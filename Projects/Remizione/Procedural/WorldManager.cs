@@ -1,0 +1,261 @@
+﻿using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+namespace Remizione
+{
+    /// <summary>
+    /// WorldManager
+    /// </summary>
+    public class WorldManager
+    {
+        #region Private fields
+
+        private readonly List<WorldBlock> blockList = [];
+        private readonly Dictionary<Point, WorldBlock> blocks = [];
+
+        #endregion
+
+        #region Constructor
+
+        // Constructor
+        public WorldManager(GameSession session, int blockWidth, int blockHeight, int gridSize)
+        {
+            Session = session;
+            Blocks = new(blockList);
+            BlockWidth = blockWidth;
+            BlockHeight = blockHeight;
+            GridSize = gridSize;
+            RandomSeed = session.RandomSeed;
+        }
+
+        #endregion
+
+        #region Private members
+
+        // MergeRectangles
+        private static List<Vector2> MergeRectangles(List<Rectangle> rectangles)
+        {
+            // Step 1: Collect unique x and y coordinates
+            HashSet<float> xSet = new HashSet<float>();
+            HashSet<float> ySet = new HashSet<float>();
+            for (var i = 0; i < rectangles.Count; i++)
+            {
+                var rect = rectangles[i];
+                xSet.Add(rect.Left);
+                xSet.Add(rect.Right);
+                ySet.Add(rect.Top);
+                ySet.Add(rect.Bottom);
+            }
+
+            // Convert to sorted lists without LINQ
+            var xArray = new float[xSet.Count];
+            var yArray = new float[ySet.Count];
+            var index = 0;
+            foreach (var x in xSet) xArray[index++] = x;
+            index = 0;
+            foreach (var y in ySet) yArray[index++] = y;
+            Array.Sort(xArray);
+            Array.Sort(yArray);
+            List<float> X = new List<float>(xArray);
+            List<float> Y = new List<float>(yArray);
+
+            var m = X.Count;
+            var n = Y.Count;
+            if (m < 2 || n < 2) return new List<Vector2>(); // No area covered
+
+            // Step 2: Create covered array
+            var covered = new bool[m - 1, n - 1];
+            for (var r = 0; r < rectangles.Count; r++)
+            {
+                var rect = rectangles[r];
+                // Binary search for i_start: smallest i where X[i] >= rect.Left
+                int i_start = 0, i_left = 0, i_right = m - 1;
+                while (i_left <= i_right)
+                {
+                    var mid = (i_left + i_right) / 2;
+                    if (X[mid] >= rect.Left) { i_start = mid; i_right = mid - 1; }
+                    else i_left = mid + 1;
+                }
+                // Binary search for i_end: largest i where X[i] < rect.Right
+                var i_end = m - 1;
+                i_left = 0; i_right = m - 1;
+                while (i_left <= i_right)
+                {
+                    var mid = (i_left + i_right) / 2;
+                    if (X[mid] < rect.Right) { i_end = mid; i_left = mid + 1; }
+                    else i_right = mid - 1;
+                }
+                // Binary search for j_start: smallest j where Y[j] >= rect.Top
+                int j_start = 0, j_left = 0, j_right = n - 1;
+                while (j_left <= j_right)
+                {
+                    var mid = (j_left + j_right) / 2;
+                    if (Y[mid] >= rect.Top) { j_start = mid; j_right = mid - 1; }
+                    else j_left = mid + 1;
+                }
+                // Binary search for j_end: largest j where Y[j] < rect.Bottom
+                var j_end = n - 1;
+                j_left = 0; j_right = n - 1;
+                while (j_left <= j_right)
+                {
+                    var mid = (j_left + j_right) / 2;
+                    if (Y[mid] < rect.Bottom) { j_end = mid; j_left = mid + 1; }
+                    else j_right = mid - 1;
+                }
+                // Mark covered cells
+                for (var i = i_start; i <= i_end && i < m - 1; i++)
+                {
+                    for (var j = j_start; j <= j_end && j < n - 1; j++)
+                    {
+                        covered[i, j] = true;
+                    }
+                }
+            }
+
+            // Step 3: Collect boundary segments
+            List<(Vector2, Vector2)> segments = new List<(Vector2, Vector2)>();
+            // Horizontal segments
+            for (var j = 0; j < n; j++)
+            {
+                for (var i = 0; i < m - 1; i++)
+                {
+                    var above_covered = j > 0 && covered[i, j - 1];
+                    var below_covered = j < n - 1 && covered[i, j];
+                    if (above_covered != below_covered)
+                    {
+                        Vector2 p1 = new Vector2(X[i], Y[j]);
+                        Vector2 p2 = new Vector2(X[i + 1], Y[j]);
+                        segments.Add((p1, p2));
+                    }
+                }
+            }
+            // Vertical segments
+            for (var i = 0; i < m; i++)
+            {
+                for (var j = 0; j < n - 1; j++)
+                {
+                    var left_covered = i > 0 && covered[i - 1, j];
+                    var right_covered = i < m - 1 && covered[i, j];
+                    if (left_covered != right_covered)
+                    {
+                        Vector2 p1 = new Vector2(X[i], Y[j]);
+                        Vector2 p2 = new Vector2(X[i], Y[j + 1]);
+                        segments.Add((p1, p2));
+                    }
+                }
+            }
+
+            // Step 4: Build adjacency list
+            Dictionary<Vector2, List<Vector2>> adj = new Dictionary<Vector2, List<Vector2>>();
+            for (var s = 0; s < segments.Count; s++)
+            {
+                var p1 = segments[s].Item1;
+                var p2 = segments[s].Item2;
+                if (!adj.ContainsKey(p1)) adj[p1] = new List<Vector2>();
+                if (!adj.ContainsKey(p2)) adj[p2] = new List<Vector2>();
+                adj[p1].Add(p2);
+                adj[p2].Add(p1);
+            }
+
+            // Step 5: Trace the polygon
+            if (adj.Count == 0) return new List<Vector2>(); // No boundary
+                                                            // Find starting point: smallest y, then smallest x (without LINQ)
+            Vector2 start = new Vector2(float.MaxValue, float.MaxValue);
+            foreach (var p in adj.Keys)
+            {
+                if (p.Y < start.Y || p.Y == start.Y && p.X < start.X)
+                    start = p;
+            }
+            List<Vector2> polygon = new List<Vector2>();
+            var current = start;
+            Vector2? previous = null;
+            do
+            {
+                polygon.Add(current);
+                var neighbors = adj[current];
+                // Find the next point that isn't the previous one
+                var next = neighbors[0];
+                if (neighbors.Count > 1 && previous.HasValue && neighbors[0] == previous.Value)
+                    next = neighbors[1];
+                previous = current;
+                current = next;
+            } while (current != start);
+
+            return polygon;
+        }
+
+        // IsValidPosition
+        private bool IsValidPosition(Point pos)
+        {
+            return pos.X >= 0 && pos.X < GridSize &&
+                   pos.Y >= 0 && pos.Y < GridSize;
+        }
+
+        #endregion
+
+        // AddBlock
+        public WorldBlock AddBlock(Point gridPosition)
+        {
+            if (!IsValidPosition(gridPosition))
+                throw new InvalidOperationException("Grid position is out of bounds.");
+
+            if (blocks.ContainsKey(gridPosition))
+                throw new InvalidOperationException("Grid position is already used.");
+
+            var block = new WorldBlock(this, gridPosition);
+            blocks[gridPosition] = block;
+            blockList.Add(block);
+
+            return block;
+        }
+
+        // BlockHeight
+        public int BlockHeight { get; }
+
+        // Blocks
+        public ReadOnlyCollection<WorldBlock> Blocks { get; }
+
+        // BlockWidth
+        public int BlockWidth { get; }
+
+        // GetBlockFromGrid
+        public WorldBlock? GetBlockFromGrid(Point gridPosition)
+        {
+            blocks.TryGetValue(gridPosition, out var block);
+            return block;
+        }
+
+        // GetBlockFromScreen
+        public WorldBlock? GetBlockFromScreen(Vector2 screenPosition)
+        {
+            var gridPosition = new Point((int)(screenPosition.X / BlockWidth), (int)(screenPosition.Y / BlockHeight));
+            blocks.TryGetValue(gridPosition, out var block);
+            return block;
+        }
+
+        // GetWalkareaVertices
+        public Vector2[] GetWalkareaVertices()
+        {
+            var rects = new List<Rectangle>();
+            for (var i = 0; i < blocks.Count; i++)
+            {
+                rects.Add(Blocks[i].BoundingBox.ToRectangle());
+            }
+
+            var result = MergeRectangles(rects);
+
+            return result.ToArray();
+        }
+
+        // GridSize
+        public int GridSize { get; }
+
+        // RandomSeed
+        public int RandomSeed { get; set; }
+
+        // Session
+        public GameSession Session { get; }
+    }
+}

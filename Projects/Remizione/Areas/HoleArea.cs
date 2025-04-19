@@ -1,0 +1,88 @@
+﻿using Engendro;
+using Engendro.PathFinding;
+using EngendroAdventure;
+using EngendroAdventure.Scripting;
+using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+
+namespace Remizione
+{
+    /// <summary>
+    /// HoleArea
+    /// </summary>
+    public class HoleArea : Room.Area, IHoleArea
+    {
+        private readonly Polygon inflatedPolygon = new();
+        private readonly List<PathNode> nodes = [];
+
+        #region Constructor
+
+        // Constructor
+        public HoleArea(WalkArea walkArea, string name, FlagCondition? condition, params Vector2[] vertices)
+            : base(walkArea.Room, name, condition, vertices)
+        {
+            this.WalkArea = walkArea;
+
+            // Inflate polygon by a marginal value to allow InLineOfSight between them            
+            this.inflatedPolygon.SetVertices(vertices, .01f);
+
+            // Create nodes (only convex vertices inside walk area)
+            if (!Polygon.IsEmpty)
+            {
+                for (var i = 0; i < inflatedPolygon.Vertices.Count; i++)
+                {
+                    if (!inflatedPolygon.IsVertexConcave(i))
+                    {
+                        if (walkArea.IsInside(inflatedPolygon.Vertices[i]))
+                            nodes.Add(new PathNode(inflatedPolygon.Vertices[i]));
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region Protected members
+
+        // OnEnabledChanged
+        protected override void OnEnabledChanged()
+        {
+            WalkArea?.MarkDirty();
+        }
+
+        #endregion
+
+        // ClampOutside
+        public Vector2 ClampOutside(Vector2 position)
+        {
+            if (Polygon.IsPointInside(position))
+                position = inflatedPolygon.GetClosestPointOnEdge(position);
+
+            return position;
+        }
+
+        // CollectNodes
+        public void CollectNodes(IList<PathNode> list)
+        {
+            for (var i = 0; i < nodes.Count; i++)
+            {
+                list.Add(nodes[i]);
+            }
+        }
+
+        // InLineOfSight
+        public bool InLineOfSight(Vector2 start, Vector2 end)
+        {
+            return Polygon.InLineOfSight(start, end);
+        }
+
+        // IsInside
+        public bool IsInside(Vector2 point)
+        {
+            return Polygon.IsPointInside(point);
+        }
+
+        // WalkArea
+        public WalkArea WalkArea { get; }
+    }
+}

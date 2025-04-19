@@ -1,0 +1,19 @@
+﻿namespace Remizione
+{
+    /// <summary>
+    /// ActorStateNames
+    /// </summary>
+    internal static class ActorStateNames
+    {
+        public const string Act = nameof(Act);
+        public const string CloseAttack = nameof(CloseAttack);
+        public const string Death = nameof(Death);
+        public const string Hurt = nameof(Hurt);
+        public const string Idle = nameof(Idle);
+        public const string Move = nameof(Move);
+        public const string MoveFast = nameof(MoveFast);
+        public const string Stand = nameof(Stand);
+        public const string Talk = nameof(Talk);
+        public const string ThrowObject = nameof(ThrowObject);
+    }
+}

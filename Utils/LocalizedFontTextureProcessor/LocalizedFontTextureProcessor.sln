@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalizedFontTextureProcessor", "LocalizedFontTextureProcessor.csproj", "{2B764769-93AA-4C0A-AC03-FB5EF307EB1E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B764769-93AA-4C0A-AC03-FB5EF307EB1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B764769-93AA-4C0A-AC03-FB5EF307EB1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B764769-93AA-4C0A-AC03-FB5EF307EB1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B764769-93AA-4C0A-AC03-FB5EF307EB1E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D2F48EC4-2C02-4D7A-9F51-1FB82AA7B99C}
+	EndGlobalSection
+EndGlobal

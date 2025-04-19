@@ -1,0 +1,278 @@
+﻿using Engendro;
+using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using System.IO;
+
+namespace EngendroAdventure.Scripting
+{
+    /// <summary>
+    /// ScriptLibrary
+    /// </summary>
+    public sealed class ScriptLibrary
+    {
+        #region Private fields
+
+        private readonly Dictionary<string, Script> declarations = [];
+        private readonly Dictionary<string, Script> scripts = [];
+
+        #endregion
+
+        #region Constructor
+
+        // Constructor
+        internal ScriptLibrary(Session session, string path)
+        {
+            CodeContract.NotEmpty(path, nameof(path));
+
+            this.Session = session;
+            this.Path = path;
+        }
+
+        #endregion
+
+        #region Private members
+
+        // LoadCore
+        private void LoadCore()
+        {
+            List<string> lines = [];
+
+            using (var stream = TitleContainer.OpenStream(Path))
+            {
+                string text;
+
+                // No encryption
+                if (!XOREncryptor.IsEncryptedXml(stream))
+                {
+                    using StreamReader r = new(stream);
+                    text = r.ReadToEnd();
+                }
+                else
+                {
+                    text = XOREncryptor.AsString(stream, XOREncryptor.EncryptionKey);
+                }
+
+                // Load lines
+                using (StringReader reader = new(text))
+                {
+                    // Get version
+                    Version = reader.ReadLine();
+
+                    string? line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        line = line.Trim();
+
+                        // Remove blank spaces or comments
+                        var skip = line.Length == 0 || line.StartsWith(ScriptSyntax.LineComment, StringComparison.OrdinalIgnoreCase);
+                        if (!skip)
+                        {
+                            lines.Add(line);
+                        }
+                    }
+                }
+
+                // Read all lines
+                while (lines.Count > 0)
+                {
+                    Script script = new(Session, lines);
+
+                    if (!string.IsNullOrWhiteSpace(script.EntityName) && script.HasCapability(ScriptCapability.EntityDeclaration))
+                    {
+                        declarations.Add(script.EntityName, script);
+                    }
+
+                    scripts.Add(script.Signature, script);
+                }
+            }
+
+            // Step 1: Run initialization scripts
+            RunInitializationScripts(false);
+
+            // Step 2: Create declared entities
+            foreach (var script in scripts.Values)
+            {
+                if (script.HasCapability(ScriptCapability.EntityDeclaration))
+                {
+                    var createdEntity = script.CreateEntity();
+                    createdEntity.Persistent = script.Persistent;
+                }
+            }
+
+            // Step 3: Run post-initialization scripts
+            RunInitializationScripts(true);
+        }
+
+        // RunInitializationScripts
+        private void RunInitializationScripts(bool post)
+        {
+            var scriptType = post ? ScriptType.Initialization : ScriptType.Declaration;
+
+            List<Script> scriptsList = [];
+
+            foreach (var script in scripts.Values)
+            {
+                if (script.ScriptType == scriptType)
+                {
+                    scriptsList.Add(script);
+                }
+            }
+
+            for (var i = 0; i < scriptsList.Count; i++)
+            {
+                var script = scriptsList[i];
+
+                script.Compile();
+                Session.ScriptProcessor.RunScript(script);
+
+                if (script.HasCapability(ScriptCapability.Discard))
+                {
+                    scripts.Remove(script.Signature);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Internal members
+
+        // CompilationPhase
+        internal CompilationPhase CompilationPhase { get; private set; }
+
+        // Compile
+        internal void Compile()
+        {
+            List<Script> discardList = [];
+
+            // Compile declarations
+            CompilationPhase = CompilationPhase.Declarations;
+            foreach (var script in AllScripts)
+            {
+                if (script.HasCapability(ScriptCapability.EntityDeclaration))
+                {
+                    script.Compile();
+                    Session.ScriptProcessor.RunScript(script);
+
+                    if (script.HasCapability(ScriptCapability.Discard))
+                    {
+                        discardList.Add(script);
+                    }
+                }
+            }
+
+            // Compile dynamic things scripts
+            CompilationPhase = CompilationPhase.Instantiation;
+            foreach (var script in AllScripts)
+            {
+                if (script.ScriptType == ScriptType.Instantiation)
+                {
+                    script.Compile();
+                    Session.ScriptProcessor.RunScript(script);
+
+                    if (script.HasCapability(ScriptCapability.Discard))
+                    {
+                        discardList.Add(script);
+                    }
+                }
+            }
+
+            // Remove useless scripts
+            for (var i = 0; i < discardList.Count; i++)
+            {
+                scripts.Remove(discardList[i].Signature);
+            }
+
+            // Compile routines
+            CompilationPhase = CompilationPhase.Routines;
+            foreach (var script in AllScripts)
+            {
+                if (script.ScriptType == ScriptType.Routine || script.ScriptType == ScriptType.NewSession)
+                {
+                    script.Compile();
+                }
+            }
+
+            // Compile all other scripts (outcomes)
+            CompilationPhase = CompilationPhase.Outcomes;
+            foreach (var script in AllScripts)
+            {
+                if (script.HasCapability(ScriptCapability.EntityDeclaration))
+                {
+                    continue;
+                }
+
+                script.Compile();
+                TotalRuntimeStatements += script.StatementCount;
+            }
+        }
+
+        // GetDeclaration
+        internal Script? GetDeclaration(string entityStaticName)
+        {
+            return declarations.TryGetValue(entityStaticName, out var result) ? result : null;
+        }
+
+        // GetScript
+        internal Script? GetScript(string name)
+        {
+            return scripts.TryGetValue(name, out var result) ? result : null;
+        }
+
+        // GetScript
+        internal Script? GetScript(ScriptType scriptType, string name)
+        {
+            CodeContract.NotEmpty(name, nameof(name));
+            var scriptName = Script.EncodeScriptName(scriptType, name);
+            return GetScript(scriptName);
+        }
+
+        // Load
+        internal void Load()
+        {
+            LoadCore();
+            Compile();
+        }
+
+        #endregion
+
+        // AllScripts
+        public IEnumerable<Script> AllScripts => scripts.Values;
+
+        // GetCompoundOutcome
+        public Script? GetCompoundOutcome(string name1, string name2)
+        {
+            CodeContract.NotEmpty(name1, nameof(name1));
+            CodeContract.NotEmpty(name2, nameof(name2));
+
+            var scriptName = name1 + ScriptSyntax.ScriptCompoundSeparator + name2;
+
+            return GetScript(ScriptType.Outcome, scriptName);
+        }
+
+        // GetOutcome
+        public Script? GetOutcome(string name)
+        {
+            CodeContract.NotEmpty(name, nameof(name));
+            return GetScript(ScriptType.Outcome, name);
+        }
+
+        // GetRoutine
+        public Script? GetRoutine(string name)
+        {
+            return GetScript(ScriptType.Routine, name);
+        }
+
+        // Path
+        public string Path { get; }
+
+        // Session
+        public Session Session { get; }
+
+        // TotalRuntimeStatements
+        public int TotalRuntimeStatements { get; private set; }
+
+        // Version
+        public string? Version { get; private set; }
+    }
+}

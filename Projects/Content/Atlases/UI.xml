@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:c4c1caa319595db44af889148c015f91:332030b330b84fc4d655d3c78ba6211b:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="UI.png" width="512" height="512">
+    <sprite n="Battery.png" x="484" y="2" w="20" h="20"/>
+    <sprite n="CheckMark.png" x="495" y="176" w="11" h="11"/>
+    <sprite n="Chili.png" x="484" y="24" w="20" h="20"/>
+    <sprite n="ContextMenuOptionSelector.png" x="472" y="106" w="7" h="6"/>
+    <sprite n="CreditsBar.png" x="2" y="2" w="480" h="67"/>
+    <sprite n="Cross.png" x="484" y="46" w="20" h="20"/>
+    <sprite n="Duck.png" x="484" y="68" w="20" h="20"/>
+    <sprite n="GoalOrnament.png" x="288" y="71" w="94" h="5"/>
+    <sprite n="Headbutt.png" x="481" y="90" w="20" h="20"/>
+    <sprite n="Health.png" x="481" y="112" w="20" h="20"/>
+    <sprite n="InventoryAmulets.png" x="503" y="107" w="6" h="6"/>
+    <sprite n="InventoryCategoryMarker.png" x="55" y="87" w="6" h="1"/>
+    <sprite n="InventoryConsumables.png" x="503" y="115" w="6" h="6"/>
+    <sprite n="InventoryGridContainer.png" x="2" y="403" w="114" h="106"/>
+    <sprite n="InventoryInfoContainer.png" x="118" y="403" w="99" h="106"/>
+    <sprite n="InventoryKeyItems.png" x="503" y="90" w="7" h="5"/>
+    <sprite n="InventorySkills.png" x="472" y="88" w="7" h="7"/>
+    <sprite n="InventorySlot.png" x="341" y="492" w="18" h="18"/>
+    <sprite n="InventorySlotSelection.png" x="361" y="492" w="18" h="18"/>
+    <sprite n="InventorySpells.png" x="503" y="97" w="6" h="8"/>
+    <sprite n="InventoryThrowables.png" x="472" y="82" w="8" h="4"/>
+    <sprite n="KeyboardE.png" x="327" y="494" w="12" h="12"/>
+    <sprite n="KeyboardInteract.png" x="55" y="71" w="14" h="14"/>
+    <sprite n="KeyboardNextTab.png" x="219" y="494" w="16" h="12"/>
+    <sprite n="KeyboardPreviousTab.png" x="237" y="494" w="16" h="12"/>
+    <sprite n="Lockpick.png" x="395" y="489" w="20" h="20"/>
+    <sprite n="MessageContainer.png" x="219" y="403" w="251" h="27"/>
+    <sprite n="MissingInputBinding.png" x="454" y="202" w="52" h="52"/>
+    <sprite n="MissingItem.png" x="417" y="489" w="20" h="20"/>
+    <sprite n="MouseCursorDefault.png" x="503" y="123" w="5" h="5"/>
+    <sprite n="MouseCursorTarget.png" x="472" y="97" w="7" h="7"/>
+    <sprite n="Pixel.png" x="509" y="45" w="1" h="1"/>
+    <sprite n="PlayStationA.png" x="330" y="225" w="52" h="52"/>
+    <sprite n="PlayStationB.png" x="268" y="232" w="52" h="52"/>
+    <sprite n="PlayStationChangeDifficulty.png" x="389" y="432" w="51" h="55"/>
+    <sprite n="PlayStationDiaryPages.png" x="354" y="119" w="60" h="51"/>
+    <sprite n="PlayStationDiaryShortcut.png" x="384" y="71" w="64" h="46"/>
+    <sprite n="PlayStationDiaryTabs.png" x="416" y="119" w="60" h="51"/>
+    <sprite n="PlayStationDPadDown.png" x="268" y="126" w="60" h="51"/>
+    <sprite n="PlayStationDPadLeft.png" x="330" y="172" w="60" h="51"/>
+    <sprite n="PlayStationDPadRight.png" x="268" y="179" w="60" h="51"/>
+    <sprite n="PlayStationDPadUp.png" x="392" y="172" w="60" h="51"/>
+    <sprite n="PlayStationInteract.png" x="384" y="225" w="52" h="52"/>
+    <sprite n="PlayStationLeftShoulder.png" x="288" y="78" w="64" h="46"/>
+    <sprite n="PlayStationLeftTrigger.png" x="376" y="333" w="50" h="46"/>
+    <sprite n="PlayStationMatchesShortcut.png" x="288" y="78" w="64" h="46"/>
+    <sprite n="PlayStationMove.png" x="335" y="432" w="52" h="58"/>
+    <sprite n="PlayStationNextDialog.png" x="438" y="256" w="52" h="52"/>
+    <sprite n="PlayStationRightShoulder.png" x="384" y="71" w="64" h="46"/>
+    <sprite n="PlayStationRightTrigger.png" x="428" y="333" w="50" h="46"/>
+    <sprite n="PlayStationSelectSlot.png" x="442" y="432" w="51" h="55"/>
+    <sprite n="PlayStationX.png" x="268" y="310" w="52" h="52"/>
+    <sprite n="PlayStationY.png" x="322" y="310" w="52" h="52"/>
+    <sprite n="PopupContainer.png" x="2" y="90" w="264" h="311"/>
+    <sprite n="PopupContainerShadow.png" x="219" y="432" w="114" h="60"/>
+    <sprite n="ProhibitionIcon.png" x="2" y="71" w="17" h="17"/>
+    <sprite n="ProhibitionMark.png" x="495" y="189" w="11" h="11"/>
+    <sprite n="QuickSlot.png" x="21" y="71" w="15" h="15"/>
+    <sprite n="QuickSlotShadow.png" x="38" y="71" w="15" h="15"/>
+    <sprite n="ReactionMeter1.png" x="87" y="71" w="13" h="13"/>
+    <sprite n="ReactionMeter2.png" x="102" y="71" w="13" h="13"/>
+    <sprite n="ReactionMeter3.png" x="117" y="71" w="13" h="13"/>
+    <sprite n="ReactionMeter4.png" x="132" y="71" w="13" h="13"/>
+    <sprite n="ReactionMeter5.png" x="147" y="71" w="13" h="13"/>
+    <sprite n="ReactionMeter6.png" x="162" y="71" w="13" h="13"/>
+    <sprite n="ReactionMeter7.png" x="177" y="71" w="13" h="13"/>
+    <sprite n="ReactionMeter8.png" x="192" y="71" w="13" h="13"/>
+    <sprite n="ReactionMeter9.png" x="207" y="71" w="13" h="13"/>
+    <sprite n="SavingIcon.png" x="472" y="71" w="9" h="9"/>
+    <sprite n="SpeechBubbleCloseArrow.png" x="506" y="31" w="3" h="2"/>
+    <sprite n="SpeechBubblePipe.png" x="236" y="85" w="5" h="3"/>
+    <sprite n="Stamina.png" x="439" y="489" w="20" h="20"/>
+    <sprite n="Ticket.png" x="461" y="489" w="20" h="20"/>
+    <sprite n="TipBalloon.png" x="222" y="71" w="12" h="13"/>
+    <sprite n="UIControlContainerEdgeLarge.png" x="506" y="2" w="4" h="9"/>
+    <sprite n="UIControlContainerEdgeSmall.png" x="506" y="13" w="4" h="8"/>
+    <sprite n="UIControlContainerPatternLarge.png" x="506" y="35" w="1" h="9"/>
+    <sprite n="UIControlContainerPatternSmall.png" x="509" y="35" w="1" h="8"/>
+    <sprite n="UIControlShade.png" x="236" y="71" w="50" h="12"/>
+    <sprite n="UIControlShadow.png" x="268" y="286" w="45" h="10"/>
+    <sprite n="UnreadSign.png" x="506" y="23" w="3" h="6"/>
+    <sprite n="XboxA.png" x="381" y="492" w="12" h="12"/>
+    <sprite n="XboxB.png" x="495" y="134" w="12" h="12"/>
+    <sprite n="XboxInteract.png" x="71" y="71" w="14" h="14"/>
+    <sprite n="XboxLeftShoulder.png" x="255" y="494" w="16" h="12"/>
+    <sprite n="XboxNextTab.png" x="273" y="494" w="16" h="12"/>
+    <sprite n="XboxPreviousTab.png" x="291" y="494" w="16" h="12"/>
+    <sprite n="XboxRightShoulder.png" x="309" y="494" w="16" h="12"/>
+    <sprite n="XboxRun.png" x="376" y="279" w="52" h="52"/>
+    <sprite n="XboxX.png" x="495" y="148" w="12" h="12"/>
+    <sprite n="XboxY.png" x="495" y="162" w="12" h="12"/>
+</TextureAtlas>

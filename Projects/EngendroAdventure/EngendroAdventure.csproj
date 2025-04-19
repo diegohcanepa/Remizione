@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<RootNamespace>EngendroAdventure</RootNamespace>
+		<Authors>Indiesruption</Authors>
+		<Company>Indiesruption</Company>
+		<Product>Engendro</Product>
+		<PackageId>Engendro.Adventure</PackageId>
+		<Version>1.0.0</Version>
+		<Copyright>Copyright (C) 2020 Indiesruption</Copyright>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<IsAotCompatible>true</IsAotCompatible>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DefineConstants>TRACE</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.2.1105" />
+		<PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.2.1105" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Engendro\Engendro.csproj" />
+	</ItemGroup>
+</Project>

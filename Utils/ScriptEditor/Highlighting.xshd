@@ -1,0 +1,377 @@
+﻿<SyntaxDefinition name="TSL" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+
+	<Color name="Comment" foreground="Green" />
+	<Color name="String" foreground="Red" />
+
+	<!-- This is the main ruleset. -->
+	<RuleSet>
+		<Span color="Comment" begin="//" />
+		<Span color="String">
+			<Begin>"</Begin>
+			<End>"</End>
+		</Span>
+
+		<!-- [+] -->
+		<Keywords fontWeight="bold" foreground="#3d882e" >
+			<Word>[+]</Word>
+		</Keywords>
+
+		<!-- [-] -->
+		<Keywords fontWeight="bold" foreground="#f54c4c" >
+			<Word>[-]</Word>
+		</Keywords>
+
+		<!-- Script Types -->
+		<Keywords fontWeight="bold" foreground="Purple">
+			<Word>{</Word>
+			<Word>}</Word>
+			<Word>Declaration</Word>
+			<Word>Instantiation</Word>
+			<Word>Initialization</Word>
+			<Word>Room </Word>
+			<Word>EnterRoom</Word>
+			<Word>Enter </Word>
+			<Word>Load </Word>
+			<Word>Unload </Word>
+			<Word>Outcome </Word>
+			<Word>Routine </Word>
+			<Word>NewSession</Word>
+			<Word>Thing </Word>
+		</Keywords>
+
+		<!-- Identifiers -->
+		<Keywords fontWeight="regular" foreground="Purple">
+			<Word>Class:</Word>
+			<Word>Instantiable</Word>
+			<Word>Persistent</Word>
+		</Keywords>
+
+		<!-- Identifiers -->
+		<Keywords fontWeight="bold" foreground="Blue">
+			<Word>??</Word>
+		</Keywords>
+
+		<!-- Session members -->
+		<Rule fontWeight="bold" foreground="Black">
+			\$\w+([-]\w+)*
+		</Rule>
+
+		<!-- Identifiers -->
+		<Keywords fontWeight="regular" foreground="Green">
+			<Word>set-achievement</Word>
+		</Keywords>
+
+		<!-- Flag commands -->
+		<Keywords fontWeight="bold" foreground="MediumVioletRed">
+			<Word>set-counter</Word>
+			<Word>set-flag</Word>
+			<Word>toggle-flag</Word>
+		</Keywords>
+
+		<!-- Statements -->
+		<Keywords fontWeight="regular" foreground="Blue" >
+			<Word>counter</Word>
+			<Word>bp-bonus-effect</Word>
+			<Word>damage-bonus-effect</Word>
+			<Word>flag</Word>
+			<Word>is</Word>
+			<Word>new</Word>
+			<Word>=>></Word>
+			<Word>=></Word>
+			<Word>await-animation</Word>
+			<Word>await-answer</Word>
+			<Word>await-camera</Word>
+			<Word>await-closeup</Word>
+			<Word>await-closing-credits</Word>
+			<Word>await-color-tween</Word>
+			<Word>await-credits</Word>
+			<Word>await-dialog-block</Word>
+			<Word>await-dialog</Word>
+			<Word>await-enter-room</Word>			
+			<Word>await-input</Word>
+			<Word>await-message</Word>
+			<Word>await-move</Word>
+			<Word>await-music</Word>
+			<Word>await-opacity-tween</Word>
+			<Word>await-option-menu</Word>
+			<Word>await-outcome-completion</Word>
+			<Word>await-outcome</Word>
+			<Word>await-pickup-message</Word>
+			<Word>await-player-approach</Word>			
+			<Word>await-popup</Word>
+			<Word>await-position-tween</Word>
+			<Word>await-qte</Word>
+			<Word>await-room</Word>
+			<Word>await-rotation-tween</Word>
+			<Word>await-routine</Word>
+			<Word>await-scale-tween</Word>
+			<Word>await-script</Word>
+			<Word>await-shake</Word>
+			<Word>await-sound</Word>
+			<Word>await-stand</Word>
+			<Word>await-sync-scripts</Word>
+			<Word>await-this-routine</Word>
+			<Word>await-transition</Word>
+			<Word>await</Word>
+			<Word>const</Word>
+			<Word>ensure-session-scene</Word>
+			<Word>exit-session</Word>
+			<Word>meta-item</Word>
+			<Word>pause-routine</Word>
+			<Word>pop-scene</Word>
+			<Word>reload</Word>
+			<Word>restart-session</Word>
+			<Word>resume-routine</Word>
+			<Word>start-routine</Word>
+			<Word>stop-routine</Word>
+			<Word>false</Word>
+			<Word>null</Word>
+			<Word>save-game</Word>			
+			<Word>true</Word>
+			<Word>this</Word>
+			<Word>await-x-tween</Word>
+			<Word>await-y-tween</Word>
+		</Keywords>
+
+		<!-- Statements -->
+		<Keywords fontWeight="regular" foreground="#8f08c4" >
+			<Word>decrement-counter</Word>
+			<Word>else</Word>
+			<Word>enable-area-if</Word>
+			<Word>endif</Word>
+			<Word>if-hotspot-area</Word>
+			<Word>if-can-pickup</Word>
+			<Word>if-counter</Word>
+			<Word>if-entity-type</Word>
+			<Word>if-entity</Word>
+			<Word>if-flag</Word>
+			<Word>if-not-null</Word>
+			<Word>if-parent</Word>
+			<Word>if-random-number</Word>
+			<Word>if-roll</Word>
+			<Word>if-routine-running</Word>
+			<Word>if</Word>
+			<Word>increment-counter</Word>
+			<Word>restart</Word>
+			<Word>return</Word>
+		</Keywords>
+
+		<!-- Audio statements -->
+		<Keywords fontWeight="bold" foreground="DodgerBlue" >
+			<Word>change-sound-settings</Word>
+			<Word>fade-sound</Word>
+			<Word>flashback-effect-in</Word>
+			<Word>flashback-effect-out</Word>
+			<Word>pan-sound</Word>
+			<Word>play-music-tag</Word>
+			<Word>play-music</Word>
+			<Word>play-sound</Word>
+			<Word>set-playing-music-pan</Word>
+			<Word>set-music-tag</Word>
+			<Word>set-playing-music-volume</Word>
+			<Word>stop-music</Word>
+			<Word>stop-sound</Word>
+		</Keywords>
+
+		<!-- Screen statements -->
+		<Keywords fontWeight="bold" foreground="OrangeRed">
+			<Word>transition</Word>
+		</Keywords>
+
+		<!-- Text & Dialog -->
+		<Keywords fontWeight="regular" foreground="#2B91AF">
+			<Word>add-dialog-option</Word>
+			<Word>create-dialog-block</Word>
+			<Word>echo</Word>
+			<Word>hide-overlay-text</Word>
+			<Word>say</Word>
+			<Word>show-overlay-text</Word>
+			<Word>terminate-dialog-block</Word>
+		</Keywords>
+
+		<!-- Miscellaneous names -->
+		<Keywords fontWeight="regular" foreground="#2B91AF">
+			<Word>add-hole</Word>
+			<Word>add-item</Word>
+			<Word>add-light</Word>
+			<Word>add-loot-item</Word>
+			<Word>add-money</Word>
+			<Word>add-terrain-area</Word>
+			<Word>add-trigger-area</Word>
+			<Word>add-walk-area</Word>
+			<Word>atlas</Word>
+			<Word>begin-rain</Word>
+			<Word>copy-holes</Word>
+			<Word>dizziness-effect</Word>
+			<Word>end-rain</Word>
+			<Word>flashback-effect</Word>
+			<Word>flip</Word>
+			<Word>focus-xy</Word>
+			<Word>focus</Word>
+			<Word>follow</Word>
+			<Word>generate-random-number</Word>
+			<Word>hide-dialog-box</Word>
+			<Word>hide-message</Word>
+			<Word>kill-all-creatures</Word>
+			<Word>push-dialog</Word>
+			<Word>push-scene</Word>
+			<Word>put</Word>
+			<Word>random-position</Word>
+			<Word>reset-camera</Word>
+			<Word>select-walk-area</Word>
+			<Word>sepia-effect</Word>
+			<Word>set-brightness</Word>
+			<Word>set-chapter</Word>
+			<Word>set-color-reduction</Word>
+			<Word>set-control-help</Word>
+			<Word>set-light</Word>
+			<Word>set-rain-impact-area</Word>
+			<Word>set-rain</Word>
+			<Word>set-sparkle</Word>
+			<Word>set-thing-light</Word>
+			<Word>shake-horizontally</Word>
+			<Word>shake-vertically</Word>
+			<Word>shake</Word>
+			<Word>show-command-tip</Word>
+			<Word>show-inventory</Word>
+			<Word>show-message</Word>
+			<Word>show-pickup-message</Word>
+			<Word>stand</Word>
+			<Word>stop-following</Word>
+			<Word>stop-shaking</Word>
+			<Word>stop-vibration</Word>
+			<Word>suspend-vibration</Word>
+			<Word>unparent</Word>
+			<Word>vibrate</Word>
+			<Word>zoom</Word>
+		</Keywords>
+
+		<!-- Visual statements -->
+		<Keywords fontWeight="regular" foreground="#9c5100">
+			<Word>act</Word>
+			<Word>approach-to-target</Word>
+			<Word>approach</Word>
+			<Word>color-tween</Word>
+			<Word>move</Word>
+			<Word>opacity-tween</Word>
+			<Word>play-animation</Word>
+			<Word>position-tween</Word>
+			<Word>reset-tweens</Word>
+			<Word>rotation-tween</Word>
+			<Word>scale-tween</Word>
+			<Word>stop-animation</Word>
+			<Word>stop-moving</Word>
+			<Word>x-tween</Word>
+			<Word>y-tween</Word>
+		</Keywords>
+
+		<!-- Tokens -->
+		<Keywords fontWeight="regular" foreground="#a6601f">
+			<Word>align</Word>
+			<Word>amount</Word>
+			<Word>animation</Word>
+			<Word>area</Word>
+			<Word>as</Word>
+			<Word>at</Word>
+			<Word>atlas</Word>
+			<Word>binding</Word>
+			<Word>brightness</Word>
+			<Word>button</Word>
+			<Word>by</Word>
+			<Word>category</Word>
+			<Word>command</Word>
+			<Word>color</Word>
+			<Word>condition</Word>
+			<Word>contains</Word>
+			<Word>control</Word>
+			<Word>count</Word>
+			<Word>depth</Word>
+			<Word>dice</Word>
+			<Word>difficulty</Word>
+			<Word>direction</Word>
+			<Word>duration</Word>
+			<Word>frame</Word>
+			<Word>frames</Word>
+			<Word>from</Word>
+			<Word>hits</Word>
+			<Word>host</Word>			
+			<Word>image</Word>
+			<Word>in</Word>
+			<Word>intensity</Word>
+			<Word>interval</Word>
+			<Word>into</Word>
+			<Word>kind</Word>
+			<Word>leftMotor</Word>
+			<Word>modifier</Word>
+			<Word>not-in</Word>
+			<Word>of</Word>
+			<Word>offset</Word>
+			<Word>options</Word>
+			<Word>origin</Word>
+			<Word>pan</Word>
+			<Word>path</Word>
+			<Word>player</Word>
+			<Word>polygon</Word>
+			<Word>position</Word>
+			<Word>property</Word>
+			<Word>range</Word>
+			<Word>rate</Word>
+			<Word>remove</Word>
+			<Word>rightMotor</Word>
+			<Word>rgb</Word>
+			<Word>room</Word>
+			<Word>routine</Word>
+			<Word>scale</Word>
+			<Word>size</Word>
+			<Word>sounds</Word>
+			<Word>sound</Word>
+			<Word>start</Word>
+			<Word>steps</Word>
+			<Word>style</Word>
+			<Word>target</Word>
+			<Word>terrain</Word>
+			<Word>text</Word>
+			<Word>to</Word>
+			<Word>type</Word>
+			<Word>value</Word>
+			<Word>verb</Word>
+			<Word>volume</Word>
+			<Word>wait-interval</Word>
+			<Word>weight</Word>
+			<Word>walkingArea</Word>
+			<Word>with</Word>
+		</Keywords>
+
+		<!-- Axis -->
+		<Keywords fontWeight="regular" foreground="DodgerBlue">
+			<Word>x</Word>
+			<Word>y</Word>
+		</Keywords>
+
+		<!-- Digits -->
+		<Rule fontWeight="bold" foreground="Black">
+			\b0[xX][0-9a-fA-F]+  # hex number
+			|    \b
+			(    \d+(\.[0-9]+)?   #number with optional floating point
+			|    \.[0-9]+         #or just starting with floating point
+			)
+			([eE][+-]?[0-9]+)? # optional exponent
+		</Rule>
+
+		<!-- Constants -->
+		<Rule foreground="BlueViolet">
+			\%\w+
+		</Rule>
+
+		<!-- Flags -->
+		<Rule fontWeight="regular" foreground="BlueViolet">
+			\#\w+([-]\w+)*
+		</Rule>
+
+		<!-- Verbs -->
+		<Rule fontWeight="bold" foreground="Purple">
+			\?\w+([-]\w+)*
+		</Rule>
+
+	</RuleSet>
+</SyntaxDefinition>

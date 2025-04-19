@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:2469fdefaa0520d63972e8349ba2255e:143034e0f2ffec5a55f238da5eef479f:b4da9324b5d92c57b73a9c864dd87fbf$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Menu.png" width="2048" height="2048">
+    <sprite n="BottomOrnament.png" x="1774" y="816" w="84" h="5"/>
+    <sprite n="ContainerScreen.png" x="2" y="1730" w="480" h="270"/>
+    <sprite n="ControllerAdvice.png" x="2" y="651" w="530" h="670"/>
+    <sprite n="ControlsKeyboard.png" x="571" y="2" w="664" h="405"/>
+    <sprite n="ControlsNintendoSwitch.png" x="1237" y="2" w="664" h="405"/>
+    <sprite n="ControlsPlayStation4.png" x="2" y="1323" w="664" h="405"/>
+    <sprite n="ControlsPlayStation5.png" x="571" y="409" w="664" h="405"/>
+    <sprite n="ControlsWindows.png" x="1237" y="409" w="664" h="405"/>
+    <sprite n="ControlsXboxOne.png" x="534" y="816" w="664" h="405"/>
+    <sprite n="DemoRibbon.png" x="1054" y="1223" w="109" h="108"/>
+    <sprite n="DeveloperLogo.png" x="1200" y="816" w="572" h="363"/>
+    <sprite n="FadeCircle.png" x="1448" y="1725" w="245" h="250"/>
+    <sprite n="GameLogo.png" x="668" y="1223" w="384" h="434"/>
+    <sprite n="LanguageIcon.png" x="1903" y="2" w="53" h="40"/>
+    <sprite n="MenuItemArrowLeft.png" x="634" y="1223" w="32" h="37"/>
+    <sprite n="MenuItemArrowRight.png" x="534" y="651" w="32" h="37"/>
+    <sprite n="MenuItemHighlight.png" x="668" y="1659" w="149" h="15"/>
+    <sprite n="MessageBoxOrnamentBottom.png" x="1774" y="816" w="84" h="5"/>
+    <sprite n="MessageBoxOrnamentTop.png" x="1448" y="1977" w="154" h="5"/>
+    <sprite n="OptionHighlight.png" x="534" y="1223" w="98" h="12"/>
+    <sprite n="OptionsIcon.png" x="1682" y="1181" w="41" h="42"/>
+    <sprite n="PauseMenuBackground.png" x="1200" y="1181" w="480" h="270"/>
+    <sprite n="PublisherLogo.png" x="2" y="2" w="567" h="647"/>
+    <sprite n="Rat01.png" x="2018" y="2" w="28" h="15"/>
+    <sprite n="Rat02.png" x="1695" y="1871" w="28" h="15"/>
+    <sprite n="Rat03.png" x="1900" y="1725" w="28" h="15"/>
+    <sprite n="Rat04.png" x="1054" y="1333" w="28" h="15"/>
+    <sprite n="Rat05.png" x="1165" y="1223" w="28" h="15"/>
+    <sprite n="Rat06.png" x="161" y="2002" w="28" h="15"/>
+    <sprite n="Rat07.png" x="668" y="1676" w="28" h="15"/>
+    <sprite n="Rat08.png" x="819" y="1659" w="28" h="15"/>
+    <sprite n="RatShadow.png" x="2" y="2036" w="25" h="7"/>
+    <sprite n="StartGameMenuBackground.png" x="1054" y="1453" w="480" h="270"/>
+    <sprite n="StartGameMenuSelectedSlotContainer.png" x="2" y="2002" w="157" h="32"/>
+    <sprite n="TitleScreen.png" x="484" y="1730" w="480" h="270"/>
+    <sprite n="TitleScreenForeground.png" x="966" y="1725" w="480" h="270"/>
+    <sprite n="TitleScreenForegroundLight.png" x="1536" y="1453" w="480" h="270"/>
+    <sprite n="TitleScreenRoofLight.png" x="1695" y="1725" w="203" h="144"/>
+</TextureAtlas>

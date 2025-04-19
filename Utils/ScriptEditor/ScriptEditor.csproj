@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
+    <RootNamespace>Engendro</RootNamespace>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <Nullable>enable</Nullable>
+    <ApplicationIcon>DeploymentDiagram(SubsystemMapper)_11298.ico</ApplicationIcon>
+    <Copyright>© 2022 Indiesruption.</Copyright>
+    <Version>2.0.0.0</Version>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <NeutralLanguage>en-US</NeutralLanguage>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Projects\Engendro\CodeContract.cs" Link="CodeContract.cs" />
+    <Compile Include="..\..\Projects\Engendro\Extensions\FloatExtensions.cs" Link="FloatExtensions.cs" />
+    <Compile Include="..\..\Projects\Engendro\Extensions\IntExtensions.cs" Link="IntExtensions.cs" />
+    <Compile Include="..\..\Projects\Engendro\INamedObject.cs" Link="INamedObject.cs" />
+    <Compile Include="..\..\Projects\Engendro\NamedObjectCollection.cs" Link="NamedObjectCollection.cs" />
+    <Compile Include="..\..\Projects\Engendro\NamedObjectCollectionHelper.cs" Link="NamedObjectCollectionHelper.cs" />
+    <Compile Include="..\..\Projects\Engendro\NamedObjectReadOnlyCollection.cs" Link="NamedObjectReadOnlyCollection.cs" />
+    <Compile Include="..\..\Projects\Engendro\XOREncryptor.cs" Link="XOREncryptor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DeploymentDiagram(SubsystemMapper)_11298.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="AppSettings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppSettings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Highlighting.xshd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="AppSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>AppSettings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+</Project>

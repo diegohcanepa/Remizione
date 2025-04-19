@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Strings>
+  <String Key="Actors.Edmund">Edmund Idle</String>
+  <String Key="Actors.Grandma">Sweet Grandma</String>
+  <String Key="Cycle.Indulgence">Indulgence</String>
+  <String Key="Cycle.Penance">Penance</String>
+  <String Key="InputBindings.Back">Back</String>
+  <String Key="InputBindings.Close">Close</String>
+  <String Key="InputBindings.Continue">Continue</String>
+  <String Key="InputBindings.Exit">Exit</String>
+  <String Key="InputBindings.NextDialog">Next</String>
+  <String Key="InputBindings.Select">Select</String>
+  <String Key="ItemActions.Examine">Examine</String>
+  <String Key="ItemActions.Upgrade">Upgrade</String>
+  <String Key="ItemCategory.Amulets">Amulets</String>
+  <String Key="ItemCategory.Consumables">Consumables</String>
+  <String Key="ItemCategory.KeyItems">Key items</String>
+  <String Key="ItemCategory.Skills">Skills</String>
+  <String Key="ItemCategory.Spells">Spells</String>
+  <String Key="ItemCategory.Throwables">Throwables</String>
+  <String Key="ItemEffects.DamageBonusEffect">Increase damage</String>
+  <String Key="Items.Cross.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
+  <String Key="Items.Cross.Name">Crucifix AA 3000</String>
+  <String Key="Languages.Abbreviations">Miss | Mr. | DR.</String>
+  <String Key="Languages.de-de">Deutsch</String>
+  <String Key="Languages.en-us">English</String>
+  <String Key="Languages.es-419">Español (Latino)</String>
+  <String Key="Languages.es-es">Español (España)</String>
+  <String Key="Languages.fr-fr">Français</String>
+  <String Key="Languages.ru-ru">Русский</String>
+  <String Key="Menu.Controls.Keyboard.Interact">Interact</String>
+  <String Key="Menu.Controls.Keyboard.Inventory">Inventory</String>
+  <String Key="Menu.Controls.Keyboard.Kick">Kick (when available)</String>
+  <String Key="Menu.Controls.Keyboard.Menu">Menu</String>
+  <String Key="Menu.Controls.Keyboard.Movement">Move</String>
+  <String Key="Menu.Controls.Keyboard.NavigateInventory">Navigate inventory</String>
+  <String Key="Menu.Controls.Keyboard.Run">Run (when available)</String>
+  <String Key="Menu.Controls.NintendoSwitch.Interact">Interact</String>
+  <String Key="Menu.Controls.NintendoSwitch.Inventory">Inventory</String>
+  <String Key="Menu.Controls.NintendoSwitch.Kick">Kick (when available)</String>
+  <String Key="Menu.Controls.NintendoSwitch.Menu">Menu</String>
+  <String Key="Menu.Controls.NintendoSwitch.Movement">Move</String>
+  <String Key="Menu.Controls.NintendoSwitch.NavigateInventory">Navigate inventory</String>
+  <String Key="Menu.Controls.NintendoSwitch.Run">Run (when available)</String>
+  <String Key="Menu.Controls.PlayStation4.Interact">Interact</String>
+  <String Key="Menu.Controls.PlayStation4.Inventory">Inventory</String>
+  <String Key="Menu.Controls.PlayStation4.Kick">Kick (when available)</String>
+  <String Key="Menu.Controls.PlayStation4.Menu">Menu</String>
+  <String Key="Menu.Controls.PlayStation4.Movement">Move</String>
+  <String Key="Menu.Controls.PlayStation4.NavigateInventory">Navigate inventory</String>
+  <String Key="Menu.Controls.PlayStation4.Run">Run (when available)</String>
+  <String Key="Menu.Controls.PlayStation5.Interact">Interact</String>
+  <String Key="Menu.Controls.PlayStation5.Inventory">Inventory</String>
+  <String Key="Menu.Controls.PlayStation5.Kick">Kick (when available)</String>
+  <String Key="Menu.Controls.PlayStation5.Menu">Menu</String>
+  <String Key="Menu.Controls.PlayStation5.Movement">Move</String>
+  <String Key="Menu.Controls.PlayStation5.NavigateInventory">Navigate inventory</String>
+  <String Key="Menu.Controls.PlayStation5.Run">Run (when available)</String>
+  <String Key="Menu.Controls.Windows.Interact">Interact</String>
+  <String Key="Menu.Controls.Windows.Inventory">Inventory</String>
+  <String Key="Menu.Controls.Windows.Kick">Kick (when available)</String>
+  <String Key="Menu.Controls.Windows.Menu">Menu</String>
+  <String Key="Menu.Controls.Windows.Movement">Move</String>
+  <String Key="Menu.Controls.Windows.NavigateInventory">Navigate inventory</String>
+  <String Key="Menu.Controls.Windows.Run">Run (when available)</String>
+  <String Key="Menu.Controls.XboxOne.Interact">Interact</String>
+  <String Key="Menu.Controls.XboxOne.Inventory">Inventory</String>
+  <String Key="Menu.Controls.XboxOne.Kick">Kick (when available)</String>
+  <String Key="Menu.Controls.XboxOne.Menu">Menu</String>
+  <String Key="Menu.Controls.XboxOne.Movement">Move</String>
+  <String Key="Menu.Controls.XboxOne.Run">Run (when available)</String>
+  <String Key="Menu.Items.Accept">OK</String>
+  <String Key="Menu.Items.Cancel">Cancel</String>
+  <String Key="Menu.Items.Credits">Credits</String>
+  <String Key="Menu.Items.Exit">Exit</String>
+  <String Key="Menu.Items.ExitToMainMenu">Exit to main menu</String>
+  <String Key="Menu.Items.No">No</String>
+  <String Key="Menu.Items.Options">Options</String>
+  <String Key="Menu.Items.Resume">Resume</String>
+  <String Key="Menu.Items.Start">Start</String>
+  <String Key="Menu.Items.WishlistNow">Wishlist now on Steam!</String>
+  <String Key="Menu.Items.Yes">Yes</String>
+  <String Key="Menu.Messages.AutoSaveAdvice">This game uses an autosave feature. Do not turn off the system when you see this icon on the screen.</String>
+  <String Key="Menu.Messages.BestExperienceAdvice">For a better experience, use headphones and turn off the lights.</String>
+  <String Key="Menu.Messages.ControllerAdvice">For the best experience, a controller is recommended.</String>
+  <String Key="Menu.Messages.ControllerDisconnected">Disconnected command</String>
+  <String Key="Menu.Messages.FullVersionRequired">This slot requires the full version of the game.</String>
+  <String Key="Menu.Messages.PressAnyButton">Press any button to continue</String>
+  <String Key="Menu.Messages.PressAnyKeyOrButton">Press any key or button to continue</String>
+  <String Key="Menu.Messages.SaveDataCorrupted">Save data has been deleted due to corrupted data.</String>
+  <String Key="Menu.Options.Ambient">Ambient sound:</String>
+  <String Key="Menu.Options.Audio">Audio</String>
+  <String Key="Menu.Options.Controls">Controls</String>
+  <String Key="Menu.Options.Fullscreen">Full screen:</String>
+  <String Key="Menu.Options.FX">Sound effects:</String>
+  <String Key="Menu.Options.Gamepad">Controller</String>
+  <String Key="Menu.Options.Gamepad.Gamepad">Command</String>
+  <String Key="Menu.Options.Keyboard">Keyboard</String>
+  <String Key="Menu.Options.Language">Language:</String>
+  <String Key="Menu.Options.Master">Main volume:</String>
+  <String Key="Menu.Options.Music">Background music:</String>
+  <String Key="Menu.Options.TextTyping">Text typing</String>
+  <String Key="Menu.Options.TextTypingSound">Text typing sound:</String>
+  <String Key="Menu.Options.Vibration">Vibration:</String>
+  <String Key="Menu.Slots.FullVersion">Full version</String>
+  <String Key="Menu.Slots.LastSave">Last save</String>
+  <String Key="Menu.Slots.NewGame">New Game</String>
+  <String Key="Menu.Slots.Title">Save slot</String>
+  <String Key="Menu.Titles.Audio">Audio</String>
+  <String Key="Menu.Titles.Controls">Controls</String>
+  <String Key="Menu.Titles.Options">Options</String>
+  <String Key="MessageBox.DeleteSlotConfirmation">Are you sure you want to delete the slot?</String>
+  <String Key="MessageBox.DeleteSlotConfirmation2">Do you confirm you want to delete the slot?</String>
+  <String Key="MessageBox.DeleteSlotWarning">Once deleted, the slot cannot be recovered.</String>
+  <String Key="MessageBox.ProgressWarning">Any unsaved progress will be lost.</String>
+  <String Key="MessageBox.ProgressWillBeSaved">Progress will be saved.</String>
+  <String Key="MessageBox.QuitToMenu">Quit to main menu?</String>
+  <String Key="MessageBox.SlotDeleted">The slot has been deleted.</String>
+  <String Key="MessageBox.Warning">Warning!</String>
+  <String Key="Messages.InventoryNoItemSelected">Select an item.</String>
+  <String Key="Messages.NoStamina">No stamina</String>
+  <String Key="Misc.And">and</String>
+  <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=</String>
+  <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
+  <String Key="Misc.Corpse">Corpse</String>
+  <String Key="Misc.Credits">Remizione
+
+Bla bla bla
+Bla bla bla
+
+Bla bla bla
+Bla bla bla
+
+Bla bla bla
+Bla bla bla
+
+Bla bla bla
+Bla bla bla
+
+Bla bla bla
+Bla bla bla
+
+Bla bla bla
+Bla bla bla</String>
+  <String Key="Misc.DisclaimerMessage">Some scenes and images may be disturbing. The following story is fictional and does not depict any real person or event.</String>
+  <String Key="Misc.DisclaimerTitle">WARNING</String>
+  <String Key="Misc.DollarSign">$</String>
+  <String Key="Misc.FP">Faith</String>
+  <String Key="Misc.GP">Grace points</String>
+  <String Key="Misc.HP">Willpower</String>
+  <String Key="Misc.Money">Money</String>
+  <String Key="Misc.Mute">Mute</String>
+  <String Key="Misc.No">No</String>
+  <String Key="Misc.Progress">Progress</String>
+  <String Key="Misc.SelectSlot">Select slot</String>
+  <String Key="Misc.Sins">SINS</String>
+  <String Key="Misc.Stamina">Stamina</String>
+  <String Key="Misc.Unknown">???</String>
+  <String Key="Misc.Yes">Yes</String>
+  <String Key="Misc.YouAreDead">YOU'RE DEAD.</String>
+  <String Key="Nouns.Cross">Cross</String>
+  <String Key="Platforms.NintendoSwitch.Messages.ControllerDisconnected">Please reconnect your Joy-Con™ to continue.</String>
+  <String Key="Platforms.NintendoSwitch.Messages.PressAnyButton">Press any button to continue</String>
+  <String Key="Platforms.NintendoSwitch.Messages.PressAnyKeyOrButton">Press any key or button to continue</String>
+  <String Key="Platforms.PlayStation4.Messages.ControllerDisconnected">Please reconnect your controller to continue.</String>
+  <String Key="Platforms.PlayStation4.Messages.ControllerDisconnectedShort">CONTROLLER DISCONNECTED</String>
+  <String Key="Platforms.PlayStation4.Messages.PressAnyButton">Press any button to continue</String>
+  <String Key="Platforms.PlayStation4.Messages.PressAnyKeyOrButton">Press any key or button to continue</String>
+  <String Key="Platforms.PlayStation5.Messages.ControllerDisconnected">Please reconnect your controller to continue.</String>
+  <String Key="Platforms.PlayStation5.Messages.ControllerDisconnectedShort">CONTROLLER DISCONNECTED</String>
+  <String Key="Platforms.PlayStation5.Messages.PressAnyButton">Press any button to continue</String>
+  <String Key="Platforms.PlayStation5.Messages.PressAnyKeyOrButton">Press any key or button to continue</String>
+  <String Key="Platforms.Windows.Messages.ControllerDisconnected">Please reconnect your controller to continue.</String>
+  <String Key="Platforms.Windows.Messages.ControllerDisconnectedShort">CONTROLLER DISCONNECTED</String>
+  <String Key="Platforms.Windows.Messages.PressAnyButton">Press any button to continue.</String>
+  <String Key="Platforms.Windows.Messages.PressAnyKeyOrButton">Press any key or button to continue.</String>
+  <String Key="Platforms.XboxOne.Messages.ChangeUser">Change active user</String>
+  <String Key="Platforms.XboxOne.Messages.ControllerDisconnected">Please reconnect your controller to continue.</String>
+  <String Key="Platforms.XboxOne.Messages.ControllerDisconnectedShort">CONTROLLER DISCONNECTED</String>
+  <String Key="Platforms.XboxOne.Messages.PressAnyButton">Press any button to continue</String>
+  <String Key="Platforms.XboxOne.Messages.PressAnyKeyOrButton">Press any key or button to continue</String>
+  <String Key="Platforms.XboxOne.Messages.SignInUser">Connect</String>
+  <String Key="Platforms.XboxSeries.Messages.ChangeUser">Change active user</String>
+  <String Key="Platforms.XboxSeries.Messages.ControllerDisconnected">Please reconnect your controller to continue.</String>
+  <String Key="Platforms.XboxSeries.Messages.ControllerDisconnectedShort">CONTROLLER DISCONNECTED</String>
+  <String Key="Platforms.XboxSeries.Messages.PressAnyButton">Press any button to continue</String>
+  <String Key="Platforms.XboxSeries.Messages.PressAnyKeyOrButton">Press any key or button to continue</String>
+  <String Key="Platforms.XboxSeries.Messages.SignInUser">Connect</String>
+  <String Key="Playtime.Hour">hour</String>
+  <String Key="Playtime.Hours">hours</String>
+  <String Key="Playtime.LessThanAMinute">Less than a minute</String>
+  <String Key="Playtime.Minute">minute</String>
+  <String Key="Playtime.Minutes">minutes</String>
+</Strings>
