@@ -8,44 +8,71 @@ namespace Remizione
     /// </summary>
     public sealed class WorldBlockGrid
     {
-        private readonly int columns;
         private readonly bool[,] occupied;
-        private readonly int rows;
-        private const float usagePercent = .9f;
+        private const float usagePercent = .7f;
+
+        #region Constructor
 
         // Constructor
-        public WorldBlockGrid(WorldBlock block)
+        public WorldBlockGrid(Size blockSize)
         {
             // Maximum cells (without margin)
-            int totalColumns = ((int)block.BoundingBox.Width + CellSize - 1) / CellSize;
-            int totalRows = ((int)block.BoundingBox.Height + CellSize - 1) / CellSize;
+            int totalColumns = ((int) blockSize.Width + CellSize - 1) / CellSize;
+            int totalRows = ((int)blockSize.Height + CellSize - 1) / CellSize;
 
             // Maximum cells (with margin)
-            columns = (int)(totalColumns * usagePercent);
-            rows = (int)(totalRows * usagePercent);
+            ColCount = (int)(totalColumns * usagePercent);
+            RowCount = (int)(totalRows * usagePercent);
 
             // Margin
-            OffsetX = (totalColumns - columns) / 2;
-            OffsetY = (totalRows - rows) / 2;
+            OffsetX = (totalColumns - ColCount) / 2;
+            OffsetY = (totalRows - RowCount) / 2;
 
-            occupied = new bool[columns, rows];
+            occupied = new bool[ColCount, RowCount];
         }
 
+        #endregion
+
+        #region Private fields
+
+        // CanFitAt
+        private bool CanFitAt(int startCol, int startRow, Size required)
+        {
+            if (startCol < 0 || startRow < 0 || startCol + required.Width > ColCount || startRow + required.Height > RowCount)
+                return false;
+
+            for (int dx = 0; dx < required.Width; dx++)
+            {
+                for (int dy = 0; dy < required.Height; dy++)
+                {
+                    if (occupied[startCol + dx, startRow + dy])
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
+        #endregion
+
         // CellSize
-        public const int CellSize = 10;
+        public const int CellSize = 20;
+
+        // ColCount
+        public int ColCount { get; }
 
         // GetWorldPosition
-        public Point GetWorldPosition(int col, int row)
+        public Vector2 GetWorldPosition(int col, int row)
         {
             int x = (OffsetX + col) * CellSize;
             int y = (OffsetY + row) * CellSize;
-            return new Point(x, y);
+            return new(x, y);
         }
 
         // IsCellFree
         public bool IsCellFree(int col, int row)
         {
-            return col >= 0 && col < columns && row >= 0 && row < rows && !occupied[col, row];
+            return col >= 0 && col < ColCount && row >= 0 && row < RowCount && !occupied[col, row];
         }
 
         // OffsetX
@@ -55,24 +82,27 @@ namespace Remizione
         public int OffsetY { get; }
 
         // MarkOccupied
-        public void MarkOccupied(int startCol, int startRow, int width, int height)
+        public void MarkOccupied(int startCol, int startRow, Size size)
         {
-            for (int x = startCol; x < startCol + width; x++)
+            for (int x = startCol; x < startCol + size.Width; x++)
             {
-                for (int y = startRow; y < startRow + height; y++)
+                for (int y = startRow; y < startRow + size.Height; y++)
                 {
-                    if (x >= 0 && x < columns && y >= 0 && y < rows)
+                    if (x >= 0 && x < ColCount && y >= 0 && y < RowCount)
                         occupied[x, y] = true;
                 }
             }
         }
 
+        // RowCount
+        public int RowCount { get; }
+
         // TryReserveSpace
         public bool TryReserveSpace(Size required, out int col, out int row)
         {
-            for (int x = 0; x <= columns - required.Width; x++)
+            for (int x = 0; x <= ColCount - required.Width; x++)
             {
-                for (int y = 0; y <= rows - required.Height; y++)
+                for (int y = 0; y <= RowCount - required.Height; y++)
                 {
                     bool fits = true;
 
@@ -91,7 +121,7 @@ namespace Remizione
                     if (fits)
                     {
                         // Reservar el espacio
-                        MarkOccupied(x, y, required.Width, required.Height);
+                        MarkOccupied(x, y, required);
                         col = x;
                         row = y;
                         return true;
@@ -100,6 +130,24 @@ namespace Remizione
             }
 
             // No se encontró espacio
+            col = -1;
+            row = -1;
+            return false;
+        }
+
+        // TryReserveSpace
+        public bool TryReserveSpace(Size required, out int col, out int row, int suggestedCol, int suggestedRow)
+        {
+            // Primero intenta colocar en la celda sugerida
+            if (CanFitAt(suggestedCol, suggestedRow, required))
+            {
+                MarkOccupied(suggestedCol, suggestedRow, required);
+                col = suggestedCol;
+                row = suggestedRow;
+                return true;
+            }
+
+            // Si no entra en la sugerida, simplemente falla (versión más directa)
             col = -1;
             row = -1;
             return false;

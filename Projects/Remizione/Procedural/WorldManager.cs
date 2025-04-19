@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Engendro;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,13 +21,12 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public WorldManager(GameSession session, int blockWidth, int blockHeight, int gridSize)
+        public WorldManager(GameSession session, Size blockSize, int gridSize)
         {
-            Session = session;
-            Blocks = new(blockList);
-            BlockWidth = blockWidth;
-            BlockHeight = blockHeight;
-            GridSize = gridSize;
+            this.Session = session;
+            this.Blocks = new(blockList);
+            this.BlockSize = blockSize;
+            this.GridSize = gridSize;
         }
 
         #endregion
@@ -195,7 +195,7 @@ namespace Remizione
         #endregion
 
         // AddBlock
-        public WorldBlock AddBlock(Point gridPosition)
+        public WorldBlock AddBlock(Point gridPosition, bool populate)
         {
             if (!IsValidPosition(gridPosition))
                 throw new InvalidOperationException("Grid position is out of bounds.");
@@ -203,21 +203,18 @@ namespace Remizione
             if (blocks.ContainsKey(gridPosition))
                 throw new InvalidOperationException("Grid position is already used.");
 
-            var block = new WorldBlock(this, gridPosition);
+            var block = new WorldBlock(this, gridPosition, populate);
             blocks[gridPosition] = block;
             blockList.Add(block);
 
             return block;
         }
 
-        // BlockHeight
-        public int BlockHeight { get; }
-
         // Blocks
         public ReadOnlyCollection<WorldBlock> Blocks { get; }
 
-        // BlockWidth
-        public int BlockWidth { get; }
+        // BlockSize
+        public Size BlockSize { get; }
 
         // GetBlockFromGrid
         public WorldBlock? GetBlockFromGrid(Point gridPosition)
@@ -229,7 +226,7 @@ namespace Remizione
         // GetBlockFromScreen
         public WorldBlock? GetBlockFromScreen(Vector2 screenPosition)
         {
-            var gridPosition = new Point((int)(screenPosition.X / BlockWidth), (int)(screenPosition.Y / BlockHeight));
+            var gridPosition = new Point((int)(screenPosition.X / BlockSize.Width), (int)(screenPosition.Y / BlockSize.Height));
             blocks.TryGetValue(gridPosition, out var block);
             return block;
         }

@@ -7,7 +7,6 @@ using Remizione.Scenes;
 using Remizione.Scripting;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 
@@ -21,12 +20,13 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly List<Prop> allStaticProps = [];
+        private enum AttributeName { RandomSeed }
         private readonly ScriptConsole? console;
         private readonly InventoryScene inventoryScene;
         private Actor? player;
         private Vector2? playerPosition;
         private readonly RoomEditor? roomEditor;
+        private readonly Dictionary<PropInstantiationPhase, List<Prop>> staticProps = [];
 
         #endregion
 
@@ -39,7 +39,8 @@ namespace Remizione
             this.Game = game;
             this.HUD = new HUD(this);
             this.Environment = new Environment();
-            this.AllStaticProps = new(allStaticProps);
+            this.RandomSeed = RandomSeed = System.Environment.TickCount;
+            this.Random = new Random(RandomSeed);
 
             ObjectPools = new ObjectPools(this);
             OverlayTexts = new OverlayTextManager(game);
@@ -65,6 +66,25 @@ namespace Remizione
             this.inventoryScene = new(this);
 
             LocalizationSource = LocalizationSource.Script;
+        }
+
+        #endregion
+
+        #region Private members
+
+        // ComparePropSizeDescending
+        private static int ComparePropSizeDescending(Prop? a, Prop? b)
+        {
+            if (a == null && b == null) return 0;
+            if (a == null) return 1;
+            if (b == null) return -1;
+
+            Size sizeA = a.GetRequiredGridSpace(WorldBlockGrid.CellSize);
+            Size sizeB = b.GetRequiredGridSpace(WorldBlockGrid.CellSize);
+            int areaA = sizeA.Width * sizeA.Height;
+            int areaB = sizeB.Width * sizeB.Height;
+
+            return areaB - areaA;
         }
 
         #endregion
@@ -170,10 +190,25 @@ namespace Remizione
         // OnInitializeEntities
         protected override void OnInitializeEntities()
         {
+            // Add dictionary entries
+            if (staticProps.Count == 0)
+            {
+                foreach (var phase in Enum.GetValues<PropInstantiationPhase>())
+                {
+                    staticProps.Add(phase, new());
+                }
+            }
+
+            // Distribute entities
             foreach (var entity in Entities)
             {
                 if (entity is Prop prop)
-                    allStaticProps.Add(prop);
+                    staticProps[prop.InstantiationPhase].Add(prop);
+            }
+
+            foreach (var phase in Enum.GetValues<PropInstantiationPhase>())
+            {
+                staticProps[phase].Sort(ComparePropSizeDescending);
             }
         }
 
@@ -214,6 +249,13 @@ namespace Remizione
             // Player position
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
                 playerPosition = XmlConverterExtension.ToVector2(playerPositionValue);
+
+            // RandomSeed
+            if (sessionNode.Attributes[AttributeName.RandomSeed.ToString()]?.Value is string randomSeedValue)
+            {
+                RandomSeed = XmlConvert.ToInt32(randomSeedValue);
+                Random = new Random(RandomSeed);
+            }
 
             // SelectedItemCategory
             if (sessionNode.Attributes[nameof(SelectedItemCategory)]?.Value is string selectedItemCategoryValue)
@@ -302,14 +344,14 @@ namespace Remizione
             if (playerPosition.HasValue)
                 output.WriteAttributeString(nameof(playerPosition), XmlConverterExtension.ToString(playerPosition.Value));
 
+            // RandomSeed
+            output.WriteAttributeString(AttributeName.RandomSeed.ToString(), XmlConvert.ToString(RandomSeed));
+
             // SelectedItemCategory
             output.WriteAttributeString(nameof(SelectedItemCategory), XmlConvert.ToString((int)SelectedItemCategory));
         }
 
         #endregion
-
-        // AllStaticProps
-        public ReadOnlyCollection<Prop> AllStaticProps { get; }
 
         // ClearOverlayTexts
         [ScriptMethod(CodingContext.Any)]
@@ -374,7 +416,10 @@ namespace Remizione
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
 
         // Random
-        public Random Random { get; } = new Random(System.Environment.TickCount);
+        public Random Random { get; private set; }
+
+        // RandomSeed
+        public int RandomSeed { get; private set; }
 
         // RestorePlayerPosition
         [ScriptMethod]
@@ -413,5 +458,13 @@ namespace Remizione
             Camera.FocusTarget();
         }
 
+        // GetStaticProps
+        public IEnumerable<Prop> GetStaticProps(PropInstantiationPhase phase)
+        {
+            foreach (var prop in staticProps[phase])
+            {
+                yield return prop;
+            }
+        }
     }
 }

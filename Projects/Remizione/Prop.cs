@@ -13,15 +13,20 @@ namespace Remizione
     public class Prop : GameThing
     {
         private readonly List<PropInstantiationCondition> conditions = [];
+        private PropInstantiationPhase instantiationPhase;
+        private bool instantiationPhaseDefined;
         private bool isRevealBoxDirty;
         private RectangleF revealBox;
         private readonly FloatTween revealTween = new();
         private readonly ImageSprite shadow;
 
+        #region Protected members
+
         // Constructor
         public Prop(GameSession session, string name)
             : base(session, name)
         {
+            this.Atlas = Atlases.Environment;
             this.Conditions = new(conditions);
 
             // Shadow
@@ -32,6 +37,8 @@ namespace Remizione
             };
 
         }
+
+        #endregion
 
         #region Private members
 
@@ -79,6 +86,14 @@ namespace Remizione
         // OnDrawShadow
         protected override void OnDrawShadow(GameTime gameTime) => shadow.Draw(gameTime);
 
+        // OnInitialize
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+            if (!instantiationPhaseDefined)
+                throw new InvalidOperationException("Prop instantiation phase is not set.");
+        }
+
         // OnLoad
         protected override void OnLoad()
         {
@@ -124,6 +139,29 @@ namespace Remizione
             int height = (int)Math.Ceiling(bbox.Height / cellSize);
 
             return new Size(width, height);
+        }
+
+        // DistributionStrategy
+        [ScriptProperty(CodingContext.EntityDeclaration)]
+        public PropDistributionStrategy DistributionStrategy { get; set; }
+        
+        // InstancesPerBlock
+        [ScriptProperty(CodingContext.EntityDeclaration)]
+        public Int32Range InstancesPerBlock { get; set; } = new Int32Range(1);
+
+        // InstantiationPhase
+        [ScriptProperty(CodingContext.EntityDeclaration)]
+        public PropInstantiationPhase InstantiationPhase
+        {
+            get => instantiationPhase;
+            set
+            {
+                if (instantiationPhaseDefined)
+                    throw new InvalidOperationException("Prop instantiation phase cannot be changed.");
+
+                instantiationPhaseDefined = true;
+                instantiationPhase = value;
+            }
         }
 
         // IsAvailable

@@ -1,4 +1,5 @@
-﻿using EngendroAdventure.Scripting;
+﻿using Engendro;
+using EngendroAdventure.Scripting;
 
 namespace Remizione
 {
@@ -13,7 +14,7 @@ namespace Remizione
         {
             AtlasName = string.Empty;
             LightingSystem = false;
-            WorldManager = new WorldManager(session, Screen.NativeWidth, Screen.NativeHeight, 101);
+            WorldManager = new WorldManager(session, new Size(Screen.NativeWidth, Screen.NativeHeight), 101);
         }
 
         // Regenerate
@@ -22,8 +23,8 @@ namespace Remizione
             Children.Clear();
             RemoveWalkArea("");
 
-            CustomWidth = WorldManager.GridSize * WorldManager.BlockWidth;
-            CustomHeight = WorldManager.GridSize * WorldManager.BlockHeight;
+            CustomWidth = WorldManager.GridSize * WorldManager.BlockSize.Width;
+            CustomHeight = WorldManager.GridSize * WorldManager.BlockSize.Height;
 
             // Define walk area
             var vertices = WorldManager.GetWalkareaVertices();
@@ -38,6 +39,9 @@ namespace Remizione
                     Children.Add(prop);
                 }
             }
+
+            if (Session.Player != null)
+                Children.Add(Session.Player);
         }
 
         #region Protected members
@@ -48,7 +52,7 @@ namespace Remizione
             base.OnInitialize();
 
             if (Session.IsNewSession)
-                WorldManager.AddBlock(new(WorldManager.GridSize / 2));
+                WorldManager.AddBlock(new(WorldManager.GridSize / 2), true);
 
             Regenerate();
         }

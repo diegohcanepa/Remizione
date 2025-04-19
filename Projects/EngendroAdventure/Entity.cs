@@ -143,9 +143,7 @@ namespace EngendroAdventure
             if (!Session.IsInitializing && !child.Persistent)
             {
                 if (!unparentList.Contains(child))
-                {
                     unparentList.Add(child);
-                }
             }
         }
 
@@ -298,6 +296,9 @@ namespace EngendroAdventure
             set => Sprite.OpacityFactor = value;
         }
 
+        // RequiresPersistence
+        protected virtual bool RequiresPersistence => false;
+
         // Sprite
         protected AnimatedSprite Sprite { get; }
 
@@ -310,6 +311,9 @@ namespace EngendroAdventure
         {
             if (!isInitialized)
             {
+                if (RequiresPersistence && !Persistent)
+                    throw new InvalidOperationException($"Entity '{Name}' must be persistent.");
+
                 isInitialized = true;
                 OnInitialize();
             }

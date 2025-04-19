@@ -15,9 +15,7 @@ namespace EngendroAdventure
         internal static void SetValue(PropertyInfo propertyInfo, Entity entity, string? value)
         {
             if (!propertyInfo.CanWrite)
-            {
                 return;
-            }
 
             // Bool
             if (propertyInfo.PropertyType == typeof(bool))
@@ -117,9 +115,7 @@ namespace EngendroAdventure
         internal static void Deserialize(PersistentProperty persistentProperty, Entity entity, XmlNode entityXmlNode)
         {
             if (entityXmlNode.Attributes?[persistentProperty.Name]?.Value is string attributeValue)
-            {
                 SetValue(persistentProperty.PropertyInfo, entity, attributeValue);
-            }
         }
 
         // Serialize
@@ -130,17 +126,13 @@ namespace EngendroAdventure
             var propValue = propertyInfo.GetValue(obj);
 
             if (propValue == null)
-            {
                 return;
-            }
 
             // Bool
             if (propertyInfo.PropertyType == typeof(bool))
             {
                 if (propValue is bool value)
-                {
                     output.WriteAttributeString(storageName, XmlConvert.ToString(value));
-                }
 
                 return;
             }
@@ -149,9 +141,7 @@ namespace EngendroAdventure
             if (propertyInfo.PropertyType == typeof(Color))
             {
                 if (propValue is Color value)
-                {
                     output.WriteAttributeString(storageName, XmlConverterExtension.ToString(value));
-                }
 
                 return;
             }
@@ -160,9 +150,7 @@ namespace EngendroAdventure
             if (typeof(Entity).IsAssignableFrom(propertyInfo.PropertyType))
             {
                 if (propValue is Entity entity && entity.Persistent)
-                {
                     output.WriteAttributeString(storageName, entity != null ? entity.Name : string.Empty);
-                }
 
                 return;
             }
@@ -178,9 +166,7 @@ namespace EngendroAdventure
             if (propertyInfo.PropertyType == typeof(int))
             {
                 if (propValue is int value)
-                {
                     output.WriteAttributeString(storageName, XmlConvert.ToString(value));
-                }
 
                 return;
             }
@@ -189,9 +175,7 @@ namespace EngendroAdventure
             if (propertyInfo.PropertyType == typeof(long))
             {
                 if (propValue is long value)
-                {
                     output.WriteAttributeString(storageName, XmlConvert.ToString(value));
-                }
 
                 return;
             }
@@ -200,9 +184,7 @@ namespace EngendroAdventure
             if (propertyInfo.PropertyType == typeof(Polygon))
             {
                 if (propValue is Polygon polygon)
-                {
                     output.WriteAttributeString(storageName, XmlConverterExtension.ToString(polygon));
-                }
 
                 return;
             }
@@ -211,9 +193,7 @@ namespace EngendroAdventure
             if (propertyInfo.PropertyType == typeof(Rectangle))
             {
                 if (propValue is Rectangle value)
-                {
                     output.WriteAttributeString(storageName, XmlConverterExtension.ToString(value));
-                }
 
                 return;
             }
@@ -222,9 +202,7 @@ namespace EngendroAdventure
             if (propertyInfo.PropertyType == typeof(RectangleF))
             {
                 if (propValue is RectangleF value)
-                {
                     output.WriteAttributeString(storageName, XmlConverterExtension.ToString(value));
-                }
 
                 return;
             }
@@ -233,9 +211,7 @@ namespace EngendroAdventure
             if (propertyInfo.PropertyType == typeof(float))
             {
                 if (propValue is float value)
-                {
                     output.WriteAttributeString(storageName, XmlConvert.ToString(value));
-                }
 
                 return;
             }
@@ -244,9 +220,7 @@ namespace EngendroAdventure
             if (propertyInfo.PropertyType == typeof(string))
             {
                 if (propValue is string value && value.Length > 0)
-                {
                     output.WriteAttributeString(storageName, value ?? string.Empty);
-                }
 
                 return;
             }
@@ -255,9 +229,7 @@ namespace EngendroAdventure
             if (propertyInfo.PropertyType == typeof(TimeSpan))
             {
                 if (propValue is TimeSpan value)
-                {
                     output.WriteAttributeString(storageName, XmlConvert.ToString(value));
-                }
 
                 return;
             }
@@ -266,9 +238,7 @@ namespace EngendroAdventure
             if (propertyInfo.PropertyType == typeof(Vector2))
             {
                 if (propValue is Vector2 value)
-                {
                     output.WriteAttributeString(storageName, XmlConverterExtension.ToString(value));
-                }
 
                 return;
             }
