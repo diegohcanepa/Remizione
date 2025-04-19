@@ -27,7 +27,6 @@ namespace Remizione
             BlockWidth = blockWidth;
             BlockHeight = blockHeight;
             GridSize = gridSize;
-            RandomSeed = session.RandomSeed;
         }
 
         #endregion
@@ -251,9 +250,6 @@ namespace Remizione
 
         // GridSize
         public int GridSize { get; }
-
-        // RandomSeed
-        public int RandomSeed { get; set; }
 
         // Session
         public GameSession Session { get; }

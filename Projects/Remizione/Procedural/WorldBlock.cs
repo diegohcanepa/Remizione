@@ -1,5 +1,6 @@
 ﻿using EngendroAdventure;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -12,13 +13,21 @@ namespace Remizione
     {
         private readonly WorldBlockGrid grid;
         private readonly List<Prop> props = [];
+        private readonly List<WorldBlockTag> tags = [];
+
+        #region Constructor
 
         // Constructor
         public WorldBlock(WorldManager manager, Point worldGridPosition)
             : base(manager.Session, string.Empty)
         {
+            this.grid = new WorldBlockGrid(this);
+            this.Props = new(props);
+            this.Tags = new(tags);
+
+            AssignTags();
+
             Index = manager.Blocks.Count;
-            RandomSeed = GetSeed(manager.RandomSeed, Index);
             Atlas = Atlases.Environment;
             Manager = manager;
             WorldGridPosition = worldGridPosition;
@@ -26,32 +35,45 @@ namespace Remizione
             RenderLayer = RenderLayer.Background;
             Position = new(worldGridPosition.X * BlockWidth, worldGridPosition.Y * BlockHeight);
             DefaultImageName = "TerrainBlockDefault";
-            this.grid = new WorldBlockGrid(this);
+          
 
-            this.Props = new(props);
-
-            if (Session.CreateDynamicThing("CrossLargeA") is Prop prop)
+            if (CreateDynamicProp("CrossLargeA") is Prop prop)
             {
                 prop.Position = BoundingBox.Center;
                 props.Add(prop);
             }
         }
 
+        #endregion
+
         #region Private fields
 
-        // GetSeed
-        private static int GetSeed(int seed, int salt)
+        // AssignTags
+        private void AssignTags()
         {
-            uint h = (uint)seed;
+        }
+
+        // CreateDynamicProp
+        private Prop CreateDynamicProp(string staticName)
+        {
+            var result = Session.CreateDynamicThing(staticName, $"{staticName}*{Index}_{props.Count}") as Prop;
+            if (result == null)
+                throw new InvalidOperationException($"Failed to create dynamic prop '{staticName}'.");
+
+            return result;
+        }
+
+        // GetAvailableProps
+        private List<Prop> GetAvailableProps()
+        {
+            var result = new List<Prop>();
             
-            h ^= (uint)salt * 0x9E3779B9; // número dorado (Knuth)
-            h ^= h >> 16;
-            h *= 0x85EBCA6B;
-            h ^= h >> 13;
-            h *= 0xC2B2AE35;
-            h ^= h >> 16;
-            
-            return (int)h;
+            for (int i = 0; i < Session.AllStaticProps.Count; i++)
+            {
+                if (Session.AllStaticProps[i].IsAvailable(this))
+                    result.Add(Session.AllStaticProps[i]);
+            }
+            return result;
         }
 
         #endregion
@@ -126,8 +148,8 @@ namespace Remizione
         // Props
         public ReadOnlyCollection<Prop> Props { get; }
 
-        // RandomSeed
-        public int RandomSeed { get; }
+        // Tags
+        public ReadOnlyCollection<WorldBlockTag> Tags { get; }
 
         // WorldGridPosition
         public Point WorldGridPosition { get; }

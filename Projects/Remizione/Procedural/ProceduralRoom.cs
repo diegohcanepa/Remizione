@@ -1,5 +1,4 @@
 ﻿using EngendroAdventure.Scripting;
-using Microsoft.Xna.Framework;
 
 namespace Remizione
 {
@@ -14,7 +13,7 @@ namespace Remizione
         {
             AtlasName = string.Empty;
             LightingSystem = false;
-            WorldManager = new WorldManager(session, Screen.NativeWidth, Screen.NativeHeight, 101);          
+            WorldManager = new WorldManager(session, Screen.NativeWidth, Screen.NativeHeight, 101);
         }
 
         // Regenerate
@@ -29,7 +28,7 @@ namespace Remizione
             // Define walk area
             var vertices = WorldManager.GetWalkareaVertices();
             AddWalkArea("", vertices);
-                
+
             // Add existing blocks
             for (var i = 0; i < WorldManager.Blocks.Count; i++)
             {

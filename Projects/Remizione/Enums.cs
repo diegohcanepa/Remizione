@@ -127,4 +127,7 @@ namespace Remizione
 
     // VolumeCategory
     public enum VolumeCategory { Ambient, FX, Music, Voice, Master }
+
+    // WorldBlockTag
+    public enum WorldBlockTag { Dark }
 }

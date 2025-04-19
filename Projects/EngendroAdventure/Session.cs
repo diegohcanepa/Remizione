@@ -578,6 +578,11 @@ namespace EngendroAdventure
                 return base.OnHandleInput(gameTime);
         }
 
+        // OnInitializeEntities
+        protected virtual void OnInitializeEntities()
+        {
+        }
+
         // OnOutcome
         protected virtual void OnOutcome(Thing target)
         {
@@ -784,7 +789,7 @@ namespace EngendroAdventure
         public int Chapter { get; set; }
 
         // CreateDynamicThing
-        public Thing CreateDynamicThing(string staticName) => ScriptEnvironment.CreateDynamicThing(staticName, false);
+        public Thing CreateDynamicThing(string staticName, string instanceName) => ScriptEnvironment.CreateDynamicThing(staticName, instanceName, false);
 
         // CreateFlagCondition
         public FlagCondition CreateFlagCondition(IList<string> flags)
@@ -1139,6 +1144,8 @@ namespace EngendroAdventure
 
                 State = GameSessionState.Idle;
             }
+
+            OnInitializeEntities();
 
             for (var i = 0; i < Entities.Count; i++)
             {

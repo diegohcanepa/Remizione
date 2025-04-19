@@ -456,7 +456,7 @@ namespace EngendroAdventure.Scripting
         // CreateEntity
         internal Entity CreateEntity()
         {
-            if (string.IsNullOrWhiteSpace(ClassName) || string.IsNullOrWhiteSpace(EntityName))
+            if (string.IsNullOrWhiteSpace(ClassName))// || string.IsNullOrWhiteSpace(EntityName))
                 throw new InvalidOperationException();
 
             var entityName = EntityName;

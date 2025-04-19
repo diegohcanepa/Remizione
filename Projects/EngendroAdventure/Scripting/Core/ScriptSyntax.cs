@@ -52,9 +52,7 @@ namespace EngendroAdventure.Scripting
         public static string GetStaticName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
-            {
                 return name;
-            }
 
             var index = name.IndexOf(DynamicSuffix, StringComparison.OrdinalIgnoreCase);
             if (index != -1)
@@ -87,25 +85,16 @@ namespace EngendroAdventure.Scripting
         }
 
         // IsDynamicName
-        public static bool IsDynamicName(string name)
-        {
-            return name.Contains(DynamicSuffix);
-        }
+        public static bool IsDynamicName(string name) => name.Contains(DynamicSuffix);
 
         // IsNumericType
-        public static bool IsNumericType(Type type)
-        {
-            return SupportedNumericTypes.Contains(type);
-        }
+        public static bool IsNumericType(Type type) => SupportedNumericTypes.Contains(type);
 
         // IsOp
         public const string IsOp = "is";
 
         // IsRuntimeName
-        public static bool IsRuntimeName(string name)
-        {
-            return name.Contains(RuntimeNameSuffix);
-        }
+        public static bool IsRuntimeName(string name) => name.Contains(RuntimeNameSuffix);
 
         // IsSessionMemberReference
         public static bool IsSessionMemberReference(string value)

@@ -46,18 +46,21 @@ namespace EngendroAdventure.Scripting
         }
 
         // CreateDynamicThingCore
-        private Thing? CreateDynamicThingCore(string typeName, string instanceName)
+        private Thing? CreateDynamicThingCore(string staticName, string instanceName)
         {
             CodeContract.NotDisposed(nameof(Session), session.IsDisposed);
+
+            if (!ScriptSyntax.IsDynamicName(instanceName))
+                throw new InvalidOperationException($"'{instanceName}' must contains the dynamic identifier (*).");
 
             IsCreatingDynamicEntity = true;
 
             // Get declaration script from library
-            var declarationScript = session.ScriptLibrary.GetScript(ScriptType.Thing, typeName) ?? throw new InvalidOperationException($"There is no declaration script for '{typeName}'.");
+            var declarationScript = session.ScriptLibrary.GetScript(ScriptType.Thing, staticName) ?? throw new InvalidOperationException($"There is no declaration script for '{staticName}'.");
 
             // Check if thing is instantiable
             if (!declarationScript.Instantiable)
-                throw new InvalidOperationException($"'{typeName}' is not instantiable.");
+                throw new InvalidOperationException($"'{staticName}' is not instantiable.");
 
             if (declarationScript.Persistent && ScriptSyntax.IsRuntimeName(instanceName))
                 throw new InvalidOperationException($"Cannot create persistent entities at runtime.");
@@ -74,8 +77,8 @@ namespace EngendroAdventure.Scripting
             return result;
         }
 
-        // CreateInternalEntityName
-        private string CreateInternalEntityName(string typeName)
+        // CreateDynamicEntityName
+        private string CreateDynamicEntityName(string typeName)
         {
             var counter = 1;
             while (true)
@@ -171,17 +174,18 @@ namespace EngendroAdventure.Scripting
         }
 
         // CreateDynamicThing
-        internal Thing CreateDynamicThing(string name, bool persistent)
+        internal Thing CreateDynamicThing(string staticName, string instanceName, bool persistent)
         {
             if (session.State == GameSessionState.Uninitialized)
                 throw new InvalidOperationException("Game session not initialized.");
 
-            //if (session.ScriptLibrary.CompilationPhase != CompilationPhase.Instantiation)
-              //  throw new InvalidOperationException();
+            if (session.State != GameSessionState.Idle && session.ScriptLibrary.CompilationPhase != CompilationPhase.Instantiation)
+                throw new InvalidOperationException();
 
-            var typeName = ScriptSyntax.GetStaticName(name);
-            var instanceName = !ScriptSyntax.IsDynamicName(name) ? CreateInternalEntityName(typeName) : name;
-            var result = CreateDynamicThingCore(typeName, instanceName) ?? throw new InvalidOperationException("Cannot create dynamic entity.");
+            if (string.IsNullOrWhiteSpace(instanceName))
+                instanceName = CreateDynamicEntityName(staticName);
+
+            var result = CreateDynamicThingCore(staticName, instanceName) ?? throw new InvalidOperationException("Cannot create dynamic entity.");
             
             if (persistent)
                 result.Persistent = persistent;

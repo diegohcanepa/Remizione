@@ -2,6 +2,8 @@
 using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -10,6 +12,7 @@ namespace Remizione
     /// </summary>
     public class Prop : GameThing
     {
+        private readonly List<PropInstantiationCondition> conditions = [];
         private bool isRevealBoxDirty;
         private RectangleF revealBox;
         private readonly FloatTween revealTween = new();
@@ -19,6 +22,8 @@ namespace Remizione
         public Prop(GameSession session, string name)
             : base(session, name)
         {
+            this.Conditions = new(conditions);
+
             // Shadow
             this.shadow = new ImageSprite(session.Game)
             {
@@ -102,6 +107,9 @@ namespace Remizione
 
         #endregion
 
+        // Conditions
+        public ReadOnlyCollection<PropInstantiationCondition> Conditions { get; }
+
         // GetRequiredGridSpace
         public Size GetRequiredGridSpace(int cellSize)
         {
@@ -116,7 +124,19 @@ namespace Remizione
             int height = (int)Math.Ceiling(bbox.Height / cellSize);
 
             return new Size(width, height);
-       }
+        }
+
+        // IsAvailable
+        public bool IsAvailable(WorldBlock worldBlock)
+        {
+            for (int i = 0; i < conditions.Count; i++)
+            {
+                if (!conditions[i].IsAvailable(this, worldBlock))
+                    return false;
+            }
+            
+            return true;
+        }
 
         // RevealArea
         [ScriptProperty]

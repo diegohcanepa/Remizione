@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using Remizione.Scenes;
 using Remizione.Scripting;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 
@@ -19,7 +21,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private enum AttributeName { RandomSeed }
+        private readonly List<Prop> allStaticProps = [];
         private readonly ScriptConsole? console;
         private readonly InventoryScene inventoryScene;
         private Actor? player;
@@ -37,7 +39,7 @@ namespace Remizione
             this.Game = game;
             this.HUD = new HUD(this);
             this.Environment = new Environment();
-            this.RandomSeed = RandomSeed = System.Environment.TickCount;
+            this.AllStaticProps = new(allStaticProps);
 
             ObjectPools = new ObjectPools(this);
             OverlayTexts = new OverlayTextManager(game);
@@ -165,6 +167,16 @@ namespace Remizione
             */
         }
 
+        // OnInitializeEntities
+        protected override void OnInitializeEntities()
+        {
+            foreach (var entity in Entities)
+            {
+                if (entity is Prop prop)
+                    allStaticProps.Add(prop);
+            }
+        }
+
         // OnOutcomeCompleted
         protected override void OnOutcomeCompleted(Thing thing)
         {
@@ -202,10 +214,6 @@ namespace Remizione
             // Player position
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
                 playerPosition = XmlConverterExtension.ToVector2(playerPositionValue);
-
-            // RandomSeed
-            if (sessionNode.Attributes[AttributeName.RandomSeed.ToString()]?.Value is string randomSeedValue)
-                RandomSeed = XmlConvert.ToInt32(randomSeedValue);
 
             // SelectedItemCategory
             if (sessionNode.Attributes[nameof(SelectedItemCategory)]?.Value is string selectedItemCategoryValue)
@@ -294,14 +302,14 @@ namespace Remizione
             if (playerPosition.HasValue)
                 output.WriteAttributeString(nameof(playerPosition), XmlConverterExtension.ToString(playerPosition.Value));
 
-            // RandomSeed
-            output.WriteAttributeString(AttributeName.RandomSeed.ToString(), XmlConvert.ToString(RandomSeed));
-
             // SelectedItemCategory
             output.WriteAttributeString(nameof(SelectedItemCategory), XmlConvert.ToString((int)SelectedItemCategory));
         }
 
         #endregion
+
+        // AllStaticProps
+        public ReadOnlyCollection<Prop> AllStaticProps { get; }
 
         // ClearOverlayTexts
         [ScriptMethod(CodingContext.Any)]
@@ -365,8 +373,8 @@ namespace Remizione
         [ScriptProperty]
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
 
-        // RandomSeed
-        public int RandomSeed { get; private set; }
+        // Random
+        public Random Random { get; } = new Random(System.Environment.TickCount);
 
         // RestorePlayerPosition
         [ScriptMethod]

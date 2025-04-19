@@ -39,7 +39,9 @@
         // CreateInstance
         private void CreateInstance(string name)
         {
-            var thing = Session.ScriptEnvironment.CreateDynamicThing(name, HasArg(PersistentArg));
+            var staticName = ScriptSyntax.GetStaticName(name);
+            var instanceName = name == staticName ? string.Empty : name;
+            var thing = Session.ScriptEnvironment.CreateDynamicThing(staticName, instanceName, HasArg(PersistentArg));
 
             // Parent (assign parent at last place to ensure correct values before the controller starts)
             var flag = Body.Args.GetArg(ParentArg);

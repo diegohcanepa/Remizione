@@ -65,9 +65,7 @@ namespace EngendroAdventure
             this.StaticName = EntityKind == EntityKind.Anonymous ? GetType().Name : ScriptSyntax.GetStaticName(Name);
 
             if (EntityKind != EntityKind.Anonymous)
-            {
                 session.RegisterEntity(this);
-            }
 
             Sprite = new EntitySprite(Game, this);
 
