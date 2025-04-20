@@ -142,12 +142,12 @@ namespace Remizione
         // Prepare
         public void Prepare(GameThing? requester)
         {
-            // Collect holes
             holeAreas.Clear();
+            linkedNodes.Clear();
+
+            // Collect holes
             CollectHoles(holeAreas);
             CollectThingHoles(requester, holeAreas);
-
-            linkedNodes.Clear();
 
             // Add walk area nodes
             linkedNodes.AddRange(walkAreaNodes);
@@ -198,9 +198,7 @@ namespace Remizione
         {
             clamped = !IsInside(point);
             if (clamped)
-            {
                 point = deflatedPolygon.GetClosestPointOnEdge(point);
-            }
 
             return point;
         }

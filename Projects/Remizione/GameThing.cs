@@ -19,6 +19,7 @@ namespace Remizione
         private bool applyDamagePending;
         private int fp;
         private readonly Polygon holeInflatedPoly = new();
+        private PathNode[]? holeNodes;
         private readonly Polygon holePoly = new();
         private RectangleF hotspotBox;
         private PlacementMode hotspotPlacement = PlacementMode.Relative;
@@ -87,7 +88,8 @@ namespace Remizione
                 if (WalkArea != null && !WalkArea.IsInside(holeInflatedPoly.Vertices[i]))
                     continue;
 
-                targetList.Add(new PathNode(holeInflatedPoly.Vertices[i]));
+                if (holeNodes != null)
+                    targetList.Add(holeNodes[i]);
             }
         }
 
@@ -198,6 +200,15 @@ namespace Remizione
             holePoly.SetVertices(vertices);
             holeInflatedPoly.SetVertices(vertices, .05f);
 
+            if (holeNodes == null || holeNodes.Length != vertices.Length)
+            {
+                holeNodes = new PathNode[vertices.Length];
+                for (int i = 0; i < vertices.Length; i++)
+                {
+                    holeNodes[i] = new PathNode(holeInflatedPoly.Vertices[i]);
+                }
+            }
+
             isHoleAreaDirty = false;
         }
 
@@ -300,6 +311,7 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
+            InvalidateHoleArea();
             InvalidateWalkArea();
             ClampToWalkArea();
         }
