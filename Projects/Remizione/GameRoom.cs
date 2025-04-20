@@ -362,12 +362,6 @@ namespace Remizione
                 Session.Camera.FollowTarget(Session.Player, true);
         }
 
-        // OnPrepare
-        protected override void OnPrepare()
-        {
-            RegenerateWalkAreas();
-        }
-
         // OnUnload
         protected override void OnUnload()
         {
@@ -470,15 +464,6 @@ namespace Remizione
 
         // Lights
         public NamedObjectReadOnlyCollection<Light> Lights { get; }
-
-        // RegenerateWalkAreas
-        public void RegenerateWalkAreas()
-        {
-            for (var i = 0; i < walkAreas.Count; i++)
-            {
-                walkAreas[i].Regenerate(null);
-            }
-        }
 
         // RemoveWalkArea
         public bool RemoveWalkArea(string name)

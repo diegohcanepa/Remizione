@@ -218,11 +218,7 @@ namespace Remizione
         private void MarkHoleAreaDirty()
         {
             if (IsWalkAreaHole)
-            {
                 isHoleAreaDirty = true;
-                if (CollisionPolygon != null)
-                    WalkArea?.MarkDirty();
-            }
         }
 
         // ResetApplyDamageValues

@@ -53,7 +53,7 @@ namespace Remizione
     public enum ItemEffectTiming { OnBeginUse, OnEndUse, AfterAllEffects }
 
     // ItemName
-    public enum ItemName { None, Pole, Cross, Lockpick, Stamina, Health, ZabulContact }
+    public enum ItemName { None, UnarmedAttack, Cross, Lockpick, Stamina, Health, ZabulContact }
 
     // ItemUsageResult
     public enum ItemUsageResult { NotEnoughHP, NotEnoughStamina, Succeeded }

@@ -42,16 +42,6 @@ namespace Remizione
 
         #endregion
 
-        #region Protected members
-
-        // OnEnabledChanged
-        protected override void OnEnabledChanged()
-        {
-            WalkArea?.MarkDirty();
-        }
-
-        #endregion
-
         // ClampOutside
         public Vector2 ClampOutside(Vector2 position)
         {

@@ -41,12 +41,6 @@ namespace Remizione
         // PerformMoveAction
         private void PerformMoveAction(bool fastMove)
         {
-            if (Actor.IsMoving)
-            {
-                Actor.Stand();
-                return;
-            }
-
             var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
             GameThing? moveToTarget = null;
 

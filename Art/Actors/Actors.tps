@@ -207,7 +207,14 @@
             <key type="filename">Sinner-assets/MoveFast06.png</key>
             <key type="filename">Sinner-assets/MoveFast07.png</key>
             <key type="filename">Sinner-assets/MoveFast08.png</key>
-            <key type="filename">Sinner-assets/Pole01.png</key>
+            <key type="filename">Sinner-assets/UnarmedAttack01.png</key>
+            <key type="filename">Sinner-assets/UnarmedAttack02.png</key>
+            <key type="filename">Sinner-assets/UnarmedAttack03.png</key>
+            <key type="filename">Sinner-assets/UnarmedAttack04.png</key>
+            <key type="filename">Sinner-assets/UnarmedAttack05.png</key>
+            <key type="filename">Sinner-assets/UnarmedAttack06.png</key>
+            <key type="filename">Sinner-assets/UnarmedAttack07.png</key>
+            <key type="filename">Sinner-assets/UnarmedAttack08.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -219,21 +226,6 @@
                 <rect>7,5,14,11</rect>
                 <key>scale9Paddings</key>
                 <rect>7,5,14,11</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Sinner-assets/Pole02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,5,8,9</rect>
-                <key>scale9Paddings</key>
-                <rect>4,5,8,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

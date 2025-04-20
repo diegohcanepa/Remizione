@@ -65,6 +65,9 @@ namespace Remizione
             // Holes
             for (var i = 0; i < holes.Count; i++)
             {
+                if (!holes[i].Polygon.BoundingRectangleF.Intersects(Room.Session.Camera.CullingBox))
+                    continue;
+
                 if (holes[i].Test())
                     list.Add(holes[i]);
             }
@@ -73,13 +76,16 @@ namespace Remizione
         // CollectThingHoles
         private void CollectThingHoles(GameThing? requester, List<IHoleArea> list)
         {
-            for (var i = 0; i < Room.Children.Count; i++)
+            for (var i = 0; i < Room.CulledThings.Count; i++)
             {
-                if (Room.Children[i] == requester)
+                if (Room.CulledThings[i] == requester)
                     continue;
 
-                if (Room.Children[i] is GameThing thing && thing.IsWalkAreaHole)
-                    list.Add(thing);
+                if (Room.CulledThings[i] is GameThing thing && thing.IsWalkAreaHole)
+                {
+                    if ((thing as IHoleArea).Polygon.BoundingRectangleF.Intersects(Room.Session.Camera.CullingBox))
+                        list.Add(thing);
+                }
             }
         }
 
@@ -133,6 +139,28 @@ namespace Remizione
             }
         }
 
+        // Prepare
+        public void Prepare(GameThing? requester)
+        {
+            // Collect holes
+            holeAreas.Clear();
+            CollectHoles(holeAreas);
+            CollectThingHoles(requester, holeAreas);
+
+            linkedNodes.Clear();
+
+            // Add walk area nodes
+            linkedNodes.AddRange(walkAreaNodes);
+
+            // Add hole nodes
+            for (var i = 0; i < holeAreas.Count; i++)
+            {
+                holeAreas[i].CollectNodes(linkedNodes);
+            }
+
+            LinkNodes();
+        }
+
         #endregion
 
         #region Protected members
@@ -184,7 +212,10 @@ namespace Remizione
             if (requester.Position == destination)
                 return null;
 
-            Regenerate(requester);
+            if (!IsInside(destination))
+                return null;
+
+            Prepare(requester);
 
             var start = deflatedPolygon.Clamp(requester.Position);
             destination = deflatedPolygon.Clamp(destination);
@@ -275,9 +306,6 @@ namespace Remizione
             return true;
         }
 
-        // IsDirty
-        public bool IsDirty { get; private set; } = true;
-
         // IsInside
         public bool IsInside(Vector2 position)
         {
@@ -301,9 +329,6 @@ namespace Remizione
             return true;
         }
 
-        // MarkDirty
-        public void MarkDirty() => IsDirty = true;
-
         // ObstacleAreas
         public ReadOnlyCollection<IHoleArea> ObstacleAreas { get; }
 
@@ -318,33 +343,6 @@ namespace Remizione
         {
             var pt = Polygon.RandomPoint(origin, minimumRadius, maximumRadius);
             return GetWalkablePoint(pt);
-        }
-
-        // Regenerate
-        public void Regenerate(GameThing? requester)
-        {
-            if (!IsDirty)
-                return;
-
-            // Collect holes
-            holeAreas.Clear();
-            CollectHoles(holeAreas);
-            CollectThingHoles(requester, holeAreas);
-
-            linkedNodes.Clear();
-
-            // Add walk area nodes
-            linkedNodes.AddRange(walkAreaNodes);
-
-            // Add hole nodes
-            for (var i = 0; i < holeAreas.Count; i++)
-            {
-                holeAreas[i].CollectNodes(linkedNodes);
-            }
-
-            LinkNodes();
-
-            IsDirty = false;
         }
     }
 }

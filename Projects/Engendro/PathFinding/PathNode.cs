@@ -7,7 +7,7 @@ namespace Engendro.PathFinding
     /// <summary>
     /// PathNode
     /// </summary>
-    public sealed class PathNode(Vector2 position) : IHeapItem<PathNode>
+    public sealed class PathNode : IHeapItem<PathNode>
     {
         #region ICompatable<T> explicit implementation
 
@@ -26,6 +26,12 @@ namespace Engendro.PathFinding
         }
 
         #endregion
+
+        // Constructor
+        public PathNode(Vector2 position)
+        {
+            Position = position;
+        }
 
         // FCost
         public float FCost => GCost + HCost;
@@ -46,7 +52,7 @@ namespace Engendro.PathFinding
         public PathNode? Parent { get; set; }
 
         // Position
-        public Vector2 Position { get; } = position;
+        public Vector2 Position { get; }
 
         // Reset
         public void Reset()

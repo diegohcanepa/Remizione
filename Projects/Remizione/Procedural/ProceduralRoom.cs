@@ -14,7 +14,7 @@ namespace Remizione
         {
             AtlasName = string.Empty;
             LightingSystem = false;
-            WorldManager = new WorldManager(session, new Size(Screen.NativeWidth, Screen.NativeHeight), 101);
+            WorldManager = new WorldManager(session, new Size(Screen.NativeWidth, Screen.NativeHeight), 111);
         }
 
         // Regenerate
@@ -81,7 +81,7 @@ namespace Remizione
                 {
                     var newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Up);
                     if (newBlock != null)
-                        Children.Add(newBlock);
+                    Children.Add(newBlock);
 
                     newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Right);
                     if (newBlock != null)
@@ -91,7 +91,83 @@ namespace Remizione
                     if (newBlock != null)
                         Children.Add(newBlock);
 
+                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
                     newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Left);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Left);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Left);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Left);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Left);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Left);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Left);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Left);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Up);
+                    if (newBlock != null)
+                        Children.Add(newBlock);
+
+                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Up);
                     if (newBlock != null)
                         Children.Add(newBlock);
 

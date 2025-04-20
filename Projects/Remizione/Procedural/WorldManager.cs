@@ -241,7 +241,6 @@ namespace Remizione
             }
 
             var result = MergeRectangles(rects);
-
             return result.ToArray();
         }
 
