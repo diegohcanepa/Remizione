@@ -26,6 +26,6 @@ namespace Remizione
         string Name { get; }
 
         // Polygon
-        Polygon Polygon { get; }
+        ReadOnlyPolygon Polygon { get; }
     }
 }

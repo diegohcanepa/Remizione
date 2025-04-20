@@ -12,7 +12,7 @@ namespace Remizione
     /// </summary>
     public class HoleArea : Room.Area, IHoleArea
     {
-        private readonly Polygon inflatedPolygon = new();
+        private readonly ReadOnlyPolygon inflatedPolygon;
         private readonly List<PathNode> nodes = [];
 
         #region Constructor
@@ -24,7 +24,7 @@ namespace Remizione
             this.WalkArea = walkArea;
 
             // Inflate polygon by a marginal value to allow InLineOfSight between them            
-            this.inflatedPolygon.SetVertices(vertices, .01f);
+            this.inflatedPolygon = new(vertices, .01f);
 
             // Create nodes (only convex vertices inside walk area)
             if (!Polygon.IsEmpty)

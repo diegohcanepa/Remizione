@@ -108,7 +108,7 @@ namespace Remizione
         }
 
         // Polygon
-        Polygon IHoleArea.Polygon => holePoly;
+        ReadOnlyPolygon IHoleArea.Polygon => holePoly;
 
         #endregion
 

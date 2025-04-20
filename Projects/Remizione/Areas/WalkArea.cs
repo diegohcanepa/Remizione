@@ -15,10 +15,12 @@ namespace Remizione
     {
         #region Private members
 
-        private readonly Polygon deflatedPolygon;
+        private readonly ReadOnlyPolygon deflatedPolygon;
+        private readonly PathNode findPathEndNode = new PathNode();
+        private readonly PathNode findPathStartNode = new PathNode();
         private readonly List<IHoleArea> holeAreas = [];
         private readonly NamedObjectCollection<HoleArea> holes = [];
-        private readonly Polygon inflatedPolygon;
+        private readonly ReadOnlyPolygon inflatedPolygon;
         private readonly List<PathNode> linkedNodes = [];
         private readonly List<PathNode> walkAreaNodes = [];
 
@@ -30,20 +32,15 @@ namespace Remizione
         internal WalkArea(GameRoom room, string name, FlagCondition? condition, params Vector2[] vertices)
             : base(room, name, condition, vertices)
         {
-            this.deflatedPolygon = new Polygon(vertices);
-            this.deflatedPolygon.Inflate(-.01f);
-
-            this.inflatedPolygon = new Polygon(vertices);
-            this.inflatedPolygon.Inflate(.01f);
-
+            this.deflatedPolygon = new ReadOnlyPolygon(vertices, -.01f);
+            this.inflatedPolygon = new ReadOnlyPolygon(vertices, .01f);
             this.Holes = new RoomAreaReadOnlyCollection<HoleArea>(holes);
 
             // Create nodes (concave vertices)
             if (!Polygon.IsEmpty)
             {
                 // Deflate polygon by a marginal value to allow InLineOfSight between them
-                Polygon p = new(vertices);
-                p.Inflate(-.05f);
+                var p = new ReadOnlyPolygon(vertices, -.05f);
 
                 for (var i = 0; i < p.Vertices.Count; i++)
                 {
@@ -223,25 +220,16 @@ namespace Remizione
                 return [destination];
 
             // Create temp start/end nodes
-            PathNode startNode = new(GetWalkablePoint(start));
-            PathNode endNode = new(GetWalkablePoint(destination));
+            findPathStartNode.Position = GetWalkablePoint(start);
+            findPathEndNode.Position = GetWalkablePoint(destination);
 
-            linkedNodes.Add(startNode);
-            LinkStartNode(startNode);
+            linkedNodes.Add(findPathStartNode);
+            LinkStartNode(findPathStartNode);
 
-            linkedNodes.Add(endNode);
-            LinkEndNode(endNode);
+            linkedNodes.Add(findPathEndNode);
+            LinkEndNode(findPathEndNode);
 
-            var result = AStar.CalculatePath(startNode, endNode, linkedNodes);
-
-            // Remove start / end nodes
-            for (var i = 0; i < endNode.Links.Count; i++)
-            {
-                linkedNodes[endNode.Links[i]].Links.Remove(linkedNodes.IndexOf(endNode));
-            }
-
-            linkedNodes.Remove(endNode);
-            linkedNodes.Remove(startNode);
+            var result = AStar.CalculatePath(findPathStartNode, findPathEndNode, linkedNodes);
 
             return result;
         }

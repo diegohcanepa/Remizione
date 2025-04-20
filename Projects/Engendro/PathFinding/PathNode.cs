@@ -9,6 +9,8 @@ namespace Engendro.PathFinding
     /// </summary>
     public sealed class PathNode : IHeapItem<PathNode>
     {
+        private Vector2 position;
+
         #region ICompatable<T> explicit implementation
 
         // CompareTo
@@ -28,9 +30,14 @@ namespace Engendro.PathFinding
         #endregion
 
         // Constructor
+        public PathNode()
+        {
+        }
+
+        // Constructor
         public PathNode(Vector2 position)
         {
-            Position = position;
+            this.position = position;
         }
 
         // FCost
@@ -52,7 +59,15 @@ namespace Engendro.PathFinding
         public PathNode? Parent { get; set; }
 
         // Position
-        public Vector2 Position { get; }
+        public Vector2 Position
+        {
+            get => position;
+            set
+            {
+                position = value;
+                Reset();
+            }
+        }
 
         // Reset
         public void Reset()

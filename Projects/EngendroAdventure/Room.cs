@@ -303,7 +303,7 @@ namespace EngendroAdventure
                 this.Room = room;
                 this.Name = name;
                 this.Condition = condition;
-                this.Polygon = new Polygon(vertices) { ReadOnly = true };
+                this.Polygon = new ReadOnlyPolygon(vertices);
 
                 room.areas.Add(this);
             }
@@ -356,7 +356,7 @@ namespace EngendroAdventure
             public string Name { get; }
 
             // Polygon
-            public Polygon Polygon { get; }
+            public ReadOnlyPolygon Polygon { get; }
 
             // Reset
             public void Reset() => OnReset();
