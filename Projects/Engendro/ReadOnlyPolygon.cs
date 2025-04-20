@@ -171,7 +171,7 @@ namespace Engendro
                 vertexTypes[i] = IsVertexConcaveCore(i) ? VertexType.Concave : VertexType.Convex;
             }
         }
-
+        
         #endregion
 
         // BoundingRectangle

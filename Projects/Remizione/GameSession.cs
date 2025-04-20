@@ -26,7 +26,7 @@ namespace Remizione
         private Actor? player;
         private Vector2? playerPosition;
         private readonly RoomEditor? roomEditor;
-        private readonly Dictionary<PropInstantiationPhase, List<Prop>> staticProps = [];
+        private readonly Dictionary<PlacementPhase, List<Prop>> staticThings = [];
 
         #endregion
 
@@ -191,11 +191,11 @@ namespace Remizione
         protected override void OnInitializeEntities()
         {
             // Add dictionary entries
-            if (staticProps.Count == 0)
+            if (staticThings.Count == 0)
             {
-                foreach (var phase in Enum.GetValues<PropInstantiationPhase>())
+                foreach (var phase in Enum.GetValues<PlacementPhase>())
                 {
-                    staticProps.Add(phase, new());
+                    staticThings.Add(phase, new());
                 }
             }
 
@@ -203,12 +203,12 @@ namespace Remizione
             foreach (var entity in Entities)
             {
                 if (entity is Prop prop)
-                    staticProps[prop.InstantiationPhase].Add(prop);
+                    staticThings[prop.InstantiationPhase].Add(prop);
             }
 
-            foreach (var phase in Enum.GetValues<PropInstantiationPhase>())
+            foreach (var phase in Enum.GetValues<PlacementPhase>())
             {
-                staticProps[phase].Sort(ComparePropSizeDescending);
+                staticThings[phase].Sort(ComparePropSizeDescending);
             }
         }
 
@@ -366,10 +366,19 @@ namespace Remizione
 
         // FullHUD
         [ScriptProperty]
-        public bool FullHUD { get; set; }
+        public bool FullHUD { get; set; } = true;
 
         // Game
         public new RemizioneGame Game { get; }
+
+        // GetStaticThings
+        public IEnumerable<GameThing> GetStaticThings(PlacementPhase phase)
+        {
+            foreach (var thing in staticThings[phase])
+            {
+                yield return thing;
+            }
+        }
 
         // HUD
         public HUD HUD { get; }
@@ -456,15 +465,6 @@ namespace Remizione
             inventoryScene.Actor = player;
             Game.SceneManager.Push(inventoryScene);
             Camera.FocusTarget();
-        }
-
-        // GetStaticProps
-        public IEnumerable<Prop> GetStaticProps(PropInstantiationPhase phase)
-        {
-            foreach (var prop in staticProps[phase])
-            {
-                yield return prop;
-            }
         }
     }
 }

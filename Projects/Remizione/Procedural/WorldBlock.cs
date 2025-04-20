@@ -13,9 +13,10 @@ namespace Remizione
     /// </summary>
     public class WorldBlock : Prop
     {
+        private readonly WorldBlockGrid decorationGrid;
         private readonly WorldBlockGrid grid;
-        private readonly List<Prop> props = [];
         private readonly List<WorldBlockTag> tags = [];
+        private readonly List<GameThing> things = [];
 
         #region Constructor
 
@@ -23,8 +24,9 @@ namespace Remizione
         public WorldBlock(WorldManager manager, Point worldGridPosition, bool isNew)
             : base(manager.Session, string.Empty)
         {
-            this.grid = new WorldBlockGrid(manager.BlockSize);
-            this.Props = new(props);
+            this.decorationGrid = new WorldBlockGrid("Decoration", manager.BlockSize);
+            this.grid = new WorldBlockGrid("Main", manager.BlockSize);
+            this.Things = new(things);
             this.Tags = new(tags);
 
             AssignTags();
@@ -51,54 +53,56 @@ namespace Remizione
         {
         }
 
-        // CreateDynamicProp
-        private Prop CreateDynamicProp(string staticName)
+        // CreateDynamicThing
+        private GameThing CreateDynamicThing(string staticName)
         {
-            if (Session.CreateDynamicThing(staticName, $"{staticName}*{Index}_{props.Count}") is not Prop result)
-                throw new InvalidOperationException($"Failed to create dynamic prop '{staticName}'.");
+            if (Session.CreateDynamicThing(staticName, $"{staticName}*{Index}_{things.Count}") is not GameThing result)
+                throw new InvalidOperationException($"Failed to create dynamic thing '{staticName}'.");
 
             return result;
         }
 
         // DistributeClumped
-        private void DistributeClumped(Prop prop)
+        private void DistributeClumped(GameThing thing)
         {
-            if (prop.InstancesPerBlock.IsEmpty)
+            if (thing.InstancesPerBlock.IsEmpty)
                 return;
 
-            int totalCount = prop.InstancesPerBlock.Random();
+            var targetGrid = thing.IsWalkAreaHole ? grid : decorationGrid;
+            int totalCount = thing.InstancesPerBlock.Random();
             int clumpSize = 3 + Session.Random.Next(3);
             int clumpCount = (totalCount + clumpSize - 1) / clumpSize;
 
-            Size sizeInCells = prop.GetRequiredGridSpace(WorldBlockGrid.CellSize);
+            Size sizeInCells = thing.GetRequiredGridSpace(WorldBlockGrid.CellSize);
 
             for (int i = 0; i < clumpCount; i++)
             {
-                if (!grid.TryReserveSpace(sizeInCells, out int baseCol, out int baseRow))
+                if (!targetGrid.TryReserveSpace(sizeInCells, out int baseCol, out int baseRow))
                     break;
 
-                PlaceDynamicProp(prop, baseCol, baseRow);
+                PlaceDynamicThing(thing, baseCol, baseRow);
 
                 for (int j = 0; j < clumpSize - 1; j++)
                 {
                     int offsetCol = baseCol + Session.Random.Next(-1, 2);
                     int offsetRow = baseRow + Session.Random.Next(-1, 2);
 
-                    if (grid.TryReserveSpace(sizeInCells, out int col, out int row, offsetCol, offsetRow))
-                        PlaceDynamicProp(prop, col, row);
+                    if (targetGrid.TryReserveSpace(sizeInCells, out int col, out int row, offsetCol, offsetRow))
+                        PlaceDynamicThing(thing, col, row);
                 }
             }
         }
 
         // DistributeRandomly
-        private void DistributeRandomly(Prop prop)
+        private void DistributeRandomly(GameThing thing)
         {
-            if (prop.InstancesPerBlock.IsEmpty)
+            if (thing.InstancesPerBlock.IsEmpty)
                 return;
 
-            Size sizeInCells = prop.GetRequiredGridSpace(WorldBlockGrid.CellSize);
+            var targetGrid = thing.IsWalkAreaHole ? grid: decorationGrid;
+            Size sizeInCells = thing.GetRequiredGridSpace(WorldBlockGrid.CellSize);
 
-            for (int i = 0; i < prop.InstancesPerBlock.Random(); i++)
+            for (int i = 0; i < thing.InstancesPerBlock.Random(); i++)
             {
                 // Intentos limitados para evitar bucles infinitos si no hay espacio
                 int maxAttempts = 20 + (sizeInCells.Width * sizeInCells.Height) * 2;
@@ -106,12 +110,12 @@ namespace Remizione
 
                 for (int attempt = 0; attempt < maxAttempts && !placed; attempt++)
                 {
-                    int col = Session.Random.Next(grid.ColCount - sizeInCells.Width + 1);
-                    int row = Session.Random.Next(grid.RowCount - sizeInCells.Height + 1);
+                    int col = Session.Random.Next(targetGrid.ColCount - sizeInCells.Width + 1);
+                    int row = Session.Random.Next(targetGrid.RowCount - sizeInCells.Height + 1);
 
-                    if (grid.TryReserveSpace(sizeInCells, out int finalCol, out int finalRow, col, row))
+                    if (targetGrid.TryReserveSpace(sizeInCells, out int finalCol, out int finalRow, col, row))
                     {
-                        PlaceDynamicProp(prop, finalCol, finalRow);
+                        PlaceDynamicThing(thing, finalCol, finalRow);
                         placed = true;
                     }
                 }
@@ -119,25 +123,26 @@ namespace Remizione
         }
 
         // DistributeWithNoiseMap
-        private void DistributeWithNoiseMap(Prop prop, int seed)
+        private void DistributeWithNoiseMap(GameThing thing, int seed)
         {
-            if (prop.InstancesPerBlock.IsEmpty)
+            if (thing.InstancesPerBlock.IsEmpty)
                 return;
 
-            Size sizeInCells = prop.GetRequiredGridSpace(WorldBlockGrid.CellSize);
+            var targetGrid = thing.IsWalkAreaHole ? grid : decorationGrid;
+            Size sizeInCells = thing.GetRequiredGridSpace(WorldBlockGrid.CellSize);
             float noiseThreshold = 0.2f;
             int attempts = 100;
 
             for (int i = 0; i < attempts; i++)
             {
-                if (!grid.TryReserveSpace(sizeInCells, out int col, out int row))
+                if (!targetGrid.TryReserveSpace(sizeInCells, out int col, out int row))
                     break;
 
                 float noise = GetNoise(col, row, seed);
                 if (noise > noiseThreshold)
                     continue;
 
-                PlaceDynamicProp(prop, col, row);
+                PlaceDynamicThing(thing, col, row);
             }
         }
 
@@ -161,45 +166,46 @@ namespace Remizione
             }
         }
 
-        // PlaceDynamicProp
-        private void PlaceDynamicProp(Prop prop, int col, int row)
+        // PlaceDynamicThing
+        private void PlaceDynamicThing(GameThing thing, int col, int row)
         {
-            var instance = CreateDynamicProp(prop.StaticName);
-            Vector2 worldPosition = grid.GetWorldPosition(col, row);
+            var targetGrid = thing.IsWalkAreaHole ? grid : decorationGrid;
+            var instance = CreateDynamicThing(thing.StaticName);
+            Vector2 worldPosition = targetGrid.GetWorldPosition(col, row);
             instance.Position = worldPosition + Position;
             instance.Y += instance.BoundingBox.Height;
             instance.X += instance.BoundingBox.Width / 2;
-            props.Add(instance);
+            things.Add(instance);
         }
 
         // Populate
         private void Populate()
         {
-            foreach (var phase in Enum.GetValues<PropInstantiationPhase>())
+            foreach (var phase in Enum.GetValues<PlacementPhase>())
             {
-                if (phase == PropInstantiationPhase.None)
+                if (phase == PlacementPhase.None)
                     continue;
 
-                foreach (var prop in Session.GetStaticProps(phase))
+                foreach (var thing in Session.GetStaticThings(phase))
                 {
-                    if (!prop.IsAvailable(this))
+                    if (!thing.IsAvailable(this))
                         continue;
 
-                    switch (prop.DistributionStrategy)
+                    switch (thing.DistributionStrategy)
                     {
                         // RandomCell
-                        case PropDistributionStrategy.RandomCell:
-                            DistributeRandomly(prop);
+                        case PlacementDistributionStrategy.Random:
+                            DistributeRandomly(thing);
                             break;
 
                         // Clump
-                        case PropDistributionStrategy.Clump:
-                            DistributeClumped(prop);
+                        case PlacementDistributionStrategy.Clump:
+                            DistributeClumped(thing);
                             break;
 
                         // NoiseMap
-                        case PropDistributionStrategy.NoiseMap:
-                            DistributeWithNoiseMap(prop, Session.RandomSeed);
+                        case PlacementDistributionStrategy.NoiseMap:
+                            DistributeWithNoiseMap(thing, Session.RandomSeed);
                             break;
                     }
                 }
@@ -283,11 +289,11 @@ namespace Remizione
         // Manager
         public WorldManager Manager { get; }
 
-        // Props
-        public ReadOnlyCollection<Prop> Props { get; }
-
         // Tags
         public ReadOnlyCollection<WorldBlockTag> Tags { get; }
+
+        // Things
+        public ReadOnlyCollection<GameThing> Things { get; }
 
         // WorldGridPosition
         public Point WorldGridPosition { get; }

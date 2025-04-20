@@ -83,17 +83,17 @@ namespace Remizione
     // MouseCursorState
     public enum MouseCursorState { Default, Target }
 
+    // PlacementDistributionStrategy
+    public enum PlacementDistributionStrategy { Random, Clump, NoiseMap }
+
+    // PlacementPhase
+    public enum PlacementPhase { None, Terrain, NonSolidDecoration, NaturalObject, ArtificialObject }
+
     // PlatformMessageKey
     public enum PlatformMessageKey { ChangeUser, ControllerDisconnected, PressAnyButton, PressAnyKeyOrButton, SignIn }
 
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
-
-    // PropDistributionStrategy
-    public enum PropDistributionStrategy { RandomCell, Clump, NoiseMap }
-
-    // PropInstantiationPhase
-    public enum PropInstantiationPhase { None, Ground, GroundDecoration, Decoration, Interactive }
 
     // QTEResult
     public enum QTEResult { Failure, Success }

@@ -14,8 +14,10 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public WorldBlockGrid(Size blockSize)
+        public WorldBlockGrid(string name, Size blockSize)
         {
+            this.Name = name;
+
             // Maximum cells (without margin)
             int totalColumns = ((int) blockSize.Width + CellSize - 1) / CellSize;
             int totalRows = ((int)blockSize.Height + CellSize - 1) / CellSize;
@@ -56,7 +58,7 @@ namespace Remizione
         #endregion
 
         // CellSize
-        public const int CellSize = 10;
+        public const int CellSize = 14;
 
         // ColCount
         public int ColCount { get; }
@@ -94,8 +96,14 @@ namespace Remizione
             }
         }
 
+        // Name
+        public string Name { get; }
+
         // RowCount
         public int RowCount { get; }
+
+        // ToString
+        public override string ToString() => Name;
 
         // TryReserveSpace
         public bool TryReserveSpace(Size required, out int col, out int row)
@@ -138,7 +146,7 @@ namespace Remizione
         // TryReserveSpace
         public bool TryReserveSpace(Size required, out int col, out int row, int suggestedCol, int suggestedRow)
         {
-            // Primero intenta colocar en la celda sugerida
+            // Try suggested cell
             if (CanFitAt(suggestedCol, suggestedRow, required))
             {
                 MarkOccupied(suggestedCol, suggestedRow, required);
@@ -147,7 +155,7 @@ namespace Remizione
                 return true;
             }
 
-            // Si no entra en la sugerida, simplemente falla (versión más directa)
+            // If can't fit in suggested cell, then fail
             col = -1;
             row = -1;
             return false;

@@ -6,6 +6,7 @@ using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -17,6 +18,7 @@ namespace Remizione
         #region Private fields
 
         private bool applyDamagePending;
+        private readonly List<PlacementCondition> conditions = [];
         private int fp;
         private readonly Polygon holeInflatedPoly = new();
         private PathNode[]? holeNodes;
@@ -54,6 +56,7 @@ namespace Remizione
         {
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
+            this.Conditions = new(conditions);
         }
 
         #endregion
@@ -516,6 +519,9 @@ namespace Remizione
         [ScriptProperty]
         public Polygon? CollisionPolygon { get; set; }
 
+        // Conditions
+        public ReadOnlyCollection<PlacementCondition> Conditions { get; }
+
         // CumulativeDamage
         public float CumulativeDamage { get; set; }
 
@@ -790,6 +796,46 @@ namespace Remizione
         // IgnoreWalkArea
         [ScriptProperty]
         public bool IgnoreWalkArea { get; set; } = true;
+
+        // DistributionStrategy
+        [ScriptProperty(CodingContext.EntityDeclaration)]
+        public PlacementDistributionStrategy DistributionStrategy { get; set; }
+
+        // GetRequiredGridSpace
+        public Size GetRequiredGridSpace(int cellSize)
+        {
+            RectangleF bbox;
+
+            if (CollisionPolygon == null)
+                bbox = BoundingBox;
+            else
+                bbox = CollisionPolygon.BoundingRectangleF;
+
+            int width = (int)Math.Ceiling(bbox.Width / cellSize);
+            int height = (int)Math.Ceiling(bbox.Height / cellSize);
+
+            return new Size(width, height);
+        }
+
+        // InstancesPerBlock
+        [ScriptProperty(CodingContext.EntityDeclaration)]
+        public Int32Range InstancesPerBlock { get; set; } = new Int32Range(1);
+
+        // InstantiationPhase
+        [ScriptProperty(CodingContext.EntityDeclaration)]
+        public PlacementPhase InstantiationPhase { get; set; }
+
+        // IsAvailable
+        public bool IsAvailable(WorldBlock worldBlock)
+        {
+            for (int i = 0; i < conditions.Count; i++)
+            {
+                if (!conditions[i].IsAvailable(this, worldBlock))
+                    return false;
+            }
+
+            return true;
+        }
 
         // IsDead
         public bool IsDead => HP == 0 && MaxHP > 0;

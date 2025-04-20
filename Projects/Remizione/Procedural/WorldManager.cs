@@ -33,14 +33,23 @@ namespace Remizione
 
         #region Private members
 
+        // IsValidPosition
+        private bool IsValidPosition(Point pos)
+        {
+            return pos.X >= 0 && pos.X < GridSize && pos.Y >= 0 && pos.Y < GridSize;
+        }
+
+        // MergeRectangles
         private static List<Vector2> MergeRectangles(List<Rectangle> rectangles)
         {
             // Step 1: Collect unique x and y coordinates
-            HashSet<float> xSet = new HashSet<float>();
-            HashSet<float> ySet = new HashSet<float>();
+            var xSet = new HashSet<float>();
+            var ySet = new HashSet<float>();
+            
             for (var i = 0; i < rectangles.Count; i++)
             {
                 var rect = rectangles[i];
+               
                 xSet.Add(rect.Left);
                 xSet.Add(rect.Right);
                 ySet.Add(rect.Top);
@@ -51,38 +60,60 @@ namespace Remizione
             var xArray = new float[xSet.Count];
             var yArray = new float[ySet.Count];
             var index = 0;
+            
             foreach (var x in xSet) xArray[index++] = x;
-            index = 0;
-            foreach (var y in ySet) yArray[index++] = y;
+            {
+                index = 0;
+            }
+
+            foreach (var y in ySet)
+            {
+                yArray[index++] = y;
+            }
+
             Array.Sort(xArray);
             Array.Sort(yArray);
-            var X = new List<float>(xArray);
-            var Y = new List<float>(yArray);
+            
+            var xList = new List<float>(xArray);
+            var yList = new List<float>(yArray);
 
-            var m = X.Count;
-            var n = Y.Count;
-            if (m < 2 || n < 2) return new List<Vector2>(); // No area covered
+            var m = xList.Count;
+            var n = yList.Count;
+            
+            if (m < 2 || n < 2)
+                return new List<Vector2>(); // No area covered
 
             // Step 2: Create covered array
             var covered = new bool[m - 1, n - 1];
             for (var r = 0; r < rectangles.Count; r++)
             {
                 var rect = rectangles[r];
+                
                 // Binary search for i_start and i_end
                 int i_start = 0, i_left = 0, i_right = m - 1;
                 while (i_left <= i_right)
                 {
                     var mid = (i_left + i_right) / 2;
-                    if (X[mid] >= rect.Left) { i_start = mid; i_right = mid - 1; }
-                    else i_left = mid + 1;
+                    if (xList[mid] >= rect.Left)
+                    { 
+                        i_start = mid; i_right = mid - 1;
+                    }
+                    else
+                        i_left = mid + 1;
                 }
+                
                 var i_end = m - 1;
                 i_left = 0; i_right = m - 1;
                 while (i_left <= i_right)
                 {
                     var mid = (i_left + i_right) / 2;
-                    if (X[mid] < rect.Right) { i_end = mid; i_left = mid + 1; }
-                    else i_right = mid - 1;
+                    if (xList[mid] < rect.Right)
+                    { 
+                        i_end = mid; 
+                        i_left = mid + 1;
+                    }
+                    else
+                        i_right = mid - 1;
                 }
 
                 // Binary search for j_start and j_end
@@ -90,16 +121,21 @@ namespace Remizione
                 while (j_left <= j_right)
                 {
                     var mid = (j_left + j_right) / 2;
-                    if (Y[mid] >= rect.Top) { j_start = mid; j_right = mid - 1; }
-                    else j_left = mid + 1;
+                    if (yList[mid] >= rect.Top)
+                        { j_start = mid; j_right = mid - 1; }
+                    else
+                        j_left = mid + 1;
                 }
+
                 var j_end = n - 1;
                 j_left = 0; j_right = n - 1;
                 while (j_left <= j_right)
                 {
                     var mid = (j_left + j_right) / 2;
-                    if (Y[mid] < rect.Bottom) { j_end = mid; j_left = mid + 1; }
-                    else j_right = mid - 1;
+                    if (yList[mid] < rect.Bottom)
+                        { j_end = mid; j_left = mid + 1; }
+                    else
+                        j_right = mid - 1;
                 }
 
                 for (var i = i_start; i <= i_end && i < m - 1; i++)
@@ -112,17 +148,18 @@ namespace Remizione
             }
 
             // Step 3: Collect boundary segments
-            List<(Vector2, Vector2)> segments = new List<(Vector2, Vector2)>();
+            var segments = new List<(Vector2, Vector2)>();
             for (var j = 0; j < n; j++)
             {
                 for (var i = 0; i < m - 1; i++)
                 {
                     var above_covered = j > 0 && covered[i, j - 1];
                     var below_covered = j < n - 1 && covered[i, j];
+                    
                     if (above_covered != below_covered)
                     {
-                        Vector2 p1 = new Vector2(X[i], Y[j]);
-                        Vector2 p2 = new Vector2(X[i + 1], Y[j]);
+                        Vector2 p1 = new Vector2(xList[i], yList[j]);
+                        Vector2 p2 = new Vector2(xList[i + 1], yList[j]);
                         segments.Add((p1, p2));
                     }
                 }
@@ -133,23 +170,29 @@ namespace Remizione
                 {
                     var left_covered = i > 0 && covered[i - 1, j];
                     var right_covered = i < m - 1 && covered[i, j];
+                    
                     if (left_covered != right_covered)
                     {
-                        Vector2 p1 = new Vector2(X[i], Y[j]);
-                        Vector2 p2 = new Vector2(X[i], Y[j + 1]);
+                        var p1 = new Vector2(xList[i], yList[j]);
+                        var p2 = new Vector2(xList[i], yList[j + 1]);
                         segments.Add((p1, p2));
                     }
                 }
             }
 
             // Step 4: Build adjacency list
-            Dictionary<Vector2, List<Vector2>> adj = new Dictionary<Vector2, List<Vector2>>();
+            var adj = new Dictionary<Vector2, List<Vector2>>();
             for (var s = 0; s < segments.Count; s++)
             {
                 var p1 = segments[s].Item1;
                 var p2 = segments[s].Item2;
-                if (!adj.ContainsKey(p1)) adj[p1] = new List<Vector2>();
-                if (!adj.ContainsKey(p2)) adj[p2] = new List<Vector2>();
+                
+                if (!adj.ContainsKey(p1))
+                    adj[p1] = new List<Vector2>();
+                
+                if (!adj.ContainsKey(p2))
+                    adj[p2] = new List<Vector2>();
+
                 adj[p1].Add(p2);
                 adj[p2].Add(p1);
             }
@@ -178,13 +221,6 @@ namespace Remizione
             } while (current != start);
 
             return polygon;
-        }
-
-        // IsValidPosition
-        private bool IsValidPosition(Point pos)
-        {
-            return pos.X >= 0 && pos.X < GridSize &&
-                   pos.Y >= 0 && pos.Y < GridSize;
         }
 
         #endregion

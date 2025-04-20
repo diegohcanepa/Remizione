@@ -14,7 +14,7 @@ namespace Remizione
         {
             AtlasName = string.Empty;
             LightingSystem = false;
-            WorldManager = new WorldManager(session, new Size(Screen.NativeWidth, Screen.NativeHeight), 111);
+            WorldManager = new WorldManager(session, new Size(Screen.NativeWidth, Screen.NativeHeight), 11);
         }
 
         // Regenerate
@@ -34,7 +34,7 @@ namespace Remizione
             for (var i = 0; i < WorldManager.Blocks.Count; i++)
             {
                 Children.Add(WorldManager.Blocks[i]);
-                foreach (var prop in WorldManager.Blocks[i].Props)
+                foreach (var prop in WorldManager.Blocks[i].Things)
                 {
                     Children.Add(prop);
                 }

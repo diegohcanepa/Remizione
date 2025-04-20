@@ -12,9 +12,6 @@ namespace Remizione
     /// </summary>
     public class Prop : GameThing
     {
-        private readonly List<PropInstantiationCondition> conditions = [];
-        private PropInstantiationPhase instantiationPhase;
-        private bool instantiationPhaseDefined;
         private bool isRevealBoxDirty;
         private RectangleF revealBox;
         private readonly FloatTween revealTween = new();
@@ -27,7 +24,6 @@ namespace Remizione
             : base(session, name)
         {
             this.Atlas = Atlases.Environment;
-            this.Conditions = new(conditions);
 
             // Shadow
             this.shadow = new ImageSprite(session.Game)
@@ -86,14 +82,6 @@ namespace Remizione
         // OnDrawShadow
         protected override void OnDrawShadow(GameTime gameTime) => shadow.Draw(gameTime);
 
-        // OnInitialize
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
-            if (!instantiationPhaseDefined)
-                throw new InvalidOperationException("Prop instantiation phase is not set.");
-        }
-
         // OnLoad
         protected override void OnLoad()
         {
@@ -121,60 +109,6 @@ namespace Remizione
         }
 
         #endregion
-
-        // Conditions
-        public ReadOnlyCollection<PropInstantiationCondition> Conditions { get; }
-
-        // GetRequiredGridSpace
-        public Size GetRequiredGridSpace(int cellSize)
-        {
-            RectangleF bbox;
-
-            if (CollisionPolygon == null)
-                bbox = BoundingBox;
-            else
-                bbox = CollisionPolygon.BoundingRectangleF;
-
-            int width = (int)Math.Ceiling(bbox.Width / cellSize);
-            int height = (int)Math.Ceiling(bbox.Height / cellSize);
-
-            return new Size(width, height);
-        }
-
-        // DistributionStrategy
-        [ScriptProperty(CodingContext.EntityDeclaration)]
-        public PropDistributionStrategy DistributionStrategy { get; set; }
-        
-        // InstancesPerBlock
-        [ScriptProperty(CodingContext.EntityDeclaration)]
-        public Int32Range InstancesPerBlock { get; set; } = new Int32Range(1);
-
-        // InstantiationPhase
-        [ScriptProperty(CodingContext.EntityDeclaration)]
-        public PropInstantiationPhase InstantiationPhase
-        {
-            get => instantiationPhase;
-            set
-            {
-                if (instantiationPhaseDefined)
-                    throw new InvalidOperationException("Prop instantiation phase cannot be changed.");
-
-                instantiationPhaseDefined = true;
-                instantiationPhase = value;
-            }
-        }
-
-        // IsAvailable
-        public bool IsAvailable(WorldBlock worldBlock)
-        {
-            for (int i = 0; i < conditions.Count; i++)
-            {
-                if (!conditions[i].IsAvailable(this, worldBlock))
-                    return false;
-            }
-            
-            return true;
-        }
 
         // RevealArea
         [ScriptProperty]
