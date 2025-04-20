@@ -15,6 +15,7 @@ namespace Remizione
     {
         #region Private members
 
+        private RectangleF clipBox;
         private readonly ReadOnlyPolygon deflatedPolygon;
         private readonly PathNode findPathEndNode = new PathNode();
         private readonly PathNode findPathStartNode = new PathNode();
@@ -78,10 +79,10 @@ namespace Remizione
                 if (Room.CulledThings[i] == requester)
                     continue;
 
-                if (Room.CulledThings[i] is GameThing thing && thing.IsWalkAreaHole)
+                if (Room.CulledThings[i] is IHoleArea holeArea && !holeArea.Polygon.IsEmpty)
                 {
-                    if ((thing as IHoleArea).Polygon.BoundingRectangleF.Intersects(Room.Session.Camera.CullingBox))
-                        list.Add(thing);
+                    if (holeArea.Polygon.BoundingRectangleF.Intersects(Room.Session.Camera.CullingBox))
+                        list.Add(holeArea);
                 }
             }
         }
@@ -209,6 +210,19 @@ namespace Remizione
 
             if (!IsInside(destination))
                 return null;
+
+            // Define clip box for optimized path finding
+            if (Room.Session.Camera.CullingBox.Contains(requester.Position) && 
+                Room.Session.Camera.CullingBox.Contains(destination))
+            {
+                clipBox = Room.Session.Camera.CullingBox;
+            }
+            else
+            {
+                var startRect = new RectangleF(requester.Position, Room.Session.Camera.VisibleBox.Size);
+                var destinationRect = new RectangleF(destination, Room.Session.Camera.VisibleBox.Size);
+                clipBox = RectangleF.Union(startRect, destinationRect);
+            }
 
             Prepare(requester);
 
