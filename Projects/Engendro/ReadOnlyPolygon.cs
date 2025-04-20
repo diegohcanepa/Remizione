@@ -22,7 +22,7 @@ namespace Engendro
         #region Constructors
 
         // Constructor
-        public ReadOnlyPolygon(Vector2[] points, float inflate = 0)
+        public ReadOnlyPolygon(IList<Vector2> points, float inflate = 0)
         {
             this.Vertices = new ReadOnlyCollection<Vector2>(this.vertices);
             SetVerticesCore(points, inflate);
@@ -151,7 +151,7 @@ namespace Engendro
         }
 
         // SetVerticesCore
-        protected void SetVerticesCore(Span<Vector2> vertices, float inflate)
+        protected void SetVerticesCore(IList<Vector2> vertices, float inflate)
         {
             this.vertices.Clear();
             this.vertices.AddRange(vertices);

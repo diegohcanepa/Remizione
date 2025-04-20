@@ -246,6 +246,7 @@
                 <false/>
             </struct>
             <key type="filename">DustParticles-assets/DustParticle1.png</key>
+            <key type="filename">Environment-assets/MoveDestinationMark.png</key>
             <key type="filename">FireflyParticles-assets/FireflyParticle1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

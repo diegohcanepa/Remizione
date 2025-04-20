@@ -23,6 +23,9 @@ namespace Remizione
         {
             this.session = session;
 
+            // DestinationMark
+            this.DestinationMark = new DestinationMark(session);
+
             // Echo message
             this.EchoMessage = new EchoMessage(session.Game);
 
@@ -43,6 +46,7 @@ namespace Remizione
             this.fpMeter = new Meter(Game, ColorPalette.FPMeter.Back, ColorPalette.FPMeter.Fore) { Position = new(6, 8) };
             this.staminaMeter = new Meter(Game, ColorPalette.StaminaMeter.Back, ColorPalette.StaminaMeter.Fore) { Position = new(6, 11) };
 
+            // GP score
             this.gpScore = new ScoreText(session.Game)
             {
                 HideZero = true,
@@ -50,6 +54,7 @@ namespace Remizione
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.RightBottom, -2, 0),
                 Scale = ScaleInfo.Text.Large
             };
+
         }
 
         #region Private members
@@ -115,12 +120,16 @@ namespace Remizione
             }
 
             cycleInfo.Update(gameTime);
+            DestinationMark.Update(gameTime);
             EchoMessage.Update(gameTime);
             QuickSlots.Update(gameTime);
             savingIcon.Update(gameTime);
         }
 
         #endregion
+
+        // DestinationMark
+        public DestinationMark DestinationMark { get; }
 
         // EchoMessage
         public EchoMessage EchoMessage { get; }

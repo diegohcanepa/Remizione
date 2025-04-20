@@ -193,7 +193,7 @@ namespace Remizione
                 return;
 
             int vertexCount = CollisionPolygon.Vertices.Count;
-            Span<Vector2> vertices = stackalloc Vector2[vertexCount];
+            var vertices = new Vector2[vertexCount];
 
             var offset = new Vector2(X - BoundingBox.Width / 2, Y - BoundingBox.Height);
             CollisionPolygon.GetVertices(vertices, offset);

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
+using System.Collections.Generic;
 
 namespace Engendro
 {
@@ -15,7 +15,7 @@ namespace Engendro
         }
 
         // Constructor
-        public Polygon(Vector2[] points, float inflate = 0)
+        public Polygon(IList<Vector2> points, float inflate = 0)
             : base(points, inflate)
         {
         }
@@ -30,9 +30,9 @@ namespace Engendro
         public void Offset(float x, float y) => OffsetCore(x, y);
 
         // SetVertices
-        public void SetVertices(Span<Vector2> vertices) => SetVerticesCore(vertices, 0);
+        public void SetVertices(IList<Vector2> vertices) => SetVerticesCore(vertices, 0);
 
         // SetVertices
-        public void SetVertices(Span<Vector2> vertices, float inflate) => SetVerticesCore(vertices, inflate);
+        public void SetVertices(IList<Vector2> vertices, float inflate) => SetVerticesCore(vertices, inflate);
     }
 }

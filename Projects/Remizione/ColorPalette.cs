@@ -35,6 +35,13 @@ namespace Remizione
         // CreditLine
         internal static Color CreditLine { get; } = new Color(230, 230, 212);
 
+        // DestinationMark
+        internal static class DestinationMark
+        {
+            internal static Color Default { get; } = new(59, 125, 79);
+            internal static Color Target { get; } = new(200, 212, 93);
+        }
+
         // FPMeter
         internal static class FPMeter
         {

@@ -320,6 +320,9 @@ namespace Remizione
         {
             base.OnStopMoving();
 
+            if (IsPlayer)
+                session.HUD.DestinationMark.Position = null;
+
             FastMove = false;
             accelerationFactorTween.Stop();
             moveTween.Stop();
@@ -496,6 +499,9 @@ namespace Remizione
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public float FastMoveFactor { get; set; } = 1;
 
+        // FollowingPathDestination
+        public Vector2? FollowingPathDestination { get; private set; }
+
         // GetBloodSplashPosition
         public Vector2 GetBloodSplashPosition()
         {
@@ -596,6 +602,7 @@ namespace Remizione
         public override bool MoveTo(Vector2 destination)
         {
             moveToTarget = null;
+            FollowingPathDestination = null;
 
             // No path needed
             if (WalkArea == null || IgnoreWalkArea)
@@ -631,6 +638,7 @@ namespace Remizione
             pendingPathNodes.AddRange(path);
             MoveToNextPathNode();
 
+            FollowingPathDestination = path[^1];
             IsFollowingPath = true;
 
             return true;

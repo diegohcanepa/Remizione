@@ -33,7 +33,6 @@ namespace Remizione
 
         #region Private members
 
-        // MergeRectangles
         private static List<Vector2> MergeRectangles(List<Rectangle> rectangles)
         {
             // Step 1: Collect unique x and y coordinates
@@ -57,8 +56,8 @@ namespace Remizione
             foreach (var y in ySet) yArray[index++] = y;
             Array.Sort(xArray);
             Array.Sort(yArray);
-            List<float> X = new List<float>(xArray);
-            List<float> Y = new List<float>(yArray);
+            var X = new List<float>(xArray);
+            var Y = new List<float>(yArray);
 
             var m = X.Count;
             var n = Y.Count;
@@ -69,7 +68,7 @@ namespace Remizione
             for (var r = 0; r < rectangles.Count; r++)
             {
                 var rect = rectangles[r];
-                // Binary search for i_start: smallest i where X[i] >= rect.Left
+                // Binary search for i_start and i_end
                 int i_start = 0, i_left = 0, i_right = m - 1;
                 while (i_left <= i_right)
                 {
@@ -77,7 +76,6 @@ namespace Remizione
                     if (X[mid] >= rect.Left) { i_start = mid; i_right = mid - 1; }
                     else i_left = mid + 1;
                 }
-                // Binary search for i_end: largest i where X[i] < rect.Right
                 var i_end = m - 1;
                 i_left = 0; i_right = m - 1;
                 while (i_left <= i_right)
@@ -86,7 +84,8 @@ namespace Remizione
                     if (X[mid] < rect.Right) { i_end = mid; i_left = mid + 1; }
                     else i_right = mid - 1;
                 }
-                // Binary search for j_start: smallest j where Y[j] >= rect.Top
+
+                // Binary search for j_start and j_end
                 int j_start = 0, j_left = 0, j_right = n - 1;
                 while (j_left <= j_right)
                 {
@@ -94,7 +93,6 @@ namespace Remizione
                     if (Y[mid] >= rect.Top) { j_start = mid; j_right = mid - 1; }
                     else j_left = mid + 1;
                 }
-                // Binary search for j_end: largest j where Y[j] < rect.Bottom
                 var j_end = n - 1;
                 j_left = 0; j_right = n - 1;
                 while (j_left <= j_right)
@@ -103,7 +101,7 @@ namespace Remizione
                     if (Y[mid] < rect.Bottom) { j_end = mid; j_left = mid + 1; }
                     else j_right = mid - 1;
                 }
-                // Mark covered cells
+
                 for (var i = i_start; i <= i_end && i < m - 1; i++)
                 {
                     for (var j = j_start; j <= j_end && j < n - 1; j++)
@@ -115,7 +113,6 @@ namespace Remizione
 
             // Step 3: Collect boundary segments
             List<(Vector2, Vector2)> segments = new List<(Vector2, Vector2)>();
-            // Horizontal segments
             for (var j = 0; j < n; j++)
             {
                 for (var i = 0; i < m - 1; i++)
@@ -130,7 +127,6 @@ namespace Remizione
                     }
                 }
             }
-            // Vertical segments
             for (var i = 0; i < m; i++)
             {
                 for (var j = 0; j < n - 1; j++)
@@ -159,22 +155,21 @@ namespace Remizione
             }
 
             // Step 5: Trace the polygon
-            if (adj.Count == 0) return new List<Vector2>(); // No boundary
-                                                            // Find starting point: smallest y, then smallest x (without LINQ)
+            if (adj.Count == 0) return new List<Vector2>();
             Vector2 start = new Vector2(float.MaxValue, float.MaxValue);
             foreach (var p in adj.Keys)
             {
-                if (p.Y < start.Y || p.Y == start.Y && p.X < start.X)
+                if (p.Y < start.Y || (p.Y == start.Y && p.X < start.X))
                     start = p;
             }
-            List<Vector2> polygon = new List<Vector2>();
+
+            var polygon = new List<Vector2>();
             var current = start;
             Vector2? previous = null;
             do
             {
                 polygon.Add(current);
                 var neighbors = adj[current];
-                // Find the next point that isn't the previous one
                 var next = neighbors[0];
                 if (neighbors.Count > 1 && previous.HasValue && neighbors[0] == previous.Value)
                     next = neighbors[1];

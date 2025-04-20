@@ -288,6 +288,9 @@ namespace Remizione
             // Shadows
             DrawShadows(gameTime);
 
+            // Move destination mark
+            Session.HUD.DestinationMark.Draw(gameTime);
+
             // Doors (layer)
             DrawThings(gameTime, RenderLayer.Doors, interactiveTarget);
 

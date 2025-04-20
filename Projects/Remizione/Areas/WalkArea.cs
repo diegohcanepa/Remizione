@@ -33,15 +33,15 @@ namespace Remizione
         internal WalkArea(GameRoom room, string name, FlagCondition? condition, params Vector2[] vertices)
             : base(room, name, condition, vertices)
         {
-            this.deflatedPolygon = new ReadOnlyPolygon(vertices, -.01f);
-            this.inflatedPolygon = new ReadOnlyPolygon(vertices, .01f);
+            this.deflatedPolygon = new ReadOnlyPolygon(Polygon.Vertices, -.01f);
+            this.inflatedPolygon = new ReadOnlyPolygon(Polygon.Vertices, .01f);
             this.Holes = new RoomAreaReadOnlyCollection<HoleArea>(holes);
 
             // Create nodes (concave vertices)
             if (!Polygon.IsEmpty)
             {
                 // Deflate polygon by a marginal value to allow InLineOfSight between them
-                var p = new ReadOnlyPolygon(vertices, -.05f);
+                var p = new ReadOnlyPolygon(Polygon.Vertices, -.05f);
 
                 for (var i = 0; i < p.Vertices.Count; i++)
                 {
@@ -63,7 +63,7 @@ namespace Remizione
             // Holes
             for (var i = 0; i < holes.Count; i++)
             {
-                if (!holes[i].Polygon.BoundingRectangleF.Intersects(Room.Session.Camera.CullingBox))
+                if (!holes[i].Polygon.BoundingRectangleF.Intersects(clipBox))
                     continue;
 
                 if (holes[i].Test())
@@ -81,7 +81,7 @@ namespace Remizione
 
                 if (Room.CulledThings[i] is IHoleArea holeArea && !holeArea.Polygon.IsEmpty)
                 {
-                    if (holeArea.Polygon.BoundingRectangleF.Intersects(Room.Session.Camera.CullingBox))
+                    if (holeArea.Polygon.BoundingRectangleF.Intersects(clipBox))
                         list.Add(holeArea);
                 }
             }
@@ -209,7 +209,7 @@ namespace Remizione
                 return null;
 
             if (!IsInside(destination))
-                return null;
+                destination = ClampInside(destination, out _);
 
             // Define clip box for optimized path finding
             if (Room.Session.Camera.CullingBox.Contains(requester.Position) && 

@@ -15,6 +15,7 @@ namespace Remizione
             DefaultLight = this[nameof(DefaultLight)];
             DustParticles = CreateReadOnlyCollection("DustParticle", 1, 1);
             FireflyParticles = CreateReadOnlyCollection("FireflyParticle", 1, 2);
+            MoveDestinationMark = this[nameof(MoveDestinationMark)];
         }
 
         // DefaultLight
@@ -25,5 +26,8 @@ namespace Remizione
 
         // FireflyParticles
         public ReadOnlyCollection<AtlasImage> FireflyParticles { get; }
+
+        // MoveDestinationMark
+        public AtlasImage MoveDestinationMark { get; }
     }
 }

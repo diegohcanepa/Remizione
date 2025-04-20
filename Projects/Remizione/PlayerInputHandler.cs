@@ -62,6 +62,12 @@ namespace Remizione
 
             Actor.FastMove = fastMove;
             Actor.MoveTo(destination, moveToTarget);
+            if (Actor.FollowingPathDestination.HasValue)
+            {
+                Actor.Session.HUD.DestinationMark.Color = moveToTarget != null ? ColorPalette.DestinationMark.Target : ColorPalette.DestinationMark.Default;
+                Actor.Session.HUD.DestinationMark.Position = Actor.FollowingPathDestination;
+            }
+            
             Actor.Session.HUD.EchoMessage.Hide();
         }
 

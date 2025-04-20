@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 
 namespace Engendro
 {
@@ -38,6 +39,14 @@ namespace Engendro
             return MathF.Sqrt(DistanceToSegmentSquared(p, v, w));
         }
 
+        // IsColinear
+        public static bool IsColinear(Vector2 a, Vector2 b, Vector2 c, float epsilon = 0.0001f)
+        {
+            var ab = b - a;
+            var bc = c - b;
+            return Math.Abs(ab.X * bc.Y - ab.Y * bc.X) < epsilon;
+        }
+
         // LineSegmentsCross
         public static bool LineSegmentsCross(Vector2 startA, Vector2 endA, Vector2 startB, Vector2 endB)
         {
@@ -62,6 +71,27 @@ namespace Engendro
         public static float NormalizeAngle(float degrees)
         {
             return (degrees %= 360) >= 0 ? degrees : (degrees + 360);
+        }
+
+        // SimplifyPolygon
+        public static List<Vector2> SimplifyPolygon(Vector2[] polygon)
+        {
+            if (polygon.Length < 3)
+                return new List<Vector2>(polygon);
+
+            var result = new List<Vector2>();
+
+            for (int i = 0; i < polygon.Length; i++)
+            {
+                Vector2 prev = polygon[(i - 1 + polygon.Length) % polygon.Length];
+                Vector2 curr = polygon[i];
+                Vector2 next = polygon[(i + 1) % polygon.Length];
+
+                if (!Geometry.IsColinear(prev, curr, next))
+                    result.Add(curr);
+            }
+
+            return result;
         }
     }
 }
