@@ -67,10 +67,7 @@ namespace Engendro
         public static Int32Range Empty { get; } = new Int32Range(0);
 
         // GetHashCode
-        public override int GetHashCode()
-        {
-            return Minimum ^ Maximum;
-        }
+        public override int GetHashCode() => Minimum ^ Maximum;
 
         // IsEmpty
         public bool IsEmpty => Minimum == 0 && Maximum == 0;
@@ -82,19 +79,13 @@ namespace Engendro
         public int Minimum { get; }
 
         // Random
-        public int Random()
-        {
-            return Randomizer.Next(Minimum, Maximum);
-        }
+        public int Random() => Randomizer.Next(Minimum, Maximum);
 
         // Separator
         public static readonly string Separator = "|";
 
         // ToString
-        public override string ToString()
-        {
-            return $"({Minimum}-{Maximum})";
-        }
+        public override string ToString() => $"({Minimum}-{Maximum})";
 
         // TryParse
         public static bool TryParse(string value, out Int32Range result)

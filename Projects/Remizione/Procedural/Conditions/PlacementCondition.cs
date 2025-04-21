@@ -1,4 +1,6 @@
-﻿namespace Remizione
+﻿using System;
+
+namespace Remizione
 {
     /// <summary>
     /// PlacementCondition
@@ -6,6 +8,6 @@
     public abstract class PlacementCondition
     {
         // IsAvailable
-        public abstract bool IsAvailable(GameThing thing, WorldBlock block);
+        public abstract bool IsAvailable(GameThing thing, WorldBlock block, Random random);
     }
 }

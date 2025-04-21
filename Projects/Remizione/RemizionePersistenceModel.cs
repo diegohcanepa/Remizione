@@ -14,6 +14,9 @@ namespace Remizione
         {
             PersistentType persistentType;
 
+            persistentType = MapType(typeof(GameThing));
+            persistentType.Map(nameof(GameThing.WorldVersion));
+
             persistentType = MapType(typeof(Actor));
             persistentType.Map(nameof(Actor.Effects));
             persistentType.Map(nameof(Actor.HP));

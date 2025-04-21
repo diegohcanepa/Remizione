@@ -52,7 +52,7 @@ namespace Remizione
             base.OnInitialize();
 
             if (Session.IsNewSession)
-                WorldManager.AddBlock(new(WorldManager.GridSize / 2), true);
+                WorldManager.AddBlock(new(WorldManager.GridSize / 2), Session.WorldVersion);
 
             Regenerate();
         }

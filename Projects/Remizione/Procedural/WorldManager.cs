@@ -226,7 +226,7 @@ namespace Remizione
         #endregion
 
         // AddBlock
-        public WorldBlock AddBlock(Point gridPosition, bool populate)
+        public WorldBlock AddBlock(Point gridPosition, int worldVersion)
         {
             if (!IsValidPosition(gridPosition))
                 throw new InvalidOperationException("Grid position is out of bounds.");
@@ -234,7 +234,7 @@ namespace Remizione
             if (blocks.ContainsKey(gridPosition))
                 throw new InvalidOperationException("Grid position is already used.");
 
-            var block = new WorldBlock(this, gridPosition, populate);
+            var block = new WorldBlock(this, gridPosition, worldVersion);
             blocks[gridPosition] = block;
             blockList.Add(block);
 

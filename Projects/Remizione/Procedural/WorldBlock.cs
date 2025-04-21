@@ -15,15 +15,18 @@ namespace Remizione
     {
         private readonly WorldBlockGrid decorationGrid;
         private readonly WorldBlockGrid grid;
+        private readonly Random random;
+        private readonly int randomSeed;
         private readonly List<WorldBlockTag> tags = [];
         private readonly List<GameThing> things = [];
 
         #region Constructor
 
         // Constructor
-        public WorldBlock(WorldManager manager, Point worldGridPosition, bool isNew)
+        public WorldBlock(WorldManager manager, Point worldGridPosition, int worldVersion)
             : base(manager.Session, string.Empty)
         {
+            this.WorldVersion = worldVersion;
             this.decorationGrid = new WorldBlockGrid("Decoration", manager.BlockSize);
             this.grid = new WorldBlockGrid("Main", manager.BlockSize);
             this.Things = new(things);
@@ -40,8 +43,10 @@ namespace Remizione
             Position = new(worldGridPosition.X * manager.BlockSize.Width, worldGridPosition.Y * manager.BlockSize.Height);
             DefaultImageName = "TerrainBlockDefault";
 
-            if (isNew)
-                Populate();
+            this.randomSeed = GetSeed(manager.Session.RandomSeed, Index);
+            this.random = new Random(randomSeed);
+
+            Populate();
         }
 
         #endregion
@@ -69,8 +74,8 @@ namespace Remizione
                 return;
 
             var targetGrid = thing.IsWalkAreaHole ? grid : decorationGrid;
-            int totalCount = thing.InstancesPerBlock.Random();
-            int clumpSize = 3 + Session.Random.Next(3);
+            int totalCount = random.Next(thing.InstancesPerBlock.Minimum, thing.InstancesPerBlock.Maximum + 1);
+            int clumpSize = 3 + random.Next(3);
             int clumpCount = (totalCount + clumpSize - 1) / clumpSize;
 
             Size sizeInCells = thing.GetRequiredGridSpace(WorldBlockGrid.CellSize);
@@ -84,8 +89,8 @@ namespace Remizione
 
                 for (int j = 0; j < clumpSize - 1; j++)
                 {
-                    int offsetCol = baseCol + Session.Random.Next(-1, 2);
-                    int offsetRow = baseRow + Session.Random.Next(-1, 2);
+                    int offsetCol = baseCol + random.Next(-1, 2);
+                    int offsetRow = baseRow + random.Next(-1, 2);
 
                     if (targetGrid.TryReserveSpace(sizeInCells, out int col, out int row, offsetCol, offsetRow))
                         PlaceDynamicThing(thing, col, row);
@@ -101,8 +106,9 @@ namespace Remizione
 
             var targetGrid = thing.IsWalkAreaHole ? grid: decorationGrid;
             Size sizeInCells = thing.GetRequiredGridSpace(WorldBlockGrid.CellSize);
-
-            for (int i = 0; i < thing.InstancesPerBlock.Random(); i++)
+            var count = random.Next(thing.InstancesPerBlock.Minimum, thing.InstancesPerBlock.Maximum + 1);
+            
+            for (int i = 0; i < count; i++)
             {
                 // Intentos limitados para evitar bucles infinitos si no hay espacio
                 int maxAttempts = 20 + (sizeInCells.Width * sizeInCells.Height) * 2;
@@ -110,8 +116,8 @@ namespace Remizione
 
                 for (int attempt = 0; attempt < maxAttempts && !placed; attempt++)
                 {
-                    int col = Session.Random.Next(targetGrid.ColCount - sizeInCells.Width + 1);
-                    int row = Session.Random.Next(targetGrid.RowCount - sizeInCells.Height + 1);
+                    int col = random.Next(targetGrid.ColCount - sizeInCells.Width + 1);
+                    int row = random.Next(targetGrid.RowCount - sizeInCells.Height + 1);
 
                     if (targetGrid.TryReserveSpace(sizeInCells, out int finalCol, out int finalRow, col, row))
                     {
@@ -166,6 +172,21 @@ namespace Remizione
             }
         }
 
+        // GetSeed
+        private static int GetSeed(int seed, int salt)
+        {
+            uint h = (uint)seed;
+
+            h ^= (uint)salt * 0x9E3779B9; // número dorado (Knuth)
+            h ^= h >> 16;
+            h *= 0x85EBCA6B;
+            h ^= h >> 13;
+            h *= 0xC2B2AE35;
+            h ^= h >> 16;
+
+            return (int)h;
+        }
+
         // PlaceDynamicThing
         private void PlaceDynamicThing(GameThing thing, int col, int row)
         {
@@ -188,7 +209,10 @@ namespace Remizione
 
                 foreach (var thing in Session.GetStaticThings(phase))
                 {
-                    if (!thing.IsAvailable(this))
+                    if (thing.WorldVersion > WorldVersion)
+                        continue;
+
+                    if (!thing.IsAvailable(this, random))
                         continue;
 
                     switch (thing.DistributionStrategy)
@@ -205,7 +229,7 @@ namespace Remizione
 
                         // NoiseMap
                         case PlacementDistributionStrategy.NoiseMap:
-                            DistributeWithNoiseMap(thing, Session.RandomSeed);
+                            DistributeWithNoiseMap(thing, randomSeed);
                             break;
                     }
                 }
@@ -248,7 +272,7 @@ namespace Remizione
             else if (direction == EngendroAdventure.Direction.Up)
                 newCell.Y -= 1;
 
-            return Manager.AddBlock(newCell, true);
+            return Manager.AddBlock(newCell, Session.WorldVersion);
         }
 
         // GetNeighbor

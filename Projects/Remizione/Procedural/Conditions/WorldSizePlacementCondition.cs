@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using System;
 
 namespace Remizione
 {
@@ -14,7 +15,7 @@ namespace Remizione
         }
 
         // IsAvailable
-        public override bool IsAvailable(GameThing thing, WorldBlock block)
+        public override bool IsAvailable(GameThing thing, WorldBlock block, Random random)
         {
             return Range.Contains(block.Manager.Blocks.Count);
         }

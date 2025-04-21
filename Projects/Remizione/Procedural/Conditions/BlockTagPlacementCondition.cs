@@ -1,4 +1,6 @@
-﻿namespace Remizione
+﻿using System;
+
+namespace Remizione
 {
     /// <summary>
     /// BlockTagPlacementCondition
@@ -12,7 +14,7 @@
         }
 
         // IsAvailable
-        public override bool IsAvailable(GameThing thing, WorldBlock block)
+        public override bool IsAvailable(GameThing thing, WorldBlock block, Random random)
         {
             return block.Tags.Contains(Tag);
         }

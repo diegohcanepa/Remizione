@@ -1,4 +1,6 @@
-﻿namespace Remizione
+﻿using System;
+
+namespace Remizione
 {
     /// <summary>
     /// ChancePlacementCondition
@@ -15,9 +17,9 @@
         public float Chance { get; }
 
         // IsAvailable
-        public override bool IsAvailable(GameThing thing, WorldBlock block)
+        public override bool IsAvailable(GameThing thing, WorldBlock block, Random random)
         {
-            return block.Session.Random.NextDouble() < Chance;
+            return random.NextDouble() < Chance;
         }
     }
 }

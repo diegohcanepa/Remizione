@@ -20,7 +20,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private enum AttributeName { RandomSeed }
+        private enum AttributeName { RandomSeed, WorldVersion }
         private readonly ScriptConsole? console;
         private readonly InventoryScene inventoryScene;
         private Actor? player;
@@ -39,8 +39,7 @@ namespace Remizione
             this.Game = game;
             this.HUD = new HUD(this);
             this.Environment = new Environment();
-            this.RandomSeed = RandomSeed = System.Environment.TickCount;
-            this.Random = new Random(RandomSeed);
+            this.RandomSeed = 10000;// RandomSeed = System.Environment.TickCount;
 
             ObjectPools = new ObjectPools(this);
             OverlayTexts = new OverlayTextManager(game);
@@ -66,31 +65,6 @@ namespace Remizione
             this.inventoryScene = new(this);
 
             LocalizationSource = LocalizationSource.Script;
-        }
-
-        #endregion
-
-        #region Private members
-
-        // CompareThingSizeDescending
-        private static int CompareThingSizeDescending(GameThing? a, GameThing? b)
-        {
-            if (a == null && b == null)
-                return 0;
-            
-            if (a == null)
-                return 1;
-            
-            if (b == null)
-                return -1;
-
-            Size sizeA = a.GetRequiredGridSpace(WorldBlockGrid.CellSize);
-            Size sizeB = b.GetRequiredGridSpace(WorldBlockGrid.CellSize);
-            
-            int areaA = sizeA.Width * sizeA.Height;
-            int areaB = sizeB.Width * sizeB.Height;
-
-            return areaB - areaA;
         }
 
         #endregion
@@ -212,11 +186,6 @@ namespace Remizione
                 if (entity is GameThing thing)
                     staticThings[thing.PlacementPhase].Add(thing);
             }
-
-            foreach (var phase in Enum.GetValues<PlacementPhase>())
-            {
-                staticThings[phase].Sort(CompareThingSizeDescending);
-            }
         }
 
         // OnOutcomeCompleted
@@ -259,14 +228,15 @@ namespace Remizione
 
             // RandomSeed
             if (sessionNode.Attributes[AttributeName.RandomSeed.ToString()]?.Value is string randomSeedValue)
-            {
                 RandomSeed = XmlConvert.ToInt32(randomSeedValue);
-                Random = new Random(RandomSeed);
-            }
 
             // SelectedItemCategory
             if (sessionNode.Attributes[nameof(SelectedItemCategory)]?.Value is string selectedItemCategoryValue)
                 SelectedItemCategory = Enum.Parse<ItemCategory>(selectedItemCategoryValue);
+
+            // WorldVersion
+            if (sessionNode.Attributes[AttributeName.WorldVersion.ToString()]?.Value is string worldVersionValue)
+                RandomSeed = XmlConvert.ToInt32(worldVersionValue);
         }
 
         // OnResume
@@ -356,6 +326,9 @@ namespace Remizione
 
             // SelectedItemCategory
             output.WriteAttributeString(nameof(SelectedItemCategory), XmlConvert.ToString((int)SelectedItemCategory));
+
+            // WorldVersion
+            output.WriteAttributeString(AttributeName.WorldVersion.ToString(), XmlConvert.ToString(WorldVersion));
         }
 
         #endregion
@@ -431,9 +404,6 @@ namespace Remizione
         [ScriptProperty]
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
 
-        // Random
-        public Random Random { get; private set; }
-
         // RandomSeed
         public int RandomSeed { get; private set; }
 
@@ -473,5 +443,8 @@ namespace Remizione
             Game.SceneManager.Push(inventoryScene);
             Camera.FocusTarget();
         }
+
+        // WorldVersion
+        public int WorldVersion { get; set; } = 1;
     }
 }

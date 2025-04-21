@@ -824,11 +824,11 @@ namespace Remizione
         public Int32Range InstancesPerBlock { get; set; } = new Int32Range(1);
 
         // IsAvailable
-        public bool IsAvailable(WorldBlock worldBlock)
+        public bool IsAvailable(WorldBlock worldBlock, Random random)
         {
             for (int i = 0; i < placementConditions.Count; i++)
             {
-                if (!placementConditions[i].IsAvailable(this, worldBlock))
+                if (!placementConditions[i].IsAvailable(this, worldBlock, random))
                     return false;
             }
 
@@ -1005,5 +1005,9 @@ namespace Remizione
                 }
             }
         }
+
+        // WorldVersion
+        [ScriptProperty]
+        public int WorldVersion { get; set; } = 1;
     }
 }
