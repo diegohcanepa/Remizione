@@ -1,12 +1,12 @@
 ﻿namespace Remizione
 {
     /// <summary>
-    /// TagCondition
+    /// BlockTagPlacementCondition
     /// </summary>
-    public sealed class TagCondition : PlacementCondition
+    public sealed class BlockTagPlacementCondition : PlacementCondition
     {
         // Constructor
-        public TagCondition(WorldBlockTag tag)
+        public BlockTagPlacementCondition(WorldBlockTag tag)
         {
             this.Tag = tag;
         }

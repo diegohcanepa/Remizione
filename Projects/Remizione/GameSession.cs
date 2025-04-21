@@ -26,7 +26,7 @@ namespace Remizione
         private Actor? player;
         private Vector2? playerPosition;
         private readonly RoomEditor? roomEditor;
-        private readonly Dictionary<PlacementPhase, List<Prop>> staticThings = [];
+        private readonly Dictionary<PlacementPhase, List<GameThing>> staticThings = [];
 
         #endregion
 
@@ -72,15 +72,21 @@ namespace Remizione
 
         #region Private members
 
-        // ComparePropSizeDescending
-        private static int ComparePropSizeDescending(Prop? a, Prop? b)
+        // CompareThingSizeDescending
+        private static int CompareThingSizeDescending(GameThing? a, GameThing? b)
         {
-            if (a == null && b == null) return 0;
-            if (a == null) return 1;
-            if (b == null) return -1;
+            if (a == null && b == null)
+                return 0;
+            
+            if (a == null)
+                return 1;
+            
+            if (b == null)
+                return -1;
 
             Size sizeA = a.GetRequiredGridSpace(WorldBlockGrid.CellSize);
             Size sizeB = b.GetRequiredGridSpace(WorldBlockGrid.CellSize);
+            
             int areaA = sizeA.Width * sizeA.Height;
             int areaB = sizeB.Width * sizeB.Height;
 
@@ -137,6 +143,7 @@ namespace Remizione
             scriptRegistry.RegisterStatement("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             scriptRegistry.RegisterStatement("exit-session", typeof(ExitSessionCommand));
             scriptRegistry.RegisterStatement("hide-overlay-text", typeof(HideOverlayTextCommand));
+            scriptRegistry.RegisterStatement("placement-condition", typeof(PlacementConditionCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("meta-item", typeof(MetaItemCommand), CodingContext.Declaration);
             scriptRegistry.RegisterStatement("say", typeof(SayCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("select-walk-area", typeof(SelectWalkAreaCommand));
@@ -202,13 +209,13 @@ namespace Remizione
             // Distribute entities
             foreach (var entity in Entities)
             {
-                if (entity is Prop prop)
-                    staticThings[prop.PlacementPhase].Add(prop);
+                if (entity is GameThing thing)
+                    staticThings[thing.PlacementPhase].Add(thing);
             }
 
             foreach (var phase in Enum.GetValues<PlacementPhase>())
             {
-                staticThings[phase].Sort(ComparePropSizeDescending);
+                staticThings[phase].Sort(CompareThingSizeDescending);
             }
         }
 

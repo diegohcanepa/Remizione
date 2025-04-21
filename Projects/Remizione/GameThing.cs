@@ -18,7 +18,6 @@ namespace Remizione
         #region Private fields
 
         private bool applyDamagePending;
-        private readonly List<PlacementCondition> conditions = [];
         private int fp;
         private readonly Polygon holeInflatedPoly = new();
         private PathNode[]? holeNodes;
@@ -38,6 +37,7 @@ namespace Remizione
         private int maxFP;
         private int maxHP;
         private int maxStamina;
+        private readonly List<PlacementCondition> placementConditions = [];
         private RenderLayer renderLayer;
         private int renderLayerDepth;
         private bool shouldClampToWalkArea;
@@ -56,7 +56,7 @@ namespace Remizione
         {
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
-            this.Conditions = new(conditions);
+            this.PlacementConditions = new(placementConditions);
         }
 
         #endregion
@@ -415,6 +415,12 @@ namespace Remizione
 
         #endregion
 
+        // AddPlacementCondition
+        public void AddPlacementCondition(PlacementCondition condition)
+        {
+            placementConditions.Add(condition);
+        }
+
         // ApplyDamage
         public void ApplyDamage(GameThing attacker)
         {
@@ -518,9 +524,6 @@ namespace Remizione
         // CollisionPolygon
         [ScriptProperty]
         public Polygon? CollisionPolygon { get; set; }
-
-        // Conditions
-        public ReadOnlyCollection<PlacementCondition> Conditions { get; }
 
         // CumulativeDamage
         public float CumulativeDamage { get; set; }
@@ -818,15 +821,14 @@ namespace Remizione
         }
 
         // InstancesPerBlock
-        [ScriptProperty(CodingContext.EntityDeclaration)]
         public Int32Range InstancesPerBlock { get; set; } = new Int32Range(1);
 
         // IsAvailable
         public bool IsAvailable(WorldBlock worldBlock)
         {
-            for (int i = 0; i < conditions.Count; i++)
+            for (int i = 0; i < placementConditions.Count; i++)
             {
-                if (!conditions[i].IsAvailable(this, worldBlock))
+                if (!placementConditions[i].IsAvailable(this, worldBlock))
                     return false;
             }
 
@@ -905,8 +907,10 @@ namespace Remizione
         [ScriptProperty]
         public Vector2 OverheadOrigin { get; set; }
 
+        // PlacementConditions
+        public ReadOnlyCollection<PlacementCondition> PlacementConditions { get; }
+
         // PlacementPhase
-        [ScriptProperty(CodingContext.EntityDeclaration)]
         public PlacementPhase PlacementPhase { get; set; }
 
         // RenderLayer

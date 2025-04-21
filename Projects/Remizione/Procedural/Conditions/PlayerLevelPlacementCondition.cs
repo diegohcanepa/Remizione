@@ -3,12 +3,12 @@
 namespace Remizione
 {
     /// <summary>
-    /// WorldSizeCondition
+    /// PlayerLevelPlacementCondition
     /// </summary>
-    public sealed class WorldSizeCondition : PlacementCondition
+    public sealed class PlayerLevelPlacementCondition : PlacementCondition
     {
         // Constructor
-        public WorldSizeCondition(Int32Range range)
+        public PlayerLevelPlacementCondition(Int32Range range)
         {
             this.Range = range;
         }
@@ -16,7 +16,10 @@ namespace Remizione
         // IsAvailable
         public override bool IsAvailable(GameThing thing, WorldBlock block)
         {
-            return Range.Contains(block.Manager.Blocks.Count);
+            if (thing.Session.Player == null)
+                return false;
+            else
+                return Range.Contains(thing.Session.Player.Level);
         }
 
         // Range

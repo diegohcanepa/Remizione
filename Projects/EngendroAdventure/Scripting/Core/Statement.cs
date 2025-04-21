@@ -25,6 +25,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string AwaitArg = "#await";
         protected static readonly string BackgroundArg = "#background";
         protected static readonly string BehaviorArg = "#behavior";
+        protected static readonly string BlockTagArg = "#block-tag";
         protected static readonly string BonusArg = "#bonus";
         protected static readonly string BottomArg = "#bottom";
         protected static readonly string BounceDelayArg = "#bounce-delay";
@@ -127,6 +128,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string PersistentArg = "#persistent";
         protected static readonly string PitchArg = "#pitch";
         protected static readonly string PivotArg = "#pivot";
+        protected static readonly string PlayerLevelArg = "#player-level";
         protected static readonly string PositionArg = "#position";
         protected static readonly string PrefixArg = "#prefix";
         protected static readonly string PreserveArg = "#preserve";
@@ -178,6 +180,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string VolatileArg = "#volatile";
         protected static readonly string VolumeArg = "#volume";
         protected static readonly string WalkAreaArg = "#walk-area";
+        protected static readonly string WorldSizeArg = "#world-size";
         protected static readonly string ZeroPaddingArg = "#zero-padding";
 
         #endregion

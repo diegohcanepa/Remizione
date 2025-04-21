@@ -1,12 +1,12 @@
 ﻿namespace Remizione
 {
     /// <summary>
-    /// ChanceCondition
+    /// ChancePlacementCondition
     /// </summary>
-    public sealed class ChanceCondition : PlacementCondition
+    public sealed class ChancePlacementCondition : PlacementCondition
     {
         // Constructor
-        public ChanceCondition(float chance)
+        public ChancePlacementCondition(float chance)
         {
             this.Chance = chance;
         }

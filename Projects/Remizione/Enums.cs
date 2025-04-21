@@ -87,7 +87,7 @@ namespace Remizione
     public enum PlacementDistributionStrategy { Random, Clump, NoiseMap }
 
     // PlacementPhase
-    public enum PlacementPhase { None, Terrain, NonSolidDecoration, NaturalObject, ArtificialObject }
+    public enum PlacementPhase { None, Terrain, NonSolidDecoration, NaturalObject, ArtificialObject, Actor }
 
     // PlatformMessageKey
     public enum PlatformMessageKey { ChangeUser, ControllerDisconnected, PressAnyButton, PressAnyKeyOrButton, SignIn }

@@ -118,6 +118,7 @@
 			<Word>exit-session</Word>
 			<Word>meta-item</Word>
 			<Word>pause-routine</Word>
+			<Word>placement-condition</Word>
 			<Word>pop-scene</Word>
 			<Word>reload</Word>
 			<Word>restart-session</Word>
@@ -195,13 +196,11 @@
 			<Word>add-item</Word>
 			<Word>add-light</Word>
 			<Word>add-loot-item</Word>
-			<Word>add-money</Word>
 			<Word>add-terrain-area</Word>
 			<Word>add-trigger-area</Word>
 			<Word>add-walk-area</Word>
 			<Word>atlas</Word>
 			<Word>begin-rain</Word>
-			<Word>copy-holes</Word>
 			<Word>dizziness-effect</Word>
 			<Word>end-rain</Word>
 			<Word>flashback-effect</Word>
