@@ -178,6 +178,13 @@ namespace Remizione
         // InputHandler
         protected InputHandler? InputHandler { get; set; }
 
+        // OnDamageReaction
+        protected override void OnDamageReaction(GameThing attacker)
+        {
+            StopMoving();
+            FaceTo(attacker);
+        }
+
         // OnDeath
         protected override void OnDeath()
         {

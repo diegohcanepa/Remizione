@@ -31,6 +31,15 @@ namespace Engendro
             return color;
         }
 
+        // ToPoint
+        public static Point ToPoint(string value)
+        {
+            var coords = value.Split(',');
+            var x = int.Parse(coords[0].Trim(), CultureInfo.InvariantCulture);
+            var y = int.Parse(coords[1].Trim(), CultureInfo.InvariantCulture);
+            return new Point(x, y);
+        }
+
         // ToPolygon
         public static Polygon ToPolygon(string value)
         {

@@ -250,8 +250,10 @@ namespace Remizione
         // CanCheckCollisions
         protected virtual bool CanCheckCollisions() => CollisionDetection;
 
-        // IsProp
-        protected virtual bool IsProp => false;
+        // OnDamageReaction
+        protected virtual void OnDamageReaction(GameThing attacker)
+        {
+        }
 
         // OnDeath
         protected virtual void OnDeath()
@@ -435,11 +437,7 @@ namespace Remizione
             if (HurtSound != null)
                 PlaySound(HurtSound);
 
-            if (!IsProp)
-            {
-                StopMoving();
-                FaceTo(attacker);
-            }
+            OnDamageReaction(attacker);
 
             if (knockback == Vector2.Zero && HP <= 0)
             {

@@ -13,12 +13,16 @@ namespace Remizione
     /// </summary>
     public class WorldBlock : Prop
     {
+        #region Private fields
+
         private readonly WorldBlockGrid decorationGrid;
         private readonly WorldBlockGrid grid;
         private readonly Random random;
         private readonly int randomSeed;
         private readonly List<WorldBlockTag> tags = [];
         private readonly List<GameThing> things = [];
+
+        #endregion
 
         #region Constructor
 

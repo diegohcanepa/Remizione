@@ -1,5 +1,8 @@
 ﻿using Engendro;
 using EngendroAdventure.Scripting;
+using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using System.Xml;
 
 namespace Remizione
 {
@@ -8,6 +11,9 @@ namespace Remizione
     /// </summary>
     public sealed class ProceduralRoom : GameRoom
     {
+        private enum AttributeName { WorldBlocks };
+        private List<(Point gridPosition, int worldVersion)> worldBlockData = [];
+
         // Constructor
         public ProceduralRoom(GameSession session, string name)
             : base(session, name)
@@ -52,7 +58,16 @@ namespace Remizione
             base.OnInitialize();
 
             if (Session.IsNewSession)
+            {
                 WorldManager.AddBlock(new(WorldManager.GridSize / 2), Session.WorldVersion);
+            }
+            else
+            {
+                for (var i = 0; i < worldBlockData.Count; i++)
+                {
+                    WorldManager.AddBlock(worldBlockData[i].gridPosition, worldBlockData[i].worldVersion);
+                }
+            }
 
             Regenerate();
         }
@@ -69,12 +84,47 @@ namespace Remizione
             }
         }
 
+        // OnRead
+        protected override void OnRead(XmlAttributeCollection attributes)
+        {
+            // World blocks
+            if (attributes[AttributeName.WorldBlocks.ToString()]?.Value is string worldBlocksValue)
+            {
+                var list = worldBlocksValue.Split(';');
+
+                foreach (var item in list)
+                {
+                    var blockData = item.Split(':');
+                    var gridPosition = XmlConverterExtension.ToPoint(blockData[0]);
+                    var worldVersion = int.Parse(blockData[1]);
+                    worldBlockData.Add((gridPosition, worldVersion));
+                }
+            }
+        }
+
+        // OnWrite
+        protected override void OnWrite(XmlWriter output)
+        {
+            var blockData = new List<string>();
+            
+            foreach (var block in WorldManager.Blocks)
+            {
+                var value = $"{block.WorldGridPosition.X},{block.WorldGridPosition.Y}:{block.WorldVersion}";
+                blockData.Add(value);
+            }
+
+            var attrValue = string.Join(";", blockData);
+
+            output.WriteAttributeString(AttributeName.WorldBlocks.ToString(), attrValue);
+        }
+
         #endregion
 
         // Expand
         [ScriptMethod]
         public void Expand()
         {
+            /*
             if (Session.Player != null)
             {
                 if (WorldManager.GetBlockFromScreen(Session.Player.Position) is WorldBlock terrainBlock)
@@ -174,6 +224,7 @@ namespace Remizione
                     Regenerate();
                 }
             }
+            */
         }
 
         // WorldManager

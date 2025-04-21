@@ -12,12 +12,16 @@ namespace Remizione
     /// </summary>
     public class Prop : GameThing
     {
+        #region Private fields
+
         private bool isRevealBoxDirty;
         private RectangleF revealBox;
         private readonly FloatTween revealTween = new();
         private readonly ImageSprite shadow;
 
-        #region Protected members
+        #endregion
+
+        #region Constructor members
 
         // Constructor
         public Prop(GameSession session, string name)
@@ -31,7 +35,6 @@ namespace Remizione
                 Opacity = ColorPalette.ShadowOpacity,
                 PivotOrigin = RectanglePoint.Bottom,
             };
-
         }
 
         #endregion
@@ -75,10 +78,7 @@ namespace Remizione
         #endregion
 
         #region Protected members
-
-        // IsProp
-        protected override bool IsProp => true;
-
+     
         // OnDrawShadow
         protected override void OnDrawShadow(GameTime gameTime) => shadow.Draw(gameTime);
 

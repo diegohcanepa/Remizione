@@ -45,7 +45,7 @@ namespace Remizione
 
             TransitionManager.DefaultTransition.DefaultDuration = GameSettings.DefaultTransitionDuration;
 
-            InputManager.AllowGamePad = false;
+            //InputManager.AllowGamePad = false;
         }
 
         #endregion
