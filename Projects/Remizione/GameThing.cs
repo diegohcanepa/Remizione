@@ -821,10 +821,6 @@ namespace Remizione
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public Int32Range InstancesPerBlock { get; set; } = new Int32Range(1);
 
-        // InstantiationPhase
-        [ScriptProperty(CodingContext.EntityDeclaration)]
-        public PlacementPhase InstantiationPhase { get; set; }
-
         // IsAvailable
         public bool IsAvailable(WorldBlock worldBlock)
         {
@@ -908,6 +904,10 @@ namespace Remizione
         // OverheadOrigin
         [ScriptProperty]
         public Vector2 OverheadOrigin { get; set; }
+
+        // PlacementPhase
+        [ScriptProperty(CodingContext.EntityDeclaration)]
+        public PlacementPhase PlacementPhase { get; set; }
 
         // RenderLayer
         [ScriptProperty]

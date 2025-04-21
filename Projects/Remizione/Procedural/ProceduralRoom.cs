@@ -14,7 +14,7 @@ namespace Remizione
         {
             AtlasName = string.Empty;
             LightingSystem = false;
-            WorldManager = new WorldManager(session, new Size(Screen.NativeWidth, Screen.NativeHeight), 11);
+            WorldManager = new WorldManager(session, new Size(Screen.NativeWidth, Screen.NativeHeight), 111);
         }
 
         // Regenerate

@@ -229,6 +229,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">CrossB-assets/CrossB.png</key>
+            <key type="filename">CrossB-assets/CrossBShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,5,9,9</rect>
+                <key>scale9Paddings</key>
+                <rect>5,5,9,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">CrossLargeA-assets/CrossLargeA.png</key>
             <key type="filename">CrossLargeA-assets/CrossLargeAShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -369,6 +385,54 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">TreeA-assets/TreeA.png</key>
+            <key type="filename">TreeA-assets/TreeAShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,10,12,21</rect>
+                <key>scale9Paddings</key>
+                <rect>6,10,12,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">TreeB-assets/TreeB.png</key>
+            <key type="filename">TreeB-assets/TreeBShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,11,15,21</rect>
+                <key>scale9Paddings</key>
+                <rect>7,11,15,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">TreeC-assets/TreeC.png</key>
+            <key type="filename">TreeC-assets/TreeCShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,11,11,21</rect>
+                <key>scale9Paddings</key>
+                <rect>6,11,11,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileLists</key>
         <map type="SpriteSheetMap">
@@ -387,6 +451,10 @@
                     <filename>BloodSplashHigh-assets</filename>
                     <filename>TerrainBlocks-assets</filename>
                     <filename>FlatStonesA-assets</filename>
+                    <filename>TreeA-assets</filename>
+                    <filename>TreeB-assets</filename>
+                    <filename>TreeC-assets</filename>
+                    <filename>CrossB-assets</filename>
                 </array>
             </struct>
         </map>

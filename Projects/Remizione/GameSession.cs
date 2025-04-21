@@ -203,7 +203,7 @@ namespace Remizione
             foreach (var entity in Entities)
             {
                 if (entity is Prop prop)
-                    staticThings[prop.InstantiationPhase].Add(prop);
+                    staticThings[prop.PlacementPhase].Add(prop);
             }
 
             foreach (var phase in Enum.GetValues<PlacementPhase>())
