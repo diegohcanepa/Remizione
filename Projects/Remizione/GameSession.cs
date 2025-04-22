@@ -268,22 +268,15 @@ namespace Remizione
             if (GetEntity<ProceduralRoom>("Purgatory") is ProceduralRoom purgatory)
             {
                 if (IsNewSession)
-                {
                     Environment.BeginCycle(Cycle.Indulgence);
-                    Player = GetEntity<Actor>("Sinner");
-                }
 
                 if (Player != null)
                 {
-                    purgatory.Children.Add(Player);
-
                     if (IsNewSession)
                         Player.Position = purgatory.WorldManager.Blocks[0].BoundingBox.Center;
 
                     Camera.FollowTarget(Player, true);
                 }
-
-                EnterRoom(purgatory);
             }
         }
 

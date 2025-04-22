@@ -60,9 +60,6 @@ namespace Remizione
                 }
             }
 
-            if (Actor.IsMoving)
-                Actor.Stand();
-
             Actor.FastMove = fastMove;
             Actor.MoveTo(destination, moveToTarget);
             if (Actor.FollowingPathDestination.HasValue)

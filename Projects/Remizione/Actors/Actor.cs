@@ -648,6 +648,11 @@ namespace Remizione
             FollowingPathDestination = path[^1];
             IsFollowingPath = true;
 
+            if (FastMove && StateMachine.CurrentState is ActorMoveState)
+                StateMachine.ChangeState(ActorStateNames.MoveFast);
+            else if (!FastMove && StateMachine.CurrentState is ActorMoveFastState)
+                StateMachine.ChangeState(ActorStateNames.Move);
+
             return true;
         }
 
