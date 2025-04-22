@@ -94,9 +94,7 @@ namespace Engendro
         private void SwitchDisplayMode(int width, int height, bool isFullScreen)
         {
             if (Graphics == null)
-            {
                 throw new InvalidOperationException("GraphicsDeviceManager not initialized.");
-            }
 
             Graphics.PreferredBackBufferWidth = width;
             Graphics.PreferredBackBufferHeight = height;

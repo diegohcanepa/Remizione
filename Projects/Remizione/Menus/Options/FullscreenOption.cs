@@ -15,13 +15,9 @@
         protected override void OnValueChanged(bool newValue)
         {
             if (Value)
-            {
                 Game.SwitchToFullScreen();
-            }
             else
-            {
                 Game.SwitchToWindowedMode();
-            }
         }
     }
 

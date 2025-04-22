@@ -385,6 +385,66 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">TerrainBlocks-assets/TerrainBlockDefaultBottom.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>50,3,99,5</rect>
+                <key>scale9Paddings</key>
+                <rect>50,3,99,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">TerrainBlocks-assets/TerrainBlockDefaultLeft.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,34,5,67</rect>
+                <key>scale9Paddings</key>
+                <rect>3,34,5,67</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">TerrainBlocks-assets/TerrainBlockDefaultRight.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,31,5,62</rect>
+                <key>scale9Paddings</key>
+                <rect>3,31,5,62</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">TerrainBlocks-assets/TerrainBlockDefaultTop.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>60,3,120,5</rect>
+                <key>scale9Paddings</key>
+                <rect>60,3,120,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">TreeA-assets/TreeA.png</key>
             <key type="filename">TreeA-assets/TreeAShadow.png</key>
             <struct type="IndividualSpriteSettings">

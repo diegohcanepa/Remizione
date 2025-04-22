@@ -23,6 +23,18 @@ namespace Remizione
             WorldManager = new WorldManager(session, new Size(Screen.NativeWidth, Screen.NativeHeight), 111);
         }
 
+        // ExpandCore
+        private void ExpandCore(EngendroAdventure.Direction direction)
+        {
+            if (Session.Player != null && WorldManager.GetBlockFromScreen(Session.Player.Position) is WorldBlock currentBlock)
+            {
+                WorldManager.BeginUpdate();
+                currentBlock.Expand(direction);
+                WorldManager.EndUpdate();
+                Regenerate();
+            }
+        }
+
         // Regenerate
         private void Regenerate()
         {
@@ -59,14 +71,18 @@ namespace Remizione
 
             if (Session.IsNewSession)
             {
+                WorldManager.BeginUpdate();
                 WorldManager.AddBlock(new(WorldManager.GridSize / 2), Session.WorldVersion);
+                WorldManager.EndUpdate();
             }
             else
             {
+                WorldManager.BeginUpdate();
                 for (var i = 0; i < worldBlockData.Count; i++)
                 {
                     WorldManager.AddBlock(worldBlockData[i].gridPosition, worldBlockData[i].worldVersion);
                 }
+                WorldManager.EndUpdate();
             }
 
             Regenerate();
@@ -120,112 +136,21 @@ namespace Remizione
 
         #endregion
 
-        // Expand
+        // ExpandDown
         [ScriptMethod]
-        public void Expand()
-        {
-            /*
-            if (Session.Player != null)
-            {
-                if (WorldManager.GetBlockFromScreen(Session.Player.Position) is WorldBlock terrainBlock)
-                {
-                    var newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Up);
-                    if (newBlock != null)
-                    Children.Add(newBlock);
+        public void ExpandDown() => ExpandCore(EngendroAdventure.Direction.Down);
 
-                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Right);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
+        // ExpandLeft
+        [ScriptMethod]
+        public void ExpandLeft() => ExpandCore(EngendroAdventure.Direction.Left);
 
-                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
+        // ExpandRight
+        [ScriptMethod]
+        public void ExpandRight() => ExpandCore(EngendroAdventure.Direction.Right);
 
-                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = newBlock.Expand(EngendroAdventure.Direction.Down);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Left);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Left);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Left);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Left);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Left);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Left);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Left);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Left);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Up);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    newBlock = terrainBlock.Expand(EngendroAdventure.Direction.Up);
-                    if (newBlock != null)
-                        Children.Add(newBlock);
-
-                    Regenerate();
-                }
-            }
-            */
-        }
+        // ExpandUp
+        [ScriptMethod]
+        public void ExpandUp() => ExpandCore(EngendroAdventure.Direction.Up);
 
         // WorldManager
         public WorldManager WorldManager { get; }

@@ -15,6 +15,7 @@ namespace Remizione
 
         private readonly List<WorldBlock> blockList = [];
         private readonly Dictionary<Point, WorldBlock> blocks = [];
+        private int updateCount;
 
         #endregion
 
@@ -228,6 +229,9 @@ namespace Remizione
         // AddBlock
         public WorldBlock AddBlock(Point gridPosition, int worldVersion)
         {
+            if (updateCount == 0)
+                throw new InvalidOperationException("WorldManager is not in update mode."); 
+
             if (!IsValidPosition(gridPosition))
                 throw new InvalidOperationException("Grid position is out of bounds.");
 
@@ -241,11 +245,31 @@ namespace Remizione
             return block;
         }
 
+        // BeginUpdate
+        public void BeginUpdate() => updateCount++;
+
         // Blocks
         public ReadOnlyCollection<WorldBlock> Blocks { get; }
 
         // BlockSize
         public Size BlockSize { get; }
+
+        // EndUpdate
+        public void EndUpdate()
+        {
+            if (updateCount > 0)
+            {
+                updateCount--;
+                
+                if (updateCount == 0)
+                {
+                    for (var i = 0; i < blocks.Count; i++)
+                    {
+                        blockList[i].Invalidate();
+                    }
+                }
+            }
+        }
 
         // GetBlockFromGrid
         public WorldBlock? GetBlockFromGrid(Point gridPosition)

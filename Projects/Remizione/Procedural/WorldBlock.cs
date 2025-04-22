@@ -14,7 +14,9 @@ namespace Remizione
     public class WorldBlock : Prop
     {
         #region Private fields
-
+        
+        private readonly bool[] borders = new bool[4];
+        private readonly ImageSprite[] borderImages;
         private readonly WorldBlockGrid decorationGrid;
         private readonly WorldBlockGrid grid;
         private readonly Random random;
@@ -49,6 +51,45 @@ namespace Remizione
 
             this.randomSeed = GetSeed(manager.Session.RandomSeed, Index);
             this.random = new Random(randomSeed);
+
+            Light = new Light(Manager.Session.Game, "GlobalLight")
+            {
+                Color = Color.White,
+                PivotOrigin = RectanglePoint.Middle,
+                Scale = new(20, 12)
+            };
+
+            LightPosition = new(120, 70);
+
+            borderImages = new ImageSprite[4];
+
+            // Top
+            borderImages[0] = new ImageSprite(Game)
+            { 
+                Image = Atlases.Environment.GetImage($"{DefaultImageName}Top"),
+                PivotOrigin = RectanglePoint.Bottom
+            };
+
+            // Right
+            borderImages[1] = new ImageSprite(Game)
+            {
+                Image = Atlases.Environment.GetImage($"{DefaultImageName}Right"),
+                PivotOrigin = RectanglePoint.Left
+            };
+
+            // Bottom
+            borderImages[2] = new ImageSprite(Game)
+            {
+                Image = Atlases.Environment.GetImage($"{DefaultImageName}Bottom"),
+                PivotOrigin = RectanglePoint.Top
+            };
+
+            // Left
+            borderImages[3] = new ImageSprite(Game)
+            {
+                Image = Atlases.Environment.GetImage($"{DefaultImageName}Left"),
+                PivotOrigin = RectanglePoint.Right
+            };
 
             Populate();
         }
@@ -243,6 +284,36 @@ namespace Remizione
         #endregion
 
         #region Protected members
+
+        // OnDraw
+        protected override void OnDraw(GameTime gameTime)
+        {
+            base.OnDraw(gameTime);
+
+            for (int i = 0; i < borderImages.Length; i++)
+            {
+                if (borders[i])
+                    borderImages[i].Draw(gameTime);
+            }   
+        }
+
+        // OnInvalidate
+        protected override void OnInvalidate()
+        {
+            base.OnInvalidate();
+
+            borders[0] = GetNeighbor(EngendroAdventure.Direction.Up) == null;
+            borderImages[0].Position = BoundingBox.GetPoint(RectanglePoint.Top);
+
+            borders[1] = GetNeighbor(EngendroAdventure.Direction.Right) == null;
+            borderImages[1].Position = BoundingBox.GetPoint(RectanglePoint.Right);
+
+            borders[2] = GetNeighbor(EngendroAdventure.Direction.Down) == null;
+            borderImages[2].Position = BoundingBox.GetPoint(RectanglePoint.Bottom);
+
+            borders[3] = GetNeighbor(EngendroAdventure.Direction.Left) == null;
+            borderImages[3].Position = BoundingBox.GetPoint(RectanglePoint.Left);
+        }
 
         // OnRead
         protected override void OnRead(XmlAttributeCollection attributes)

@@ -23,6 +23,7 @@ namespace Remizione
         private RenderTarget2D? lightMapTarget;
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
+        private readonly Light globalLight;
         private readonly List<Light> renderedLights = [];
         private readonly List<TriggerArea> triggerAreas = [];
         private readonly List<WalkArea> walkAreas = [];
@@ -40,11 +41,14 @@ namespace Remizione
             this.TriggerAreas = new RoomAreaReadOnlyCollection<TriggerArea>(triggerAreas);
             this.WalkAreas = new RoomAreaReadOnlyCollection<WalkArea>(walkAreas);
 
-            if (dustEmitter == null)
-                dustEmitter = new DustEmitter(session, 6, 1000, 35);
+            dustEmitter ??= new DustEmitter(session, 6, 1000, 35);
+            fireflyEmitter ??= new FireflyEmitter(session, 1, 500, 20);
 
-            if (fireflyEmitter == null)
-                fireflyEmitter = new FireflyEmitter(session, 1, 500, 20);
+            globalLight = new Light(session.Game, "GlobalLight")
+            {
+                Color = Color.White,
+                Scale = new(20,12)
+            };
         }
 
         #endregion
@@ -203,20 +207,29 @@ namespace Remizione
             Game.GraphicsDevice.Clear(LightMapColor);
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
 
+            //if (globalLight.IsEmitting)
+            //{
+            //    globalLight.Draw(gameTime);
+            //    renderedLights.Add(globalLight);
+            //}
+
             // Owned lights
             for (int i = 0; i < lights.Count; i++)
             {
                 if (lights[i].IsEmitting)
                 {
-                    lights[i].Draw(gameTime);
-                    renderedLights.Add(lights[i]);
+                    if (lights[i].BoundingBox.Intersects(Session.Camera.CullingBox))
+                    {
+                        lights[i].Draw(gameTime);
+                        renderedLights.Add(lights[i]);
+                    }
                 }
             }
 
             // Light sources
             for (int i = 0; i < CulledThings.Count; i++)
             {
-                if (CulledThings[i] is ILightSource lightSource && lightSource.IsEmittingLight)
+                if (CulledThings[i].IsInCullingBox && CulledThings[i] is ILightSource lightSource && lightSource.IsEmittingLight)
                     lightSource.DrawLights(gameTime, renderedLights);
             }
 
@@ -377,6 +390,9 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+
+            if (Session.Player != null)
+                globalLight.Position = Session.Player.Position;
 
             TestTriggerAreas();
 

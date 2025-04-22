@@ -172,6 +172,9 @@ namespace Remizione
         // Blink
         public void Blink(Int32Range interval, int count) => blinker.Start(interval, count);
 
+        // BoundingBox
+        public RectangleF BoundingBox => lightSprite.BoundingBox;
+
         // Color
         public Color Color
         {
@@ -257,20 +260,6 @@ namespace Remizione
             set => lightSprite.Position = value;
         }
 
-        // X
-        public float X
-        {
-            get => lightSprite.X;
-            set => lightSprite.X = value;
-        }
-
-        // Y
-        public float PositionY
-        {
-            get => lightSprite.Y;
-            set => lightSprite.Y = value;
-        }
-
         // Prepare
         public void Prepare(Atlas atlas)
         {
@@ -338,6 +327,20 @@ namespace Remizione
                 lightSprite.Opacity = 1;
             else
                 opacityTween.Start(TweenStyle.CubicIn, lightSprite.Opacity, 1, litTweenDuration);
+        }
+
+        // X
+        public float X
+        {
+            get => lightSprite.X;
+            set => lightSprite.X = value;
+        }
+
+        // Y
+        public float PositionY
+        {
+            get => lightSprite.Y;
+            set => lightSprite.Y = value;
         }
     }
 }
