@@ -38,7 +38,7 @@ namespace Remizione
         {
             this.Game = game;
             this.HUD = new HUD(this);
-            this.Environment = new Environment();
+            this.Environment = new Environment(this);
             this.RandomSeed = 10000;// RandomSeed = System.Environment.TickCount;
 
             ObjectPools = new ObjectPools(this);
@@ -329,6 +329,10 @@ namespace Remizione
         // ClearOverlayTexts
         [ScriptMethod(CodingContext.Any)]
         public void ClearOverlayTexts() => OverlayTexts.Clear();
+
+        // CycleCount
+        [ScriptProperty]
+        public int CycleCount { get; set; }
 
         // DialogOptionId
         [ScriptProperty]

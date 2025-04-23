@@ -245,6 +245,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">CrossC-assets/CrossC.png</key>
+            <key type="filename">CrossC-assets/CrossCShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,6,9,11</rect>
+                <key>scale9Paddings</key>
+                <rect>5,6,9,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">CrossLargeA-assets/CrossLargeA.png</key>
             <key type="filename">CrossLargeA-assets/CrossLargeAShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -338,8 +354,23 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">LargeStoneA-assets/LargeStoneA.png</key>
-            <key type="filename">LargeStoneA-assets/LargeStoneAShadow.png</key>
+            <key type="filename">FlatStonesB-assets/FlatStonesB.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,8,25,16</rect>
+                <key>scale9Paddings</key>
+                <rect>12,8,25,16</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">LargeRockA-assets/LargeRockA.png</key>
+            <key type="filename">LargeRockA-assets/LargeRockAShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -354,8 +385,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">LargeStoneB-assets/LargeStoneB.png</key>
-            <key type="filename">LargeStoneB-assets/LargeStoneBShadow.png</key>
+            <key type="filename">LargeRockB-assets/LargeRockB.png</key>
+            <key type="filename">LargeRockB-assets/LargeRockBShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -367,6 +398,22 @@
                 <rect>12,13,25,25</rect>
                 <key>scale9Paddings</key>
                 <rect>12,13,25,25</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">SmallRockA-assets/SmallRockA.png</key>
+            <key type="filename">SmallRockA-assets/SmallRockAShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,3,7,5</rect>
+                <key>scale9Paddings</key>
+                <rect>4,3,7,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -505,8 +552,6 @@
                     <filename>DustParticles-assets</filename>
                     <filename>CrossA-assets</filename>
                     <filename>CrossLargeA-assets</filename>
-                    <filename>LargeStoneA-assets</filename>
-                    <filename>LargeStoneB-assets</filename>
                     <filename>BloodSplashLow-assets</filename>
                     <filename>BloodSplashHigh-assets</filename>
                     <filename>TerrainBlocks-assets</filename>
@@ -515,6 +560,11 @@
                     <filename>TreeB-assets</filename>
                     <filename>TreeC-assets</filename>
                     <filename>CrossB-assets</filename>
+                    <filename>CrossC-assets</filename>
+                    <filename>FlatStonesB-assets</filename>
+                    <filename>SmallRockA-assets</filename>
+                    <filename>LargeRockA-assets</filename>
+                    <filename>LargeRockB-assets</filename>
                 </array>
             </struct>
         </map>

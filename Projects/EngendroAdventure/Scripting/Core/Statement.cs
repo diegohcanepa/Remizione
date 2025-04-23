@@ -43,6 +43,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string CostArg = "#cost";
         protected static readonly string CountArg = "#count";
         protected static readonly string CurrentArg = "#current";
+        protected static readonly string CyclesArg = "#cycles";
         protected static readonly string DamageArg = "#damage";
         protected static readonly string DecimalsArg = "#decimals";
         protected static readonly string DefaultArg = "#default";

@@ -8,11 +8,20 @@ namespace Remizione
     /// </summary>
     public sealed class Environment
     {
+        private readonly GameSession session;
+
+        // Constructor
+        public Environment(GameSession session)
+        {
+            this.session = session;
+        }
+
         // BeginCycle
         public void BeginCycle(Cycle cycle)
         {
             CurrentCycle = cycle;
             CycleCooldown = Randomizer.Next(180_000, 300_000);
+            session.CycleCount++;
         }
 
         // Update

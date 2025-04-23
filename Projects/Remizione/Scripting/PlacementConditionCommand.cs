@@ -3,12 +3,12 @@
 namespace Remizione.Scripting
 {
     // PlacementConditionCommand
-    // Arguments: {Phase:PlacementPhase} [#block-tag:WorldBlockTag] [#chance:Ratio] [#instances:Int32Range] [#player-level:Int32Range] [#world-size:Integer]
+    // Arguments: {Phase:PlacementPhase} [#block-tag:WorldBlockTag] [#chance:Ratio] [#cycles:Int32Range] [#instances:Int32Range] [#player-level:Int32Range] [#world-size:Integer]
     internal sealed class PlacementConditionCommand : NonAwaitableCommand
     {
         // Constructor
         internal PlacementConditionCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, BlockTagArg, ChanceArg, InstancesArg, PlayerLevelArg, WorldSizeArg)
+            : base(script, source, body, 1, BlockTagArg, ChanceArg, CyclesArg, InstancesArg, PlayerLevelArg, WorldSizeArg)
         {
             var thing = AssertEntityNotNull<GameThing>(Script.EntityName);
             thing.PlacementPhase = Parser.ParseEnum<PlacementPhase>(this, 0);
@@ -25,6 +25,13 @@ namespace Remizione.Scripting
             {
                 var chance = Parser.ParseRatioArgument(this, ChanceArg);
                 thing.AddPlacementCondition(new ChancePlacementCondition(chance));
+            }
+
+            // Cycles
+            if (HasArg(CyclesArg))
+            {
+                var cycles = Parser.ParseInt32RangeArgument(this, InstancesArg);
+                thing.AddPlacementCondition(new WorldCyclesPlacementCondition(cycles));
             }
 
             // Instances
