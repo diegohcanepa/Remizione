@@ -417,6 +417,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">SmallRockB-assets/SmallRockB.png</key>
+            <key type="filename">SmallRockB-assets/SmallRockBShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,2,7,5</rect>
+                <key>scale9Paddings</key>
+                <rect>4,2,7,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">TerrainBlocks-assets/TerrainBlockDefault.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -565,6 +581,7 @@
                     <filename>SmallRockA-assets</filename>
                     <filename>LargeRockA-assets</filename>
                     <filename>LargeRockB-assets</filename>
+                    <filename>SmallRockB-assets</filename>
                 </array>
             </struct>
         </map>

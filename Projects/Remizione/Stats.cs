@@ -113,7 +113,7 @@
         public int StaminaDegradationInterval => 200;
 
         // StaminaRecoveryInterval
-        public int StaminaRecoveryInterval => 600;
+        public int StaminaRecoveryInterval => 100;
 
         // Strength
         public int Strength { get; set; } = 8;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:de65acb4fd01e0ea35a06d3b46f18573:e09a7cf27f2ab5a84fa0aa72a62121fe:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:dea2dca1f8fb4a3a81ce521d3a2f5212:b866e37877c04780023540d440824eb7:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,18 +20,18 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Environment.png" width="512" height="512">
-    <sprite n="BloodSplashHigh01.png" x="441" y="78" w="13" h="18"/>
-    <sprite n="BloodSplashHigh02.png" x="421" y="89" w="13" h="18"/>
-    <sprite n="BloodSplashHigh03.png" x="400" y="93" w="13" h="18"/>
-    <sprite n="BloodSplashHigh04.png" x="310" y="127" w="13" h="18"/>
-    <sprite n="BloodSplashHigh05.png" x="285" y="145" w="13" h="18"/>
-    <sprite n="BloodSplashHigh06.png" x="269" y="146" w="13" h="18"/>
-    <sprite n="BloodSplashLow01.png" x="269" y="101" w="14" h="7"/>
-    <sprite n="BloodSplashLow02.png" x="269" y="110" w="14" h="7"/>
-    <sprite n="BloodSplashLow03.png" x="269" y="119" w="14" h="7"/>
-    <sprite n="BloodSplashLow04.png" x="269" y="128" w="14" h="7"/>
-    <sprite n="BloodSplashLow05.png" x="269" y="137" w="14" h="7"/>
-    <sprite n="BloodSplashLow06.png" x="441" y="69" w="14" h="7"/>
+    <sprite n="BloodSplashHigh01.png" x="421" y="89" w="13" h="18"/>
+    <sprite n="BloodSplashHigh02.png" x="400" y="93" w="13" h="18"/>
+    <sprite n="BloodSplashHigh03.png" x="310" y="127" w="13" h="18"/>
+    <sprite n="BloodSplashHigh04.png" x="285" y="145" w="13" h="18"/>
+    <sprite n="BloodSplashHigh05.png" x="269" y="150" w="13" h="18"/>
+    <sprite n="BloodSplashHigh06.png" x="284" y="165" w="13" h="18"/>
+    <sprite n="BloodSplashLow01.png" x="269" y="123" w="14" h="7"/>
+    <sprite n="BloodSplashLow02.png" x="269" y="132" w="14" h="7"/>
+    <sprite n="BloodSplashLow03.png" x="269" y="141" w="14" h="7"/>
+    <sprite n="BloodSplashLow04.png" x="441" y="69" w="14" h="7"/>
+    <sprite n="BloodSplashLow05.png" x="441" y="78" w="14" h="7"/>
+    <sprite n="BloodSplashLow06.png" x="441" y="87" w="14" h="7"/>
     <sprite n="CrossA.png" x="310" y="104" w="19" h="21"/>
     <sprite n="CrossAShadow.png" x="331" y="104" w="19" h="21"/>
     <sprite n="CrossB.png" x="352" y="113" w="18" h="18"/>
@@ -43,7 +43,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="DefaultLight.png" x="380" y="69" w="19" h="19"/>
     <sprite n="DustParticle1.png" x="350" y="60" w="3" h="3"/>
     <sprite n="FireflyParticle1.png" x="350" y="65" w="3" h="3"/>
-    <sprite n="FireflyParticle2.png" x="284" y="165" w="5" h="5"/>
+    <sprite n="FireflyParticle2.png" x="269" y="170" w="5" h="5"/>
     <sprite n="FlatStonesA.png" x="244" y="60" w="42" h="26"/>
     <sprite n="FlatStonesB.png" x="458" y="59" w="49" h="32"/>
     <sprite n="LargeRockA.png" x="244" y="16" w="54" h="42"/>
@@ -54,6 +54,8 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="ShadowSpotAverage.png" x="501" y="53" w="6" h="3"/>
     <sprite n="SmallRockA.png" x="484" y="45" w="15" h="11"/>
     <sprite n="SmallRockAShadow.png" x="269" y="88" w="15" h="11"/>
+    <sprite n="SmallRockB.png" x="269" y="101" w="14" h="9"/>
+    <sprite n="SmallRockBShadow.png" x="269" y="112" w="14" h="9"/>
     <sprite n="TerrainBlockDefault.png" x="2" y="2" w="240" h="135"/>
     <sprite n="TerrainBlockDefaultBottom.png" x="244" y="2" w="240" h="5"/>
     <sprite n="TerrainBlockDefaultLeft.png" x="372" y="113" w="5" h="135"/>

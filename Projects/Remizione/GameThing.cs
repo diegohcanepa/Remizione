@@ -515,6 +515,10 @@ namespace Remizione
             return dot >= angleThreshold;
         }
 
+        // CellMargin
+        [ScriptProperty]
+        public int CellMargin { get; set; }
+
         // CollisionDetection
         [ScriptProperty]
         public bool CollisionDetection { get; set; } = true;
@@ -812,8 +816,8 @@ namespace Remizione
             else
                 bbox = CollisionPolygon.BoundingRectangleF;
 
-            int width = (int)Math.Ceiling(bbox.Width / cellSize);
-            int height = (int)Math.Ceiling(bbox.Height / cellSize);
+            int width = (int)Math.Ceiling(bbox.Width / cellSize) + CellMargin * 2;
+            int height = (int)Math.Ceiling(bbox.Height / cellSize) + CellMargin * 2;
 
             return new Size(width, height);
         }
