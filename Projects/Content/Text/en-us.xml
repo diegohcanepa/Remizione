@@ -147,7 +147,7 @@ Bla bla bla</String>
   <String Key="Misc.DollarSign">$</String>
   <String Key="Misc.FP">Faith</String>
   <String Key="Misc.GP">Grace points</String>
-  <String Key="Misc.HP">Willpower</String>
+  <String Key="Misc.HP">Vitality</String>
   <String Key="Misc.Money">Money</String>
   <String Key="Misc.Mute">Mute</String>
   <String Key="Misc.No">No</String>
