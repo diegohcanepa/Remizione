@@ -13,10 +13,9 @@ namespace Remizione
         public Zabul(GameSession session, string name)
             : base(session, name)
         {
-            this.AI = true;
             this.BodySize = ActorSize.Small;
             this.Affinity = Affinity.Evil;
-            this.IsHostile = true;
+            this.Hostile = true;
 
             /*
             var charge = new AIChargeState(this);

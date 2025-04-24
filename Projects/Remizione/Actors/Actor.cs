@@ -349,6 +349,9 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            if (Hostile)
+                AIStateMachine?.Update(gameTime);
+
             base.OnUpdate(gameTime);
 
             bloodSplash?.Update(gameTime);
@@ -384,9 +387,6 @@ namespace Remizione
             moveTween.Update(gameTime);
             UpdateDirection();
             StateMachine.Update(gameTime);
-
-            if (AI)
-                AIStateMachine?.Update(gameTime);
         }
 
         // OnWrite
@@ -424,6 +424,7 @@ namespace Remizione
         }
 
         // Affinity
+        [ScriptProperty]
         public Affinity Affinity { get; set; } = Affinity.Neutral;  
 
         // AI
@@ -442,7 +443,7 @@ namespace Remizione
         public ActorSize BodySize { get; set; } = ActorSize.Medium;
 
         // CanBeTargeted
-        public override bool CanBeTargeted => base.CanBeTargeted && IsHostile;
+        public override bool CanBeTargeted => base.CanBeTargeted && Hostile;
 
         // CanHandleInput
         public bool CanHandleInput => InputHandler != null && !Session.IsAwaiting;
@@ -552,6 +553,10 @@ namespace Remizione
             }
         }
 
+        // Hostile
+        [ScriptProperty]
+        public bool Hostile { get; set; }
+
         // HotspotDetectorPosition
         [ScriptProperty]
         public Vector2 HotspotDetectorPosition { get; set; }
@@ -562,7 +567,7 @@ namespace Remizione
             if (target == null)
                 target = InteractionTarget;
 
-            if (target == null || !IsPresent || suspendInteractionCooldown > 0)
+            if (target == null || !InCurrentRoom || suspendInteractionCooldown > 0)
                 return false;
 
             // Session is busy
@@ -586,9 +591,6 @@ namespace Remizione
 
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }
-
-        // IsHostile
-        public bool IsHostile { get; set; }
 
         // IsPlayer
         public bool IsPlayer => Session.Player == this;

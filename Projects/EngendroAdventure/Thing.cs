@@ -57,7 +57,7 @@ namespace EngendroAdventure
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (!IsPresent)
+            if (!InCurrentRoom)
                 return;
 
             if (ParallaxDepth == 0)
@@ -146,7 +146,7 @@ namespace EngendroAdventure
         public Vector2 BottomPosition => PivotOrigin == RectanglePoint.Bottom ? Position : BoundingBox.GetPoint(RectanglePoint.Bottom);
 
         // CanMove
-        public virtual bool CanMove => IsPresent && Speed > 0;
+        public virtual bool CanMove => InCurrentRoom && Speed > 0;
 
         // CanParent
         public override bool CanParent(Entity child)
@@ -179,6 +179,10 @@ namespace EngendroAdventure
         [ScriptProperty]
         public bool IgnoreCulling { get; set; }
 
+        // InCurrentRoom
+        [ScriptProperty]
+        public bool InCurrentRoom => Room != null && Room == Session.Room;
+
         // IsActiveInGameLoop
         public override bool IsActiveInGameLoop => IgnoreCulling || IsInCullingBox || Tweens.IsTweeningPosition;
 
@@ -187,15 +191,11 @@ namespace EngendroAdventure
 
         // IsInViewport
         [ScriptProperty(CodingContext.Execution)]
-        public bool IsInViewport => IsPresent && RectangleF.Intersects(BoundingBox, Session.Viewport) != RectangleF.Empty;
+        public bool IsInViewport => InCurrentRoom && RectangleF.Intersects(BoundingBox, Session.Viewport) != RectangleF.Empty;
 
         // IsMoving
         [ScriptProperty]
         public bool IsMoving => Sprite.Velocity != Vector2.Zero;
-
-        // IsPresent
-        [ScriptProperty]
-        public bool IsPresent => Room != null && Room == Session.Room;
 
         // Move
         public bool Move(Vector2 direction)

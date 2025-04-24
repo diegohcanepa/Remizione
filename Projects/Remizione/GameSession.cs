@@ -3,6 +3,7 @@ using EngendroAdventure;
 using EngendroAdventure.Scripting;
 using EngendroAdventure.Scripting.Core;
 using Microsoft.Xna.Framework;
+using Remizione.Creatures;
 using Remizione.Scenes;
 using Remizione.Scripting;
 using System;
@@ -110,6 +111,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(GameRoom));
             scriptRegistry.RegisterEntity(typeof(CreditsRoom));
             scriptRegistry.RegisterEntity(typeof(ProceduralRoom));
+            scriptRegistry.RegisterEntity(typeof(Sinner));
             scriptRegistry.RegisterEntity(typeof(Zabul));
 
             scriptRegistry.RegisterStatement("act", typeof(ActCommand));

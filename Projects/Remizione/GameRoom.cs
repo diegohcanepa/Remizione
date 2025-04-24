@@ -361,7 +361,7 @@ namespace Remizione
             }
 
             // Follow player
-            if (Session.Player != null && Session.Player.IsPresent)
+            if (Session.Player != null && Session.Player.InCurrentRoom)
                 Session.Camera.FollowTarget(Session.Player, true);
         }
 
