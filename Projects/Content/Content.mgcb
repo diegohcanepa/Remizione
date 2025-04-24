@@ -98,6 +98,30 @@
 /processorParam:Quality=Best
 /build:Audio/FX/ImpactA.wav
 
+#begin Audio/FX/SmallWhooshA1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SmallWhooshA1.wav
+
+#begin Audio/FX/SmallWhooshA2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SmallWhooshA2.wav
+
+#begin Audio/FX/SmallWhooshA3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SmallWhooshA3.wav
+
+#begin Audio/FX/SmallWhooshA4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SmallWhooshA4.wav
+
 #begin Audio/FX/UINavigation1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

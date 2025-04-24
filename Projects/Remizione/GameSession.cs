@@ -69,6 +69,19 @@ namespace Remizione
 
         #endregion
 
+        #region Private members
+
+        // Expand
+        private bool Expand(Direction direction)
+        {
+            if (Player == null || Room is not ProceduralRoom proceduralRoom)
+                return false;
+
+            return proceduralRoom.Expand(Player.Position, direction);
+        }
+
+        #endregion
+
         #region Protected members
 
         // CanHandleRoomInput
@@ -340,6 +353,22 @@ namespace Remizione
 
         // Environment
         public Environment Environment { get; }
+
+        // ExpandDown
+        [ScriptMethod]
+        public void ExpandDown() => Expand(Direction.Down);
+
+        // ExpandLeft
+        [ScriptMethod]
+        public void ExpandLeft() => Expand(Direction.Left);
+
+        // ExpandRight
+        [ScriptMethod]
+        public void ExpandRight() => Expand(Direction.Right);
+
+        // ExpandUp
+        [ScriptMethod]
+        public void ExpandUp() => Expand(Direction.Up);
 
         // FullHUD
         [ScriptProperty]

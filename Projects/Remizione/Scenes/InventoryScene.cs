@@ -34,7 +34,6 @@ namespace Remizione.Scenes
         private readonly TextSprite noItemSelectedText;
         private readonly UIControl previousTabButton;
         private readonly GameSession session;
-        private readonly TextSprite sins;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 100 };
 
         #endregion
@@ -137,16 +136,6 @@ namespace Remizione.Scenes
                 PivotOrigin = RectanglePoint.LeftTop,
                 MaximumWidth = maxInfoTextWidth,
                 Scale = ScaleInfo.Text.Medium,
-            };
-
-            // Sins
-            this.sins = new TextSprite(Game, Fonts.Regular)
-            {
-                Color = new(173, 47, 69),
-                PivotOrigin = RectanglePoint.LeftBottom,
-                Position = infoContainerImage.BoundingBox.GetPoint(RectanglePoint.LeftTop, 2, -1),
-                Scale = ScaleInfo.Text.VeryLarge,
-                ShadowOffset = new Vector2(0, 1)
             };
 
             // Upgrade info
@@ -291,8 +280,6 @@ namespace Remizione.Scenes
 
             itemUpgradeInfo.Draw(gameTime);
 
-            sins.Draw(gameTime);
-
             Game.SpriteBatch.End();
 
             if (itemActionButton.Text != null)
@@ -373,12 +360,6 @@ namespace Remizione.Scenes
             return base.OnHandleInput(gameTime);
         }
 
-        // OnLoadContent
-        protected override void OnLoadContent()
-        {
-            sins.Text = actor == null ? string.Empty : $"{TextRepository.GetValue("Misc.Sins")}: {actor.Sins}";
-        }
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
@@ -390,7 +371,6 @@ namespace Remizione.Scenes
             itemActionButton.Update(gameTime);
             itemName.Update(gameTime);
             itemDescription.Update(gameTime);
-            sins.Update(gameTime);
             noItemSelectedText.Update(gameTime);
         }
 

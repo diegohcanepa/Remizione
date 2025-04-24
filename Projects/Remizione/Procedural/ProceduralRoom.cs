@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Xml;
@@ -12,27 +11,15 @@ namespace Remizione
     public sealed class ProceduralRoom : GameRoom
     {
         private enum AttributeName { WorldBlocks };
-        private List<(Point gridPosition, int worldVersion)> worldBlockData = [];
+        private readonly List<(Point gridPosition, int worldVersion)> worldBlockData = [];
 
         // Constructor
         public ProceduralRoom(GameSession session, string name)
             : base(session, name)
         {
             AtlasName = string.Empty;
-            LightingSystem = false;
+            LightingSystem = true;
             WorldManager = new WorldManager(session, new Size(Screen.NativeWidth, Screen.NativeHeight), 111);
-        }
-
-        // ExpandCore
-        private void ExpandCore(EngendroAdventure.Direction direction)
-        {
-            if (Session.Player != null && WorldManager.GetBlockFromScreen(Session.Player.Position) is WorldBlock currentBlock)
-            {
-                WorldManager.BeginUpdate();
-                currentBlock.Expand(direction);
-                WorldManager.EndUpdate();
-                Regenerate();
-            }
         }
 
         // Regenerate
@@ -122,7 +109,7 @@ namespace Remizione
         protected override void OnWrite(XmlWriter output)
         {
             var blockData = new List<string>();
-            
+
             foreach (var block in WorldManager.Blocks)
             {
                 var value = $"{block.WorldGridPosition.X},{block.WorldGridPosition.Y}:{block.WorldVersion}";
@@ -136,21 +123,21 @@ namespace Remizione
 
         #endregion
 
-        // ExpandDown
-        [ScriptMethod]
-        public void ExpandDown() => ExpandCore(EngendroAdventure.Direction.Down);
+        // Expand
+        public bool Expand(Vector2 playerPosition, EngendroAdventure.Direction direction)
+        {
+            if (WorldManager.GetBlockFromScreen(playerPosition) is WorldBlock currentBlock)
+            {
+                WorldManager.BeginUpdate();
+                currentBlock.Expand(direction);
+                WorldManager.EndUpdate();
+                Regenerate();
 
-        // ExpandLeft
-        [ScriptMethod]
-        public void ExpandLeft() => ExpandCore(EngendroAdventure.Direction.Left);
+                return true;
+            }
 
-        // ExpandRight
-        [ScriptMethod]
-        public void ExpandRight() => ExpandCore(EngendroAdventure.Direction.Right);
-
-        // ExpandUp
-        [ScriptMethod]
-        public void ExpandUp() => ExpandCore(EngendroAdventure.Direction.Up);
+            return false;
+        }
 
         // WorldManager
         public WorldManager WorldManager { get; }

@@ -56,7 +56,7 @@ namespace Remizione
             {
                 Color = Color.White,
                 PivotOrigin = RectanglePoint.Middle,
-                Scale = new(20, 12)
+                Scale = new(10, 6)
             };
 
             LightPosition = new(120, 70);

@@ -8,6 +8,7 @@
 	<!-- FX -->
 	<FX Name="FootstepGrass" MaxInstances="8" Sounds="1..2" Volume=".5" />
 	<FX Name="ImpactA" MaxInstances="6" />
+	<FX Name="SmallWhooshA" MaxInstances="6" Sounds="1..4" />
 	<FX Name="UINavigation" MaxInstances="4" Sounds="1..4" />
 	<FX Name="UIQuickSlot" MaxInstances="6" />
 	<FX Name="UISelect" MaxInstances="4" />

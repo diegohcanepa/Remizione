@@ -5,7 +5,7 @@ namespace Remizione
     /// <summary>
     /// Zabul
     /// </summary>
-    public sealed class Zabul : Enemy
+    public sealed class Zabul : Actor
     {
         private int nextDamageCooldown;
 
@@ -15,6 +15,8 @@ namespace Remizione
         {
             this.AI = true;
             this.BodySize = ActorSize.Small;
+            this.Affinity = Affinity.Evil;
+            this.IsHostile = true;
 
             /*
             var charge = new AIChargeState(this);

@@ -23,7 +23,6 @@ namespace Remizione
         private RenderTarget2D? lightMapTarget;
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
-        private readonly Light globalLight;
         private readonly List<Light> renderedLights = [];
         private readonly List<TriggerArea> triggerAreas = [];
         private readonly List<WalkArea> walkAreas = [];
@@ -43,12 +42,6 @@ namespace Remizione
 
             dustEmitter ??= new DustEmitter(session, 6, 1000, 35);
             fireflyEmitter ??= new FireflyEmitter(session, 1, 500, 20);
-
-            globalLight = new Light(session.Game, "GlobalLight")
-            {
-                Color = Color.White,
-                Scale = new(20,12)
-            };
         }
 
         #endregion
@@ -207,12 +200,6 @@ namespace Remizione
             Game.GraphicsDevice.Clear(LightMapColor);
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
 
-            //if (globalLight.IsEmitting)
-            //{
-            //    globalLight.Draw(gameTime);
-            //    renderedLights.Add(globalLight);
-            //}
-
             // Owned lights
             for (int i = 0; i < lights.Count; i++)
             {
@@ -229,8 +216,8 @@ namespace Remizione
             // Light sources
             for (int i = 0; i < CulledThings.Count; i++)
             {
-                if (CulledThings[i].IsInCullingBox && CulledThings[i] is ILightSource lightSource && lightSource.IsEmittingLight)
-                    lightSource.DrawLights(gameTime, renderedLights);
+                if (CulledThings[i] is GameThing thing && thing.IsEmittingLight && CulledThings[i].IsInCullingBox)
+                    thing.DrawLights(gameTime, renderedLights);
             }
 
             Game.SpriteBatch.End();
@@ -391,9 +378,6 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-            if (Session.Player != null)
-                globalLight.Position = Session.Player.Position;
-
             TestTriggerAreas();
 
             // Lights
@@ -479,7 +463,7 @@ namespace Remizione
 
         // LightMapColor
         [ScriptProperty]
-        public Color LightMapColor { get; set; } = new Color(10, 20, 35);
+        public Color LightMapColor { get; set; } = new Color(10, 10, 25);
 
         // Lights
         public NamedObjectReadOnlyCollection<Light> Lights { get; }

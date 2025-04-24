@@ -62,6 +62,8 @@ namespace Remizione
         // DrawMeters
         private void DrawMeters(GameTime gameTime, Actor actor)
         {
+            Game.SpriteBatch.Begin(Game.Camera);
+
             // HP
             hpMeter.MaximumValue = actor.MaxHP;
             hpMeter.Value = actor.HP;
@@ -76,6 +78,8 @@ namespace Remizione
             staminaMeter.MaximumValue = actor.MaxStamina;
             staminaMeter.Value = actor.Stamina;
             staminaMeter.Draw(gameTime);
+
+            Game.SpriteBatch.End();
         }
 
         #endregion

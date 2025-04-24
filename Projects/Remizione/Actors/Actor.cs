@@ -423,6 +423,9 @@ namespace Remizione
             return result;
         }
 
+        // Affinity
+        public Affinity Affinity { get; set; } = Affinity.Neutral;  
+
         // AI
         [ScriptProperty]
         public bool AI { get; set; }
@@ -437,6 +440,9 @@ namespace Remizione
 
         // BodySize
         public ActorSize BodySize { get; set; } = ActorSize.Medium;
+
+        // CanBeTargeted
+        public override bool CanBeTargeted => base.CanBeTargeted && IsHostile;
 
         // CanHandleInput
         public bool CanHandleInput => InputHandler != null && !Session.IsAwaiting;
@@ -581,6 +587,9 @@ namespace Remizione
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }
 
+        // IsHostile
+        public bool IsHostile { get; set; }
+
         // IsPlayer
         public bool IsPlayer => Session.Player == this;
 
@@ -703,10 +712,6 @@ namespace Remizione
 
         // ShadowSpot
         public ShadowSpot ShadowSpot { get; }
-
-        // Sins
-        [ScriptProperty]
-        public int Sins { get; set; }
 
         // Skills
         public ItemStorage Skills { get; }

@@ -16,6 +16,9 @@ namespace Remizione
         LoopAnimation = 1
     }
 
+    // Affinity
+    public enum Affinity { Good, Neutral, Evil }
+
     // AIStateSignal
     public enum AIStateSignal
     {

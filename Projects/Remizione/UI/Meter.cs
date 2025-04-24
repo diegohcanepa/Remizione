@@ -10,17 +10,20 @@ namespace Remizione
     /// </summary>
     public sealed class Meter : GameObject
     {
+        #region Private fields
+
         private readonly ImageSprite back;
         private readonly ImageSprite container;
         private readonly ImageSprite fore;
         private bool isResetting;
-        private readonly TextSprite labelText;
         private int maximumValue;
         private Vector2 position;
         private static readonly Color previousValue = new(207, 117, 43);
         private readonly ImageSprite previousValue1;
         private readonly FloatTween tween = new() { StartDelay = 200 };
         private float value;
+
+        #endregion
 
         // Constructor
         public Meter(EngendroGame game, Color backColor, Color foreColor)
@@ -51,14 +54,6 @@ namespace Remizione
                 ScaleY = 1.2f
             };
 
-            // Label text
-            this.labelText = new TextSprite(game, Fonts.Speech)
-            {
-                Color = ColorPalette.Text.Dark,
-                PivotOrigin = RectanglePoint.LeftBottom,
-                Scale = ScaleInfo.Text.Tiny
-            };
-
             // Previous value
             this.previousValue1 = new ImageSprite(game, Atlases.UI.Pixel)
             {
@@ -76,7 +71,6 @@ namespace Remizione
             back.Position = Position - Vector2.One / 2;
             fore.Position = Position - new Vector2(.5f);
             previousValue1.Position = Position - new Vector2(.5f);
-            labelText.Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, .5f, 1);
         }
 
         #endregion
@@ -86,22 +80,11 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Game.Camera);
-            
             container.Draw(gameTime);
             back.Draw(gameTime);
             if (previousValue1.ScaleX > 0)
                 previousValue1.Draw(gameTime);
             fore.Draw(gameTime);
-
-            Game.SpriteBatch.End();
-
-            if (!labelText.IsEmpty)
-            {
-                Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearWrap);
-                labelText.Draw(gameTime);
-                Game.SpriteBatch.End();
-            }
         }
 
         // OnUpdate
@@ -124,17 +107,6 @@ namespace Remizione
 
         // ForeColor
         public Color ForeColor { get; }
-
-        // Label
-        public string? Label
-        {
-            get => labelText.Text;
-            set
-            {
-                if (value != labelText.Text)
-                    labelText.Text = value;
-            }
-        }
 
         // MaximumValue
         public int MaximumValue

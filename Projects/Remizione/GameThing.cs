@@ -481,7 +481,7 @@ namespace Remizione
         }
 
         // CanBeTargeted
-        public bool CanBeTargeted => MaxHP > 0 && IsEnemy;
+        public virtual bool CanBeTargeted => MaxHP > 0;
 
         // CanInteract
         public bool CanInteract(Actor requester)
@@ -646,7 +646,7 @@ namespace Remizione
                 requesterBox = requester.BoundingBox;
 
             Vector2 result;
-            if (IsEnemy)
+            if (CanBeTargeted)
             {
                 // Doesn't matter the enemy facing direction
                 if (requester.X <= X)
@@ -839,10 +839,6 @@ namespace Remizione
 
         // IsDead
         public bool IsDead => HP == 0 && MaxHP > 0;
-
-        // IsEnemy
-        [ScriptProperty]
-        public bool IsEnemy { get; set; }
 
         // IsEmittingLight
         public virtual bool IsEmittingLight => Light != null && Light.IsEmitting;

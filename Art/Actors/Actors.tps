@@ -215,6 +215,31 @@
             <key type="filename">Sinner-assets/UnarmedAttack06.png</key>
             <key type="filename">Sinner-assets/UnarmedAttack07.png</key>
             <key type="filename">Sinner-assets/UnarmedAttack08.png</key>
+            <key type="filename">SinnerNPC-assets/Move01.png</key>
+            <key type="filename">SinnerNPC-assets/Move02.png</key>
+            <key type="filename">SinnerNPC-assets/Move03.png</key>
+            <key type="filename">SinnerNPC-assets/Move04.png</key>
+            <key type="filename">SinnerNPC-assets/Move05.png</key>
+            <key type="filename">SinnerNPC-assets/Move06.png</key>
+            <key type="filename">SinnerNPC-assets/Move07.png</key>
+            <key type="filename">SinnerNPC-assets/Move08.png</key>
+            <key type="filename">SinnerNPC-assets/MoveFast01.png</key>
+            <key type="filename">SinnerNPC-assets/MoveFast02.png</key>
+            <key type="filename">SinnerNPC-assets/MoveFast03.png</key>
+            <key type="filename">SinnerNPC-assets/MoveFast04.png</key>
+            <key type="filename">SinnerNPC-assets/MoveFast05.png</key>
+            <key type="filename">SinnerNPC-assets/MoveFast06.png</key>
+            <key type="filename">SinnerNPC-assets/MoveFast07.png</key>
+            <key type="filename">SinnerNPC-assets/MoveFast08.png</key>
+            <key type="filename">SinnerNPC-assets/Stand01.png</key>
+            <key type="filename">SinnerNPC-assets/UnarmedAttack01.png</key>
+            <key type="filename">SinnerNPC-assets/UnarmedAttack02.png</key>
+            <key type="filename">SinnerNPC-assets/UnarmedAttack03.png</key>
+            <key type="filename">SinnerNPC-assets/UnarmedAttack04.png</key>
+            <key type="filename">SinnerNPC-assets/UnarmedAttack05.png</key>
+            <key type="filename">SinnerNPC-assets/UnarmedAttack06.png</key>
+            <key type="filename">SinnerNPC-assets/UnarmedAttack07.png</key>
+            <key type="filename">SinnerNPC-assets/UnarmedAttack08.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -271,6 +296,7 @@
                     <filename>Sinner-assets</filename>
                     <filename>Monster-assets</filename>
                     <filename>Zabul-assets</filename>
+                    <filename>SinnerNPC-assets</filename>
                 </array>
             </struct>
         </map>
