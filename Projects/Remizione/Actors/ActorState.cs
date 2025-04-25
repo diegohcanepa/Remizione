@@ -10,10 +10,11 @@ namespace Remizione
         private readonly ActorStateSettings settings;
 
         // Constructor
-        public ActorState(Actor owner, string name, ActorStateSettings settings)
+        public ActorState(Actor owner, string name, ActorStateSettings settings, bool autoPlayAnimation = true)
             : base(owner, name)
         {
             this.settings = settings;
+            this.AutoPlayAnimation = autoPlayAnimation;
         }
 
         #region Protected members
@@ -22,7 +23,13 @@ namespace Remizione
         protected virtual string GetAnimationName() => Name;
 
         // AutoPlayAnimation
-        protected virtual bool AutoPlayAnimation => true;
+        protected bool AutoPlayAnimation { get; }
+
+        // PlayAnimation
+        protected void PlayAnimation()
+        {
+            Owner.AnimationPlayer.Play(GetAnimationName(), settings.HasFlag(ActorStateSettings.LoopAnimation));
+        }
 
         #endregion
 
@@ -30,7 +37,7 @@ namespace Remizione
         public override void Enter()
         {
             if (AutoPlayAnimation)
-                Owner.AnimationPlayer.Play(GetAnimationName(), settings.HasFlag(ActorStateSettings.LoopAnimation));
+                PlayAnimation();
         }
     }
 }

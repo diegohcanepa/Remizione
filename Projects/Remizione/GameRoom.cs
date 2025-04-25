@@ -147,7 +147,7 @@ namespace Remizione
                 {
                     OutlineEffect? effect = null;
 
-                    if (interactiveTarget == thing && !interactiveTarget.CanBeTargeted && thing.Atlas is Atlas thingAtlas)
+                    if (interactiveTarget == thing && !Session.TargetMode && thing.Atlas is Atlas thingAtlas)
                     {
                         effect = RemizioneGame.Effects.Outline;
                         effect.Color.SetValue((Color.AntiqueWhite * .4f).ToVector4());
@@ -269,8 +269,13 @@ namespace Remizione
 
             // Find outlined target
             var interactiveTarget = FindMouseCursorTarget();
-            if (interactiveTarget != null && interactiveTarget.CanBeTargeted && !interactiveTarget.IsMoving)
-                MouseCursor.Instance.State = MouseCursorState.Target;
+            if (Session.TargetMode)
+            {
+                if (interactiveTarget != null && !interactiveTarget.IsMoving)
+                    MouseCursor.Instance.State = MouseCursorState.TargetOn;
+                else
+                    MouseCursor.Instance.State = MouseCursorState.TargetOff;
+            }
             else
                 MouseCursor.Instance.State = MouseCursorState.Default;
 

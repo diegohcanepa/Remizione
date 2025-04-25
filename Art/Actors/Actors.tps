@@ -194,6 +194,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Sinner-assets/Fatigue01.png</key>
+            <key type="filename">Sinner-assets/Fatigue02.png</key>
             <key type="filename">Sinner-assets/Move04.png</key>
             <key type="filename">Sinner-assets/Move05.png</key>
             <key type="filename">Sinner-assets/Move06.png</key>

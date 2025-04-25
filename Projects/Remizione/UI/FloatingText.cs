@@ -22,7 +22,7 @@ namespace Remizione
         {
             this.session = session;
 
-            this.text = new TextSprite(session.Game, Fonts.Outline)
+            this.text = new TextSprite(session.Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Light,
                 Scale = ScaleInfo.Text.Medium,
@@ -51,6 +51,9 @@ namespace Remizione
 
         // IsVisible
         public bool IsVisible => yTween.IsRunning || opacityTween.IsRunning;
+
+        // MessageId
+        public int MessageId { get; set; }
 
         // Show
         public void Show(Vector2 origin, string value) => Show(origin, value, ColorPalette.Text.Light);

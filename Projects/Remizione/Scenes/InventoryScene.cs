@@ -109,7 +109,7 @@ namespace Remizione.Scenes
             };
 
             // Category text
-            this.categoryText = new TextSprite(Game, Fonts.Regular)
+            this.categoryText = new TextSprite(Game, Fonts.Main)
             {
                 Color = ColorPalette.Text.Title,
                 PivotOrigin = RectanglePoint.Top,
@@ -119,7 +119,7 @@ namespace Remizione.Scenes
             };
 
             // Item name
-            this.itemName = new TextSprite(Game, Fonts.Regular)
+            this.itemName = new TextSprite(Game, Fonts.Main)
             {
                 Color = ColorPalette.Text.Title,
                 PivotOrigin = RectanglePoint.LeftTop,
@@ -130,7 +130,7 @@ namespace Remizione.Scenes
             };
 
             // Item description
-            this.itemDescription = new TextSprite(Game, Fonts.Regular)
+            this.itemDescription = new TextSprite(Game, Fonts.Main)
             {
                 Color = ColorPalette.Text.Dark,
                 PivotOrigin = RectanglePoint.LeftTop,
@@ -139,7 +139,7 @@ namespace Remizione.Scenes
             };
 
             // Upgrade info
-            this.itemUpgradeInfo = new TextSprite(Game, Fonts.Regular)
+            this.itemUpgradeInfo = new TextSprite(Game, Fonts.Main)
             {
                 Color = ColorPalette.Text.Green,
                 PivotOrigin = RectanglePoint.RightBottom,
@@ -148,7 +148,7 @@ namespace Remizione.Scenes
             };
 
             // No item selected
-            this.noItemSelectedText = new TextSprite(Game, Fonts.Regular)
+            this.noItemSelectedText = new TextSprite(Game, Fonts.Main)
             {
                 Color = ColorPalette.Text.Dark,
                 PivotOrigin = RectanglePoint.Middle,

@@ -15,7 +15,6 @@ namespace Remizione
         {
             this.BodySize = ActorSize.Small;
             this.Affinity = Affinity.Evil;
-            this.Hostile = true;
 
             /*
             var charge = new AIChargeState(this);

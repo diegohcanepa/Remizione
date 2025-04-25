@@ -98,6 +98,54 @@
 /processorParam:Quality=Best
 /build:Audio/FX/ImpactA.wav
 
+#begin Audio/FX/SinnerMaleHurtSetA1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SinnerMaleHurtSetA1.wav
+
+#begin Audio/FX/SinnerMaleHurtSetA2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SinnerMaleHurtSetA2.wav
+
+#begin Audio/FX/SinnerMaleHurtSetA3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SinnerMaleHurtSetA3.wav
+
+#begin Audio/FX/SinnerMaleHurtSetA4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SinnerMaleHurtSetA4.wav
+
+#begin Audio/FX/SinnerMaleHurtSetA5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SinnerMaleHurtSetA5.wav
+
+#begin Audio/FX/SinnerMaleHurtSetA6.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SinnerMaleHurtSetA6.wav
+
+#begin Audio/FX/SinnerMaleHurtSetA7.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SinnerMaleHurtSetA7.wav
+
+#begin Audio/FX/SinnerMaleHurtSetA8.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SinnerMaleHurtSetA8.wav
+
 #begin Audio/FX/SmallWhooshA1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -206,32 +254,41 @@
 /processorParam:DebugMode=Auto
 /build:Effects/Sepia.fx
 
-#begin Fonts/Outline.bmp
+#begin Fonts/Common.bmp
 /importer:LocalizedFontTextureImporter
 /processor:LocalizedFontTextureProcessor
 /processorParam:DefaultCharacter=?
 /processorParam:FirstCharacter=
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Color
-/build:Fonts/Outline.bmp
+/build:Fonts/Common.bmp
 
-#begin Fonts/Regular.bmp
+#begin Fonts/CommonOutline.bmp
 /importer:LocalizedFontTextureImporter
 /processor:LocalizedFontTextureProcessor
 /processorParam:DefaultCharacter=?
 /processorParam:FirstCharacter=
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Color
-/build:Fonts/Regular.bmp
+/build:Fonts/CommonOutline.bmp
 
-#begin Fonts/Speech.bmp
+#begin Fonts/Main.bmp
 /importer:LocalizedFontTextureImporter
 /processor:LocalizedFontTextureProcessor
 /processorParam:DefaultCharacter=?
 /processorParam:FirstCharacter=
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Color
-/build:Fonts/Speech.bmp
+/build:Fonts/Main.bmp
+
+#begin Fonts/MainOutline.bmp
+/importer:LocalizedFontTextureImporter
+/processor:LocalizedFontTextureProcessor
+/processorParam:DefaultCharacter=?
+/processorParam:FirstCharacter=
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Color
+/build:Fonts/MainOutline.bmp
 
 #begin System/ScriptLibrary.esl
 /copy:System/ScriptLibrary.esl

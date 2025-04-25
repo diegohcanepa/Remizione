@@ -27,17 +27,21 @@ namespace Remizione
             if (TextRepository.LanguagePackage is null)
                 return;
 
-            Regular.SpriteFont = assets[RegularAssetName];
-            Regular.SpriteFont.LineSpacing += 4;
-            Regular.SpriteFont.Spacing = 4;
+            Main.SpriteFont = assets[MainAssetName];
+            Main.SpriteFont.LineSpacing += 4;
+            Main.SpriteFont.Spacing = 4;
 
-            Outline.SpriteFont = assets[OutlineAssetName];
-            Outline.SpriteFont.LineSpacing += 4;
-            Outline.SpriteFont.Spacing = -6;
+            MainOutline.SpriteFont = assets[MainOutlineAssetName];
+            MainOutline.SpriteFont.LineSpacing += 4;
+            MainOutline.SpriteFont.Spacing = -6;
 
-            Speech.SpriteFont = assets[SpeechAssetName];
-            Speech.SpriteFont.LineSpacing += 2;
-            Speech.SpriteFont.Spacing = 5;
+            Common.SpriteFont = assets[CommonAssetName];
+            Common.SpriteFont.LineSpacing += 2;
+            Common.SpriteFont.Spacing = 5;
+
+            CommonOutline.SpriteFont = assets[CommonOutlineAssetName];
+            CommonOutline.SpriteFont.LineSpacing += 2;
+            CommonOutline.SpriteFont.Spacing = -5;
         }
 
         #endregion
@@ -48,32 +52,40 @@ namespace Remizione
         // Initialize
         public static void Initialize(ContentManager content)
         {
-            assets[RegularAssetName] = LoadFont(content, RegularAssetName);
-            assets[OutlineAssetName] = LoadFont(content, OutlineAssetName);
-            assets[SpeechAssetName] = LoadFont(content, SpeechAssetName);
+            assets[CommonAssetName] = LoadFont(content, CommonAssetName);
+            assets[CommonOutlineAssetName] = LoadFont(content, CommonOutlineAssetName);
+            assets[MainAssetName] = LoadFont(content, MainAssetName);
+            assets[MainOutlineAssetName] = LoadFont(content, MainOutlineAssetName);
 
             TextRepository.Loaded += OnTextRepositoryLoaded;
         }
 
-        // Outline
-        // Ancient Modern Tales, Regular, 48, Antialiased, Outline 6, Shadow Offset 0
-        public static Font Outline { get; } = new Font();
-
-        // OutlineAssetName
-        public const string OutlineAssetName = "Outline";
-
-        // Regular
+        // Main
         // Ancient Modern Tales, Regular, 48, Antialiased
-        public static Font Regular { get; } = new Font();
+        public static Font Main { get; } = new Font();
 
-        // RegularAssetName
-        public const string RegularAssetName = "Regular";
+        // MainAssetName
+        public const string MainAssetName = "Main";
 
-        // Speech
+        // MainOutline
+        // Ancient Modern Tales, Regular, 48, Antialiased, Outline 6, Shadow Offset 0
+        public static Font MainOutline { get; } = new Font();
+
+        // MainOutlineAssetName
+        public const string MainOutlineAssetName = "MainOutline";
+
+        // Common
         // SB Navigator, Regular, 48, Antialiased
-        public static Font Speech { get; } = new Font();
+        public static Font Common { get; } = new Font();
 
-        // SpeechAssetName
-        public const string SpeechAssetName = "Speech";
+        // CommonAssetName
+        public const string CommonAssetName = "Common";
+
+        // CommonOutine
+        // SB Navigator, Regular, 48, Antialiased
+        public static Font CommonOutline { get; } = new Font();
+
+        // CommonOutlineAssetName
+        public const string CommonOutlineAssetName = "CommonOutline";
     }
 }

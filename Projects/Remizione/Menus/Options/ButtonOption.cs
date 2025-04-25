@@ -29,7 +29,7 @@ namespace Remizione.Menus
                 }
             }
 
-            this.textSprite = new TextSprite(Game, Fonts.Regular)
+            this.textSprite = new TextSprite(Game, Fonts.Main)
             {
                 Color = ColorPalette.TextWhite,
                 PivotOrigin = RectanglePoint.Middle,

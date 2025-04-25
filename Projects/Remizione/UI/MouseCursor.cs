@@ -16,7 +16,8 @@ namespace Remizione
         private readonly ImageSprite defaultImage;
         private Vector2 position;
         private MouseCursorState state;
-        private readonly ImageSprite targetImage;
+        private readonly ImageSprite targetImageOff;
+        private readonly ImageSprite targetImageOn;
 
         #endregion
 
@@ -30,7 +31,8 @@ namespace Remizione
                 Instance = this;
 
             this.defaultImage = new ImageSprite(game);
-            this.targetImage = new ImageSprite(game) { PivotOrigin = RectanglePoint.Middle };
+            this.targetImageOff = new ImageSprite(game) { PivotOrigin = RectanglePoint.Middle };
+            this.targetImageOn = new ImageSprite(game) { PivotOrigin = RectanglePoint.Middle };
             this.activeImage = defaultImage;
         }
 
@@ -54,8 +56,11 @@ namespace Remizione
                 if (state == MouseCursorState.Default)
                     activeImage.Image = Atlases.UI.MouseCursorDefault;
 
-                else if (state == MouseCursorState.Target)
-                    activeImage.Image = Atlases.UI.MouseCursorTarget;
+                else if (state == MouseCursorState.TargetOff)
+                    activeImage.Image = Atlases.UI.MouseCursorTargetOff;
+
+                else if (state == MouseCursorState.TargetOn)
+                    activeImage.Image = Atlases.UI.MouseCursorTargetOn;
             }
 
             activeImage.Update(gameTime);
@@ -88,11 +93,13 @@ namespace Remizione
                     state = value;
 
                     if (state == MouseCursorState.Default)
-                        activeImage = defaultImage;
-                    else
-                        activeImage = targetImage;
+                        activeImage.Image = Atlases.UI.MouseCursorDefault;
 
-                    activeImage.Position = position;
+                    else if (state == MouseCursorState.TargetOff)
+                        activeImage.Image = Atlases.UI.MouseCursorTargetOff;
+
+                    else if (state == MouseCursorState.TargetOn)
+                        activeImage.Image = Atlases.UI.MouseCursorTargetOn;
                 }
             }
         }

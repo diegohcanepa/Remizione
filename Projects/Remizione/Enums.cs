@@ -23,9 +23,12 @@ namespace Remizione
     public enum AIStateSignal
     {
         None,
-        ChargeComplete,
+        ChaseComplete,
         IdleTimeout,
-        SawPlayer
+        TargetInRange,
+        TargetOutOfRange,
+        TargetLost,
+        SawTarget
     }
 
     // ContentFolder
@@ -81,10 +84,10 @@ namespace Remizione
     }
 
     // MessageKey
-    public enum MessageKey { None, NoStamina }
+    public enum MessageKey { None, Fatigue, NoStamina }
 
     // MouseCursorState
-    public enum MouseCursorState { Default, Target }
+    public enum MouseCursorState { Default, TargetOff, TargetOn }
 
     // PlacementDistributionStrategy
     public enum PlacementDistributionStrategy { Random, Clump, NoiseMap }

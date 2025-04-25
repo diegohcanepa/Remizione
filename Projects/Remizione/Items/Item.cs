@@ -26,6 +26,7 @@ namespace Remizione
             this.Knockback = metaItem.Knockback;
             this.Maximum = metaItem.Maximum;
             this.HP = metaItem.HP;
+            this.Range = metaItem.Range;
             this.Stamina = metaItem.Stamina;
         }
 
@@ -156,6 +157,9 @@ namespace Remizione
 
         // Owner
         public GameThing Owner => Storage.Owner;
+
+        // Range
+        public int Range { get; }
 
         // Replenish
         public void Replenish()

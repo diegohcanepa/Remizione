@@ -11,7 +11,7 @@ namespace Remizione
         // CreateVersionLabel
         internal static TextSprite CreateVersionLabel(EngendroGame game)
         {
-            TextSprite result = new(game, Fonts.Regular)
+            TextSprite result = new(game, Fonts.Main)
             {
                 Color = Color.DarkGray,
                 Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -5, 5),

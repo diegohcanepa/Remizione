@@ -34,7 +34,7 @@ namespace Remizione
         {
             currentState.Update(gameTime);
 
-            var signal = currentState.GetSignal();
+            var signal = currentState.Signal;
             if (signal != AIStateSignal.None && transitions.TryGetValue((currentState.GetType(), signal), out var newState))
             {
                 currentState.Exit();

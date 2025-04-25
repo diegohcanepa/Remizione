@@ -30,7 +30,7 @@ namespace Remizione.Menus
             this.onPress = onPress;
 
             this.icon = new ImageSprite(Game, iconImage) { PivotOrigin = RectanglePoint.Left, Scale = new Vector2(.2f) };
-            this.textSprite = new TextSprite(Game, Fonts.Regular)
+            this.textSprite = new TextSprite(Game, Fonts.Main)
             {
                 PivotOrigin = RectanglePoint.Middle,
                 Text = $"@Menu.Items.{Name}"

@@ -100,14 +100,14 @@
         // Endurance
         public int Endurance { get; set; } = 8;
 
+        // FatigueRecoveyPenalty
+        public int FatigueRecoveyPenalty => 2000;
+
         // GP (XP)
         public int GP { get; set; } = 0;
 
         // Mind (Intelligence)
         public int Mind { get; set; } = 8;
-
-        // ReactionSpeed
-        public int ReactionSpeed => 2000;
 
         // StaminaDegradationInterval
         public int StaminaDegradationInterval => 200;

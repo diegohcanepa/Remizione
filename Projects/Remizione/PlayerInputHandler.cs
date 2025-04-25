@@ -41,9 +41,13 @@ namespace Remizione
         // PerformMoveAction
         private void PerformMoveAction(bool fastMove)
         {
-            var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
-            GameThing? moveToTarget = null;
+            if (!Actor.CanPerformAction)
+                return;
 
+            var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
+            GameThing? moveTarget = null;
+
+            // Find potential target
             if (Actor.Room is GameRoom room)
             {
                 for (int i = room.CulledThings.Count - 1; i >= 0; i--)
@@ -54,17 +58,17 @@ namespace Remizione
                     else if (room.CulledThings[i] is GameThing target && target.HotspotBox.Contains(destination))
                     {
                         destination = target.GetApproachPosition(Actor);
-                        moveToTarget = target;
+                        moveTarget = target;
                         break;
                     }
                 }
             }
 
             Actor.FastMove = fastMove;
-            Actor.MoveTo(destination, moveToTarget);
+            Actor.MovePlayerTo(destination, moveTarget);
             if (Actor.FollowingPathDestination.HasValue)
             {
-                Actor.Session.HUD.DestinationMark.Color = moveToTarget != null ? ColorPalette.DestinationMark.Target : ColorPalette.DestinationMark.Default;
+                Actor.Session.HUD.DestinationMark.Color = moveTarget != null ? ColorPalette.DestinationMark.Target : ColorPalette.DestinationMark.Default;
                 Actor.Session.HUD.DestinationMark.Position = Actor.FollowingPathDestination;
             }
             
@@ -123,6 +127,12 @@ namespace Remizione
         // HandleInput
         public override HandleInputResult HandleInput(GameTime gameTime)
         {
+           // if (Actor.ActionCooldown > 0)
+             //   return HandleInputResult.Unhandled;   
+
+            if (InputBindings.TargetMode.IsPressed(PlayerIndex.One))
+                Actor.Session.TargetMode = !Actor.Session.TargetMode;
+
             // Mouse left button
             if (TestMouseLeftButtonClick())
                 return HandleInputResult.Handled;

@@ -18,7 +18,7 @@ namespace Remizione
         public EchoMessage(RemizioneGame game)
             : base(game)
         {
-            this.textSprite = new TextSprite(Game, Fonts.Regular)
+            this.textSprite = new TextSprite(Game, Fonts.Main)
             {
                 Color = ColorPalette.Text.Dark,
                 MaximumWidth = (int)(Screen.NativeWidth * .7f),

@@ -28,7 +28,7 @@ namespace Remizione.Menus
 
             BackgroundColor = Color.Black;
 
-            text = new TextSprite(Game, Fonts.Regular)
+            text = new TextSprite(Game, Fonts.Main)
             {
                 Color = ColorPalette.TextWhite,
                 MaximumWidth = 250,

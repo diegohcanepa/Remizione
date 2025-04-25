@@ -19,7 +19,7 @@ namespace Remizione.UI
         {
             this.session = session;
 
-            this.title = new TextSprite(Game, Fonts.Outline)
+            this.title = new TextSprite(Game, Fonts.MainOutline)
             {
                 PivotOrigin = RectanglePoint.RightTop,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.RightTop, -3, 3),

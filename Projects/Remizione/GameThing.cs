@@ -16,7 +16,7 @@ namespace Remizione
     public abstract class GameThing : Thing, IHoleArea, ILightSource
     {
         #region Private fields
-
+        
         private bool applyDamagePending;
         private int fp;
         private readonly Polygon holeInflatedPoly = new();
@@ -308,7 +308,7 @@ namespace Remizione
         }
 
         // OnHurt
-        protected virtual void OnHurt()
+        protected virtual void OnHurt(GameThing attacker)
         {
         }
 
@@ -437,6 +437,9 @@ namespace Remizione
             if (HurtSound != null)
                 PlaySound(HurtSound);
 
+            if (HurtImpactSound != null)
+                PlaySound(HurtImpactSound);
+
             OnDamageReaction(attacker);
 
             if (knockback == Vector2.Zero && HP <= 0)
@@ -460,7 +463,7 @@ namespace Remizione
 
                 Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), ((int)CumulativeDamage).ToString(), ColorPalette.HPMeter.Fore);
 
-                OnHurt();
+                OnHurt(attacker);
             }
 
             ResetApplyDamageValues();
@@ -480,9 +483,6 @@ namespace Remizione
             return HurtBox.Intersects(otherThing.HurtBox);
         }
 
-        // CanBeTargeted
-        public virtual bool CanBeTargeted => MaxHP > 0;
-
         // CanInteract
         public bool CanInteract(Actor requester)
         {
@@ -493,26 +493,6 @@ namespace Remizione
                 return false;
 
             return HotspotBox.Contains(requester.GetAbsolutePoint(requester.HotspotDetectorPosition));
-        }
-
-        // CanSeePlayer
-        public bool CanSeePlayer()
-        {
-            if (Session.Player == null || Session.Player == this)
-                return false;
-
-            Vector2 toPlayer = Session.Player.Position - Position;
-
-            if (ViewDistance > 0 && toPlayer.Length() > ViewDistance)
-                return false;
-
-            Vector2 directionToPlayer = Vector2.Normalize(toPlayer);
-            Vector2 forward = Direction == FacingDirection.Right ? Vector2.UnitX : -Vector2.UnitX;
-
-            float dot = Vector2.Dot(forward, directionToPlayer);
-            float angleThreshold = MathF.Cos(MathHelper.ToRadians(ViewAngle / 2f));
-
-            return dot >= angleThreshold;
         }
 
         // CellMargin
@@ -646,7 +626,8 @@ namespace Remizione
                 requesterBox = requester.BoundingBox;
 
             Vector2 result;
-            if (CanBeTargeted)
+            
+            if (Session.TargetMode)
             {
                 // Doesn't matter the enemy facing direction
                 if (requester.X <= X)
@@ -793,6 +774,10 @@ namespace Remizione
         // HurtShake
         [ScriptProperty]
         public Vector2 HurtShake { get; set; } = new Vector2(.5f, 0);
+
+        // HurtImpactSound
+        [ScriptProperty]
+        public Sound? HurtImpactSound { get; set; }
 
         // HurtSound
         [ScriptProperty]

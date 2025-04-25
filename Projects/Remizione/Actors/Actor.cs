@@ -25,18 +25,20 @@ namespace Remizione
         private Meter? damageMeter;
         private int damageMeterCooldown;
         private readonly ActorDeathState deathState;
+        private FloatingText? fatigueMessage;
+        private readonly ActorFatigueState fatigueState;
         private readonly FloatTween headTween = new();
         private readonly ActorHurtState hurtState;
         private int level;
-        private GameThing? moveToTarget;
         private readonly FloatTween moveTween = new();
-        private FloatingText? staminaMessage;
         private PlayerNumber playerNumber = PlayerNumber.None;
         private readonly List<Vector2> pendingPathNodes = [];
         private readonly GameSession session;
         private SpeechBubble? speechBubble;
+        private FloatingText? staminaMessage;
         private readonly ActorStandState standState;
         private int suspendInteractionCooldown;
+        private GameThing? target;
         private readonly ActorThrowObjectState throwObjectState;
         private float tinyMoveSpeedFactor = 1;
         private readonly Blinker<float> vanishBlinker = new(1, 0) { StartDelay = 500 };
@@ -64,10 +66,12 @@ namespace Remizione
             hurtState = new ActorHurtState(this);
 
             this.standState = new ActorStandState(this);
+            this.fatigueState = new ActorFatigueState(this);
 
             this.StateMachine = new ActorStateMachine(this, standState);
             this.StateMachine.RegisterState(actState);
             this.StateMachine.RegisterState(deathState);
+            this.StateMachine.RegisterState(fatigueState);
             this.StateMachine.RegisterState(hurtState);
             this.StateMachine.RegisterState(new ActorMoveState(this));
             this.StateMachine.RegisterState(new ActorMoveFastState(this));
@@ -101,33 +105,36 @@ namespace Remizione
             return null;
         }
 
-        // HandleMoveToTarget
-        private void HandleMoveToTarget()
+        // HandlePlayerTarget
+        private void HandlePlayerTarget()
         {
-            if (moveToTarget != null)
-            {
-                FaceTo(moveToTarget);
+            if (!IsPlayer)
+                return;
 
-                if (moveToTarget.CanBeTargeted)
+            if (Target != null)
+            {
+                FaceTo(Target);
+
+                if (session.TargetMode)
                 {
                     if (Direction == FacingDirection.Right)
                     {
-                        if (Vector2.Distance(HurtBox.GetPoint(RectanglePoint.RightBottom), moveToTarget.HurtBox.GetPoint(RectanglePoint.LeftBottom)) > 10)
-                            moveToTarget = null;
+                        if (Vector2.Distance(HurtBox.GetPoint(RectanglePoint.RightBottom), Target.HurtBox.GetPoint(RectanglePoint.LeftBottom)) > CloseAttackItem.Range)
+                            Target = null;
                     }
                     else
                     {
-                        if (Vector2.Distance(HurtBox.GetPoint(RectanglePoint.LeftBottom), moveToTarget.HurtBox.GetPoint(RectanglePoint.RightBottom)) > 10)
-                            moveToTarget = null;
+                        if (Vector2.Distance(HurtBox.GetPoint(RectanglePoint.LeftBottom), Target.HurtBox.GetPoint(RectanglePoint.RightBottom)) > CloseAttackItem.Range)
+                            Target = null;
                     }
 
-                    CloseAttack(moveToTarget);
+                    CloseAttack(Target);
                 }
                 else
-                    Interact(moveToTarget);
-
-                moveToTarget = null;
+                    Interact(Target);
             }
+
+            Target = null;
         }
 
         // InvalidateDamageMeter
@@ -228,10 +235,10 @@ namespace Remizione
         }
 
         // OnHurt
-        protected override void OnHurt()
+        protected override void OnHurt(GameThing attacker)
         {
-            StateMachine.ChangeState(ActorStateNames.Hurt);
-            damageMeterCooldown = 2500;
+            //StateMachine.ChangeState(ActorStateNames.Hurt);
+            damageMeterCooldown = 2000;
 
             if (damageMeter == null)
             {
@@ -263,7 +270,7 @@ namespace Remizione
             {
                 StopMoving();
                 IsFollowingPath = false;
-                HandleMoveToTarget();
+                HandlePlayerTarget();
             }
         }
 
@@ -303,6 +310,25 @@ namespace Remizione
             // Vigor
             if (attributes[nameof(Stats.Vigor)]?.Value is string vigor)
                 Stats.Vigor = XmlConvert.ToInt32(vigor);
+        }
+
+        // OnStaminaChanged
+        protected override void OnStaminaChanged()
+        {
+            if (Stamina == 0)
+            {
+                Stand();
+                StateMachine.ChangeState(ActorStateNames.Fatigue);
+
+                if (IsPlayer)
+                {
+                    if (fatigueMessage == null || !fatigueMessage.IsVisible)
+                    {
+                        fatigueMessage = session.ObjectPools.FloatingTexts.Get();
+                        fatigueMessage.Show(GetOverheadPosition(-3, -1), Utils.EncodeMessageKey(MessageKey.Fatigue), ColorPalette.StaminaMeter.Fore);
+                    }
+                }
+            }
         }
 
         // OnStartMoving
@@ -349,7 +375,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (Hostile)
+            if (Target != null)
                 AIStateMachine?.Update(gameTime);
 
             base.OnUpdate(gameTime);
@@ -442,15 +468,52 @@ namespace Remizione
         // BodySize
         public ActorSize BodySize { get; set; } = ActorSize.Medium;
 
-        // CanBeTargeted
-        public override bool CanBeTargeted => base.CanBeTargeted && Hostile;
-
         // CanHandleInput
         public bool CanHandleInput => InputHandler != null && !Session.IsAwaiting;
+
+        // CanPerformAction
+        public bool CanPerformAction
+        {
+            get
+            {
+                if (IsDead)
+                    return false;
+
+                return StateMachine.CurrentState is ActorStandState ||
+                       StateMachine.CurrentState is ActorMoveState ||
+                       StateMachine.CurrentState is ActorMoveFastState;
+            }
+        }
+
+        // CanSeeTarget
+        public bool CanSeeTarget()
+        {
+            if (Target == null)
+                return false;
+
+            Vector2 toTarget = Target.Position - Position;
+
+            if (ViewDistance > 0 && toTarget.Length() > ViewDistance)
+                return false;
+
+            Vector2 directionToTarget = Vector2.Normalize(toTarget);
+            Vector2 forward = Direction == FacingDirection.Right ? Vector2.UnitX : -Vector2.UnitX;
+
+            float dot = Vector2.Dot(forward, directionToTarget);
+            float angleThreshold = MathF.Cos(MathHelper.ToRadians(ViewAngle / 2f));
+
+            return dot >= angleThreshold;
+        }
 
         // CloseAttack
         public virtual bool CloseAttack(GameThing? target)
         {
+            if (HasSpeechBubble)
+                speechBubble?.Hide();
+
+            if (!CanPerformAction)
+                return false;
+
             if (CloseAttackItem != null)
             {
                 Stand();
@@ -553,10 +616,6 @@ namespace Remizione
             }
         }
 
-        // Hostile
-        [ScriptProperty]
-        public bool Hostile { get; set; }
-
         // HotspotDetectorPosition
         [ScriptProperty]
         public Vector2 HotspotDetectorPosition { get; set; }
@@ -589,11 +648,41 @@ namespace Remizione
         // InteractionTarget
         public GameThing? InteractionTarget { get; private set; }
 
+        // IsAttacking
+        public bool IsAttacking => StateMachine.CurrentState is ActorCloseAttackState;
+
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }
 
         // IsPlayer
         public bool IsPlayer => Session.Player == this;
+
+        // IsTargetInAttackRange
+        public bool IsTargetInAttackRange()
+        {
+            if (Target == null || CloseAttackItem == null)
+                return false;
+
+            Vector2 targetPos = Target.Position;
+            Vector2 toTarget = targetPos - Position;
+
+            // Out of range
+            float distance = toTarget.Length();
+            if (distance > CloseAttackItem.Range)
+                return false;
+
+            // Ensure player is not behind
+            if ((Direction == FacingDirection.Right && toTarget.X < 0) ||
+                (Direction == FacingDirection.Left && toTarget.X > 0))
+            {
+                return false;
+            }
+
+            if (Math.Abs(Target.Y-Y) > 8)
+                return false;
+
+            return true;
+        }
 
         // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;
@@ -619,7 +708,6 @@ namespace Remizione
         // MoveTo
         public override bool MoveTo(Vector2 destination)
         {
-            moveToTarget = null;
             FollowingPathDestination = null;
 
             // No path needed
@@ -667,16 +755,26 @@ namespace Remizione
             return true;
         }
 
-        // MoveTo
-        public bool MoveTo(Vector2 destination, GameThing? target)
+        // MovePlayerTo
+        public bool MovePlayerTo(Vector2 destination, GameThing? target)
         {
+            if (!IsPlayer)
+                return false;
+
             var result = MoveTo(destination);
-            this.moveToTarget = target;
+            this.Target = target;
 
             if (!result)
-                HandleMoveToTarget();
+                HandlePlayerTarget();
 
             return result;
+        }
+
+        // MoveTowardsTarget
+        public void MoveTowardsTarget()
+        {
+            if (Target != null)
+                MoveTo(Target.Position);
         }
 
         // PlayerNumber
@@ -735,6 +833,21 @@ namespace Remizione
             CodeContract.GreaterThanZero(duration, nameof(duration));
             suspendInteractionCooldown = duration;
             InteractionTarget = null;
+        }
+
+        // Target
+        public GameThing? Target
+        {
+            get => target;
+            set
+            {
+                if (value != target)
+                {
+                    target = value;
+                    if (target == this)
+                        target = null;
+                }
+            }
         }
 
         // ThrowObject

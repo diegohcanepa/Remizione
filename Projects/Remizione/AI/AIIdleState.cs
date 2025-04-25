@@ -9,7 +9,6 @@ namespace Remizione
     {
         private readonly float idleDuration;
         private int timer;
-        private AIStateSignal signal;
 
         // Constructor
         public AIIdleState(Actor owner, float idleDuration = 2000)
@@ -21,8 +20,8 @@ namespace Remizione
         // Enter
         public override void Enter()
         {
+            base.Enter();
             timer = 0;
-            signal = AIStateSignal.None;
             Owner.StopMoving();
         }
 
@@ -31,17 +30,14 @@ namespace Remizione
         {
             timer += gameTime.ElapsedGameTime.Milliseconds;
 
-            if (Owner.CanSeePlayer())
+            if (Owner.CanSeeTarget())
             {
-                signal = AIStateSignal.SawPlayer;
+                Signal = AIStateSignal.SawTarget;
                 return;
             }
 
             if (timer >= idleDuration)
-                signal = AIStateSignal.IdleTimeout;
+                Signal = AIStateSignal.IdleTimeout;
         }
-
-        // GetSignal
-        public override AIStateSignal GetSignal() => signal;
     }
 }

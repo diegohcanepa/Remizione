@@ -260,7 +260,8 @@
             <key type="filename">ItemCategories-assets/InventoryAmulets.png</key>
             <key type="filename">ItemCategories-assets/InventoryConsumables.png</key>
             <key type="filename">ItemCategories-assets/InventorySkills.png</key>
-            <key type="filename">UI-assets/MouseCursorTarget.png</key>
+            <key type="filename">UI-assets/MouseCursorTargetOff.png</key>
+            <key type="filename">UI-assets/MouseCursorTargetOn.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

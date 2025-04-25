@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -27,7 +28,7 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (!damageTaken && Target != null && Owner.AnimationPlayer.Frame is SpriteFrame frame)
+            if (!damageTaken && Target != null && Owner.DistanceTo(Target) <= Owner.CloseAttackItem.Range && Owner.AnimationPlayer.Frame is SpriteFrame frame)
             {
                 if (frame.Label == GameSettings.KeyFrame)
                 {
@@ -62,7 +63,11 @@ namespace Remizione
         public override void Exit()
         {
             base.Exit();
-            Target = null;
+
+            if (Owner.IsPlayer)
+                Target = null;
+
+            //Owner.ReactionSpeedCooldown = Owner.Stats.ReactionSpeed;
         }
     }
 }

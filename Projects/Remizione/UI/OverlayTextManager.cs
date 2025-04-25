@@ -100,7 +100,7 @@ namespace Remizione
         // Show
         public TextSprite Show(string name, string text, Color color, RectanglePoint pivotOrigin, Vector2 position, Vector2 scale, int maximumWidth, int fadeDuration)
         {
-            TextSprite textSprite = new(Game, Fonts.Regular)
+            TextSprite textSprite = new(Game, Fonts.Main)
             {
                 Color = color,
                 MaximumWidth = maximumWidth,

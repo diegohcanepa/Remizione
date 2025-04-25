@@ -7,16 +7,9 @@
     {
         // Constructor
         public ActorActState(Actor owner)
-            : base(owner, ActorStateNames.Act, ActorStateSettings.None)
+            : base(owner, ActorStateNames.Act, ActorStateSettings.None, false)
         {
         }
-
-        #region Protected members
-
-        // AutoPlayAnimation
-        protected override bool AutoPlayAnimation => false;
-
-        #endregion
 
         // CheckTransitions
         public override string? CheckTransitions()

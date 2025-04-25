@@ -16,6 +16,7 @@ namespace Remizione
         // Enter
         public virtual void Enter()
         {
+            Signal = AIStateSignal.None;
         }
 
         // Exit
@@ -23,11 +24,11 @@ namespace Remizione
         {
         }
 
-        // GetSignal
-        public virtual AIStateSignal GetSignal() => AIStateSignal.None;
-
         // Owner
         protected Actor Owner { get; }
+
+        // Signal
+        public AIStateSignal Signal { get; protected set; }
 
         // Update
         public virtual void Update(GameTime gameTime)

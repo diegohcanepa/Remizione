@@ -79,7 +79,7 @@ namespace Remizione
             pipeHeight = pipe.BoundingBox.Height;
 
             // Text
-            this.text = new TextSprite(Game, Fonts.Speech)
+            this.text = new TextSprite(Game, Fonts.Common)
             {
                 Color = ColorPalette.SpeechBubble.Text,
                 MaximumWidth = maxWidth,

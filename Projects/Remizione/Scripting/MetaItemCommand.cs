@@ -4,12 +4,12 @@ using EngendroAdventure.Scripting;
 namespace Remizione.Scripting
 {
     // MetaItemCommand
-    // Arguments: {Name} category {ItemCategory} [#action:ItemAction] [#damage:DiceRoll] [#fp:Integer] [#hp:Integer] [#knockback:Vector2] [#maximum:Integer] [#stamina:Integer]
+    // Arguments: {Name} category {ItemCategory} [#action:ItemAction] [#damage:DiceRoll] [#fp:Integer] [#hp:Integer] [#knockback:Vector2] [#maximum:Integer] [#range:Integer] [#stamina:Integer]
     internal sealed class MetaItemCommand : NonAwaitableCommand
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 3, ActionArg, DamageArg, FPArg, HPArg, ImpactWordArg, KnockbackArg, MaximumArg, MaximumLevelArg, StaminaArg)
+            : base(script, source, body, 3, ActionArg, DamageArg, FPArg, HPArg, ImpactWordArg, KnockbackArg, MaximumArg, MaximumLevelArg, RangeArg, StaminaArg)
         {
             var name = ParseItemName(this, 0);
             AssertKeyword(1, "category");
@@ -20,9 +20,10 @@ namespace Remizione.Scripting
             var maximum = Parser.ParseInt32Argument(this, MaximumArg);
             var fp = Parser.ParseInt32Argument(this, FPArg);
             var hp = Parser.ParseInt32Argument(this, HPArg);
+            var range = Parser.ParseInt32Argument(this, RangeArg);
             var stamina = Parser.ParseInt32Argument(this, StaminaArg);
 
-            var metaItem = new MetaItem(name, category, action, damage, knockback, maximum, hp, fp, stamina);
+            var metaItem = new MetaItem(name, category, action, damage, knockback, maximum, hp, fp, range, stamina);
             MetaItem.Register(metaItem);
         }
 

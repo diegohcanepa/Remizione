@@ -24,7 +24,8 @@ namespace Remizione
             MissingInputBinding = this[nameof(MissingInputBinding)];
             MissingItem = this[nameof(MissingItem)];
             MouseCursorDefault = this[nameof(MouseCursorDefault)];
-            MouseCursorTarget = this[nameof(MouseCursorTarget)];
+            MouseCursorTargetOff = this[nameof(MouseCursorTargetOff)];
+            MouseCursorTargetOn = this[nameof(MouseCursorTargetOn)];
             Pixel = this[nameof(Pixel)];
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
@@ -80,8 +81,11 @@ namespace Remizione
         // MouseCursorDefault
         public AtlasImage MouseCursorDefault { get; }
 
-        // MouseCursorTarget
-        public AtlasImage MouseCursorTarget { get; }
+        // MouseCursorTargetOff
+        public AtlasImage MouseCursorTargetOff { get; }
+
+        // MouseCursorTargetOn
+        public AtlasImage MouseCursorTargetOn { get; }
 
         // Pixel
         public AtlasImage Pixel { get; }

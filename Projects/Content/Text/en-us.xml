@@ -117,6 +117,7 @@
   <String Key="MessageBox.QuitToMenu">Quit to main menu?</String>
   <String Key="MessageBox.SlotDeleted">The slot has been deleted.</String>
   <String Key="MessageBox.Warning">Warning!</String>
+  <String Key="Messages.Fatigue">Fatigue</String>
   <String Key="Messages.InventoryNoItemSelected">Select an item.</String>
   <String Key="Messages.NoStamina">No stamina</String>
   <String Key="Misc.And">and</String>

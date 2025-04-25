@@ -23,13 +23,13 @@ namespace Remizione.UI
         public ScoreText(RemizioneGame game)
             : base(game)
         {
-            this.deltaScoreText = new TextSprite(Game, Fonts.Outline)
+            this.deltaScoreText = new TextSprite(Game, Fonts.MainOutline)
             {
                 Color = ColorPalette.Text.Light,
                 PivotOrigin = RectanglePoint.RightBottom
             };
 
-            this.scoreText = new TextSprite(Game, Fonts.Outline)
+            this.scoreText = new TextSprite(Game, Fonts.MainOutline)
             {
                 Color = ColorPalette.Text.Light
             };

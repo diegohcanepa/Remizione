@@ -28,7 +28,7 @@ namespace Remizione.Menus
             // Labels
             for (var i = 0; i < labels.Length; i++)
             {
-                labels[i] = new TextSprite(game, Fonts.Regular)
+                labels[i] = new TextSprite(game, Fonts.Main)
                 {
                     Color = ColorPalette.TextWhite,
                     Scale = ScaleInfo.ControlLabel,

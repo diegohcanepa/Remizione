@@ -32,7 +32,7 @@ namespace Remizione.UI
         public UIContextMenu(EngendroGame game, Font? font = null)
             : base(game)
         {
-            Font = font ?? Fonts.Regular;
+            Font = font ?? Fonts.Main;
 
             // Title
             titleSprite = new TextSprite(game, Font)

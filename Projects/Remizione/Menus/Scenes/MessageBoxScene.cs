@@ -45,7 +45,7 @@ namespace Remizione.Menus
             BackgroundColor = Color.Black;
 
             // Message
-            message = new TextSprite(Game, Fonts.Regular)
+            message = new TextSprite(Game, Fonts.Main)
             {
                 Color = ColorPalette.TextWhite,
                 MaximumWidth = 250,
@@ -55,7 +55,7 @@ namespace Remizione.Menus
             };
 
             // SubMessage
-            subMessage = new TextSprite(Game, Fonts.Regular)
+            subMessage = new TextSprite(Game, Fonts.Main)
             {
                 Color = ColorPalette.TextWhite,
                 MaximumWidth = 200,
@@ -64,7 +64,7 @@ namespace Remizione.Menus
             };
 
             // Title
-            title = new TextSprite(Game, Fonts.Regular)
+            title = new TextSprite(Game, Fonts.Main)
             {
                 Color = ColorPalette.TextWhite,
                 PivotOrigin = RectanglePoint.Bottom,

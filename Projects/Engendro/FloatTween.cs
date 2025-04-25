@@ -14,9 +14,7 @@ namespace Engendro
         {
             var result = startValue + (endValue - startValue) * progress;
             if (Decimals >= 0)
-            {
                 result = result.Round(Decimals);
-            }
 
             return result;
         }

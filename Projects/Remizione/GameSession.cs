@@ -51,7 +51,7 @@ namespace Remizione
 
             if (EngendroGame.DebugMode)
             {
-                TextSprite consoleText = new(game, Fonts.Speech)
+                TextSprite consoleText = new(game, Fonts.Common)
                 {
                     Color = ColorPalette.HighlightedText,
                     PivotOrigin = RectanglePoint.LeftBottom,
@@ -471,6 +471,9 @@ namespace Remizione
             Game.SceneManager.Push(inventoryScene);
             Camera.FocusTarget();
         }
+
+        // TargetMode
+        public bool TargetMode { get; set; }
 
         // WorldVersion
         public int WorldVersion { get; set; } = 1;
