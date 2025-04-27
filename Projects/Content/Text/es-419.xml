@@ -2,6 +2,9 @@
 <Strings>
   <String Key="Actors.Edmund">Edmundo Idle</String>
   <String Key="Actors.Grandma">Dulce abuelita</String>
+  <String Key="CombatOptions.Attack">Atacar</String>
+  <String Key="CombatOptions.Guard">Defender</String>
+  <String Key="CombatOptions.UseItem">Usar item...</String>
   <String Key="Cycle.Indulgence">Indulgencia</String>
   <String Key="Cycle.Penance">Penitencia</String>
   <String Key="InputBindings.Back">Atrás</String>

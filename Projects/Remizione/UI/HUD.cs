@@ -1,6 +1,8 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Remizione.UI;
+using Windows.Gaming.Input;
 
 namespace Remizione
 {
@@ -13,6 +15,7 @@ namespace Remizione
         private readonly Meter fpMeter;
         private readonly ScoreText gpScore;
         private readonly Meter hpMeter;
+        private readonly TextSprite narrationText;
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
         private readonly Meter staminaMeter;
@@ -22,6 +25,17 @@ namespace Remizione
             : base(session.Game)
         {
             this.session = session;
+
+            // Context menu
+            this.ContextMenu = new UIContextMenu(session.Game, session.Camera, Fonts.CommonOutline)
+            {
+                OptionTextScale = ScaleInfo.Text.Medium,
+                UseSelector = false
+            };
+
+            ContextMenu.AddOption("@CombatItems.Attack", "Attack");
+            ContextMenu.AddOption("@CombatItems.Guard", "Guard");
+            ContextMenu.AddOption("@CombatItems.UseItem", "Use item...");
 
             // DestinationMark
             this.DestinationMark = new DestinationMark(session);
@@ -55,6 +69,15 @@ namespace Remizione
                 Scale = ScaleInfo.Text.Large
             };
 
+            this.narrationText = new TextSprite(Game, Fonts.MainOutline)
+            {
+                Color = ColorPalette.Text.Light,
+                MaximumWidth = (int)(Screen.NativeWidth * .7f),
+                PauseOnPunctuationMarks = false,
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -10),
+                Scale = ScaleInfo.Text.Medium
+            };
         }
 
         #region Private members
@@ -89,6 +112,10 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            narrationText.Draw(gameTime);
+            Game.SpriteBatch.End();
+
             if (session.Player != null && session.FullHUD)
             {
                 cycleInfo.Draw(gameTime);
@@ -96,6 +123,9 @@ namespace Remizione
                 //QuickSlots.Draw(gameTime);
                 gpScore.Draw(gameTime);
             }
+
+            if (session.CombatManager.CurrentActor == session.Player)
+                ContextMenu.Draw(gameTime);
 
             EchoMessage.Draw(gameTime);
 
@@ -110,6 +140,13 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            if (session.Player != null)
+                ContextMenu.Position = session.Player.BoundingBox.GetPoint(RectanglePoint.Top, -ContextMenu.BoundingBox.Width / 2, -ContextMenu.BoundingBox.Height);
+
+            ContextMenu.Update(gameTime);
+
+            narrationText.Update(gameTime);
+
             if (session.Player != null)
             {
                 fpMeter.Update(gameTime);
@@ -128,6 +165,8 @@ namespace Remizione
 
         #endregion
 
+        public UIContextMenu ContextMenu { get; }
+
         // DestinationMark
         public DestinationMark DestinationMark { get; }
 
@@ -136,6 +175,20 @@ namespace Remizione
 
         // QuickSlots
         public QuickSlots QuickSlots { get; }
+
+        // NarrationText
+        public string NarrationText
+        {
+            get => narrationText.Text ?? string.Empty;
+            set
+            {
+                if (narrationText.Text != value)
+                {
+                    narrationText.Text = value;
+                    narrationText.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicInOut, 0, 1, 500);
+                }
+            }
+        }
 
         // Reset
         public void Reset()

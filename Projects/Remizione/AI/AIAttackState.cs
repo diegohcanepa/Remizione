@@ -7,7 +7,7 @@ namespace Remizione
     /// </summary>
     public sealed class AIAttackState : AIState
     {
-        private bool attackDone;
+        private bool attackLaunched;
 
         // Constructor
         public AIAttackState(Actor owner)
@@ -19,7 +19,7 @@ namespace Remizione
         public override void Enter()
         {
             base.Enter();
-            attackDone = false;
+            attackLaunched = false;
         }
 
         // Exit
@@ -32,17 +32,14 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (attackDone)
+            if (attackLaunched)
             {
                 if (!Owner.IsAttacking)
-                {
-                    if (!Owner.IsTargetInAttackRange())
-                        Signal = AIStateSignal.TargetOutOfRange;
-                }
+                    Signal = AIStateSignal.AttackComplete;
             }
             else
             {
-                attackDone = true;
+                attackLaunched = true;
                 Owner.CloseAttack(Owner.Target);
             }
 

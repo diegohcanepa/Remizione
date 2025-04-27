@@ -67,7 +67,8 @@ namespace Remizione
             if (Owner.IsPlayer)
                 Target = null;
 
-            //Owner.ReactionSpeedCooldown = Owner.Stats.ReactionSpeed;
+            if (Owner.Session.CombatManager.CurrentActor == Owner)
+                Owner.Session.CombatManager.AdvanceTurn();
         }
     }
 }

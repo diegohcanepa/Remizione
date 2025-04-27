@@ -35,11 +35,12 @@ namespace Remizione
                 return;
             }
 
-            if (Owner.IsTargetInAttackRange())
-                Signal = AIStateSignal.TargetInRange;
-
-            //else if (!Owner.IsFollowingPath)
-            //  signal = AIStateSignal.ChaseComplete;
+            if (!Owner.IsMoving)
+            {
+                Signal = AIStateSignal.ChaseComplete;
+                if (Owner.Target != null)
+                    Owner.FaceTo(Owner.Target);
+            }
             else
                 Owner.MoveTowardsTarget();
         }

@@ -23,6 +23,7 @@ namespace Remizione
     public enum AIStateSignal
     {
         None,
+        AttackComplete,
         ChaseComplete,
         IdleTimeout,
         TargetInRange,

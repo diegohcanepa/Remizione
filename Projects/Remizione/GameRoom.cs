@@ -271,7 +271,7 @@ namespace Remizione
             var interactiveTarget = FindMouseCursorTarget();
             if (Session.TargetMode)
             {
-                if (interactiveTarget != null && !interactiveTarget.IsMoving)
+                if (interactiveTarget != null && interactiveTarget.CanBeTargeted)
                     MouseCursor.Instance.State = MouseCursorState.TargetOn;
                 else
                     MouseCursor.Instance.State = MouseCursorState.TargetOff;

@@ -134,6 +134,9 @@ namespace Remizione
                     Interact(Target);
             }
 
+            if (session.CombatManager.CurrentActor == this)
+                session.CombatManager.AdvanceTurn();
+
             Target = null;
         }
 
@@ -167,8 +170,8 @@ namespace Remizione
 
         #region Protected members
 
-        // AIStateMachine
-        protected AIStateMachine? AIStateMachine { get; set; }
+        // CombatAIStateMachine
+        protected AIStateMachine? CombatAIStateMachine { get; set; }
 
         // CalculateSpeed
         protected override float CalculateSpeed() => base.CalculateSpeed() * (FastMove ? FastMoveFactor : 1) * tinyMoveSpeedFactor * (accelerationFactorTween.IsRunning ? accelerationFactorTween.CurrentValue : 1);
@@ -251,6 +254,12 @@ namespace Remizione
                 bloodSplash ??= new BloodSplash(Game, this);
                 bloodSplash.Show(BodySize, GetBloodSplashPosition());
             }
+
+            if (!IsPlayer && CombatAIStateMachine != null && attacker is Actor actor)
+            {
+                Target = actor;
+                session.CombatManager.Add(this);
+            }
         }
 
         // OnLoad
@@ -272,6 +281,11 @@ namespace Remizione
                 IsFollowingPath = false;
                 HandlePlayerTarget();
             }
+        }
+
+        // OnPerformAICombatAction
+        protected virtual void OnPerformAICombatAction()
+        {
         }
 
         // OnRead
@@ -375,8 +389,8 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (Target != null)
-                AIStateMachine?.Update(gameTime);
+            if (session.CombatManager.CurrentActor == this && CombatAIStateMachine != null)
+                CombatAIStateMachine.Update(gameTime);
 
             base.OnUpdate(gameTime);
 
@@ -469,7 +483,7 @@ namespace Remizione
         public ActorSize BodySize { get; set; } = ActorSize.Medium;
 
         // CanHandleInput
-        public bool CanHandleInput => InputHandler != null && !Session.IsAwaiting;
+        public bool CanHandleInput => InputHandler != null && !Session.IsAwaiting && (!session.CombatManager.IsActive || session.CombatManager.CurrentActor == this);
 
         // CanPerformAction
         public bool CanPerformAction
@@ -522,6 +536,7 @@ namespace Remizione
 
                 if (usageResult == ItemUsageResult.Succeeded)
                 {
+                    session.CombatManager.Add(this);
                     closeAttackState.AnimationName = CloseAttackItem.Name.ToString();
                     closeAttackState.Target = target;
                     StateMachine.ChangeState(ActorStateNames.CloseAttack);
@@ -774,7 +789,16 @@ namespace Remizione
         public void MoveTowardsTarget()
         {
             if (Target != null)
-                MoveTo(Target.Position);
+                MoveTo(Target.GetApproachPosition(Target));
+        }
+
+        // PerformAICombatAction
+        public void PerformAICombatAction()
+        {
+            if (!session.CombatManager.IsActive)
+                return;
+            else
+                OnPerformAICombatAction();
         }
 
         // PlayerNumber

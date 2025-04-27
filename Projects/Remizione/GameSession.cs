@@ -41,6 +41,7 @@ namespace Remizione
             this.HUD = new HUD(this);
             this.Environment = new Environment(this);
             this.RandomSeed = 10000;// RandomSeed = System.Environment.TickCount;
+            this.CombatManager = new CombatManager(this);
 
             ObjectPools = new ObjectPools(this);
             OverlayTexts = new OverlayTextManager(game);
@@ -313,6 +314,8 @@ namespace Remizione
             Environment.Update(gameTime);
             HUD.Update(gameTime);
             OverlayTexts.Update(gameTime);
+
+            CombatManager.Update(gameTime);
         }
 
         // OnWrite
@@ -344,6 +347,9 @@ namespace Remizione
         // ClearOverlayTexts
         [ScriptMethod(CodingContext.Any)]
         public void ClearOverlayTexts() => OverlayTexts.Clear();
+
+        // CombatManager
+        public CombatManager CombatManager { get; }
 
         // CycleCount
         [ScriptProperty]

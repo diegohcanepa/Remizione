@@ -36,7 +36,7 @@ namespace Remizione
             this.session = session;
             this.dialogBlock = dialogBlock;
 
-            this.menu = new UIContextMenu(Game, Fonts.MainOutline)
+            this.menu = new UIContextMenu(Game, Game.Camera, Fonts.MainOutline)
             {
                 OptionTextScale = ScaleInfo.ContextMenu.Option,
                 SelectInputBinding = InputBindings.SelectDialogOption

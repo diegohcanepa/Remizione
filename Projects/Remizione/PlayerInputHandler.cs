@@ -127,7 +127,7 @@ namespace Remizione
         // HandleInput
         public override HandleInputResult HandleInput(GameTime gameTime)
         {
-           // if (Actor.ActionCooldown > 0)
+            //if (Actor.ActionCooldown > 0)
              //   return HandleInputResult.Unhandled;   
 
             if (InputBindings.TargetMode.IsPressed(PlayerIndex.One))

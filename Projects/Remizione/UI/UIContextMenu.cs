@@ -29,10 +29,11 @@ namespace Remizione.UI
         #region Constructor
 
         // Constructor
-        public UIContextMenu(EngendroGame game, Font? font = null)
+        public UIContextMenu(EngendroGame game, Camera camera, Font? font = null)
             : base(game)
         {
-            Font = font ?? Fonts.Main;
+            this.Camera = camera;
+            this.Font = font ?? Fonts.Main;
 
             // Title
             titleSprite = new TextSprite(game, Font)
@@ -109,11 +110,11 @@ namespace Remizione.UI
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, RemizioneGame.Effects.ColorReduction.Effect);
+            Game.SpriteBatch.Begin(Camera, SamplerState.PointClamp, RemizioneGame.Effects.ColorReduction.Effect);
 
             titleSprite.Draw(gameTime);
 
-            if (optionList.Count > 0 && SelectInputBinding == null)
+            if (UseSelector && optionList.Count > 0 && SelectInputBinding == null)
                 optionSelector.Draw(gameTime);
 
             for (var i = 0; i < optionList.Count; i++)
@@ -145,15 +146,13 @@ namespace Remizione.UI
         #endregion
 
         // AddOption
-        public UIContextMenuOption AddOption(string key, string text, AtlasImage? icon)
+        public UIContextMenuOption AddOption(string key, string text, AtlasImage? icon = null)
         {
             UIContextMenuOption result = new(this, key, text, icon);
             optionList.Add(result);
 
             if (SelectedIndex == -1)
-            {
                 SelectedIndex = 0;
-            }
 
             Invalidate();
 
@@ -162,6 +161,9 @@ namespace Remizione.UI
 
         // BoundingBox
         public RectangleF BoundingBox { get; private set; }
+
+        // Camera
+        public Camera Camera { get; }
 
         // CanHandleInput
         public bool CanHandleInput => true;
@@ -341,6 +343,9 @@ namespace Remizione.UI
                 }
             }
         }
+
+        // UseSelector
+        public bool UseSelector { get; set; } = true;
 
         // Width
         public int Width { get; private set; }

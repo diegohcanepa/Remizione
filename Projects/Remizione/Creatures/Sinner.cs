@@ -18,25 +18,13 @@ namespace Remizione.Creatures
             var chase = new AIChaseState(this);
             var idle = new AIIdleState(this);
 
-            /*
+            CombatAIStateMachine = new AIStateMachine(this, idle);
 
-            AIStateMachine = new AIStateMachine(this, idle);
-
-            AIStateMachine.AddTransition<AIIdleState>(AIStateSignal.SawTarget, chase);
-            AIStateMachine.AddTransition<AIChaseState>(AIStateSignal.TargetInRange, attack);
-            AIStateMachine.AddTransition<AIAttackState>(AIStateSignal.TargetOutOfRange, chase);
-            AIStateMachine.AddTransition<AIAttackState>(AIStateSignal.TargetLost, idle);
-
-            */
-        }
-
-        // OnHurt
-        protected override void OnHurt(GameThing attacker)
-        {
-            base.OnHurt(attacker);
-
-            if (attacker is Actor actor)
-                Target = actor;
+            CombatAIStateMachine.AddTransition<AIIdleState>(AIStateSignal.TargetOutOfRange, chase);
+            CombatAIStateMachine.AddTransition<AIIdleState>(AIStateSignal.TargetInRange, attack);
+            CombatAIStateMachine.AddTransition<AIChaseState>(AIStateSignal.ChaseComplete, idle);
+            CombatAIStateMachine.AddTransition<AIAttackState>(AIStateSignal.AttackComplete, idle);
+            CombatAIStateMachine.AddTransition<AIAttackState>(AIStateSignal.TargetLost, idle);
         }
     }
 }

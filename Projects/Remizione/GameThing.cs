@@ -483,6 +483,9 @@ namespace Remizione
             return HurtBox.Intersects(otherThing.HurtBox);
         }
 
+        // CanBeTargeted
+        public bool CanBeTargeted => !IsMoving && MaxHP > 0;
+
         // CanInteract
         public bool CanInteract(Actor requester)
         {
@@ -537,6 +540,10 @@ namespace Remizione
         // DeathSound
         [ScriptProperty]
         public Sound? DeathSound { get; set; }
+
+        // DistributionStrategy
+        [ScriptProperty(CodingContext.EntityDeclaration)]
+        public PlacementDistributionStrategy DistributionStrategy { get; set; }
 
         // DrawLights
         public void DrawLights(GameTime gameTime, List<Light> renderedLights)
@@ -786,10 +793,6 @@ namespace Remizione
         // IgnoreWalkArea
         [ScriptProperty]
         public bool IgnoreWalkArea { get; set; } = true;
-
-        // DistributionStrategy
-        [ScriptProperty(CodingContext.EntityDeclaration)]
-        public PlacementDistributionStrategy DistributionStrategy { get; set; }
 
         // GetRequiredGridSpace
         public Size GetRequiredGridSpace(int cellSize)
