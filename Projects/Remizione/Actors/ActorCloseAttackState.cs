@@ -68,7 +68,7 @@ namespace Remizione
                 Target = null;
 
             if (Owner.Session.CombatManager.CurrentActor == Owner)
-                Owner.Session.CombatManager.AdvanceTurn();
+                Owner.Session.CombatManager.EndTurn();
         }
     }
 }

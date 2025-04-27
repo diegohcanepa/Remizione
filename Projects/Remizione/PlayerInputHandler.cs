@@ -45,7 +45,7 @@ namespace Remizione
                 return;
 
             var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
-            GameThing? moveTarget = null;
+            GameThing? interactionTarget = null;
 
             // Find potential target
             if (Actor.Room is GameRoom room)
@@ -58,17 +58,21 @@ namespace Remizione
                     else if (room.CulledThings[i] is GameThing target && target.HotspotBox.Contains(destination))
                     {
                         destination = target.GetApproachPosition(Actor);
-                        moveTarget = target;
+                        interactionTarget = target;
                         break;
                     }
                 }
             }
 
             Actor.FastMove = fastMove;
-            Actor.MovePlayerTo(destination, moveTarget);
+            if (interactionTarget != null)
+                Actor.InteractWith(destination, interactionTarget);
+            else
+                Actor.MoveTo(destination);
+
             if (Actor.FollowingPathDestination.HasValue)
             {
-                Actor.Session.HUD.DestinationMark.Color = moveTarget != null ? ColorPalette.DestinationMark.Target : ColorPalette.DestinationMark.Default;
+                Actor.Session.HUD.DestinationMark.Color = interactionTarget != null ? ColorPalette.DestinationMark.Target : ColorPalette.DestinationMark.Default;
                 Actor.Session.HUD.DestinationMark.Position = Actor.FollowingPathDestination;
             }
             

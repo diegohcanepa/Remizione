@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace Remizione
@@ -21,6 +22,23 @@ namespace Remizione
         }
 
         #region Private members
+
+        // AdvanceTurn
+        private void AdvanceTurn()
+        {
+            currentIndex++;
+
+            if (currentIndex >= actors.Count)
+                currentIndex = 0;
+
+            if (CurrentActor != null)
+            {
+                if (CurrentActor.IsPlayer)
+                    playerTurnCooldown = 5000;
+                else
+                    session.HUD.NarrationText = $"Wait the grace of God...";
+            }
+        }
 
         // CleanUp
         private void CleanUp()
@@ -54,28 +72,37 @@ namespace Remizione
             }
         }
 
-        // AdvanceTurn
-        public void AdvanceTurn()
+        // BeginTurn
+        public void BeginTurn()
         {
-            currentIndex++;
+            if (CurrentActor == null)
+                return;
 
-            if (currentIndex >= actors.Count)
-                currentIndex = 0;
+            if (IsTurnInProgress)
+                throw new InvalidOperationException("Turn already in progress.");
 
-            if (CurrentActor != null)
-            {
-                if (CurrentActor.IsPlayer)
-                    playerTurnCooldown = 5000;
-                else
-                    session.HUD.NarrationText = $"Wait the grace of God...";
-            }
+            IsTurnInProgress = true;
         }
 
         // CurrentActor
         public Actor? CurrentActor => IsActive ? actors[currentIndex] : null;
 
+        // EndTurn
+        public void EndTurn()
+        {
+            if (!IsTurnInProgress)
+                throw new InvalidOperationException("No turn in progress.");
+         
+            IsTurnInProgress = false;
+            
+            AdvanceTurn();
+        }
+
         // IsActive
         public bool IsActive { get; private set; }
+
+        // IsTurnInProgress
+        public bool IsTurnInProgress { get; private set; }
 
         // Contains
         public bool Contains(Actor actor) => actors.Contains(actor);
@@ -119,6 +146,7 @@ namespace Remizione
             IsActive = false;
             actors.Clear();
             currentIndex = -1;
+            IsTurnInProgress = false;
         }
 
         // Update

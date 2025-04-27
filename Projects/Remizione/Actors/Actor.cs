@@ -134,9 +134,6 @@ namespace Remizione
                     Interact(Target);
             }
 
-            if (session.CombatManager.CurrentActor == this)
-                session.CombatManager.AdvanceTurn();
-
             Target = null;
         }
 
@@ -660,6 +657,21 @@ namespace Remizione
                 return false;
         }
 
+        // InteractWith
+        public bool InteractWith(Vector2 destination, GameThing target)
+        {
+            if (!IsPlayer)
+                return false;
+
+            var result = MoveTo(destination);
+            this.Target = target;
+
+            if (!result)
+                HandlePlayerTarget();
+
+            return result;
+        }
+
         // InteractionTarget
         public GameThing? InteractionTarget { get; private set; }
 
@@ -768,21 +780,6 @@ namespace Remizione
                 StateMachine.ChangeState(ActorStateNames.Move);
 
             return true;
-        }
-
-        // MovePlayerTo
-        public bool MovePlayerTo(Vector2 destination, GameThing? target)
-        {
-            if (!IsPlayer)
-                return false;
-
-            var result = MoveTo(destination);
-            this.Target = target;
-
-            if (!result)
-                HandlePlayerTarget();
-
-            return result;
         }
 
         // MoveTowardsTarget
