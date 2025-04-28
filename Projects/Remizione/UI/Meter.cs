@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace Remizione
@@ -12,6 +11,7 @@ namespace Remizione
     {
         #region Private fields
 
+        private HorizontalAlignment alignment;
         private readonly ImageSprite back;
         private readonly ImageSprite container;
         private readonly ImageSprite fore;
@@ -71,6 +71,15 @@ namespace Remizione
             back.Position = Position - Vector2.One / 2;
             fore.Position = Position - new Vector2(.5f);
             previousValue1.Position = Position - new Vector2(.5f);
+
+            if (alignment == HorizontalAlignment.Center)
+            {
+                var offset = container.BoundingBox.Width / 2; ;
+                container.X -= offset;
+                back.X -= offset;
+                fore.X -= offset;
+                previousValue1.X -= offset;
+            }
         }
 
         #endregion
@@ -98,6 +107,20 @@ namespace Remizione
         }
 
         #endregion
+
+        // Alignment
+        public HorizontalAlignment Alignment
+        {
+            get => alignment;
+            set
+            {
+                if (value != alignment)
+                {
+                    this.alignment = value;
+                    Invalidate();
+                }
+            }
+        }
 
         // BackColor
         public Color BackColor { get; }

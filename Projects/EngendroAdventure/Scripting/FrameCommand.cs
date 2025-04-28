@@ -3,12 +3,12 @@
 namespace EngendroAdventure.Scripting
 {
     // FrameCommand
-    // Arguments: {Range:Int32Range} duration {Int32} [#key-area:Rectangle] [#label:Name] [#repeat:Integer] [#sound:Name] [#speed-factor:Float]
+    // Arguments: {Range:Int32Range} duration {Int32} [#label:Name] [#repeat:Integer] [#sound:Name] [#speed-factor:Float]
     internal sealed class FrameCommand : NonAwaitableCommand
     {
         // Constructor
         internal FrameCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 3, LabelArg, RepeatArg, SoundArg, SpeedFactorArg, KeyAreaArg)
+            : base(script, source, body, 3, LabelArg, RepeatArg, SoundArg, SpeedFactorArg)
         {
             if (AnimationCommand.ActiveAnimation == null)
                 throw ScriptExceptionBuilder.AnimationNotActive(this);
@@ -19,7 +19,6 @@ namespace EngendroAdventure.Scripting
             var repeat = Parser.ParseInt32Argument(this, RepeatArg, 1);
             var sound = Parser.ParseNameArgument(this, SoundArg) ?? string.Empty;
             var speedFactor = Parser.ParseFloatArgument(this, SpeedFactorArg, 1);
-            var subArea = Parser.ParseRectangleArgument(this, KeyAreaArg);
 
             // Add frames
             var prefix = AnimationCommand.ActiveAnimationFramePrefix ?? AnimationCommand.ActiveAnimation.Name;
@@ -29,7 +28,7 @@ namespace EngendroAdventure.Scripting
                 for (var j = range.Minimum; j <= range.Maximum; j++)
                 {
                     var imageName = prefix + j.ToString(CultureInfo.InvariantCulture).PadLeft(AnimationCommand.ZeroPaddingLength, '0');
-                    AnimationCommand.ActiveAnimation.AddFrame(imageName, duration, label, speedFactor, sound, subArea);
+                    AnimationCommand.ActiveAnimation.AddFrame(imageName, duration, label, speedFactor, sound);
                 }
             }
         }

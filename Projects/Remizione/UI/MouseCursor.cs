@@ -16,8 +16,7 @@ namespace Remizione
         private readonly ImageSprite defaultImage;
         private Vector2 position;
         private MouseCursorState state;
-        private readonly ImageSprite targetImageOff;
-        private readonly ImageSprite targetImageOn;
+        private readonly ImageSprite waitImage;
 
         #endregion
 
@@ -31,8 +30,7 @@ namespace Remizione
                 Instance = this;
 
             this.defaultImage = new ImageSprite(game);
-            this.targetImageOff = new ImageSprite(game) { PivotOrigin = RectanglePoint.Middle };
-            this.targetImageOn = new ImageSprite(game) { PivotOrigin = RectanglePoint.Middle };
+            this.waitImage = new ImageSprite(game) { PivotOrigin = RectanglePoint.Middle };
             this.activeImage = defaultImage;
         }
 
@@ -56,11 +54,8 @@ namespace Remizione
                 if (state == MouseCursorState.Default)
                     activeImage.Image = Atlases.UI.MouseCursorDefault;
 
-                else if (state == MouseCursorState.TargetOff)
-                    activeImage.Image = Atlases.UI.MouseCursorTargetOff;
-
-                else if (state == MouseCursorState.TargetOn)
-                    activeImage.Image = Atlases.UI.MouseCursorTargetOn;
+                else if (state == MouseCursorState.Wait)
+                    activeImage.Image = Atlases.UI.MouseCursorWait;
             }
 
             activeImage.Update(gameTime);
@@ -95,11 +90,8 @@ namespace Remizione
                     if (state == MouseCursorState.Default)
                         activeImage.Image = Atlases.UI.MouseCursorDefault;
 
-                    else if (state == MouseCursorState.TargetOff)
-                        activeImage.Image = Atlases.UI.MouseCursorTargetOff;
-
-                    else if (state == MouseCursorState.TargetOn)
-                        activeImage.Image = Atlases.UI.MouseCursorTargetOn;
+                    else if (state == MouseCursorState.Wait)
+                        activeImage.Image = Atlases.UI.MouseCursorWait;
                 }
             }
         }

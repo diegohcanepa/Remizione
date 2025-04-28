@@ -39,7 +39,7 @@ namespace Remizione.Scripting
             if (target == null)
                 return;
 
-            var destination = target.GetApproachPosition(player);
+            var destination = target.GetApproachPosition(player, true);
 
             if (player.MoveTo(destination))
                 directionCooldown = 150;

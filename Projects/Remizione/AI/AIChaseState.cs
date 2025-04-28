@@ -8,8 +8,6 @@ namespace Remizione
     /// </summary>
     public sealed class AIChaseState : AIState
     {
-        private int startCooldown;
-
         // Constructor
         public AIChaseState(Actor owner)
             : base(owner)
@@ -21,20 +19,13 @@ namespace Remizione
         {
             base.Enter();
 
-            startCooldown = Randomizer.Next(400, 2000);
-            Owner.FastMove = DiceBag.Dice10.Roll() < 4;
+            Owner.FastMove = true;
             Owner.MoveTowardsTarget();
         }
 
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (startCooldown > 0)
-            {
-                startCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                return;
-            }
-
             if (!Owner.IsMoving)
             {
                 Signal = AIStateSignal.ChaseComplete;

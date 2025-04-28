@@ -36,15 +36,14 @@ namespace Remizione
         private readonly Vector2Tween knockbackTween = new();
         private int maxFP;
         private int maxHP;
-        private int maxStamina;
+        private int maxWillpower;
         private readonly List<PlacementCondition> placementConditions = [];
         private RenderLayer renderLayer;
         private int renderLayerDepth;
         private bool shouldClampToWalkArea;
-        private float stamina;
-        private int staminaRecoveryCooldown;
         private WalkArea? walkArea;
         private string walkAreaName = string.Empty;
+        private float willpower;
 
         #endregion
 
@@ -321,11 +320,6 @@ namespace Remizione
             ClampToWalkArea();
         }
 
-        // OnStaminaChanged
-        protected virtual void OnStaminaChanged()
-        {
-        }
-
         // OnTransform
         protected override void OnTransform(TransformChange change)
         {
@@ -364,19 +358,6 @@ namespace Remizione
 
             base.OnUpdate(gameTime);
 
-            if (stamina < MaxStamina)
-            {
-                if (staminaRecoveryCooldown > 0)
-                {
-                    staminaRecoveryCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                }
-                else
-                {
-                    staminaRecoveryCooldown = StaminaRecoveryInterval;
-                    stamina += .1f;
-                }
-            }
-
             ClampToWalkArea();
         }
 
@@ -413,6 +394,11 @@ namespace Remizione
 
             instance.Pan = pan;
             instance.Volume.Current = volume * masterVolume;
+        }
+
+        // OnWillpowerChanged
+        protected virtual void OnWillpowerChanged()
+        {
         }
 
         #endregion
@@ -619,7 +605,7 @@ namespace Remizione
         }
 
         // GetApproachPosition
-        public Vector2 GetApproachPosition(GameThing requester)
+        public Vector2 GetApproachPosition(GameThing requester, bool inFront)
         {
             if (ApproachPosition != Vector2.Zero)
                 return this.GetAbsolutePoint(ApproachPosition);
@@ -634,17 +620,17 @@ namespace Remizione
 
             Vector2 result;
             
-            if (Session.TargetMode)
+            if (inFront)
             {
-                // Doesn't matter the enemy facing direction
-                if (requester.X <= X)
+                if (Direction == FacingDirection.Left)
                     result = box.GetPoint(RectanglePoint.LeftBottom, -requesterBox.Width / 2, 0);
                 else
                     result = box.GetPoint(RectanglePoint.RightBottom, requesterBox.Width / 2, 0);
             }
             else
             {
-                if (Direction == FacingDirection.Left)
+                // Doesn't matter the enemy facing direction
+                if (requester.X <= X)
                     result = box.GetPoint(RectanglePoint.LeftBottom, -requesterBox.Width / 2, 0);
                 else
                     result = box.GetPoint(RectanglePoint.RightBottom, requesterBox.Width / 2, 0);
@@ -672,15 +658,6 @@ namespace Remizione
             result.Y += yOffset;
 
             return result;
-        }
-
-        // GetFrameSubArea
-        public RectangleF GetFrameSubArea()
-        {
-            if (AnimationPlayer.Frame != null)
-                return this.GetAbsoluteBounds(AnimationPlayer.Frame.SubArea);
-            else
-                return RectangleF.Empty;
         }
 
         // GetOverheadPosition
@@ -874,17 +851,17 @@ namespace Remizione
             }
         }
 
-        // MaxStamina
+        // MaxWillpower
         [ScriptProperty]
-        public int MaxStamina
+        public int MaxWillpower
         {
-            get => maxStamina;
+            get => maxWillpower;
             set
             {
-                if (value != maxStamina)
+                if (value != maxWillpower)
                 {
-                    maxStamina = value;
-                    Stamina = value;
+                    maxWillpower = value;
+                    Willpower = value;
                 }
             }
         }
@@ -923,7 +900,6 @@ namespace Remizione
         {
             FP = MaxFP;
             HP = MaxHP;
-            Stamina = MaxStamina;
         }
 
         // Room
@@ -931,25 +907,6 @@ namespace Remizione
 
         // Session
         public new GameSession Session { get; }
-
-        // Stamina
-        [ScriptProperty]
-        public float Stamina
-        {
-            get => stamina;
-            set
-            {
-                if (value != stamina)
-                {
-                    this.stamina = Math.Clamp(value, 0, MaxStamina);
-                    OnStaminaChanged();
-                }
-            }
-        }
-
-        // StaminaRecoveryInterval
-        [ScriptProperty]
-        public int StaminaRecoveryInterval { get; set; } = 100;
 
         // TakeDamage
         public void TakeDamage(GameThing attacker, int amount, Vector2 knockback)
@@ -988,6 +945,21 @@ namespace Remizione
                 {
                     walkAreaName = value;
                     InvalidateWalkArea();
+                }
+            }
+        }
+
+        // Willpower
+        [ScriptProperty]
+        public float Willpower
+        {
+            get => willpower;
+            set
+            {
+                if (value != willpower)
+                {
+                    this.willpower = Math.Clamp(value, 0, MaxWillpower);
+                    OnWillpowerChanged();
                 }
             }
         }

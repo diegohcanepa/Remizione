@@ -58,8 +58,8 @@
                 return 775; // Max (without buffs)
         }
 
-        // CalculateStamina
-        private int CalculateStamina()
+        // CalculateWillpower
+        private int CalculateWillpower()
         {
             if (Endurance <= 10)
                 return 90 + (Endurance - 8) * 4; // from 8 a 10 → +4 per point
@@ -84,8 +84,7 @@
         {
             actor.MaxFP = CalculateFP();
             actor.MaxHP = CalculateHP();
-            actor.MaxStamina = CalculateStamina();
-            actor.StaminaRecoveryInterval = StaminaRecoveryInterval;
+            actor.MaxWillpower = CalculateWillpower();
         }
 
         // Devotion
@@ -100,25 +99,19 @@
         // Endurance
         public int Endurance { get; set; } = 8;
 
-        // FatigueRecoveyPenalty
-        public int FatigueRecoveyPenalty => 2000;
-
         // GP (XP)
         public int GP { get; set; } = 0;
 
         // Mind (Intelligence)
         public int Mind { get; set; } = 8;
 
-        // StaminaDegradationInterval
-        public int StaminaDegradationInterval => 200;
-
-        // StaminaRecoveryInterval
-        public int StaminaRecoveryInterval => 100;
-
         // Strength
         public int Strength { get; set; } = 8;
 
         // Vigor (Constitution)
         public int Vigor { get; set; } = 8;
+
+        // WillpowerDegradationInterval
+        public int WillpowerDegradationInterval => 500;
     }
 }

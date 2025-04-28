@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.6.2</string>
+        <string>7.6.3</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -194,8 +194,28 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Sinner-assets/Death01.png</key>
+            <key type="filename">Sinner-assets/Death02.png</key>
+            <key type="filename">Sinner-assets/Death03.png</key>
+            <key type="filename">Sinner-assets/Death04.png</key>
+            <key type="filename">Sinner-assets/Death05.png</key>
+            <key type="filename">Sinner-assets/Death06.png</key>
+            <key type="filename">Sinner-assets/Death07.png</key>
+            <key type="filename">Sinner-assets/Death08.png</key>
+            <key type="filename">Sinner-assets/Death09.png</key>
+            <key type="filename">Sinner-assets/Death10.png</key>
+            <key type="filename">Sinner-assets/Death11.png</key>
+            <key type="filename">Sinner-assets/Death12.png</key>
+            <key type="filename">Sinner-assets/Death13.png</key>
+            <key type="filename">Sinner-assets/Death14.png</key>
+            <key type="filename">Sinner-assets/Death15.png</key>
+            <key type="filename">Sinner-assets/Death16.png</key>
             <key type="filename">Sinner-assets/Fatigue01.png</key>
             <key type="filename">Sinner-assets/Fatigue02.png</key>
+            <key type="filename">Sinner-assets/Hurt01.png</key>
+            <key type="filename">Sinner-assets/Hurt02.png</key>
+            <key type="filename">Sinner-assets/Hurt03.png</key>
+            <key type="filename">Sinner-assets/Hurt04.png</key>
             <key type="filename">Sinner-assets/Move04.png</key>
             <key type="filename">Sinner-assets/Move05.png</key>
             <key type="filename">Sinner-assets/Move06.png</key>
@@ -217,6 +237,26 @@
             <key type="filename">Sinner-assets/UnarmedAttack06.png</key>
             <key type="filename">Sinner-assets/UnarmedAttack07.png</key>
             <key type="filename">Sinner-assets/UnarmedAttack08.png</key>
+            <key type="filename">SinnerNPC-assets/Death01.png</key>
+            <key type="filename">SinnerNPC-assets/Death02.png</key>
+            <key type="filename">SinnerNPC-assets/Death03.png</key>
+            <key type="filename">SinnerNPC-assets/Death04.png</key>
+            <key type="filename">SinnerNPC-assets/Death05.png</key>
+            <key type="filename">SinnerNPC-assets/Death06.png</key>
+            <key type="filename">SinnerNPC-assets/Death07.png</key>
+            <key type="filename">SinnerNPC-assets/Death08.png</key>
+            <key type="filename">SinnerNPC-assets/Death09.png</key>
+            <key type="filename">SinnerNPC-assets/Death10.png</key>
+            <key type="filename">SinnerNPC-assets/Death11.png</key>
+            <key type="filename">SinnerNPC-assets/Death12.png</key>
+            <key type="filename">SinnerNPC-assets/Death13.png</key>
+            <key type="filename">SinnerNPC-assets/Death14.png</key>
+            <key type="filename">SinnerNPC-assets/Death15.png</key>
+            <key type="filename">SinnerNPC-assets/Death16.png</key>
+            <key type="filename">SinnerNPC-assets/Hurt01.png</key>
+            <key type="filename">SinnerNPC-assets/Hurt02.png</key>
+            <key type="filename">SinnerNPC-assets/Hurt03.png</key>
+            <key type="filename">SinnerNPC-assets/Hurt04.png</key>
             <key type="filename">SinnerNPC-assets/Move01.png</key>
             <key type="filename">SinnerNPC-assets/Move02.png</key>
             <key type="filename">SinnerNPC-assets/Move03.png</key>

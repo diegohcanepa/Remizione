@@ -147,7 +147,7 @@ namespace Remizione
                 {
                     OutlineEffect? effect = null;
 
-                    if (interactiveTarget == thing && !Session.TargetMode && thing.Atlas is Atlas thingAtlas)
+                    if (interactiveTarget == thing && thing.Atlas is Atlas thingAtlas)
                     {
                         effect = RemizioneGame.Effects.Outline;
                         effect.Color.SetValue((Color.AntiqueWhite * .4f).ToVector4());
@@ -162,26 +162,6 @@ namespace Remizione
                     currentDrawIndex++;
                 }
             }
-        }
-
-        // FindMouseCursorTarget
-        private GameThing? FindMouseCursorTarget()
-        {
-            if (!Session.IsAwaiting && SpeechBubble.ModalInstance == null)
-            {
-                var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera);
-
-                for (var i = CulledThings.Count - 1; i >= 0; i--)
-                {
-                    if (CulledThings[i] == Session.Player)
-                        continue;
-
-                    if (CulledThings[i] is GameThing thing && thing.HotspotBox.Contains(mousePos))
-                        return thing;
-                }
-            }
-
-            return null;
         }
 
         // PrepareLightMap
@@ -268,14 +248,9 @@ namespace Remizione
             currentDrawIndex = 0;
 
             // Find outlined target
-            var interactiveTarget = FindMouseCursorTarget();
-            if (Session.TargetMode)
-            {
-                if (interactiveTarget != null && interactiveTarget.CanBeTargeted)
-                    MouseCursor.Instance.State = MouseCursorState.TargetOn;
-                else
-                    MouseCursor.Instance.State = MouseCursorState.TargetOff;
-            }
+            var interactiveTarget = Session.Player?.InteractionTarget;
+            if (Session.CombatManager.IsActive && Session.CombatManager.CurrentActor != null && !Session.CombatManager.CurrentActor.IsPlayer)
+                MouseCursor.Instance.State = MouseCursorState.Wait;
             else
                 MouseCursor.Instance.State = MouseCursorState.Default;
 

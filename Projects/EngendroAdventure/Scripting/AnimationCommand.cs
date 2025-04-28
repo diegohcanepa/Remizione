@@ -3,12 +3,12 @@
 namespace EngendroAdventure.Scripting
 {
     // AnimationCommand
-    // Arguments: {Name} [#frame-prefix:String] [#sub-area:Rectangle] [#zero-padding:Int32]
+    // Arguments: {Name} [#frame-prefix:String] [#zero-padding:Int32]
     internal sealed class AnimationCommand : NonAwaitableCommand
     {
         // Constructor
         internal AnimationCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, PrefixArg, KeyAreaArg, ZeroPaddingArg)
+            : base(script, source, body, 1, PrefixArg, ZeroPaddingArg)
         {
             var entity = AssertEntityNotNull<Entity>(Script.EntityName);
             var animationName = RemoveQuotes(0);
@@ -17,9 +17,6 @@ namespace EngendroAdventure.Scripting
             ActiveAnimationFramePrefix = Parser.ParseNameArgument(this, PrefixArg);
 
             ZeroPaddingLength = Parser.ParseInt32Argument(this, ZeroPaddingArg, 2);
-
-            if (HasArg(KeyAreaArg))
-                ActiveAnimation.KeyArea = Parser.ParseRectangleArgument(this, KeyAreaArg);
         }
 
         // ActiveAnimation

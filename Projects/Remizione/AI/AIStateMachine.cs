@@ -10,12 +10,14 @@ namespace Remizione
     public class AIStateMachine
     {
         private AIState currentState;
+        private AIState initialState;
         private readonly Dictionary<(Type, AIStateSignal), AIState> transitions = [];
 
         // Constructor
         public AIStateMachine(Actor owner, AIState initialState)
         {
             this.Owner = owner;
+            this.initialState = initialState;
             currentState = initialState;
             currentState.Enter();
         }
@@ -28,6 +30,13 @@ namespace Remizione
 
         // Owner
         public Actor Owner { get; }
+
+        // Reset
+        public void Reset()
+        {
+            //currentState.Exit();
+            currentState = initialState;
+        }
 
         // Update
         public void Update(GameTime gameTime)

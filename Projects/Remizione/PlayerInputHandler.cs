@@ -39,7 +39,7 @@ namespace Remizione
         }
 
         // PerformMoveAction
-        private void PerformMoveAction(bool fastMove)
+        private void PerformMoveAction(bool fastMove, bool attack)
         {
             if (!Actor.CanPerformAction)
                 return;
@@ -57,7 +57,6 @@ namespace Remizione
 
                     else if (room.CulledThings[i] is GameThing target && target.HotspotBox.Contains(destination))
                     {
-                        destination = target.GetApproachPosition(Actor);
                         interactionTarget = target;
                         break;
                     }
@@ -66,7 +65,7 @@ namespace Remizione
 
             Actor.FastMove = fastMove;
             if (interactionTarget != null)
-                Actor.InteractWith(destination, interactionTarget);
+                Actor.ApproachAndInteract(interactionTarget, attack);
             else
                 Actor.MoveTo(destination);
 
@@ -109,7 +108,8 @@ namespace Remizione
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
 
-            PerformMoveAction(false);
+            PerformMoveAction(true, false);
+
             return true;
         }
 
@@ -119,7 +119,8 @@ namespace Remizione
             if (!InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
                 return false;
 
-            PerformMoveAction(true);
+            PerformMoveAction(true, true);
+
             return true;
         }
 
@@ -132,10 +133,7 @@ namespace Remizione
         public override HandleInputResult HandleInput(GameTime gameTime)
         {
             //if (Actor.ActionCooldown > 0)
-             //   return HandleInputResult.Unhandled;   
-
-            if (InputBindings.TargetMode.IsPressed(PlayerIndex.One))
-                Actor.Session.TargetMode = !Actor.Session.TargetMode;
+            //   return HandleInputResult.Unhandled;   
 
             // Mouse left button
             if (TestMouseLeftButtonClick())

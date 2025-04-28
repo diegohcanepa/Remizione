@@ -105,13 +105,6 @@ namespace Remizione
             internal static Color Title { get; } = new(130, 130, 130);
         }
 
-        // StaminaMeter
-        internal static class StaminaMeter
-        {
-            internal static Color Back { get; } = new(43, 43, 69);
-            internal static Color Fore { get; } = new(59, 125, 79);
-        }
-
         // Text
         internal static class Text
         {
@@ -139,5 +132,12 @@ namespace Remizione
 
         // UIControlShadow
         internal static Color UIControlShadow { get; } = Color.Black * .5f;
+
+        // WillpowerMeter
+        internal static class WillpowerMeter
+        {
+            internal static Color Back { get; } = new(59, 32, 39);
+            internal static Color Fore { get; } = new(105, 36, 100);
+        }
     }
 }

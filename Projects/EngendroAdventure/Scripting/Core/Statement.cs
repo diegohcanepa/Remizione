@@ -90,7 +90,6 @@ namespace EngendroAdventure.Scripting
         protected static readonly string IntensityArg = "#intensity";
         protected static readonly string IntervalArg = "#interval";
         protected static readonly string KeepArg = "#keep";
-        protected static readonly string KeyAreaArg = "#key-area";
         protected static readonly string KindArg = "#kind";
         protected static readonly string KnockbackArg = "#knockback";
         protected static readonly string LabelArg = "#label";
@@ -158,7 +157,6 @@ namespace EngendroAdventure.Scripting
         protected static readonly string SoundNameArg = "#sound-name";
         protected static readonly string SoundsArg = "#sounds";
         protected static readonly string SpeedFactorArg = "#speed-factor";
-        protected static readonly string StaminaArg = "#stamina";
         protected static readonly string StartDelayArg = "#start-delay";
         protected static readonly string StateArg = "#state";
         protected static readonly string StepsArg = "#steps";
@@ -181,6 +179,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string VolatileArg = "#volatile";
         protected static readonly string VolumeArg = "#volume";
         protected static readonly string WalkAreaArg = "#walk-area";
+        protected static readonly string WillpowerArg = "#willpower";
         protected static readonly string WorldSizeArg = "#world-size";
         protected static readonly string ZeroPaddingArg = "#zero-padding";
 

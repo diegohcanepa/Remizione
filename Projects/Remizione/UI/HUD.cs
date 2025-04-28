@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Remizione.UI;
-using Windows.Gaming.Input;
 
 namespace Remizione
 {
@@ -18,7 +17,8 @@ namespace Remizione
         private readonly TextSprite narrationText;
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
-        private readonly Meter staminaMeter;
+        private readonly Meter willpowerMeter;
+        private readonly TextSprite willpowerMeterLabel;
 
         // Constructor
         public HUD(GameSession session)
@@ -58,7 +58,11 @@ namespace Remizione
 
             this.hpMeter = new Meter(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore) { Position = new(6, 5) };
             this.fpMeter = new Meter(Game, ColorPalette.FPMeter.Back, ColorPalette.FPMeter.Fore) { Position = new(6, 8) };
-            this.staminaMeter = new Meter(Game, ColorPalette.StaminaMeter.Back, ColorPalette.StaminaMeter.Fore) { Position = new(6, 11) };
+            this.willpowerMeter = new Meter(Game, ColorPalette.WillpowerMeter.Back, ColorPalette.WillpowerMeter.Fore)
+            { 
+                Alignment = HorizontalAlignment.Center,
+                Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 10)
+            };
 
             // GP score
             this.gpScore = new ScoreText(session.Game)
@@ -77,6 +81,15 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -10),
                 Scale = ScaleInfo.Text.Medium
+            };
+
+            this.willpowerMeterLabel = new TextSprite(Game, Fonts.MainOutline)
+            {
+                Color = ColorPalette.Text.Light,
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 10),
+                Scale = ScaleInfo.Text.Small,
+                Text = "Willpower"
             };
         }
 
@@ -97,10 +110,13 @@ namespace Remizione
             fpMeter.Value = actor.FP;
             fpMeter.Draw(gameTime);
 
-            // Stamina
-            staminaMeter.MaximumValue = actor.MaxStamina;
-            staminaMeter.Value = actor.Stamina;
-            staminaMeter.Draw(gameTime);
+            // Willpower
+            if (session.CombatManager.IsActive)
+            {
+                willpowerMeter.MaximumValue = actor.MaxWillpower;
+                willpowerMeter.Value = actor.Willpower;
+                willpowerMeter.Draw(gameTime);
+            }
 
             Game.SpriteBatch.End();
         }
@@ -113,6 +129,8 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            if (session.CombatManager.IsActive)
+                willpowerMeterLabel.Draw(gameTime);
             narrationText.Draw(gameTime);
             Game.SpriteBatch.End();
 
@@ -124,8 +142,8 @@ namespace Remizione
                 gpScore.Draw(gameTime);
             }
 
-            if (session.CombatManager.CurrentActor == session.Player)
-                ContextMenu.Draw(gameTime);
+            //if (session.Player?.InteractionTarget != null)
+            //    ContextMenu.Draw(gameTime);
 
             EchoMessage.Draw(gameTime);
 
@@ -143,6 +161,8 @@ namespace Remizione
             if (session.Player != null)
                 ContextMenu.Position = session.Player.BoundingBox.GetPoint(RectanglePoint.Top, -ContextMenu.BoundingBox.Width / 2, -ContextMenu.BoundingBox.Height);
 
+            willpowerMeterLabel.Update(gameTime);
+
             ContextMenu.Update(gameTime);
 
             narrationText.Update(gameTime);
@@ -151,7 +171,7 @@ namespace Remizione
             {
                 fpMeter.Update(gameTime);
                 hpMeter.Update(gameTime);
-                staminaMeter.Update(gameTime);
+                willpowerMeter.Update(gameTime);
                 gpScore.Score = session.Player.Stats.GP;
                 gpScore.Update(gameTime);
             }

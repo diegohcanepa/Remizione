@@ -478,9 +478,6 @@ namespace Remizione
             Camera.FocusTarget();
         }
 
-        // TargetMode
-        public bool TargetMode { get; set; }
-
         // WorldVersion
         public int WorldVersion { get; set; } = 1;
     }

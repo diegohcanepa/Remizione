@@ -49,7 +49,6 @@ namespace Remizione
         internal static readonly InputBinding SelectDialogOption = InputManager.AddBinding(nameof(SelectDialogOption), Buttons.A, Keys.E, Keys.Enter);
         internal static readonly InputBinding ShowInventory = InputManager.AddBinding(nameof(ShowInventory), Buttons.Start, Keys.I);
         internal static readonly InputBinding SpeechBubble = InputManager.AddBinding(nameof(SpeechBubble), Buttons.Y, MouseButton.Left, Keys.E, Keys.Enter);
-        internal static readonly InputBinding TargetMode = InputManager.AddBinding(nameof(TargetMode), Buttons.None, Keys.Space);
 
         // Quick slots
         internal static readonly InputBinding QuickSlotBottom = InputManager.AddBinding(nameof(QuickSlotBottom), Buttons.DPadDown, Keys.Down);

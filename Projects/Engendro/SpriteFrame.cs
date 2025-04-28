@@ -9,7 +9,7 @@ namespace Engendro
     public sealed class SpriteFrame
     {
         // Constructor
-        public SpriteFrame(SpriteAnimation animation, int index, string imageName, int duration, string label, float speedFactor, string soundName, Rectangle subArea)
+        public SpriteFrame(SpriteAnimation animation, int index, string imageName, int duration, string label, float speedFactor, string soundName)
         {
             this.Animation = animation;
             this.ImageName = imageName;
@@ -18,7 +18,6 @@ namespace Engendro
             this.Index = index;
             this.SpeedFactor = speedFactor;
             this.SoundName = soundName;
-            this.SubArea = subArea;
 
             InvalidateImage();
         }
@@ -62,8 +61,5 @@ namespace Engendro
 
         // SpeedFactor
         public float SpeedFactor { get; }
-
-        // SubArea
-        public Rectangle SubArea { get; }
     }
 }

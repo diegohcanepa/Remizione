@@ -80,6 +80,12 @@
 /processorParam:Quality=Best
 /build:Audio/Ambience/Ambience1.wav
 
+#begin Audio/FX/BodyFallMedium1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/BodyFallMedium1.wav
+
 #begin Audio/FX/FootstepGrass1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -97,6 +103,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/ImpactA.wav
+
+#begin Audio/FX/SinnerMaleDeathSetA1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SinnerMaleDeathSetA1.wav
 
 #begin Audio/FX/SinnerMaleHurtSetA1.wav
 /importer:WavImporter

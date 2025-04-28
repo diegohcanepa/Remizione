@@ -27,7 +27,7 @@ namespace Remizione
             this.Maximum = metaItem.Maximum;
             this.HP = metaItem.HP;
             this.Range = metaItem.Range;
-            this.Stamina = metaItem.Stamina;
+            this.Willpower = metaItem.Willpower;
         }
 
         // BaseDamage
@@ -41,11 +41,11 @@ namespace Remizione
                 return ItemUsageResult.NotEnoughHP;
 
             // Owner has not enough stamina
-            if (Stamina < 0 && Math.Abs(Stamina) > Owner.Stamina)
+            if (Willpower < 0 && Math.Abs(Willpower) > Owner.Willpower)
                 return ItemUsageResult.NotEnoughStamina;
 
             Owner.HP += HP;
-            Owner.Stamina += Stamina;
+            Owner.Willpower += Willpower;
 
             if (Level > 0 && MetaItem.UpgradeEffects.Count > 0)
             {
@@ -168,9 +168,6 @@ namespace Remizione
                 Count = Maximum;
         }
 
-        // Stamina
-        public int Stamina { get; }
-
         // Storage
         public ItemStorage Storage { get; }
 
@@ -191,5 +188,8 @@ namespace Remizione
                 return MetaItem.UpgradeCosts[Level];
             }
         }
+
+        // Willpower
+        public int Willpower { get; }
     }
 }

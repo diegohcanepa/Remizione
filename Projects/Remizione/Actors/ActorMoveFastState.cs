@@ -7,7 +7,7 @@ namespace Remizione
     /// </summary>
     public sealed class ActorMoveFastState : ActorState
     {
-        private int staminaPenaltyCooldown;
+        private int willpowerPenaltyCooldown;
 
         // Constructor
         public ActorMoveFastState(Actor owner)
@@ -19,20 +19,20 @@ namespace Remizione
         public override void Enter()
         {
             base.Enter();
-            staminaPenaltyCooldown = Owner.Stats.StaminaDegradationInterval;
+            willpowerPenaltyCooldown = Owner.Stats.WillpowerDegradationInterval;
         }
 
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (staminaPenaltyCooldown > 0)
+            if (willpowerPenaltyCooldown > 0)
             {
-                staminaPenaltyCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+                willpowerPenaltyCooldown -= gameTime.ElapsedGameTime.Milliseconds;
             }
             else
             {
-                Owner.Stamina -= 1;
-                staminaPenaltyCooldown = Owner.Stats.StaminaDegradationInterval;
+                Owner.Willpower -= 1;
+                willpowerPenaltyCooldown = Owner.Stats.WillpowerDegradationInterval;
             }
         }
     }

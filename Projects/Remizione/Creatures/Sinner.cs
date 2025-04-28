@@ -1,6 +1,4 @@
-﻿using Engendro;
-
-namespace Remizione.Creatures
+﻿namespace Remizione.Creatures
 {
     /// <summary>
     /// Sinner
@@ -12,19 +10,23 @@ namespace Remizione.Creatures
             : base(session, name)
         {
             this.BodySize = ActorSize.Small;
-            this.Affinity = Affinity.Evil;
 
             var attack = new AIAttackState(this);
             var chase = new AIChaseState(this);
             var idle = new AIIdleState(this);
 
             CombatAIStateMachine = new AIStateMachine(this, idle);
-
             CombatAIStateMachine.AddTransition<AIIdleState>(AIStateSignal.TargetOutOfRange, chase);
             CombatAIStateMachine.AddTransition<AIIdleState>(AIStateSignal.TargetInRange, attack);
             CombatAIStateMachine.AddTransition<AIChaseState>(AIStateSignal.ChaseComplete, idle);
             CombatAIStateMachine.AddTransition<AIAttackState>(AIStateSignal.AttackComplete, idle);
             CombatAIStateMachine.AddTransition<AIAttackState>(AIStateSignal.TargetLost, idle);
+        }
+
+        // OnPlayCombatTurn
+        protected override void OnPlayCombatTurn()
+        {
+            CombatAIStateMachine?.Reset();
         }
     }
 }

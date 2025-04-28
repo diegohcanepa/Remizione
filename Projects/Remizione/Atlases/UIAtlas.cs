@@ -26,6 +26,7 @@ namespace Remizione
             MouseCursorDefault = this[nameof(MouseCursorDefault)];
             MouseCursorTargetOff = this[nameof(MouseCursorTargetOff)];
             MouseCursorTargetOn = this[nameof(MouseCursorTargetOn)];
+            MouseCursorWait = this[nameof(MouseCursorWait)];
             Pixel = this[nameof(Pixel)];
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
@@ -86,6 +87,9 @@ namespace Remizione
 
         // MouseCursorTargetOn
         public AtlasImage MouseCursorTargetOn { get; }
+
+        // MouseCursorWait
+        public AtlasImage MouseCursorWait { get; }
 
         // Pixel
         public AtlasImage Pixel { get; }

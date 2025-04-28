@@ -19,14 +19,13 @@ namespace Remizione
 
         private readonly FloatTween accelerationFactorTween = new();
         private readonly ActorActState actState;
+        private bool attackTarget;
         private BloodSplash? bloodSplash;
         private ItemName closeAttackItemName;
         private readonly ActorCloseAttackState closeAttackState;
         private Meter? damageMeter;
         private int damageMeterCooldown;
         private readonly ActorDeathState deathState;
-        private FloatingText? fatigueMessage;
-        private readonly ActorFatigueState fatigueState;
         private readonly FloatTween headTween = new();
         private readonly ActorHurtState hurtState;
         private int level;
@@ -66,12 +65,10 @@ namespace Remizione
             hurtState = new ActorHurtState(this);
 
             this.standState = new ActorStandState(this);
-            this.fatigueState = new ActorFatigueState(this);
 
             this.StateMachine = new ActorStateMachine(this, standState);
             this.StateMachine.RegisterState(actState);
             this.StateMachine.RegisterState(deathState);
-            this.StateMachine.RegisterState(fatigueState);
             this.StateMachine.RegisterState(hurtState);
             this.StateMachine.RegisterState(new ActorMoveState(this));
             this.StateMachine.RegisterState(new ActorMoveFastState(this));
@@ -87,8 +84,8 @@ namespace Remizione
 
         #region Private members
 
-        // FindInteractiveTarget
-        private GameThing? FindInteractiveTarget()
+        // FindGamePadTarget
+        private GameThing? FindGamePadTarget()
         {
             if (Room != null)
             {
@@ -96,9 +93,40 @@ namespace Remizione
                 {
                     if (Room.CulledThings[i] == this)
                         continue;
-
                     else if (Room.CulledThings[i] is GameThing target && target.CanInteract(this))
                         return target;
+                }
+            }
+            
+            return null;
+        }
+
+        // FindInteractiveTarget
+        private GameThing? FindInteractiveTarget()
+        {
+            if (session.IsAwaiting || SpeechBubble.ModalInstance != null)
+                return null;
+
+            if (session.CombatManager.IsActive && session.CombatManager.CurrentActor != this)
+                return null;
+
+            return InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad ? FindGamePadTarget() : FindMouseCursorTarget();
+        }
+
+        // FindMouseCursorTarget
+        private GameThing? FindMouseCursorTarget()
+        {
+            if (Room != null)
+            {
+                var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera);
+
+                for (var i = Room.CulledThings.Count - 1; i >= 0; i--)
+                {
+                    if (Room.CulledThings[i] == Session.Player)
+                        continue;
+
+                    if (Room.CulledThings[i] is GameThing thing && thing.HotspotBox.Contains(mousePos))
+                        return thing;
                 }
             }
 
@@ -115,19 +143,9 @@ namespace Remizione
             {
                 FaceTo(Target);
 
-                if (session.TargetMode)
+                if (attackTarget)
                 {
-                    if (Direction == FacingDirection.Right)
-                    {
-                        if (Vector2.Distance(HurtBox.GetPoint(RectanglePoint.RightBottom), Target.HurtBox.GetPoint(RectanglePoint.LeftBottom)) > CloseAttackItem.Range)
-                            Target = null;
-                    }
-                    else
-                    {
-                        if (Vector2.Distance(HurtBox.GetPoint(RectanglePoint.LeftBottom), Target.HurtBox.GetPoint(RectanglePoint.RightBottom)) > CloseAttackItem.Range)
-                            Target = null;
-                    }
-
+                    attackTarget = false;
                     CloseAttack(Target);
                 }
                 else
@@ -195,9 +213,9 @@ namespace Remizione
         // OnDeath
         protected override void OnDeath()
         {
+            session.CombatManager.Remove(this);
             damageMeterCooldown = 0;
             StateMachine.ChangeState(ActorStateNames.Death);
-            Vanish();
         }
 
         // OnDraw
@@ -237,8 +255,8 @@ namespace Remizione
         // OnHurt
         protected override void OnHurt(GameThing attacker)
         {
-            //StateMachine.ChangeState(ActorStateNames.Hurt);
-            damageMeterCooldown = 2000;
+            StateMachine.ChangeState(ActorStateNames.Hurt);
+            damageMeterCooldown = 1200;
 
             if (damageMeter == null)
             {
@@ -276,12 +294,21 @@ namespace Remizione
             {
                 StopMoving();
                 IsFollowingPath = false;
-                HandlePlayerTarget();
+
+                if (Target == null && session.CombatManager.CurrentActor == this)
+                    session.CombatManager.AdvanceTurn();
+                else
+                    HandlePlayerTarget();
             }
         }
 
         // OnPerformAICombatAction
         protected virtual void OnPerformAICombatAction()
+        {
+        }
+
+        // OnPlayCombatTurn
+        protected virtual void OnPlayCombatTurn()
         {
         }
 
@@ -323,14 +350,17 @@ namespace Remizione
                 Stats.Vigor = XmlConvert.ToInt32(vigor);
         }
 
-        // OnStaminaChanged
-        protected override void OnStaminaChanged()
+        // OnWillpowerChanged
+        protected override void OnWillpowerChanged()
         {
-            if (Stamina == 0)
+            if (Willpower == 0)
             {
                 Stand();
-                StateMachine.ChangeState(ActorStateNames.Fatigue);
 
+                if (session.CombatManager.CurrentActor == this)
+                    session.CombatManager.AdvanceTurn();
+
+                /*
                 if (IsPlayer)
                 {
                     if (fatigueMessage == null || !fatigueMessage.IsVisible)
@@ -339,6 +369,7 @@ namespace Remizione
                         fatigueMessage.Show(GetOverheadPosition(-3, -1), Utils.EncodeMessageKey(MessageKey.Fatigue), ColorPalette.StaminaMeter.Fore);
                     }
                 }
+                */
             }
         }
 
@@ -386,8 +417,17 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (session.CombatManager.CurrentActor == this && CombatAIStateMachine != null)
-                CombatAIStateMachine.Update(gameTime);
+            if (session.CombatManager.CurrentActor is Actor combatant)
+            {
+                if (combatant == this)
+                {
+                    CombatAIStateMachine?.Update(gameTime);
+                }
+                else if (combatant.Target == this)
+                {
+                    FaceTo(combatant);
+                }
+            }
 
             base.OnUpdate(gameTime);
 
@@ -472,6 +512,23 @@ namespace Remizione
         [ScriptMethod]
         public void ApplyStats() => Stats.Apply();
 
+        // ApproachAndInteract
+        public bool ApproachAndInteract(GameThing target, bool attack)
+        {
+            if (!IsPlayer)
+                return false;
+            
+            this.attackTarget = attack;
+            var destination = target.GetApproachPosition(this, !attack);
+            var result = MoveTo(destination);
+            this.Target = target;
+
+            if (!result)
+                HandlePlayerTarget();
+
+            return result;
+        }
+
         // BloodSplashOrigin
         [ScriptProperty]
         public Vector2 BloodSplashOrigin { get; set; }
@@ -480,7 +537,19 @@ namespace Remizione
         public ActorSize BodySize { get; set; } = ActorSize.Medium;
 
         // CanHandleInput
-        public bool CanHandleInput => InputHandler != null && !Session.IsAwaiting && (!session.CombatManager.IsActive || session.CombatManager.CurrentActor == this);
+        public bool CanHandleInput
+        {
+            get
+            {
+                if (InputHandler == null || Session.IsAwaiting)
+                    return false;
+
+                if (session.CombatManager.IsActive && session.CombatManager.CurrentActor != this)
+                    return false;
+
+                return true;
+            }
+        }
 
         // CanPerformAction
         public bool CanPerformAction
@@ -488,6 +557,9 @@ namespace Remizione
             get
             {
                 if (IsDead)
+                    return false;
+
+                if (session.CombatManager.IsActive && session.CombatManager.CurrentActor != this)
                     return false;
 
                 return StateMachine.CurrentState is ActorStandState ||
@@ -533,7 +605,6 @@ namespace Remizione
 
                 if (usageResult == ItemUsageResult.Succeeded)
                 {
-                    session.CombatManager.Add(this);
                     closeAttackState.AnimationName = CloseAttackItem.Name.ToString();
                     closeAttackState.Target = target;
                     StateMachine.ChangeState(ActorStateNames.CloseAttack);
@@ -546,7 +617,7 @@ namespace Remizione
                         if (staminaMessage == null || !staminaMessage.IsVisible)
                         {
                             staminaMessage = session.ObjectPools.FloatingTexts.Get();
-                            staminaMessage.Show(GetOverheadPosition(-3, -1), Utils.EncodeMessageKey(MessageKey.NoStamina), ColorPalette.StaminaMeter.Fore);
+                            staminaMessage.Show(GetOverheadPosition(-3, -1), Utils.EncodeMessageKey(MessageKey.NoStamina), ColorPalette.WillpowerMeter.Fore);
                         }
                     }
                 }
@@ -657,21 +728,6 @@ namespace Remizione
                 return false;
         }
 
-        // InteractWith
-        public bool InteractWith(Vector2 destination, GameThing target)
-        {
-            if (!IsPlayer)
-                return false;
-
-            var result = MoveTo(destination);
-            this.Target = target;
-
-            if (!result)
-                HandlePlayerTarget();
-
-            return result;
-        }
-
         // InteractionTarget
         public GameThing? InteractionTarget { get; private set; }
 
@@ -699,11 +755,13 @@ namespace Remizione
                 return false;
 
             // Ensure player is not behind
+            /*
             if ((Direction == FacingDirection.Right && toTarget.X < 0) ||
                 (Direction == FacingDirection.Left && toTarget.X > 0))
             {
                 return false;
             }
+            */
 
             if (Math.Abs(Target.Y-Y) > 8)
                 return false;
@@ -735,6 +793,9 @@ namespace Remizione
         // MoveTo
         public override bool MoveTo(Vector2 destination)
         {
+            if (IsPlayer)
+                Target = null;
+
             FollowingPathDestination = null;
 
             // No path needed
@@ -786,7 +847,7 @@ namespace Remizione
         public void MoveTowardsTarget()
         {
             if (Target != null)
-                MoveTo(Target.GetApproachPosition(Target));
+                MoveTo(Target.GetApproachPosition(Target, false));
         }
 
         // PerformAICombatAction
@@ -814,6 +875,17 @@ namespace Remizione
                         InputHandler = new PlayerInputHandler<Actor>(this, (PlayerIndex)value);
                 }
             }
+        }
+
+        // PlayCombatTurn
+        public bool PlayCombatTurn()
+        {
+            if (IsPlayer || session.CombatManager.CurrentActor != this)
+                return false;
+
+            OnPlayCombatTurn();
+
+            return true;
         }
 
         // Say

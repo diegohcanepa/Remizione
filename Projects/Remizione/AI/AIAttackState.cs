@@ -26,7 +26,8 @@ namespace Remizione
         public override void Exit()
         {
             base.Exit();
-            //Owner.ReactionSpeedCooldown = Owner.Stats.ReactionSpeed;
+            if (Owner.Session.CombatManager.CurrentActor == Owner)
+                Owner.Session.CombatManager.AdvanceTurn();
         }
 
         // Update

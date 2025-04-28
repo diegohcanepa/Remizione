@@ -18,7 +18,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(ItemName name, ItemCategory category, ItemAction action, DiceRoll baseDamage, Vector2 knockback, int maximum, int hp, int fp, int range, int stamina)
+        public MetaItem(ItemName name, ItemCategory category, ItemAction action, DiceRoll baseDamage, Vector2 knockback, int maximum, int hp, int fp, int range, int willpower)
         {
             if (name == ItemName.None)
                 throw new InvalidOperationException("Item must have a name.");
@@ -32,7 +32,7 @@ namespace Remizione
             this.FP = fp;
             this.HP = hp;
             this.Range = range;
-            this.Stamina = stamina;
+            this.Willpower = willpower;
 
             this.UpgradeCosts = new ReadOnlyCollection<int>(upgradeCosts);
             this.UpgradeEffects = new ReadOnlyCollection<ItemEffect>(upgradeEffects);
@@ -102,9 +102,6 @@ namespace Remizione
         // Range
         public int Range { get; }
 
-        // Stamina
-        public int Stamina { get; }
-
         // ToString
         public override string ToString() => Name.ToString();
 
@@ -113,5 +110,8 @@ namespace Remizione
 
         // UpgradeEffects
         public ReadOnlyCollection<ItemEffect> UpgradeEffects { get; }
+
+        // Willpower
+        public int Willpower { get; }
     }
 }

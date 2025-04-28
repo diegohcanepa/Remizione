@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace Remizione
@@ -11,7 +10,6 @@ namespace Remizione
     {
         private readonly List<Actor> actors = [];
         private int currentIndex = -1;
-        private int playerTurnCooldown;
         private readonly GameSession session;
 
         // Constructor
@@ -20,38 +18,6 @@ namespace Remizione
             this.session = session;
             IsActive = false;
         }
-
-        #region Private members
-
-        // AdvanceTurn
-        private void AdvanceTurn()
-        {
-            currentIndex++;
-
-            if (currentIndex >= actors.Count)
-                currentIndex = 0;
-
-            if (CurrentActor != null)
-            {
-                if (CurrentActor.IsPlayer)
-                    playerTurnCooldown = 5000;
-                else
-                    session.HUD.NarrationText = $"Wait the grace of God...";
-            }
-        }
-
-        // CleanUp
-        private void CleanUp()
-        {
-            for (int i = actors.Count - 1; i >= 0; i--)
-            {
-                if (actors[i].IsDead || !
-                    actors[i].InCurrentRoom)
-                    Remove(actors[i]);
-            }
-        }
-
-        #endregion
 
         // Add
         public void Add(Actor actor)
@@ -72,37 +38,45 @@ namespace Remizione
             }
         }
 
-        // BeginTurn
-        public void BeginTurn()
+        // AdvanceTurn
+        public void AdvanceTurn()
         {
-            if (CurrentActor == null)
-                return;
+            int startingIndex = currentIndex;
 
-            if (IsTurnInProgress)
-                throw new InvalidOperationException("Turn already in progress.");
+            do
+            {
+                currentIndex++;
+                if (currentIndex >= actors.Count)
+                    currentIndex = 0;
 
-            IsTurnInProgress = true;
+                // Si dimos toda la vuelta sin encontrar un actor vivo
+                if (currentIndex == startingIndex)
+                {
+                    Terminate();
+                    return;
+                }
+
+            } while (CurrentActor != null && CurrentActor.IsDead);
+
+            if (CurrentActor != null)
+            {
+                if (CurrentActor.IsPlayer)
+                {
+                    session.HUD.NarrationText = "Take your action";
+                }
+                else
+                {
+                    CurrentActor.PlayCombatTurn();
+                    session.HUD.NarrationText = string.Empty;
+                }
+            }
         }
 
         // CurrentActor
         public Actor? CurrentActor => IsActive ? actors[currentIndex] : null;
 
-        // EndTurn
-        public void EndTurn()
-        {
-            if (!IsTurnInProgress)
-                throw new InvalidOperationException("No turn in progress.");
-         
-            IsTurnInProgress = false;
-            
-            AdvanceTurn();
-        }
-
         // IsActive
         public bool IsActive { get; private set; }
-
-        // IsTurnInProgress
-        public bool IsTurnInProgress { get; private set; }
 
         // Contains
         public bool Contains(Actor actor) => actors.Contains(actor);
@@ -143,10 +117,10 @@ namespace Remizione
         // Terminate
         public void Terminate()
         {
+            session.HUD.NarrationText = string.Empty;
             IsActive = false;
             actors.Clear();
             currentIndex = -1;
-            IsTurnInProgress = false;
         }
 
         // Update
@@ -155,20 +129,10 @@ namespace Remizione
             if (!IsActive)
                 return;
 
-            CleanUp();
-
             if (CurrentActor == null)
                 return;
 
-            if (CurrentActor.IsPlayer)
-            {
-                playerTurnCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                if (playerTurnCooldown <= 0)
-                    AdvanceTurn();
-                else
-                    session.HUD.NarrationText = $"Your turn: {playerTurnCooldown / 1000}s";
-            }
-            else
+            if (!CurrentActor.IsPlayer)
                 CurrentActor.PerformAICombatAction();
         }
     }

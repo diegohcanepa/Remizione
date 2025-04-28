@@ -9,7 +9,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 3, ActionArg, DamageArg, FPArg, HPArg, ImpactWordArg, KnockbackArg, MaximumArg, MaximumLevelArg, RangeArg, StaminaArg)
+            : base(script, source, body, 3, ActionArg, DamageArg, FPArg, HPArg, ImpactWordArg, KnockbackArg, MaximumArg, MaximumLevelArg, RangeArg, WillpowerArg)
         {
             var name = ParseItemName(this, 0);
             AssertKeyword(1, "category");
@@ -21,9 +21,9 @@ namespace Remizione.Scripting
             var fp = Parser.ParseInt32Argument(this, FPArg);
             var hp = Parser.ParseInt32Argument(this, HPArg);
             var range = Parser.ParseInt32Argument(this, RangeArg);
-            var stamina = Parser.ParseInt32Argument(this, StaminaArg);
+            var willpower = Parser.ParseInt32Argument(this, WillpowerArg);
 
-            var metaItem = new MetaItem(name, category, action, damage, knockback, maximum, hp, fp, range, stamina);
+            var metaItem = new MetaItem(name, category, action, damage, knockback, maximum, hp, fp, range, willpower);
             MetaItem.Register(metaItem);
         }
 

@@ -59,19 +59,19 @@ namespace Engendro
         // AddFrame
         public SpriteFrame AddFrame(string imageName, int duration)
         {
-            return AddFrame(imageName, duration, string.Empty, 1, string.Empty, Rectangle.Empty);
+            return AddFrame(imageName, duration, string.Empty, 1, string.Empty);
         }
 
         // AddFrame
         public SpriteFrame AddFrame(string imageName, int duration, string label)
         {
-            return AddFrame(imageName, duration, label, 1, string.Empty, Rectangle.Empty);
+            return AddFrame(imageName, duration, label, 1, string.Empty);
         }
 
         // AddFrame
-        public SpriteFrame AddFrame(string imageName, int duration, string label, float speedFactor, string soundName, Rectangle subArea)
+        public SpriteFrame AddFrame(string imageName, int duration, string label, float speedFactor, string soundName)
         {
-            SpriteFrame result = new(this, frameList.Count, imageName, duration, label, speedFactor, soundName, subArea);
+            SpriteFrame result = new(this, frameList.Count, imageName, duration, label, speedFactor, soundName);
             frameList.Add(result);
             Invalidate();
 
@@ -118,9 +118,6 @@ namespace Engendro
 
         // GetFrames
         public SpriteFrame[] GetFrames() => frameList.ToArray();
-
-        // KeyArea
-        public Rectangle KeyArea { get; set; } = Rectangle.Empty;
 
         // Name
         public string Name { get; }
