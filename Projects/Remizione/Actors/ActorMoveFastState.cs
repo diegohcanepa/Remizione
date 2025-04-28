@@ -25,6 +25,9 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
+            if (!Owner.Session.CombatManager.IsActive)
+                return;
+
             if (willpowerPenaltyCooldown > 0)
             {
                 willpowerPenaltyCooldown -= gameTime.ElapsedGameTime.Milliseconds;

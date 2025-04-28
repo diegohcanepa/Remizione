@@ -17,6 +17,7 @@ namespace Remizione
         private readonly ImageSprite fore;
         private bool isResetting;
         private int maximumValue;
+        private readonly Vector2 padding = new(.75f);
         private Vector2 position;
         private static readonly Color previousValue = new(207, 117, 43);
         private readonly ImageSprite previousValue1;
@@ -26,7 +27,7 @@ namespace Remizione
         #endregion
 
         // Constructor
-        public Meter(EngendroGame game, Color backColor, Color foreColor)
+        public Meter(EngendroGame game, Color backColor, Color foreColor, float verticalSize = 2.4f)
             : base(game)
         {
             this.BackColor = backColor;
@@ -37,28 +38,28 @@ namespace Remizione
             {
                 Color = Color.Black,
                 Opacity = .6f,
-                ScaleY = 2.4f
+                ScaleY = verticalSize
             };
 
             // Back
             this.back = new ImageSprite(game, Atlases.UI.Pixel)
             {
                 Color = backColor,
-                ScaleY = 1.2f
+                ScaleY = container.ScaleY - (padding.Y * 2)
             };
 
             // Fore
             this.fore = new ImageSprite(game, Atlases.UI.Pixel)
             {
                 Color = foreColor,
-                ScaleY = 1.2f
+                ScaleY = container.ScaleY - (padding.Y * 2)
             };
 
             // Previous value
             this.previousValue1 = new ImageSprite(game, Atlases.UI.Pixel)
             {
                 Color = previousValue,
-                ScaleY = 1.2f
+                ScaleY = container.ScaleY - (padding.Y * 2)
             };
         }
 
@@ -67,18 +68,27 @@ namespace Remizione
         // Invalidate
         private void Invalidate()
         {
-            container.Position = Position - Vector2.One;
-            back.Position = Position - Vector2.One / 2;
-            fore.Position = Position - new Vector2(.5f);
-            previousValue1.Position = Position - new Vector2(.5f);
+            container.Position = Position;
+            back.Position = Position + padding;
+            fore.Position = Position + padding;
+            previousValue1.Position = Position + padding;
 
             if (alignment == HorizontalAlignment.Center)
             {
-                var offset = container.BoundingBox.Width / 2; ;
-                container.X -= offset;
-                back.X -= offset;
-                fore.X -= offset;
-                previousValue1.X -= offset;
+                var xOffset = container.BoundingBox.Width / 2;
+                container.X -= xOffset;
+                back.X -= xOffset;
+                fore.X -= xOffset;
+                previousValue1.X -= xOffset;
+            }
+
+            else if (alignment == HorizontalAlignment.Right)
+            {
+                var xOffset = container.BoundingBox.Width;
+                container.X += xOffset;
+                back.X += xOffset;
+                fore.X += xOffset;
+                previousValue1.X += xOffset;
             }
         }
 
@@ -141,7 +151,7 @@ namespace Remizione
                 {
                     this.maximumValue = value;
                     back.ScaleX = value;
-                    container.ScaleX = value + 1;
+                    container.ScaleX = value + (padding.X * 2);
                     Invalidate();
                 }
             }

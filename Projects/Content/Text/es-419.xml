@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Strings>
-  <String Key="Actors.Edmund">Edmundo Idle</String>
-  <String Key="Actors.Grandma">Dulce abuelita</String>
+  <String Key="Actors.Sinner">Pecador</String>
+  <String Key="Attributes.Secondary.Faith">Fe</String>
+  <String Key="Attributes.Secondary.Vitality">Vitalidad</String>
+  <String Key="Attributes.Secondary.Willpower">Voluntad</String>
   <String Key="CombatOptions.Attack">Atacar</String>
   <String Key="CombatOptions.Guard">Defender</String>
   <String Key="CombatOptions.UseItem">Usar item...</String>

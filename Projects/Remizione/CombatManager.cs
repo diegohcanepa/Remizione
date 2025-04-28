@@ -49,7 +49,7 @@ namespace Remizione
                 if (currentIndex >= actors.Count)
                     currentIndex = 0;
 
-                // Si dimos toda la vuelta sin encontrar un actor vivo
+                // No alive actors
                 if (currentIndex == startingIndex)
                 {
                     Terminate();
@@ -60,6 +60,8 @@ namespace Remizione
 
             if (CurrentActor != null)
             {
+                TurnInProgress = false;
+
                 if (CurrentActor.IsPlayer)
                 {
                     session.HUD.NarrationText = "Take your action";
@@ -122,6 +124,9 @@ namespace Remizione
             actors.Clear();
             currentIndex = -1;
         }
+
+        // TurnInProgress
+        public bool TurnInProgress { get; set; }
 
         // Update
         public void Update(GameTime gameTime)

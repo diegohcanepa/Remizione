@@ -45,8 +45,8 @@ namespace Remizione
         // FPMeter
         internal static class FPMeter
         {
-            internal static Color Back { get; } = new(43, 43, 69);
-            internal static Color Fore { get; } = new(76, 104, 133);
+            internal static Color Back { get; } = new(34, 63, 60);
+            internal static Color Fore { get; } = new(47, 87, 83);
         }
 
         // HighlightedText

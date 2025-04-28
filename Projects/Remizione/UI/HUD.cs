@@ -10,6 +10,7 @@ namespace Remizione
     /// </summary>
     public sealed class HUD : GameObject
     {
+        private readonly QuickSlot amuletSlot;
         private readonly CycleInfo cycleInfo;
         private readonly Meter fpMeter;
         private readonly ScoreText gpScore;
@@ -18,6 +19,7 @@ namespace Remizione
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
         private readonly Meter willpowerMeter;
+        private readonly Meter willpowerMeterLarge;
         private readonly TextSprite willpowerMeterLabel;
 
         // Constructor
@@ -26,16 +28,11 @@ namespace Remizione
         {
             this.session = session;
 
-            // Context menu
-            this.ContextMenu = new UIContextMenu(session.Game, session.Camera, Fonts.CommonOutline)
+            // Amulet slot
+            this.amuletSlot = new QuickSlot(Game, null)
             {
-                OptionTextScale = ScaleInfo.Text.Medium,
-                UseSelector = false
+                Position = new(10, 8)
             };
-
-            ContextMenu.AddOption("@CombatItems.Attack", "Attack");
-            ContextMenu.AddOption("@CombatItems.Guard", "Guard");
-            ContextMenu.AddOption("@CombatItems.UseItem", "Use item...");
 
             // DestinationMark
             this.DestinationMark = new DestinationMark(session);
@@ -46,9 +43,6 @@ namespace Remizione
             // Cycle info
             this.cycleInfo = new CycleInfo(session);
 
-            // Quick slots
-            this.QuickSlots = new QuickSlots(session);
-
             // Saving icon
             this.savingIcon = new ImageSprite(Game, Atlases.UI.SavingIcon)
             {
@@ -56,9 +50,11 @@ namespace Remizione
                 Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -8, 6)
             };
 
-            this.hpMeter = new Meter(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore) { Position = new(6, 5) };
-            this.fpMeter = new Meter(Game, ColorPalette.FPMeter.Back, ColorPalette.FPMeter.Fore) { Position = new(6, 8) };
-            this.willpowerMeter = new Meter(Game, ColorPalette.WillpowerMeter.Back, ColorPalette.WillpowerMeter.Fore)
+            this.hpMeter = new Meter(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, 2.8f) { Position = new(17, 4) };
+            this.fpMeter = new Meter(Game, ColorPalette.FPMeter.Back, ColorPalette.FPMeter.Fore, 2.8f) { Position = new(17, 7) };
+            this.willpowerMeter = new Meter(Game, ColorPalette.WillpowerMeter.Back, ColorPalette.WillpowerMeter.Fore, 2.8f) { Position = new(17, 10) };
+
+            this.willpowerMeterLarge = new Meter(Game, ColorPalette.WillpowerMeter.Back, ColorPalette.WillpowerMeter.Fore, 3.6f)
             { 
                 Alignment = HorizontalAlignment.Center,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 10)
@@ -73,22 +69,22 @@ namespace Remizione
                 Scale = ScaleInfo.Text.Large
             };
 
-            this.narrationText = new TextSprite(Game, Fonts.MainOutline)
+            this.narrationText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Light,
                 MaximumWidth = (int)(Screen.NativeWidth * .7f),
                 PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -10),
-                Scale = ScaleInfo.Text.Medium
+                Scale = ScaleInfo.Text.Large
             };
 
-            this.willpowerMeterLabel = new TextSprite(Game, Fonts.MainOutline)
+            this.willpowerMeterLabel = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Light,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 10),
-                Scale = ScaleInfo.Text.Small,
+                Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 11),
+                Scale = ScaleInfo.Text.Medium,
                 Text = "Willpower"
             };
         }
@@ -110,13 +106,17 @@ namespace Remizione
             fpMeter.Value = actor.FP;
             fpMeter.Draw(gameTime);
 
+            willpowerMeterLarge.MaximumValue = actor.MaxWillpower;
+            willpowerMeterLarge.Value = actor.Willpower;
+
+            willpowerMeter.MaximumValue = actor.MaxWillpower;
+            willpowerMeter.Value = actor.Willpower;
+
             // Willpower
             if (session.CombatManager.IsActive)
-            {
-                willpowerMeter.MaximumValue = actor.MaxWillpower;
-                willpowerMeter.Value = actor.Willpower;
+                willpowerMeterLarge.Draw(gameTime);
+            else
                 willpowerMeter.Draw(gameTime);
-            }
 
             Game.SpriteBatch.End();
         }
@@ -136,14 +136,11 @@ namespace Remizione
 
             if (session.Player != null && session.FullHUD)
             {
-                cycleInfo.Draw(gameTime);
+                //cycleInfo.Draw(gameTime);
                 DrawMeters(gameTime, session.Player);
-                //QuickSlots.Draw(gameTime);
+                amuletSlot.Draw(gameTime);
                 gpScore.Draw(gameTime);
             }
-
-            //if (session.Player?.InteractionTarget != null)
-            //    ContextMenu.Draw(gameTime);
 
             EchoMessage.Draw(gameTime);
 
@@ -158,13 +155,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (session.Player != null)
-                ContextMenu.Position = session.Player.BoundingBox.GetPoint(RectanglePoint.Top, -ContextMenu.BoundingBox.Width / 2, -ContextMenu.BoundingBox.Height);
-
-            willpowerMeterLabel.Update(gameTime);
-
-            ContextMenu.Update(gameTime);
-
+            amuletSlot.Update(gameTime);
             narrationText.Update(gameTime);
 
             if (session.Player != null)
@@ -174,27 +165,27 @@ namespace Remizione
                 willpowerMeter.Update(gameTime);
                 gpScore.Score = session.Player.Stats.GP;
                 gpScore.Update(gameTime);
+
+                if (session.CombatManager.IsActive)
+                {
+                    willpowerMeterLabel.Update(gameTime);
+                    willpowerMeterLarge.Update(gameTime);
+                }
             }
 
             cycleInfo.Update(gameTime);
             DestinationMark.Update(gameTime);
             EchoMessage.Update(gameTime);
-            QuickSlots.Update(gameTime);
             savingIcon.Update(gameTime);
         }
 
         #endregion
-
-        public UIContextMenu ContextMenu { get; }
 
         // DestinationMark
         public DestinationMark DestinationMark { get; }
 
         // EchoMessage
         public EchoMessage EchoMessage { get; }
-
-        // QuickSlots
-        public QuickSlots QuickSlots { get; }
 
         // NarrationText
         public string NarrationText
@@ -213,7 +204,6 @@ namespace Remizione
         // Reset
         public void Reset()
         {
-            QuickSlots.Invalidate();
         }
 
         // ShowSavingIcon

@@ -45,23 +45,10 @@ namespace Remizione
                 return;
 
             var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
-            GameThing? interactionTarget = null;
+            GameThing? interactionTarget = Actor.InteractionTarget;
 
-            // Find potential target
-            if (Actor.Room is GameRoom room)
-            {
-                for (int i = room.CulledThings.Count - 1; i >= 0; i--)
-                {
-                    if (Actor.Session.Player == room.CulledThings[i])
-                        continue;
-
-                    else if (room.CulledThings[i] is GameThing target && target.HotspotBox.Contains(destination))
-                    {
-                        interactionTarget = target;
-                        break;
-                    }
-                }
-            }
+            if (Actor.Session.CombatManager.CurrentActor == Actor)
+                Actor.Session.CombatManager.TurnInProgress = true;
 
             Actor.FastMove = fastMove;
             if (interactionTarget != null)
@@ -96,12 +83,6 @@ namespace Remizione
             return false;
         }
 
-        // TestQuickSlots
-        private bool TestQuickSlots(GameTime gameTime)
-        {
-            return Actor.Session.HUD.QuickSlots.HandleInput(gameTime) == HandleInputResult.Handled;
-        }
-
         // TestMouseLeftButtonClick
         private bool TestMouseLeftButtonClick()
         {
@@ -132,9 +113,6 @@ namespace Remizione
         // HandleInput
         public override HandleInputResult HandleInput(GameTime gameTime)
         {
-            //if (Actor.ActionCooldown > 0)
-            //   return HandleInputResult.Unhandled;   
-
             // Mouse left button
             if (TestMouseLeftButtonClick())
                 return HandleInputResult.Handled;
@@ -146,7 +124,7 @@ namespace Remizione
             /*
             if (Actor.Session.FullHUD)
             {
-                if (TestInventory() || TestQuickSlots(gameTime))
+                if (TestInventory())
                     return HandleInputResult.Handled;
             }
             */

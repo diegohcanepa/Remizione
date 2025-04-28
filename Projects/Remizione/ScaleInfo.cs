@@ -27,6 +27,13 @@ namespace Remizione
         // CreditTitle
         internal static Vector2 CreditTitle { get; } = new Vector2(.16f);
 
+        // InteractionMenu
+        internal static class InteractionMenu
+        {
+            internal static Vector2 Option { get; } = new(.07f);
+            internal static Vector2 Title { get; } = new(.08f);
+        }
+
         // MenuItemTextActive
         internal static Vector2 MenuItemTextActive { get; } = new Vector2(.14f);
 

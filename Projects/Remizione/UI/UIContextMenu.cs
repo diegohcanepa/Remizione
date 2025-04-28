@@ -114,7 +114,7 @@ namespace Remizione.UI
 
             titleSprite.Draw(gameTime);
 
-            if (UseSelector && optionList.Count > 0 && SelectInputBinding == null)
+            if (ShowSelector && optionList.Count > 0 && SelectInputBinding == null)
                 optionSelector.Draw(gameTime);
 
             for (var i = 0; i < optionList.Count; i++)
@@ -319,6 +319,9 @@ namespace Remizione.UI
             set => optionSelectorControl.InputBinding = value;
         }
 
+        // ShowSelector
+        public bool ShowSelector { get; set; } = true;
+
         // Title
         public string Title
         {
@@ -328,6 +331,16 @@ namespace Remizione.UI
                 titleSprite.Text = value;
                 Invalidate();
             }
+        }
+
+        // TitleBoundingBox
+        public RectangleF TitleBoundingBox => titleSprite.BoundingBox;
+
+        // TitleColor
+        public Color TitleColor
+        {
+            get => titleSprite.Color;
+            set => titleSprite.Color = value;
         }
 
         // TitleTextScale
@@ -343,9 +356,6 @@ namespace Remizione.UI
                 }
             }
         }
-
-        // UseSelector
-        public bool UseSelector { get; set; } = true;
 
         // Width
         public int Width { get; private set; }

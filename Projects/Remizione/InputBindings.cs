@@ -50,12 +50,6 @@ namespace Remizione
         internal static readonly InputBinding ShowInventory = InputManager.AddBinding(nameof(ShowInventory), Buttons.Start, Keys.I);
         internal static readonly InputBinding SpeechBubble = InputManager.AddBinding(nameof(SpeechBubble), Buttons.Y, MouseButton.Left, Keys.E, Keys.Enter);
 
-        // Quick slots
-        internal static readonly InputBinding QuickSlotBottom = InputManager.AddBinding(nameof(QuickSlotBottom), Buttons.DPadDown, Keys.Down);
-        internal static readonly InputBinding QuickSlotLeft = InputManager.AddBinding(nameof(QuickSlotLeft), Buttons.DPadLeft, Keys.Left);
-        internal static readonly InputBinding QuickSlotRight = InputManager.AddBinding(nameof(QuickSlotRight), Buttons.DPadRight, Keys.Right);
-        internal static readonly InputBinding QuickSlotTop = InputManager.AddBinding(nameof(QuickSlotTop), Buttons.DPadUp, Keys.Up);
-
         // Keyboard movement
         internal static readonly InputBinding KeyboardMoveDown = InputManager.AddBinding(nameof(KeyboardMoveDown), 0, Keys.S);
         internal static readonly InputBinding KeyboardMoveLeft = InputManager.AddBinding(nameof(KeyboardMoveLeft), 0, Keys.A);

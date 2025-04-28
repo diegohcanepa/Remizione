@@ -518,7 +518,7 @@ namespace Remizione
             if (!IsPlayer)
                 return false;
             
-            this.attackTarget = attack;
+            this.attackTarget = attack && target.HP > 0;
             var destination = target.GetApproachPosition(this, !attack);
             var result = MoveTo(destination);
             this.Target = target;
@@ -544,7 +544,7 @@ namespace Remizione
                 if (InputHandler == null || Session.IsAwaiting)
                     return false;
 
-                if (session.CombatManager.IsActive && session.CombatManager.CurrentActor != this)
+                if (Session.CombatManager.CurrentActor == this && Session.CombatManager.TurnInProgress)
                     return false;
 
                 return true;
