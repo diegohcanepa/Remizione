@@ -45,7 +45,7 @@ namespace Remizione
         // FPMeter
         internal static class FPMeter
         {
-            internal static Color Back { get; } = new(61, 41, 54);
+            internal static Color Back { get; } = new(41, 29, 43);
             internal static Color Fore { get; } = new(82, 51, 63);
         }
 
@@ -55,7 +55,7 @@ namespace Remizione
         // HPMeter
         internal static class HPMeter
         {
-            internal static Color Back { get; } = new(61, 41, 54);
+            internal static Color Back { get; } = new(41, 29, 43);
             internal static Color Fore { get; } = new(82, 51, 63);
         }
 
@@ -79,13 +79,6 @@ namespace Remizione
 
         // PopupTitle
         internal static Color PopupTitle { get; } = new Color(116, 95, 75);
-
-        // ReactionMeter
-        internal static class ReactionMeter
-        {
-            internal static Color Back { get; } = new(125, 56, 51);
-            internal static Color Fore { get; } = new(171, 81, 48);
-        }
 
         // ScenePausedShade
         internal static Color ScenePausedShade { get; } = Color.Black * .4f;
@@ -136,7 +129,7 @@ namespace Remizione
         // WillpowerMeter
         internal static class WillpowerMeter
         {
-            internal static Color Back { get; } = new(61, 41, 54);
+            internal static Color Back { get; } = new(41, 29, 43);
             internal static Color Fore { get; } = new(82, 51, 63);
         }
     }

@@ -44,16 +44,16 @@ namespace Remizione
                 Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -8, 6)
             };
 
-            this.hpMeter = new Meter(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, 2.4f) { Position = new(4, 5) };
-            this.fpMeter = new Meter(Game, ColorPalette.FPMeter.Back, ColorPalette.FPMeter.Fore, 2.4f) { Position = new(4, 8.5f) };
-            this.willpowerMeter = new Meter(Game, ColorPalette.WillpowerMeter.Back, ColorPalette.WillpowerMeter.Fore, 2.4f) { Position = new(4, 12) };
+            this.hpMeter = new Meter(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, 2.4f);
+            this.fpMeter = new Meter(Game, ColorPalette.FPMeter.Back, ColorPalette.FPMeter.Fore, 2.4f);
+            this.willpowerMeter = new Meter(Game, ColorPalette.WillpowerMeter.Back, ColorPalette.WillpowerMeter.Fore, 2.4f);
 
             labels = new TextSprite[3];
             labels[0] = CreateLabel(Game, TextRepository.GetValue("@Attributes.Secondary.Vitality"));
             labels[1] = CreateLabel(Game, TextRepository.GetValue("@Attributes.Secondary.Faith"));
             labels[2] = CreateLabel(Game, TextRepository.GetValue("@Attributes.Secondary.Willpower"));
 
-            AlignLabels();
+            LayoutMeters();
 
             this.willpowerMeterLarge = new Meter(Game, ColorPalette.WillpowerMeter.Back, ColorPalette.WillpowerMeter.Fore, 3.6f)
             { 
@@ -80,9 +80,10 @@ namespace Remizione
                 Scale = ScaleInfo.Text.Large
             };
 
+            // Willpower label
             this.willpowerMeterLabel = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Light,
+                Color = ColorPalette.Text.LightRed,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 11),
                 Scale = ScaleInfo.Text.Medium,
@@ -92,37 +93,12 @@ namespace Remizione
 
         #region Private members
 
-        // AlignLabels
-        private void AlignLabels()
-        {
-            float x = 0;
-            for (var i = 0; i < labels.Length; i++)
-            {
-                if (labels[i].BoundingBox.Width > x)
-                    x = labels[i].BoundingBox.Width;
-            }
-
-            x += 5;
-            float y = 5;
-            for (var i = 0; i < labels.Length; i++)
-            {
-                labels[i].X = x;
-                labels[i].Y = y;
-
-                y += labels[i].BoundingBox.Height;  
-            }
-
-            hpMeter.Position = labels[0].BoundingBox.GetPoint(RectanglePoint.RightTop, 1, .5f);
-            fpMeter.Position = labels[1].BoundingBox.GetPoint(RectanglePoint.RightTop, 1, .5f);
-            willpowerMeter.Position = labels[2].BoundingBox.GetPoint(RectanglePoint.RightTop, 1, .5f);
-        }
-
         // CreateLabel
         private static TextSprite CreateLabel(EngendroGame game, string key)
         {
             return new TextSprite(game, Fonts.CommonOutline)
             {
-                Color = new(189, 106, 98),
+                Color = ColorPalette.Text.LightRed,
                 PivotOrigin = RectanglePoint.Right,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.RightTop, -3, 3),
                 Scale = ScaleInfo.Text.Small,
@@ -136,7 +112,8 @@ namespace Remizione
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             labels[0].Draw(gameTime);
             labels[1].Draw(gameTime);
-            labels[2].Draw(gameTime);
+            if (!session.CombatManager.IsActive)
+                labels[2].Draw(gameTime);
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera);
@@ -164,6 +141,31 @@ namespace Remizione
                 willpowerMeter.Draw(gameTime);
 
             Game.SpriteBatch.End();
+        }
+
+        // LayoutMeters
+        private void LayoutMeters()
+        {
+            float x = 0;
+            for (var i = 0; i < labels.Length; i++)
+            {
+                if (labels[i].BoundingBox.Width > x)
+                    x = labels[i].BoundingBox.Width;
+            }
+
+            x += 5;
+            float y = 5;
+            for (var i = 0; i < labels.Length; i++)
+            {
+                labels[i].X = x;
+                labels[i].Y = y;
+
+                y += labels[i].BoundingBox.Height - 1;
+            }
+
+            hpMeter.Position = labels[0].BoundingBox.GetPoint(RectanglePoint.RightTop, 1, .5f);
+            fpMeter.Position = labels[1].BoundingBox.GetPoint(RectanglePoint.RightTop, 1, .5f);
+            willpowerMeter.Position = labels[2].BoundingBox.GetPoint(RectanglePoint.RightTop, 1, .5f);
         }
 
         #endregion
@@ -208,12 +210,8 @@ namespace Remizione
                 willpowerMeter.Update(gameTime);
                 gpScore.Score = session.Player.Stats.GP;
                 gpScore.Update(gameTime);
-
-                if (session.CombatManager.IsActive)
-                {
-                    willpowerMeterLabel.Update(gameTime);
-                    willpowerMeterLarge.Update(gameTime);
-                }
+                willpowerMeterLabel.Update(gameTime);
+                willpowerMeterLarge.Update(gameTime);
             }
 
             cycleInfo.Update(gameTime);
