@@ -26,8 +26,8 @@ namespace Remizione
         public override void Exit()
         {
             base.Exit();
-            if (Owner.Session.CombatManager.CurrentActor == Owner)
-                Owner.Session.CombatManager.AdvanceTurn();
+            //if (Owner.Session.CombatManager.CurrentActor == Owner)
+            //    Owner.Session.CombatManager.TurnInProgress = true;
         }
 
         // Update

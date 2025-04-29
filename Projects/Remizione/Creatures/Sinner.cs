@@ -11,6 +11,7 @@
         {
             this.BodySize = ActorSize.Small;
 
+            /*
             var attack = new AIAttackState(this);
             var chase = new AIChaseState(this);
             var idle = new AIIdleState(this);
@@ -21,12 +22,26 @@
             CombatAIStateMachine.AddTransition<AIChaseState>(AIStateSignal.ChaseComplete, idle);
             CombatAIStateMachine.AddTransition<AIAttackState>(AIStateSignal.AttackComplete, idle);
             CombatAIStateMachine.AddTransition<AIAttackState>(AIStateSignal.TargetLost, idle);
+            */
         }
 
         // OnPlayCombatTurn
         protected override void OnPlayCombatTurn()
         {
-            CombatAIStateMachine?.Reset();
+            if (Target == null)
+                return;
+
+            Session.CombatManager.IsTurnInProgress = true;
+
+            if (IsTargetInAttackRange())
+            {
+                CloseAttack(Target);
+                return;
+            }
+            else
+            {
+                MoveTowardsTarget();
+            }
         }
     }
 }

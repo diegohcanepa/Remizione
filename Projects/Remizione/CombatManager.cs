@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace Remizione
@@ -42,33 +43,25 @@ namespace Remizione
         public void AdvanceTurn()
         {
             int startingIndex = currentIndex;
+            IsTurnInProgress = false;
 
-            do
+            if (actors.Count < 2)
             {
-                currentIndex++;
-                if (currentIndex >= actors.Count)
-                    currentIndex = 0;
+                Terminate();
+                return;
+            }
 
-                // No alive actors
-                if (currentIndex == startingIndex)
-                {
-                    Terminate();
-                    return;
-                }
-
-            } while (CurrentActor != null && CurrentActor.IsDead);
+            currentIndex++;
+            if (currentIndex >= actors.Count)
+                currentIndex = 0;
 
             if (CurrentActor != null)
             {
-                TurnInProgress = false;
-
                 if (CurrentActor.IsPlayer)
-                {
                     session.HUD.NarrationText = "Take your action";
-                }
                 else
                 {
-                    CurrentActor.PlayCombatTurn();
+                    CurrentActor.CombatTurnDone = false;
                     session.HUD.NarrationText = string.Empty;
                 }
             }
@@ -83,14 +76,17 @@ namespace Remizione
         // Contains
         public bool Contains(Actor actor) => actors.Contains(actor);
 
+        // IsTurnInProgress
+        public bool IsTurnInProgress { get; set; }
+
         // Remove
         public void Remove(Actor actor)
         {
-            if (!actors.Contains(actor))
+            var index = actors.IndexOf(actor);
+            if (index == -1)
                 return;
 
-            int actorIndex = actors.IndexOf(actor);
-            actors.RemoveAt(actorIndex);
+            actors.RemoveAt(index);
 
             if (actors.Count <= 1)
             {
@@ -98,10 +94,9 @@ namespace Remizione
                 return;
             }
 
-            if (actorIndex <= currentIndex && currentIndex > 0)
-                currentIndex--;
-
-            currentIndex %= actors.Count; // Por si acaso ajustar
+            currentIndex--;
+            if (currentIndex < 0)
+                currentIndex = actors.Count - 1;
         }
 
         // Start
@@ -121,24 +116,9 @@ namespace Remizione
         {
             session.HUD.NarrationText = string.Empty;
             IsActive = false;
+            IsTurnInProgress = false;
             actors.Clear();
             currentIndex = -1;
-        }
-
-        // TurnInProgress
-        public bool TurnInProgress { get; set; }
-
-        // Update
-        public void Update(GameTime gameTime)
-        {
-            if (!IsActive)
-                return;
-
-            if (CurrentActor == null)
-                return;
-
-            if (!CurrentActor.IsPlayer)
-                CurrentActor.PerformAICombatAction();
         }
     }
 }

@@ -44,11 +44,11 @@ namespace Remizione
             if (!Actor.CanPerformAction)
                 return;
 
+            if (Actor.IsActiveCombatant)
+                Actor.Session.CombatManager.IsTurnInProgress = true;
+
             var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
             GameThing? interactionTarget = Actor.InteractionTarget;
-
-            if (Actor.Session.CombatManager.CurrentActor == Actor)
-                Actor.Session.CombatManager.TurnInProgress = true;
 
             Actor.FastMove = fastMove;
             if (interactionTarget != null)

@@ -22,9 +22,6 @@ namespace Remizione
         // GetAnimationName
         protected override string GetAnimationName() => AnimationName;
 
-        // Target
-        public GameThing? Target { get; set; }
-
         // Update
         public override void Update(GameTime gameTime)
         {
@@ -57,7 +54,6 @@ namespace Remizione
         {
             base.Enter();
             damageTaken = false;
-            Owner.Session.CombatManager.Add(Owner);
         }
 
         // Exit
@@ -65,11 +61,11 @@ namespace Remizione
         {
             base.Exit();
 
-            if (Owner.IsPlayer)
-                Target = null;
-
-            if (Owner.Session.CombatManager.CurrentActor == Owner)
+            if (Owner.Session.CombatManager.CurrentActor == Owner && Owner.Session.CombatManager.IsTurnInProgress)
                 Owner.Session.CombatManager.AdvanceTurn();
         }
+
+        // Target
+        public GameThing? Target { get; set; }
     }
 }

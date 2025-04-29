@@ -71,7 +71,7 @@ namespace Remizione
 
             this.narrationText = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Light,
+                Color = ColorPalette.Text.LightRed,
                 MaximumWidth = (int)(Screen.NativeWidth * .7f),
                 PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.Bottom,
@@ -81,7 +81,7 @@ namespace Remizione
 
             this.willpowerMeterLabel = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Light,
+                Color = ColorPalette.Text.LightRed,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 11),
                 Scale = ScaleInfo.Text.Medium,

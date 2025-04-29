@@ -34,7 +34,6 @@ namespace Remizione
         // Reset
         public void Reset()
         {
-            //currentState.Exit();
             currentState = initialState;
         }
 

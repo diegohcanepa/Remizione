@@ -314,8 +314,6 @@ namespace Remizione
             Environment.Update(gameTime);
             HUD.Update(gameTime);
             OverlayTexts.Update(gameTime);
-
-            CombatManager.Update(gameTime);
         }
 
         // OnWrite

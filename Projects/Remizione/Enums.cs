@@ -63,7 +63,7 @@ namespace Remizione
     public enum ItemName { None, UnarmedAttack, Cross, Lockpick, Stamina, Health, ZabulContact }
 
     // ItemUsageResult
-    public enum ItemUsageResult { NotEnoughHP, NotEnoughStamina, Succeeded }
+    public enum ItemUsageResult { NotEnoughHP, NotEnoughWillpower, Succeeded }
 
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, LightBulb, Moon, MuzzleFlash, Outdoor, Lightning }

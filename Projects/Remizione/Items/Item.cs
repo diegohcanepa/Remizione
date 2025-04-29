@@ -40,12 +40,14 @@ namespace Remizione
             if (HP < 0 && Math.Abs(HP) > Owner.HP)
                 return ItemUsageResult.NotEnoughHP;
 
-            // Owner has not enough stamina
+            // Owner has not enough willpower
             if (Willpower < 0 && Math.Abs(Willpower) > Owner.Willpower)
-                return ItemUsageResult.NotEnoughStamina;
+                return ItemUsageResult.NotEnoughWillpower;
 
             Owner.HP += HP;
-            Owner.Willpower += Willpower;
+
+            if (Owner.Session.CombatManager.IsActive)
+                Owner.Willpower += Willpower;
 
             if (Level > 0 && MetaItem.UpgradeEffects.Count > 0)
             {

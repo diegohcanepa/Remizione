@@ -295,15 +295,15 @@ namespace Remizione
                 StopMoving();
                 IsFollowingPath = false;
 
-                if (Target == null && session.CombatManager.CurrentActor == this)
+                if (IsActiveCombatant && session.CombatManager.IsTurnInProgress && Target == null)
                     session.CombatManager.AdvanceTurn();
                 else
                     HandlePlayerTarget();
             }
         }
 
-        // OnPerformAICombatAction
-        protected virtual void OnPerformAICombatAction()
+        // OnPerformCombatAction
+        protected virtual void OnPerformCombatAction()
         {
         }
 
@@ -357,8 +357,10 @@ namespace Remizione
             {
                 Stand();
 
+                /*
                 if (session.CombatManager.CurrentActor == this)
                     session.CombatManager.AdvanceTurn();
+                */
 
                 /*
                 if (IsPlayer)
@@ -421,7 +423,8 @@ namespace Remizione
             {
                 if (combatant == this)
                 {
-                    CombatAIStateMachine?.Update(gameTime);
+                    if (!IsPlayer && !CombatTurnDone && CanPerformAction)
+                        PlayCombatTurn();
                 }
                 else if (combatant.Target == this)
                 {
@@ -517,8 +520,18 @@ namespace Remizione
         {
             if (!IsPlayer)
                 return false;
-            
-            this.attackTarget = attack && target.HP > 0;
+
+            if (attack && target.HP > 0)
+            {
+                session.CombatManager.Add(this);
+                if (target is Actor targetActor)
+                    targetActor.Session.CombatManager.Add(targetActor); 
+            }
+
+            if (session.CombatManager.CurrentActor == this)
+                session.CombatManager.IsTurnInProgress = true;
+
+            this.attackTarget = attack;
             var destination = target.GetApproachPosition(this, !attack);
             var result = MoveTo(destination);
             this.Target = target;
@@ -541,11 +554,14 @@ namespace Remizione
         {
             get
             {
-                if (InputHandler == null || Session.IsAwaiting)
+                if (InputHandler == null || Session.IsAwaiting ||!IsPlayer)
                     return false;
 
-                if (Session.CombatManager.CurrentActor == this && Session.CombatManager.TurnInProgress)
-                    return false;
+                if (session.CombatManager.IsActive)
+                {
+                    if (session.CombatManager.CurrentActor != this || session.CombatManager.IsTurnInProgress)
+                        return false;
+                }
 
                 return true;
             }
@@ -610,7 +626,7 @@ namespace Remizione
                     StateMachine.ChangeState(ActorStateNames.CloseAttack);
                     return true;
                 }
-                else if (usageResult == ItemUsageResult.NotEnoughStamina)
+                else if (usageResult == ItemUsageResult.NotEnoughWillpower)
                 {
                     if (IsPlayer)
                     {
@@ -648,6 +664,9 @@ namespace Remizione
                 }
             }
         }
+
+        // CombatTurnDone
+        public bool CombatTurnDone { get; set; }
 
         // Equipment
         public ItemStorage Equipment { get; }
@@ -731,8 +750,14 @@ namespace Remizione
         // InteractionTarget
         public GameThing? InteractionTarget { get; private set; }
 
+        // IsActiveCombatant
+        public bool IsActiveCombatant => session.CombatManager.IsActive && session.CombatManager.CurrentActor == this;
+
         // IsAttacking
         public bool IsAttacking => StateMachine.CurrentState is ActorCloseAttackState;
+
+        // IsCombatant
+        public bool IsCombatant => session.CombatManager.IsActive && session.CombatManager.Contains(this);
 
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }
@@ -847,16 +872,10 @@ namespace Remizione
         public void MoveTowardsTarget()
         {
             if (Target != null)
+            {
+                FastMove = true;
                 MoveTo(Target.GetApproachPosition(Target, false));
-        }
-
-        // PerformAICombatAction
-        public void PerformAICombatAction()
-        {
-            if (!session.CombatManager.IsActive)
-                return;
-            else
-                OnPerformAICombatAction();
+            }
         }
 
         // PlayerNumber
@@ -884,6 +903,7 @@ namespace Remizione
                 return false;
 
             OnPlayCombatTurn();
+            CombatTurnDone = true;
 
             return true;
         }
