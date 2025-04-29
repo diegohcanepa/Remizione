@@ -81,9 +81,9 @@ namespace Remizione
             };
 
             // Willpower label
-            this.willpowerMeterLabel = new TextSprite(Game, Fonts.CommonOutline)
+            this.willpowerMeterLabel = new TextSprite(Game, Fonts.MainOutline)
             {
-                Color = ColorPalette.Text.LightRed,
+                Color = ColorPalette.Text.Dark,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 11),
                 Scale = ScaleInfo.Text.Medium,
@@ -96,12 +96,12 @@ namespace Remizione
         // CreateLabel
         private static TextSprite CreateLabel(EngendroGame game, string key)
         {
-            return new TextSprite(game, Fonts.CommonOutline)
+            return new TextSprite(game, Fonts.MainOutline)
             {
-                Color = ColorPalette.Text.LightRed,
+                Color = ColorPalette.Text.Dark,
                 PivotOrigin = RectanglePoint.Right,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.RightTop, -3, 3),
-                Scale = ScaleInfo.Text.Small,
+                Scale = ScaleInfo.Text.Tiny,
                 Text = key
             };
         }
@@ -160,7 +160,7 @@ namespace Remizione
                 labels[i].X = x;
                 labels[i].Y = y;
 
-                y += labels[i].BoundingBox.Height - 1;
+                y += labels[i].BoundingBox.Height;
             }
 
             hpMeter.Position = labels[0].BoundingBox.GetPoint(RectanglePoint.RightTop, 1, .5f);
