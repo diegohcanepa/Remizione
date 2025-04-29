@@ -23,8 +23,6 @@ namespace Remizione
         private BloodSplash? bloodSplash;
         private ItemName closeAttackItemName;
         private readonly ActorCloseAttackState closeAttackState;
-        private Meter? damageMeter;
-        private int damageMeterCooldown;
         private readonly ActorDeathState deathState;
         private readonly FloatTween headTween = new();
         private readonly ActorHurtState hurtState;
@@ -155,13 +153,6 @@ namespace Remizione
             Target = null;
         }
 
-        // InvalidateDamageMeter
-        private void InvalidateDamageMeter()
-        {
-            if (damageMeter != null)
-                damageMeter.Value = HP * 100 / MaxHP / damageMeter.MaximumValue;
-        }
-
         // MoveToNextPathNode
         private void MoveToNextPathNode()
         {
@@ -214,7 +205,6 @@ namespace Remizione
         protected override void OnDeath()
         {
             session.CombatManager.Remove(this);
-            damageMeterCooldown = 0;
             StateMachine.ChangeState(ActorStateNames.Death);
         }
 
@@ -230,12 +220,6 @@ namespace Remizione
 
             if (moveTween.IsRunning)
                 Y += moveTween.CurrentValue;
-
-            if (damageMeterCooldown > 0 && damageMeter != null)
-            {
-                damageMeter.Position = GetOverheadPosition(-5, -3);
-                damageMeter.Draw(gameTime);
-            }
         }
 
         // OnDrawShadow
@@ -245,24 +229,10 @@ namespace Remizione
             ShadowSpot.Draw(gameTime);
         }
 
-        // OnHPChanged
-        protected override void OnHPChanged()
-        {
-            base.OnHPChanged();
-            InvalidateDamageMeter();
-        }
-
         // OnHurt
         protected override void OnHurt(GameThing attacker)
         {
             StateMachine.ChangeState(ActorStateNames.Hurt);
-            damageMeterCooldown = 1200;
-
-            if (damageMeter == null)
-            {
-                damageMeter = new(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore) { MaximumValue = 10 };
-                InvalidateDamageMeter();
-            }
 
             if (BloodSplashOrigin != Vector2.Zero)
             {
@@ -435,12 +405,6 @@ namespace Remizione
             base.OnUpdate(gameTime);
 
             bloodSplash?.Update(gameTime);
-
-            if (damageMeterCooldown > 0)
-            {
-                damageMeterCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                damageMeter?.Update(gameTime);
-            }
 
             if (vanishBlinker.IsRunning)
             {

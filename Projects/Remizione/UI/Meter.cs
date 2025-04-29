@@ -17,7 +17,7 @@ namespace Remizione
         private readonly ImageSprite fore;
         private bool isResetting;
         private int maximumValue;
-        private readonly Vector2 padding = new(.75f);
+        private readonly Vector2 padding = new(.5f);
         private Vector2 position;
         private static readonly Color previousValue = new(207, 117, 43);
         private readonly ImageSprite previousValue1;
@@ -36,7 +36,7 @@ namespace Remizione
             // Container
             this.container = new ImageSprite(game, Atlases.UI.Pixel)
             {
-                Color = Color.Black,
+                Color = new(41, 29, 43),
                 Opacity = .6f,
                 ScaleY = verticalSize
             };

@@ -45,8 +45,8 @@ namespace Remizione
         // FPMeter
         internal static class FPMeter
         {
-            internal static Color Back { get; } = new(34, 63, 60);
-            internal static Color Fore { get; } = new(47, 87, 83);
+            internal static Color Back { get; } = new(61, 41, 54);
+            internal static Color Fore { get; } = new(82, 51, 63);
         }
 
         // HighlightedText
@@ -55,8 +55,8 @@ namespace Remizione
         // HPMeter
         internal static class HPMeter
         {
-            internal static Color Back { get; } = new(43, 43, 69);
-            internal static Color Fore { get; } = new(173, 47, 69);
+            internal static Color Back { get; } = new(61, 41, 54);
+            internal static Color Fore { get; } = new(82, 51, 63);
         }
 
         // HUDMessage
@@ -112,7 +112,7 @@ namespace Remizione
             internal static Color DarkRed { get; } = new(82, 51, 63);
             internal static Color Green { get; } = new(59, 125, 79);
             internal static Color Highlight { get; } = new(240, 181, 65);
-            internal static Color Light { get; } = new(223, 224, 232);
+            internal static Color Light { get; } = new Color(223, 224, 232) * .7f;
             internal static Color LightRed { get; } = new(143, 77, 87);
             internal static Color Title { get; } = new(59, 125, 79);
             internal static Color Yellow { get; } = new(255, 238, 131);
@@ -136,8 +136,8 @@ namespace Remizione
         // WillpowerMeter
         internal static class WillpowerMeter
         {
-            internal static Color Back { get; } = new(59, 32, 39);
-            internal static Color Fore { get; } = new(105, 36, 100);
+            internal static Color Back { get; } = new(61, 41, 54);
+            internal static Color Fore { get; } = new(82, 51, 63);
         }
     }
 }

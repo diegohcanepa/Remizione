@@ -10,11 +10,11 @@ namespace Remizione
     /// </summary>
     public sealed class HUD : GameObject
     {
-        private readonly QuickSlot amuletSlot;
         private readonly CycleInfo cycleInfo;
         private readonly Meter fpMeter;
         private readonly ScoreText gpScore;
         private readonly Meter hpMeter;
+        private readonly TextSprite[] labels;
         private readonly TextSprite narrationText;
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
@@ -27,12 +27,6 @@ namespace Remizione
             : base(session.Game)
         {
             this.session = session;
-
-            // Amulet slot
-            this.amuletSlot = new QuickSlot(Game, null)
-            {
-                Position = new(10, 8)
-            };
 
             // DestinationMark
             this.DestinationMark = new DestinationMark(session);
@@ -50,9 +44,16 @@ namespace Remizione
                 Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -8, 6)
             };
 
-            this.hpMeter = new Meter(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, 2.8f) { Position = new(17, 4) };
-            this.fpMeter = new Meter(Game, ColorPalette.FPMeter.Back, ColorPalette.FPMeter.Fore, 2.8f) { Position = new(17, 7) };
-            this.willpowerMeter = new Meter(Game, ColorPalette.WillpowerMeter.Back, ColorPalette.WillpowerMeter.Fore, 2.8f) { Position = new(17, 10) };
+            this.hpMeter = new Meter(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, 2.4f) { Position = new(4, 5) };
+            this.fpMeter = new Meter(Game, ColorPalette.FPMeter.Back, ColorPalette.FPMeter.Fore, 2.4f) { Position = new(4, 8.5f) };
+            this.willpowerMeter = new Meter(Game, ColorPalette.WillpowerMeter.Back, ColorPalette.WillpowerMeter.Fore, 2.4f) { Position = new(4, 12) };
+
+            labels = new TextSprite[3];
+            labels[0] = CreateLabel(Game, TextRepository.GetValue("@Attributes.Secondary.Vitality"));
+            labels[1] = CreateLabel(Game, TextRepository.GetValue("@Attributes.Secondary.Faith"));
+            labels[2] = CreateLabel(Game, TextRepository.GetValue("@Attributes.Secondary.Willpower"));
+
+            AlignLabels();
 
             this.willpowerMeterLarge = new Meter(Game, ColorPalette.WillpowerMeter.Back, ColorPalette.WillpowerMeter.Fore, 3.6f)
             { 
@@ -81,19 +82,63 @@ namespace Remizione
 
             this.willpowerMeterLabel = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.LightRed,
+                Color = ColorPalette.Text.Light,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 11),
                 Scale = ScaleInfo.Text.Medium,
-                Text = "Willpower"
+                Text = "@Attributes.Secondary.Willpower"
             };
         }
 
         #region Private members
 
+        // AlignLabels
+        private void AlignLabels()
+        {
+            float x = 0;
+            for (var i = 0; i < labels.Length; i++)
+            {
+                if (labels[i].BoundingBox.Width > x)
+                    x = labels[i].BoundingBox.Width;
+            }
+
+            x += 5;
+            float y = 5;
+            for (var i = 0; i < labels.Length; i++)
+            {
+                labels[i].X = x;
+                labels[i].Y = y;
+
+                y += labels[i].BoundingBox.Height;  
+            }
+
+            hpMeter.Position = labels[0].BoundingBox.GetPoint(RectanglePoint.RightTop, 1, .5f);
+            fpMeter.Position = labels[1].BoundingBox.GetPoint(RectanglePoint.RightTop, 1, .5f);
+            willpowerMeter.Position = labels[2].BoundingBox.GetPoint(RectanglePoint.RightTop, 1, .5f);
+        }
+
+        // CreateLabel
+        private static TextSprite CreateLabel(EngendroGame game, string key)
+        {
+            return new TextSprite(game, Fonts.CommonOutline)
+            {
+                Color = new(189, 106, 98),
+                PivotOrigin = RectanglePoint.Right,
+                Position = Screen.SafeArea.GetPoint(RectanglePoint.RightTop, -3, 3),
+                Scale = ScaleInfo.Text.Small,
+                Text = key
+            };
+        }
+
         // DrawMeters
         private void DrawMeters(GameTime gameTime, Actor actor)
         {
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            labels[0].Draw(gameTime);
+            labels[1].Draw(gameTime);
+            labels[2].Draw(gameTime);
+            Game.SpriteBatch.End();
+
             Game.SpriteBatch.Begin(Game.Camera);
 
             // HP
@@ -138,7 +183,6 @@ namespace Remizione
             {
                 //cycleInfo.Draw(gameTime);
                 DrawMeters(gameTime, session.Player);
-                amuletSlot.Draw(gameTime);
                 gpScore.Draw(gameTime);
             }
 
@@ -155,7 +199,6 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            amuletSlot.Update(gameTime);
             narrationText.Update(gameTime);
 
             if (session.Player != null)

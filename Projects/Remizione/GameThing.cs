@@ -18,6 +18,8 @@ namespace Remizione
         #region Private fields
         
         private bool applyDamagePending;
+        private Meter? damageMeter;
+        private int damageMeterCooldown;
         private int fp;
         private readonly Polygon holeInflatedPoly = new();
         private PathNode[]? holeNodes;
@@ -170,6 +172,8 @@ namespace Remizione
         // Die
         private void Die()
         {
+            damageMeterCooldown = 0;
+
             if (DeathSound != null)
                 PlaySound(DeathSound);
 
@@ -186,6 +190,13 @@ namespace Remizione
                     lootBag.Drop(Position, itemName);
                 }
             }
+        }
+
+        // InvalidateDamageMeter
+        private void InvalidateDamageMeter()
+        {
+            if (damageMeter != null)
+                damageMeter.Value = HP * 100 / MaxHP / damageMeter.MaximumValue;
         }
 
         // InvalidateHoleArea
@@ -281,6 +292,12 @@ namespace Remizione
 
             if (hurtTween != null && hurtTween.IsRunning)
                 Altitude -= hurtTween.CurrentValue;
+
+            if (damageMeterCooldown > 0 && damageMeter != null)
+            {
+                damageMeter.Position = GetOverheadPosition(-5, -3);
+                damageMeter.Draw(gameTime);
+            }
         }
 
         // OnDrawReflection
@@ -354,6 +371,12 @@ namespace Remizione
                 Position = knockbackTween.CurrentValue;
                 if (!knockbackTween.IsRunning && IsDead)
                     Die();
+            }
+
+            if (damageMeterCooldown > 0)
+            {
+                damageMeterCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+                damageMeter?.Update(gameTime);
             }
 
             base.OnUpdate(gameTime);
@@ -447,7 +470,14 @@ namespace Remizione
                 hurtTween ??= new();
                 hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
 
-                Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), ((int)CumulativeDamage).ToString(), ColorPalette.HPMeter.Fore);
+                Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), ((int)CumulativeDamage).ToString(), ColorPalette.Text.Light);
+
+                damageMeterCooldown = 1200;
+                if (damageMeter == null)
+                {
+                    damageMeter = new(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore) { MaximumValue = 10 };
+                    InvalidateDamageMeter();
+                }
 
                 OnHurt(attacker);
             }
@@ -731,6 +761,7 @@ namespace Remizione
                 if (value != hp)
                 {
                     hp = Math.Clamp(value, 0, MaxHP);
+                    InvalidateDamageMeter();
                     OnHPChanged();
                 }
             }
