@@ -301,6 +301,11 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
+            if (CombatMode)
+                Game.MouseCursor.State = Player?.InteractionTarget != null ? MouseCursorState.Target : MouseCursorState.CombatMode;
+            else
+                Game.MouseCursor.State = MouseCursorState.Default;
+
             if (console != null)
             {
                 if (console.IsActive && roomEditor != null)
@@ -348,6 +353,9 @@ namespace Remizione
 
         // CombatManager
         public CombatManager CombatManager { get; }
+
+        // CombatMode
+        public bool CombatMode { get; set; }
 
         // CycleCount
         [ScriptProperty]

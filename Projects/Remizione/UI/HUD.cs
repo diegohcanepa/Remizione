@@ -14,7 +14,7 @@ namespace Remizione
         private readonly Meter fpMeter;
         private readonly ScoreText gpScore;
         private readonly Meter hpMeter;
-        private readonly TextSprite[] labels;
+        private readonly ImageSprite[] meterIcons;
         private readonly TextSprite narrationText;
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
@@ -44,16 +44,22 @@ namespace Remizione
                 Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -8, 6)
             };
 
-            this.hpMeter = new Meter(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, 2.4f);
-            this.fpMeter = new Meter(Game, ColorPalette.FPMeter.Back, ColorPalette.FPMeter.Fore, 2.4f);
-            this.willpowerMeter = new Meter(Game, ColorPalette.WillpowerMeter.Back, ColorPalette.WillpowerMeter.Fore, 2.4f);
+            this.hpMeter = new Meter(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, 2.8f);
+            this.fpMeter = new Meter(Game, ColorPalette.FPMeter.Back, ColorPalette.FPMeter.Fore, 2.8f);
+            this.willpowerMeter = new Meter(Game, ColorPalette.WillpowerMeter.Back, ColorPalette.WillpowerMeter.Fore, 2.8f);
 
-            labels = new TextSprite[3];
-            labels[0] = CreateLabel(Game, TextRepository.GetValue("@Attributes.Secondary.Vitality"));
-            labels[1] = CreateLabel(Game, TextRepository.GetValue("@Attributes.Secondary.Faith"));
-            labels[2] = CreateLabel(Game, TextRepository.GetValue("@Attributes.Secondary.Willpower"));
+            meterIcons = new ImageSprite[3];
+            meterIcons[0] = new ImageSprite(Game, Atlases.UI.SpiritIcon) { Scale = new(.5f) };
+            meterIcons[1] = new ImageSprite(Game, Atlases.UI.FaithIcon) { Scale = new(.5f) };
+            meterIcons[2] = new ImageSprite(Game, Atlases.UI.WillpowerIcon) { Scale = new(.5f) };
 
-            LayoutMeters();
+            meterIcons[0].Position = new(4);
+            meterIcons[1].Position = meterIcons[0].BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, .5f);
+            meterIcons[2].Position = meterIcons[1].BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, .5f);
+
+            hpMeter.Position = new(10, 5);
+            fpMeter.Position = new(10, 10);
+            willpowerMeter.Position = new(10, 15);
 
             this.willpowerMeterLarge = new Meter(Game, ColorPalette.WillpowerMeter.Back, ColorPalette.WillpowerMeter.Fore, 3.6f)
             { 
@@ -93,30 +99,14 @@ namespace Remizione
 
         #region Private members
 
-        // CreateLabel
-        private static TextSprite CreateLabel(EngendroGame game, string key)
-        {
-            return new TextSprite(game, Fonts.MainOutline)
-            {
-                Color = ColorPalette.Text.Dark,
-                PivotOrigin = RectanglePoint.Right,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.RightTop, -3, 3),
-                Scale = ScaleInfo.Text.Tiny,
-                Text = key
-            };
-        }
-
         // DrawMeters
         private void DrawMeters(GameTime gameTime, Actor actor)
         {
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-            labels[0].Draw(gameTime);
-            labels[1].Draw(gameTime);
-            if (!session.CombatManager.IsActive)
-                labels[2].Draw(gameTime);
-            Game.SpriteBatch.End();
-
             Game.SpriteBatch.Begin(Game.Camera);
+
+            meterIcons[0].Draw(gameTime);
+            meterIcons[1].Draw(gameTime);
+            meterIcons[2].Draw(gameTime);
 
             // HP
             hpMeter.MaximumValue = actor.MaxHP;
@@ -141,31 +131,6 @@ namespace Remizione
                 willpowerMeter.Draw(gameTime);
 
             Game.SpriteBatch.End();
-        }
-
-        // LayoutMeters
-        private void LayoutMeters()
-        {
-            float x = 0;
-            for (var i = 0; i < labels.Length; i++)
-            {
-                if (labels[i].BoundingBox.Width > x)
-                    x = labels[i].BoundingBox.Width;
-            }
-
-            x += 5;
-            float y = 5;
-            for (var i = 0; i < labels.Length; i++)
-            {
-                labels[i].X = x;
-                labels[i].Y = y;
-
-                y += labels[i].BoundingBox.Height;
-            }
-
-            hpMeter.Position = labels[0].BoundingBox.GetPoint(RectanglePoint.RightTop, 1, .5f);
-            fpMeter.Position = labels[1].BoundingBox.GetPoint(RectanglePoint.RightTop, 1, .5f);
-            willpowerMeter.Position = labels[2].BoundingBox.GetPoint(RectanglePoint.RightTop, 1, .5f);
         }
 
         #endregion

@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Input;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -20,25 +19,25 @@ namespace Remizione
         #region Protected members
 
         // GetAnimationName
-        protected override string GetAnimationName() => AnimationName;
+        protected override string GetAnimationName() => Owner.AttackSkill is Item skill ? skill.Name.ToString() : string.Empty;
 
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (!damageTaken && Target != null && Owner.DistanceTo(Target) <= Owner.CloseAttackItem.Range && Owner.AnimationPlayer.Frame is SpriteFrame frame)
+            if (Owner.Target == null || Owner.AttackSkill == null)
+                return;
+
+            if (!damageTaken && Owner.AnimationPlayer.Frame is SpriteFrame frame)
             {
                 if (frame.Label == GameSettings.KeyFrame)
                 {
                     damageTaken = true;
-                    Owner.CloseAttackItem?.EndUse(Target);
+                    Owner.AttackSkill.EndUse(Owner.Target);
                 }
             }
         }
 
         #endregion
-
-        // AnimationName
-        public string AnimationName { get; set; } = string.Empty;
 
         // CheckTransitions
         public override string? CheckTransitions()
@@ -55,17 +54,5 @@ namespace Remizione
             base.Enter();
             damageTaken = false;
         }
-
-        // Exit
-        public override void Exit()
-        {
-            base.Exit();
-
-            if (Owner.Session.CombatManager.CurrentActor == Owner && Owner.Session.CombatManager.IsTurnInProgress)
-                Owner.Session.CombatManager.AdvanceTurn();
-        }
-
-        // Target
-        public GameThing? Target { get; set; }
     }
 }

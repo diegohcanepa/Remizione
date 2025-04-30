@@ -19,17 +19,15 @@ namespace Remizione
     // Affinity
     public enum Affinity { Good, Neutral, Evil }
 
+    // AIStateName
+    public enum AIStateName { Idle, Charge, CloseAttack }
+
     // AIStateSignal
     public enum AIStateSignal
     {
-        None,
-        AttackComplete,
-        ChaseComplete,
-        IdleTimeout,
-        TargetInRange,
-        TargetOutOfRange,
-        TargetLost,
-        SawTarget
+        ActionDone,
+        Attack,
+        CloseAttack
     }
 
     // ContentFolder
@@ -88,7 +86,7 @@ namespace Remizione
     public enum MessageKey { None, Fatigue, NoStamina }
 
     // MouseCursorState
-    public enum MouseCursorState { Default, Wait }
+    public enum MouseCursorState { Default, CombatMode, Target, Wait }
 
     // PlacementDistributionStrategy
     public enum PlacementDistributionStrategy { Random, Clump, NoiseMap }

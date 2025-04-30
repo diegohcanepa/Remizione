@@ -26,7 +26,7 @@ namespace Remizione
             */
 
             Skills.Add(ItemName.ZabulContact, 1);
-            CloseAttackItemName = ItemName.ZabulContact;
+            AttackSkillName = ItemName.ZabulContact;
         }
 
         // OnUpdate
@@ -44,8 +44,8 @@ namespace Remizione
             {
                 if (AreHurtBoxesVisuallyOverlapping(Session.Player))
                 {
-                    if (CloseAttackItem != null && CloseAttackItem.BeginUse() == ItemUsageResult.Succeeded)
-                        CloseAttackItem.EndUse(Session.Player);
+                    if (AttackSkill != null && AttackSkill.BeginUse() == ItemUsageResult.Succeeded)
+                        AttackSkill.EndUse(Session.Player);
 
                     nextDamageCooldown = 400;
                 }

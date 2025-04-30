@@ -89,5 +89,13 @@ namespace Remizione
 
         // TextVersionInfo
         internal static Vector2 TextVersionInfo { get; } = new Vector2(.08f);
+
+        // UIIcon
+        internal static class UIIcon
+        {
+            internal static Vector2 Small { get; } = new(.5f);
+            internal static Vector2 Medium { get; } = new(.75f);
+            internal static Vector2 Large { get; } = Vector2.One;
+        }
     }
 }

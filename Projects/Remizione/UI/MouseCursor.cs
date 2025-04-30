@@ -12,13 +12,14 @@ namespace Remizione
     {
         #region Private fields
 
-        private ImageSprite activeImage;
-        private readonly ImageSprite defaultImage;
+        private readonly ImageSprite cursorImage;
         private Vector2 position;
+        private readonly Vector2Tween scaleTween = new();
         private MouseCursorState state;
-        private readonly ImageSprite waitImage;
 
         #endregion
+
+        #region Constructor
 
         // Constructor
         public MouseCursor(EngendroGame game)
@@ -29,10 +30,32 @@ namespace Remizione
             else
                 Instance = this;
 
-            this.defaultImage = new ImageSprite(game);
-            this.waitImage = new ImageSprite(game) { PivotOrigin = RectanglePoint.Middle };
-            this.activeImage = defaultImage;
+            this.cursorImage = new ImageSprite(game) { PivotOrigin = RectanglePoint.Middle, Scale = ScaleInfo.UIIcon.Medium };
         }
+
+        #endregion
+
+        #region Private members
+
+        // Invalidate
+        private void Invalidate()
+        {
+            if (state == MouseCursorState.CombatMode)
+                cursorImage.Image = Atlases.UI.MouseCursorCombatMode;
+
+            else if (state == MouseCursorState.Default)
+                cursorImage.Image = Atlases.UI.MouseCursorDefault;
+
+            else if (state == MouseCursorState.Target)
+                cursorImage.Image = Atlases.UI.MouseCursorTarget;
+
+            else if (state == MouseCursorState.Wait)
+                cursorImage.Image = Atlases.UI.MouseCursorWait;
+
+            cursorImage.PivotOrigin = state == MouseCursorState.Default ? RectanglePoint.LeftTop : RectanglePoint.Middle;
+        }
+
+        #endregion
 
         #region Protected members
 
@@ -40,7 +63,7 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
-            activeImage.Draw(gameTime);
+            cursorImage.Draw(gameTime);
             Game.SpriteBatch.End();
         }
 
@@ -49,19 +72,27 @@ namespace Remizione
         {
             this.Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
 
-            if (activeImage.Image == null)
-            {
-                if (state == MouseCursorState.Default)
-                    activeImage.Image = Atlases.UI.MouseCursorDefault;
+            if (cursorImage.Image == null)
+                Invalidate();
 
-                else if (state == MouseCursorState.Wait)
-                    activeImage.Image = Atlases.UI.MouseCursorWait;
-            }
-
-            activeImage.Update(gameTime);
+            cursorImage.Update(gameTime);
         }
 
         #endregion
+
+        // AnimateClick
+        public void AnimateClick()
+        {
+            scaleTween.Start(TweenStyle.QuadraticIn, ScaleInfo.UIIcon.Small, ScaleInfo.UIIcon.Medium, 150);
+            cursorImage.Tweens.ScaleTween = scaleTween;
+        }
+
+        // AnimateSwitch
+        public void AnimateSwitch()
+        {
+            scaleTween.Start(TweenStyle.QuadraticIn, new(.2f), ScaleInfo.UIIcon.Medium, 100);
+            cursorImage.Tweens.ScaleTween = scaleTween;
+        }
 
         // Instance
         public static MouseCursor Instance { get; private set; } = null!;
@@ -73,7 +104,7 @@ namespace Remizione
             set
             {
                 this.position = value;
-                activeImage.Position = value;
+                cursorImage.Position = value;
             }
         }
 
@@ -85,13 +116,14 @@ namespace Remizione
             {
                 if (value != state)
                 {
-                    state = value;
-
                     if (state == MouseCursorState.Default)
-                        activeImage.Image = Atlases.UI.MouseCursorDefault;
+                    {
+                        if (value == MouseCursorState.CombatMode || value == MouseCursorState.Target)
+                            AnimateSwitch();
+                    }
 
-                    else if (state == MouseCursorState.Wait)
-                        activeImage.Image = Atlases.UI.MouseCursorWait;
+                    state = value;
+                    Invalidate();
                 }
             }
         }

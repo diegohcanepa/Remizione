@@ -9,7 +9,7 @@ namespace Remizione
     /// </summary>
     public sealed class PlayerInputHandler<T> : InputHandler where T : Actor
     {
-        private bool inventoryLocked;
+        //private bool inventoryLocked;
 
         // Constructor
         public PlayerInputHandler(T actor, PlayerIndex playerIndex)
@@ -20,67 +20,18 @@ namespace Remizione
 
         #region Private members
 
-        // Interact
-        private bool Interact()
+        // HandleMouseInput
+        private HandleInputResult HandleMouseInput()
         {
-            if (Actor.InteractionTarget != null)
-            {
-                var interact = false;
+            // Left button
+            if (TestMouseLeftButtonClick())
+                return HandleInputResult.Handled;
 
-                // Triggered by player
-                if (InputBindings.Interact.IsPressed(0))
-                    interact = true;
+            // Right button
+            if (TestMouseRightButtonClick())
+                return HandleInputResult.Handled;
 
-                if (interact)
-                    Actor.Interact(null);
-            }
-
-            return false;
-        }
-
-        // PerformMoveAction
-        private void PerformMoveAction(bool fastMove, bool attack)
-        {
-            if (!Actor.CanPerformAction)
-                return;
-
-            if (Actor.IsActiveCombatant)
-                Actor.Session.CombatManager.IsTurnInProgress = true;
-
-            var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
-            GameThing? interactionTarget = Actor.InteractionTarget;
-
-            Actor.FastMove = fastMove;
-            if (interactionTarget != null)
-                Actor.ApproachAndInteract(interactionTarget, attack);
-            else
-                Actor.MoveTo(destination);
-
-            if (Actor.FollowingPathDestination.HasValue)
-            {
-                Actor.Session.HUD.DestinationMark.Color = interactionTarget != null ? ColorPalette.DestinationMark.Target : ColorPalette.DestinationMark.Default;
-                Actor.Session.HUD.DestinationMark.Position = Actor.FollowingPathDestination;
-            }
-            
-            Actor.Session.HUD.EchoMessage.Hide();
-        }
-
-        // TestInventory
-        private bool TestInventory()
-        {
-            if (inventoryLocked)
-            {
-                if (InputBindings.ShowInventory.IsUp(PlayerIndex.One))
-                    inventoryLocked = false;
-            }
-            else if (InputBindings.ShowInventory.IsPressed(PlayerIndex.One))
-            {
-                inventoryLocked = true;
-                Actor.Session.ShowInventory();
-                return true;
-            }
-
-            return false;
+            return HandleInputResult.Unhandled;
         }
 
         // TestMouseLeftButtonClick
@@ -89,7 +40,30 @@ namespace Remizione
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
 
-            PerformMoveAction(true, false);
+            if (!Actor.CanPerformAction)
+                return false;
+
+            var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
+
+            MouseCursor.Instance.AnimateClick();
+
+            if (Actor.Session.CombatMode && Actor.InteractionTarget != null)
+            {
+                Actor.LaunchAttack(Actor.InteractionTarget);
+                return true;
+            }
+
+            Actor.FastMove = true;
+            if (Actor.InteractionTarget != null)
+                Actor.ApproachAndInteract(Actor.InteractionTarget);
+            else
+                Actor.MoveTo(destination);
+
+            if (Actor.FollowingPathDestination.HasValue)
+            {
+                Actor.Session.HUD.DestinationMark.Color = Actor.InteractionTarget != null ? ColorPalette.DestinationMark.Target : ColorPalette.DestinationMark.Default;
+                Actor.Session.HUD.DestinationMark.Position = Actor.FollowingPathDestination;
+            }
 
             return true;
         }
@@ -97,12 +71,12 @@ namespace Remizione
         // TestMouseRightButtonClick
         private bool TestMouseRightButtonClick()
         {
-            if (!InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
-                return false;
+            var result = InputManager.DefaultPlayer.Mouse.IsRightButtonPressed();
+            
+            if (result)
+                Actor.Session.CombatMode = !Actor.Session.CombatMode;
 
-            PerformMoveAction(true, true);
-
-            return true;
+            return result;
         }
 
         #endregion
@@ -113,41 +87,10 @@ namespace Remizione
         // HandleInput
         public override HandleInputResult HandleInput(GameTime gameTime)
         {
-            // Mouse left button
-            if (TestMouseLeftButtonClick())
-                return HandleInputResult.Handled;
+            if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
+                return HandleMouseInput();
 
-            // Mouse right button
-            if (TestMouseRightButtonClick())
-                return HandleInputResult.Handled;
-
-            /*
-            if (Actor.Session.FullHUD)
-            {
-                if (TestInventory())
-                    return HandleInputResult.Handled;
-            }
-            */
-
-            /*
-            // Get direction from keyboard -or- left stick
-            if (!Actor.IsFollowingPath)
-            {
-                var direction = GetDirectionVectorFromLeftStick();
-                if (direction == Vector2.Zero && PlayerInputManager.PlayerNumber == 0)
-                    direction = GetDirectionVectorFromKeyboard(InputBindings.KeyboardMoveLeft, InputBindings.KeyboardMoveUp, InputBindings.KeyboardMoveRight, InputBindings.KeyboardMoveDown);
-
-                if (direction == Vector2.Zero)
-                    Actor.Stand();
-                else
-                    Actor.Move(direction);
-            }
-            */
-
-            if (Interact())
-                return HandleInputResult.Handled;
-
-            return HandleInputResult.Handled;
+            return HandleInputResult.Unhandled;
         }
     }
 }

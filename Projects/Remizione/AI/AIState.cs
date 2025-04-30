@@ -8,15 +8,17 @@ namespace Remizione
     public abstract class AIState
     {
         // Constructor
-        protected AIState(Actor owner)
+        protected AIState(AIStateMachine stateMachine)
         {
-            this.Owner = owner;
+            this.StateMachine = stateMachine;
         }
 
+        // Actor
+        public Actor Actor => StateMachine.Actor;
+        
         // Enter
         public virtual void Enter()
         {
-            Signal = AIStateSignal.None;
         }
 
         // Exit
@@ -24,11 +26,11 @@ namespace Remizione
         {
         }
 
-        // Owner
-        protected Actor Owner { get; }
+        // HandleSignal
+        public virtual bool HandleSignal(AIStateSignal signal) => false;
 
-        // Signal
-        public AIStateSignal Signal { get; protected set; }
+        // StateMachine
+        public AIStateMachine StateMachine { get; }
 
         // Update
         public virtual void Update(GameTime gameTime)

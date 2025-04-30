@@ -15,6 +15,7 @@ namespace Remizione
             CheckMark = this[nameof(CheckMark)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
+            FaithIcon = this[nameof(FaithIcon)];
             InventoryCategoryMarker = this[nameof(InventoryCategoryMarker)];
             InventoryGridContainer = this[nameof(InventoryGridContainer)];
             InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
@@ -23,9 +24,9 @@ namespace Remizione
             MessageContainer = this[nameof(MessageContainer)];
             MissingInputBinding = this[nameof(MissingInputBinding)];
             MissingItem = this[nameof(MissingItem)];
+            MouseCursorCombatMode = this[nameof(MouseCursorCombatMode)];
             MouseCursorDefault = this[nameof(MouseCursorDefault)];
-            MouseCursorTargetOff = this[nameof(MouseCursorTargetOff)];
-            MouseCursorTargetOn = this[nameof(MouseCursorTargetOn)];
+            MouseCursorTarget = this[nameof(MouseCursorTarget)];
             MouseCursorWait = this[nameof(MouseCursorWait)];
             Pixel = this[nameof(Pixel)];
             PopupContainer = this[nameof(PopupContainer)];
@@ -38,12 +39,14 @@ namespace Remizione
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
+            SpiritIcon = this[nameof(SpiritIcon)];
             UIControlContainerEdgeLarge = this[nameof(UIControlContainerEdgeLarge)];
             UIControlContainerPatternLarge = this[nameof(UIControlContainerPatternLarge)];
             UIControlContainerEdgeSmall = this[nameof(UIControlContainerEdgeSmall)];
             UIControlContainerPatternSmall = this[nameof(UIControlContainerPatternSmall)];
             UIControlShade = this[nameof(UIControlShade)];
             UnreadSign = this[nameof(UnreadSign)];
+            WillpowerIcon = this[nameof(WillpowerIcon)];
         }
 
         // CheckMark
@@ -70,6 +73,9 @@ namespace Remizione
         // InventorySlotSelection
         public AtlasImage InventorySlotSelection { get; }
 
+        // FaithIcon
+        public AtlasImage FaithIcon { get; }
+
         // MessageContainer
         public AtlasImage MessageContainer { get; }
 
@@ -79,14 +85,14 @@ namespace Remizione
         // MissingItem
         public AtlasImage MissingItem { get; }
 
+        // MouseCursorCombatMode
+        public AtlasImage MouseCursorCombatMode { get; }
+
         // MouseCursorDefault
         public AtlasImage MouseCursorDefault { get; }
 
-        // MouseCursorTargetOff
-        public AtlasImage MouseCursorTargetOff { get; }
-
-        // MouseCursorTargetOn
-        public AtlasImage MouseCursorTargetOn { get; }
+        // MouseCursorTarget
+        public AtlasImage MouseCursorTarget { get; }
 
         // MouseCursorWait
         public AtlasImage MouseCursorWait { get; }
@@ -136,10 +142,16 @@ namespace Remizione
         // SpeechBubblePipe
         public AtlasImage SpeechBubblePipe { get; }
 
+        // SpiritIcon
+        public AtlasImage SpiritIcon { get; }
+
         // UIControlShade
         public AtlasImage UIControlShade { get; }
 
         // UnreadSign
         public AtlasImage UnreadSign { get; }
+
+        // WillpowerIcon
+        public AtlasImage WillpowerIcon { get; }
     }
 }

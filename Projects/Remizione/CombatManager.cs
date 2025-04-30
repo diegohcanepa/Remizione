@@ -1,124 +1,98 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace Remizione
 {
-    /// <summary>
-    /// CombatManager
-    /// </summary>
-    public sealed class CombatManager
+    public class CombatManager
     {
-        private readonly List<Actor> actors = [];
-        private int currentIndex = -1;
+        private readonly List<Actor> turnOrder = [];
+        private int currentIndex = 0;
         private readonly GameSession session;
 
         // Constructor
         public CombatManager(GameSession session)
         {
             this.session = session;
-            IsActive = false;
         }
 
         // Add
         public void Add(Actor actor)
         {
-            if (!actors.Contains(actor))
-            {
-                if (actors.Count == 0)
-                {
-                    Start(actor);
-                    return;
-                }
-                else
-                {
-                    actors.Add(actor);
-                    if (currentIndex == -1)
-                        currentIndex = 0;
-                }
-            }
+            if (!turnOrder.Contains(actor))
+                turnOrder.Add(actor);
         }
 
         // AdvanceTurn
         public void AdvanceTurn()
         {
-            int startingIndex = currentIndex;
-            IsTurnInProgress = false;
-
-            if (actors.Count < 2)
-            {
-                Terminate();
+            if (!IsActive)
                 return;
-            }
 
-            currentIndex++;
-            if (currentIndex >= actors.Count)
-                currentIndex = 0;
-
-            if (CurrentActor != null)
+            for (int i = 0; i < turnOrder.Count; i++)
             {
-                if (CurrentActor.IsPlayer)
-                    session.HUD.NarrationText = "Take your action";
-                else
+                currentIndex = (currentIndex + 1) % turnOrder.Count;
+                var next = turnOrder[currentIndex];
+                if (!next.IsDead)
                 {
-                    CurrentActor.CombatTurnDone = false;
-                    session.HUD.NarrationText = string.Empty;
+                    next.StartCombatTurn();
+                    return;
                 }
             }
+
+            // Si ninguno está vivo
+            Terminate();
         }
 
         // CurrentActor
-        public Actor? CurrentActor => IsActive ? actors[currentIndex] : null;
+        public Actor? CurrentActor => (turnOrder.Count > 0 && currentIndex < turnOrder.Count) ? turnOrder[currentIndex] : null;
+
+        // EndCurrentTurn
+        public void EndCurrentTurn()
+        {
+            AdvanceTurn();
+        }
 
         // IsActive
         public bool IsActive { get; private set; }
 
-        // Contains
-        public bool Contains(Actor actor) => actors.Contains(actor);
-
-        // IsTurnInProgress
-        public bool IsTurnInProgress { get; set; }
-
         // Remove
         public void Remove(Actor actor)
         {
-            var index = actors.IndexOf(actor);
-            if (index == -1)
-                return;
-
-            actors.RemoveAt(index);
-
-            if (actors.Count <= 1)
+            if (turnOrder.Contains(actor))
             {
-                Terminate();
-                return;
-            }
+                int removedIndex = turnOrder.IndexOf(actor);
+                turnOrder.Remove(actor);
 
-            currentIndex--;
-            if (currentIndex < 0)
-                currentIndex = actors.Count - 1;
+                if (removedIndex <= currentIndex && currentIndex > 0)
+                    currentIndex--;
+
+                if (turnOrder.Count == 0)
+                    Terminate();
+            }
         }
 
         // Start
-        public void Start(params Actor[] members)
+        public void Start(params Actor[] participants)
         {
-            if (members.Length == 0)
-                return;
-
-            actors.Clear();
-            actors.AddRange(members);
+            turnOrder.Clear();
+            turnOrder.AddRange(participants);
             currentIndex = 0;
             IsActive = true;
+
+            AdvanceTurn();
         }
 
         // Terminate
         public void Terminate()
         {
-            session.HUD.NarrationText = string.Empty;
             IsActive = false;
-            IsTurnInProgress = false;
-            actors.Clear();
-            currentIndex = -1;
+            foreach (var actor in turnOrder)
+            {
+                actor.EndCombatTurn();
+            }
+
+            turnOrder.Clear();
+            currentIndex = 0;
         }
     }
 }

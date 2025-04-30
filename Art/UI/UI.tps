@@ -260,8 +260,8 @@
             <key type="filename">ItemCategories-assets/InventoryAmulets.png</key>
             <key type="filename">ItemCategories-assets/InventoryConsumables.png</key>
             <key type="filename">ItemCategories-assets/InventorySkills.png</key>
-            <key type="filename">UI-assets/MouseCursorTargetOff.png</key>
-            <key type="filename">UI-assets/MouseCursorTargetOn.png</key>
+            <key type="filename">UI-assets/MouseCursorCombatMode.png</key>
+            <key type="filename">UI-assets/MouseCursorTarget.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -852,6 +852,23 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">UIIcons-assets/FaithIcon.png</key>
+            <key type="filename">UIIcons-assets/VitalityIcon.png</key>
+            <key type="filename">UIIcons-assets/WillpowerIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">XboxControls-assets/XboxLeftShoulder.png</key>
             <key type="filename">XboxControls-assets/XboxRightShoulder.png</key>
             <struct type="IndividualSpriteSettings">
@@ -884,6 +901,7 @@
                     <filename>Inventory-assets</filename>
                     <filename>ItemCategories-assets</filename>
                     <filename>ReactionMeter-assets</filename>
+                    <filename>UIIcons-assets</filename>
                 </array>
             </struct>
         </map>

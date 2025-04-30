@@ -24,24 +24,5 @@
             CombatAIStateMachine.AddTransition<AIAttackState>(AIStateSignal.TargetLost, idle);
             */
         }
-
-        // OnPlayCombatTurn
-        protected override void OnPlayCombatTurn()
-        {
-            if (Target == null)
-                return;
-
-            Session.CombatManager.IsTurnInProgress = true;
-
-            if (IsTargetInAttackRange())
-            {
-                CloseAttack(Target);
-                return;
-            }
-            else
-            {
-                MoveTowardsTarget();
-            }
-        }
     }
 }

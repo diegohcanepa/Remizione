@@ -6,8 +6,8 @@
     public sealed class AIPatrolState : AIState
     {
         // Constructor
-        public AIPatrolState(Actor owner)
-            : base(owner)
+        public AIPatrolState(AIStateMachine stateMachine)
+            : base(stateMachine)
         {
         }
     }
