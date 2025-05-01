@@ -32,7 +32,6 @@ namespace Remizione
         
         #endregion
 
-
         // Enter
         public override void Enter()
         {

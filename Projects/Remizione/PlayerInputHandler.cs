@@ -47,10 +47,21 @@ namespace Remizione
 
             MouseCursor.Instance.AnimateClick();
 
-            if (Actor.Session.CombatMode && Actor.InteractionTarget != null)
+            if (Actor.Session.CombatMode)
             {
-                Actor.StartCombatTurn();
-                return true;
+                if (Actor.InteractionTarget == null)
+                {
+                    if (Actor.Session.CombatManager.CurrentActor != null && Actor.Session.CombatManager.CurrentActor.IsPlayer)
+                    {
+                        Actor.DoMoveTurn(destination);
+                        return true;
+                    }
+                }
+                else if (Actor.InteractionTarget.MaxHP > 0)
+                {
+                    Actor.DoAttackTurn();
+                    return true;
+                }
             }
 
             Actor.FastMove = true;
@@ -59,12 +70,6 @@ namespace Remizione
             else
                 Actor.MoveTo(destination);
 
-            if (Actor.FollowingPathDestination.HasValue)
-            {
-                Actor.Session.HUD.DestinationMark.Color = Actor.InteractionTarget != null ? ColorPalette.DestinationMark.Target : ColorPalette.DestinationMark.Default;
-                Actor.Session.HUD.DestinationMark.Position = Actor.FollowingPathDestination;
-            }
-
             return true;
         }
 
@@ -72,9 +77,14 @@ namespace Remizione
         private bool TestMouseRightButtonClick()
         {
             var result = InputManager.DefaultPlayer.Mouse.IsRightButtonPressed();
-            
+
             if (result)
-                Actor.Session.CombatMode = !Actor.Session.CombatMode;
+            {
+                if (Actor.Session.CombatManager.TurnList.Count <= 1)
+                    Actor.Session.CombatMode = !Actor.Session.CombatMode;
+                else
+                    MouseCursor.Instance.Shake();
+            }
 
             return result;
         }

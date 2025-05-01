@@ -10,7 +10,7 @@ namespace Remizione
         // Anger
         internal static class Anger
         {
-            internal static Color Back { get; } = new(41, 29, 43);
+            internal static Color Back { get; } = new(20, 24, 46);
             internal static Color Fore { get; } = new(82, 51, 63);
         }
 
@@ -52,7 +52,7 @@ namespace Remizione
         // FPMeter
         internal static class FPMeter
         {
-            internal static Color Back { get; } = new(41, 29, 43);
+            internal static Color Back { get; } = new(20, 24, 46);
             internal static Color Fore { get; } = new(82, 51, 63);
         }
 
@@ -62,7 +62,7 @@ namespace Remizione
         // HPMeter
         internal static class HPMeter
         {
-            internal static Color Back { get; } = new(41, 29, 43);
+            internal static Color Back { get; } = new(20, 24, 46);
             internal static Color Fore { get; } = new(82, 51, 63);
         }
 

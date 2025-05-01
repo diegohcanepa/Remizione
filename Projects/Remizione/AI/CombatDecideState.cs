@@ -3,12 +3,12 @@
 namespace Remizione
 {
     /// <summary>
-    /// CombatIdleState
+    /// CombatDecideState
     /// </summary>
-    public sealed class CombatIdleState : CombatState
+    public sealed class CombatDecideState : CombatState
     {
         // Constructor
-        public CombatIdleState(CombatStateMachine stateMachine)
+        public CombatDecideState(CombatStateMachine stateMachine)
             : base(stateMachine)
         {
         }
@@ -20,6 +20,8 @@ namespace Remizione
             {
                 Actor.SelectTarget();
                 StateMachine.ExecuteAction(CombatStateSignal.Attack);
+
+                // Add other actions based on combat state
             }
         }
     }

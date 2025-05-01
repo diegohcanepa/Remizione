@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -12,6 +13,7 @@ namespace Remizione
         public CombatManager(GameSession session)
         {
             this.session = session;
+            this.TurnList = new(turnList);
         }
 
         // Terminate
@@ -55,7 +57,7 @@ namespace Remizione
                 currentIndex = 0;
 
             if (CurrentActor is Actor currentActor && !currentActor.IsPlayer)
-                currentActor.StartCombatTurn();
+                currentActor.DoAttackTurn();
         }
 
         // CurrentActor
@@ -85,5 +87,8 @@ namespace Remizione
                     Terminate();
             }
         }
+
+        // TurnList
+        public ReadOnlyCollection<Actor> TurnList { get; }
     }
 }

@@ -8,8 +8,6 @@ namespace Remizione
     /// </summary>
     public sealed class CombatStateMachine
     {
-        private CombatState currentState;
-        private bool isTurnActive;
         private Dictionary<CombatStateName, CombatState> states = [];
 
         // Constructor
@@ -19,11 +17,24 @@ namespace Remizione
 
             states[CombatStateName.Charge] = new CombatChargeState(this);
             states[CombatStateName.CloseAttack] = new CombatCloseAttackState(this);
-            states[CombatStateName.Idle] = new CombatIdleState(this);
+            states[CombatStateName.Decide] = new CombatDecideState(this);
+            states[CombatStateName.Move] = new CombatMoveState(this);
 
-            currentState = states[CombatStateName.Idle];
-            currentState.Enter();
+            CurrentState = states[CombatStateName.Decide];
+            CurrentState.Enter();
         }
+
+        #region Private members
+
+        // EndTurn
+        private void EndTurn()
+        {
+            TurnState = CombatTurnState.None;
+            ChangeState(CombatStateName.Decide);
+            Actor.Session.CombatManager.EndCurrentTurn();
+        }
+
+        #endregion
 
         // Actor
         public Actor Actor { get; }
@@ -31,35 +42,22 @@ namespace Remizione
         // ChangeState
         public void ChangeState(CombatStateName newStateName)
         {
-            currentState?.Exit();
-            currentState = states[newStateName];
-            currentState?.Enter();
+            CurrentState?.Exit();
+            CurrentState = states[newStateName];
+            CurrentState?.Enter();
         }
 
-        // EndCombat
-        public void EndCombat()
-        {
-            isTurnActive = false;
-            //stateMachine.FireSignal(AIStateSignal.ExitCombat);
-        }
+        // CurrentState
+        public CombatState? CurrentState { get; private set; }
 
-        // EndTurn
-        public void EndTurn()
-        {
-            isTurnActive = false;
-            ChangeState(CombatStateName.Idle);
-            Actor.Session.CombatManager.EndCurrentTurn();
-        }
+        // Destination
+        public Vector2? Destination { get; private set; }
 
         // ExecuteAction
-        public void ExecuteAction(CombatStateSignal signal)
+        public void ExecuteAction(CombatStateSignal signal, Vector2? destination = null)
         {
-            // Idle
-            if (signal == CombatStateSignal.Idle)
-            {
-                ChangeState(CombatStateName.Idle);
-                return;
-            }
+            this.Destination = destination;
+            TurnState = CombatTurnState.InProgress;
 
             // Attack
             if (signal == CombatStateSignal.Attack)
@@ -85,49 +83,50 @@ namespace Remizione
                 ChangeState(CombatStateName.CloseAttack);
                 return;
             }
+
+            // Decide
+            if (signal == CombatStateSignal.Decide)
+            {
+                ChangeState(CombatStateName.Decide);
+                return;
+            }
+
+            // EndTurn
+            if (signal == CombatStateSignal.EndTurn)
+            {
+                EndTurn();
+                return;
+            }
+
+            // Move
+            if (signal == CombatStateSignal.Move)
+            {
+                ChangeState(CombatStateName.Move);
+                return;
+            }
         }
 
-        // Reset
-        public void Reset()
-        {
-            currentState = states[CombatStateName.Idle];
-            currentState.Enter();
-        }
+        // TurnState
+        public CombatTurnState TurnState { get; private set; }
 
         // StartTurn
         public void StartTurn()
         {
-            if (isTurnActive)
+            if (TurnState != CombatTurnState.None)
                 return;
-
-            if (Actor.IsDead)
-            {
-                Actor.Session.CombatManager.EndCurrentTurn();
-                return;
-            }
 
             Actor.Session.CombatManager.Add(Actor);
-            isTurnActive = true;
+            TurnState = CombatTurnState.Active;
 
-            if (Actor.IsPlayer)
-            {
-                // El jugador espera input del usuario (p. ej., clic derecho para atacar)
-                // El GameUI debería habilitar los botones para permitir acciones
-            }
-            else
-            {
-                // NPC: ejecutar comportamiento de combate usando la AI
-                ExecuteAction(CombatStateSignal.Idle);
-            }
+            if (!Actor.IsPlayer)
+                ExecuteAction(CombatStateSignal.Decide);
         }
 
         // Update
         public void Update(GameTime gameTime)
         {
-            if (!isTurnActive)
-                return;
-
-            currentState?.Update(gameTime);
+            if (TurnState != CombatTurnState.None)
+                CurrentState?.Update(gameTime);
         }
     }
 }

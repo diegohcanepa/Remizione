@@ -540,6 +540,53 @@ namespace Remizione
         // CloseAttack
         public void CloseAttack() => StateMachine.ChangeState(ActorStateNames.CloseAttack);
 
+        // DoAttackTurn
+        public bool DoAttackTurn()
+        {
+            if (HasSpeechBubble)
+                speechBubble?.Hide();
+
+            this.Target = InteractionTarget;
+
+            Stand();
+
+            if (AttackSkill is null)
+                return false;
+
+            var usageResult = AttackSkill.BeginUse();
+
+            if (usageResult == ItemUsageResult.Succeeded)
+            {
+                combatStateMachine.StartTurn();
+                combatStateMachine.ExecuteAction(CombatStateSignal.Decide);
+                return true;
+            }
+            else if (usageResult == ItemUsageResult.NotEnoughAnger)
+            {
+                if (IsPlayer)
+                {
+                    if (staminaMessage == null || !staminaMessage.IsVisible)
+                    {
+                        staminaMessage = session.ObjectPools.FloatingTexts.Get();
+                        staminaMessage.Show(GetOverheadPosition(-3, -1), Utils.EncodeMessageKey(MessageKey.NoStamina), ColorPalette.Anger.Fore);
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        // DoMoveTurn
+        public void DoMoveTurn(Vector2 destination)
+        {
+            if (HasSpeechBubble)
+                speechBubble?.Hide();
+
+            Stand();
+            combatStateMachine.StartTurn();
+            combatStateMachine.ExecuteAction(CombatStateSignal.Move, destination);
+        }
+
         // Equipment
         public ItemStorage Equipment { get; }
 
@@ -549,9 +596,6 @@ namespace Remizione
         // FastMoveFactor
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public float FastMoveFactor { get; set; } = 1;
-
-        // FollowingPathDestination
-        public Vector2? FollowingPathDestination { get; private set; }
 
         // GetBloodSplashPosition
         public Vector2 GetBloodSplashPosition()
@@ -662,9 +706,6 @@ namespace Remizione
             */
         }
 
-        // IsTurnActive
-        public bool IsTurnActive { get; private set; }
-
         // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;
 
@@ -707,8 +748,6 @@ namespace Remizione
             if (IsPlayer)
                 pendingInteractiveTarget = null;
 
-            FollowingPathDestination = null;
-
             // No path needed
             if (WalkArea == null || IgnoreWalkArea)
                 return base.MoveTo(destination);
@@ -749,9 +788,14 @@ namespace Remizione
             pendingPathNodes.AddRange(path);
             MoveToNextPathNode();
 
-            FollowingPathDestination = path[^1];
             IsFollowingPath = true;
 
+            if (IsPlayer)
+            {
+                Session.HUD.DestinationMark.Color = InteractionTarget != null ? ColorPalette.DestinationMark.Target : ColorPalette.DestinationMark.Default;
+                Session.HUD.DestinationMark.Position = path[^1];
+            }
+            
             if (FastMove && StateMachine.CurrentState is ActorMoveState)
                 StateMachine.ChangeState(ActorStateNames.MoveFast);
             else if (!FastMove && StateMachine.CurrentState is ActorMoveFastState)
@@ -814,42 +858,6 @@ namespace Remizione
         [ScriptMethod(CodingContext.Any)]
         public void Stand(bool forceRestart = false) => StateMachine.ChangeState(ActorStateNames.Stand, forceRestart);
 
-        // StartCombatTurn
-        public bool StartCombatTurn()
-        {
-            if (HasSpeechBubble)
-                speechBubble?.Hide();
-
-            this.Target = InteractionTarget;
-
-            Stand();
-
-            if (AttackSkill is null)
-                return false;
-
-            var usageResult = AttackSkill.BeginUse();
-
-            if (usageResult == ItemUsageResult.Succeeded)
-            {
-                combatStateMachine.StartTurn();
-                combatStateMachine.ExecuteAction(CombatStateSignal.Idle);
-                return true;
-            }
-            else if (usageResult == ItemUsageResult.NotEnoughAnger)
-            {
-                if (IsPlayer)
-                {
-                    if (staminaMessage == null || !staminaMessage.IsVisible)
-                    {
-                        staminaMessage = session.ObjectPools.FloatingTexts.Get();
-                        staminaMessage.Show(GetOverheadPosition(-3, -1), Utils.EncodeMessageKey(MessageKey.NoStamina), ColorPalette.Anger.Fore);
-                    }
-                }
-            }
-
-            return true;
-        }
-
         // Stats
         public Stats Stats { get; }
 
@@ -880,6 +888,9 @@ namespace Remizione
 
             return false;
         }
+
+        // TurnState
+        public CombatTurnState TurnState => combatStateMachine.TurnState;
 
         // Vanish
         public void Vanish()

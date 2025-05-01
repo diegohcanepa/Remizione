@@ -15,6 +15,7 @@ namespace Remizione
         private readonly ImageSprite cursorImage;
         private Vector2 position;
         private readonly Vector2Tween scaleTween = new();
+        private readonly FloatTween shakeTween = new();
         private MouseCursorState state;
 
         #endregion
@@ -63,7 +64,9 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
+            cursorImage.X += shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             cursorImage.Draw(gameTime);
+            cursorImage.X -= shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             Game.SpriteBatch.End();
         }
 
@@ -76,6 +79,8 @@ namespace Remizione
                 Invalidate();
 
             cursorImage.Update(gameTime);
+
+            shakeTween.Update(gameTime);
         }
 
         #endregion
@@ -107,6 +112,9 @@ namespace Remizione
                 cursorImage.Position = value;
             }
         }
+
+        // Shake
+        public void Shake() => shakeTween.Start(TweenStyle.CubicInOut, 0, 1, 50, 4);
 
         // State
         public MouseCursorState State

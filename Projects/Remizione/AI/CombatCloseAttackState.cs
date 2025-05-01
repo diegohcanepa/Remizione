@@ -28,7 +28,7 @@ namespace Remizione
             if (attackLaunched)
             {
                 if (!Actor.IsAttacking)
-                    StateMachine.EndTurn();
+                    StateMachine.ExecuteAction(CombatStateSignal.EndTurn);
             }
             else
             {
