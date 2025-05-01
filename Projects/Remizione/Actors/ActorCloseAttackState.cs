@@ -6,13 +6,13 @@ namespace Remizione
     /// <summary>
     /// ActorCloseAttackState
     /// </summary>
-    public sealed class ActorCloseAttackState : ActorState
+    public sealed class ActorCloseAttackState : ActorAnimatedState
     {
         private bool damageTaken;
 
         // Constructor
         public ActorCloseAttackState(Actor owner)
-            : base(owner, ActorStateNames.CloseAttack, ActorStateSettings.None)
+            : base(owner, ActorStateNames.CloseAttack, false)
         {
         }
 

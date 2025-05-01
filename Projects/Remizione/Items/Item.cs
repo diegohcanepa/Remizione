@@ -20,6 +20,7 @@ namespace Remizione
 
             this.Storage = storage;
             this.MetaItem = metaItem;
+            this.Anger = metaItem.Anger;
             this.Category = metaItem.Category;
             this.IconImage = Atlases.UI.GetImage(nameString) ?? Atlases.UI.MissingItem;
             this.BaseDamage = metaItem.BaseDamage;
@@ -27,8 +28,10 @@ namespace Remizione
             this.Maximum = metaItem.Maximum;
             this.HP = metaItem.HP;
             this.Range = metaItem.Range;
-            this.Willpower = metaItem.Willpower;
         }
+
+        // Anger
+        public int Anger { get; }
 
         // BaseDamage
         public DiceRoll BaseDamage { get; }
@@ -40,14 +43,22 @@ namespace Remizione
             if (HP < 0 && Math.Abs(HP) > Owner.HP)
                 return ItemUsageResult.NotEnoughHP;
 
-            // Owner has not enough willpower
-            if (Willpower < 0 && Math.Abs(Willpower) > Owner.Willpower)
-                return ItemUsageResult.NotEnoughWillpower;
+            var actor = Owner as Actor;
+
+            // Owner has not enough anger
+            if (actor != null)
+            {
+                if (Anger < 0 && Math.Abs(Anger) > actor.Anger)
+                    return ItemUsageResult.NotEnoughAnger;
+            }
 
             Owner.HP += HP;
 
-            if (Owner.Session.CombatManager.IsActive)
-                Owner.Willpower += Willpower;
+            if (actor != null)
+            {
+                if (Owner.Session.CombatManager.IsActive)
+                    actor.Anger += Anger;
+            }
 
             if (Level > 0 && MetaItem.UpgradeEffects.Count > 0)
             {
@@ -190,8 +201,5 @@ namespace Remizione
                 return MetaItem.UpgradeCosts[Level];
             }
         }
-
-        // Willpower
-        public int Willpower { get; }
     }
 }

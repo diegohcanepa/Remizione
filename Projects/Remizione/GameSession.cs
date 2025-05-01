@@ -115,7 +115,6 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(Sinner));
             scriptRegistry.RegisterEntity(typeof(Zabul));
 
-            scriptRegistry.RegisterStatement("act", typeof(ActCommand));
             scriptRegistry.RegisterStatement("add-dialog-option", typeof(AddDialogOptionCommand));
             scriptRegistry.RegisterStatement("add-hole", typeof(AddHoleCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("add-item", typeof(AddItemCommand), CodingContext.Any);

@@ -38,14 +38,12 @@ namespace Remizione
         private readonly Vector2Tween knockbackTween = new();
         private int maxFP;
         private int maxHP;
-        private int maxWillpower;
         private readonly List<PlacementCondition> placementConditions = [];
         private RenderLayer renderLayer;
         private int renderLayerDepth;
         private bool shouldClampToWalkArea;
         private WalkArea? walkArea;
         private string walkAreaName = string.Empty;
-        private float willpower;
 
         #endregion
 
@@ -417,11 +415,6 @@ namespace Remizione
 
             instance.Pan = pan;
             instance.Volume.Current = volume * masterVolume;
-        }
-
-        // OnWillpowerChanged
-        protected virtual void OnWillpowerChanged()
-        {
         }
 
         #endregion
@@ -882,21 +875,6 @@ namespace Remizione
             }
         }
 
-        // MaxWillpower
-        [ScriptProperty]
-        public int MaxWillpower
-        {
-            get => maxWillpower;
-            set
-            {
-                if (value != maxWillpower)
-                {
-                    maxWillpower = value;
-                    Willpower = value;
-                }
-            }
-        }
-
         // OverheadOrigin
         [ScriptProperty]
         public Vector2 OverheadOrigin { get; set; }
@@ -976,21 +954,6 @@ namespace Remizione
                 {
                     walkAreaName = value;
                     InvalidateWalkArea();
-                }
-            }
-        }
-
-        // Willpower
-        [ScriptProperty]
-        public float Willpower
-        {
-            get => willpower;
-            set
-            {
-                if (value != willpower)
-                {
-                    this.willpower = Math.Clamp(value, 0, MaxWillpower);
-                    OnWillpowerChanged();
                 }
             }
         }

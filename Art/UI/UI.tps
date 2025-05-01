@@ -852,9 +852,9 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">UIIcons-assets/AngerIcon.png</key>
             <key type="filename">UIIcons-assets/FaithIcon.png</key>
-            <key type="filename">UIIcons-assets/VitalityIcon.png</key>
-            <key type="filename">UIIcons-assets/WillpowerIcon.png</key>
+            <key type="filename">UIIcons-assets/SpiritIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

@@ -18,14 +18,16 @@ namespace Remizione
         #region Private fields
 
         private readonly FloatTween accelerationFactorTween = new();
-        private readonly ActorActState actState;
+        private float anger;
         private ItemName attackSkillName;
         private BloodSplash? bloodSplash;
         private readonly ActorCloseAttackState closeAttackState;
+        private readonly CombatStateMachine combatStateMachine;
         private readonly ActorDeathState deathState;
         private readonly FloatTween headTween = new();
         private readonly ActorHurtState hurtState;
         private int level;
+        private int maxAnger;
         private readonly FloatTween moveTween = new();
         private GameThing? pendingInteractiveTarget;
         private readonly List<Vector2> pendingPathNodes = [];
@@ -33,7 +35,6 @@ namespace Remizione
         private readonly GameSession session;
         private SpeechBubble? speechBubble;
         private FloatingText? staminaMessage;
-        private readonly AIStateMachine combatStateMachine;
         private readonly ActorStandState standState;
         private int suspendInteractionCooldown;
         private readonly ActorThrowObjectState throwObjectState;
@@ -50,7 +51,6 @@ namespace Remizione
         {
             this.session = session;
             this.Stats = new Stats(this);
-            this.combatStateMachine = new(this);
 
             this.Atlas = Atlases.Actors;
             this.IgnoreWalkArea = false;
@@ -59,24 +59,23 @@ namespace Remizione
             this.Equipment = new ItemStorage(this);
             this.Skills = new ItemStorage(this);
 
-            actState = new ActorActState(this);
+            closeAttackState = new ActorCloseAttackState(this);
             deathState = new ActorDeathState(this);
             hurtState = new ActorHurtState(this);
 
             this.standState = new ActorStandState(this);
 
             this.StateMachine = new ActorStateMachine(this, standState);
-            this.StateMachine.RegisterState(actState);
             this.StateMachine.RegisterState(deathState);
             this.StateMachine.RegisterState(hurtState);
             this.StateMachine.RegisterState(new ActorMoveState(this));
             this.StateMachine.RegisterState(new ActorMoveFastState(this));
-
-            closeAttackState = new ActorCloseAttackState(this);
             this.StateMachine.RegisterState(closeAttackState);
 
             throwObjectState = new ActorThrowObjectState(this);
             this.StateMachine.RegisterState(throwObjectState);
+
+            this.combatStateMachine = new(this); 
         }
 
         #endregion
@@ -182,6 +181,11 @@ namespace Remizione
         // InputHandler
         protected InputHandler? InputHandler { get; set; }
 
+        // OnAngerChanged
+        protected virtual void OnAngerChanged()
+        {
+        }
+
         // OnDamageReaction
         protected override void OnDamageReaction(GameThing attacker)
         {
@@ -227,6 +231,8 @@ namespace Remizione
                 bloodSplash ??= new BloodSplash(Game, this);
                 bloodSplash.Show(BodySize, GetBloodSplashPosition());
             }
+
+            Session.CombatManager.Add(this);
         }
 
         // OnLoad
@@ -288,30 +294,8 @@ namespace Remizione
                 Stats.Vigor = XmlConvert.ToInt32(vigor);
         }
 
-        // OnWillpowerChanged
-        protected override void OnWillpowerChanged()
-        {
-            if (Willpower == 0)
-            {
-                Stand();
-
-                /*
-                if (session.CombatManager.CurrentActor == this)
-                    session.CombatManager.AdvanceTurn();
-                */
-
-                /*
-                if (IsPlayer)
-                {
-                    if (fatigueMessage == null || !fatigueMessage.IsVisible)
-                    {
-                        fatigueMessage = session.ObjectPools.FloatingTexts.Get();
-                        fatigueMessage.Show(GetOverheadPosition(-3, -1), Utils.EncodeMessageKey(MessageKey.Fatigue), ColorPalette.StaminaMeter.Fore);
-                    }
-                }
-                */
-            }
-        }
+        // OnSelectTarget
+        protected virtual GameThing? OnSelectTarget() => session.Player;
 
         // OnStartMoving
         protected override void OnStartMoving()
@@ -357,8 +341,9 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (session.CombatMode)
-                combatStateMachine.Update(gameTime);
+            combatStateMachine.Update(gameTime);
+
+            StateMachine.Update(gameTime);
 
             base.OnUpdate(gameTime);
 
@@ -388,7 +373,6 @@ namespace Remizione
             speechBubble?.Update(gameTime);
             moveTween.Update(gameTime);
             UpdateDirection();
-            StateMachine.Update(gameTime);
         }
 
         // OnWrite
@@ -411,23 +395,44 @@ namespace Remizione
 
         #endregion
 
-        // Act
-        public SpriteAnimation? Act(string animationName, bool loop, AnimationDirection direction, bool preserve)
-        {
-            var result = AnimationPlayer.Play(animationName, loop, direction);
-
-            if (result != null)
-            {
-                actState.Preserve = preserve;
-                StateMachine.ChangeState(ActorStateNames.Act, true);
-            }
-
-            return result;
-        }
-
         // Affinity
         [ScriptProperty]
-        public Affinity Affinity { get; set; } = Affinity.Neutral;  
+        public Affinity Affinity { get; set; } = Affinity.Neutral;
+
+        // Anger
+        [ScriptProperty]
+        public float Anger
+        {
+            get => anger;
+            set
+            {
+                if (value != anger)
+                {
+                    this.anger = Math.Clamp(value, 0, MaxAnger);
+                    OnAngerChanged();
+
+                    /*
+                    if (Willpower == 0)
+                    {
+                        Stand();
+
+                        if (session.CombatManager.CurrentActor == this)
+                            session.CombatManager.AdvanceTurn();
+
+                        if (IsPlayer)
+                        {
+                            if (fatigueMessage == null || !fatigueMessage.IsVisible)
+                            {
+                                fatigueMessage = session.ObjectPools.FloatingTexts.Get();
+                                fatigueMessage.Show(GetOverheadPosition(-3, -1), Utils.EncodeMessageKey(MessageKey.Fatigue), ColorPalette.StaminaMeter.Fore);
+                            }
+                        }
+                    }
+                    */
+
+                }
+            }
+        }
 
         // ApplyStats
         [ScriptMethod]
@@ -537,9 +542,6 @@ namespace Remizione
 
         // Equipment
         public ItemStorage Equipment { get; }
-
-        // EndCombatTurn
-        public void EndCombatTurn() => combatStateMachine.EndTurn();
 
         // FastMove
         public bool FastMove { get; set; }
@@ -660,47 +662,11 @@ namespace Remizione
             */
         }
 
+        // IsTurnActive
+        public bool IsTurnActive { get; private set; }
+
         // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;
-
-        // LaunchAttack
-        public bool LaunchAttack(GameThing attackTarget)
-        {
-            if (HasSpeechBubble)
-                speechBubble?.Hide();
-
-            if (!CanPerformAction)
-                return false;
-
-            this.Target = attackTarget;
-
-            Stand();
-
-            if (AttackSkill is null)
-                return false;
-
-            var usageResult = AttackSkill.BeginUse();
-
-            if (usageResult == ItemUsageResult.Succeeded)
-            {
-                combatStateMachine.StartTurn();
-                combatStateMachine.ExecuteAction(AIStateSignal.Attack);
-                return true;
-            }
-            else if (usageResult == ItemUsageResult.NotEnoughWillpower)
-            {
-                if (IsPlayer)
-                {
-                    if (staminaMessage == null || !staminaMessage.IsVisible)
-                    {
-                        staminaMessage = session.ObjectPools.FloatingTexts.Get();
-                        staminaMessage.Show(GetOverheadPosition(-3, -1), Utils.EncodeMessageKey(MessageKey.NoStamina), ColorPalette.WillpowerMeter.Fore);
-                    }
-                }
-            }
-
-            return true;
-        }
 
         // Level
         [ScriptProperty]
@@ -716,6 +682,21 @@ namespace Remizione
 
                     level = value;
                     Stats.Apply();
+                }
+            }
+        }
+
+        // MaxAnger
+        [ScriptProperty]
+        public int MaxAnger
+        {
+            get => maxAnger;
+            set
+            {
+                if (value != maxAnger)
+                {
+                    maxAnger = value;
+                    Anger = value;
                 }
             }
         }
@@ -779,22 +760,6 @@ namespace Remizione
             return true;
         }
 
-        // MoveTowardsTarget
-        public bool MoveTowardsTarget()
-        {
-            if (Target != null)
-            {
-                FastMove = true;
-
-                var front = Target.Direction == FacingDirection.Right && X > Target.X ||
-                            Target.Direction == FacingDirection.Left && X < Target.X;
-
-                MoveTo(Target.GetApproachPosition(Target, front));
-            }
-
-            return Target != null;
-        }
-
         // PlayerNumber
         [ScriptProperty]
         public PlayerNumber PlayerNumber
@@ -820,6 +785,13 @@ namespace Remizione
             speechBubble.Show(GetLocalizedDisplayName(), text, awaitInput);
         }
 
+        // SelectTarget
+        public void SelectTarget()
+        {
+            if (!IsPlayer)
+                Target = OnSelectTarget();
+        }
+
         // ShadowOffset
         [ScriptProperty]
         public Vector2 ShadowOffset
@@ -843,9 +815,39 @@ namespace Remizione
         public void Stand(bool forceRestart = false) => StateMachine.ChangeState(ActorStateNames.Stand, forceRestart);
 
         // StartCombatTurn
-        public void StartCombatTurn()
+        public bool StartCombatTurn()
         {
-            combatStateMachine.StartTurn();
+            if (HasSpeechBubble)
+                speechBubble?.Hide();
+
+            this.Target = InteractionTarget;
+
+            Stand();
+
+            if (AttackSkill is null)
+                return false;
+
+            var usageResult = AttackSkill.BeginUse();
+
+            if (usageResult == ItemUsageResult.Succeeded)
+            {
+                combatStateMachine.StartTurn();
+                combatStateMachine.ExecuteAction(CombatStateSignal.Idle);
+                return true;
+            }
+            else if (usageResult == ItemUsageResult.NotEnoughAnger)
+            {
+                if (IsPlayer)
+                {
+                    if (staminaMessage == null || !staminaMessage.IsVisible)
+                    {
+                        staminaMessage = session.ObjectPools.FloatingTexts.Get();
+                        staminaMessage.Show(GetOverheadPosition(-3, -1), Utils.EncodeMessageKey(MessageKey.NoStamina), ColorPalette.Anger.Fore);
+                    }
+                }
+            }
+
+            return true;
         }
 
         // Stats

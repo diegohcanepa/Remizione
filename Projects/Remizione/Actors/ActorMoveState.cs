@@ -3,11 +3,11 @@
     /// <summary>
     /// ActorMoveState
     /// </summary>
-    public sealed class ActorMoveState : ActorState
+    public sealed class ActorMoveState : ActorAnimatedState
     {
         // Constructor
         public ActorMoveState(Actor owner)
-            : base(owner, ActorStateNames.Move, ActorStateSettings.LoopAnimation)
+            : base(owner, ActorStateNames.Move, true)
         {
         }
     }

@@ -3,11 +3,11 @@
     /// <summary>
     /// ActorDeathState
     /// </summary>
-    public sealed class ActorDeathState : ActorState
+    public sealed class ActorDeathState : ActorAnimatedState
     {
         // Constructor
         public ActorDeathState(Actor owner)
-            : base(owner, ActorStateNames.Death, ActorStateSettings.None)
+            : base(owner, ActorStateNames.Death, false)
         {
         }
     }

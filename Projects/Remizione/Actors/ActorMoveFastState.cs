@@ -5,13 +5,13 @@ namespace Remizione
     /// <summary>
     /// ActorMoveFastState
     /// </summary>
-    public sealed class ActorMoveFastState : ActorState
+    public sealed class ActorMoveFastState : ActorAnimatedState
     {
-        private int willpowerPenaltyCooldown;
+        private int angerPenaltyCooldown;
 
         // Constructor
         public ActorMoveFastState(Actor owner)
-            : base(owner, ActorStateNames.MoveFast, ActorStateSettings.LoopAnimation)
+            : base(owner, ActorStateNames.MoveFast, true)
         {
         }
 
@@ -19,7 +19,7 @@ namespace Remizione
         public override void Enter()
         {
             base.Enter();
-            willpowerPenaltyCooldown = Owner.Stats.WillpowerDegradationInterval;
+            angerPenaltyCooldown = Owner.Stats.AngerDegradationInterval;
         }
 
         // Update
@@ -28,14 +28,14 @@ namespace Remizione
             if (!Owner.Session.CombatManager.IsActive)
                 return;
 
-            if (willpowerPenaltyCooldown > 0)
+            if (angerPenaltyCooldown > 0)
             {
-                willpowerPenaltyCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+                angerPenaltyCooldown -= gameTime.ElapsedGameTime.Milliseconds;
             }
             else
             {
-                Owner.Willpower -= 1;
-                willpowerPenaltyCooldown = Owner.Stats.WillpowerDegradationInterval;
+                Owner.Anger -= 1;
+                angerPenaltyCooldown = Owner.Stats.AngerDegradationInterval;
             }
         }
     }

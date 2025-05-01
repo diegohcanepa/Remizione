@@ -8,27 +8,14 @@ namespace Remizione
     // ActorSize
     public enum ActorSize { Small, Medium, Large }
 
-    // ActorStateSettings
-    [Flags]
-    public enum ActorStateSettings
-    {
-        None = 0,
-        LoopAnimation = 1
-    }
+    // CombatStateSignal
+    public enum CombatStateSignal { Idle, Attack, CloseAttack }
+
+    // CombatStateName
+    public enum CombatStateName { Idle, Charge, CloseAttack }
 
     // Affinity
     public enum Affinity { Good, Neutral, Evil }
-
-    // AIStateName
-    public enum AIStateName { Idle, Charge, CloseAttack }
-
-    // AIStateSignal
-    public enum AIStateSignal
-    {
-        ActionDone,
-        Attack,
-        CloseAttack
-    }
 
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Videos, Voices, System, Text }
@@ -61,7 +48,7 @@ namespace Remizione
     public enum ItemName { None, UnarmedAttack, Cross, Lockpick, Stamina, Health, ZabulContact }
 
     // ItemUsageResult
-    public enum ItemUsageResult { NotEnoughHP, NotEnoughWillpower, Succeeded }
+    public enum ItemUsageResult { NotEnoughHP, NotEnoughAnger, Succeeded }
 
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, LightBulb, Moon, MuzzleFlash, Outdoor, Lightning }

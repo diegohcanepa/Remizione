@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Strings>
   <String Key="Actors.Sinner">Sinner</String>
+  <String Key="Attributes.Secondary.Anger">Anger</String>
   <String Key="Attributes.Secondary.Faith">Faith</String>
   <String Key="Attributes.Secondary.Vitality">Vitality</String>
-  <String Key="Attributes.Secondary.Willpower">Willpower</String>
   <String Key="CombatOptions.Attack">Attack</String>
   <String Key="CombatOptions.Guard">Guard</String>
   <String Key="CombatOptions.UseItem">Use item...</String>

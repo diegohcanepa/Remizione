@@ -7,6 +7,13 @@ namespace Remizione
     /// </summary>
     internal static class ColorPalette
     {
+        // Anger
+        internal static class Anger
+        {
+            internal static Color Back { get; } = new(41, 29, 43);
+            internal static Color Fore { get; } = new(82, 51, 63);
+        }
+
         // BackgroundColor
         internal static Color BackgroundColor { get; } = new Color(0, 2, 5);
 
@@ -125,12 +132,5 @@ namespace Remizione
 
         // UIControlShadow
         internal static Color UIControlShadow { get; } = Color.Black * .5f;
-
-        // WillpowerMeter
-        internal static class WillpowerMeter
-        {
-            internal static Color Back { get; } = new(41, 29, 43);
-            internal static Color Fore { get; } = new(82, 51, 63);
-        }
     }
 }

@@ -4,24 +4,24 @@ using System.Collections.Generic;
 namespace Remizione
 {
     /// <summary>
-    /// AIStateMachine
+    /// CombatStateMachine
     /// </summary>
-    public sealed class AIStateMachine
+    public sealed class CombatStateMachine
     {
-        private AIState currentState;
+        private CombatState currentState;
         private bool isTurnActive;
-        private Dictionary<AIStateName, AIState> states = [];
+        private Dictionary<CombatStateName, CombatState> states = [];
 
         // Constructor
-        public AIStateMachine(Actor actor)
+        public CombatStateMachine(Actor actor)
         {
             this.Actor = actor;
 
-            states[AIStateName.Charge] = new AIChargeState(this);
-            states[AIStateName.CloseAttack] = new AICloseAttackState(this);
-            states[AIStateName.Idle] = new AIIdleState(this);
+            states[CombatStateName.Charge] = new CombatChargeState(this);
+            states[CombatStateName.CloseAttack] = new CombatCloseAttackState(this);
+            states[CombatStateName.Idle] = new CombatIdleState(this);
 
-            currentState = states[AIStateName.Idle];
+            currentState = states[CombatStateName.Idle];
             currentState.Enter();
         }
 
@@ -29,7 +29,7 @@ namespace Remizione
         public Actor Actor { get; }
 
         // ChangeState
-        public void ChangeState(AIStateName newStateName)
+        public void ChangeState(CombatStateName newStateName)
         {
             currentState?.Exit();
             currentState = states[newStateName];
@@ -47,21 +47,28 @@ namespace Remizione
         public void EndTurn()
         {
             isTurnActive = false;
-            ChangeState(AIStateName.Idle);
+            ChangeState(CombatStateName.Idle);
             Actor.Session.CombatManager.EndCurrentTurn();
         }
 
         // ExecuteAction
-        public void ExecuteAction(AIStateSignal signal)
+        public void ExecuteAction(CombatStateSignal signal)
         {
+            // Idle
+            if (signal == CombatStateSignal.Idle)
+            {
+                ChangeState(CombatStateName.Idle);
+                return;
+            }
+
             // Attack
-            if (signal == AIStateSignal.Attack)
+            if (signal == CombatStateSignal.Attack)
             {
                 if (Actor.AttackSkill is Item skill)
                 {
                     if (skill.Range == 0)
                     {
-                        ChangeState(AIStateName.Charge);
+                        ChangeState(CombatStateName.Charge);
                     }
                     else
                     {
@@ -73,37 +80,33 @@ namespace Remizione
             }
 
             // Close attack
-            if (signal == AIStateSignal.CloseAttack)
+            if (signal == CombatStateSignal.CloseAttack)
             {
-                ChangeState(AIStateName.CloseAttack);
+                ChangeState(CombatStateName.CloseAttack);
                 return;
             }
-
-            // Este método puede ser llamado desde la AI o desde el input del jugador
-            // por ejemplo: "ChargeAndAttack", "UseSkill", etc.
-            //stateMachine.Reset();
-            //stateMachine.FireSignal(signal);
-
-            // Cuando la acción termine (desde el estado final, por ejemplo "AttackDone"), llamará:
-            // EndTurn();
         }
 
         // Reset
         public void Reset()
         {
-            currentState = states[AIStateName.Idle];
+            currentState = states[CombatStateName.Idle];
             currentState.Enter();
         }
 
         // StartTurn
         public void StartTurn()
         {
+            if (isTurnActive)
+                return;
+
             if (Actor.IsDead)
             {
                 Actor.Session.CombatManager.EndCurrentTurn();
                 return;
             }
 
+            Actor.Session.CombatManager.Add(Actor);
             isTurnActive = true;
 
             if (Actor.IsPlayer)
@@ -114,7 +117,7 @@ namespace Remizione
             else
             {
                 // NPC: ejecutar comportamiento de combate usando la AI
-                ExecuteAction(AIStateSignal.Attack);
+                ExecuteAction(CombatStateSignal.Idle);
             }
         }
 

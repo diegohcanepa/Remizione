@@ -3,14 +3,14 @@
 namespace Remizione
 {
     /// <summary>
-    /// AICloseAttackState
+    /// CombatCloseAttackState
     /// </summary>
-    public sealed class AICloseAttackState : AIState
+    public sealed class CombatCloseAttackState : CombatState
     {
         private bool attackLaunched;
 
         // Constructor
-        public AICloseAttackState(AIStateMachine stateMachine)
+        public CombatCloseAttackState(CombatStateMachine stateMachine)
             : base(stateMachine)
         {
         }

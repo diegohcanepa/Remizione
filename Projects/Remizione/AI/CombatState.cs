@@ -5,10 +5,10 @@ namespace Remizione
     /// <summary>
     /// AIState
     /// </summary>
-    public abstract class AIState
+    public abstract class CombatState
     {
         // Constructor
-        protected AIState(AIStateMachine stateMachine)
+        protected CombatState(CombatStateMachine stateMachine)
         {
             this.StateMachine = stateMachine;
         }
@@ -27,10 +27,10 @@ namespace Remizione
         }
 
         // HandleSignal
-        public virtual bool HandleSignal(AIStateSignal signal) => false;
+        public virtual bool HandleSignal(CombatStateSignal signal) => false;
 
         // StateMachine
-        public AIStateMachine StateMachine { get; }
+        public CombatStateMachine StateMachine { get; }
 
         // Update
         public virtual void Update(GameTime gameTime)

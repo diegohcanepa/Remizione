@@ -1,12 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Remizione
 {
     public class CombatManager
     {
-        private readonly List<Actor> turnOrder = [];
-        private int currentIndex = 0;
+        private readonly List<Actor> turnList = [];
+        private int currentIndex = -1;
         private readonly GameSession session;
 
         // Constructor
@@ -15,11 +14,34 @@ namespace Remizione
             this.session = session;
         }
 
+        // Terminate
+        private void Terminate()
+        {
+            IsActive = false;
+            /*
+            foreach (var actor in turnOrder)
+            {
+                actor.EndCombatTurn();
+            }
+            */
+
+            turnList.Clear();
+            currentIndex = -1;
+        }
+
         // Add
         public void Add(Actor actor)
         {
-            if (!turnOrder.Contains(actor))
-                turnOrder.Add(actor);
+            if (!turnList.Contains(actor))
+            {
+                turnList.Add(actor);
+
+                if (!IsActive)
+                {
+                    IsActive = true;
+                    AdvanceTurn();
+                }
+            }
         }
 
         // AdvanceTurn
@@ -28,23 +50,16 @@ namespace Remizione
             if (!IsActive)
                 return;
 
-            for (int i = 0; i < turnOrder.Count; i++)
-            {
-                currentIndex = (currentIndex + 1) % turnOrder.Count;
-                var next = turnOrder[currentIndex];
-                if (!next.IsDead)
-                {
-                    next.StartCombatTurn();
-                    return;
-                }
-            }
+            currentIndex++;
+            if (currentIndex == turnList.Count)
+                currentIndex = 0;
 
-            // Si ninguno está vivo
-            Terminate();
+            if (CurrentActor is Actor currentActor && !currentActor.IsPlayer)
+                currentActor.StartCombatTurn();
         }
 
         // CurrentActor
-        public Actor? CurrentActor => (turnOrder.Count > 0 && currentIndex < turnOrder.Count) ? turnOrder[currentIndex] : null;
+        public Actor? CurrentActor => currentIndex != -1 ? turnList[currentIndex] : null;
 
         // EndCurrentTurn
         public void EndCurrentTurn()
@@ -58,41 +73,17 @@ namespace Remizione
         // Remove
         public void Remove(Actor actor)
         {
-            if (turnOrder.Contains(actor))
+            if (turnList.Contains(actor))
             {
-                int removedIndex = turnOrder.IndexOf(actor);
-                turnOrder.Remove(actor);
+                int removedIndex = turnList.IndexOf(actor);
+                turnList.Remove(actor);
 
                 if (removedIndex <= currentIndex && currentIndex > 0)
                     currentIndex--;
 
-                if (turnOrder.Count == 0)
+                if (turnList.Count == 0)
                     Terminate();
             }
-        }
-
-        // Start
-        public void Start(params Actor[] participants)
-        {
-            turnOrder.Clear();
-            turnOrder.AddRange(participants);
-            currentIndex = 0;
-            IsActive = true;
-
-            AdvanceTurn();
-        }
-
-        // Terminate
-        public void Terminate()
-        {
-            IsActive = false;
-            foreach (var actor in turnOrder)
-            {
-                actor.EndCombatTurn();
-            }
-
-            turnOrder.Clear();
-            currentIndex = 0;
         }
     }
 }

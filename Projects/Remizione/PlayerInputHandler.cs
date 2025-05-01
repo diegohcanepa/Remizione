@@ -49,7 +49,7 @@ namespace Remizione
 
             if (Actor.Session.CombatMode && Actor.InteractionTarget != null)
             {
-                Actor.LaunchAttack(Actor.InteractionTarget);
+                Actor.StartCombatTurn();
                 return true;
             }
 

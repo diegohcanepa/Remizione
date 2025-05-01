@@ -58,8 +58,8 @@
                 return 775; // Max (without buffs)
         }
 
-        // CalculateWillpower
-        private int CalculateWillpower()
+        // CalculateAnger
+        private int CalculateAnger()
         {
             if (Endurance <= 10)
                 return 90 + (Endurance - 8) * 4; // from 8 a 10 → +4 per point
@@ -79,12 +79,15 @@
 
         #endregion
 
+        // AngerDegradationInterval
+        public int AngerDegradationInterval => 500;
+
         // Apply
         public void Apply()
         {
             actor.MaxFP = CalculateFP();
             actor.MaxHP = CalculateHP();
-            actor.MaxWillpower = CalculateWillpower();
+            actor.MaxAnger = CalculateAnger();
         }
 
         // Devotion
@@ -110,8 +113,5 @@
 
         // Vigor (Constitution)
         public int Vigor { get; set; } = 8;
-
-        // WillpowerDegradationInterval
-        public int WillpowerDegradationInterval => 500;
     }
 }

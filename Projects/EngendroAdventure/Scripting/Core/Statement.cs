@@ -15,6 +15,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string AlignmentArg = "#alignment";
         protected static readonly string AmountArg = "#amount";
         protected static readonly string AnchorArg = "#anchor";
+        protected static readonly string AngerArg = "#anger";
         protected static readonly string AnimationArg = "#animation";
         protected static readonly string AnimationNameArg = "#animation-name";
         protected static readonly string AllArg = "#all";
@@ -179,7 +180,6 @@ namespace EngendroAdventure.Scripting
         protected static readonly string VolatileArg = "#volatile";
         protected static readonly string VolumeArg = "#volume";
         protected static readonly string WalkAreaArg = "#walk-area";
-        protected static readonly string WillpowerArg = "#willpower";
         protected static readonly string WorldSizeArg = "#world-size";
         protected static readonly string ZeroPaddingArg = "#zero-padding";
 

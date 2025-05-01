@@ -5,13 +5,13 @@ namespace Remizione
     /// <summary>
     /// ActorStandState
     /// </summary>
-    public sealed class ActorStandState : ActorState
+    public sealed class ActorStandState : ActorAnimatedState
     {
         private int idleCooldown;
 
         // Constructor
         public ActorStandState(Actor owner)
-            : base(owner, ActorStateNames.Stand, ActorStateSettings.LoopAnimation)
+            : base(owner, ActorStateNames.Stand, true)
         {
         }
 

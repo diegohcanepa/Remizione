@@ -10,6 +10,10 @@ namespace Remizione
     /// </summary>
     public sealed class HUD : GameObject
     {
+        private readonly ImageSprite angerIconLarge;
+        private readonly Meter angerMeter;
+        private readonly Meter angerMeterLarge;
+        private readonly TextSprite angerMeterLabel;
         private readonly CycleInfo cycleInfo;
         private readonly Meter fpMeter;
         private readonly ScoreText gpScore;
@@ -18,9 +22,6 @@ namespace Remizione
         private readonly TextSprite narrationText;
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
-        private readonly Meter willpowerMeter;
-        private readonly Meter willpowerMeterLarge;
-        private readonly TextSprite willpowerMeterLabel;
 
         // Constructor
         public HUD(GameSession session)
@@ -46,12 +47,12 @@ namespace Remizione
 
             this.hpMeter = new Meter(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, 2.8f);
             this.fpMeter = new Meter(Game, ColorPalette.FPMeter.Back, ColorPalette.FPMeter.Fore, 2.8f);
-            this.willpowerMeter = new Meter(Game, ColorPalette.WillpowerMeter.Back, ColorPalette.WillpowerMeter.Fore, 2.8f);
+            this.angerMeter = new Meter(Game, ColorPalette.Anger.Back, ColorPalette.Anger.Fore, 2.8f);
 
             meterIcons = new ImageSprite[3];
-            meterIcons[0] = new ImageSprite(Game, Atlases.UI.SpiritIcon) { Scale = new(.5f) };
-            meterIcons[1] = new ImageSprite(Game, Atlases.UI.FaithIcon) { Scale = new(.5f) };
-            meterIcons[2] = new ImageSprite(Game, Atlases.UI.WillpowerIcon) { Scale = new(.5f) };
+            meterIcons[0] = new ImageSprite(Game, Atlases.UI.SpiritIcon) { Scale = ScaleInfo.UIIcon.Small };
+            meterIcons[1] = new ImageSprite(Game, Atlases.UI.FaithIcon) { Scale = ScaleInfo.UIIcon.Small };
+            meterIcons[2] = new ImageSprite(Game, Atlases.UI.AngerIcon) { Scale = ScaleInfo.UIIcon.Small };
 
             meterIcons[0].Position = new(4);
             meterIcons[1].Position = meterIcons[0].BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, .5f);
@@ -59,9 +60,11 @@ namespace Remizione
 
             hpMeter.Position = new(10, 5);
             fpMeter.Position = new(10, 10);
-            willpowerMeter.Position = new(10, 15);
+            angerMeter.Position = new(10, 15);
 
-            this.willpowerMeterLarge = new Meter(Game, ColorPalette.WillpowerMeter.Back, ColorPalette.WillpowerMeter.Fore, 3.6f)
+            this.angerIconLarge = new ImageSprite(Game, Atlases.UI.AngerIcon) { PivotOrigin = RectanglePoint.Right, Scale = ScaleInfo.UIIcon.Medium };
+
+            this.angerMeterLarge = new Meter(Game, ColorPalette.Anger.Back, ColorPalette.Anger.Fore, 3.6f)
             { 
                 Alignment = HorizontalAlignment.Center,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 10)
@@ -86,14 +89,14 @@ namespace Remizione
                 Scale = ScaleInfo.Text.Large
             };
 
-            // Willpower label
-            this.willpowerMeterLabel = new TextSprite(Game, Fonts.MainOutline)
+            // Anger label
+            this.angerMeterLabel = new TextSprite(Game, Fonts.MainOutline)
             {
                 Color = ColorPalette.Text.Dark,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 11),
                 Scale = ScaleInfo.Text.Medium,
-                Text = "@Attributes.Secondary.Willpower"
+                Text = "@Attributes.Secondary.Anger"
             };
         }
 
@@ -106,7 +109,11 @@ namespace Remizione
 
             meterIcons[0].Draw(gameTime);
             meterIcons[1].Draw(gameTime);
-            meterIcons[2].Draw(gameTime);
+
+            if (session.CombatMode)
+                angerIconLarge.Draw(gameTime);
+            else
+                meterIcons[2].Draw(gameTime);
 
             // HP
             hpMeter.MaximumValue = actor.MaxHP;
@@ -118,17 +125,17 @@ namespace Remizione
             fpMeter.Value = actor.FP;
             fpMeter.Draw(gameTime);
 
-            willpowerMeterLarge.MaximumValue = actor.MaxWillpower;
-            willpowerMeterLarge.Value = actor.Willpower;
+            angerMeterLarge.MaximumValue = actor.MaxAnger;
+            angerMeterLarge.Value = actor.Anger;
 
-            willpowerMeter.MaximumValue = actor.MaxWillpower;
-            willpowerMeter.Value = actor.Willpower;
+            angerMeter.MaximumValue = actor.MaxAnger;
+            angerMeter.Value = actor.Anger;
 
-            // Willpower
-            if (session.CombatManager.IsActive)
-                willpowerMeterLarge.Draw(gameTime);
+            // Anger
+            if (session.CombatMode)
+                angerMeterLarge.Draw(gameTime);
             else
-                willpowerMeter.Draw(gameTime);
+                angerMeter.Draw(gameTime);
 
             Game.SpriteBatch.End();
         }
@@ -141,8 +148,8 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-            if (session.CombatManager.IsActive)
-                willpowerMeterLabel.Draw(gameTime);
+            if (session.CombatMode)
+                angerMeterLabel.Draw(gameTime);
             narrationText.Draw(gameTime);
             Game.SpriteBatch.End();
 
@@ -172,17 +179,20 @@ namespace Remizione
             {
                 fpMeter.Update(gameTime);
                 hpMeter.Update(gameTime);
-                willpowerMeter.Update(gameTime);
+                angerMeter.Update(gameTime);
                 gpScore.Score = session.Player.Stats.GP;
                 gpScore.Update(gameTime);
-                willpowerMeterLabel.Update(gameTime);
-                willpowerMeterLarge.Update(gameTime);
+                angerMeterLabel.Update(gameTime);
+                angerMeterLarge.Update(gameTime);
             }
 
             cycleInfo.Update(gameTime);
             DestinationMark.Update(gameTime);
             EchoMessage.Update(gameTime);
             savingIcon.Update(gameTime);
+
+            if (session.CombatMode)
+                angerIconLarge.Position = angerMeterLarge.BoundingBox.GetPoint(RectanglePoint.Left, -1, 0);
         }
 
         #endregion

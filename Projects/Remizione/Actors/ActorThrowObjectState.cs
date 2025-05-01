@@ -3,11 +3,11 @@
     /// <summary>
     /// ActorThrowObjectState
     /// </summary>
-    public sealed class ActorThrowObjectState : ActorState
+    public sealed class ActorThrowObjectState : ActorAnimatedState
     {
         // Constructor
         public ActorThrowObjectState(Actor owner)
-            : base(owner, "ThrowObject", ActorStateSettings.None)
+            : base(owner, "ThrowObject", false)
         {
         }
 
