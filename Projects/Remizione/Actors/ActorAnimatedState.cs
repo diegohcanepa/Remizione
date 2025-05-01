@@ -1,6 +1,4 @@
-﻿using Engendro;
-
-namespace Remizione
+﻿namespace Remizione
 {
     /// <summary>
     /// ActorAnimatedState

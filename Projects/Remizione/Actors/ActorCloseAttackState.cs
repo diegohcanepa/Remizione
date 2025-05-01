@@ -32,7 +32,22 @@ namespace Remizione
                 if (frame.Label == GameSettings.KeyFrame)
                 {
                     damageTaken = true;
-                    Owner.AttackSkill.EndUse(Owner.Target);
+
+                    if (Owner.Target is Actor targetActor)
+                    {
+                        var attackRoll = Owner.Stats.RollAttack();
+                        var defenseRoll = targetActor.Stats.GetDefense();
+
+                        if (attackRoll >= defenseRoll)
+                            Owner.AttackSkill.EndUse(Owner.Target);
+                        else
+                        {
+                            Owner.Session.CombatManager.Add(targetActor);
+                            targetActor.ShowMessage("@Messages.Miss");
+                        }
+                    }
+                    else
+                        Owner.AttackSkill.EndUse(Owner.Target);
                 }
             }
         }
@@ -53,6 +68,7 @@ namespace Remizione
         {
             base.Enter();
             damageTaken = false;
+            Owner.FaceToTarget();
         }
     }
 }

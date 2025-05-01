@@ -251,7 +251,7 @@ namespace Remizione
             var interactiveTarget = Session.Player?.InteractionTarget;
             if (Session.CombatManager.IsActive)
             {
-                if (Session.Player != null && Session.Player.TurnState != CombatTurnState.WaitingInput)
+                if (Session.Player != null && Session.Player.TurnState != CombatTurnState.WaitingInput && Session.CombatManager.TurnList.Count >= 2)
                     MouseCursor.Instance.State = MouseCursorState.Wait;
                 else if (Session.Player?.InteractionTarget != null)
                     MouseCursor.Instance.State = MouseCursorState.Target;

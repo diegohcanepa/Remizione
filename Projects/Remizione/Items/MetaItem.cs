@@ -18,7 +18,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(ItemName name, ItemCategory category, ItemAction action, DiceRoll baseDamage, Vector2 knockback, int maximum, int hp, int fp, int range, int anger)
+        public MetaItem(ItemName name, ItemCategory category, ItemAction action, DiceRoll baseDamage, Vector2 knockback, int maximum, int hp, int faith, int range, int anger)
         {
             if (name == ItemName.None)
                 throw new InvalidOperationException("Item must have a name.");
@@ -29,7 +29,7 @@ namespace Remizione
             this.BaseDamage = baseDamage;
             this.Knockback = knockback;
             this.Maximum = maximum;
-            this.FP = fp;
+            this.Faith = faith;
             this.HP = hp;
             this.Range = range;
             this.Anger = anger;
@@ -84,8 +84,8 @@ namespace Remizione
             return text;
         }
 
-        // FP
-        public int FP { get; }
+        // Faith
+        public int Faith { get; }
 
         // HP
         public int HP { get; }

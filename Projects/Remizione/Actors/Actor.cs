@@ -24,10 +24,13 @@ namespace Remizione
         private readonly ActorCloseAttackState closeAttackState;
         private readonly CombatStateMachine combatStateMachine;
         private readonly ActorDeathState deathState;
+        private int faith;
+        private FloatingText? floatingMessage;
         private readonly FloatTween headTween = new();
         private readonly ActorHurtState hurtState;
-        private int level;
+        private int level = 1;
         private int maxAnger;
+        private int maxFaith;
         private readonly FloatTween moveTween = new();
         private GameThing? pendingInteractiveTarget;
         private readonly List<Vector2> pendingPathNodes = [];
@@ -346,6 +349,17 @@ namespace Remizione
         {
             combatStateMachine.Update(gameTime);
 
+            if (floatingMessage != null)
+            {
+                if (floatingMessage.IsVisible)
+                    floatingMessage.Update(gameTime);
+                else
+                {
+                    session.ObjectPools.FloatingTexts.Return(floatingMessage);
+                    floatingMessage = null;
+                }
+            }
+
             StateMachine.Update(gameTime);
 
             base.OnUpdate(gameTime);
@@ -410,7 +424,11 @@ namespace Remizione
             {
                 if (value != anger)
                 {
-                    this.anger = Math.Clamp(value, 0, MaxAnger);
+                    anger = Math.Min(value, MaxAnger);
+
+                    if (anger < -1)
+                        anger = -1;
+
                     OnAngerChanged();
                 }
             }
@@ -474,7 +492,7 @@ namespace Remizione
                 if (InputHandler == null || Session.IsAwaiting || !IsPlayer)
                     return false;
 
-                if (Session.CombatManager.IsActive && TurnState != CombatTurnState.WaitingInput)
+                if (Session.CombatManager.TurnList.Count >= 2 && TurnState != CombatTurnState.WaitingInput)
                     return false;
 
                 return true;
@@ -532,9 +550,8 @@ namespace Remizione
 
             this.Target = InteractionTarget;
 
-            var usageResult = AttackSkill.BeginUse();
-            if (usageResult == ItemUsageResult.Succeeded)
-                combatStateMachine.ExecuteAction(CombatStateSignal.Attack);
+            AttackSkill.BeginUse();
+            combatStateMachine.ExecuteAction(CombatStateSignal.Attack);
         }
 
         // DoDecideTurn (NPCs)
@@ -561,12 +578,35 @@ namespace Remizione
             session.CombatManager.EndCurrentTurn();
         }
 
+        // FaceToTarget
+        public void FaceToTarget()
+        {
+            if (Target != null)
+                FaceTo(Target);
+        }
+
         // FastMove
         public bool FastMove { get; set; }
 
         // FastMoveFactor
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public float FastMoveFactor { get; set; } = 1;
+
+        // Faith
+        [ScriptProperty]
+        public int Faith
+        {
+            get => faith;
+            set
+            {
+                if (value != faith)
+                {
+                    faith = Math.Min(value, MaxFaith);
+                    if (faith < 0)
+                        faith = 0;
+                }
+            }
+        }
 
         // GetBloodSplashPosition
         public Vector2 GetBloodSplashPosition()
@@ -713,6 +753,21 @@ namespace Remizione
             }
         }
 
+        // MaxFaith
+        [ScriptProperty]
+        public int MaxFaith
+        {
+            get => maxFaith;
+            set
+            {
+                if (value != maxFaith)
+                {
+                    maxFaith = value;
+                    Faith = value;
+                }
+            }
+        }
+
         // MoveTo
         public override bool MoveTo(Vector2 destination)
         {
@@ -793,6 +848,14 @@ namespace Remizione
             }
         }
 
+        // Replenish
+        [ScriptMethod]
+        public override void Replenish()
+        {
+            base.Replenish();
+            Faith = MaxFaith;
+        }
+
         // Say
         public void Say(string text, bool awaitInput)
         {
@@ -817,6 +880,13 @@ namespace Remizione
 
         // ShadowSpot
         public ShadowSpot ShadowSpot { get; }
+
+        // ShowMessage
+        public void ShowMessage(string value)
+        {
+            floatingMessage ??= session.ObjectPools.FloatingTexts.Get();
+            floatingMessage.Show(GetOverheadPosition(), value);
+        }
 
         // Skills
         public ItemStorage Skills { get; }

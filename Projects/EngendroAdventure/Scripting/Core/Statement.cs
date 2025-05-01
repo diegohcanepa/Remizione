@@ -74,7 +74,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string FocusArg = "#focus";
         protected static readonly string FolderNamesArg = "#folder-names";
         protected static readonly string FollowArg = "#follow";
-        protected static readonly string FPArg = "#fp";
+        protected static readonly string FaithArg = "#faith";
         protected static readonly string FramesArg = "#frames";
         protected static readonly string FreeArg = "#free";
         protected static readonly string GlobalArg = "#global";

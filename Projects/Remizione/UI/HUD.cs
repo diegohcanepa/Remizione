@@ -15,7 +15,7 @@ namespace Remizione
         private readonly Meter angerMeterLarge;
         private readonly TextSprite angerMeterLabel;
         private readonly CycleInfo cycleInfo;
-        private readonly Meter fpMeter;
+        private readonly Meter faithMeter;
         private readonly ScoreText gpScore;
         private readonly Meter hpMeter;
         private readonly ImageSprite[] meterIcons;
@@ -46,7 +46,7 @@ namespace Remizione
             };
 
             this.hpMeter = new Meter(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, 2.8f);
-            this.fpMeter = new Meter(Game, ColorPalette.FPMeter.Back, ColorPalette.FPMeter.Fore, 2.8f);
+            this.faithMeter = new Meter(Game, ColorPalette.FaithMeter.Back, ColorPalette.FaithMeter.Fore, 2.8f);
             this.angerMeter = new Meter(Game, ColorPalette.Anger.Back, ColorPalette.Anger.Fore, 2.8f);
 
             meterIcons = new ImageSprite[3];
@@ -59,7 +59,7 @@ namespace Remizione
             meterIcons[2].Position = meterIcons[1].BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, .5f);
 
             hpMeter.Position = new(10, 5);
-            fpMeter.Position = new(10, 10);
+            faithMeter.Position = new(10, 10);
             angerMeter.Position = new(10, 15);
 
             this.angerIconLarge = new ImageSprite(Game, Atlases.UI.AngerIcon) { PivotOrigin = RectanglePoint.Right, Scale = ScaleInfo.UIIcon.Medium };
@@ -121,9 +121,9 @@ namespace Remizione
             hpMeter.Draw(gameTime);
 
             // FP
-            fpMeter.MaximumValue = actor.MaxFP;
-            fpMeter.Value = actor.FP;
-            fpMeter.Draw(gameTime);
+            faithMeter.MaximumValue = actor.MaxFaith;
+            faithMeter.Value = actor.Faith;
+            faithMeter.Draw(gameTime);
 
             angerMeterLarge.MaximumValue = actor.MaxAnger;
             angerMeterLarge.Value = actor.Anger;
@@ -177,7 +177,7 @@ namespace Remizione
 
             if (session.Player != null)
             {
-                fpMeter.Update(gameTime);
+                faithMeter.Update(gameTime);
                 hpMeter.Update(gameTime);
                 angerMeter.Update(gameTime);
                 gpScore.Score = session.Player.Stats.GP;

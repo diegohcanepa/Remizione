@@ -23,34 +23,34 @@ namespace Remizione
         // Puntos de golpe(HP)
         // Resistencia a enfermedades, venenos, fatiga
         // Tiradas de salvación del cuerpo
-        public int Constitution { get; set; } = 8;
+        public int Constitution { get; set; } = 10;
 
         // Devotion (Fe o fuerza espiritual)
         // Puntos de espíritu o "mana sagrado"
         // Poder y precisión de los conjuros sagrados
         // Salvaciones contra corrupción, maldiciones, tentaciones
         // Influencia en rituales
-        public int Devotion { get; set; } = 8;
+        public int Devotion { get; set; } = 10;
 
         // Dexterity (Agilidad y reflejos)
         // Tiradas de ataque con armas ligeras o a distancia
         // Iniciativa
         // Clase de armadura(evasión)
         // Salvaciones contra trampas, fuego, explosiones
-        public int Dexterity { get; set; } = 8;
+        public int Dexterity { get; set; } = 10;
 
         // Empathy (Carisma/emoción)
         // Interacciones sociales: persuasión, intimidación, mentira
         // Atraer aliados o manipular enemigos
         // Habilidad para consolar, redimir, o engañar
         // Influye en eventos basados en emociones
-        public int Empathy { get; set; } = 8;
+        public int Empathy { get; set; } = 10;
 
         // Mind (Inteligencia/razón)
         // Tiradas de habilidad mental(investigación, conocimiento)
         // Capacidad para entender acertijos, runas, lenguas antiguas
         // Defensa contra ilusiones y control mental
-        public int Mind { get; set; } = 8;
+        public int Mind { get; set; } = 10;
 
         // Strength (Fuerza física)
         // Tiradas de ataque con armas cuerpo a cuerpo
@@ -70,13 +70,13 @@ namespace Remizione
         // Apply
         public void Apply()
         {
-            actor.MaxFP = GetMaxFP();
+            actor.MaxFaith = GetMaxFaith();
             actor.MaxHP = GetMaxHP();
             actor.MaxAnger = GetMaxAnger();
         }
 
-        // FPGainPerLevel
-        public int FPGainPerLevel { get; private set; } = 10;
+        // FaithGainPerLevel
+        public int FaithGainPerLevel { get; private set; } = 10;
 
         // GetAngerCostForAttack
         public int GetAngerCostForAttack(AttackType attackType)
@@ -106,13 +106,13 @@ namespace Remizione
         // GetMaxAnger
         public int GetMaxAnger()
         {
-            return actor.Level * (AngerGainPerLevel + GetModifier(PrimaryStat.Dexterity));
+            return 15 + (actor.Level * (AngerGainPerLevel + GetModifier(PrimaryStat.Dexterity)));
         }
 
-        // GetMaxFP
-        public int GetMaxFP()
+        // GetMaxFaith
+        public int GetMaxFaith()
         {
-            return actor.Level * (FPGainPerLevel + GetModifier(PrimaryStat.Devotion));
+            return actor.Level * (FaithGainPerLevel + GetModifier(PrimaryStat.Devotion));
         }
 
         // GetMaxHP

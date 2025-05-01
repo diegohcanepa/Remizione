@@ -25,7 +25,7 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (!Owner.Session.CombatManager.IsActive)
+            if (Owner.Session.CombatManager.TurnList.Count < 2)
                 return;
 
             if (angerPenaltyCooldown > 0)

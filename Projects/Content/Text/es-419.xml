@@ -122,9 +122,10 @@
   <String Key="MessageBox.QuitToMenu">¿Salir al menú principal?</String>
   <String Key="MessageBox.SlotDeleted">La ranura ha sido eliminada.</String>
   <String Key="MessageBox.Warning">¡Atención!</String>
+  <String Key="Messages.Critical">Crítico</String>
   <String Key="Messages.Fatigue">Fatiga</String>
   <String Key="Messages.InventoryNoItemSelected">Selecciona un elemento.</String>
-  <String Key="Messages.NoStamina">Sin resistencia</String>
+  <String Key="Messages.Miss">Fallo</String>
   <String Key="Misc.And">y</String>
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>

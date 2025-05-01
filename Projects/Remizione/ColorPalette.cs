@@ -49,8 +49,8 @@ namespace Remizione
             internal static Color Target { get; } = new(200, 212, 93);
         }
 
-        // FPMeter
-        internal static class FPMeter
+        // FaithMeter
+        internal static class FaithMeter
         {
             internal static Color Back { get; } = new(20, 24, 46);
             internal static Color Fore { get; } = new(82, 51, 63);

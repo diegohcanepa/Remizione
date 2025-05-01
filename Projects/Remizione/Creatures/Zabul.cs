@@ -39,17 +39,6 @@ namespace Remizione
                 nextDamageCooldown -= gameTime.ElapsedGameTime.Milliseconds;
                 return;
             }
-
-            if (Session.Player != null)
-            {
-                if (AreHurtBoxesVisuallyOverlapping(Session.Player))
-                {
-                    if (AttackSkill != null && AttackSkill.BeginUse() == ItemUsageResult.Succeeded)
-                        AttackSkill.EndUse(Session.Player);
-
-                    nextDamageCooldown = 400;
-                }
-            }
         }
     }
 }

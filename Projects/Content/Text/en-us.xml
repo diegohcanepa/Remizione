@@ -122,9 +122,10 @@
   <String Key="MessageBox.QuitToMenu">Quit to main menu?</String>
   <String Key="MessageBox.SlotDeleted">The slot has been deleted.</String>
   <String Key="MessageBox.Warning">Warning!</String>
+  <String Key="Messages.Critical">Critical</String>
   <String Key="Messages.Fatigue">Fatigue</String>
   <String Key="Messages.InventoryNoItemSelected">Select an item.</String>
-  <String Key="Messages.NoStamina">No stamina</String>
+  <String Key="Messages.Miss">Miss</String>
   <String Key="Misc.And">and</String>
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>

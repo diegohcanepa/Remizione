@@ -37,26 +37,13 @@ namespace Remizione
         public DiceRoll BaseDamage { get; }
 
         // BeginUse
-        public ItemUsageResult BeginUse()
+        public void BeginUse()
         {
-            // Owner has not enough HP
-            if (HP < 0 && Math.Abs(HP) > Owner.HP)
-                return ItemUsageResult.NotEnoughHP;
-
-            var actor = Owner as Actor;
-
-            // Owner has not enough anger
-            if (actor != null)
-            {
-                if (Anger < 0 && Math.Abs(Anger) > actor.Anger)
-                    return ItemUsageResult.NotEnoughAnger;
-            }
-
             Owner.HP += HP;
 
-            if (actor != null)
+            if (Owner is Actor actor)
             {
-                if (Owner.Session.CombatManager.IsActive)
+                if (actor.Session.CombatManager.IsActive)
                     actor.Anger += Anger;
             }
 
@@ -68,8 +55,6 @@ namespace Remizione
                         MetaItem.UpgradeEffects[i].Apply(Owner);
                 }
             }
-
-            return ItemUsageResult.Succeeded;
         }
 
         // Category
@@ -103,7 +88,15 @@ namespace Remizione
         public void EndUse(GameThing target)
         {
             if (BaseDamage != DiceRoll.Empty)
-                target.TakeDamage(Storage.Owner, BaseDamage.Roll(), Knockback);
+            {
+                int damageAmount;
+                if (MetaItem.Anger < 0 && Owner is Actor actor && actor.Anger < 0)
+                    damageAmount = BaseDamage.MinimumValue;
+                else
+                    damageAmount = BaseDamage.Roll();
+
+                target.TakeDamage(Storage.Owner, damageAmount, damageAmount == BaseDamage.MaximumValue, Knockback);
+            }
 
             if (Level > 0 && MetaItem.UpgradeEffects.Count > 0)
             {

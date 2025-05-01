@@ -9,7 +9,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 3, ActionArg, AngerArg, DamageArg, FPArg, HPArg, ImpactWordArg, KnockbackArg, MaximumArg, MaximumLevelArg, RangeArg)
+            : base(script, source, body, 3, ActionArg, AngerArg, DamageArg, FaithArg, HPArg, ImpactWordArg, KnockbackArg, MaximumArg, MaximumLevelArg, RangeArg)
         {
             var name = ParseItemName(this, 0);
             AssertKeyword(1, "category");
@@ -19,7 +19,7 @@ namespace Remizione.Scripting
             var damage = Parser.ParseDiceRollArgument(this, DamageArg) ?? DiceRoll.Empty;
             var knockback = Parser.ParseVector2Argument(this, KnockbackArg);
             var maximum = Parser.ParseInt32Argument(this, MaximumArg);
-            var fp = Parser.ParseInt32Argument(this, FPArg);
+            var fp = Parser.ParseInt32Argument(this, FaithArg);
             var hp = Parser.ParseInt32Argument(this, HPArg);
             var range = Parser.ParseInt32Argument(this, RangeArg);
 

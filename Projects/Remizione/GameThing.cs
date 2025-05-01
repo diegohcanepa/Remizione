@@ -16,11 +16,11 @@ namespace Remizione
     public abstract class GameThing : Thing, IHoleArea, ILightSource
     {
         #region Private fields
-        
+
+        private bool applyCriticalDamage;        
         private bool applyDamagePending;
         private Meter? damageMeter;
         private int damageMeterCooldown;
-        private int fp;
         private readonly Polygon holeInflatedPoly = new();
         private PathNode[]? holeNodes;
         private readonly Polygon holePoly = new();
@@ -36,7 +36,6 @@ namespace Remizione
         private bool isHurtBoxDirty = true;
         private Vector2 knockback;
         private readonly Vector2Tween knockbackTween = new();
-        private int maxFP;
         private int maxHP;
         private readonly List<PlacementCondition> placementConditions = [];
         private RenderLayer renderLayer;
@@ -463,9 +462,9 @@ namespace Remizione
                 hurtTween ??= new();
                 hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
 
-                Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), ((int)CumulativeDamage).ToString(), ColorPalette.Text.Light);
+                Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), ((int)CumulativeDamage).ToString(), applyCriticalDamage ? ColorPalette.Text.LightRed : ColorPalette.Text.Light);
 
-                damageMeterCooldown = 1200;
+                damageMeterCooldown = 1500;
                 if (damageMeter == null)
                 {
                     damageMeter = new(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore) { MaximumValue = 10 };
@@ -611,22 +610,6 @@ namespace Remizione
             }
         }
 
-        // FP
-        [ScriptProperty]
-        public int FP
-        {
-            get => fp;
-            set
-            {
-                if (value != fp)
-                {
-                    fp = Math.Min(value, MaxFP);
-                    if (fp < 0)
-                        fp = 0;
-                }
-            }
-        }
-
         // GetApproachPosition
         public Vector2 GetApproachPosition(GameThing requester, bool inFront)
         {
@@ -753,7 +736,7 @@ namespace Remizione
             {
                 if (value != hp)
                 {
-                    hp = Math.Clamp(value, 0, MaxHP);
+                    hp = Math.Min(value, MaxHP);
                     InvalidateDamageMeter();
                     OnHPChanged();
                 }
@@ -845,21 +828,6 @@ namespace Remizione
         // LightPosition
         public Vector2 LightPosition { get; set; }
 
-        // MaxFP
-        [ScriptProperty]
-        public int MaxFP
-        {
-            get => maxFP;
-            set
-            {
-                if (value != maxFP)
-                {
-                    maxFP = value;
-                    FP = value;
-                }
-            }
-        }
-
         // MaxHP
         [ScriptProperty]
         public int MaxHP
@@ -905,11 +873,7 @@ namespace Remizione
 
         // Replenish
         [ScriptMethod]
-        public void Replenish()
-        {
-            FP = MaxFP;
-            HP = MaxHP;
-        }
+        public virtual void Replenish() => HP = MaxHP;
 
         // Room
         public new GameRoom? Room => Parent as GameRoom;
@@ -918,11 +882,12 @@ namespace Remizione
         public new GameSession Session { get; }
 
         // TakeDamage
-        public void TakeDamage(GameThing attacker, int amount, Vector2 knockback)
+        public void TakeDamage(GameThing attacker, int amount, bool critical, Vector2 knockback)
         {
             if (IsDead)
                 return;
 
+            applyCriticalDamage = critical;
             applyDamagePending = true;
             CumulativeDamage += amount;
 

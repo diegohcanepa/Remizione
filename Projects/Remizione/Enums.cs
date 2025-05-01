@@ -32,9 +32,6 @@ namespace Remizione
     // Cycle
     public enum Cycle { Indulgence, Penance } 
 
-    // DerivedStat
-    public enum DerivedStat { HP, FP, Stamina }
-
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
 
@@ -52,9 +49,6 @@ namespace Remizione
 
     // ItemName
     public enum ItemName { None, UnarmedAttack, Cross, Lockpick, Stamina, Health, ZabulContact }
-
-    // ItemUsageResult
-    public enum ItemUsageResult { NotEnoughHP, NotEnoughAnger, Succeeded }
 
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, LightBulb, Moon, MuzzleFlash, Outdoor, Lightning }
