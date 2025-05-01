@@ -53,7 +53,7 @@ namespace Remizione
             else if (state == MouseCursorState.Wait)
                 cursorImage.Image = Atlases.UI.MouseCursorWait;
 
-            cursorImage.PivotOrigin = state == MouseCursorState.Default ? RectanglePoint.LeftTop : RectanglePoint.Middle;
+            cursorImage.PivotOrigin = state == MouseCursorState.Default || state == MouseCursorState.CombatMode ? RectanglePoint.LeftTop : RectanglePoint.Middle;
         }
 
         #endregion
