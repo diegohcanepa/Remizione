@@ -34,7 +34,6 @@ namespace Remizione
         private PlayerNumber playerNumber = PlayerNumber.None;
         private readonly GameSession session;
         private SpeechBubble? speechBubble;
-        private FloatingText? staminaMessage;
         private readonly ActorStandState standState;
         private int suspendInteractionCooldown;
         private readonly ActorThrowObjectState throwObjectState;
@@ -196,7 +195,11 @@ namespace Remizione
         // OnDeath
         protected override void OnDeath()
         {
-            session.CombatManager.Remove(this);
+            if (IsPlayer)
+                session.CombatManager.Terminate();
+            else
+                session.CombatManager.Remove(this);
+
             StateMachine.ChangeState(ActorStateNames.Death);
         }
 
@@ -273,10 +276,6 @@ namespace Remizione
             if (attributes[nameof(Stats.Empathy)]?.Value is string empathy)
                 Stats.Empathy = XmlConvert.ToInt32(empathy);
 
-            // Endurance
-            if (attributes[nameof(Stats.Endurance)]?.Value is string endurance)
-                Stats.Endurance = XmlConvert.ToInt32(endurance);
-
             // GP
             if (attributes[nameof(Stats.GP)]?.Value is string gp)
                 Stats.GP = XmlConvert.ToInt32(gp);
@@ -290,8 +289,8 @@ namespace Remizione
                 Stats.Strength = XmlConvert.ToInt32(strength);
 
             // Vigor
-            if (attributes[nameof(Stats.Vigor)]?.Value is string vigor)
-                Stats.Vigor = XmlConvert.ToInt32(vigor);
+            if (attributes[nameof(Stats.Constitution)]?.Value is string vigor)
+                Stats.Constitution = XmlConvert.ToInt32(vigor);
         }
 
         // OnSelectTarget
@@ -335,6 +334,10 @@ namespace Remizione
         protected override void OnUnload()
         {
             InteractionTarget = null;
+            
+            if (Session.CombatManager.IsActive)
+                Session.CombatManager.Remove(this);
+
             base.OnUnload();
         }
 
@@ -383,11 +386,10 @@ namespace Remizione
             output.WriteAttributeString(nameof(Stats.Devotion), XmlConvert.ToString(Stats.Devotion));
             output.WriteAttributeString(nameof(Stats.Dexterity), XmlConvert.ToString(Stats.Dexterity));
             output.WriteAttributeString(nameof(Stats.Empathy), XmlConvert.ToString(Stats.Empathy));
-            output.WriteAttributeString(nameof(Stats.Endurance), XmlConvert.ToString(Stats.Endurance));
             output.WriteAttributeString(nameof(Stats.GP), XmlConvert.ToString(Stats.GP));
             output.WriteAttributeString(nameof(Stats.Mind), XmlConvert.ToString(Stats.Mind));
             output.WriteAttributeString(nameof(Stats.Strength), XmlConvert.ToString(Stats.Strength));
-            output.WriteAttributeString(nameof(Stats.Vigor), XmlConvert.ToString(Stats.Vigor));
+            output.WriteAttributeString(nameof(Stats.Constitution), XmlConvert.ToString(Stats.Constitution));
         }
 
         // StateMachine
@@ -410,26 +412,6 @@ namespace Remizione
                 {
                     this.anger = Math.Clamp(value, 0, MaxAnger);
                     OnAngerChanged();
-
-                    /*
-                    if (Willpower == 0)
-                    {
-                        Stand();
-
-                        if (session.CombatManager.CurrentActor == this)
-                            session.CombatManager.AdvanceTurn();
-
-                        if (IsPlayer)
-                        {
-                            if (fatigueMessage == null || !fatigueMessage.IsVisible)
-                            {
-                                fatigueMessage = session.ObjectPools.FloatingTexts.Get();
-                                fatigueMessage.Show(GetOverheadPosition(-3, -1), Utils.EncodeMessageKey(MessageKey.Fatigue), ColorPalette.StaminaMeter.Fore);
-                            }
-                        }
-                    }
-                    */
-
                 }
             }
         }
@@ -492,15 +474,15 @@ namespace Remizione
                 if (InputHandler == null || Session.IsAwaiting || !IsPlayer)
                     return false;
 
-                if (session.CombatManager.IsActive && session.CombatManager.CurrentActor != this)
+                if (Session.CombatManager.IsActive && TurnState != CombatTurnState.WaitingInput)
                     return false;
 
                 return true;
             }
         }
 
-        // CanPerformAction
-        public bool CanPerformAction
+        // CanChangeState
+        public bool CanChangeState
         {
             get
             {
@@ -541,54 +523,43 @@ namespace Remizione
         public void CloseAttack() => StateMachine.ChangeState(ActorStateNames.CloseAttack);
 
         // DoAttackTurn
-        public bool DoAttackTurn()
+        public void DoAttackTurn()
         {
-            if (HasSpeechBubble)
-                speechBubble?.Hide();
+            if (AttackSkill is null)
+                return;
+
+            TurnState = CombatTurnState.Busy;
 
             this.Target = InteractionTarget;
 
-            Stand();
-
-            if (AttackSkill is null)
-                return false;
-
             var usageResult = AttackSkill.BeginUse();
-
             if (usageResult == ItemUsageResult.Succeeded)
-            {
-                combatStateMachine.StartTurn();
-                combatStateMachine.ExecuteAction(CombatStateSignal.Decide);
-                return true;
-            }
-            else if (usageResult == ItemUsageResult.NotEnoughAnger)
-            {
-                if (IsPlayer)
-                {
-                    if (staminaMessage == null || !staminaMessage.IsVisible)
-                    {
-                        staminaMessage = session.ObjectPools.FloatingTexts.Get();
-                        staminaMessage.Show(GetOverheadPosition(-3, -1), Utils.EncodeMessageKey(MessageKey.NoStamina), ColorPalette.Anger.Fore);
-                    }
-                }
-            }
+                combatStateMachine.ExecuteAction(CombatStateSignal.Attack);
+        }
 
-            return true;
+        // DoDecideTurn (NPCs)
+        public void DoDecideTurn()
+        {
+            if (!IsPlayer)
+                combatStateMachine.ExecuteAction(CombatStateSignal.Decide);
         }
 
         // DoMoveTurn
         public void DoMoveTurn(Vector2 destination)
         {
-            if (HasSpeechBubble)
-                speechBubble?.Hide();
-
-            Stand();
-            combatStateMachine.StartTurn();
+            TurnState = CombatTurnState.Busy;
             combatStateMachine.ExecuteAction(CombatStateSignal.Move, destination);
         }
 
         // Equipment
         public ItemStorage Equipment { get; }
+
+        // EndTurn
+        public void EndTurn()
+        {
+            TurnState = Session.CombatManager.TurnList.Contains(this) ? CombatTurnState.Waiting : CombatTurnState.None;
+            session.CombatManager.EndCurrentTurn();
+        }
 
         // FastMove
         public bool FastMove { get; set; }
@@ -858,6 +829,23 @@ namespace Remizione
         [ScriptMethod(CodingContext.Any)]
         public void Stand(bool forceRestart = false) => StateMachine.ChangeState(ActorStateNames.Stand, forceRestart);
 
+        // StartTurn
+        public void StartTurn()
+        {
+            if (HasSpeechBubble)
+                speechBubble?.Hide();
+
+            if (IsPlayer)
+            {
+                TurnState = CombatTurnState.WaitingInput;
+            }
+            else
+            {
+                TurnState = CombatTurnState.Busy;
+                combatStateMachine.ExecuteAction(CombatStateSignal.Decide);
+            }
+        }
+
         // Stats
         public Stats Stats { get; }
 
@@ -890,7 +878,7 @@ namespace Remizione
         }
 
         // TurnState
-        public CombatTurnState TurnState => combatStateMachine.TurnState;
+        public CombatTurnState TurnState { get; private set; }
 
         // Vanish
         public void Vanish()

@@ -16,7 +16,7 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (Actor.CanPerformAction)
+            if (Actor.CanChangeState)
             {
                 Actor.SelectTarget();
                 StateMachine.ExecuteAction(CombatStateSignal.Attack);

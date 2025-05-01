@@ -19,22 +19,7 @@ namespace Remizione
             states[CombatStateName.CloseAttack] = new CombatCloseAttackState(this);
             states[CombatStateName.Decide] = new CombatDecideState(this);
             states[CombatStateName.Move] = new CombatMoveState(this);
-
-            CurrentState = states[CombatStateName.Decide];
-            CurrentState.Enter();
         }
-
-        #region Private members
-
-        // EndTurn
-        private void EndTurn()
-        {
-            TurnState = CombatTurnState.None;
-            ChangeState(CombatStateName.Decide);
-            Actor.Session.CombatManager.EndCurrentTurn();
-        }
-
-        #endregion
 
         // Actor
         public Actor Actor { get; }
@@ -57,7 +42,6 @@ namespace Remizione
         public void ExecuteAction(CombatStateSignal signal, Vector2? destination = null)
         {
             this.Destination = destination;
-            TurnState = CombatTurnState.InProgress;
 
             // Attack
             if (signal == CombatStateSignal.Attack)
@@ -94,7 +78,7 @@ namespace Remizione
             // EndTurn
             if (signal == CombatStateSignal.EndTurn)
             {
-                EndTurn();
+                Actor.EndTurn();
                 return;
             }
 
@@ -106,26 +90,10 @@ namespace Remizione
             }
         }
 
-        // TurnState
-        public CombatTurnState TurnState { get; private set; }
-
-        // StartTurn
-        public void StartTurn()
-        {
-            if (TurnState != CombatTurnState.None)
-                return;
-
-            Actor.Session.CombatManager.Add(Actor);
-            TurnState = CombatTurnState.Active;
-
-            if (!Actor.IsPlayer)
-                ExecuteAction(CombatStateSignal.Decide);
-        }
-
         // Update
         public void Update(GameTime gameTime)
         {
-            if (TurnState != CombatTurnState.None)
+            if (Actor.Session.CombatManager.CurrentActor == Actor && Actor.TurnState != CombatTurnState.WaitingInput)
                 CurrentState?.Update(gameTime);
         }
     }

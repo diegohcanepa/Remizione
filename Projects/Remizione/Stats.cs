@@ -1,4 +1,7 @@
-﻿namespace Remizione
+﻿using Engendro;
+using System;
+
+namespace Remizione
 {
     /// <summary>
     /// Stats
@@ -14,104 +17,164 @@
             Apply();
         }
 
-        #region Private members
+        #region Primary stats
 
-        // CalculateFP
-        private int CalculateFP()
-        {
-            return 20;
+        // Constitution (Resistencia física)
+        // Puntos de golpe(HP)
+        // Resistencia a enfermedades, venenos, fatiga
+        // Tiradas de salvación del cuerpo
+        public int Constitution { get; set; } = 8;
 
-            if (Devotion < 10)
-                return 50 + (Devotion - 1) * 6;   // crecimiento inicial
+        // Devotion (Fe o fuerza espiritual)
+        // Puntos de espíritu o "mana sagrado"
+        // Poder y precisión de los conjuros sagrados
+        // Salvaciones contra corrupción, maldiciones, tentaciones
+        // Influencia en rituales
+        public int Devotion { get; set; } = 8;
 
-            else if (Devotion <= 20)
-                return 104 + (Devotion - 10) * 5; // crecimiento moderado
+        // Dexterity (Agilidad y reflejos)
+        // Tiradas de ataque con armas ligeras o a distancia
+        // Iniciativa
+        // Clase de armadura(evasión)
+        // Salvaciones contra trampas, fuego, explosiones
+        public int Dexterity { get; set; } = 8;
 
-            else if (Devotion <= 40)
-                return 154 + (Devotion - 20) * 3; // soft cap
+        // Empathy (Carisma/emoción)
+        // Interacciones sociales: persuasión, intimidación, mentira
+        // Atraer aliados o manipular enemigos
+        // Habilidad para consolar, redimir, o engañar
+        // Influye en eventos basados en emociones
+        public int Empathy { get; set; } = 8;
 
-            else if (Devotion <= 60)
-                return 214 + (Devotion - 40);     // +1 FP por punto
+        // Mind (Inteligencia/razón)
+        // Tiradas de habilidad mental(investigación, conocimiento)
+        // Capacidad para entender acertijos, runas, lenguas antiguas
+        // Defensa contra ilusiones y control mental
+        public int Mind { get; set; } = 8;
 
-            else
-                return 234; // hard cap
-        }
-
-        // CalculateHP
-        private int CalculateHP()
-        {
-            return 30;
-
-            if (Vigor < 10)
-                return 300 + (Vigor - 1) * 15;  // grow faster at begining
-
-            else if (Vigor <= 20)
-                return 435 + (Vigor - 10) * 10; // +10 HP per point
-
-            else if (Vigor <= 40)
-                return 535 + (Vigor - 20) * 8;  // +8 HP per point
-
-            else if (Vigor <= 60)
-                return 695 + (Vigor - 40) * 4;  // +4 HP per point
-
-            else
-                return 775; // Max (without buffs)
-        }
-
-        // CalculateAnger
-        private int CalculateAnger()
-        {
-            if (Endurance <= 10)
-                return 90 + (Endurance - 8) * 4; // from 8 a 10 → +4 per point
-
-            else if (Endurance <= 20)
-                return 102 + (Endurance - 10) * 2; // from 11 a 20 → +2 per point
-
-            else if (Endurance <= 40)
-                return 122 + (Endurance - 20); // from 21 a 40 → +1 per point
-
-            else if (Endurance <= 60)
-                return 142 + (Endurance - 40) / 2; // from 41 a 60 → +1 every 2 points
-
-            else
-                return 152; // Max
-        }
+        // Strength (Fuerza física)
+        // Tiradas de ataque con armas cuerpo a cuerpo
+        // Daño con armas pesadas
+        // Tiradas para forzar cosas, romper, cargar
+        // Salvaciones contra agarres, empujones
+        public int Strength { get; set; } = 8;
 
         #endregion
 
         // AngerDegradationInterval
         public int AngerDegradationInterval => 500;
 
+        // AngerGainPerLevel
+        public int AngerGainPerLevel { get; private set; } = 10;
+
         // Apply
         public void Apply()
         {
-            actor.MaxFP = CalculateFP();
-            actor.MaxHP = CalculateHP();
-            actor.MaxAnger = CalculateAnger();
+            actor.MaxFP = GetMaxFP();
+            actor.MaxHP = GetMaxHP();
+            actor.MaxAnger = GetMaxAnger();
         }
 
-        // Devotion
-        public int Devotion { get; set; } = 8;
+        // FPGainPerLevel
+        public int FPGainPerLevel { get; private set; } = 10;
 
-        // Dexterity
-        public int Dexterity { get; set; } = 8;
+        // GetAngerCostForAttack
+        public int GetAngerCostForAttack(AttackType attackType)
+        {
+            return attackType switch
+            {
+                AttackType.Light => 2,
+                AttackType.Medium => 3,
+                AttackType.Heavy => 4,
+                _ => throw new NotImplementedException(),
+            };
+        }
 
-        // Empathy (Charisma)
-        public int Empathy { get; set; } = 8;
+        // GetAngerCostFromMovement
+        public int GetAngerCostFromMovement(float distance)
+        {
+            const int basePixelUnit = 20;
+            return (int)Math.Ceiling(distance / basePixelUnit);
+        }
 
-        // Endurance
-        public int Endurance { get; set; } = 8;
+        // GetDefense
+        public int GetDefense(int armorBonus = 0, int miscBonus = 0)
+        {
+            return 10 + GetModifier(PrimaryStat.Dexterity) + armorBonus + miscBonus;
+        }
+
+        // GetMaxAnger
+        public int GetMaxAnger()
+        {
+            return actor.Level * (AngerGainPerLevel + GetModifier(PrimaryStat.Dexterity));
+        }
+
+        // GetMaxFP
+        public int GetMaxFP()
+        {
+            return actor.Level * (FPGainPerLevel + GetModifier(PrimaryStat.Devotion));
+        }
+
+        // GetMaxHP
+        public int GetMaxHP()
+        {
+            return actor.Level * (HPGainPerLevel + GetModifier(PrimaryStat.Constitution));
+        }
+
+        // GetStatValue
+        public int GetStatValue(PrimaryStat stat)
+        {
+            return stat switch
+            {
+                PrimaryStat.Constitution => Constitution,
+                PrimaryStat.Devotion => Devotion,
+                PrimaryStat.Dexterity => Dexterity,
+                PrimaryStat.Empathy => Empathy,
+                PrimaryStat.Mind => Mind,
+                PrimaryStat.Strength => Strength,
+                _ => throw new System.NotImplementedException()
+            };
+        }
+
+        // GetModifier
+        public int GetModifier(PrimaryStat stat)
+        {
+            return (GetStatValue(stat) - 10) / 2;
+        }
 
         // GP (XP)
         public int GP { get; set; } = 0;
 
-        // Mind (Intelligence)
-        public int Mind { get; set; } = 8;
+        // HPGainPerLevel
+        public int HPGainPerLevel { get; private set; } = 8;
 
-        // Strength
-        public int Strength { get; set; } = 8;
+        // PerformSkillCheck
+        public int PerformSkillCheck(PrimaryStat stat) => DiceBag.Dice20.Roll() + GetStatValue(stat);
 
-        // Vigor (Constitution)
-        public int Vigor { get; set; } = 8;
+        // RollAttack
+        public int RollAttack(bool useDexterity = false)
+        {
+            int modifier = useDexterity ? GetModifier(PrimaryStat.Dexterity) : GetModifier(PrimaryStat.Strength);
+            return DiceBag.Dice20.Roll() + modifier;
+        }
+
+        // RollInitiative
+        public int RollInitiative()
+        {
+            return DiceBag.Dice20.Roll() + GetModifier(PrimaryStat.Dexterity);
+        }
+
+        // RollSavingThrow
+        public int RollSavingThrow(PrimaryStat stat)
+        {
+            return stat switch
+            {
+                PrimaryStat.Mind => DiceBag.Dice20.Roll() + GetModifier(PrimaryStat.Mind),
+                PrimaryStat.Constitution => DiceBag.Dice20.Roll() + GetModifier(PrimaryStat.Constitution),
+                PrimaryStat.Devotion => DiceBag.Dice20.Roll() + GetModifier(PrimaryStat.Devotion),
+                PrimaryStat.Empathy => DiceBag.Dice20.Roll() + GetModifier(PrimaryStat.Empathy),
+                _ => DiceBag.Dice20.Roll()
+            };
+        }
     }
 }

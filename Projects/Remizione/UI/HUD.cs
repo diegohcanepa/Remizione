@@ -110,7 +110,7 @@ namespace Remizione
             meterIcons[0].Draw(gameTime);
             meterIcons[1].Draw(gameTime);
 
-            if (session.CombatMode)
+            if (session.CombatManager.IsActive)
                 angerIconLarge.Draw(gameTime);
             else
                 meterIcons[2].Draw(gameTime);
@@ -132,7 +132,7 @@ namespace Remizione
             angerMeter.Value = actor.Anger;
 
             // Anger
-            if (session.CombatMode)
+            if (session.CombatManager.IsActive)
                 angerMeterLarge.Draw(gameTime);
             else
                 angerMeter.Draw(gameTime);
@@ -148,7 +148,7 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-            if (session.CombatMode)
+            if (session.CombatManager.IsActive)
                 angerMeterLabel.Draw(gameTime);
             narrationText.Draw(gameTime);
             Game.SpriteBatch.End();
@@ -191,7 +191,7 @@ namespace Remizione
             EchoMessage.Update(gameTime);
             savingIcon.Update(gameTime);
 
-            if (session.CombatMode)
+            if (session.CombatManager.IsActive)
                 angerIconLarge.Position = angerMeterLarge.BoundingBox.GetPoint(RectanglePoint.Left, -1, 0);
         }
 

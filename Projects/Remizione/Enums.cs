@@ -15,10 +15,13 @@ namespace Remizione
     public enum CombatStateName { Charge, CloseAttack, Decide, Move }
 
     // CombatTurnState
-    public enum CombatTurnState { None, Active, InProgress }
+    public enum CombatTurnState { None, Waiting, WaitingInput, Busy }
 
     // Affinity
     public enum Affinity { Good, Neutral, Evil }
+
+    // AttackType
+    public enum AttackType { Light, Medium, Heavy }
 
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Videos, Voices, System, Text }
@@ -90,6 +93,9 @@ namespace Remizione
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
 
+    // PrimaryStat
+    public enum PrimaryStat { Strength, Constitution, Dexterity, Devotion, Empathy, Mind }
+
     // QTEResult
     public enum QTEResult { Failure, Success }
 
@@ -101,6 +107,9 @@ namespace Remizione
 
     // RoomSampler
     public enum RoomSampler { PointClamp, LinearClamp }
+
+    // SecodaryStat
+    public enum SecodaryStat { Spirit, Faith, Anger }
 
     // ShadowSpotSize
     public enum ShadowSpotSize { None, Tiny, Small, Average, Large, Huge, Giant }

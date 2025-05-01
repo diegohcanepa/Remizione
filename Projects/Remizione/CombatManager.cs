@@ -16,58 +16,31 @@ namespace Remizione
             this.TurnList = new(turnList);
         }
 
-        // Terminate
-        private void Terminate()
-        {
-            IsActive = false;
-            /*
-            foreach (var actor in turnOrder)
-            {
-                actor.EndCombatTurn();
-            }
-            */
-
-            turnList.Clear();
-            currentIndex = -1;
-        }
-
         // Add
         public void Add(Actor actor)
         {
             if (!turnList.Contains(actor))
-            {
                 turnList.Add(actor);
-
-                if (!IsActive)
-                {
-                    IsActive = true;
-                    AdvanceTurn();
-                }
-            }
         }
 
         // AdvanceTurn
         public void AdvanceTurn()
         {
-            if (!IsActive)
+            if (!IsActive || turnList.Count == 0)
                 return;
 
             currentIndex++;
             if (currentIndex == turnList.Count)
                 currentIndex = 0;
 
-            if (CurrentActor is Actor currentActor && !currentActor.IsPlayer)
-                currentActor.DoAttackTurn();
+            CurrentActor?.StartTurn();
         }
 
         // CurrentActor
         public Actor? CurrentActor => currentIndex != -1 ? turnList[currentIndex] : null;
 
         // EndCurrentTurn
-        public void EndCurrentTurn()
-        {
-            AdvanceTurn();
-        }
+        public void EndCurrentTurn() => AdvanceTurn();
 
         // IsActive
         public bool IsActive { get; private set; }
@@ -85,6 +58,31 @@ namespace Remizione
 
                 if (turnList.Count == 0)
                     Terminate();
+            }
+        }
+
+        // Start
+        public void Start(params Actor[] actors)
+        {
+            if (IsActive)
+                return;
+
+            IsActive = true;
+            turnList.Clear();
+            turnList.AddRange(actors);
+            AdvanceTurn();
+        }
+
+        // Terminate
+        public void Terminate()
+        {
+            IsActive = false;
+            turnList.Clear();
+            currentIndex = -1;
+
+            foreach (var actor in turnList)
+            {
+                actor.EndTurn();
             }
         }
 
