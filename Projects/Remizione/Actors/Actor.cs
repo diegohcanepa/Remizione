@@ -162,6 +162,11 @@ namespace Remizione
                 else
                     Sprite.FlipRight();
             }
+            else if (Session.CombatManager.CurrentActor is Actor attacker && attacker != this)
+            {
+                if (attacker.Target == this && attacker.TurnState == CombatTurnState.Busy && DistanceTo(attacker) < 40)
+                    FaceTo(attacker);
+            }
         }
 
         #endregion
@@ -336,7 +341,7 @@ namespace Remizione
         // OnUnload
         protected override void OnUnload()
         {
-            InteractionTarget = null;
+            InteractiveTarget = null;
             
             if (Session.CombatManager.IsActive)
                 Session.CombatManager.Remove(this);
@@ -380,9 +385,9 @@ namespace Remizione
             if (suspendInteractionCooldown > 0 && !session.IsAwaiting)
                 suspendInteractionCooldown -= gameTime.ElapsedGameTime.Milliseconds;
 
-            this.InteractionTarget = null;
+            this.InteractiveTarget = null;
             if (IsPlayer && suspendInteractionCooldown <= 0 && !session.IsAwaiting)
-                this.InteractionTarget = FindInteractiveTarget();
+                this.InteractiveTarget = FindInteractiveTarget();
 
             accelerationFactorTween.Update(gameTime);
             headTween.Update(gameTime);
@@ -516,9 +521,6 @@ namespace Remizione
         // CanSeeTarget
         public bool CanSeeTarget()
         {
-            return false;
-
-            /*
             if (Target == null)
                 return false;
 
@@ -534,7 +536,6 @@ namespace Remizione
             float angleThreshold = MathF.Cos(MathHelper.ToRadians(ViewAngle / 2f));
 
             return dot >= angleThreshold;
-            */
         }
 
         // CloseAttack
@@ -548,9 +549,8 @@ namespace Remizione
 
             TurnState = CombatTurnState.Busy;
 
-            this.Target = InteractionTarget;
+            this.Target = InteractiveTarget;
 
-            AttackSkill.BeginUse();
             combatStateMachine.ExecuteAction(CombatStateSignal.Attack);
         }
 
@@ -653,7 +653,7 @@ namespace Remizione
         public virtual bool Interact(GameThing? target)
         {
             if (target == null)
-                target = InteractionTarget;
+                target = InteractiveTarget;
 
             if (target == null || !InCurrentRoom || suspendInteractionCooldown > 0)
                 return false;
@@ -674,8 +674,8 @@ namespace Remizione
                 return false;
         }
 
-        // InteractionTarget
-        public GameThing? InteractionTarget { get; private set; }
+        // InteractiveTarget
+        public GameThing? InteractiveTarget { get; private set; }
 
         // IsAttacking
         public bool IsAttacking => StateMachine.CurrentState is ActorCloseAttackState;
@@ -817,10 +817,7 @@ namespace Remizione
             IsFollowingPath = true;
 
             if (IsPlayer)
-            {
-                Session.HUD.DestinationMark.Color = InteractionTarget != null ? ColorPalette.DestinationMark.Target : ColorPalette.DestinationMark.Default;
                 Session.HUD.DestinationMark.Position = path[^1];
-            }
             
             if (FastMove && StateMachine.CurrentState is ActorMoveState)
                 StateMachine.ChangeState(ActorStateNames.MoveFast);
@@ -924,7 +921,7 @@ namespace Remizione
         {
             CodeContract.GreaterThanZero(duration, nameof(duration));
             suspendInteractionCooldown = duration;
-            InteractionTarget = null;
+            InteractiveTarget = null;
         }
 
         // Target

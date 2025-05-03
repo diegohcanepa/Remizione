@@ -92,6 +92,10 @@ namespace Remizione
                 int damageAmount;
                 if (MetaItem.Anger < 0 && Owner is Actor actor && actor.Anger < 0)
                     damageAmount = BaseDamage.MinimumValue;
+                
+                else if (Owner.IsBehind(target))
+                    damageAmount = BaseDamage.MaximumValue;
+                
                 else
                     damageAmount = BaseDamage.Roll();
 

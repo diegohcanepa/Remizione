@@ -15,7 +15,6 @@ namespace Remizione
     {
         #region Private members
 
-        private RectangleF clipBox;
         private readonly ReadOnlyPolygon deflatedPolygon;
         private readonly PathNode findPathEndNode = new PathNode();
         private readonly PathNode findPathStartNode = new PathNode();
@@ -58,7 +57,7 @@ namespace Remizione
         #region Private members
 
         // CollectHoles
-        private void CollectHoles(List<IHoleArea> list)
+        private void CollectHoles(List<IHoleArea> list, ref RectangleF clipBox)
         {
             // Holes
             for (var i = 0; i < holes.Count; i++)
@@ -72,7 +71,7 @@ namespace Remizione
         }
 
         // CollectThingHoles
-        private void CollectThingHoles(GameThing? requester, List<IHoleArea> list)
+        private void CollectThingHoles(GameThing? requester, List<IHoleArea> list, ref RectangleF clipBox)
         {
             for (var i = 0; i < Room.CulledThings.Count; i++)
             {
@@ -138,14 +137,29 @@ namespace Remizione
         }
 
         // Prepare
-        public void Prepare(GameThing? requester)
+        public void Prepare(GameThing requester, Vector2 destination)
         {
+            RectangleF clipBox;
+
+            // Define clip box for optimized path finding
+            if (Room.Session.Camera.CullingBox.Contains(requester.Position) &&
+                Room.Session.Camera.CullingBox.Contains(destination))
+            {
+                clipBox = Room.Session.Camera.CullingBox;
+            }
+            else
+            {
+                var startRect = new RectangleF(requester.Position, Room.Session.Camera.VisibleBox.Size);
+                var destinationRect = new RectangleF(destination, Room.Session.Camera.VisibleBox.Size);
+                clipBox = RectangleF.Union(startRect, destinationRect);
+            }
+
             holeAreas.Clear();
             linkedNodes.Clear();
 
             // Collect holes
-            CollectHoles(holeAreas);
-            CollectThingHoles(requester, holeAreas);
+            CollectHoles(holeAreas, ref clipBox);
+            CollectThingHoles(requester, holeAreas, ref clipBox);
 
             // Add walk area nodes
             linkedNodes.AddRange(walkAreaNodes);
@@ -211,20 +225,7 @@ namespace Remizione
             if (!IsInside(destination))
                 destination = ClampInside(destination, out _);
 
-            // Define clip box for optimized path finding
-            if (Room.Session.Camera.CullingBox.Contains(requester.Position) && 
-                Room.Session.Camera.CullingBox.Contains(destination))
-            {
-                clipBox = Room.Session.Camera.CullingBox;
-            }
-            else
-            {
-                var startRect = new RectangleF(requester.Position, Room.Session.Camera.VisibleBox.Size);
-                var destinationRect = new RectangleF(destination, Room.Session.Camera.VisibleBox.Size);
-                clipBox = RectangleF.Union(startRect, destinationRect);
-            }
-
-            Prepare(requester);
+            Prepare(requester, destination);
 
             var start = deflatedPolygon.Clamp(requester.Position);
             destination = deflatedPolygon.Clamp(destination);
@@ -300,7 +301,7 @@ namespace Remizione
             for (var i = 0; i < holeAreas.Count; i++)
             {
                 if (!holeAreas[i].InLineOfSight(value1, value2))
-                    return false;
+                    return false;              
             }
 
             return true;

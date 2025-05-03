@@ -14,7 +14,6 @@ namespace Remizione
         private readonly Meter angerMeter;
         private readonly Meter angerMeterLarge;
         private readonly TextSprite angerMeterLabel;
-        private readonly CycleInfo cycleInfo;
         private readonly Meter faithMeter;
         private readonly ScoreText gpScore;
         private readonly Meter hpMeter;
@@ -34,9 +33,6 @@ namespace Remizione
 
             // Echo message
             this.EchoMessage = new EchoMessage(session.Game);
-
-            // Cycle info
-            this.cycleInfo = new CycleInfo(session);
 
             // Saving icon
             this.savingIcon = new ImageSprite(Game, Atlases.UI.SavingIcon)
@@ -79,6 +75,7 @@ namespace Remizione
                 Scale = ScaleInfo.Text.Large
             };
 
+            // Narration text
             this.narrationText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.LightRed,
@@ -90,12 +87,12 @@ namespace Remizione
             };
 
             // Anger label
-            this.angerMeterLabel = new TextSprite(Game, Fonts.MainOutline)
+            this.angerMeterLabel = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Dark,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 11),
-                Scale = ScaleInfo.Text.Medium,
+                Scale = ScaleInfo.Text.Large,
                 Text = "@Attributes.Secondary.Anger"
             };
         }
@@ -109,18 +106,17 @@ namespace Remizione
 
             meterIcons[0].Draw(gameTime);
             meterIcons[1].Draw(gameTime);
+            meterIcons[2].Draw(gameTime);
 
-            if (session.CombatManager.IsActive)
+            if (session.CombatManager.TurnList.Count > 1)
                 angerIconLarge.Draw(gameTime);
-            else
-                meterIcons[2].Draw(gameTime);
 
             // HP
             hpMeter.MaximumValue = actor.MaxHP;
             hpMeter.Value = actor.HP;
             hpMeter.Draw(gameTime);
 
-            // FP
+            // Faith
             faithMeter.MaximumValue = actor.MaxFaith;
             faithMeter.Value = actor.Faith;
             faithMeter.Draw(gameTime);
@@ -130,12 +126,11 @@ namespace Remizione
 
             angerMeter.MaximumValue = actor.MaxAnger;
             angerMeter.Value = actor.Anger;
+            angerMeter.Draw(gameTime);
 
             // Anger
-            if (session.CombatManager.IsActive)
+            if (session.CombatManager.TurnList.Count > 1)
                 angerMeterLarge.Draw(gameTime);
-            else
-                angerMeter.Draw(gameTime);
 
             Game.SpriteBatch.End();
         }
@@ -148,14 +143,13 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-            if (session.CombatManager.IsActive)
+            if (session.CombatManager.TurnList.Count > 1)
                 angerMeterLabel.Draw(gameTime);
             narrationText.Draw(gameTime);
             Game.SpriteBatch.End();
 
             if (session.Player != null && session.FullHUD)
             {
-                //cycleInfo.Draw(gameTime);
                 DrawMeters(gameTime, session.Player);
                 gpScore.Draw(gameTime);
             }
@@ -186,12 +180,11 @@ namespace Remizione
                 angerMeterLarge.Update(gameTime);
             }
 
-            cycleInfo.Update(gameTime);
             DestinationMark.Update(gameTime);
             EchoMessage.Update(gameTime);
             savingIcon.Update(gameTime);
 
-            if (session.CombatManager.IsActive)
+            if (session.CombatManager.TurnList.Count > 1)
                 angerIconLarge.Position = angerMeterLarge.BoundingBox.GetPoint(RectanglePoint.Left, -1, 0);
         }
 

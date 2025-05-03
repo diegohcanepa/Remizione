@@ -73,13 +73,35 @@ namespace Remizione
 
         #region Private members
 
-        // Expand
-        private bool Expand(Direction direction)
+        // ExpandRoom
+        private bool ExpandRoom(Direction direction)
         {
             if (Player == null || Room is not ProceduralRoom proceduralRoom)
                 return false;
 
             return proceduralRoom.Expand(Player.Position, direction);
+        }
+
+        // UpdateMouseCursor
+        private void UpdateMouseCursor()
+        {
+            if (Player == null)
+            {
+                MouseCursor.Instance.State = MouseCursorState.Default;
+                return;
+            }
+
+            if (CombatManager.IsActive)
+            {
+                if (Player.TurnState != CombatTurnState.WaitingInput && CombatManager.TurnList.Count >= 2)
+                    MouseCursor.Instance.State = MouseCursorState.Wait;
+                else if (Player.InteractiveTarget != null)
+                    MouseCursor.Instance.State = MouseCursorState.CrossOn;
+                else
+                    MouseCursor.Instance.State = MouseCursorState.Cross;
+            }
+            else
+                MouseCursor.Instance.State = Player.InteractiveTarget == null ? MouseCursorState.Default : MouseCursorState.DefaultOn;
         }
 
         #endregion
@@ -300,10 +322,7 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-            if (CombatManager.IsActive)
-                Game.MouseCursor.State = Player?.InteractionTarget != null ? MouseCursorState.Target : MouseCursorState.CombatMode;
-            else
-                Game.MouseCursor.State = MouseCursorState.Default;
+            UpdateMouseCursor();
 
             if (console != null)
             {
@@ -366,19 +385,19 @@ namespace Remizione
 
         // ExpandDown
         [ScriptMethod]
-        public void ExpandDown() => Expand(Direction.Down);
+        public void ExpandDown() => ExpandRoom(Direction.Down);
 
         // ExpandLeft
         [ScriptMethod]
-        public void ExpandLeft() => Expand(Direction.Left);
+        public void ExpandLeft() => ExpandRoom(Direction.Left);
 
         // ExpandRight
         [ScriptMethod]
-        public void ExpandRight() => Expand(Direction.Right);
+        public void ExpandRight() => ExpandRoom(Direction.Right);
 
         // ExpandUp
         [ScriptMethod]
-        public void ExpandUp() => Expand(Direction.Up);
+        public void ExpandUp() => ExpandRoom(Direction.Up);
 
         // FullHUD
         [ScriptProperty]

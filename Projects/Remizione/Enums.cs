@@ -73,7 +73,7 @@ namespace Remizione
     public enum MessageKey { None, Fatigue, NoStamina }
 
     // MouseCursorState
-    public enum MouseCursorState { Default, CombatMode, Target, Wait }
+    public enum MouseCursorState { Default, DefaultOn, Cross, CrossOn, Wait }
 
     // PlacementDistributionStrategy
     public enum PlacementDistributionStrategy { Random, Clump, NoiseMap }

@@ -19,6 +19,8 @@ namespace Remizione
             if (Actor.CanChangeState)
             {
                 Actor.SelectTarget();
+                Actor.FaceToTarget();
+
                 StateMachine.ExecuteAction(CombatStateSignal.Attack);
 
                 // Add other actions based on combat state

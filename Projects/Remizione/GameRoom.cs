@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Input;
 using EngendroAdventure;
 using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
@@ -20,6 +19,7 @@ namespace Remizione
         private int currentDrawIndex;
         private static DustEmitter dustEmitter = null!;
         private static FireflyEmitter fireflyEmitter = null!;
+        private readonly TextSprite interactiveTargetLabel;
         private RenderTarget2D? lightMapTarget;
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
@@ -42,6 +42,13 @@ namespace Remizione
 
             dustEmitter ??= new DustEmitter(session, 6, 1000, 35);
             fireflyEmitter ??= new FireflyEmitter(session, 1, 500, 20);
+
+            this.interactiveTargetLabel = new TextSprite(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Light,
+                PivotOrigin = RectanglePoint.Bottom,
+                Scale = ScaleInfo.Text.Medium
+            };
         }
 
         #endregion
@@ -112,11 +119,41 @@ namespace Remizione
         // DrawFloatingTexts
         private void DrawFloatingTexts(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.AlphaBlend, null);
             for (var i = Session.ObjectPools.FloatingTexts.InUse.Count - 1; i >= 0; i--)
             {
                 Session.ObjectPools.FloatingTexts.InUse[i].Draw(gameTime);
             }
+        }
+
+        /*
+        // DrawInteractiveTargetLabel
+        private void DrawInteractiveTargetLabel(GameTime gameTime)
+        {
+            if (Session.Player?.InteractiveTarget is GameThing target && target.CanDisplayLabel)
+            {
+                if (target != interactiveTargetLabel.Tag)
+                {
+                    interactiveTargetLabel.Tag = target;
+                    interactiveTargetLabel.Text = target.GetLocalizedDisplayName();
+                    interactiveTargetLabel.Position = target.GetOverheadPosition();
+                }
+            }
+            else
+            {
+                interactiveTargetLabel.Text = null;
+                interactiveTargetLabel.Tag = null;
+            }
+
+            interactiveTargetLabel.Draw(gameTime);
+        }
+        */
+
+        // DrawTexts
+        private void DrawTexts(GameTime gameTime)
+        {
+            Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.AlphaBlend, null);
+            //DrawInteractiveTargetLabel(gameTime);
+            DrawFloatingTexts(gameTime);
             Game.SpriteBatch.End();
         }
 
@@ -147,14 +184,19 @@ namespace Remizione
                 {
                     OutlineEffect? effect = null;
 
-                    if (interactiveTarget == thing && thing.Atlas is Atlas thingAtlas)
+                    /*
+                    if (!Session.CombatManager.IsActive)
                     {
-                        effect = RemizioneGame.Effects.Outline;
-                        effect.Color.SetValue((Color.AntiqueWhite * .4f).ToVector4());
-                        effect.TextureSize.SetValue(new Vector2(thingAtlas.Texture.Width, thingAtlas.Texture.Height));
-                        effect.Thickness.SetValue(0.5f);
-                        effect.Effect.CurrentTechnique.Passes[0].Apply();
+                        if (interactiveTarget == thing && thing.Atlas is Atlas thingAtlas)
+                        {
+                            effect = RemizioneGame.Effects.Outline;
+                            effect.Color.SetValue(ColorPalette.InteractiveTargetOutline);
+                            effect.TextureSize.SetValue(new Vector2(thingAtlas.Texture.Width, thingAtlas.Texture.Height));
+                            effect.Thickness.SetValue(0.4f);
+                            effect.Effect.CurrentTechnique.Passes[0].Apply();
+                        }
                     }
+                    */
 
                     Game.SpriteBatch.Begin(Session.Camera, RoomSampler == RoomSampler.PointClamp ? SamplerState.PointClamp : SamplerState.LinearClamp, BlendState.AlphaBlend, effect?.Effect);
                     thing.Draw(gameTime);
@@ -248,18 +290,7 @@ namespace Remizione
             currentDrawIndex = 0;
 
             // Find outlined target
-            var interactiveTarget = Session.Player?.InteractionTarget;
-            if (Session.CombatManager.IsActive)
-            {
-                if (Session.Player != null && Session.Player.TurnState != CombatTurnState.WaitingInput && Session.CombatManager.TurnList.Count >= 2)
-                    MouseCursor.Instance.State = MouseCursorState.Wait;
-                else if (Session.Player?.InteractionTarget != null)
-                    MouseCursor.Instance.State = MouseCursorState.Target;
-                else
-                    MouseCursor.Instance.State = MouseCursorState.CombatMode;
-            }
-            else
-                MouseCursor.Instance.State = MouseCursorState.Default;
+            var interactiveTarget = Session.Player?.InteractiveTarget;
 
             // BehindBackground (layer)
             DrawThings(gameTime, RenderLayer.BehindBackground, interactiveTarget);
@@ -301,7 +332,7 @@ namespace Remizione
             DrawThings(gameTime, RenderLayer.ForegroundNoLight, interactiveTarget);
 
             // Draw hit numbers
-            DrawFloatingTexts(gameTime);
+            DrawTexts(gameTime);
 
             // Draw speech bubbles
             SpeechBubble.DrawSpeechBubbles(gameTime);
@@ -461,10 +492,10 @@ namespace Remizione
             if (WalkAreas.Find(name) is WalkArea walkArea)
             {
                 walkAreas.Remove(walkArea);
-                
+
                 if (WalkArea == walkArea)
                     WalkArea = null;
-                
+
                 return true;
             }
 

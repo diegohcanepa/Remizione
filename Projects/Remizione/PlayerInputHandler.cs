@@ -23,12 +23,12 @@ namespace Remizione
         // HandleCombatModeInput
         private bool HandleCombatModeInput(Vector2 destination)
         {
-            if (Actor.InteractionTarget == null)
+            if (Actor.InteractiveTarget == null)
             {
                 Actor.DoMoveTurn(destination);
                 return true;
             }
-            else if (Actor.InteractionTarget.MaxHP > 0)
+            else if (Actor.CanBeTargeted)
             {
                 Actor.DoAttackTurn();
                 return true;
@@ -68,8 +68,8 @@ namespace Remizione
                 return HandleCombatModeInput(destination);
 
             Actor.FastMove = true;
-            if (Actor.InteractionTarget != null)
-                Actor.ApproachAndInteract(Actor.InteractionTarget);
+            if (Actor.InteractiveTarget != null)
+                Actor.ApproachAndInteract(Actor.InteractiveTarget);
             else
                 Actor.MoveTo(destination);
 

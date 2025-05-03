@@ -43,11 +43,7 @@ namespace Remizione
         internal static Color CreditLine { get; } = new Color(230, 230, 212);
 
         // DestinationMark
-        internal static class DestinationMark
-        {
-            internal static Color Default { get; } = new(59, 125, 79);
-            internal static Color Target { get; } = new(200, 212, 93);
-        }
+        internal static Color DestinationMark { get; } = new(143, 77, 87);
 
         // FaithMeter
         internal static class FaithMeter
@@ -68,6 +64,9 @@ namespace Remizione
 
         // HUDMessage
         internal static Color HUDMessage { get; } = new Color(227, 213, 200);
+
+        // InteractiveTargetOutline
+        internal static Vector4 InteractiveTargetOutline { get; } = (Color.LightCyan * .4f).ToVector4();
 
         // MenuItemTextActive
         internal static Color MenuItemTextActive { get; } = new Color(240, 240, 240);
@@ -114,6 +113,7 @@ namespace Remizione
             internal static Color Highlight { get; } = new(240, 181, 65);
             internal static Color Light { get; } = new Color(223, 224, 232) * .7f;
             internal static Color LightRed { get; } = new(143, 77, 87);
+            internal static Color Red { get; } = new(173, 47, 69);
             internal static Color Title { get; } = new(59, 125, 79);
             internal static Color Yellow { get; } = new(255, 238, 131);
         }

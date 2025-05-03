@@ -1,9 +1,6 @@
 ﻿using Engendro;
 using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -78,7 +75,7 @@ namespace Remizione
         #endregion
 
         #region Protected members
-     
+
         // OnDrawShadow
         protected override void OnDrawShadow(GameTime gameTime) => shadow.Draw(gameTime);
 

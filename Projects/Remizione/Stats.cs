@@ -61,9 +61,6 @@ namespace Remizione
 
         #endregion
 
-        // AngerDegradationInterval
-        public int AngerDegradationInterval => 500;
-
         // AngerGainPerLevel
         public int AngerGainPerLevel { get; private set; } = 10;
 
@@ -78,8 +75,8 @@ namespace Remizione
         // FaithGainPerLevel
         public int FaithGainPerLevel { get; private set; } = 10;
 
-        // GetAngerCostForAttack
-        public int GetAngerCostForAttack(AttackType attackType)
+        // GetAngerCost
+        public int GetAngerCost(AttackType attackType)
         {
             return attackType switch
             {
@@ -90,8 +87,8 @@ namespace Remizione
             };
         }
 
-        // GetAngerCostFromMovement
-        public int GetAngerCostFromMovement(float distance)
+        // GetAngerCost
+        public int GetAngerCost(float distance)
         {
             const int basePixelUnit = 20;
             return (int)Math.Ceiling(distance / basePixelUnit);
@@ -121,6 +118,12 @@ namespace Remizione
             return actor.Level * (HPGainPerLevel + GetModifier(PrimaryStat.Constitution));
         }
 
+        // GetModifier
+        public int GetModifier(PrimaryStat stat)
+        {
+            return (GetStatValue(stat) - 10) / 2;
+        }
+
         // GetStatValue
         public int GetStatValue(PrimaryStat stat)
         {
@@ -134,12 +137,6 @@ namespace Remizione
                 PrimaryStat.Strength => Strength,
                 _ => throw new System.NotImplementedException()
             };
-        }
-
-        // GetModifier
-        public int GetModifier(PrimaryStat stat)
-        {
-            return (GetStatValue(stat) - 10) / 2;
         }
 
         // GP (XP)
@@ -162,6 +159,15 @@ namespace Remizione
         public int RollInitiative()
         {
             return DiceBag.Dice20.Roll() + GetModifier(PrimaryStat.Dexterity);
+        }
+
+        // RollInitiative
+        public bool RollInitiative(Actor target)
+        {
+            var targetInitiative = target.Stats.RollInitiative();
+            var thisInitiative = RollInitiative();
+
+            return thisInitiative >= targetInitiative;
         }
 
         // RollSavingThrow

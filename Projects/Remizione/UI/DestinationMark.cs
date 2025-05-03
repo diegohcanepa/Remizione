@@ -22,6 +22,7 @@ namespace Remizione.UI
             // DestinationMark
             this.sprite = new ImageSprite(Game, Atlases.Environment.MoveDestinationMark)
             {
+                Color = ColorPalette.DestinationMark,
                 Opacity = .3f,
                 PivotOrigin = RectanglePoint.Middle,
                 Scale = new(.7f)
@@ -51,13 +52,6 @@ namespace Remizione.UI
 
         #endregion
 
-        // Color
-        public Color Color
-        {
-            get => sprite.Color;
-            set => sprite.Color = value;
-        }
-
         // Position
         public Vector2? Position
         {
@@ -71,7 +65,7 @@ namespace Remizione.UI
                     if (position.HasValue)
                     {
                         sprite.Position = position.Value;
-                        scaleTween.Start(TweenStyle.CubicIn, Vector2.Zero, new(.8f), 300);
+                        scaleTween.Start(TweenStyle.CubicIn, Vector2.Zero, new(.8f), 150);
                     }
                     else
                     {

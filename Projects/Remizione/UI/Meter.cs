@@ -27,7 +27,7 @@ namespace Remizione
         #endregion
 
         // Constructor
-        public Meter(EngendroGame game, Color backColor, Color foreColor, float verticalSize = 2.4f)
+        public Meter(EngendroGame game, Color backColor, Color foreColor, float verticalSize = 2.6f)
             : base(game)
         {
             this.BackColor = backColor;

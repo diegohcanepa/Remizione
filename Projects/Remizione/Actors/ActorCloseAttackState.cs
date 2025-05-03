@@ -33,17 +33,17 @@ namespace Remizione
                 {
                     damageTaken = true;
 
-                    if (Owner.Target is Actor targetActor)
+                    if (Owner.Target is Actor target)
                     {
                         var attackRoll = Owner.Stats.RollAttack();
-                        var defenseRoll = targetActor.Stats.GetDefense();
+                        var defenseRoll = target.Stats.GetDefense();
 
-                        if (attackRoll >= defenseRoll)
+                        if (Owner.IsBehind(target) || attackRoll >= defenseRoll)
                             Owner.AttackSkill.EndUse(Owner.Target);
                         else
                         {
-                            Owner.Session.CombatManager.Add(targetActor);
-                            targetActor.ShowMessage("@Messages.Miss");
+                            Owner.Session.CombatManager.Add(target);
+                            target.ShowMessage("@Messages.Miss");
                         }
                     }
                     else

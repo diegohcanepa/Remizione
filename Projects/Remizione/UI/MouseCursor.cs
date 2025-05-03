@@ -41,19 +41,20 @@ namespace Remizione
         // Invalidate
         private void Invalidate()
         {
-            if (state == MouseCursorState.CombatMode)
-                cursorImage.Image = Atlases.UI.MouseCursorCombatMode;
+            if (state == MouseCursorState.Cross)
+                cursorImage.Image = Atlases.UI.MouseCursorCross;
 
             else if (state == MouseCursorState.Default)
                 cursorImage.Image = Atlases.UI.MouseCursorDefault;
 
-            else if (state == MouseCursorState.Target)
-                cursorImage.Image = Atlases.UI.MouseCursorTarget;
+            else if (state == MouseCursorState.DefaultOn)
+                cursorImage.Image = Atlases.UI.MouseCursorDefaultOn;
+
+            else if (state == MouseCursorState.CrossOn)
+                cursorImage.Image = Atlases.UI.MouseCursorCrossOn;
 
             else if (state == MouseCursorState.Wait)
                 cursorImage.Image = Atlases.UI.MouseCursorWait;
-
-            cursorImage.PivotOrigin = state == MouseCursorState.Default ? RectanglePoint.LeftTop : RectanglePoint.Middle;
         }
 
         #endregion
@@ -126,7 +127,7 @@ namespace Remizione
                 {
                     if (state == MouseCursorState.Default)
                     {
-                        if (value == MouseCursorState.CombatMode || value == MouseCursorState.Target)
+                        if (value == MouseCursorState.Cross || value == MouseCursorState.CrossOn)
                             AnimateSwitch();
                     }
 

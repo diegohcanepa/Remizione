@@ -33,7 +33,17 @@ namespace Remizione
             if (currentIndex == turnList.Count)
                 currentIndex = 0;
 
-            CurrentActor?.StartTurn();
+            if (CurrentActor != null)
+            {
+                if (CurrentActor.IsPlayer && turnList.Count > 1)
+                    session.HUD.NarrationText = "Make your move";
+                else
+                    session.HUD.NarrationText = string.Empty;
+
+                CurrentActor.StartTurn();
+            }
+            else
+                session.HUD.NarrationText = string.Empty;
         }
 
         // CurrentActor

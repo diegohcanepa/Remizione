@@ -462,7 +462,7 @@ namespace Remizione
                 hurtTween ??= new();
                 hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
 
-                Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), ((int)CumulativeDamage).ToString(), applyCriticalDamage ? ColorPalette.Text.LightRed : ColorPalette.Text.Light);
+                Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), ((int)CumulativeDamage).ToString(), applyCriticalDamage ? ColorPalette.Text.Red : ColorPalette.Text.Light);
 
                 damageMeterCooldown = 1500;
                 if (damageMeter == null)
@@ -809,14 +809,24 @@ namespace Remizione
             return true;
         }
 
+        // IsBehind
+        public bool IsBehind(GameThing thing)
+        {
+            if (thing.Direction == FacingDirection.Right && X < thing.X)
+                return true;
+
+            else if (thing.Direction == FacingDirection.Left && X > thing.X)
+                return true;
+
+            else
+                return false;
+        }
+
         // IsDead
         public bool IsDead => HP == 0 && MaxHP > 0;
 
         // IsEmittingLight
         public virtual bool IsEmittingLight => Light != null && Light.IsEmitting;
-
-        // IsInteractionTarget
-        public bool IsInteractionTarget => Session.Player?.InteractionTarget == this;
 
         // IsWalkAreaHole
         [ScriptProperty]

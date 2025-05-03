@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:3844dcfaa74065cbacc6d20c48e06672:b06dcb01fcd77cf9340fa60bc2d21427:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:40c489cfe65d55738278021de69b1f23:3537d743dc98c316cb2e8843e5b7d917:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -32,8 +32,8 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="BloodSplashLow04.png" x="395" y="100" w="14" h="7"/>
     <sprite n="BloodSplashLow05.png" x="379" y="102" w="14" h="7"/>
     <sprite n="BloodSplashLow06.png" x="411" y="107" w="14" h="7"/>
-    <sprite n="CrossA.png" x="307" y="101" w="19" h="21"/>
-    <sprite n="CrossAShadow.png" x="307" y="124" w="19" h="21"/>
+    <sprite n="CrossA.png" x="307" y="101" w="19" h="22"/>
+    <sprite n="CrossAShadow.png" x="307" y="125" w="19" h="22"/>
     <sprite n="CrossB.png" x="399" y="69" w="18" h="18"/>
     <sprite n="CrossBShadow.png" x="419" y="69" w="18" h="18"/>
     <sprite n="CrossC.png" x="282" y="145" w="18" h="22"/>
