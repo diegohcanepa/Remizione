@@ -110,7 +110,7 @@ namespace Engendro.Audio
             }
             else
             {
-                if (PlayingTag.Length > 0)
+                if (CurrentTag.Length > 0)
                 {
                     if (soundInstance == null || !soundInstance.IsPlaying)
                     {
@@ -123,7 +123,7 @@ namespace Engendro.Audio
                             cooldown -= gameTime.ElapsedGameTime.Milliseconds;
                             if (cooldown <= 0)
                             {
-                                PlayTagCore(PlayingTag, 2000);
+                                PlayTagCore(CurrentTag, 2000);
                             }
                         }
                     }
@@ -132,6 +132,21 @@ namespace Engendro.Audio
         }
 
         #endregion
+
+        // CurrentSoundName
+        public string CurrentSoundName
+        {
+            get
+            {
+                if (soundInstance == null || soundInstance.State == SoundState.Stopped)
+                    return string.Empty;
+                else
+                    return soundInstance.Sound.Name;
+            }
+        }
+
+        // CurrentTag
+        public string CurrentTag { get; set; } = string.Empty;
 
         // IsLooped
         public bool IsLooped { get; set; }
@@ -148,7 +163,7 @@ namespace Engendro.Audio
         // Play
         public bool Play(string soundName, bool looped, int fadeIn, float volume, float pitch)
         {
-            if (string.IsNullOrWhiteSpace(soundName) || soundName == PlayingSoundName)
+            if (string.IsNullOrWhiteSpace(soundName) || soundName == CurrentSoundName)
                 return false;
 
             if (GetSoundInstance(soundName) is SoundInstance newSoundInstance)
@@ -162,31 +177,16 @@ namespace Engendro.Audio
             return true;
         }
 
-        // PlayingSoundName
-        public string PlayingSoundName
-        {
-            get
-            {
-                if (soundInstance == null || soundInstance.State == SoundState.Stopped)
-                    return string.Empty;
-                else
-                    return soundInstance.Sound.Name;
-            }
-        }
-
-        // PlayingTag
-        public string PlayingTag { get; set; } = string.Empty;
-
         // PlayTag
         public void PlayTag(string tag) => PlayTag(tag, 0);
 
         // PlayTag
         public bool PlayTag(string tag, int fadeIn)
         {
-            if (Sound.AvailableTags.Contains(tag) && tag != PlayingTag)
+            if (Sound.AvailableTags.Contains(tag) && tag != CurrentTag)
             {
                 PlayTagCore(tag, fadeIn);
-                PlayingTag = tag;
+                CurrentTag = tag;
                 return true;
             }
 
@@ -197,7 +197,7 @@ namespace Engendro.Audio
         public void Reset()
         {
             cooldown = 0;
-            PlayingTag = string.Empty;
+            CurrentTag = string.Empty;
             Stop();
         }
 

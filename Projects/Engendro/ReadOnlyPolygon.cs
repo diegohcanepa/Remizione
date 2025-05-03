@@ -342,7 +342,7 @@ namespace Engendro
         // IsPointInside (optimized with ChatGPT)
         public bool IsPointInside(Vector2 point)
         {
-            if (IsEmpty)
+            if (IsEmpty || !BoundingRectangleF.Contains(point))
                 return false;
 
             bool inside = false;

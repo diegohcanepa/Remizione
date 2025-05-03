@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -59,19 +58,19 @@ namespace Engendro
         // AddFrame
         public SpriteFrame AddFrame(string imageName, int duration)
         {
-            return AddFrame(imageName, duration, string.Empty, 1, string.Empty);
+            return AddFrame(imageName, duration, string.Empty, 1, string.Empty, false);
         }
 
         // AddFrame
         public SpriteFrame AddFrame(string imageName, int duration, string label)
         {
-            return AddFrame(imageName, duration, label, 1, string.Empty);
+            return AddFrame(imageName, duration, label, 1, string.Empty, false);
         }
 
         // AddFrame
-        public SpriteFrame AddFrame(string imageName, int duration, string label, float speedFactor, string soundName)
+        public SpriteFrame AddFrame(string imageName, int duration, string label, float speedFactor, string soundName, bool footstep)
         {
-            SpriteFrame result = new(this, frameList.Count, imageName, duration, label, speedFactor, soundName);
+            SpriteFrame result = new(this, frameList.Count, imageName, duration, label, speedFactor, soundName, footstep);
             frameList.Add(result);
             Invalidate();
 

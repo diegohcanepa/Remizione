@@ -387,11 +387,11 @@ namespace EngendroAdventure
             // Demo
             output.WriteAttributeString(GameSessionPersistenceAttributeName.Demo.ToString(), XmlConvert.ToString(IsDemo));
 
-            if (AudioManager.Music.IsLooped && AudioManager.Music.PlayingSoundName.Length > 0)
-                output.WriteAttributeString(GameSessionPersistenceAttributeName.MusicSoundName.ToString(), AudioManager.Music.PlayingSoundName);
+            if (AudioManager.Music.IsLooped && AudioManager.Music.CurrentSoundName.Length > 0)
+                output.WriteAttributeString(GameSessionPersistenceAttributeName.MusicSoundName.ToString(), AudioManager.Music.CurrentSoundName);
 
             // MusicTag
-            output.WriteAttributeString(GameSessionPersistenceAttributeName.MusicTag.ToString(), AudioManager.Music.PlayingTag);
+            output.WriteAttributeString(GameSessionPersistenceAttributeName.MusicTag.ToString(), AudioManager.Music.CurrentTag);
 
             // MusicTagRoomScope
             if (musicTagRoomScope != null)
@@ -812,7 +812,7 @@ namespace EngendroAdventure
 
         // CurrentMusicName
         [ScriptProperty]
-        public string CurrentMusicName => AudioManager.Music.PlayingSoundName;
+        public string CurrentMusicName => AudioManager.Music.CurrentSoundName;
 
         // DebugMode
         [ScriptProperty]
@@ -981,14 +981,14 @@ namespace EngendroAdventure
         {
             if (scope == MusicTagScope.Script)
             {
-                musicTagScriptScope = AudioManager.Music.PlayingTag;
+                musicTagScriptScope = AudioManager.Music.CurrentTag;
             }
             else if (scope == MusicTagScope.Room)
             {
                 if (musicTagRoomScope != null)
                     return;
 
-                musicTagRoomScope = AudioManager.Music.PlayingTag;
+                musicTagRoomScope = AudioManager.Music.CurrentTag;
             }
 
             AudioManager.Music.PlayTag(tag, fade);

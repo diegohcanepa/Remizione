@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Engendro.Audio;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Remizione
@@ -20,7 +21,12 @@ namespace Remizione
         public void Add(Actor actor)
         {
             if (!turnList.Contains(actor))
+            {
                 turnList.Add(actor);
+
+                if (turnList.Count > 0 && AudioManager.Music.CurrentTag != "Anger")
+                    AudioManager.Music.PlayTag("Anger", 1000);
+            }
         }
 
         // AdvanceTurn
@@ -94,6 +100,9 @@ namespace Remizione
             {
                 actor.EndTurn();
             }
+
+            AudioManager.Music.CurrentTag = string.Empty;
+            AudioManager.Music.Stop(5000);
         }
 
         // TurnList

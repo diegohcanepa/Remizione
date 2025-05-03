@@ -20,7 +20,7 @@ namespace EngendroAdventure.Scripting
 
             if (HasArg(ClearTagArg))
             {
-                AudioManager.Music.PlayingTag = string.Empty;
+                AudioManager.Music.CurrentTag = string.Empty;
             }
 
             AudioManager.Music.Stop(fadeDuration);

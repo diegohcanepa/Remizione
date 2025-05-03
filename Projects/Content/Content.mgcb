@@ -98,6 +98,42 @@
 /processorParam:Quality=Best
 /build:Audio/FX/FootstepGrass2.wav
 
+#begin Audio/FX/FootstepWater1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/FootstepWater1.wav
+
+#begin Audio/FX/FootstepWater2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/FootstepWater2.wav
+
+#begin Audio/FX/FootstepWater3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/FootstepWater3.wav
+
+#begin Audio/FX/FootstepWater4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/FootstepWater4.wav
+
+#begin Audio/FX/FootstepWater5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/FootstepWater5.wav
+
+#begin Audio/FX/FootstepWater6.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/FootstepWater6.wav
+
 #begin Audio/FX/ImpactA.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -217,6 +253,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/UISelect.wav
+
+#begin Audio/Music/Anger1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Anger1.wav
 
 #begin Effects/Blur.fx
 /importer:EffectImporter

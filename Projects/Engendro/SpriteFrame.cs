@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 
 namespace Engendro
 {
@@ -9,7 +8,7 @@ namespace Engendro
     public sealed class SpriteFrame
     {
         // Constructor
-        public SpriteFrame(SpriteAnimation animation, int index, string imageName, int duration, string label, float speedFactor, string soundName)
+        public SpriteFrame(SpriteAnimation animation, int index, string imageName, int duration, string label, float speedFactor, string soundName, bool footstep)
         {
             this.Animation = animation;
             this.ImageName = imageName;
@@ -18,6 +17,7 @@ namespace Engendro
             this.Index = index;
             this.SpeedFactor = speedFactor;
             this.SoundName = soundName;
+            this.Footstep = footstep;
 
             InvalidateImage();
         }
@@ -37,6 +37,9 @@ namespace Engendro
 
         // Duration
         public int Duration { get; }
+
+        // Footstep
+        public bool Footstep { get; }
 
         // Image
         public AtlasImage? Image { get; private set; }

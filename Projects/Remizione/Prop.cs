@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 
@@ -15,6 +16,7 @@ namespace Remizione
         private RectangleF revealBox;
         private readonly FloatTween revealTween = new();
         private readonly ImageSprite shadow;
+        private Polygon? terrainPoly;
 
         #endregion
 
@@ -40,6 +42,21 @@ namespace Remizione
 
         // InvalidateShadowImage
         private void InvalidateShadowImage() => shadow.Image = Atlas?.GetImage(GetDefaultImageName() + "Shadow");
+
+        // InvalidateTerrainArea
+        private void InvalidateTerrainArea()
+        {
+            if (TerrainPolygon == null)
+                return;
+
+            int vertexCount = TerrainPolygon.Vertices.Count;
+            var vertices = new Vector2[vertexCount];
+
+            var offset = new Vector2(X - BoundingBox.Width / 2, Y - BoundingBox.Height);
+            TerrainPolygon.GetVertices(vertices, offset);
+            terrainPoly ??= new();
+            terrainPoly.SetVertices(vertices);
+        }
 
         // UpdateOpacityFactor
         private void UpdateOpacityFactor(GameTime gameTime)
@@ -84,6 +101,7 @@ namespace Remizione
         {
             base.OnLoad();
             InvalidateShadowImage();
+            InvalidateTerrainArea();
         }
 
         // OnTransform
@@ -94,6 +112,8 @@ namespace Remizione
             shadow?.MatchTransform(Sprite);
 
             isRevealBoxDirty = true;
+
+            InvalidateTerrainArea();
         }
 
         // OnUpdate
@@ -106,6 +126,18 @@ namespace Remizione
         }
 
         #endregion
+
+        // GetFootstepSound
+        public Sound? GetFootstepSound(Vector2 position)
+        {
+            if (terrainPoly != null)
+            {
+                if (terrainPoly.IsPointInside(position))
+                    return TerrainSound;
+            }
+
+            return null;
+        }
 
         // RevealArea
         [ScriptProperty]
@@ -125,5 +157,13 @@ namespace Remizione
                 return revealBox;
             }
         }
+
+        // TerrainPolygon
+        [ScriptProperty]
+        public Polygon? TerrainPolygon { get; set; }
+
+        // TerrainSound
+        [ScriptProperty]
+        public Sound? TerrainSound { get; set; }
     }
 }

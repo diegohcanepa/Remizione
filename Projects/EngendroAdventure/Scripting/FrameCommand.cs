@@ -8,7 +8,7 @@ namespace EngendroAdventure.Scripting
     {
         // Constructor
         internal FrameCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 3, LabelArg, RepeatArg, SoundArg, SpeedFactorArg)
+            : base(script, source, body, 3, FootstepArg, LabelArg, RepeatArg, SoundArg, SpeedFactorArg)
         {
             if (AnimationCommand.ActiveAnimation == null)
                 throw ScriptExceptionBuilder.AnimationNotActive(this);
@@ -19,6 +19,7 @@ namespace EngendroAdventure.Scripting
             var repeat = Parser.ParseInt32Argument(this, RepeatArg, 1);
             var sound = Parser.ParseNameArgument(this, SoundArg) ?? string.Empty;
             var speedFactor = Parser.ParseFloatArgument(this, SpeedFactorArg, 1);
+            var footstep = HasArg(FootstepArg);
 
             // Add frames
             var prefix = AnimationCommand.ActiveAnimationFramePrefix ?? AnimationCommand.ActiveAnimation.Name;
@@ -28,7 +29,7 @@ namespace EngendroAdventure.Scripting
                 for (var j = range.Minimum; j <= range.Maximum; j++)
                 {
                     var imageName = prefix + j.ToString(CultureInfo.InvariantCulture).PadLeft(AnimationCommand.ZeroPaddingLength, '0');
-                    AnimationCommand.ActiveAnimation.AddFrame(imageName, duration, label, speedFactor, sound);
+                    AnimationCommand.ActiveAnimation.AddFrame(imageName, duration, label, speedFactor, sound, footstep);
                 }
             }
         }

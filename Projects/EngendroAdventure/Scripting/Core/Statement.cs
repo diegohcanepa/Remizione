@@ -68,13 +68,14 @@ namespace EngendroAdventure.Scripting
         protected static readonly string FaceArg = "#face";
         protected static readonly string FadeArg = "#fade";
         protected static readonly string FadeModeArg = "#fade-mode";
+        protected static readonly string FaithArg = "#faith";
         protected static readonly string FastArg = "#fast";
         protected static readonly string FileArg = "#file";
         protected static readonly string FlipArg = "#flip";
         protected static readonly string FocusArg = "#focus";
         protected static readonly string FolderNamesArg = "#folder-names";
         protected static readonly string FollowArg = "#follow";
-        protected static readonly string FaithArg = "#faith";
+        protected static readonly string FootstepArg = "#footstep";
         protected static readonly string FramesArg = "#frames";
         protected static readonly string FreeArg = "#free";
         protected static readonly string GlobalArg = "#global";

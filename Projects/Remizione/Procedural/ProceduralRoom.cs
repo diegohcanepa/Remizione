@@ -1,4 +1,6 @@
 ﻿using Engendro;
+using Engendro.Audio;
+using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Xml;
@@ -21,6 +23,8 @@ namespace Remizione
             LightingSystem = true;
             WorldManager = new WorldManager(session, new Size(Screen.NativeWidth, Screen.NativeHeight), 111);
         }
+
+        #region Private members
 
         // Regenerate
         private void Regenerate()
@@ -48,6 +52,8 @@ namespace Remizione
             if (Session.Player != null)
                 Children.Add(Session.Player);
         }
+
+        #endregion
 
         #region Protected members
 
@@ -138,6 +144,10 @@ namespace Remizione
 
             return false;
         }
+
+        // TerrainSound
+        [ScriptProperty]
+        public Sound? TerrainSound { get; set; }
 
         // WorldManager
         public WorldManager WorldManager { get; }

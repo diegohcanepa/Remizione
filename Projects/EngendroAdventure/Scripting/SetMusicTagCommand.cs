@@ -26,7 +26,7 @@ namespace EngendroAdventure.Scripting
                 tag = string.Empty;
             }
 
-            AudioManager.Music.PlayingTag = tag;
+            AudioManager.Music.CurrentTag = tag;
         }
     }
 }

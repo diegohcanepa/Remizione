@@ -666,6 +666,22 @@ namespace Remizione
             return result;
         }
 
+        // GetRequiredGridSpace
+        public Size GetRequiredGridSpace(int cellSize)
+        {
+            RectangleF bbox;
+
+            if (CollisionPolygon == null)
+                bbox = BoundingBox;
+            else
+                bbox = CollisionPolygon.BoundingRectangleF;
+
+            int width = (int)Math.Ceiling(bbox.Width / cellSize) + CellMargin * 2;
+            int height = (int)Math.Ceiling(bbox.Height / cellSize) + CellMargin * 2;
+
+            return new Size(width, height);
+        }
+
         // GetOverheadPosition
         public Vector2 GetOverheadPosition() => GetOverheadPosition(0, 0);
 
@@ -777,22 +793,6 @@ namespace Remizione
         // IgnoreWalkArea
         [ScriptProperty]
         public bool IgnoreWalkArea { get; set; } = true;
-
-        // GetRequiredGridSpace
-        public Size GetRequiredGridSpace(int cellSize)
-        {
-            RectangleF bbox;
-
-            if (CollisionPolygon == null)
-                bbox = BoundingBox;
-            else
-                bbox = CollisionPolygon.BoundingRectangleF;
-
-            int width = (int)Math.Ceiling(bbox.Width / cellSize) + CellMargin * 2;
-            int height = (int)Math.Ceiling(bbox.Height / cellSize) + CellMargin * 2;
-
-            return new Size(width, height);
-        }
 
         // InstancesPerBlock
         public Int32Range InstancesPerBlock { get; set; } = new Int32Range(1);

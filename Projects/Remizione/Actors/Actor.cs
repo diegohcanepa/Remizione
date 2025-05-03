@@ -26,6 +26,7 @@ namespace Remizione
         private readonly ActorDeathState deathState;
         private int faith;
         private FloatingText? floatingMessage;
+        private SoundInstance? footstepSoundInstance;
         private readonly FloatTween headTween = new();
         private readonly ActorHurtState hurtState;
         private int level = 1;
@@ -164,9 +165,37 @@ namespace Remizione
             }
             else if (Session.CombatManager.CurrentActor is Actor attacker && attacker != this)
             {
-                if (attacker.Target == this && attacker.TurnState == CombatTurnState.Busy && DistanceTo(attacker) < 40)
+                if (IsAlert && attacker.Target == this && attacker.TurnState == CombatTurnState.Busy && DistanceTo(attacker) < 40)
                     FaceTo(attacker);
             }
+        }
+
+        // UpdateFootstep
+        private void UpdateFootstep()
+        {
+            if (Sprite.Player.Frame == null || !Sprite.Player.Frame.Footstep)
+                return;
+
+            if (Room is not ProceduralRoom room)
+                return;
+
+            if (footstepSoundInstance != null && footstepSoundInstance.IsPlaying)
+                return;
+
+            if (room.WorldManager.GetBlockFromScreen(Position) is WorldBlock worldBlock)
+            {
+                for (var i = 0; i < worldBlock.Things.Count; i++)
+                {
+                    if (worldBlock.Things[i] is Prop prop && prop.GetFootstepSound(Position) is Sound sound)
+                    {
+                        footstepSoundInstance = PlaySound(sound);
+                        return;
+                    }
+                }
+            }
+
+            if (room.TerrainSound != null)
+                footstepSoundInstance = PlaySound(room.TerrainSound);
         }
 
         #endregion
@@ -235,6 +264,8 @@ namespace Remizione
         // OnHurt
         protected override void OnHurt(GameThing attacker)
         {
+            IsAlert = true; 
+
             StateMachine.ChangeState(ActorStateNames.Hurt);
 
             if (BloodSplashOrigin != Vector2.Zero)
@@ -341,6 +372,8 @@ namespace Remizione
         // OnUnload
         protected override void OnUnload()
         {
+            IsAlert = false;
+
             InteractiveTarget = null;
             
             if (Session.CombatManager.IsActive)
@@ -395,6 +428,7 @@ namespace Remizione
             speechBubble?.Update(gameTime);
             moveTween.Update(gameTime);
             UpdateDirection();
+            UpdateFootstep();
         }
 
         // OnWrite
@@ -676,6 +710,9 @@ namespace Remizione
 
         // InteractiveTarget
         public GameThing? InteractiveTarget { get; private set; }
+
+        // IsAlert
+        public bool IsAlert { get; set; }
 
         // IsAttacking
         public bool IsAttacking => StateMachine.CurrentState is ActorCloseAttackState;
