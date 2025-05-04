@@ -37,15 +37,10 @@ namespace Remizione
             ProhibitionMark = this[nameof(ProhibitionMark)];
             QuickSlot = this[nameof(QuickSlot)];
             QuickSlotShadow = this[nameof(QuickSlotShadow)];
-            ReactionMeter = CreateReadOnlyCollection("ReactionMeter", 1, 9);
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
             SpiritIcon = this[nameof(SpiritIcon)];
-            UIControlContainerEdgeLarge = this[nameof(UIControlContainerEdgeLarge)];
-            UIControlContainerPatternLarge = this[nameof(UIControlContainerPatternLarge)];
-            UIControlContainerEdgeSmall = this[nameof(UIControlContainerEdgeSmall)];
-            UIControlContainerPatternSmall = this[nameof(UIControlContainerPatternSmall)];
             UIControlShade = this[nameof(UIControlShade)];
             UnreadSign = this[nameof(UnreadSign)];
 }
@@ -118,21 +113,6 @@ namespace Remizione
 
         // ProhibitionMark
         public AtlasImage ProhibitionMark { get; }
-
-        // ReactionMeter
-        public ReadOnlyCollection<AtlasImage> ReactionMeter { get; }
-
-        // UIControlContainerEdgeLarge
-        public AtlasImage UIControlContainerEdgeLarge { get; }
-
-        // UIControlContainerPatternLarge
-        public AtlasImage UIControlContainerPatternLarge { get; }
-
-        // UIControlContainerEdgeSmall
-        public AtlasImage UIControlContainerEdgeSmall { get; }
-
-        // UIControlContainerPatternSmall
-        public AtlasImage UIControlContainerPatternSmall { get; }
 
         // QuickSlot
         public AtlasImage QuickSlot { get; }

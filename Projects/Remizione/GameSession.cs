@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Remizione.Creatures;
 using Remizione.Scenes;
 using Remizione.Scripting;
+using Remizione.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -67,6 +68,8 @@ namespace Remizione
             this.inventoryScene = new(this);
 
             LocalizationSource = LocalizationSource.Script;
+
+            this.InteractionMenu = new(this);
         }
 
         #endregion
@@ -96,7 +99,12 @@ namespace Remizione
                 if (Player.TurnState != CombatTurnState.WaitingInput && CombatManager.TurnList.Count >= 2)
                     MouseCursor.Instance.State = MouseCursorState.Wait;
                 else if (Player.InteractiveTarget != null && Player.InteractiveTarget.CanBeTargeted)
-                    MouseCursor.Instance.State = MouseCursorState.CrossOn;
+                {
+                    if (Player.InteractiveTarget == Player)
+                        MouseCursor.Instance.State = MouseCursorState.DefaultOn;
+                    else
+                        MouseCursor.Instance.State = MouseCursorState.CrossOn;
+                }
                 else
                     MouseCursor.Instance.State = MouseCursorState.Cross;
             }
@@ -172,6 +180,8 @@ namespace Remizione
             base.OnDraw(gameTime);
 
             OverlayTexts.Draw(gameTime);
+
+            InteractionMenu.Draw(gameTime);
 
             HUD.Draw(gameTime);
 
@@ -336,6 +346,9 @@ namespace Remizione
 
             Environment.Update(gameTime);
             HUD.Update(gameTime);
+
+            InteractionMenu.Update(gameTime);
+
             OverlayTexts.Update(gameTime);
         }
 
@@ -418,6 +431,9 @@ namespace Remizione
         // HUD
         public HUD HUD { get; }
 
+        // InteractionMenu
+        public InteractionMenu InteractionMenu { get; }
+
         // LightingSystem
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;
@@ -445,14 +461,6 @@ namespace Remizione
                     HUD.Reset();
                 }
             }
-        }
-
-        // PreservePlayerPosition
-        [ScriptMethod]
-        public void PreservePlayerPosition()
-        {
-            if (Player != null)
-                this.playerPosition = Player.Position;
         }
 
         // PreviousRoom

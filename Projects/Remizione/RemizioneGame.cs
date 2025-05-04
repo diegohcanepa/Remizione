@@ -14,8 +14,6 @@ namespace Remizione
     /// </summary>
     public partial class RemizioneGame : AdventureGame
     {
-        private static GameEffects? effects;
-
         #region Constructor
 
         // Constructor
@@ -109,7 +107,7 @@ namespace Remizione
         {
             base.OnInitialize();
 
-            effects = new GameEffects(this);
+            Effects = new GameEffects(this);
 
             AudioManager.LoadSoundData(ContentHelper.EncodePath(Content, ContentFolder.System, "SoundData.xml"));
             Fonts.Initialize(Content);
@@ -201,7 +199,7 @@ namespace Remizione
         public GameSession? CurrentSession { get; private set; }
 
         // Effects
-        public static GameEffects Effects => effects ?? throw new InvalidOperationException();
+        public static GameEffects Effects { get; private set; } = null!;
 
         // MouseCursor
         public MouseCursor MouseCursor { get; }

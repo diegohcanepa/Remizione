@@ -121,8 +121,8 @@ namespace Remizione
 
                 for (var i = Room.CulledThings.Count - 1; i >= 0; i--)
                 {
-                    if (Room.CulledThings[i] == Session.Player)
-                        continue;
+                   // if (Room.CulledThings[i] == Session.Player)
+                     //   continue;
 
                     if (Room.CulledThings[i] is GameThing thing && thing.HotspotBox.Contains(mousePos))
                         return thing;
@@ -130,6 +130,15 @@ namespace Remizione
             }
 
             return null;
+        }
+
+        // GetLocalizedDisplayName
+        public override string GetLocalizedDisplayName()
+        {
+            if (IsPlayer)
+                return TextRepository.GetValue("Misc.WanderingSpirit");
+            else
+                return base.GetLocalizedDisplayName();
         }
 
         // HandlePendingInteraction
@@ -643,6 +652,7 @@ namespace Remizione
         public void Fatigue()
         {
             StopMoving();
+            IsAlert = false;
             StateMachine.ChangeState(ActorStateNames.Fatigue);
         }
 
@@ -726,6 +736,9 @@ namespace Remizione
 
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }
+
+        // IsInteractiveTarget
+        public bool IsInteractiveTarget => session.Player?.InteractiveTarget == this;
 
         // IsPlayer
         public bool IsPlayer => Session.Player == this;
@@ -930,7 +943,7 @@ namespace Remizione
         public void ShowMessage(string value)
         {
             floatingMessage ??= session.ObjectPools.FloatingTexts.Get();
-            floatingMessage.Show(GetOverheadPosition(), value);
+            floatingMessage.Show(GetOverheadPosition(), value, ColorPalette.Text.LightRed);
         }
 
         // Skills

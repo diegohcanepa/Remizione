@@ -4,15 +4,15 @@ using Microsoft.Xna.Framework;
 namespace Remizione.UI
 {
     /// <summary>
-    /// UIContextMenuOption
+    /// ContextMenuOption
     /// </summary>
-    public sealed class UIContextMenuOption : IDraw, IUpdate
+    public sealed class ContextMenuOption : IDraw, IUpdate
     {
         #region Private fields
 
         private readonly ImageSprite iconSprite;
         private bool isSelected;
-        private readonly UIContextMenu menu;
+        private readonly ContextMenu menu;
         private Vector2 position;
         private readonly FloatTween shakeTween = new();
         private readonly TextSprite textSprite;
@@ -20,7 +20,7 @@ namespace Remizione.UI
         #endregion
 
         // Constructor
-        public UIContextMenuOption(UIContextMenu menu, string key, string text, AtlasImage? icon)
+        public ContextMenuOption(ContextMenu menu, int index, string key, string text, AtlasImage? icon = null)
         {
             this.menu = menu;
             this.Key = key;
@@ -37,6 +37,8 @@ namespace Remizione.UI
             };
 
             Invalidate();
+
+            this.Index = index;
         }
 
         // BoundingBox
@@ -55,6 +57,9 @@ namespace Remizione.UI
             get => iconSprite.Scale;
             set => iconSprite.Scale = value;
         }
+
+        // Index
+        public int Index { get; }
 
         // Invalidate
         public void Invalidate()

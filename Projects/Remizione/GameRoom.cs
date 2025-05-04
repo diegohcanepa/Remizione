@@ -150,21 +150,13 @@ namespace Remizione
                 }
                 else if (CulledThings[i] is GameThing thing)
                 {
-                    OutlineEffect? effect = null;
+                    ShaderEffect? effect = null;
 
-                    /*
-                    if (!Session.CombatManager.IsActive)
+                    if (interactiveTarget == thing)
                     {
-                        if (interactiveTarget == thing && thing.Atlas is Atlas thingAtlas)
-                        {
-                            effect = RemizioneGame.Effects.Outline;
-                            effect.Color.SetValue(ColorPalette.InteractiveTargetOutline);
-                            effect.TextureSize.SetValue(new Vector2(thingAtlas.Texture.Width, thingAtlas.Texture.Height));
-                            effect.Thickness.SetValue(0.4f);
-                            effect.Effect.CurrentTechnique.Passes[0].Apply();
-                        }
+                        RemizioneGame.Effects.ColorSaturation.SetColor(.8f, .8f, .8f, 0);
+                        effect = RemizioneGame.Effects.ColorSaturation;
                     }
-                    */
 
                     Game.SpriteBatch.Begin(Session.Camera, RoomSampler == RoomSampler.PointClamp ? SamplerState.PointClamp : SamplerState.LinearClamp, BlendState.AlphaBlend, effect?.Effect);
                     thing.Draw(gameTime);

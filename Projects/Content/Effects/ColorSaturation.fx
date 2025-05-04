@@ -5,7 +5,6 @@ producing a ‘night-time’ color scheme, scene transitions, etc.
 colored flashes for events, e.g. red flash or red tint for low health, ‘power’ effects, etc.
 */
 
-
 sampler ColorMapSampler : register(s0);
 
 float r = 0.5f;
@@ -33,12 +32,6 @@ technique colorSaturation
 {
 	pass P0
 	{
-		#if SM4
-			PixelShader = compile ps_4_0_level_9_1 PixelShaderColorSaturation();
-		#elif SM3
-			PixelShader = compile ps_3_0 PixelShaderColorSaturation();
-		#else
-			PixelShader = compile ps_2_0 PixelShaderColorSaturation();
-		#endif;
+		PixelShader = compile ps_4_0_level_9_1 PixelShaderColorSaturation();
 	}
 }

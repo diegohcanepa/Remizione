@@ -144,8 +144,10 @@ namespace Remizione
             image.Scale = Size == UIControlSize.Small ? new Vector2(.55f) : new Vector2(.75f);
             label.Scale = Size == UIControlSize.Small ? ScaleInfo.Text.Large : ScaleInfo.Text.VeryLarge;
 
+            /*
             containerPattern.Image = Size == UIControlSize.Small ? Atlases.UI.UIControlContainerPatternSmall : Atlases.UI.UIControlContainerPatternLarge;
             containerEdge.Image = Size == UIControlSize.Small ? Atlases.UI.UIControlContainerEdgeSmall : Atlases.UI.UIControlContainerEdgeLarge;
+            */
 
             if (displayMode == UIControlDisplayMode.ImageOnly)
             {

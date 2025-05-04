@@ -16,12 +16,25 @@ namespace Remizione
         {
         }
 
+        /*
+        // CheckTransitions
+        public override string? CheckTransitions()
+        {
+            if (!tween.IsRunning)
+                return ActorStateNames.Stand;
+            else
+                return base.CheckTransitions();
+        }
+        */
+
         // Enter
         public override void Enter()
         {
             base.Enter();
 
-            var newAnger = Owner.MaxAnger * .3f;
+            Owner.ShowMessage("@Messages.Fatigue");
+
+            var newAnger = Owner.MaxAnger * .5f;
 
             if (Owner.AnimationPlayer.Animation != null)
                 tween.Start(TweenStyle.Linear, Owner.Anger, newAnger, 2000);

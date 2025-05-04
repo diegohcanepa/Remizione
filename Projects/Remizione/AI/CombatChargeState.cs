@@ -25,11 +25,7 @@ namespace Remizione
                     actorTarget.FaceTo(Actor);
 
                 Actor.FastMove = true;
-
-                var front = target.Direction == FacingDirection.Right && Actor.X > target.X ||
-                            target.Direction == FacingDirection.Left && Actor.X < target.X;
-
-                Actor.MoveTo(target.GetApproachPosition(target, front));
+                Actor.MoveTo(target.GetApproachPosition(Actor, false));
             }
         }
         

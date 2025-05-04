@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Remizione.UI;
@@ -18,6 +19,7 @@ namespace Remizione
         private readonly Meter faithMeter;
         private readonly ScoreText gpScore;
         private readonly Meter hpMeter;
+        private readonly TextSprite messageText;
         private readonly ImageSprite[] meterIcons;
         private readonly TextSprite narrationText;
         private readonly TextSprite prompt;
@@ -93,6 +95,15 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.Left,
                 Scale = ScaleInfo.Text.Medium,
                 Text = "Broken"
+            };
+
+            // Message text
+            this.messageText = new TextSprite(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.LightRed,
+                PivotOrigin = RectanglePoint.RightTop,
+                Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -5, 5),
+                Scale = ScaleInfo.Text.Large
             };
 
             // Narration text
@@ -181,13 +192,15 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-            if (session.CombatManager.TurnList.Count > 1)
-                angerMeterLabel.Draw(gameTime);
+            //if (session.CombatManager.TurnList.Count > 1)
+            //    angerMeterLabel.Draw(gameTime);
 
             if (narrationText.IsEmpty)
                 prompt.Draw(gameTime);
             else
                 narrationText.Draw(gameTime);
+
+            messageText.Draw(gameTime); 
 
             if (session.Player != null && session.Player.IsBroken && !session.Player.IsDead)
                 brokenLabel.Draw(gameTime);
@@ -215,6 +228,7 @@ namespace Remizione
         {
             UpdatePrompt();
             narrationText.Update(gameTime);
+            messageText.Update(gameTime);
 
             if (session.Player != null)
             {
@@ -245,6 +259,20 @@ namespace Remizione
 
         // EchoMessage
         public EchoMessage EchoMessage { get; }
+
+        // MessageText
+        public string MessageText
+        {
+            get => messageText.Text ?? string.Empty;
+            set
+            {
+                if (messageText.Text != value)
+                {
+                    messageText.Text = value;
+                    messageText.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicInOut, 0, 1, 500);
+                }
+            }
+        }
 
         // NarrationText
         public string NarrationText

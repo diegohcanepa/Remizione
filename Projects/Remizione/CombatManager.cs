@@ -40,9 +40,18 @@ namespace Remizione
                 currentIndex = 0;
 
             if (CurrentActor != null)
+            {
+                if (TurnList.Count < 2)
+                    session.HUD.MessageText = "Unleash your anger";
+                else if (CurrentActor.IsPlayer)
+                    session.HUD.MessageText = "Make your move";
+                else
+                    session.HUD.MessageText = "Wait the grace of God";
+
                 CurrentActor.StartTurn();
+            }
             else
-                session.HUD.NarrationText = string.Empty;
+                session.HUD.MessageText = string.Empty;
         }
 
         // CurrentActor
@@ -96,6 +105,8 @@ namespace Remizione
 
             AudioManager.Music.CurrentTag = string.Empty;
             AudioManager.Music.Stop(5000);
+
+            session.HUD.MessageText = string.Empty;
         }
 
         // TurnList

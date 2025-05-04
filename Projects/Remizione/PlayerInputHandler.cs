@@ -23,7 +23,11 @@ namespace Remizione
         // HandleCombatModeInput
         private bool HandleCombatModeInput(Vector2 destination)
         {
-            if (Actor.InteractiveTarget == null || !Actor.InteractiveTarget.CanBeTargeted)
+            if (Actor.IsInteractiveTarget)
+            {
+                Actor.Session.InteractionMenu.Show(Actor);
+            }
+            else if (Actor.InteractiveTarget == null || !Actor.InteractiveTarget.CanBeTargeted)
             {
                 Actor.DoMoveTurn(destination);
                 return true;
@@ -69,7 +73,12 @@ namespace Remizione
 
             Actor.FastMove = true;
             if (Actor.InteractiveTarget != null)
-                Actor.ApproachAndInteract(Actor.InteractiveTarget);
+            {
+                if (Actor.InteractiveTarget == Actor)
+                    Actor.Session.InteractionMenu.Show(Actor);
+                else
+                    Actor.ApproachAndInteract(Actor.InteractiveTarget);
+            }
             else
                 Actor.MoveTo(destination);
 

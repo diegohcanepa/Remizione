@@ -290,12 +290,6 @@
 /processorParam:DebugMode=Auto
 /build:Effects/Lighting.fx
 
-#begin Effects/Outline.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Effects/Outline.fx
-
 #begin Effects/PlaneDeformation.fx
 /importer:EffectImporter
 /processor:EffectProcessor

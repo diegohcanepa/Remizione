@@ -30,8 +30,8 @@ namespace Remizione
         // InteractionMenu
         internal static class InteractionMenu
         {
-            internal static Vector2 Option { get; } = new(.07f);
-            internal static Vector2 Title { get; } = new(.08f);
+            internal static Vector2 Option { get; } = new(.09f);
+            internal static Vector2 Title { get; } = new(.1f);
         }
 
         // MenuItemTextActive

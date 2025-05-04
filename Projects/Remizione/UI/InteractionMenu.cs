@@ -8,18 +8,18 @@ namespace Remizione.UI
     /// </summary>
     public sealed class InteractionMenu : GameObject
     {
-        private readonly UIContextMenu contextMenu;
+        private readonly ContextMenu contextMenu;
         private RectangleF frame;
 
         // Constructor
         public InteractionMenu(GameSession session)
             : base(session.Game)
         {
-            this.contextMenu = new UIContextMenu(session.Game, session.Camera, Fonts.CommonOutline)
+            this.contextMenu = new ContextMenu(session.Game, session.Camera, Fonts.CommonOutline)
             {
                 OptionTextScale = ScaleInfo.InteractionMenu.Option,
                 TitleTextScale = ScaleInfo.InteractionMenu.Title,
-                //ShowSelector = false
+                ShowSelector = false
             };
         }
 
@@ -32,7 +32,7 @@ namespace Remizione.UI
                 return;
 
             Game.SpriteBatch.Begin(Thing.Session.Camera);
-            Game.Shapes.DrawRectangle(frame, ColorPalette.Text.DarkRed * .5f);
+            Game.Shapes.DrawRectangle(frame, Color.Black * .5f);
             Game.SpriteBatch.End();
 
             contextMenu.Draw(gameTime);
@@ -58,17 +58,17 @@ namespace Remizione.UI
         {
             this.Thing = thing;
             contextMenu.Clear();
-            contextMenu.Title = thing.GetLocalizedDisplayName();
+            contextMenu.Title = "";
             contextMenu.TitleColor = new(125, 56, 51);
             contextMenu.AddOption("Talk", "Talk");
+            contextMenu.AddOption("Trade", "Trade");
             contextMenu.AddOption("Attack", "Attack");
-            contextMenu.AddOption("Threat", "Threat");
             contextMenu.Position = thing.GetOverheadPosition();
             contextMenu.X -= contextMenu.BoundingBox.Width / 2;
             contextMenu.Y -= contextMenu.BoundingBox.Height + 4;
 
             var bbox = contextMenu.BoundingBox;
-            frame = new(bbox.Left - 1, bbox.Top - 1, bbox.Width + 2, bbox.Height + 2);
+            frame = new(bbox.Left - 3, bbox.Top - 2, bbox.Width + 6, bbox.Height + 4);
         }
 
         // Thing
