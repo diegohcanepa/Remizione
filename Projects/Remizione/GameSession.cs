@@ -95,7 +95,7 @@ namespace Remizione
             {
                 if (Player.TurnState != CombatTurnState.WaitingInput && CombatManager.TurnList.Count >= 2)
                     MouseCursor.Instance.State = MouseCursorState.Wait;
-                else if (Player.InteractiveTarget != null)
+                else if (Player.InteractiveTarget != null && Player.InteractiveTarget.CanBeTargeted)
                     MouseCursor.Instance.State = MouseCursorState.CrossOn;
                 else
                     MouseCursor.Instance.State = MouseCursorState.Cross;

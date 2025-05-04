@@ -23,7 +23,7 @@ namespace Remizione
         // HandleCombatModeInput
         private bool HandleCombatModeInput(Vector2 destination)
         {
-            if (Actor.InteractiveTarget == null)
+            if (Actor.InteractiveTarget == null || !Actor.InteractiveTarget.CanBeTargeted)
             {
                 Actor.DoMoveTurn(destination);
                 return true;

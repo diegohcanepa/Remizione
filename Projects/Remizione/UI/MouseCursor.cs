@@ -12,6 +12,7 @@ namespace Remizione
     {
         #region Private fields
 
+        private readonly Vector2Tween attackTween = Vector2Tween.Create(TweenStyle.CubicInOut, ScaleInfo.UIIcon.Medium, ScaleInfo.UIIcon.Medium * .8f, 130, -1);
         private readonly ImageSprite cursorImage;
         private Vector2 position;
         private readonly Vector2Tween scaleTween = new();
@@ -55,6 +56,8 @@ namespace Remizione
 
             else if (state == MouseCursorState.Wait)
                 cursorImage.Image = Atlases.UI.MouseCursorWait;
+
+            cursorImage.Scale = ScaleInfo.UIIcon.Medium;
         }
 
         #endregion
@@ -74,6 +77,8 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            attackTween.Update(gameTime);
+
             this.Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
 
             if (cursorImage.Image == null)
@@ -82,6 +87,9 @@ namespace Remizione
             cursorImage.Update(gameTime);
 
             shakeTween.Update(gameTime);
+
+            if (state == MouseCursorState.CrossOn && !scaleTween.IsRunning && !shakeTween.IsRunning)
+                cursorImage.Scale = attackTween.CurrentValue;
         }
 
         #endregion

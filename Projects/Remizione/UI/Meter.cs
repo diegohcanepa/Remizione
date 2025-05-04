@@ -15,11 +15,10 @@ namespace Remizione
         private readonly ImageSprite back;
         private readonly ImageSprite container;
         private readonly ImageSprite fore;
-        private bool isResetting;
         private int maximumValue;
         private readonly Vector2 padding = new(.5f);
         private Vector2 position;
-        private static readonly Color previousValue = new(207, 117, 43);
+        private static readonly Color previousValue = new(171, 81, 48);
         private readonly ImageSprite previousValue1;
         private readonly FloatTween tween = new() { StartDelay = 200 };
         private float value;
@@ -149,6 +148,7 @@ namespace Remizione
                 if (value != maximumValue)
                 {
                     this.maximumValue = value;
+                    this.Value = maximumValue;
                     back.ScaleX = value;
                     container.ScaleX = value + (padding.X * 2);
                     Invalidate();
@@ -170,15 +170,6 @@ namespace Remizione
             }
         }
 
-        // Reset
-        public void Reset()
-        {
-            tween.Stop();
-            isResetting = true;
-            Value = 0;
-            isResetting = false;
-        }
-
         // Value
         public float Value
         {
@@ -187,11 +178,16 @@ namespace Remizione
             {
                 if (value != this.value)
                 {
-                    if (value < this.value && !isResetting)
+                    if (value < this.value)
                     {
                         var diff = Math.Abs(fore.ScaleX - value);
                         previousValue1.ScaleX = tween.IsRunning ? tween.CurrentValue : fore.ScaleX;
                         tween.Start(TweenStyle.CubicIn, previousValue1.ScaleX, fore.ScaleX - diff, 1000);
+                    }
+                    else
+                    {
+                        previousValue1.ScaleX = 0;
+                        tween.Stop();
                     }
 
                     this.value = value;

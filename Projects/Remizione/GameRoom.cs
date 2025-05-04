@@ -19,7 +19,6 @@ namespace Remizione
         private int currentDrawIndex;
         private static DustEmitter dustEmitter = null!;
         private static FireflyEmitter fireflyEmitter = null!;
-        private readonly TextSprite interactiveTargetLabel;
         private RenderTarget2D? lightMapTarget;
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
@@ -42,13 +41,6 @@ namespace Remizione
 
             dustEmitter ??= new DustEmitter(session, 6, 1000, 35);
             fireflyEmitter ??= new FireflyEmitter(session, 1, 500, 20);
-
-            this.interactiveTargetLabel = new TextSprite(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Light,
-                PivotOrigin = RectanglePoint.Bottom,
-                Scale = ScaleInfo.Text.Medium
-            };
         }
 
         #endregion
@@ -125,34 +117,10 @@ namespace Remizione
             }
         }
 
-        /*
-        // DrawInteractiveTargetLabel
-        private void DrawInteractiveTargetLabel(GameTime gameTime)
-        {
-            if (Session.Player?.InteractiveTarget is GameThing target && target.CanDisplayLabel)
-            {
-                if (target != interactiveTargetLabel.Tag)
-                {
-                    interactiveTargetLabel.Tag = target;
-                    interactiveTargetLabel.Text = target.GetLocalizedDisplayName();
-                    interactiveTargetLabel.Position = target.GetOverheadPosition();
-                }
-            }
-            else
-            {
-                interactiveTargetLabel.Text = null;
-                interactiveTargetLabel.Tag = null;
-            }
-
-            interactiveTargetLabel.Draw(gameTime);
-        }
-        */
-
         // DrawTexts
         private void DrawTexts(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.AlphaBlend, null);
-            //DrawInteractiveTargetLabel(gameTime);
             DrawFloatingTexts(gameTime);
             Game.SpriteBatch.End();
         }
@@ -412,7 +380,7 @@ namespace Remizione
             if (AllowFireflyParticles)
                 fireflyEmitter?.Update(gameTime);
 
-            // Hit numbers
+            // Floating texts
             for (var i = 0; i < Session.ObjectPools.FloatingTexts.InUse.Count; i++)
             {
                 Session.ObjectPools.FloatingTexts.InUse[i].Update(gameTime);

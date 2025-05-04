@@ -21,6 +21,9 @@ namespace Remizione
         {
             if (Actor.Target is GameThing target)
             {
+                if (target is Actor actorTarget && actorTarget.IsAlert)
+                    actorTarget.FaceTo(Actor);
+
                 Actor.FastMove = true;
 
                 var front = target.Direction == FacingDirection.Right && Actor.X > target.X ||
@@ -42,7 +45,10 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (!Actor.IsMoving)
+            if (Actor.Anger <= 0)
+                StateMachine.ExecuteAction(CombatStateSignal.Fatigue);
+
+            else if (!Actor.IsMoving)
                 StateMachine.ExecuteAction(CombatStateSignal.CloseAttack);
         }
     }

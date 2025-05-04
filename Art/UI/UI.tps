@@ -379,9 +379,6 @@
             </struct>
             <key type="filename">KeyboardControls-assets/KeyboardInteract.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>
-            <key type="filename">UI-assets/MouseCursorAnger.png</key>
-            <key type="filename">UI-assets/MouseCursorAngerOn.png</key>
-            <key type="filename">UI-assets/MouseCursorProhibit.png</key>
             <key type="filename">UI-assets/ProhibitionMark.png</key>
             <key type="filename">XboxControls-assets/XboxInteract.png</key>
             <struct type="IndividualSpriteSettings">
@@ -595,6 +592,25 @@
                 <rect>24,1,47,3</rect>
                 <key>scale9Paddings</key>
                 <rect>24,1,47,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UI-assets/MouseCursorCross.png</key>
+            <key type="filename">UI-assets/MouseCursorCrossOn.png</key>
+            <key type="filename">UIIcons-assets/AngerIcon.png</key>
+            <key type="filename">UIIcons-assets/FaithIcon.png</key>
+            <key type="filename">UIIcons-assets/SpiritIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -851,23 +867,6 @@
                 <rect>11,3,23,5</rect>
                 <key>scale9Paddings</key>
                 <rect>11,3,23,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UIIcons-assets/AngerIcon.png</key>
-            <key type="filename">UIIcons-assets/FaithIcon.png</key>
-            <key type="filename">UIIcons-assets/SpiritIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

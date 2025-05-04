@@ -71,6 +71,7 @@ namespace Remizione
             this.StateMachine = new ActorStateMachine(this, standState);
             this.StateMachine.RegisterState(deathState);
             this.StateMachine.RegisterState(hurtState);
+            this.StateMachine.RegisterState(new ActorFatigueState(this));
             this.StateMachine.RegisterState(new ActorMoveState(this));
             this.StateMachine.RegisterState(new ActorMoveFastState(this));
             this.StateMachine.RegisterState(closeAttackState);
@@ -162,11 +163,6 @@ namespace Remizione
                     Sprite.FlipLeft();
                 else
                     Sprite.FlipRight();
-            }
-            else if (Session.CombatManager.CurrentActor is Actor attacker && attacker != this)
-            {
-                if (IsAlert && attacker.Target == this && attacker.TurnState == CombatTurnState.Busy && DistanceTo(attacker) < 40)
-                    FaceTo(attacker);
             }
         }
 
@@ -548,7 +544,8 @@ namespace Remizione
 
                 return StateMachine.CurrentState is ActorStandState ||
                        StateMachine.CurrentState is ActorMoveState ||
-                       StateMachine.CurrentState is ActorMoveFastState;
+                       StateMachine.CurrentState is ActorMoveFastState ||
+                       StateMachine.CurrentState is ActorFatigueState;
             }
         }
 
@@ -608,7 +605,7 @@ namespace Remizione
         // EndTurn
         public void EndTurn()
         {
-            TurnState = Session.CombatManager.TurnList.Contains(this) ? CombatTurnState.Waiting : CombatTurnState.None;
+            TurnState = IsCombating ? CombatTurnState.Waiting : CombatTurnState.None;
             session.CombatManager.EndCurrentTurn();
         }
 
@@ -618,13 +615,6 @@ namespace Remizione
             if (Target != null)
                 FaceTo(Target);
         }
-
-        // FastMove
-        public bool FastMove { get; set; }
-
-        // FastMoveFactor
-        [ScriptProperty(CodingContext.EntityDeclaration)]
-        public float FastMoveFactor { get; set; } = 1;
 
         // Faith
         [ScriptProperty]
@@ -640,6 +630,20 @@ namespace Remizione
                         faith = 0;
                 }
             }
+        }
+
+        // FastMove
+        public bool FastMove { get; set; }
+
+        // FastMoveFactor
+        [ScriptProperty(CodingContext.EntityDeclaration)]
+        public float FastMoveFactor { get; set; } = 1;
+
+        // Fatigue
+        public void Fatigue()
+        {
+            StopMoving();
+            StateMachine.ChangeState(ActorStateNames.Fatigue);
         }
 
         // GetBloodSplashPosition
@@ -717,6 +721,9 @@ namespace Remizione
         // IsAttacking
         public bool IsAttacking => StateMachine.CurrentState is ActorCloseAttackState;
 
+        // IsCombating
+        public bool IsCombating => session.CombatManager.TurnList.Count > 1 && session.CombatManager.TurnList.Contains(this);
+
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }
 
@@ -756,6 +763,10 @@ namespace Remizione
 
         // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;
+
+        // IsBroken
+        [ScriptProperty]
+        public bool IsBroken => !IsDead && (float)HP / MaxHP < .3f;
 
         // Level
         [ScriptProperty]
@@ -938,6 +949,8 @@ namespace Remizione
         {
             if (HasSpeechBubble)
                 speechBubble?.Hide();
+
+            Stand();
 
             if (IsPlayer)
             {

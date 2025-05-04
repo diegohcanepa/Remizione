@@ -64,6 +64,25 @@ namespace Remizione
         // AngerGainPerLevel
         public int AngerGainPerLevel { get; private set; } = 10;
 
+        // AngerDegradationInterval
+        public int AngerDegradationInterval { get; private set; }
+
+        // AngerPenalty
+        public int AngerPenalty { get; private set; } = 2;
+
+        // AngerPenaltyCooldown
+        public int AngerPenaltyCooldown
+        {
+            get
+            {
+                int baseCooldown = 100;
+                int modifier = GetModifier(PrimaryStat.Constitution);
+
+                // Increase cooldown by 100ms for each modifier point
+                return Math.Max(250, baseCooldown + (modifier * 100));
+            }
+        }
+
         // Apply
         public void Apply()
         {
@@ -74,25 +93,6 @@ namespace Remizione
 
         // FaithGainPerLevel
         public int FaithGainPerLevel { get; private set; } = 10;
-
-        // GetAngerCost
-        public int GetAngerCost(AttackType attackType)
-        {
-            return attackType switch
-            {
-                AttackType.Light => 2,
-                AttackType.Medium => 3,
-                AttackType.Heavy => 4,
-                _ => throw new NotImplementedException(),
-            };
-        }
-
-        // GetAngerCost
-        public int GetAngerCost(float distance)
-        {
-            const int basePixelUnit = 20;
-            return (int)Math.Ceiling(distance / basePixelUnit);
-        }
 
         // GetDefense
         public int GetDefense(int armorBonus = 0, int miscBonus = 0)

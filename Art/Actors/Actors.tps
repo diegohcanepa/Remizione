@@ -253,6 +253,8 @@
             <key type="filename">SinnerNPC-assets/Death14.png</key>
             <key type="filename">SinnerNPC-assets/Death15.png</key>
             <key type="filename">SinnerNPC-assets/Death16.png</key>
+            <key type="filename">SinnerNPC-assets/Fatigue01.png</key>
+            <key type="filename">SinnerNPC-assets/Fatigue02.png</key>
             <key type="filename">SinnerNPC-assets/Hurt01.png</key>
             <key type="filename">SinnerNPC-assets/Hurt02.png</key>
             <key type="filename">SinnerNPC-assets/Hurt03.png</key>

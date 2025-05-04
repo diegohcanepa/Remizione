@@ -14,11 +14,13 @@ namespace Remizione
         private readonly Meter angerMeter;
         private readonly Meter angerMeterLarge;
         private readonly TextSprite angerMeterLabel;
+        private readonly TextSprite brokenLabel;
         private readonly Meter faithMeter;
         private readonly ScoreText gpScore;
         private readonly Meter hpMeter;
         private readonly ImageSprite[] meterIcons;
         private readonly TextSprite narrationText;
+        private readonly TextSprite prompt;
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
 
@@ -55,8 +57,8 @@ namespace Remizione
             meterIcons[2].Position = meterIcons[1].BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, .5f);
 
             hpMeter.Position = new(10, 5);
-            faithMeter.Position = new(10, 10);
-            angerMeter.Position = new(10, 15);
+            faithMeter.Position = new(10, 11);
+            angerMeter.Position = new(10, 17);
 
             this.angerIconLarge = new ImageSprite(Game, Atlases.UI.AngerIcon) { PivotOrigin = RectanglePoint.Right, Scale = ScaleInfo.UIIcon.Medium };
 
@@ -73,6 +75,24 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.RightBottom, -2, 0),
                 Scale = ScaleInfo.Text.Large
+            };
+
+            // Prompt
+            this.prompt = new TextSprite(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Light,
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.SafeArea.GetPoint(RectanglePoint.Bottom, 0, -5),
+                Scale = ScaleInfo.Text.VeryLarge
+            };
+
+            // Broken label
+            this.brokenLabel = new TextSprite(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.LightRed,
+                PivotOrigin = RectanglePoint.Left,
+                Scale = ScaleInfo.Text.Medium,
+                Text = "Broken"
             };
 
             // Narration text
@@ -135,6 +155,24 @@ namespace Remizione
             Game.SpriteBatch.End();
         }
 
+        // UpdatePrompt
+        private void UpdatePrompt()
+        {
+            if (session.Player?.InteractiveTarget is GameThing target && (!session.CombatManager.IsActive || target.CanBeTargeted))
+            {
+                if (target != prompt.Tag)
+                {
+                    prompt.Tag = target;
+                    prompt.Text = "..." + target.GetLocalizedDisplayName() + "...";
+                }
+            }
+            else
+            {
+                prompt.Text = null;
+                prompt.Tag = null;
+            }
+        }
+
         #endregion
 
         #region Protected members
@@ -145,7 +183,15 @@ namespace Remizione
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             if (session.CombatManager.TurnList.Count > 1)
                 angerMeterLabel.Draw(gameTime);
-            narrationText.Draw(gameTime);
+
+            if (narrationText.IsEmpty)
+                prompt.Draw(gameTime);
+            else
+                narrationText.Draw(gameTime);
+
+            if (session.Player != null && session.Player.IsBroken && !session.Player.IsDead)
+                brokenLabel.Draw(gameTime);
+
             Game.SpriteBatch.End();
 
             if (session.Player != null && session.FullHUD)
@@ -167,6 +213,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            UpdatePrompt();
             narrationText.Update(gameTime);
 
             if (session.Player != null)
@@ -186,6 +233,9 @@ namespace Remizione
 
             if (session.CombatManager.TurnList.Count > 1)
                 angerIconLarge.Position = angerMeterLarge.BoundingBox.GetPoint(RectanglePoint.Left, -1, 0);
+
+            if (session.Player != null && session.Player.IsBroken)
+                brokenLabel.Position = hpMeter.BoundingBox.GetPoint(RectanglePoint.Right, 1, .5f);
         }
 
         #endregion

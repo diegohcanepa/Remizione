@@ -9,19 +9,16 @@ namespace Remizione
     public enum ActorSize { Small, Medium, Large }
 
     // CombatStateSignal
-    public enum CombatStateSignal { Attack, CloseAttack, Decide, EndTurn, Move }
+    public enum CombatStateSignal { Attack, CloseAttack, Decide, EndTurn, Fatigue, Move }
 
     // CombatStateName
-    public enum CombatStateName { Charge, CloseAttack, Decide, Move }
+    public enum CombatStateName { Charge, CloseAttack, Decide, Fatigue, Move }
 
     // CombatTurnState
     public enum CombatTurnState { None, Waiting, WaitingInput, Busy }
 
     // Affinity
     public enum Affinity { Good, Neutral, Evil }
-
-    // AttackType
-    public enum AttackType { Light, Medium, Heavy }
 
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Videos, Voices, System, Text }
