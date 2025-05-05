@@ -6,116 +6,47 @@ namespace Remizione.UI
     /// <summary>
     /// ContextMenuOption
     /// </summary>
-    public sealed class ContextMenuOption : IDraw, IUpdate
+    public sealed class ContextMenuOption<TKey> : IDraw, IUpdate
     {
-        #region Private fields
-
-        private readonly ImageSprite iconSprite;
-        private bool isSelected;
         private readonly ContextMenu menu;
-        private Vector2 position;
-        private readonly FloatTween shakeTween = new();
         private readonly TextSprite textSprite;
 
-        #endregion
-
         // Constructor
-        public ContextMenuOption(ContextMenu menu, int index, string key, string text, AtlasImage? icon = null)
+        public ContextMenuOption(ContextMenu menu, int index, TKey key, string text)
         {
             this.menu = menu;
             this.Key = key;
-            this.iconSprite = new ImageSprite(menu.Game, icon)
-            {
-                Scale = ScaleInfo.ContextMenu.Icon
-            };
+            this.Index = index;
 
             this.textSprite = new TextSprite(menu.Game, menu.Font)
             {
                 Color = ColorPalette.ContextMenu.Option,
-                Scale = menu.OptionTextScale,
+                Scale = menu.TextScale,
                 Text = text
             };
-
-            Invalidate();
-
-            this.Index = index;
         }
-
-        // BoundingBox
-        public RectangleF BoundingBox { get; private set; }
 
         // Draw
-        public void Draw(GameTime gameTime)
-        {
-            iconSprite.Draw(gameTime);
-            textSprite.Draw(gameTime);
-        }
-
-        // IconScale
-        public Vector2 IconScale
-        {
-            get => iconSprite.Scale;
-            set => iconSprite.Scale = value;
-        }
+        public void Draw(GameTime gameTime) => textSprite.Draw(gameTime);
 
         // Index
         public int Index { get; }
 
-        // Invalidate
-        public void Invalidate()
-        {
-            iconSprite.PivotOrigin = RectanglePoint.LeftTop;
-            iconSprite.Position = position;
-            textSprite.Position = position;
-
-            if (!iconSprite.IsEmpty)
-                textSprite.X += iconSprite.BoundingBox.Width + 2;
-
-            BoundingBox = RectangleF.Union(textSprite.BoundingBox, iconSprite.BoundingBox);
-
-            iconSprite.PivotOrigin = RectanglePoint.Middle;
-            iconSprite.X += iconSprite.BoundingBox.Width * .5f;
-            iconSprite.Y = textSprite.BoundingBox.GetPoint(RectanglePoint.Left).Y;
-
-            textSprite.Scale = menu.OptionTextScale;
-            textSprite.Color = IsSelected ? ColorPalette.Text.Light : ColorPalette.Text.LightRed;
-            iconSprite.Color = textSprite.Color;
-        }
-
         // IsSelected
-        public bool IsSelected
-        {
-            get => isSelected;
-            set
-            {
-                if (value != isSelected)
-                {
-                    this.isSelected = value;
-                    Invalidate();
-                }
-            }
-        }
+        public bool IsSelected => menu.SelectedIndex == Index;
 
         // Key
-        public string Key { get; }
+        public TKey Key { get; }
 
         // Position
         public Vector2 Position
         {
-            get => position;
-            set
-            {
-                this.position = value;
-                Invalidate();
-            }
+            get => textSprite.Position;
+            set => textSprite.Position = value;
         }
 
-        // Shake
-        public void Shake()
-        {
-            shakeTween.Start(TweenStyle.Linear, textSprite.Y, textSprite.Y + .5f, 40, 4);
-            textSprite.Tweens.YTween = shakeTween;
-        }
+        // TextBoundingBox
+        public RectangleF TextBoundingBox => textSprite.BoundingBox;
 
         // ToString
         public override string ToString() => textSprite.ToString();
@@ -123,8 +54,7 @@ namespace Remizione.UI
         // Update
         public void Update(GameTime gameTime)
         {
-            iconSprite.Update(gameTime);
-            textSprite.Update(gameTime);
+            textSprite.Color = IsSelected ? ColorPalette.Text.Light : ColorPalette.Text.LightRed;
         }
     }
 }

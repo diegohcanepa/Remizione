@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,14 +15,11 @@ namespace Remizione.UI
     {
         #region Private fields
 
-        private readonly List<ContextMenuOption> optionList = [];
-        private readonly UIControl optionSelectorControl;
-        private readonly ImageSprite optionSelector;
+        private readonly List<RectangleF> boundingBoxes = new();
+        private readonly List<ContextMenuOption<string>> optionList = [];
         private Vector2 optionTextScale = ScaleInfo.ContextMenu.Option;
         private Vector2 position;
-        private int selectedIndex = -1;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 200 };
-        private readonly TextSprite titleSprite;
 
         #endregion
 
@@ -35,29 +31,7 @@ namespace Remizione.UI
         {
             this.Camera = camera;
             this.Font = font ?? Fonts.Main;
-
-            // Title
-            titleSprite = new TextSprite(game, Font)
-            {
-                Color = ColorPalette.ContextMenu.Title,
-                PivotOrigin = RectanglePoint.LeftTop,
-                Scale = ScaleInfo.ContextMenu.Title
-            };
-
-            // Option Selector
-            optionSelector = new ImageSprite(game, Atlases.UI.ContextMenuOptionSelector)
-            {
-                PivotOrigin = RectanglePoint.Right
-            };
-
-            optionSelectorControl = new UIControl(Game, null)
-            {
-                DisplayMode = UIControlDisplayMode.ImageOnly,
-                PivotOrigin = RectanglePoint.Right,
-                Size = UIControlSize.Small
-            };
-
-            this.Options = new ReadOnlyCollection<ContextMenuOption>(optionList);
+            this.Options = new ReadOnlyCollection<ContextMenuOption<string>>(optionList);
         }
 
         #endregion
@@ -67,41 +41,32 @@ namespace Remizione.UI
         // Invalidate
         private void Invalidate()
         {
-            float NewLine(RectangleF bbox)
+            if (!IsVisible)
+                return;    
+            
+            // Get maximum width
+            Width = 0;
+            for (var i = 0; i < optionList.Count; i++)
             {
-                Width = Math.Max(Width, bbox.Width);
-                Height += bbox.Height - 1;
-                return bbox.Height - 1;
+                if (optionList[i].TextBoundingBox.Width > Width)
+                    Width = optionList[i].TextBoundingBox.Width;
             }
 
             Height = 0;
-            Width = 0;
-            var pos = Position;
 
-            if (!titleSprite.IsEmpty)
-            {
-                titleSprite.Position = pos;
-                pos.Y += NewLine(titleSprite.BoundingBox);
-            }
+            var pos = Position;
 
             for (var i = 0; i < optionList.Count; i++)
             {
+
                 var option = optionList[i];
-                option.IsSelected = false;
                 option.Position = pos;
-                pos.Y += NewLine(option.BoundingBox);
+                boundingBoxes[i] = new(pos.X, pos.Y, Width, option.TextBoundingBox.Height);
+                pos.Y += option.TextBoundingBox.Height;
+                Height += option.TextBoundingBox.Height;
             }
 
             BoundingBox = new RectangleF(Position.X, Position.Y, Width, Height);
-
-            if (SelectedIndex != -1)
-            {
-                optionList[SelectedIndex].IsSelected = true;
-                optionSelector.Position = optionList[SelectedIndex].BoundingBox.GetPoint(RectanglePoint.Left, -1, -.5f);
-
-                if (optionSelectorControl != null)
-                    optionSelectorControl.Position = optionSelector.Position;
-            }
         }
 
         #endregion
@@ -113,20 +78,12 @@ namespace Remizione.UI
         {
             Game.SpriteBatch.Begin(Camera, SamplerState.PointClamp, RemizioneGame.Effects.ColorReduction.Effect);
 
-            titleSprite.Draw(gameTime);
-
-            if (ShowSelector && optionList.Count > 0 && SelectInputBinding == null)
-                optionSelector.Draw(gameTime);
-
             for (var i = 0; i < optionList.Count; i++)
             {
                 optionList[i].Draw(gameTime);
             }
 
             Game.SpriteBatch.End();
-
-            if (optionList.Count > 0 && SelectInputBinding != null)
-                optionSelectorControl.Draw(gameTime);
         }
 
         // OnUpdate
@@ -134,15 +91,19 @@ namespace Remizione.UI
         {
             if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
             {
-                if (GetOptionAt(InputManager.DefaultPlayer.Mouse.WorldPosition(Camera)) is ContextMenuOption option)
+                if (GetOptionAt(InputManager.DefaultPlayer.Mouse.WorldPosition(Camera)) is ContextMenuOption<string> option)
+                {
                     SelectedIndex = option.Index;
+
+                    if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
+                        Hide();
+                }
+                else
+                    SelectedIndex = -1;
             }
 
             stick.Stick = GamePadThumbStick.Left;
             stick.Update(gameTime);
-            optionSelectorControl?.Update(gameTime);
-            optionSelector.Update(gameTime);
-            titleSprite.Update(gameTime);
 
             for (var i = 0; i < optionList.Count; i++)
             {
@@ -152,13 +113,15 @@ namespace Remizione.UI
 
         #endregion
 
-        // AddOption
-        public ContextMenuOption AddOption(string key, string text, AtlasImage? icon = null)
-        {
-            ContextMenuOption result = new(this, optionList.Count, key, text, icon);
-            optionList.Add(result);
-            Invalidate();
+        // IsActiveInGameLoop
+        public override bool IsActiveInGameLoop => IsVisible;
 
+        // AddOption
+        public ContextMenuOption<string> AddOption(string key, string text)
+        {
+            ContextMenuOption<string> result = new(this, optionList.Count, key, text);
+            optionList.Add(result);
+            boundingBoxes.Add(RectangleF.Empty);
             return result;
         }
 
@@ -176,21 +139,20 @@ namespace Remizione.UI
         {
             optionList.Clear();
             SelectedIndex = -1;
-            titleSprite.Text = null;
         }
 
         // Font
         public Font Font { get; }
 
         // GetOptionAt
-        public ContextMenuOption? GetOptionAt(Vector2 position)
+        public ContextMenuOption<string>? GetOptionAt(Vector2 position)
         {
             if (!BoundingBox.Contains(position))
                 return null;
 
             for (var i = 0; i < optionList.Count; i++)
             {
-                if (optionList[i].BoundingBox.Contains(position))
+                if (boundingBoxes[i].Contains(position))
                     return optionList[i];
             }
 
@@ -229,6 +191,15 @@ namespace Remizione.UI
         // Height
         public float Height { get; private set; }
 
+        // Hide
+        public void Hide()
+        {
+            IsVisible = false;
+        }
+
+        // IsVisible
+        public bool IsVisible { get; private set; }
+
         // Last
         public void Last()
         {
@@ -247,10 +218,6 @@ namespace Remizione.UI
             else
                 SelectedIndex++;
 
-            Sound.Play(SoundNames.UINavigation);
-
-            SelectedOption?.Shake();
-
             return true;
         }
 
@@ -258,42 +225,10 @@ namespace Remizione.UI
         public int OptionCount => optionList.Count;
 
         // Options
-        public ReadOnlyCollection<ContextMenuOption> Options { get; }
-
-        // OptionSelectorImage
-        public AtlasImage? OptionSelectorImage
-        {
-            get => optionSelector.Image;
-            set => optionSelector.Image = value;
-        }
-
-        // OptionTextScale
-        public Vector2 OptionTextScale
-        {
-            get => optionTextScale;
-            set
-            {
-                if (value != optionTextScale)
-                {
-                    optionTextScale = value;
-                    Invalidate();
-                }
-            }
-        }
+        public ReadOnlyCollection<ContextMenuOption<string>> Options { get; }
 
         // Position
-        public Vector2 Position
-        {
-            get => position;
-            set
-            {
-                if (value != position)
-                {
-                    position = value;
-                    Invalidate();
-                }
-            }
-        }
+        public Vector2 Position { get; private set; }
 
         // Previous
         public bool Previous()
@@ -306,104 +241,27 @@ namespace Remizione.UI
             else
                 SelectedIndex--;
 
-            Sound.Play(SoundNames.UINavigation);
-
-            SelectedOption?.Shake();
-
             return true;
         }
 
         // SelectedIndex
-        public int SelectedIndex
-        {
-            get => selectedIndex;
-            set
-            {
-                if (value != selectedIndex)
-                {
-                    this.selectedIndex = value;
-                    Invalidate();
-                }
-            }
-        }
+        public int SelectedIndex { get; set; } = -1;
 
         // SelectedOption
-        public ContextMenuOption? SelectedOption => selectedIndex == -1 ? null : optionList[selectedIndex];
+        public ContextMenuOption<string>? SelectedOption => SelectedIndex == -1 ? null : optionList[SelectedIndex];
 
-        // SelectInputBinding
-        public InputBinding? SelectInputBinding
+        // Show
+        public void Show(Vector2 position)
         {
-            get => optionSelectorControl.InputBinding;
-            set => optionSelectorControl.InputBinding = value;
+            IsVisible = true;
+            this.Position = position;
+            Invalidate();
         }
 
-        // ShowSelector
-        public bool ShowSelector { get; set; } = true;
-
-        // Title
-        public string Title
-        {
-            get => titleSprite.Text ?? string.Empty;
-            set
-            {
-                titleSprite.Text = value;
-                Invalidate();
-            }
-        }
-
-        // TitleBoundingBox
-        public RectangleF TitleBoundingBox => titleSprite.BoundingBox;
-
-        // TitleColor
-        public Color TitleColor
-        {
-            get => titleSprite.Color;
-            set => titleSprite.Color = value;
-        }
-
-        // TitleTextScale
-        public Vector2 TitleTextScale
-        {
-            get => titleSprite.Scale;
-            set
-            {
-                if (value != titleSprite.Scale)
-                {
-                    titleSprite.Scale = value;
-                    Invalidate();
-                }
-            }
-        }
+        // TextScale
+        public Vector2 TextScale { get; set; } = ScaleInfo.Text.Large;
 
         // Width
         public float Width { get; private set; }
-
-        // X
-        public float X
-        {
-            get => position.X;
-            set
-            {
-                if (value != position.X)
-                {
-                    this.position.X = value;
-                    Invalidate();
-                }
-            }
-        }
-
-        // Y
-        public float Y
-        {
-            get => position.Y;
-            set
-            {
-                if (value != position.Y)
-                {
-                    this.position.Y = value;
-                    Invalidate();
-                }
-            }
-        }
     }
 }

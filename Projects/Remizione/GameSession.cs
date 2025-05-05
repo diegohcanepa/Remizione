@@ -332,6 +332,7 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
+            CombatManager.Update(gameTime);
             UpdateMouseCursor();
 
             if (console != null)

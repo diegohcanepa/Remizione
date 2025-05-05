@@ -176,7 +176,6 @@
             <key type="filename">Monster-assets/Move01.png</key>
             <key type="filename">Monster-assets/Move02.png</key>
             <key type="filename">Monster-assets/Stand01.png</key>
-            <key type="filename">Sinner-assets/Move01.png</key>
             <key type="filename">Sinner-assets/Move02.png</key>
             <key type="filename">Sinner-assets/Move03.png</key>
             <key type="filename">Sinner-assets/Stand01.png</key>
@@ -216,6 +215,7 @@
             <key type="filename">Sinner-assets/Hurt02.png</key>
             <key type="filename">Sinner-assets/Hurt03.png</key>
             <key type="filename">Sinner-assets/Hurt04.png</key>
+            <key type="filename">Sinner-assets/Move01.png</key>
             <key type="filename">Sinner-assets/Move04.png</key>
             <key type="filename">Sinner-assets/Move05.png</key>
             <key type="filename">Sinner-assets/Move06.png</key>

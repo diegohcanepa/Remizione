@@ -15,12 +15,7 @@ namespace Remizione.UI
         public InteractionMenu(GameSession session)
             : base(session.Game)
         {
-            this.contextMenu = new ContextMenu(session.Game, session.Camera, Fonts.CommonOutline)
-            {
-                OptionTextScale = ScaleInfo.InteractionMenu.Option,
-                TitleTextScale = ScaleInfo.InteractionMenu.Title,
-                ShowSelector = false
-            };
+            this.contextMenu = new ContextMenu(session.Game, session.Camera, Fonts.CommonOutline);
         }
 
         #region Protected members
@@ -28,7 +23,7 @@ namespace Remizione.UI
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (Thing == null)
+            if (Thing == null || !contextMenu.IsVisible)
                 return;
 
             Game.SpriteBatch.Begin(Thing.Session.Camera);
@@ -58,17 +53,18 @@ namespace Remizione.UI
         {
             this.Thing = thing;
             contextMenu.Clear();
-            contextMenu.Title = "";
-            contextMenu.TitleColor = new(125, 56, 51);
             contextMenu.AddOption("Talk", "Talk");
             contextMenu.AddOption("Trade", "Trade");
             contextMenu.AddOption("Attack", "Attack");
-            contextMenu.Position = thing.GetOverheadPosition();
-            contextMenu.X -= contextMenu.BoundingBox.Width / 2;
-            contextMenu.Y -= contextMenu.BoundingBox.Height + 4;
+
+            var pos = thing.GetOverheadPosition();
+            pos.X -= contextMenu.BoundingBox.Width / 2;
+            pos.Y -= contextMenu.BoundingBox.Height + 4;
+
+            contextMenu.Show(pos);
 
             var bbox = contextMenu.BoundingBox;
-            frame = new(bbox.Left - 3, bbox.Top - 2, bbox.Width + 6, bbox.Height + 4);
+            frame = new(bbox.Left - 3, bbox.Top - 2, bbox.Width + 6, bbox.Height + 3);
         }
 
         // Thing

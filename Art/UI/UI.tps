@@ -527,29 +527,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">ReactionMeter-assets/ReactionMeter1.png</key>
-            <key type="filename">ReactionMeter-assets/ReactionMeter2.png</key>
-            <key type="filename">ReactionMeter-assets/ReactionMeter3.png</key>
-            <key type="filename">ReactionMeter-assets/ReactionMeter4.png</key>
-            <key type="filename">ReactionMeter-assets/ReactionMeter5.png</key>
-            <key type="filename">ReactionMeter-assets/ReactionMeter6.png</key>
-            <key type="filename">ReactionMeter-assets/ReactionMeter7.png</key>
-            <key type="filename">ReactionMeter-assets/ReactionMeter8.png</key>
-            <key type="filename">ReactionMeter-assets/ReactionMeter9.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,7,7</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,7,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">UI-assets/ContextMenuOptionSelector.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -592,6 +569,21 @@
                 <rect>24,1,47,3</rect>
                 <key>scale9Paddings</key>
                 <rect>24,1,47,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UI-assets/MouseCursorArrow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,4,4</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,4,4</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -780,66 +772,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UI-assets/UIControlContainerEdgeLarge.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,3,3,6</rect>
-                <key>scale9Paddings</key>
-                <rect>1,3,3,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UI-assets/UIControlContainerEdgeSmall.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,2,3,5</rect>
-                <key>scale9Paddings</key>
-                <rect>1,2,3,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UI-assets/UIControlContainerPatternLarge.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>0,3,1,6</rect>
-                <key>scale9Paddings</key>
-                <rect>0,3,1,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UI-assets/UIControlContainerPatternSmall.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>0,2,1,5</rect>
-                <key>scale9Paddings</key>
-                <rect>0,2,1,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">UI-assets/UIControlShade.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -901,7 +833,6 @@
                     <filename>Items-assets</filename>
                     <filename>Inventory-assets</filename>
                     <filename>ItemCategories-assets</filename>
-                    <filename>ReactionMeter-assets</filename>
                     <filename>UIIcons-assets</filename>
                 </array>
             </struct>
