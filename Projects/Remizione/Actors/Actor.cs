@@ -106,7 +106,7 @@ namespace Remizione
         // FindInteractiveTarget
         private GameThing? FindInteractiveTarget()
         {
-            if (session.IsAwaiting || SpeechBubble.ModalInstance != null)
+            if (session.IsAwaiting || SpeechBubble.ModalInstance != null || !session.IsCurrentScene)
                 return null;
 
             return InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad ? FindGamePadTarget() : FindMouseCursorTarget();
@@ -150,7 +150,11 @@ namespace Remizione
             if (pendingInteractiveTarget != null)
             {
                 FaceTo(pendingInteractiveTarget);
-                Interact(pendingInteractiveTarget);
+
+                if (pendingInteractiveTarget.GetVerbs() == null)
+                    Interact(pendingInteractiveTarget);
+                else
+                    session.ShowContextMenu(pendingInteractiveTarget);
             }
 
             pendingInteractiveTarget = null;
@@ -698,7 +702,7 @@ namespace Remizione
         public Vector2 HotspotDetectorPosition { get; set; }
 
         // Interact
-        public virtual bool Interact(GameThing? target)
+        public bool Interact(GameThing? target)
         {
             if (target == null)
                 target = InteractiveTarget;

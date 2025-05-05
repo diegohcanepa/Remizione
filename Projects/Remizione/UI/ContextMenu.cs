@@ -2,7 +2,6 @@
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -11,14 +10,12 @@ namespace Remizione.UI
     /// <summary>
     /// ContextMenu
     /// </summary>
-    public sealed class ContextMenu : GameObject, IInputHandler
+    public sealed class ContextMenu<TKey> : GameObject, IInputHandler
     {
         #region Private fields
 
-        private readonly List<RectangleF> boundingBoxes = new();
-        private readonly List<ContextMenuOption<string>> optionList = [];
-        private Vector2 optionTextScale = ScaleInfo.ContextMenu.Option;
-        private Vector2 position;
+        private readonly List<RectangleF> boundingBoxes = [];
+        private readonly List<ContextMenuOption<TKey>> optionList = [];
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 200 };
 
         #endregion
@@ -30,43 +27,8 @@ namespace Remizione.UI
             : base(game)
         {
             this.Camera = camera;
-            this.Font = font ?? Fonts.Main;
-            this.Options = new ReadOnlyCollection<ContextMenuOption<string>>(optionList);
-        }
-
-        #endregion
-
-        #region Private members
-
-        // Invalidate
-        private void Invalidate()
-        {
-            if (!IsVisible)
-                return;    
-            
-            // Get maximum width
-            Width = 0;
-            for (var i = 0; i < optionList.Count; i++)
-            {
-                if (optionList[i].TextBoundingBox.Width > Width)
-                    Width = optionList[i].TextBoundingBox.Width;
-            }
-
-            Height = 0;
-
-            var pos = Position;
-
-            for (var i = 0; i < optionList.Count; i++)
-            {
-
-                var option = optionList[i];
-                option.Position = pos;
-                boundingBoxes[i] = new(pos.X, pos.Y, Width, option.TextBoundingBox.Height);
-                pos.Y += option.TextBoundingBox.Height;
-                Height += option.TextBoundingBox.Height;
-            }
-
-            BoundingBox = new RectangleF(Position.X, Position.Y, Width, Height);
+            this.Font = font ?? Fonts.CommonOutline;
+            this.Options = new ReadOnlyCollection<ContextMenuOption<TKey>>(optionList);
         }
 
         #endregion
@@ -91,7 +53,7 @@ namespace Remizione.UI
         {
             if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
             {
-                if (GetOptionAt(InputManager.DefaultPlayer.Mouse.WorldPosition(Camera)) is ContextMenuOption<string> option)
+                if (GetOptionAt(InputManager.DefaultPlayer.Mouse.WorldPosition(Camera)) is ContextMenuOption<TKey> option)
                 {
                     SelectedIndex = option.Index;
 
@@ -117,9 +79,9 @@ namespace Remizione.UI
         public override bool IsActiveInGameLoop => IsVisible;
 
         // AddOption
-        public ContextMenuOption<string> AddOption(string key, string text)
+        public ContextMenuOption<TKey> AddOption(TKey key, string text)
         {
-            ContextMenuOption<string> result = new(this, optionList.Count, key, text);
+            ContextMenuOption<TKey> result = new(this, optionList.Count, key, text);
             optionList.Add(result);
             boundingBoxes.Add(RectangleF.Empty);
             return result;
@@ -145,7 +107,7 @@ namespace Remizione.UI
         public Font Font { get; }
 
         // GetOptionAt
-        public ContextMenuOption<string>? GetOptionAt(Vector2 position)
+        public ContextMenuOption<TKey>? GetOptionAt(Vector2 position)
         {
             if (!BoundingBox.Contains(position))
                 return null;
@@ -221,14 +183,8 @@ namespace Remizione.UI
             return true;
         }
 
-        // OptionCount
-        public int OptionCount => optionList.Count;
-
         // Options
-        public ReadOnlyCollection<ContextMenuOption<string>> Options { get; }
-
-        // Position
-        public Vector2 Position { get; private set; }
+        public ReadOnlyCollection<ContextMenuOption<TKey>> Options { get; }
 
         // Previous
         public bool Previous()
@@ -248,14 +204,46 @@ namespace Remizione.UI
         public int SelectedIndex { get; set; } = -1;
 
         // SelectedOption
-        public ContextMenuOption<string>? SelectedOption => SelectedIndex == -1 ? null : optionList[SelectedIndex];
+        public ContextMenuOption<TKey>? SelectedOption => SelectedIndex == -1 ? null : optionList[SelectedIndex];
 
         // Show
-        public void Show(Vector2 position)
+        public void Show(Vector2 position, bool fromBottom)
         {
             IsVisible = true;
-            this.Position = position;
-            Invalidate();
+
+            optionList.Sort((a, b) => a.ToString().CompareTo(b.ToString()));
+
+            // Calculate width
+            Width = 0;
+            for (var i = 0; i < optionList.Count; i++)
+            {
+                if (optionList[i].TextBoundingBox.Width > Width)
+                    Width = optionList[i].TextBoundingBox.Width;
+            }
+
+            // Calculate height
+            Height = 0;
+            for (var i = 0; i < optionList.Count; i++)
+            {
+                Height += optionList[i].TextBoundingBox.Height;
+            }
+
+            if (fromBottom)
+            {
+                position.X -= Width / 2;
+                position.Y -= Height + 2;
+            }
+
+            var pos = position;
+            for (var i = 0; i < optionList.Count; i++)
+            {
+                var option = optionList[i];
+                option.Position = pos;
+                boundingBoxes[i] = new(pos.X, pos.Y, Width, option.TextBoundingBox.Height);
+                pos.Y += option.TextBoundingBox.Height;
+            }
+
+            BoundingBox = new RectangleF(position.X, position.Y, Width, Height);
         }
 
         // TextScale

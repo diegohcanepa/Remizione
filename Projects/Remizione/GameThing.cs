@@ -41,6 +41,7 @@ namespace Remizione
         private RenderLayer renderLayer;
         private int renderLayerDepth;
         private bool shouldClampToWalkArea;
+        private List<Verb>? verbList;
         private WalkArea? walkArea;
         private string walkAreaName = string.Empty;
 
@@ -424,6 +425,20 @@ namespace Remizione
             placementConditions.Add(condition);
         }
 
+        // AddVerbs
+        public void AddVerbs(params Verb[] verbs)
+        {
+            verbList ??= new();
+
+            for (var i = 0; i < verbs.Length; i++)
+            {
+                if (!verbList.Contains(verbs[i]))
+                    verbList.Add(verbs[i]);
+            }
+
+            verbList.Sort();
+        }
+
         // ApplyDamage
         public void ApplyDamage(GameThing attacker)
         {
@@ -698,6 +713,9 @@ namespace Remizione
         // GetThrowableSpawnPosition
         public Vector2 GetThrowableSpawnPosition() => this.GetAbsolutePoint(ThrowableSpawnPosition);
 
+        // GetVerbs
+        public Verb[]? GetVerbs() => verbList?.ToArray();
+
         // GPReward
         [ScriptProperty]
         public int GPReward { get; set; }
@@ -908,6 +926,10 @@ namespace Remizione
         // ThrowableSpawnPosition
         [ScriptProperty]
         public Vector2 ThrowableSpawnPosition { get; set; }
+
+        // Verb
+        [ScriptProperty]
+        public Verb Verb { get; set; }
 
         // ViewAngle
         public float ViewAngle { get; set; } = 90;

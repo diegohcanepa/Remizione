@@ -130,6 +130,7 @@
 			<Word>save-game</Word>			
 			<Word>true</Word>
 			<Word>this</Word>
+			<Word>verbs</Word>
 			<Word>await-x-tween</Word>
 			<Word>await-y-tween</Word>
 		</Keywords>

@@ -42,7 +42,10 @@ namespace Remizione
         // Invalidate
         private void Invalidate()
         {
-            if (state == MouseCursorState.Cross)
+            if (state == MouseCursorState.Arrow)
+                cursorImage.Image = Atlases.UI.MouseCursorArrow;
+
+            else if (state == MouseCursorState.Cross)
                 cursorImage.Image = Atlases.UI.MouseCursorCross;
 
             else if (state == MouseCursorState.Default)

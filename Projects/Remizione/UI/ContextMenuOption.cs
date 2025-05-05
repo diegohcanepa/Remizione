@@ -8,11 +8,11 @@ namespace Remizione.UI
     /// </summary>
     public sealed class ContextMenuOption<TKey> : IDraw, IUpdate
     {
-        private readonly ContextMenu menu;
+        private readonly ContextMenu<TKey> menu;
         private readonly TextSprite textSprite;
 
         // Constructor
-        public ContextMenuOption(ContextMenu menu, int index, TKey key, string text)
+        public ContextMenuOption(ContextMenu<TKey> menu, int index, TKey key, string text)
         {
             this.menu = menu;
             this.Key = key;
@@ -20,11 +20,22 @@ namespace Remizione.UI
 
             this.textSprite = new TextSprite(menu.Game, menu.Font)
             {
-                Color = ColorPalette.ContextMenu.Option,
                 Scale = menu.TextScale,
                 Text = text
             };
+
+            UpdateColor();
         }
+
+        #region Private members
+
+        // UpdateColor
+        private void UpdateColor()
+        {
+            textSprite.Color = IsSelected ? ColorPalette.Text.Light : ColorPalette.Text.LightRed;
+        }
+
+        #endregion
 
         // Draw
         public void Draw(GameTime gameTime) => textSprite.Draw(gameTime);
@@ -54,7 +65,7 @@ namespace Remizione.UI
         // Update
         public void Update(GameTime gameTime)
         {
-            textSprite.Color = IsSelected ? ColorPalette.Text.Light : ColorPalette.Text.LightRed;
+            UpdateColor();
         }
     }
 }

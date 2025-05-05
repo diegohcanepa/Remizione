@@ -199,4 +199,8 @@ Bla bla bla</String>
   <String Key="Playtime.LessThanAMinute">Less than a minute</String>
   <String Key="Playtime.Minute">minute</String>
   <String Key="Playtime.Minutes">minutes</String>
+  <String Key="Verbs.Examine">Examine</String>
+  <String Key="Verbs.Insult">Insult</String>
+  <String Key="Verbs.Talk">Talk</String>
+  <String Key="Verbs.Trade">Trade</String>
 </Strings>

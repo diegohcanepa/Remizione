@@ -9,7 +9,6 @@ namespace Remizione
     {
         private int currentIndex = -1;
         private readonly GameSession session;
-        private int turnCooldown;
         private readonly List<Actor> turnList = [];
 
         // Constructor
@@ -43,19 +42,12 @@ namespace Remizione
 
             if (CurrentActor != null)
             {
-                /*
                 if (TurnList.Count < 2)
                     session.HUD.MessageText = "Unleash your anger";
                 else if (CurrentActor.IsPlayer)
                     session.HUD.MessageText = "Make your move";
                 else
                     session.HUD.MessageText = "Wait the grace of God";
-                */
-
-                if (CurrentActor.IsPlayer)
-                    turnCooldown = 5000;
-                else
-                    turnCooldown = 0;
 
                 CurrentActor.StartTurn();
             }
@@ -116,21 +108,9 @@ namespace Remizione
             AudioManager.Music.Stop(5000);
 
             session.HUD.MessageText = string.Empty;
-            turnCooldown = 0;
         }
 
         // TurnList
         public ReadOnlyCollection<Actor> TurnList { get; }
-
-        // Update
-        public void Update(GameTime gameTime)
-        {
-            if (!session.IsAwaiting && turnCooldown > 0)
-            {
-                turnCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                if (turnCooldown <= 0)
-                    AdvanceTurn();
-            }
-        }
     }
 }

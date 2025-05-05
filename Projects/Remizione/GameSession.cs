@@ -24,6 +24,7 @@ namespace Remizione
 
         private enum AttributeName { RandomSeed, WorldVersion }
         private readonly ScriptConsole? console;
+        private readonly ContextMenuScene contextMenuScene;
         private readonly InventoryScene inventoryScene;
         private Actor? player;
         private Vector2? playerPosition;
@@ -65,11 +66,10 @@ namespace Remizione
                 roomEditor = new RoomEditor(this);
             }
 
+            this.contextMenuScene = new(this);
             this.inventoryScene = new(this);
 
             LocalizationSource = LocalizationSource.Script;
-
-            this.InteractionMenu = new(this);
         }
 
         #endregion
@@ -169,6 +169,7 @@ namespace Remizione
             scriptRegistry.RegisterStatement("set-light", typeof(SetLightCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("set-thing-light", typeof(SetThingLightCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
+            scriptRegistry.RegisterStatement("verbs", typeof(VerbsCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("vibrate", typeof(VibrateCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("x-tween", typeof(XTweenCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("y-tween", typeof(YTweenCommand), CodingContext.Execution);
@@ -180,8 +181,6 @@ namespace Remizione
             base.OnDraw(gameTime);
 
             OverlayTexts.Draw(gameTime);
-
-            InteractionMenu.Draw(gameTime);
 
             HUD.Draw(gameTime);
 
@@ -332,8 +331,8 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-            CombatManager.Update(gameTime);
-            UpdateMouseCursor();
+            if (IsCurrentScene)
+                UpdateMouseCursor();
 
             if (console != null)
             {
@@ -347,8 +346,6 @@ namespace Remizione
 
             Environment.Update(gameTime);
             HUD.Update(gameTime);
-
-            InteractionMenu.Update(gameTime);
 
             OverlayTexts.Update(gameTime);
         }
@@ -432,9 +429,6 @@ namespace Remizione
         // HUD
         public HUD HUD { get; }
 
-        // InteractionMenu
-        public InteractionMenu InteractionMenu { get; }
-
         // LightingSystem
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;
@@ -498,6 +492,16 @@ namespace Remizione
 
             else
                 Camera.Shake(TweenStyle.Linear, new Vector2(3.4f), 50, 4);
+        }
+
+        // ShowContextMenu
+        public void ShowContextMenu(GameThing thing)
+        {
+            if (player == null)
+                return;
+
+            contextMenuScene.Target = thing;
+            Game.SceneManager.Push(contextMenuScene);
         }
 
         // ShowInventory

@@ -70,7 +70,7 @@ namespace Remizione
     public enum MessageKey { None, Fatigue, NoStamina }
 
     // MouseCursorState
-    public enum MouseCursorState { Default, DefaultOn, Cross, CrossOn, Wait }
+    public enum MouseCursorState { Default, DefaultOn, Cross, CrossOn, Wait, Arrow }
 
     // PlacementDistributionStrategy
     public enum PlacementDistributionStrategy { Random, Clump, NoiseMap }
@@ -125,6 +125,9 @@ namespace Remizione
 
     // UIControlGroupLayoutStyle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
+
+    // Verb
+    public enum Verb { Examine, Insult, Talk, Trade }
 
     // VolumeCategory
     public enum VolumeCategory { Ambient, FX, Music, Voice, Master }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:400c162b924e135c8e13bd0784a4d0a3:8cba770040edd29768484a54e06cec74:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:91327f5339660b39e91708e1c18ac841:e9c947c546536b283ff20b8e51c48e77:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -37,12 +37,12 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="InventoryConsumables.png" x="504" y="196" w="6" h="6"/>
     <sprite n="InventoryGridContainer.png" x="2" y="403" w="114" h="106"/>
     <sprite n="InventoryInfoContainer.png" x="118" y="403" w="99" h="106"/>
-    <sprite n="InventoryKeyItems.png" x="503" y="204" w="7" h="5"/>
-    <sprite n="InventorySkills.png" x="472" y="192" w="7" h="7"/>
+    <sprite n="InventoryKeyItems.png" x="472" y="191" w="7" h="5"/>
+    <sprite n="InventorySkills.png" x="472" y="182" w="7" h="7"/>
     <sprite n="InventorySlot.png" x="348" y="492" w="18" h="18"/>
     <sprite n="InventorySlotSelection.png" x="368" y="492" w="18" h="18"/>
     <sprite n="InventorySpells.png" x="504" y="178" w="6" h="8"/>
-    <sprite n="InventoryThrowables.png" x="472" y="186" w="8" h="4"/>
+    <sprite n="InventoryThrowables.png" x="472" y="176" w="8" h="4"/>
     <sprite n="KeyboardE.png" x="261" y="71" w="12" h="12"/>
     <sprite n="KeyboardInteract.png" x="55" y="71" w="14" h="14"/>
     <sprite n="KeyboardNextTab.png" x="153" y="71" w="16" h="12"/>
@@ -51,7 +51,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MessageContainer.png" x="219" y="403" w="251" h="27"/>
     <sprite n="MissingInputBinding.png" x="268" y="222" w="52" h="52"/>
     <sprite n="MissingItem.png" x="483" y="156" w="20" h="20"/>
-    <sprite n="MouseCursorArrow.png" x="472" y="176" w="8" h="8"/>
+    <sprite n="MouseCursorArrow.png" x="472" y="198" w="6" h="6"/>
     <sprite n="MouseCursorCross.png" x="472" y="132" w="9" h="9"/>
     <sprite n="MouseCursorCrossOn.png" x="472" y="143" w="9" h="9"/>
     <sprite n="MouseCursorDefault.png" x="472" y="71" w="9" h="11"/>
@@ -90,7 +90,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="SpeechBubblePipe.png" x="101" y="85" w="5" h="3"/>
     <sprite n="SpiritIcon.png" x="472" y="165" w="9" h="9"/>
     <sprite n="Stamina.png" x="482" y="178" w="20" h="20"/>
-    <sprite n="Ticket.png" x="481" y="200" w="20" h="20"/>
+    <sprite n="Ticket.png" x="480" y="200" w="20" h="20"/>
     <sprite n="TipBalloon.png" x="87" y="71" w="12" h="13"/>
     <sprite n="UIControlShade.png" x="101" y="71" w="50" h="12"/>
     <sprite n="UIControlShadow.png" x="301" y="494" w="45" h="10"/>

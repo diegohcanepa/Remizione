@@ -25,7 +25,7 @@ namespace Remizione
         {
             if (Actor.IsInteractiveTarget)
             {
-                Actor.Session.InteractionMenu.Show(Actor);
+                //Actor.Session.ShowContextMenu();
             }
             else if (Actor.InteractiveTarget == null || !Actor.InteractiveTarget.CanBeTargeted)
             {
@@ -75,7 +75,7 @@ namespace Remizione
             if (Actor.InteractiveTarget != null)
             {
                 if (Actor.InteractiveTarget == Actor)
-                    Actor.Session.InteractionMenu.Show(Actor);
+                    Actor.Session.ShowContextMenu(Actor);
                 else
                     Actor.ApproachAndInteract(Actor.InteractiveTarget);
             }
