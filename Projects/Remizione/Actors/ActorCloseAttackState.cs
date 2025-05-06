@@ -32,14 +32,23 @@ namespace Remizione
                 if (frame.Label == GameSettings.KeyFrame)
                 {
                     damageTaken = true;
+                    var attackRoll = Owner.Stats.RollAttack(AttackRollStat.Strength, out bool criticalHit);
+
+                    var hitType = criticalHit ? HitType.Critical : HitType.Default;
 
                     if (Owner.Target is Actor target)
                     {
-                        var attackRoll = Owner.Stats.RollAttack();
-                        var defenseRoll = target.Stats.GetDefense();
+                        var defenseRoll = criticalHit || target.IsTired ? 0 : target.Stats.GetDefense();
 
-                        if (Owner.IsBehind(target) || attackRoll >= defenseRoll)
-                            Owner.AttackSkill.EndUse(Owner.Target);
+                        // 50% miss chances
+                        if (attackRoll < defenseRoll && DiceBag.Dice10.Roll() <= 5)
+                        {
+                            hitType = HitType.Glancing;
+                            defenseRoll = 0;
+                        }
+
+                        if (attackRoll >= defenseRoll)
+                            Owner.AttackSkill.EndUse(Owner.Target, hitType);
                         else
                         {
                             Owner.Session.CombatManager.Add(target);
@@ -47,7 +56,7 @@ namespace Remizione
                         }
                     }
                     else
-                        Owner.AttackSkill.EndUse(Owner.Target);
+                        Owner.AttackSkill.EndUse(Owner.Target, hitType);
                 }
             }
         }

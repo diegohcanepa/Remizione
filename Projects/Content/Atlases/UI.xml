@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:91327f5339660b39e91708e1c18ac841:e9c947c546536b283ff20b8e51c48e77:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:76d42598bc092b40b2de5e8930f457f2:fcd567690e446a93d87747f0738b2151:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -52,10 +52,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MissingInputBinding.png" x="268" y="222" w="52" h="52"/>
     <sprite n="MissingItem.png" x="483" y="156" w="20" h="20"/>
     <sprite n="MouseCursorArrow.png" x="472" y="198" w="6" h="6"/>
-    <sprite n="MouseCursorCross.png" x="472" y="132" w="9" h="9"/>
-    <sprite n="MouseCursorCrossOn.png" x="472" y="143" w="9" h="9"/>
-    <sprite n="MouseCursorDefault.png" x="472" y="71" w="9" h="11"/>
-    <sprite n="MouseCursorDefaultOn.png" x="472" y="84" w="9" h="11"/>
+    <sprite n="MouseCursorCross.png" x="472" y="71" w="9" h="11"/>
+    <sprite n="MouseCursorCrossOn.png" x="472" y="84" w="9" h="11"/>
+    <sprite n="MouseCursorTarget.png" x="472" y="132" w="9" h="9"/>
+    <sprite n="MouseCursorTargetOn.png" x="472" y="143" w="9" h="9"/>
     <sprite n="MouseCursorWait.png" x="472" y="97" w="9" h="11"/>
     <sprite n="Pixel.png" x="506" y="21" w="1" h="1"/>
     <sprite n="PlayStationA.png" x="268" y="276" w="52" h="52"/>

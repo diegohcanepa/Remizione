@@ -14,8 +14,6 @@ namespace Remizione
         private readonly ImageSprite angerIconLarge;
         private readonly Meter angerMeter;
         private readonly Meter angerMeterLarge;
-        private readonly TextSprite angerMeterLabel;
-        private readonly TextSprite brokenLabel;
         private readonly Meter faithMeter;
         private readonly ScoreText gpScore;
         private readonly Meter hpMeter;
@@ -67,7 +65,7 @@ namespace Remizione
             this.angerMeterLarge = new Meter(Game, ColorPalette.Anger.Back, ColorPalette.Anger.Fore, 3.6f)
             { 
                 Alignment = HorizontalAlignment.Center,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 10)
+                Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 11)
             };
 
             // GP score
@@ -88,21 +86,12 @@ namespace Remizione
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
-            // Broken label
-            this.brokenLabel = new TextSprite(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.LightRed,
-                PivotOrigin = RectanglePoint.Left,
-                Scale = ScaleInfo.Text.Medium,
-                Text = "Broken"
-            };
-
             // Message text
             this.messageText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.LightRed,
-                PivotOrigin = RectanglePoint.RightTop,
-                Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -5, 5),
+                PivotOrigin = RectanglePoint.Top,
+                Position = Screen.Area.GetPoint(RectanglePoint.Top, 0, 5),
                 Scale = ScaleInfo.Text.Large
             };
 
@@ -116,16 +105,6 @@ namespace Remizione
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -10),
                 Scale = ScaleInfo.Text.Large
             };
-
-            // Anger label
-            this.angerMeterLabel = new TextSprite(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Dark,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 11),
-                Scale = ScaleInfo.Text.Large,
-                Text = "@Attributes.Secondary.Anger"
-            };
         }
 
         #region Private members
@@ -137,10 +116,11 @@ namespace Remizione
 
             meterIcons[0].Draw(gameTime);
             meterIcons[1].Draw(gameTime);
-            meterIcons[2].Draw(gameTime);
 
             if (session.CombatManager.TurnList.Count > 1)
                 angerIconLarge.Draw(gameTime);
+            else
+                meterIcons[2].Draw(gameTime);
 
             // HP
             hpMeter.MaximumValue = actor.MaxHP;
@@ -157,11 +137,12 @@ namespace Remizione
 
             angerMeter.MaximumValue = actor.MaxAnger;
             angerMeter.Value = actor.Anger;
-            angerMeter.Draw(gameTime);
 
             // Anger
             if (session.CombatManager.TurnList.Count > 1)
                 angerMeterLarge.Draw(gameTime);
+            else
+                angerMeter.Draw(gameTime);
 
             Game.SpriteBatch.End();
         }
@@ -169,7 +150,9 @@ namespace Remizione
         // UpdatePrompt
         private void UpdatePrompt()
         {
-            if (session.Player?.InteractiveTarget is GameThing target && (!session.CombatManager.IsActive || target.CanBeTargeted))
+            if (MouseCursor.Instance.State != MouseCursorState.Wait && 
+                session.Player?.InteractiveTarget is GameThing target && 
+                (!session.TargetMode || target.CanBeTargeted))
             {
                 if (target != prompt.Tag)
                 {
@@ -192,8 +175,6 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-            //if (session.CombatManager.TurnList.Count > 1)
-            //    angerMeterLabel.Draw(gameTime);
 
             if (narrationText.IsEmpty)
                 prompt.Draw(gameTime);
@@ -201,9 +182,6 @@ namespace Remizione
                 narrationText.Draw(gameTime);
 
             messageText.Draw(gameTime); 
-
-            if (session.Player != null && session.Player.IsBroken && !session.Player.IsDead)
-                brokenLabel.Draw(gameTime);
 
             Game.SpriteBatch.End();
 
@@ -237,7 +215,6 @@ namespace Remizione
                 angerMeter.Update(gameTime);
                 gpScore.Score = session.Player.Stats.GP;
                 gpScore.Update(gameTime);
-                angerMeterLabel.Update(gameTime);
                 angerMeterLarge.Update(gameTime);
             }
 
@@ -247,9 +224,6 @@ namespace Remizione
 
             if (session.CombatManager.TurnList.Count > 1)
                 angerIconLarge.Position = angerMeterLarge.BoundingBox.GetPoint(RectanglePoint.Left, -1, 0);
-
-            if (session.Player != null && session.Player.IsBroken)
-                brokenLabel.Position = hpMeter.BoundingBox.GetPoint(RectanglePoint.Right, 1, .5f);
         }
 
         #endregion

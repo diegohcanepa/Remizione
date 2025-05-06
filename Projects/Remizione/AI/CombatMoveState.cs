@@ -1,5 +1,4 @@
-﻿using EngendroAdventure;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace Remizione
 {
@@ -29,9 +28,7 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (Actor.Anger <= 0)
-                StateMachine.ExecuteAction(CombatStateSignal.Fatigue);
-            else if (!Actor.IsMoving)
+            if (!Actor.IsMoving)
                 StateMachine.ExecuteAction(CombatStateSignal.EndTurn);
         }
     }

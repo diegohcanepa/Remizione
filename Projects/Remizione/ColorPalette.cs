@@ -23,10 +23,9 @@ namespace Remizione
         // ContextMenu
         internal static class ContextMenu
         {
-            internal static Color Option { get; } = new(231, 230, 212);
-            internal static Color OptionBack { get; } = Color.Black * .8f;
-            internal static Color OptionHighlight { get; } = new(230, 190, 90);
-            internal static Color Title { get; } = Color.White;
+            internal static Color OptionText { get; } = new(189, 106, 98);
+            internal static Color OptionBack { get; } = Color.White * .1f;
+            internal static Color OptionHighlight { get; } = new Color(223, 224, 232) * .7f;
         }
 
         // Cycle
@@ -113,7 +112,7 @@ namespace Remizione
             internal static Color Highlight { get; } = new(240, 181, 65);
             internal static Color Light { get; } = new Color(223, 224, 232) * .7f;
             internal static Color LightRed { get; } = new(143, 77, 87);
-            internal static Color Red { get; } = new(173, 47, 69);
+            internal static Color Red { get; } = new(230, 69, 57);
             internal static Color Title { get; } = new(59, 125, 79);
             internal static Color Yellow { get; } = new(255, 238, 131);
         }

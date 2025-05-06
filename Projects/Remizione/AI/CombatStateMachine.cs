@@ -52,7 +52,6 @@ namespace Remizione
                     if (skill.Range == 0)
                     {
                         ChangeState(CombatStateName.Charge);
-
                     }
                     else
                     {

@@ -1,4 +1,5 @@
-﻿using Engendro.Audio;
+﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,6 +19,29 @@ namespace Remizione
             this.TurnList = new(turnList);
         }
 
+        #region Private members
+
+        // AdvanceTurn
+        private void AdvanceTurn()
+        {
+            if (!IsActive || turnList.Count == 0)
+                return;
+
+            currentIndex++;
+            if (currentIndex == turnList.Count)
+                currentIndex = 0;
+
+            if (CurrentActor != null)
+            {
+                if (session.HUD.MessageText == string.Empty && turnList.Count > 1)
+                    session.HUD.MessageText = "@Messages.ThreatsNearby";
+
+                CurrentActor.StartTurn();
+            }
+        }
+
+        #endregion
+
         // Add
         public void Add(Actor actor)
         {
@@ -30,36 +54,17 @@ namespace Remizione
             }
         }
 
-        // AdvanceTurn
-        public void AdvanceTurn()
-        {
-            if (!IsActive || turnList.Count == 0)
-                return;
-
-            currentIndex++;
-            if (currentIndex == turnList.Count)
-                currentIndex = 0;
-
-            if (CurrentActor != null)
-            {
-                if (TurnList.Count < 2)
-                    session.HUD.MessageText = "Unleash your anger";
-                else if (CurrentActor.IsPlayer)
-                    session.HUD.MessageText = "Make your move";
-                else
-                    session.HUD.MessageText = "Wait the grace of God";
-
-                CurrentActor.StartTurn();
-            }
-            else
-                session.HUD.MessageText = string.Empty;
-        }
-
         // CurrentActor
         public Actor? CurrentActor => currentIndex != -1 ? turnList[currentIndex] : null;
 
         // EndCurrentTurn
-        public void EndCurrentTurn() => AdvanceTurn();
+        public void EndCurrentTurn()
+        {
+            if (turnList.Count == 1 && turnList[0].IsPlayer)
+                Terminate();
+            else
+                AdvanceTurn();
+        }
 
         // IsActive
         public bool IsActive { get; private set; }

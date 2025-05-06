@@ -85,21 +85,28 @@ namespace Remizione
         }
 
         // EndUse
-        public void EndUse(GameThing target)
+        public void EndUse(GameThing target, HitType hitType)
         {
             if (BaseDamage != DiceRoll.Empty)
             {
                 int damageAmount;
                 if (MetaItem.Anger < 0 && Owner is Actor actor && actor.Anger < 0)
                     damageAmount = BaseDamage.MinimumValue;
-                
-                else if (Owner.IsBehind(target))
-                    damageAmount = BaseDamage.MaximumValue;
-                
                 else
-                    damageAmount = BaseDamage.Roll();
+                {
+                    if (hitType == HitType.Glancing)
+                    {
+                        damageAmount = BaseDamage.MinimumValue;
+                    }
+                    else
+                    {
+                        damageAmount = BaseDamage.Roll();
+                        if (hitType == HitType.Critical)
+                            damageAmount += BaseDamage.Roll();
+                    }
+                }
 
-                target.TakeDamage(Storage.Owner, damageAmount, damageAmount == BaseDamage.MaximumValue, Knockback);
+                target.TakeDamage(Storage.Owner, damageAmount, hitType, Knockback);
             }
 
             if (Level > 0 && MetaItem.UpgradeEffects.Count > 0)

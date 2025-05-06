@@ -1,7 +1,6 @@
 ﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -38,10 +37,13 @@ namespace Remizione.UI
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Camera, SamplerState.PointClamp, RemizioneGame.Effects.ColorReduction.Effect);
+            Game.SpriteBatch.Begin(Camera);
 
             for (var i = 0; i < optionList.Count; i++)
             {
+                //if (optionList[i] == SelectedOption)
+                //    Game.Shapes.DrawRectangle(boundingBoxes[i], ColorPalette.ContextMenu.OptionBack);
+
                 optionList[i].Draw(gameTime);
             }
 
@@ -55,13 +57,12 @@ namespace Remizione.UI
             {
                 if (GetOptionAt(InputManager.DefaultPlayer.Mouse.WorldPosition(Camera)) is ContextMenuOption<TKey> option)
                 {
-                    SelectedIndex = option.Index;
-
+                    SelectedOption = option;
                     if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                         Hide();
                 }
                 else
-                    SelectedIndex = -1;
+                    SelectedOption = null;
             }
 
             stick.Stick = GamePadThumbStick.Left;
@@ -81,7 +82,7 @@ namespace Remizione.UI
         // AddOption
         public ContextMenuOption<TKey> AddOption(TKey key, string text)
         {
-            ContextMenuOption<TKey> result = new(this, optionList.Count, key, text);
+            ContextMenuOption<TKey> result = new(this, key, text);
             optionList.Add(result);
             boundingBoxes.Add(RectangleF.Empty);
             return result;
@@ -100,7 +101,7 @@ namespace Remizione.UI
         public void Clear()
         {
             optionList.Clear();
-            SelectedIndex = -1;
+            SelectedOption = null;
         }
 
         // Font
@@ -109,9 +110,6 @@ namespace Remizione.UI
         // GetOptionAt
         public ContextMenuOption<TKey>? GetOptionAt(Vector2 position)
         {
-            if (!BoundingBox.Contains(position))
-                return null;
-
             for (var i = 0; i < optionList.Count; i++)
             {
                 if (boundingBoxes[i].Contains(position))
@@ -126,23 +124,6 @@ namespace Remizione.UI
         {
             if (!CanHandleInput)
                 return HandleInputResult.Unhandled;
-
-            if (optionList.Count > 1)
-            {
-                // Previous option
-                if (InputBindings.SelectUp.IsPressed(0) || stick.IsUp(0))
-                {
-                    Previous();
-                    return HandleInputResult.Handled;
-                }
-
-                // Next option
-                else if (InputBindings.SelectDown.IsPressed(0) || stick.IsDown(0))
-                {
-                    Next();
-                    return HandleInputResult.Handled;
-                }
-            }
 
             return HandleInputResult.Unhandled;
         }
@@ -162,49 +143,11 @@ namespace Remizione.UI
         // IsVisible
         public bool IsVisible { get; private set; }
 
-        // Last
-        public void Last()
-        {
-            if (optionList.Count > 0)
-                SelectedIndex = optionList.Count - 1;
-        }
-
-        // Next
-        public bool Next()
-        {
-            if (optionList.Count <= 1)
-                return false;
-
-            if (SelectedIndex == optionList.Count - 1)
-                SelectedIndex = 0;
-            else
-                SelectedIndex++;
-
-            return true;
-        }
-
         // Options
         public ReadOnlyCollection<ContextMenuOption<TKey>> Options { get; }
 
-        // Previous
-        public bool Previous()
-        {
-            if (optionList.Count <= 1)
-                return false;
-
-            if (SelectedIndex == 0)
-                SelectedIndex = optionList.Count - 1;
-            else
-                SelectedIndex--;
-
-            return true;
-        }
-
-        // SelectedIndex
-        public int SelectedIndex { get; set; } = -1;
-
         // SelectedOption
-        public ContextMenuOption<TKey>? SelectedOption => SelectedIndex == -1 ? null : optionList[SelectedIndex];
+        public ContextMenuOption<TKey>? SelectedOption { get; private set; }
 
         // Show
         public void Show(Vector2 position, bool fromBottom)
@@ -239,7 +182,8 @@ namespace Remizione.UI
             {
                 var option = optionList[i];
                 option.Position = pos;
-                boundingBoxes[i] = new(pos.X, pos.Y, Width, option.TextBoundingBox.Height);
+                boundingBoxes[i] = new(pos.X-2, pos.Y - 1, Width + 4, option.TextBoundingBox.Height + 1);
+
                 pos.Y += option.TextBoundingBox.Height;
             }
 

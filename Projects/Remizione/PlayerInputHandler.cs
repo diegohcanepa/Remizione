@@ -20,27 +20,6 @@ namespace Remizione
 
         #region Private members
 
-        // HandleCombatModeInput
-        private bool HandleCombatModeInput(Vector2 destination)
-        {
-            if (Actor.IsInteractiveTarget)
-            {
-                //Actor.Session.ShowContextMenu();
-            }
-            else if (Actor.InteractiveTarget == null || !Actor.InteractiveTarget.CanBeTargeted)
-            {
-                Actor.DoMoveTurn(destination);
-                return true;
-            }
-            else if (Actor.CanBeTargeted)
-            {
-                Actor.DoAttackTurn();
-                return true;
-            }
-
-            return false;
-        }
-
         // HandleMouseInput
         private HandleInputResult HandleMouseInput()
         {
@@ -61,15 +40,20 @@ namespace Remizione
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
 
-            if (!Actor.CanChangeState)
-                return false;
-
-            var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
-
             MouseCursor.Instance.AnimateClick();
 
-            if (Actor.Session.CombatManager.IsActive)
-                return HandleCombatModeInput(destination);
+            // Attack
+            if (Actor.Session.TargetMode)
+            {
+                if (Actor.InteractiveTarget != null)
+                {
+                    if (Actor.Session.CombatManager.TurnList.Count == 0)
+                        Actor.Session.CombatManager.Start(Actor);
+                    Actor.DoAttackTurn();
+                }
+
+                return true;
+            }
 
             Actor.FastMove = true;
             if (Actor.InteractiveTarget != null)
@@ -80,7 +64,14 @@ namespace Remizione
                     Actor.ApproachAndInteract(Actor.InteractiveTarget);
             }
             else
-                Actor.MoveTo(destination);
+            {
+                var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
+
+                if (Actor.Session.CombatManager.TurnList.Count > 1)
+                    Actor.DoMoveTurn(destination);
+                else
+                    Actor.MoveTo(destination);
+            }
 
             return true;
         }
@@ -92,15 +83,17 @@ namespace Remizione
 
             if (result)
             {
-                if (Actor.Session.CombatManager.TurnList.Count <= 1)
-                {
-                    if (Actor.Session.CombatManager.IsActive)
-                        Actor.Session.CombatManager.Terminate();
-                    else
-                        Actor.Session.CombatManager.Start(Actor);
-                }
-                else
-                    MouseCursor.Instance.Shake();
+                Actor.Session.TargetMode = !Actor.Session.TargetMode;
+
+                //if (Actor.Session.CombatManager.TurnList.Count <= 1)
+                //{
+                //    if (Actor.Session.CombatManager.IsActive)
+                //        Actor.Session.CombatManager.Terminate();
+                //    else
+                //        Actor.Session.CombatManager.Start(Actor);
+                //}
+                //else
+                //    MouseCursor.Instance.Shake();
             }
 
             return result;

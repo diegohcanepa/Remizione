@@ -3,7 +3,6 @@ using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Remizione.UI;
-using System;
 
 namespace Remizione
 {
@@ -48,6 +47,7 @@ namespace Remizione
             if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
                 SceneController.Pop();
+                session.Player?.EndTurn();
                 return HandleInputResult.Handled;
             }
 
@@ -58,6 +58,8 @@ namespace Remizione
                     Target.Verb = option.Key;
                     session.Player?.Interact(Target);
                 }
+                else
+                    session.Player?.EndTurn();
 
                 SceneController.Pop();
                 return HandleInputResult.Handled;

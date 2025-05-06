@@ -25,7 +25,7 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (!Owner.IsCombating)
+            if (!Owner.IsCombating || !Owner.AngerMovePenalty)
                 return;
 
             if (angerPenaltyCooldown > 0)

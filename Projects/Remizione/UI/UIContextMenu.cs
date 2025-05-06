@@ -38,7 +38,7 @@ namespace Remizione.UI
             // Title
             titleSprite = new TextSprite(game, Font)
             {
-                Color = ColorPalette.ContextMenu.Title,
+                //Color = ColorPalette.ContextMenu.Title,
                 PivotOrigin = RectanglePoint.LeftTop,
                 Scale = ScaleInfo.ContextMenu.Title
             };

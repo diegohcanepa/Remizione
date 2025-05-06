@@ -121,11 +121,19 @@ namespace Remizione
 
                 for (var i = Room.CulledThings.Count - 1; i >= 0; i--)
                 {
-                   // if (Room.CulledThings[i] == Session.Player)
-                     //   continue;
+                    if (Room.CulledThings[i] == Session.Player)
+                        continue;
 
                     if (Room.CulledThings[i] is GameThing thing && thing.HotspotBox.Contains(mousePos))
-                        return thing;
+                    {
+                        if (Session.TargetMode)
+                        {
+                            if (thing.CanBeTargeted)
+                                return thing;
+                        }
+                        else
+                            return thing;
+                    }
                 }
             }
 
@@ -482,6 +490,9 @@ namespace Remizione
             }
         }
 
+        // AngerMovePenalty
+        public bool AngerMovePenalty => combatStateMachine.CurrentState is CombatChargeState;
+
         // ApplyStats
         [ScriptMethod]
         public void ApplyStats() => Stats.Apply();
@@ -537,7 +548,7 @@ namespace Remizione
         {
             get
             {
-                if (InputHandler == null || Session.IsAwaiting || !IsPlayer)
+                if (InputHandler == null || Session.IsAwaiting || !IsPlayer || !CanChangeState)
                     return false;
 
                 if (Session.CombatManager.TurnList.Count >= 2 && TurnState != CombatTurnState.WaitingInput)
@@ -598,7 +609,7 @@ namespace Remizione
             combatStateMachine.ExecuteAction(CombatStateSignal.Attack);
         }
 
-        // DoDecideTurn (NPCs)
+        // DoDecideTurn (for NPCs)
         public void DoDecideTurn()
         {
             if (!IsPlayer)
@@ -618,6 +629,9 @@ namespace Remizione
         // EndTurn
         public void EndTurn()
         {
+            if (session.CombatManager.CurrentActor != this)
+                return;
+
             TurnState = IsCombating ? CombatTurnState.Waiting : CombatTurnState.None;
             session.CombatManager.EndCurrentTurn();
         }
@@ -777,6 +791,9 @@ namespace Remizione
             return true;
             */
         }
+
+        // IsTired
+        public bool IsTired => StateMachine.CurrentState is ActorFatigueState;
 
         // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;

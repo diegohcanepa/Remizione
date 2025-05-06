@@ -20,7 +20,7 @@ namespace Remizione
         {
             base.Enter();
             Actor.Fatigue();
-            cooldown = 2000;
+            cooldown = 200;
         }
 
         // Update

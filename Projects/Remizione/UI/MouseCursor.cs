@@ -48,19 +48,20 @@ namespace Remizione
             else if (state == MouseCursorState.Cross)
                 cursorImage.Image = Atlases.UI.MouseCursorCross;
 
-            else if (state == MouseCursorState.Default)
-                cursorImage.Image = Atlases.UI.MouseCursorDefault;
-
-            else if (state == MouseCursorState.DefaultOn)
-                cursorImage.Image = Atlases.UI.MouseCursorDefaultOn;
-
             else if (state == MouseCursorState.CrossOn)
                 cursorImage.Image = Atlases.UI.MouseCursorCrossOn;
+
+            else if (state == MouseCursorState.Target)
+                cursorImage.Image = Atlases.UI.MouseCursorTarget;
+
+            else if (state == MouseCursorState.TargetOn)
+                cursorImage.Image = Atlases.UI.MouseCursorTargetOn;
 
             else if (state == MouseCursorState.Wait)
                 cursorImage.Image = Atlases.UI.MouseCursorWait;
 
             cursorImage.Scale = ScaleInfo.UIIcon.Medium;
+            cursorImage.PivotOrigin = state == MouseCursorState.Arrow ? RectanglePoint.LeftTop : RectanglePoint.Middle;
         }
 
         #endregion
@@ -91,7 +92,7 @@ namespace Remizione
 
             shakeTween.Update(gameTime);
 
-            if (state == MouseCursorState.CrossOn && !scaleTween.IsRunning && !shakeTween.IsRunning)
+            if (state == MouseCursorState.TargetOn && !scaleTween.IsRunning && !shakeTween.IsRunning)
                 cursorImage.Scale = attackTween.CurrentValue;
         }
 
@@ -136,9 +137,9 @@ namespace Remizione
             {
                 if (value != state)
                 {
-                    if (state == MouseCursorState.Default)
+                    if (state == MouseCursorState.Cross)
                     {
-                        if (value == MouseCursorState.Cross || value == MouseCursorState.CrossOn)
+                        if (value == MouseCursorState.Target || value == MouseCursorState.TargetOn)
                             AnimateSwitch();
                     }
 

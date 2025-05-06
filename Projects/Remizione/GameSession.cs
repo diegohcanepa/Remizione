@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using Remizione.Creatures;
 using Remizione.Scenes;
 using Remizione.Scripting;
-using Remizione.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -88,28 +87,29 @@ namespace Remizione
         // UpdateMouseCursor
         private void UpdateMouseCursor()
         {
+            // No active player
             if (Player == null)
             {
-                MouseCursor.Instance.State = MouseCursorState.Default;
+                MouseCursor.Instance.State = MouseCursorState.Cross;
                 return;
             }
 
-            if (CombatManager.IsActive)
+            // Wait
+            if (Player.TurnState != CombatTurnState.WaitingInput && CombatManager.TurnList.Count >= 2)
             {
-                if (Player.TurnState != CombatTurnState.WaitingInput && CombatManager.TurnList.Count >= 2)
-                    MouseCursor.Instance.State = MouseCursorState.Wait;
-                else if (Player.InteractiveTarget != null && Player.InteractiveTarget.CanBeTargeted)
-                {
-                    if (Player.InteractiveTarget == Player)
-                        MouseCursor.Instance.State = MouseCursorState.DefaultOn;
-                    else
-                        MouseCursor.Instance.State = MouseCursorState.CrossOn;
-                }
+                MouseCursor.Instance.State = MouseCursorState.Wait;
+                return;
+            }
+
+            if (TargetMode)
+            {
+                if (Player.InteractiveTarget != null && Player.InteractiveTarget.CanBeTargeted)
+                    MouseCursor.Instance.State = MouseCursorState.TargetOn;
                 else
-                    MouseCursor.Instance.State = MouseCursorState.Cross;
+                    MouseCursor.Instance.State = MouseCursorState.Target;
             }
             else
-                MouseCursor.Instance.State = Player.InteractiveTarget == null ? MouseCursorState.Default : MouseCursorState.DefaultOn;
+                MouseCursor.Instance.State = Player.InteractiveTarget == null ? MouseCursorState.Cross : MouseCursorState.CrossOn;
         }
 
         #endregion
@@ -237,7 +237,11 @@ namespace Remizione
         // OnOutcomeCompleted
         protected override void OnOutcomeCompleted(Thing thing)
         {
-            player?.SuspendInteraction(500);
+            if (Player != null)
+            {
+                Player.SuspendInteraction(500);
+                Player.EndTurn();
+            }
         }
 
         // OnPause
@@ -511,6 +515,9 @@ namespace Remizione
             Game.SceneManager.Push(inventoryScene);
             Camera.FocusTarget();
         }
+
+        // TargetMode
+        public bool TargetMode { get; set; }
 
         // WorldVersion
         public int WorldVersion { get; set; } = 1;

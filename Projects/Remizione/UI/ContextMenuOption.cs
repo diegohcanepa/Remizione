@@ -12,11 +12,10 @@ namespace Remizione.UI
         private readonly TextSprite textSprite;
 
         // Constructor
-        public ContextMenuOption(ContextMenu<TKey> menu, int index, TKey key, string text)
+        public ContextMenuOption(ContextMenu<TKey> menu, TKey key, string text)
         {
             this.menu = menu;
             this.Key = key;
-            this.Index = index;
 
             this.textSprite = new TextSprite(menu.Game, menu.Font)
             {
@@ -32,19 +31,22 @@ namespace Remizione.UI
         // UpdateColor
         private void UpdateColor()
         {
-            textSprite.Color = IsSelected ? ColorPalette.Text.Light : ColorPalette.Text.LightRed;
+            textSprite.Color = IsSelected ? ColorPalette.ContextMenu.OptionHighlight : ColorPalette.ContextMenu.OptionText;
         }
 
         #endregion
 
         // Draw
-        public void Draw(GameTime gameTime) => textSprite.Draw(gameTime);
+        public void Draw(GameTime gameTime)
+        {
+            textSprite.Draw(gameTime);
+        }
 
         // Index
         public int Index { get; }
 
         // IsSelected
-        public bool IsSelected => menu.SelectedIndex == Index;
+        public bool IsSelected => menu.SelectedOption == this;
 
         // Key
         public TKey Key { get; }

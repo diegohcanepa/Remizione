@@ -28,8 +28,8 @@ namespace Remizione
             MouseCursorArrow = this[nameof(MouseCursorArrow)];
             MouseCursorCross = this[nameof(MouseCursorCross)];
             MouseCursorCrossOn = this[nameof(MouseCursorCrossOn)];
-            MouseCursorDefault = this[nameof(MouseCursorDefault)];
-            MouseCursorDefaultOn = this[nameof(MouseCursorDefaultOn)];
+            MouseCursorTarget = this[nameof(MouseCursorTarget)];
+            MouseCursorTargetOn = this[nameof(MouseCursorTargetOn)];
             MouseCursorWait = this[nameof(MouseCursorWait)];
             Pixel = this[nameof(Pixel)];
             PopupContainer = this[nameof(PopupContainer)];
@@ -94,11 +94,11 @@ namespace Remizione
         // MouseCursorCrossOn
         public AtlasImage MouseCursorCrossOn { get; }
 
-        // MouseCursorDefault
-        public AtlasImage MouseCursorDefault { get; }
+        // MouseCursorTarget
+        public AtlasImage MouseCursorTarget { get; }
 
-        // MouseCursorDefaultOn
-        public AtlasImage MouseCursorDefaultOn { get; }
+        // MouseCursorTargetOn
+        public AtlasImage MouseCursorTargetOn { get; }
 
         // MouseCursorWait
         public AtlasImage MouseCursorWait { get; }

@@ -149,10 +149,12 @@ namespace Remizione
         public int PerformSkillCheck(PrimaryStat stat) => DiceBag.Dice20.Roll() + GetStatValue(stat);
 
         // RollAttack
-        public int RollAttack(bool useDexterity = false)
+        public int RollAttack(AttackRollStat stat, out bool criticalHit)
         {
-            int modifier = useDexterity ? GetModifier(PrimaryStat.Dexterity) : GetModifier(PrimaryStat.Strength);
-            return DiceBag.Dice20.Roll() + modifier;
+            int modifier = stat == AttackRollStat.Dexterity ? GetModifier(PrimaryStat.Dexterity) : GetModifier(PrimaryStat.Strength);
+            var d20 = DiceBag.Dice20.Roll();
+            criticalHit = d20 == 20;
+            return d20 + modifier;
         }
 
         // RollInitiative

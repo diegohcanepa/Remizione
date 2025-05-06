@@ -8,6 +8,12 @@ namespace Remizione
     // ActorSize
     public enum ActorSize { Small, Medium, Large }
 
+    // Affinity
+    public enum Affinity { Good, Neutral, Evil }
+
+    // AttackRollStat
+    public enum AttackRollStat { Strength, Dexterity }
+
     // CombatStateSignal
     public enum CombatStateSignal { Attack, CloseAttack, Decide, EndTurn, Fatigue, Move }
 
@@ -16,9 +22,6 @@ namespace Remizione
 
     // CombatTurnState
     public enum CombatTurnState { None, Waiting, WaitingInput, Busy }
-
-    // Affinity
-    public enum Affinity { Good, Neutral, Evil }
 
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Videos, Voices, System, Text }
@@ -31,6 +34,9 @@ namespace Remizione
 
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
+
+    // HitType
+    public enum HitType { Default, Critical, Glancing }
 
     // ImpactType
     public enum ImpactType { Low, Medium, High }
@@ -70,7 +76,7 @@ namespace Remizione
     public enum MessageKey { None, Fatigue, NoStamina }
 
     // MouseCursorState
-    public enum MouseCursorState { Default, DefaultOn, Cross, CrossOn, Wait, Arrow }
+    public enum MouseCursorState { Cross, CrossOn, Target, TargetOn, Wait, Arrow }
 
     // PlacementDistributionStrategy
     public enum PlacementDistributionStrategy { Random, Clump, NoiseMap }

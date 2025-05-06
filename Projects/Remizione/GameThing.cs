@@ -17,7 +17,6 @@ namespace Remizione
     {
         #region Private fields
 
-        private bool applyCriticalDamage;        
         private bool applyDamagePending;
         private Meter? damageMeter;
         private int damageMeterCooldown;
@@ -31,6 +30,7 @@ namespace Remizione
         private FloatTween? hurtTween;
         private float floatingForce;
         private FloatTween? floatingTween;
+        private HitType hitType;
         private bool isHoleAreaDirty;
         private bool isHotspotDirty = true;
         private bool isHurtBoxDirty = true;
@@ -177,7 +177,7 @@ namespace Remizione
 
             OnDeath();
 
-            if (Session.Player != null)
+            if (Session.Player != null && Session.Player != this)
                 Session.Player.Stats.GP += GPReward;
 
             if (LootTable.Find(StaticName) is LootTable lootTable)
@@ -458,6 +458,20 @@ namespace Remizione
 
             OnDamageReaction(attacker);
 
+            var damageTextColor = hitType == HitType.Critical ? ColorPalette.Text.Dark : ColorPalette.Text.Light;
+            var damageText = $"{(int)CumulativeDamage}";
+            if (hitType == HitType.Critical)
+                damageText += " " + TextRepository.GetValue("HitType.Critical");
+
+            Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), damageText, damageTextColor);
+
+            damageMeterCooldown = 2000;
+            if (damageMeter == null)
+            {
+                damageMeter = new(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore) { MaximumValue = 10 };
+                InvalidateDamageMeter();
+            }
+
             if (knockback == Vector2.Zero && HP <= 0)
             {
                 Die();
@@ -476,15 +490,6 @@ namespace Remizione
 
                 hurtTween ??= new();
                 hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
-
-                Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), ((int)CumulativeDamage).ToString(), applyCriticalDamage ? ColorPalette.Text.Red : ColorPalette.Text.Light);
-
-                damageMeterCooldown = 1500;
-                if (damageMeter == null)
-                {
-                    damageMeter = new(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore) { MaximumValue = 10 };
-                    InvalidateDamageMeter();
-                }
 
                 OnHurt(attacker);
             }
@@ -507,7 +512,7 @@ namespace Remizione
         }
 
         // CanBeTargeted
-        public bool CanBeTargeted => !IsMoving && MaxHP > 0;
+        public bool CanBeTargeted => !IsMoving && MaxHP > 0 && !IsDead;
 
         // CanInteract
         public bool CanInteract(Actor requester)
@@ -841,7 +846,7 @@ namespace Remizione
         }
 
         // IsDead
-        public bool IsDead => HP == 0 && MaxHP > 0;
+        public bool IsDead => HP <= 0 && MaxHP > 0;
 
         // IsEmittingLight
         public virtual bool IsEmittingLight => Light != null && Light.IsEmitting;
@@ -910,12 +915,12 @@ namespace Remizione
         public new GameSession Session { get; }
 
         // TakeDamage
-        public void TakeDamage(GameThing attacker, int amount, bool critical, Vector2 knockback)
+        public void TakeDamage(GameThing attacker, int amount, HitType hitType, Vector2 knockback)
         {
             if (IsDead)
                 return;
 
-            applyCriticalDamage = critical;
+            this.hitType = hitType;
             applyDamagePending = true;
             CumulativeDamage += amount;
 

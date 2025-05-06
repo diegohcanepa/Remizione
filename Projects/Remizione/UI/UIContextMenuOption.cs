@@ -31,7 +31,7 @@ namespace Remizione.UI
 
             this.textSprite = new TextSprite(menu.Game, menu.Font)
             {
-                Color = ColorPalette.ContextMenu.Option,
+                Color = ColorPalette.ContextMenu.OptionText,
                 Scale = menu.OptionTextScale,
                 Text = text
             };

@@ -9,6 +9,8 @@
   <String Key="CombatOptions.UseItem">Usar item...</String>
   <String Key="Cycle.Indulgence">Indulgencia</String>
   <String Key="Cycle.Penance">Penitencia</String>
+  <String Key="HitType.Critical">¡Crítico!</String>
+  <String Key="HitType.Glancing">Superficial</String>
   <String Key="InputBindings.Back">Atrás</String>
   <String Key="InputBindings.Close">Cerrar</String>
   <String Key="InputBindings.Continue">Continuar</String>
@@ -125,7 +127,8 @@
   <String Key="Messages.Critical">Crítico</String>
   <String Key="Messages.Fatigue">Fatiga</String>
   <String Key="Messages.InventoryNoItemSelected">Selecciona un elemento.</String>
-  <String Key="Messages.Miss">Fallo</String>
+  <String Key="Messages.Miss">Fallido</String>
+  <String Key="Messages.ThreatsNearby">Tu espíritu está bajo asedio.</String>
   <String Key="Misc.And">y</String>
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
