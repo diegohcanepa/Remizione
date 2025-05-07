@@ -571,6 +571,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">UI-assets/ItemMenuContainer.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>23,25,45,51</rect>
+                <key>scale9Paddings</key>
+                <rect>23,25,45,51</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">UI-assets/MouseCursorArrow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

@@ -15,7 +15,7 @@ namespace Remizione
 
         private readonly ImageSprite bottomBar;
         private readonly ImageSprite topBar;
-        private readonly List<Credit> lines = new();
+        private readonly List<Credit> lines = [];
 
         #endregion
 
@@ -151,7 +151,7 @@ namespace Remizione
         private sealed class LineReader
         {
             private int index;
-            private readonly List<string> lines = new();
+            private readonly List<string> lines = [];
 
             // Constructor
             internal LineReader(string text)

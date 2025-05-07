@@ -15,8 +15,7 @@ namespace Remizione.Scripting
             var dropChance = Parser.ParseFloat(this, 1);
 
             var lootTable = LootTable.Find(thing.StaticName);
-            if (lootTable == null)
-                lootTable = LootTable.Register(thing.StaticName);
+            lootTable ??= LootTable.Register(thing.StaticName);
 
             lootTable.Add(itemName, dropChance);
         }

@@ -30,7 +30,10 @@ namespace Remizione
     public enum ControlImageSource { Default, InputBindingName, ImageName }
 
     // Cycle
-    public enum Cycle { Indulgence, Penance } 
+    public enum Cycle { Indulgence, Penance }
+
+    // DerivedStat
+    public enum DerivedStat { Spirit, Faith, Anger }
 
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
@@ -52,6 +55,9 @@ namespace Remizione
 
     // ItemName
     public enum ItemName { None, UnarmedAttack, Cross, Lockpick, Stamina, Health, ZabulContact }
+
+    // ItemStorageCategory
+    public enum ItemStorageCategory { Inventory, Skills }
 
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, LightBulb, Moon, MuzzleFlash, Outdoor, Lightning }
@@ -90,9 +96,6 @@ namespace Remizione
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
 
-    // PrimaryStat
-    public enum PrimaryStat { Strength, Constitution, Dexterity, Devotion, Empathy, Mind }
-
     // QTEResult
     public enum QTEResult { Failure, Success }
 
@@ -105,14 +108,14 @@ namespace Remizione
     // RoomSampler
     public enum RoomSampler { PointClamp, LinearClamp }
 
-    // SecodaryStat
-    public enum SecodaryStat { Spirit, Faith, Anger }
-
     // ShadowSpotSize
     public enum ShadowSpotSize { None, Tiny, Small, Average, Large, Huge, Giant }
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }
+
+    // Stat
+    public enum Stat { Strength, Constitution, Dexterity, Devotion, Empathy, Mind }
 
     // TerrainKind
     public enum TerrainKind { None }

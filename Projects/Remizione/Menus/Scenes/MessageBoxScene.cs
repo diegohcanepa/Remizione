@@ -96,7 +96,7 @@ namespace Remizione.Menus
                 menu.AddItem(MenuItemName.Accept, () => SelectOption(MessageBoxOptions.Accept), null);
                 if (defaultOption == MessageBoxOptions.Accept)
                 {
-                    defaultItem = menu.Items[menu.Items.Count - 1];
+                    defaultItem = menu.Items[^1];
                 }
             }
 

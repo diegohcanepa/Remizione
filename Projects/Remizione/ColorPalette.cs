@@ -97,14 +97,24 @@ namespace Remizione
         // SpeechBubble
         internal static class SpeechBubble
         {
-            internal static Color Fill { get; } = new(68, 62, 37);
+            internal static Color Fill { get; } = ColorPalette.Text.Fill;
             internal static Color Shadow { get; } = Color.Black * .2f;
-            internal static Color Text { get; } = new(200, 200, 200);
-            internal static Color Title { get; } = new(130, 130, 130);
+            internal static Color Text { get; } = ColorPalette.Text.Default;
         }
 
         // Text
         internal static class Text
+        {
+            internal static Color Dark { get; } = new(163, 122, 123);
+            internal static Color Default { get; } = new(148, 121, 123);
+            internal static Color Disabled { get; } = new(80, 76, 76);
+            internal static Color Fill { get; } = new(15, 42, 63);
+            internal static Color Highlight { get; } = new(252, 224, 194);
+            internal static Color Light { get; } = new(200, 165, 138);
+        }   
+
+        // TextDepracated
+        internal static class TextDepracated
         {
             internal static Color Dark { get; } = new(189, 106, 98);
             internal static Color DarkRed { get; } = new(82, 51, 63);
@@ -112,9 +122,6 @@ namespace Remizione
             internal static Color Highlight { get; } = new(240, 181, 65);
             internal static Color Light { get; } = new Color(223, 224, 232) * .7f;
             internal static Color LightRed { get; } = new(143, 77, 87);
-            internal static Color Red { get; } = new(230, 69, 57);
-            internal static Color Title { get; } = new(59, 125, 79);
-            internal static Color Yellow { get; } = new(255, 238, 131);
         }
 
         // TextWhite

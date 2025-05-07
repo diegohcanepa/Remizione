@@ -19,7 +19,7 @@ namespace Remizione
             this.Name = name;
 
             // Maximum cells (without margin)
-            int totalColumns = ((int) blockSize.Width + CellSize - 1) / CellSize;
+            int totalColumns = ((int)blockSize.Width + CellSize - 1) / CellSize;
             int totalRows = ((int)blockSize.Height + CellSize - 1) / CellSize;
 
             // Maximum cells (with margin)

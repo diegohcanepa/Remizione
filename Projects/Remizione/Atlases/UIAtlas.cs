@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -22,6 +21,7 @@ namespace Remizione
             InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
             InventorySlot = this[nameof(InventorySlot)];
             InventorySlotSelection = this[nameof(InventorySlotSelection)];
+            ItemMenuContainer = this[nameof(ItemMenuContainer)];
             MessageContainer = this[nameof(MessageContainer)];
             MissingInputBinding = this[nameof(MissingInputBinding)];
             MissingItem = this[nameof(MissingItem)];
@@ -44,7 +44,7 @@ namespace Remizione
             SpiritIcon = this[nameof(SpiritIcon)];
             UIControlShade = this[nameof(UIControlShade)];
             UnreadSign = this[nameof(UnreadSign)];
-}
+        }
 
         // AngerIcon
         public AtlasImage AngerIcon { get; }
@@ -72,6 +72,9 @@ namespace Remizione
 
         // InventorySlotSelection
         public AtlasImage InventorySlotSelection { get; }
+
+        // ItemMenuContainer
+        public AtlasImage ItemMenuContainer { get; }
 
         // FaithIcon
         public AtlasImage FaithIcon { get; }

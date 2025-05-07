@@ -13,9 +13,11 @@ namespace Remizione
         private readonly Dictionary<ItemName, Item> itemsDictionary = [];
 
         // Constructor
-        public ItemStorage(GameThing owner)
+        public ItemStorage(GameThing owner, ItemStorageCategory category)
         {
             this.Owner = owner;
+            this.Category = category;
+
             Items = new ReadOnlyCollection<Item>(items);
         }
 
@@ -73,6 +75,9 @@ namespace Remizione
                 return item;
             }
         }
+
+        // Category
+        public ItemStorageCategory Category { get; }
 
         // GetItem
         public Item? GetItem(ItemName name) => itemsDictionary.TryGetValue(name, out var value) ? value : null;

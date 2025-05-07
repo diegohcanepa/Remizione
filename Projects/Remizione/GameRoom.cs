@@ -3,7 +3,6 @@ using EngendroAdventure;
 using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Remizione.Effects;
 using System;
 using System.Collections.Generic;
 

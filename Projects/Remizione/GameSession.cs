@@ -66,7 +66,7 @@ namespace Remizione
             }
 
             this.contextMenuScene = new(this);
-            this.inventoryScene = new(this);
+            this.inventoryScene = new(this.Game);
 
             LocalizationSource = LocalizationSource.Script;
         }
@@ -222,7 +222,7 @@ namespace Remizione
             {
                 foreach (var phase in Enum.GetValues<PlacementPhase>())
                 {
-                    staticThings.Add(phase, new());
+                    staticThings.Add(phase, []);
                 }
             }
 
@@ -509,9 +509,10 @@ namespace Remizione
         }
 
         // ShowInventory
+        [ScriptMethod]
         public void ShowInventory()
         {
-            inventoryScene.Actor = player;
+            inventoryScene.Storage = Player?.Skills;
             Game.SceneManager.Push(inventoryScene);
             Camera.FocusTarget();
         }

@@ -26,8 +26,10 @@
   <String Key="ItemCategory.Spells">Poderes</String>
   <String Key="ItemCategory.Throwables">Arrojables</String>
   <String Key="ItemEffects.DamageBonusEffect">Incrementa el daño {Bonus}</String>
-  <String Key="Items.Cross.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="Items.Cross.Name">Crucifijo AA 3000</String>
+  <String Key="Items.UnarmedAttack.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
+  <String Key="Items.UnarmedAttack.Name">Arrebato</String>
+  <String Key="ItemStorageCategory.Inventory">Tus cosas</String>
+  <String Key="ItemStorageCategory.Skills">Conocimientos</String>
   <String Key="Languages.Abbreviations">Srta.|Sr.|Dr.</String>
   <String Key="Languages.de-de">Deutsch</String>
   <String Key="Languages.en-us">English</String>

@@ -1,5 +1,4 @@
-﻿using EngendroAdventure;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace Remizione
 {
@@ -28,7 +27,7 @@ namespace Remizione
                 Actor.MoveTo(target.GetApproachPosition(Actor, false));
             }
         }
-        
+
         #endregion
 
         // Enter

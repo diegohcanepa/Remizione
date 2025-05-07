@@ -76,7 +76,7 @@ namespace Remizione
             get
             {
                 int baseCooldown = 100;
-                int modifier = GetModifier(PrimaryStat.Constitution);
+                int modifier = GetModifier(Stat.Constitution);
 
                 // Increase cooldown by 100ms for each modifier point
                 return Math.Max(250, baseCooldown + (modifier * 100));
@@ -97,44 +97,44 @@ namespace Remizione
         // GetDefense
         public int GetDefense(int armorBonus = 0, int miscBonus = 0)
         {
-            return 10 + GetModifier(PrimaryStat.Dexterity) + armorBonus + miscBonus;
+            return 10 + GetModifier(Stat.Dexterity) + armorBonus + miscBonus;
         }
 
         // GetMaxAnger
         public int GetMaxAnger()
         {
-            return 15 + (actor.Level * (AngerGainPerLevel + GetModifier(PrimaryStat.Dexterity)));
+            return 15 + (actor.Level * (AngerGainPerLevel + GetModifier(Stat.Dexterity)));
         }
 
         // GetMaxFaith
         public int GetMaxFaith()
         {
-            return actor.Level * (FaithGainPerLevel + GetModifier(PrimaryStat.Devotion));
+            return actor.Level * (FaithGainPerLevel + GetModifier(Stat.Devotion));
         }
 
         // GetMaxHP
         public int GetMaxHP()
         {
-            return actor.Level * (HPGainPerLevel + GetModifier(PrimaryStat.Constitution));
+            return actor.Level * (HPGainPerLevel + GetModifier(Stat.Constitution));
         }
 
         // GetModifier
-        public int GetModifier(PrimaryStat stat)
+        public int GetModifier(Stat stat)
         {
             return (GetStatValue(stat) - 10) / 2;
         }
 
         // GetStatValue
-        public int GetStatValue(PrimaryStat stat)
+        public int GetStatValue(Stat stat)
         {
             return stat switch
             {
-                PrimaryStat.Constitution => Constitution,
-                PrimaryStat.Devotion => Devotion,
-                PrimaryStat.Dexterity => Dexterity,
-                PrimaryStat.Empathy => Empathy,
-                PrimaryStat.Mind => Mind,
-                PrimaryStat.Strength => Strength,
+                Stat.Constitution => Constitution,
+                Stat.Devotion => Devotion,
+                Stat.Dexterity => Dexterity,
+                Stat.Empathy => Empathy,
+                Stat.Mind => Mind,
+                Stat.Strength => Strength,
                 _ => throw new System.NotImplementedException()
             };
         }
@@ -146,12 +146,12 @@ namespace Remizione
         public int HPGainPerLevel { get; private set; } = 8;
 
         // PerformSkillCheck
-        public int PerformSkillCheck(PrimaryStat stat) => DiceBag.Dice20.Roll() + GetStatValue(stat);
+        public int PerformSkillCheck(Stat stat) => DiceBag.Dice20.Roll() + GetStatValue(stat);
 
         // RollAttack
         public int RollAttack(AttackRollStat stat, out bool criticalHit)
         {
-            int modifier = stat == AttackRollStat.Dexterity ? GetModifier(PrimaryStat.Dexterity) : GetModifier(PrimaryStat.Strength);
+            int modifier = stat == AttackRollStat.Dexterity ? GetModifier(Stat.Dexterity) : GetModifier(Stat.Strength);
             var d20 = DiceBag.Dice20.Roll();
             criticalHit = d20 == 20;
             return d20 + modifier;
@@ -160,7 +160,7 @@ namespace Remizione
         // RollInitiative
         public int RollInitiative()
         {
-            return DiceBag.Dice20.Roll() + GetModifier(PrimaryStat.Dexterity);
+            return DiceBag.Dice20.Roll() + GetModifier(Stat.Dexterity);
         }
 
         // RollInitiative
@@ -173,14 +173,14 @@ namespace Remizione
         }
 
         // RollSavingThrow
-        public int RollSavingThrow(PrimaryStat stat)
+        public int RollSavingThrow(Stat stat)
         {
             return stat switch
             {
-                PrimaryStat.Mind => DiceBag.Dice20.Roll() + GetModifier(PrimaryStat.Mind),
-                PrimaryStat.Constitution => DiceBag.Dice20.Roll() + GetModifier(PrimaryStat.Constitution),
-                PrimaryStat.Devotion => DiceBag.Dice20.Roll() + GetModifier(PrimaryStat.Devotion),
-                PrimaryStat.Empathy => DiceBag.Dice20.Roll() + GetModifier(PrimaryStat.Empathy),
+                Stat.Mind => DiceBag.Dice20.Roll() + GetModifier(Stat.Mind),
+                Stat.Constitution => DiceBag.Dice20.Roll() + GetModifier(Stat.Constitution),
+                Stat.Devotion => DiceBag.Dice20.Roll() + GetModifier(Stat.Devotion),
+                Stat.Empathy => DiceBag.Dice20.Roll() + GetModifier(Stat.Empathy),
                 _ => DiceBag.Dice20.Roll()
             };
         }

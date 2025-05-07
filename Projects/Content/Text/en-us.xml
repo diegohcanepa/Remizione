@@ -26,8 +26,10 @@
   <String Key="ItemCategory.Spells">Spells</String>
   <String Key="ItemCategory.Throwables">Throwables</String>
   <String Key="ItemEffects.DamageBonusEffect">Increase damage</String>
-  <String Key="Items.Cross.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="Items.Cross.Name">Crucifix AA 3000</String>
+  <String Key="Items.UnarmedAttack.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
+  <String Key="Items.UnarmedAttack.Name">Outburst</String>
+  <String Key="ItemStorageCategory.Inventory">Your stuff</String>
+  <String Key="ItemStorageCategory.Skills">Knowledge</String>
   <String Key="Languages.Abbreviations">Miss | Mr. | DR.</String>
   <String Key="Languages.de-de">Deutsch</String>
   <String Key="Languages.en-us">English</String>

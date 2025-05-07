@@ -24,7 +24,7 @@ namespace Remizione
 
             this.text = new TextSprite(session.Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Light,
+                Color = ColorPalette.Text.Default,
                 Scale = ScaleInfo.Text.Large,
                 PivotOrigin = RectanglePoint.Bottom
             };
@@ -56,7 +56,7 @@ namespace Remizione
         public int MessageId { get; set; }
 
         // Show
-        public void Show(Vector2 origin, string value) => Show(origin, value, ColorPalette.Text.Light);
+        public void Show(Vector2 origin, string value) => Show(origin, value, ColorPalette.Text.Default);
 
         // Show
         public void Show(Vector2 origin, string value, Color color)

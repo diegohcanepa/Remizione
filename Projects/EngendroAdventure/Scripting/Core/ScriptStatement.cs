@@ -28,7 +28,7 @@ namespace EngendroAdventure.Scripting
         // CreateInstance
         public Statement? CreateInstance(Script script, string source, StatementBody body)
         {
-            return constructorInfo.Invoke(new object[] { script, source, body }) as Statement;
+            return constructorInfo.Invoke([script, source, body]) as Statement;
         }
 
         // StatementType

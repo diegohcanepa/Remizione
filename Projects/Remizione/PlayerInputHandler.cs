@@ -58,10 +58,7 @@ namespace Remizione
             Actor.FastMove = true;
             if (Actor.InteractiveTarget != null)
             {
-                if (Actor.InteractiveTarget == Actor)
-                    Actor.Session.ShowContextMenu(Actor);
-                else
-                    Actor.ApproachAndInteract(Actor.InteractiveTarget);
+                Actor.ApproachAndInteract(Actor.InteractiveTarget);
             }
             else
             {
@@ -79,6 +76,9 @@ namespace Remizione
         // TestMouseRightButtonClick
         private bool TestMouseRightButtonClick()
         {
+            Actor.Session.ShowInventory();
+            return true;
+
             var result = InputManager.DefaultPlayer.Mouse.IsRightButtonPressed();
 
             if (result)

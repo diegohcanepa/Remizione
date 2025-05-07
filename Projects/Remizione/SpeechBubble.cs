@@ -72,7 +72,7 @@ namespace Remizione
 
             // Pipe
             pipe = new ImageSprite(Game, Atlases.UI.SpeechBubblePipe)
-            {   
+            {
                 Color = ColorPalette.SpeechBubble.Fill,
                 PivotOrigin = RectanglePoint.Bottom
             };
@@ -358,7 +358,7 @@ namespace Remizione
         public static SpeechBubble? ModalInstance { get; private set; }
 
         // Show
-        public void Show(string title, string text, bool awaitInput)
+        public void Show(string text, bool awaitInput)
         {
             if (string.IsNullOrWhiteSpace(text))
                 return;

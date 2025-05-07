@@ -5,7 +5,6 @@ using EngendroAdventure;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Remizione.Menus;
-using System;
 
 namespace Remizione
 {

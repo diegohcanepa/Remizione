@@ -11,7 +11,7 @@ namespace EngendroAdventure.Scripting
 
         // Constructor
         protected Vector2TweenCommand(Script script, string source, StatementBody body, params string[] supportedFlags)
-            : base(script, source, body, 6, supportedFlags.Concatenate(new string[] { BouncesArg, BounceDelayArg, DecimalsArg, LoopedArg, RelativeArg }))
+            : base(script, source, body, 6, supportedFlags.Concatenate([BouncesArg, BounceDelayArg, DecimalsArg, LoopedArg, RelativeArg]))
         {
             AssertEntity<Entity>(0);
             Parser.ParseEnum<TweenStyle>(this, 1);

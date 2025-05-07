@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using EngendroAdventure;
 using Microsoft.Xna.Framework;
 using System;
@@ -15,7 +14,7 @@ namespace Remizione
     public class WorldBlock : Prop
     {
         #region Private fields
-        
+
         private readonly bool[] borders = new bool[4];
         private readonly ImageSprite[] borderImages;
         private readonly WorldBlockGrid decorationGrid;
@@ -66,7 +65,7 @@ namespace Remizione
 
             // Top
             borderImages[0] = new ImageSprite(Game)
-            { 
+            {
                 Image = Atlases.Environment.GetImage($"{DefaultImageName}Top"),
                 PivotOrigin = RectanglePoint.Bottom
             };
@@ -150,10 +149,10 @@ namespace Remizione
             if (thing.InstancesPerBlock.IsEmpty)
                 return;
 
-            var targetGrid = thing.IsWalkAreaHole ? grid: decorationGrid;
+            var targetGrid = thing.IsWalkAreaHole ? grid : decorationGrid;
             Size sizeInCells = thing.GetRequiredGridSpace(WorldBlockGrid.CellSize);
             var count = random.Next(thing.InstancesPerBlock.Minimum, thing.InstancesPerBlock.Maximum + 1);
-            
+
             for (int i = 0; i < count; i++)
             {
                 // Intentos limitados para evitar bucles infinitos si no hay espacio
@@ -295,7 +294,7 @@ namespace Remizione
             {
                 if (borders[i])
                     borderImages[i].Draw(gameTime);
-            }   
+            }
         }
 
         // OnInvalidate

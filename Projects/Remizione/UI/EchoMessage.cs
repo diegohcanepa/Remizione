@@ -20,7 +20,7 @@ namespace Remizione
         {
             this.textSprite = new TextSprite(Game, Fonts.Main)
             {
-                Color = ColorPalette.Text.Dark,
+                Color = ColorPalette.TextDepracated.Dark,
                 MaximumWidth = (int)(Screen.NativeWidth * .7f),
                 PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.Bottom,

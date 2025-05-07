@@ -18,7 +18,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(ItemName name, ItemCategory category, ItemAction action, DiceRoll baseDamage, Vector2 knockback, int maximum, int hp, int faith, int range, int anger)
+        public MetaItem(ItemName name, ItemCategory category, ItemAction action, DiceRoll baseDamage, Stat modifier, Vector2 knockback, int maximum, int hp, int faith, int range, int anger, int durability)
         {
             if (name == ItemName.None)
                 throw new InvalidOperationException("Item must have a name.");
@@ -27,12 +27,15 @@ namespace Remizione
             this.Category = category;
             this.Action = action;
             this.BaseDamage = baseDamage;
+            this.Durability = durability;
             this.Knockback = knockback;
             this.Maximum = maximum;
             this.Faith = faith;
             this.HP = hp;
             this.Range = range;
+            this.Modifier = modifier;
             this.Anger = anger;
+            this.LocalizedName = TextRepository.GetValue($"Items.{Name}.Name");
 
             this.UpgradeCosts = new ReadOnlyCollection<int>(upgradeCosts);
             this.UpgradeEffects = new ReadOnlyCollection<ItemEffect>(upgradeEffects);
@@ -73,6 +76,12 @@ namespace Remizione
         // Category
         public ItemCategory Category { get; }
 
+        // Durability
+        public int Durability { get; set; }
+
+        // Faith
+        public int Faith { get; }
+
         // GetUpgradeDescription
         public string GetUpgradeDescription(int level)
         {
@@ -84,20 +93,23 @@ namespace Remizione
             return text;
         }
 
-        // Faith
-        public int Faith { get; }
-
         // HP
         public int HP { get; }
 
         // Knockback
         public Vector2 Knockback { get; }
 
+        // LocalizedName
+        public string LocalizedName { get; }
+
         // Maximum
         public int Maximum { get; }
 
         // MaximumLevel
         public int MaximumLevel => upgradeEffects.Count;
+
+        // Modifier
+        public Stat Modifier { get; }
 
         // Name
         public ItemName Name { get; }

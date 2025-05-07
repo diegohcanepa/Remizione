@@ -48,7 +48,7 @@ namespace Remizione
             // Label
             this.label = new TextSprite(game, outlineFont ? Fonts.MainOutline : Fonts.Main)
             {
-                Color = ColorPalette.Text.Dark,
+                Color = ColorPalette.TextDepracated.Dark,
                 ShadowColor = ColorPalette.UIControlShadow,
                 Text = text
             };

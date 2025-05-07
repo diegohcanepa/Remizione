@@ -8,7 +8,7 @@ namespace Remizione
     /// </summary>
     public sealed class CombatStateMachine
     {
-        private Dictionary<CombatStateName, CombatState> states = [];
+        private readonly Dictionary<CombatStateName, CombatState> states = [];
 
         // Constructor
         public CombatStateMachine(Actor actor)

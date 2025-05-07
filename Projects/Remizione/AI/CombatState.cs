@@ -15,7 +15,7 @@ namespace Remizione
 
         // Actor
         public Actor Actor => StateMachine.Actor;
-        
+
         // Enter
         public virtual void Enter()
         {

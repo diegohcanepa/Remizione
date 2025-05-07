@@ -55,6 +55,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string DirectionConstraintArg = "#direction-constraint";
         protected static readonly string DisableArg = "#disable";
         protected static readonly string DisabledArg = "#disabled";
+        protected static readonly string DurabilityArg = "#durability";
         protected static readonly string DurationArg = "#duration";
         protected static readonly string DrawOwnerArg = "#draw-owner";
         protected static readonly string EnforceArg = "#enforce";
@@ -105,6 +106,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string MaximumArg = "#maximum";
         protected static readonly string MaximumLevelArg = "#maximum-level";
         protected static readonly string MaximumWidthArg = "#maximum-width";
+        protected static readonly string ModifierArg = "#modifier";
         protected static readonly string MusicArg = "#music";
         protected static readonly string MuteArg = "#mute";
         protected static readonly string NameArg = "#name";

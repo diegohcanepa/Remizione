@@ -37,7 +37,7 @@ namespace Remizione
         // GetAvailableLanguageTags
         internal static string[] GetAvailableLanguageTags()
         {
-            return new string[] { SpanishLatinAmerica, English };
+            return [SpanishLatinAmerica, English];
         }
 
         // Initialize

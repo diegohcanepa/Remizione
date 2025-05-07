@@ -172,10 +172,10 @@ namespace EngendroAdventure.Scripting
         public const string SubtractionAssignmentOp = "-=";
 
         // SupportedNumericTypes
-        public static ReadOnlyCollection<Type> SupportedNumericTypes { get; } = new ReadOnlyCollection<Type>(new Type[] { typeof(int), typeof(long), typeof(float) });
+        public static ReadOnlyCollection<Type> SupportedNumericTypes { get; } = new ReadOnlyCollection<Type>([typeof(int), typeof(long), typeof(float)]);
 
         // SupportedPropertyTypes
-        public static ReadOnlyCollection<Type> SupportedPropertyTypes { get; } = new ReadOnlyCollection<Type>(new Type[] { typeof(Atlas),
+        public static ReadOnlyCollection<Type> SupportedPropertyTypes { get; } = new ReadOnlyCollection<Type>([ typeof(Atlas),
                                                                                                                   typeof(bool),
                                                                                                                   typeof(Color),
                                                                                                                   typeof(DiceRoll),
@@ -192,7 +192,7 @@ namespace EngendroAdventure.Scripting
                                                                                                                   typeof(Sound),
                                                                                                                   typeof(string),
                                                                                                                   typeof(Vector2),
-                                                                                                                  typeof(Polygon) });
+                                                                                                                  typeof(Polygon) ]);
 
         // ThisKeyword
         public const string ThisKeyword = "this";

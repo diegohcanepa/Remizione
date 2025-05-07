@@ -342,7 +342,7 @@ namespace Engendro
                 return text;
             }
 
-            var lines = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+            var lines = text.Split([Environment.NewLine], StringSplitOptions.None);
 
             stringBuilder.Clear();
 

@@ -25,13 +25,13 @@ namespace Remizione.UI
         {
             this.deltaScoreText = new TextSprite(Game, Fonts.MainOutline)
             {
-                Color = ColorPalette.Text.Light,
+                Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.RightBottom
             };
 
             this.scoreText = new TextSprite(Game, Fonts.MainOutline)
             {
-                Color = ColorPalette.Text.Light
+                Color = ColorPalette.Text.Default
             };
 
             this.Scale = ScaleInfo.Text.Medium;

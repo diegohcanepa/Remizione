@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Remizione.UI;
@@ -20,8 +19,8 @@ namespace Remizione
         private readonly TextSprite messageText;
         private readonly ImageSprite[] meterIcons;
         private readonly TextSprite narrationText;
-        private readonly TextSprite prompt;
         private readonly ImageSprite savingIcon;
+        private readonly TextSprite sentenceText;
         private readonly GameSession session;
 
         // Constructor
@@ -53,8 +52,8 @@ namespace Remizione
             meterIcons[2] = new ImageSprite(Game, Atlases.UI.AngerIcon) { Scale = ScaleInfo.UIIcon.Small };
 
             meterIcons[0].Position = new(4);
-            meterIcons[1].Position = meterIcons[0].BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, .5f);
-            meterIcons[2].Position = meterIcons[1].BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, .5f);
+            meterIcons[1].Position = meterIcons[0].BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, .4f);
+            meterIcons[2].Position = meterIcons[1].BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, .4f);
 
             hpMeter.Position = new(10, 5);
             faithMeter.Position = new(10, 11);
@@ -63,7 +62,7 @@ namespace Remizione
             this.angerIconLarge = new ImageSprite(Game, Atlases.UI.AngerIcon) { PivotOrigin = RectanglePoint.Right, Scale = ScaleInfo.UIIcon.Medium };
 
             this.angerMeterLarge = new Meter(Game, ColorPalette.Anger.Back, ColorPalette.Anger.Fore, 3.6f)
-            { 
+            {
                 Alignment = HorizontalAlignment.Center,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 11)
             };
@@ -78,9 +77,9 @@ namespace Remizione
             };
 
             // Prompt
-            this.prompt = new TextSprite(Game, Fonts.CommonOutline)
+            this.sentenceText = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Light,
+                Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.Bottom, 0, -5),
                 Scale = ScaleInfo.Text.VeryLarge
@@ -89,7 +88,7 @@ namespace Remizione
             // Message text
             this.messageText = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.LightRed,
+                Color = ColorPalette.TextDepracated.Dark,
                 PivotOrigin = RectanglePoint.Top,
                 Position = Screen.Area.GetPoint(RectanglePoint.Top, 0, 5),
                 Scale = ScaleInfo.Text.Large
@@ -98,7 +97,7 @@ namespace Remizione
             // Narration text
             this.narrationText = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.LightRed,
+                Color = ColorPalette.Text.Default,
                 MaximumWidth = (int)(Screen.NativeWidth * .7f),
                 PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.Bottom,
@@ -150,20 +149,20 @@ namespace Remizione
         // UpdatePrompt
         private void UpdatePrompt()
         {
-            if (MouseCursor.Instance.State != MouseCursorState.Wait && 
-                session.Player?.InteractiveTarget is GameThing target && 
+            if (session.IsCurrentScene && MouseCursor.Instance.State != MouseCursorState.Wait &&
+                session.Player?.InteractiveTarget is GameThing target &&
                 (!session.TargetMode || target.CanBeTargeted))
             {
-                if (target != prompt.Tag)
+                if (target != sentenceText.Tag)
                 {
-                    prompt.Tag = target;
-                    prompt.Text = "..." + target.GetLocalizedDisplayName() + "...";
+                    sentenceText.Tag = target;
+                    sentenceText.Text = "..." + target.GetLocalizedDisplayName() + "...";
                 }
             }
             else
             {
-                prompt.Text = null;
-                prompt.Tag = null;
+                sentenceText.Text = null;
+                sentenceText.Tag = null;
             }
         }
 
@@ -177,11 +176,11 @@ namespace Remizione
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
 
             if (narrationText.IsEmpty)
-                prompt.Draw(gameTime);
+                sentenceText.Draw(gameTime);
             else
                 narrationText.Draw(gameTime);
 
-            messageText.Draw(gameTime); 
+            messageText.Draw(gameTime);
 
             Game.SpriteBatch.End();
 

@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using System;
 
 namespace Remizione
 {
@@ -84,14 +83,22 @@ namespace Remizione
             }
         }
 
+        // Durability
+        public int Durability { get; set; }
+
         // EndUse
         public void EndUse(GameThing target, HitType hitType)
         {
             if (BaseDamage != DiceRoll.Empty)
             {
+                var actor = Owner as Actor;
                 int damageAmount;
-                if (MetaItem.Anger < 0 && Owner is Actor actor && actor.Anger < 0)
+
+                // Anger penalty
+                if (MetaItem.Anger < 0 && actor != null && actor.Anger < 0)
+                {
                     damageAmount = BaseDamage.MinimumValue;
+                }
                 else
                 {
                     if (hitType == HitType.Glancing)
@@ -101,10 +108,17 @@ namespace Remizione
                     else
                     {
                         damageAmount = BaseDamage.Roll();
+
+                        if (actor != null)
+                            damageAmount += actor.Stats.GetModifier(MetaItem.Modifier);
+
                         if (hitType == HitType.Critical)
                             damageAmount += BaseDamage.Roll();
                     }
                 }
+
+                if (MetaItem.Durability > 0 && Durability > 0)
+                    Durability -= 1;
 
                 target.TakeDamage(Storage.Owner, damageAmount, hitType, Knockback);
             }

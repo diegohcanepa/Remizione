@@ -33,7 +33,7 @@ namespace Remizione.Inventory
             // Selection image
             this.selectionImage = new ImageSprite(Game, Atlases.UI.InventorySlotSelection)
             {
-                Color = ColorPalette.Text.Dark,
+                Color = ColorPalette.TextDepracated.Dark,
                 Opacity = .8f,
                 Scale = new(.75f)
             };

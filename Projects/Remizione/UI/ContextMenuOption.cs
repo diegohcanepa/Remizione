@@ -6,16 +6,17 @@ namespace Remizione.UI
     /// <summary>
     /// ContextMenuOption
     /// </summary>
-    public sealed class ContextMenuOption<TKey> : IDraw, IUpdate
+    public sealed class ContextMenuOption<TKey>
     {
         private readonly ContextMenu<TKey> menu;
         private readonly TextSprite textSprite;
 
         // Constructor
-        public ContextMenuOption(ContextMenu<TKey> menu, TKey key, string text)
+        public ContextMenuOption(ContextMenu<TKey> menu, TKey key, string text, object? tag = null)
         {
             this.menu = menu;
             this.Key = key;
+            this.Tag = tag;
 
             this.textSprite = new TextSprite(menu.Game, menu.Font)
             {
@@ -24,7 +25,7 @@ namespace Remizione.UI
             };
 
             UpdateColor();
-        }
+}
 
         #region Private members
 
@@ -57,6 +58,9 @@ namespace Remizione.UI
             get => textSprite.Position;
             set => textSprite.Position = value;
         }
+
+        // Tag
+        public object? Tag { get; set; }
 
         // TextBoundingBox
         public RectangleF TextBoundingBox => textSprite.BoundingBox;

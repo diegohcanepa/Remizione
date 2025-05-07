@@ -498,7 +498,7 @@ namespace Engendro
         }
 
         // StopZooming
-        public void StopZooming() =>zoomTween.Stop();
+        public void StopZooming() => zoomTween.Stop();
 
         // Target
         public ITransform? Target { get; private set; }

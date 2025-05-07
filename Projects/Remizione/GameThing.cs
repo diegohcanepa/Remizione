@@ -428,7 +428,7 @@ namespace Remizione
         // AddVerbs
         public void AddVerbs(params Verb[] verbs)
         {
-            verbList ??= new();
+            verbList ??= [];
 
             for (var i = 0; i < verbs.Length; i++)
             {
@@ -458,7 +458,7 @@ namespace Remizione
 
             OnDamageReaction(attacker);
 
-            var damageTextColor = hitType == HitType.Critical ? ColorPalette.Text.Dark : ColorPalette.Text.Light;
+            var damageTextColor = hitType == HitType.Critical ? ColorPalette.TextDepracated.Dark : ColorPalette.Text.Default;
             var damageText = $"{(int)CumulativeDamage}";
             if (hitType == HitType.Critical)
                 damageText += " " + TextRepository.GetValue("HitType.Critical");
@@ -645,7 +645,7 @@ namespace Remizione
                 requesterBox = requester.BoundingBox;
 
             Vector2 result;
-            
+
             if (inFront)
             {
                 if (Direction == FacingDirection.Left)

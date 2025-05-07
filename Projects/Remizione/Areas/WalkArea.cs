@@ -16,8 +16,8 @@ namespace Remizione
         #region Private members
 
         private readonly ReadOnlyPolygon deflatedPolygon;
-        private readonly PathNode findPathEndNode = new PathNode();
-        private readonly PathNode findPathStartNode = new PathNode();
+        private readonly PathNode findPathEndNode = new();
+        private readonly PathNode findPathStartNode = new();
         private readonly List<IHoleArea> holeAreas = [];
         private readonly NamedObjectCollection<HoleArea> holes = [];
         private readonly ReadOnlyPolygon inflatedPolygon;
@@ -301,7 +301,7 @@ namespace Remizione
             for (var i = 0; i < holeAreas.Count; i++)
             {
                 if (!holeAreas[i].InLineOfSight(value1, value2))
-                    return false;              
+                    return false;
             }
 
             return true;

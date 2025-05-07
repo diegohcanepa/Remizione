@@ -61,7 +61,7 @@ namespace Remizione.UI
                 if (value != position)
                 {
                     this.position = value;
-                    
+
                     if (position.HasValue)
                     {
                         sprite.Position = position.Value;

@@ -1,33 +1,48 @@
 ﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Remizione.UI
 {
     /// <summary>
-    /// ContextMenu
+    /// ItemMenu
     /// </summary>
-    public sealed class ContextMenu<TKey> : GameObject, IInputHandler
+    public sealed class ItemMenu : GameObject, IInputHandler
     {
         #region Private fields
 
-        private readonly List<RectangleF> boundingBoxes = [];
-        private readonly List<ContextMenuOption<TKey>> optionList = [];
+        private readonly ImageSprite container;
+        private readonly List<ItemMenuOption> optionList = [];
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 200 };
+        private readonly TextSprite titleText;
 
         #endregion
 
         #region Constructor
 
         // Constructor
-        public ContextMenu(EngendroGame game, Camera camera, Font? font = null)
+        public ItemMenu(EngendroGame game, Font? font = null)
             : base(game)
         {
-            this.Camera = camera;
-            this.Font = font ?? Fonts.CommonOutline;
-            this.Options = new ReadOnlyCollection<ContextMenuOption<TKey>>(optionList);
+            this.Font = font ?? Fonts.Common;
+            this.Options = new ReadOnlyCollection<ItemMenuOption>(optionList);
+
+            this.container = new(game, Atlases.UI.ItemMenuContainer)
+            {
+                PivotOrigin = RectanglePoint.Top,
+                Scale = new(.5f)
+            };
+
+            // Title
+            this.titleText = new TextSprite(Game, Fonts.Common)
+            {
+                Color = ColorPalette.Text.Default,
+                PivotOrigin = RectanglePoint.Bottom,
+                Scale = ScaleInfo.Text.Large
+            };
         }
 
         #endregion
@@ -37,16 +52,22 @@ namespace Remizione.UI
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Camera);
+            Game.SpriteBatch.Begin(Game.Camera);
+
+            container.Draw(gameTime);
 
             for (var i = 0; i < optionList.Count; i++)
             {
-                //if (optionList[i] == SelectedOption)
-                //    Game.Shapes.DrawRectangle(boundingBoxes[i], ColorPalette.ContextMenu.OptionBack);
+                if (optionList[i].IsSelected)
+                    Game.Shapes.DrawRectangle(optionList[i].BoundingBox, new(41, 29, 43));
 
                 optionList[i].Draw(gameTime);
             }
 
+            Game.SpriteBatch.End();
+
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            titleText.Draw(gameTime);
             Game.SpriteBatch.End();
         }
 
@@ -55,7 +76,7 @@ namespace Remizione.UI
         {
             if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
             {
-                if (GetOptionAt(InputManager.DefaultPlayer.Mouse.WorldPosition(Camera)) is ContextMenuOption<TKey> option)
+                if (GetOptionAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is ItemMenuOption option)
                 {
                     SelectedOption = option;
                     if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
@@ -76,23 +97,18 @@ namespace Remizione.UI
 
         #endregion
 
-        // IsActiveInGameLoop
-        public override bool IsActiveInGameLoop => IsVisible;
-
         // AddOption
-        public ContextMenuOption<TKey> AddOption(TKey key, string text)
+        public ItemMenuOption AddOption(Item item)
         {
-            ContextMenuOption<TKey> result = new(this, key, text);
+            ItemMenuOption result = new(this, item);
             optionList.Add(result);
-            boundingBoxes.Add(RectangleF.Empty);
+            optionList.Sort((a, b) => a.ToString().CompareTo(b.ToString()));
+
             return result;
         }
 
         // BoundingBox
-        public RectangleF BoundingBox { get; private set; }
-
-        // Camera
-        public Camera Camera { get; }
+        public RectangleF BoundingBox => container.BoundingBox;
 
         // CanHandleInput
         public bool CanHandleInput => true;
@@ -108,11 +124,11 @@ namespace Remizione.UI
         public Font Font { get; }
 
         // GetOptionAt
-        public ContextMenuOption<TKey>? GetOptionAt(Vector2 position)
+        public ItemMenuOption? GetOptionAt(Vector2 position)
         {
             for (var i = 0; i < optionList.Count; i++)
             {
-                if (boundingBoxes[i].Contains(position))
+                if (optionList[i].BoundingBox.Contains(position))
                     return optionList[i];
             }
 
@@ -140,60 +156,45 @@ namespace Remizione.UI
             IsVisible = false;
         }
 
+        // IsActiveInGameLoop
+        public override bool IsActiveInGameLoop => IsVisible;
+
         // IsVisible
         public bool IsVisible { get; private set; }
 
+        // Margin
+        public Vector2 Margin { get; } = new(4, 3);
+
         // Options
-        public ReadOnlyCollection<ContextMenuOption<TKey>> Options { get; }
+        public ReadOnlyCollection<ItemMenuOption> Options { get; }
 
         // SelectedOption
-        public ContextMenuOption<TKey>? SelectedOption { get; private set; }
+        public ItemMenuOption? SelectedOption { get; private set; }
 
         // Show
-        public void Show(Vector2 position, bool fromBottom)
+        public void Show(Vector2 position, string title)
         {
             IsVisible = true;
 
-            optionList.Sort((a, b) => a.ToString().CompareTo(b.ToString()));
+            container.Position = position;
 
-            // Calculate width
-            Width = 0;
-            for (var i = 0; i < optionList.Count; i++)
-            {
-                if (optionList[i].TextBoundingBox.Width > Width)
-                    Width = optionList[i].TextBoundingBox.Width;
-            }
+            var pos = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, Margin);
 
-            // Calculate height
-            Height = 0;
-            for (var i = 0; i < optionList.Count; i++)
-            {
-                Height += optionList[i].TextBoundingBox.Height;
-            }
-
-            if (fromBottom)
-            {
-                position.X -= Width / 2;
-                position.Y -= Height + 2;
-            }
-
-            var pos = position;
             for (var i = 0; i < optionList.Count; i++)
             {
                 var option = optionList[i];
                 option.Position = pos;
-                boundingBoxes[i] = new(pos.X - 2, pos.Y - 1, Width + 4, option.TextBoundingBox.Height + 1);
-
                 pos.Y += option.TextBoundingBox.Height;
             }
 
-            BoundingBox = new RectangleF(position.X, position.Y, Width, Height);
+            titleText.Text = title;
+            titleText.Position = container.BoundingBox.GetPoint(RectanglePoint.Top);
         }
 
         // TextScale
         public Vector2 TextScale { get; set; } = ScaleInfo.Text.Large;
 
         // Width
-        public float Width { get; private set; }
+        public float Width { get; } = 100;
     }
 }

@@ -59,8 +59,8 @@ namespace Remizione
             this.IgnoreWalkArea = false;
             this.ShadowSpot = new ShadowSpot(this);
 
-            this.Equipment = new ItemStorage(this);
-            this.Skills = new ItemStorage(this);
+            this.Inventory = new ItemStorage(this, ItemStorageCategory.Inventory);
+            this.Skills = new ItemStorage(this, ItemStorageCategory.Skills);
 
             closeAttackState = new ActorCloseAttackState(this);
             deathState = new ActorDeathState(this);
@@ -79,7 +79,7 @@ namespace Remizione
             throwObjectState = new ActorThrowObjectState(this);
             this.StateMachine.RegisterState(throwObjectState);
 
-            this.combatStateMachine = new(this); 
+            this.combatStateMachine = new(this);
         }
 
         #endregion
@@ -99,7 +99,7 @@ namespace Remizione
                         return target;
                 }
             }
-            
+
             return null;
         }
 
@@ -281,7 +281,7 @@ namespace Remizione
         // OnHurt
         protected override void OnHurt(GameThing attacker)
         {
-            IsAlert = true; 
+            IsAlert = true;
 
             StateMachine.ChangeState(ActorStateNames.Hurt);
 
@@ -392,7 +392,7 @@ namespace Remizione
             IsAlert = false;
 
             InteractiveTarget = null;
-            
+
             if (Session.CombatManager.IsActive)
                 Session.CombatManager.Remove(this);
 
@@ -504,7 +504,10 @@ namespace Remizione
                 return false;
 
             var destination = target.GetApproachPosition(this, true);
-            var result = MoveTo(destination);
+
+            var canApproach = target is not Actor actor || !actor.IsCombating;
+
+            var result = canApproach && MoveTo(destination);
             this.pendingInteractiveTarget = target;
 
             if (!result)
@@ -623,9 +626,6 @@ namespace Remizione
             combatStateMachine.ExecuteAction(CombatStateSignal.Move, destination);
         }
 
-        // Equipment
-        public ItemStorage Equipment { get; }
-
         // EndTurn
         public void EndTurn()
         {
@@ -742,6 +742,9 @@ namespace Remizione
 
         // InteractiveTarget
         public GameThing? InteractiveTarget { get; private set; }
+
+        // Inventory
+        public ItemStorage Inventory { get; }
 
         // IsAlert
         public bool IsAlert { get; set; }
@@ -900,7 +903,7 @@ namespace Remizione
 
             if (IsPlayer)
                 Session.HUD.DestinationMark.Position = path[^1];
-            
+
             if (FastMove && StateMachine.CurrentState is ActorMoveState)
                 StateMachine.ChangeState(ActorStateNames.MoveFast);
             else if (!FastMove && StateMachine.CurrentState is ActorMoveFastState)
@@ -939,7 +942,7 @@ namespace Remizione
         public void Say(string text, bool awaitInput)
         {
             speechBubble ??= new SpeechBubble(this);
-            speechBubble.Show(GetLocalizedDisplayName(), text, awaitInput);
+            speechBubble.Show(text, awaitInput);
         }
 
         // SelectTarget
@@ -964,7 +967,7 @@ namespace Remizione
         public void ShowMessage(string value)
         {
             floatingMessage ??= session.ObjectPools.FloatingTexts.Get();
-            floatingMessage.Show(GetOverheadPosition(), value, ColorPalette.Text.LightRed);
+            floatingMessage.Show(GetOverheadPosition(), value, ColorPalette.TextDepracated.Dark);
         }
 
         // Skills

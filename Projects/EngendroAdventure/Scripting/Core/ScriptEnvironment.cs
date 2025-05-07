@@ -186,10 +186,10 @@ namespace EngendroAdventure.Scripting
                 instanceName = CreateDynamicEntityName(staticName);
 
             var result = CreateDynamicThingCore(staticName, instanceName) ?? throw new InvalidOperationException("Cannot create dynamic entity.");
-            
+
             if (persistent)
                 result.Persistent = persistent;
-            
+
             result.Initialize();
 
             return result;
