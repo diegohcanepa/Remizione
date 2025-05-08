@@ -11,6 +11,7 @@ namespace Remizione
     /// </summary>
     public sealed class MetaItem
     {
+        private readonly string nameString;
         private static readonly Dictionary<ItemName, MetaItem> types = [];
         private readonly List<int> upgradeCosts = [];
         private readonly List<ItemEffect> upgradeEffects = [];
@@ -24,6 +25,7 @@ namespace Remizione
                 throw new InvalidOperationException("Item must have a name.");
 
             this.Name = name;
+            this.nameString = name.ToString();
             this.Category = category;
             this.Action = action;
             this.BaseDamage = baseDamage;
@@ -34,8 +36,8 @@ namespace Remizione
             this.HP = hp;
             this.Range = range;
             this.Modifier = modifier;
+            this.LocalizedDescription = TextRepository.GetValue($"Items.{Name}.Description");
             this.LocalizedName = TextRepository.GetValue($"Items.{Name}.Name");
-
             this.UpgradeCosts = new ReadOnlyCollection<int>(upgradeCosts);
             this.UpgradeEffects = new ReadOnlyCollection<ItemEffect>(upgradeEffects);
         }
@@ -95,6 +97,9 @@ namespace Remizione
         // Knockback
         public Vector2 Knockback { get; }
 
+        // LocalizedDescription
+        public string LocalizedDescription { get; }
+
         // LocalizedName
         public string LocalizedName { get; }
 
@@ -114,7 +119,7 @@ namespace Remizione
         public int Range { get; }
 
         // ToString
-        public override string ToString() => Name.ToString();
+        public override string ToString() => nameString;
 
         // UpgradeCosts
         public ReadOnlyCollection<int> UpgradeCosts { get; }

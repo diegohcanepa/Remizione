@@ -10,16 +10,13 @@ namespace Remizione
     public sealed class Item
     {
         private int count;
-        private int maximum;
-        private readonly string nameString;
 
         // Constructor
         public Item(ItemContainer container, MetaItem metaItem)
         {
-            this.nameString = metaItem.Name.ToString();
             this.Container = container;
             this.MetaItem = metaItem;
-            this.IconImage = Atlases.UI.GetImage(nameString) ?? Atlases.UI.MissingItem;
+            this.IconImage = Atlases.UI.GetImage(MetaItem.ToString()) ?? Atlases.UI.MissingItem;
         }
 
         // BeginUse
@@ -171,7 +168,7 @@ namespace Remizione
         }
 
         // ToString
-        public override string ToString() => nameString;
+        public override string ToString() => MetaItem.ToString();
 
         // Unread
         public bool Unread { get; set; }

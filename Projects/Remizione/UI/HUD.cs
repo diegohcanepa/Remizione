@@ -13,7 +13,6 @@ namespace Remizione
         private readonly UIDerivedStats playerStats;
         private readonly ScoreText gpScore;
         private readonly TextSprite messageText;
-        private readonly TextSprite narrationText;
         private readonly ImageSprite savingIcon;
         private readonly UISentence sentence;
         private readonly GameSession session;
@@ -59,23 +58,12 @@ namespace Remizione
                 Position = Screen.Area.GetPoint(RectanglePoint.Top, 0, 8),
                 Scale = ScaleInfo.Text.VeryLarge
             };
-
-            // Narration text
-            this.narrationText = new TextSprite(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Default,
-                MaximumWidth = (int)(Screen.NativeWidth * .7f),
-                PauseOnPunctuationMarks = false,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -10),
-                Scale = ScaleInfo.Text.Large
-            };
         }
 
         #region Private members
 
-        // UpdatePrompt
-        private void UpdatePrompt()
+        // UpdateSentence
+        private void UpdateSentence()
         {
             if (session.IsCurrentScene && MouseCursor.Instance.State != MouseCursorState.Wait &&
                 session.Player?.InteractiveTarget is GameThing target &&
@@ -104,8 +92,6 @@ namespace Remizione
             playerStats.Draw(gameTime);
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-            if (!narrationText.IsEmpty)
-                narrationText.Draw(gameTime);
 
             messageText.Draw(gameTime);
 
@@ -118,7 +104,7 @@ namespace Remizione
 
             EchoMessage.Draw(gameTime);
 
-            if (narrationText.IsEmpty && session.IsCurrentScene)
+            if (sentence.IsEmpty && session.IsCurrentScene)
                 sentence.Draw(gameTime);
 
             if (savingIcon.Tweens.IsTweening)
@@ -134,8 +120,7 @@ namespace Remizione
         {
             playerStats.Update(gameTime);
 
-            UpdatePrompt();
-            narrationText.Update(gameTime);
+            UpdateSentence();
             messageText.Update(gameTime);
 
             if (session.Player != null)
@@ -167,20 +152,6 @@ namespace Remizione
                 {
                     messageText.Text = value;
                     messageText.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicInOut, 0, 1, 500);
-                }
-            }
-        }
-
-        // NarrationText
-        public string NarrationText
-        {
-            get => narrationText.Text ?? string.Empty;
-            set
-            {
-                if (narrationText.Text != value)
-                {
-                    narrationText.Text = value;
-                    narrationText.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicInOut, 0, 1, 500);
                 }
             }
         }

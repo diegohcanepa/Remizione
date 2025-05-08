@@ -30,8 +30,10 @@ namespace Remizione.UI
             this.Font = font ?? Fonts.Common;
             this.Options = new ReadOnlyCollection<ItemMenuOption>(optionList);
 
+            // Container
             this.container = new(game, Atlases.UI.ItemMenuContainer)
             {
+                Opacity = .7f,
                 PivotOrigin = RectanglePoint.Top,
                 Scale = new(.5f)
             };
@@ -59,7 +61,7 @@ namespace Remizione.UI
             for (var i = 0; i < optionList.Count; i++)
             {
                 if (optionList[i].IsSelected)
-                    Game.Shapes.DrawRectangle(optionList[i].BoundingBox, new(41, 29, 43));
+                    Game.Shapes.DrawRectangle(optionList[i].BoundingBox, new Color(41, 29, 43) * .6f);
 
                 optionList[i].Draw(gameTime);
             }

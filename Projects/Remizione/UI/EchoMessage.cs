@@ -20,12 +20,12 @@ namespace Remizione
         {
             this.textSprite = new TextSprite(Game, Fonts.Common)
             {
-                Color = ColorPalette.TextDepracated.Dark,
+                Color = ColorPalette.Text.Default,
                 MaximumWidth = (int)(Screen.NativeWidth * .7f),
                 PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -10),
-                Scale = ScaleInfo.Text.Medium
+                Scale = ScaleInfo.Text.VeryLarge
             };
         }
 

@@ -68,13 +68,18 @@ namespace Remizione
                 menu.AddOption(Container.Items[i]);
             }
 
-            menu.Show(new Vector2(Screen.NativeWidth / 2, 10), $"@ItemContainerCategory.{Container.Category}");
+            menu.Show(new Vector2(Screen.NativeWidth / 2, 20), $"@ItemContainerCategory.{Container.Category}");
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             menu.Update(gameTime);
+
+            if (menu.SelectedOption != null)
+                sentence.Text = menu.SelectedOption.Item.MetaItem.LocalizedDescription;
+            else
+                sentence.Text = null;
         }
 
         #endregion

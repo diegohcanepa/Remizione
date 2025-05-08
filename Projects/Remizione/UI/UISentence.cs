@@ -18,6 +18,7 @@ namespace Remizione.UI
             this.sentenceText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
+                MaximumWidth = (int)(Screen.NativeWidth * .8f),
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.Bottom, 0, -5),
                 Scale = ScaleInfo.Text.VeryLarge
@@ -35,6 +36,9 @@ namespace Remizione.UI
         }
 
         #endregion
+
+        // IsEmpty
+        public bool IsEmpty => sentenceText.IsEmpty;
 
         // Tag
         public object? Tag { get; set; }

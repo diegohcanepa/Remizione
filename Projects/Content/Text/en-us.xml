@@ -28,6 +28,8 @@
   <String Key="ItemContainerCategory.Inventory">Your stuff</String>
   <String Key="ItemContainerCategory.Skills">Manifestations</String>
   <String Key="ItemEffects.DamageBonusEffect">Increase damage</String>
+  <String Key="Items.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
+  <String Key="Items.RottenApple.Name">Rotten apple</String>
   <String Key="Items.UnarmedAttack.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Items.UnarmedAttack.Name">Outburst</String>
   <String Key="Languages.Abbreviations">Miss | Mr. | DR.</String>

@@ -80,8 +80,8 @@ namespace Remizione
 
             if (result)
             {
-                //Actor.Session.ShowInventory();
-                //return true;
+                Actor.Session.ShowInventory();
+                return true;
 
                 Actor.Session.TargetMode = !Actor.Session.TargetMode;
             }
