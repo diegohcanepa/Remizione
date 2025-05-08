@@ -33,7 +33,7 @@ namespace Remizione.Menus
                 Color = ColorPalette.TextWhite,
                 PivotOrigin = RectanglePoint.Top,
                 Position = image.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 15),
-                Scale = ScaleInfo.Text.Huge,
+                Scale = ScaleInfo.Text.ExtraLarge,
                 Text = "@Menu.Messages.ControllerAdvice"
             };
         }

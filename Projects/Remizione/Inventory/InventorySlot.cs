@@ -73,7 +73,7 @@ namespace Remizione
             }
             Game.SpriteBatch.End();
 
-            if (item != null && item.Maximum != 1)
+            if (item != null && item.MetaItem.Maximum != 1)
             {
                 Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
                 amountText.Draw(gameTime);

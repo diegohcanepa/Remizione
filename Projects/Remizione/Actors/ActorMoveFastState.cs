@@ -19,13 +19,13 @@ namespace Remizione
         public override void Enter()
         {
             base.Enter();
-            angerPenaltyCooldown = Owner.Stats.AngerPenaltyCooldown;
+            angerPenaltyCooldown = Owner.Stats.FaithPenaltyCooldown;
         }
 
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (!Owner.IsCombating || !Owner.AngerMovePenalty)
+            if (!Owner.IsCombating || !Owner.ShouldApplyMovePenalty)
                 return;
 
             if (angerPenaltyCooldown > 0)
@@ -34,8 +34,8 @@ namespace Remizione
             }
             else
             {
-                Owner.Anger -= Owner.Stats.AngerPenalty;
-                angerPenaltyCooldown = Owner.Stats.AngerPenaltyCooldown;
+                Owner.Faith -= Owner.Stats.MovePenalty;
+                angerPenaltyCooldown = Owner.Stats.FaithPenaltyCooldown;
             }
         }
     }

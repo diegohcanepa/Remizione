@@ -34,12 +34,12 @@ namespace Remizione
 
             Owner.ShowMessage("@Messages.Fatigue");
 
-            var newAnger = Owner.MaxAnger * .5f;
+            int faithGain = (int)(Owner.MaxFaith * .5f);
 
             if (Owner.AnimationPlayer.Animation != null)
-                tween.Start(TweenStyle.Linear, Owner.Anger, newAnger, 2000);
+                tween.Start(TweenStyle.Linear, Owner.Faith, faithGain, 2000);
             else
-                Owner.Anger = newAnger;
+                Owner.Faith = faithGain;
         }
 
         // Update
@@ -48,7 +48,7 @@ namespace Remizione
             if (tween.IsRunning)
             {
                 tween.Update(gameTime);
-                Owner.Anger = tween.CurrentValue;
+                Owner.Faith = (int)tween.CurrentValue;
             }
         }
     }

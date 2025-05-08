@@ -16,24 +16,10 @@ namespace Remizione
         public Item(ItemStorage storage, MetaItem metaItem)
         {
             this.nameString = metaItem.Name.ToString();
-
             this.Storage = storage;
             this.MetaItem = metaItem;
-            this.Anger = metaItem.Anger;
-            this.Category = metaItem.Category;
             this.IconImage = Atlases.UI.GetImage(nameString) ?? Atlases.UI.MissingItem;
-            this.BaseDamage = metaItem.BaseDamage;
-            this.Knockback = metaItem.Knockback;
-            this.Maximum = metaItem.Maximum;
-            this.HP = metaItem.HP;
-            this.Range = metaItem.Range;
         }
-
-        // Anger
-        public int Anger { get; }
-
-        // BaseDamage
-        public DiceRoll BaseDamage { get; }
 
         // BeginUse
         public void BeginUse()
@@ -43,7 +29,7 @@ namespace Remizione
             if (Owner is Actor actor)
             {
                 if (actor.Session.CombatManager.IsActive)
-                    actor.Anger += Anger;
+                    actor.Faith += Faith;
             }
 
             if (Level > 0 && MetaItem.UpgradeEffects.Count > 0)
@@ -55,9 +41,6 @@ namespace Remizione
                 }
             }
         }
-
-        // Category
-        public ItemCategory Category { get; }
 
         // Consume
         public bool Consume()
@@ -78,8 +61,8 @@ namespace Remizione
             set
             {
                 this.count = value;
-                if (Maximum > 0 && count > Maximum)
-                    count = Maximum;
+                if (MetaItem.Maximum > 0 && count > MetaItem.Maximum)
+                    count = MetaItem.Maximum;
             }
         }
 
@@ -89,31 +72,31 @@ namespace Remizione
         // EndUse
         public void EndUse(GameThing target, HitType hitType)
         {
-            if (BaseDamage != DiceRoll.Empty)
+            if (MetaItem.BaseDamage != DiceRoll.Empty)
             {
                 var actor = Owner as Actor;
                 int damageAmount;
 
                 // Anger penalty
-                if (MetaItem.Anger < 0 && actor != null && actor.Anger < 0)
+                if (MetaItem.Faith < 0 && actor != null && actor.Faith < 0)
                 {
-                    damageAmount = BaseDamage.MinimumValue;
+                    damageAmount = MetaItem.BaseDamage.MinimumValue;
                 }
                 else
                 {
                     if (hitType == HitType.Glancing)
                     {
-                        damageAmount = BaseDamage.MinimumValue;
+                        damageAmount = MetaItem.BaseDamage.MinimumValue;
                     }
                     else
                     {
-                        damageAmount = BaseDamage.Roll();
+                        damageAmount = MetaItem.BaseDamage.Roll();
 
                         if (actor != null)
                             damageAmount += actor.Stats.GetModifier(MetaItem.Modifier);
 
                         if (hitType == HitType.Critical)
-                            damageAmount += BaseDamage.Roll();
+                            damageAmount += MetaItem.BaseDamage.Roll();
                     }
                 }
 
@@ -141,6 +124,9 @@ namespace Remizione
             target.ApplyDamage(Storage.Owner);
         }
 
+        // Faith
+        public int Faith => MetaItem.Faith;
+
         // GetLocalizedUpgradeDescription
         public string? GetLocalizedUpgradeDescription()
         {
@@ -163,22 +149,10 @@ namespace Remizione
         public bool IsActive => Storage.SelectedItem == this;
 
         // Knockback
-        public Vector2 Knockback { get; }
+        public Vector2 Knockback => MetaItem.Knockback;
 
         // Level
         public int Level { get; set; }
-
-        // Maximum
-        public int Maximum
-        {
-            get => maximum;
-            set
-            {
-                this.maximum = value;
-                if (value > 0 && count > maximum)
-                    count = maximum;
-            }
-        }
 
         // MetaItem
         public MetaItem MetaItem { get; }
@@ -195,8 +169,8 @@ namespace Remizione
         // Replenish
         public void Replenish()
         {
-            if (Maximum > 0)
-                Count = Maximum;
+            if (MetaItem.Maximum > 0)
+                Count = MetaItem.Maximum;
         }
 
         // Storage

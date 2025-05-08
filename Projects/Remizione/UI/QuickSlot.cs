@@ -77,7 +77,7 @@ namespace Remizione.UI
             itemImage.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            if (items?.SelectedItem != null && items.SelectedItem.Maximum != 1)
+            if (items?.SelectedItem != null && items.SelectedItem.MetaItem.Maximum != 1)
             {
                 if (lastKnownCount > 0)
                 {

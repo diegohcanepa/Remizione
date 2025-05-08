@@ -18,7 +18,6 @@ namespace Remizione
         #region Private fields
 
         private readonly FloatTween accelerationFactorTween = new();
-        private float anger;
         private ItemName attackSkillName;
         private BloodSplash? bloodSplash;
         private readonly ActorCloseAttackState closeAttackState;
@@ -30,7 +29,6 @@ namespace Remizione
         private readonly FloatTween headTween = new();
         private readonly ActorHurtState hurtState;
         private int level = 1;
-        private int maxAnger;
         private int maxFaith;
         private readonly FloatTween moveTween = new();
         private GameThing? pendingInteractiveTarget;
@@ -234,11 +232,6 @@ namespace Remizione
         // InputHandler
         protected InputHandler? InputHandler { get; set; }
 
-        // OnAngerChanged
-        protected virtual void OnAngerChanged()
-        {
-        }
-
         // OnDamageReaction
         protected override void OnDamageReaction(GameThing attacker)
         {
@@ -276,6 +269,11 @@ namespace Remizione
         {
             base.OnDrawShadow(gameTime);
             ShadowSpot.Draw(gameTime);
+        }
+
+        // OnFaithChanged
+        protected virtual void OnFaithChanged()
+        {
         }
 
         // OnHurt
@@ -471,28 +469,6 @@ namespace Remizione
         [ScriptProperty]
         public Affinity Affinity { get; set; } = Affinity.Neutral;
 
-        // Anger
-        [ScriptProperty]
-        public float Anger
-        {
-            get => anger;
-            set
-            {
-                if (value != anger)
-                {
-                    anger = Math.Min(value, MaxAnger);
-
-                    if (anger < -1)
-                        anger = -1;
-
-                    OnAngerChanged();
-                }
-            }
-        }
-
-        // AngerMovePenalty
-        public bool AngerMovePenalty => combatStateMachine.CurrentState is CombatChargeState;
-
         // ApplyStats
         [ScriptMethod]
         public void ApplyStats() => Stats.Apply();
@@ -655,6 +631,8 @@ namespace Remizione
                     faith = Math.Min(value, MaxFaith);
                     if (faith < 0)
                         faith = 0;
+
+                    OnFaithChanged();
                 }
             }
         }
@@ -823,21 +801,6 @@ namespace Remizione
             }
         }
 
-        // MaxAnger
-        [ScriptProperty]
-        public int MaxAnger
-        {
-            get => maxAnger;
-            set
-            {
-                if (value != maxAnger)
-                {
-                    maxAnger = value;
-                    Anger = value;
-                }
-            }
-        }
-
         // MaxFaith
         [ScriptProperty]
         public int MaxFaith
@@ -962,6 +925,9 @@ namespace Remizione
 
         // ShadowSpot
         public ShadowSpot ShadowSpot { get; }
+
+        // ShouldApplyMovePenalty
+        public bool ShouldApplyMovePenalty => combatStateMachine.CurrentState is CombatChargeState;
 
         // ShowMessage
         public void ShowMessage(string value)

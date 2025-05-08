@@ -40,7 +40,7 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (Actor.Anger <= 0)
+            if (Actor.Faith <= 0)
                 StateMachine.ExecuteAction(CombatStateSignal.Fatigue);
 
             else if (!Actor.IsMoving)

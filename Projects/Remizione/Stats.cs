@@ -61,49 +61,39 @@ namespace Remizione
 
         #endregion
 
-        // AngerGainPerLevel
-        public int AngerGainPerLevel { get; private set; } = 10;
-
         // AngerDegradationInterval
         public int AngerDegradationInterval { get; private set; }
-
-        // AngerPenalty
-        public int AngerPenalty { get; private set; } = 2;
-
-        // AngerPenaltyCooldown
-        public int AngerPenaltyCooldown
-        {
-            get
-            {
-                int baseCooldown = 100;
-                int modifier = GetModifier(Stat.Constitution);
-
-                // Increase cooldown by 100ms for each modifier point
-                return Math.Max(250, baseCooldown + (modifier * 100));
-            }
-        }
 
         // Apply
         public void Apply()
         {
             actor.MaxFaith = GetMaxFaith();
             actor.MaxHP = GetMaxHP();
-            actor.MaxAnger = GetMaxAnger();
         }
+
+        // MovePenalty
+        public int MovePenalty { get; private set; } = 2;
 
         // FaithGainPerLevel
         public int FaithGainPerLevel { get; private set; } = 10;
+
+        // FaithPenaltyCooldown
+        public int FaithPenaltyCooldown
+        {
+            get
+            {
+                int baseCooldown = 100;
+                int modifier = GetModifier(Stat.Devotion);
+
+                // Increase cooldown by 100ms for each modifier point
+                return Math.Max(250, baseCooldown + (modifier * 100));
+            }
+        }
 
         // GetDefense
         public int GetDefense(int armorBonus = 0, int miscBonus = 0)
         {
             return 10 + GetModifier(Stat.Dexterity) + armorBonus + miscBonus;
-        }
-
-        // GetMaxAnger
-        public int GetMaxAnger()
-        {
-            return 15 + (actor.Level * (AngerGainPerLevel + GetModifier(Stat.Dexterity)));
         }
 
         // GetMaxFaith

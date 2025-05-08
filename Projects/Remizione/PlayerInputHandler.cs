@@ -76,8 +76,8 @@ namespace Remizione
         // TestMouseRightButtonClick
         private bool TestMouseRightButtonClick()
         {
-            Actor.Session.ShowInventory();
-            return true;
+            //Actor.Session.ShowInventory();
+            //return true;
 
             var result = InputManager.DefaultPlayer.Mouse.IsRightButtonPressed();
 

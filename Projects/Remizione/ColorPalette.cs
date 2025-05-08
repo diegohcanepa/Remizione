@@ -7,13 +7,6 @@ namespace Remizione
     /// </summary>
     internal static class ColorPalette
     {
-        // Anger
-        internal static class Anger
-        {
-            internal static Color Back { get; } = new(20, 24, 46);
-            internal static Color Fore { get; } = new(82, 51, 63);
-        }
-
         // BackgroundColor
         internal static Color BackgroundColor { get; } = new Color(0, 2, 5);
 
@@ -100,6 +93,13 @@ namespace Remizione
             internal static Color Fill { get; } = ColorPalette.Text.Fill;
             internal static Color Shadow { get; } = Color.Black * .2f;
             internal static Color Text { get; } = ColorPalette.Text.Default;
+        }
+
+        // StatMeter
+        internal static class StatMeter
+        {
+            internal static Color CurrentValue { get; } = new(143, 77, 87);
+            internal static Color MaximumValue { get; } = new(61, 41, 54);
         }
 
         // Text

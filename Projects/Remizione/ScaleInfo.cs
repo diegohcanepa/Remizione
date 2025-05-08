@@ -78,7 +78,7 @@ namespace Remizione
             internal static Vector2 Medium { get; } = new(.07f);
             internal static Vector2 Large { get; } = new(.08f);
             internal static Vector2 VeryLarge { get; } = new(.1f);
-            internal static Vector2 Huge { get; } = new(.13f);
+            internal static Vector2 ExtraLarge { get; } = new(.11f);
         }
 
         // TextMenuContainerTitle
@@ -93,7 +93,7 @@ namespace Remizione
         // UIIcon
         internal static class UIIcon
         {
-            internal static Vector2 Small { get; } = new(.6f);
+            internal static Vector2 Small { get; } = new(.5f);
             internal static Vector2 Medium { get; } = new(.75f);
             internal static Vector2 Large { get; } = Vector2.One;
         }

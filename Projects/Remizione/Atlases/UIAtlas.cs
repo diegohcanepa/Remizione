@@ -11,7 +11,6 @@ namespace Remizione
         public UIAtlas(EngendroGame game)
             : base(game.Content, "UI", ContentHelper.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
-            AngerIcon = this[nameof(AngerIcon)];
             CheckMark = this[nameof(CheckMark)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
@@ -45,9 +44,6 @@ namespace Remizione
             UIControlShade = this[nameof(UIControlShade)];
             UnreadSign = this[nameof(UnreadSign)];
         }
-
-        // AngerIcon
-        public AtlasImage AngerIcon { get; }
 
         // CheckMark
         public AtlasImage CheckMark { get; }

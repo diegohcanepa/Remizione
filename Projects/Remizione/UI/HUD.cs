@@ -10,14 +10,9 @@ namespace Remizione
     /// </summary>
     public sealed class HUD : GameObject
     {
-        private readonly ImageSprite angerIconLarge;
-        private readonly Meter angerMeter;
-        private readonly Meter angerMeterLarge;
-        private readonly Meter faithMeter;
+        private readonly UIDerivedStats playerStats;
         private readonly ScoreText gpScore;
-        private readonly Meter hpMeter;
         private readonly TextSprite messageText;
-        private readonly ImageSprite[] meterIcons;
         private readonly TextSprite narrationText;
         private readonly ImageSprite savingIcon;
         private readonly TextSprite sentenceText;
@@ -28,6 +23,8 @@ namespace Remizione
             : base(session.Game)
         {
             this.session = session;
+
+            this.playerStats = new(session.Game);
 
             // DestinationMark
             this.DestinationMark = new DestinationMark(session);
@@ -40,31 +37,6 @@ namespace Remizione
             {
                 PivotOrigin = RectanglePoint.RightTop,
                 Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -8, 6)
-            };
-
-            this.hpMeter = new Meter(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, 2.8f);
-            this.faithMeter = new Meter(Game, ColorPalette.FaithMeter.Back, ColorPalette.FaithMeter.Fore, 2.8f);
-            this.angerMeter = new Meter(Game, ColorPalette.Anger.Back, ColorPalette.Anger.Fore, 2.8f);
-
-            meterIcons = new ImageSprite[3];
-            meterIcons[0] = new ImageSprite(Game, Atlases.UI.SpiritIcon) { Scale = ScaleInfo.UIIcon.Small };
-            meterIcons[1] = new ImageSprite(Game, Atlases.UI.FaithIcon) { Scale = ScaleInfo.UIIcon.Small };
-            meterIcons[2] = new ImageSprite(Game, Atlases.UI.AngerIcon) { Scale = ScaleInfo.UIIcon.Small };
-
-            meterIcons[0].Position = new(4);
-            meterIcons[1].Position = meterIcons[0].BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, .4f);
-            meterIcons[2].Position = meterIcons[1].BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, .4f);
-
-            hpMeter.Position = new(10, 5);
-            faithMeter.Position = new(10, 11);
-            angerMeter.Position = new(10, 17);
-
-            this.angerIconLarge = new ImageSprite(Game, Atlases.UI.AngerIcon) { PivotOrigin = RectanglePoint.Right, Scale = ScaleInfo.UIIcon.Medium };
-
-            this.angerMeterLarge = new Meter(Game, ColorPalette.Anger.Back, ColorPalette.Anger.Fore, 3.6f)
-            {
-                Alignment = HorizontalAlignment.Center,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 11)
             };
 
             // GP score
@@ -90,7 +62,7 @@ namespace Remizione
             {
                 Color = ColorPalette.TextDepracated.Dark,
                 PivotOrigin = RectanglePoint.Top,
-                Position = Screen.Area.GetPoint(RectanglePoint.Top, 0, 5),
+                Position = Screen.Area.GetPoint(RectanglePoint.Top, 0, 8),
                 Scale = ScaleInfo.Text.Large
             };
 
@@ -107,44 +79,6 @@ namespace Remizione
         }
 
         #region Private members
-
-        // DrawMeters
-        private void DrawMeters(GameTime gameTime, Actor actor)
-        {
-            Game.SpriteBatch.Begin(Game.Camera);
-
-            meterIcons[0].Draw(gameTime);
-            meterIcons[1].Draw(gameTime);
-
-            if (session.CombatManager.TurnList.Count > 1)
-                angerIconLarge.Draw(gameTime);
-            else
-                meterIcons[2].Draw(gameTime);
-
-            // HP
-            hpMeter.MaximumValue = actor.MaxHP;
-            hpMeter.Value = actor.HP;
-            hpMeter.Draw(gameTime);
-
-            // Faith
-            faithMeter.MaximumValue = actor.MaxFaith;
-            faithMeter.Value = actor.Faith;
-            faithMeter.Draw(gameTime);
-
-            angerMeterLarge.MaximumValue = actor.MaxAnger;
-            angerMeterLarge.Value = actor.Anger;
-
-            angerMeter.MaximumValue = actor.MaxAnger;
-            angerMeter.Value = actor.Anger;
-
-            // Anger
-            if (session.CombatManager.TurnList.Count > 1)
-                angerMeterLarge.Draw(gameTime);
-            else
-                angerMeter.Draw(gameTime);
-
-            Game.SpriteBatch.End();
-        }
 
         // UpdatePrompt
         private void UpdatePrompt()
@@ -173,8 +107,9 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            playerStats.Draw(gameTime);
 
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             if (narrationText.IsEmpty)
                 sentenceText.Draw(gameTime);
             else
@@ -186,7 +121,6 @@ namespace Remizione
 
             if (session.Player != null && session.FullHUD)
             {
-                DrawMeters(gameTime, session.Player);
                 gpScore.Draw(gameTime);
             }
 
@@ -203,26 +137,21 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            playerStats.Update(gameTime);
+
             UpdatePrompt();
             narrationText.Update(gameTime);
             messageText.Update(gameTime);
 
             if (session.Player != null)
             {
-                faithMeter.Update(gameTime);
-                hpMeter.Update(gameTime);
-                angerMeter.Update(gameTime);
                 gpScore.Score = session.Player.Stats.GP;
                 gpScore.Update(gameTime);
-                angerMeterLarge.Update(gameTime);
             }
 
             DestinationMark.Update(gameTime);
             EchoMessage.Update(gameTime);
             savingIcon.Update(gameTime);
-
-            if (session.CombatManager.TurnList.Count > 1)
-                angerIconLarge.Position = angerMeterLarge.BoundingBox.GetPoint(RectanglePoint.Left, -1, 0);
         }
 
         #endregion
@@ -264,6 +193,7 @@ namespace Remizione
         // Reset
         public void Reset()
         {
+            playerStats.Actor = session.Player;
         }
 
         // ShowSavingIcon

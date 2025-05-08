@@ -605,7 +605,6 @@
             <key type="filename">UI-assets/MouseCursorCrossOn.png</key>
             <key type="filename">UI-assets/MouseCursorTarget.png</key>
             <key type="filename">UI-assets/MouseCursorTargetOn.png</key>
-            <key type="filename">UIIcons-assets/AngerIcon.png</key>
             <key type="filename">UIIcons-assets/FaithIcon.png</key>
             <key type="filename">UIIcons-assets/SpiritIcon.png</key>
             <struct type="IndividualSpriteSettings">

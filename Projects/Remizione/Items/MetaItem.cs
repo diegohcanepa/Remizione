@@ -18,7 +18,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(ItemName name, ItemCategory category, ItemAction action, DiceRoll baseDamage, Stat modifier, Vector2 knockback, int maximum, int hp, int faith, int range, int anger, int durability)
+        public MetaItem(ItemName name, ItemCategory category, ItemAction action, DiceRoll baseDamage, Stat modifier, Vector2 knockback, int maximum, int hp, int faith, int range, int durability)
         {
             if (name == ItemName.None)
                 throw new InvalidOperationException("Item must have a name.");
@@ -34,7 +34,6 @@ namespace Remizione
             this.HP = hp;
             this.Range = range;
             this.Modifier = modifier;
-            this.Anger = anger;
             this.LocalizedName = TextRepository.GetValue($"Items.{Name}.Name");
 
             this.UpgradeCosts = new ReadOnlyCollection<int>(upgradeCosts);
@@ -66,9 +65,6 @@ namespace Remizione
             upgradeEffects.Add(effect);
             upgradeCosts.Add(cost);
         }
-
-        // Anger
-        public int Anger { get; }
 
         // BaseDamage
         public DiceRoll BaseDamage { get; }

@@ -15,7 +15,6 @@ namespace EngendroAdventure.Scripting
         protected static readonly string AlignmentArg = "#alignment";
         protected static readonly string AmountArg = "#amount";
         protected static readonly string AnchorArg = "#anchor";
-        protected static readonly string AngerArg = "#anger";
         protected static readonly string AnimationArg = "#animation";
         protected static readonly string AnimationNameArg = "#animation-name";
         protected static readonly string AllArg = "#all";
@@ -69,7 +68,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string FaceArg = "#face";
         protected static readonly string FadeArg = "#fade";
         protected static readonly string FadeModeArg = "#fade-mode";
-        protected static readonly string FaithArg = "#faith";
+        protected static readonly string FaithArg = "#fp";
         protected static readonly string FastArg = "#fast";
         protected static readonly string FileArg = "#file";
         protected static readonly string FlipArg = "#flip";
