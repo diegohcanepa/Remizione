@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Remizione
 {
@@ -77,27 +78,20 @@ namespace Remizione
                 var actor = Owner as Actor;
                 int damageAmount;
 
-                // Anger penalty
-                if (MetaItem.Faith < 0 && actor != null && actor.Faith < 0)
+                // Faith penalty
+                if (actor != null && (actor.Faith <= 0 || hitType == HitType.Glancing))
                 {
                     damageAmount = MetaItem.BaseDamage.MinimumValue;
                 }
                 else
                 {
-                    if (hitType == HitType.Glancing)
-                    {
-                        damageAmount = MetaItem.BaseDamage.MinimumValue;
-                    }
-                    else
-                    {
-                        damageAmount = MetaItem.BaseDamage.Roll();
+                    damageAmount = MetaItem.BaseDamage.Roll();
 
-                        if (actor != null)
-                            damageAmount += actor.Stats.GetModifier(MetaItem.Modifier);
+                    if (actor != null)
+                        damageAmount += actor.Stats.GetModifier(MetaItem.Modifier);
 
-                        if (hitType == HitType.Critical)
-                            damageAmount += MetaItem.BaseDamage.Roll();
-                    }
+                    if (hitType == HitType.Critical)
+                        damageAmount += Math.Max(MetaItem.BaseDamage.Roll(), MetaItem.BaseDamage.MaximumValue / 2);
                 }
 
                 if (MetaItem.Durability > 0 && Durability > 0)

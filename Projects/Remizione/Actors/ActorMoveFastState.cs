@@ -7,7 +7,7 @@ namespace Remizione
     /// </summary>
     public sealed class ActorMoveFastState : ActorAnimatedState
     {
-        private int angerPenaltyCooldown;
+        private int faithPenaltyCooldown;
 
         // Constructor
         public ActorMoveFastState(Actor owner)
@@ -19,7 +19,7 @@ namespace Remizione
         public override void Enter()
         {
             base.Enter();
-            angerPenaltyCooldown = Owner.Stats.FaithPenaltyCooldown;
+            faithPenaltyCooldown = Owner.Stats.FaithPenaltyCooldown;
         }
 
         // Update
@@ -28,14 +28,14 @@ namespace Remizione
             if (!Owner.IsCombating || !Owner.ShouldApplyMovePenalty)
                 return;
 
-            if (angerPenaltyCooldown > 0)
+            if (faithPenaltyCooldown > 0)
             {
-                angerPenaltyCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+                faithPenaltyCooldown -= gameTime.ElapsedGameTime.Milliseconds;
             }
             else
             {
                 Owner.Faith -= Owner.Stats.MovePenalty;
-                angerPenaltyCooldown = Owner.Stats.FaithPenaltyCooldown;
+                faithPenaltyCooldown = Owner.Stats.FaithPenaltyCooldown;
             }
         }
     }

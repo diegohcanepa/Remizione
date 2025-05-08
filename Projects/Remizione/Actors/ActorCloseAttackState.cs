@@ -32,19 +32,22 @@ namespace Remizione
                 if (frame.Label == GameSettings.KeyFrame)
                 {
                     damageTaken = true;
+                    
                     var attackRoll = Owner.Stats.RollAttack(AttackRollStat.Strength, out bool criticalHit);
-
                     var hitType = criticalHit ? HitType.Critical : HitType.Default;
 
                     if (Owner.Target is Actor target)
                     {
                         var defenseRoll = criticalHit || target.IsTired ? 0 : target.Stats.GetDefense();
 
-                        // 50% miss chances
-                        if (attackRoll < defenseRoll && DiceBag.Dice10.Roll() <= 5)
+                        if (hitType != HitType.Critical)
                         {
-                            hitType = HitType.Glancing;
-                            defenseRoll = 0;
+                            // 50% miss chances
+                            if (attackRoll < defenseRoll && DiceBag.Dice10.Roll() <= 5)
+                            {
+                                hitType = HitType.Glancing;
+                                defenseRoll = 0;
+                            }
                         }
 
                         if (attackRoll >= defenseRoll)

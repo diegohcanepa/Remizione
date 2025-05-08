@@ -61,9 +61,6 @@ namespace Remizione
 
         #endregion
 
-        // AngerDegradationInterval
-        public int AngerDegradationInterval { get; private set; }
-
         // Apply
         public void Apply()
         {
@@ -75,7 +72,7 @@ namespace Remizione
         public int MovePenalty { get; private set; } = 2;
 
         // FaithGainPerLevel
-        public int FaithGainPerLevel { get; private set; } = 10;
+        public int FaithGainPerLevel { get; private set; } = 20;
 
         // FaithPenaltyCooldown
         public int FaithPenaltyCooldown
