@@ -14,10 +14,10 @@ namespace Remizione
         private readonly string nameString;
 
         // Constructor
-        public Item(ItemStorage storage, MetaItem metaItem)
+        public Item(ItemContainer container, MetaItem metaItem)
         {
             this.nameString = metaItem.Name.ToString();
-            this.Storage = storage;
+            this.Container = container;
             this.MetaItem = metaItem;
             this.IconImage = Atlases.UI.GetImage(nameString) ?? Atlases.UI.MissingItem;
         }
@@ -54,6 +54,9 @@ namespace Remizione
 
             return false;
         }
+
+        // Container
+        public ItemContainer Container { get; }
 
         // Count
         public int Count
@@ -97,7 +100,7 @@ namespace Remizione
                 if (MetaItem.Durability > 0 && Durability > 0)
                     Durability -= 1;
 
-                target.TakeDamage(Storage.Owner, damageAmount, hitType, Knockback);
+                target.TakeDamage(Container.Owner, damageAmount, hitType, Knockback);
             }
 
             if (Level > 0 && MetaItem.UpgradeEffects.Count > 0)
@@ -115,7 +118,7 @@ namespace Remizione
                 }
             }
 
-            target.ApplyDamage(Storage.Owner);
+            target.ApplyDamage(Container.Owner);
         }
 
         // Faith
@@ -140,7 +143,7 @@ namespace Remizione
         public AtlasImage IconImage { get; }
 
         // IsActive
-        public bool IsActive => Storage.SelectedItem == this;
+        public bool IsActive => Container.SelectedItem == this;
 
         // Knockback
         public Vector2 Knockback => MetaItem.Knockback;
@@ -155,7 +158,7 @@ namespace Remizione
         public ItemName Name => MetaItem.Name;
 
         // Owner
-        public GameThing Owner => Storage.Owner;
+        public GameThing Owner => Container.Owner;
 
         // Range
         public int Range { get; }
@@ -166,9 +169,6 @@ namespace Remizione
             if (MetaItem.Maximum > 0)
                 Count = MetaItem.Maximum;
         }
-
-        // Storage
-        public ItemStorage Storage { get; }
 
         // ToString
         public override string ToString() => nameString;

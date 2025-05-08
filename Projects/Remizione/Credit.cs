@@ -14,7 +14,7 @@ namespace Remizione
         public Credit(Credits credits, string text, Vector2 position, Color textColor, Vector2 textScale)
             : base(credits.Game)
         {
-            this.textSprite = new TextSprite(Game, Fonts.Main)
+            this.textSprite = new TextSprite(Game, Fonts.Common)
             {
                 Color = textColor,
                 PivotOrigin = RectanglePoint.Top,

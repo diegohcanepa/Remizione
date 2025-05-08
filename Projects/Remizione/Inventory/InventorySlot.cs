@@ -36,7 +36,7 @@ namespace Remizione
             };
 
             // Amount
-            this.amountText = new TextSprite(Game, Fonts.MainOutline)
+            this.amountText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.TextWhite,
                 PivotOrigin = RectanglePoint.RightBottom,

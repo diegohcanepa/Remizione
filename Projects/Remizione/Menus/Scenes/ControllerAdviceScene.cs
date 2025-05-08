@@ -28,7 +28,7 @@ namespace Remizione.Menus
             };
 
             // Message
-            message = new TextSprite(game, Fonts.Main)
+            message = new TextSprite(game, Fonts.Common)
             {
                 Color = ColorPalette.TextWhite,
                 PivotOrigin = RectanglePoint.Top,

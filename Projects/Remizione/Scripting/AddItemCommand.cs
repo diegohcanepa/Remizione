@@ -31,7 +31,7 @@ namespace Remizione.Scripting
 
             var amount = Parser.ParseInt32Argument(this, AmountArg, 1);
 
-            actor.Skills.Add(metaItem.Name, amount);
+            actor.Manifestations.Add(metaItem.Name, amount);
         }
     }
 }

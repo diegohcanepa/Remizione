@@ -30,8 +30,8 @@ namespace Remizione
             this.container = new ImageSprite(session.Game, Atlases.UI.PopupContainer) { PivotOrigin = RectanglePoint.Middle, Position = Screen.Area.Center.ToVector2() };
             this.shadow = new ImageSprite(session.Game, Atlases.UI.PopupContainerShadow) { Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, 7, 7) };
 
-            this.titleSprite = new TextSprite(session.Game, Fonts.Main) { Color = ColorPalette.PopupTitle, PivotOrigin = RectanglePoint.Top, Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 12), Scale = ScaleInfo.PopupTitle, Text = title };
-            this.text = new TextSprite(session.Game, Fonts.Main) { Color = ColorPalette.TextWhite, MaximumWidth = 220, PivotOrigin = RectanglePoint.Top, Position = titleSprite.BoundingBox.GetPoint(RectanglePoint.Bottom), Scale = ScaleInfo.PopupText, Text = text };
+            this.titleSprite = new TextSprite(session.Game, Fonts.Common) { Color = ColorPalette.PopupTitle, PivotOrigin = RectanglePoint.Top, Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 12), Scale = ScaleInfo.PopupTitle, Text = title };
+            this.text = new TextSprite(session.Game, Fonts.Common) { Color = ColorPalette.TextWhite, MaximumWidth = 220, PivotOrigin = RectanglePoint.Top, Position = titleSprite.BoundingBox.GetPoint(RectanglePoint.Bottom), Scale = ScaleInfo.PopupText, Text = text };
 
             buttons = new UIControl[inputBindings.Length];
             for (var i = 0; i < inputBindings.Length; i++)

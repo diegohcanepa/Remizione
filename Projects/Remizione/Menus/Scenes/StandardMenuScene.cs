@@ -25,7 +25,7 @@ namespace Remizione.Menus
             ControlGroup = new UIControlGroup(Game) { Spacing = 5 };
             ControlGroup.Add(LocalizationHelper.GetInputBinding(InputBindings.Back), InputBindings.Back);
 
-            titleSprite = new TextSprite(Game, Fonts.Main)
+            titleSprite = new TextSprite(Game, Fonts.Common)
             {
                 Color = ColorPalette.TextStandardMenuTitle,
                 PivotOrigin = RectanglePoint.Middle,

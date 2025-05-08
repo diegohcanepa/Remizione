@@ -104,12 +104,12 @@ namespace Remizione.Inventory
         }
 
         // Fill
-        public void Fill(ItemStorage storage)
+        public void Fill(ItemContainer container)
         {
             Clear();
 
             int index = 0;
-            foreach (var item in storage.Items)
+            foreach (var item in container.Items)
             {
                 if (index >= slots.Count)
                     break;
@@ -118,7 +118,7 @@ namespace Remizione.Inventory
                 index++;
             }
 
-            SelectSlot(storage.SelectedIndex);
+            SelectSlot(container.SelectedIndex);
             InvalidateVisibleSlots();
         }
 

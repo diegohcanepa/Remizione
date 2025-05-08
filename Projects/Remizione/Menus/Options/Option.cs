@@ -42,7 +42,7 @@ namespace Remizione.Menus
             this.IsEnabled = isEnabled;
 
             // Label
-            this.textSprites[0] = new TextSprite(Game, Fonts.Main)
+            this.textSprites[0] = new TextSprite(Game, Fonts.Common)
             {
                 Color = ColorPalette.MenuOptionLabel * (isEnabled ? 1 : disableColorFactor),
                 PivotOrigin = RectanglePoint.Right,
@@ -51,7 +51,7 @@ namespace Remizione.Menus
             };
 
             // Value
-            this.textSprites[1] = new TextSprite(Game, Fonts.Main)
+            this.textSprites[1] = new TextSprite(Game, Fonts.Common)
             {
                 Color = ColorPalette.TextWhite * (isEnabled ? 1 : disableColorFactor),
                 PivotOrigin = RectanglePoint.Middle,

@@ -4,7 +4,7 @@ using EngendroAdventure.Scripting;
 namespace Remizione.Scripting
 {
     // MetaItemCommand
-    // Arguments: {Name} category {ItemCategory} [#action:ItemAction] [#damage:DiceRoll] [#fp:Integer] [#hp:Integer] [#knockback:Vector2] [#maximum:Integer] [#modifier:Stat] [#range:Integer] [#stamina:Integer]
+    // Arguments: {Name} category {ItemCategory} [#action:ItemAction] [#damage:DiceRoll] [#faith:Integer] [#hp:Integer] [#knockback:Vector2] [#maximum:Integer] [#modifier:Stat] [#range:Integer] [#stamina:Integer]
     internal sealed class MetaItemCommand : NonAwaitableCommand
     {
         // Constructor

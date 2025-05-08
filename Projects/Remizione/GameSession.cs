@@ -4,7 +4,6 @@ using EngendroAdventure.Scripting;
 using EngendroAdventure.Scripting.Core;
 using Microsoft.Xna.Framework;
 using Remizione.Creatures;
-using Remizione.Scenes;
 using Remizione.Scripting;
 using System;
 using System.Collections.Generic;
@@ -195,7 +194,7 @@ namespace Remizione
             if (IsPaused)
             {
                 Game.SpriteBatch.Begin(Game.Camera);
-                Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.ScenePausedShade);
+                Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade);
                 Game.SpriteBatch.End();
             }
 
@@ -279,10 +278,6 @@ namespace Remizione
             // RandomSeed
             if (sessionNode.Attributes[AttributeName.RandomSeed.ToString()]?.Value is string randomSeedValue)
                 RandomSeed = XmlConvert.ToInt32(randomSeedValue);
-
-            // SelectedItemCategory
-            if (sessionNode.Attributes[nameof(SelectedItemCategory)]?.Value is string selectedItemCategoryValue)
-                SelectedItemCategory = Enum.Parse<ItemCategory>(selectedItemCategoryValue);
 
             // WorldVersion
             if (sessionNode.Attributes[AttributeName.WorldVersion.ToString()]?.Value is string worldVersionValue)
@@ -370,9 +365,6 @@ namespace Remizione
 
             // RandomSeed
             output.WriteAttributeString(AttributeName.RandomSeed.ToString(), XmlConvert.ToString(RandomSeed));
-
-            // SelectedItemCategory
-            output.WriteAttributeString(nameof(SelectedItemCategory), XmlConvert.ToString((int)SelectedItemCategory));
 
             // WorldVersion
             output.WriteAttributeString(AttributeName.WorldVersion.ToString(), XmlConvert.ToString(WorldVersion));
@@ -481,9 +473,6 @@ namespace Remizione
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
 
-        // SelectedItemCategory
-        public ItemCategory SelectedItemCategory { get; set; } = ItemCategory.KeyItems;
-
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)
         {
@@ -512,7 +501,7 @@ namespace Remizione
         [ScriptMethod]
         public void ShowInventory()
         {
-            inventoryScene.Storage = Player?.Skills;
+            inventoryScene.Container = Player?.Manifestations;
             Game.SceneManager.Push(inventoryScene);
             Camera.FocusTarget();
         }

@@ -33,7 +33,7 @@ namespace Remizione.UI
             : base(game)
         {
             this.Camera = camera;
-            this.Font = font ?? Fonts.Main;
+            this.Font = font ?? Fonts.Common;
 
             // Title
             titleSprite = new TextSprite(game, Font)

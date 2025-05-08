@@ -57,8 +57,8 @@ namespace Remizione
             this.IgnoreWalkArea = false;
             this.ShadowSpot = new ShadowSpot(this);
 
-            this.Inventory = new ItemStorage(this, ItemStorageCategory.Inventory);
-            this.Skills = new ItemStorage(this, ItemStorageCategory.Skills);
+            this.Inventory = new ItemContainer(this, ItemContainerCategory.Inventory);
+            this.Manifestations = new ItemContainer(this, ItemContainerCategory.Skills);
 
             closeAttackState = new ActorCloseAttackState(this);
             deathState = new ActorDeathState(this);
@@ -505,9 +505,9 @@ namespace Remizione
                 if (value != attackSkillName)
                 {
                     attackSkillName = value;
-                    var item = value == ItemName.None ? null : Skills.GetItem(value);
+                    var item = value == ItemName.None ? null : Manifestations.GetItem(value);
 
-                    if (item?.Storage != Skills)
+                    if (item?.Container != Manifestations)
                         throw new InvalidOperationException("Item must be a skill.");
                     else
                         this.AttackSkill = item;
@@ -722,7 +722,7 @@ namespace Remizione
         public GameThing? InteractiveTarget { get; private set; }
 
         // Inventory
-        public ItemStorage Inventory { get; }
+        public ItemContainer Inventory { get; }
 
         // IsAlert
         public bool IsAlert { get; set; }
@@ -800,6 +800,9 @@ namespace Remizione
                 }
             }
         }
+
+        // Manifestations
+        public ItemContainer Manifestations { get; }
 
         // MaxFaith
         [ScriptProperty]
@@ -930,14 +933,11 @@ namespace Remizione
         public bool ShouldApplyMovePenalty => combatStateMachine.CurrentState is CombatChargeState;
 
         // ShowMessage
-        public void ShowMessage(string value)
+        public void ShowMessage(MessageKey messageKey, int duration = 1000)
         {
             floatingMessage ??= session.ObjectPools.FloatingTexts.Get();
-            floatingMessage.Show(GetOverheadPosition(), value, ColorPalette.TextDepracated.Dark);
+            floatingMessage.Show(GetOverheadPosition(), Utils.EncodeMessageKey(messageKey), ColorPalette.TextDepracated.Dark, duration);
         }
-
-        // Skills
-        public ItemStorage Skills { get; }
 
         // SpeechBubbleSound
         [ScriptProperty(CodingContext.EntityDeclaration)]

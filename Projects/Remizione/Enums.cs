@@ -45,10 +45,11 @@ namespace Remizione
     public enum ImpactType { Low, Medium, High }
 
     // ItemAction
+    // TODO: Useless?
     public enum ItemAction { None, Examine, Upgrade }
 
     // ItemCategory
-    public enum ItemCategory { Skills, KeyItems, Consumables, Throwables, Spells, Amulets }
+    public enum ItemCategory { Skills, Consumables, Spells, Throwables, Weapons }
 
     // ItemEffectTiming
     public enum ItemEffectTiming { OnBeginUse, OnEndUse, AfterAllEffects }
@@ -56,8 +57,8 @@ namespace Remizione
     // ItemName
     public enum ItemName { None, UnarmedAttack, Cross, Lockpick, Stamina, Health, ZabulContact }
 
-    // ItemStorageCategory
-    public enum ItemStorageCategory { Inventory, Skills }
+    // ItemContainerCategory
+    public enum ItemContainerCategory { Inventory, Skills }
 
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, LightBulb, Moon, MuzzleFlash, Outdoor, Lightning }
@@ -79,7 +80,7 @@ namespace Remizione
     }
 
     // MessageKey
-    public enum MessageKey { None, Fatigue, NoStamina }
+    public enum MessageKey { None, Critical, Miss, NoFaith, ThreatsNearby }
 
     // MouseCursorState
     public enum MouseCursorState { Cross, CrossOn, Target, TargetOn, Wait, Arrow }

@@ -25,7 +25,7 @@ namespace Remizione
             AIStateMachine.AddTransition<AIChargeState>(AIStateSignal.ChargeComplete, idle);
             */
 
-            Skills.Add(ItemName.ZabulContact, 1);
+            Manifestations.Add(ItemName.ZabulContact, 1);
             AttackSkillName = ItemName.ZabulContact;
         }
 

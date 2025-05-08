@@ -76,24 +76,14 @@ namespace Remizione
         // TestMouseRightButtonClick
         private bool TestMouseRightButtonClick()
         {
-            //Actor.Session.ShowInventory();
-            //return true;
-
             var result = InputManager.DefaultPlayer.Mouse.IsRightButtonPressed();
 
             if (result)
             {
-                Actor.Session.TargetMode = !Actor.Session.TargetMode;
+                //Actor.Session.ShowInventory();
+                //return true;
 
-                //if (Actor.Session.CombatManager.TurnList.Count <= 1)
-                //{
-                //    if (Actor.Session.CombatManager.IsActive)
-                //        Actor.Session.CombatManager.Terminate();
-                //    else
-                //        Actor.Session.CombatManager.Start(Actor);
-                //}
-                //else
-                //    MouseCursor.Instance.Shake();
+                Actor.Session.TargetMode = !Actor.Session.TargetMode;
             }
 
             return result;

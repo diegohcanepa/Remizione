@@ -39,14 +39,14 @@ namespace Remizione.UI
                 {
                     Color = ColorPalette.StatMeter.CurrentValue,
                     PivotOrigin = RectanglePoint.Left,
-                    Scale = ScaleInfo.Text.ExtraLarge
+                    Scale = ScaleInfo.Text.VeryLarge
                 };
 
                 this.maxValues[i] = new TextSprite(Game, Fonts.CommonOutline)
                 {
                     Color = ColorPalette.StatMeter.MaximumValue,
                     PivotOrigin = RectanglePoint.Left,
-                    Scale = ScaleInfo.Text.Medium
+                    Scale = ScaleInfo.Text.Small
                 };
 
                 this.values[i].Position = icons[i].BoundingBox.GetPoint(RectanglePoint.Right, 1, .5f);
@@ -58,6 +58,9 @@ namespace Remizione.UI
         // InvalidateCore
         private void InvalidateCore(int index, int value, int maxValue, bool animate)
         {
+            if (value < 0)
+                value = 0;
+
             if (lastKnownValues[index] != value)
             {
                 lastKnownValues[index] = value;

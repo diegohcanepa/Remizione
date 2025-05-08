@@ -15,7 +15,7 @@ namespace Remizione.UI
         private readonly InputBinding? inputBinding;
         private readonly ImageSprite itemImage;
         private readonly Vector2Tween itemImageScaleTween = new();
-        private ItemStorage? items;
+        private ItemContainer? items;
         private static readonly Vector2 itemScale = new(.4f);
         private int lastKnownCount;
         private Item? lastKnownItem;
@@ -55,7 +55,7 @@ namespace Remizione.UI
             };
 
             // Amount
-            this.amountText = new TextSprite(Game, Fonts.MainOutline)
+            this.amountText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.TextWhite,
                 PivotOrigin = RectanglePoint.RightBottom,
@@ -134,7 +134,7 @@ namespace Remizione.UI
         }
 
         // Items
-        public ItemStorage? Items
+        public ItemContainer? Items
         {
             get => items;
             set

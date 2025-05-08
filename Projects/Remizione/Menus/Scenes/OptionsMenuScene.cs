@@ -19,7 +19,7 @@ namespace Remizione.Menus
         public OptionsMenuScene(RemizioneGame game)
             : base(game, "@Menu.Titles.Options")
         {
-            this.mouseInfo = new TextSprite(game, Fonts.Main) { Scale = ScaleInfo.Text.Medium, Color = Color.White, PivotOrigin = RectanglePoint.LeftTop };
+            this.mouseInfo = new TextSprite(game, Fonts.Common) { Scale = ScaleInfo.Text.Medium, Color = Color.White, PivotOrigin = RectanglePoint.LeftTop };
 
             menu = new OptionMenu(game, 6)
             {
@@ -47,7 +47,7 @@ namespace Remizione.Menus
             */
 
             // Option description
-            this.optionDescription = new TextSprite(game, Fonts.Main)
+            this.optionDescription = new TextSprite(game, Fonts.Common)
             {
                 Color = ColorPalette.TextWhite,
                 MaximumWidth = 100,

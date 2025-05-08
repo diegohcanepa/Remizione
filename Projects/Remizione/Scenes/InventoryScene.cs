@@ -11,6 +11,7 @@ namespace Remizione
     public sealed class InventoryScene : Scene
     {
         private readonly ItemMenu menu;
+        private readonly UISentence sentence;
 
         #region Constructor
 
@@ -19,6 +20,7 @@ namespace Remizione
             : base(game, SceneSettings.None)
         {
             this.menu = new(Game);
+            this.sentence = new(Game);
         }
 
         #endregion
@@ -28,10 +30,16 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            Game.SpriteBatch.Begin(Game.Camera);
+            Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade);
+            Game.SpriteBatch.End();
+
             if (menu.Options.Count == 0)
                 return;
 
             menu.Draw(gameTime);
+
+            sentence.Draw(gameTime);
         }
 
         // OnHandleInput
@@ -52,15 +60,15 @@ namespace Remizione
             menu.Clear();
             MouseCursor.Instance.State = MouseCursorState.Arrow;
 
-            if (Storage == null)
+            if (Container == null)
                 return;
 
-            for (int i = 0; i < Storage.Items.Count; i++)
+            for (int i = 0; i < Container.Items.Count; i++)
             {
-                menu.AddOption(Storage.Items[i]);
+                menu.AddOption(Container.Items[i]);
             }
 
-            menu.Show(new Vector2(Screen.NativeWidth / 2, 10), $"@ItemStorageCategory.{Storage.Category}");
+            menu.Show(new Vector2(Screen.NativeWidth / 2, 10), $"@ItemContainerCategory.{Container.Category}");
         }
 
         // OnUpdate
@@ -71,7 +79,7 @@ namespace Remizione
 
         #endregion
 
-        // Storage
-        public ItemStorage? Storage { get; set; }
+        // Container
+        public ItemContainer? Container { get; set; }
     }
 }

@@ -79,7 +79,7 @@ namespace Remizione.Menus
             menu.AddItem(MenuItemName.Exit, Game.Exit, null);
 
             // Experience advice
-            experienceAdviceText = new TextSprite(Game, Fonts.Main)
+            experienceAdviceText = new TextSprite(Game, Fonts.Common)
             {
                 Color = ColorPalette.TextWhite,
                 MaximumWidth = 260,

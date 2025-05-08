@@ -32,7 +32,7 @@ namespace Remizione
             if (CurrentActor != null)
             {
                 if (session.HUD.MessageText == string.Empty && turnList.Count > 1)
-                    session.HUD.MessageText = "@Messages.ThreatsNearby";
+                    session.HUD.MessageText = Utils.EncodeMessageKey(MessageKey.ThreatsNearby);
 
                 CurrentActor.StartTurn();
             }

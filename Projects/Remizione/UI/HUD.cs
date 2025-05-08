@@ -15,7 +15,7 @@ namespace Remizione
         private readonly TextSprite messageText;
         private readonly TextSprite narrationText;
         private readonly ImageSprite savingIcon;
-        private readonly TextSprite sentenceText;
+        private readonly UISentence sentence;
         private readonly GameSession session;
 
         // Constructor
@@ -45,25 +45,19 @@ namespace Remizione
                 HideZero = true,
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.RightBottom, -2, 0),
-                Scale = ScaleInfo.Text.Large
-            };
-
-            // Prompt
-            this.sentenceText = new TextSprite(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.Bottom, 0, -5),
                 Scale = ScaleInfo.Text.VeryLarge
             };
+
+            // Sentence
+            this.sentence = new UISentence(Game);
 
             // Message text
             this.messageText = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.TextDepracated.Dark,
+                Color = ColorPalette.Text.Terra,
                 PivotOrigin = RectanglePoint.Top,
                 Position = Screen.Area.GetPoint(RectanglePoint.Top, 0, 8),
-                Scale = ScaleInfo.Text.Large
+                Scale = ScaleInfo.Text.VeryLarge
             };
 
             // Narration text
@@ -87,16 +81,16 @@ namespace Remizione
                 session.Player?.InteractiveTarget is GameThing target &&
                 (!session.TargetMode || target.CanBeTargeted))
             {
-                if (target != sentenceText.Tag)
+                if (target != sentence.Tag)
                 {
-                    sentenceText.Tag = target;
-                    sentenceText.Text = "..." + target.GetLocalizedDisplayName() + "...";
+                    sentence.Tag = target;
+                    sentence.Text = "..." + target.GetLocalizedDisplayName() + "...";
                 }
             }
             else
             {
-                sentenceText.Text = null;
-                sentenceText.Tag = null;
+                sentence.Text = null;
+                sentence.Tag = null;
             }
         }
 
@@ -110,9 +104,7 @@ namespace Remizione
             playerStats.Draw(gameTime);
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-            if (narrationText.IsEmpty)
-                sentenceText.Draw(gameTime);
-            else
+            if (!narrationText.IsEmpty)
                 narrationText.Draw(gameTime);
 
             messageText.Draw(gameTime);
@@ -125,6 +117,9 @@ namespace Remizione
             }
 
             EchoMessage.Draw(gameTime);
+
+            if (narrationText.IsEmpty && session.IsCurrentScene)
+                sentence.Draw(gameTime);
 
             if (savingIcon.Tweens.IsTweening)
             {

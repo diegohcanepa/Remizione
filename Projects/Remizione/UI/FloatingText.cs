@@ -8,10 +8,9 @@ namespace Remizione
     /// </summary>
     public sealed class FloatingText : GameObject
     {
-        private const int movementDuration = 1000;
         private const int fadeDuration = 300;
 
-        private readonly FloatTween opacityTween = new() { StartDelay = movementDuration - fadeDuration };
+        private readonly FloatTween opacityTween = new();
         private readonly GameSession session;
         private readonly TextSprite text;
         private readonly FloatTween yTween = new();
@@ -59,12 +58,16 @@ namespace Remizione
         public void Show(Vector2 origin, string value) => Show(origin, value, ColorPalette.Text.Default);
 
         // Show
-        public void Show(Vector2 origin, string value, Color color)
+        public void Show(Vector2 origin, string value, Color color, int duration = 1000)
         {
+            if (duration < fadeDuration)
+                duration = fadeDuration;
+
             text.Color = color;
             text.Text = value;
             text.Position = origin;
-            yTween.Start(TweenStyle.CubicOut, origin.Y, origin.Y - 2, movementDuration);
+            yTween.Start(TweenStyle.CubicOut, origin.Y, origin.Y - 2, duration);
+            opacityTween.StartDelay = duration - fadeDuration; 
             opacityTween.Start(TweenStyle.CubicIn, 1, 0, fadeDuration);
 
             text.Tweens.OpacityTween = opacityTween;

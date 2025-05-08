@@ -33,7 +33,7 @@ namespace Remizione.UI
             {
                 PivotOrigin = RectanglePoint.RightTop,
                 Scale = menu.TextScale,
-                Text = "Lvl 1"
+                Text = ""
             };
 
             UpdateColor();
@@ -76,13 +76,12 @@ namespace Remizione.UI
             set
             {
                 nameText.Position = value;
+             
                 var box = menu.BoundingBox;
+                BoundingBox = new(box.X + 1, nameText.BoundingBox.Top - 1, box.Width-2, nameText.BoundingBox.Height + 1);
 
-                BoundingBox = new(box.X + 1, TextBoundingBox.Top - 1, box.Width-2, TextBoundingBox.Height + 1);
-
-                infoText.X = BoundingBox.Right - 1;
+                infoText.X = BoundingBox.Right - 2;
                 infoText.Y = nameText.Y;
-
             }
         }
 

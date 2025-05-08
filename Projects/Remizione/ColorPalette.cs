@@ -78,8 +78,8 @@ namespace Remizione
         // PopupTitle
         internal static Color PopupTitle { get; } = new Color(116, 95, 75);
 
-        // ScenePausedShade
-        internal static Color ScenePausedShade { get; } = Color.Black * .4f;
+        // SceneShade
+        internal static Color SceneShade { get; } = Color.Black * .4f;
 
         // ShadowOpacity
         public const float ShadowOpacity = .4f;
@@ -99,7 +99,7 @@ namespace Remizione
         internal static class StatMeter
         {
             internal static Color CurrentValue { get; } = new(143, 77, 87);
-            internal static Color MaximumValue { get; } = new(61, 41, 54);
+            internal static Color MaximumValue { get; } = new(82, 51, 63);
         }
 
         // Text
@@ -111,6 +111,11 @@ namespace Remizione
             internal static Color Fill { get; } = new(15, 42, 63);
             internal static Color Highlight { get; } = new(252, 224, 194);
             internal static Color Light { get; } = new(200, 165, 138);
+            internal static Color TerraDarker { get; } = new(61, 41, 54);
+            internal static Color TerraDark { get; } = new(82, 51, 63);
+            internal static Color Terra { get; } = new(143, 77, 87);
+            internal static Color TerraLight { get; } = new(189, 106, 98);
+            internal static Color TerraLighter { get; } = new(255, 174, 112);
         }   
 
         // TextDepracated

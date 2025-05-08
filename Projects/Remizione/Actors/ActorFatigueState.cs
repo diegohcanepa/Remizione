@@ -8,48 +8,31 @@ namespace Remizione
     /// </summary>
     public sealed class ActorFatigueState : ActorAnimatedState
     {
-        private readonly FloatTween tween = new();
-
         // Constructor
         public ActorFatigueState(Actor owner)
-            : base(owner, ActorStateNames.Fatigue, true)
+            : base(owner, ActorStateNames.Fatigue, false)
         {
         }
 
-        /*
         // CheckTransitions
         public override string? CheckTransitions()
         {
-            if (!tween.IsRunning)
+            if (!Owner.AnimationPlayer.IsPlaying)
                 return ActorStateNames.Stand;
             else
                 return base.CheckTransitions();
         }
-        */
 
         // Enter
         public override void Enter()
         {
             base.Enter();
-
-            Owner.ShowMessage("@Messages.Fatigue");
-
-            int faithGain = (int)(Owner.MaxFaith * .5f);
-
-            if (Owner.AnimationPlayer.Animation != null)
-                tween.Start(TweenStyle.Linear, Owner.Faith, faithGain, 2000);
-            else
-                Owner.Faith = faithGain;
+            Owner.ShowMessage(MessageKey.NoFaith, 2500);
         }
 
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (tween.IsRunning)
-            {
-                tween.Update(gameTime);
-                Owner.Faith = (int)tween.CurrentValue;
-            }
         }
     }
 }
