@@ -503,9 +503,11 @@ namespace Remizione
         [ScriptMethod]
         public void ShowInventory()
         {
-            inventoryScene.Container = Player?.Manifestations;
+            if (Player == null)
+                return;
+
+            inventoryScene.Actor = Player;
             Game.SceneManager.Push(inventoryScene);
-            Camera.FocusTarget();
         }
 
         // TargetMode

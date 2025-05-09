@@ -17,8 +17,9 @@ namespace Remizione
         internal static class ContextMenu
         {
             internal static Color OptionText { get; } = new(189, 106, 98);
-            internal static Color OptionBack { get; } = Color.White * .1f;
+            internal static Color OptionBack { get; } = Color.Black;
             internal static Color OptionHighlight { get; } = new Color(223, 224, 232) * .7f;
+            internal static Color SceneShade { get; } = Color.Black * .4f;
         }
 
         // Cycle

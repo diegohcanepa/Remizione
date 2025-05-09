@@ -27,24 +27,40 @@ namespace Remizione.UI
         public ItemMenu(EngendroGame game, Font? font = null)
             : base(game)
         {
-            this.Font = font ?? Fonts.Common;
+            this.Font = font ?? Fonts.CommonOutline;
             this.Options = new ReadOnlyCollection<ItemMenuOption>(optionList);
 
             // Container
             this.container = new(game, Atlases.UI.ItemMenuContainer)
             {
-                Opacity = .7f,
                 PivotOrigin = RectanglePoint.Top,
-                Scale = new(.5f)
+                Scale = new(.75f)
             };
 
             // Title
-            this.titleText = new TextSprite(Game, Fonts.Common)
+            this.titleText = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Default,
+                Color = ColorPalette.Text.Terra,
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.Text.Large
             };
+        }
+
+        #endregion
+
+        #region Private members
+
+        // LayoutOptions
+        private void LayoutOptions()
+        {
+            var pos = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 11);
+
+            for (var i = 0; i < optionList.Count; i++)
+            {
+                var option = optionList[i];
+                option.Position = pos;
+                pos.Y += option.TextBoundingBox.Height;
+            }
         }
 
         #endregion
@@ -55,20 +71,16 @@ namespace Remizione.UI
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
-
             container.Draw(gameTime);
-
-            for (var i = 0; i < optionList.Count; i++)
-            {
-                if (optionList[i].IsSelected)
-                    Game.Shapes.DrawRectangle(optionList[i].BoundingBox, new Color(41, 29, 43) * .6f);
-
-                optionList[i].Draw(gameTime);
-            }
-
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+
+            for (var i = 0; i < optionList.Count; i++)
+            {
+                optionList[i].Draw(gameTime);
+            }
+            
             titleText.Draw(gameTime);
             Game.SpriteBatch.End();
         }
@@ -149,9 +161,6 @@ namespace Remizione.UI
         // HasOptions
         public bool HasOptions => optionList.Count > 0;
 
-        // Height
-        public float Height { get; private set; }
-
         // Hide
         public void Hide()
         {
@@ -164,11 +173,18 @@ namespace Remizione.UI
         // IsVisible
         public bool IsVisible { get; private set; }
 
-        // Margin
-        public Vector2 Margin { get; } = new(4, 3);
-
         // Options
         public ReadOnlyCollection<ItemMenuOption> Options { get; }
+
+        // RemoveSelectedOption
+        public void RemoveSelectedOption()
+        {
+            if (SelectedOption != null)
+            {
+                optionList.Remove(SelectedOption);
+                LayoutOptions();
+            }
+        }
 
         // SelectedOption
         public ItemMenuOption? SelectedOption { get; private set; }
@@ -180,14 +196,7 @@ namespace Remizione.UI
 
             container.Position = position;
 
-            var pos = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, Margin);
-
-            for (var i = 0; i < optionList.Count; i++)
-            {
-                var option = optionList[i];
-                option.Position = pos;
-                pos.Y += option.TextBoundingBox.Height;
-            }
+            LayoutOptions();
 
             titleText.Text = title;
             titleText.Position = container.BoundingBox.GetPoint(RectanglePoint.Top);
@@ -196,7 +205,11 @@ namespace Remizione.UI
         // TextScale
         public Vector2 TextScale { get; set; } = ScaleInfo.Text.Large;
 
-        // Width
-        public float Width { get; } = 100;
+        // Title
+        public string? Title
+        {
+            get => titleText.Text;
+            set => titleText.Text = value;
+        }
     }
 }

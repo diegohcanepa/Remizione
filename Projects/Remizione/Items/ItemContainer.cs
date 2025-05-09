@@ -88,6 +88,16 @@ namespace Remizione
         // Owner
         public GameThing Owner { get; }
 
+        // Remove
+        public void Remove(string name)
+        {
+            if (GetItem(name) is Item item)
+            {
+                items.Remove(item);
+                itemsDictionary.Remove(item.Name);
+            }
+        }
+
         // SelectedIndex
         public int SelectedIndex { get; private set; }
 

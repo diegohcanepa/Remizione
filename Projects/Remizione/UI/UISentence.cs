@@ -20,8 +20,8 @@ namespace Remizione.UI
                 Color = ColorPalette.Text.Default,
                 MaximumWidth = (int)(Screen.NativeWidth * .8f),
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.Bottom, 0, -5),
-                Scale = ScaleInfo.Text.VeryLarge
+                Position = Screen.SafeArea.GetPoint(RectanglePoint.Bottom, 0, -9),
+                Scale = ScaleInfo.Text.Large
             };
         }
 

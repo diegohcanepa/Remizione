@@ -45,8 +45,7 @@ namespace Remizione
     public enum ImpactType { Low, Medium, High }
 
     // ItemAction
-    // TODO: Useless?
-    public enum ItemAction { None, Examine, Upgrade }
+    public enum ItemAction { None, Discard, Use }
 
     // ItemCategory
     public enum ItemCategory { Skills, Consumables, Spells, Throwables, Weapons }

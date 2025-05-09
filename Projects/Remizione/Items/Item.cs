@@ -10,6 +10,10 @@ namespace Remizione
     public sealed class Item
     {
         private int count;
+        private string displayText = string.Empty;
+        private int durability;
+        private bool isDisplayTextDiry = true;
+        private int level;
 
         // Constructor
         public Item(ItemContainer container, MetaItem metaItem)
@@ -18,6 +22,55 @@ namespace Remizione
             this.MetaItem = metaItem;
             this.IconImage = Atlases.UI.GetImage(MetaItem.ToString()) ?? Atlases.UI.MissingItem;
         }
+
+        #region Private members
+
+        // InvalidateDisplayText
+        private void InvalidateDisplayText()
+        {
+            if (!isDisplayTextDiry)
+                return;
+
+            var text = MetaItem.LocalizedName;
+
+            // Add level
+            if (Level > 0)
+                text += $" +{Level}";
+
+            // Count
+            if (MetaItem.Maximum > 1)
+            {
+                if (Count > 1)
+                    text += $" (x{Count})";
+            }
+
+            // Durability state
+            else if (MetaItem.Durability > 0)
+            {
+                var ratio = Durability / MetaItem.Durability;
+
+                if (ratio >= .85f)
+                    text += $" ({TextRepository.GetValue("@DurabilityState.Sturdy")})";
+
+                else if (ratio >= .75f)
+                    text += $" ({TextRepository.GetValue("@DurabilityState.Used")})";
+
+                else if (ratio >= .5f)
+                    text += $" ({TextRepository.GetValue("@DurabilityState.Worn")})";
+
+                else if (ratio >= .25f)
+                    text += $" ({TextRepository.GetValue("@DurabilityState.Cracked")})";
+
+                else
+                    text += $" ({TextRepository.GetValue("@DurabilityState.Broken")})";
+            }
+
+            displayText = text;
+
+            isDisplayTextDiry = false;
+        }
+
+        #endregion
 
         // BeginUse
         public void BeginUse()
@@ -64,11 +117,36 @@ namespace Remizione
                 this.count = value;
                 if (MetaItem.Maximum > 0 && count > MetaItem.Maximum)
                     count = MetaItem.Maximum;
+                
+                isDisplayTextDiry = true;
+            }
+        }
+
+        // DisplayText
+        public string DisplayText
+        {
+            get
+            {
+                if (isDisplayTextDiry)
+                    InvalidateDisplayText();
+
+                return displayText;
             }
         }
 
         // Durability
-        public int Durability { get; set; }
+        public int Durability
+        {
+            get => durability;
+            set
+            {
+                this.durability = value;
+                if (durability < 0)
+                    durability = 0;
+                
+                isDisplayTextDiry = true;
+            }
+        }
 
         // EndUse
         public void EndUse(GameThing target, HitType hitType)
@@ -146,7 +224,18 @@ namespace Remizione
         public Vector2 Knockback => MetaItem.Knockback;
 
         // Level
-        public int Level { get; set; }
+        public int Level
+        {
+            get => level;
+            set
+            {
+                if (value != level)
+                {
+                    this.level = value;
+                    isDisplayTextDiry = true;
+                }
+            }
+        }
 
         // MetaItem
         public MetaItem MetaItem { get; }

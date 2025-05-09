@@ -1,14 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Strings>
   <String Key="Actors.Unredeemed">Unredeemed</String>
-  <String Key="Attributes.Secondary.Anger">Anger</String>
-  <String Key="Attributes.Secondary.Faith">Faith</String>
-  <String Key="Attributes.Secondary.Vitality">Vitality</String>
+  <String Key="Attributes.Derived.Faith">Faith</String>
+  <String Key="Attributes.Derived.HP">Vitality</String>
   <String Key="CombatOptions.Attack">Attack</String>
   <String Key="CombatOptions.Guard">Guard</String>
   <String Key="CombatOptions.UseItem">Use item...</String>
   <String Key="Cycle.Indulgence">Indulgence</String>
   <String Key="Cycle.Penance">Penance</String>
+  <String Key="DurabilityState.Broken">Broken</String>
+  <String Key="DurabilityState.Cracked">Cracked</String>
+  <String Key="DurabilityState.Sturdy">Sturdy</String>
+  <String Key="DurabilityState.Used">Used</String>
+  <String Key="DurabilityState.Worn">Worn</String>
   <String Key="HitType.Critical">Critical!</String>
   <String Key="HitType.Glancing">Glancing</String>
   <String Key="InputBindings.Back">Back</String>
@@ -17,15 +21,15 @@
   <String Key="InputBindings.Exit">Exit</String>
   <String Key="InputBindings.NextDialog">Next</String>
   <String Key="InputBindings.Select">Select</String>
-  <String Key="ItemActions.Examine">Examine</String>
-  <String Key="ItemActions.Upgrade">Upgrade</String>
+  <String Key="ItemActions.Discard">Discard</String>
+  <String Key="ItemActions.Use">Use</String>
   <String Key="ItemCategory.Amulets">Amulets</String>
   <String Key="ItemCategory.Consumables">Consumables</String>
   <String Key="ItemCategory.KeyItems">Key items</String>
   <String Key="ItemCategory.Skills">Manifestations</String>
   <String Key="ItemCategory.Spells">Spells</String>
   <String Key="ItemCategory.Throwables">Throwables</String>
-  <String Key="ItemContainerCategory.Inventory">Your stuff</String>
+  <String Key="ItemContainerCategory.Inventory">What You Bear</String>
   <String Key="ItemContainerCategory.Skills">Manifestations</String>
   <String Key="ItemEffects.DamageBonusEffect">Increase damage</String>
   <String Key="Items.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
@@ -41,6 +45,7 @@
   <String Key="Languages.ru-ru">Русский</String>
   <String Key="LogMessages.EnoughOfThat">You already have enough of that.</String>
   <String Key="LogMessages.InventoryFull">You cannot carry more items.</String>
+  <String Key="LogVerbs.Discarded">Discarded</String>
   <String Key="LogVerbs.PickedUp">Picked up</String>
   <String Key="Menu.Controls.Keyboard.Interact">Interact</String>
   <String Key="Menu.Controls.Keyboard.Inventory">Inventory</String>

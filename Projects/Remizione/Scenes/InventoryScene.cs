@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Remizione.UI;
 
 namespace Remizione
@@ -10,6 +11,7 @@ namespace Remizione
     /// </summary>
     public sealed class InventoryScene : Scene
     {
+        private readonly ContextMenu<ItemAction> actionMenu;
         private readonly ItemMenu menu;
         private readonly UISentence sentence;
 
@@ -21,6 +23,62 @@ namespace Remizione
         {
             this.menu = new(Game);
             this.sentence = new(Game);
+
+            this.actionMenu = new ContextMenu<ItemAction>(game, game.Camera);
+        }
+
+        #endregion
+
+        #region Private members
+
+        // HandleMouseInput
+        private bool HandleMouseInput()
+        {
+            if (InputManager.DefaultPlayer.LastInputMethod != InputMethod.Mouse)
+                return false;
+
+            if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
+            {
+                SceneController.Pop();
+                return true;
+            }
+
+            if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
+            {
+                if (!menu.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
+                    SceneController.Pop();
+                else
+                    ShowActionMenu();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        // GetTitle
+        private string GetTitle()
+        {
+            var title = TextRepository.GetValue("ItemContainerCategory.Inventory");
+            if (Actor != null)
+                title += $" ({Actor.Inventory.Items.Count} / {Actor.InventoryCapacity})";
+
+            return title;
+        }
+
+        // ShowActionMenu
+        private void ShowActionMenu()
+        {
+            actionMenu.Clear();
+            actionMenu.AddOption(ItemAction.Discard, "@ItemActions.Discard");
+            actionMenu.AddOption(ItemAction.Use, "@ItemActions.Use");
+
+            var pos = InputManager.DefaultPlayer.Mouse.VirtualPosition;
+            var option = menu.GetOptionAt(pos);
+            if (option != null)
+            {
+                actionMenu.Show(pos, false);
+            }
         }
 
         #endregion
@@ -30,26 +88,49 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Game.Camera);
-            Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade);
-            Game.SpriteBatch.End();
-
-            if (menu.Options.Count == 0)
-                return;
-
             menu.Draw(gameTime);
-
             sentence.Draw(gameTime);
+
+            if (actionMenu.IsVisible)
+            {
+                Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
+                Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.ContextMenu.SceneShade);
+                Game.SpriteBatch.End();
+
+                actionMenu.Draw(gameTime);
+            }
         }
 
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
-            if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
-            {
-                SceneController.Pop();
-                return HandleInputResult.Handled;
+            if (Actor == null)
+                return HandleInputResult.Unhandled;
+
+            if (actionMenu.IsVisible)
+            { 
+                var result = actionMenu.HandleInput(gameTime);
+
+                if (result == HandleInputResult.Handled && actionMenu.SelectedOption is ContextMenuOption<ItemAction> action)
+                {
+                    // Discard
+                    if (action.Key == ItemAction.Discard)
+                    {
+                        if (menu.SelectedOption?.Item is Item item)
+                        {
+                            Actor.Inventory.Remove(item.Name);
+                            menu.RemoveSelectedOption();
+                            menu.Title = GetTitle();
+                            Actor.Session.HUD.Log.Show("@LogVerbs.Discarded", item.MetaItem.LocalizedName);
+                        }
+                    }
+                }
+
+                return result;
             }
+
+            if (HandleMouseInput())
+                return HandleInputResult.Handled;
 
             return base.OnHandleInput(gameTime);
         }
@@ -60,31 +141,34 @@ namespace Remizione
             menu.Clear();
             MouseCursor.Instance.State = MouseCursorState.Arrow;
 
-            if (Container == null)
+            if (Actor == null)
                 return;
 
-            for (int i = 0; i < Container.Items.Count; i++)
+            for (int i = 0; i < Actor.Inventory.Items.Count; i++)
             {
-                menu.AddOption(Container.Items[i]);
+                menu.AddOption(Actor.Inventory.Items[i]);
             }
 
-            menu.Show(new Vector2(Screen.NativeWidth / 2, 20), $"@ItemContainerCategory.{Container.Category}");
+            menu.Show(new Vector2(Screen.NativeWidth / 2, 20), GetTitle());
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            menu.Update(gameTime);
+            if (!actionMenu.IsVisible)
+                menu.Update(gameTime);
 
             if (menu.SelectedOption != null)
                 sentence.Text = menu.SelectedOption.Item.MetaItem.LocalizedDescription;
             else
                 sentence.Text = null;
+
+            actionMenu.Update(gameTime);
         }
 
         #endregion
 
-        // Container
-        public ItemContainer? Container { get; set; }
+        // Actor
+        public Actor? Actor { get; set; }
     }
 }

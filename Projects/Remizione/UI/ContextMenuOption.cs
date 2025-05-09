@@ -32,7 +32,7 @@ namespace Remizione.UI
         // UpdateColor
         private void UpdateColor()
         {
-            textSprite.Color = IsSelected ? ColorPalette.ContextMenu.OptionHighlight : ColorPalette.ContextMenu.OptionText;
+            textSprite.Color = IsSelected ? ColorPalette.Text.TerraLight : ColorPalette.Text.Default;
         }
 
         #endregion

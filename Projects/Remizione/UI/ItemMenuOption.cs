@@ -8,7 +8,6 @@ namespace Remizione.UI
     /// </summary>
     public sealed class ItemMenuOption
     {
-        private readonly TextSprite infoText;
         private readonly ItemMenu menu;
         private readonly TextSprite nameText;
 
@@ -20,21 +19,14 @@ namespace Remizione.UI
 
             this.nameText = new TextSprite(menu.Game, menu.Font)
             {
-                PivotOrigin = RectanglePoint.LeftTop,
-                MaximumWidth = (int)menu.Width-10,
-                Scale = menu.TextScale,
-                Text = item.MetaItem.LocalizedName
+                PivotOrigin = RectanglePoint.Middle,
+                MaximumWidth = (int)(menu.BoundingBox.Width * .9f),
+                Scale = ScaleInfo.Text.Large,
+                Text = item.DisplayText
             };
             
             if (item.Level > 0)
                 nameText.Text += $" +item.Level";
-
-            this.infoText = new TextSprite(menu.Game, menu.Font)
-            {
-                PivotOrigin = RectanglePoint.RightTop,
-                Scale = menu.TextScale,
-                Text = ""
-            };
 
             UpdateColor();
 }
@@ -44,8 +36,7 @@ namespace Remizione.UI
         // UpdateColor
         private void UpdateColor()
         {
-            nameText.Color = IsSelected ? ColorPalette.Text.Highlight : ColorPalette.Text.Default;
-            infoText.Color = nameText.Color;
+            nameText.Color = IsSelected ? ColorPalette.Text.TerraLight : ColorPalette.Text.Default;
         }
 
         #endregion
@@ -57,7 +48,6 @@ namespace Remizione.UI
         public void Draw(GameTime gameTime)
         {
             nameText.Draw(gameTime);
-            infoText.Draw(gameTime);
         }
 
         // Index
@@ -79,14 +69,11 @@ namespace Remizione.UI
              
                 var box = menu.BoundingBox;
                 BoundingBox = new(box.X + 1, nameText.BoundingBox.Top - 1, box.Width-2, nameText.BoundingBox.Height + 1);
-
-                infoText.X = BoundingBox.Right - 2;
-                infoText.Y = nameText.Y;
             }
         }
 
         // TextBoundingBox
-        public RectangleF TextBoundingBox => RectangleF.Union(nameText.BoundingBox, infoText.BoundingBox);
+        public RectangleF TextBoundingBox => nameText.BoundingBox;
 
         // ToString
         public override string ToString() => nameText.ToString();
