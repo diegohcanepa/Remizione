@@ -10,7 +10,7 @@ namespace Remizione
     public sealed class ItemContainer
     {
         private readonly List<Item> items = [];
-        private readonly Dictionary<ItemName, Item> itemsDictionary = [];
+        private readonly Dictionary<string, Item> itemsDictionary = [];
 
         // Constructor
         public ItemContainer(GameThing owner, ItemContainerCategory category)
@@ -22,7 +22,7 @@ namespace Remizione
         }
 
         // Activate
-        public bool Activate(ItemName name)
+        public bool Activate(string name)
         {
             if (GetItem(name) is Item item)
             {
@@ -56,9 +56,9 @@ namespace Remizione
         }
 
         // Add
-        public Item? Add(ItemName name, int amount)
+        public Item? Add(string name, int amount)
         {
-            if (name == ItemName.None)
+            if (string.IsNullOrEmpty(name))
                 return null;
 
             if (itemsDictionary.TryGetValue(name, out var value))
@@ -80,7 +80,7 @@ namespace Remizione
         public ItemContainerCategory Category { get; }
 
         // GetItem
-        public Item? GetItem(ItemName name) => itemsDictionary.TryGetValue(name, out var value) ? value : null;
+        public Item? GetItem(string name) => itemsDictionary.TryGetValue(name, out var value) ? value : null;
 
         // Items
         public ReadOnlyCollection<Item> Items { get; }

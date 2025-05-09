@@ -18,7 +18,7 @@ namespace Remizione
         #region Private fields
 
         private readonly FloatTween accelerationFactorTween = new();
-        private ItemName attackSkillName;
+        private string attackSkillName;
         private BloodSplash? bloodSplash;
         private readonly ActorCloseAttackState closeAttackState;
         private readonly CombatStateMachine combatStateMachine;
@@ -497,7 +497,7 @@ namespace Remizione
 
         // AttackSkillName
         [ScriptProperty]
-        public ItemName AttackSkillName
+        public string AttackSkillName
         {
             get => attackSkillName;
             set
@@ -505,7 +505,7 @@ namespace Remizione
                 if (value != attackSkillName)
                 {
                     attackSkillName = value;
-                    var item = value == ItemName.None ? null : Manifestations.GetItem(value);
+                    var item = Manifestations.GetItem(value);
 
                     if (item?.Container != Manifestations)
                         throw new InvalidOperationException("Item must be a skill.");

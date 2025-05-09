@@ -9,7 +9,7 @@ namespace Remizione
     /// </summary>
     public sealed class LootTable
     {
-        private readonly List<(ItemName itemName, float weight)> items = [];
+        private readonly List<(string itemName, float weight)> items = [];
         private static readonly Dictionary<string, LootTable> lootTables = [];
         private readonly Random _random = new();
 
@@ -33,9 +33,10 @@ namespace Remizione
         #endregion
 
         // Add
-        public void Add(ItemName itemName, float dropChance)
+        public void Add(string itemName, float dropChance)
         {
-            if (itemName == ItemName.None)
+            // TODO: Exception?
+            if (string.IsNullOrEmpty(itemName))
                 return;
 
             CodeContract.GreaterThanZero(dropChance, nameof(dropChance));
@@ -43,10 +44,10 @@ namespace Remizione
         }
 
         // Get
-        public ItemName GetLoot()
+        public string GetLoot()
         {
             if (items.Count == 0)
-                return ItemName.None;
+                return string.Empty;
 
             float totalWeight = 0f;
             foreach (var loot in items)
@@ -64,7 +65,7 @@ namespace Remizione
                 roll -= loot.weight;
             }
 
-            return ItemName.None;
+            return string.Empty;
         }
     }
 }

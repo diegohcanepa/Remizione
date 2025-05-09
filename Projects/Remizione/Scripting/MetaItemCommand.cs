@@ -11,7 +11,7 @@ namespace Remizione.Scripting
         internal MetaItemCommand(Script script, string source, StatementBody body)
             : base(script, source, body, 3, ActionArg, DamageArg, DurabilityArg, FaithArg, HPArg, ImpactWordArg, KnockbackArg, MaximumArg, MaximumLevelArg, ModifierArg, RangeArg)
         {
-            var name = ParseItemName(this, 0);
+            var name = Parser.ParseName(this, 0);
             AssertKeyword(1, "category");
             var category = Parser.ParseEnum<ItemCategory>(this, 2);
             var action = Parser.ParseEnumArgument<ItemAction>(this, ActionArg, ItemAction.None);
@@ -23,18 +23,8 @@ namespace Remizione.Scripting
             var fp = Parser.ParseInt32Argument(this, FaithArg);
             var hp = Parser.ParseInt32Argument(this, HPArg);
             var range = Parser.ParseInt32Argument(this, RangeArg);
-            var metaItem = new MetaItem(name, category, action, damage, modifier, knockback, maximum, hp, fp, range, durability);
-            MetaItem.Register(metaItem);
-        }
-
-        // ParseItemName
-        internal static ItemName ParseItemName(Statement statement, int clauseIndex)
-        {
-            var result = Parser.ParseEnum<ItemName>(statement, clauseIndex);
-            if (result == ItemName.None)
-                throw new ScriptException(statement, "Item must have a name.");
-
-            return result;
+            
+            new MetaItem(name, category, action, damage, modifier, knockback, maximum, hp, fp, range, durability);
         }
     }
 }

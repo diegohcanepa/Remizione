@@ -152,7 +152,7 @@ namespace Remizione
         public MetaItem MetaItem { get; }
 
         // Name
-        public ItemName Name => MetaItem.Name;
+        public string Name => MetaItem.Name;
 
         // Owner
         public GameThing Owner => Container.Owner;

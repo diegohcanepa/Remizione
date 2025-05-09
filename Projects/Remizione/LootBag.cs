@@ -66,7 +66,7 @@ namespace Remizione
         #endregion
 
         // Drop
-        public void Drop(Vector2 position, ItemName itemName)
+        public void Drop(Vector2 position, string itemName)
         {
             Loot = null;
             Scale = Vector2.One;

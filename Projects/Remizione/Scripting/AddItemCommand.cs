@@ -12,7 +12,7 @@ namespace Remizione.Scripting
         internal AddItemCommand(Script script, string source, StatementBody body)
             : base(script, source, body, 3, AmountArg)
         {
-            var itemName = Parser.ParseEnum<ItemName>(this, 0);
+            var itemName = Parser.ParseName(this, 0);
             AssertKeyword(1, "to");
             Parser.ParseEntity<Actor>(this, 2);
             Parser.ParseInt32Argument(this, AmountArg);

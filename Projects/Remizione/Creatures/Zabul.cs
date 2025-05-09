@@ -24,9 +24,8 @@ namespace Remizione
             AIStateMachine.AddTransition<AIIdleState>(AIStateSignal.SawPlayer, charge);
             AIStateMachine.AddTransition<AIChargeState>(AIStateSignal.ChargeComplete, idle);
             */
-
-            Manifestations.Add(ItemName.ZabulContact, 1);
-            AttackSkillName = ItemName.ZabulContact;
+            //Manifestations.Add(ItemName.ZabulContact, 1);
+            //AttackSkillName = ItemName.ZabulContact;
         }
 
         // OnUpdate

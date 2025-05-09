@@ -11,7 +11,7 @@ namespace Remizione.Scripting
             : base(script, source, body, 2)
         {
             var thing = AssertEntityNotNull<GameThing>(Script.EntityName);
-            var itemName = Parser.ParseEnum<ItemName>(this, 0);
+            var itemName = Parser.ParseName(this, 0);
             var dropChance = Parser.ParseFloat(this, 1);
 
             var lootTable = LootTable.Find(thing.StaticName);

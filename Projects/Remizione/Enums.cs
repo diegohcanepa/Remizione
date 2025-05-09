@@ -54,9 +54,6 @@ namespace Remizione
     // ItemEffectTiming
     public enum ItemEffectTiming { OnBeginUse, OnEndUse, AfterAllEffects }
 
-    // ItemName
-    public enum ItemName { None, UnarmedAttack, Cross, Lockpick, Stamina, Health, ZabulContact }
-
     // ItemContainerCategory
     public enum ItemContainerCategory { Inventory, Skills }
 

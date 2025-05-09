@@ -11,21 +11,23 @@ namespace Remizione
     /// </summary>
     public sealed class MetaItem
     {
-        private readonly string nameString;
-        private static readonly Dictionary<ItemName, MetaItem> types = [];
+        private static readonly Dictionary<string, MetaItem> items = [];
         private readonly List<int> upgradeCosts = [];
         private readonly List<ItemEffect> upgradeEffects = [];
 
         #region Constructor
 
         // Constructor
-        public MetaItem(ItemName name, ItemCategory category, ItemAction action, DiceRoll baseDamage, Stat modifier, Vector2 knockback, int maximum, int hp, int faith, int range, int durability)
+        public MetaItem(string name, ItemCategory category, ItemAction action, DiceRoll baseDamage, Stat modifier, Vector2 knockback, int maximum, int hp, int faith, int range, int durability)
         {
-            if (name == ItemName.None)
-                throw new InvalidOperationException("Item must have a name.");
+            CodeContract.NotEmpty(name, nameof(name));
+
+            if (items.ContainsKey(name))
+                throw new InvalidOperationException($"The meta item '{name}' already exists.");
+            else
+                items[name] = this;
 
             this.Name = name;
-            this.nameString = name.ToString();
             this.Category = category;
             this.Action = action;
             this.BaseDamage = baseDamage;
@@ -47,14 +49,7 @@ namespace Remizione
         #region Static members
 
         // Find
-        public static MetaItem? Find(ItemName name) => types.TryGetValue(name, out var result) ? result : null;
-
-        // Register
-        public static void Register(MetaItem metaItem)
-        {
-            if (!types.ContainsKey(metaItem.Name))
-                types[metaItem.Name] = metaItem;
-        }
+        public static MetaItem? Find(string name) => items.TryGetValue(name, out var result) ? result : null;
 
         #endregion
 
@@ -113,13 +108,13 @@ namespace Remizione
         public Stat Modifier { get; }
 
         // Name
-        public ItemName Name { get; }
+        public string Name { get; }
 
         // Range
         public int Range { get; }
 
         // ToString
-        public override string ToString() => nameString;
+        public override string ToString() => Name;
 
         // UpgradeCosts
         public ReadOnlyCollection<int> UpgradeCosts { get; }
