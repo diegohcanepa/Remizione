@@ -1,0 +1,85 @@
+﻿using Engendro;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+namespace Remizione.UI
+{
+    /// <summary>
+    /// UILog
+    /// </summary>
+    public sealed class UILog : GameObject
+    {
+        private readonly FloatTween fadeTween = new() { StartDelay = 1500 };
+        private readonly TextSprite nounText;
+        private readonly TextSprite verbText;
+
+        // Constructor
+        public UILog(EngendroGame game)
+            : base(game)
+        {
+            this.verbText = new(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Default,
+                PivotOrigin = RectanglePoint.Left,
+                Scale = ScaleInfo.Text.Large
+            };
+
+            this.nounText = new(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Default * .7f,
+                PivotOrigin = RectanglePoint.LeftTop,
+                Scale = ScaleInfo.Text.Large
+            };
+        }
+
+        #region Private members
+
+        // ShowCore
+        private void ShowCore(string verb, string noun, bool isWarning)
+        {
+            verbText.Color = isWarning ? ColorPalette.Text.Terra : ColorPalette.Text.Default;
+            verbText.Position = new Vector2(5, 30);
+            verbText.Text = verb;
+
+            nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
+            nounText.Text = noun;
+
+            fadeTween.Start(TweenStyle.CubicIn, 1, 0, 1000);
+        }
+
+        #endregion
+
+        #region Protected members
+
+        // OnDraw
+        protected override void OnDraw(GameTime gameTime)
+        {
+            if (!fadeTween.IsRunning)
+                return;
+
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            verbText.Draw(gameTime);
+            nounText.Draw(gameTime);
+            Game.SpriteBatch.End();
+        }
+
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            fadeTween.Update(gameTime);
+            verbText.Update(gameTime);
+            nounText.Update(gameTime);
+
+            verbText.Opacity = fadeTween.IsRunning ? fadeTween.CurrentValue : 1;
+            nounText.Opacity = fadeTween.IsRunning ? fadeTween.CurrentValue : 1;
+        }
+
+        #endregion
+
+        // Show
+        public void Show(string text, bool isWarning) => ShowCore(text, string.Empty, isWarning);
+
+        // Show
+        public void Show(string verb, string noun) => ShowCore(verb, noun, false);
+    }
+}

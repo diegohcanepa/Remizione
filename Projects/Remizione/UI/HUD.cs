@@ -31,6 +31,9 @@ namespace Remizione
             // Echo message
             this.EchoMessage = new EchoMessage(session.Game);
 
+            // Log
+            this.Log = new(Game);
+
             // Saving icon
             this.savingIcon = new ImageSprite(Game, Atlases.UI.SavingIcon)
             {
@@ -104,8 +107,10 @@ namespace Remizione
 
             EchoMessage.Draw(gameTime);
 
-            if (sentence.IsEmpty && session.IsCurrentScene)
+            if (!sentence.IsEmpty && session.IsCurrentScene)
                 sentence.Draw(gameTime);
+
+            Log.Draw(gameTime);
 
             if (savingIcon.Tweens.IsTweening)
             {
@@ -131,6 +136,7 @@ namespace Remizione
 
             DestinationMark.Update(gameTime);
             EchoMessage.Update(gameTime);
+            Log.Update(gameTime);
             savingIcon.Update(gameTime);
         }
 
@@ -141,6 +147,9 @@ namespace Remizione
 
         // EchoMessage
         public EchoMessage EchoMessage { get; }
+
+        // Log
+        public UILog Log { get; }
 
         // MessageText
         public string MessageText

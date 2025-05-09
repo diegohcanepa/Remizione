@@ -39,6 +39,9 @@
   <String Key="Languages.es-es">Español (España)</String>
   <String Key="Languages.fr-fr">Français</String>
   <String Key="Languages.ru-ru">Русский</String>
+  <String Key="LogMessages.EnoughOfThat">You already have enough of that.</String>
+  <String Key="LogMessages.InventoryFull">You cannot carry more items.</String>
+  <String Key="LogVerbs.PickedUp">Picked up</String>
   <String Key="Menu.Controls.Keyboard.Interact">Interact</String>
   <String Key="Menu.Controls.Keyboard.Inventory">Inventory</String>
   <String Key="Menu.Controls.Keyboard.Kick">Kick (when available)</String>

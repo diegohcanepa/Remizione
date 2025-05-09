@@ -137,6 +137,7 @@ namespace Remizione
         protected override void ExtendScriptRegistry(ScriptRegistry scriptRegistry)
         {
             scriptRegistry.RegisterEntity(typeof(Actor));
+            scriptRegistry.RegisterEntity(typeof(PickupItem));
             scriptRegistry.RegisterEntity(typeof(Prop));
             scriptRegistry.RegisterEntity(typeof(GameRoom));
             scriptRegistry.RegisterEntity(typeof(CreditsRoom));
@@ -163,6 +164,7 @@ namespace Remizione
             scriptRegistry.RegisterStatement("hide-overlay-text", typeof(HideOverlayTextCommand));
             scriptRegistry.RegisterStatement("placement-condition", typeof(PlacementConditionCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("meta-item", typeof(MetaItemCommand), CodingContext.Declaration);
+            scriptRegistry.RegisterStatement("pickup", typeof(PickupCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("say", typeof(SayCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("select-walk-area", typeof(SelectWalkAreaCommand));
             scriptRegistry.RegisterStatement("set-light", typeof(SetLightCommand), CodingContext.Execution);

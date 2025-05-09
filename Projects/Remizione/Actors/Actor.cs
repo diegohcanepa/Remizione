@@ -18,7 +18,7 @@ namespace Remizione
         #region Private fields
 
         private readonly FloatTween accelerationFactorTween = new();
-        private string attackSkillName;
+        private string attackSkillName = string.Empty;
         private BloodSplash? bloodSplash;
         private readonly ActorCloseAttackState closeAttackState;
         private readonly CombatStateMachine combatStateMachine;
@@ -486,6 +486,9 @@ namespace Remizione
             var result = canApproach && MoveTo(destination);
             this.pendingInteractiveTarget = target;
 
+            if (target is PickupItem)
+                Session.HUD.DestinationMark.Position = null;
+
             if (!result)
                 HandlePendingInteraction();
 
@@ -723,6 +726,10 @@ namespace Remizione
 
         // Inventory
         public ItemContainer Inventory { get; }
+
+        // InventoryCapacity
+        [ScriptProperty]
+        public int InventoryCapacity { get; set; } = 6;
 
         // IsAlert
         public bool IsAlert { get; set; }
