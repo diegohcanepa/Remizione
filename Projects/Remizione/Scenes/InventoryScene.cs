@@ -1,7 +1,6 @@
 ﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Remizione.UI;
 
 namespace Remizione
@@ -11,9 +10,10 @@ namespace Remizione
     /// </summary>
     public sealed class InventoryScene : Scene
     {
-        private readonly ContextMenu<ItemAction> actionMenu;
+        private readonly UIControl discardButton;
         private readonly ItemMenu menu;
         private readonly UISentence sentence;
+        private readonly UIControl useButton;
 
         #region Constructor
 
@@ -21,43 +21,35 @@ namespace Remizione
         public InventoryScene(RemizioneGame game)
             : base(game, SceneSettings.None)
         {
-            this.menu = new(Game);
-            this.sentence = new(Game);
+            this.menu = new(Game, SelectedOptionChanged);
+            this.sentence = new(Game) { ShowGradient = true };
 
-            this.actionMenu = new ContextMenu<ItemAction>(game, game.Camera);
+            this.discardButton = new UIControl(game, InputBindings.Select)
+            {
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Text = Localization.EncodeKey(ItemAction.Discard)
+            };
+
+            this.useButton = new UIControl(game, InputBindings.Select)
+            {
+                PivotOrigin = RectanglePoint.RightBottom,
+                Text = Localization.EncodeKey(ItemAction.Use)
+            };
         }
 
         #endregion
 
         #region Private members
 
-        // HandleActionMenuInput
-        private bool HandleActionMenuInput(GameTime gameTime, Actor actor)
+        // DiscardItem
+        private void DiscardItem(Actor actor)
         {
-            if (!actionMenu.IsVisible)
-                return false;   
-
-            var result = actionMenu.HandleInput(gameTime);
-            if (result == HandleInputResult.Unhandled)
-                return false;
-
-            if (actionMenu.SelectedOption is ContextMenuOption<ItemAction> action)
+            if (menu.SelectedOption?.Item is Item item)
             {
-                // Discard
-                if (action.Key == ItemAction.Discard)
-                {
-                    if (menu.SelectedOption?.Item is Item item)
-                    {
-                        actor.Inventory.Remove(item.Name);
-                        menu.RemoveSelectedOption();
-                        menu.Title = GetTitle();
-                        actor.Session.HUD.Log.Show(LogVerb.Discard, item.MetaItem.LocalizedName);
-                        return true;
-                    }
-                }
+                actor.Inventory.Remove(item.Name);
+                menu.RemoveSelectedOption();
+                menu.Title = GetTitle();
             }
-
-            return false;
         }
 
         // HandleMouseInput
@@ -76,9 +68,6 @@ namespace Remizione
             {
                 if (!menu.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
                     SceneController.Pop();
-                else
-                    ShowActionMenu();
-
                 return true;
             }
 
@@ -95,18 +84,23 @@ namespace Remizione
             return title;
         }
 
-        // ShowActionMenu
-        private void ShowActionMenu()
-        {
-            actionMenu.Clear();
-            actionMenu.AddOption(ItemAction.Discard, Localization.EncodeKey(ItemAction.Discard));
-            actionMenu.AddOption(ItemAction.Use, Localization.EncodeKey(ItemAction.Use));
+        // SelectedOptionChanged
+        private void SelectedOptionChanged() => sentence.Text = menu.SelectedOption?.Item.MetaItem.LocalizedDescription;
 
-            var pos = InputManager.DefaultPlayer.Mouse.VirtualPosition;
-            var option = menu.GetOptionAt(pos);
-            if (option != null)
+        // UseItem
+        private void UseItem(Actor actor)
+        {
+            if (menu.SelectedOption?.Item is Item item)
             {
-                actionMenu.Show(pos, false);
+                item.Consume();
+                if (item.Count == 0)
+                {
+                    actor.Inventory.Remove(item.Name);
+                    menu.RemoveSelectedOption();
+                    menu.Title = GetTitle();
+                }
+                else
+                    menu.SelectedOption.Invalidate();
             }
         }
 
@@ -120,13 +114,10 @@ namespace Remizione
             menu.Draw(gameTime);
             sentence.Draw(gameTime);
 
-            if (actionMenu.IsVisible)
+            if (menu.SelectedOption != null)
             {
-                Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
-                Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.ContextMenu.SceneShade);
-                Game.SpriteBatch.End();
-
-                actionMenu.Draw(gameTime);
+                discardButton.Draw(gameTime);
+                useButton.Draw(gameTime);
             }
         }
 
@@ -136,8 +127,14 @@ namespace Remizione
             if (Actor == null)
                 return HandleInputResult.Unhandled;
 
-            if (HandleActionMenuInput(gameTime, Actor))
+            if (menu.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
+
+            if (discardButton.TestPressed(PlayerIndex.One))
+                DiscardItem(Actor);
+
+            if (useButton.TestPressed(PlayerIndex.One))
+                UseItem(Actor);
 
             if (HandleMouseInput())
                 return HandleInputResult.Handled;
@@ -160,20 +157,21 @@ namespace Remizione
             }
 
             menu.Show(new Vector2(Screen.NativeWidth / 2, 20), GetTitle());
+
+            discardButton.Position = menu.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 5, -9);
+            useButton.Position = menu.BoundingBox.GetPoint(RectanglePoint.RightBottom, -5, -9);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (!actionMenu.IsVisible)
-                menu.Update(gameTime);
+            menu.Update(gameTime);
 
             if (menu.SelectedOption != null)
-                sentence.Text = menu.SelectedOption.Item.MetaItem.LocalizedDescription;
-            else
-                sentence.Text = null;
-
-            actionMenu.Update(gameTime);
+            {
+                discardButton.Update(gameTime);
+                useButton.Update(gameTime);
+            }
         }
 
         #endregion

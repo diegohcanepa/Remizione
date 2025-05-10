@@ -85,9 +85,7 @@ namespace Engendro
         protected override void OnDraw(GameTime gameTime)
         {
             if (CurrentScene == null)
-            {
                 return;
-            }
 
             if (CurrentScene.SceneController.ExclusiveDraw)
             {
@@ -108,9 +106,7 @@ namespace Engendro
         protected override void OnUpdate(GameTime gameTime)
         {
             if (CurrentScene == null)
-            {
                 return;
-            }
 
             TransitionManager.CurrentTransition.Update(gameTime);
 
@@ -122,9 +118,7 @@ namespace Engendro
             {
                 scenes[i].ContinuousUpdate(gameTime);
                 if (sceneListSize > scenes.Count)
-                {
                     break;
-                }
 
                 if (canUpdate)
                 {
@@ -142,9 +136,7 @@ namespace Engendro
                     }
 
                     if (sceneListSize > scenes.Count)
-                    {
                         break;
-                    }
                 }
             }
         }

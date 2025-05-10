@@ -78,10 +78,7 @@ namespace Remizione
             Owner.HP += HP;
 
             if (Owner is Actor actor)
-            {
-                if (actor.Session.CombatManager.IsActive)
-                    actor.Faith += Faith;
-            }
+                actor.Faith += Faith;
 
             if (Level > 0 && MetaItem.UpgradeEffects.Count > 0)
             {
@@ -98,7 +95,9 @@ namespace Remizione
         {
             if (Count > 0)
             {
+                BeginUse();
                 Count--;
+                InvalidateDisplayText();
                 return true;
             }
 
@@ -212,7 +211,7 @@ namespace Remizione
         public bool HasUpgrade => Level < MetaItem.UpgradeEffects.Count;
 
         // HP
-        public int HP { get; }
+        public int HP => MetaItem.HP;
 
         // IconImage
         public AtlasImage IconImage { get; }

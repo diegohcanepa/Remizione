@@ -22,7 +22,6 @@ namespace Remizione
 
             this.button = new UIControl(Game, InputBindings.Exit)
             {
-                AllowContainer = true,
                 DisplayMode = UIControlDisplayMode.ImageAndText,
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.RightBottom)

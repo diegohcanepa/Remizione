@@ -64,7 +64,7 @@ namespace Remizione
             this.bubbleImage2 = new ImageSprite(Game, Atlases.UI.Pixel);
 
             // Button
-            this.button = new UIControl(Game, InputBindings.NextDialog, null, true)
+            this.button = new UIControl(Game, InputBindings.NextDialog)
             {
                 DisplayMode = UIControlDisplayMode.ImageAndText,
                 PivotOrigin = RectanglePoint.RightBottom,

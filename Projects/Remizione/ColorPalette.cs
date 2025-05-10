@@ -80,7 +80,7 @@ namespace Remizione
         internal static Color PopupTitle { get; } = new Color(116, 95, 75);
 
         // SceneShade
-        internal static Color SceneShade { get; } = Color.Black * .7f;
+        internal static Color SceneShade { get; } = Color.Black * .5f;
 
         // ShadowOpacity
         public const float ShadowOpacity = .4f;
@@ -111,6 +111,7 @@ namespace Remizione
             internal static Color Disabled { get; } = new(80, 76, 76);
             internal static Color Fill { get; } = new(15, 42, 63);
             internal static Color Highlight { get; } = new(252, 224, 194);
+            internal static Color Hover { get; } = new(167, 143, 145);
             internal static Color Light { get; } = new(200, 165, 138);
             internal static Color TerraDarker { get; } = new(61, 41, 54);
             internal static Color TerraDark { get; } = new(82, 51, 63);

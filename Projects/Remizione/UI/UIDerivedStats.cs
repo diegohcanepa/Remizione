@@ -7,7 +7,7 @@ namespace Remizione.UI
     /// <summary>
     /// UIDerivedStats
     /// </summary>
-    internal class UIDerivedStats : GameObject
+    public class UIDerivedStats : GameObject
     {
         private Actor? actor;
         private readonly ImageSprite[] icons;

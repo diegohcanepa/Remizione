@@ -53,7 +53,6 @@ namespace Remizione.UI
             {
                 DisplayMode = UIControlDisplayMode.ImageOnly,
                 PivotOrigin = RectanglePoint.Right,
-                Size = UIControlSize.Small
             };
 
             this.Options = new ReadOnlyCollection<UIContextMenuOption>(optionList);

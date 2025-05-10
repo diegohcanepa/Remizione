@@ -65,16 +65,15 @@ namespace Remizione.UI
         // Add
         public UIControl Add(string text, InputBinding? inputBinding)
         {
-            return Add(text, inputBinding, ControlImageSource.Default, null);
+            return Add(text, inputBinding);
         }
 
         // Add
-        public UIControl Add(string text, InputBinding? gameInput, ControlImageSource imageSource, string? imageName)
+        public UIControl Add(string text, InputBinding? gameInput, string? imageName)
         {
             UIControl control = new(Game, gameInput)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
-                ImageSource = imageSource,
                 Text = text
             };
 

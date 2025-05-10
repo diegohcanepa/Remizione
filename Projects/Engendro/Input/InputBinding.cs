@@ -55,9 +55,6 @@ namespace Engendro.Input
             }
         }
 
-        // IsEmpty
-        public bool IsEmpty => Button == 0 && (Keys.Length == 0 || Keys[0] != Microsoft.Xna.Framework.Input.Keys.None);
-
         // IsKeyDown
         public bool IsKeyDown()
         {

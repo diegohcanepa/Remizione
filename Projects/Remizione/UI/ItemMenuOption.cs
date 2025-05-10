@@ -33,7 +33,14 @@ namespace Remizione.UI
         // UpdateColor
         private void UpdateColor()
         {
-            nameText.Color = IsSelected ? ColorPalette.Text.TerraLight : ColorPalette.Text.Default;
+            if (IsSelected)
+                nameText.Color = ColorPalette.Text.Terra;
+
+            else if (IsHovered )
+                nameText.Color = ColorPalette.Text.Hover;
+            
+            else
+                nameText.Color = ColorPalette.Text.Default;
         }
 
         #endregion
@@ -49,6 +56,12 @@ namespace Remizione.UI
 
         // Index
         public int Index { get; }
+
+        // Invalidate
+        public void Invalidate() => nameText.Text = Item.DisplayText;
+
+        // IsHovered
+        public bool IsHovered => menu.HoveredOption == this;
 
         // IsSelected
         public bool IsSelected => menu.SelectedOption == this;

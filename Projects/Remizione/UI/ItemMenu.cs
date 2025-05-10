@@ -2,6 +2,7 @@
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -16,6 +17,8 @@ namespace Remizione.UI
 
         private readonly ImageSprite container;
         private readonly List<ItemMenuOption> optionList = [];
+        private ItemMenuOption? selectedOption;
+        private Action? selectedOptionChanged;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 200 };
         private readonly TextSprite titleText;
 
@@ -24,10 +27,11 @@ namespace Remizione.UI
         #region Constructor
 
         // Constructor
-        public ItemMenu(EngendroGame game, Font? font = null)
+        public ItemMenu(EngendroGame game, Action? selectedOptionChanged)
             : base(game)
         {
-            this.Font = font ?? Fonts.CommonOutline;
+            this.selectedOptionChanged = selectedOptionChanged;
+            this.Font = Fonts.CommonOutline;
             this.Options = new ReadOnlyCollection<ItemMenuOption>(optionList);
 
             // Container
@@ -59,7 +63,7 @@ namespace Remizione.UI
             {
                 var option = optionList[i];
                 option.Position = pos;
-                pos.Y += option.TextBoundingBox.Height;
+                pos.Y += option.TextBoundingBox.Height + VerticalSpacing;
             }
         }
 
@@ -89,16 +93,7 @@ namespace Remizione.UI
         protected override void OnUpdate(GameTime gameTime)
         {
             if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
-            {
-                if (GetOptionAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is ItemMenuOption option)
-                {
-                    SelectedOption = option;
-                    if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
-                        Hide();
-                }
-                else
-                    SelectedOption = null;
-            }
+                HoveredOption = GetOptionAt(InputManager.DefaultPlayer.Mouse.VirtualPosition);
 
             stick.Stick = GamePadThumbStick.Left;
             stick.Update(gameTime);
@@ -131,6 +126,7 @@ namespace Remizione.UI
         public void Clear()
         {
             optionList.Clear();
+            HoveredOption = null;
             SelectedOption = null;
         }
 
@@ -155,6 +151,12 @@ namespace Remizione.UI
             if (!CanHandleInput)
                 return HandleInputResult.Unhandled;
 
+            if (HoveredOption != null && InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
+            {
+                SelectedOption = HoveredOption;
+                return HandleInputResult.Handled;
+            }
+
             return HandleInputResult.Unhandled;
         }
 
@@ -166,6 +168,9 @@ namespace Remizione.UI
         {
             IsVisible = false;
         }
+
+        // HoveredOption
+        public ItemMenuOption? HoveredOption { get; private set; }
 
         // IsActiveInGameLoop
         public override bool IsActiveInGameLoop => IsVisible;
@@ -182,12 +187,24 @@ namespace Remizione.UI
             if (SelectedOption != null)
             {
                 optionList.Remove(SelectedOption);
+                SelectedOption = null;
                 LayoutOptions();
             }
         }
 
         // SelectedOption
-        public ItemMenuOption? SelectedOption { get; private set; }
+        public ItemMenuOption? SelectedOption
+        {
+            get => selectedOption;
+            set
+            {
+                if (value != selectedOption)
+                {
+                    selectedOption = value;
+                    selectedOptionChanged?.Invoke();
+                }
+            }
+        }
 
         // Show
         public void Show(Vector2 position, string title)
@@ -211,5 +228,8 @@ namespace Remizione.UI
             get => titleText.Text;
             set => titleText.Text = value;
         }
+
+        // VerticalSpacing
+        public float VerticalSpacing { get; set; } = 1;
     }
 }

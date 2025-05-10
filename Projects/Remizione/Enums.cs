@@ -26,9 +26,6 @@ namespace Remizione
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Videos, Voices, System, Text }
 
-    // ControlImageSource
-    public enum ControlImageSource { Default, InputBindingName, ImageName }
-
     // Cycle
     public enum Cycle { Indulgence, Penance }
 
@@ -125,9 +122,6 @@ namespace Remizione
 
     // ThrowableBounceIntensity
     public enum ThrowableBounceIntensity { Low, Medium, High }
-
-    // UIControlSize
-    public enum UIControlSize { Large, Small }
 
     // UIControlDisplayMode
     public enum UIControlDisplayMode { ImageAndText, ImageOnly }

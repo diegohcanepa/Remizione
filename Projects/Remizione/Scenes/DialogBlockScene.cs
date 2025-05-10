@@ -44,10 +44,8 @@ namespace Remizione
 
             this.buttonQuit = new UIControl(Game, InputBindings.Exit)
             {
-                AllowContainer = true,
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.RightBottom),
-                Size = UIControlSize.Large
             };
 
             fadeTween.Start(TweenStyle.Linear, 0, 1, 800);

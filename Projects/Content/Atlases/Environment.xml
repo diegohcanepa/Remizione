@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:0db32f4faf0b898cea560998ced0ea1f:f2755ac199368a70f4aa60f6f1c670c2:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:13d56fb092a147e4e207e1930156ec39:b2f041aab4bfc489cef492c35d3afad4:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,6 +20,7 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Environment.png" width="512" height="512">
+    <sprite n="Apple.png" x="282" y="98" w="2" h="3"/>
     <sprite n="BloodSplashHigh01.png" x="497" y="93" w="13" h="18"/>
     <sprite n="BloodSplashHigh02.png" x="497" y="113" w="13" h="18"/>
     <sprite n="BloodSplashHigh03.png" x="411" y="93" w="13" h="18"/>
@@ -51,7 +52,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="LargeRockB.png" x="356" y="16" w="49" h="51"/>
     <sprite n="LargeRockBShadow.png" x="407" y="16" w="49" h="51"/>
     <sprite n="MoveDestinationMark.png" x="501" y="45" w="7" h="6"/>
-    <sprite n="RottenApple.png" x="282" y="98" w="2" h="3"/>
+    <sprite n="RottenApple.png" x="282" y="103" w="2" h="3"/>
     <sprite n="ShadowSpotAverage.png" x="501" y="53" w="6" h="3"/>
     <sprite n="SmallRockA.png" x="484" y="45" w="15" h="11"/>
     <sprite n="SmallRockAShadow.png" x="311" y="101" w="15" h="11"/>

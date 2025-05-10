@@ -10,9 +10,9 @@ namespace Remizione
     /// </summary>
     public sealed class HUD : GameObject
     {
-        private readonly UIDerivedStats playerStats;
         private readonly ScoreText gpScore;
         private readonly TextSprite messageText;
+        private readonly UIDerivedStats playerStats;
         private readonly ImageSprite savingIcon;
         private readonly UISentence sentence;
         private readonly GameSession session;
