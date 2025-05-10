@@ -55,7 +55,7 @@ namespace Remizione
                         else
                         {
                             Owner.Session.CombatManager.Add(target);
-                            target.ShowMessage(MessageKey.Miss);
+                            target.ShowMessage(Message.Miss);
                         }
                     }
                     else

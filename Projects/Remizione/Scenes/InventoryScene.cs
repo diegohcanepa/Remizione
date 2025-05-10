@@ -31,6 +31,35 @@ namespace Remizione
 
         #region Private members
 
+        // HandleActionMenuInput
+        private bool HandleActionMenuInput(GameTime gameTime, Actor actor)
+        {
+            if (!actionMenu.IsVisible)
+                return false;   
+
+            var result = actionMenu.HandleInput(gameTime);
+            if (result == HandleInputResult.Unhandled)
+                return false;
+
+            if (actionMenu.SelectedOption is ContextMenuOption<ItemAction> action)
+            {
+                // Discard
+                if (action.Key == ItemAction.Discard)
+                {
+                    if (menu.SelectedOption?.Item is Item item)
+                    {
+                        actor.Inventory.Remove(item.Name);
+                        menu.RemoveSelectedOption();
+                        menu.Title = GetTitle();
+                        actor.Session.HUD.Log.Show(LogVerb.Discard, item.MetaItem.LocalizedName);
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         // HandleMouseInput
         private bool HandleMouseInput()
         {
@@ -70,8 +99,8 @@ namespace Remizione
         private void ShowActionMenu()
         {
             actionMenu.Clear();
-            actionMenu.AddOption(ItemAction.Discard, "@ItemActions.Discard");
-            actionMenu.AddOption(ItemAction.Use, "@ItemActions.Use");
+            actionMenu.AddOption(ItemAction.Discard, Localization.EncodeKey(ItemAction.Discard));
+            actionMenu.AddOption(ItemAction.Use, Localization.EncodeKey(ItemAction.Use));
 
             var pos = InputManager.DefaultPlayer.Mouse.VirtualPosition;
             var option = menu.GetOptionAt(pos);
@@ -107,27 +136,8 @@ namespace Remizione
             if (Actor == null)
                 return HandleInputResult.Unhandled;
 
-            if (actionMenu.IsVisible)
-            { 
-                var result = actionMenu.HandleInput(gameTime);
-
-                if (result == HandleInputResult.Handled && actionMenu.SelectedOption is ContextMenuOption<ItemAction> action)
-                {
-                    // Discard
-                    if (action.Key == ItemAction.Discard)
-                    {
-                        if (menu.SelectedOption?.Item is Item item)
-                        {
-                            Actor.Inventory.Remove(item.Name);
-                            menu.RemoveSelectedOption();
-                            menu.Title = GetTitle();
-                            Actor.Session.HUD.Log.Show("@LogVerbs.Discarded", item.MetaItem.LocalizedName);
-                        }
-                    }
-                }
-
-                return result;
-            }
+            if (HandleActionMenuInput(gameTime, Actor))
+                return HandleInputResult.Handled;
 
             if (HandleMouseInput())
                 return HandleInputResult.Handled;

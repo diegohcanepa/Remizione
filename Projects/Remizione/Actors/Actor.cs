@@ -940,10 +940,10 @@ namespace Remizione
         public bool ShouldApplyMovePenalty => combatStateMachine.CurrentState is CombatChargeState;
 
         // ShowMessage
-        public void ShowMessage(MessageKey messageKey, int duration = 1000)
+        public void ShowMessage(Message message, int duration = 1000)
         {
             floatingMessage ??= session.ObjectPools.FloatingTexts.Get();
-            floatingMessage.Show(GetOverheadPosition(), Utils.EncodeMessageKey(messageKey), ColorPalette.TextDepracated.Dark, duration);
+            floatingMessage.Show(GetOverheadPosition(), Localization.GetLocalizedValue(message), ColorPalette.TextDepracated.Dark, duration);
         }
 
         // SpeechBubbleSound

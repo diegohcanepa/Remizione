@@ -23,7 +23,7 @@ namespace Remizione.Menus
             : base(game, Atlases.Menu.ContainerScreen)
         {
             ControlGroup = new UIControlGroup(Game) { Spacing = 5 };
-            ControlGroup.Add(LocalizationHelper.GetInputBinding(InputBindings.Back), InputBindings.Back);
+            ControlGroup.Add(Localization.EncodeKey(InputBindings.Back), InputBindings.Back);
 
             titleSprite = new TextSprite(Game, Fonts.Common)
             {

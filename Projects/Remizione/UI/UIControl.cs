@@ -70,7 +70,7 @@ namespace Remizione
             this.image = new ImageSprite(game);
             this.imageShadow = new ImageSprite(game) { Color = ColorPalette.UIControlShadow };
             this.inputBinding = inputBinding;
-            this.label.Text = inputBinding == null ? string.Empty : LocalizationHelper.GetInputBinding(inputBinding);
+            this.label.Text = inputBinding == null ? string.Empty : Localization.EncodeKey(inputBinding);
 
             Invalidate();
         }

@@ -38,8 +38,8 @@ namespace Remizione
             this.HP = hp;
             this.Range = range;
             this.Modifier = modifier;
-            this.LocalizedDescription = TextRepository.GetValue($"Items.{Name}.Description");
-            this.LocalizedName = TextRepository.GetValue($"Items.{Name}.Name");
+            this.LocalizedDescription = TextRepository.GetValue($"Item.{Name}.Description");
+            this.LocalizedName = TextRepository.GetValue($"Item.{Name}.Name");
             this.UpgradeCosts = new ReadOnlyCollection<int>(upgradeCosts);
             this.UpgradeEffects = new ReadOnlyCollection<ItemEffect>(upgradeEffects);
         }
@@ -81,7 +81,7 @@ namespace Remizione
             if (level == 0 || level > upgradeEffects.Count)
                 return string.Empty;
 
-            var text = TextRepository.GetValue("ItemEffects." + UpgradeEffects[level - 1].GetType().Name);
+            var text = TextRepository.GetValue("ItemEffect." + UpgradeEffects[level - 1].GetType().Name);
 
             return text;
         }

@@ -185,14 +185,6 @@ namespace Remizione
 
             HUD.Draw(gameTime);
 
-            if (Game.RenderTargets != null)
-            {
-                Game.RenderTargets.Swap();
-                Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.CRT.Effect);
-                Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
-                Game.SpriteBatch.End();
-            }
-
             if (IsPaused)
             {
                 Game.SpriteBatch.Begin(Game.Camera);

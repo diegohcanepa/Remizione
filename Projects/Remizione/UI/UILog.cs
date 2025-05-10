@@ -77,9 +77,9 @@ namespace Remizione.UI
         #endregion
 
         // Show
-        public void Show(string text, bool isWarning) => ShowCore(text, string.Empty, isWarning);
+        public void Show(LogMessage message, bool isWarning) => ShowCore(Localization.GetLocalizedValue(message), string.Empty, isWarning);
 
         // Show
-        public void Show(string verb, string noun) => ShowCore(verb, noun, false);
+        public void Show(LogVerb verb, string noun) => ShowCore(Localization.GetLocalizedValue(verb), noun, false);
     }
 }

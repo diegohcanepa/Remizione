@@ -27,7 +27,7 @@ namespace Remizione
         public override void Enter()
         {
             base.Enter();
-            Owner.ShowMessage(MessageKey.NoFaith, 2500);
+            Owner.ShowMessage(Message.NoFaith, 2500);
         }
 
         // Update

@@ -126,6 +126,15 @@ namespace Remizione
 #endif
         }
 
+        // OnSceneManagerDrawn
+        protected override void OnSceneManagerDrawn(GameTime gameTime)
+        {
+            RenderTargets.Swap();
+            SpriteBatch.Begin(effect:Effects.CRT.Effect);
+            SpriteBatch.Draw(RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
+            SpriteBatch.End();
+        }
+
         // OUpdate
         protected override void OnUpdate(GameTime gameTime)
         {

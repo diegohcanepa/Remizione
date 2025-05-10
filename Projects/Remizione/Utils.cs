@@ -50,9 +50,6 @@ namespace Remizione
             };
         }
 
-        // EncodeMessageKey
-        internal static string EncodeMessageKey(MessageKey key) => $"@Messages.{key}";
-
         // GetVersion
         internal static string GetVersion() => $"Build {GameSettings.Build} " + (EngendroGame.DebugMode ? "(dev)" : "(rel)");
 

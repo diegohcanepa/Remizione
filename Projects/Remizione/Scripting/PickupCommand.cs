@@ -31,7 +31,7 @@ namespace Remizione.Scripting
             {
                 if (item.Count == item.MetaItem.Maximum)
                 {
-                    actor.Session.HUD.Log.Show("@LogMessages.EnoughOfThat", true);
+                    actor.Session.HUD.Log.Show(LogMessage.EnoughOfThat, true);
                     return;
                 }
             }
@@ -39,13 +39,13 @@ namespace Remizione.Scripting
             // Inventory is full
             if (actor.Inventory.Items.Count == actor.InventoryCapacity)
             {
-                actor.Session.HUD.Log.Show("@LogMessages.InventoryFull", true);
+                actor.Session.HUD.Log.Show(LogMessage.InventoryFull, true);
                 return;
             }
 
             actor.Inventory.Add(metaItem.Name, 1);
             pickupItem.Unparent();
-            actor.Session.HUD.Log.Show("@LogVerbs.PickedUp", metaItem.LocalizedName);
+            actor.Session.HUD.Log.Show(LogVerb.Pickup, metaItem.LocalizedName);
         }
     }
 }

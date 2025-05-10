@@ -24,9 +24,6 @@ namespace Remizione.UI
                 Scale = ScaleInfo.Text.Large,
                 Text = item.DisplayText
             };
-            
-            if (item.Level > 0)
-                nameText.Text += $" +item.Level";
 
             UpdateColor();
 }

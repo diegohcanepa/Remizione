@@ -95,15 +95,11 @@ namespace Remizione
             playerStats.Draw(gameTime);
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-
             messageText.Draw(gameTime);
-
             Game.SpriteBatch.End();
 
             if (session.Player != null && session.FullHUD)
-            {
                 gpScore.Draw(gameTime);
-            }
 
             EchoMessage.Draw(gameTime);
 

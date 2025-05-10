@@ -62,6 +62,12 @@ namespace Remizione
     // LightState
     public enum LightState { Off, On, TurningOn, TurningOff }
 
+    // LogMessage
+    public enum LogMessage { EnoughOfThat, InventoryFull }
+
+    // LogVerb
+    public enum LogVerb { Pickup, Discard }
+
     // MenuItemName
     public enum MenuItemName { Options, Resume, Start, Exit, ExitToMainMenu, Yes, No, Cancel, Accept, Credits, WishlistNow, Memoirs }
 
@@ -75,8 +81,8 @@ namespace Remizione
         Accept = 8
     }
 
-    // MessageKey
-    public enum MessageKey { None, Critical, Miss, NoFaith, ThreatsNearby }
+    // Message
+    public enum Message { None, Critical, Miss, NoFaith, ThreatsNearby }
 
     // MouseCursorState
     public enum MouseCursorState { Cross, CrossOn, Target, TargetOn, Wait, Arrow }
@@ -86,9 +92,6 @@ namespace Remizione
 
     // PlacementPhase
     public enum PlacementPhase { None, Terrain, NonSolidDecoration, NaturalObject, ArtificialObject, Actor }
-
-    // PlatformMessageKey
-    public enum PlatformMessageKey { ChangeUser, ControllerDisconnected, PressAnyButton, PressAnyKeyOrButton, SignIn }
 
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }

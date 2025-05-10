@@ -53,7 +53,7 @@ namespace Remizione.UI
         // LayoutOptions
         private void LayoutOptions()
         {
-            var pos = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 11);
+            var pos = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 8);
 
             for (var i = 0; i < optionList.Count; i++)
             {

@@ -6,10 +6,19 @@ using System.Globalization;
 namespace Remizione
 {
     /// <summary>
-    /// LocalizationHelper
+    /// Localization
     /// </summary>
-    internal static class LocalizationHelper
+    internal static class Localization
     {
+        // EncodeKey
+        internal static string EncodeKey(InputBinding binding) => $"@InputBinding.{binding.Name}";
+
+        // EncodeKey
+        internal static string EncodeKey<TEnum>(TEnum value) where TEnum : Enum
+        {
+            return $"@{typeof(TEnum).Name}.{value}";
+        }
+
         // FormatPlayTime
         internal static string FormatPlayTime(TimeSpan value)
         {
@@ -48,34 +57,10 @@ namespace Remizione
             return result.Trim();
         }
 
-        // GetInputBinding
-        internal static string GetInputBinding(InputBinding binding)
+        // GetLocalizedValue
+        internal static string GetLocalizedValue<TEnum>(TEnum value) where TEnum:Enum
         {
-            return "@InputBindings." + binding.Name;
-        }
-
-        // GetMessage
-        internal static string GetMessage(MessageKey key)
-        {
-            return GetMessage(key.ToString());
-        }
-
-        // GetMessage
-        internal static string GetMessage(string key)
-        {
-            return "@Messages." + key;
-        }
-
-        // GetNoun
-        internal static string GetoNoun(string noun)
-        {
-            return "@Nouns." + noun;
-        }
-
-        // GetPlatformMessage
-        public static string GetPlatformMessage(PlatformMessageKey key)
-        {
-            return $"@Platforms.{EngendroGame.RunningPlatform}.Messages.{key}";
+            return TextRepository.GetValue(EncodeKey(value));
         }
     }
 }
