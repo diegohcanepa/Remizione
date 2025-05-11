@@ -47,9 +47,6 @@ namespace Remizione
     // ItemCategory
     public enum ItemCategory { Skills, Consumables, Spells, Throwables, Weapons }
 
-    // ItemEffectTiming
-    public enum ItemEffectTiming { OnBeginUse, OnEndUse, AfterAllEffects }
-
     // ItemContainerCategory
     public enum ItemContainerCategory { Inventory, Skills }
 
@@ -112,7 +109,7 @@ namespace Remizione
     public enum SpeechBubbleState { Hidden, Typing, Idle }
 
     // Stat
-    public enum Stat { Strength, Constitution, Dexterity, Devotion, Empathy, Mind }
+    public enum Stat { Strength, Dexterity, Devotion, Fortitude, Mind, Presence }
 
     // TerrainKind
     public enum TerrainKind { None }
@@ -128,6 +125,9 @@ namespace Remizione
 
     // UIControlGroupLayoutStyle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
+
+    // UpgradeHardness
+    public enum UpgradeHardness { Easy, Normal, Hard }
 
     // Verb
     public enum Verb { Examine, Insult, Talk, Trade }

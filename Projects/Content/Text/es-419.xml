@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Strings>
   <String Key="Actor.Unredeemed">Irredento</String>
-  <String Key="Attribute.Derived.Faith">Fe</String>
-  <String Key="Attribute.Derived.HP">Vitalidad</String>
   <String Key="CombatOption.Attack">Atacar</String>
   <String Key="CombatOption.Guard">Defender</String>
   <String Key="CombatOption.UseItem">Usar item...</String>
@@ -37,7 +35,6 @@
   <String Key="ItemCategory.Throwables">Arrojables</String>
   <String Key="ItemContainerCategory.Inventory">Carga</String>
   <String Key="ItemContainerCategory.Skills">Manifestaciones</String>
-  <String Key="ItemEffect.DamageBonusEffect">Incrementa el daño {Bonus}</String>
   <String Key="Languages.Abbreviations">Srta.|Sr.|Dr.</String>
   <String Key="Languages.de-de">Deutsch</String>
   <String Key="Languages.en-us">English</String>
@@ -182,6 +179,7 @@ Bla bla bla</String>
   <String Key="Misc.WanderingSpirit">Tu espíritu errante</String>
   <String Key="Misc.Yes">Sí</String>
   <String Key="Misc.YouAreDead">ESTÁS MUERTO.</String>
+  <String Key="Noun.Cross">Cruz</String>
   <String Key="Platform.NintendoSwitch.Messages.ControllerDisconnected">Por favor vuelve a conectar el mando para continuar.</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyButton">Pulse cualquier botón para continuar</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyKeyOrButton">Pulse cualquier tecla o botón para continuar</String>
@@ -214,6 +212,14 @@ Bla bla bla</String>
   <String Key="Playtime.LessThanAMinute">Menos de un minuto</String>
   <String Key="Playtime.Minute">minuto</String>
   <String Key="Playtime.Minutes">minutos</String>
+  <String Key="Stat.Derived.Faith">Fe</String>
+  <String Key="Stat.Derived.Spirit">Espíritu</String>
+  <String Key="Stat.Primary.Devotion">Devoción</String>
+  <String Key="Stat.Primary.Dexterity">Destreza</String>
+  <String Key="Stat.Primary.Fortitude">Fortaleza</String>
+  <String Key="Stat.Primary.Mind">Mente</String>
+  <String Key="Stat.Primary.Presence">Presencia</String>
+  <String Key="Stat.Primary.Strength">Fuerza</String>
   <String Key="Verb.Examine">Examinar</String>
   <String Key="Verb.Insult">Insultar</String>
   <String Key="Verb.Talk">Hablar</String>

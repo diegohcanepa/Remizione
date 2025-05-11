@@ -38,10 +38,8 @@ namespace EngendroAdventure.Scripting
         protected static readonly string FocusArg = "#focus";
         protected static readonly string FollowArg = "#follow";
         protected static readonly string FootstepArg = "#footstep";
-        protected static readonly string HPArg = "#hp";
         protected static readonly string ImageArg = "#image";
         protected static readonly string ImmediateArg = "#immediate";
-        protected static readonly string ImpactWordArg = "#impact-word";
         protected static readonly string IndexArg = "#index";
         protected static readonly string InstancesArg = "#instances";
         protected static readonly string KindArg = "#kind";
@@ -83,6 +81,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string ScopeArg = "#scope";
         protected static readonly string SoundArg = "#sound";
         protected static readonly string SpeedFactorArg = "#speed-factor";
+        protected static readonly string SpiritArg = "#spirit";
         protected static readonly string StartDelayArg = "#start-delay";
         protected static readonly string StyleArg = "#style";
         protected static readonly string TargetArg = "#target";
@@ -90,6 +89,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string TransitionAwareArg = "#transition-aware";
         protected static readonly string TweenArg = "#tween";
         protected static readonly string UnparentArg = "#unparent";
+        protected static readonly string UpgradeHardnessArg = "#upgrade-hardness";
         protected static readonly string VibrateArg = "#vibrate";
         protected static readonly string VolumeArg = "#volume";
         protected static readonly string WalkAreaArg = "#walk-area";

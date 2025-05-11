@@ -157,7 +157,6 @@ namespace Remizione
             scriptRegistry.RegisterStatement("await-player-approach", typeof(AwaitPlayerApproachCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-popup", typeof(AwaitPopupCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("create-dialog-block", typeof(CreateDialogBlockCommand));
-            scriptRegistry.RegisterStatement("damage-bonus-effect", typeof(DamageBonusEffectCommand), CodingContext.Declaration);
             scriptRegistry.RegisterStatement("echo", typeof(EchoCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             scriptRegistry.RegisterStatement("exit-session", typeof(ExitSessionCommand));

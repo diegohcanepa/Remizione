@@ -48,13 +48,6 @@ namespace Remizione
         // HighlightedText
         internal static Color HighlightedText { get; } = new Color(215, 215, 170);
 
-        // HPMeter
-        internal static class HPMeter
-        {
-            internal static Color Back { get; } = new(20, 24, 46);
-            internal static Color Fore { get; } = new(82, 51, 63);
-        }
-
         // HUDMessage
         internal static Color HUDMessage { get; } = new Color(227, 213, 200);
 
@@ -94,6 +87,13 @@ namespace Remizione
             internal static Color Fill { get; } = ColorPalette.Text.Fill;
             internal static Color Shadow { get; } = Color.Black * .2f;
             internal static Color Text { get; } = ColorPalette.Text.Default;
+        }
+
+        // SpiritMeter
+        internal static class SpiritMeter
+        {
+            internal static Color Back { get; } = new(20, 24, 46);
+            internal static Color Fore { get; } = new(82, 51, 63);
         }
 
         // StatMeter

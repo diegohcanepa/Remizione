@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Remizione.UI;
+using System;
 
 namespace Remizione
 {
@@ -65,6 +66,30 @@ namespace Remizione
 
         #region Private members
 
+        // FormatSentenceText
+        private static string FormatSentenceText(string name)
+        {
+            const string dots = "...";
+
+            int totalLength = dots.Length + name.Length + dots.Length;
+
+            Span<char> buffer = stackalloc char[totalLength];
+
+            // Copy prefix
+            dots.AsSpan().CopyTo(buffer);
+            int offset = dots.Length;
+
+            // Copy name
+            name.AsSpan().CopyTo(buffer.Slice(offset));
+            offset += name.Length;
+
+            // Copy suffix
+            dots.AsSpan().CopyTo(buffer.Slice(offset));
+
+            // Return string from buffer
+            return new string(buffer);
+        }
+
         // UpdateSentence
         private void UpdateSentence()
         {
@@ -75,7 +100,7 @@ namespace Remizione
                 if (target != sentence.Tag)
                 {
                     sentence.Tag = target;
-                    sentence.Text = "..." + target.GetLocalizedDisplayName() + "...";
+                    sentence.Text = FormatSentenceText(target.LocalizedDisplayName);
                 }
             }
             else

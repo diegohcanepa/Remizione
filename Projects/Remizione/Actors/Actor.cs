@@ -138,15 +138,6 @@ namespace Remizione
             return null;
         }
 
-        // GetLocalizedDisplayName
-        public override string GetLocalizedDisplayName()
-        {
-            if (IsPlayer)
-                return TextRepository.GetValue("Misc.WanderingSpirit");
-            else
-                return base.GetLocalizedDisplayName();
-        }
-
         // HandlePendingInteraction
         private void HandlePendingInteraction()
         {
@@ -326,9 +317,9 @@ namespace Remizione
             if (attributes[nameof(Stats.Dexterity)]?.Value is string dexterity)
                 Stats.Dexterity = XmlConvert.ToInt32(dexterity);
 
-            // Empathy
-            if (attributes[nameof(Stats.Empathy)]?.Value is string empathy)
-                Stats.Empathy = XmlConvert.ToInt32(empathy);
+            // Fortitude
+            if (attributes[nameof(Stats.Fortitude)]?.Value is string fortitude)
+                Stats.Fortitude = XmlConvert.ToInt32(fortitude);
 
             // GP
             if (attributes[nameof(Stats.GP)]?.Value is string gp)
@@ -338,13 +329,13 @@ namespace Remizione
             if (attributes[nameof(Stats.Mind)]?.Value is string mind)
                 Stats.Mind = XmlConvert.ToInt32(mind);
 
+            // Presence
+            if (attributes[nameof(Stats.Presence)]?.Value is string presence)
+                Stats.Presence = XmlConvert.ToInt32(presence);
+
             // Strength
             if (attributes[nameof(Stats.Strength)]?.Value is string strength)
                 Stats.Strength = XmlConvert.ToInt32(strength);
-
-            // Vigor
-            if (attributes[nameof(Stats.Constitution)]?.Value is string vigor)
-                Stats.Constitution = XmlConvert.ToInt32(vigor);
         }
 
         // OnSelectTarget
@@ -453,11 +444,11 @@ namespace Remizione
 
             output.WriteAttributeString(nameof(Stats.Devotion), XmlConvert.ToString(Stats.Devotion));
             output.WriteAttributeString(nameof(Stats.Dexterity), XmlConvert.ToString(Stats.Dexterity));
-            output.WriteAttributeString(nameof(Stats.Empathy), XmlConvert.ToString(Stats.Empathy));
+            output.WriteAttributeString(nameof(Stats.Fortitude), XmlConvert.ToString(Stats.Fortitude));
             output.WriteAttributeString(nameof(Stats.GP), XmlConvert.ToString(Stats.GP));
             output.WriteAttributeString(nameof(Stats.Mind), XmlConvert.ToString(Stats.Mind));
+            output.WriteAttributeString(nameof(Stats.Presence), XmlConvert.ToString(Stats.Presence));
             output.WriteAttributeString(nameof(Stats.Strength), XmlConvert.ToString(Stats.Strength));
-            output.WriteAttributeString(nameof(Stats.Constitution), XmlConvert.ToString(Stats.Constitution));
         }
 
         // StateMachine
@@ -788,7 +779,7 @@ namespace Remizione
 
         // IsBroken
         [ScriptProperty]
-        public bool IsBroken => !IsDead && (float)HP / MaxHP < .3f;
+        public bool IsBroken => !IsDead && (float)Spirit / MaxSpirit < .3f;
 
         // Level
         [ScriptProperty]

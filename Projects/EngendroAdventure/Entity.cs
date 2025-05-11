@@ -446,10 +446,6 @@ namespace EngendroAdventure
         // Depth
         public virtual float Depth => 0;
 
-        // DisplayName
-        [ScriptProperty]
-        public string DisplayName { get; set; } = string.Empty;
-
         // DistanceTo
         public float DistanceTo(Vector2 position)
         {
@@ -478,17 +474,6 @@ namespace EngendroAdventure
 
         // FlipHorizontally
         public void FlipHorizontally() => Sprite.FlipHorizontally();
-
-        // GetLocalizedDisplayName
-        public virtual string GetLocalizedDisplayName()
-        {
-            if (string.IsNullOrWhiteSpace(DisplayName))
-                return string.Empty;
-
-            var result = TextRepository.GetValue(DisplayName);
-
-            return string.IsNullOrWhiteSpace(result) ? DisplayName : result;
-        }
 
         // HasChildren
         [ScriptProperty]

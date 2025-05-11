@@ -19,12 +19,6 @@ namespace Remizione
 
         #region Primary stats
 
-        // Constitution (Resistencia física)
-        // Puntos de golpe(HP)
-        // Resistencia a enfermedades, venenos, fatiga
-        // Tiradas de salvación del cuerpo
-        public int Constitution { get; set; } = 10;
-
         // Devotion (Fe o fuerza espiritual)
         // Puntos de espíritu o "mana sagrado"
         // Poder y precisión de los conjuros sagrados
@@ -39,18 +33,24 @@ namespace Remizione
         // Salvaciones contra trampas, fuego, explosiones
         public int Dexterity { get; set; } = 10;
 
-        // Empathy (Carisma/emoción)
-        // Interacciones sociales: persuasión, intimidación, mentira
-        // Atraer aliados o manipular enemigos
-        // Habilidad para consolar, redimir, o engañar
-        // Influye en eventos basados en emociones
-        public int Empathy { get; set; } = 10;
+        // Fortitude (Resistencia del alma y espiritual)
+        // Puntos de golpe(HP)
+        // Resistencia a enfermedades, venenos, fatiga
+        // Tiradas de salvación del cuerpo
+        public int Fortitude { get; set; } = 10;
 
         // Mind (Inteligencia/razón)
         // Tiradas de habilidad mental(investigación, conocimiento)
         // Capacidad para entender acertijos, runas, lenguas antiguas
         // Defensa contra ilusiones y control mental
         public int Mind { get; set; } = 10;
+
+        // Presence (Carisma/emoción)
+        // Interacciones sociales: persuasión, intimidación, mentira
+        // Atraer aliados o manipular enemigos
+        // Habilidad para consolar, redimir, o engañar
+        // Influye en eventos basados en emociones
+        public int Presence { get; set; } = 10;
 
         // Strength (Fuerza física)
         // Tiradas de ataque con armas cuerpo a cuerpo
@@ -65,7 +65,7 @@ namespace Remizione
         public void Apply()
         {
             actor.MaxFaith = GetMaxFaith();
-            actor.MaxHP = GetMaxHP();
+            actor.MaxSpirit = GetMaxSpirit();
         }
 
         // MovePenalty
@@ -99,10 +99,10 @@ namespace Remizione
             return actor.Level * (FaithGainPerLevel + GetModifier(Stat.Devotion));
         }
 
-        // GetMaxHP
-        public int GetMaxHP()
+        // GetMaxSpirit
+        public int GetMaxSpirit()
         {
-            return actor.Level * (HPGainPerLevel + GetModifier(Stat.Constitution));
+            return actor.Level * (SpiritGainPerLevel + GetModifier(Stat.Fortitude));
         }
 
         // GetModifier
@@ -116,10 +116,10 @@ namespace Remizione
         {
             return stat switch
             {
-                Stat.Constitution => Constitution,
+                Stat.Fortitude => Fortitude,
                 Stat.Devotion => Devotion,
                 Stat.Dexterity => Dexterity,
-                Stat.Empathy => Empathy,
+                Stat.Presence => Presence,
                 Stat.Mind => Mind,
                 Stat.Strength => Strength,
                 _ => throw new System.NotImplementedException()
@@ -128,9 +128,6 @@ namespace Remizione
 
         // GP (XP)
         public int GP { get; set; } = 0;
-
-        // HPGainPerLevel
-        public int HPGainPerLevel { get; private set; } = 8;
 
         // PerformSkillCheck
         public int PerformSkillCheck(Stat stat) => DiceBag.Dice20.Roll() + GetStatValue(stat);
@@ -165,11 +162,14 @@ namespace Remizione
             return stat switch
             {
                 Stat.Mind => DiceBag.Dice20.Roll() + GetModifier(Stat.Mind),
-                Stat.Constitution => DiceBag.Dice20.Roll() + GetModifier(Stat.Constitution),
+                Stat.Fortitude => DiceBag.Dice20.Roll() + GetModifier(Stat.Fortitude),
                 Stat.Devotion => DiceBag.Dice20.Roll() + GetModifier(Stat.Devotion),
-                Stat.Empathy => DiceBag.Dice20.Roll() + GetModifier(Stat.Empathy),
+                Stat.Presence => DiceBag.Dice20.Roll() + GetModifier(Stat.Presence),
                 _ => DiceBag.Dice20.Roll()
             };
         }
+
+        // SpiritGainPerLevel
+        public int SpiritGainPerLevel { get; private set; } = 8;
     }
 }

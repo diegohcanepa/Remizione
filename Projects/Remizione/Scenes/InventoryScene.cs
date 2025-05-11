@@ -89,7 +89,10 @@ namespace Remizione
         }
 
         // SelectedOptionChanged
-        private void SelectedOptionChanged() => sentence.Text = menu.SelectedOption?.Item.MetaItem.LocalizedDescription;
+        private void SelectedOptionChanged()
+        {
+            sentence.Text = menu.SelectedOption?.Item.MetaItem.LocalizedDescription;
+        }
 
         // UseItem
         private void UseItem(Actor actor)

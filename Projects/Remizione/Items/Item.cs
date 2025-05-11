@@ -25,6 +25,18 @@ namespace Remizione
 
         #region Private members
 
+        // GetUgradeParams
+        private static (double baseCost, double growthRate, double powerFactor) GetUpgradeParams(UpgradeHardness hardness)
+        {
+            return hardness switch
+            {
+                UpgradeHardness.Easy => (8, 1.3, 1.0),
+                UpgradeHardness.Normal => (10, 1.5, 1.2),
+                UpgradeHardness.Hard => (12, 1.8, 1.4),
+                _ => throw new ArgumentOutOfRangeException(nameof(hardness), "Unknown hardness value")
+            };
+        }
+
         // InvalidateDisplayText
         private void InvalidateDisplayText()
         {
@@ -38,11 +50,8 @@ namespace Remizione
                 text += $" +{Level}";
 
             // Count
-            if (MetaItem.Maximum > 1)
-            {
-                if (Count > 1)
-                    text += $" (x{Count})";
-            }
+            if (MetaItem.Maximum > 0 && Count > 0)
+                text += $" ({Count} / {MetaItem.Maximum})";
 
             // Durability state
             else if (MetaItem.Durability > 0)
@@ -75,19 +84,10 @@ namespace Remizione
         // BeginUse
         public void BeginUse()
         {
-            Owner.HP += HP;
+            Owner.Spirit += Spirit;
 
             if (Owner is Actor actor)
                 actor.Faith += Faith;
-
-            if (Level > 0 && MetaItem.UpgradeEffects.Count > 0)
-            {
-                for (var i = 1; i <= Level; i++)
-                {
-                    if (MetaItem.UpgradeEffects[i].EffectTiming == ItemEffectTiming.OnBeginUse)
-                        MetaItem.UpgradeEffects[i].Apply(Owner);
-                }
-            }
         }
 
         // Consume
@@ -177,41 +177,20 @@ namespace Remizione
                 target.TakeDamage(Container.Owner, damageAmount, hitType, Knockback);
             }
 
-            if (Level > 0 && MetaItem.UpgradeEffects.Count > 0)
-            {
-                for (var i = 1; i <= Level; i++)
-                {
-                    if (MetaItem.UpgradeEffects[i].EffectTiming == ItemEffectTiming.OnEndUse)
-                        MetaItem.UpgradeEffects[i].Apply(target);
-                }
-
-                for (var i = 1; i <= Level; i++)
-                {
-                    if (MetaItem.UpgradeEffects[i].EffectTiming == ItemEffectTiming.AfterAllEffects)
-                        MetaItem.UpgradeEffects[i].Apply(target);
-                }
-            }
-
             target.ApplyDamage(Container.Owner);
         }
 
         // Faith
         public int Faith => MetaItem.Faith;
 
-        // GetLocalizedUpgradeDescription
-        public string? GetLocalizedUpgradeDescription()
+        // GetUpgradeCost
+        public int GetUpgradeCost()
         {
-            if (MetaItem.UpgradeEffects.Count == 0 || Level == MetaItem.UpgradeEffects.Count)
-                return null;
+            var (baseCost, growthRate, powerFactor) = GetUpgradeParams(UpgradeHardness);
+            double cost = baseCost * Math.Pow(Level, growthRate) * powerFactor;
 
-            return MetaItem.UpgradeEffects[Level].GetLocalizedDescription();
+            return (int)Math.Ceiling(cost);
         }
-
-        // HasUpgrade
-        public bool HasUpgrade => Level < MetaItem.UpgradeEffects.Count;
-
-        // HP
-        public int HP => MetaItem.HP;
 
         // IconImage
         public AtlasImage IconImage { get; }
@@ -255,22 +234,16 @@ namespace Remizione
                 Count = MetaItem.Maximum;
         }
 
+        // Spirit
+        public int Spirit => MetaItem.Spirit;
+
         // ToString
         public override string ToString() => MetaItem.ToString();
 
         // Unread
         public bool Unread { get; set; }
 
-        // UpgradeCost
-        public int UpgradeCost
-        {
-            get
-            {
-                if (MetaItem.UpgradeEffects.Count == 0 || Level == MetaItem.UpgradeEffects.Count)
-                    return -1;
-
-                return MetaItem.UpgradeCosts[Level];
-            }
-        }
+        // UpgradeHardness
+        public UpgradeHardness UpgradeHardness => MetaItem.UpgradeHardness;
     }
 }

@@ -38,6 +38,10 @@ namespace Remizione
                 var item = new Item(this, metaItem) { Count = amount };
                 itemsDictionary[name] = item;
                 items.Add(item);
+
+                if (SelectedItem == null)
+                    SelectedItem = item;
+
                 return item;
             }
         }
@@ -63,6 +67,9 @@ namespace Remizione
                 itemsDictionary.Remove(item.Name);
             }
         }
+
+        // Select
+        public bool Select(Item item) => Select(item.Name);
 
         // Select
         public bool Select(string name)

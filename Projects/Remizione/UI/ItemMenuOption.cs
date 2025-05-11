@@ -21,7 +21,7 @@ namespace Remizione.UI
             {
                 PivotOrigin = RectanglePoint.Middle,
                 MaximumWidth = (int)(menu.BoundingBox.Width * .9f),
-                Scale = ScaleInfo.Text.Large,
+                Scale = ScaleInfo.Text.Medium,
             };
 
             Invalidate();

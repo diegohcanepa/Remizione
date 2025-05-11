@@ -14,12 +14,11 @@ namespace Remizione
     {
         private static readonly Dictionary<string, MetaItem> items = [];
         private readonly List<int> upgradeCosts = [];
-        private readonly List<ItemEffect> upgradeEffects = [];
 
         #region Constructor
 
         // Constructor
-        public MetaItem(string name, ItemCategory category, DiceRoll baseDamage, Stat modifier, Vector2 knockback, int maximum, int hp, int faith, int range, int durability)
+        public MetaItem(string name, ItemCategory category, DiceRoll baseDamage, Stat modifier, Vector2 knockback, int maximum, int spirit, int faith, int range, int durability, UpgradeHardness upgradeHardness)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -35,13 +34,12 @@ namespace Remizione
             this.Knockback = knockback;
             this.Maximum = maximum;
             this.Faith = faith;
-            this.HP = hp;
+            this.Spirit = spirit;
             this.Range = range;
             this.Modifier = modifier;
             this.LocalizedDescription = TextRepository.GetValue($"Item.{Name}.Description");
             this.LocalizedName = TextRepository.GetValue($"Item.{Name}.Name");
-            this.UpgradeCosts = new ReadOnlyCollection<int>(upgradeCosts);
-            this.UpgradeEffects = new ReadOnlyCollection<ItemEffect>(upgradeEffects);
+            this.UpgradeHardness = upgradeHardness;
         }
 
         #endregion
@@ -53,15 +51,11 @@ namespace Remizione
 
         #endregion
 
-        // AddUpgradeEffect
-        public void AddUpgradeEffect(ItemEffect effect, int cost)
-        {
-            upgradeEffects.Add(effect);
-            upgradeCosts.Add(cost);
-        }
-
         // BaseDamage
         public DiceRoll BaseDamage { get; }
+
+        // BaseUpgradeCost
+        public int BaseUpgradeCost { get; }
 
         // Category
         public ItemCategory Category { get; }
@@ -71,20 +65,6 @@ namespace Remizione
 
         // Faith
         public int Faith { get; }
-
-        // GetUpgradeDescription
-        public string GetUpgradeDescription(int level)
-        {
-            if (level == 0 || level > upgradeEffects.Count)
-                return string.Empty;
-
-            var text = TextRepository.GetValue("ItemEffect." + UpgradeEffects[level - 1].GetType().Name);
-
-            return text;
-        }
-
-        // HP
-        public int HP { get; }
 
         // Knockback
         public Vector2 Knockback { get; }
@@ -98,9 +78,6 @@ namespace Remizione
         // Maximum
         public int Maximum { get; }
 
-        // MaximumLevel
-        public int MaximumLevel => upgradeEffects.Count;
-
         // Modifier
         public Stat Modifier { get; }
 
@@ -113,13 +90,13 @@ namespace Remizione
         // Sound
         public Sound? Sound { get; }
 
+        // Spirit
+        public int Spirit { get; }
+
         // ToString
         public override string ToString() => Name;
 
-        // UpgradeCosts
-        public ReadOnlyCollection<int> UpgradeCosts { get; }
-
-        // UpgradeEffects
-        public ReadOnlyCollection<ItemEffect> UpgradeEffects { get; }
+        // UpgradeHardness
+        public UpgradeHardness UpgradeHardness { get; }
     }
 }

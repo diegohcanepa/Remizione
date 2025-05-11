@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Strings>
   <String Key="Actor.Unredeemed">Unredeemed</String>
-  <String Key="Attribute.Derived.Faith">Faith</String>
-  <String Key="Attribute.Derived.HP">Vitality</String>
   <String Key="CombatOption.Attack">Attack</String>
   <String Key="CombatOption.Guard">Guard</String>
   <String Key="CombatOption.UseItem">Use item...</String>
@@ -37,7 +35,6 @@
   <String Key="ItemCategory.Throwables">Throwables</String>
   <String Key="ItemContainerCategory.Inventory">Load</String>
   <String Key="ItemContainerCategory.Skills">Manifestations</String>
-  <String Key="ItemEffect.DamageBonusEffect">Increase damage</String>
   <String Key="Languages.Abbreviations">Miss | Mr. | DR.</String>
   <String Key="Languages.de-de">Deutsch</String>
   <String Key="Languages.en-us">English</String>
@@ -182,6 +179,7 @@ Bla bla bla</String>
   <String Key="Misc.WanderingSpirit">Your wandering spirit</String>
   <String Key="Misc.Yes">Yes</String>
   <String Key="Misc.YouAreDead">YOU'RE DEAD.</String>
+  <String Key="Noun.Cross">Cross</String>
   <String Key="Platform.NintendoSwitch.Messages.ControllerDisconnected">Please reconnect your Joy-Con™ to continue.</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyButton">Press any button to continue</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyKeyOrButton">Press any key or button to continue</String>
@@ -214,6 +212,14 @@ Bla bla bla</String>
   <String Key="Playtime.LessThanAMinute">Less than a minute</String>
   <String Key="Playtime.Minute">minute</String>
   <String Key="Playtime.Minutes">minutes</String>
+  <String Key="Stat.Derived.Faith">Faith</String>
+  <String Key="Stat.Derived.Spirit">Spirit</String>
+  <String Key="Stat.Primary.Devotion">Devotion</String>
+  <String Key="Stat.Primary.Dexterity">Dexterity</String>
+  <String Key="Stat.Primary.Fortitude">Fortitude</String>
+  <String Key="Stat.Primary.Mind">Mind</String>
+  <String Key="Stat.Primary.Presence">Presence</String>
+  <String Key="Stat.Primary.Strength">Strength</String>
   <String Key="Verb.Examine">Examine</String>
   <String Key="Verb.Insult">Insult</String>
   <String Key="Verb.Talk">Talk</String>

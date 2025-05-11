@@ -20,12 +20,12 @@ namespace Remizione
         private bool applyDamagePending;
         private Meter? damageMeter;
         private int damageMeterCooldown;
+        private string displayName = string.Empty;
         private readonly Polygon holeInflatedPoly = new();
         private PathNode[]? holeNodes;
         private readonly Polygon holePoly = new();
         private RectangleF hotspotBox;
         private PlacementMode hotspotPlacement = PlacementMode.Relative;
-        private int hp;
         private RectangleF hurtBox;
         private FloatTween? hurtTween;
         private float floatingForce;
@@ -36,11 +36,13 @@ namespace Remizione
         private bool isHurtBoxDirty = true;
         private Vector2 knockback;
         private readonly Vector2Tween knockbackTween = new();
-        private int maxHP;
+        private string localizedDisplayName = string.Empty;
+        private int maxSpirit;
         private readonly List<PlacementCondition> placementConditions = [];
         private RenderLayer renderLayer;
         private int renderLayerDepth;
         private bool shouldClampToWalkArea;
+        private int spirit;
         private List<Verb>? verbList;
         private WalkArea? walkArea;
         private string walkAreaName = string.Empty;
@@ -194,7 +196,7 @@ namespace Remizione
         private void InvalidateDamageMeter()
         {
             if (damageMeter != null)
-                damageMeter.Value = HP * 100 / MaxHP / damageMeter.MaximumValue;
+                damageMeter.Value = Spirit * 100 / MaxSpirit / damageMeter.MaximumValue;
         }
 
         // InvalidateHoleArea
@@ -316,8 +318,8 @@ namespace Remizione
         // OnHandleCollision
         protected virtual bool OnHandleCollision(GameThing thing) => false;
 
-        // OnHPChanged
-        protected virtual void OnHPChanged()
+        // OnSpiritChanged
+        protected virtual void OnSpiritChanged()
         {
         }
 
@@ -448,7 +450,7 @@ namespace Remizione
                 return;
             }
 
-            HP -= (int)CumulativeDamage;
+            Spirit -= (int)CumulativeDamage;
 
             if (HurtSound != null)
                 PlaySound(HurtSound);
@@ -468,15 +470,15 @@ namespace Remizione
             damageMeterCooldown = 2000;
             if (damageMeter == null)
             {
-                damageMeter = new(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore) { MaximumValue = 10 };
+                damageMeter = new(Game, ColorPalette.SpiritMeter.Back, ColorPalette.SpiritMeter.Fore) { MaximumValue = 10 };
                 InvalidateDamageMeter();
             }
 
-            if (knockback == Vector2.Zero && HP <= 0)
+            if (knockback == Vector2.Zero && Spirit <= 0)
             {
                 Die();
             }
-            else if (MaxHP > 0)
+            else if (MaxSpirit > 0)
             {
                 var destination = Position;
                 destination.Y += knockback.Y;
@@ -512,7 +514,7 @@ namespace Remizione
         }
 
         // CanBeTargeted
-        public bool CanBeTargeted => !IsMoving && MaxHP > 0 && !IsDead;
+        public bool CanBeTargeted => !IsMoving && MaxSpirit > 0 && !IsDead;
 
         // CanInteract
         public bool CanInteract(Actor requester)
@@ -568,6 +570,21 @@ namespace Remizione
         // DeathSound
         [ScriptProperty]
         public Sound? DeathSound { get; set; }
+
+        // DisplayName
+        [ScriptProperty]
+        public string DisplayName
+        {
+            get => displayName;
+            set
+            {
+                if (value != displayName)
+                {
+                    displayName = value;
+                    localizedDisplayName = TextRepository.GetValue(DisplayName);
+                }
+            }
+        }
 
         // DistributionStrategy
         [ScriptProperty(CodingContext.EntityDeclaration)]
@@ -766,22 +783,6 @@ namespace Remizione
             }
         }
 
-        // HP
-        [ScriptProperty]
-        public int HP
-        {
-            get => hp;
-            set
-            {
-                if (value != hp)
-                {
-                    hp = Math.Min(value, MaxHP);
-                    InvalidateDamageMeter();
-                    OnHPChanged();
-                }
-            }
-        }
-
         // HurtArea
         [ScriptProperty]
         public Rectangle HurtArea { get; set; }
@@ -846,7 +847,7 @@ namespace Remizione
         }
 
         // IsDead
-        public bool IsDead => HP <= 0 && MaxHP > 0;
+        public bool IsDead => Spirit <= 0 && MaxSpirit > 0;
 
         // IsEmittingLight
         public virtual bool IsEmittingLight => Light != null && Light.IsEmitting;
@@ -861,17 +862,20 @@ namespace Remizione
         // LightPosition
         public Vector2 LightPosition { get; set; }
 
-        // MaxHP
+        // LocalizedDisplayName
+        public string LocalizedDisplayName => localizedDisplayName;
+
+        // MaxSpirit
         [ScriptProperty]
-        public int MaxHP
+        public int MaxSpirit
         {
-            get => maxHP;
+            get => maxSpirit;
             set
             {
-                if (value != maxHP)
+                if (value != maxSpirit)
                 {
-                    maxHP = value;
-                    HP = value;
+                    maxSpirit = value;
+                    Spirit = value;
                 }
             }
         }
@@ -906,13 +910,29 @@ namespace Remizione
 
         // Replenish
         [ScriptMethod]
-        public virtual void Replenish() => HP = MaxHP;
+        public virtual void Replenish() => Spirit = MaxSpirit;
 
         // Room
         public new GameRoom? Room => Parent as GameRoom;
 
         // Session
         public new GameSession Session { get; }
+
+        // Spirit
+        [ScriptProperty]
+        public int Spirit
+        {
+            get => spirit;
+            set
+            {
+                if (value != spirit)
+                {
+                    spirit = Math.Min(value, MaxSpirit);
+                    InvalidateDamageMeter();
+                    OnSpiritChanged();
+                }
+            }
+        }
 
         // TakeDamage
         public void TakeDamage(GameThing attacker, int amount, HitType hitType, Vector2 knockback)
