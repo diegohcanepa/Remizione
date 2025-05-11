@@ -35,7 +35,7 @@
   <String Key="ItemCategory.Skills">Manifestations</String>
   <String Key="ItemCategory.Spells">Spells</String>
   <String Key="ItemCategory.Throwables">Throwables</String>
-  <String Key="ItemContainerCategory.Inventory">What You Bear</String>
+  <String Key="ItemContainerCategory.Inventory">Load</String>
   <String Key="ItemContainerCategory.Skills">Manifestations</String>
   <String Key="ItemEffect.DamageBonusEffect">Increase damage</String>
   <String Key="Languages.Abbreviations">Miss | Mr. | DR.</String>

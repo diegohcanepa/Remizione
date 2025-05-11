@@ -892,6 +892,17 @@ namespace EngendroAdventure.Scripting
             return result;
         }
 
+        // ParseSoundArgument
+        public static Sound? ParseSoundArgument(Statement statement, string argName)
+        {
+            Sound? result = null;
+
+            if (AssertArgumentValue(statement, argName) is string value)
+                result = ParseSound(statement, value);
+
+            return result;
+        }
+
         // ParseStringArgument
         public static string ParseStringArgument(Statement statement, string argName)
         {

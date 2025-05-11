@@ -21,40 +21,6 @@ namespace Remizione
             Items = new ReadOnlyCollection<Item>(items);
         }
 
-        // Activate
-        public bool Activate(string name)
-        {
-            if (GetItem(name) is Item item)
-            {
-                SelectedItem = item;
-                SelectedIndex = items.IndexOf(item);
-                return true;
-            }
-            else
-                return false;
-        }
-
-        // ActivateNext
-        public void ActivateNext()
-        {
-            if (items.Count == 0)
-                return;
-
-            if (SelectedItem == null)
-            {
-                if (items.Count > 0)
-                    Activate(items[0].Name);
-            }
-            else if (items.Count > 1)
-            {
-                var index = items.IndexOf(SelectedItem);
-                if (index == items.Count - 1)
-                    Activate(items[0].Name);
-                else
-                    Activate(items[index + 1].Name);
-            }
-        }
-
         // Add
         public Item? Add(string name, int amount)
         {
@@ -98,10 +64,44 @@ namespace Remizione
             }
         }
 
+        // Select
+        public bool Select(string name)
+        {
+            if (GetItem(name) is Item item)
+            {
+                SelectedItem = item;
+                SelectedIndex = items.IndexOf(item);
+                return true;
+            }
+            else
+                return false;
+        }
+
         // SelectedIndex
         public int SelectedIndex { get; private set; }
 
         // SelectedItem
         public Item? SelectedItem { get; private set; }
+
+        // SelectNext
+        public void SelectNext()
+        {
+            if (items.Count == 0)
+                return;
+
+            if (SelectedItem == null)
+            {
+                if (items.Count > 0)
+                    Select(items[0].Name);
+            }
+            else if (items.Count > 1)
+            {
+                var index = items.IndexOf(SelectedItem);
+                if (index == items.Count - 1)
+                    Select(items[0].Name);
+                else
+                    Select(items[index + 1].Name);
+            }
+        }
     }
 }

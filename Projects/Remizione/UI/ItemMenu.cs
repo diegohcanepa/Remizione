@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -38,15 +39,15 @@ namespace Remizione.UI
             this.container = new(game, Atlases.UI.ItemMenuContainer)
             {
                 PivotOrigin = RectanglePoint.Top,
-                Scale = new(.75f)
+                Scale = ScaleInfo.UIElement.Medium
             };
 
             // Title
             this.titleText = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Terra,
+                Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Bottom,
-                Scale = ScaleInfo.Text.Large
+                Scale = ScaleInfo.Text.VeryLarge
             };
         }
 
@@ -57,7 +58,7 @@ namespace Remizione.UI
         // LayoutOptions
         private void LayoutOptions()
         {
-            var pos = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 8);
+            var pos = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 9);
 
             for (var i = 0; i < optionList.Count; i++)
             {
@@ -192,6 +193,19 @@ namespace Remizione.UI
             }
         }
 
+        // Select
+        public void Select(Item item)
+        {
+            for (var i = 0; i < optionList.Count; i++)
+            {
+                if (optionList[i].Item == item)
+                {
+                    SelectedOption = optionList[i];
+                    return;
+                }
+            }
+        }
+
         // SelectedOption
         public ItemMenuOption? SelectedOption
         {
@@ -200,10 +214,22 @@ namespace Remizione.UI
             {
                 if (value != selectedOption)
                 {
+                    if (selectedOption != null && value != null)
+                        Sound.Play(SoundNames.MenuSelect);
+
                     selectedOption = value;
                     selectedOptionChanged?.Invoke();
                 }
             }
+        }
+
+        // SelectFirst
+        public void SelectFirst()
+        {
+            if (optionList.Count == 0)
+                return;
+
+            SelectedOption = optionList[0];
         }
 
         // Show
@@ -216,7 +242,7 @@ namespace Remizione.UI
             LayoutOptions();
 
             titleText.Text = title;
-            titleText.Position = container.BoundingBox.GetPoint(RectanglePoint.Top);
+            titleText.Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 2);
         }
 
         // TextScale

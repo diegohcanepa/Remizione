@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Remizione.UI;
@@ -27,13 +28,15 @@ namespace Remizione
             this.discardButton = new UIControl(game, InputBindings.Select)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Text = Localization.EncodeKey(ItemAction.Discard)
+                Text = Localization.EncodeKey(ItemAction.Discard),
+                TextColor = ColorPalette.Text.Terra
             };
 
             this.useButton = new UIControl(game, InputBindings.Select)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
-                Text = Localization.EncodeKey(ItemAction.Use)
+                Text = Localization.EncodeKey(ItemAction.Use),
+                TextColor = ColorPalette.Text.Default
             };
         }
 
@@ -49,6 +52,7 @@ namespace Remizione
                 actor.Inventory.Remove(item.Name);
                 menu.RemoveSelectedOption();
                 menu.Title = GetTitle();
+                Sound.Play(SoundNames.MenuDiscardItem);
             }
         }
 
@@ -156,10 +160,22 @@ namespace Remizione
                 menu.AddOption(Actor.Inventory.Items[i]);
             }
 
-            menu.Show(new Vector2(Screen.NativeWidth / 2, 20), GetTitle());
+            menu.Show(new Vector2(Screen.NativeWidth / 2, 18), GetTitle());
 
-            discardButton.Position = menu.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 5, -9);
-            useButton.Position = menu.BoundingBox.GetPoint(RectanglePoint.RightBottom, -5, -9);
+            if (Actor.Inventory.SelectedItem is Item selectedItem)
+                menu.Select(selectedItem);
+            else
+                menu.SelectFirst();
+
+            discardButton.Position = menu.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 5, -10);
+            useButton.Position = menu.BoundingBox.GetPoint(RectanglePoint.RightBottom, -5, -10);
+        }
+
+        // OnUnloadContent
+        protected override void OnUnloadContent()
+        {
+            if (Actor?.Inventory is ItemContainer container && menu.SelectedOption != null)
+                container.Select(menu.SelectedOption.Item.Name);
         }
 
         // OnUpdate

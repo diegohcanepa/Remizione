@@ -126,7 +126,7 @@ namespace Remizione.UI
             if (inputBinding != null && inputBinding.IsPressed(0))
             {
                 Sound.Play(SoundNames.UIQuickSlot);
-                Items?.ActivateNext();
+                Items?.SelectNext();
                 return HandleInputResult.Handled;
             }
 

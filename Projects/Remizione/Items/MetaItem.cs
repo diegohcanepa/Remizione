@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(string name, ItemCategory category, ItemAction action, DiceRoll baseDamage, Stat modifier, Vector2 knockback, int maximum, int hp, int faith, int range, int durability)
+        public MetaItem(string name, ItemCategory category, DiceRoll baseDamage, Stat modifier, Vector2 knockback, int maximum, int hp, int faith, int range, int durability)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -29,7 +30,6 @@ namespace Remizione
 
             this.Name = name;
             this.Category = category;
-            this.Action = action;
             this.BaseDamage = baseDamage;
             this.Durability = durability;
             this.Knockback = knockback;
@@ -52,9 +52,6 @@ namespace Remizione
         public static MetaItem? Find(string name) => items.TryGetValue(name, out var result) ? result : null;
 
         #endregion
-
-        // Action
-        public ItemAction Action { get; set; }
 
         // AddUpgradeEffect
         public void AddUpgradeEffect(ItemEffect effect, int cost)
@@ -112,6 +109,9 @@ namespace Remizione
 
         // Range
         public int Range { get; }
+
+        // Sound
+        public Sound? Sound { get; }
 
         // ToString
         public override string ToString() => Name;

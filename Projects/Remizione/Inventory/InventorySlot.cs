@@ -84,7 +84,8 @@ namespace Remizione
         #endregion
 
         // Action
-        public ItemAction Action => item == null ? ItemAction.None : item.MetaItem.Action;
+        // TODO: Remove
+        public ItemAction Action => ItemAction.None;
 
         // BoundingBox
         public RectangleF BoundingBox => slotImage.BoundingBox;

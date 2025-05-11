@@ -35,7 +35,7 @@
   <String Key="ItemCategory.Skills">Manifestaciones</String>
   <String Key="ItemCategory.Spells">Poderes</String>
   <String Key="ItemCategory.Throwables">Arrojables</String>
-  <String Key="ItemContainerCategory.Inventory">Lo Que Cargas</String>
+  <String Key="ItemContainerCategory.Inventory">Carga</String>
   <String Key="ItemContainerCategory.Skills">Manifestaciones</String>
   <String Key="ItemEffect.DamageBonusEffect">Incrementa el daño {Bonus}</String>
   <String Key="Languages.Abbreviations">Srta.|Sr.|Dr.</String>

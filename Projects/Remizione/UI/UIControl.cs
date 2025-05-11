@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -293,13 +294,18 @@ namespace Remizione
         // TestPressed
         public bool TestPressed(PlayerIndex playerIndex)
         {
+            var result = false;
+
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() && IsMouseOver())
-                return true;
+                result = true;
 
             if (inputBinding != null && inputBinding.IsPressed(playerIndex))
-                return true;
+                result = true;
 
-            return false;
+            if (result)
+                Sound.Play(SoundNames.MenuSelect);
+
+            return result;
         }
 
         // Text

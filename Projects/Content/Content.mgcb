@@ -140,6 +140,18 @@
 /processorParam:Quality=Best
 /build:Audio/FX/ImpactA.wav
 
+#begin Audio/FX/MenuDiscardItem.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/MenuDiscardItem.wav
+
+#begin Audio/FX/MenuSelect.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/MenuSelect.wav
+
 #begin Audio/FX/SinnerMaleDeathSetA1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

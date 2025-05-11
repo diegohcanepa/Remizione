@@ -22,8 +22,9 @@ namespace Remizione.UI
                 PivotOrigin = RectanglePoint.Middle,
                 MaximumWidth = (int)(menu.BoundingBox.Width * .9f),
                 Scale = ScaleInfo.Text.Large,
-                Text = item.DisplayText
             };
+
+            Invalidate();
 
             UpdateColor();
 }
@@ -34,7 +35,7 @@ namespace Remizione.UI
         private void UpdateColor()
         {
             if (IsSelected)
-                nameText.Color = ColorPalette.Text.Terra;
+                nameText.Color = ColorPalette.Text.Highlight;
 
             else if (IsHovered )
                 nameText.Color = ColorPalette.Text.Hover;

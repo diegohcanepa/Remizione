@@ -12,7 +12,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly Vector2Tween attackTween = Vector2Tween.Create(TweenStyle.CubicInOut, ScaleInfo.UIIcon.Medium, ScaleInfo.UIIcon.Medium * .8f, 130, -1);
+        private readonly Vector2Tween attackTween = Vector2Tween.Create(TweenStyle.CubicInOut, ScaleInfo.UIElement.Medium, ScaleInfo.UIElement.Medium * .8f, 130, -1);
         private readonly ImageSprite cursorImage;
         private Vector2 position;
         private readonly Vector2Tween scaleTween = new();
@@ -32,7 +32,7 @@ namespace Remizione
             else
                 Instance = this;
 
-            this.cursorImage = new ImageSprite(game) { PivotOrigin = RectanglePoint.Middle, Scale = ScaleInfo.UIIcon.Medium };
+            this.cursorImage = new ImageSprite(game) { PivotOrigin = RectanglePoint.Middle, Scale = ScaleInfo.UIElement.Medium };
         }
 
         #endregion
@@ -60,7 +60,7 @@ namespace Remizione
             else if (state == MouseCursorState.Wait)
                 cursorImage.Image = Atlases.UI.MouseCursorWait;
 
-            cursorImage.Scale = ScaleInfo.UIIcon.Medium;
+            cursorImage.Scale = ScaleInfo.UIElement.Medium;
             cursorImage.PivotOrigin = state == MouseCursorState.Arrow ? RectanglePoint.LeftTop : RectanglePoint.Middle;
         }
 
@@ -101,14 +101,14 @@ namespace Remizione
         // AnimateClick
         public void AnimateClick()
         {
-            scaleTween.Start(TweenStyle.QuadraticIn, ScaleInfo.UIIcon.Small, ScaleInfo.UIIcon.Medium, 150);
+            scaleTween.Start(TweenStyle.QuadraticIn, ScaleInfo.UIElement.Small, ScaleInfo.UIElement.Medium, 150);
             cursorImage.Tweens.ScaleTween = scaleTween;
         }
 
         // AnimateSwitch
         public void AnimateSwitch()
         {
-            scaleTween.Start(TweenStyle.QuadraticIn, new(.2f), ScaleInfo.UIIcon.Medium, 100);
+            scaleTween.Start(TweenStyle.QuadraticIn, new(.2f), ScaleInfo.UIElement.Medium, 100);
             cursorImage.Tweens.ScaleTween = scaleTween;
         }
 

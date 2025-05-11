@@ -142,7 +142,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(GameRoom));
             scriptRegistry.RegisterEntity(typeof(CreditsRoom));
             scriptRegistry.RegisterEntity(typeof(ProceduralRoom));
-            scriptRegistry.RegisterEntity(typeof(Sinner));
+            scriptRegistry.RegisterEntity(typeof(Unredeemed));
             scriptRegistry.RegisterEntity(typeof(Zabul));
 
             scriptRegistry.RegisterStatement("add-dialog-option", typeof(AddDialogOptionCommand));
