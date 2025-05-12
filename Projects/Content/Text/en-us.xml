@@ -6,6 +6,8 @@
   <String Key="CombatOption.UseItem">Use item...</String>
   <String Key="Cycle.Indulgence">Indulgence</String>
   <String Key="Cycle.Penance">Penance</String>
+  <String Key="DerivedStat.Faith">Faith</String>
+  <String Key="DerivedStat.Spirit">Spirit</String>
   <String Key="DurabilityState.Broken">Broken</String>
   <String Key="DurabilityState.Cracked">Cracked</String>
   <String Key="DurabilityState.Sturdy">Sturdy</String>
@@ -45,6 +47,7 @@
   <String Key="LogMessage.InventoryFull">You cannot carry more items.</String>
   <String Key="LogVerb.Discard">Discarded</String>
   <String Key="LogVerb.Pickup">Picked up</String>
+  <String Key="LogVerb.Restore">Restored</String>
   <String Key="Menu.Controls.Keyboard.Interact">Interact</String>
   <String Key="Menu.Controls.Keyboard.Inventory">Inventory</String>
   <String Key="Menu.Controls.Keyboard.Kick">Kick (when available)</String>
@@ -211,14 +214,12 @@ Bla bla bla</String>
   <String Key="Playtime.LessThanAMinute">Less than a minute</String>
   <String Key="Playtime.Minute">minute</String>
   <String Key="Playtime.Minutes">minutes</String>
-  <String Key="Stat.Derived.Faith">Faith</String>
-  <String Key="Stat.Derived.Spirit">Spirit</String>
-  <String Key="Stat.Primary.Devotion">Devotion</String>
-  <String Key="Stat.Primary.Dexterity">Dexterity</String>
-  <String Key="Stat.Primary.Fortitude">Fortitude</String>
-  <String Key="Stat.Primary.Mind">Mind</String>
-  <String Key="Stat.Primary.Presence">Presence</String>
-  <String Key="Stat.Primary.Strength">Strength</String>
+  <String Key="Stat.Devotion">Devotion</String>
+  <String Key="Stat.Dexterity">Dexterity</String>
+  <String Key="Stat.Fortitude">Fortitude</String>
+  <String Key="Stat.Mind">Mind</String>
+  <String Key="Stat.Presence">Presence</String>
+  <String Key="Stat.Strength">Strength</String>
   <String Key="Verb.Examine">Examine</String>
   <String Key="Verb.Insult">Insult</String>
   <String Key="Verb.Talk">Talk</String>

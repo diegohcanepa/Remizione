@@ -17,6 +17,7 @@ namespace Remizione.UI
         #region Private fields
 
         private readonly ImageSprite container;
+        private readonly ImageSprite containerSelection;
         private readonly List<ItemMenuOption> optionList = [];
         private ItemMenuOption? selectedOption;
         private Action<ItemMenuOption?>? selectedOptionChanged;
@@ -28,7 +29,7 @@ namespace Remizione.UI
         #region Constructor
 
         // Constructor
-        public ItemMenu(EngendroGame game, Action<ItemMenuOption>? selectedOptionChanged)
+        public ItemMenu(EngendroGame game, Action<ItemMenuOption?>? selectedOptionChanged)
             : base(game)
         {
             this.selectedOptionChanged = selectedOptionChanged;
@@ -39,6 +40,14 @@ namespace Remizione.UI
             this.container = new(game, Atlases.UI.ItemMenuContainer)
             {
                 PivotOrigin = RectanglePoint.Top,
+                Scale = ScaleInfo.UIElement.Medium
+            };
+
+            // ContainerSelection
+            this.containerSelection = new(game, Atlases.UI.ItemMenuContainerSelection)
+            {
+                Opacity = .2f,
+                PivotOrigin = RectanglePoint.Middle,
                 Scale = ScaleInfo.UIElement.Medium
             };
 
@@ -77,6 +86,13 @@ namespace Remizione.UI
         {
             Game.SpriteBatch.Begin(Game.Camera);
             container.Draw(gameTime);
+
+            if (SelectedOption != null)
+            {
+                containerSelection.Position = SelectedOption.Position;
+                containerSelection.Draw(gameTime);
+            }
+
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);

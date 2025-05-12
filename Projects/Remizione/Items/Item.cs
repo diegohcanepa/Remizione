@@ -50,8 +50,10 @@ namespace Remizione
                 text += $" +{Level}";
 
             // Count
-            if (MetaItem.Maximum > 0 && Count > 0)
+            if (MetaItem.Maximum > 0)
                 text += $" ({Count} / {MetaItem.Maximum})";
+            else if (Count > 1)
+                text += $" (x{Count})";
 
             // Durability state
             else if (MetaItem.Durability > 0)
@@ -123,11 +125,17 @@ namespace Remizione
             get => count;
             set
             {
-                this.count = value;
-                if (MetaItem.Maximum > 0 && count > MetaItem.Maximum)
-                    count = MetaItem.Maximum;
-                
-                isDisplayTextDiry = true;
+                if (value != count)
+                {
+                    this.count = value;
+
+                    if (MetaItem.Maximum > 0 && count > MetaItem.Maximum)
+                        count = MetaItem.Maximum;
+
+                    isDisplayTextDiry = true;
+
+                    Container.Invalidate();
+                }
             }
         }
 

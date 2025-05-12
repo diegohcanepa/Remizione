@@ -30,6 +30,7 @@ namespace Remizione
             if (itemsDictionary.TryGetValue(name, out var value))
             {
                 value.Count += amount;
+                Invalidate();
                 return value;
             }
             else
@@ -39,8 +40,9 @@ namespace Remizione
                 itemsDictionary[name] = item;
                 items.Add(item);
 
-                if (SelectedItem == null)
-                    SelectedItem = item;
+                SelectedItem ??= item;
+
+                Invalidate();
 
                 return item;
             }
@@ -49,8 +51,22 @@ namespace Remizione
         // Category
         public ItemContainerCategory Category { get; }
 
+        // Count
+        public int Count { get; private set; }
+
         // GetItem
         public Item? GetItem(string name) => itemsDictionary.TryGetValue(name, out var value) ? value : null;
+
+        // Invalidate
+        public void Invalidate()
+        {
+            Count = 0;
+
+            for (var i = 0; i < items.Count; i++)
+            {
+                Count += items[i].MetaItem.Maximum > 0 ? 1 : items[i].Count;
+            }
+        }
 
         // Items
         public ReadOnlyCollection<Item> Items { get; }
@@ -71,7 +87,9 @@ namespace Remizione
         public bool Remove(Item item)
         {
             var result = items.Remove(item);
-            itemsDictionary.Remove(item.Name);
+            if (result)
+                itemsDictionary.Remove(item.Name);
+            Invalidate();
             return result;
         }
 

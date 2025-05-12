@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Remizione
 {
@@ -36,6 +37,7 @@ namespace Remizione
         public override void Exit()
         {
             base.Exit();
+            Owner.EndTurn();
             Item = null;
         }
 
@@ -49,10 +51,22 @@ namespace Remizione
             {
                 if (frame.Label == GameSettings.KeyFrame)
                 {
+                    var hp = Owner.HP;
+                    var faith = Owner.Faith;
+
                     Item.Use();
 
                     if (Item.MetaItem.Sound != null)
                         Owner.PlaySound(Item.MetaItem.Sound);
+
+                    var diffHP = Owner.HP - hp;
+                    var diffFaith = Owner.Faith - faith;
+
+                    if (diffHP > 0)
+                        Owner.Session.HUD.Log.Show(LogVerb.Restore, $"{Localization.GetLocalizedValue(DerivedStat.Spirit)} +{hp}");
+
+                    if (diffFaith > 0)
+                        Owner.Session.HUD.Log.Show(LogVerb.Restore, $"{Localization.GetLocalizedValue(DerivedStat.Faith)} +{faith}");
 
                     soundPlayed = true;
                 }

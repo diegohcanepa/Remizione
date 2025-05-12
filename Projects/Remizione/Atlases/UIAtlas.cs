@@ -22,6 +22,7 @@ namespace Remizione
             InventorySlot = this[nameof(InventorySlot)];
             InventorySlotSelection = this[nameof(InventorySlotSelection)];
             ItemMenuContainer = this[nameof(ItemMenuContainer)];
+            ItemMenuContainerSelection = this[nameof(ItemMenuContainerSelection)];
             MessageContainer = this[nameof(MessageContainer)];
             MissingInputBinding = this[nameof(MissingInputBinding)];
             MissingItem = this[nameof(MissingItem)];
@@ -76,6 +77,9 @@ namespace Remizione
 
         // ItemMenuContainer
         public AtlasImage ItemMenuContainer { get; }
+
+        // ItemMenuContainerSelection
+        public AtlasImage ItemMenuContainerSelection { get; }
 
         // FaithIcon
         public AtlasImage FaithIcon { get; }

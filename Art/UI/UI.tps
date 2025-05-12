@@ -260,6 +260,7 @@
             <key type="filename">ItemCategories-assets/InventoryAmulets.png</key>
             <key type="filename">ItemCategories-assets/InventoryConsumables.png</key>
             <key type="filename">ItemCategories-assets/InventorySkills.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -424,6 +425,56 @@
                 <rect>49,7,99,13</rect>
                 <key>scale9Paddings</key>
                 <rect>49,7,99,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MouseCursors-assets/MouseCursorBag.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,5,7</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,5,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MouseCursors-assets/MouseCursorCross.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorCrossOn.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorWait.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,3,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,3,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MouseCursors-assets/MouseCursorTarget.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorTargetOn.png</key>
+            <key type="filename">UIIcons-assets/FaithIcon.png</key>
+            <key type="filename">UIIcons-assets/SpiritIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -601,7 +652,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UI-assets/MouseCursorArrow.png</key>
+            <key type="filename">UI-assets/ItemMenuContainerSelection.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -610,44 +661,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,2,4,4</rect>
+                <rect>22,2,44,4</rect>
                 <key>scale9Paddings</key>
-                <rect>2,2,4,4</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UI-assets/MouseCursorCross.png</key>
-            <key type="filename">UI-assets/MouseCursorCrossOn.png</key>
-            <key type="filename">UI-assets/MouseCursorTarget.png</key>
-            <key type="filename">UI-assets/MouseCursorTargetOn.png</key>
-            <key type="filename">UIIcons-assets/FaithIcon.png</key>
-            <key type="filename">UIIcons-assets/SpiritIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,5,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UI-assets/MouseCursorWait.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>10,2,19,3</rect>
-                <key>scale9Paddings</key>
-                <rect>10,2,19,3</rect>
+                <rect>22,2,44,4</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -849,6 +865,7 @@
                     <filename>Inventory-assets</filename>
                     <filename>ItemCategories-assets</filename>
                     <filename>UIIcons-assets</filename>
+                    <filename>MouseCursors-assets</filename>
                 </array>
             </struct>
         </map>

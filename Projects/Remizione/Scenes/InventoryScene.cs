@@ -84,7 +84,7 @@ namespace Remizione
         {
             var title = TextRepository.GetValue("ItemContainerCategory.Inventory");
             if (Actor != null)
-                title += $" ({Actor.Inventory.Items.Count} / {Actor.InventoryCapacity})";
+                title += $" ({Actor.Inventory.Count} / {Actor.InventoryCapacity})";
 
             return title;
         }
@@ -166,7 +166,7 @@ namespace Remizione
                 menu.AddOption(Actor.Inventory.Items[i]);
             }
 
-            menu.Show(new Vector2(Screen.NativeWidth / 2, 18), GetTitle());
+            menu.Show(new Vector2(Screen.NativeWidth / 2, 12), GetTitle());
 
             if (Actor.Inventory.SelectedItem is Item selectedItem)
                 menu.Select(selectedItem);
