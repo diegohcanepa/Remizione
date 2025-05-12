@@ -65,7 +65,7 @@ namespace Remizione
         public void Apply()
         {
             actor.MaxFaith = GetMaxFaith();
-            actor.MaxSpirit = GetMaxSpirit();
+            actor.MaxHP = GetMaxHP();
         }
 
         // MovePenalty
@@ -99,10 +99,10 @@ namespace Remizione
             return actor.Level * (FaithGainPerLevel + GetModifier(Stat.Devotion));
         }
 
-        // GetMaxSpirit
-        public int GetMaxSpirit()
+        // GetMaxHP
+        public int GetMaxHP()
         {
-            return actor.Level * (SpiritGainPerLevel + GetModifier(Stat.Fortitude));
+            return actor.Level * (HPGainPerLevel + GetModifier(Stat.Fortitude));
         }
 
         // GetModifier
@@ -129,16 +129,19 @@ namespace Remizione
         // GP (XP)
         public int GP { get; set; } = 0;
 
+        // HPGainPerLevel
+        public int HPGainPerLevel { get; private set; } = 8;
+
         // PerformSkillCheck
         public int PerformSkillCheck(Stat stat) => DiceBag.Dice20.Roll() + GetStatValue(stat);
 
         // RollAttack
-        public int RollAttack(AttackRollStat stat, out bool criticalHit)
+        public int RollAttack(AttackRollStat stat, int bonus, out bool criticalHit)
         {
             int modifier = stat == AttackRollStat.Dexterity ? GetModifier(Stat.Dexterity) : GetModifier(Stat.Strength);
             var d20 = DiceBag.Dice20.Roll();
             criticalHit = d20 == 20;
-            return d20 + modifier;
+            return d20 + modifier + bonus;
         }
 
         // RollInitiative
@@ -168,8 +171,5 @@ namespace Remizione
                 _ => DiceBag.Dice20.Roll()
             };
         }
-
-        // SpiritGainPerLevel
-        public int SpiritGainPerLevel { get; private set; } = 8;
     }
 }

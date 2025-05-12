@@ -42,6 +42,12 @@ namespace Remizione
 
             MouseCursor.Instance.AnimateClick();
 
+            if (MouseCursor.Instance.State == MouseCursorState.Bag)
+            {
+                Actor.Session.ShowInventory();
+                return true;
+            }
+
             // Attack
             if (Actor.Session.TargetMode)
             {
@@ -79,12 +85,7 @@ namespace Remizione
             var result = InputManager.DefaultPlayer.Mouse.IsRightButtonPressed();
 
             if (result)
-            {
-                Actor.Session.ShowInventory();
-                return true;
-
                 Actor.Session.TargetMode = !Actor.Session.TargetMode;
-            }
 
             return result;
         }

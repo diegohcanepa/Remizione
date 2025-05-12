@@ -193,6 +193,12 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Sinner-assets/Consume01.png</key>
+            <key type="filename">Sinner-assets/Consume02.png</key>
+            <key type="filename">Sinner-assets/Consume03.png</key>
+            <key type="filename">Sinner-assets/Consume04.png</key>
+            <key type="filename">Sinner-assets/Consume05.png</key>
+            <key type="filename">Sinner-assets/Consume06.png</key>
             <key type="filename">Sinner-assets/Death01.png</key>
             <key type="filename">Sinner-assets/Death02.png</key>
             <key type="filename">Sinner-assets/Death03.png</key>

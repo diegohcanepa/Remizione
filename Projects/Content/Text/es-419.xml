@@ -19,7 +19,7 @@
   <String Key="InputBinding.Exit">Salir</String>
   <String Key="InputBinding.NextDialog">Siguiente</String>
   <String Key="InputBinding.Select">Seleccionar</String>
-  <String Key="Item.Apple.Description">Una manzana en buen estado.</String>
+  <String Key="Item.Apple.Description">Una apetitoza manzana en su punto justo... Spirit +4</String>
   <String Key="Item.Apple.Name">Manzana</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Manzana putrefacta</String>
@@ -27,12 +27,11 @@
   <String Key="Item.UnarmedAttack.Name">Arrebato</String>
   <String Key="ItemAction.Discard">Descartar</String>
   <String Key="ItemAction.Use">Usar</String>
-  <String Key="ItemCategory.Amulets">Amuletos</String>
-  <String Key="ItemCategory.Consumables">Consumibles</String>
-  <String Key="ItemCategory.KeyItems">Objetos clave</String>
-  <String Key="ItemCategory.Skills">Manifestaciones</String>
-  <String Key="ItemCategory.Spells">Poderes</String>
-  <String Key="ItemCategory.Throwables">Arrojables</String>
+  <String Key="ItemAction.Wield">Empuñar</String>
+  <String Key="ItemCategory.Consumable">Consumibles</String>
+  <String Key="ItemCategory.Skill">Manifestaciones</String>
+  <String Key="ItemCategory.Spell">Poderes</String>
+  <String Key="ItemCategory.Throwable">Arrojables</String>
   <String Key="ItemContainerCategory.Inventory">Carga</String>
   <String Key="ItemContainerCategory.Skills">Manifestaciones</String>
   <String Key="Languages.Abbreviations">Srta.|Sr.|Dr.</String>

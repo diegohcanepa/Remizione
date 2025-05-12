@@ -20,7 +20,7 @@ namespace Remizione
         {
             base.Enter();
             attackLaunched = false;
-            Actor.AttackSkill?.BeginUse();
+            Actor.AttackSkill?.Use();
         }
 
         // Update

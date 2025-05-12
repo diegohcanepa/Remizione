@@ -20,14 +20,11 @@ namespace Remizione
         private readonly FloatTween accelerationFactorTween = new();
         private string attackSkillName = string.Empty;
         private BloodSplash? bloodSplash;
-        private readonly ActorCloseAttackState closeAttackState;
         private readonly CombatStateMachine combatStateMachine;
-        private readonly ActorDeathState deathState;
         private int faith;
         private FloatingText? floatingMessage;
         private SoundInstance? footstepSoundInstance;
         private readonly FloatTween headTween = new();
-        private readonly ActorHurtState hurtState;
         private int level = 1;
         private int maxFaith;
         private readonly FloatTween moveTween = new();
@@ -60,19 +57,16 @@ namespace Remizione
             this.Inventory = new ItemContainer(this, ItemContainerCategory.Inventory);
             this.Manifestations = new ItemContainer(this, ItemContainerCategory.Skills);
 
-            closeAttackState = new ActorCloseAttackState(this);
-            deathState = new ActorDeathState(this);
-            hurtState = new ActorHurtState(this);
-
             this.standState = new ActorStandState(this);
 
             this.StateMachine = new ActorStateMachine(this, standState);
-            this.StateMachine.RegisterState(deathState);
-            this.StateMachine.RegisterState(hurtState);
+            this.StateMachine.RegisterState(new ActorConsumeState(this));
+            this.StateMachine.RegisterState(new ActorDeathState(this));
+            this.StateMachine.RegisterState(new ActorHurtState(this));
             this.StateMachine.RegisterState(new ActorFatigueState(this));
             this.StateMachine.RegisterState(new ActorMoveState(this));
             this.StateMachine.RegisterState(new ActorMoveFastState(this));
-            this.StateMachine.RegisterState(closeAttackState);
+            this.StateMachine.RegisterState(new ActorCloseAttackState(this));
 
             throwObjectState = new ActorThrowObjectState(this);
             this.StateMachine.RegisterState(throwObjectState);
@@ -569,6 +563,16 @@ namespace Remizione
         // CloseAttack
         public void CloseAttack() => StateMachine.ChangeState(ActorStateNames.CloseAttack);
 
+        // Consume
+        public void Consume(Item item)
+        {
+            if (StateMachine.GetState(ActorStateNames.Consume) is ActorConsumeState state)
+            {
+                state.Item = item;
+                StateMachine.ChangeState(state.Name);
+            }
+        }
+
         // DoAttackTurn
         public void DoAttackTurn()
         {
@@ -779,7 +783,7 @@ namespace Remizione
 
         // IsBroken
         [ScriptProperty]
-        public bool IsBroken => !IsDead && (float)Spirit / MaxSpirit < .3f;
+        public bool IsBroken => !IsDead && (float)HP / MaxHP < .3f;
 
         // Level
         [ScriptProperty]

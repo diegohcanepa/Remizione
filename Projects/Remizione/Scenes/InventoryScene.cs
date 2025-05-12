@@ -11,10 +11,10 @@ namespace Remizione
     /// </summary>
     public sealed class InventoryScene : Scene
     {
+        private readonly UIControl actionButton;
         private readonly UIControl discardButton;
         private readonly ItemMenu menu;
         private readonly UISentence sentence;
-        private readonly UIControl useButton;
 
         #region Constructor
 
@@ -25,18 +25,19 @@ namespace Remizione
             this.menu = new(Game, SelectedOptionChanged);
             this.sentence = new(Game) { ShowGradient = true };
 
+            // Default action
+            this.actionButton = new UIControl(game, InputBindings.Select)
+            {
+                PivotOrigin = RectanglePoint.RightBottom,
+                TextColor = ColorPalette.Text.Default
+            };
+
+            // Discard
             this.discardButton = new UIControl(game, InputBindings.Select)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Text = Localization.EncodeKey(ItemAction.Discard),
                 TextColor = ColorPalette.Text.Terra
-            };
-
-            this.useButton = new UIControl(game, InputBindings.Select)
-            {
-                PivotOrigin = RectanglePoint.RightBottom,
-                Text = Localization.EncodeKey(ItemAction.Use),
-                TextColor = ColorPalette.Text.Default
             };
         }
 
@@ -89,9 +90,12 @@ namespace Remizione
         }
 
         // SelectedOptionChanged
-        private void SelectedOptionChanged()
+        private void SelectedOptionChanged(ItemMenuOption? option)
         {
-            sentence.Text = menu.SelectedOption?.Item.MetaItem.LocalizedDescription;
+            sentence.Text = option?.Item.MetaItem.LocalizedDescription;
+
+            if (option != null)
+                actionButton.Text = Localization.EncodeKey(option.Item.MetaItem.Action);
         }
 
         // UseItem
@@ -99,15 +103,12 @@ namespace Remizione
         {
             if (menu.SelectedOption?.Item is Item item)
             {
-                item.Consume();
-                if (item.Count == 0)
-                {
-                    actor.Inventory.Remove(item.Name);
-                    menu.RemoveSelectedOption();
-                    menu.Title = GetTitle();
-                }
+                if (item.MetaItem.Category == ItemCategory.Consumable)
+                    actor.Consume(item);
                 else
-                    menu.SelectedOption.Invalidate();
+                    item.Use();
+
+                SceneController.Pop();
             }
         }
 
@@ -124,7 +125,7 @@ namespace Remizione
             if (menu.SelectedOption != null)
             {
                 discardButton.Draw(gameTime);
-                useButton.Draw(gameTime);
+                actionButton.Draw(gameTime);
             }
         }
 
@@ -140,7 +141,7 @@ namespace Remizione
             if (discardButton.TestPressed(PlayerIndex.One))
                 DiscardItem(Actor);
 
-            if (useButton.TestPressed(PlayerIndex.One))
+            if (actionButton.TestPressed(PlayerIndex.One))
                 UseItem(Actor);
 
             if (HandleMouseInput())
@@ -152,6 +153,8 @@ namespace Remizione
         // OnLoadContent
         protected override void OnLoadContent()
         {
+            Sound.Play(SoundNames.InventoryOpen);
+
             menu.Clear();
             MouseCursor.Instance.State = MouseCursorState.Arrow;
 
@@ -171,7 +174,7 @@ namespace Remizione
                 menu.SelectFirst();
 
             discardButton.Position = menu.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 5, -10);
-            useButton.Position = menu.BoundingBox.GetPoint(RectanglePoint.RightBottom, -5, -10);
+            actionButton.Position = menu.BoundingBox.GetPoint(RectanglePoint.RightBottom, -5, -10);
         }
 
         // OnUnloadContent
@@ -189,7 +192,7 @@ namespace Remizione
             if (menu.SelectedOption != null)
             {
                 discardButton.Update(gameTime);
-                useButton.Update(gameTime);
+                actionButton.Update(gameTime);
             }
         }
 

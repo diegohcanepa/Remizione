@@ -27,12 +27,11 @@
   <String Key="Item.UnarmedAttack.Name">Outburst</String>
   <String Key="ItemAction.Discard">Discard</String>
   <String Key="ItemAction.Use">Use</String>
-  <String Key="ItemCategory.Amulets">Amulets</String>
-  <String Key="ItemCategory.Consumables">Consumables</String>
-  <String Key="ItemCategory.KeyItems">Key items</String>
-  <String Key="ItemCategory.Skills">Manifestations</String>
-  <String Key="ItemCategory.Spells">Spells</String>
-  <String Key="ItemCategory.Throwables">Throwables</String>
+  <String Key="ItemAction.Wield">Wield</String>
+  <String Key="ItemCategory.Consumable">Consumables</String>
+  <String Key="ItemCategory.Skill">Manifestations</String>
+  <String Key="ItemCategory.Spell">Spells</String>
+  <String Key="ItemCategory.Throwable">Throwables</String>
   <String Key="ItemContainerCategory.Inventory">Load</String>
   <String Key="ItemContainerCategory.Skills">Manifestations</String>
   <String Key="Languages.Abbreviations">Miss | Mr. | DR.</String>

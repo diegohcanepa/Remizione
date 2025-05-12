@@ -5,6 +5,7 @@
     /// </summary>
     internal static class SoundNames
     {
+        internal const string InventoryOpen = nameof(InventoryOpen);
         internal const string LootBagPickup = nameof(LootBagPickup);
         internal const string MenuDiscardItem = nameof(MenuDiscardItem);
         internal const string MenuSelect = nameof(MenuSelect);

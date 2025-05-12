@@ -42,10 +42,10 @@ namespace Remizione
     public enum ImpactType { Low, Medium, High }
 
     // ItemAction
-    public enum ItemAction { None, Discard, Use }
+    public enum ItemAction { None, Discard, Use, Wield }
 
     // ItemCategory
-    public enum ItemCategory { Skills, Consumables, Spells, Throwables, Weapons }
+    public enum ItemCategory { Skill, Consumable, Spell, Throwable, Weapon }
 
     // ItemContainerCategory
     public enum ItemContainerCategory { Inventory, Skills }
@@ -79,7 +79,7 @@ namespace Remizione
     public enum Message { None, Critical, Miss, NoFaith, ThreatsNearby }
 
     // MouseCursorState
-    public enum MouseCursorState { Cross, CrossOn, Target, TargetOn, Wait, Arrow }
+    public enum MouseCursorState { Bag, Cross, CrossOn, Target, TargetOn, Wait, Arrow }
 
     // PlacementDistributionStrategy
     public enum PlacementDistributionStrategy { Random, Clump, NoiseMap }

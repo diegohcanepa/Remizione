@@ -33,7 +33,7 @@ namespace Remizione
                 {
                     damageTaken = true;
                     
-                    var attackRoll = Owner.Stats.RollAttack(AttackRollStat.Strength, out bool criticalHit);
+                    var attackRoll = Owner.Stats.RollAttack(AttackRollStat.Strength, 0, out bool criticalHit);
                     var hitType = criticalHit ? HitType.Critical : HitType.Default;
 
                     if (Owner.Target is Actor target)
@@ -51,7 +51,7 @@ namespace Remizione
                         }
 
                         if (attackRoll >= defenseRoll)
-                            Owner.AttackSkill.EndUse(Owner.Target, hitType);
+                            Owner.AttackSkill.ApplyDamage(Owner.Target, hitType);
                         else
                         {
                             Owner.Session.CombatManager.Add(target);
@@ -59,7 +59,7 @@ namespace Remizione
                         }
                     }
                     else
-                        Owner.AttackSkill.EndUse(Owner.Target, hitType);
+                        Owner.AttackSkill.ApplyDamage(Owner.Target, hitType);
                 }
             }
         }

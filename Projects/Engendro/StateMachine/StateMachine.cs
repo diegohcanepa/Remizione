@@ -49,6 +49,9 @@ namespace Engendro
         // CurrentState
         public TState CurrentState { get; private set; }
 
+        // GetState
+        public TState? GetState(string name) => states.TryGetValue(name, out TState? state) ? state : null;
+
         // Owner
         public TOwner Owner { get; }
 

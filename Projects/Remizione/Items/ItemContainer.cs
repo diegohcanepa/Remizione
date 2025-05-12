@@ -59,13 +59,20 @@ namespace Remizione
         public GameThing Owner { get; }
 
         // Remove
-        public void Remove(string name)
+        public bool Remove(string name)
         {
             if (GetItem(name) is Item item)
-            {
-                items.Remove(item);
-                itemsDictionary.Remove(item.Name);
-            }
+                return Remove(item);
+            else
+                return false;
+        }
+
+        // Remove
+        public bool Remove(Item item)
+        {
+            var result = items.Remove(item);
+            itemsDictionary.Remove(item.Name);
+            return result;
         }
 
         // Select

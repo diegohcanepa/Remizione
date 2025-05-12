@@ -19,7 +19,7 @@ namespace Remizione.UI
         private readonly ImageSprite container;
         private readonly List<ItemMenuOption> optionList = [];
         private ItemMenuOption? selectedOption;
-        private Action? selectedOptionChanged;
+        private Action<ItemMenuOption?>? selectedOptionChanged;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 200 };
         private readonly TextSprite titleText;
 
@@ -28,7 +28,7 @@ namespace Remizione.UI
         #region Constructor
 
         // Constructor
-        public ItemMenu(EngendroGame game, Action? selectedOptionChanged)
+        public ItemMenu(EngendroGame game, Action<ItemMenuOption>? selectedOptionChanged)
             : base(game)
         {
             this.selectedOptionChanged = selectedOptionChanged;
@@ -218,7 +218,7 @@ namespace Remizione.UI
                         Sound.Play(SoundNames.MenuSelect);
 
                     selectedOption = value;
-                    selectedOptionChanged?.Invoke();
+                    selectedOptionChanged?.Invoke(selectedOption);
                 }
             }
         }

@@ -89,8 +89,8 @@ namespace Remizione
             internal static Color Text { get; } = ColorPalette.Text.Default;
         }
 
-        // SpiritMeter
-        internal static class SpiritMeter
+        // HPMeter
+        internal static class HPMeter
         {
             internal static Color Back { get; } = new(20, 24, 46);
             internal static Color Fore { get; } = new(82, 51, 63);

@@ -81,27 +81,37 @@ namespace Remizione
 
         #endregion
 
-        // BeginUse
-        public void BeginUse()
+        // ApplyDamage
+        public void ApplyDamage(GameThing target, HitType hitType)
         {
-            Owner.Spirit += Spirit;
-
-            if (Owner is Actor actor)
-                actor.Faith += Faith;
-        }
-
-        // Consume
-        public bool Consume()
-        {
-            if (Count > 0)
+            if (MetaItem.BaseDamage != DiceRoll.Empty)
             {
-                BeginUse();
-                Count--;
-                InvalidateDisplayText();
-                return true;
+                var actor = Owner as Actor;
+                int damageAmount;
+
+                // Faith penalty
+                if (actor != null && (actor.Faith <= 0 || hitType == HitType.Glancing))
+                {
+                    damageAmount = MetaItem.BaseDamage.MinimumValue;
+                }
+                else
+                {
+                    damageAmount = MetaItem.BaseDamage.Roll();
+
+                    if (actor != null)
+                        damageAmount += actor.Stats.GetModifier(MetaItem.Modifier);
+
+                    if (hitType == HitType.Critical)
+                        damageAmount += Math.Max(MetaItem.BaseDamage.Roll(), MetaItem.BaseDamage.MaximumValue / 2);
+                }
+
+                if (MetaItem.Durability > 0 && Durability > 0)
+                    Durability -= 1;
+
+                target.TakeDamage(Container.Owner, damageAmount + MetaItem.Bonus, hitType, Knockback);
             }
 
-            return false;
+            target.ApplyDamage(Container.Owner);
         }
 
         // Container
@@ -147,39 +157,6 @@ namespace Remizione
             }
         }
 
-        // EndUse
-        public void EndUse(GameThing target, HitType hitType)
-        {
-            if (MetaItem.BaseDamage != DiceRoll.Empty)
-            {
-                var actor = Owner as Actor;
-                int damageAmount;
-
-                // Faith penalty
-                if (actor != null && (actor.Faith <= 0 || hitType == HitType.Glancing))
-                {
-                    damageAmount = MetaItem.BaseDamage.MinimumValue;
-                }
-                else
-                {
-                    damageAmount = MetaItem.BaseDamage.Roll();
-
-                    if (actor != null)
-                        damageAmount += actor.Stats.GetModifier(MetaItem.Modifier);
-
-                    if (hitType == HitType.Critical)
-                        damageAmount += Math.Max(MetaItem.BaseDamage.Roll(), MetaItem.BaseDamage.MaximumValue / 2);
-                }
-
-                if (MetaItem.Durability > 0 && Durability > 0)
-                    Durability -= 1;
-
-                target.TakeDamage(Container.Owner, damageAmount, hitType, Knockback);
-            }
-
-            target.ApplyDamage(Container.Owner);
-        }
-
         // Faith
         public int Faith => MetaItem.Faith;
 
@@ -191,6 +168,9 @@ namespace Remizione
 
             return (int)Math.Ceiling(cost);
         }
+
+        // HP
+        public int HP => MetaItem.HP;
 
         // IconImage
         public AtlasImage IconImage { get; }
@@ -234,9 +214,6 @@ namespace Remizione
                 Count = MetaItem.Maximum;
         }
 
-        // Spirit
-        public int Spirit => MetaItem.Spirit;
-
         // ToString
         public override string ToString() => MetaItem.ToString();
 
@@ -245,5 +222,27 @@ namespace Remizione
 
         // UpgradeHardness
         public UpgradeHardness UpgradeHardness => MetaItem.UpgradeHardness;
+
+        // Use
+        public bool Use()
+        {
+            if (Count > 0)
+            {
+                Owner.HP += HP;
+
+                if (Owner is Actor actor)
+                    actor.Faith += Faith;
+
+                Count--;
+                InvalidateDisplayText();
+
+                if (Count == 0)
+                    Container.Remove(this);
+
+                return true;
+            }
+
+            return false;
+        }
     }
 }
