@@ -117,7 +117,7 @@ namespace Remizione.Menus
                 return HandleInputResult.Handled;
             }
 
-            if (InputBindings.PauseMenu.IsPressed(0) || InputBindings.Back.IsPressed(0))
+            if (InputBindings.InGameMenu.IsPressed(0) || InputBindings.Back.IsPressed(0))
             {
                 InputManager.Suspend(300);
                 SceneController.Pop();

@@ -213,7 +213,6 @@ namespace Engendro
                 {
                     if (scene.SceneController.PausePreviousScenes)
                     {
-                        //InputManager.GamePad.StopVibration();
                         for (var i = 0; i < scenes.Count; i++)
                         {
                             scenes[i].Pause();

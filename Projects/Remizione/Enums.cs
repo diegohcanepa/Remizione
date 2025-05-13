@@ -41,6 +41,9 @@ namespace Remizione
     // ImpactType
     public enum ImpactType { Low, Medium, High }
 
+    // InGameMenuOptionName
+    public enum InGameMenuOptionName { Attributes, Creatures, Inventory, Manifestations, Map, Prayers, QuitToDesktop, Settings }
+
     // ItemAction
     public enum ItemAction { None, Discard, Use, Wield }
 

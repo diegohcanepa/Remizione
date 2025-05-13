@@ -15,6 +15,14 @@
   <String Key="DurabilityState.Worn">Gastado</String>
   <String Key="HitType.Critical">¡Crítico!</String>
   <String Key="HitType.Glancing">Superficial</String>
+  <String Key="InGameMenuOptionName.Attributes">Atributos</String>
+  <String Key="InGameMenuOptionName.Creatures">Criaturas</String>
+  <String Key="InGameMenuOptionName.Inventory">Bolsa</String>
+  <String Key="InGameMenuOptionName.Manifestations">Manifestaciones</String>
+  <String Key="InGameMenuOptionName.Map">Mapa</String>
+  <String Key="InGameMenuOptionName.Prayers">Plegarias</String>
+  <String Key="InGameMenuOptionName.QuitToDesktop">Salir al escritorio</String>
+  <String Key="InGameMenuOptionName.Settings">Configuración</String>
   <String Key="InputBinding.Back">Atrás</String>
   <String Key="InputBinding.Close">Cerrar</String>
   <String Key="InputBinding.Continue">Continuar</String>
@@ -34,7 +42,7 @@
   <String Key="ItemCategory.Skill">Manifestaciones</String>
   <String Key="ItemCategory.Spell">Poderes</String>
   <String Key="ItemCategory.Throwable">Arrojables</String>
-  <String Key="ItemContainerCategory.Inventory">Carga</String>
+  <String Key="ItemContainerCategory.Inventory">Bolsa</String>
   <String Key="ItemContainerCategory.Skills">Manifestaciones</String>
   <String Key="ItemProperty.BaseDamage">Daño base</String>
   <String Key="Languages.Abbreviations">Srta.|Sr.|Dr.</String>

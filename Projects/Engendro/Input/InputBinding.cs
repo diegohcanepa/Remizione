@@ -152,15 +152,6 @@ namespace Engendro.Input
             }
         }
 
-        // IsUp2
-        public bool IsUp2(PlayerIndex playerIndex)
-        {
-            if (!CanTestInput())
-                return false;
-            else
-                return Button != null && (InputManager.Players[(int)playerIndex].GamePad.IsButtonUp(Button.Value) || IsKeyUp());
-        }
-
         // IsUp
         public bool IsUp(PlayerIndex playerIndex)
         {
@@ -187,7 +178,6 @@ namespace Engendro.Input
                 return result;
             }
         }
-
 
         // Keys
         public Keys[] Keys { get; set; }

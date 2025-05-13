@@ -29,9 +29,9 @@ namespace Remizione
         // Menu
         internal static readonly InputBinding Console = InputManager.AddBinding(nameof(Console), null, Keys.Tab);
         internal static readonly InputBinding DeleteSlot = InputManager.AddBinding(nameof(DeleteSlot), Buttons.Y, Keys.F8);
+        internal static readonly InputBinding InGameMenu = InputManager.AddBinding(nameof(InGameMenu), Buttons.Start, Keys.Escape);
         internal static readonly InputBinding NextMenuItem = InputManager.AddBinding(nameof(NextMenuItem), Buttons.DPadDown, Keys.S, Keys.Down);
         internal static readonly InputBinding NextMenuItemValue = InputManager.AddBinding(nameof(NextMenuItemValue), Buttons.DPadRight, Keys.D, Keys.Right);
-        internal static readonly InputBinding PauseMenu = InputManager.AddBinding(nameof(PauseMenu), Buttons.Start, Keys.Escape);
         internal static readonly InputBinding PreviousMenuItem = InputManager.AddBinding(nameof(PreviousMenuItem), Buttons.DPadUp, Keys.W, Keys.Up);
         internal static readonly InputBinding PreviousMenuItemValue = InputManager.AddBinding(nameof(PreviousMenuItemValue), Buttons.DPadLeft, Keys.A, Keys.Left);
         internal static readonly InputBinding ClickMenuItem = InputManager.AddBinding(nameof(ClickMenuItem), GetButtonA(), Keys.E, Keys.Enter);

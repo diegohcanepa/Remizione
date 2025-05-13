@@ -87,6 +87,7 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
+            /*
 #if DEBUG
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
@@ -94,6 +95,7 @@ namespace Remizione
                 return;
             }
 #endif
+            */
 
             if (IsSteamRunning)
             {

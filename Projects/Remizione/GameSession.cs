@@ -23,6 +23,8 @@ namespace Remizione
         private enum AttributeName { RandomSeed, WorldVersion }
         private readonly ScriptConsole? console;
         private readonly ContextMenuScene contextMenuScene;
+        private bool inGameMenuLocked;
+        private readonly InGameMenuScene inGameMenuScene;
         private readonly InventoryScene inventoryScene;
         private Actor? player;
         private Vector2? playerPosition;
@@ -65,6 +67,7 @@ namespace Remizione
             }
 
             this.contextMenuScene = new(this);
+            this.inGameMenuScene = new(this);
             this.inventoryScene = new(this.Game);
 
             LocalizationSource = LocalizationSource.Script;
@@ -208,6 +211,21 @@ namespace Remizione
                 Environment.EnterRoom(commonRoom);
             }
             */
+        }
+
+        // OnHandleInput
+        protected override HandleInputResult OnHandleInput(GameTime gameTime)
+        {
+            if (inGameMenuLocked && InputBindings.InGameMenu.IsKeyUp())
+                inGameMenuLocked = false;   
+
+            if (!inGameMenuLocked && InputBindings.InGameMenu.IsPressed(PlayerIndex.One))
+            {
+                ShowInGameMenu();
+                return HandleInputResult.Handled;
+            }
+            else
+                return base.OnHandleInput(gameTime);
         }
 
         // OnInitializeEntities
@@ -492,6 +510,14 @@ namespace Remizione
 
             contextMenuScene.Target = thing;
             Game.SceneManager.Push(contextMenuScene);
+        }
+
+        // ShowInGameMenu
+        public void ShowInGameMenu()
+        {
+            inGameMenuLocked = true;
+            HUD.Log.Hide();
+            Game.SceneManager.Push(inGameMenuScene);
         }
 
         // ShowInventory
