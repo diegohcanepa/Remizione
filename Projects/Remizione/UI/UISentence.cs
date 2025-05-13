@@ -51,8 +51,11 @@ namespace Remizione.UI
             if (ShowGradient)
                 gradient.Draw(gameTime);
 
-            infoSprite.Draw(gameTime);
-            textSprite.Draw(gameTime);
+            if (!textSprite.IsEmpty)
+            {
+                infoSprite.Draw(gameTime);
+                textSprite.Draw(gameTime);
+            }
 
             Game.SpriteBatch.End();
         }

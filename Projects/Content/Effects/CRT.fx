@@ -10,11 +10,10 @@ sampler2D SpriteTextureSampler = sampler_state
 };
 
 // Uniforms adjustable from code
-float ScanlineIntensity = 0.09; // Scanline intensity (0.0 - 1.0)
-float ScanlineCount = 150.0; // Number of scanlines
+float ScanlineIntensity = 0.12; // Scanline intensity (0.0 - 1.0)
+float ScanlineCount = 130.0; // Number of scanlines
 float Curvature = 0; // Curvature intensity (0.0 - 0.5)
-float ChromaticAberration = 0.0002; // Chromatic aberration intensity
-float NoiseIntensity = 0.005; // Noise intensity (0.0 - 1.0)
+float ChromaticAberration = 0.0001; // Chromatic aberration intensity
 
 // Vertex Shader structure
 struct VertexShaderOutput

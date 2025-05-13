@@ -171,21 +171,10 @@ namespace Remizione
             }
 
             menu.Show(new Vector2(Screen.NativeWidth / 2, 12), GetTitle());
-
-            if (Actor.Inventory.SelectedItem is Item selectedItem)
-                menu.Select(selectedItem);
-            else
-                menu.SelectFirst();
+            menu.SelectFirst();
 
             discardButton.Position = menu.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 5, -10);
             actionButton.Position = menu.BoundingBox.GetPoint(RectanglePoint.RightBottom, -5, -10);
-        }
-
-        // OnUnloadContent
-        protected override void OnUnloadContent()
-        {
-            if (Actor?.Inventory is ItemContainer container && menu.SelectedOption != null)
-                container.Select(menu.SelectedOption.Item.Name);
         }
 
         // OnUpdate

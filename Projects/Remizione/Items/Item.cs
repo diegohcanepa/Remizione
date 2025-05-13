@@ -197,9 +197,6 @@ namespace Remizione
         // HP
         public int HP => MetaItem.HP;
 
-        // IsActive
-        public bool IsActive => Container.SelectedItem == this;
-
         // Knockback
         public Vector2 Knockback => MetaItem.Knockback;
 

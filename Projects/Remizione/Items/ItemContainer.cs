@@ -44,7 +44,6 @@ namespace Remizione
             {
                 var item = new Item(this, metaItem) { Count = amount };
                 items.Add(item);
-                SelectedItem ??= item;
                 return item;
             }
         }
@@ -81,48 +80,5 @@ namespace Remizione
 
         // Remove
         public bool Remove(Item item) => items.Remove(item);
-
-        // Select
-        public bool Select(Item item) => Select(item.Name);
-
-        // Select
-        public bool Select(string name)
-        {
-            if (GetItem(name) is Item item)
-            {
-                SelectedItem = item;
-                SelectedIndex = items.IndexOf(item);
-                return true;
-            }
-            else
-                return false;
-        }
-
-        // SelectedIndex
-        public int SelectedIndex { get; private set; }
-
-        // SelectedItem
-        public Item? SelectedItem { get; private set; }
-
-        // SelectNext
-        public void SelectNext()
-        {
-            if (items.Count == 0)
-                return;
-
-            if (SelectedItem == null)
-            {
-                if (items.Count > 0)
-                    Select(items[0].Name);
-            }
-            else if (items.Count > 1)
-            {
-                var index = items.IndexOf(SelectedItem);
-                if (index == items.Count - 1)
-                    Select(items[0].Name);
-                else
-                    Select(items[index + 1].Name);
-            }
-        }
     }
 }

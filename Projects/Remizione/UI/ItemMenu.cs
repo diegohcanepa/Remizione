@@ -203,8 +203,16 @@ namespace Remizione.UI
         {
             if (SelectedOption != null)
             {
+                var index = optionList.IndexOf(SelectedOption);
                 optionList.Remove(SelectedOption);
-                SelectedOption = null;
+
+                if (optionList.Count == 0)
+                    SelectedOption = null;
+                else if (index < optionList.Count)
+                    Select(optionList[index].Item);
+                else
+                    SelectFirst();
+
                 LayoutOptions();
             }
         }
