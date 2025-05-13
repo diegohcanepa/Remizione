@@ -36,6 +36,7 @@
   <String Key="ItemCategory.Throwable">Throwables</String>
   <String Key="ItemContainerCategory.Inventory">Load</String>
   <String Key="ItemContainerCategory.Skills">Manifestations</String>
+  <String Key="ItemProperty.BaseDamage">Base damage</String>
   <String Key="Languages.Abbreviations">Miss | Mr. | DR.</String>
   <String Key="Languages.de-de">Deutsch</String>
   <String Key="Languages.en-us">English</String>

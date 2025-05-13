@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 
 namespace Remizione
 {
@@ -19,12 +20,16 @@ namespace Remizione
 
         #endregion
 
+        #region Constructor
+
         // Constructor
         public Item(ItemContainer container, MetaItem metaItem)
         {
             this.Container = container;
             this.MetaItem = metaItem;
         }
+
+        #endregion
 
         #region Private members
 
@@ -53,7 +58,7 @@ namespace Remizione
                 text += $" +{Level}";
 
             // Count
-            if (MetaItem.Maximum != 0)
+            if (MetaItem.Maximum > 1)
                 text += $" ({Count} / {MetaItem.Maximum})";
 
             // Durability state
@@ -128,14 +133,7 @@ namespace Remizione
             {
                 if (value != count)
                 {
-                    if (value < 0)
-                        value = 0;
-
-                    this.count = value;
-                    
-                    if (MetaItem.Maximum != 0 && value > MetaItem.Maximum)
-                        this.count = MetaItem.Maximum;
-                    
+                    this.count = Math.Clamp(value, 1, MetaItem.Maximum);
                     isDisplayTextDiry = true;
                 }
             }
@@ -169,6 +167,23 @@ namespace Remizione
 
         // Faith
         public int Faith => MetaItem.Faith;
+
+        // GetLocalizedInfo
+        public string GetLocalizedInfo()
+        {
+            var values = new List<string>();
+
+            if (!MetaItem.BaseDamage.IsEmpty)
+                values.Add($"{Localization.GetLocalizedValue(ItemProperty.BaseDamage)}: {MetaItem.BaseDamage.MinimumValue + Level}-{MetaItem.BaseDamage.MaximumValue + Level}");
+
+            if (HP != 0)
+                values.Add($"{Localization.GetLocalizedValue(DerivedStat.Spirit)}: {(HP < 0 ? string.Empty : "+")}{HP}");
+
+            if (Faith != 0)
+                values.Add($"{Localization.GetLocalizedValue(DerivedStat.Faith)}: {(Faith < 0 ? string.Empty : "+")}{Faith}");
+
+            return string.Join(" / ", values);
+        }
 
         // GetUpgradeCost
         public int GetUpgradeCost()
@@ -217,7 +232,7 @@ namespace Remizione
         // Replenish
         public void Replenish()
         {
-            if (MetaItem.Maximum > 0)
+            if (MetaItem.Maximum > 1)
                 Count = MetaItem.Maximum;
         }
 
@@ -238,12 +253,12 @@ namespace Remizione
             if (Owner is Actor actor)
                 actor.Faith += Faith;
 
-            Count--;
+            if (Count == 1)
+                Container.Remove(this);
+            else
+                Count--;
 
             InvalidateDisplayText();
-
-            if (Count == 0)
-                Container.Remove(this);
 
             return true;
         }

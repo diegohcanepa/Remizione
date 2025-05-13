@@ -111,6 +111,9 @@ namespace Engendro
         // DiceCount
         public int DiceCount { get; }
 
+        // IsEmpty
+        public bool IsEmpty => DiceCount == 0;
+
         // Empty
         public static DiceRoll Empty { get; } = new DiceRoll("0");
 

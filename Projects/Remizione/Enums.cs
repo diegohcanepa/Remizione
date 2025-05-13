@@ -50,6 +50,9 @@ namespace Remizione
     // ItemContainerCategory
     public enum ItemContainerCategory { Inventory, Skills }
 
+    // ItemProperty
+    public enum ItemProperty { BaseDamage }
+
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, LightBulb, Moon, MuzzleFlash, Outdoor, Lightning }
 

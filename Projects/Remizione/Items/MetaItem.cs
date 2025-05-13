@@ -32,7 +32,7 @@ namespace Remizione
             this.BaseDamage = baseDamage;
             this.Durability = durability;
             this.Knockback = knockback;
-            this.Maximum = maximum;
+            this.Maximum = Math.Max(1, maximum);
             this.Faith = faith;
             this.HP = hp;
             this.Range = range;

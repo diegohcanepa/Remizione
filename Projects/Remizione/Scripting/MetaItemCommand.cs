@@ -17,7 +17,7 @@ namespace Remizione.Scripting
             var action = Parser.ParseEnumArgument<ItemAction>(this, ActionArg, ItemAction.Use);
             var bonus = Parser.ParseInt32Argument(this, BonusArg);
             var category = Parser.ParseEnum<ItemCategory>(this, 2);
-            var damage = Parser.ParseDiceRollArgument(this, DamageArg) ?? DiceRoll.Empty;
+            var baseDamage = Parser.ParseDiceRollArgument(this, DamageArg) ?? DiceRoll.Empty;
             var durability = Parser.ParseInt32Argument(this, DurabilityArg);
             var knockback = Parser.ParseVector2Argument(this, KnockbackArg);
             var maximum = Parser.ParseInt32Argument(this, MaximumArg);
@@ -28,7 +28,7 @@ namespace Remizione.Scripting
             var sound = Parser.ParseSoundArgument(this, SoundArg);
             var upgradeHardness = Parser.ParseEnumArgument<UpgradeHardness>(this, UpgradeHardnessArg);
 
-            new MetaItem(name, category, action, damage, modifier, bonus, knockback, maximum, hp, fp, range, durability, upgradeHardness, sound);
+            new MetaItem(name, category, action, baseDamage, modifier, bonus, knockback, maximum, hp, fp, range, durability, upgradeHardness, sound);
         }
     }
 }

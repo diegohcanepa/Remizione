@@ -30,7 +30,7 @@ namespace Remizione
         // Add
         public Item Add(MetaItem metaItem, int amount)
         {
-            if (metaItem.Maximum <= 1)
+            if (metaItem.Maximum == 1)
                 amount = 1;
 
             var existingItem = GetItem(metaItem.Name);

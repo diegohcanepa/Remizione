@@ -37,7 +37,7 @@ namespace Remizione
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Text = Localization.EncodeKey(ItemAction.Discard),
-                TextColor = ColorPalette.Text.Terra
+                TextColor = ColorPalette.Text.Default
             };
         }
 
@@ -82,7 +82,7 @@ namespace Remizione
         // GetTitle
         private string GetTitle()
         {
-            var title = TextRepository.GetValue("ItemContainerCategory.Inventory");
+            var title = Localization.GetLocalizedValue(ItemContainerCategory.Inventory);
             if (Actor != null)
                 title += $" ({Actor.Inventory.Items.Count} / {Actor.InventoryCapacity})";
 
@@ -92,10 +92,14 @@ namespace Remizione
         // SelectedOptionChanged
         private void SelectedOptionChanged(ItemMenuOption? option)
         {
-            sentence.Text = option?.Item.MetaItem.LocalizedDescription;
-
             if (option != null)
+            {
+                sentence.Info = option.Item.GetLocalizedInfo();
+                sentence.Text = option.Item.MetaItem.LocalizedDescription;
                 actionButton.Text = Localization.EncodeKey(option.Item.MetaItem.Action);
+            }
+            else
+                sentence.Text = null;
         }
 
         // UseItem

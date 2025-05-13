@@ -21,7 +21,7 @@
   <String Key="InputBinding.Exit">Salir</String>
   <String Key="InputBinding.NextDialog">Siguiente</String>
   <String Key="InputBinding.Select">Seleccionar</String>
-  <String Key="Item.Apple.Description">Una apetitoza manzana en su punto justo... Spirit +4</String>
+  <String Key="Item.Apple.Description">Una apetitoza manzana en su punto justo.</String>
   <String Key="Item.Apple.Name">Manzana</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Manzana putrefacta</String>
@@ -36,6 +36,7 @@
   <String Key="ItemCategory.Throwable">Arrojables</String>
   <String Key="ItemContainerCategory.Inventory">Carga</String>
   <String Key="ItemContainerCategory.Skills">Manifestaciones</String>
+  <String Key="ItemProperty.BaseDamage">Daño base</String>
   <String Key="Languages.Abbreviations">Srta.|Sr.|Dr.</String>
   <String Key="Languages.de-de">Deutsch</String>
   <String Key="Languages.en-us">English</String>
