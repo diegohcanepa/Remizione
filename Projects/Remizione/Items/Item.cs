@@ -9,18 +9,21 @@ namespace Remizione
     /// </summary>
     public sealed class Item
     {
-        private int count;
+        #region Private fields
+
+        private int count = 1;
         private string displayText = string.Empty;
         private int durability;
         private bool isDisplayTextDiry = true;
         private int level;
+
+        #endregion
 
         // Constructor
         public Item(ItemContainer container, MetaItem metaItem)
         {
             this.Container = container;
             this.MetaItem = metaItem;
-            this.IconImage = Atlases.UI.GetImage(MetaItem.ToString()) ?? Atlases.UI.MissingItem;
         }
 
         #region Private members
@@ -50,10 +53,8 @@ namespace Remizione
                 text += $" +{Level}";
 
             // Count
-            if (MetaItem.Maximum > 0)
+            if (MetaItem.Maximum != 0)
                 text += $" ({Count} / {MetaItem.Maximum})";
-            else if (Count > 1)
-                text += $" (x{Count})";
 
             // Durability state
             else if (MetaItem.Durability > 0)
@@ -127,14 +128,15 @@ namespace Remizione
             {
                 if (value != count)
                 {
+                    if (value < 0)
+                        value = 0;
+
                     this.count = value;
-
-                    if (MetaItem.Maximum > 0 && count > MetaItem.Maximum)
-                        count = MetaItem.Maximum;
-
+                    
+                    if (MetaItem.Maximum != 0 && value > MetaItem.Maximum)
+                        this.count = MetaItem.Maximum;
+                    
                     isDisplayTextDiry = true;
-
-                    Container.Invalidate();
                 }
             }
         }
@@ -179,9 +181,6 @@ namespace Remizione
 
         // HP
         public int HP => MetaItem.HP;
-
-        // IconImage
-        public AtlasImage IconImage { get; }
 
         // IsActive
         public bool IsActive => Container.SelectedItem == this;
@@ -234,23 +233,19 @@ namespace Remizione
         // Use
         public bool Use()
         {
-            if (Count > 0)
-            {
-                Owner.HP += HP;
+            Owner.HP += HP;
 
-                if (Owner is Actor actor)
-                    actor.Faith += Faith;
+            if (Owner is Actor actor)
+                actor.Faith += Faith;
 
-                Count--;
-                InvalidateDisplayText();
+            Count--;
 
-                if (Count == 0)
-                    Container.Remove(this);
+            InvalidateDisplayText();
 
-                return true;
-            }
+            if (Count == 0)
+                Container.Remove(this);
 
-            return false;
+            return true;
         }
     }
 }

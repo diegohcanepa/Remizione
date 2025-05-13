@@ -94,7 +94,6 @@ namespace Remizione.UI
             if (lastKnownItem != items?.SelectedItem)
             {
                 lastKnownItem = items?.SelectedItem;
-                itemImage.Image = items?.SelectedItem?.IconImage;
 
                 slotColorTween.Start(TweenStyle.Linear, Color.Green, Color.White, 70);
                 slotImage.Tweens.ColorTween = slotColorTween;
@@ -142,7 +141,6 @@ namespace Remizione.UI
                 if (value != items)
                 {
                     items = value;
-                    itemImage.Image = items?.SelectedItem?.IconImage;
                     lastKnownCount = -1;
                     lastKnownItem = null;
                 }

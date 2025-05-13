@@ -100,7 +100,7 @@ namespace Remizione
                 return;
             }
 
-            if (!Player.IsMoving && Player.IsMouseCursorOver)
+            if (!TargetMode && !Player.IsMoving && Player.IsMouseCursorOver)
             {
                 MouseCursor.Instance.State = MouseCursorState.Bag;
             }

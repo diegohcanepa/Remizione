@@ -10,7 +10,6 @@ namespace Remizione
     public sealed class ItemContainer
     {
         private readonly List<Item> items = [];
-        private readonly Dictionary<string, Item> itemsDictionary = [];
 
         // Constructor
         public ItemContainer(GameThing owner, ItemContainerCategory category)
@@ -24,26 +23,28 @@ namespace Remizione
         // Add
         public Item? Add(string name, int amount)
         {
-            if (string.IsNullOrEmpty(name))
-                return null;
+            var metaItem = MetaItem.Find(name) ?? throw new InvalidOperationException("Meta item not found.");
+            return Add(metaItem, amount);
+        }
 
-            if (itemsDictionary.TryGetValue(name, out var value))
+        // Add
+        public Item Add(MetaItem metaItem, int amount)
+        {
+            if (metaItem.Maximum <= 1)
+                amount = 1;
+
+            var existingItem = GetItem(metaItem.Name);
+
+            if (existingItem != null && metaItem.Maximum > 1)
             {
-                value.Count += amount;
-                Invalidate();
-                return value;
+                existingItem.Count += amount;
+                return existingItem;
             }
             else
             {
-                var metaItem = MetaItem.Find(name) ?? throw new InvalidOperationException("Item type not found.");
                 var item = new Item(this, metaItem) { Count = amount };
-                itemsDictionary[name] = item;
                 items.Add(item);
-
                 SelectedItem ??= item;
-
-                Invalidate();
-
                 return item;
             }
         }
@@ -51,21 +52,16 @@ namespace Remizione
         // Category
         public ItemContainerCategory Category { get; }
 
-        // Count
-        public int Count { get; private set; }
-
         // GetItem
-        public Item? GetItem(string name) => itemsDictionary.TryGetValue(name, out var value) ? value : null;
-
-        // Invalidate
-        public void Invalidate()
+        public Item? GetItem(string name)
         {
-            Count = 0;
-
             for (var i = 0; i < items.Count; i++)
             {
-                Count += items[i].MetaItem.Maximum > 0 ? 1 : items[i].Count;
+                if (items[i].Name == name)
+                    return items[i];
             }
+
+            return null;
         }
 
         // Items
@@ -84,14 +80,7 @@ namespace Remizione
         }
 
         // Remove
-        public bool Remove(Item item)
-        {
-            var result = items.Remove(item);
-            if (result)
-                itemsDictionary.Remove(item.Name);
-            Invalidate();
-            return result;
-        }
+        public bool Remove(Item item) => items.Remove(item);
 
         // Select
         public bool Select(Item item) => Select(item.Name);

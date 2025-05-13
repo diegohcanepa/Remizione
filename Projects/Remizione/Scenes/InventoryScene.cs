@@ -84,7 +84,7 @@ namespace Remizione
         {
             var title = TextRepository.GetValue("ItemContainerCategory.Inventory");
             if (Actor != null)
-                title += $" ({Actor.Inventory.Count} / {Actor.InventoryCapacity})";
+                title += $" ({Actor.Inventory.Items.Count} / {Actor.InventoryCapacity})";
 
             return title;
         }

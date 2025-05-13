@@ -27,7 +27,7 @@ namespace Remizione.Scripting
                 return;
 
             // Item is already in inventory, so check if the slot is empty
-            if (actor.Inventory.GetItem(metaItem.Name) is Item item)
+            if (metaItem.Maximum > 1 && actor.Inventory.GetItem(metaItem.Name) is Item item)
             {
                 if (item.Count == item.MetaItem.Maximum)
                 {
@@ -37,7 +37,7 @@ namespace Remizione.Scripting
             }
 
             // Inventory is full
-            if (actor.Inventory.Count == actor.InventoryCapacity)
+            if (actor.Inventory.Items.Count == actor.InventoryCapacity)
             {
                 actor.Session.HUD.Log.Show(LogMessage.InventoryFull, true);
                 return;

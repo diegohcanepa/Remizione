@@ -99,7 +99,6 @@ namespace Remizione
                 if (value != item)
                 {
                     item = value;
-                    itemImage.Image = item?.IconImage;
                     if (item != null)
                     {
                         itemImage.Opacity = item.Count == 0 ? .2f : 1;
