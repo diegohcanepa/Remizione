@@ -234,7 +234,7 @@ namespace Remizione
         }
 
         // ToString
-        public override string ToString() => MetaItem.ToString();
+        public override string ToString() => DisplayText;
 
         // Unread
         public bool Unread { get; set; }

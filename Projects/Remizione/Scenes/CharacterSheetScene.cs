@@ -2,7 +2,6 @@
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Remizione.UI;
 
 namespace Remizione
@@ -12,10 +11,8 @@ namespace Remizione
     /// </summary>
     public sealed class CharacterSheetScene : Scene
     {
-        private readonly ImageSprite container;
+        private readonly PopupMenu<StatData> menu;
         private readonly UISentence sentence;
-        private readonly StatData[] slots;
-        private readonly TextSprite titleText;
 
         #region Constructor
 
@@ -23,35 +20,8 @@ namespace Remizione
         public CharacterSheetScene(RemizioneGame game)
             : base(game, SceneSettings.None)
         {
-            // Container
-            this.container = new(game, Atlases.UI.CharacterSheetContainer)
-            {
-                PivotOrigin = RectanglePoint.Middle,
-                Position = Screen.Area.GetPoint(RectanglePoint.Middle, 0, -5),
-                Scale = ScaleInfo.UIElement.Medium
-            };
-
-            // Title
-            this.titleText = new TextSprite(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 2),
-                Scale = ScaleInfo.Text.VeryLarge,
-                Text = Localization.GetLocalizedValue(InGameMenuOptionName.Attributes)
-            };
-
+            this.menu = new(Game, HorizontalAlignment.Center, false, RectangleF.Empty);
             this.sentence = new(Game) { ShowGradient = true };
-
-            var x = container.BoundingBox.Center.X;
-            var y = container.BoundingBox.Top + 10;
-
-            slots = new StatData[6];
-            for (var i = 0; i < slots.Length; i++)
-            {
-                slots[i] = new StatData(game, (Stat)i, new(x, y));
-                y += slots[i].BoundingBox.Height + 1;
-            }
         }
 
         #endregion
@@ -70,16 +40,23 @@ namespace Remizione
                 return true;
             }
 
-            /*
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
             {
                 if (!menu.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
                     SceneController.Pop();
                 return true;
             }
-            */
 
             return false;
+        }
+
+        // SelectedOptionChanged
+        private void SelectedOptionChanged(PopupMenuOption<StatData>? option)
+        {
+            if (option != null)
+                sentence.Text = option.LinkedObject.LocalizedDescription;
+            else
+                sentence.Text = null;
         }
 
         #endregion
@@ -89,19 +66,7 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Game.Camera);
-            container.Draw(gameTime);
-            Game.SpriteBatch.End();
-
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-            titleText.Draw(gameTime);
-            Game.SpriteBatch.End();
-
-            for (var i = 0; i < slots.Length; i++)
-            {
-                slots[i].Draw(gameTime);
-            }
-            
+            menu.Draw(gameTime);
             sentence.Draw(gameTime);
         }
 
@@ -110,6 +75,9 @@ namespace Remizione
         {
             if (Actor == null)
                 return HandleInputResult.Unhandled;
+
+            if (menu.HandleInput(gameTime) == HandleInputResult.Handled)
+                return HandleInputResult.Handled;
 
             if (HandleMouseInput())
                 return HandleInputResult.Handled;
@@ -122,20 +90,24 @@ namespace Remizione
         {
             Sound.Play(SoundNames.InventoryOpen);
 
+            menu.Clear();
             MouseCursor.Instance.State = MouseCursorState.Arrow;
 
             if (Actor == null)
                 return;
 
-            for (var i = 0; i < slots.Length; i++)
+            for (int i = 0; i < 6; i++)
             {
-                slots[i].Value = Actor.Stats.GetStatValue((Stat)i).ToString();
+                menu.AddOption(new StatData((Stat)i, Actor.Stats.GetStatValue((Stat)i)));
             }
+
+            menu.SelectFirst();
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            menu.Update(gameTime);
         }
 
         #endregion
@@ -146,67 +118,27 @@ namespace Remizione
         /// <summary>
         /// StatData
         /// </summary>
-        private sealed class StatData : GameObject
+        private sealed class StatData
         {
-            private readonly ImageSprite container;
-            private readonly TextSprite name;
-            private readonly TextSprite value;
-
             // Constructor
-            internal StatData(EngendroGame game, Stat stat, Vector2 position)
-                : base(game)
+            internal StatData(Stat stat, int value)
             {
-                // Container
-                this.container = new(game, Atlases.UI.CharacterSheetStatContainer)
-                {
-                    Opacity = .2f,
-                    PivotOrigin = RectanglePoint.Middle,
-                    Position = position,
-                    Scale = ScaleInfo.UIElement.Medium
-                };
-
-                // Name
-                name = new TextSprite(Game, Fonts.CommonOutline)
-                {
-                    Color = ColorPalette.Text.Default,
-                    PivotOrigin = RectanglePoint.Left,
-                    Position = container.BoundingBox.GetPoint(RectanglePoint.Left, 2, 0),
-                    Scale = ScaleInfo.Text.Large,
-                    Text = Localization.GetLocalizedValue(stat)
-                };
-
-                // Value
-                value = new TextSprite(Game, Fonts.CommonOutline)
-                {
-                    Color = ColorPalette.Text.Highlight,
-                    PivotOrigin = RectanglePoint.Right,
-                    Position = container.BoundingBox.GetPoint(RectanglePoint.Right, -2, 0),
-                    Scale = ScaleInfo.Text.Large,
-                };
+                this.Stat = stat;
+                this.LocalizedName = TextRepository.GetValue($"Stat.{stat}.Name") + ": " + value.ToString();
+                this.LocalizedDescription = TextRepository.GetValue($"Stat.{stat}.Description");
             }
 
-            // OnDraw
-            protected override void OnDraw(GameTime gameTime)
-            {
-                Game.SpriteBatch.Begin(Game.Camera);
-                container.Draw(gameTime);
-                Game.SpriteBatch.End();
+            // LocalizedName
+            public string LocalizedName { get; }
 
-                Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-                name.Draw(gameTime);
-                value.Draw(gameTime);
-                Game.SpriteBatch.End();
-            }
+            // LocalizedDescription
+            public string LocalizedDescription { get; }
 
-            // BoundingBox
-            public RectangleF BoundingBox => container.BoundingBox;
+            // Stat
+            internal Stat Stat { get; }
 
-            // Value
-            public string? Value
-            {
-                get => value.Text;
-                set => this.value.Text = value;
-            }
+            // ToString
+            public override string ToString() => LocalizedName;
         }
     }
 }

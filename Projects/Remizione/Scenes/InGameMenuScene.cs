@@ -10,7 +10,7 @@ namespace Remizione
     /// </summary>
     public sealed class InGameMenuScene : Scene
     {
-        private readonly InGameMenu<InGameMenuOptionName> menu;
+        private readonly PopupMenu<string> menu;
         private readonly Vector2 position = new(5, 30);
         private readonly GameSession session;
 
@@ -22,15 +22,19 @@ namespace Remizione
         {
             this.session = session;
 
-            menu = new(Game);
-            menu.AddOption(InGameMenuOptionName.Inventory, Localization.GetLocalizedValue(InGameMenuOptionName.Inventory), session.ShowInventory);
-            menu.AddOption(InGameMenuOptionName.Prayers, Localization.GetLocalizedValue(InGameMenuOptionName.Prayers), QuitToDesktopAction);
-            menu.AddOption(InGameMenuOptionName.Manifestations, Localization.GetLocalizedValue(InGameMenuOptionName.Manifestations), QuitToDesktopAction);
-            menu.AddOption(InGameMenuOptionName.Attributes, Localization.GetLocalizedValue(InGameMenuOptionName.Attributes), session.ShowCharacterSheet);
-            menu.AddOption(InGameMenuOptionName.Map, Localization.GetLocalizedValue(InGameMenuOptionName.Map), QuitToDesktopAction);
-            menu.AddOption(InGameMenuOptionName.Creatures, Localization.GetLocalizedValue(InGameMenuOptionName.Creatures), QuitToDesktopAction);
-            menu.AddOption(InGameMenuOptionName.Settings, Localization.GetLocalizedValue(InGameMenuOptionName.Settings), QuitToDesktopAction);
-            menu.AddOption(InGameMenuOptionName.QuitToDesktop, Localization.GetLocalizedValue(InGameMenuOptionName.QuitToDesktop), QuitToDesktopAction);
+            menu = new(Game, HorizontalAlignment.Left, false)
+            {
+                Position = new(5, 30),
+                TextScale = ScaleInfo.Text.VeryLarge,
+            };
+
+            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Inventory), session.ShowInventory);
+            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Prayers));
+            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Manifestations));
+            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Attributes));
+            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Map));
+            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Creatures));
+            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Settings));
         }
 
         #endregion
@@ -51,13 +55,7 @@ namespace Remizione
 
             return false;
         }
-
-        // QuitToDesktopAction
-        private void QuitToDesktopAction()
-        {
-            session.Game.Exit();
-        }
-
+        
         #endregion
 
         #region Protected members
@@ -90,7 +88,7 @@ namespace Remizione
         protected override void OnLoadContent()
         {
             MouseCursor.Instance.State = MouseCursorState.Arrow;
-            menu.Show(position);
+            //menu.Show(position);
         }
 
         // OnUpdate

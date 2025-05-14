@@ -2,6 +2,7 @@
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Remizione.UI;
 
 namespace Remizione
@@ -12,9 +13,12 @@ namespace Remizione
     public sealed class InventoryScene : Scene
     {
         private readonly UIControl actionButton;
+        private readonly ImageSprite container;
+        private readonly ImageSprite containerSelection;
         private readonly UIControl discardButton;
-        private readonly ItemMenu menu;
+        private readonly PopupMenu<Item> menu;
         private readonly UISentence sentence;
+        private readonly TextSprite titleText;
 
         #region Constructor
 
@@ -22,8 +26,29 @@ namespace Remizione
         public InventoryScene(RemizioneGame game)
             : base(game, SceneSettings.None)
         {
-            this.menu = new(Game, SelectedOptionChanged);
             this.sentence = new(Game) { ShowGradient = true };
+
+            // Container
+            this.container = new(game, Atlases.UI.ItemMenuContainer)
+            {
+                PivotOrigin = RectanglePoint.Top,
+                Position = new Vector2(Screen.Center.X, 14),
+                Scale = ScaleInfo.UIElement.Medium
+            };
+
+            // ContainerSelection
+            this.containerSelection = new(game, Atlases.UI.ItemMenuContainerSelection)
+            {
+                Opacity = .2f,
+                PivotOrigin = RectanglePoint.Middle,
+                Scale = ScaleInfo.UIElement.Medium
+            };
+
+            this.menu = new(Game, HorizontalAlignment.Center, true, container.BoundingBox)
+            {
+                Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 12),
+                OnSelectionChanged = SelectedOptionChanged
+            };
 
             // Default action
             this.actionButton = new UIControl(game, InputBindings.Select)
@@ -39,6 +64,15 @@ namespace Remizione
                 Text = Localization.EncodeKey(ItemAction.Discard),
                 TextColor = ColorPalette.Text.Default
             };
+
+            // Title
+            this.titleText = new TextSprite(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Default,
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 2),
+                Scale = ScaleInfo.Text.VeryLarge,
+            };
         }
 
         #endregion
@@ -48,11 +82,11 @@ namespace Remizione
         // DiscardItem
         private void DiscardItem(Actor actor)
         {
-            if (menu.SelectedOption?.Item is Item item)
+            if (menu.SelectedOption?.LinkedObject is Item item)
             {
                 actor.Inventory.Remove(item.Name);
                 menu.RemoveSelectedOption();
-                menu.Title = GetTitle();
+                InvalidateTitle();
                 Sound.Play(SoundNames.MenuDiscardItem);
             }
         }
@@ -79,24 +113,24 @@ namespace Remizione
             return false;
         }
 
-        // GetTitle
-        private string GetTitle()
+        // InvalidateTitle
+        private void InvalidateTitle()
         {
             var title = Localization.GetLocalizedValue(ItemContainerCategory.Inventory);
             if (Actor != null)
                 title += $" ({Actor.Inventory.Items.Count} / {Actor.InventoryCapacity})";
 
-            return title;
+            titleText.Text = title;
         }
 
         // SelectedOptionChanged
-        private void SelectedOptionChanged(ItemMenuOption? option)
+        private void SelectedOptionChanged(PopupMenuOption<Item>? option)
         {
             if (option != null)
             {
-                sentence.Info = option.Item.GetLocalizedInfo();
-                sentence.Text = option.Item.MetaItem.LocalizedDescription;
-                actionButton.Text = Localization.EncodeKey(option.Item.MetaItem.Action);
+                sentence.Info = option.LinkedObject.GetLocalizedInfo();
+                sentence.Text = option.LinkedObject.MetaItem.LocalizedDescription;
+                actionButton.Text = Localization.EncodeKey(option.LinkedObject.MetaItem.Action);
             }
             else
                 sentence.Text = null;
@@ -105,7 +139,7 @@ namespace Remizione
         // UseItem
         private void UseItem(Actor actor)
         {
-            if (menu.SelectedOption?.Item is Item item)
+            if (menu.SelectedOption?.LinkedObject is Item item)
             {
                 if (item.MetaItem.Category == ItemCategory.Consumable)
                     actor.Consume(item);
@@ -123,6 +157,21 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            Game.SpriteBatch.Begin(Game.Camera);
+            container.Draw(gameTime);
+
+            if (menu.SelectedOption != null)
+            {
+                containerSelection.Position = menu.SelectedOption.Position;
+                containerSelection.Draw(gameTime);
+            }
+
+            Game.SpriteBatch.End();
+
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            titleText.Draw(gameTime);
+            Game.SpriteBatch.End();
+
             menu.Draw(gameTime);
             sentence.Draw(gameTime);
 
@@ -170,11 +219,12 @@ namespace Remizione
                 menu.AddOption(Actor.Inventory.Items[i]);
             }
 
-            menu.Show(new Vector2(Screen.NativeWidth / 2, 12), GetTitle());
             menu.SelectFirst();
 
             discardButton.Position = menu.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 5, -10);
             actionButton.Position = menu.BoundingBox.GetPoint(RectanglePoint.RightBottom, -5, -10);
+
+            InvalidateTitle();
         }
 
         // OnUpdate

@@ -1,33 +1,44 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Remizione.UI
 {
     /// <summary>
-    /// ItemMenuOption
+    /// PopupMenuOption
     /// </summary>
-    public sealed class ItemMenuOption
+    public sealed class PopupMenuOption<TLinkedObject> where TLinkedObject : class
     {
-        private readonly ItemMenu menu;
+        private readonly Action? action;
+        private readonly PopupMenu<TLinkedObject> menu;
         private readonly TextSprite nameText;
 
         // Constructor
-        public ItemMenuOption(ItemMenu menu, Item item)
+        public PopupMenuOption(PopupMenu<TLinkedObject> menu, TLinkedObject linkedObject, Action? action)
         {
             this.menu = menu;
-            this.Item = item;
+            this.LinkedObject = linkedObject;
+            this.action = action;
 
             this.nameText = new TextSprite(menu.Game, menu.Font)
             {
-                PivotOrigin = RectanglePoint.Middle,
                 MaximumWidth = (int)(menu.BoundingBox.Width * .9f),
                 Scale = ScaleInfo.Text.Medium,
             };
 
+            if (menu.HorizontalAlignment == HorizontalAlignment.Center)
+                nameText.PivotOrigin = RectanglePoint.Middle;
+
+            else if (menu.HorizontalAlignment == HorizontalAlignment.Left)
+                nameText.PivotOrigin = RectanglePoint.LeftTop;
+
+            else
+                nameText.PivotOrigin = RectanglePoint.RightTop;
+
             Invalidate();
 
             UpdateColor();
-}
+        }
 
         #region Private members
 
@@ -37,9 +48,9 @@ namespace Remizione.UI
             if (IsSelected)
                 nameText.Color = ColorPalette.Text.Highlight;
 
-            else if (IsHovered )
+            else if (IsHovered)
                 nameText.Color = ColorPalette.Text.Hover;
-            
+
             else
                 nameText.Color = ColorPalette.Text.Default;
         }
@@ -55,11 +66,18 @@ namespace Remizione.UI
             nameText.Draw(gameTime);
         }
 
+        // Execute
+        public void Execute() => action?.Invoke();
+
         // Index
         public int Index { get; }
 
         // Invalidate
-        public void Invalidate() => nameText.Text = Item.DisplayText;
+        public void Invalidate()
+        {
+            nameText.Text = LinkedObject.ToString();
+            nameText.Scale = menu.TextScale;
+        }
 
         // IsHovered
         public bool IsHovered => menu.HoveredOption == this;
@@ -67,8 +85,8 @@ namespace Remizione.UI
         // IsSelected
         public bool IsSelected => menu.SelectedOption == this;
 
-        // Item
-        public Item Item { get; }
+        // LinkedObject
+        public TLinkedObject LinkedObject { get; }
 
         // Position
         public Vector2 Position
@@ -77,9 +95,15 @@ namespace Remizione.UI
             set
             {
                 nameText.Position = value;
-             
-                var box = menu.BoundingBox;
-                BoundingBox = new(box.X + 1, nameText.BoundingBox.Top - 1, box.Width-2, nameText.BoundingBox.Height + 1);
+                if (menu.BoundingBox.IsEmpty)
+                {
+                    BoundingBox = nameText.BoundingBox;
+                }
+                else
+                {
+                    var box = menu.BoundingBox;
+                    BoundingBox = new(box.X + 1, nameText.BoundingBox.Top - 1, box.Width - 2, nameText.BoundingBox.Height + 1);
+                }
             }
         }
 
