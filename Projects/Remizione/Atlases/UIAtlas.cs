@@ -12,6 +12,8 @@ namespace Remizione
             : base(game.Content, "UI", ContentHelper.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
             BottomGradient = this[nameof(BottomGradient)];
+            CharacterSheetContainer = this[nameof(CharacterSheetContainer)];
+            CharacterSheetStatContainer = this[nameof(CharacterSheetStatContainer)];
             CheckMark = this[nameof(CheckMark)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
@@ -50,6 +52,12 @@ namespace Remizione
 
         // BottomGradient}
         public AtlasImage BottomGradient { get; }
+
+        // CharacterSheetContainer
+        public AtlasImage CharacterSheetContainer { get; }
+
+        // CharacterSheetStatContainer
+        public AtlasImage CharacterSheetStatContainer { get; }
 
         // CheckMark
         public AtlasImage CheckMark { get; }

@@ -21,6 +21,7 @@ namespace Remizione
         #region Private fields
 
         private enum AttributeName { RandomSeed, WorldVersion }
+        private readonly CharacterSheetScene characterSheetScene;
         private readonly ScriptConsole? console;
         private readonly ContextMenuScene contextMenuScene;
         private bool inGameMenuLocked;
@@ -68,6 +69,7 @@ namespace Remizione
 
             this.contextMenuScene = new(this);
             this.inGameMenuScene = new(this);
+            this.characterSheetScene = new(this.Game);
             this.inventoryScene = new(this.Game);
 
             LocalizationSource = LocalizationSource.Script;
@@ -500,6 +502,16 @@ namespace Remizione
 
             else
                 Camera.Shake(TweenStyle.Linear, new Vector2(3.4f), 50, 4);
+        }
+
+        // ShowCharacterSheet
+        public void ShowCharacterSheet()
+        {
+            if (Player == null)
+                return;
+
+            characterSheetScene.Actor = Player;
+            Game.SceneManager.Push(characterSheetScene);
         }
 
         // ShowContextMenu

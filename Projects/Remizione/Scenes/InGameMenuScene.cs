@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Remizione.UI;
@@ -21,13 +20,13 @@ namespace Remizione
         public InGameMenuScene(GameSession session)
             : base(session.Game, SceneSettings.None)
         {
-            this.session = session; 
-            
+            this.session = session;
+
             menu = new(Game);
-            menu.AddOption(InGameMenuOptionName.Inventory, Localization.GetLocalizedValue(InGameMenuOptionName.Inventory), InventoryAction);
+            menu.AddOption(InGameMenuOptionName.Inventory, Localization.GetLocalizedValue(InGameMenuOptionName.Inventory), session.ShowInventory);
             menu.AddOption(InGameMenuOptionName.Prayers, Localization.GetLocalizedValue(InGameMenuOptionName.Prayers), QuitToDesktopAction);
             menu.AddOption(InGameMenuOptionName.Manifestations, Localization.GetLocalizedValue(InGameMenuOptionName.Manifestations), QuitToDesktopAction);
-            menu.AddOption(InGameMenuOptionName.Attributes, Localization.GetLocalizedValue(InGameMenuOptionName.Attributes), QuitToDesktopAction);
+            menu.AddOption(InGameMenuOptionName.Attributes, Localization.GetLocalizedValue(InGameMenuOptionName.Attributes), session.ShowCharacterSheet);
             menu.AddOption(InGameMenuOptionName.Map, Localization.GetLocalizedValue(InGameMenuOptionName.Map), QuitToDesktopAction);
             menu.AddOption(InGameMenuOptionName.Creatures, Localization.GetLocalizedValue(InGameMenuOptionName.Creatures), QuitToDesktopAction);
             menu.AddOption(InGameMenuOptionName.Settings, Localization.GetLocalizedValue(InGameMenuOptionName.Settings), QuitToDesktopAction);
@@ -53,18 +52,12 @@ namespace Remizione
             return false;
         }
 
-        // InventoryAction
-        private void InventoryAction()
-        {
-            session.ShowInventory();
-        }
-
         // QuitToDesktopAction
         private void QuitToDesktopAction()
         {
             session.Game.Exit();
         }
-        
+
         #endregion
 
         #region Protected members
