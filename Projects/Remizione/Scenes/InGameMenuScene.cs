@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Remizione.UI;
 
 namespace Remizione
@@ -11,7 +12,6 @@ namespace Remizione
     public sealed class InGameMenuScene : Scene
     {
         private readonly PopupMenu<string> menu;
-        private readonly Vector2 position = new(5, 30);
         private readonly GameSession session;
 
         #region Constructor
@@ -31,8 +31,7 @@ namespace Remizione
             menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Inventory), session.ShowInventory);
             menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Prayers));
             menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Manifestations));
-            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Attributes));
-            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Map));
+            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Attributes), session.ShowCharacterSheet);            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Map));
             menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Creatures));
             menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Settings));
         }
@@ -63,6 +62,10 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            Game.SpriteBatch.Begin(Game.Camera);
+            Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade);
+            Game.SpriteBatch.End();
+
             menu.Draw(gameTime);
         }
 

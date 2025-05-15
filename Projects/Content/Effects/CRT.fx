@@ -10,8 +10,8 @@ sampler2D SpriteTextureSampler = sampler_state
 };
 
 // Uniforms adjustable from code
-float ScanlineIntensity = 0.12; // Scanline intensity (0.0 - 1.0)
-float ScanlineCount = 130.0; // Number of scanlines
+float ScanlineIntensity = 0.05; // Scanline intensity (0.0 - 1.0)
+float ScanlineCount = 120.0; // Number of scanlines
 float Curvature = 0; // Curvature intensity (0.0 - 0.5)
 float ChromaticAberration = 0.0001; // Chromatic aberration intensity
 

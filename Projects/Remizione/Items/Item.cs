@@ -177,10 +177,10 @@ namespace Remizione
                 values.Add($"{Localization.GetLocalizedValue(ItemProperty.BaseDamage)}: {MetaItem.BaseDamage.MinimumValue + Level}-{MetaItem.BaseDamage.MaximumValue + Level}");
 
             if (HP != 0)
-                values.Add($"{Localization.GetLocalizedValue(DerivedStat.Spirit)}: {(HP < 0 ? string.Empty : "+")}{HP}");
+                values.Add($"{TextRepository.GetValue($"DerivedStat.Spirit.Name")}: {(HP < 0 ? string.Empty : "+")}{HP}");
 
             if (Faith != 0)
-                values.Add($"{Localization.GetLocalizedValue(DerivedStat.Faith)}: {(Faith < 0 ? string.Empty : "+")}{Faith}");
+                values.Add($"{TextRepository.GetValue($"DerivedStat.Faith.Name")}: {(Faith < 0 ? string.Empty : "+")}{Faith}");
 
             return string.Join(" / ", values);
         }

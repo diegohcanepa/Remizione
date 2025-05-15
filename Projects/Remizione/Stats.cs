@@ -45,12 +45,12 @@ namespace Remizione
         // Defensa contra ilusiones y control mental
         public int Mind { get; set; } = 10;
 
-        // Presence (Carisma/emoción)
+        // Charisma
         // Interacciones sociales: persuasión, intimidación, mentira
         // Atraer aliados o manipular enemigos
         // Habilidad para consolar, redimir, o engañar
         // Influye en eventos basados en emociones
-        public int Presence { get; set; } = 10;
+        public int Charisma { get; set; } = 10;
 
         // Strength (Fuerza física)
         // Tiradas de ataque con armas cuerpo a cuerpo
@@ -119,7 +119,7 @@ namespace Remizione
                 Stat.Fortitude => Fortitude,
                 Stat.Devotion => Devotion,
                 Stat.Dexterity => Dexterity,
-                Stat.Presence => Presence,
+                Stat.Charisma => Charisma,
                 Stat.Mind => Mind,
                 Stat.Strength => Strength,
                 _ => throw new System.NotImplementedException()
@@ -167,7 +167,7 @@ namespace Remizione
                 Stat.Mind => DiceBag.Dice20.Roll() + GetModifier(Stat.Mind),
                 Stat.Fortitude => DiceBag.Dice20.Roll() + GetModifier(Stat.Fortitude),
                 Stat.Devotion => DiceBag.Dice20.Roll() + GetModifier(Stat.Devotion),
-                Stat.Presence => DiceBag.Dice20.Roll() + GetModifier(Stat.Presence),
+                Stat.Charisma => DiceBag.Dice20.Roll() + GetModifier(Stat.Charisma),
                 _ => DiceBag.Dice20.Roll()
             };
         }

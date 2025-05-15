@@ -2,7 +2,6 @@
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Remizione.UI;
 
 namespace Remizione
@@ -18,7 +17,6 @@ namespace Remizione
         private readonly UIControl discardButton;
         private readonly PopupMenu<Item> menu;
         private readonly UISentence sentence;
-        private readonly TextSprite titleText;
 
         #region Constructor
 
@@ -47,7 +45,8 @@ namespace Remizione
             this.menu = new(Game, HorizontalAlignment.Center, true, container.BoundingBox)
             {
                 Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 12),
-                OnSelectionChanged = SelectedOptionChanged
+                OnSelectionChanged = SelectedOptionChanged,
+                TitlePosition = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 2),
             };
 
             // Default action
@@ -63,15 +62,6 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Text = Localization.EncodeKey(ItemAction.Discard),
                 TextColor = ColorPalette.Text.Default
-            };
-
-            // Title
-            this.titleText = new TextSprite(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 2),
-                Scale = ScaleInfo.Text.VeryLarge,
             };
         }
 
@@ -120,7 +110,7 @@ namespace Remizione
             if (Actor != null)
                 title += $" ({Actor.Inventory.Items.Count} / {Actor.InventoryCapacity})";
 
-            titleText.Text = title;
+            menu.Title = title;
         }
 
         // SelectedOptionChanged
@@ -159,17 +149,11 @@ namespace Remizione
         {
             Game.SpriteBatch.Begin(Game.Camera);
             container.Draw(gameTime);
-
             if (menu.SelectedOption != null)
             {
                 containerSelection.Position = menu.SelectedOption.Position;
                 containerSelection.Draw(gameTime);
             }
-
-            Game.SpriteBatch.End();
-
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-            titleText.Draw(gameTime);
             Game.SpriteBatch.End();
 
             menu.Draw(gameTime);

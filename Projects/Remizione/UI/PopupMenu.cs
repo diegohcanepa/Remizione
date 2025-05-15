@@ -19,9 +19,10 @@ namespace Remizione.UI
         private readonly List<PopupMenuOption<TLinkedObject>> optionList = [];
         private Vector2 position;
         private PopupMenuOption<TLinkedObject>? selectedOption;
-        private bool sorted;
+        private readonly bool sorted;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 200 };
         private Vector2 textScale = ScaleInfo.Text.Large;
+        private readonly TextSprite titleText;
 
         #endregion
 
@@ -36,6 +37,14 @@ namespace Remizione.UI
             this.BoundingBox = boundingBox ?? RectangleF.Empty;
             this.Font = Fonts.CommonOutline;
             this.Options = new ReadOnlyCollection<PopupMenuOption<TLinkedObject>>(optionList);
+
+            // Title
+            this.titleText = new TextSprite(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Default,
+                PivotOrigin = RectanglePoint.Bottom,
+                Scale = TextScale
+            };
         }
 
         #endregion
@@ -48,7 +57,7 @@ namespace Remizione.UI
             if (HoveredOption != null && InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
             {
                 SelectedOption = HoveredOption;
-                selectedOption.Execute();
+                SelectedOption.Execute();
                 return true;
             }
 
@@ -76,6 +85,8 @@ namespace Remizione.UI
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+
+            titleText.Draw(gameTime);
 
             for (var i = 0; i < optionList.Count; i++)
             {
@@ -308,12 +319,29 @@ namespace Remizione.UI
                 if (value != textScale)
                 {
                     textScale = value;
+
+                    titleText.Scale = textScale;
+
                     for (var i = 0; i < optionList.Count; i++)
                     {
                         optionList[i].Invalidate();
                     }
                 }
             }
+        }
+
+        // Title
+        public string? Title
+        {
+            get => titleText.Text;
+            set => titleText.Text = value;
+        }
+
+        // TitlePosition
+        public Vector2 TitlePosition
+        {
+            get => titleText.Position;
+            set => titleText.Position = value;
         }
 
         // VerticalSpacing

@@ -115,7 +115,7 @@ namespace Remizione
     public enum SpeechBubbleState { Hidden, Typing, Idle }
 
     // Stat
-    public enum Stat { Strength, Dexterity, Fortitude, Devotion, Mind, Presence }
+    public enum Stat { Strength, Dexterity, Fortitude, Devotion, Mind, Charisma }
 
     // TerrainKind
     public enum TerrainKind { None }

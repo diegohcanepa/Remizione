@@ -323,9 +323,9 @@ namespace Remizione
             if (attributes[nameof(Stats.Mind)]?.Value is string mind)
                 Stats.Mind = XmlConvert.ToInt32(mind);
 
-            // Presence
-            if (attributes[nameof(Stats.Presence)]?.Value is string presence)
-                Stats.Presence = XmlConvert.ToInt32(presence);
+            // Charisma
+            if (attributes[nameof(Stats.Charisma)]?.Value is string charisma)
+                Stats.Charisma = XmlConvert.ToInt32(charisma);
 
             // Strength
             if (attributes[nameof(Stats.Strength)]?.Value is string strength)
@@ -441,7 +441,7 @@ namespace Remizione
             output.WriteAttributeString(nameof(Stats.Fortitude), XmlConvert.ToString(Stats.Fortitude));
             output.WriteAttributeString(nameof(Stats.GP), XmlConvert.ToString(Stats.GP));
             output.WriteAttributeString(nameof(Stats.Mind), XmlConvert.ToString(Stats.Mind));
-            output.WriteAttributeString(nameof(Stats.Presence), XmlConvert.ToString(Stats.Presence));
+            output.WriteAttributeString(nameof(Stats.Charisma), XmlConvert.ToString(Stats.Charisma));
             output.WriteAttributeString(nameof(Stats.Strength), XmlConvert.ToString(Stats.Strength));
         }
 
