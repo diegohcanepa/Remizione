@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace Remizione.UI
 {
@@ -10,6 +11,7 @@ namespace Remizione.UI
     public sealed class UILog : GameObject
     {
         private readonly FloatTween fadeTween = new() { StartDelay = 1500 };
+        private readonly Queue<(string verb, string noun, bool isWarning)> queue = [];
         private readonly TextSprite nounText;
         private readonly TextSprite verbText;
 
@@ -37,6 +39,16 @@ namespace Remizione.UI
         // ShowCore
         private void ShowCore(string verb, string noun, bool isWarning)
         {
+            if (isWarning)
+            {
+                queue.Clear();
+            }
+            else if (fadeTween.IsRunning)
+            {
+                queue.Enqueue(new(verb, noun, isWarning));
+                return;
+            }
+
             verbText.Color = isWarning ? ColorPalette.Text.Terra : ColorPalette.Text.Default;
             verbText.Position = new Vector2(5, 30);
             verbText.Text = verb;
@@ -72,6 +84,12 @@ namespace Remizione.UI
 
             verbText.Opacity = fadeTween.IsRunning ? fadeTween.CurrentValue : 1;
             nounText.Opacity = fadeTween.IsRunning ? fadeTween.CurrentValue : 1;
+
+            if (!fadeTween.IsRunning && queue.Count > 0)
+            {
+                var log = queue.Dequeue();
+                ShowCore(log.verb, log.noun, log.isWarning);
+            }
         }
 
         #endregion
@@ -84,5 +102,17 @@ namespace Remizione.UI
 
         // Show
         public void Show(LogVerb verb, string noun) => ShowCore(Localization.GetLocalizedValue(verb), noun, false);
+
+        // Show
+        public void Show(DerivedStat stat, int value)
+        {
+            if (value == 0)
+                return;
+
+            var verb = value < 0 ? LogVerb.Lost : LogVerb.Restored;
+            var localizedStat = TextRepository.GetValue($"DerivedStat.{stat}.Name");
+
+            Show(verb, $"{localizedStat} + {value}");
+        }
     }
 }

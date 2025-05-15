@@ -58,9 +58,10 @@
   <String Key="Languages.ru-ru">Русский</String>
   <String Key="LogMessage.EnoughOfThat">You already have enough of that.</String>
   <String Key="LogMessage.InventoryFull">You cannot carry more items.</String>
-  <String Key="LogVerb.Discard">Discarded</String>
-  <String Key="LogVerb.Pickup">Picked up</String>
-  <String Key="LogVerb.Restore">Restored</String>
+  <String Key="LogVerb.Discarded">Discarded</String>
+  <String Key="LogVerb.Lost">Lost</String>
+  <String Key="LogVerb.PickedUp">Picked up</String>
+  <String Key="LogVerb.Restored">Restored</String>
   <String Key="Menu.Controls.Keyboard.Interact">Interact</String>
   <String Key="Menu.Controls.Keyboard.Inventory">Inventory</String>
   <String Key="Menu.Controls.Keyboard.Kick">Kick (when available)</String>

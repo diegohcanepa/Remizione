@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Input;
 using EngendroAdventure;
 using EngendroAdventure.Scripting;
 using EngendroAdventure.Scripting.Core;
@@ -221,7 +222,7 @@ namespace Remizione
             if (inGameMenuLocked && InputBindings.InGameMenu.IsKeyUp())
                 inGameMenuLocked = false;   
 
-            if (!inGameMenuLocked && InputBindings.InGameMenu.IsPressed(PlayerIndex.One))
+            if (!inGameMenuLocked && !InputManager.DefaultPlayer.Keyboard.IsShiftDown() && InputBindings.InGameMenu.IsPressed(PlayerIndex.One))
             {
                 ShowInGameMenu();
                 return HandleInputResult.Handled;

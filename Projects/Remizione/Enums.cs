@@ -66,7 +66,7 @@ namespace Remizione
     public enum LogMessage { EnoughOfThat, InventoryFull }
 
     // LogVerb
-    public enum LogVerb { Discard, Pickup, Restore }
+    public enum LogVerb { Discarded, Lost, PickedUp, Restored }
 
     // MenuItemName
     public enum MenuItemName { Options, Resume, Start, Exit, ExitToMainMenu, Yes, No, Cancel, Accept, Credits, WishlistNow, Memoirs }

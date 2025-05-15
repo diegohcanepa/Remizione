@@ -45,7 +45,7 @@ namespace Remizione.Scripting
 
             actor.Inventory.Add(metaItem.Name, 1);
             pickupItem.Unparent();
-            actor.Session.HUD.Log.Show(LogVerb.Pickup, metaItem.LocalizedName);
+            actor.Session.HUD.Log.Show(LogVerb.PickedUp, metaItem.LocalizedName);
         }
     }
 }

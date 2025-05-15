@@ -62,11 +62,8 @@ namespace Remizione
                     var diffHP = Owner.HP - hp;
                     var diffFaith = Owner.Faith - faith;
 
-                    if (diffHP > 0)
-                        Owner.Session.HUD.Log.Show(LogVerb.Restore, $"{Localization.GetLocalizedValue(DerivedStat.Spirit)} + {diffHP}");
-
-                    if (diffFaith > 0)
-                        Owner.Session.HUD.Log.Show(LogVerb.Restore, $"{Localization.GetLocalizedValue(DerivedStat.Faith)} + {diffFaith}");
+                    Owner.Session.HUD.Log.Show(DerivedStat.Spirit, diffHP);
+                    Owner.Session.HUD.Log.Show(DerivedStat.Faith, diffFaith);
 
                     soundPlayed = true;
                 }
