@@ -59,6 +59,7 @@ namespace Remizione
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
             this.PlacementConditions = new(placementConditions);
+            this.Inventory = new ItemContainer(this, ItemContainerCategory.Inventory);
         }
 
         #endregion
@@ -704,6 +705,19 @@ namespace Remizione
             return result;
         }
 
+        // GetOverheadPosition
+        public Vector2 GetOverheadPosition() => GetOverheadPosition(0, 0);
+
+        // GetOverheadPosition
+        public Vector2 GetOverheadPosition(int xOffset, int yOffset)
+        {
+            // Origin
+            if (OverheadOrigin == Vector2.Zero)
+                return BoundingBox.GetPoint(RectanglePoint.Top, xOffset, yOffset);
+            else
+                return this.GetAbsolutePoint(OverheadOrigin, xOffset, yOffset);
+        }
+
         // GetRequiredGridSpace
         public Size GetRequiredGridSpace(int cellSize)
         {
@@ -718,19 +732,6 @@ namespace Remizione
             int height = (int)Math.Ceiling(bbox.Height / cellSize) + CellMargin * 2;
 
             return new Size(width, height);
-        }
-
-        // GetOverheadPosition
-        public Vector2 GetOverheadPosition() => GetOverheadPosition(0, 0);
-
-        // GetOverheadPosition
-        public Vector2 GetOverheadPosition(int xOffset, int yOffset)
-        {
-            // Origin
-            if (OverheadOrigin == Vector2.Zero)
-                return BoundingBox.GetPoint(RectanglePoint.Top, xOffset, yOffset);
-            else
-                return this.GetAbsolutePoint(OverheadOrigin, xOffset, yOffset);
         }
 
         // GetThrowableSpawnPosition
@@ -837,6 +838,9 @@ namespace Remizione
 
         // InstancesPerBlock
         public Int32Range InstancesPerBlock { get; set; } = new Int32Range(1);
+
+        // Inventory
+        public ItemContainer Inventory { get; }
 
         // IsAvailable
         public bool IsAvailable(WorldBlock worldBlock, Random random)

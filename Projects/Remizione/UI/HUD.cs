@@ -11,12 +11,18 @@ namespace Remizione
     /// </summary>
     public sealed class HUD : GameObject
     {
+        #region Private fields
+
         private readonly ScoreText gpScore;
         private readonly TextSprite interactionTarget;
-        private readonly TextSprite messageText;
         private readonly UIDerivedStats playerStats;
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
+        private readonly TextSprite statusText;
+
+        #endregion
+
+        #region Constructor
 
         // Constructor
         public HUD(GameSession session)
@@ -58,7 +64,7 @@ namespace Remizione
             };
 
             // Message text
-            this.messageText = new TextSprite(Game, Fonts.CommonOutline)
+            this.statusText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Terra,
                 PivotOrigin = RectanglePoint.Top,
@@ -66,6 +72,8 @@ namespace Remizione
                 Scale = ScaleInfo.Text.VeryLarge
             };
         }
+
+        #endregion
 
         #region Private members
 
@@ -120,12 +128,11 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            playerStats.Draw(gameTime);
-
             if (session.IsCurrentScene)
             {
+                playerStats.Draw(gameTime);
                 Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-                messageText.Draw(gameTime);
+                statusText.Draw(gameTime);
                 interactionTarget.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
@@ -149,7 +156,7 @@ namespace Remizione
             playerStats.Update(gameTime);
 
             UpdateInteractionTarget();
-            messageText.Update(gameTime);
+            statusText.Update(gameTime);
 
             if (session.Player != null)
             {
@@ -170,20 +177,6 @@ namespace Remizione
         // Log
         public UILog Log { get; }
 
-        // MessageText
-        public string MessageText
-        {
-            get => messageText.Text ?? string.Empty;
-            set
-            {
-                if (messageText.Text != value)
-                {
-                    messageText.Text = value;
-                    messageText.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicInOut, 0, 1, 500);
-                }
-            }
-        }
-
         // Reset
         public void Reset()
         {
@@ -194,6 +187,20 @@ namespace Remizione
         public void ShowSavingIcon()
         {
             savingIcon.Tweens.OpacityTween = FloatTween.Create(TweenStyle.QuadraticInOut, 1, .8f, 300, 10);
+        }
+
+        // Status
+        public string Status
+        {
+            get => statusText.Text ?? string.Empty;
+            set
+            {
+                if (statusText.Text != value)
+                {
+                    statusText.Text = value;
+                    statusText.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicInOut, 0, 1, 500);
+                }
+            }
         }
     }
 }

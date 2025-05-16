@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:4219f247a9c7e70a1f0268a9835a412d:57aa7221db0028f730958e66a12f24e9:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:32bff9def7ff42f8efe8a3f3f6dca11c:ecfa65a1beeaeacbe418240309033e0b:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -21,6 +21,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="UI.png" width="1024" height="1024">
     <sprite n="BottomGradient.png" x="750" y="31" w="240" h="43"/>
+    <sprite n="ButtonContainer.png" x="2" y="178" w="44" h="11"/>
     <sprite n="CharacterSheetContainer.png" x="866" y="138" w="104" h="119"/>
     <sprite n="CharacterSheetStatContainer.png" x="865" y="266" w="88" h="10"/>
     <sprite n="CheckMark.png" x="990" y="81" w="11" h="11"/>

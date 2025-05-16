@@ -29,6 +29,7 @@ namespace Remizione
         private bool inGameMenuLocked;
         private readonly InGameMenuScene inGameMenuScene;
         private readonly InventoryScene inventoryScene;
+        private readonly LootScene lootScene;
         private Actor? player;
         private Vector2? playerPosition;
         private readonly RoomEditor? roomEditor;
@@ -74,6 +75,7 @@ namespace Remizione
             this.characterSheetScene = new(Game);
             this.echoScene = new(Game);
             this.inventoryScene = new(Game);
+            this.lootScene = new(this);
 
             LocalizationSource = LocalizationSource.Script;
         }
@@ -550,6 +552,17 @@ namespace Remizione
 
             inventoryScene.Actor = Player;
             Game.SceneManager.Push(inventoryScene);
+        }
+
+        // ShowLootScene
+        [ScriptMethod]
+        public void ShowLootScene()
+        {
+            if (Player?.InteractiveTarget == null)
+                return;
+
+            lootScene.Target = Player.InteractiveTarget;
+            Game.SceneManager.Push(lootScene);
         }
 
         // TargetMode

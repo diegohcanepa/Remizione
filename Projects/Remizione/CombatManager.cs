@@ -31,8 +31,8 @@ namespace Remizione
 
             if (CurrentActor != null)
             {
-                if (session.HUD.MessageText == string.Empty && turnList.Count > 1)
-                    session.HUD.MessageText = Localization.GetLocalizedValue(Message.ThreatsNearby);
+                if (session.HUD.Status == string.Empty && turnList.Count > 1)
+                    session.HUD.Status = Localization.GetLocalizedValue(Message.ThreatsNearby);
 
                 CurrentActor.StartTurn();
             }
@@ -110,7 +110,7 @@ namespace Remizione
             AudioManager.Music.CurrentTag = string.Empty;
             AudioManager.Music.Stop(5000);
 
-            session.HUD.MessageText = string.Empty;
+            session.HUD.Status = string.Empty;
         }
 
         // TurnList

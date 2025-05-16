@@ -55,7 +55,6 @@ namespace Remizione
             this.IgnoreWalkArea = false;
             this.ShadowSpot = new ShadowSpot(this);
 
-            this.Inventory = new ItemContainer(this, ItemContainerCategory.Inventory);
             this.Manifestations = new ItemContainer(this, ItemContainerCategory.Skills);
 
             this.standState = new ActorStandState(this);
@@ -704,9 +703,6 @@ namespace Remizione
 
         // InteractiveTarget
         public GameThing? InteractiveTarget { get; private set; }
-
-        // Inventory
-        public ItemContainer Inventory { get; }
 
         // InventoryCapacity
         [ScriptProperty]

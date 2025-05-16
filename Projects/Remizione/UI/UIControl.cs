@@ -13,10 +13,11 @@ namespace Remizione
     {
         #region Private fields
 
+        private readonly ImageSprite container;
         private UIControlDisplayMode displayMode;
         private string? imageName;
-        private readonly Vector2 imagePadding = new(2, .5f);
         private readonly ImageSprite image;
+        private readonly Vector2 imagePadding = new(1, .2f);
         private InputBinding? inputBinding;
         private readonly TextSprite label;
         private InputMethod lastKnownInputMethod;
@@ -32,6 +33,13 @@ namespace Remizione
         public UIControl(EngendroGame game, InputBinding? inputBinding = null)
             : base(game)
         {
+            // Container
+            this.container = new ImageSprite(game)
+            {
+                PivotOrigin = RectanglePoint.Middle,
+                Scale = ScaleInfo.UIElement.Medium
+            };
+
             // Label
             this.label = new TextSprite(game, Fonts.CommonOutline)
             {
@@ -39,7 +47,7 @@ namespace Remizione
                 Scale = ScaleInfo.Text.Large
             };
 
-            this.image = new ImageSprite(game) { Scale = new(.55f) };
+            this.image = new ImageSprite(game) { Scale = ScaleInfo.UIElement.Small };
             this.inputBinding = inputBinding;
             this.label.Text = inputBinding == null ? string.Empty : Localization.EncodeKey(inputBinding);
 
@@ -82,77 +90,58 @@ namespace Remizione
             image.Image = GetInputBindingImage();
             lastKnownInputMethod = InputManager.DefaultPlayer.LastInputMethod;
 
-            // Update bounding box
-            InvalidateBoundingBox();
-            if (BoundingBox.IsEmpty)
-                return;
-
-            // Image scale & position
-            image.PivotOrigin = pivotOrigin;
-            image.Position = position;
-
-            if (displayMode == UIControlDisplayMode.ImageOnly)
+            if (DisplayMode == UIControlDisplayMode.ImageOnly)
             {
-                image.Position = Position;
+                image.PivotOrigin = pivotOrigin;
+                image.Position = position;
+                BoundingBox = image.BoundingBox;
             }
             else
             {
-                if (PivotOrigin == RectanglePoint.Right || PivotOrigin == RectanglePoint.RightBottom || PivotOrigin == RectanglePoint.RightTop)
-                {
-                    label.PivotOrigin = RectanglePoint.Right;
-                    label.Position = image.IsEmpty ? position : image.BoundingBox.GetPoint(RectanglePoint.Left, -imagePadding.X, imagePadding.Y);
-                }
-                else
-                {
-                    label.PivotOrigin = RectanglePoint.Left;
-                    label.Position = image.IsEmpty ? position : image.BoundingBox.GetPoint(RectanglePoint.Right, imagePadding.X, imagePadding.Y);
+                label.PivotOrigin = pivotOrigin;
+                label.Position = position;
 
-                    if (PivotOrigin == RectanglePoint.Bottom || PivotOrigin == RectanglePoint.Top || PivotOrigin == RectanglePoint.Middle)
+                if (!image.IsEmpty)
+                {
+                    if (PivotOrigin == RectanglePoint.Right || PivotOrigin == RectanglePoint.RightBottom || PivotOrigin == RectanglePoint.RightTop)
                     {
-                        var halfWidth = image.BoundingBox.Width - imagePadding.X + label.BoundingBox.Width / 2;
-
-                        image.X -= halfWidth;
-                        label.X -= halfWidth;
+                        label.X -= image.BoundingBox.Width / 2;
+                        image.PivotOrigin = RectanglePoint.Left;
+                        image.Position = label.BoundingBox.GetPoint(RectanglePoint.Right, imagePadding);
+                    }
+                    else
+                    {
+                        label.X += image.BoundingBox.Width / 2;
+                        image.PivotOrigin = RectanglePoint.Right;
+                        image.Position = label.BoundingBox.GetPoint(RectanglePoint.Left, -imagePadding);
                     }
                 }
-            }
 
-            InvalidateBoundingBox();
+                BoundingBox = RectangleF.Union(image.BoundingBox, label.BoundingBox);
+
+                if (image.IsEmpty)
+                    container.Position = label.BoundingBox.Center - new Vector2(0, .65f);
+                else
+                    container.Position = BoundingBox.Center - new Vector2(0, .65f);
+            }
         }
 
         #endregion
 
         #region Protected members
 
-        // InvalidateBoundingBox
-        private void InvalidateBoundingBox()
-        {
-            var labelBBox = DisplayMode == UIControlDisplayMode.ImageOnly ? RectangleF.Empty : label.BoundingBox;
-
-            if (image.IsEmpty && labelBBox.IsEmpty)
-            {
-                BoundingBox = RectangleF.Empty;
-            }
-            else if (image.IsEmpty && !labelBBox.IsEmpty)
-            {
-                BoundingBox = label.BoundingBox;
-            }
-            else if (!image.IsEmpty && labelBBox.IsEmpty)
-            {
-                BoundingBox = image.BoundingBox;
-            }
-            else
-            {
-                RectangleF bbox = RectangleF.Union(image.BoundingBox, labelBBox);
-                BoundingBox = new RectangleF(bbox.Left, bbox.Top, bbox.Width + imagePadding.X, bbox.Height + imagePadding.Y);
-            }
-        }
-
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
             if (BoundingBox.IsEmpty)
                 return;
+
+            if (!container.IsEmpty)
+            {
+                Game.SpriteBatch.Begin(Game.Camera);
+                container.Draw(gameTime);
+                Game.SpriteBatch.End();
+            }
 
             if (!image.IsEmpty)
             {
@@ -164,14 +153,9 @@ namespace Remizione
                     shader = RemizioneGame.Effects.ColorSaturation.Effect;
                 }
 
-                var currentImageOpacity = image.Opacity;
                 Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, shader);
-
                 image.Draw(gameTime);
-
                 Game.SpriteBatch.End();
-
-                image.Opacity = currentImageOpacity;
             }
 
             if (displayMode == UIControlDisplayMode.ImageAndText)
@@ -205,8 +189,16 @@ namespace Remizione
         // BoundingBox
         public RectangleF BoundingBox { get; private set; }
 
-        // ButtonBoundingBox
-        public RectangleF ButtonBoundingBox => image.BoundingBox;
+        // Container
+        public AtlasImage? ContainerImage
+        {
+            get => container.Image;
+            set
+            {
+                container.Image = value;
+                Invalidate();
+            }
+        }
 
         // DisplayMode
         public UIControlDisplayMode DisplayMode
