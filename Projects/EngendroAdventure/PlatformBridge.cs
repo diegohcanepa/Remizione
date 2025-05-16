@@ -8,7 +8,7 @@ namespace EngendroAdventure
     /// This class brings a layer of abstraction, 
     /// so the game can interact with platform specific systems.
     /// </summary>
-    public abstract class PlatformBridge : IUpdate
+    public abstract class PlatformBridge
     {
         // Constructor
         protected PlatformBridge(PlatformFileSystem fileSystem)

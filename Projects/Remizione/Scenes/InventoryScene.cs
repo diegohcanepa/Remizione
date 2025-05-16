@@ -131,7 +131,7 @@ namespace Remizione
         {
             if (menu.SelectedOption?.LinkedObject is Item item)
             {
-                if (item.MetaItem.Category == ItemCategory.Consumable)
+                if (item.MetaItem.Action == ItemAction.Consume)
                     actor.Consume(item);
                 else
                     item.Use();

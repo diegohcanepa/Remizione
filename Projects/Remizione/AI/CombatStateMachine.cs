@@ -47,9 +47,9 @@ namespace Remizione
             // Attack
             if (signal == CombatStateSignal.Attack)
             {
-                if (Actor.AttackSkill is Item skill)
+                if (Actor.GetAttackItem() is Item attackItem)
                 {
-                    if (skill.Range == 0)
+                    if (attackItem.Range == 0)
                     {
                         ChangeState(CombatStateName.Charge);
                     }

@@ -18,7 +18,6 @@ namespace Remizione
         #region Private fields
 
         private readonly FloatTween accelerationFactorTween = new();
-        private string attackSkillName = string.Empty;
         private BloodSplash? bloodSplash;
         private readonly CombatStateMachine combatStateMachine;
         private int faith;
@@ -38,6 +37,8 @@ namespace Remizione
         private readonly ActorThrowObjectState throwObjectState;
         private float tinyMoveSpeedFactor = 1;
         private readonly Blinker<float> vanishBlinker = new(1, 0) { StartDelay = 500 };
+        private Item? weapon;
+        private string weaponName = string.Empty;
 
         #endregion
 
@@ -480,29 +481,6 @@ namespace Remizione
             return result;
         }
 
-        // AttackSkill
-        public Item? AttackSkill { get; private set; }
-
-        // AttackSkillName
-        [ScriptProperty]
-        public string AttackSkillName
-        {
-            get => attackSkillName;
-            set
-            {
-                if (value != attackSkillName)
-                {
-                    attackSkillName = value;
-                    var item = Manifestations.GetItem(value);
-
-                    if (item?.Container != Manifestations)
-                        throw new InvalidOperationException("Item must be a skill.");
-                    else
-                        this.AttackSkill = item;
-                }
-            }
-        }
-
         // BloodSplashOrigin
         [ScriptProperty]
         public Vector2 BloodSplashOrigin { get; set; }
@@ -576,7 +554,7 @@ namespace Remizione
         // DoAttackTurn
         public void DoAttackTurn()
         {
-            if (AttackSkill is null)
+            if (GetAttackItem() is null)
                 return;
 
             TurnState = CombatTurnState.Busy;
@@ -658,6 +636,14 @@ namespace Remizione
                 return Vector2.Zero;
             else
                 return this.GetAbsolutePoint(BloodSplashOrigin);
+        }
+
+        // GetAttackItem
+        public Item? GetAttackItem()
+        {
+            var result = Inventory.GetItem(WeaponName);
+            result ??= Manifestations.GetItem("UnarmedAttack");
+            return result;
         }
 
         // HandleInput
@@ -931,9 +917,6 @@ namespace Remizione
         // ShadowSpot
         public ShadowSpot ShadowSpot { get; }
 
-        // ShouldApplyMovePenalty
-        public bool ShouldApplyMovePenalty => combatStateMachine.CurrentState is CombatChargeState;
-
         // ShowMessage
         public void ShowMessage(Message message, int duration = 1000)
         {
@@ -1009,6 +992,18 @@ namespace Remizione
             var tween = new ColorTween() { StartDelay = vanishBlinker.StartDelay };
             tween.Start(TweenStyle.CubicIn, Color, Color.Black, 200);
             Tweens.ColorTween = tween;
+        }
+
+        // WeaponName
+        [ScriptProperty]
+        public string WeaponName
+        {
+            get => weaponName;
+            set
+            {
+                if (value != weaponName)
+                    weaponName = value;
+            }
         }
 
         /// <summary>

@@ -394,6 +394,9 @@ namespace Remizione
         // Things
         public ReadOnlyCollection<GameThing> Things { get; }
 
+        // ToString
+        public override string ToString() => $"{nameof(WorldBlock)} ({WorldGridPosition.X},{WorldGridPosition.Y})";
+
         // WorldGridPosition
         public Point WorldGridPosition { get; }
     }

@@ -6,7 +6,7 @@ namespace Engendro
     /// <summary>
     /// Transition
     /// </summary>
-    public class Transition : IUpdate, IDraw
+    public class Transition
     {
         #region Private fields
 

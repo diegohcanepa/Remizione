@@ -5,7 +5,7 @@ namespace Engendro
     /// <summary>
     /// GameObject
     /// </summary>
-    public abstract class GameObject(EngendroGame game) : IDraw, IUpdate
+    public abstract class GameObject(EngendroGame game)
     {
         #region Protected members
 

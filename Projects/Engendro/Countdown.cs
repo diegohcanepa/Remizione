@@ -6,7 +6,7 @@ namespace Engendro
     /// <summary>
     /// Countdown
     /// </summary>
-    public sealed class Countdown : IUpdate
+    public sealed class Countdown
     {
         private int restartDuration;
 

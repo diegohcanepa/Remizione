@@ -6,7 +6,7 @@ namespace Remizione.UI
     /// <summary>
     /// UIContextMenuOption
     /// </summary>
-    public sealed class UIContextMenuOption : IDraw, IUpdate
+    public sealed class UIContextMenuOption
     {
         #region Private fields
 

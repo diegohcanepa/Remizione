@@ -68,9 +68,6 @@ namespace Remizione
             actor.MaxHP = GetMaxHP();
         }
 
-        // MovePenalty
-        public int MovePenalty { get; private set; } = 2;
-
         // FaithGainPerLevel
         public int FaithGainPerLevel { get; private set; } = 20;
 

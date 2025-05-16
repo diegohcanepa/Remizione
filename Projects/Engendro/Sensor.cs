@@ -5,7 +5,7 @@ namespace Engendro
     /// <summary>
     /// Sensor
     /// </summary>
-    public abstract class Sensor<T>(T owner) : IUpdate
+    public abstract class Sensor<T>(T owner)
     {
         #region Protected members
 

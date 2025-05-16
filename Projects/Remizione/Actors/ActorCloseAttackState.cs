@@ -19,12 +19,12 @@ namespace Remizione
         #region Protected members
 
         // GetAnimationName
-        protected override string GetAnimationName() => Owner.AttackSkill is Item skill ? skill.Name.ToString() : string.Empty;
+        protected override string GetAnimationName() => Owner.GetAttackItem() is Item attackItem ? attackItem.Name.ToString() : string.Empty;
 
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (Owner.Target == null || Owner.AttackSkill == null)
+            if (Owner.Target == null || Owner.GetAttackItem() is not Item attackItem)
                 return;
 
             if (!damageTaken && Owner.AnimationPlayer.Frame is SpriteFrame frame)
@@ -51,7 +51,9 @@ namespace Remizione
                         }
 
                         if (attackRoll >= defenseRoll)
-                            Owner.AttackSkill.ApplyDamage(Owner.Target, hitType);
+                        {
+                            attackItem.ApplyDamage(Owner.Target, hitType);
+                        }
                         else
                         {
                             Owner.Session.CombatManager.Add(target);
@@ -59,7 +61,7 @@ namespace Remizione
                         }
                     }
                     else
-                        Owner.AttackSkill.ApplyDamage(Owner.Target, hitType);
+                        attackItem.ApplyDamage(Owner.Target, hitType);
                 }
             }
         }

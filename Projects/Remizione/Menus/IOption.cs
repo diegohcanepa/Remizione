@@ -6,9 +6,10 @@ namespace Remizione.Menus
     /// <summary>
     /// IOption
     /// </summary>
-    public interface IOption : IDraw, IUpdate
+    public interface IOption
     {
         string Description { get; }
+        void Draw(GameTime gameTime);
         bool IsEnabled { get; }
         RectangleF LabelBoundingBox { get; }
         RectangleF LeftArrowBoundingBox { get; }
