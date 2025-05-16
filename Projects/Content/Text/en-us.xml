@@ -18,7 +18,6 @@
   <String Key="DurabilityState.Used">Used</String>
   <String Key="DurabilityState.Worn">Worn</String>
   <String Key="HitType.Critical">Critical!</String>
-  <String Key="HitType.Glancing">Glancing</String>
   <String Key="InGameMenuOptionName.Attributes">Attributes</String>
   <String Key="InGameMenuOptionName.Creatures">Creatures</String>
   <String Key="InGameMenuOptionName.Inventory">Bag</String>
@@ -193,6 +192,7 @@ Bla bla bla</String>
   <String Key="Misc.WanderingSpirit">Your wandering spirit</String>
   <String Key="Misc.Yes">Yes</String>
   <String Key="Misc.YouAreDead">YOU'RE DEAD.</String>
+  <String Key="Noun.Chest">Wooden chest</String>
   <String Key="Noun.Cross">Cross</String>
   <String Key="Platform.NintendoSwitch.Messages.ControllerDisconnected">Please reconnect your Joy-Con™ to continue.</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyButton">Press any button to continue</String>

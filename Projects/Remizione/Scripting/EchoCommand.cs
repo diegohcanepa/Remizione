@@ -22,7 +22,7 @@ namespace Remizione.Scripting
             string text = GetDisplayText();
 
             if (Session is GameSession session)
-                session.HUD.EchoMessage.Show(text);
+                session.ShowEcho(text);
         }
 
         // TextClauseIndex

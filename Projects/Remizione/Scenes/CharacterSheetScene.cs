@@ -13,8 +13,8 @@ namespace Remizione
     {
         private readonly ImageSprite container;
         private readonly ImageSprite containerSelection;
+        private readonly UIInfo info;
         private readonly PopupMenu<StatData> menu;
-        private readonly UISentence sentence;
 
         #region Constructor
 
@@ -47,7 +47,7 @@ namespace Remizione
                 TitlePosition = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 2)
             };
 
-            this.sentence = new(Game) { ShowGradient = true };
+            this.info = new(Game) { ShowGradient = true };
         }
 
         #endregion
@@ -80,9 +80,9 @@ namespace Remizione
         private void SelectedOptionChanged(PopupMenuOption<StatData>? option)
         {
             if (option != null)
-                sentence.Text = option.LinkedObject.LocalizedDescription;
+                info.Text = option.LinkedObject.LocalizedDescription;
             else
-                sentence.Text = null;
+                info.Text = null;
         }
 
         #endregion
@@ -104,7 +104,7 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             menu.Draw(gameTime);
-            sentence.Draw(gameTime);
+            info.Draw(gameTime);
         }
 
         // OnHandleInput

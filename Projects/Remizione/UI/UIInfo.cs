@@ -5,24 +5,24 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Remizione.UI
 {
     /// <summary>
-    /// UISentence
+    /// UIInfo
     /// </summary>
-    public sealed class UISentence : GameObject
+    public sealed class UIInfo : GameObject
     {
         private readonly ImageSprite gradient;
         private readonly TextSprite infoSprite;
         private readonly TextSprite textSprite;
 
         // Constructor
-        public UISentence(EngendroGame game)
+        public UIInfo(EngendroGame game)
             : base(game)
         {
             this.textSprite = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
                 MaximumWidth = (int)(Screen.NativeWidth * .8f),
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.Bottom, 0, -6),
+                PivotOrigin = RectanglePoint.Top,
+                Position = Screen.SafeArea.GetPoint(RectanglePoint.Bottom, 0, -22),
                 Scale = ScaleInfo.Text.Large
             };
 

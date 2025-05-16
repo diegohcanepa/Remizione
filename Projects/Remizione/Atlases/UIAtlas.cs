@@ -18,16 +18,12 @@ namespace Remizione
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
             FaithIcon = this[nameof(FaithIcon)];
-            InventoryCategoryMarker = this[nameof(InventoryCategoryMarker)];
-            InventoryGridContainer = this[nameof(InventoryGridContainer)];
-            InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
             InventorySlot = this[nameof(InventorySlot)];
             InventorySlotSelection = this[nameof(InventorySlotSelection)];
             ItemMenuContainer = this[nameof(ItemMenuContainer)];
             ItemMenuContainerSelection = this[nameof(ItemMenuContainerSelection)];
             MessageContainer = this[nameof(MessageContainer)];
             MissingInputBinding = this[nameof(MissingInputBinding)];
-            MissingItem = this[nameof(MissingItem)];
             MouseCursorArrow = this[nameof(MouseCursorArrow)];
             MouseCursorBag = this[nameof(MouseCursorBag)];
             MouseCursorCross = this[nameof(MouseCursorCross)];
@@ -68,15 +64,6 @@ namespace Remizione
         // CreditsBar
         public AtlasImage CreditsBar { get; }
 
-        // InventoryCategoryMarker
-        public AtlasImage InventoryCategoryMarker { get; }
-
-        // InventoryGridContainer
-        public AtlasImage InventoryGridContainer { get; }
-
-        // InventoryInfoContainer
-        public AtlasImage InventoryInfoContainer { get; }
-
         // InventorySlot
         public AtlasImage InventorySlot { get; }
 
@@ -97,9 +84,6 @@ namespace Remizione
 
         // MissingInputBinding
         public AtlasImage MissingInputBinding { get; }
-
-        // MissingItem
-        public AtlasImage MissingItem { get; }
 
         // MouseCursorArrow
         public AtlasImage MouseCursorArrow { get; }

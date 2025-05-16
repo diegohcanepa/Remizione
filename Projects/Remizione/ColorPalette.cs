@@ -84,7 +84,7 @@ namespace Remizione
         // SpeechBubble
         internal static class SpeechBubble
         {
-            internal static Color Fill { get; } = ColorPalette.Text.Fill;
+            internal static Color Fill { get; } = ColorPalette.Text.TerraDarkest;
             internal static Color Shadow { get; } = Color.Black * .2f;
             internal static Color Text { get; } = ColorPalette.Text.Default;
         }
@@ -114,6 +114,7 @@ namespace Remizione
             internal static Color Hover { get; } = new(167, 143, 145);
             internal static Color Light { get; } = new(200, 165, 138);
             internal static Color TerraDarker { get; } = new(61, 41, 54);
+            internal static Color TerraDarkest { get; } = new(41, 29, 43);
             internal static Color TerraDark { get; } = new(82, 51, 63);
             internal static Color Terra { get; } = new(143, 77, 87);
             internal static Color TerraLight { get; } = new(189, 106, 98);

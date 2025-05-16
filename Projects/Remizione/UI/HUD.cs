@@ -12,10 +12,10 @@ namespace Remizione
     public sealed class HUD : GameObject
     {
         private readonly ScoreText gpScore;
+        private readonly TextSprite interactionTarget;
         private readonly TextSprite messageText;
         private readonly UIDerivedStats playerStats;
         private readonly ImageSprite savingIcon;
-        private readonly UISentence sentence;
         private readonly GameSession session;
 
         // Constructor
@@ -28,9 +28,6 @@ namespace Remizione
 
             // DestinationMark
             this.DestinationMark = new DestinationMark(session);
-
-            // Echo message
-            this.EchoMessage = new EchoMessage(session.Game);
 
             // Log
             this.Log = new(Game);
@@ -51,8 +48,14 @@ namespace Remizione
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
-            // Sentence
-            this.sentence = new UISentence(Game);
+            this.interactionTarget = new TextSprite(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Default,
+                MaximumWidth = (int)(Screen.NativeWidth * .8f),
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.SafeArea.GetPoint(RectanglePoint.Bottom, 0, -6),
+                Scale = ScaleInfo.Text.Large
+            };
 
             // Message text
             this.messageText = new TextSprite(Game, Fonts.CommonOutline)
@@ -90,23 +93,23 @@ namespace Remizione
             return new string(buffer);
         }
 
-        // UpdateSentence
-        private void UpdateSentence()
+        // UpdateInteractionTarget
+        private void UpdateInteractionTarget()
         {
             if (session.IsCurrentScene && MouseCursor.Instance.State != MouseCursorState.Wait &&
                 session.Player?.InteractiveTarget is GameThing target &&
                 (!session.TargetMode || target.CanBeTargeted))
             {
-                if (target != sentence.Tag)
+                if (target != interactionTarget.Tag)
                 {
-                    sentence.Tag = target;
-                    sentence.Text = FormatSentenceText(target.LocalizedDisplayName);
+                    interactionTarget.Tag = target;
+                    interactionTarget.Text = FormatSentenceText(target.LocalizedDisplayName);
                 }
             }
             else
             {
-                sentence.Text = null;
-                sentence.Tag = null;
+                interactionTarget.Text = null;
+                interactionTarget.Tag = null;
             }
         }
 
@@ -123,16 +126,12 @@ namespace Remizione
             {
                 Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
                 messageText.Draw(gameTime);
+                interactionTarget.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
 
             if (session.Player != null && session.FullHUD)
                 gpScore.Draw(gameTime);
-
-            EchoMessage.Draw(gameTime);
-
-            if (!sentence.IsEmpty && session.IsCurrentScene)
-                sentence.Draw(gameTime);
 
             Log.Draw(gameTime);
 
@@ -149,7 +148,7 @@ namespace Remizione
         {
             playerStats.Update(gameTime);
 
-            UpdateSentence();
+            UpdateInteractionTarget();
             messageText.Update(gameTime);
 
             if (session.Player != null)
@@ -159,7 +158,6 @@ namespace Remizione
             }
 
             DestinationMark.Update(gameTime);
-            EchoMessage.Update(gameTime);
             Log.Update(gameTime);
             savingIcon.Update(gameTime);
         }
@@ -168,9 +166,6 @@ namespace Remizione
 
         // DestinationMark
         public DestinationMark DestinationMark { get; }
-
-        // EchoMessage
-        public EchoMessage EchoMessage { get; }
 
         // Log
         public UILog Log { get; }

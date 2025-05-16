@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.6.3</string>
+        <string>7.7.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -219,15 +219,6 @@
                 <false/>
             </struct>
             <key type="filename">Inventory-assets/InventorySlotSelection.png</key>
-            <key type="filename">Items-assets/Battery.png</key>
-            <key type="filename">Items-assets/Chili.png</key>
-            <key type="filename">Items-assets/Cross.png</key>
-            <key type="filename">Items-assets/Duck.png</key>
-            <key type="filename">Items-assets/Headbutt.png</key>
-            <key type="filename">Items-assets/Health.png</key>
-            <key type="filename">Items-assets/Lockpick.png</key>
-            <key type="filename">Items-assets/MissingItem.png</key>
-            <key type="filename">Items-assets/Stamina.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -254,99 +245,6 @@
                 <rect>1,2,1,3</rect>
                 <key>scale9Paddings</key>
                 <rect>1,2,1,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ItemCategories-assets/InventoryAmulets.png</key>
-            <key type="filename">ItemCategories-assets/InventoryConsumables.png</key>
-            <key type="filename">ItemCategories-assets/InventorySkills.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,3,3</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,3,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ItemCategories-assets/InventoryCategoryMarker.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,0,3,1</rect>
-                <key>scale9Paddings</key>
-                <rect>2,0,3,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ItemCategories-assets/InventoryKeyItems.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,1,3,3</rect>
-                <key>scale9Paddings</key>
-                <rect>2,1,3,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ItemCategories-assets/InventorySpells.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,3,4</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,3,4</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ItemCategories-assets/InventoryThrowables.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,1,4,2</rect>
-                <key>scale9Paddings</key>
-                <rect>2,1,4,2</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Items-assets/Ticket.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,3,10,7</rect>
-                <key>scale9Paddings</key>
-                <rect>5,3,10,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -425,6 +323,21 @@
                 <rect>49,7,99,13</rect>
                 <key>scale9Paddings</key>
                 <rect>49,7,99,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,3,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -891,9 +804,7 @@
                     <filename>KeyboardControls-assets</filename>
                     <filename>PlayStationControls-assets</filename>
                     <filename>MessageContainer-assets</filename>
-                    <filename>Items-assets</filename>
                     <filename>Inventory-assets</filename>
-                    <filename>ItemCategories-assets</filename>
                     <filename>UIIcons-assets</filename>
                     <filename>MouseCursors-assets</filename>
                 </array>

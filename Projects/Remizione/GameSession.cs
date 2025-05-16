@@ -25,6 +25,7 @@ namespace Remizione
         private readonly CharacterSheetScene characterSheetScene;
         private readonly ScriptConsole? console;
         private readonly ContextMenuScene contextMenuScene;
+        private readonly EchoScene echoScene;
         private bool inGameMenuLocked;
         private readonly InGameMenuScene inGameMenuScene;
         private readonly InventoryScene inventoryScene;
@@ -70,8 +71,9 @@ namespace Remizione
 
             this.contextMenuScene = new(this);
             this.inGameMenuScene = new(this);
-            this.characterSheetScene = new(this.Game);
-            this.inventoryScene = new(this.Game);
+            this.characterSheetScene = new(Game);
+            this.echoScene = new(Game);
+            this.inventoryScene = new(Game);
 
             LocalizationSource = LocalizationSource.Script;
         }
@@ -525,6 +527,13 @@ namespace Remizione
             Game.SceneManager.Push(contextMenuScene);
         }
 
+        // ShowEcho
+        public void ShowEcho(string text)
+        {
+            echoScene.Text = text;
+            Game.SceneManager.Push(echoScene);
+        }
+
         // ShowInGameMenu
         public void ShowInGameMenu()
         {
@@ -534,7 +543,6 @@ namespace Remizione
         }
 
         // ShowInventory
-        [ScriptMethod]
         public void ShowInventory()
         {
             if (Player == null)

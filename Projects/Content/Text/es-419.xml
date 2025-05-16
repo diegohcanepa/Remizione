@@ -18,7 +18,6 @@
   <String Key="DurabilityState.Used">Usado</String>
   <String Key="DurabilityState.Worn">Gastado</String>
   <String Key="HitType.Critical">¡Crítico!</String>
-  <String Key="HitType.Glancing">Superficial</String>
   <String Key="InGameMenuOptionName.Attributes">Atributos</String>
   <String Key="InGameMenuOptionName.Creatures">Criaturas</String>
   <String Key="InGameMenuOptionName.Inventory">Bolsa</String>
@@ -193,6 +192,7 @@ Bla bla bla</String>
   <String Key="Misc.WanderingSpirit">Tu espíritu errante</String>
   <String Key="Misc.Yes">Sí</String>
   <String Key="Misc.YouAreDead">ESTÁS MUERTO.</String>
+  <String Key="Noun.Chest">Cofre de madera</String>
   <String Key="Noun.Cross">Cruz</String>
   <String Key="Platform.NintendoSwitch.Messages.ControllerDisconnected">Por favor vuelve a conectar el mando para continuar.</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyButton">Pulse cualquier botón para continuar</String>

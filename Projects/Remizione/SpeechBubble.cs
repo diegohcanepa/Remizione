@@ -131,7 +131,7 @@ namespace Remizione
                 pipe.Y -= Math.Abs(pipeHeight - pipe.BoundingBox.Height);
             }
 
-            arrowImage.Draw(gameTime);
+            //arrowImage.Draw(gameTime);
 
             Game.SpriteBatch.End();
         }

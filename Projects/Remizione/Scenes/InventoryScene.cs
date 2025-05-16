@@ -15,8 +15,8 @@ namespace Remizione
         private readonly ImageSprite container;
         private readonly ImageSprite containerSelection;
         private readonly UIControl discardButton;
+        private readonly UIInfo info;
         private readonly PopupMenu<Item> menu;
-        private readonly UISentence sentence;
 
         #region Constructor
 
@@ -24,7 +24,7 @@ namespace Remizione
         public InventoryScene(RemizioneGame game)
             : base(game, SceneSettings.None)
         {
-            this.sentence = new(Game) { ShowGradient = true };
+            this.info = new(Game) { ShowGradient = true };
 
             // Container
             this.container = new(game, Atlases.UI.ItemMenuContainer)
@@ -118,12 +118,12 @@ namespace Remizione
         {
             if (option != null)
             {
-                sentence.Info = option.LinkedObject.GetLocalizedInfo();
-                sentence.Text = option.LinkedObject.MetaItem.LocalizedDescription;
+                info.Info = option.LinkedObject.GetLocalizedInfo();
+                info.Text = option.LinkedObject.MetaItem.LocalizedDescription;
                 actionButton.Text = Localization.EncodeKey(option.LinkedObject.MetaItem.Action);
             }
             else
-                sentence.Text = null;
+                info.Text = null;
         }
 
         // UseItem
@@ -157,7 +157,7 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             menu.Draw(gameTime);
-            sentence.Draw(gameTime);
+            info.Draw(gameTime);
 
             if (menu.SelectedOption != null)
             {
