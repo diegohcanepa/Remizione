@@ -250,10 +250,13 @@ namespace Remizione
             if (Owner is Actor actor)
                 actor.Faith += Faith;
 
-            if (Count == 1)
-                Container.Remove(this);
-            else
-                Count--;
+            if (MetaItem.Maximum > 1)
+            {
+                if (Count == 1)
+                    Container.Remove(this);
+                else
+                    Count--;
+            }
 
             InvalidateDisplayText();
 
