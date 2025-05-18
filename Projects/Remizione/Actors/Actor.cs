@@ -704,10 +704,6 @@ namespace Remizione
         // InteractiveTarget
         public GameThing? InteractiveTarget { get; private set; }
 
-        // InventoryCapacity
-        [ScriptProperty]
-        public int InventoryCapacity { get; set; } = 6;
-
         // IsAlert
         public bool IsAlert { get; set; }
 

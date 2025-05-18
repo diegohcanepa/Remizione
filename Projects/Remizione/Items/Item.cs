@@ -123,7 +123,7 @@ namespace Remizione
         }
 
         // Container
-        public ItemContainer Container { get; }
+        public ItemContainer Container { get; private set; }
 
         // Count
         public int Count
@@ -166,7 +166,7 @@ namespace Remizione
         }
 
         // Faith
-        public int Faith => MetaItem.Faith;
+        public DiceExpression? Faith => MetaItem.Faith;
 
         // GetLocalizedInfo
         public string GetLocalizedInfo()
@@ -176,11 +176,11 @@ namespace Remizione
             if (MetaItem.BaseDamage != null)
                 values.Add($"{Localization.GetLocalizedValue(ItemProperty.BaseDamage)}: {MetaItem.BaseDamage.MinimumValue + Level}-{MetaItem.BaseDamage.MaximumValue + Level}");
 
-            if (HP != 0)
-                values.Add($"{TextRepository.GetValue($"DerivedStat.Spirit.Name")}: {(HP < 0 ? string.Empty : "+")}{HP}");
+            if (HP != null)
+                values.Add($"{TextRepository.GetValue($"DerivedStat.Spirit.Name")}: {HP.MinimumValue}-{HP.MaximumValue}");
 
-            if (Faith != 0)
-                values.Add($"{TextRepository.GetValue($"DerivedStat.Faith.Name")}: {(Faith < 0 ? string.Empty : "+")}{Faith}");
+            if (Faith != null)
+                values.Add($"{TextRepository.GetValue($"DerivedStat.Faith.Name")}: {Faith.MinimumValue}-{Faith.MaximumValue}");
 
             return string.Join(" / ", values);
         }
@@ -195,7 +195,7 @@ namespace Remizione
         }
 
         // HP
-        public int HP => MetaItem.HP;
+        public DiceExpression? HP => MetaItem.HP;
 
         // Knockback
         public Vector2 Knockback => MetaItem.Knockback;
@@ -245,10 +245,11 @@ namespace Remizione
         // Use
         public bool Use()
         {
-            Owner.HP += HP;
+            if (HP != null)
+                Owner.HP += HP.Roll();
 
-            if (Owner is Actor actor)
-                actor.Faith += Faith;
+            if (Faith != null && Owner is Actor actor)
+                actor.Faith += Faith.Roll();
 
             if (MetaItem.Maximum > 1)
             {

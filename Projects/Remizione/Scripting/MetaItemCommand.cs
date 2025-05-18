@@ -20,8 +20,8 @@ namespace Remizione.Scripting
             var knockback = Parser.ParseVector2Argument(this, KnockbackArg);
             var maximum = Parser.ParseInt32Argument(this, MaximumArg);
             var modifier = Parser.ParseEnumArgument<Stat>(this, ModifierArg, Stat.Strength);
-            var fp = Parser.ParseInt32Argument(this, FaithArg);
-            var hp = Parser.ParseInt32Argument(this, HPArg);
+            var fp = Parser.ParseDiceExpressionArgument(this, FaithArg);
+            var hp = Parser.ParseDiceExpressionArgument(this, HPArg);
             var range = Parser.ParseInt32Argument(this, RangeArg);
             var sound = Parser.ParseSoundArgument(this, SoundArg);
             var upgradeHardness = Parser.ParseEnumArgument<UpgradeHardness>(this, UpgradeHardnessArg);

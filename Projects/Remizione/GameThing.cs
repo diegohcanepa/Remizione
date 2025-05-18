@@ -842,6 +842,14 @@ namespace Remizione
         // Inventory
         public ItemContainer Inventory { get; }
 
+        // InventoryCapacity
+        [ScriptProperty]
+        public int InventoryCapacity
+        {
+            get => Inventory.Capacity;
+            set => Inventory.Capacity = value;
+        }
+
         // IsAvailable
         public bool IsAvailable(WorldBlock worldBlock, Random random)
         {

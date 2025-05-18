@@ -11,6 +11,8 @@ namespace Remizione
     /// </summary>
     public sealed class LootScene : Scene
     {
+        #region Private fields
+
         private PopupMenu<Item> activeMenu;
         private readonly UIInfo info;
         private const int margin = 22;
@@ -22,6 +24,7 @@ namespace Remizione
         private readonly ImageSprite targetContainer;
         private readonly PopupMenu<Item> targetMenu;
 
+        #endregion
 
         #region Constructor
 
@@ -138,31 +141,47 @@ namespace Remizione
                 info.Text = null;
         }
 
-        // InvalidateTitle
-        private void InvalidateTitle()
+        // InvalidateTitles
+        private void InvalidateTitles()
         {
-            var title = Localization.GetLocalizedValue(ItemContainerCategory.Inventory);
-            
             if (session.Player != null)
-                title += $" ({session.Player.Inventory.Items.Count} / {session.Player.InventoryCapacity})";
+            {
+                var title = Localization.GetLocalizedValue(ItemContainerCategory.Inventory);
+                title += $" ({playerMenu.Options.Count} / {session.Player.InventoryCapacity})";
+                playerMenu.Title = title;
+            }
 
-            playerMenu.Title = title;
+            if (Target != null)
+            {
+                var title = TextRepository.GetValue(Target.DisplayName);
+                if (Target.InventoryCapacity > 0)
+                    title += $" ({targetMenu.Options.Count} / {Target.InventoryCapacity})";
+                targetMenu.Title = title;
+            }
         }
 
         // MoveItem
         private void MoveItem(Actor actor)
         {
-            /*
-            if (playerMenu.SelectedOption?.LinkedObject is Item item)
+            if (activeMenu.SelectedOption?.LinkedObject is Item item)
             {
-                if (item.MetaItem.Action == ItemAction.Consume)
-                    actor.Consume(item);
+                if (activeMenu == targetMenu)
+                {
+                    playerMenu.AddOption(item);
+                    targetMenu.RemoveSelectedOption();
+                    if (targetMenu.Options.Count == 0)
+                        activeMenu = playerMenu;
+                }
                 else
-                    item.Use();
+                {
+                    targetMenu.AddOption(item);
+                    playerMenu.RemoveSelectedOption();
+                    if (playerMenu.Options.Count == 0)
+                        activeMenu = targetMenu;
+                }
 
-                SceneController.Pop();
+                InvalidateTitles();
             }
-            */
         }
 
         // SelectedOptionChanged
@@ -182,13 +201,13 @@ namespace Remizione
             Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade);
             playerContainer.Draw(gameTime);
             targetContainer.Draw(gameTime);
-            
+
             if (activeMenu.SelectedOption != null)
             {
                 selectionContainer.Position = activeMenu.SelectedOption.Position;
                 selectionContainer.Draw(gameTime);
             }
-            
+
             Game.SpriteBatch.End();
 
             playerMenu.Draw(gameTime);
@@ -196,8 +215,7 @@ namespace Remizione
 
             info.Draw(gameTime);
 
-            if (playerMenu.SelectedOption != null)
-                moveButton.Draw(gameTime);
+            moveButton.Draw(gameTime);
         }
 
         // OnHandleInput
@@ -241,9 +259,7 @@ namespace Remizione
                 targetMenu.AddOption(Target.Inventory.Items[i]);
             }
 
-            InvalidateTitle();
-
-            targetMenu.Title = Target.DisplayName;
+            InvalidateTitles();
 
             playerMenu.SelectFirst();
             targetMenu.SelectFirst();

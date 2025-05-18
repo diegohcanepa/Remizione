@@ -9,6 +9,7 @@ namespace Remizione
     /// </summary>
     public sealed class ItemContainer
     {
+        private int capacity;
         private readonly List<Item> items = [];
 
         // Constructor
@@ -20,9 +21,17 @@ namespace Remizione
             Items = new ReadOnlyCollection<Item>(items);
         }
 
+        // AssertCapacity
+        private void AssertCapacity()
+        {
+            if (capacity > 0 && items.Count == capacity)
+                throw new InvalidOperationException("Maximum capacity reached.");
+        }
+
         // Add
         public Item? Add(string name, int amount)
         {
+            AssertCapacity();
             var metaItem = MetaItem.Find(name) ?? throw new InvalidOperationException("Meta item not found.");
             return Add(metaItem, amount);
         }
@@ -30,6 +39,8 @@ namespace Remizione
         // Add
         public Item Add(MetaItem metaItem, int amount)
         {
+            AssertCapacity();
+
             if (metaItem.Maximum == 1)
                 amount = 1;
 
@@ -48,6 +59,25 @@ namespace Remizione
             }
         }
 
+        // Capacity
+        public int Capacity
+        {
+            get => capacity;
+            set
+            {
+                if (value != capacity)
+                {
+                    if (value < 0)
+                        value = 0;
+
+                    this.capacity = value;
+
+                    if (value > 0 && items.Count > capacity)
+                        items.RemoveRange(items.Count - 1, items.Count - capacity);
+                }
+            }
+        }
+
         // Category
         public ItemContainerCategory Category { get; }
 
@@ -62,6 +92,9 @@ namespace Remizione
 
             return null;
         }
+
+        // IsFull
+        public bool IsFull => capacity > 0 && items.Count >= capacity;
 
         // Items
         public ReadOnlyCollection<Item> Items { get; }

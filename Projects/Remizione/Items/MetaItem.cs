@@ -16,7 +16,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(string name, ItemAction action, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, int hp, int faith, int range, int durability, UpgradeHardness upgradeHardness, Sound? sound)
+        public MetaItem(string name, ItemAction action, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, UpgradeHardness upgradeHardness, Sound? sound)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -64,10 +64,10 @@ namespace Remizione
         public int Durability { get; set; }
 
         // Faith
-        public int Faith { get; }
+        public DiceExpression? Faith { get; }
 
         // HP
-        public int HP { get; }
+        public DiceExpression? HP { get; }
 
         // Knockback
         public Vector2 Knockback { get; }
