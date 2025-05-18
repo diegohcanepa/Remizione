@@ -34,7 +34,7 @@ namespace EngendroAdventure.Scripting
             if (HasArg(ChanceArg))
             {
                 var chance = Parser.ParseInt32Argument(this, ChanceArg);
-                if (DiceBag.Dice10.Roll() > chance)
+                if (DiceExpression.Dice10.Roll() > chance)
                     return;
             }
 

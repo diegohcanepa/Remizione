@@ -45,7 +45,10 @@ namespace Remizione.UI
         // UpdateColor
         private void UpdateColor()
         {
-            if (IsSelected)
+            if (menu.HideSelectedOption)
+                nameText.Color = ColorPalette.Text.Default;
+
+            else if (IsSelected)
                 nameText.Color = ColorPalette.Text.Highlight;
 
             else if (IsHovered)

@@ -43,7 +43,7 @@ namespace Remizione
                         if (hitType != HitType.Critical)
                         {
                             // 50% miss chances
-                            if (attackRoll < defenseRoll && DiceBag.Dice10.Roll() <= 5)
+                            if (attackRoll < defenseRoll && DiceExpression.Dice10.Roll() <= 5)
                             {
                                 hitType = HitType.Glancing;
                                 defenseRoll = 0;

@@ -1,5 +1,4 @@
-﻿using Engendro;
-using EngendroAdventure.Scripting;
+﻿using EngendroAdventure.Scripting;
 
 namespace Remizione.Scripting
 {
@@ -14,9 +13,9 @@ namespace Remizione.Scripting
             var name = Parser.ParseName(this, 0);
             AssertKeyword(1, "category");
 
-            var action = Parser.ParseEnumArgument<ItemAction>(this, ActionArg, ItemAction.Use);
+            var action = Parser.ParseEnumArgument(this, ActionArg, ItemAction.Use);
             var bonus = Parser.ParseInt32Argument(this, BonusArg);
-            var baseDamage = Parser.ParseDiceRollArgument(this, DamageArg) ?? DiceRoll.Empty;
+            var baseDamage = Parser.ParseDiceExpressionArgument(this, DamageArg) ?? null;
             var durability = Parser.ParseInt32Argument(this, DurabilityArg);
             var knockback = Parser.ParseVector2Argument(this, KnockbackArg);
             var maximum = Parser.ParseInt32Argument(this, MaximumArg);

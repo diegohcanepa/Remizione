@@ -92,7 +92,7 @@ namespace Remizione
         // ApplyDamage
         public void ApplyDamage(GameThing target, HitType hitType)
         {
-            if (MetaItem.BaseDamage != DiceRoll.Empty)
+            if (MetaItem.BaseDamage != null)
             {
                 var actor = Owner as Actor;
                 int damageAmount;
@@ -173,7 +173,7 @@ namespace Remizione
         {
             var values = new List<string>();
 
-            if (!MetaItem.BaseDamage.IsEmpty)
+            if (MetaItem.BaseDamage != null)
                 values.Add($"{Localization.GetLocalizedValue(ItemProperty.BaseDamage)}: {MetaItem.BaseDamage.MinimumValue + Level}-{MetaItem.BaseDamage.MaximumValue + Level}");
 
             if (HP != 0)

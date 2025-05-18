@@ -178,7 +178,7 @@ namespace EngendroAdventure.Scripting
         public static ReadOnlyCollection<Type> SupportedPropertyTypes { get; } = new ReadOnlyCollection<Type>([ typeof(Atlas),
                                                                                                                   typeof(bool),
                                                                                                                   typeof(Color),
-                                                                                                                  typeof(DiceRoll),
+                                                                                                                  typeof(DiceExpression),
                                                                                                                   typeof(FlagCondition),
                                                                                                                   typeof(float),
                                                                                                                   typeof(FloatRange),

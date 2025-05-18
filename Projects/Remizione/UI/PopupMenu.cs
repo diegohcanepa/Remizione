@@ -183,6 +183,9 @@ namespace Remizione.UI
         // HasOptions
         public bool HasOptions => optionList.Count > 0;
 
+        // HideSelectedOption
+        public bool HideSelectedOption { get; set; }
+
         // HorizontalAlignment
         public HorizontalAlignment HorizontalAlignment { get; }
 
@@ -241,23 +244,6 @@ namespace Remizione.UI
             }
         }
 
-        // SelectedOption
-        public PopupMenuOption<TLinkedObject>? SelectedOption
-        {
-            get => selectedOption;
-            set
-            {
-                if (value != selectedOption)
-                {
-                    if (selectedOption != null && value != null)
-                        Sound.Play(SoundNames.MenuSelect);
-
-                    selectedOption = value;
-                    OnSelectionChanged?.Invoke(selectedOption);
-                }
-            }
-        }
-
         // SelectFirst
         public void SelectFirst()
         {
@@ -285,6 +271,33 @@ namespace Remizione.UI
                 index = 0;
 
             SelectedOption = optionList[index];
+        }
+
+        // SelectedOption
+        public PopupMenuOption<TLinkedObject>? SelectedOption
+        {
+            get => selectedOption;
+            set
+            {
+                if (value != selectedOption)
+                {
+                    if (selectedOption != null && value != null)
+                        Sound.Play(SoundNames.MenuSelect);
+
+                    selectedOption = value;
+                    OnSelectionChanged?.Invoke(selectedOption);
+                }
+            }
+        }
+
+        // SelectOptionAt
+        public PopupMenuOption<TLinkedObject>? SelectOptionAt(Vector2 position)
+        {
+            var option = GetOptionAt(position);
+            if(option != null)
+                SelectedOption = option;
+
+            return option;
         }
 
         // SelectPrevious

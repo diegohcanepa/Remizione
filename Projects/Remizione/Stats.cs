@@ -130,13 +130,13 @@ namespace Remizione
         public int HPGainPerLevel { get; private set; } = 8;
 
         // PerformSkillCheck
-        public int PerformSkillCheck(Stat stat) => DiceBag.Dice20.Roll() + GetStatValue(stat);
+        public int PerformSkillCheck(Stat stat) => DiceExpression.Dice20.Roll() + GetStatValue(stat);
 
         // RollAttack
         public int RollAttack(AttackRollStat stat, int bonus, out bool criticalHit)
         {
             int modifier = stat == AttackRollStat.Dexterity ? GetModifier(Stat.Dexterity) : GetModifier(Stat.Strength);
-            var d20 = DiceBag.Dice20.Roll();
+            var d20 = DiceExpression.Dice20.Roll();
             criticalHit = d20 == 20;
             return d20 + modifier + bonus;
         }
@@ -144,7 +144,7 @@ namespace Remizione
         // RollInitiative
         public int RollInitiative()
         {
-            return DiceBag.Dice20.Roll() + GetModifier(Stat.Dexterity);
+            return DiceExpression.Dice20.Roll() + GetModifier(Stat.Dexterity);
         }
 
         // RollInitiative
@@ -161,12 +161,12 @@ namespace Remizione
         {
             return stat switch
             {
-                Stat.Mind => DiceBag.Dice20.Roll() + GetModifier(Stat.Mind),
-                Stat.Fortitude => DiceBag.Dice20.Roll() + GetModifier(Stat.Fortitude),
-                Stat.Devotion => DiceBag.Dice20.Roll() + GetModifier(Stat.Devotion),
-                Stat.Charisma => DiceBag.Dice20.Roll() + GetModifier(Stat.Charisma),
-                _ => DiceBag.Dice20.Roll()
+                Stat.Mind => DiceExpression.Dice20.Roll() + GetModifier(Stat.Mind),
+                Stat.Fortitude => DiceExpression.Dice20.Roll() + GetModifier(Stat.Fortitude),
+                Stat.Devotion => DiceExpression.Dice20.Roll() + GetModifier(Stat.Devotion),
+                Stat.Charisma => DiceExpression.Dice20.Roll() + GetModifier(Stat.Charisma),
+                _ => DiceExpression.Dice20.Roll()
             };
-        }
+        }   
     }
 }

@@ -9,12 +9,11 @@ namespace Engendro.Input
     public sealed class InputBinding : INamedObject
     {
         // Constructor
-        public InputBinding(string name, Buttons? button, MouseButton mouseButton, Keys[] keys)
+        public InputBinding(string name, Buttons? button, Keys[] keys)
         {
             this.Name = name;
             this.Button = button;
             this.Keys = keys;
-            this.MouseButton = mouseButton;
         }
 
         // CanTestInput
@@ -34,13 +33,6 @@ namespace Engendro.Input
             {
                 // Gamepad
                 var result = Button != null && InputManager.Players[(int)playerIndex].GamePad.IsButtonDown(Button.Value);
-
-                // Mouse
-                if (!result && InputManager.AllowMouse && MouseButton != MouseButton.None)
-                {
-                    result = MouseButton == MouseButton.Left && InputManager.DefaultPlayer.Mouse.IsLeftButtonDown() ||
-                             MouseButton == MouseButton.Right && InputManager.DefaultPlayer.Mouse.IsRightButtonDown();
-                }
 
                 // Keyboard
                 if (!result)
@@ -132,13 +124,6 @@ namespace Engendro.Input
                 // Gamepad
                 var result = Button != null && InputManager.Players[(int)playerIndex].GamePad.IsButtonPressed(Button.Value);
 
-                // Mouse
-                if (!result && InputManager.AllowMouse && MouseButton != MouseButton.None)
-                {
-                    result = MouseButton == MouseButton.Left && InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() ||
-                             MouseButton == MouseButton.Right && InputManager.DefaultPlayer.Mouse.IsRightButtonPressed();
-                }
-
                 // Keyboard
                 if (!result)
                 {
@@ -164,13 +149,6 @@ namespace Engendro.Input
                 // Gamepad
                 var result = Button != null && InputManager.Players[(int)playerIndex].GamePad.IsButtonUp(Button.Value);
 
-                // Mouse
-                if (!result && InputManager.AllowMouse && MouseButton != MouseButton.None)
-                {
-                    result = MouseButton == MouseButton.Left && InputManager.DefaultPlayer.Mouse.IsLeftButtonUp() ||
-                             MouseButton == MouseButton.Right && InputManager.DefaultPlayer.Mouse.IsRightButtonUp();
-                }
-
                 // Keyboard
                 if (!result)
                     result = IsKeyUp();
@@ -181,9 +159,6 @@ namespace Engendro.Input
 
         // Keys
         public Keys[] Keys { get; set; }
-
-        // MouseButton
-        public MouseButton MouseButton { get; set; }
 
         // Name
         public string Name { get; }

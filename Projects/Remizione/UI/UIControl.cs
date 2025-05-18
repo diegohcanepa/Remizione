@@ -17,7 +17,7 @@ namespace Remizione
         private UIControlDisplayMode displayMode;
         private string? imageName;
         private readonly ImageSprite image;
-        private readonly Vector2 imagePadding = new(1, .2f);
+        private readonly float horzImagePadding = 1;
         private InputBinding? inputBinding;
         private readonly TextSprite label;
         private InputMethod lastKnownInputMethod;
@@ -107,22 +107,22 @@ namespace Remizione
                     {
                         label.X -= image.BoundingBox.Width / 2;
                         image.PivotOrigin = RectanglePoint.Left;
-                        image.Position = label.BoundingBox.GetPoint(RectanglePoint.Right, imagePadding);
+                        image.Position = label.BoundingBox.GetPoint(RectanglePoint.Right, horzImagePadding, 0);
                     }
                     else
                     {
                         label.X += image.BoundingBox.Width / 2;
                         image.PivotOrigin = RectanglePoint.Right;
-                        image.Position = label.BoundingBox.GetPoint(RectanglePoint.Left, -imagePadding);
+                        image.Position = label.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, -.5f);
                     }
                 }
 
                 BoundingBox = RectangleF.Union(image.BoundingBox, label.BoundingBox);
 
                 if (image.IsEmpty)
-                    container.Position = label.BoundingBox.Center - new Vector2(0, .65f);
+                    container.Position = label.BoundingBox.Center;
                 else
-                    container.Position = BoundingBox.Center - new Vector2(0, .65f);
+                    container.Position = BoundingBox.Center;
             }
         }
 
@@ -325,6 +325,20 @@ namespace Remizione
             {
                 if (value != textColor)
                     textColor = value;
+            }
+        }
+
+        // TextScale
+        public Vector2 TextScale
+        {
+            get => label.Scale;
+            set
+            {
+                if (value != label.Scale)
+                {
+                    label.Scale= value;
+                    Invalidate();
+                }
             }
         }
 

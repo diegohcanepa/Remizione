@@ -54,27 +54,15 @@ namespace Engendro.Input
         // AddBinding
         public static InputBinding AddBinding(string name, Buttons? button, params Keys[] keys)
         {
-            return AddBinding(name, button, MouseButton.None, ModifiersKey.None, keys);
-        }
-
-        // AddBinding
-        public static InputBinding AddBinding(string name, Buttons? button, MouseButton mouseButton, params Keys[] keys)
-        {
-            return AddBinding(name, button, mouseButton, ModifiersKey.None, keys);
+            return AddBinding(name, button, ModifiersKey.None, keys);
         }
 
         // AddBinding
         public static InputBinding AddBinding(string name, Buttons? button, ModifiersKey modifiers, params Keys[] keys)
         {
-            return AddBinding(name, button, MouseButton.None, modifiers, keys);
-        }
-
-        // AddBinding
-        public static InputBinding AddBinding(string name, Buttons? button, MouseButton mouseButton, ModifiersKey modifiers, params Keys[] keys)
-        {
             CodeContract.NotEmpty(name, nameof(name));
 
-            InputBinding result = new(name, button, mouseButton, keys)
+            InputBinding result = new(name, button, keys)
             {
                 RequiresAlt = modifiers.HasFlag(ModifiersKey.Alt),
                 RequiresControl = modifiers.HasFlag(ModifiersKey.Control),

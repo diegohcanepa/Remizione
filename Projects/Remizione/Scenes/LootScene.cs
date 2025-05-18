@@ -11,15 +11,15 @@ namespace Remizione
     /// </summary>
     public sealed class LootScene : Scene
     {
+        private PopupMenu<Item> activeMenu;
         private readonly UIInfo info;
         private const int margin = 22;
         private readonly UIControl moveButton;
         private readonly ImageSprite playerContainer;
-        private readonly ImageSprite playerContainerSelection;
+        private readonly ImageSprite selectionContainer;
         private readonly PopupMenu<Item> playerMenu;
         private readonly GameSession session;
         private readonly ImageSprite targetContainer;
-        private readonly ImageSprite targetContainerSelection;
         private readonly PopupMenu<Item> targetMenu;
 
 
@@ -41,18 +41,10 @@ namespace Remizione
                 Scale = ScaleInfo.UIElement.Medium
             };
 
-            // Player container selection
-            this.playerContainerSelection = new(Game, Atlases.UI.ItemMenuContainerSelection)
-            {
-                Opacity = .2f,
-                PivotOrigin = RectanglePoint.Middle,
-                Scale = ScaleInfo.UIElement.Medium
-            };
-
             // Player menu
             this.playerMenu = new(Game, HorizontalAlignment.Center, true, playerContainer.BoundingBox)
             {
-                Position = playerContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 12),
+                Position = playerContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 9),
                 OnSelectionChanged = SelectedOptionChanged,
                 TitlePosition = playerContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 2),
             };
@@ -65,49 +57,40 @@ namespace Remizione
                 Scale = ScaleInfo.UIElement.Medium
             };
 
-            // Target container selection
-            this.targetContainerSelection = new(Game, Atlases.UI.ItemMenuContainerSelection)
+            // Target menu
+            this.targetMenu = new(Game, HorizontalAlignment.Center, true, targetContainer.BoundingBox)
+            {
+                Position = targetContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 9),
+                OnSelectionChanged = SelectedOptionChanged,
+                TitlePosition = targetContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 2),
+            };
+
+            // Selection container
+            this.selectionContainer = new(Game, Atlases.UI.ItemMenuContainerSelection)
             {
                 Opacity = .2f,
                 PivotOrigin = RectanglePoint.Middle,
                 Scale = ScaleInfo.UIElement.Medium
             };
 
-            // Target menu
-            this.targetMenu = new(Game, HorizontalAlignment.Center, true, targetContainer.BoundingBox)
-            {
-                Position = targetContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 12),
-                OnSelectionChanged = SelectedOptionChanged,
-                TitlePosition = targetContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 2),
-            };
-
             // Move button
-            this.moveButton = new UIControl(Game, InputBindings.Select)
+            this.moveButton = new UIControl(Game, InputBindings.Interact)
             {
                 ContainerImage = Atlases.UI.GetImage("ButtonContainer"),
                 PivotOrigin = RectanglePoint.Middle,
                 X = Screen.Area.Center.X,
                 Y = playerContainer.BoundingBox.GetPoint(RectanglePoint.Middle).Y,
                 TextColor = ColorPalette.Text.Default,
-                Text = "Borrow"
+                TextScale = ScaleInfo.Text.VeryLarge,
+                Text = "Move"
             };
+
+            activeMenu = targetMenu;
         }
 
         #endregion
 
         #region Private members
-
-        // DiscardItem
-        private void DiscardItem(Actor actor)
-        {
-            if (playerMenu.SelectedOption?.LinkedObject is Item item)
-            {
-                actor.Inventory.Remove(item.Name);
-                playerMenu.RemoveSelectedOption();
-                InvalidateTitle();
-                Sound.Play(SoundNames.MenuDiscardItem);
-            }
-        }
 
         // HandleMouseInput
         private bool HandleMouseInput()
@@ -123,12 +106,36 @@ namespace Remizione
 
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
             {
-                if (!playerMenu.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
-                    SceneController.Pop();
+                if (playerMenu.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
+                {
+                    activeMenu = playerMenu;
+                    activeMenu.SelectOptionAt(InputManager.DefaultPlayer.Mouse.VirtualPosition);
+                    InvalidateInfo();
+                }
+
+                else if (targetMenu.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
+                {
+                    activeMenu = targetMenu;
+                    activeMenu.SelectOptionAt(InputManager.DefaultPlayer.Mouse.VirtualPosition);
+                    InvalidateInfo();
+                }
+
                 return true;
             }
 
             return false;
+        }
+
+        // InvalidateInfo
+        private void InvalidateInfo()
+        {
+            if (activeMenu.SelectedOption != null)
+            {
+                info.Info = activeMenu.SelectedOption.LinkedObject.GetLocalizedInfo();
+                info.Text = activeMenu.SelectedOption.LinkedObject.MetaItem.LocalizedDescription;
+            }
+            else
+                info.Text = null;
         }
 
         // InvalidateTitle
@@ -142,21 +149,10 @@ namespace Remizione
             playerMenu.Title = title;
         }
 
-        // SelectedOptionChanged
-        private void SelectedOptionChanged(PopupMenuOption<Item>? option)
+        // MoveItem
+        private void MoveItem(Actor actor)
         {
-            if (option != null)
-            {
-                info.Info = option.LinkedObject.GetLocalizedInfo();
-                info.Text = option.LinkedObject.MetaItem.LocalizedDescription;
-            }
-            else
-                info.Text = null;
-        }
-
-        // UseItem
-        private void UseItem(Actor actor)
-        {
+            /*
             if (playerMenu.SelectedOption?.LinkedObject is Item item)
             {
                 if (item.MetaItem.Action == ItemAction.Consume)
@@ -166,6 +162,13 @@ namespace Remizione
 
                 SceneController.Pop();
             }
+            */
+        }
+
+        // SelectedOptionChanged
+        private void SelectedOptionChanged(PopupMenuOption<Item>? option)
+        {
+            InvalidateInfo();
         }
 
         #endregion
@@ -179,17 +182,13 @@ namespace Remizione
             Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade);
             playerContainer.Draw(gameTime);
             targetContainer.Draw(gameTime);
-            if (playerMenu.SelectedOption != null)
+            
+            if (activeMenu.SelectedOption != null)
             {
-                playerContainerSelection.Position = playerMenu.SelectedOption.Position;
-                playerContainerSelection.Draw(gameTime);
+                selectionContainer.Position = activeMenu.SelectedOption.Position;
+                selectionContainer.Draw(gameTime);
             }
-
-            if (targetMenu.SelectedOption != null)
-            {
-                targetContainerSelection.Position = targetMenu.SelectedOption.Position;
-                targetContainerSelection.Draw(gameTime);
-            }
+            
             Game.SpriteBatch.End();
 
             playerMenu.Draw(gameTime);
@@ -207,11 +206,11 @@ namespace Remizione
             if (session.Player == null)
                 return HandleInputResult.Unhandled;
 
-            if (playerMenu.HandleInput(gameTime) == HandleInputResult.Handled)
+            if (activeMenu.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
             if (moveButton.TestPressed(PlayerIndex.One))
-                UseItem(session.Player);
+                MoveItem(session.Player);
 
             if (HandleMouseInput())
                 return HandleInputResult.Handled;
@@ -235,7 +234,6 @@ namespace Remizione
             {
                 playerMenu.AddOption(session.Player.Inventory.Items[i]);
             }
-            playerMenu.SelectFirst();
 
             // Target items
             for (int i = 0; i < Target.Inventory.Items.Count; i++)
@@ -246,11 +244,17 @@ namespace Remizione
             InvalidateTitle();
 
             targetMenu.Title = Target.DisplayName;
+
+            playerMenu.SelectFirst();
+            targetMenu.SelectFirst();
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            playerMenu.HideSelectedOption = activeMenu != playerMenu;
+            targetMenu.HideSelectedOption = activeMenu != targetMenu;
+
             playerMenu.Update(gameTime);
             targetMenu.Update(gameTime);
 

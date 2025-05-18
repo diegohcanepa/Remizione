@@ -561,6 +561,8 @@ namespace Remizione
             if (Player?.InteractiveTarget == null)
                 return;
 
+            Player.InteractiveTarget.Inventory.Add(MetaItem.Find("Apple"), 3);
+
             lootScene.Target = Player.InteractiveTarget;
             Game.SceneManager.Push(lootScene);
         }

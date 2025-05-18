@@ -82,7 +82,7 @@ namespace EngendroAdventure.Scripting
             var parsedValue = Parser.ParseQuotedString(statement, value);
             if (instance != null)
             {
-                PropertyInfo.SetValue(instance, new DiceRoll(parsedValue));
+                PropertyInfo.SetValue(instance, new DiceExpression(parsedValue));
             }
         }
 
@@ -309,7 +309,7 @@ namespace EngendroAdventure.Scripting
             }
 
             // DiceRoll
-            else if (PropertyInfo.PropertyType == typeof(DiceRoll))
+            else if (PropertyInfo.PropertyType == typeof(DiceExpression))
             {
                 SetDiceRollProperty(statement, instance, value);
             }

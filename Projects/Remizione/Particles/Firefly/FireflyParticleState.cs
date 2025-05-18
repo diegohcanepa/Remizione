@@ -23,11 +23,11 @@ namespace Remizione
             scale = new Vector2(.5f);
 
             speed.X = Randomizer.Next(2.5f, 5);
-            if (DiceBag.Dice10.Roll() <= 5)
+            if (DiceExpression.Dice10.Roll() <= 5)
                 speed.X *= -1;
 
             speed.Y = Randomizer.Next(1, 3);
-            if (DiceBag.Dice10.Roll() <= 5)
+            if (DiceExpression.Dice10.Roll() <= 5)
                 speed.Y *= -1;
 
             acceleration.X = Math.Abs(speed.X / 2.5f);

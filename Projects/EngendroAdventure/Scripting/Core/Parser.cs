@@ -160,24 +160,28 @@ namespace EngendroAdventure.Scripting
             throw ScriptExceptionBuilder.UnrecognizedConditionalOperator(statement, value);
         }
 
-        // ParseDiceRoll
-        public static DiceRoll? ParseDiceRoll(Statement statement, string expression)
+        // ParseDiceExpression
+        public static DiceExpression ParseDiceExpression(Statement statement, string expression)
         {
-            if (!DiceRoll.TryParse(expression, out var diceRoll))
-                throw new ScriptException(statement, $"'{expression}' is not a valid roll expression.");
+            DiceExpression.TryParse(expression, out var diceExpression);
 
-            return diceRoll;
+            if (diceExpression == null)
+                throw new ScriptException(statement, $"'{diceExpression}' is not a valid dice expression.");
+            else
+                return diceExpression;
         }
 
-        // ParseDiceRollArgument
-        public static DiceRoll? ParseDiceRollArgument(Statement statement, string argName)
+        // ParseDiceExpressionArgument
+        public static DiceExpression? ParseDiceExpressionArgument(Statement statement, string argName)
         {
             var expresion = AssertArgumentValue(statement, argName) ?? string.Empty;
 
             if (expresion.Length > 0)
-                expresion = Parser.RemoveQuotes(expresion);
+                expresion = RemoveQuotes(expresion);
+            else
+                return null;
 
-            return ParseDiceRoll(statement, expresion);
+            return ParseDiceExpression(statement, expresion);
         }
 
         // ParseEntities

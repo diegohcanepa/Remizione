@@ -11,9 +11,6 @@ namespace Engendro
     // CameraShakeState
     public enum CameraShakeState { None, X, Y, XY }
 
-    // DiceName
-    public enum DiceName { d4, d6, d8, d10, d12, d20, d100 }
-
     // FadeMode
     public enum FadeMode { In, Out }
 
