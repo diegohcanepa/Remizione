@@ -40,32 +40,32 @@ namespace Remizione
             this.playerContainer = new(Game, Atlases.UI.ItemMenuContainer)
             {
                 PivotOrigin = RectanglePoint.LeftTop,
-                Position = new Vector2(Screen.Area.Left + margin, 14),
+                Position = new Vector2(Screen.Area.Left + margin, 20),
                 Scale = ScaleInfo.UIElement.Medium
             };
 
             // Player menu
-            this.playerMenu = new(Game, HorizontalAlignment.Center, true, playerContainer.BoundingBox)
+            this.playerMenu = new(Game, HorizontalAlignment.Center, false, playerContainer.BoundingBox)
             {
-                Position = playerContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 9),
+                Position = playerContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 5),
                 OnSelectionChanged = SelectedOptionChanged,
-                TitlePosition = playerContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 2),
+                TitlePosition = playerContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, -1),
             };
 
             // Target container
             this.targetContainer = new(Game, Atlases.UI.ItemMenuContainer)
             {
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = new Vector2(Screen.Area.Right - margin, 14),
+                Position = new Vector2(Screen.Area.Right - margin, 20),
                 Scale = ScaleInfo.UIElement.Medium
             };
 
             // Target menu
             this.targetMenu = new(Game, HorizontalAlignment.Center, true, targetContainer.BoundingBox)
             {
-                Position = targetContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 9),
+                Position = targetContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 5),
                 OnSelectionChanged = SelectedOptionChanged,
-                TitlePosition = targetContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 2),
+                TitlePosition = targetContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, -1),
             };
 
             // Selection container
@@ -144,11 +144,17 @@ namespace Remizione
         // InvalidateTitles
         private void InvalidateTitles()
         {
+            
             if (session.Player != null)
             {
                 var title = Localization.GetLocalizedValue(ItemContainerCategory.Inventory);
                 title += $" ({playerMenu.Options.Count} / {session.Player.InventoryCapacity})";
                 playerMenu.Title = title;
+
+                if (IsPlayerInventoryFull)
+                    playerMenu.TitleColor = ColorPalette.Text.Terra;
+                else
+                    playerMenu.ResetColors();
             }
 
             if (Target != null)
@@ -157,8 +163,19 @@ namespace Remizione
                 if (Target.InventoryCapacity > 0)
                     title += $" ({targetMenu.Options.Count} / {Target.InventoryCapacity})";
                 targetMenu.Title = title;
+
+                if (IsTargetInventoryFull)
+                    targetMenu.TitleColor =  ColorPalette.Text.Terra;
+                else
+                    targetMenu.ResetColors();
             }
         }
+
+        // IsPlayerInventoryFull}
+        private bool IsPlayerInventoryFull => session.Player != null && playerMenu.Options.Count >= session.Player.Inventory.Capacity;
+
+        // IsTargetInventoryFull}
+        private bool IsTargetInventoryFull => Target != null && targetMenu.Options.Count >= Target.Inventory.Capacity;
 
         // MoveItem
         private void MoveItem(Actor actor)
@@ -268,14 +285,21 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            moveButton.IsEnabled = activeMenu.SelectedOption != null;
+            if (moveButton.IsEnabled)
+            {
+                if (activeMenu == playerMenu && IsTargetInventoryFull ||
+                    activeMenu == targetMenu && IsPlayerInventoryFull)
+                    moveButton.IsEnabled = false;
+            }
+
             playerMenu.HideSelectedOption = activeMenu != playerMenu;
             targetMenu.HideSelectedOption = activeMenu != targetMenu;
 
             playerMenu.Update(gameTime);
             targetMenu.Update(gameTime);
 
-            if (playerMenu.SelectedOption != null)
-                moveButton.Update(gameTime);
+            moveButton.Update(gameTime);
         }
 
         #endregion

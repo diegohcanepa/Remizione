@@ -26,10 +26,10 @@ namespace Remizione.Scripting
             if (MetaItem.Find(pickupItem.StaticName) is not MetaItem metaItem)
                 return;
 
-            // Item is already in inventory, so check if the slot is empty
-            if (metaItem.Maximum > 1 && actor.Inventory.GetItem(metaItem.Name) is Item item)
+            // Stackable item already in inventory
+            if (metaItem.IsStackable && actor.Inventory.GetItem(metaItem.Name) is Item item)
             {
-                if (item.Count == item.MetaItem.Maximum)
+                if (item.IsStackFull)
                 {
                     actor.Session.HUD.Log.Show(LogMessage.EnoughOfThat, true);
                     return;
@@ -43,7 +43,7 @@ namespace Remizione.Scripting
                 return;
             }
 
-            actor.Inventory.Add(metaItem.Name, 1);
+            actor.Inventory.Add(metaItem, 1);
             pickupItem.Unparent();
             actor.Session.HUD.Log.Show(LogVerb.PickedUp, metaItem.LocalizedName);
         }

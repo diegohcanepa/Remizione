@@ -128,9 +128,10 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            playerStats.Draw(gameTime);
+
             if (session.IsCurrentScene)
             {
-                playerStats.Draw(gameTime);
                 Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
                 statusText.Draw(gameTime);
                 interactionTarget.Draw(gameTime);

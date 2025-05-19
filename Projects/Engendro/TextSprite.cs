@@ -80,7 +80,7 @@ namespace Engendro
             if (VisualParent != null)
                 pos = GetAbsolutePosition();
 
-            Game.SpriteBatch.DrawString(font, DisplayText, pos, Color * Opacity, Rotation, Origin, Scale, SpriteEffects.None, 0);
+            Game.SpriteBatch.DrawString(font, DisplayText, pos, Color * Opacity * OpacityFactor, Rotation, Origin, Scale, SpriteEffects.None, 0);
         }
 
         // Invalidate

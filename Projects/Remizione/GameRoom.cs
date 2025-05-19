@@ -110,17 +110,11 @@ namespace Remizione
         // DrawFloatingTexts
         private void DrawFloatingTexts(GameTime gameTime)
         {
+            Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp);
             for (var i = Session.ObjectPools.FloatingTexts.InUse.Count - 1; i >= 0; i--)
             {
                 Session.ObjectPools.FloatingTexts.InUse[i].Draw(gameTime);
             }
-        }
-
-        // DrawTexts
-        private void DrawTexts(GameTime gameTime)
-        {
-            Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.AlphaBlend, null);
-            DrawFloatingTexts(gameTime);
             Game.SpriteBatch.End();
         }
 
@@ -132,6 +126,18 @@ namespace Remizione
             {
                 if (CulledThings[i] is GameThing thing)
                     thing.DrawShadow(gameTime);
+            }
+            Game.SpriteBatch.End();
+        }
+
+        // DrawThingUIElements
+        private void DrawThingUIElements(GameTime gameTime)
+        {
+            Game.SpriteBatch.Begin(Session.Camera);
+            for (int i = 0; i < CulledThings.Count; i++)
+            {
+                if (CulledThings[i] is GameThing thing)
+                    thing.DrawDamagerMeter(gameTime);
             }
             Game.SpriteBatch.End();
         }
@@ -290,8 +296,11 @@ namespace Remizione
             // Foreround (layer)
             DrawThings(gameTime, RenderLayer.ForegroundNoLight, interactiveTarget);
 
-            // Draw hit numbers
-            DrawTexts(gameTime);
+            // DrawThingUIElements
+            DrawThingUIElements(gameTime);
+
+            // Draw texts (hit numbers, etc)
+            DrawFloatingTexts(gameTime);
 
             // Draw speech bubbles
             SpeechBubble.DrawSpeechBubbles(gameTime);

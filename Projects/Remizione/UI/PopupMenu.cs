@@ -41,10 +41,11 @@ namespace Remizione.UI
             // Title
             this.titleText = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = TextScale
             };
+
+            ResetColors();
         }
 
         #endregion
@@ -231,6 +232,12 @@ namespace Remizione.UI
             }
         }
 
+        // ResetColors
+        public void ResetColors()
+        {
+            titleText.Color = ColorPalette.Text.Default;
+        }
+
         // Select
         public void Select(TLinkedObject obj)
         {
@@ -350,6 +357,13 @@ namespace Remizione.UI
             set => titleText.Text = value;
         }
 
+        // TitleColor
+        public Color TitleColor
+        {
+            get => titleText.Color;
+            set => titleText.Color = value;
+        }
+
         // TitlePosition
         public Vector2 TitlePosition
         {
@@ -358,6 +372,6 @@ namespace Remizione.UI
         }
 
         // VerticalSpacing
-        public float VerticalSpacing { get; set; } = 1.5f;
+        public float VerticalSpacing { get; set; } = .75f;
     }
 }

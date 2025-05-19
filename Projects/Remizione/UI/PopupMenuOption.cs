@@ -20,6 +20,7 @@ namespace Remizione.UI
             this.LinkedObject = linkedObject;
             this.action = action;
 
+            // Name
             this.nameText = new TextSprite(menu.Game, menu.Font)
             {
                 MaximumWidth = (int)(menu.BoundingBox.Width * .9f),
@@ -79,7 +80,7 @@ namespace Remizione.UI
         public void Invalidate()
         {
             nameText.Text = LinkedObject.ToString();
-            nameText.Scale = menu.TextScale;
+            nameText.Scale = ScaleInfo.Text.Medium;
         }
 
         // IsHovered

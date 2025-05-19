@@ -42,14 +42,15 @@ namespace Remizione
                 Scale = ScaleInfo.UIElement.Medium
             };
 
+            // Menu
             this.menu = new(Game, HorizontalAlignment.Center, true, container.BoundingBox)
             {
-                Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 12),
+                Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 6),
                 OnSelectionChanged = SelectedOptionChanged,
-                TitlePosition = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 2),
+                TitlePosition = container.BoundingBox.GetPoint(RectanglePoint.Top),
             };
 
-            // Default action
+            // Item action
             this.actionButton = new UIControl(game, InputBindings.Select)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
@@ -205,8 +206,8 @@ namespace Remizione
 
             menu.SelectFirst();
 
-            discardButton.Position = menu.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 5, -10);
-            actionButton.Position = menu.BoundingBox.GetPoint(RectanglePoint.RightBottom, -5, -10);
+            discardButton.Position = container.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 5, -4);
+            actionButton.Position = container.BoundingBox.GetPoint(RectanglePoint.RightBottom, -5, -4);
 
             InvalidateTitle();
         }

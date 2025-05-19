@@ -69,6 +69,9 @@ namespace Remizione
         // HP
         public DiceExpression? HP { get; }
 
+        // IsStackable
+        public bool IsStackable => Maximum > 1;
+
         // Knockback
         public Vector2 Knockback { get; }
 

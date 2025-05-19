@@ -294,12 +294,6 @@ namespace Remizione
 
             if (hurtTween != null && hurtTween.IsRunning)
                 Altitude -= hurtTween.CurrentValue;
-
-            if (damageMeterCooldown > 0 && damageMeter != null)
-            {
-                damageMeter.Position = GetOverheadPosition(-5, -3);
-                damageMeter.Draw(gameTime);
-            }
         }
 
         // OnDrawReflection
@@ -469,7 +463,7 @@ namespace Remizione
 
             Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), damageText, damageTextColor);
 
-            damageMeterCooldown = 2000;
+            damageMeterCooldown = 1500;
             if (damageMeter == null)
             {
                 damageMeter = new(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore) { MaximumValue = 10 };
@@ -591,6 +585,16 @@ namespace Remizione
         // DistributionStrategy
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public PlacementDistributionStrategy DistributionStrategy { get; set; }
+
+        // DrawDamagerMeter
+        public void DrawDamagerMeter(GameTime gameTime)
+        {
+            if (damageMeterCooldown > 0 && damageMeter != null)
+            {
+                damageMeter.Position = GetOverheadPosition(-5, -3);
+                damageMeter.Draw(gameTime);
+            }
+        }
 
         // DrawLights
         public void DrawLights(GameTime gameTime, List<Light> renderedLights)

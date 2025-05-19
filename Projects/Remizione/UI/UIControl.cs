@@ -17,6 +17,7 @@ namespace Remizione
         private UIControlDisplayMode displayMode;
         private string? imageName;
         private readonly ImageSprite image;
+        private bool isEnabled = true;
         private readonly float horzImagePadding = 1;
         private InputBinding? inputBinding;
         private readonly TextSprite label;
@@ -170,17 +171,19 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             label.Color = textColor;
-
             image.Update(gameTime);
             label.Update(gameTime);
 
             if (InputManager.DefaultPlayer.LastInputMethod != lastKnownInputMethod)
                 Invalidate();
 
-            if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
+            if (IsEnabled)
             {
-                if (IsMouseOver())
-                    label.Color = ColorPalette.Text.Hover;
+                if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
+                {
+                    if (IsMouseOver())
+                        label.Color = ColorPalette.Text.Hover;
+                }
             }
         }
 
@@ -249,6 +252,20 @@ namespace Remizione
             }
         }
 
+        // IsEnabled
+        public bool IsEnabled
+        {
+            get => isEnabled;
+            set
+            {
+                if (value != isEnabled)
+                {
+                    isEnabled = value;
+                    label.OpacityFactor = isEnabled ? 1 : .3f;
+                }
+            }   
+        }
+
         // IsMouseOver
         public bool IsMouseOver()
         {
@@ -286,6 +303,9 @@ namespace Remizione
         // TestPressed
         public bool TestPressed(PlayerIndex playerIndex)
         {
+            if (!IsEnabled)
+                return false;
+
             var result = false;
 
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() && IsMouseOver())

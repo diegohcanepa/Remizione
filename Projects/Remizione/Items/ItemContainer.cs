@@ -21,42 +21,34 @@ namespace Remizione
             Items = new ReadOnlyCollection<Item>(items);
         }
 
-        // AssertCapacity
-        private void AssertCapacity()
-        {
-            if (capacity > 0 && items.Count == capacity)
-                throw new InvalidOperationException("Maximum capacity reached.");
-        }
-
         // Add
         public Item? Add(string name, int amount)
         {
-            AssertCapacity();
             var metaItem = MetaItem.Find(name) ?? throw new InvalidOperationException("Meta item not found.");
             return Add(metaItem, amount);
         }
 
         // Add
-        public Item Add(MetaItem metaItem, int amount)
+        public Item? Add(MetaItem metaItem, int amount)
         {
-            AssertCapacity();
-
-            if (metaItem.Maximum == 1)
+            if (!metaItem.IsStackable)
                 amount = 1;
 
             var existingItem = GetItem(metaItem.Name);
 
-            if (existingItem != null && metaItem.Maximum > 1)
+            if (existingItem != null && metaItem.IsStackable)
             {
                 existingItem.Count += amount;
                 return existingItem;
             }
-            else
+            else if (!IsFull)
             {
                 var item = new Item(this, metaItem) { Count = amount };
                 items.Add(item);
                 return item;
             }
+
+            return null;
         }
 
         // Capacity

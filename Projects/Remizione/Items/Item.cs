@@ -92,32 +92,32 @@ namespace Remizione
         // ApplyDamage
         public void ApplyDamage(GameThing target, HitType hitType)
         {
-            if (MetaItem.BaseDamage != null)
+            if (MetaItem.BaseDamage == null)
+                return;
+
+            var actor = Owner as Actor;
+            int damageAmount;
+
+            // Faith penalty
+            if (actor != null && (actor.Faith <= 0 || hitType == HitType.Glancing))
             {
-                var actor = Owner as Actor;
-                int damageAmount;
-
-                // Faith penalty
-                if (actor != null && (actor.Faith <= 0 || hitType == HitType.Glancing))
-                {
-                    damageAmount = MetaItem.BaseDamage.MinimumValue;
-                }
-                else
-                {
-                    damageAmount = MetaItem.BaseDamage.Roll();
-
-                    if (actor != null)
-                        damageAmount += actor.Stats.GetModifier(MetaItem.Modifier);
-
-                    if (hitType == HitType.Critical)
-                        damageAmount += Math.Max(MetaItem.BaseDamage.Roll(), MetaItem.BaseDamage.MaximumValue / 2);
-                }
-
-                if (MetaItem.Durability > 0 && Durability > 0)
-                    Durability -= 1;
-
-                target.TakeDamage(Container.Owner, damageAmount + MetaItem.Bonus, hitType, Knockback);
+                damageAmount = MetaItem.BaseDamage.MinimumValue;
             }
+            else
+            {
+                damageAmount = MetaItem.BaseDamage.Roll();
+
+                if (actor != null)
+                    damageAmount += actor.Stats.GetModifier(MetaItem.Modifier);
+
+                if (hitType == HitType.Critical)
+                    damageAmount += Math.Max(MetaItem.BaseDamage.Roll(), MetaItem.BaseDamage.MaximumValue / 2);
+            }
+
+            if (MetaItem.Durability > 0 && Durability > 0)
+                Durability -= 1;
+
+            target.TakeDamage(Container.Owner, damageAmount + MetaItem.Bonus, hitType, Knockback);
 
             target.ApplyDamage(Container.Owner);
         }
@@ -133,7 +133,7 @@ namespace Remizione
             {
                 if (value != count)
                 {
-                    this.count = Math.Clamp(value, 1, MetaItem.Maximum);
+                    count = Math.Clamp(value, 1, MetaItem.Maximum);
                     isDisplayTextDiry = true;
                 }
             }
@@ -196,6 +196,9 @@ namespace Remizione
 
         // HP
         public DiceExpression? HP => MetaItem.HP;
+
+        // IsStackFull
+        public bool IsStackFull => MetaItem.Maximum == 1 || Count >= MetaItem.Maximum;
 
         // Knockback
         public Vector2 Knockback => MetaItem.Knockback;
