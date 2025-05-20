@@ -53,7 +53,7 @@ namespace Remizione.UI
 
             if (!textSprite.IsEmpty)
             {
-                //infoSprite.Draw(gameTime);
+                infoSprite.Draw(gameTime);
                 textSprite.Draw(gameTime);
             }
 

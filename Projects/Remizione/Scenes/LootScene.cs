@@ -147,7 +147,7 @@ namespace Remizione
             
             if (session.Player != null)
             {
-                var title = Localization.GetLocalizedValue(ItemContainerCategory.Inventory);
+                var title = TextRepository.GetValue("Misc.Inventory");
                 title += $" ({playerMenu.Options.Count} / {session.Player.InventoryCapacity})";
                 playerMenu.Title = title;
 

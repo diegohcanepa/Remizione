@@ -165,22 +165,28 @@ namespace Remizione
             }
         }
 
-        // Faith
-        public DiceExpression? Faith => MetaItem.Faith;
-
         // GetLocalizedInfo
         public string GetLocalizedInfo()
         {
             var values = new List<string>();
 
             if (MetaItem.BaseDamage != null)
-                values.Add($"{Localization.GetLocalizedValue(ItemProperty.BaseDamage)}: {MetaItem.BaseDamage.MinimumValue + Level}-{MetaItem.BaseDamage.MaximumValue + Level}");
+            {
+                var value = $"{Localization.GetLocalizedValue(ItemProperty.BaseDamage)}: {MetaItem.BaseDamage.GetValueRangeAsString(Level)}";
+                values.Add(value);
+            }
 
-            if (HP != null)
-                values.Add($"{TextRepository.GetValue($"DerivedStat.Spirit.Name")}: {HP.MinimumValue}-{HP.MaximumValue}");
+            if (MetaItem.HP != null)
+            {
+                var value = $"{TextRepository.GetValue($"DerivedStat.Spirit.Name")}: {MetaItem.HP.GetValueRangeAsString()}";
+                values.Add(value);
+            }
 
-            if (Faith != null)
-                values.Add($"{TextRepository.GetValue($"DerivedStat.Faith.Name")}: {Faith.MinimumValue}-{Faith.MaximumValue}");
+            if (MetaItem.Faith != null)
+            {
+                var value = $"{TextRepository.GetValue($"DerivedStat.Faith.Name")}: {MetaItem.Faith.GetValueRangeAsString()}";
+                values.Add(value);
+            }
 
             return string.Join(" / ", values);
         }
@@ -193,9 +199,6 @@ namespace Remizione
 
             return (int)Math.Ceiling(cost);
         }
-
-        // HP
-        public DiceExpression? HP => MetaItem.HP;
 
         // IsStackFull
         public bool IsStackFull => MetaItem.Maximum == 1 || Count >= MetaItem.Maximum;
@@ -248,11 +251,11 @@ namespace Remizione
         // Use
         public bool Use()
         {
-            if (HP != null)
-                Owner.HP += HP.Roll();
+            if (MetaItem.HP != null)
+                Owner.HP += MetaItem.HP.Roll();
 
-            if (Faith != null && Owner is Actor actor)
-                actor.Faith += Faith.Roll();
+            if (MetaItem.Faith != null && Owner is Actor actor)
+                actor.Faith += MetaItem.Faith.Roll();
 
             if (MetaItem.Maximum > 1)
             {

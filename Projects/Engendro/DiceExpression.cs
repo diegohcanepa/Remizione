@@ -8,12 +8,18 @@ namespace Engendro
     /// </summary>
     public class DiceExpression
     {
+        private int fixedValue;
         private static readonly Random random = new();
 
         // Constructor
         public DiceExpression(string expression)
         {
-            if (TryParse(expression, out int diceCount, out int diceSides, out int modifier))
+            if (int.TryParse(expression, out int value))
+            {
+                IsFixedValue = true;
+                fixedValue = value;
+            }
+            else if (TryParse(expression, out int diceCount, out int diceSides, out int modifier))
             {
                 DiceCount = diceCount;
                 DiceSides = diceSides;
@@ -22,6 +28,32 @@ namespace Engendro
             else
                 throw new ArgumentException($"Invalid dice expression: {expression}");
         }
+
+        #region Private members
+
+        // TryParse
+        private static bool TryParse(string expression, out int diceCount, out int diceSides, out int modifier)
+        {
+            diceCount = 0;
+            diceSides = 0;
+            modifier = 0;
+
+            var match = Regex.Match(expression.Trim(), @"^(\d*)d(\d+)([+-]\d+)?$", RegexOptions.IgnoreCase);
+
+            if (!match.Success)
+                throw new ArgumentException("Invalid dice expression. Use formats like '2d6+1' or 'd8-2'.");
+
+            diceCount = string.IsNullOrEmpty(match.Groups[1].Value) ? 1 : int.Parse(match.Groups[1].Value);
+            diceSides = int.Parse(match.Groups[2].Value);
+            modifier = match.Groups[3].Success ? int.Parse(match.Groups[3].Value) : 0;
+
+            if (diceCount <= 0 || diceSides <= 0)
+                return false;
+
+            return true;
+        }
+
+        #endregion
 
         // Dice4
         public static DiceExpression Dice4 { get; } = new("d4");
@@ -50,11 +82,26 @@ namespace Engendro
         // DiceSides
         public int DiceSides { get; }
 
+        // GetValueRangeAsString
+        public string GetValueRangeAsString(int level = 0)
+        {
+            var result = $"{MinimumValue + level}";
+            if (IsFixedValue)
+                result = (fixedValue > 0 ? "+" : "-") + result;
+            else
+                result += $"-{MaximumValue + level}";
+
+            return result;
+        }
+
+        // IsFixedValue
+        public bool IsFixedValue { get; }
+
         // MaximumValue
-        public int MaximumValue => DiceCount * DiceSides + Modifier;
+        public int MaximumValue => IsFixedValue ? fixedValue : DiceCount * DiceSides + Modifier;
 
         // MinimumValue
-        public int MinimumValue => DiceCount * 1 + Modifier;
+        public int MinimumValue => IsFixedValue ? fixedValue : DiceCount * 1 + Modifier;
 
         // Modifier
         public int Modifier { get; }
@@ -62,6 +109,9 @@ namespace Engendro
         // Roll
         public int Roll()
         {
+            if (IsFixedValue)
+                return fixedValue;
+
             int total = 0;
 
             for (int i = 0; i < DiceCount; i++)
@@ -75,34 +125,21 @@ namespace Engendro
         // ToString
         public override string ToString()
         {
-            return $"{DiceCount}d{DiceSides}{(Modifier >= 0 ? "+" : "")}{Modifier}";
-        }
-
-        // TryParse
-        public static bool TryParse(string expression, out int diceCount, out int diceSides, out int modifier)
-        {
-            diceCount = 0;
-            diceSides = 0;
-            modifier = 0;
-
-            var match = Regex.Match(expression.Trim(), @"^(\d*)d(\d+)([+-]\d+)?$", RegexOptions.IgnoreCase);
-
-            if (!match.Success)
-                throw new ArgumentException("Invalid dice expression. Use formats like '2d6+1' or 'd8-2'.");
-
-            diceCount = string.IsNullOrEmpty(match.Groups[1].Value) ? 1 : int.Parse(match.Groups[1].Value);
-            diceSides = int.Parse(match.Groups[2].Value);
-            modifier = match.Groups[3].Success ? int.Parse(match.Groups[3].Value) : 0;
-
-            if (diceCount <= 0 || diceSides <= 0)
-                return false;
-
-            return true;
+            if (IsFixedValue)
+                return fixedValue.ToString();
+            else
+                return $"{DiceCount}d{DiceSides}{(Modifier >= 0 ? "+" : "")}{Modifier}";
         }
 
         // TryParse
         public static bool TryParse(string expression, out DiceExpression? diceRoll)
         {
+            if (int.TryParse(expression, out int value))
+            {
+                diceRoll = new DiceExpression(expression);
+                return true;
+            }
+
             if (TryParse(expression, out _, out _, out _))
             {
                 diceRoll = new DiceExpression(expression);

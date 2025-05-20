@@ -71,23 +71,23 @@ namespace Remizione
         // FaithGainPerLevel
         public int FaithGainPerLevel { get; private set; } = 20;
 
-        // FaithPenaltyCooldown
-        public int FaithPenaltyCooldown
-        {
-            get
-            {
-                int baseCooldown = 100;
-                int modifier = GetModifier(Stat.Devotion);
-
-                // Increase cooldown by 100ms for each modifier point
-                return Math.Max(250, baseCooldown + (modifier * 100));
-            }
-        }
-
         // GetDefense
         public int GetDefense(int armorBonus = 0, int miscBonus = 0)
         {
             return 10 + GetModifier(Stat.Dexterity) + armorBonus + miscBonus;
+        }
+
+        // GetFaithRecoveryInterval
+        public int GetFaithRecoveryInterval()
+        {
+            const int baseCooldownMs = 15000; // 15 segundos en milisegundos
+            int modifier = GetModifier(Stat.Devotion);
+
+            // Cada punto de modificador reduce el cooldown un 10%
+            float multiplier = 1f - (modifier * 0.1f);
+            multiplier = Math.Clamp(multiplier, 0.25f, 1f); // mínimo 25% del base
+
+            return (int)(baseCooldownMs * multiplier);
         }
 
         // GetMaxFaith

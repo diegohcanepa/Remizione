@@ -21,6 +21,7 @@ namespace Remizione
         private BloodSplash? bloodSplash;
         private readonly CombatStateMachine combatStateMachine;
         private int faith;
+        private int faithRecoveryCooldown;
         private FloatingText? floatingMessage;
         private SoundInstance? footstepSoundInstance;
         private readonly FloatTween headTween = new();
@@ -36,7 +37,6 @@ namespace Remizione
         private int suspendInteractionCooldown;
         private readonly ActorThrowObjectState throwObjectState;
         private float tinyMoveSpeedFactor = 1;
-        private readonly Blinker<float> vanishBlinker = new(1, 0) { StartDelay = 500 };
         private Item? weapon;
         private string weaponName = string.Empty;
 
@@ -55,7 +55,7 @@ namespace Remizione
             this.IgnoreWalkArea = false;
             this.ShadowSpot = new ShadowSpot(this);
 
-            this.Manifestations = new ItemContainer(this, ItemContainerCategory.Skills);
+            this.Gifts = new ItemContainer(this);
 
             this.standState = new ActorStandState(this);
 
@@ -167,6 +167,42 @@ namespace Remizione
                     Sprite.FlipLeft();
                 else
                     Sprite.FlipRight();
+            }
+        }
+
+        // UpdateFaithRecovery
+        private void UpdateFaithRecovery(GameTime gameTime)
+        {
+            if (faithRecoveryCooldown > 0)
+            {
+                faithRecoveryCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+            }
+            else
+            {
+                faithRecoveryCooldown = Stats.GetFaithRecoveryInterval();
+
+                for (var i = 0; i < Inventory.Items.Count; i++)
+                {
+                    if (Inventory.Items[i].MetaItem.EffectTiming == ItemEffectTiming.FaithRecovery)
+                        Inventory.Items[i].Use();
+                }
+
+                Faith++;
+            }
+        }
+
+        // UpdateFloatingMessage
+        private void UpdateFloatingMessage(GameTime gameTime)
+        {
+            if (floatingMessage != null)
+            {
+                if (floatingMessage.IsVisible)
+                    floatingMessage.Update(gameTime);
+                else
+                {
+                    session.ObjectPools.FloatingTexts.Return(floatingMessage);
+                    floatingMessage = null;
+                }
             }
         }
 
@@ -387,33 +423,15 @@ namespace Remizione
         {
             combatStateMachine.Update(gameTime);
 
-            if (floatingMessage != null)
-            {
-                if (floatingMessage.IsVisible)
-                    floatingMessage.Update(gameTime);
-                else
-                {
-                    session.ObjectPools.FloatingTexts.Return(floatingMessage);
-                    floatingMessage = null;
-                }
-            }
+            UpdateFaithRecovery(gameTime);
+
+            UpdateFloatingMessage(gameTime);
 
             StateMachine.Update(gameTime);
 
             base.OnUpdate(gameTime);
 
             bloodSplash?.Update(gameTime);
-
-            if (vanishBlinker.IsRunning)
-            {
-                vanishBlinker.Update(gameTime);
-                OpacityFactor = vanishBlinker.CurrentValue;
-                if (!vanishBlinker.IsRunning)
-                {
-                    Unparent();
-                    return;
-                }
-            }
 
             if (suspendInteractionCooldown > 0 && !session.IsAwaiting)
                 suspendInteractionCooldown -= gameTime.ElapsedGameTime.Milliseconds;
@@ -641,9 +659,12 @@ namespace Remizione
         public Item? GetAttackItem()
         {
             var result = Inventory.GetItem(WeaponName);
-            result ??= Manifestations.GetItem("UnarmedAttack");
+            result ??= Gifts.GetItem("UnarmedAttack");
             return result;
         }
+
+        // Gifts
+        public ItemContainer Gifts { get; }
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
@@ -780,9 +801,6 @@ namespace Remizione
                 }
             }
         }
-
-        // Manifestations
-        public ItemContainer Manifestations { get; }
 
         // MaxFaith
         [ScriptProperty]
@@ -976,15 +994,6 @@ namespace Remizione
 
         // TurnState
         public CombatTurnState TurnState { get; private set; }
-
-        // Vanish
-        public void Vanish()
-        {
-            vanishBlinker.Start(70, 8);
-            var tween = new ColorTween() { StartDelay = vanishBlinker.StartDelay };
-            tween.Start(TweenStyle.CubicIn, Color, Color.Black, 200);
-            Tweens.ColorTween = tween;
-        }
 
         // WeaponName
         [ScriptProperty]

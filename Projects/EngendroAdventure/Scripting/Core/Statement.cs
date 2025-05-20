@@ -18,6 +18,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string BonusArg = "#bonus";
         protected static readonly string BounceDelayArg = "#bounce-delay";
         protected static readonly string BouncesArg = "#bounces";
+        protected static readonly string CategoryArg = "#category";
         protected static readonly string ChanceArg = "#chance";
         protected static readonly string ClearTagArg = "#clear-tag";
         protected static readonly string ColorArg = "#color";
@@ -31,6 +32,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string DisableArg = "#disable";
         protected static readonly string DurabilityArg = "#durability";
         protected static readonly string DurationArg = "#duration";
+        protected static readonly string EffectTimingArg = "#effect-timing";
         protected static readonly string EmitterArg = "#emitter";
         protected static readonly string FaceArg = "#face";
         protected static readonly string FadeArg = "#fade";

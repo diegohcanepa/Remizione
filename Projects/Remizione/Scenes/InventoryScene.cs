@@ -107,7 +107,7 @@ namespace Remizione
         // InvalidateTitle
         private void InvalidateTitle()
         {
-            var title = Localization.GetLocalizedValue(ItemContainerCategory.Inventory);
+            var title = TextRepository.GetValue("Misc.Inventory");
             if (Actor != null)
                 title += $" ({Actor.Inventory.Items.Count} / {Actor.InventoryCapacity})";
 
@@ -125,12 +125,14 @@ namespace Remizione
             }
             else
                 info.Text = null;
+
+            actionButton.IsEnabled = option != null && option.LinkedObject.MetaItem.Action != ItemAction.None;
         }
 
         // UseItem
         private void UseItem(Actor actor)
         {
-            if (menu.SelectedOption?.LinkedObject is Item item)
+            if (menu.SelectedOption?.LinkedObject is Item item && item.MetaItem.Action != ItemAction.None)
             {
                 if (item.MetaItem.Action == ItemAction.Consume)
                     actor.Consume(item);

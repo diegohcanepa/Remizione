@@ -80,7 +80,7 @@ namespace Remizione
 
             for (int i = 0; i < verbs.Length; i++)
             {
-                menu.AddOption(verbs[i], TextRepository.GetValue($"Verbs.{verbs[i]}"));
+                menu.AddOption(verbs[i], Localization.GetLocalizedValue(verbs[i]));
             }
 
             var pos = session.Player.GetOverheadPosition();

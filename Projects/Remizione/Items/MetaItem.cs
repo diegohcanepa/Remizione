@@ -16,7 +16,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(string name, ItemAction action, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, UpgradeHardness upgradeHardness, Sound? sound)
+        public MetaItem(string name, ItemKind kind, ItemAction action, ItemEffectTiming effectTiming, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, UpgradeHardness upgradeHardness, Sound? sound)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -26,8 +26,10 @@ namespace Remizione
                 items[name] = this;
 
             this.Name = name;
+            this.Kind = kind;
             this.Bonus = bonus;
             this.Action = action;
+            this.EffectTiming = effectTiming;
             this.BaseDamage = baseDamage;
             this.Durability = durability;
             this.Knockback = knockback;
@@ -63,6 +65,9 @@ namespace Remizione
         // Durability
         public int Durability { get; set; }
 
+        // EffectTiming
+        public ItemEffectTiming EffectTiming { get; }
+
         // Faith
         public DiceExpression? Faith { get; }
 
@@ -71,6 +76,9 @@ namespace Remizione
 
         // IsStackable
         public bool IsStackable => Maximum > 1;
+
+        // Kind
+        public ItemKind Kind { get; }
 
         // Knockback
         public Vector2 Knockback { get; }

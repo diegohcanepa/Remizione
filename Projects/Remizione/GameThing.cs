@@ -59,7 +59,7 @@ namespace Remizione
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
             this.PlacementConditions = new(placementConditions);
-            this.Inventory = new ItemContainer(this, ItemContainerCategory.Inventory);
+            this.Inventory = new ItemContainer(this);
         }
 
         #endregion
