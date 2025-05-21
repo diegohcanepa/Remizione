@@ -97,9 +97,9 @@ namespace Remizione
         private void UpdateMouseCursor()
         {
             // No active player
-            if (Player == null)
+            if (Player == null || Player.HasSpeechBubble)
             {
-                MouseCursor.Instance.State = MouseCursorState.Cross;
+                MouseCursor.Instance.State = MouseCursorState.Arrow;
                 return;
             }
 

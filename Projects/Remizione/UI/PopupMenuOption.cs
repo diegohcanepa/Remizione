@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace Remizione.UI
@@ -10,6 +11,7 @@ namespace Remizione.UI
     public sealed class PopupMenuOption<TLinkedObject> where TLinkedObject : class
     {
         private readonly Action? action;
+        private readonly ImageSprite icon;
         private readonly PopupMenu<TLinkedObject> menu;
         private readonly TextSprite nameText;
 
@@ -35,6 +37,14 @@ namespace Remizione.UI
 
             else
                 nameText.PivotOrigin = RectanglePoint.RightTop;
+
+            // Icon
+            this.icon = new ImageSprite(menu.Game)
+            {
+                PivotOrigin = RectanglePoint.Right,
+                Scale = ScaleInfo.UIElement.Small
+            };
+            this.icon.Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, 1, .5f, 1000, -1);
 
             Invalidate();
 
@@ -67,11 +77,27 @@ namespace Remizione.UI
         // Draw
         public void Draw(GameTime gameTime)
         {
+            menu.Game.SpriteBatch.Begin(menu.Game.Camera, SamplerState.LinearClamp);
             nameText.Draw(gameTime);
+            menu.Game.SpriteBatch.End();
+
+            if (!icon.IsEmpty)
+            {
+                menu.Game.SpriteBatch.Begin(menu.Game.Camera);
+                icon.Draw(gameTime);
+                menu.Game.SpriteBatch.End();
+            }
         }
 
         // Execute
         public void Execute() => action?.Invoke();
+
+        // IconImage
+        public AtlasImage? IconImage
+        {
+            get => icon.Image;
+            set => icon.Image = value;
+        }
 
         // Index
         public int Index { get; }
@@ -108,6 +134,8 @@ namespace Remizione.UI
                     var box = menu.BoundingBox;
                     BoundingBox = new(box.X + 1, nameText.BoundingBox.Top - 1, box.Width - 2, nameText.BoundingBox.Height + 1);
                 }
+
+                icon.Position = nameText.BoundingBox.GetPoint(RectanglePoint.Left, -1, -.5f);
             }
         }
 
@@ -121,6 +149,7 @@ namespace Remizione.UI
         public void Update(GameTime gameTime)
         {
             UpdateColor();
+            icon.Update(gameTime);
         }
     }
 }

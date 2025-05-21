@@ -14,7 +14,7 @@ namespace Remizione
         #region Private fields
 
         private PopupMenu<Item> activeMenu;
-        private readonly UIInfo info;
+        private readonly UIInfoPanel infoPanel;
         private const int margin = 22;
         private readonly UIControl moveButton;
         private readonly ImageSprite playerContainer;
@@ -34,7 +34,7 @@ namespace Remizione
         {
             this.session = session;
 
-            this.info = new(Game) { ShowGradient = true };
+            this.infoPanel = new(Game) { ShowGradient = true };
 
             // Player container
             this.playerContainer = new(Game, Atlases.UI.ItemMenuContainer)
@@ -134,11 +134,11 @@ namespace Remizione
         {
             if (activeMenu.SelectedOption != null)
             {
-                info.Info = activeMenu.SelectedOption.LinkedObject.GetLocalizedInfo();
-                info.Text = activeMenu.SelectedOption.LinkedObject.MetaItem.LocalizedDescription;
+                infoPanel.Title = activeMenu.SelectedOption.LinkedObject.GetLocalizedInfo();
+                infoPanel.Text = activeMenu.SelectedOption.LinkedObject.MetaItem.LocalizedDescription;
             }
             else
-                info.Text = null;
+                infoPanel.Text = null;
         }
 
         // InvalidateTitles
@@ -230,7 +230,7 @@ namespace Remizione
             playerMenu.Draw(gameTime);
             targetMenu.Draw(gameTime);
 
-            info.Draw(gameTime);
+            infoPanel.Draw(gameTime);
 
             moveButton.Draw(gameTime);
         }

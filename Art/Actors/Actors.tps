@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.6.3</string>
+        <string>7.7.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -193,12 +193,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sinner-assets/Consume01.png</key>
-            <key type="filename">Sinner-assets/Consume02.png</key>
-            <key type="filename">Sinner-assets/Consume03.png</key>
-            <key type="filename">Sinner-assets/Consume04.png</key>
-            <key type="filename">Sinner-assets/Consume05.png</key>
-            <key type="filename">Sinner-assets/Consume06.png</key>
             <key type="filename">Sinner-assets/Death01.png</key>
             <key type="filename">Sinner-assets/Death02.png</key>
             <key type="filename">Sinner-assets/Death03.png</key>
@@ -255,6 +249,12 @@
             <key type="filename">Sinner-assets/UnarmedAttack06.png</key>
             <key type="filename">Sinner-assets/UnarmedAttack07.png</key>
             <key type="filename">Sinner-assets/UnarmedAttack08.png</key>
+            <key type="filename">Sinner-assets/UseItem01.png</key>
+            <key type="filename">Sinner-assets/UseItem02.png</key>
+            <key type="filename">Sinner-assets/UseItem03.png</key>
+            <key type="filename">Sinner-assets/UseItem04.png</key>
+            <key type="filename">Sinner-assets/UseItem05.png</key>
+            <key type="filename">Sinner-assets/UseItem06.png</key>
             <key type="filename">Unredeemed-assets/Death01.png</key>
             <key type="filename">Unredeemed-assets/Death02.png</key>
             <key type="filename">Unredeemed-assets/Death03.png</key>

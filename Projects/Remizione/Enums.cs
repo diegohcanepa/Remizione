@@ -45,7 +45,7 @@ namespace Remizione
     public enum InGameMenuOptionName { Attributes, Creatures, Inventory, Skills, Map, Prayers, QuitToDesktop, Settings }
 
     // ItemAction
-    public enum ItemAction { None, Discard, Consume, Use, Wear, TakeOff, Wield }
+    public enum ItemAction { None, Discard, Use, Wield }
 
     // ItemEffectTiming
     public enum ItemEffectTiming { None, FaithRecovery }
@@ -54,7 +54,7 @@ namespace Remizione
     public enum ItemKind { Object, Gift }
 
     // ItemProperty
-    public enum ItemProperty { BaseDamage }
+    public enum ItemProperty { BaseDamage, Passive }
 
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, LightBulb, Moon, MuzzleFlash, Outdoor, Lightning }

@@ -42,13 +42,11 @@
   <String Key="Item.RottenApple.Name">Rotten apple</String>
   <String Key="Item.StoneAxe.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.StoneAxe.Name">Stone axe</String>
-  <String Key="ItemAction.Consume">Consume</String>
   <String Key="ItemAction.Discard">Discard</String>
-  <String Key="ItemAction.TakeOff">Take off</String>
   <String Key="ItemAction.Use">Use</String>
-  <String Key="ItemAction.Wear">Wear</String>
   <String Key="ItemAction.Wield">Wield</String>
   <String Key="ItemProperty.BaseDamage">Base damage</String>
+  <String Key="ItemProperty.Passive">Passive</String>
   <String Key="Languages.Abbreviations">Miss | Mr. | DR.</String>
   <String Key="Languages.de-de">Deutsch</String>
   <String Key="Languages.en-us">English</String>

@@ -27,6 +27,7 @@ namespace Remizione
         {
             this.Container = container;
             this.MetaItem = metaItem;
+            this.DegradationCooldown = metaItem.DegradationInterval;
         }
 
         #endregion
@@ -139,6 +140,9 @@ namespace Remizione
             }
         }
 
+        // DegradationCooldown
+        public int DegradationCooldown { get; set; }
+
         // DisplayText
         public string DisplayText
         {
@@ -169,6 +173,9 @@ namespace Remizione
         public string GetLocalizedInfo()
         {
             var values = new List<string>();
+
+            if (MetaItem.Passive)
+                values.Add(Localization.GetLocalizedValue(ItemProperty.Passive));
 
             if (MetaItem.BaseDamage != null)
             {
@@ -220,6 +227,21 @@ namespace Remizione
             }
         }
 
+        // MeetUsageConditions
+        public bool MeetUsageConditions()
+        {
+            if (MetaItem.HP is DiceExpression hpExp && hpExp.FixedValue < 0 && Owner.HP <= hpExp.FixedValue)
+                return false;
+
+            if (Owner is Actor actor)
+            {
+                if (MetaItem.Faith is DiceExpression faithExp && faithExp.FixedValue < 0 && actor.Faith <= faithExp.FixedValue)
+                    return false;
+            }
+
+            return true;
+        }
+
         // MetaItem
         public MetaItem MetaItem { get; }
 
@@ -228,6 +250,20 @@ namespace Remizione
 
         // Owner
         public GameThing Owner => Container.Owner;
+
+        // Update
+        public void Update(GameTime gameTime)
+        {
+            if (MetaItem.DegradationInterval > 0)
+            {
+                DegradationCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+                if (DegradationCooldown <= 0)
+                {
+                    DegradationCooldown = MetaItem.DegradationInterval;
+                    Durability--;
+                }
+            }
+        }
 
         // Range
         public int Range { get; }
@@ -264,6 +300,8 @@ namespace Remizione
                 else
                     Count--;
             }
+            else if (MetaItem.Action == ItemAction.Use)
+                Container.Remove(this);
 
             InvalidateDisplayText();
 

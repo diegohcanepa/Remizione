@@ -16,8 +16,12 @@ namespace Engendro.Input
             this.Keys = keys;
         }
 
+        #region Private members
+
         // CanTestInput
         private static bool CanTestInput() => EngendroGame.Instance != null && EngendroGame.Instance.IsActive && !InputManager.IsSuspended;
+
+        #endregion
 
         // Button
         public Buttons? Button { get; set; }

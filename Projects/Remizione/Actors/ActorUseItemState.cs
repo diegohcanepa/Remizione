@@ -1,19 +1,18 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using System;
 
 namespace Remizione
 {
     /// <summary>
-    /// ActorConsumeState
+    /// ActorUseItemState
     /// </summary>
-    public sealed class ActorConsumeState : ActorAnimatedState
+    public sealed class ActorUseItemState : ActorAnimatedState
     {
         private bool soundPlayed;
 
         // Constructor
-        public ActorConsumeState(Actor owner)
-            : base(owner, ActorStateNames.Consume, false)
+        public ActorUseItemState(Actor owner)
+            : base(owner, ActorStateNames.UseItem, false)
         {
         }
 
@@ -51,19 +50,10 @@ namespace Remizione
             {
                 if (frame.Label == GameSettings.KeyFrame)
                 {
-                    var hp = Owner.HP;
-                    var faith = Owner.Faith;
-
                     Item.Use();
 
                     if (Item.MetaItem.Sound != null)
                         Owner.PlaySound(Item.MetaItem.Sound);
-
-                    var diffHP = Owner.HP - hp;
-                    var diffFaith = Owner.Faith - faith;
-
-                    Owner.Session.HUD.Log.Show(DerivedStat.Spirit, diffHP);
-                    Owner.Session.HUD.Log.Show(DerivedStat.Faith, diffFaith);
 
                     soundPlayed = true;
                 }

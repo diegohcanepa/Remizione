@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -251,7 +252,7 @@ namespace Remizione
 
                     State = SpeechBubbleState.Idle;
                 }
-                else if (AwaitInput && InputBindings.SpeechBubble.IsPressed(0) && inputCooldown <= 0)
+                else if (AwaitInput && (InputBindings.SpeechBubble.IsPressed(0) || InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() || InputManager.DefaultPlayer.Mouse.IsRightButtonPressed()) && inputCooldown <= 0)
                 {
                     State = SpeechBubbleState.Idle;
                     text.StopTyping();
@@ -266,7 +267,7 @@ namespace Remizione
                     if (autoHideCooldown <= 0)
                         Hide();
                 }
-                else if (AwaitInput && InputBindings.SpeechBubble.IsPressed(0))
+                else if (AwaitInput && (InputBindings.SpeechBubble.IsPressed(0) || InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() || InputManager.DefaultPlayer.Mouse.IsRightButtonPressed()))
                 {
                     Hide();
                 }

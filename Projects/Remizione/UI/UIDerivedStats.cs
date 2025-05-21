@@ -10,6 +10,7 @@ namespace Remizione.UI
     public class UIDerivedStats : GameObject
     {
         private Actor? actor;
+        private readonly ColorTween[] colorTweens = [new ColorTween(), new ColorTween()];
         private readonly ImageSprite[] icons;
         private readonly int[] lastKnownMaxValues = [int.MinValue, int.MinValue];
         private readonly int[] lastKnownValues = [int.MinValue, int.MinValue];
@@ -60,24 +61,27 @@ namespace Remizione.UI
             if (value < 0)
                 value = 0;
 
-            if (lastKnownValues[index] != value)
+            if (lastKnownValues[index] == value)
+                return;
+
+            var color = lastKnownValues[index] > value ? ColorPalette.Text.Red : ColorPalette.Text.Green;
+            lastKnownValues[index] = value;
+            values[index].Text = value.ToString();
+
+            if (lastKnownMaxValues[index] != maxValue)
             {
-                lastKnownValues[index] = value;
-                values[index].Text = value.ToString();
+                lastKnownMaxValues[index] = maxValue;
+                maxValues[index].Text = " | " + maxValue.ToString();
+            }
 
-                if (lastKnownMaxValues[index] != maxValue)
-                {
-                    lastKnownMaxValues[index] = maxValue;
-                    maxValues[index].Text = " | " + maxValue.ToString();
-                }
+            maxValues[index].Position = values[index].BoundingBox.GetPoint(RectanglePoint.Right, -.5f, 0);
 
-                maxValues[index].Position = values[index].BoundingBox.GetPoint(RectanglePoint.Right, -.5f, 0);
-
-                if (animate)
-                {
-                    scaleTweens[index].Start(TweenStyle.Linear, values[index].Scale, values[index].Scale * .9f, 100, 2);
-                    values[index].Tweens.ScaleTween = scaleTweens[index];
-                }
+            if (animate)
+            {
+                colorTweens[index].Start(TweenStyle.Linear, ColorPalette.Text.Terra, color, 350, 6);
+                scaleTweens[index].Start(TweenStyle.Linear, values[index].Scale, values[index].Scale * .9f, 250, 2);
+                values[index].Tweens.ColorTween = colorTweens[index];
+                values[index].Tweens.ScaleTween = scaleTweens[index];
             }
         }
 

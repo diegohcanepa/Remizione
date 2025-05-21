@@ -15,7 +15,7 @@ namespace Remizione
         private readonly ImageSprite container;
         private readonly ImageSprite containerSelection;
         private readonly UIControl discardButton;
-        private readonly UIInfo info;
+        private readonly UIInfoPanel infoPanel;
         private readonly PopupMenu<Item> menu;
 
         #region Constructor
@@ -24,7 +24,7 @@ namespace Remizione
         public InventoryScene(RemizioneGame game)
             : base(game, SceneSettings.None)
         {
-            this.info = new(Game) { ShowGradient = true };
+            this.infoPanel = new(Game) { ShowGradient = true };
 
             // Container
             this.container = new(game, Atlases.UI.ItemMenuContainer)
@@ -119,14 +119,14 @@ namespace Remizione
         {
             if (option != null)
             {
-                info.Info = option.LinkedObject.GetLocalizedInfo();
-                info.Text = option.LinkedObject.MetaItem.LocalizedDescription;
+                infoPanel.Title = option.LinkedObject.GetLocalizedInfo();
+                infoPanel.Text = option.LinkedObject.MetaItem.LocalizedDescription;
                 actionButton.Text = Localization.EncodeKey(option.LinkedObject.MetaItem.Action);
             }
             else
-                info.Text = null;
+                infoPanel.Text = null;
 
-            actionButton.IsEnabled = option != null && option.LinkedObject.MetaItem.Action != ItemAction.None;
+            actionButton.IsEnabled = option != null && option.LinkedObject.MetaItem.Action != ItemAction.None && option.LinkedObject.MeetUsageConditions();
         }
 
         // UseItem
@@ -134,8 +134,8 @@ namespace Remizione
         {
             if (menu.SelectedOption?.LinkedObject is Item item && item.MetaItem.Action != ItemAction.None)
             {
-                if (item.MetaItem.Action == ItemAction.Consume)
-                    actor.Consume(item);
+                if (item.MetaItem.Action == ItemAction.Use)
+                    actor.UseItem(item);
                 else
                     item.Use();
 
@@ -160,7 +160,7 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             menu.Draw(gameTime);
-            info.Draw(gameTime);
+            infoPanel.Draw(gameTime);
 
             if (menu.SelectedOption != null)
             {
@@ -203,7 +203,9 @@ namespace Remizione
 
             for (int i = 0; i < Actor.Inventory.Items.Count; i++)
             {
-                menu.AddOption(Actor.Inventory.Items[i]);
+                var option = menu.AddOption(Actor.Inventory.Items[i]);
+                if (Actor.Inventory.Items[i].MetaItem.Passive)
+                    option.IconImage = Atlases.UI.PassiveItemIcon;
             }
 
             menu.SelectFirst();

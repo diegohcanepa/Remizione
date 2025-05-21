@@ -5,16 +5,16 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Remizione.UI
 {
     /// <summary>
-    /// UIInfo
+    /// UIInfoPanel
     /// </summary>
-    public sealed class UIInfo : GameObject
+    public sealed class UIInfoPanel : GameObject
     {
         private readonly ImageSprite gradient;
-        private readonly TextSprite infoSprite;
         private readonly TextSprite textSprite;
+        private readonly TextSprite titleSprite;
 
         // Constructor
-        public UIInfo(EngendroGame game)
+        public UIInfoPanel(EngendroGame game)
             : base(game)
         {
             this.textSprite = new TextSprite(Game, Fonts.CommonOutline)
@@ -26,7 +26,7 @@ namespace Remizione.UI
                 Scale = ScaleInfo.Text.Large
             };
 
-            this.infoSprite = new TextSprite(Game, Fonts.CommonOutline)
+            this.titleSprite = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Terra,
                 MaximumWidth = (int)(Screen.NativeWidth * .8f),
@@ -53,7 +53,7 @@ namespace Remizione.UI
 
             if (!textSprite.IsEmpty)
             {
-                infoSprite.Draw(gameTime);
+                titleSprite.Draw(gameTime);
                 textSprite.Draw(gameTime);
             }
 
@@ -61,13 +61,6 @@ namespace Remizione.UI
         }
 
         #endregion
-
-        // Info
-        public string? Info
-        {
-            get => infoSprite.Text;
-            set => infoSprite.Text = value;
-        }
 
         // IsEmpty
         public bool IsEmpty => textSprite.IsEmpty;
@@ -85,8 +78,15 @@ namespace Remizione.UI
             set
             {
                 textSprite.Text = value;
-                infoSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.Top, 0, 1);
+                titleSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.Top, 0, 1);
             }
+        }
+
+        // Title
+        public string? Title
+        {
+            get => titleSprite.Text;
+            set => titleSprite.Text = value;
         }
     }
 }

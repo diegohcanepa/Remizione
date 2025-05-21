@@ -16,7 +16,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(string name, ItemKind kind, ItemAction action, ItemEffectTiming effectTiming, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, UpgradeHardness upgradeHardness, Sound? sound)
+        public MetaItem(string name, ItemKind kind, ItemAction action, bool passive, ItemEffectTiming effectTiming, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, int degradationInterval, UpgradeHardness upgradeHardness, Sound? sound)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -25,13 +25,18 @@ namespace Remizione
             else
                 items[name] = this;
 
+            if (passive && action != ItemAction.None)
+                throw new InvalidOperationException("A passive item cannot define an action.");
+
             this.Name = name;
             this.Kind = kind;
             this.Bonus = bonus;
             this.Action = action;
+            this.Passive = passive;
             this.EffectTiming = effectTiming;
             this.BaseDamage = baseDamage;
             this.Durability = durability;
+            this.DegradationInterval = degradationInterval;
             this.Knockback = knockback;
             this.Maximum = Math.Max(1, maximum);
             this.Faith = faith;
@@ -61,6 +66,9 @@ namespace Remizione
 
         // Bonus
         public int Bonus { get; }
+
+        // DegradationInterval
+        public int DegradationInterval { get; }
 
         // Durability
         public int Durability { get; set; }
@@ -97,6 +105,9 @@ namespace Remizione
 
         // Name
         public string Name { get; }
+
+        // Passive
+        public bool Passive { get; }
 
         // Range
         public int Range { get; }

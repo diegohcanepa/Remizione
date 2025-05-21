@@ -60,7 +60,7 @@ namespace Remizione
             this.standState = new ActorStandState(this);
 
             this.StateMachine = new ActorStateMachine(this, standState);
-            this.StateMachine.RegisterState(new ActorConsumeState(this));
+            this.StateMachine.RegisterState(new ActorUseItemState(this));
             this.StateMachine.RegisterState(new ActorDeathState(this));
             this.StateMachine.RegisterState(new ActorHurtState(this));
             this.StateMachine.RegisterState(new ActorFatigueState(this));
@@ -424,9 +424,7 @@ namespace Remizione
             combatStateMachine.Update(gameTime);
 
             UpdateFaithRecovery(gameTime);
-
             UpdateFloatingMessage(gameTime);
-
             StateMachine.Update(gameTime);
 
             base.OnUpdate(gameTime);
@@ -557,16 +555,6 @@ namespace Remizione
 
         // CloseAttack
         public void CloseAttack() => StateMachine.ChangeState(ActorStateNames.CloseAttack);
-
-        // Consume
-        public void Consume(Item item)
-        {
-            if (StateMachine.GetState(ActorStateNames.Consume) is ActorConsumeState state)
-            {
-                state.Item = item;
-                StateMachine.ChangeState(state.Name);
-            }
-        }
 
         // DoAttackTurn
         public void DoAttackTurn()
@@ -994,6 +982,16 @@ namespace Remizione
 
         // TurnState
         public CombatTurnState TurnState { get; private set; }
+
+        // UseItem
+        public void UseItem(Item item)
+        {
+            if (StateMachine.GetState(ActorStateNames.UseItem) is ActorUseItemState state)
+            {
+                state.Item = item;
+                StateMachine.ChangeState(state.Name);
+            }
+        }
 
         // WeaponName
         [ScriptProperty]

@@ -102,17 +102,5 @@ namespace Remizione.UI
 
         // Show
         public void Show(LogVerb verb, string noun) => ShowCore(Localization.GetLocalizedValue(verb), noun, false);
-
-        // Show
-        public void Show(DerivedStat stat, int value)
-        {
-            if (value == 0)
-                return;
-
-            var verb = value < 0 ? LogVerb.Lost : LogVerb.Restored;
-            var localizedStat = TextRepository.GetValue($"DerivedStat.{stat}.Name");
-
-            Show(verb, $"{localizedStat} + {value}");
-        }
     }
 }

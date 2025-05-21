@@ -8,7 +8,6 @@ namespace Engendro
     /// </summary>
     public class DiceExpression
     {
-        private int fixedValue;
         private static readonly Random random = new();
 
         // Constructor
@@ -17,7 +16,7 @@ namespace Engendro
             if (int.TryParse(expression, out int value))
             {
                 IsFixedValue = true;
-                fixedValue = value;
+                FixedValue = value;
             }
             else if (TryParse(expression, out int diceCount, out int diceSides, out int modifier))
             {
@@ -82,12 +81,18 @@ namespace Engendro
         // DiceSides
         public int DiceSides { get; }
 
+        // FixedValue
+        public int FixedValue { get; }
+
         // GetValueRangeAsString
         public string GetValueRangeAsString(int level = 0)
         {
             var result = $"{MinimumValue + level}";
             if (IsFixedValue)
-                result = (fixedValue > 0 ? "+" : "-") + result;
+            {
+                if (FixedValue > 0)
+                    result = "+" + result;
+            }
             else
                 result += $"-{MaximumValue + level}";
 
@@ -98,10 +103,10 @@ namespace Engendro
         public bool IsFixedValue { get; }
 
         // MaximumValue
-        public int MaximumValue => IsFixedValue ? fixedValue : DiceCount * DiceSides + Modifier;
+        public int MaximumValue => IsFixedValue ? FixedValue : DiceCount * DiceSides + Modifier;
 
         // MinimumValue
-        public int MinimumValue => IsFixedValue ? fixedValue : DiceCount * 1 + Modifier;
+        public int MinimumValue => IsFixedValue ? FixedValue : DiceCount * 1 + Modifier;
 
         // Modifier
         public int Modifier { get; }
@@ -110,7 +115,7 @@ namespace Engendro
         public int Roll()
         {
             if (IsFixedValue)
-                return fixedValue;
+                return FixedValue;
 
             int total = 0;
 
@@ -126,7 +131,7 @@ namespace Engendro
         public override string ToString()
         {
             if (IsFixedValue)
-                return fixedValue.ToString();
+                return FixedValue.ToString();
             else
                 return $"{DiceCount}d{DiceSides}{(Modifier >= 0 ? "+" : "")}{Modifier}";
         }

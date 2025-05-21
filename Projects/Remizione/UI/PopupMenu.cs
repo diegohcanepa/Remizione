@@ -86,15 +86,13 @@ namespace Remizione.UI
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-
             titleText.Draw(gameTime);
+            Game.SpriteBatch.End();
 
             for (var i = 0; i < optionList.Count; i++)
             {
                 optionList[i].Draw(gameTime);
             }
-
-            Game.SpriteBatch.End();
         }
 
         // OnUpdate
