@@ -42,9 +42,9 @@ namespace Remizione
             this.menu = new(Game, HorizontalAlignment.Center, false, container.BoundingBox)
             {
                 OnSelectionChanged = SelectedOptionChanged,
-                Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 12),
+                Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 7),
                 Title = Localization.GetLocalizedValue(InGameMenuOptionName.Attributes),
-                TitlePosition = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 2)
+                TitlePosition = container.BoundingBox.GetPoint(RectanglePoint.Top)
             };
 
             this.infoPanel = new(Game) { ShowGradient = true };

@@ -2,7 +2,7 @@
 <Strings>
   <String Key="Actor.Unredeemed">Unredeemed</String>
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="ActorProperty.Level.Name">Level</String>
+  <String Key="ActorProperty.Level.Name">State of Grace</String>
   <String Key="CombatOption.Attack">Attack</String>
   <String Key="CombatOption.Guard">Guard</String>
   <String Key="CombatOption.UseItem">Use item...</String>
@@ -20,12 +20,12 @@
   <String Key="HitType.Critical">Critical!</String>
   <String Key="InGameMenuOptionName.Attributes">Attributes</String>
   <String Key="InGameMenuOptionName.Creatures">Creatures</String>
-  <String Key="InGameMenuOptionName.Inventory">Bag</String>
+  <String Key="InGameMenuOptionName.Gifts">Gifts</String>
+  <String Key="InGameMenuOptionName.Inventory">Belongings</String>
   <String Key="InGameMenuOptionName.Map">Map</String>
   <String Key="InGameMenuOptionName.Prayers">Prayers</String>
   <String Key="InGameMenuOptionName.QuitToDesktop">Quit to desktop</String>
   <String Key="InGameMenuOptionName.Settings">Settings</String>
-  <String Key="InGameMenuOptionName.Skills">Manifestations</String>
   <String Key="InputBinding.Back">Back</String>
   <String Key="InputBinding.Close">Close</String>
   <String Key="InputBinding.Continue">Continue</String>
@@ -36,12 +36,15 @@
   <String Key="Item.Apple.Name">Apple</String>
   <String Key="Item.BareHands.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.BareHands.Name">Outburst</String>
+  <String Key="Item.BlessedTinder.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
+  <String Key="Item.BlessedTinder.Name">Blessed tinder</String>
   <String Key="Item.CrownOfThorns.Description">The crown of thorns makes you regain faith in exchange for physical punishment.</String>
   <String Key="Item.CrownOfThorns.Name">Crown of thorns</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
   <String Key="Item.StoneAxe.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.StoneAxe.Name">Stone axe</String>
+  <String Key="ItemAction.Create">Create</String>
   <String Key="ItemAction.Discard">Discard</String>
   <String Key="ItemAction.Use">Use</String>
   <String Key="ItemAction.Wield">Wield</String>

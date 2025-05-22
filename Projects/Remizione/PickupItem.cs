@@ -10,6 +10,7 @@
             : base(session, name)
         {
             this.Atlas = Atlases.Environment;
+            this.DisplayName = $"Item.{StaticName}.Name";
         }
     }
 }

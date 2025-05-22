@@ -8,16 +8,16 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 2, ActionArg, BonusArg, CategoryArg, DamageArg, DegradationIntervalArg, DurabilityArg, EffectTimingArg, FaithArg, HPArg, KnockbackArg, MaximumArg, ModifierArg, PassiveArg, RangeArg, SoundArg, UpgradeHardnessArg)
+            : base(script, source, body, 2, ActionArg, BonusArg, CategoryArg, CreationRoutineArg, DamageArg, DegradationIntervalArg, DurabilityArg, FaithArg, HPArg, KnockbackArg, MaximumArg, ModifierArg, PassiveArg, RangeArg, SoundArg, UpgradeHardnessArg, UseIntervalArg)
         {
             var name = Parser.ParseName(this, 0);
             var kind = Parser.ParseEnum<ItemKind>(this, 1);
             var action = Parser.ParseEnumArgument(this, ActionArg, ItemAction.None);
             var bonus = Parser.ParseInt32Argument(this, BonusArg);
             var baseDamage = Parser.ParseDiceExpressionArgument(this, DamageArg) ?? null;
+            var creationRoutine = Parser.ParseRoutineArgument(this, CreationRoutineArg);
             var durability = Parser.ParseInt32Argument(this, DurabilityArg, -1);
-            var degrdationInterval = Parser.ParseInt32Argument(this, DegradationIntervalArg);
-            var effectTiming = Parser.ParseEnumArgument(this, EffectTimingArg, ItemEffectTiming.None);
+            var degradationInterval = Parser.ParseInt32Argument(this, DegradationIntervalArg);
             var knockback = Parser.ParseVector2Argument(this, KnockbackArg);
             var maximum = Parser.ParseInt32Argument(this, MaximumArg);
             var modifier = Parser.ParseEnumArgument(this, ModifierArg, Stat.Strength);
@@ -27,8 +27,9 @@ namespace Remizione.Scripting
             var range = Parser.ParseInt32Argument(this, RangeArg);
             var sound = Parser.ParseSoundArgument(this, SoundArg);
             var upgradeHardness = Parser.ParseEnumArgument<UpgradeHardness>(this, UpgradeHardnessArg);
+            var useInterval = Parser.ParseInt32Argument(this, UseIntervalArg);
 
-            new MetaItem(name, kind, action, passive, effectTiming, baseDamage, modifier, bonus, knockback, maximum, hp, fp, range, durability, degrdationInterval, upgradeHardness, sound);
+            new MetaItem(name, kind, action, passive, baseDamage, modifier, bonus, knockback, maximum, hp, fp, range, durability, degradationInterval, upgradeHardness, sound, useInterval, creationRoutine);
         }
     }
 }

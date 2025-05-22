@@ -42,13 +42,10 @@ namespace Remizione
     public enum ImpactType { Low, Medium, High }
 
     // InGameMenuOptionName
-    public enum InGameMenuOptionName { Attributes, Creatures, Inventory, Skills, Map, Prayers, QuitToDesktop, Settings }
+    public enum InGameMenuOptionName { Attributes, Creatures, Inventory, Gifts, Map, Prayers, QuitToDesktop, Settings }
 
     // ItemAction
-    public enum ItemAction { None, Discard, Use, Wield }
-
-    // ItemEffectTiming
-    public enum ItemEffectTiming { None, FaithRecovery }
+    public enum ItemAction { None, Create, Discard, Use, Wield }
 
     // ItemKind
     public enum ItemKind { Object, Gift }

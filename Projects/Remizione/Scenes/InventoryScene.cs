@@ -114,6 +114,24 @@ namespace Remizione
             menu.Title = title;
         }
 
+        // PerformItemAction
+        private void PerformItemAction(Actor actor)
+        {
+            if (menu.SelectedOption?.LinkedObject is Item item && item.MetaItem.Action != ItemAction.None)
+            {
+                if (item.MetaItem.Action == ItemAction.Create)
+                    actor.CreateItem(item);
+
+                else if (item.MetaItem.Action == ItemAction.Use)
+                    actor.UseItem(item);
+
+                else
+                    item.Use();
+
+                SceneController.Pop();
+            }
+        }
+
         // SelectedOptionChanged
         private void SelectedOptionChanged(PopupMenuOption<Item>? option)
         {
@@ -127,20 +145,6 @@ namespace Remizione
                 infoPanel.Text = null;
 
             actionButton.IsEnabled = option != null && option.LinkedObject.MetaItem.Action != ItemAction.None && option.LinkedObject.MeetUsageConditions();
-        }
-
-        // UseItem
-        private void UseItem(Actor actor)
-        {
-            if (menu.SelectedOption?.LinkedObject is Item item && item.MetaItem.Action != ItemAction.None)
-            {
-                if (item.MetaItem.Action == ItemAction.Use)
-                    actor.UseItem(item);
-                else
-                    item.Use();
-
-                SceneController.Pop();
-            }
         }
 
         #endregion
@@ -182,7 +186,7 @@ namespace Remizione
                 DiscardItem(Actor);
 
             if (actionButton.TestPressed(PlayerIndex.One))
-                UseItem(Actor);
+                PerformItemAction(Actor);
 
             if (HandleMouseInput())
                 return HandleInputResult.Handled;
@@ -203,9 +207,7 @@ namespace Remizione
 
             for (int i = 0; i < Actor.Inventory.Items.Count; i++)
             {
-                var option = menu.AddOption(Actor.Inventory.Items[i]);
-                if (Actor.Inventory.Items[i].MetaItem.Passive)
-                    option.IconImage = Atlases.UI.PassiveItemIcon;
+                menu.AddOption(Actor.Inventory.Items[i]);
             }
 
             menu.SelectFirst();

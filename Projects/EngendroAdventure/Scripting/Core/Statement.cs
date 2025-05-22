@@ -24,6 +24,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string ColorArg = "#color";
         protected static readonly string ConditionArg = "#condition";
         protected static readonly string CostArg = "#cost";
+        protected static readonly string CreationRoutineArg = "#creation-routine";
         protected static readonly string CyclesArg = "#cycles";
         protected static readonly string DamageArg = "#damage";
         protected static readonly string DecimalsArg = "#decimals";
@@ -33,7 +34,6 @@ namespace EngendroAdventure.Scripting
         protected static readonly string DisableArg = "#disable";
         protected static readonly string DurabilityArg = "#durability";
         protected static readonly string DurationArg = "#duration";
-        protected static readonly string EffectTimingArg = "#effect-timing";
         protected static readonly string EmitterArg = "#emitter";
         protected static readonly string FaceArg = "#face";
         protected static readonly string FadeArg = "#fade";
@@ -95,6 +95,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string TweenArg = "#tween";
         protected static readonly string UnparentArg = "#unparent";
         protected static readonly string UpgradeHardnessArg = "#upgrade-hardness";
+        protected static readonly string UseIntervalArg = "#use-interval";
         protected static readonly string VibrateArg = "#vibrate";
         protected static readonly string VolumeArg = "#volume";
         protected static readonly string WalkAreaArg = "#walk-area";

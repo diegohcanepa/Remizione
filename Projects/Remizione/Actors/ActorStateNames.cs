@@ -6,6 +6,7 @@
     internal static class ActorStateNames
     {
         public const string CloseAttack = nameof(CloseAttack);
+        public const string CreateItem = nameof(CreateItem);
         public const string Death = nameof(Death);
         public const string Fatigue = nameof(Fatigue);
         public const string Hurt = nameof(Hurt);

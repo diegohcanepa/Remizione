@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -20,6 +21,25 @@ namespace Remizione
             Items = new ReadOnlyCollection<Item>(items);
         }
 
+        #region Private members
+
+        // Invalidate
+        private void Invalidate()
+        {
+            RequiresUpdate = false;
+
+            for (var i = 0; i < items.Count; i++)
+            {
+                if (items[i].MetaItem.DegradationInterval > 0 || items[i].MetaItem.UseInterval > 0)
+                {
+                    RequiresUpdate = true;
+                    return;
+                }
+            }
+        }
+
+        #endregion
+
         // Add
         public Item? Add(string name, int amount)
         {
@@ -33,21 +53,21 @@ namespace Remizione
             if (!metaItem.IsStackable)
                 amount = 1;
 
-            var existingItem = GetItem(metaItem.Name);
+            var item = GetItem(metaItem.Name);
 
-            if (existingItem != null && metaItem.IsStackable)
+            if (item != null && metaItem.IsStackable)
             {
-                existingItem.Count += amount;
-                return existingItem;
+                item.Count += amount;
             }
             else if (!IsFull)
             {
-                var item = new Item(this, metaItem) { Count = amount };
+                item = new Item(this, metaItem) { Count = amount };
                 items.Add(item);
-                return item;
             }
 
-            return null;
+            Invalidate();
+
+            return item;
         }
 
         // Capacity
@@ -101,5 +121,20 @@ namespace Remizione
 
         // Remove
         public bool Remove(Item item) => items.Remove(item);
+
+        // RequiresUpdate
+        public bool RequiresUpdate { get; private set; }
+
+        // Update
+        public void Update(GameTime gameTime)
+        {
+            if (RequiresUpdate)
+            {
+                for (var i = 0; i < items.Count; i++)
+                {
+                    items[i].Update(gameTime);
+                }
+            }
+        }
     }
 }

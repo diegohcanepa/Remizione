@@ -30,7 +30,7 @@ namespace Remizione
 
             menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Inventory), session.ShowInventory);
             menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Prayers));
-            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Skills));
+            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Gifts));
             menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Attributes), session.ShowCharacterSheet);            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Map));
             menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Creatures));
             menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Settings));

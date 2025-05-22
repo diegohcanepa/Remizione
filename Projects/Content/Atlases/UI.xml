@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:0a3a3c3e76c2b71538ce31351d7fbe82:0c93573f28b56ebf04f41ecc9501de20:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:a2fb98cd32f6309f5bc0542712c3d6d7:48290e1001b74e4a04cd6fec018714e1:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -21,13 +21,13 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="UI.png" width="1024" height="1024">
     <sprite n="BottomGradient.png" x="750" y="31" w="240" h="43"/>
-    <sprite n="ButtonContainer.png" x="436" y="83" w="44" h="13"/>
+    <sprite n="ButtonContainer.png" x="386" y="125" w="44" h="13"/>
     <sprite n="CharacterSheetContainer.png" x="866" y="138" w="100" h="117"/>
     <sprite n="CharacterSheetStatContainer.png" x="750" y="310" w="88" h="10"/>
-    <sprite n="CheckMark.png" x="968" y="152" w="11" h="11"/>
-    <sprite n="ContextMenuOptionSelector.png" x="982" y="98" w="4" h="5"/>
+    <sprite n="CheckMark.png" x="990" y="81" w="11" h="11"/>
+    <sprite n="ContextMenuOptionSelector.png" x="982" y="89" w="4" h="5"/>
     <sprite n="CreditsBar.png" x="2" y="2" w="480" h="67"/>
-    <sprite n="FaithIcon.png" x="953" y="257" w="13" h="13"/>
+    <sprite n="FaithIcon.png" x="988" y="94" w="13" h="13"/>
     <sprite n="GoalOrnament.png" x="750" y="303" w="94" h="5"/>
     <sprite n="InventoryGridContainer.png" x="750" y="76" w="114" h="106"/>
     <sprite n="InventoryInfoContainer.png" x="852" y="257" w="99" h="106"/>
@@ -35,64 +35,63 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="InventorySlotSelection.png" x="1003" y="22" w="18" h="18"/>
     <sprite n="ItemMenuContainer.png" x="750" y="184" w="100" h="117"/>
     <sprite n="ItemMenuContainerSelection.png" x="750" y="310" w="88" h="10"/>
-    <sprite n="KeyboardE.png" x="968" y="138" w="12" h="12"/>
-    <sprite n="KeyboardInteract.png" x="987" y="111" w="14" h="14"/>
+    <sprite n="KeyboardE.png" x="968" y="153" w="12" h="12"/>
+    <sprite n="KeyboardInteract.png" x="982" y="140" w="14" h="14"/>
     <sprite n="KeyboardNextTab.png" x="1003" y="61" w="16" h="12"/>
     <sprite n="KeyboardPreviousTab.png" x="1003" y="75" w="16" h="12"/>
     <sprite n="MessageContainer.png" x="750" y="2" w="251" h="27"/>
-    <sprite n="MissingInputBinding.png" x="968" y="225" w="52" h="52"/>
-    <sprite n="MouseCursorArrow.png" x="982" y="85" w="6" h="6"/>
-    <sprite n="MouseCursorBag.png" x="991" y="81" w="10" h="13"/>
+    <sprite n="MissingInputBinding.png" x="968" y="227" w="52" h="52"/>
+    <sprite n="MouseCursorArrow.png" x="982" y="76" w="6" h="6"/>
+    <sprite n="MouseCursorBag.png" x="852" y="197" w="10" h="13"/>
     <sprite n="MouseCursorCross.png" x="992" y="31" w="9" h="11"/>
     <sprite n="MouseCursorCrossOn.png" x="992" y="44" w="9" h="11"/>
     <sprite n="MouseCursorTarget.png" x="992" y="70" w="9" h="9"/>
-    <sprite n="MouseCursorTargetOn.png" x="852" y="197" w="9" h="9"/>
+    <sprite n="MouseCursorTargetOn.png" x="982" y="156" w="9" h="9"/>
     <sprite n="MouseCursorWait.png" x="992" y="57" w="9" h="11"/>
-    <sprite n="PassiveItemIcon.png" x="982" y="76" w="7" h="7"/>
     <sprite n="Pixel.png" x="1021" y="61" w="1" h="1"/>
-    <sprite n="PlayStationA.png" x="968" y="279" w="52" h="52"/>
-    <sprite n="PlayStationB.png" x="968" y="333" w="52" h="52"/>
-    <sprite n="PlayStationChangeDifficulty.png" x="234" y="124" w="51" h="55"/>
-    <sprite n="PlayStationDiaryPages.png" x="134" y="71" w="60" h="51"/>
-    <sprite n="PlayStationDiaryShortcut.png" x="2" y="71" w="64" h="46"/>
+    <sprite n="PlayStationA.png" x="968" y="281" w="52" h="52"/>
+    <sprite n="PlayStationB.png" x="378" y="71" w="52" h="52"/>
+    <sprite n="PlayStationChangeDifficulty.png" x="280" y="124" w="51" h="55"/>
+    <sprite n="PlayStationDiaryPages.png" x="68" y="71" w="60" h="51"/>
+    <sprite n="PlayStationDiaryShortcut.png" x="953" y="335" w="64" h="46"/>
     <sprite n="PlayStationDiaryTabs.png" x="2" y="119" w="60" h="51"/>
-    <sprite n="PlayStationDPadDown.png" x="64" y="119" w="60" h="51"/>
-    <sprite n="PlayStationDPadLeft.png" x="196" y="71" w="60" h="51"/>
-    <sprite n="PlayStationDPadRight.png" x="258" y="71" w="60" h="51"/>
-    <sprite n="PlayStationDPadUp.png" x="320" y="71" w="60" h="51"/>
-    <sprite n="PlayStationInteract.png" x="382" y="71" w="52" h="52"/>
-    <sprite n="PlayStationLeftShoulder.png" x="68" y="71" w="64" h="46"/>
-    <sprite n="PlayStationLeftTrigger.png" x="110" y="178" w="50" h="46"/>
-    <sprite n="PlayStationMatchesShortcut.png" x="68" y="71" w="64" h="46"/>
-    <sprite n="PlayStationMove.png" x="968" y="165" w="52" h="58"/>
-    <sprite n="PlayStationNextDialog.png" x="126" y="124" w="52" h="52"/>
-    <sprite n="PlayStationRightShoulder.png" x="2" y="71" w="64" h="46"/>
-    <sprite n="PlayStationRightTrigger.png" x="162" y="178" w="50" h="46"/>
-    <sprite n="PlayStationSelectSlot.png" x="287" y="124" w="51" h="55"/>
-    <sprite n="PlayStationX.png" x="2" y="172" w="52" h="52"/>
-    <sprite n="PlayStationY.png" x="56" y="172" w="52" h="52"/>
+    <sprite n="PlayStationDPadDown.png" x="130" y="71" w="60" h="51"/>
+    <sprite n="PlayStationDPadLeft.png" x="192" y="71" w="60" h="51"/>
+    <sprite n="PlayStationDPadRight.png" x="254" y="71" w="60" h="51"/>
+    <sprite n="PlayStationDPadUp.png" x="316" y="71" w="60" h="51"/>
+    <sprite n="PlayStationInteract.png" x="64" y="124" w="52" h="52"/>
+    <sprite n="PlayStationLeftShoulder.png" x="2" y="71" w="64" h="46"/>
+    <sprite n="PlayStationLeftTrigger.png" x="432" y="71" w="50" h="46"/>
+    <sprite n="PlayStationMatchesShortcut.png" x="2" y="71" w="64" h="46"/>
+    <sprite n="PlayStationMove.png" x="968" y="167" w="52" h="58"/>
+    <sprite n="PlayStationNextDialog.png" x="2" y="172" w="52" h="52"/>
+    <sprite n="PlayStationRightShoulder.png" x="953" y="335" w="64" h="46"/>
+    <sprite n="PlayStationRightTrigger.png" x="432" y="119" w="50" h="46"/>
+    <sprite n="PlayStationSelectSlot.png" x="333" y="125" w="51" h="55"/>
+    <sprite n="PlayStationX.png" x="118" y="124" w="52" h="52"/>
+    <sprite n="PlayStationY.png" x="172" y="124" w="52" h="52"/>
     <sprite n="PopupContainer.png" x="484" y="2" w="264" h="311"/>
     <sprite n="PopupContainerShadow.png" x="866" y="76" w="114" h="60"/>
     <sprite n="ProhibitionIcon.png" x="1003" y="42" w="17" h="17"/>
     <sprite n="ProhibitionMark.png" x="852" y="184" w="11" h="11"/>
-    <sprite n="QuickSlot.png" x="1000" y="131" w="15" h="15"/>
-    <sprite n="QuickSlotShadow.png" x="982" y="141" w="15" h="15"/>
-    <sprite n="SavingIcon.png" x="852" y="208" w="9" h="9"/>
-    <sprite n="SpeechBubbleCloseArrow.png" x="982" y="113" w="3" h="2"/>
-    <sprite n="SpeechBubblePipe.png" x="982" y="93" w="5" h="3"/>
-    <sprite n="SpiritIcon.png" x="953" y="272" w="13" h="13"/>
-    <sprite n="TipBalloon.png" x="989" y="96" w="12" h="13"/>
-    <sprite n="UIControlShade.png" x="340" y="125" w="50" h="12"/>
-    <sprite n="UIControlShadow.png" x="436" y="71" w="45" h="10"/>
-    <sprite n="UnreadSign.png" x="982" y="105" w="3" h="6"/>
-    <sprite n="XboxA.png" x="953" y="287" w="13" h="13"/>
-    <sprite n="XboxB.png" x="953" y="302" w="13" h="13"/>
-    <sprite n="XboxInteract.png" x="999" y="148" w="14" h="14"/>
+    <sprite n="QuickSlot.png" x="982" y="123" w="15" h="15"/>
+    <sprite n="QuickSlotShadow.png" x="999" y="131" w="15" h="15"/>
+    <sprite n="SavingIcon.png" x="993" y="156" w="9" h="9"/>
+    <sprite n="SpeechBubbleCloseArrow.png" x="982" y="104" w="3" h="2"/>
+    <sprite n="SpeechBubblePipe.png" x="982" y="84" w="5" h="3"/>
+    <sprite n="SpiritIcon.png" x="953" y="257" w="13" h="13"/>
+    <sprite n="TipBalloon.png" x="968" y="138" w="12" h="13"/>
+    <sprite n="UIControlShade.png" x="386" y="167" w="50" h="12"/>
+    <sprite n="UIControlShadow.png" x="386" y="181" w="45" h="10"/>
+    <sprite n="UnreadSign.png" x="982" y="96" w="3" h="6"/>
+    <sprite n="XboxA.png" x="953" y="272" w="13" h="13"/>
+    <sprite n="XboxB.png" x="953" y="287" w="13" h="13"/>
+    <sprite n="XboxInteract.png" x="1004" y="148" w="14" h="14"/>
     <sprite n="XboxLeftShoulder.png" x="1003" y="89" w="16" h="12"/>
     <sprite n="XboxNextTab.png" x="1003" y="103" w="16" h="12"/>
-    <sprite n="XboxPreviousTab.png" x="1003" y="117" w="16" h="12"/>
-    <sprite n="XboxRightShoulder.png" x="982" y="127" w="16" h="12"/>
-    <sprite n="XboxRun.png" x="180" y="124" w="52" h="52"/>
-    <sprite n="XboxX.png" x="953" y="317" w="13" h="13"/>
-    <sprite n="XboxY.png" x="953" y="332" w="13" h="13"/>
+    <sprite n="XboxPreviousTab.png" x="982" y="109" w="16" h="12"/>
+    <sprite n="XboxRightShoulder.png" x="1000" y="117" w="16" h="12"/>
+    <sprite n="XboxRun.png" x="226" y="124" w="52" h="52"/>
+    <sprite n="XboxX.png" x="953" y="302" w="13" h="13"/>
+    <sprite n="XboxY.png" x="953" y="317" w="13" h="13"/>
 </TextureAtlas>

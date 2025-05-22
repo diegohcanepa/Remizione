@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Engendro.Audio;
+using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(string name, ItemKind kind, ItemAction action, bool passive, ItemEffectTiming effectTiming, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, int degradationInterval, UpgradeHardness upgradeHardness, Sound? sound)
+        public MetaItem(string name, ItemKind kind, ItemAction action, bool passive, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, int degradationInterval, UpgradeHardness upgradeHardness, Sound? sound, int useInterval, Script? creationRoutine)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -28,12 +29,18 @@ namespace Remizione
             if (passive && action != ItemAction.None)
                 throw new InvalidOperationException("A passive item cannot define an action.");
 
+            if (action == ItemAction.Create && creationRoutine == null)
+                throw new InvalidOperationException("A creatable item must specify a creation rountine.");
+
+            if (action != ItemAction.Create && creationRoutine != null)
+                throw new InvalidOperationException("A creation routine is only for creatable items.");
+
             this.Name = name;
             this.Kind = kind;
             this.Bonus = bonus;
             this.Action = action;
+            this.CreationRoutine = creationRoutine;
             this.Passive = passive;
-            this.EffectTiming = effectTiming;
             this.BaseDamage = baseDamage;
             this.Durability = durability;
             this.DegradationInterval = degradationInterval;
@@ -47,6 +54,7 @@ namespace Remizione
             this.LocalizedName = TextRepository.GetValue($"Item.{Name}.Name");
             this.UpgradeHardness = upgradeHardness;
             this.Sound = sound;
+            this.UseInterval = useInterval;
         }
 
         #endregion
@@ -67,14 +75,14 @@ namespace Remizione
         // Bonus
         public int Bonus { get; }
 
+        // CreationRoutine
+        public Script? CreationRoutine { get; }
+
         // DegradationInterval
         public int DegradationInterval { get; }
 
         // Durability
         public int Durability { get; set; }
-
-        // EffectTiming
-        public ItemEffectTiming EffectTiming { get; }
 
         // Faith
         public DiceExpression? Faith { get; }
@@ -120,5 +128,8 @@ namespace Remizione
 
         // UpgradeHardness
         public UpgradeHardness UpgradeHardness { get; }
+
+        // UseInterval
+        public int UseInterval { get; }
     }
 }

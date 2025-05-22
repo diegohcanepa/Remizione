@@ -60,6 +60,7 @@ namespace Remizione
             this.standState = new ActorStandState(this);
 
             this.StateMachine = new ActorStateMachine(this, standState);
+            this.StateMachine.RegisterState(new ActorCreateState(this));
             this.StateMachine.RegisterState(new ActorUseItemState(this));
             this.StateMachine.RegisterState(new ActorDeathState(this));
             this.StateMachine.RegisterState(new ActorHurtState(this));
@@ -180,13 +181,6 @@ namespace Remizione
             else
             {
                 faithRecoveryCooldown = Stats.GetFaithRecoveryInterval();
-
-                for (var i = 0; i < Inventory.Items.Count; i++)
-                {
-                    if (Inventory.Items[i].MetaItem.EffectTiming == ItemEffectTiming.FaithRecovery)
-                        Inventory.Items[i].Use();
-                }
-
                 Faith++;
             }
         }
@@ -423,6 +417,8 @@ namespace Remizione
         {
             combatStateMachine.Update(gameTime);
 
+            Inventory.Update(gameTime);
+
             UpdateFaithRecovery(gameTime);
             UpdateFloatingMessage(gameTime);
             StateMachine.Update(gameTime);
@@ -555,6 +551,19 @@ namespace Remizione
 
         // CloseAttack
         public void CloseAttack() => StateMachine.ChangeState(ActorStateNames.CloseAttack);
+
+        // CreateItem
+        public void CreateItem(Item item)
+        {
+            if (item.MetaItem.Action != ItemAction.Create)
+                return;
+
+            if (StateMachine.GetState(ActorStateNames.CreateItem) is ActorCreateState state)
+            {
+                state.Item = item;
+                StateMachine.ChangeState(state.Name);
+            }
+        }
 
         // DoAttackTurn
         public void DoAttackTurn()

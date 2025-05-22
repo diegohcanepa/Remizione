@@ -80,7 +80,7 @@ namespace Remizione
         // GetFaithRecoveryInterval
         public int GetFaithRecoveryInterval()
         {
-            const int baseCooldownMs = 15000; // 15 segundos en milisegundos
+            const int baseCooldownMs = 30000; // 15 segundos en milisegundos
             int modifier = GetModifier(Stat.Devotion);
 
             // Cada punto de modificador reduce el cooldown un 10%

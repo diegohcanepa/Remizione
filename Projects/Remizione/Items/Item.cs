@@ -28,6 +28,7 @@ namespace Remizione
             this.Container = container;
             this.MetaItem = metaItem;
             this.DegradationCooldown = metaItem.DegradationInterval;
+            this.UseCooldown = metaItem.UseInterval;
         }
 
         #endregion
@@ -53,6 +54,8 @@ namespace Remizione
                 return;
 
             var text = MetaItem.LocalizedName;
+            if (MetaItem.Passive)
+                text = GameSettings.PassiveSymbol + " " + text;
 
             // Add level
             if (Level > 0)
@@ -175,7 +178,7 @@ namespace Remizione
             var values = new List<string>();
 
             if (MetaItem.Passive)
-                values.Add(Localization.GetLocalizedValue(ItemProperty.Passive));
+                values.Add(GameSettings.PassiveSymbol + Localization.GetLocalizedValue(ItemProperty.Passive));
 
             if (MetaItem.BaseDamage != null)
             {
@@ -230,10 +233,18 @@ namespace Remizione
         // MeetUsageConditions
         public bool MeetUsageConditions()
         {
-            if (MetaItem.HP is DiceExpression hpExp && hpExp.FixedValue < 0 && Owner.HP <= hpExp.FixedValue)
+            var actor = Owner as Actor;
+
+            // Create
+            if (MetaItem.IsStackable && MetaItem.Action == ItemAction.Create)
+                return IsStackFull && actor != null && !actor.IsCombating;
+
+            // Not enough HP
+            if (MetaItem.HP is DiceExpression hpExp && hpExp.FixedValue < 0 && Owner.HP <= Math.Abs(hpExp.FixedValue))
                 return false;
 
-            if (Owner is Actor actor)
+            // Not enough faith
+            if (actor != null)
             {
                 if (MetaItem.Faith is DiceExpression faithExp && faithExp.FixedValue < 0 && actor.Faith <= faithExp.FixedValue)
                     return false;
@@ -263,6 +274,16 @@ namespace Remizione
                     Durability--;
                 }
             }
+
+            if (MetaItem.UseInterval > 0)
+            {
+                UseCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+                if (UseCooldown <= 0)
+                {
+                    UseCooldown = MetaItem.UseInterval;
+                    Use();
+                }
+            }
         }
 
         // Range
@@ -287,25 +308,33 @@ namespace Remizione
         // Use
         public bool Use()
         {
+            if (!MeetUsageConditions())
+                return false;
+
             if (MetaItem.HP != null)
                 Owner.HP += MetaItem.HP.Roll();
 
             if (MetaItem.Faith != null && Owner is Actor actor)
                 actor.Faith += MetaItem.Faith.Roll();
 
-            if (MetaItem.Maximum > 1)
+            var action = MetaItem.Action;
+
+            if (MetaItem.Maximum > 1 && action != ItemAction.Create)
             {
                 if (Count == 1)
                     Container.Remove(this);
                 else
                     Count--;
             }
-            else if (MetaItem.Action == ItemAction.Use)
+            else if (action == ItemAction.Create || action == ItemAction.Use)
                 Container.Remove(this);
 
             InvalidateDisplayText();
 
             return true;
         }
+
+        // UseCooldown
+        public int UseCooldown { get; set; }
     }
 }
