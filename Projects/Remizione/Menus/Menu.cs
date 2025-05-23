@@ -192,9 +192,6 @@ namespace Remizione.Menus
             }
         }
 
-        // CanHandleInput
-        public bool CanHandleInput => true;
-
         // Game
         public new RemizioneGame Game { get; }
 

@@ -197,9 +197,6 @@ namespace EngendroAdventure
         [ScriptProperty]
         public bool AllowSaving { get; set; } = true;
 
-        // CanHandleInput
-        public virtual bool CanHandleInput => !Session.IsAwaiting;
-
         // CanParent
         public override bool CanParent(Entity child)
         {
@@ -223,7 +220,10 @@ namespace EngendroAdventure
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
-            return CanHandleInput ? OnHandleInput(gameTime) : HandleInputResult.Unhandled;
+            if (Session.IsAwaiting)
+                return HandleInputResult.Unhandled;
+            else
+                return OnHandleInput(gameTime);
         }
 
         // IsCurrentRoom

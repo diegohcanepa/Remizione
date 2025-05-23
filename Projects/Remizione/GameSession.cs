@@ -110,11 +110,7 @@ namespace Remizione
                 return;
             }
 
-            if (!TargetMode && !Player.IsMoving && Player.IsMouseCursorOver)
-            {
-                MouseCursor.Instance.State = MouseCursorState.Bag;
-            }
-            else if (TargetMode)
+            if (TargetMode)
             {
                 if (Player.InteractiveTarget != null && Player.InteractiveTarget.CanBeTargeted)
                     MouseCursor.Instance.State = MouseCursorState.TargetOn;
@@ -223,7 +219,8 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
-
+            if (HUD.HandleInput(gameTime) == HandleInputResult.Handled)
+                return HandleInputResult.Handled;
 
             if (inGameMenuLocked && InputBindings.InGameMenu.IsKeyUp())
                 inGameMenuLocked = false;   
@@ -552,6 +549,7 @@ namespace Remizione
             if (Player == null)
                 return;
 
+            Player.StopMoving();
             inventoryScene.Actor = Player;
             Game.SceneManager.Push(inventoryScene);
         }

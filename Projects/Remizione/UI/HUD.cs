@@ -14,11 +14,11 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly UIControl bagIcon;
+        private readonly UIControl bagButton;
         private readonly ScoreText gpScore;
         private readonly TextSprite interactionTarget;
         private readonly UIDerivedStats playerStats;
-        private readonly UIControl prayerIcon;
+        private readonly UIControl prayerButton;
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
         private readonly TextSprite statusText;
@@ -77,23 +77,23 @@ namespace Remizione
             };
 
             // Prayer icon
-            this.prayerIcon = new UIControl(Game)
+            this.prayerButton = new UIControl(Game)
             {
                 DisplayMode = UIControlDisplayMode.ImageOnly,
                 ImageName = "PrayerIcon",
-                ImageScale = ScaleInfo.UIElement.Large,
+                ImageScale = ScaleInfo.UIElement.Medium,
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.LeftBottom, 4, -4),
             };
 
             // Bag icon
-            this.bagIcon = new UIControl(Game)
+            this.bagButton = new UIControl(Game)
             {
                 DisplayMode = UIControlDisplayMode.ImageOnly,
                 ImageName = "BagIcon",
-                ImageScale = ScaleInfo.UIElement.Large,
+                ImageScale = ScaleInfo.UIElement.Medium,
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Position = prayerIcon.BoundingBox.GetPoint(RectanglePoint.RightBottom, 2, 0)
+                Position = prayerButton.BoundingBox.GetPoint(RectanglePoint.RightBottom, 2, 0)
             };
         }
 
@@ -165,8 +165,8 @@ namespace Remizione
             if (session.Player != null && session.FullHUD)
             {
                 gpScore.Draw(gameTime);
-                prayerIcon.Draw(gameTime);
-                bagIcon.Draw(gameTime);
+                prayerButton.Draw(gameTime);
+                bagButton.Draw(gameTime);
             }
 
             Log.Draw(gameTime);
@@ -200,15 +200,30 @@ namespace Remizione
 
         #endregion
 
-        // CanHandleInput
-        public bool CanHandleInput => throw new NotImplementedException();
-
         // DestinationMark
         public DestinationMark DestinationMark { get; }
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
+            if (bagButton.TestPressed(0))
+            {
+                session.ShowInventory();
+                return HandleInputResult.Handled;
+            }
+
+            if (prayerButton.TestPressed(0))
+            {
+                return HandleInputResult.Handled;
+            }
+
+            return HandleInputResult.Unhandled;
+        }
+
+        // IsMouseOverButton
+        public bool IsMouseOverButton()
+        {
+            return bagButton.IsMouseOver() || prayerButton.IsMouseOver();
         }
 
         // Log

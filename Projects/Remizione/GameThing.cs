@@ -885,9 +885,6 @@ namespace Remizione
         // IsEmittingLight
         public virtual bool IsEmittingLight => Light != null && Light.IsEmitting;
 
-        // IsMouseCursorOver
-        public bool IsMouseCursorOver => HotspotBox.Contains(InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera));
-
         // IsWalkAreaHole
         [ScriptProperty]
         public virtual bool IsWalkAreaHole => CollisionPolygon != null;

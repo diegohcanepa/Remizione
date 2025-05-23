@@ -160,6 +160,9 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
+            if (fadeTween.IsRunning || RunningOption != null)
+                return HandleInputResult.Unhandled;
+
             if (menu.HandleInput(gameTime) == HandleInputResult.Handled || runSelectedOptionCooldown > 0)
                 return HandleInputResult.Handled;
 
@@ -218,9 +221,6 @@ namespace Remizione
         }
 
         #endregion
-
-        // CanHandleInput
-        public override bool CanHandleInput => !fadeTween.IsRunning && RunningOption == null && base.CanHandleInput;
 
         // RunningOption
         public DialogOption? RunningOption { get; private set; }

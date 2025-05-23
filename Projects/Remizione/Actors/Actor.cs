@@ -499,21 +499,6 @@ namespace Remizione
         // BodySize
         public ActorSize BodySize { get; set; } = ActorSize.Medium;
 
-        // CanHandleInput
-        public bool CanHandleInput
-        {
-            get
-            {
-                if (InputHandler == null || Session.IsAwaiting || !IsPlayer || !CanChangeState)
-                    return false;
-
-                if (Session.CombatManager.TurnList.Count >= 2 && TurnState != CombatTurnState.WaitingInput)
-                    return false;
-
-                return true;
-            }
-        }
-
         // CanChangeState
         public bool CanChangeState
         {
@@ -666,7 +651,10 @@ namespace Remizione
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
-            if (!CanHandleInput)
+            if (InputHandler == null || Session.IsAwaiting || !IsPlayer || !CanChangeState)
+                return HandleInputResult.Unhandled;
+
+            if (Session.CombatManager.TurnList.Count >= 2 && TurnState != CombatTurnState.WaitingInput)
                 return HandleInputResult.Unhandled;
 
             if (StateMachine.CurrentState.HandleInput(gameTime) == HandleInputResult.Handled)

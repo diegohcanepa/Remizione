@@ -276,6 +276,7 @@
                 <false/>
             </struct>
             <key type="filename">KeyboardControls-assets/KeyboardInteract.png</key>
+            <key type="filename">UI-assets/BagIcon.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>
             <key type="filename">UI-assets/ProhibitionMark.png</key>
             <key type="filename">XboxControls-assets/XboxInteract.png</key>
@@ -338,21 +339,6 @@
                 <rect>2,2,3,3</rect>
                 <key>scale9Paddings</key>
                 <rect>2,2,3,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">MouseCursors-assets/MouseCursorBag.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,5,7</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,5,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -667,6 +653,21 @@
                 <rect>29,15,57,30</rect>
                 <key>scale9Paddings</key>
                 <rect>29,15,57,30</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UI-assets/PrayerIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,3,7,6</rect>
+                <key>scale9Paddings</key>
+                <rect>4,3,7,6</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

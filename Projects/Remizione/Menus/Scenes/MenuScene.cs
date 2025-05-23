@@ -75,6 +75,7 @@ namespace Remizione.Menus
 
         #endregion
 
+        /*
         // CanHandleInput
         public override bool CanHandleInput
         {
@@ -83,18 +84,15 @@ namespace Remizione.Menus
                 if (TransitionManager.CurrentTransition.IsRunning)
                 {
                     if (TransitionManager.CurrentTransition.TransitionState == TransitionState.In)
-                    {
                         return false;
-                    }
                     else if (TransitionManager.CurrentTransition.TransitionState == TransitionState.Out && TransitionManager.CurrentTransition.VisibleRatio > .4f)
-                    {
                         return false;
-                    }
                 }
 
                 return base.CanHandleInput;
             }
         }
+        */
 
         // Game
         public new RemizioneGame Game { get; }

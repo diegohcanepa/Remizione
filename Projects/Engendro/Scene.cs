@@ -162,9 +162,6 @@ namespace Engendro
         // BoundingBox
         public Rectangle BoundingBox { get; private set; }
 
-        // CanHandleInput
-        public virtual bool CanHandleInput => !InputManager.IsSuspended && IsCurrentScene;
-
         // Content
         public ContentManager? Content { get; private set; }
 
@@ -178,7 +175,10 @@ namespace Engendro
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
-            return CanHandleInput ? OnHandleInput(gameTime) : HandleInputResult.Unhandled;
+            if (!InputManager.IsSuspended && IsCurrentScene)
+                return OnHandleInput(gameTime);
+            else
+                return HandleInputResult.Unhandled;
         }
 
         // Height

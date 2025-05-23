@@ -131,9 +131,6 @@ namespace Remizione.UI
         // Camera
         public Camera Camera { get; }
 
-        // CanHandleInput
-        public bool CanHandleInput => true;
-
         // Clear
         public void Clear()
         {
@@ -159,13 +156,10 @@ namespace Remizione.UI
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
-            if (!CanHandleInput)
-                return HandleInputResult.Unhandled;
-
             if (HandleMouseInput())
                 return HandleInputResult.Handled;
-
-            return HandleInputResult.Unhandled;
+            else
+                return HandleInputResult.Unhandled;
         }
 
         // HasOptions

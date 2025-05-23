@@ -572,10 +572,15 @@ namespace EngendroAdventure
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
-            if (Room != null && CanHandleRoomInput)
-                return Room.HandleInput(gameTime);
-            else
-                return base.OnHandleInput(gameTime);
+            if (IsRunning && !IsDisposed && (State == GameSessionState.Idle || IsAwaiting))
+            {
+                if (Room != null && CanHandleRoomInput)
+                    return Room.HandleInput(gameTime);
+                else
+                    return base.OnHandleInput(gameTime);
+            }
+
+            return HandleInputResult.Unhandled;
         }
 
         // OnInitializeEntities
@@ -777,9 +782,6 @@ namespace EngendroAdventure
 
         // Camera
         public Camera Camera { get; }
-
-        // CanHandleInput
-        public override bool CanHandleInput => IsRunning && !IsDisposed && (State == GameSessionState.Idle || IsAwaiting);
 
         // CanSave
         public bool CanSave => AllowSaving && !IsSaving && SaveFileNumber >= 0 && Room != null && Room.CanSave && !IsAwaiting;

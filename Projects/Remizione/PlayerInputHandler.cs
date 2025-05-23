@@ -42,12 +42,6 @@ namespace Remizione
 
             MouseCursor.Instance.AnimateClick();
 
-            if (MouseCursor.Instance.State == MouseCursorState.Bag)
-            {
-                Actor.Session.ShowInventory();
-                return true;
-            }
-
             // Attack
             if (Actor.Session.TargetMode)
             {

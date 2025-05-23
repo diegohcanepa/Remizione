@@ -45,9 +45,6 @@ namespace Remizione
             if (state == MouseCursorState.Arrow)
                 cursorImage.Image = Atlases.UI.MouseCursorArrow;
 
-            else if (state == MouseCursorState.Bag)
-                cursorImage.Image = Atlases.UI.MouseCursorBag;
-
             else if (state == MouseCursorState.Cross)
                 cursorImage.Image = Atlases.UI.MouseCursorCross;
 
@@ -64,7 +61,7 @@ namespace Remizione
                 cursorImage.Image = Atlases.UI.MouseCursorWait;
 
             cursorImage.Scale = ScaleInfo.UIElement.Medium;
-            cursorImage.PivotOrigin = state == MouseCursorState.Arrow || state == MouseCursorState.Bag ? RectanglePoint.LeftTop : RectanglePoint.Middle;
+            cursorImage.PivotOrigin = state == MouseCursorState.Arrow ? RectanglePoint.LeftTop : RectanglePoint.Middle;
         }
 
         #endregion

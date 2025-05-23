@@ -26,7 +26,6 @@ namespace Remizione
             MessageContainer = this[nameof(MessageContainer)];
             MissingInputBinding = this[nameof(MissingInputBinding)];
             MouseCursorArrow = this[nameof(MouseCursorArrow)];
-            MouseCursorBag = this[nameof(MouseCursorBag)];
             MouseCursorCross = this[nameof(MouseCursorCross)];
             MouseCursorCrossOn = this[nameof(MouseCursorCrossOn)];
             MouseCursorTarget = this[nameof(MouseCursorTarget)];
@@ -92,9 +91,6 @@ namespace Remizione
 
         // MouseCursorArrow
         public AtlasImage MouseCursorArrow { get; }
-
-        // MouseCursorBag
-        public AtlasImage MouseCursorBag { get; }
 
         // MouseCursorCross
         public AtlasImage MouseCursorCross { get; }

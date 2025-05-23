@@ -26,9 +26,6 @@ namespace Engendro
 
         #endregion
 
-        // CanHandleInput
-        public virtual bool CanHandleInput => false;
-
         // CheckTransitions
         public virtual string? CheckTransitions()
         {
@@ -46,13 +43,7 @@ namespace Engendro
         }
 
         // HandleInput
-        public HandleInputResult HandleInput(GameTime gameTime)
-        {
-            if (CanHandleInput)
-                return OnHandleInput(gameTime);
-            else
-                return HandleInputResult.Unhandled;
-        }
+        public HandleInputResult HandleInput(GameTime gameTime) => HandleInputResult.Unhandled;
 
         // Name
         public string Name { get; }

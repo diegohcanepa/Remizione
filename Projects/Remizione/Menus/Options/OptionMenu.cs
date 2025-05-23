@@ -148,9 +148,6 @@ namespace Remizione.Menus
             Invalidate();
         }
 
-        // CanHandleInput
-        public bool CanHandleInput => true;
-
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {

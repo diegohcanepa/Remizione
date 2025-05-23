@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:81cc1ff2c552b7f3f1f94b04c2737fe5:629620e98859579f650fedfd5fda981a:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:7386b682afe71ce03f8fa03744200521:4d61b25ebb6a634420e80ef0afb418db:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -43,7 +43,6 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MessageContainer.png" x="750" y="2" w="251" h="27"/>
     <sprite n="MissingInputBinding.png" x="968" y="227" w="52" h="52"/>
     <sprite n="MouseCursorArrow.png" x="982" y="76" w="6" h="6"/>
-    <sprite n="MouseCursorBag.png" x="852" y="210" w="10" h="13"/>
     <sprite n="MouseCursorCross.png" x="992" y="31" w="9" h="11"/>
     <sprite n="MouseCursorCrossOn.png" x="992" y="44" w="9" h="11"/>
     <sprite n="MouseCursorTarget.png" x="992" y="70" w="9" h="9"/>
