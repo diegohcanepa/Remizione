@@ -36,7 +36,7 @@ namespace Remizione
                 return;
 
             Game.SpriteBatch.Begin(session.Camera, SamplerState.LinearWrap);
-            Game.Shapes.DrawRectangle(frame, Color.Black * .5f);
+            //Game.Shapes.DrawRectangle(frame, Color.Black * .5f);
             Game.SpriteBatch.End();
             menu.Draw(gameTime);
         }

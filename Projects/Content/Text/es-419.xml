@@ -198,6 +198,7 @@ Bla bla bla</String>
   <String Key="Misc.WanderingSpirit">Tu espíritu errante</String>
   <String Key="Misc.Yes">Sí</String>
   <String Key="Misc.YouAreDead">ESTÁS MUERTO.</String>
+  <String Key="Noun.Bag">Bolsa</String>
   <String Key="Noun.Chest">Cofre de madera</String>
   <String Key="Noun.Cross">Cruz</String>
   <String Key="Platform.NintendoSwitch.Messages.ControllerDisconnected">Por favor vuelve a conectar el mando para continuar.</String>

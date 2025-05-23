@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:a2fb98cd32f6309f5bc0542712c3d6d7:48290e1001b74e4a04cd6fec018714e1:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:81cc1ff2c552b7f3f1f94b04c2737fe5:629620e98859579f650fedfd5fda981a:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,11 +20,12 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="UI.png" width="1024" height="1024">
+    <sprite n="BagIcon.png" x="990" y="81" w="11" h="11"/>
     <sprite n="BottomGradient.png" x="750" y="31" w="240" h="43"/>
-    <sprite n="ButtonContainer.png" x="386" y="125" w="44" h="13"/>
+    <sprite n="ButtonContainer.png" x="56" y="178" w="44" h="13"/>
     <sprite n="CharacterSheetContainer.png" x="866" y="138" w="100" h="117"/>
     <sprite n="CharacterSheetStatContainer.png" x="750" y="310" w="88" h="10"/>
-    <sprite n="CheckMark.png" x="990" y="81" w="11" h="11"/>
+    <sprite n="CheckMark.png" x="852" y="184" w="11" h="11"/>
     <sprite n="ContextMenuOptionSelector.png" x="982" y="89" w="4" h="5"/>
     <sprite n="CreditsBar.png" x="2" y="2" w="480" h="67"/>
     <sprite n="FaithIcon.png" x="988" y="94" w="13" h="13"/>
@@ -42,7 +43,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MessageContainer.png" x="750" y="2" w="251" h="27"/>
     <sprite n="MissingInputBinding.png" x="968" y="227" w="52" h="52"/>
     <sprite n="MouseCursorArrow.png" x="982" y="76" w="6" h="6"/>
-    <sprite n="MouseCursorBag.png" x="852" y="197" w="10" h="13"/>
+    <sprite n="MouseCursorBag.png" x="852" y="210" w="10" h="13"/>
     <sprite n="MouseCursorCross.png" x="992" y="31" w="9" h="11"/>
     <sprite n="MouseCursorCrossOn.png" x="992" y="44" w="9" h="11"/>
     <sprite n="MouseCursorTarget.png" x="992" y="70" w="9" h="9"/>
@@ -67,13 +68,14 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PlayStationNextDialog.png" x="2" y="172" w="52" h="52"/>
     <sprite n="PlayStationRightShoulder.png" x="953" y="335" w="64" h="46"/>
     <sprite n="PlayStationRightTrigger.png" x="432" y="119" w="50" h="46"/>
-    <sprite n="PlayStationSelectSlot.png" x="333" y="125" w="51" h="55"/>
+    <sprite n="PlayStationSelectSlot.png" x="349" y="125" w="51" h="55"/>
     <sprite n="PlayStationX.png" x="118" y="124" w="52" h="52"/>
     <sprite n="PlayStationY.png" x="172" y="124" w="52" h="52"/>
     <sprite n="PopupContainer.png" x="484" y="2" w="264" h="311"/>
     <sprite n="PopupContainerShadow.png" x="866" y="76" w="114" h="60"/>
+    <sprite n="PrayerIcon.png" x="333" y="124" w="14" h="12"/>
     <sprite n="ProhibitionIcon.png" x="1003" y="42" w="17" h="17"/>
-    <sprite n="ProhibitionMark.png" x="852" y="184" w="11" h="11"/>
+    <sprite n="ProhibitionMark.png" x="852" y="197" w="11" h="11"/>
     <sprite n="QuickSlot.png" x="982" y="123" w="15" h="15"/>
     <sprite n="QuickSlotShadow.png" x="999" y="131" w="15" h="15"/>
     <sprite n="SavingIcon.png" x="993" y="156" w="9" h="9"/>
@@ -81,8 +83,8 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="SpeechBubblePipe.png" x="982" y="84" w="5" h="3"/>
     <sprite n="SpiritIcon.png" x="953" y="257" w="13" h="13"/>
     <sprite n="TipBalloon.png" x="968" y="138" w="12" h="13"/>
-    <sprite n="UIControlShade.png" x="386" y="167" w="50" h="12"/>
-    <sprite n="UIControlShadow.png" x="386" y="181" w="45" h="10"/>
+    <sprite n="UIControlShade.png" x="402" y="167" w="50" h="12"/>
+    <sprite n="UIControlShadow.png" x="402" y="181" w="45" h="10"/>
     <sprite n="UnreadSign.png" x="982" y="96" w="3" h="6"/>
     <sprite n="XboxA.png" x="953" y="272" w="13" h="13"/>
     <sprite n="XboxB.png" x="953" y="287" w="13" h="13"/>

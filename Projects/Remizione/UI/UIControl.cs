@@ -237,6 +237,20 @@ namespace Remizione
             }
         }
 
+        // ImageScale
+        public Vector2 ImageScale
+        {
+            get => image.Scale;
+            set
+            {
+                if (value != image.Scale)
+                {
+                    image.Scale = value;
+                    Invalidate();
+                }
+            }
+        }
+
         // InputBinding
         public InputBinding? InputBinding
         {

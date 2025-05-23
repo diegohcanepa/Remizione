@@ -198,6 +198,7 @@ Bla bla bla</String>
   <String Key="Misc.WanderingSpirit">Your wandering spirit</String>
   <String Key="Misc.Yes">Yes</String>
   <String Key="Misc.YouAreDead">YOU'RE DEAD.</String>
+  <String Key="Noun.Bag">Bag</String>
   <String Key="Noun.Chest">Wooden chest</String>
   <String Key="Noun.Cross">Cross</String>
   <String Key="Platform.NintendoSwitch.Messages.ControllerDisconnected">Please reconnect your Joy-Con™ to continue.</String>

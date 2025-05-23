@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Remizione.UI;
@@ -9,13 +10,15 @@ namespace Remizione
     /// <summary>
     /// HUD
     /// </summary>
-    public sealed class HUD : GameObject
+    public sealed class HUD : GameObject, IInputHandler
     {
         #region Private fields
 
+        private readonly UIControl bagIcon;
         private readonly ScoreText gpScore;
         private readonly TextSprite interactionTarget;
         private readonly UIDerivedStats playerStats;
+        private readonly UIControl prayerIcon;
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
         private readonly TextSprite statusText;
@@ -54,6 +57,7 @@ namespace Remizione
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
+            // Interaction target
             this.interactionTarget = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
@@ -70,6 +74,26 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.Top,
                 Position = Screen.Area.GetPoint(RectanglePoint.Top, 0, 8),
                 Scale = ScaleInfo.Text.VeryLarge
+            };
+
+            // Prayer icon
+            this.prayerIcon = new UIControl(Game)
+            {
+                DisplayMode = UIControlDisplayMode.ImageOnly,
+                ImageName = "PrayerIcon",
+                ImageScale = ScaleInfo.UIElement.Large,
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = Screen.SafeArea.GetPoint(RectanglePoint.LeftBottom, 4, -4),
+            };
+
+            // Bag icon
+            this.bagIcon = new UIControl(Game)
+            {
+                DisplayMode = UIControlDisplayMode.ImageOnly,
+                ImageName = "BagIcon",
+                ImageScale = ScaleInfo.UIElement.Large,
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = prayerIcon.BoundingBox.GetPoint(RectanglePoint.RightBottom, 2, 0)
             };
         }
 
@@ -139,7 +163,11 @@ namespace Remizione
             }
 
             if (session.Player != null && session.FullHUD)
+            {
                 gpScore.Draw(gameTime);
+                prayerIcon.Draw(gameTime);
+                bagIcon.Draw(gameTime);
+            }
 
             Log.Draw(gameTime);
 
@@ -172,8 +200,16 @@ namespace Remizione
 
         #endregion
 
+        // CanHandleInput
+        public bool CanHandleInput => throw new NotImplementedException();
+
         // DestinationMark
         public DestinationMark DestinationMark { get; }
+
+        // HandleInput
+        public HandleInputResult HandleInput(GameTime gameTime)
+        {
+        }
 
         // Log
         public UILog Log { get; }
