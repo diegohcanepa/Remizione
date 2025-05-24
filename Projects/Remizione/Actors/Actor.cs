@@ -55,7 +55,8 @@ namespace Remizione
             this.IgnoreWalkArea = false;
             this.ShadowSpot = new ShadowSpot(this);
 
-            this.Gifts = new ItemContainer(this);
+            this.Gifts = new ItemContainer(this, Localization.GetLocalizedValue(InGameMenuOptionName.Gifts));
+            this.Prayers = new ItemContainer(this, Localization.GetLocalizedValue(InGameMenuOptionName.Prayers));
 
             this.standState = new ActorStandState(this);
 
@@ -645,6 +646,18 @@ namespace Remizione
             return result;
         }
 
+        // GetItemContainer
+        public ItemContainer GetItemContainer(ItemContainerCategory category)
+        {
+            return category switch
+            {
+                ItemContainerCategory.Inventory => Inventory,
+                ItemContainerCategory.Gifts => Gifts,
+                ItemContainerCategory.Prayers => Prayers,
+                _ => throw new ArgumentOutOfRangeException(nameof(category), category, null),
+            };
+        }   
+
         // Gifts
         public ItemContainer Gifts { get; }
 
@@ -878,6 +891,9 @@ namespace Remizione
                 }
             }
         }
+
+        // Prayers
+        public ItemContainer Prayers { get; }
 
         // Replenish
         [ScriptMethod]

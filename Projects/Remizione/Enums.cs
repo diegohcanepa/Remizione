@@ -47,6 +47,14 @@ namespace Remizione
     // ItemAction
     public enum ItemAction { None, Create, Discard, Use, Wield }
 
+    // ItemContainerCategory
+    public enum ItemContainerCategory
+    {
+        Inventory,
+        Gifts,
+        Prayers
+    }
+
     // ItemKind
     public enum ItemKind { Object, Gift }
 

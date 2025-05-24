@@ -148,7 +148,7 @@ namespace Remizione
             {
                 Effect? shader = null;
                 
-                if (IsMouseOver())
+                if (IsMouseOver)
                 {
                     RemizioneGame.Effects.ColorSaturation.SetColor(.7f, .7f, .7f, 1);
                     shader = RemizioneGame.Effects.ColorSaturation.Effect;
@@ -177,11 +177,14 @@ namespace Remizione
             if (InputManager.DefaultPlayer.LastInputMethod != lastKnownInputMethod)
                 Invalidate();
 
+            IsMouseOver = false;
+
             if (IsEnabled)
             {
                 if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
                 {
-                    if (IsMouseOver())
+                    IsMouseOver = BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);
+                    if (IsMouseOver)
                         label.Color = ColorPalette.Text.Hover;
                 }
             }
@@ -281,10 +284,7 @@ namespace Remizione
         }
 
         // IsMouseOver
-        public bool IsMouseOver()
-        {
-            return BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);
-        }
+        public bool IsMouseOver { get; private set; }
 
         // PivotOrigin
         public RectanglePoint PivotOrigin
@@ -322,7 +322,7 @@ namespace Remizione
 
             var result = false;
 
-            if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() && IsMouseOver())
+            if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() && IsMouseOver)
                 result = true;
 
             if (inputBinding != null && inputBinding.IsPressed(playerIndex))

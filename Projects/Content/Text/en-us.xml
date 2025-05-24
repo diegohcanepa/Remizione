@@ -185,7 +185,6 @@ Bla bla bla</String>
   <String Key="Misc.FP">Faith</String>
   <String Key="Misc.GP">Grace points</String>
   <String Key="Misc.HP">Vitality</String>
-  <String Key="Misc.Inventory">Possessions</String>
   <String Key="Misc.Level">Level</String>
   <String Key="Misc.Money">Money</String>
   <String Key="Misc.Mute">Mute</String>

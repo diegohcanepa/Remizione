@@ -14,9 +14,10 @@ namespace Remizione
         private readonly List<Item> items = [];
 
         // Constructor
-        public ItemContainer(GameThing owner)
+        public ItemContainer(GameThing owner, string displayName)
         {
             this.Owner = owner;
+            this.DisplayName = displayName;
 
             Items = new ReadOnlyCollection<Item>(items);
         }
@@ -88,6 +89,9 @@ namespace Remizione
                 }
             }
         }
+
+        // DisplayName
+        public string DisplayName { get; }
 
         // GetItem
         public Item? GetItem(string name)

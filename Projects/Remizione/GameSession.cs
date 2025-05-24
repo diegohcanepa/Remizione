@@ -26,12 +26,14 @@ namespace Remizione
         private readonly ScriptConsole? console;
         private readonly ContextMenuScene contextMenuScene;
         private readonly EchoScene echoScene;
+        private readonly GiftsScene giftsScene;
         private bool inGameMenuLocked;
         private readonly InGameMenuScene inGameMenuScene;
         private readonly InventoryScene inventoryScene;
         private readonly LootScene lootScene;
         private Actor? player;
         private Vector2? playerPosition;
+        private readonly PrayersScene prayersScene;
         private readonly RoomEditor? roomEditor;
         private readonly Dictionary<PlacementPhase, List<GameThing>> staticThings = [];
 
@@ -74,8 +76,10 @@ namespace Remizione
             this.inGameMenuScene = new(this);
             this.characterSheetScene = new(Game);
             this.echoScene = new(Game);
+            this.giftsScene = new(Game);
             this.inventoryScene = new(Game);
             this.lootScene = new(this);
+            this.prayersScene = new(Game);
 
             LocalizationSource = LocalizationSource.Script;
         }
@@ -107,6 +111,13 @@ namespace Remizione
             if (Player.TurnState != CombatTurnState.WaitingInput && CombatManager.TurnList.Count >= 2)
             {
                 MouseCursor.Instance.State = MouseCursorState.Wait;
+                return;
+            }
+
+            // Arrow
+            if (HUD.IsMouseOverButton())
+            {
+                MouseCursor.Instance.State = MouseCursorState.Arrow;
                 return;
             }
 
@@ -543,15 +554,27 @@ namespace Remizione
             Game.SceneManager.Push(inGameMenuScene);
         }
 
-        // ShowInventory
-        public void ShowInventory()
+        // ShowItemContainerScene
+        public void ShowItemContainerScene(ItemContainerCategory category)
         {
             if (Player == null)
                 return;
 
             Player.StopMoving();
-            inventoryScene.Actor = Player;
-            Game.SceneManager.Push(inventoryScene);
+
+            ItemContainerScene? scene = null;
+            if (category == ItemContainerCategory.Inventory)
+                scene = inventoryScene;
+            
+            else if (category == ItemContainerCategory.Prayers)
+                scene = prayersScene;
+
+            else
+                scene = giftsScene;
+
+            scene.Actor = Player;
+
+            Game.SceneManager.Push(scene);
         }
 
         // ShowLootScene

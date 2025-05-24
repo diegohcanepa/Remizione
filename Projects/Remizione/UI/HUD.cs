@@ -81,7 +81,7 @@ namespace Remizione
             {
                 DisplayMode = UIControlDisplayMode.ImageOnly,
                 ImageName = "PrayerIcon",
-                ImageScale = ScaleInfo.UIElement.Medium,
+                ImageScale = ScaleInfo.UIElement.Large,
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.LeftBottom, 4, -4),
             };
@@ -91,9 +91,9 @@ namespace Remizione
             {
                 DisplayMode = UIControlDisplayMode.ImageOnly,
                 ImageName = "BagIcon",
-                ImageScale = ScaleInfo.UIElement.Medium,
+                ImageScale = ScaleInfo.UIElement.Large,
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Position = prayerButton.BoundingBox.GetPoint(RectanglePoint.RightBottom, 2, 0)
+                Position = prayerButton.BoundingBox.GetPoint(RectanglePoint.RightBottom)
             };
         }
 
@@ -165,8 +165,12 @@ namespace Remizione
             if (session.Player != null && session.FullHUD)
             {
                 gpScore.Draw(gameTime);
-                prayerButton.Draw(gameTime);
-                bagButton.Draw(gameTime);
+
+                if (session.IsCurrentScene)
+                {
+                    prayerButton.Draw(gameTime);
+                    bagButton.Draw(gameTime);
+                }
             }
 
             Log.Draw(gameTime);
@@ -183,6 +187,9 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             playerStats.Update(gameTime);
+
+            bagButton.Update(gameTime);
+            prayerButton.Update(gameTime);
 
             UpdateInteractionTarget();
             statusText.Update(gameTime);
@@ -208,12 +215,13 @@ namespace Remizione
         {
             if (bagButton.TestPressed(0))
             {
-                session.ShowInventory();
+                session.ShowItemContainerScene(ItemContainerCategory.Inventory);
                 return HandleInputResult.Handled;
             }
 
             if (prayerButton.TestPressed(0))
             {
+                session.ShowItemContainerScene(ItemContainerCategory.Prayers);
                 return HandleInputResult.Handled;
             }
 
@@ -223,7 +231,7 @@ namespace Remizione
         // IsMouseOverButton
         public bool IsMouseOverButton()
         {
-            return bagButton.IsMouseOver() || prayerButton.IsMouseOver();
+            return bagButton.IsMouseOver || prayerButton.IsMouseOver;
         }
 
         // Log

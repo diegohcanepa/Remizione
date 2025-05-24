@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:85e4c4850cf8816684b6794575d4f3d1:17c06034066d7304f1344530d4804185:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:b3d1cebf80609177def530f70120eabf:701cbe355b7545f8083a872a4dc81712:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -122,29 +122,29 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Unredeemed-assets/Fatigue11.png" x="212" y="48" w="28" h="21"/>
     <sprite n="Unredeemed-assets/Fatigue12.png" x="332" y="48" w="28" h="21"/>
     <sprite n="Unredeemed-assets/Fatigue13.png" x="362" y="48" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/Fatigue14.png" x="122" y="48" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/Hurt01.png" x="392" y="48" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/Hurt02.png" x="422" y="48" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/Hurt03.png" x="452" y="48" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/Hurt04.png" x="482" y="48" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/Move01.png" x="62" y="71" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/Move02.png" x="92" y="71" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/Move03.png" x="122" y="71" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/Move04.png" x="152" y="71" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/Move05.png" x="182" y="71" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/Move06.png" x="212" y="71" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/Move07.png" x="242" y="71" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/Move08.png" x="272" y="71" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/MoveFast01.png" x="302" y="71" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/MoveFast02.png" x="332" y="71" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/MoveFast03.png" x="362" y="71" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/MoveFast04.png" x="392" y="71" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/MoveFast05.png" x="422" y="71" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/MoveFast06.png" x="452" y="71" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/MoveFast07.png" x="482" y="71" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/MoveFast08.png" x="62" y="94" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/Stand01.png" x="62" y="117" w="28" h="21"/>
-    <sprite n="Unredeemed-assets/UnarmedAttack01.png" x="62" y="140" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/Fatigue14.png" x="392" y="48" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/Hurt01.png" x="422" y="48" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/Hurt02.png" x="452" y="48" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/Hurt03.png" x="482" y="48" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/Hurt04.png" x="62" y="71" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/Move01.png" x="92" y="71" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/Move02.png" x="122" y="71" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/Move03.png" x="152" y="71" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/Move04.png" x="182" y="71" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/Move05.png" x="212" y="71" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/Move06.png" x="242" y="71" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/Move07.png" x="272" y="71" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/Move08.png" x="302" y="71" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/MoveFast01.png" x="332" y="71" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/MoveFast02.png" x="362" y="71" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/MoveFast03.png" x="392" y="71" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/MoveFast04.png" x="422" y="71" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/MoveFast05.png" x="452" y="71" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/MoveFast06.png" x="482" y="71" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/MoveFast07.png" x="62" y="94" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/MoveFast08.png" x="62" y="117" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/Stand01.png" x="62" y="140" w="28" h="21"/>
+    <sprite n="Unredeemed-assets/UnarmedAttack01.png" x="122" y="48" w="28" h="21"/>
     <sprite n="Unredeemed-assets/UnarmedAttack02.png" x="62" y="163" w="28" h="21"/>
     <sprite n="Unredeemed-assets/UnarmedAttack03.png" x="62" y="186" w="28" h="21"/>
     <sprite n="Unredeemed-assets/UnarmedAttack04.png" x="62" y="209" w="28" h="21"/>

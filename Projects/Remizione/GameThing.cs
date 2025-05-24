@@ -59,7 +59,7 @@ namespace Remizione
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
             this.PlacementConditions = new(placementConditions);
-            this.Inventory = new ItemContainer(this);
+            this.Inventory = new ItemContainer(this, Localization.GetLocalizedValue(InGameMenuOptionName.Inventory));
         }
 
         #endregion

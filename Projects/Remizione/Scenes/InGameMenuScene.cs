@@ -1,7 +1,6 @@
 ﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Remizione.UI;
 
 namespace Remizione
@@ -28,10 +27,10 @@ namespace Remizione
                 TextScale = ScaleInfo.Text.VeryLarge,
             };
 
-            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Inventory), session.ShowInventory);
-            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Prayers));
-            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Gifts));
-            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Attributes), session.ShowCharacterSheet);            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Map));
+            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Inventory), () => session.ShowItemContainerScene(ItemContainerCategory.Inventory));
+            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Prayers), () => session.ShowItemContainerScene(ItemContainerCategory.Prayers));
+            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Gifts), () => session.ShowItemContainerScene(ItemContainerCategory.Gifts));
+            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Attributes), session.ShowCharacterSheet); menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Map));
             menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Creatures));
             menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Settings));
         }
@@ -54,7 +53,7 @@ namespace Remizione
 
             return false;
         }
-        
+
         #endregion
 
         #region Protected members
