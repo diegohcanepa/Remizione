@@ -16,6 +16,7 @@ namespace Remizione
             CharacterSheetContainer = this[nameof(CharacterSheetContainer)];
             CharacterSheetStatContainer = this[nameof(CharacterSheetStatContainer)];
             CheckMark = this[nameof(CheckMark)];
+            CloseWindowButton = this[nameof(CloseWindowButton)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
             FaithIcon = this[nameof(FaithIcon)];
@@ -61,6 +62,9 @@ namespace Remizione
 
         // CheckMark
         public AtlasImage CheckMark { get; }
+
+        // CloseWindowButton
+        public AtlasImage CloseWindowButton { get; }
 
         // ContextMenuOptionSelector
         public AtlasImage ContextMenuOptionSelector { get; }

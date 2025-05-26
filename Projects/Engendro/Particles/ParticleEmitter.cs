@@ -90,9 +90,7 @@ namespace Engendro
         protected override void OnDraw(GameTime gameTime)
         {
             if (!IsActive)
-            {
                 return;
-            }
 
             var node = activeParticles.First;
             while (node != null)
@@ -106,9 +104,7 @@ namespace Engendro
         protected override void OnUpdate(GameTime gameTime)
         {
             if (!IsActive)
-            {
                 return;
-            }
 
             if (IsActive)
             {
@@ -150,9 +146,7 @@ namespace Engendro
         public void Activate()
         {
             if (IsActive)
-            {
                 return;
-            }
 
             Age = Duration <= 0 ? -1 : 0;
             IsActive = true;
@@ -169,10 +163,7 @@ namespace Engendro
         public int BurstInterval { get; set; }
 
         // Deactivate
-        public void Deactivate()
-        {
-            IsActive = false;
-        }
+        public void Deactivate() => IsActive = false;
 
         // Duration
         public int Duration { get; set; }

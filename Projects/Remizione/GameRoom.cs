@@ -18,6 +18,7 @@ namespace Remizione
         private int currentDrawIndex;
         private static DustEmitter dustEmitter = null!;
         private static FireflyEmitter fireflyEmitter = null!;
+        private readonly Light lightning;
         private RenderTarget2D? lightMapTarget;
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
@@ -34,6 +35,13 @@ namespace Remizione
             : base(session, name)
         {
             this.Session = session;
+            this.lightning = new Light(Game, "<Lightning>")
+            { 
+                ImageName = nameof(Atlases.Environment.LightningLight),
+                LightKind = LightKind.Lightning,
+                Scale = new Vector2(6)
+            };
+
             this.Lights = new NamedObjectReadOnlyCollection<Light>(lights);
             this.TriggerAreas = new RoomAreaReadOnlyCollection<TriggerArea>(triggerAreas);
             this.WalkAreas = new RoomAreaReadOnlyCollection<WalkArea>(walkAreas);
@@ -200,6 +208,13 @@ namespace Remizione
                 }
             }
 
+            if (lightning.IsFlashing)
+            {
+                lightning.Position = Session.Camera.VisibleBox.Center;
+                lightning.Draw(gameTime);
+                renderedLights.Add(lightning);
+            }
+
             // Light sources
             for (int i = 0; i < CulledThings.Count; i++)
             {
@@ -271,6 +286,10 @@ namespace Remizione
             // Shadows
             DrawShadows(gameTime);
 
+            // Rain drop impacts
+            if (Session.Environment.Weather.IsRaining)
+                Session.Environment.Weather.DrawRainDropImpacts(gameTime);
+
             // Move destination mark
             Session.HUD.DestinationMark.Draw(gameTime);
 
@@ -285,6 +304,10 @@ namespace Remizione
 
             // Foreround (layer)
             DrawThings(gameTime, RenderLayer.Foreground, interactiveTarget);
+
+            // Rain
+            if (Session.Environment.Weather.IsRaining)
+                Session.Environment.Weather.DrawRain(gameTime);
 
             // Apply light map
             if (CanUseLightingSystem && Game.RenderTargets != null)
@@ -372,6 +395,9 @@ namespace Remizione
                 lights[i].Update(gameTime);
             }
 
+            if (lightning.IsFlashing)
+                lightning.Update(gameTime);
+
             // Dust particles
             if (DustParticleKind != DustParticleKind.None)
                 dustEmitter?.Update(gameTime);
@@ -440,6 +466,10 @@ namespace Remizione
         [ScriptProperty]
         public DustParticleKind DustParticleKind { get; set; } = DustParticleKind.Ash;
 
+        // IsOutdoor
+        [ScriptProperty]
+        public bool IsOutdoor { get; set; } = true;
+
         // IsWalkable
         public virtual bool IsWalkable => true;
 
@@ -482,6 +512,28 @@ namespace Remizione
 
         // Session
         public new GameSession Session { get; }
+
+        // ShowLightning
+        public void ShowLightning(bool extendedDuration)
+        {
+            var interval = extendedDuration ? new Int32Range(100, 150) : new Int32Range(50, 80);
+            int count = extendedDuration ? 18 : 6;
+            //var lightCount = 0;
+
+            for (int i = 0; i < Lights.Count; i++)
+            {
+                /*
+                if (Lights[i].Environmental)
+                {
+                    Lights[i].Flash(interval, count);
+                    lightCount++;
+                }
+                */
+            }
+
+            if (IsOutdoor)
+                lightning.Flash(interval, count);
+        }
 
         // TriggerAreas
         public RoomAreaReadOnlyCollection<TriggerArea> TriggerAreas { get; }

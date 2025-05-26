@@ -14,8 +14,8 @@ namespace Remizione
     {
         #region Private fields
 
+        private readonly UIScore ashes;
         private readonly UIControl bagButton;
-        private readonly ScoreText gpScore;
         private readonly TextSprite interactionTarget;
         private readonly UIDerivedStats playerStats;
         private readonly UIControl prayerButton;
@@ -48,13 +48,12 @@ namespace Remizione
                 Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -8, 6)
             };
 
-            // GP score
-            this.gpScore = new ScoreText(session.Game)
+            // Ashes
+            this.ashes = new UIScore(session.Game, TextRepository.GetValue("ActorProperty.Ashes.Name"))
             {
                 HideZero = true,
-                PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.RightBottom, -2, 0),
-                Scale = ScaleInfo.Text.VeryLarge
+                PivotOrigin = RectanglePoint.RightTop,
+                Position = Screen.SafeArea.GetPoint(RectanglePoint.RightTop, -3, 2),
             };
 
             // Interaction target
@@ -164,8 +163,7 @@ namespace Remizione
 
             if (session.Player != null && session.FullHUD)
             {
-                gpScore.Draw(gameTime);
-
+                ashes.Draw(gameTime);
                 if (session.IsCurrentScene)
                 {
                     prayerButton.Draw(gameTime);
@@ -196,8 +194,8 @@ namespace Remizione
 
             if (session.Player != null)
             {
-                gpScore.Score = session.Player.Stats.GP;
-                gpScore.Update(gameTime);
+                ashes.Score = session.Player.Ashes;
+                ashes.Update(gameTime);
             }
 
             DestinationMark.Update(gameTime);

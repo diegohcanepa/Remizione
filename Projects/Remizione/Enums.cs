@@ -104,6 +104,9 @@ namespace Remizione
     // QTEResult
     public enum QTEResult { Failure, Success }
 
+    // RainDropImpactKind
+    public enum RainDropImpactKind { None, Ground, Water }
+
     // RenderLayer
     public enum RenderLayer { BehindBackground, Background, Doors, Default, Foreground, ForegroundNoLight }
 

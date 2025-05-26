@@ -356,6 +356,97 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Environment-assets/LightningLight.png</key>
+            <key type="filename">TerrainBlocks-assets/TerrainBlockDefault.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>60,34,120,67</rect>
+                <key>scale9Paddings</key>
+                <rect>60,34,120,67</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Environment-assets/RainParticle1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>91,13,183,25</rect>
+                <key>scale9Paddings</key>
+                <rect>91,13,183,25</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Environment-assets/RainParticle2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>90,14,180,29</rect>
+                <key>scale9Paddings</key>
+                <rect>90,14,180,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Environment-assets/RainParticle3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>88,17,177,33</rect>
+                <key>scale9Paddings</key>
+                <rect>88,17,177,33</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Environment-assets/RainParticle4.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>83,11,166,22</rect>
+                <key>scale9Paddings</key>
+                <rect>83,11,166,22</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Environment-assets/RainParticle5.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>78,16,155,32</rect>
+                <key>scale9Paddings</key>
+                <rect>78,16,155,32</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Environment-assets/RottenApple.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -464,6 +555,31 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">RainDropImpacts-assets/RainDropImpactA01.png</key>
+            <key type="filename">RainDropImpacts-assets/RainDropImpactA02.png</key>
+            <key type="filename">RainDropImpacts-assets/RainDropImpactA03.png</key>
+            <key type="filename">RainDropImpacts-assets/RainDropImpactB01.png</key>
+            <key type="filename">RainDropImpacts-assets/RainDropImpactB02.png</key>
+            <key type="filename">RainDropImpacts-assets/RainDropImpactB03.png</key>
+            <key type="filename">RainDropImpacts-assets/RainDropImpactB04.png</key>
+            <key type="filename">RainDropImpacts-assets/RainDropImpactC01.png</key>
+            <key type="filename">RainDropImpacts-assets/RainDropImpactC02.png</key>
+            <key type="filename">RainDropImpacts-assets/RainDropImpactC03.png</key>
+            <key type="filename">RainDropImpacts-assets/RainDropImpactC04.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,4,13,8</rect>
+                <key>scale9Paddings</key>
+                <rect>6,4,13,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">SmallRockA-assets/SmallRockA.png</key>
             <key type="filename">SmallRockA-assets/SmallRockAShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -493,21 +609,6 @@
                 <rect>4,2,7,5</rect>
                 <key>scale9Paddings</key>
                 <rect>4,2,7,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">TerrainBlocks-assets/TerrainBlockDefault.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>60,34,120,67</rect>
-                <key>scale9Paddings</key>
-                <rect>60,34,120,67</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -647,6 +748,7 @@
                     <filename>SmallRockB-assets</filename>
                     <filename>Chest-assets</filename>
                     <filename>LootBag-assets</filename>
+                    <filename>RainDropImpacts-assets</filename>
                 </array>
             </struct>
         </map>

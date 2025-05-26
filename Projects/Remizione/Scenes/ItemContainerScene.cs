@@ -11,15 +11,20 @@ namespace Remizione
     /// </summary>
     public abstract class ItemContainerScene : Scene
     {
+        #region Private fields
+
         private readonly UIControl actionButton;
         private readonly bool allowAction;
         private readonly bool allowDiscard;
+        //private readonly UIControl closeButton;
         private readonly ImageSprite container;
         private readonly ImageSprite containerSelection;
         private readonly UIControl discardButton;
         private readonly UIInfoPanel infoPanel;
         private readonly ItemContainerCategory category;
         private readonly PopupMenu<Item> menu;
+
+        #endregion
 
         #region Constructor
 
@@ -63,6 +68,18 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.RightBottom,
                 TextColor = ColorPalette.Text.Default
             };
+
+            /*
+            // Close window
+            this.closeButton = new UIControl(game)
+            {
+                DisplayMode = UIControlDisplayMode.ImageOnly,
+                ImageName = "CloseWindowButton",
+                PivotOrigin = RectanglePoint.LeftTop,
+                Position = container.BoundingBox.GetPoint(RectanglePoint.RightTop, 2, 0),
+                TextColor = ColorPalette.Text.Default
+            };
+            */
 
             // Discard
             this.discardButton = new UIControl(game, InputBindings.Select)
@@ -189,6 +206,8 @@ namespace Remizione
                 if (allowAction)
                     actionButton.Draw(gameTime);
             }
+
+            //closeButton.Draw(gameTime);
         }
 
         // OnHandleInput
@@ -252,6 +271,8 @@ namespace Remizione
                 if (allowAction)
                     actionButton.Update(gameTime);
             }
+
+            //closeButton.Update(gameTime);
         }
 
         #endregion

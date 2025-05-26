@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:8e759fbd0387f2bff10ffbd91cd7eac6:01538622d99b2f0fc85d7e1b3e28b0dc:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:dcba45f1e4c4f0d8bbf6d4ff1af6a621:cf637d7e2447c05d1f0d3b763238e93e:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,58 +20,75 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Environment.png" width="512" height="512">
-    <sprite n="Apple.png" x="284" y="98" w="2" h="3"/>
-    <sprite n="BlessedTinder.png" x="307" y="145" w="5" h="6"/>
-    <sprite n="BloodSplashHigh01.png" x="467" y="93" w="13" h="18"/>
-    <sprite n="BloodSplashHigh02.png" x="451" y="102" w="13" h="18"/>
-    <sprite n="BloodSplashHigh03.png" x="482" y="93" w="13" h="18"/>
-    <sprite n="BloodSplashHigh04.png" x="497" y="93" w="13" h="18"/>
-    <sprite n="BloodSplashHigh05.png" x="466" y="113" w="13" h="18"/>
-    <sprite n="BloodSplashHigh06.png" x="481" y="113" w="13" h="18"/>
-    <sprite n="BloodSplashLow01.png" x="371" y="93" w="14" h="7"/>
-    <sprite n="BloodSplashLow02.png" x="387" y="93" w="14" h="7"/>
-    <sprite n="BloodSplashLow03.png" x="371" y="102" w="14" h="7"/>
-    <sprite n="BloodSplashLow04.png" x="387" y="102" w="14" h="7"/>
-    <sprite n="BloodSplashLow05.png" x="342" y="106" w="14" h="7"/>
-    <sprite n="BloodSplashLow06.png" x="451" y="93" w="14" h="7"/>
-    <sprite n="Chest.png" x="415" y="89" w="16" h="14"/>
-    <sprite n="ChestShadow.png" x="433" y="89" w="16" h="14"/>
-    <sprite n="CrossA.png" x="282" y="227" w="19" h="22"/>
-    <sprite n="CrossAShadow.png" x="354" y="69" w="19" h="22"/>
-    <sprite n="CrossB.png" x="415" y="69" w="18" h="18"/>
-    <sprite n="CrossBShadow.png" x="435" y="69" w="18" h="18"/>
-    <sprite n="CrossC.png" x="375" y="69" w="18" h="22"/>
-    <sprite n="CrossCShadow.png" x="395" y="69" w="18" h="22"/>
-    <sprite n="CrossLargeA.png" x="282" y="145" w="23" h="39"/>
-    <sprite n="CrossLargeAShadow.png" x="282" y="186" w="23" h="39"/>
-    <sprite n="DefaultLight.png" x="288" y="60" w="39" h="39"/>
-    <sprite n="DustParticle1.png" x="283" y="108" w="3" h="3"/>
-    <sprite n="FireflyParticle1.png" x="282" y="113" w="3" h="3"/>
-    <sprite n="FireflyParticle2.png" x="307" y="153" w="5" h="5"/>
-    <sprite n="FlatStonesA.png" x="244" y="60" w="42" h="26"/>
-    <sprite n="FlatStonesB.png" x="458" y="59" w="49" h="32"/>
+    <sprite n="Apple.png" x="351" y="70" w="2" h="3"/>
+    <sprite n="BlessedTinder.png" x="343" y="104" w="5" h="6"/>
+    <sprite n="BloodSplashHigh01.png" x="475" y="36" w="13" h="18"/>
+    <sprite n="BloodSplashHigh02.png" x="475" y="56" w="13" h="18"/>
+    <sprite n="BloodSplashHigh03.png" x="490" y="36" w="13" h="18"/>
+    <sprite n="BloodSplashHigh04.png" x="495" y="15" w="13" h="18"/>
+    <sprite n="BloodSplashHigh05.png" x="381" y="370" w="13" h="18"/>
+    <sprite n="BloodSplashHigh06.png" x="381" y="390" w="13" h="18"/>
+    <sprite n="BloodSplashLow01.png" x="369" y="343" w="14" h="7"/>
+    <sprite n="BloodSplashLow02.png" x="369" y="352" w="14" h="7"/>
+    <sprite n="BloodSplashLow03.png" x="369" y="361" w="14" h="7"/>
+    <sprite n="BloodSplashLow04.png" x="385" y="332" w="14" h="7"/>
+    <sprite n="BloodSplashLow05.png" x="385" y="341" w="14" h="7"/>
+    <sprite n="BloodSplashLow06.png" x="385" y="350" w="14" h="7"/>
+    <sprite n="Chest.png" x="292" y="122" w="16" h="14"/>
+    <sprite n="ChestShadow.png" x="490" y="56" w="16" h="14"/>
+    <sprite n="CrossA.png" x="322" y="104" w="19" h="22"/>
+    <sprite n="CrossAShadow.png" x="271" y="113" w="19" h="22"/>
+    <sprite n="CrossB.png" x="414" y="168" w="18" h="18"/>
+    <sprite n="CrossBShadow.png" x="475" y="16" w="18" h="18"/>
+    <sprite n="CrossC.png" x="357" y="175" w="18" h="22"/>
+    <sprite n="CrossCShadow.png" x="414" y="144" w="18" h="22"/>
+    <sprite n="CrossLargeA.png" x="450" y="16" w="23" h="39"/>
+    <sprite n="CrossLargeAShadow.png" x="450" y="57" w="23" h="39"/>
+    <sprite n="DefaultLight.png" x="395" y="103" w="39" h="39"/>
+    <sprite n="DustParticle1.png" x="351" y="60" w="3" h="3"/>
+    <sprite n="FireflyParticle1.png" x="351" y="65" w="3" h="3"/>
+    <sprite n="FireflyParticle2.png" x="343" y="112" w="5" h="5"/>
+    <sprite n="FlatStonesA.png" x="351" y="103" w="42" h="26"/>
+    <sprite n="FlatStonesB.png" x="356" y="69" w="49" h="32"/>
     <sprite n="LargeRockA.png" x="244" y="16" w="54" h="42"/>
     <sprite n="LargeRockAShadow.png" x="300" y="16" w="54" h="42"/>
     <sprite n="LargeRockB.png" x="356" y="16" w="49" h="51"/>
-    <sprite n="LargeRockBShadow.png" x="407" y="16" w="49" h="51"/>
-    <sprite n="LootBag.png" x="501" y="45" w="8" h="8"/>
-    <sprite n="LootBagShadow.png" x="275" y="88" w="8" h="8"/>
-    <sprite n="MoveDestinationMark.png" x="275" y="98" w="7" h="6"/>
-    <sprite n="RottenApple.png" x="284" y="103" w="2" h="3"/>
-    <sprite n="ShadowSpotAverage.png" x="275" y="106" w="6" h="3"/>
-    <sprite n="SmallRockA.png" x="484" y="45" w="15" h="11"/>
-    <sprite n="SmallRockAShadow.png" x="354" y="93" w="15" h="11"/>
-    <sprite n="SmallRockB.png" x="303" y="227" w="14" h="9"/>
-    <sprite n="SmallRockBShadow.png" x="326" y="104" w="14" h="9"/>
+    <sprite n="LargeRockBShadow.png" x="244" y="60" w="49" h="51"/>
+    <sprite n="LightningLight.png" x="314" y="207" w="123" h="123"/>
+    <sprite n="LootBag.png" x="310" y="122" w="8" h="8"/>
+    <sprite n="LootBagShadow.png" x="336" y="128" w="8" h="8"/>
+    <sprite n="MoveDestinationMark.png" x="244" y="131" w="7" h="6"/>
+    <sprite n="RainDropImpactA01.png" x="295" y="104" w="25" h="16"/>
+    <sprite n="RainDropImpactA02.png" x="244" y="113" w="25" h="16"/>
+    <sprite n="RainDropImpactA03.png" x="434" y="153" w="25" h="16"/>
+    <sprite n="RainDropImpactB01.png" x="377" y="187" w="25" h="16"/>
+    <sprite n="RainDropImpactB02.png" x="434" y="171" w="25" h="16"/>
+    <sprite n="RainDropImpactB03.png" x="404" y="188" w="25" h="16"/>
+    <sprite n="RainDropImpactB04.png" x="431" y="189" w="25" h="16"/>
+    <sprite n="RainDropImpactC01.png" x="450" y="98" w="25" h="16"/>
+    <sprite n="RainDropImpactC02.png" x="450" y="116" w="25" h="16"/>
+    <sprite n="RainDropImpactC03.png" x="450" y="134" w="25" h="16"/>
+    <sprite n="RainDropImpactC04.png" x="475" y="76" w="25" h="16"/>
+    <sprite n="RainParticle1.png" x="2" y="332" w="365" h="50"/>
+    <sprite n="RainParticle2.png" x="2" y="384" w="360" h="57"/>
+    <sprite n="RainParticle3.png" x="2" y="139" w="353" h="66"/>
+    <sprite n="RainParticle4.png" x="2" y="443" w="332" h="44"/>
+    <sprite n="RainParticle5.png" x="2" y="207" w="310" h="64"/>
+    <sprite n="RottenApple.png" x="351" y="75" w="2" h="3"/>
+    <sprite n="ShadowSpotAverage.png" x="310" y="132" w="6" h="3"/>
+    <sprite n="SmallRockA.png" x="486" y="2" w="15" h="11"/>
+    <sprite n="SmallRockAShadow.png" x="364" y="384" w="15" h="11"/>
+    <sprite n="SmallRockB.png" x="320" y="128" w="14" h="9"/>
+    <sprite n="SmallRockBShadow.png" x="369" y="332" w="14" h="9"/>
     <sprite n="TerrainBlockDefault.png" x="2" y="2" w="240" h="135"/>
     <sprite n="TerrainBlockDefaultBottom.png" x="244" y="2" w="240" h="5"/>
-    <sprite n="TerrainBlockDefaultLeft.png" x="275" y="111" w="5" h="135"/>
-    <sprite n="TerrainBlockDefaultRight.png" x="319" y="101" w="5" h="135"/>
+    <sprite n="TerrainBlockDefaultLeft.png" x="436" y="16" w="5" h="135"/>
+    <sprite n="TerrainBlockDefaultRight.png" x="443" y="16" w="5" h="135"/>
     <sprite n="TerrainBlockDefaultTop.png" x="244" y="9" w="240" h="5"/>
-    <sprite n="TreeA.png" x="486" y="2" w="24" h="41"/>
-    <sprite n="TreeAShadow.png" x="458" y="16" w="24" h="41"/>
-    <sprite n="TreeB.png" x="244" y="88" w="29" h="42"/>
-    <sprite n="TreeBShadow.png" x="288" y="101" w="29" h="42"/>
-    <sprite n="TreeC.png" x="329" y="60" w="23" h="42"/>
-    <sprite n="TreeCShadow.png" x="244" y="132" w="23" h="42"/>
+    <sprite n="TreeA.png" x="388" y="144" w="24" h="41"/>
+    <sprite n="TreeAShadow.png" x="407" y="60" w="24" h="41"/>
+    <sprite n="TreeB.png" x="295" y="60" w="29" h="42"/>
+    <sprite n="TreeBShadow.png" x="357" y="131" w="29" h="42"/>
+    <sprite n="TreeC.png" x="326" y="60" w="23" h="42"/>
+    <sprite n="TreeCShadow.png" x="407" y="16" w="23" h="42"/>
 </TextureAtlas>

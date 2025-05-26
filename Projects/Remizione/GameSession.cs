@@ -34,6 +34,7 @@ namespace Remizione
         private Actor? player;
         private Vector2? playerPosition;
         private readonly PrayersScene prayersScene;
+        private int rainRemainingTime;
         private readonly RoomEditor? roomEditor;
         private readonly Dictionary<PlacementPhase, List<GameThing>> staticThings = [];
 
@@ -177,6 +178,7 @@ namespace Remizione
             scriptRegistry.RegisterStatement("await-dialog-block", typeof(AwaitDialogBlockCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-player-approach", typeof(AwaitPlayerApproachCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-popup", typeof(AwaitPopupCommand), CodingContext.Execution);
+            scriptRegistry.RegisterStatement("begin-rain", typeof(BeginRainCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("create-dialog-block", typeof(CreateDialogBlockCommand));
             scriptRegistry.RegisterStatement("echo", typeof(EchoCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("ensure-session-scene", typeof(EnsureSessionSceneCommand));
@@ -219,12 +221,8 @@ namespace Remizione
         // OnEnterRoom
         protected override void OnEnterRoom(Room room)
         {
-            /*
-            if (room is CommonRoom commonRoom)
-            {
-                Environment.EnterRoom(commonRoom);
-            }
-            */
+            if (room is GameRoom gameRoom)
+                Environment.EnterRoom(gameRoom);
         }
 
         // OnHandleInput
@@ -307,6 +305,14 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
                 playerPosition = XmlConverterExtension.ToVector2(playerPositionValue);
 
+            // NextRainCooldown
+            if (sessionNode.Attributes[nameof(NextRainCooldown)]?.Value is string nextRainCooldown)
+                this.NextRainCooldown = XmlConvert.ToInt32(nextRainCooldown);
+
+            // RainRemainingTime
+            if (sessionNode.Attributes[nameof(Environment.Weather.RainRemainingTime)]?.Value is string rainRemainingTime)
+                this.rainRemainingTime = XmlConvert.ToInt32(rainRemainingTime);
+
             // RandomSeed
             if (sessionNode.Attributes[AttributeName.RandomSeed.ToString()]?.Value is string randomSeedValue)
                 RandomSeed = XmlConvert.ToInt32(randomSeedValue);
@@ -328,6 +334,15 @@ namespace Remizione
                     Room.Children[i].Resume();
                 }
             }
+        }
+
+        // OnRun
+        protected override void OnRun()
+        {
+            base.OnRun();
+
+            if (rainRemainingTime > 0)
+                Environment.Weather.BeginRain(rainRemainingTime, true);
         }
 
         // OnSave
@@ -387,6 +402,9 @@ namespace Remizione
             // FullHUD
             output.WriteAttributeString(nameof(FullHUD), XmlConvert.ToString(FullHUD));
 
+            // NextRainCooldown
+            output.WriteAttributeString(nameof(NextRainCooldown), XmlConvert.ToString(NextRainCooldown));
+
             // Player
             if (Player != null)
                 output.WriteAttributeString(nameof(Player), Player.Name);
@@ -394,6 +412,9 @@ namespace Remizione
             // PlayerPosition
             if (playerPosition.HasValue)
                 output.WriteAttributeString(nameof(playerPosition), XmlConverterExtension.ToString(playerPosition.Value));
+
+            // RainRemainingTime
+            output.WriteAttributeString(nameof(Environment.Weather.RainRemainingTime), XmlConvert.ToString(Environment.Weather.RainRemainingTime));
 
             // RandomSeed
             output.WriteAttributeString(AttributeName.RandomSeed.ToString(), XmlConvert.ToString(RandomSeed));
@@ -460,6 +481,10 @@ namespace Remizione
         // LightingSystem
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;
+
+        // NextRainCooldown
+        [ScriptProperty(CodingContext.Any)]
+        public int NextRainCooldown { get; private set; }
 
         // NextRoom
         [ScriptProperty]

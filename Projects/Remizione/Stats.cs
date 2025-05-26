@@ -123,9 +123,6 @@ namespace Remizione
             };
         }
 
-        // GP (XP)
-        public int GP { get; set; } = 0;
-
         // HPGainPerLevel
         public int HPGainPerLevel { get; private set; } = 8;
 

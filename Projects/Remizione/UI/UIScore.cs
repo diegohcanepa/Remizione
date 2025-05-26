@@ -5,36 +5,38 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Remizione.UI
 {
     /// <summary>
-    /// ScoreText
+    /// UIScore
     /// </summary>
-    public sealed class ScoreText : GameObject
+    public class UIScore : GameObject
     {
         private const int duration = 2000;
 
         private int deltaScore;
-        private readonly FloatTween deltaScoreOpacityTween = new() { StartDelay = duration - 300 };
-        private readonly TextSprite deltaScoreText;
         private bool isInitializing = true;
         private int score;
         private readonly TextSprite scoreText;
+        private readonly TextSprite titleText;
         private readonly FloatTween tween = new();
 
         // Constructor
-        public ScoreText(RemizioneGame game)
+        public UIScore(RemizioneGame game, string title)
             : base(game)
         {
-            this.deltaScoreText = new TextSprite(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.RightBottom
-            };
-
+            // Score text
             this.scoreText = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Default
+                Color = ColorPalette.Text.Terra,
+                Scale = ScaleInfo.Text.VeryLarge,
             };
 
-            this.Scale = ScaleInfo.Text.Medium;
+            // Title text
+            this.titleText = new TextSprite(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.TerraDark,
+                PivotOrigin = RectanglePoint.RightTop,
+                Scale = ScaleInfo.Text.Large,
+                Text = title
+            };
         }
 
         #region Protected members
@@ -46,8 +48,8 @@ namespace Remizione.UI
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.AlphaBlend, null);
-            deltaScoreText.Draw(gameTime);
             scoreText.Draw(gameTime);
+            titleText.Draw(gameTime);
             Game.SpriteBatch.End();
         }
 
@@ -64,11 +66,12 @@ namespace Remizione.UI
                     scoreText.Text = deltaScore.ToString();
                 }
             }
-
-            deltaScoreText.Update(gameTime);
         }
 
         #endregion
+
+        // BoundingBox
+        public RectangleF BoundingBox => scoreText.BoundingBox;
 
         // Color
         public Color Color
@@ -94,17 +97,6 @@ namespace Remizione.UI
             set => scoreText.Position = value;
         }
 
-        // Scale
-        public Vector2 Scale
-        {
-            get => scoreText.Scale;
-            set
-            {
-                scoreText.Scale = value;
-                deltaScoreText.Scale = value * .8f;
-            }
-        }
-
         // Score
         public int Score
         {
@@ -114,17 +106,12 @@ namespace Remizione.UI
                 if (value != score)
                 {
                     if (!isInitializing)
-                    {
-                        deltaScoreText.Text = $"+{value - score}";
-                        deltaScoreText.Position = scoreText.BoundingBox.GetPoint(RectanglePoint.RightTop, 0, 1);
-                        deltaScoreOpacityTween.Start(TweenStyle.CubicOut, 1, 0, 300);
-                        deltaScoreText.Tweens.OpacityTween = deltaScoreOpacityTween;
                         tween.Start(TweenStyle.Linear, score, value, duration);
-                    }
 
                     score = value;
                     scoreText.Text = score.ToString();
                     isInitializing = false;
+                    titleText.Position = scoreText.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -2);
                 }
             }
         }

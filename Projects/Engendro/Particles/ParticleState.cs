@@ -27,9 +27,7 @@ namespace Engendro
         protected void AddImage(AtlasImage image)
         {
             if (!imageList.Contains(image))
-            {
                 imageList.Add(image);
-            }
         }
 
         // AddImages
@@ -45,9 +43,7 @@ namespace Engendro
         protected static float GenerateFloat(float value, float deviation)
         {
             if (deviation == 0)
-            {
                 return value;
-            }
 
             var halfDeviation = deviation / 2.0f;
             return Randomizer.Next(value - halfDeviation, value + halfDeviation);
