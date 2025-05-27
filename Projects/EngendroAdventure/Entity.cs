@@ -93,8 +93,8 @@ namespace EngendroAdventure
 
         #region ISoundEmitter implementation
 
-        // IsLoaded
-        bool ISoundEmitter.IsAvailable => IsLoaded;
+        // IsAvailable
+        bool ISoundEmitter.IsAvailable => LoadState == LoadState.Loaded;
 
         // Update
         void ISoundEmitter.Update(SoundInstance soundInstance, float masterVolume)
@@ -132,7 +132,7 @@ namespace EngendroAdventure
         {
             child.Parent = this;
 
-            if (IsLoaded)
+            if (LoadState == LoadState.Loaded || LoadState == LoadState.Loading)
             {
                 child.Load();
                 Invalidate();
@@ -152,10 +152,8 @@ namespace EngendroAdventure
         {
             child.Parent = null;
 
-            if (IsLoaded)
-            {
+            if (LoadState == LoadState.Loaded)
                 child.Unload();
-            }
 
             OnChildRemoved(child);
 
@@ -515,9 +513,6 @@ namespace EngendroAdventure
         // IsFlippedVertically
         public bool IsFlippedVertically => Sprite.IsFlippedVertically;
 
-        // IsLoaded
-        public bool IsLoaded { get; private set; }
-
         // IsParentOf
         public static bool IsParentOf(Entity entity1, Entity entity2)
         {
@@ -542,15 +537,17 @@ namespace EngendroAdventure
         // Load
         public void Load()
         {
-            if (IsLoaded)
+            if (LoadState == LoadState.Loaded)
                 return;
+
+            LoadState = LoadState.Loading;
 
             OnLoad();
 
             if (loadScript != null)
                 RunScript(loadScript);
 
-            IsLoaded = true;
+            LoadState = LoadState.Loaded;
 
             // Load children
             for (var i = 0; i < Children.Count; i++)
@@ -561,6 +558,9 @@ namespace EngendroAdventure
             if (AutoPlayAnimation && !AnimationPlayer.IsPlaying)
                 Sprite.Player.Play(true, AnimationDirection.Forward, false);
         }
+
+        // LoadState
+        public LoadState LoadState { get; private set; }
 
         // Name
         public string Name { get; }
@@ -698,7 +698,7 @@ namespace EngendroAdventure
         // Reload
         public void Reload()
         {
-            if (IsLoaded)
+            if (LoadState == LoadState.Loaded)
             {
                 IsReloading = true;
                 Unload();
@@ -797,7 +797,7 @@ namespace EngendroAdventure
         // Unload
         public virtual void Unload()
         {
-            if (!IsLoaded || isUnloading)
+            if (LoadState == LoadState.Unloaded || isUnloading)
                 return;
 
             isUnloading = true;
@@ -827,7 +827,7 @@ namespace EngendroAdventure
                 weakChildren[i].Unparent();
             }
 
-            IsLoaded = false;
+            LoadState = LoadState.Unloaded;
             isUnloading = false;
         }
 

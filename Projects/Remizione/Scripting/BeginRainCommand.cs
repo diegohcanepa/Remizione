@@ -20,7 +20,7 @@ namespace Remizione.Scripting
             if (Session is GameSession session)
             {
                 var duration = Parser.ParseInt32Argument(this, DurationArg, GameSettings.RainDurationRange.Random());
-                session.Environment.Weather.BeginRain(duration, false);
+                session.Environment.Rain.Begin(duration, false);
             }
         }
     }

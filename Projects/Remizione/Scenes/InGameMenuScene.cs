@@ -11,7 +11,6 @@ namespace Remizione
     public sealed class InGameMenuScene : Scene
     {
         private readonly PopupMenu<string> menu;
-        private readonly GameSession session;
 
         #region Constructor
 
@@ -19,8 +18,6 @@ namespace Remizione
         public InGameMenuScene(GameSession session)
             : base(session.Game, SceneSettings.None)
         {
-            this.session = session;
-
             menu = new(Game, HorizontalAlignment.Left, false)
             {
                 Position = new(5, 30),

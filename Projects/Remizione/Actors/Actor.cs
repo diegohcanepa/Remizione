@@ -56,7 +56,10 @@ namespace Remizione
             this.ShadowSpot = new ShadowSpot(this);
 
             this.Gifts = new ItemContainer(this, Localization.GetLocalizedValue(InGameMenuOptionName.Gifts));
-            this.Prayers = new ItemContainer(this, Localization.GetLocalizedValue(InGameMenuOptionName.Prayers));
+            this.Prayers = new ItemContainer(this, Localization.GetLocalizedValue(InGameMenuOptionName.Prayers))
+            {
+                Capacity = 12
+            };
 
             this.standState = new ActorStandState(this);
 
@@ -236,6 +239,7 @@ namespace Remizione
         // CalculateSpeed
         protected override float CalculateSpeed() => base.CalculateSpeed() * (FastMove ? FastMoveFactor : 1) * tinyMoveSpeedFactor * (accelerationFactorTween.IsRunning ? accelerationFactorTween.CurrentValue : 1);
 
+        /*
         // CanCheckCollisions
         protected override bool CanCheckCollisions()
         {
@@ -244,6 +248,7 @@ namespace Remizione
 
             return base.CanCheckCollisions();
         }
+        */
 
         // InputHandler
         protected InputHandler? InputHandler { get; set; }

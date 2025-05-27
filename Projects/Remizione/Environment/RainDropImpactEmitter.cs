@@ -109,7 +109,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (session.Environment.Weather.IsRaining)
+            if (session.Environment.Rain.IsRaining)
             {
                 cooldown -= gameTime.ElapsedGameTime.Milliseconds;
                 if (cooldown <= 0)

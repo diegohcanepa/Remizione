@@ -287,8 +287,7 @@ namespace Remizione
             DrawShadows(gameTime);
 
             // Rain drop impacts
-            if (Session.Environment.Weather.IsRaining)
-                Session.Environment.Weather.DrawRainDropImpacts(gameTime);
+            Session.Environment.Rain.DrawImpacts(gameTime);
 
             // Move destination mark
             Session.HUD.DestinationMark.Draw(gameTime);
@@ -306,8 +305,8 @@ namespace Remizione
             DrawThings(gameTime, RenderLayer.Foreground, interactiveTarget);
 
             // Rain
-            if (Session.Environment.Weather.IsRaining)
-                Session.Environment.Weather.DrawRain(gameTime);
+            if (Session.Environment.Rain.IsRaining)
+                Session.Environment.Rain.Draw(gameTime);
 
             // Apply light map
             if (CanUseLightingSystem && Game.RenderTargets != null)

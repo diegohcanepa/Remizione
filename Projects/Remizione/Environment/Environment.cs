@@ -14,7 +14,7 @@ namespace Remizione
         public Environment(GameSession session)
         {
             this.session = session;
-            this.Weather = new Weather(session);
+            this.Rain = new Rain(session);
         }
 
         #region Internal members
@@ -30,7 +30,7 @@ namespace Remizione
                     BeginCycle(CurrentCycle == Cycle.Indulgence ? Cycle.Penance : Cycle.Indulgence);
             }
 
-            Weather.Update(gameTime);
+            Rain.Update(gameTime);
         }
 
         #endregion
@@ -46,7 +46,7 @@ namespace Remizione
         // EnterRoom
         public void EnterRoom(GameRoom room)
         {
-            Weather.EnterRoom();
+            Rain.EnterRoom();
         }
 
         // Cycle
@@ -55,7 +55,7 @@ namespace Remizione
         // CycleCooldown
         public int CycleCooldown { get; set; }
 
-        // Weather
-        public Weather Weather { get; }
+        // Rain
+        public Rain Rain { get; }
     }
 }

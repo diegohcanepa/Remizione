@@ -10,6 +10,7 @@ namespace Remizione
     /// </summary>
     public sealed class ItemContainer
     {
+        private string? toString;
         private int capacity;
         private readonly List<Item> items = [];
 
@@ -68,6 +69,8 @@ namespace Remizione
 
             Invalidate();
 
+            toString = null;
+
             return item;
         }
 
@@ -86,6 +89,8 @@ namespace Remizione
 
                     if (value > 0 && items.Count > capacity)
                         items.RemoveRange(items.Count - 1, items.Count - capacity);
+
+                    toString = null;
                 }
             }
         }
@@ -124,10 +129,32 @@ namespace Remizione
         }
 
         // Remove
-        public bool Remove(Item item) => items.Remove(item);
+        public bool Remove(Item item)
+        {
+            if (items.Remove(item))
+            {
+                toString = null;
+                return true;
+            }
+            else
+                return false;
+        }
 
         // RequiresUpdate
         public bool RequiresUpdate { get; private set; }
+
+        // ToString
+        public override string ToString()
+        {
+            if (toString == null)
+            {
+                toString = DisplayName;
+                if (Capacity > 0)
+                    toString += $" ({items.Count} / {Capacity})";
+            }
+
+            return toString;
+        }
 
         // Update
         public void Update(GameTime gameTime)

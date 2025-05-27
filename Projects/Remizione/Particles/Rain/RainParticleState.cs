@@ -8,10 +8,10 @@ namespace Remizione
     /// </summary>
     public sealed class RainParticleState : ParticleState
     {
-        private readonly Weather weather;
+        private readonly Rain weather;
 
         // Constructor
-        public RainParticleState(Weather weather)
+        public RainParticleState(Rain weather)
             : base()
         {
             this.weather = weather;

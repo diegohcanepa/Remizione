@@ -310,7 +310,7 @@ namespace Remizione
                 this.NextRainCooldown = XmlConvert.ToInt32(nextRainCooldown);
 
             // RainRemainingTime
-            if (sessionNode.Attributes[nameof(Environment.Weather.RainRemainingTime)]?.Value is string rainRemainingTime)
+            if (sessionNode.Attributes[nameof(Environment.Rain.RemainingTime)]?.Value is string rainRemainingTime)
                 this.rainRemainingTime = XmlConvert.ToInt32(rainRemainingTime);
 
             // RandomSeed
@@ -342,7 +342,7 @@ namespace Remizione
             base.OnRun();
 
             if (rainRemainingTime > 0)
-                Environment.Weather.BeginRain(rainRemainingTime, true);
+                Environment.Rain.Begin(rainRemainingTime, true);
         }
 
         // OnSave
@@ -414,7 +414,7 @@ namespace Remizione
                 output.WriteAttributeString(nameof(playerPosition), XmlConverterExtension.ToString(playerPosition.Value));
 
             // RainRemainingTime
-            output.WriteAttributeString(nameof(Environment.Weather.RainRemainingTime), XmlConvert.ToString(Environment.Weather.RainRemainingTime));
+            output.WriteAttributeString(nameof(Environment.Rain.RemainingTime), XmlConvert.ToString(Environment.Rain.RemainingTime));
 
             // RandomSeed
             output.WriteAttributeString(AttributeName.RandomSeed.ToString(), XmlConvert.ToString(RandomSeed));

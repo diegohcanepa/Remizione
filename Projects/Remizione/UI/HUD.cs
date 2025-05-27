@@ -15,11 +15,11 @@ namespace Remizione
         #region Private fields
 
         private readonly UIScore ashes;
-        private readonly UIControl bagButton;
-        private readonly TextSprite interactionTarget;
+        private readonly HUDButton inventoryButton;
         private readonly UIDerivedStats playerStats;
-        private readonly UIControl prayerButton;
+        private readonly HUDButton prayerButton;
         private readonly ImageSprite savingIcon;
+        private readonly TextSprite sentence;
         private readonly GameSession session;
         private readonly TextSprite statusText;
 
@@ -56,14 +56,14 @@ namespace Remizione
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.RightTop, -3, 2),
             };
 
-            // Interaction target
-            this.interactionTarget = new TextSprite(Game, Fonts.CommonOutline)
+            // Sentence
+            this.sentence = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Default,
+                Color = ColorPalette.Text.TerraLight,
                 MaximumWidth = (int)(Screen.NativeWidth * .8f),
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.Bottom, 0, -6),
-                Scale = ScaleInfo.Text.Large
+                Position = Screen.SafeArea.GetPoint(RectanglePoint.Bottom, 0, -4),
+                Scale = ScaleInfo.Text.VeryLarge
             };
 
             // Message text
@@ -75,24 +75,16 @@ namespace Remizione
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
-            // Prayer icon
-            this.prayerButton = new UIControl(Game)
+            // Prayer button
+            this.prayerButton = new HUDButton(Game, "PrayerIcon", Localization.GetLocalizedValue(InGameMenuOptionName.Prayers))
             {
-                DisplayMode = UIControlDisplayMode.ImageOnly,
-                ImageName = "PrayerIcon",
-                ImageScale = ScaleInfo.UIElement.Large,
-                PivotOrigin = RectanglePoint.LeftBottom,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.LeftBottom, 4, -4),
             };
 
-            // Bag icon
-            this.bagButton = new UIControl(Game)
+            // Inventory button
+            this.inventoryButton = new HUDButton(Game, "BagIcon", Localization.GetLocalizedValue(InGameMenuOptionName.Inventory))
             {
-                DisplayMode = UIControlDisplayMode.ImageOnly,
-                ImageName = "BagIcon",
-                ImageScale = ScaleInfo.UIElement.Large,
-                PivotOrigin = RectanglePoint.LeftBottom,
-                Position = prayerButton.BoundingBox.GetPoint(RectanglePoint.RightBottom)
+                Position = prayerButton.BoundingBox.GetPoint(RectanglePoint.RightBottom),
             };
         }
 
@@ -124,23 +116,34 @@ namespace Remizione
             return new string(buffer);
         }
 
-        // UpdateInteractionTarget
-        private void UpdateInteractionTarget()
+        // UpdateSentence
+        private void UpdateSentence()
         {
+            if (IsMouseOverButton() && session.Player != null)
+            {
+                if (inventoryButton.IsMouseOver)
+                    sentence.Text = session.Player.Inventory.ToString();
+
+                else if (prayerButton.IsMouseOver)
+                    sentence.Text = session.Player.Prayers.ToString();
+
+                return;
+            }
+
             if (session.IsCurrentScene && MouseCursor.Instance.State != MouseCursorState.Wait &&
                 session.Player?.InteractiveTarget is GameThing target &&
                 (!session.TargetMode || target.CanBeTargeted))
             {
-                if (target != interactionTarget.Tag)
+                if (target != sentence.Tag)
                 {
-                    interactionTarget.Tag = target;
-                    interactionTarget.Text = FormatSentenceText(target.LocalizedDisplayName);
+                    sentence.Tag = target;
+                    sentence.Text = FormatSentenceText(target.LocalizedDisplayName);
                 }
             }
             else
             {
-                interactionTarget.Text = null;
-                interactionTarget.Tag = null;
+                sentence.Text = null;
+                sentence.Tag = null;
             }
         }
 
@@ -157,7 +160,7 @@ namespace Remizione
             {
                 Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
                 statusText.Draw(gameTime);
-                interactionTarget.Draw(gameTime);
+                sentence.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
 
@@ -167,7 +170,7 @@ namespace Remizione
                 if (session.IsCurrentScene)
                 {
                     prayerButton.Draw(gameTime);
-                    bagButton.Draw(gameTime);
+                    inventoryButton.Draw(gameTime);
                 }
             }
 
@@ -186,10 +189,10 @@ namespace Remizione
         {
             playerStats.Update(gameTime);
 
-            bagButton.Update(gameTime);
+            inventoryButton.Update(gameTime);
             prayerButton.Update(gameTime);
 
-            UpdateInteractionTarget();
+            UpdateSentence();
             statusText.Update(gameTime);
 
             if (session.Player != null)
@@ -211,7 +214,7 @@ namespace Remizione
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
-            if (bagButton.TestPressed(0))
+            if (inventoryButton.TestPressed(0))
             {
                 session.ShowItemContainerScene(ItemContainerCategory.Inventory);
                 return HandleInputResult.Handled;
@@ -229,7 +232,7 @@ namespace Remizione
         // IsMouseOverButton
         public bool IsMouseOverButton()
         {
-            return bagButton.IsMouseOver || prayerButton.IsMouseOver;
+            return inventoryButton.IsMouseOver || prayerButton.IsMouseOver;
         }
 
         // Log

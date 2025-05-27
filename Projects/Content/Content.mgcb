@@ -152,12 +152,6 @@
 /processorParam:Quality=Best
 /build:Audio/FX/ImpactA.wav
 
-#begin Audio/FX/InventoryOpen.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/InventoryOpen.wav
-
 #begin Audio/FX/MenuDiscardItem.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Engendro.Audio;
+using EngendroAdventure;
 using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -65,8 +66,14 @@ namespace Remizione
             if (Session.IsNewSession)
             {
                 WorldManager.BeginUpdate();
-                WorldManager.AddBlock(new(WorldManager.GridSize / 2), Session.WorldVersion);
+                var origin = WorldManager.AddBlock(new(WorldManager.GridSize / 2), Session.WorldVersion);
+
+                origin.Expand(EngendroAdventure.Direction.Up);
+                origin.Expand(EngendroAdventure.Direction.Down);
+                origin.Expand(EngendroAdventure.Direction.Left);
+                origin.Expand(EngendroAdventure.Direction.Right);
                 WorldManager.EndUpdate();
+                Regenerate();
             }
             else
             {

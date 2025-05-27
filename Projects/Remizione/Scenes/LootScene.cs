@@ -256,8 +256,6 @@ namespace Remizione
         // OnLoadContent
         protected override void OnLoadContent()
         {
-            Sound.Play(SoundNames.InventoryOpen);
-
             playerMenu.Clear();
             MouseCursor.Instance.State = MouseCursorState.Arrow;
 

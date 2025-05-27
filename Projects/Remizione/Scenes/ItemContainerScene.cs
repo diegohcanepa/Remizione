@@ -132,19 +132,7 @@ namespace Remizione
         }
 
         // InvalidateTitle
-        private void InvalidateTitle()
-        {
-            var itemContainer = Actor?.GetItemContainer(category);
-            if (itemContainer == null)
-                return;
-
-            var title = itemContainer.DisplayName;
-
-            if (itemContainer.Capacity > 0)
-                title += $" ({itemContainer.Items.Count} / {itemContainer.Capacity})";
-
-            menu.Title = title;
-        }
+        private void InvalidateTitle() => menu.Title = Actor?.GetItemContainer(category).ToString();
 
         // PerformItemAction
         private void PerformItemAction(Actor actor)
@@ -234,8 +222,6 @@ namespace Remizione
         // OnLoadContent
         protected override void OnLoadContent()
         {
-            Sound.Play(SoundNames.InventoryOpen);
-
             menu.Clear();
             MouseCursor.Instance.State = MouseCursorState.Arrow;
 

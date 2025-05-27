@@ -147,30 +147,6 @@ namespace Remizione
             }
         }
 
-        // ClampToWalkArea
-        private void ClampToWalkArea()
-        {
-            if (IgnoreWalkArea || !shouldClampToWalkArea)
-                return;
-
-            // Clamp to a walkable position
-            if (WalkArea != null)
-            {
-                Position = WalkArea.ClampInside(Position, out _);
-
-                for (int i = 0; i < WalkArea.Holes.Count; i++)
-                {
-                    if (WalkArea.Holes[i].Test())
-                        Position = WalkArea.Holes[i].ClampOutside(Position);
-                }
-            }
-
-            if (CanCheckCollisions())
-                CheckCollisions();
-
-            shouldClampToWalkArea = false;
-        }
-
         // Die
         private void Die()
         {
@@ -328,6 +304,7 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
+            shouldClampToWalkArea = true;
             InvalidateHoleArea();
             InvalidateWalkArea();
             ClampToWalkArea();
@@ -531,6 +508,33 @@ namespace Remizione
         // CellMargin
         [ScriptProperty]
         public int CellMargin { get; set; }
+
+        // ClampToWalkArea
+        public void ClampToWalkArea()
+        {
+            if (IgnoreWalkArea || LoadState != LoadState.Loaded)
+                return;
+
+            if (!shouldClampToWalkArea)
+                return;
+
+            // Clamp to a walkable position
+            if (WalkArea != null)
+            {
+                Position = WalkArea.ClampInside(Position, out _);
+
+                for (int i = 0; i < WalkArea.Holes.Count; i++)
+                {
+                    if (WalkArea.Holes[i].Test())
+                        Position = WalkArea.Holes[i].ClampOutside(Position);
+                }
+            }
+
+            if (CanCheckCollisions())
+                CheckCollisions();
+
+            shouldClampToWalkArea = false;
+        }
 
         // CollisionDetection
         [ScriptProperty]

@@ -13,7 +13,6 @@
 	<FX Name="FootstepGrass" MaxInstances="8" Sounds="1..2" Volume=".5" />
 	<FX Name="FootstepWater" MaxInstances="8" Sounds="1..6" Volume=".5" />
 	<FX Name="ImpactA" MaxInstances="6" />
-	<FX Name="InventoryOpen" MaxInstances="3" />
 	<FX Name="MenuDiscardItem" MaxInstances="4" />
 	<FX Name="MenuSelect" MaxInstances="4" />
 	<FX Name="SinnerMaleDeathSetA" MaxInstances="8" Sounds="1..1" Volume=".5" />
