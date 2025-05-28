@@ -3,16 +3,16 @@
 namespace EngendroAdventure.Scripting
 {
     // FrameCommand
-    // Arguments: {Range:Int32Range} duration {Int32} [#label:Name] [#repeat:Integer] [#sound:Name] [#speed-factor:Float]
+    // Arguments: {Range:Int32Range} duration {Int32} [#goto:Label] [#label:Name] [#repeat:Integer] [#sound:Name] [#speed-factor:Float]
     internal sealed class FrameCommand : NonAwaitableCommand
     {
         // Constructor
         internal FrameCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 3, FootstepArg, LabelArg, RepeatArg, SoundArg, SpeedFactorArg)
+            : base(script, source, body, 3, FootstepArg, GotoArg, LabelArg, RepeatArg, SoundArg, SpeedFactorArg)
         {
             if (AnimationCommand.ActiveAnimation == null)
                 throw ScriptExceptionBuilder.AnimationNotActive(this);
-
+            
             var range = Parser.ParseInt32Range(this, 0);
             var duration = Parser.ParseInt32(this, 2);
             var label = Parser.ParseNameArgument(this, LabelArg) ?? string.Empty;
@@ -20,6 +20,7 @@ namespace EngendroAdventure.Scripting
             var sound = Parser.ParseNameArgument(this, SoundArg) ?? string.Empty;
             var speedFactor = Parser.ParseFloatArgument(this, SpeedFactorArg, 1);
             var footstep = HasArg(FootstepArg);
+            var gotoLabel = Parser.ParseNameArgument(this, GotoArg) ?? string.Empty;
 
             // Add frames
             var prefix = AnimationCommand.ActiveAnimationFramePrefix ?? AnimationCommand.ActiveAnimation.Name;
@@ -29,7 +30,7 @@ namespace EngendroAdventure.Scripting
                 for (var j = range.Minimum; j <= range.Maximum; j++)
                 {
                     var imageName = prefix + j.ToString(CultureInfo.InvariantCulture).PadLeft(AnimationCommand.ZeroPaddingLength, '0');
-                    AnimationCommand.ActiveAnimation.AddFrame(imageName, duration, label, speedFactor, sound, footstep);
+                    AnimationCommand.ActiveAnimation.AddFrame(imageName, duration, label, speedFactor, sound, footstep, gotoLabel);
                 }
             }
         }

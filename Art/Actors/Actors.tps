@@ -176,9 +176,6 @@
             <key type="filename">Monster-assets/Move01.png</key>
             <key type="filename">Monster-assets/Move02.png</key>
             <key type="filename">Monster-assets/Stand01.png</key>
-            <key type="filename">Sinner-assets/Move02.png</key>
-            <key type="filename">Sinner-assets/Move03.png</key>
-            <key type="filename">Sinner-assets/Stand01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -228,6 +225,8 @@
             <key type="filename">Sinner-assets/Hurt03.png</key>
             <key type="filename">Sinner-assets/Hurt04.png</key>
             <key type="filename">Sinner-assets/Move01.png</key>
+            <key type="filename">Sinner-assets/Move02.png</key>
+            <key type="filename">Sinner-assets/Move03.png</key>
             <key type="filename">Sinner-assets/Move04.png</key>
             <key type="filename">Sinner-assets/Move05.png</key>
             <key type="filename">Sinner-assets/Move06.png</key>
@@ -243,6 +242,10 @@
             <key type="filename">Sinner-assets/MoveFast08.png</key>
             <key type="filename">Sinner-assets/Pray01.png</key>
             <key type="filename">Sinner-assets/Pray02.png</key>
+            <key type="filename">Sinner-assets/Pray03.png</key>
+            <key type="filename">Sinner-assets/Pray04.png</key>
+            <key type="filename">Sinner-assets/Pray05.png</key>
+            <key type="filename">Sinner-assets/Stand01.png</key>
             <key type="filename">Sinner-assets/UnarmedAttack01.png</key>
             <key type="filename">Sinner-assets/UnarmedAttack02.png</key>
             <key type="filename">Sinner-assets/UnarmedAttack03.png</key>
@@ -327,37 +330,6 @@
                 <rect>7,5,14,11</rect>
                 <key>scale9Paddings</key>
                 <rect>7,5,14,11</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Sinner-assets/Pray03.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,5,6,10</rect>
-                <key>scale9Paddings</key>
-                <rect>3,5,6,10</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Sinner-assets/Pray04.png</key>
-            <key type="filename">Sinner-assets/Pray05.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,5,5,10</rect>
-                <key>scale9Paddings</key>
-                <rect>3,5,5,10</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

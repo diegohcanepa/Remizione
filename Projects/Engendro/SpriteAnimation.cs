@@ -58,19 +58,19 @@ namespace Engendro
         // AddFrame
         public SpriteFrame AddFrame(string imageName, int duration)
         {
-            return AddFrame(imageName, duration, string.Empty, 1, string.Empty, false);
+            return AddFrame(imageName, duration, string.Empty, 1, string.Empty, false, string.Empty);
         }
 
         // AddFrame
         public SpriteFrame AddFrame(string imageName, int duration, string label)
         {
-            return AddFrame(imageName, duration, label, 1, string.Empty, false);
+            return AddFrame(imageName, duration, label, 1, string.Empty, false, string.Empty);
         }
 
         // AddFrame
-        public SpriteFrame AddFrame(string imageName, int duration, string label, float speedFactor, string soundName, bool footstep)
+        public SpriteFrame AddFrame(string imageName, int duration, string label, float speedFactor, string soundName, bool footstep, string gotoLabel)
         {
-            SpriteFrame result = new(this, frameList.Count, imageName, duration, label, speedFactor, soundName, footstep);
+            SpriteFrame result = new(this, frameList.Count, imageName, duration, label, speedFactor, soundName, footstep, gotoLabel);
             frameList.Add(result);
             Invalidate();
 
@@ -115,6 +115,21 @@ namespace Engendro
         // GetFrame
         public SpriteFrame GetFrame(int index) => frameList[index];
 
+        // GetFrame
+        public SpriteFrame? GetFrame(string label)
+        {
+            if (string.IsNullOrWhiteSpace(label))
+                return null;
+
+            for (var i = 0; i < frameList.Count; i++)
+            {
+                if (frameList[i].Label == label)
+                   return frameList[i];
+            }
+
+            return null;
+        }
+
         // GetFrames
         public SpriteFrame[] GetFrames() => frameList.ToArray();
 
@@ -125,9 +140,6 @@ namespace Engendro
         public AnimatedSprite Sprite { get; }
 
         // ToString
-        public override string ToString()
-        {
-            return Name;
-        }
+        public override string ToString() => Name;
     }
 }

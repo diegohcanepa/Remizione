@@ -42,6 +42,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string FocusArg = "#focus";
         protected static readonly string FollowArg = "#follow";
         protected static readonly string FootstepArg = "#footstep";
+        protected static readonly string GotoArg = "#goto";
         protected static readonly string HPArg = "#hp";
         protected static readonly string ImageArg = "#image";
         protected static readonly string ImmediateArg = "#immediate";

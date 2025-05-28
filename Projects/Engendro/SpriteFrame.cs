@@ -8,7 +8,7 @@ namespace Engendro
     public sealed class SpriteFrame
     {
         // Constructor
-        public SpriteFrame(SpriteAnimation animation, int index, string imageName, int duration, string label, float speedFactor, string soundName, bool footstep)
+        public SpriteFrame(SpriteAnimation animation, int index, string imageName, int duration, string label, float speedFactor, string soundName, bool footstep, string gotoLabel)
         {
             this.Animation = animation;
             this.ImageName = imageName;
@@ -18,6 +18,7 @@ namespace Engendro
             this.SpeedFactor = speedFactor;
             this.SoundName = soundName;
             this.Footstep = footstep;
+            this.GotoLabel = gotoLabel;
 
             InvalidateImage();
         }
@@ -40,6 +41,9 @@ namespace Engendro
 
         // Footstep
         public bool Footstep { get; }
+
+        // GotoLabel
+        public string GotoLabel { get; }
 
         // Image
         public AtlasImage? Image { get; private set; }

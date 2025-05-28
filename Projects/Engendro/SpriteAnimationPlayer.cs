@@ -60,6 +60,11 @@ namespace Engendro
                 return;
             }
 
+            else if (Frame?.GotoLabel is string gotoLabel && gotoLabel.Length > 0)
+            {
+                GoTo(gotoLabel);
+            }
+
             else if (Direction == AnimationDirection.Forward)
             {
                 if (AtLastFrame)
@@ -200,20 +205,13 @@ namespace Engendro
         // GoTo
         public bool GoTo(string label)
         {
-            if (Animation == null || Animation.FrameCount == 0 || string.IsNullOrWhiteSpace(label))
-                return false;
-
-            var frames = Animation.GetFrames();
-            for (var i = 0; i < frames.Length; i++)
+            if (Animation?.GetFrame(label) is SpriteFrame frame)
             {
-                if (frames[i].Label == label)
-                {
-                    GoTo(i);
-                    return true;
-                }
+                GoTo(frame.Index);
+                return true;
             }
-
-            return false;
+            else
+                return false;
         }
 
         // IsPlaying
