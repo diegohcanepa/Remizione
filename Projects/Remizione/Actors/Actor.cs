@@ -687,7 +687,7 @@ namespace Remizione
         public Vector2 HotspotDetectorPosition { get; set; }
 
         // Interact
-        public bool Interact(GameThing? target)
+        public bool Interact(GameThing? target = null)
         {
             if (target == null)
                 target = InteractiveTarget;

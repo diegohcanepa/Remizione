@@ -41,7 +41,7 @@
   <String Key="Item.BlessedTinder.Description">Una hierba que nace donde la tierra llora por los pecadores. Su aroma, al arder, ahuyenta a las criaturas del abismo y consuela a las almas errantes. Recolecta 5 hierbas para encender un fuego sagrado que te proteja del aliento del Infierno.</String>
   <String Key="Item.BlessedTinder.Name">Yesca bendita</String>
   <String Key="Item.CrateFragment.Description">Un trozo de madera útil para armar un bául primitivo.</String>
-  <String Key="Item.CrateFragment.Name">Pedazo de madera</String>
+  <String Key="Item.CrateFragment.Name">Pedazo de cajón</String>
   <String Key="Item.CrownOfThorns.Description">Trenzada con dolor y redención, esta corona hiere la carne... pero en cada una de sus espinas florece la fe.</String>
   <String Key="Item.CrownOfThorns.Name">Corona de espinas</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>

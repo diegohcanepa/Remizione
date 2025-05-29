@@ -313,6 +313,9 @@ namespace Remizione
                 }
             }
         }
+        
+        // Tag
+        public object? Tag { get; set; }
 
         // TestPressed
         public bool TestPressed(PlayerIndex playerIndex)

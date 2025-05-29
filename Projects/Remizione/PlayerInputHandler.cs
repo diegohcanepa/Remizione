@@ -20,6 +20,32 @@ namespace Remizione
 
         #region Private members
 
+        // HandleGamePadInput
+        private HandleInputResult HandleGamePadInput()
+        {
+            Actor.FastMove = true;
+
+            // Interaction
+            if (Actor.InteractiveTarget != null && InputBindings.Interact.IsPressed(PlayerIndex.One))
+            {
+                Actor.Interact();
+                return HandleInputResult.Handled;
+            }
+            
+            // Movement
+            var direction = GetDirectionVectorFromLeftStick();
+            if (direction != Vector2.Zero)
+            {
+                Actor.Move(direction);
+            }
+            else if (Actor.IsMoving)
+            {
+                Actor.Stand();
+            }
+
+            return HandleInputResult.Unhandled;
+        }
+
         // HandleMouseInput
         private HandleInputResult HandleMouseInput()
         {
@@ -94,6 +120,9 @@ namespace Remizione
         {
             if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
                 return HandleMouseInput();
+
+            else if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad)
+                return HandleGamePadInput();
 
             return HandleInputResult.Unhandled;
         }

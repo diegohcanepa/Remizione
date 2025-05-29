@@ -101,6 +101,12 @@ namespace Remizione
         // UpdateMouseCursor
         private void UpdateMouseCursor()
         {
+            if (InputManager.Players[0].LastInputMethod == InputMethod.GamePad)
+            {
+                MouseCursor.Instance.State = MouseCursorState.None;
+                return;
+            }
+
             // No active player
             if (Player == null || Player.HasSpeechBubble)
             {

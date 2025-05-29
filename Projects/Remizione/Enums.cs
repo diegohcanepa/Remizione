@@ -90,7 +90,7 @@ namespace Remizione
     public enum Message { None, Critical, Miss, NoFaith, ThreatsNearby }
 
     // MouseCursorState
-    public enum MouseCursorState { Cross, CrossOn, Target, TargetOn, Wait, Arrow }
+    public enum MouseCursorState { None, Cross, CrossOn, Target, TargetOn, Wait, Arrow }
 
     // PlacementDistributionStrategy
     public enum PlacementDistributionStrategy { Random, Clump, NoiseMap }

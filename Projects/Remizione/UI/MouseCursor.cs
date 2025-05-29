@@ -71,6 +71,9 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            if (state == MouseCursorState.None)
+                return;
+
             Game.SpriteBatch.Begin(Game.Camera);
             cursorImage.X += shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             cursorImage.Draw(gameTime);

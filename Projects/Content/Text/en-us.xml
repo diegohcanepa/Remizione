@@ -41,14 +41,14 @@
   <String Key="Item.BlessedTinder.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.BlessedTinder.Name">Blessed tinder</String>
   <String Key="Item.CrateFragment.Description"></String>
-  <String Key="Item.CrateFragment.Name">Wood fragment</String>
+  <String Key="Item.CrateFragment.Name">Crate fragment</String>
   <String Key="Item.CrownOfThorns.Description">The crown of thorns makes you regain faith in exchange for physical punishment.</String>
   <String Key="Item.CrownOfThorns.Name">Crown of thorns</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
   <String Key="Item.StoneAxe.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.StoneAxe.Name">Stone axe</String>
-  <String Key="ItemAction.Create">Create</String>
+  <String Key="ItemAction.Create">Craft</String>
   <String Key="ItemAction.Discard">Discard</String>
   <String Key="ItemAction.Use">Use</String>
   <String Key="ItemAction.Wield">Wield</String>
