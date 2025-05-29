@@ -363,6 +363,13 @@ namespace Remizione.UI
             set => titleText.Position = value;
         }
 
+        // TitleScale
+        public Vector2 TitleScale
+        {
+            get => titleText.Scale;
+            set => titleText.Scale = value;
+        }
+
         // VerticalSpacing
         public float VerticalSpacing { get; set; } = .75f;
     }

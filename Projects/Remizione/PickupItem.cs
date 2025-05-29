@@ -11,6 +11,7 @@
         {
             this.Atlas = Atlases.Environment;
             this.DisplayName = $"Item.{StaticName}.Name";
+            this.IgnoreWalkArea = false;
         }
     }
 }

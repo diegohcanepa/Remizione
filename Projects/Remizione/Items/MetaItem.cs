@@ -50,8 +50,8 @@ namespace Remizione
             this.HP = hp;
             this.Range = range;
             this.Modifier = modifier;
-            this.LocalizedDescription = TextRepository.GetValue($"Item.{Name}.Description");
-            this.LocalizedName = TextRepository.GetValue($"Item.{Name}.Name");
+            this.LocalizedDescription = Localization.GetItemDescription(this);
+            this.LocalizedName = Localization.GetItemName(this);
             this.UpgradeHardness = upgradeHardness;
             this.Sound = sound;
             this.UseInterval = useInterval;

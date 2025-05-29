@@ -55,12 +55,8 @@ namespace Remizione
             this.IgnoreWalkArea = false;
             this.ShadowSpot = new ShadowSpot(this);
 
-            this.Gifts = new ItemContainer(this, Localization.GetLocalizedValue(InGameMenuOptionName.Gifts));
-            this.Prayers = new ItemContainer(this, Localization.GetLocalizedValue(InGameMenuOptionName.Prayers))
-            {
-                Capacity = 12
-            };
-
+            this.Gifts = new ItemContainer(this, ItemContainerCategory.Gifts, Localization.GetValue(InGameMenuOptionName.Gifts));
+            this.Prayers = new ItemContainer(this, ItemContainerCategory.Prayers, Localization.GetValue(InGameMenuOptionName.Prayers));
             this.standState = new ActorStandState(this);
 
             this.StateMachine = new ActorStateMachine(this, standState);
@@ -238,17 +234,6 @@ namespace Remizione
 
         // CalculateSpeed
         protected override float CalculateSpeed() => base.CalculateSpeed() * (FastMove ? FastMoveFactor : 1) * tinyMoveSpeedFactor * (accelerationFactorTween.IsRunning ? accelerationFactorTween.CurrentValue : 1);
-
-        /*
-        // CanCheckCollisions
-        protected override bool CanCheckCollisions()
-        {
-            if (Session.IsAwaiting)
-                return false;
-
-            return base.CanCheckCollisions();
-        }
-        */
 
         // InputHandler
         protected InputHandler? InputHandler { get; set; }
@@ -656,7 +641,13 @@ namespace Remizione
                 ItemContainerCategory.Prayers => Prayers,
                 _ => throw new ArgumentOutOfRangeException(nameof(category), category, null),
             };
-        }   
+        }
+
+        // GetItemContainerSize
+        public override int GetItemContainerSize(ItemContainerCategory category)
+        {
+            return Stats.GetItemContainerSize(category);
+        }
 
         // Gifts
         public ItemContainer Gifts { get; }
@@ -932,7 +923,7 @@ namespace Remizione
         public void ShowMessage(Message message, int duration = 1000)
         {
             floatingMessage ??= session.ObjectPools.FloatingTexts.Get();
-            floatingMessage.Show(GetOverheadPosition(), Localization.GetLocalizedValue(message), ColorPalette.TextDepracated.Dark, duration);
+            floatingMessage.Show(GetOverheadPosition(), Localization.GetValue(message), ColorPalette.TextDepracated.Dark, duration);
         }
 
         // SpeechBubbleSound

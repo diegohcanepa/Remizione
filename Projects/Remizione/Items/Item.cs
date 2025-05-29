@@ -178,11 +178,11 @@ namespace Remizione
             var values = new List<string>();
 
             if (MetaItem.Passive)
-                values.Add(GameSettings.PassiveSymbol + Localization.GetLocalizedValue(ItemProperty.Passive));
+                values.Add(GameSettings.PassiveSymbol + Localization.GetValue(ItemProperty.Passive));
 
             if (MetaItem.BaseDamage != null)
             {
-                var value = $"{Localization.GetLocalizedValue(ItemProperty.BaseDamage)}: {MetaItem.BaseDamage.GetValueRangeAsString(Level)}";
+                var value = $"{Localization.GetValue(ItemProperty.BaseDamage)}: {MetaItem.BaseDamage.GetValueRangeAsString(Level)}";
                 values.Add(value);
             }
 

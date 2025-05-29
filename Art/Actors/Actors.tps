@@ -190,6 +190,11 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Sinner-assets/Cross01.png</key>
+            <key type="filename">Sinner-assets/Cross02.png</key>
+            <key type="filename">Sinner-assets/Cross03.png</key>
+            <key type="filename">Sinner-assets/Cross04.png</key>
+            <key type="filename">Sinner-assets/Cross05.png</key>
             <key type="filename">Sinner-assets/Death01.png</key>
             <key type="filename">Sinner-assets/Death02.png</key>
             <key type="filename">Sinner-assets/Death03.png</key>
@@ -245,6 +250,15 @@
             <key type="filename">Sinner-assets/Pray03.png</key>
             <key type="filename">Sinner-assets/Pray04.png</key>
             <key type="filename">Sinner-assets/Pray05.png</key>
+            <key type="filename">Sinner-assets/Pray06.png</key>
+            <key type="filename">Sinner-assets/Pray07.png</key>
+            <key type="filename">Sinner-assets/Pray08.png</key>
+            <key type="filename">Sinner-assets/Pray09.png</key>
+            <key type="filename">Sinner-assets/Pray10.png</key>
+            <key type="filename">Sinner-assets/Pray11.png</key>
+            <key type="filename">Sinner-assets/Pray12.png</key>
+            <key type="filename">Sinner-assets/Pray13.png</key>
+            <key type="filename">Sinner-assets/Pray14.png</key>
             <key type="filename">Sinner-assets/Stand01.png</key>
             <key type="filename">Sinner-assets/UnarmedAttack01.png</key>
             <key type="filename">Sinner-assets/UnarmedAttack02.png</key>
@@ -260,6 +274,11 @@
             <key type="filename">Sinner-assets/UseItem04.png</key>
             <key type="filename">Sinner-assets/UseItem05.png</key>
             <key type="filename">Sinner-assets/UseItem06.png</key>
+            <key type="filename">Unredeemed-assets/Cross01.png</key>
+            <key type="filename">Unredeemed-assets/Cross02.png</key>
+            <key type="filename">Unredeemed-assets/Cross03.png</key>
+            <key type="filename">Unredeemed-assets/Cross04.png</key>
+            <key type="filename">Unredeemed-assets/Cross05.png</key>
             <key type="filename">Unredeemed-assets/Death01.png</key>
             <key type="filename">Unredeemed-assets/Death02.png</key>
             <key type="filename">Unredeemed-assets/Death03.png</key>
@@ -319,6 +338,12 @@
             <key type="filename">Unredeemed-assets/UnarmedAttack06.png</key>
             <key type="filename">Unredeemed-assets/UnarmedAttack07.png</key>
             <key type="filename">Unredeemed-assets/UnarmedAttack08.png</key>
+            <key type="filename">Unredeemed-assets/UseItem01.png</key>
+            <key type="filename">Unredeemed-assets/UseItem02.png</key>
+            <key type="filename">Unredeemed-assets/UseItem03.png</key>
+            <key type="filename">Unredeemed-assets/UseItem04.png</key>
+            <key type="filename">Unredeemed-assets/UseItem05.png</key>
+            <key type="filename">Unredeemed-assets/UseItem06.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

@@ -60,16 +60,13 @@ namespace Remizione
             }
         }
 
+        // Contains
+        public bool Contains(Vector2 point) => Polygon.IsPointInside(point);
+
         // InLineOfSight
         public bool InLineOfSight(Vector2 start, Vector2 end)
         {
             return Polygon.InLineOfSight(start, end);
-        }
-
-        // IsInside
-        public bool IsInside(Vector2 point)
-        {
-            return Polygon.IsPointInside(point);
         }
 
         // WalkArea

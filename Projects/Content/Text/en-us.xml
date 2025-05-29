@@ -23,7 +23,7 @@
   <String Key="InGameMenuOptionName.Attributes">Attributes</String>
   <String Key="InGameMenuOptionName.Creatures">Creatures</String>
   <String Key="InGameMenuOptionName.Gifts">Gifts</String>
-  <String Key="InGameMenuOptionName.Inventory">Belongings</String>
+  <String Key="InGameMenuOptionName.Inventory">Bag</String>
   <String Key="InGameMenuOptionName.Map">Map</String>
   <String Key="InGameMenuOptionName.Prayers">Prayers</String>
   <String Key="InGameMenuOptionName.QuitToDesktop">Quit to desktop</String>
@@ -40,6 +40,8 @@
   <String Key="Item.BareHands.Name">Outburst</String>
   <String Key="Item.BlessedTinder.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.BlessedTinder.Name">Blessed tinder</String>
+  <String Key="Item.CrateFragment.Description"></String>
+  <String Key="Item.CrateFragment.Name">Wood fragment</String>
   <String Key="Item.CrownOfThorns.Description">The crown of thorns makes you regain faith in exchange for physical punishment.</String>
   <String Key="Item.CrownOfThorns.Name">Crown of thorns</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>

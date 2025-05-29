@@ -145,7 +145,19 @@ namespace EngendroAdventure
 
             base.OnUpdate(gameTime);
 
+            InvalidateCulledThings();
+
+            for (var i = 0; i < culledThings.Count; i++)
+            {
+                culledThings[i].Update(gameTime);
+            }
+        }
+
+        // InvalidateCulledThings
+        protected void InvalidateCulledThings()
+        {
             var count = 0;
+            
             for (int i = 0; i < Children.Count; i++)
             {
                 if (Children[i].IsActiveInGameLoop)
@@ -163,11 +175,6 @@ namespace EngendroAdventure
                 culledThings.RemoveRange(count, culledThings.Count - count);
 
             culledThings.Sort(EntityDepthComparer.Instance);
-
-            for (var i = 0; i < culledThings.Count; i++)
-            {
-                culledThings[i].Update(gameTime);
-            }
         }
 
         #endregion

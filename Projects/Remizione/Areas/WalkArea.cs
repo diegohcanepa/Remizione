@@ -259,7 +259,7 @@ namespace Remizione
 
             for (var i = 0; i < holeAreas.Count; i++)
             {
-                if (holeAreas[i].IsInside(point))
+                if (holeAreas[i].Contains(point))
                 {
                     point = holeAreas[i].ClampOutside(point);
                     break;
@@ -321,7 +321,7 @@ namespace Remizione
 
             for (var i = 0; i < holeAreas.Count; i++)
             {
-                if (holeAreas[i].IsInside(point))
+                if (holeAreas[i].Contains(point))
                 {
                     return false;
                 }

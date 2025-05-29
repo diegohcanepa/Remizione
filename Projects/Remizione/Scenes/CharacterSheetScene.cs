@@ -43,7 +43,7 @@ namespace Remizione
             {
                 OnSelectionChanged = SelectedOptionChanged,
                 Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 7),
-                Title = Localization.GetLocalizedValue(InGameMenuOptionName.Attributes),
+                Title = Localization.GetValue(InGameMenuOptionName.Attributes),
                 TitlePosition = container.BoundingBox.GetPoint(RectanglePoint.Top)
             };
 

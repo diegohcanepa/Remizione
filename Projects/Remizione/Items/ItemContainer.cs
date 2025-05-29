@@ -11,13 +11,13 @@ namespace Remizione
     public sealed class ItemContainer
     {
         private string? toString;
-        private int capacity;
         private readonly List<Item> items = [];
 
         // Constructor
-        public ItemContainer(GameThing owner, string displayName)
+        public ItemContainer(GameThing owner, ItemContainerCategory category, string displayName)
         {
             this.Owner = owner;
+            this.Category = category;
             this.DisplayName = displayName;
 
             Items = new ReadOnlyCollection<Item>(items);
@@ -74,26 +74,8 @@ namespace Remizione
             return item;
         }
 
-        // Capacity
-        public int Capacity
-        {
-            get => capacity;
-            set
-            {
-                if (value != capacity)
-                {
-                    if (value < 0)
-                        value = 0;
-
-                    this.capacity = value;
-
-                    if (value > 0 && items.Count > capacity)
-                        items.RemoveRange(items.Count - 1, items.Count - capacity);
-
-                    toString = null;
-                }
-            }
-        }
+        // Category
+        public ItemContainerCategory Category { get; }
 
         // DisplayName
         public string DisplayName { get; }
@@ -111,7 +93,7 @@ namespace Remizione
         }
 
         // IsFull
-        public bool IsFull => capacity > 0 && items.Count >= capacity;
+        public bool IsFull => Size > 0 && items.Count >= Size;
 
         // Items
         public ReadOnlyCollection<Item> Items { get; }
@@ -143,14 +125,17 @@ namespace Remizione
         // RequiresUpdate
         public bool RequiresUpdate { get; private set; }
 
+        // Size
+        public int Size => Owner.GetItemContainerSize(Category);
+
         // ToString
         public override string ToString()
         {
             if (toString == null)
             {
                 toString = DisplayName;
-                if (Capacity > 0)
-                    toString += $" ({items.Count} / {Capacity})";
+                if (Size > 0)
+                    toString += $" ({items.Count} / {Size})";
             }
 
             return toString;

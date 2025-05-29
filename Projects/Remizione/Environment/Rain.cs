@@ -1,7 +1,6 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
-using EngendroAdventure;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -18,7 +17,7 @@ namespace Remizione
         private readonly RainDropImpactEmitter rainDropImpacts;
         private readonly RainEmitter rainEmitter;
         private const int RainEaseInOut = 10000;
-        private readonly FloatTween rainIntensityTween = new();
+        private readonly FloatTween rainIntensityTween = new() { StartDelay = 10000 };
         private readonly SoundInstance rainSound;
         private readonly GameSession session;
         private readonly Countdown thunderCooldown = new() { TimeRange = new Int32Range(40000, 90000) };
@@ -96,7 +95,7 @@ namespace Remizione
         // Begin
         public void Begin(int duration, bool immediate)
         {
-            thunderCooldown.StartFromRange();
+            thunderCooldown.Start(2000);
 
             // Renew time if is already raining or rain isn't visible in current room
             if (IsRaining || !IsVisibleInRoom)

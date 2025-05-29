@@ -241,6 +241,11 @@ namespace EngendroAdventure
         {
         }
 
+        // OnLoadCompleted
+        protected virtual void OnLoadCompleted()
+        {
+        }
+
         // OnParentChanged
         protected virtual void OnParentChanged()
         {
@@ -557,6 +562,8 @@ namespace EngendroAdventure
 
             if (AutoPlayAnimation && !AnimationPlayer.IsPlaying)
                 Sprite.Player.Play(true, AnimationDirection.Forward, false);
+
+            OnLoadCompleted();
         }
 
         // LoadState

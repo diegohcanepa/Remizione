@@ -148,7 +148,7 @@ namespace Remizione
             if (session.Player != null)
             {
                 var title = TextRepository.GetValue("Misc.Inventory");
-                title += $" ({playerMenu.Options.Count} / {session.Player.InventoryCapacity})";
+                title += $" ({playerMenu.Options.Count} / {session.Player.Inventory.Size})";
                 playerMenu.Title = title;
 
                 if (IsPlayerInventoryFull)
@@ -160,8 +160,8 @@ namespace Remizione
             if (Target != null)
             {
                 var title = TextRepository.GetValue(Target.DisplayName);
-                if (Target.InventoryCapacity > 0)
-                    title += $" ({targetMenu.Options.Count} / {Target.InventoryCapacity})";
+                if (Target.Inventory.Size > 0)
+                    title += $" ({targetMenu.Options.Count} / {Target.Inventory.Size})";
                 targetMenu.Title = title;
 
                 if (IsTargetInventoryFull)
@@ -172,10 +172,10 @@ namespace Remizione
         }
 
         // IsPlayerInventoryFull}
-        private bool IsPlayerInventoryFull => session.Player != null && playerMenu.Options.Count >= session.Player.Inventory.Capacity;
+        private bool IsPlayerInventoryFull => session.Player != null && playerMenu.Options.Count >= session.Player.Inventory.Size;
 
         // IsTargetInventoryFull}
-        private bool IsTargetInventoryFull => Target != null && targetMenu.Options.Count >= Target.Inventory.Capacity;
+        private bool IsTargetInventoryFull => Target != null && targetMenu.Options.Count >= Target.Inventory.Size;
 
         // MoveItem
         private void MoveItem(Actor actor)

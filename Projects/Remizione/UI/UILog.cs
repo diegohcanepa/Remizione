@@ -98,9 +98,9 @@ namespace Remizione.UI
         public void Hide() => fadeTween.Stop(); 
 
         // Show
-        public void Show(LogMessage message, bool isWarning) => ShowCore(Localization.GetLocalizedValue(message), string.Empty, isWarning);
+        public void Show(LogMessage message, bool isWarning) => ShowCore(Localization.GetValue(message), string.Empty, isWarning);
 
         // Show
-        public void Show(LogVerb verb, string noun) => ShowCore(Localization.GetLocalizedValue(verb), noun, false);
+        public void Show(LogVerb verb, string noun) => ShowCore(Localization.GetValue(verb), noun, false);
     }
 }

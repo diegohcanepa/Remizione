@@ -6,6 +6,7 @@
 	
 	<!-- Music -->
 	<Music Name="Anger1" MaxInstances="2" Tags="Anger" />
+	<Music Name="Main" MaxInstances="2" Tags="Back"/>
 	
 	<!-- FX -->
 	<FX Name="AppleBite" MaxInstances="2" />

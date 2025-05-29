@@ -76,13 +76,13 @@ namespace Remizione
             };
 
             // Prayer button
-            this.prayerButton = new HUDButton(Game, "PrayerIcon", Localization.GetLocalizedValue(InGameMenuOptionName.Prayers))
+            this.prayerButton = new HUDButton(Game, "PrayerIcon", Localization.GetValue(InGameMenuOptionName.Prayers))
             {
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.LeftBottom, 4, -4),
             };
 
             // Inventory button
-            this.inventoryButton = new HUDButton(Game, "BagIcon", Localization.GetLocalizedValue(InGameMenuOptionName.Inventory))
+            this.inventoryButton = new HUDButton(Game, "BagIcon", Localization.GetValue(InGameMenuOptionName.Inventory))
             {
                 Position = prayerButton.BoundingBox.GetPoint(RectanglePoint.RightBottom),
             };

@@ -57,8 +57,20 @@ namespace Remizione
             return result.Trim();
         }
 
-        // GetLocalizedValue
-        internal static string GetLocalizedValue<TEnum>(TEnum value) where TEnum:Enum
+        // GetItemDescription
+        internal static string GetItemDescription(MetaItem item)
+        {
+            return TextRepository.GetValue($"Item.{item.Name}.Description");
+        }
+
+        // GetItemName
+        internal static string GetItemName(MetaItem item)
+        {
+            return TextRepository.GetValue($"Item.{item.Name}.Name");
+        }
+
+        // GetValue
+        internal static string GetValue<TEnum>(TEnum value) where TEnum:Enum
         {
             return TextRepository.GetValue(EncodeKey(value));
         }

@@ -70,12 +70,6 @@ namespace Remizione
                     unlitTweenDuration = 1000;
                     break;
 
-                // LightBulb
-                case LightKind.LightBulb:
-                    lightSprite.Color = new Color(194, 194, 130) * .95f;
-                    lightSprite.Tweens.Reset();
-                    break;
-
                 // Moon
                 case LightKind.Moon:
                     lightSprite.Tweens.Reset();

@@ -16,11 +16,11 @@ namespace Remizione
         // CollectNodes
         void CollectNodes(IList<PathNode> list);
 
+        // Contains
+        bool Contains(Vector2 point);
+
         // InLineOfSight
         bool InLineOfSight(Vector2 start, Vector2 end);
-
-        // IsInside
-        bool IsInside(Vector2 point);
 
         // Name
         string Name { get; }

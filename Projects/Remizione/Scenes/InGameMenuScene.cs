@@ -24,12 +24,12 @@ namespace Remizione
                 TextScale = ScaleInfo.Text.VeryLarge,
             };
 
-            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Inventory), () => session.ShowItemContainerScene(ItemContainerCategory.Inventory));
-            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Prayers), () => session.ShowItemContainerScene(ItemContainerCategory.Prayers));
-            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Gifts), () => session.ShowItemContainerScene(ItemContainerCategory.Gifts));
-            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Attributes), session.ShowCharacterSheet); menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Map));
-            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Creatures));
-            menu.AddOption(Localization.GetLocalizedValue(InGameMenuOptionName.Settings));
+            menu.AddOption(Localization.GetValue(InGameMenuOptionName.Inventory), () => session.ShowItemContainerScene(ItemContainerCategory.Inventory));
+            menu.AddOption(Localization.GetValue(InGameMenuOptionName.Prayers), () => session.ShowItemContainerScene(ItemContainerCategory.Prayers));
+            menu.AddOption(Localization.GetValue(InGameMenuOptionName.Gifts), () => session.ShowItemContainerScene(ItemContainerCategory.Gifts));
+            menu.AddOption(Localization.GetValue(InGameMenuOptionName.Attributes), session.ShowCharacterSheet); menu.AddOption(Localization.GetValue(InGameMenuOptionName.Map));
+            menu.AddOption(Localization.GetValue(InGameMenuOptionName.Creatures));
+            menu.AddOption(Localization.GetValue(InGameMenuOptionName.Settings));
         }
 
         #endregion

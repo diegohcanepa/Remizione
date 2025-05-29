@@ -95,10 +95,29 @@ namespace Remizione
 
             if (Session.Player != null)
             {
+                Children.Add(Session.Player);
                 Session.Player.Position = WorldManager.Blocks[0].BoundingBox.Center;
                 Session.Camera.FollowTarget(Session.Player);
+                Session.Camera.FocusTarget();
+                InvalidateCulledThings();
+                Session.Player.ClampToWalkablePosition();
+                Session.Camera.FocusTarget();
             }
         }
+
+        /*
+        // OnLoadCompleted
+        protected override void OnLoadCompleted()
+        {
+            base.OnLoadCompleted();
+
+            for (var i = 0; i < Children.Count; i++)
+            {
+                if (Children[i] is GameThing thing && !thing.IsStationary)
+                    thing.ClampToWalkablePosition();
+            }
+        }
+        */
 
         // OnRead
         protected override void OnRead(XmlAttributeCollection attributes)

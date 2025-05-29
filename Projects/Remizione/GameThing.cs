@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Engendro.Audio;
-using Engendro.Input;
 using Engendro.PathFinding;
 using EngendroAdventure;
 using EngendroAdventure.Scripting;
@@ -43,7 +42,7 @@ namespace Remizione
         private readonly List<PlacementCondition> placementConditions = [];
         private RenderLayer renderLayer;
         private int renderLayerDepth;
-        private bool shouldClampToWalkArea;
+        private bool shouldClampToWalkablePosition;
         private List<Verb>? verbList;
         private WalkArea? walkArea;
         private string walkAreaName = string.Empty;
@@ -59,7 +58,7 @@ namespace Remizione
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
             this.PlacementConditions = new(placementConditions);
-            this.Inventory = new ItemContainer(this, Localization.GetLocalizedValue(InGameMenuOptionName.Inventory));
+            this.Inventory = new ItemContainer(this, ItemContainerCategory.Inventory, Localization.GetValue(InGameMenuOptionName.Inventory));
         }
 
         #endregion
@@ -99,18 +98,18 @@ namespace Remizione
             }
         }
 
+        // Contains
+        bool IHoleArea.Contains(Vector2 point)
+        {
+            InvalidateHoleArea();
+            return holePoly.IsPointInside(point);
+        }
+
         // InLineOfSight
         bool IHoleArea.InLineOfSight(Vector2 start, Vector2 end)
         {
             InvalidateHoleArea();
             return holePoly.InLineOfSight(start, end);
-        }
-
-        // IsInside
-        bool IHoleArea.IsInside(Vector2 point)
-        {
-            InvalidateHoleArea();
-            return holePoly.IsPointInside(point);
         }
 
         // Polygon
@@ -138,10 +137,10 @@ namespace Remizione
                         continue;
 
                     // If thing is an obstacle (walk area hole)
-                    if (thing.CollisionPolygon != null && (thing as IHoleArea).IsInside(Position))
+                    if (thing.CollisionPolygon != null)
                     {
-                        if (!OnHandleCollision(thing))
-                            Position = (thing as IHoleArea).ClampOutside(Position);
+                        if (thing is IHoleArea holeArea && holeArea.Contains(Position))
+                            Position = holeArea.ClampOutside(Position);
                     }
                 }
             }
@@ -211,7 +210,7 @@ namespace Remizione
             else
                 walkArea = null;
 
-            shouldClampToWalkArea = true;
+            shouldClampToWalkablePosition = true;
 
             MarkHoleAreaDirty();
         }
@@ -287,9 +286,6 @@ namespace Remizione
         {
         }
 
-        // OnHandleCollision
-        protected virtual bool OnHandleCollision(GameThing thing) => false;
-
         // OnHPChanged
         protected virtual void OnHPChanged()
         {
@@ -304,10 +300,8 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            shouldClampToWalkArea = true;
             InvalidateHoleArea();
             InvalidateWalkArea();
-            ClampToWalkArea();
         }
 
         // OnTransform
@@ -317,7 +311,7 @@ namespace Remizione
 
             isHotspotDirty = true;
             isHurtBoxDirty = true;
-            shouldClampToWalkArea = true;
+            shouldClampToWalkablePosition = true;
 
             if (change != TransformChange.Altitude)
                 MarkHoleAreaDirty();
@@ -354,7 +348,11 @@ namespace Remizione
 
             base.OnUpdate(gameTime);
 
-            ClampToWalkArea();
+            if (shouldClampToWalkablePosition)
+            {
+                ClampToWalkablePosition();
+                shouldClampToWalkablePosition = false;
+            }
         }
 
         // OnUpdateEmittingSound
@@ -509,17 +507,14 @@ namespace Remizione
         [ScriptProperty]
         public int CellMargin { get; set; }
 
-        // ClampToWalkArea
-        public void ClampToWalkArea()
+        // ClampToWalkablePosition
+        public void ClampToWalkablePosition()
         {
-            if (IgnoreWalkArea || LoadState != LoadState.Loaded)
-                return;
-
-            if (!shouldClampToWalkArea)
+            if (IgnoreWalkArea)
                 return;
 
             // Clamp to a walkable position
-            if (WalkArea != null)
+            if (WalkArea != null && WalkArea.Holes.Count > 0)
             {
                 Position = WalkArea.ClampInside(Position, out _);
 
@@ -532,8 +527,6 @@ namespace Remizione
 
             if (CanCheckCollisions())
                 CheckCollisions();
-
-            shouldClampToWalkArea = false;
         }
 
         // CollisionDetection
@@ -717,6 +710,9 @@ namespace Remizione
             return result;
         }
 
+        // GetItemContainerSize
+        public virtual int GetItemContainerSize(ItemContainerCategory category) => 8;
+
         // GetOverheadPosition
         public Vector2 GetOverheadPosition() => GetOverheadPosition(0, 0);
 
@@ -849,14 +845,6 @@ namespace Remizione
 
         // Inventory
         public ItemContainer Inventory { get; }
-
-        // InventoryCapacity
-        [ScriptProperty]
-        public int InventoryCapacity
-        {
-            get => Inventory.Capacity;
-            set => Inventory.Capacity = value;
-        }
 
         // IsAvailable
         public bool IsAvailable(WorldBlock worldBlock, Random random)

@@ -39,7 +39,7 @@ namespace Remizione
             { 
                 ImageName = nameof(Atlases.Environment.LightningLight),
                 LightKind = LightKind.Lightning,
-                Scale = new Vector2(6)
+                Scale = new Vector2(8)
             };
 
             this.Lights = new NamedObjectReadOnlyCollection<Light>(lights);

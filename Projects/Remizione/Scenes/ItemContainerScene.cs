@@ -59,7 +59,9 @@ namespace Remizione
             {
                 Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 6),
                 OnSelectionChanged = SelectedOptionChanged,
+                TitleColor = ColorPalette.Text.TerraLight,
                 TitlePosition = container.BoundingBox.GetPoint(RectanglePoint.Top),
+                TitleScale = ScaleInfo.Text.Large,
             };
 
             // Action

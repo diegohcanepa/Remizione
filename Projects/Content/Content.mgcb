@@ -308,6 +308,12 @@
 /processorParam:Quality=Best
 /build:Audio/Music/Anger1.wav
 
+#begin Audio/Music/Main.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Main.wav
+
 #begin Effects/Blur.fx
 /importer:EffectImporter
 /processor:EffectProcessor
