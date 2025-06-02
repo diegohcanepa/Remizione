@@ -3,7 +3,7 @@
 namespace EngendroAdventure.Scripting
 {
     // AnimationCommand
-    // Arguments: {Name} [#frame-prefix:String] [#zero-padding:Int32]
+    // Arguments: {Name} [#prefix:String] [#zero-padding:Int32]
     internal sealed class AnimationCommand : NonAwaitableCommand
     {
         // Constructor

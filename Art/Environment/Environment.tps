@@ -595,6 +595,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">SinnerCross-assets/SinnerCross.png</key>
+            <key type="filename">SinnerCross-assets/SinnerCrossShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,9,11,18</rect>
+                <key>scale9Paddings</key>
+                <rect>6,9,11,18</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">SmallRockA-assets/SmallRockA.png</key>
             <key type="filename">SmallRockA-assets/SmallRockAShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -764,6 +780,7 @@
                     <filename>Chest-assets</filename>
                     <filename>LootBag-assets</filename>
                     <filename>RainDropImpacts-assets</filename>
+                    <filename>SinnerCross-assets</filename>
                 </array>
             </struct>
         </map>

@@ -30,8 +30,7 @@ namespace Remizione.Scripting
                 return;
 
             var amount = Parser.ParseInt32Argument(this, AmountArg, 1);
-            var container = metaItem.Kind == ItemKind.Object ? actor.Inventory : actor.Gifts;
-            
+            var container = actor.GetItemContainer(metaItem.Category);
             container.Add(metaItem.Name, amount);
         }
     }

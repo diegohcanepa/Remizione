@@ -49,6 +49,7 @@ namespace EngendroAdventure.Scripting.Core
             RegisterStatement("else", typeof(ElseStatement), CodingContext.Execution);
             RegisterStatement("endif", typeof(EndifStatement), CodingContext.Execution);
             RegisterStatement("flip", typeof(FlipCommand), CodingContext.Any);
+            RegisterStatement("goto-animation-frame", typeof(GoToAnimationFrameCommand));
             RegisterStatement("if-counter", typeof(IfCounterStatement), CodingContext.Execution);
             RegisterStatement("if-entity", typeof(IfEntityStatement));
             RegisterStatement("if-entity-type", typeof(IfEntityTypeStatement));

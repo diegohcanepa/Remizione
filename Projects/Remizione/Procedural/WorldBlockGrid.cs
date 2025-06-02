@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Remizione
 {
@@ -98,6 +99,25 @@ namespace Remizione
 
         // Name
         public string Name { get; }
+
+        // ReserveSpace
+        public bool ReserveSpace(Rectangle pixelArea)
+        {
+            int startCol = (pixelArea.X / CellSize) - OffsetX;
+            int startRow = (pixelArea.Y / CellSize) - OffsetY;
+            int cellWidth = (int)Math.Ceiling(pixelArea.Width / (float)CellSize);
+            int cellHeight = (int)Math.Ceiling(pixelArea.Height / (float)CellSize);
+
+            Size size = new(cellWidth, cellHeight);
+
+            if (CanFitAt(startCol, startRow, size))
+            {
+                MarkOccupied(startCol, startRow, size);
+                return true;
+            }
+
+            return false;
+        }
 
         // RowCount
         public int RowCount { get; }

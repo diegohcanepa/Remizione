@@ -53,7 +53,7 @@ namespace Remizione
             {
                 HideZero = true,
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.RightTop, -3, 2),
+                Position = Screen.SafeArea.GetPoint(RectanglePoint.RightTop, -3, 0),
             };
 
             // Sentence
@@ -82,7 +82,7 @@ namespace Remizione
             };
 
             // Inventory button
-            this.inventoryButton = new HUDButton(Game, "BagIcon", Localization.GetValue(InGameMenuOptionName.Inventory))
+            this.inventoryButton = new HUDButton(Game, "InventoryIcon", Localization.GetValue(InGameMenuOptionName.Inventory))
             {
                 Position = prayerButton.BoundingBox.GetPoint(RectanglePoint.RightBottom),
             };
@@ -154,7 +154,8 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            playerStats.Draw(gameTime);
+            if (session.FullHUD)
+                playerStats.Draw(gameTime);
 
             if (session.IsCurrentScene)
             {

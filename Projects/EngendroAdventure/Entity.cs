@@ -696,9 +696,7 @@ namespace EngendroAdventure
             set
             {
                 if (value != Sprite.Position)
-                {
                     Sprite.Position = value;
-                }
             }
         }
 

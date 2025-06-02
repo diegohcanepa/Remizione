@@ -227,7 +227,7 @@ namespace Remizione
         #endregion
 
         // AddBlock
-        public WorldBlock AddBlock(Point gridPosition, int worldVersion)
+        public WorldBlock AddBlock(Point gridPosition, int worldVersion, Rectangle? reservedSpace = null)
         {
             if (updateCount == 0)
                 throw new InvalidOperationException("WorldManager is not in update mode.");
@@ -238,7 +238,7 @@ namespace Remizione
             if (blocks.ContainsKey(gridPosition))
                 throw new InvalidOperationException("Grid position is already used.");
 
-            var block = new WorldBlock(this, gridPosition, worldVersion);
+            var block = new WorldBlock(this, gridPosition, worldVersion, reservedSpace);
             blocks[gridPosition] = block;
             blockList.Add(block);
 

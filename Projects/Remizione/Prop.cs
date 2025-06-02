@@ -20,14 +20,14 @@ namespace Remizione
 
         #endregion
 
-        #region Constructor members
+        #region Constructor
 
         // Constructor
         public Prop(GameSession session, string name)
             : base(session, name)
         {
             this.Atlas = Atlases.Environment;
-
+            
             // Shadow
             this.shadow = new ImageSprite(session.Game)
             {

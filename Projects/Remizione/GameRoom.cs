@@ -458,6 +458,30 @@ namespace Remizione
         [ScriptProperty]
         public bool AllowPauseMenu { get; set; } = true;
 
+        // CanPlaceDynamicPropAt
+        public bool CanPlaceDynamicPropAt(Prop prop, Vector2 position)
+        {
+            if (prop.CollisionPolygon != null)
+            {
+                var box = new RectangleF(position, prop.CollisionPolygon.BoundingRectangleF.Size);
+                box.Inflate(5, 5);
+
+                for (int i = 0; i < CulledThings.Count; i++)
+                {
+                    if (CulledThings[i] == prop)
+                        continue;
+
+                    if (CulledThings[i] is IHoleArea holeArea)
+                    {
+                        if (holeArea.Polygon.BoundingRectangleF.Intersects(box))
+                            return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
         // CanUseLightingSystem
         public bool CanUseLightingSystem => Session.LightingSystem && LightingSystem;
 
@@ -482,6 +506,32 @@ namespace Remizione
 
         // Lights
         public NamedObjectReadOnlyCollection<Light> Lights { get; }
+
+        // PlaceDynamicPropAt
+        public bool PlaceDynamicPropAt(Prop prop)
+        {
+            if (Session.Player is Actor actor)
+            {
+                var pos = actor.Position;
+                if (actor.Direction == FacingDirection.Right)
+                    pos.X += 5;
+                else
+                    pos.X -= 5;
+
+                if (CanPlaceDynamicPropAt(prop, pos) == false)
+                    return false;
+
+                if (Session.CreateDynamicThing(prop.StaticName, string.Empty) is Prop newProp)
+                {
+                    newProp.Position = actor.Position;
+                    Children.Add(newProp);
+                }
+                else
+                    return false;
+            }
+
+            return true;
+        }
 
         // RemoveWalkArea
         public bool RemoveWalkArea(string name)

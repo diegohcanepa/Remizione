@@ -32,5 +32,8 @@ namespace Remizione.Scripting
 
         // GetTextEmitterName
         protected override string GetTextEmitterName() => "(UI Message)";
+
+        // IsAwaiting
+        public override bool IsAwaiting => Game.SceneManager.CurrentScene is EchoScene;
     }
 }

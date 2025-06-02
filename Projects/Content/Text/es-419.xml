@@ -3,6 +3,8 @@
   <String Key="Actor.Unredeemed">Irredento</String>
   <String Key="ActorProperty.Ashes.Description">Las cenizas quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Ashes.Name">Cenizas</String>
+  <String Key="ActorProperty.Gold.Description">El oro quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
+  <String Key="ActorProperty.Gold.Name">Oro</String>
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Level.Name">Estado de Gracia</String>
   <String Key="CombatOption.Attack">Atacar</String>
@@ -44,6 +46,8 @@
   <String Key="Item.CrateFragment.Name">Pedazo de cajón</String>
   <String Key="Item.CrownOfThorns.Description">Trenzada con dolor y redención, esta corona hiere la carne... pero en cada una de sus espinas florece la fe.</String>
   <String Key="Item.CrownOfThorns.Name">Corona de espinas</String>
+  <String Key="Item.Gold.Description">Un puñado de polvo de oro.</String>
+  <String Key="Item.Gold.Name">Polvo de oro</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Manzana putrefacta</String>
   <String Key="Item.StoneAxe.Description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
@@ -61,6 +65,7 @@
   <String Key="Languages.es-es">Español (España)</String>
   <String Key="Languages.fr-fr">Français</String>
   <String Key="Languages.ru-ru">Русский</String>
+  <String Key="LogMessage.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
   <String Key="LogMessage.EnoughOfThat">Ya tienes suficiente.</String>
   <String Key="LogMessage.InventoryFull">No puedes llevar más objetos.</String>
   <String Key="LogVerb.Discarded">Descartaste</String>

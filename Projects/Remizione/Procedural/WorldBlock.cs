@@ -18,7 +18,7 @@ namespace Remizione
         private readonly bool[] borders = new bool[4];
         private readonly ImageSprite[] borderImages;
         private readonly WorldBlockGrid decorationGrid;
-        private readonly WorldBlockGrid grid;
+        private readonly WorldBlockGrid mainGrid;
         private readonly Random random;
         private readonly int randomSeed;
         private readonly List<WorldBlockTag> tags = [];
@@ -29,12 +29,12 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public WorldBlock(WorldManager manager, Point worldGridPosition, int worldVersion)
+        public WorldBlock(WorldManager manager, Point worldGridPosition, int worldVersion, Rectangle? reservedSpace = null)
             : base(manager.Session, string.Empty)
         {
             this.WorldVersion = worldVersion;
             this.decorationGrid = new WorldBlockGrid("Decoration", manager.BlockSize);
-            this.grid = new WorldBlockGrid("Main", manager.BlockSize);
+            this.mainGrid = new WorldBlockGrid("Main", manager.BlockSize);
             this.Things = new(things);
             this.Tags = new(tags);
 
@@ -91,12 +91,18 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.Right
             };
 
+            if (reservedSpace.HasValue)
+            {
+                decorationGrid.ReserveSpace(reservedSpace.Value);
+                mainGrid.ReserveSpace(reservedSpace.Value);
+            }
+
             Populate();
         }
 
         #endregion
 
-        #region Private fields
+        #region Private members
 
         // AssignTags
         private void AssignTags()
@@ -118,7 +124,7 @@ namespace Remizione
             if (thing.InstancesPerBlock.IsEmpty)
                 return;
 
-            var targetGrid = thing.IsWalkAreaHole ? grid : decorationGrid;
+            var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
             int totalCount = random.Next(thing.InstancesPerBlock.Minimum, thing.InstancesPerBlock.Maximum + 1);
             int clumpSize = 3 + random.Next(3);
             int clumpCount = (totalCount + clumpSize - 1) / clumpSize;
@@ -149,7 +155,7 @@ namespace Remizione
             if (thing.InstancesPerBlock.IsEmpty)
                 return;
 
-            var targetGrid = thing.IsWalkAreaHole ? grid : decorationGrid;
+            var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
             Size sizeInCells = thing.GetRequiredGridSpace(WorldBlockGrid.CellSize);
             var count = random.Next(thing.InstancesPerBlock.Minimum, thing.InstancesPerBlock.Maximum + 1);
 
@@ -179,7 +185,7 @@ namespace Remizione
             if (thing.InstancesPerBlock.IsEmpty)
                 return;
 
-            var targetGrid = thing.IsWalkAreaHole ? grid : decorationGrid;
+            var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
             Size sizeInCells = thing.GetRequiredGridSpace(WorldBlockGrid.CellSize);
             float noiseThreshold = 0.2f;
             int attempts = 100;
@@ -235,7 +241,7 @@ namespace Remizione
         // PlaceDynamicThing
         private void PlaceDynamicThing(GameThing thing, int col, int row)
         {
-            var targetGrid = thing.IsWalkAreaHole ? grid : decorationGrid;
+            var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
             var instance = CreateDynamicThing(thing.StaticName);
             Vector2 worldPosition = targetGrid.GetWorldPosition(col, row);
             instance.Position = worldPosition + Position;

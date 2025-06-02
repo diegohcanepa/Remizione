@@ -17,7 +17,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(string name, ItemKind kind, ItemAction action, bool passive, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, int degradationInterval, UpgradeHardness upgradeHardness, Sound? sound, int useInterval, Script? creationRoutine)
+        public MetaItem(string name, ItemContainerCategory category, ItemAction action, bool passive, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, int degradationInterval, UpgradeHardness upgradeHardness, Sound? sound, int useInterval, Script? creationRoutine)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -36,7 +36,7 @@ namespace Remizione
                 throw new InvalidOperationException("A creation routine is only for creatable items.");
 
             this.Name = name;
-            this.Kind = kind;
+            this.Category = category;
             this.Bonus = bonus;
             this.Action = action;
             this.CreationRoutine = creationRoutine;
@@ -75,6 +75,9 @@ namespace Remizione
         // Bonus
         public int Bonus { get; }
 
+        // Category
+        public ItemContainerCategory Category { get; }
+
         // CreationRoutine
         public Script? CreationRoutine { get; }
 
@@ -92,9 +95,6 @@ namespace Remizione
 
         // IsStackable
         public bool IsStackable => Maximum > 1;
-
-        // Kind
-        public ItemKind Kind { get; }
 
         // Knockback
         public Vector2 Knockback { get; }

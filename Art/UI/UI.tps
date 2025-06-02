@@ -173,6 +173,23 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">HUDButtons-assets/InventoryIcon.png</key>
+            <key type="filename">HUDButtons-assets/PrayIcon.png</key>
+            <key type="filename">HUDButtons-assets/PrayerIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,8,8</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,8,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Inventory-assets/InventoryGridContainer.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -276,7 +293,6 @@
                 <false/>
             </struct>
             <key type="filename">KeyboardControls-assets/KeyboardInteract.png</key>
-            <key type="filename">UI-assets/BagIcon.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>
             <key type="filename">UI-assets/ProhibitionMark.png</key>
             <key type="filename">XboxControls-assets/XboxInteract.png</key>
@@ -671,21 +687,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UI-assets/PrayerIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,3,7,6</rect>
-                <key>scale9Paddings</key>
-                <rect>4,3,7,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -838,6 +839,7 @@
                     <filename>Inventory-assets</filename>
                     <filename>UIIcons-assets</filename>
                     <filename>MouseCursors-assets</filename>
+                    <filename>HUDButtons-assets</filename>
                 </array>
             </struct>
         </map>

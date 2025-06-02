@@ -63,7 +63,12 @@ namespace Remizione
 
             // Count
             if (MetaItem.Maximum > 1)
-                text += $" ({Count} / {MetaItem.Maximum})";
+            {
+                if (MetaItem.Maximum == 999)
+                    text += $" ({Count})";
+                else
+                    text += $" ({Count} / {MetaItem.Maximum})";
+            }
 
             // Durability state
             else if (MetaItem.Durability > 0)

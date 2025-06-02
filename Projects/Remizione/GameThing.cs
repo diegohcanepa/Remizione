@@ -748,6 +748,10 @@ namespace Remizione
         // GetVerbs
         public Verb[]? GetVerbs() => verbList?.ToArray();
 
+        // Gold
+        [ScriptProperty]
+        public int Gold { get; set; }
+
         // HotspotArea
         [ScriptProperty]
         public Rectangle HotspotArea { get; set; }

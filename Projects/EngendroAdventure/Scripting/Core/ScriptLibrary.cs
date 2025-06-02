@@ -263,6 +263,13 @@ namespace EngendroAdventure.Scripting
             return GetScript(ScriptType.Routine, name);
         }
 
+        // IsDeclared
+        public bool IsDeclared(string entityStaticName)
+        {
+            CodeContract.NotEmpty(entityStaticName, nameof(entityStaticName));
+            return declarations.ContainsKey(entityStaticName);
+        }   
+
         // Path
         public string Path { get; }
 

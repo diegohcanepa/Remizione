@@ -48,9 +48,7 @@ namespace EngendroAdventure.Scripting
             ParseHeader(line, out var name, out var signature);
 
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(signature))
-            {
                 throw new InvalidOperationException("Invalid script header.");
-            }
 
             this.Name = name;
             this.Signature = signature;

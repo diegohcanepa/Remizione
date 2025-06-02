@@ -3,6 +3,8 @@
   <String Key="Actor.Unredeemed">Unredeemed</String>
   <String Key="ActorProperty.Ashes.Description">The ashes quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Ashes.Name">Ashes</String>
+  <String Key="ActorProperty.Gold.Description">Gold ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
+  <String Key="ActorProperty.Gold.Name">Gold</String>
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Level.Name">State of Grace</String>
   <String Key="CombatOption.Attack">Attack</String>
@@ -40,10 +42,12 @@
   <String Key="Item.BareHands.Name">Outburst</String>
   <String Key="Item.BlessedTinder.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.BlessedTinder.Name">Blessed tinder</String>
-  <String Key="Item.CrateFragment.Description"></String>
+  <String Key="Item.CrateFragment.Description" />
   <String Key="Item.CrateFragment.Name">Crate fragment</String>
   <String Key="Item.CrownOfThorns.Description">The crown of thorns makes you regain faith in exchange for physical punishment.</String>
   <String Key="Item.CrownOfThorns.Name">Crown of thorns</String>
+  <String Key="Item.Gold.Description">A handful of gold dust.</String>
+  <String Key="Item.Gold.Name">Gold dust</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
   <String Key="Item.StoneAxe.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
@@ -61,6 +65,7 @@
   <String Key="Languages.es-es">Español (España)</String>
   <String Key="Languages.fr-fr">Français</String>
   <String Key="Languages.ru-ru">Русский</String>
+  <String Key="LogMessage.CannotPlaceItem">There is not enough space on the ground.</String>
   <String Key="LogMessage.EnoughOfThat">You already have enough of that.</String>
   <String Key="LogMessage.InventoryFull">You cannot carry more items.</String>
   <String Key="LogVerb.Discarded">Discarded</String>

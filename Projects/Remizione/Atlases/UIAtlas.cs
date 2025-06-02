@@ -11,7 +11,6 @@ namespace Remizione
         public UIAtlas(EngendroGame game)
             : base(game.Content, "UI", ContentHelper.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
-            BagIcon = this[nameof(BagIcon)];
             BottomGradient = this[nameof(BottomGradient)];
             CharacterSheetContainer = this[nameof(CharacterSheetContainer)];
             CharacterSheetStatContainer = this[nameof(CharacterSheetStatContainer)];
@@ -20,6 +19,7 @@ namespace Remizione
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
             FaithIcon = this[nameof(FaithIcon)];
+            InventoryIcon = this[nameof(InventoryIcon)];
             InventorySlot = this[nameof(InventorySlot)];
             InventorySlotSelection = this[nameof(InventorySlotSelection)];
             ItemMenuContainer = this[nameof(ItemMenuContainer)];
@@ -47,9 +47,6 @@ namespace Remizione
             UIControlShade = this[nameof(UIControlShade)];
             UnreadSign = this[nameof(UnreadSign)];
         }
-
-        // BagIcon
-        public AtlasImage BagIcon { get; }
 
         // BottomGradient
         public AtlasImage BottomGradient { get; }
@@ -86,6 +83,9 @@ namespace Remizione
 
         // FaithIcon
         public AtlasImage FaithIcon { get; }
+
+        // InventoryIcon
+        public AtlasImage InventoryIcon { get; }
 
         // MessageContainer
         public AtlasImage MessageContainer { get; }

@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Engendro.Audio;
-using EngendroAdventure;
 using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -66,12 +65,11 @@ namespace Remizione
             if (Session.IsNewSession)
             {
                 WorldManager.BeginUpdate();
-                var origin = WorldManager.AddBlock(new(WorldManager.GridSize / 2), Session.WorldVersion);
-
-                origin.Expand(EngendroAdventure.Direction.Up);
-                origin.Expand(EngendroAdventure.Direction.Down);
-                origin.Expand(EngendroAdventure.Direction.Left);
-                origin.Expand(EngendroAdventure.Direction.Right);
+                var origin = WorldManager.AddBlock(new(WorldManager.GridSize / 2), Session.WorldVersion, FirstBlockReservedSpace);
+                //origin.Expand(EngendroAdventure.Direction.Up);
+                //origin.Expand(EngendroAdventure.Direction.Down);
+                //origin.Expand(EngendroAdventure.Direction.Left);
+                //origin.Expand(EngendroAdventure.Direction.Right);
                 WorldManager.EndUpdate();
                 Regenerate();
             }
@@ -87,37 +85,6 @@ namespace Remizione
 
             Regenerate();
         }
-
-        // OnLoad
-        protected override void OnLoad()
-        {
-            base.OnLoad();
-
-            if (Session.Player != null)
-            {
-                Children.Add(Session.Player);
-                Session.Player.Position = WorldManager.Blocks[0].BoundingBox.Center;
-                Session.Camera.FollowTarget(Session.Player);
-                Session.Camera.FocusTarget();
-                InvalidateCulledThings();
-                Session.Player.ClampToWalkablePosition();
-                Session.Camera.FocusTarget();
-            }
-        }
-
-        /*
-        // OnLoadCompleted
-        protected override void OnLoadCompleted()
-        {
-            base.OnLoadCompleted();
-
-            for (var i = 0; i < Children.Count; i++)
-            {
-                if (Children[i] is GameThing thing && !thing.IsStationary)
-                    thing.ClampToWalkablePosition();
-            }
-        }
-        */
 
         // OnRead
         protected override void OnRead(XmlAttributeCollection attributes)
@@ -170,6 +137,10 @@ namespace Remizione
 
             return false;
         }
+
+        // FirstBlockReservedSpace
+        [ScriptProperty]
+        public Rectangle FirstBlockReservedSpace { get; set; }
 
         // TerrainSound
         [ScriptProperty]

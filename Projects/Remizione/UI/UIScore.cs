@@ -26,7 +26,7 @@ namespace Remizione.UI
             this.scoreText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Terra,
-                Scale = ScaleInfo.Text.VeryLarge,
+                Scale = ScaleInfo.Text.Large,
             };
 
             // Title text
@@ -37,7 +37,21 @@ namespace Remizione.UI
                 Scale = ScaleInfo.Text.Large,
                 Text = title
             };
+
+            this.Score = 0;
+
+            isInitializing = true;
         }
+
+        #region Invalidate
+
+        // Invalidate
+        private void Invalidate()
+        {
+            scoreText.Position = titleText.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1);
+        }
+
+        #endregion
 
         #region Protected members
 
@@ -71,7 +85,7 @@ namespace Remizione.UI
         #endregion
 
         // BoundingBox
-        public RectangleF BoundingBox => scoreText.BoundingBox;
+        public RectangleF BoundingBox => RectangleF.Intersects(scoreText.BoundingBox, titleText.BoundingBox);
 
         // Color
         public Color Color
@@ -87,14 +101,25 @@ namespace Remizione.UI
         public RectanglePoint PivotOrigin
         {
             get => scoreText.PivotOrigin;
-            set => scoreText.PivotOrigin = value;
+            set
+            {
+                scoreText.PivotOrigin = value;
+                titleText.PivotOrigin = value;
+            }
         }
 
         // Position
         public Vector2 Position
         {
-            get => scoreText.Position;
-            set => scoreText.Position = value;
+            get => titleText.Position;
+            set
+            {
+                if (value != titleText.Position)
+                {
+                    titleText.Position = value;
+                    Invalidate();
+                }
+            }
         }
 
         // Score
@@ -103,7 +128,7 @@ namespace Remizione.UI
             get => score;
             set
             {
-                if (value != score)
+                if (value != score || isInitializing)
                 {
                     if (!isInitializing)
                         tween.Start(TweenStyle.Linear, score, value, duration);
@@ -111,7 +136,7 @@ namespace Remizione.UI
                     score = value;
                     scoreText.Text = score.ToString();
                     isInitializing = false;
-                    titleText.Position = scoreText.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -2);
+                    Invalidate();
                 }
             }
         }

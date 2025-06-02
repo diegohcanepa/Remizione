@@ -55,9 +55,6 @@ namespace Remizione
         Prayers
     }
 
-    // ItemKind
-    public enum ItemKind { Object, Gift }
-
     // ItemProperty
     public enum ItemProperty { BaseDamage, Passive }
 
@@ -68,7 +65,7 @@ namespace Remizione
     public enum LightState { Off, On, TurningOn, TurningOff }
 
     // LogMessage
-    public enum LogMessage { EnoughOfThat, InventoryFull }
+    public enum LogMessage { EnoughOfThat, InventoryFull, CannoPlaceItem }
 
     // LogVerb
     public enum LogVerb { Discarded, Lost, PickedUp, Restored }

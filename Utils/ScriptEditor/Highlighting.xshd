@@ -253,6 +253,7 @@
 			<Word>approach-to-target</Word>
 			<Word>approach</Word>
 			<Word>color-tween</Word>
+			<Word>goto-animation-frame</Word>
 			<Word>move</Word>
 			<Word>opacity-tween</Word>
 			<Word>play-animation</Word>

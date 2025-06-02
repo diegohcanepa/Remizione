@@ -25,8 +25,7 @@ namespace Remizione.UI
             // Name
             this.nameText = new TextSprite(menu.Game, menu.Font)
             {
-                MaximumWidth = (int)(menu.BoundingBox.Width * .9f),
-                Scale = ScaleInfo.Text.Medium,
+                MaximumWidth = (int)(menu.BoundingBox.Width * .9f)
             };
 
             if (menu.HorizontalAlignment == HorizontalAlignment.Center)
@@ -106,7 +105,7 @@ namespace Remizione.UI
         public void Invalidate()
         {
             nameText.Text = LinkedObject.ToString();
-            nameText.Scale = ScaleInfo.Text.Medium;
+            nameText.Scale = menu.TextScale;
         }
 
         // IsHovered

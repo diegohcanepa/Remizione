@@ -38,13 +38,6 @@ namespace EngendroAdventure.Scripting
 
         #region Private members
 
-        // CheckCodingContext
-        internal static void CheckCodingContext(string memberName, CodingContext context, ScriptType scriptType)
-        {
-            if (!IsValidCodingContext(context, scriptType))
-                throw new InvalidOperationException($"Coding context out of scope. The valid context for '{memberName}' is '{context}'.");
-        }
-
         // CreateDynamicThingCore
         private Thing? CreateDynamicThingCore(string staticName, string instanceName)
         {
@@ -171,6 +164,13 @@ namespace EngendroAdventure.Scripting
                     sessionMethods[method.Name] = method;
                 }
             }
+        }
+
+        // CheckCodingContext
+        internal static void CheckCodingContext(string memberName, CodingContext context, ScriptType scriptType)
+        {
+            if (!IsValidCodingContext(context, scriptType))
+                throw new InvalidOperationException($"Coding context out of scope. The valid context for '{memberName}' is '{context}'.");
         }
 
         // CreateDynamicThing

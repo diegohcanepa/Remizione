@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:6c8ac70d07c0360a5f9f96975e78baa7:cce245a15aceacbae6a90a445498e2a5:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:5cb405620a32c7a999a9a833ca3f668c:ef28b4cf4f175b5d3f13e8caf077b51e:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,18 +20,18 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="UI.png" width="1024" height="1024">
-    <sprite n="BagIcon.png" x="852" y="184" w="11" h="11"/>
     <sprite n="BottomGradient.png" x="750" y="31" w="240" h="43"/>
     <sprite n="ButtonContainer.png" x="56" y="178" w="44" h="13"/>
     <sprite n="CharacterSheetContainer.png" x="866" y="138" w="100" h="117"/>
     <sprite n="CharacterSheetStatContainer.png" x="750" y="310" w="88" h="10"/>
-    <sprite n="CheckMark.png" x="852" y="197" w="11" h="11"/>
+    <sprite n="CheckMark.png" x="852" y="198" w="11" h="11"/>
     <sprite n="CloseWindowButton.png" x="990" y="81" w="11" h="12"/>
     <sprite n="ContextMenuOptionSelector.png" x="982" y="89" w="4" h="5"/>
     <sprite n="CreditsBar.png" x="2" y="2" w="480" h="67"/>
     <sprite n="FaithIcon.png" x="988" y="95" w="13" h="13"/>
     <sprite n="GoalOrnament.png" x="750" y="303" w="94" h="5"/>
     <sprite n="InventoryGridContainer.png" x="750" y="76" w="114" h="106"/>
+    <sprite n="InventoryIcon.png" x="852" y="184" w="11" h="12"/>
     <sprite n="InventoryInfoContainer.png" x="852" y="257" w="99" h="106"/>
     <sprite n="InventorySlot.png" x="1003" y="2" w="18" h="18"/>
     <sprite n="InventorySlotSelection.png" x="1003" y="22" w="18" h="18"/>
@@ -73,9 +73,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PlayStationY.png" x="172" y="124" w="52" h="52"/>
     <sprite n="PopupContainer.png" x="484" y="2" w="264" h="311"/>
     <sprite n="PopupContainerShadow.png" x="866" y="76" w="114" h="60"/>
-    <sprite n="PrayerIcon.png" x="982" y="141" w="15" h="12"/>
+    <sprite n="PrayerIcon.png" x="852" y="224" w="10" h="12"/>
+    <sprite n="PrayIcon.png" x="982" y="141" w="15" h="12"/>
     <sprite n="ProhibitionIcon.png" x="1003" y="42" w="17" h="17"/>
-    <sprite n="ProhibitionMark.png" x="852" y="210" w="11" h="11"/>
+    <sprite n="ProhibitionMark.png" x="852" y="211" w="11" h="11"/>
     <sprite n="QuickSlot.png" x="982" y="124" w="15" h="15"/>
     <sprite n="QuickSlotShadow.png" x="999" y="131" w="15" h="15"/>
     <sprite n="SavingIcon.png" x="993" y="155" w="9" h="9"/>
