@@ -49,7 +49,7 @@ namespace EngendroAdventure.Scripting
             IsCreatingDynamicEntity = true;
 
             // Get declaration script from library
-            var declarationScript = session.ScriptLibrary.GetScript(ScriptType.Thing, staticName) ?? throw new InvalidOperationException($"There is no declaration script for '{staticName}'.");
+            var declarationScript = session.ScriptLibrary.GetScript(ScriptType.Thing, staticName) ?? throw new InvalidOperationException($"'{staticName}' cannot have dynamic instances. Use the Instantible keyword.");
 
             // Check if thing is instantiable
             if (!declarationScript.Instantiable)

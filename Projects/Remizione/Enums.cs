@@ -65,7 +65,7 @@ namespace Remizione
     public enum LightState { Off, On, TurningOn, TurningOff }
 
     // LogMessage
-    public enum LogMessage { EnoughOfThat, InventoryFull, CannoPlaceItem }
+    public enum LogMessage { CannoPlaceItem, EnoughOfThat, InventoryFull, NoInventoryBag } 
 
     // LogVerb
     public enum LogVerb { Discarded, Lost, PickedUp, Restored }
@@ -136,6 +136,9 @@ namespace Remizione
 
     // UIControlGroupLayoutStyle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
+
+    // UIToolbarButton
+    public enum UIToolbarButton { None, Inventory }
 
     // UpgradeHardness
     public enum UpgradeHardness { Easy, Normal, Hard }

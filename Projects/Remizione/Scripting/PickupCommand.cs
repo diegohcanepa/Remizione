@@ -26,6 +26,12 @@ namespace Remizione.Scripting
             if (MetaItem.Find(pickupItem.StaticName) is not MetaItem metaItem)
                 return;
 
+            if (!actor.Session.InventoryButton)
+            {
+                actor.Session.HUD.Log.Show(LogMessage.NoInventoryBag, true);
+                return;
+            }
+
             // Stackable item already in inventory
             if (metaItem.IsStackable && actor.Inventory.GetItem(metaItem.Name) is Item item)
             {

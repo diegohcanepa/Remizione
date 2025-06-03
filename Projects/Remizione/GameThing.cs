@@ -304,6 +304,13 @@ namespace Remizione
             InvalidateWalkArea();
         }
 
+        // OnParentChanged
+        protected override void OnParentChanged(Entity? previousParent)
+        {
+            if (!Session.IsInitializing && WorldBlockOrigin != null)
+                WorldBlockOrigin.Manager.RemovedThings.Add(this.Name);
+        }
+
         // OnTransform
         protected override void OnTransform(TransformChange change)
         {
@@ -353,6 +360,8 @@ namespace Remizione
                 ClampToWalkablePosition();
                 shouldClampToWalkablePosition = false;
             }
+
+            Light?.Update(gameTime);
         }
 
         // OnUpdateEmittingSound
@@ -992,6 +1001,9 @@ namespace Remizione
                 }
             }
         }
+
+        // WorldBlockOrigin
+        public WorldBlock? WorldBlockOrigin { get; set; }
 
         // WorldVersion
         [ScriptProperty]

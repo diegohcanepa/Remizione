@@ -33,7 +33,7 @@ namespace Remizione
 
             CommonOutline.SpriteFont = assets[CommonOutlineAssetName];
             CommonOutline.SpriteFont.LineSpacing += 2;
-            CommonOutline.SpriteFont.Spacing = -7;
+            CommonOutline.SpriteFont.Spacing = -3;
         }
 
         #endregion

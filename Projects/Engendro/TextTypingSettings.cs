@@ -18,6 +18,6 @@
         public static int SemicolonPauseDuration { get; set; } = 500;
 
         // TypingSpeed
-        public static int TypingSpeed { get; set; } = 10;
+        public static int TypingSpeed { get; set; } = 30;
     }
 }

@@ -179,14 +179,21 @@ namespace EngendroAdventure
         // GetDefaultImageName
         protected string GetDefaultImageName()
         {
-            const char separator = '-';
+            if (string.IsNullOrWhiteSpace(DefaultImageName))
+            {
+                const char separator = '-';
 
-            var result = StaticName;
-            var index = StaticName.LastIndexOf(separator);
-            if (index != -1)
-                result = StaticName.Substring(index + 1);
+                var result = StaticName;
+                var index = StaticName.LastIndexOf(separator);
+                if (index != -1)
+                    result = StaticName.Substring(index + 1);
 
-            return result;
+                return result;
+            }
+            else
+            {
+                return DefaultImageName;
+            }   
         }
 
         // MatchTransform
@@ -247,7 +254,7 @@ namespace EngendroAdventure
         }
 
         // OnParentChanged
-        protected virtual void OnParentChanged()
+        protected virtual void OnParentChanged(Entity? previousParent)
         {
         }
 
@@ -591,21 +598,20 @@ namespace EngendroAdventure
             {
                 if (value != parent)
                 {
+                    var previousParent = parent;
+
                     if (value != null)
                     {
                         if (!value.CanParent(this))
-                        {
                             throw new InvalidOperationException($"[{value.GetType().Name}] cannot parent [{GetType().Name}]");
-                        }
 
                         if (IsParentOf(value, this))
-                        {
                             throw new InvalidOperationException("Enities are not allowed to parent each other.");
-                        }
                     }
 
                     parent = value;
-                    OnParentChanged();
+                    
+                    OnParentChanged(previousParent);
                 }
             }
         }

@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Xml;
 
 namespace Remizione
 {
@@ -19,10 +18,10 @@ namespace Remizione
         private readonly ImageSprite[] borderImages;
         private readonly WorldBlockGrid decorationGrid;
         private readonly WorldBlockGrid mainGrid;
+        private readonly List<GameThing> proceduralThings = [];
         private readonly Random random;
         private readonly int randomSeed;
         private readonly List<WorldBlockTag> tags = [];
-        private readonly List<GameThing> things = [];
 
         #endregion
 
@@ -35,7 +34,7 @@ namespace Remizione
             this.WorldVersion = worldVersion;
             this.decorationGrid = new WorldBlockGrid("Decoration", manager.BlockSize);
             this.mainGrid = new WorldBlockGrid("Main", manager.BlockSize);
-            this.Things = new(things);
+            this.ProceduralThings = new(proceduralThings);
             this.Tags = new(tags);
 
             AssignTags();
@@ -59,7 +58,7 @@ namespace Remizione
                 Scale = new(10, 6)
             };
 
-            LightPosition = new(120, 70);
+            LightPosition = Screen.Center;
 
             borderImages = new ImageSprite[4];
 
@@ -112,8 +111,10 @@ namespace Remizione
         // CreateDynamicThing
         private GameThing CreateDynamicThing(string staticName)
         {
-            if (Session.CreateDynamicThing(staticName, $"{staticName}*{Index}_{things.Count}") is not GameThing result)
+            if (Session.CreateDynamicThing(staticName, $"{staticName}*{Index}_{proceduralThings.Count}") is not GameThing result)
                 throw new InvalidOperationException($"Failed to create dynamic thing '{staticName}'.");
+
+            result.WorldBlockOrigin = this;
 
             return result;
         }
@@ -247,7 +248,7 @@ namespace Remizione
             instance.Position = worldPosition + Position;
             instance.Y += instance.BoundingBox.Height;
             instance.X += instance.BoundingBox.Width / 2;
-            things.Add(instance);
+            proceduralThings.Add(instance);
         }
 
         // Populate
@@ -321,16 +322,6 @@ namespace Remizione
             borderImages[3].Position = BoundingBox.GetPoint(RectanglePoint.Left);
         }
 
-        // OnRead
-        protected override void OnRead(XmlAttributeCollection attributes)
-        {
-        }
-
-        // OnWrite
-        protected override void OnWrite(XmlWriter output)
-        {
-        }
-
         #endregion
 
         // Expand
@@ -394,11 +385,11 @@ namespace Remizione
         // Manager
         public WorldManager Manager { get; }
 
+        // ProceduralThings
+        public ReadOnlyCollection<GameThing> ProceduralThings { get; }
+
         // Tags
         public ReadOnlyCollection<WorldBlockTag> Tags { get; }
-
-        // Things
-        public ReadOnlyCollection<GameThing> Things { get; }
 
         // ToString
         public override string ToString() => $"{nameof(WorldBlock)} ({WorldGridPosition.X},{WorldGridPosition.Y})";

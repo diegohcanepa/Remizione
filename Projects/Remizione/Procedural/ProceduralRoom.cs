@@ -43,9 +43,11 @@ namespace Remizione
             for (var i = 0; i < WorldManager.Blocks.Count; i++)
             {
                 Children.Add(WorldManager.Blocks[i]);
-                foreach (var prop in WorldManager.Blocks[i].Things)
+                
+                foreach (var thing in WorldManager.Blocks[i].ProceduralThings)
                 {
-                    Children.Add(prop);
+                    if (!WorldManager.RemovedThings.Contains(thing.Name))
+                        Children.Add(thing);
                 }
             }
 
@@ -65,13 +67,16 @@ namespace Remizione
             if (Session.IsNewSession)
             {
                 WorldManager.BeginUpdate();
-                var origin = WorldManager.AddBlock(new(WorldManager.GridSize / 2), Session.WorldVersion, FirstBlockReservedSpace);
-                //origin.Expand(EngendroAdventure.Direction.Up);
-                //origin.Expand(EngendroAdventure.Direction.Down);
-                //origin.Expand(EngendroAdventure.Direction.Left);
-                //origin.Expand(EngendroAdventure.Direction.Right);
+                var initialBlock = WorldManager.AddBlock(new(WorldManager.GridSize / 2), Session.WorldVersion, FirstBlockReservedSpace);
+
+                if (initialBlock.Light != null)
+                {
+                    initialBlock.LightPosition = new Vector2(120,50);
+                    initialBlock.Light.Scale = new(3);
+                }
+
+                //initialBlock.Expand(EngendroAdventure.Direction.Right);
                 WorldManager.EndUpdate();
-                Regenerate();
             }
             else
             {
@@ -99,6 +104,15 @@ namespace Remizione
                     var blockData = item.Split(':');
                     var gridPosition = XmlConverterExtension.ToPoint(blockData[0]);
                     var worldVersion = int.Parse(blockData[1]);
+                    var removedNames = blockData[2].Split(',');
+                    if (removedNames.Length > 0 && removedNames[0] != "[none]")
+                    {
+                        for (var i = 0; i < removedNames.Length; i++)
+                        {
+                            WorldManager.RemovedThings.Add(removedNames[i]);
+                        }
+                    }
+
                     worldBlockData.Add((gridPosition, worldVersion));
                 }
             }
@@ -111,7 +125,11 @@ namespace Remizione
 
             foreach (var block in WorldManager.Blocks)
             {
-                var value = $"{block.WorldGridPosition.X},{block.WorldGridPosition.Y}:{block.WorldVersion}";
+                var removeThings = string.Join(",", WorldManager.RemovedThings);
+                if (string.IsNullOrWhiteSpace(removeThings))
+                    removeThings = "[none]";
+
+                var value = $"{block.WorldGridPosition.X},{block.WorldGridPosition.Y}:{block.WorldVersion}:{removeThings}";
                 blockData.Add(value);
             }
 
@@ -141,6 +159,13 @@ namespace Remizione
         // FirstBlockReservedSpace
         [ScriptProperty]
         public Rectangle FirstBlockReservedSpace { get; set; }
+
+        // ScaleFirstBlockLight
+        [ScriptMethod]
+        public void ScaleFirstBlockLight()
+        {
+            WorldManager.Blocks[0].Light?.ScaleTo(TweenStyle.Linear, new Vector2(11, 6), 15000);
+        }
 
         // TerrainSound
         [ScriptProperty]

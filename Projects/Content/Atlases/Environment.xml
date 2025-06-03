@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:7219710ca45bf2dc102e0c6b1940e84a:eaadafbc2020ffdd5849b218f4b14f38:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:8d11ac4a66e1fbc832154c4497ed2c18:909eebf808df3ba8788ff56b7f7aac5d:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -51,6 +51,8 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="FireflyParticle2.png" x="459" y="107" w="5" h="5"/>
     <sprite n="FlatStonesA.png" x="415" y="99" w="42" h="26"/>
     <sprite n="FlatStonesB.png" x="364" y="99" w="49" h="32"/>
+    <sprite n="InventoryBag.png" x="502" y="87" w="8" h="8"/>
+    <sprite n="InventoryBagShadow.png" x="502" y="97" w="8" h="8"/>
     <sprite n="LargeRockA.png" x="369" y="2" w="54" h="42"/>
     <sprite n="LargeRockAShadow.png" x="425" y="2" w="54" h="42"/>
     <sprite n="LargeRockB.png" x="369" y="46" w="49" h="51"/>

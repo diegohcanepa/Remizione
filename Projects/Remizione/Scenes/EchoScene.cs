@@ -10,6 +10,7 @@ namespace Remizione
     /// </summary>
     public sealed class EchoScene : Scene
     {
+        private readonly ImageSprite gradient;
         private readonly FloatTween opacityTween = new();
         private readonly TextSprite textSprite;
 
@@ -19,14 +20,20 @@ namespace Remizione
         public EchoScene(RemizioneGame game)
             : base(game, SceneSettings.None)
         {
-            this.textSprite = new TextSprite(Game, Fonts.Common)
+            this.textSprite = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Default,
+                Color = ColorPalette.Text.TerraLight,
                 MaximumWidth = (int)(Screen.NativeWidth * .7f),
                 PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -10),
+                Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -15),
                 Scale = ScaleInfo.Text.VeryLarge
+            };
+
+            this.gradient = new(game, Atlases.UI.BottomGradient)
+            {
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.Area.GetPoint(RectanglePoint.Bottom)
             };
         }
 
@@ -43,7 +50,10 @@ namespace Remizione
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() ||
                 InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
-                SceneController.Pop();
+                if (textSprite.IsTyping)
+                    textSprite.StopTyping();
+                else
+                    SceneController.Pop();
                 return true;
             }
 
@@ -58,6 +68,7 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            gradient.Draw(gameTime);
             textSprite.Draw(gameTime);
             Game.SpriteBatch.End();
         }

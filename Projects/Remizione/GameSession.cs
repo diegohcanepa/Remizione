@@ -9,6 +9,7 @@ using Remizione.Scripting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Xml;
 
 namespace Remizione
@@ -29,6 +30,7 @@ namespace Remizione
         private readonly GiftsScene giftsScene;
         private bool inGameMenuLocked;
         private readonly InGameMenuScene inGameMenuScene;
+        private bool inventoryButton;
         private readonly InventoryScene inventoryScene;
         private readonly LootScene lootScene;
         private Actor? player;
@@ -50,6 +52,7 @@ namespace Remizione
             this.HUD = new HUD(this);
             this.Environment = new Environment(this);
             this.RandomSeed = 10000;// RandomSeed = System.Environment.TickCount;
+            this.RandomSeed = System.Environment.TickCount;
             this.CombatManager = new CombatManager(this);
 
             ObjectPools = new ObjectPools(this);
@@ -122,7 +125,7 @@ namespace Remizione
             }
 
             // Arrow
-            if (HUD.IsMouseOverButton())
+            if (HUD.IsMouseOverToolbarButton())
             {
                 MouseCursor.Instance.State = MouseCursorState.Arrow;
                 return;
@@ -304,6 +307,10 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(FullHUD)]?.Value is string fullHUDValue)
                 FullHUD = XmlConvert.ToBoolean(fullHUDValue);
 
+            // InventoryButton
+            if (sessionNode.Attributes[nameof(InventoryButton)]?.Value is string inventoryButtonValue)
+                InventoryButton = XmlConvert.ToBoolean(inventoryButtonValue);
+
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
                 Player = GetEntity<Actor>(player);
@@ -409,6 +416,9 @@ namespace Remizione
             // FullHUD
             output.WriteAttributeString(nameof(FullHUD), XmlConvert.ToString(FullHUD));
 
+            // InventoryButton
+            output.WriteAttributeString(nameof(InventoryButton), XmlConvert.ToString(InventoryButton));
+
             // NextRainCooldown
             output.WriteAttributeString(nameof(NextRainCooldown), XmlConvert.ToString(NextRainCooldown));
 
@@ -484,6 +494,21 @@ namespace Remizione
 
         // HUD
         public HUD HUD { get; }
+
+        // InventoryButton
+        [ScriptProperty]
+        public bool InventoryButton
+        {
+            get => inventoryButton;
+            set
+            {
+                if (value != inventoryButton)
+                {
+                    inventoryButton = value;
+                    HUD.InvalidateToolbar();
+                }
+            }
+        }
 
         // LightingSystem
         [ScriptProperty]

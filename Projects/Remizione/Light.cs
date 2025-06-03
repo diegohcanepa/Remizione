@@ -183,12 +183,6 @@ namespace Remizione
             }
         }
 
-        // CurrentColor
-        public Color CurrentColor => lightSprite.Color;
-
-        // CurrentScale
-        public Vector2 CurrentScale => lightSprite.Scale;
-
         // Flash
         public void Flash() => Flash(66, 6);
 
@@ -274,6 +268,12 @@ namespace Remizione
                     Invalidate();
                 }
             }
+        }
+
+        // ScaleTo
+        public void ScaleTo(TweenStyle style,  Vector2 value, int duration)
+        {
+            lightSprite.Tweens.ScaleTween = Vector2Tween.Create(style, lightSprite.Scale, value, duration);
         }
 
         // ToString

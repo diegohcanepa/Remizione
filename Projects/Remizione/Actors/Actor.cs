@@ -214,9 +214,9 @@ namespace Remizione
 
             if (room.WorldManager.GetBlockFromScreen(Position) is WorldBlock worldBlock)
             {
-                for (var i = 0; i < worldBlock.Things.Count; i++)
+                for (var i = 0; i < worldBlock.ProceduralThings.Count; i++)
                 {
-                    if (worldBlock.Things[i] is Prop prop && prop.GetFootstepSound(Position) is Sound sound)
+                    if (worldBlock.ProceduralThings[i] is Prop prop && prop.GetFootstepSound(Position) is Sound sound)
                     {
                         footstepSoundInstance = PlaySound(sound);
                         return;

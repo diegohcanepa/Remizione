@@ -68,6 +68,7 @@
   <String Key="LogMessage.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
   <String Key="LogMessage.EnoughOfThat">Ya tienes suficiente.</String>
   <String Key="LogMessage.InventoryFull">No puedes llevar más objetos.</String>
+  <String Key="LogMessage.NoInventoryBag">No tienes donde guardar cosas.</String>
   <String Key="LogVerb.Discarded">Descartaste</String>
   <String Key="LogVerb.Lost">Perdiste</String>
   <String Key="LogVerb.PickedUp">Recogiste</String>

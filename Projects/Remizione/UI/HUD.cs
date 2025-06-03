@@ -15,13 +15,12 @@ namespace Remizione
         #region Private fields
 
         private readonly UIScore ashes;
-        private readonly HUDButton inventoryButton;
         private readonly UIDerivedStats playerStats;
-        private readonly HUDButton prayerButton;
         private readonly ImageSprite savingIcon;
         private readonly TextSprite sentence;
         private readonly GameSession session;
         private readonly TextSprite statusText;
+        private readonly UIToolbar toolbar;
 
         #endregion
 
@@ -59,7 +58,7 @@ namespace Remizione
             // Sentence
             this.sentence = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.TerraLight,
+                Color = ColorPalette.Text.Terra,
                 MaximumWidth = (int)(Screen.NativeWidth * .8f),
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.SafeArea.GetPoint(RectanglePoint.Bottom, 0, -4),
@@ -75,17 +74,8 @@ namespace Remizione
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
-            // Prayer button
-            this.prayerButton = new HUDButton(Game, "PrayerIcon", Localization.GetValue(InGameMenuOptionName.Prayers))
-            {
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.LeftBottom, 4, -4),
-            };
-
-            // Inventory button
-            this.inventoryButton = new HUDButton(Game, "InventoryIcon", Localization.GetValue(InGameMenuOptionName.Inventory))
-            {
-                Position = prayerButton.BoundingBox.GetPoint(RectanglePoint.RightBottom),
-            };
+            // Toolbar
+            toolbar = new UIToolbar(session);
         }
 
         #endregion
@@ -119,17 +109,6 @@ namespace Remizione
         // UpdateSentence
         private void UpdateSentence()
         {
-            if (IsMouseOverButton() && session.Player != null)
-            {
-                if (inventoryButton.IsMouseOver)
-                    sentence.Text = session.Player.Inventory.ToString();
-
-                else if (prayerButton.IsMouseOver)
-                    sentence.Text = session.Player.Prayers.ToString();
-
-                return;
-            }
-
             if (session.IsCurrentScene && MouseCursor.Instance.State != MouseCursorState.Wait &&
                 session.Player?.InteractiveTarget is GameThing target &&
                 (!session.TargetMode || target.CanBeTargeted))
@@ -169,10 +148,7 @@ namespace Remizione
             {
                 ashes.Draw(gameTime);
                 if (session.IsCurrentScene)
-                {
-                    prayerButton.Draw(gameTime);
-                    inventoryButton.Draw(gameTime);
-                }
+                    toolbar.Draw(gameTime);
             }
 
             Log.Draw(gameTime);
@@ -189,9 +165,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             playerStats.Update(gameTime);
-
-            inventoryButton.Update(gameTime);
-            prayerButton.Update(gameTime);
+            toolbar.Update(gameTime);
 
             UpdateSentence();
             statusText.Update(gameTime);
@@ -215,26 +189,17 @@ namespace Remizione
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
-            if (inventoryButton.TestPressed(0))
-            {
-                session.ShowItemContainerScene(ItemContainerCategory.Inventory);
+            if (toolbar.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
-            }
-
-            if (prayerButton.TestPressed(0))
-            {
-                session.ShowItemContainerScene(ItemContainerCategory.Prayers);
-                return HandleInputResult.Handled;
-            }
 
             return HandleInputResult.Unhandled;
         }
 
-        // IsMouseOverButton
-        public bool IsMouseOverButton()
-        {
-            return inventoryButton.IsMouseOver || prayerButton.IsMouseOver;
-        }
+        // InvalidateToolbar
+        public void InvalidateToolbar() => toolbar.Invalidate();
+
+        // IsMouseOverToolbarButton
+        public bool IsMouseOverToolbarButton() => toolbar.GetHoveredButton() != UIToolbarButton.None;
 
         // Log
         public UILog Log { get; }
