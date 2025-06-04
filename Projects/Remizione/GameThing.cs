@@ -308,7 +308,7 @@ namespace Remizione
         protected override void OnParentChanged(Entity? previousParent)
         {
             if (!Session.IsInitializing && WorldBlockOrigin != null)
-                WorldBlockOrigin.Manager.RemovedThings.Add(this.Name);
+                StateID = -1;
         }
 
         // OnTransform
@@ -955,6 +955,9 @@ namespace Remizione
 
         // Session
         public new GameSession Session { get; }
+
+        // StateID
+        public int StateID { get; set; }
 
         // TakeDamage
         public void TakeDamage(GameThing attacker, int amount, HitType hitType, Vector2 knockback)

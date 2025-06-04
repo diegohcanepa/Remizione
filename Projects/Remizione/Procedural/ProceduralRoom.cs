@@ -13,7 +13,7 @@ namespace Remizione
     public sealed class ProceduralRoom : GameRoom
     {
         private enum AttributeName { WorldBlocks };
-        private readonly List<(Point gridPosition, int worldVersion)> worldBlockData = [];
+        private readonly List<(Point gridPosition, int worldVersion, Dictionary<string, int> states)> worldBlockData = [];
 
         // Constructor
         public ProceduralRoom(GameSession session, string name)
@@ -46,7 +46,7 @@ namespace Remizione
                 
                 foreach (var thing in WorldManager.Blocks[i].ProceduralThings)
                 {
-                    if (!WorldManager.RemovedThings.Contains(thing.Name))
+                    if (thing.StateID >= 0)
                         Children.Add(thing);
                 }
             }
@@ -64,29 +64,37 @@ namespace Remizione
         {
             base.OnInitialize();
 
+            WorldManager.BeginUpdate();
             if (Session.IsNewSession)
             {
-                WorldManager.BeginUpdate();
                 var initialBlock = WorldManager.AddBlock(new(WorldManager.GridSize / 2), Session.WorldVersion, FirstBlockReservedSpace);
-
                 if (initialBlock.Light != null)
                 {
                     initialBlock.LightPosition = new Vector2(120,50);
                     initialBlock.Light.Scale = new(3);
                 }
-
-                //initialBlock.Expand(EngendroAdventure.Direction.Right);
-                WorldManager.EndUpdate();
             }
             else
             {
-                WorldManager.BeginUpdate();
                 for (var i = 0; i < worldBlockData.Count; i++)
                 {
                     WorldManager.AddBlock(worldBlockData[i].gridPosition, worldBlockData[i].worldVersion);
+
+                    foreach (var keyValue in worldBlockData[i].states)
+                    {
+                        var thing = Session.GetEntity<GameThing>(keyValue.Key);
+                        if (thing != null)
+                        {
+                            thing.StateID = keyValue.Value;
+                            if (thing.StateID < 0)
+                                thing.Unparent();
+                        }
+                    }
                 }
-                WorldManager.EndUpdate();
+
+                worldBlockData.Clear();
             }
+            WorldManager.EndUpdate();
 
             Regenerate();
         }
@@ -104,16 +112,16 @@ namespace Remizione
                     var blockData = item.Split(':');
                     var gridPosition = XmlConverterExtension.ToPoint(blockData[0]);
                     var worldVersion = int.Parse(blockData[1]);
-                    var removedNames = blockData[2].Split(',');
-                    if (removedNames.Length > 0 && removedNames[0] != "[none]")
+                    var thingStates = new Dictionary<string, int>();
+
+                    var states = blockData[2].Split(',');
+                    foreach (var state in states)
                     {
-                        for (var i = 0; i < removedNames.Length; i++)
-                        {
-                            WorldManager.RemovedThings.Add(removedNames[i]);
-                        }
+                        var values = state.Split('=');
+                        thingStates[values[0]] = int.Parse(values[1]);
                     }
 
-                    worldBlockData.Add((gridPosition, worldVersion));
+                    worldBlockData.Add((gridPosition, worldVersion, thingStates));
                 }
             }
         }
@@ -121,20 +129,25 @@ namespace Remizione
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
-            var blockData = new List<string>();
+            var data = new List<string>();
+            var stateData = new List<string>();
 
             foreach (var block in WorldManager.Blocks)
             {
-                var removeThings = string.Join(",", WorldManager.RemovedThings);
-                if (string.IsNullOrWhiteSpace(removeThings))
-                    removeThings = "[none]";
+                // Collect state data for procedural things in block
+                stateData.Clear();
+                foreach (var thing in block.ProceduralThings)
+                {
+                    if (thing.StateID != 0)
+                        stateData.Add($"{thing.Name}={thing.StateID}");
+                }
 
-                var value = $"{block.WorldGridPosition.X},{block.WorldGridPosition.Y}:{block.WorldVersion}:{removeThings}";
-                blockData.Add(value);
+                var stateDataValue = stateData.Count == 0 ? "[none]" : string.Join(",", stateData);
+                var value = $"{block.WorldGridPosition.X},{block.WorldGridPosition.Y}:{block.WorldVersion}:{stateDataValue}";
+                data.Add(value);
             }
 
-            var attrValue = string.Join(";", blockData);
-
+            var attrValue = string.Join(";", data);
             output.WriteAttributeString(AttributeName.WorldBlocks.ToString(), attrValue);
         }
 

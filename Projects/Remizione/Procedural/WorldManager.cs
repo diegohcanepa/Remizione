@@ -302,9 +302,6 @@ namespace Remizione
         // GridSize
         public int GridSize { get; }
 
-        // RemovedThings
-        public HashSet<string> RemovedThings { get; } = new();
-
         // Session
         public GameSession Session { get; }
     }
