@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Xml;
 
 namespace Remizione
 {
@@ -311,6 +312,16 @@ namespace Remizione
                 StateID = -1;
         }
 
+        // OnRead
+        protected override void OnRead(XmlAttributeCollection attributes)
+        {
+            // Inventory
+            if (attributes[ItemContainerCategory.Inventory.ToString()]?.Value is string inventoryData)
+            {
+                Inventory.SetSerializationData(inventoryData);
+            }
+        }
+
         // OnTransform
         protected override void OnTransform(TransformChange change)
         {
@@ -397,6 +408,12 @@ namespace Remizione
 
             instance.Pan = pan;
             instance.Volume.Current = volume * masterVolume;
+        }
+
+        // OnWrite
+        protected override void OnWrite(XmlWriter output)
+        {
+            output.WriteAttributeString(ItemContainerCategory.Inventory.ToString(), Inventory.GetSerializationData());
         }
 
         #endregion

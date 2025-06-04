@@ -404,8 +404,6 @@ namespace Remizione
         {
             combatStateMachine.Update(gameTime);
 
-            Inventory.Update(gameTime);
-
             UpdateFaithRecovery(gameTime);
             UpdateFloatingMessage(gameTime);
             StateMachine.Update(gameTime);

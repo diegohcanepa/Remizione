@@ -8,7 +8,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 2, ActionArg, BonusArg, CategoryArg, CreationRoutineArg, DamageArg, DegradationIntervalArg, DurabilityArg, FaithArg, HPArg, KnockbackArg, MaximumArg, ModifierArg, PassiveArg, RangeArg, SoundArg, UpgradeHardnessArg, UseIntervalArg)
+            : base(script, source, body, 2, ActionArg, BonusArg, CategoryArg, CreationRoutineArg, DamageArg, DurabilityArg, FaithArg, HPArg, KnockbackArg, MaximumArg, ModifierArg, PassiveArg, RangeArg, SoundArg, UseIntervalArg)
         {
             var name = Parser.ParseName(this, 0);
             var category = Parser.ParseEnum<ItemContainerCategory>(this, 1);
@@ -17,7 +17,6 @@ namespace Remizione.Scripting
             var baseDamage = Parser.ParseDiceExpressionArgument(this, DamageArg) ?? null;
             var creationRoutine = Parser.ParseRoutineArgument(this, CreationRoutineArg);
             var durability = Parser.ParseInt32Argument(this, DurabilityArg, -1);
-            var degradationInterval = Parser.ParseInt32Argument(this, DegradationIntervalArg);
             var knockback = Parser.ParseVector2Argument(this, KnockbackArg);
             var maximum = Parser.ParseInt32Argument(this, MaximumArg);
             var modifier = Parser.ParseEnumArgument(this, ModifierArg, Stat.Strength);
@@ -26,10 +25,9 @@ namespace Remizione.Scripting
             var passive = HasArg(PassiveArg);
             var range = Parser.ParseInt32Argument(this, RangeArg);
             var sound = Parser.ParseSoundArgument(this, SoundArg);
-            var upgradeHardness = Parser.ParseEnumArgument<UpgradeHardness>(this, UpgradeHardnessArg);
             var useInterval = Parser.ParseInt32Argument(this, UseIntervalArg);
 
-            new MetaItem(name, category, action, passive, baseDamage, modifier, bonus, knockback, maximum, hp, fp, range, durability, degradationInterval, upgradeHardness, sound, useInterval, creationRoutine);
+            new MetaItem(name, category, action, passive, baseDamage, modifier, bonus, knockback, maximum, hp, fp, range, durability, sound, useInterval, creationRoutine);
         }
     }
 }

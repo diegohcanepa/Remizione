@@ -140,9 +140,6 @@ namespace Remizione
     // UIToolbarButton
     public enum UIToolbarButton { None, Inventory }
 
-    // UpgradeHardness
-    public enum UpgradeHardness { Easy, Normal, Hard }
-
     // Verb
     public enum Verb { Examine, Insult, Talk, Trade, UseItem }
 

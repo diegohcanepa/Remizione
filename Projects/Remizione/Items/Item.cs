@@ -27,25 +27,12 @@ namespace Remizione
         {
             this.Container = container;
             this.MetaItem = metaItem;
-            this.DegradationCooldown = metaItem.DegradationInterval;
             this.UseCooldown = metaItem.UseInterval;
         }
 
         #endregion
 
         #region Private members
-
-        // GetUgradeParams
-        private static (double baseCost, double growthRate, double powerFactor) GetUpgradeParams(UpgradeHardness hardness)
-        {
-            return hardness switch
-            {
-                UpgradeHardness.Easy => (8, 1.3, 1.0),
-                UpgradeHardness.Normal => (10, 1.5, 1.2),
-                UpgradeHardness.Hard => (12, 1.8, 1.4),
-                _ => throw new ArgumentOutOfRangeException(nameof(hardness), "Unknown hardness value")
-            };
-        }
 
         // InvalidateDisplayText
         private void InvalidateDisplayText()
@@ -148,9 +135,6 @@ namespace Remizione
             }
         }
 
-        // DegradationCooldown
-        public int DegradationCooldown { get; set; }
-
         // DisplayText
         public string DisplayText
         {
@@ -204,15 +188,6 @@ namespace Remizione
             }
 
             return string.Join(" / ", values);
-        }
-
-        // GetUpgradeCost
-        public int GetUpgradeCost()
-        {
-            var (baseCost, growthRate, powerFactor) = GetUpgradeParams(UpgradeHardness);
-            double cost = baseCost * Math.Pow(Level, growthRate) * powerFactor;
-
-            return (int)Math.Ceiling(cost);
         }
 
         // IsStackFull
@@ -270,16 +245,6 @@ namespace Remizione
         // Update
         public void Update(GameTime gameTime)
         {
-            if (MetaItem.DegradationInterval > 0)
-            {
-                DegradationCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                if (DegradationCooldown <= 0)
-                {
-                    DegradationCooldown = MetaItem.DegradationInterval;
-                    Durability--;
-                }
-            }
-
             if (MetaItem.UseInterval > 0)
             {
                 UseCooldown -= gameTime.ElapsedGameTime.Milliseconds;
@@ -292,7 +257,7 @@ namespace Remizione
         }
 
         // Range
-        public int Range { get; }
+        public int Range => MetaItem.Range;
 
         // Replenish
         public void Replenish()
@@ -306,9 +271,6 @@ namespace Remizione
 
         // Unread
         public bool Unread { get; set; }
-
-        // UpgradeHardness
-        public UpgradeHardness UpgradeHardness => MetaItem.UpgradeHardness;
 
         // Use
         public bool Use()

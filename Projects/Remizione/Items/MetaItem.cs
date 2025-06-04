@@ -17,7 +17,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(string name, ItemContainerCategory category, ItemAction action, bool passive, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, int degradationInterval, UpgradeHardness upgradeHardness, Sound? sound, int useInterval, Script? creationRoutine)
+        public MetaItem(string name, ItemContainerCategory category, ItemAction action, bool passive, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, Sound? sound, int useInterval, Script? creationRoutine)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -43,7 +43,6 @@ namespace Remizione
             this.Passive = passive;
             this.BaseDamage = baseDamage;
             this.Durability = durability;
-            this.DegradationInterval = degradationInterval;
             this.Knockback = knockback;
             this.Maximum = Math.Max(1, maximum);
             this.Faith = faith;
@@ -52,7 +51,6 @@ namespace Remizione
             this.Modifier = modifier;
             this.LocalizedDescription = Localization.GetItemDescription(this);
             this.LocalizedName = Localization.GetItemName(this);
-            this.UpgradeHardness = upgradeHardness;
             this.Sound = sound;
             this.UseInterval = useInterval;
         }
@@ -80,9 +78,6 @@ namespace Remizione
 
         // CreationRoutine
         public Script? CreationRoutine { get; }
-
-        // DegradationInterval
-        public int DegradationInterval { get; }
 
         // Durability
         public int Durability { get; set; }
@@ -125,9 +120,6 @@ namespace Remizione
 
         // ToString
         public override string ToString() => Name;
-
-        // UpgradeHardness
-        public UpgradeHardness UpgradeHardness { get; }
 
         // UseInterval
         public int UseInterval { get; }

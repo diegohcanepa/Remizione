@@ -189,17 +189,19 @@ namespace Remizione
                 var p2 = segments[s].Item2;
 
                 if (!adj.ContainsKey(p1))
-                    adj[p1] = new List<Vector2>();
+                    adj[p1] = [];
 
                 if (!adj.ContainsKey(p2))
-                    adj[p2] = new List<Vector2>();
+                    adj[p2] = [];
 
                 adj[p1].Add(p2);
                 adj[p2].Add(p1);
             }
 
             // Step 5: Trace the polygon
-            if (adj.Count == 0) return new List<Vector2>();
+            if (adj.Count == 0)
+                return [];
+
             Vector2 start = new(float.MaxValue, float.MaxValue);
             foreach (var p in adj.Keys)
             {

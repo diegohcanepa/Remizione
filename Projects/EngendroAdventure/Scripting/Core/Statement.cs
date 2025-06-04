@@ -28,7 +28,6 @@ namespace EngendroAdventure.Scripting
         protected static readonly string CyclesArg = "#cycles";
         protected static readonly string DamageArg = "#damage";
         protected static readonly string DecimalsArg = "#decimals";
-        protected static readonly string DegradationIntervalArg = "#degradation-interval";
         protected static readonly string DelayArg = "#delay";
         protected static readonly string DepthOffsetArg = "#depth-offset";
         protected static readonly string DisableArg = "#disable";
@@ -96,7 +95,6 @@ namespace EngendroAdventure.Scripting
         protected static readonly string TransitionAwareArg = "#transition-aware";
         protected static readonly string TweenArg = "#tween";
         protected static readonly string UnparentArg = "#unparent";
-        protected static readonly string UpgradeHardnessArg = "#upgrade-hardness";
         protected static readonly string UseIntervalArg = "#use-interval";
         protected static readonly string VibrateArg = "#vibrate";
         protected static readonly string VolumeArg = "#volume";

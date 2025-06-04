@@ -32,7 +32,7 @@ namespace Remizione
 
             for (var i = 0; i < items.Count; i++)
             {
-                if (items[i].MetaItem.DegradationInterval > 0 || items[i].MetaItem.UseInterval > 0)
+                if (items[i].MetaItem.UseInterval > 0)
                 {
                     RequiresUpdate = true;
                     return;
@@ -92,6 +92,19 @@ namespace Remizione
             return null;
         }
 
+        // GetSerializationData
+        public string GetSerializationData()
+        {
+            var result = new List<string>();
+
+            foreach (var item in Items)
+            {
+                result.Add($"{item.Name}:{item.Count}:{item.Durability}");
+            }
+            
+            return string.Join(";", result);
+        }
+
         // IsFull
         public bool IsFull => Size > 0 && items.Count >= Size;
 
@@ -124,6 +137,19 @@ namespace Remizione
 
         // RequiresUpdate
         public bool RequiresUpdate { get; private set; }
+
+        // SetSerializationData
+        public void SetSerializationData(string data)
+        {
+            items.Clear();
+            var itemList = data.Split(';');
+
+            foreach (var item in itemList)
+            {
+                var itemData = item.Split(':');
+                Add(itemData[0], int.Parse(itemData[1]));
+            }
+        }
 
         // Size
         public int Size => Owner.GetItemContainerSize(Category);
