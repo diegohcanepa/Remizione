@@ -57,6 +57,8 @@ namespace Remizione
 
             this.Gifts = new ItemContainer(this, ItemContainerCategory.Gifts, Localization.GetValue(InGameMenuOptionName.Gifts));
             this.Prayers = new ItemContainer(this, ItemContainerCategory.Prayers, Localization.GetValue(InGameMenuOptionName.Prayers));
+            this.SacredWords = new ItemContainer(this, ItemContainerCategory.SacredWords, Localization.GetValue(InGameMenuOptionName.SacredWords));
+
             this.standState = new ActorStandState(this);
 
             this.StateMachine = new ActorStateMachine(this, standState);
@@ -324,6 +326,10 @@ namespace Remizione
         {
             base.OnRead(attributes);
 
+            // SacredWords
+            if (attributes[ItemContainerCategory.SacredWords.ToString()]?.Value is string sacredWordsData)
+                Inventory.SetSerializationData(sacredWordsData);
+
             // Devotion
             if (attributes[nameof(Stats.Devotion)]?.Value is string devotion)
                 Stats.Devotion = XmlConvert.ToInt32(devotion);
@@ -432,6 +438,8 @@ namespace Remizione
         protected override void OnWrite(XmlWriter output)
         {
             base.OnWrite(output);
+
+            output.WriteAttributeString(ItemContainerCategory.SacredWords.ToString(), SacredWords.GetSerializationData());
 
             output.WriteAttributeString(nameof(Stats.Devotion), XmlConvert.ToString(Stats.Devotion));
             output.WriteAttributeString(nameof(Stats.Dexterity), XmlConvert.ToString(Stats.Dexterity));
@@ -891,6 +899,9 @@ namespace Remizione
             base.Replenish();
             Faith = MaxFaith;
         }
+
+        // SacredWords
+        public ItemContainer SacredWords { get; }
 
         // Say
         public void Say(string text, bool awaitInput)

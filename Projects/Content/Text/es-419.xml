@@ -29,6 +29,7 @@
   <String Key="InGameMenuOptionName.Map">Mapa</String>
   <String Key="InGameMenuOptionName.Prayers">Plegarias</String>
   <String Key="InGameMenuOptionName.QuitToDesktop">Salir al escritorio</String>
+  <String Key="InGameMenuOptionName.SacredWords">Verbum Sacrum</String>
   <String Key="InGameMenuOptionName.Settings">Configuración</String>
   <String Key="InputBinding.Back">Atrás</String>
   <String Key="InputBinding.Close">Cerrar</String>

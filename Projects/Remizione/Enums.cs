@@ -42,7 +42,7 @@ namespace Remizione
     public enum ImpactType { Low, Medium, High }
 
     // InGameMenuOptionName
-    public enum InGameMenuOptionName { Attributes, Creatures, Inventory, Gifts, Map, Prayers, QuitToDesktop, Settings }
+    public enum InGameMenuOptionName { Attributes, Creatures, Inventory, Gifts, Map, Prayers, SacredWords, QuitToDesktop, Settings }
 
     // ItemAction
     public enum ItemAction { None, Create, Discard, Use, Wield }
@@ -52,7 +52,8 @@ namespace Remizione
     {
         Inventory,
         Gifts,
-        Prayers
+        Prayers,
+        SacredWords
     }
 
     // ItemProperty

@@ -317,9 +317,7 @@ namespace Remizione
         {
             // Inventory
             if (attributes[ItemContainerCategory.Inventory.ToString()]?.Value is string inventoryData)
-            {
                 Inventory.SetSerializationData(inventoryData);
-            }
         }
 
         // OnTransform

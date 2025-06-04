@@ -25,6 +25,7 @@ namespace Remizione
             };
 
             menu.AddOption(Localization.GetValue(InGameMenuOptionName.Inventory), () => session.ShowItemContainerScene(ItemContainerCategory.Inventory));
+            menu.AddOption(Localization.GetValue(InGameMenuOptionName.SacredWords), () => session.ShowItemContainerScene(ItemContainerCategory.SacredWords));
             menu.AddOption(Localization.GetValue(InGameMenuOptionName.Prayers), () => session.ShowItemContainerScene(ItemContainerCategory.Prayers));
             menu.AddOption(Localization.GetValue(InGameMenuOptionName.Gifts), () => session.ShowItemContainerScene(ItemContainerCategory.Gifts));
             menu.AddOption(Localization.GetValue(InGameMenuOptionName.Attributes), session.ShowCharacterSheet); menu.AddOption(Localization.GetValue(InGameMenuOptionName.Map));
