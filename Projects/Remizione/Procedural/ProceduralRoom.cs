@@ -12,7 +12,8 @@ namespace Remizione
     /// </summary>
     public sealed class ProceduralRoom : GameRoom
     {
-        private enum AttributeName { WorldBlocks };
+        private const string EmptyList = "[none]";
+        private const string WorldBlocksAttributeName = "WorldBlocks";
         private readonly List<(Point gridPosition, int worldVersion, Dictionary<string, int> states)> worldBlockData = [];
 
         // Constructor
@@ -103,7 +104,7 @@ namespace Remizione
         protected override void OnRead(XmlAttributeCollection attributes)
         {
             // World blocks
-            if (attributes[AttributeName.WorldBlocks.ToString()]?.Value is string worldBlocksValue)
+            if (attributes[WorldBlocksAttributeName]?.Value is string worldBlocksValue)
             {
                 var list = worldBlocksValue.Split(';');
 
@@ -114,11 +115,14 @@ namespace Remizione
                     var worldVersion = int.Parse(blockData[1]);
                     var thingStates = new Dictionary<string, int>();
 
-                    var states = blockData[2].Split(',');
-                    foreach (var state in states)
+                    if (blockData[2] != EmptyList)
                     {
-                        var values = state.Split('=');
-                        thingStates[values[0]] = int.Parse(values[1]);
+                        var states = blockData[2].Split(',');
+                        foreach (var state in states)
+                        {
+                            var values = state.Split('=');
+                            thingStates[values[0]] = int.Parse(values[1]);
+                        }
                     }
 
                     worldBlockData.Add((gridPosition, worldVersion, thingStates));
@@ -148,7 +152,7 @@ namespace Remizione
             }
 
             var attrValue = string.Join(";", data);
-            output.WriteAttributeString(AttributeName.WorldBlocks.ToString(), attrValue);
+            output.WriteAttributeString(WorldBlocksAttributeName, attrValue);
         }
 
         #endregion

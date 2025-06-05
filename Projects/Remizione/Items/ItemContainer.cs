@@ -142,6 +142,10 @@ namespace Remizione
         public void SetSerializationData(string data)
         {
             items.Clear();
+
+            if (string.IsNullOrEmpty(data))
+                return;
+
             var itemList = data.Split(';');
 
             foreach (var item in itemList)

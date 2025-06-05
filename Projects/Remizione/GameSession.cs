@@ -333,7 +333,7 @@ namespace Remizione
 
             // WorldVersion
             if (sessionNode.Attributes[AttributeName.WorldVersion.ToString()]?.Value is string worldVersionValue)
-                RandomSeed = XmlConvert.ToInt32(worldVersionValue);
+                WorldVersion = XmlConvert.ToInt32(worldVersionValue);
         }
 
         // OnResume
