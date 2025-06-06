@@ -158,7 +158,7 @@ namespace Remizione
             OnDeath();
 
             if (Session.Player != null && Session.Player != this)
-                Session.Player.Ashes += Ashes;
+                Session.Player.Grace += Grace;
 
             if (LootTable.Find(StaticName) is LootTable lootTable)
             {
@@ -508,10 +508,6 @@ namespace Remizione
             return HurtBox.Intersects(otherThing.HurtBox);
         }
 
-        // Ashes
-        [ScriptProperty]
-        public int Ashes { get; set; }
-
         // CanBeTargeted
         public bool CanBeTargeted => !IsMoving && MaxHP > 0 && !IsDead;
 
@@ -772,9 +768,13 @@ namespace Remizione
         // GetVerbs
         public Verb[]? GetVerbs() => verbList?.ToArray();
 
-        // Gold
+        // Grace
         [ScriptProperty]
-        public int Gold { get; set; }
+        public int Grace { get; set; }
+
+        // Highlight
+        [ScriptProperty]
+        public bool Highlight { get; set; } = true;
 
         // HotspotArea
         [ScriptProperty]

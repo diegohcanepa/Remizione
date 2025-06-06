@@ -49,10 +49,10 @@ namespace Remizione
             : base(game, new RemizionePersistenceModel(), ContentHelper.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
-            this.HUD = new HUD(this);
             this.Environment = new Environment(this);
+            this.HUD = new HUD(this);
             this.RandomSeed = 10000;// RandomSeed = System.Environment.TickCount;
-            this.RandomSeed = System.Environment.TickCount;
+            //this.RandomSeed = System.Environment.TickCount;
             this.CombatManager = new CombatManager(this);
 
             ObjectPools = new ObjectPools(this);
@@ -168,6 +168,7 @@ namespace Remizione
         protected override void ExtendScriptRegistry(ScriptRegistry scriptRegistry)
         {
             scriptRegistry.RegisterEntity(typeof(Actor));
+            scriptRegistry.RegisterEntity(typeof(Orb));
             scriptRegistry.RegisterEntity(typeof(PickupItem));
             scriptRegistry.RegisterEntity(typeof(Prop));
             scriptRegistry.RegisterEntity(typeof(GameRoom));

@@ -14,8 +14,8 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly UIScore ashes;
         private readonly UICycleMeter cycleMeter;
+        private readonly UIScore grace;
         private readonly UIDerivedStats playerStats;
         private readonly ImageSprite savingIcon;
         private readonly TextSprite sentence;
@@ -49,12 +49,12 @@ namespace Remizione
                 Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -8, 6)
             };
 
-            // Ashes
-            this.ashes = new UIScore(session.Game, TextRepository.GetValue("ActorProperty.Ashes.Name"))
+            // Grace
+            this.grace = new UIScore(session.Game, TextRepository.GetValue("ActorProperty.Grace.Name"))
             {
                 HideZero = true,
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.RightTop, -3, 0),
+                Position = Screen.SafeArea.GetPoint(RectanglePoint.RightBottom, -5, -12),
             };
 
             // Sentence
@@ -151,7 +151,7 @@ namespace Remizione
 
             if (session.Player != null && session.FullHUD)
             {
-                ashes.Draw(gameTime);
+                grace.Draw(gameTime);
                 if (session.IsCurrentScene)
                     toolbar.Draw(gameTime);
             }
@@ -178,8 +178,8 @@ namespace Remizione
 
             if (session.Player != null)
             {
-                ashes.Score = session.Player.Ashes;
-                ashes.Update(gameTime);
+                grace.Score = session.Player.Grace;
+                grace.Update(gameTime);
             }
 
             DestinationMark.Update(gameTime);

@@ -165,7 +165,7 @@ namespace Remizione
                 {
                     ShaderEffect? effect = null;
 
-                    if (interactiveTarget == thing)
+                    if (interactiveTarget == thing && thing.Highlight)
                     {
                         RemizioneGame.Effects.ColorSaturation.SetColor(.8f, .8f, .8f, 0);
                         effect = RemizioneGame.Effects.ColorSaturation;

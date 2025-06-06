@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:a704f33ac8668955651e747f5d00cf9c:4d662c43c4b8afe356b844beac1d2e80:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:f38910157d3eb5a075fa8fdd63fbe6c9:e591be9108542bf3e7d8092cda5ab7a1:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -38,7 +38,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="ItemMenuContainer.png" x="750" y="194" w="100" h="117"/>
     <sprite n="ItemMenuContainerSelection.png" x="2" y="71" w="88" h="10"/>
     <sprite n="KeyboardE.png" x="968" y="163" w="12" h="12"/>
-    <sprite n="KeyboardInteract.png" x="999" y="148" w="14" h="14"/>
+    <sprite n="KeyboardInteract.png" x="998" y="148" w="14" h="14"/>
     <sprite n="KeyboardNextTab.png" x="1003" y="61" w="16" h="12"/>
     <sprite n="KeyboardPreviousTab.png" x="1003" y="75" w="16" h="12"/>
     <sprite n="MessageContainer.png" x="750" y="2" w="251" h="27"/>
@@ -74,7 +74,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PopupContainer.png" x="484" y="2" w="264" h="311"/>
     <sprite n="PopupContainerShadow.png" x="866" y="86" w="114" h="60"/>
     <sprite n="PrayerIcon.png" x="852" y="194" w="10" h="12"/>
-    <sprite n="PrayIcon.png" x="982" y="137" w="15" h="12"/>
+    <sprite n="PrayIcon.png" x="982" y="137" w="14" h="15"/>
     <sprite n="ProhibitionIcon.png" x="1003" y="42" w="17" h="17"/>
     <sprite n="ProhibitionMark.png" x="1011" y="164" w="11" h="11"/>
     <sprite n="QuickSlot.png" x="982" y="120" w="15" h="15"/>
@@ -89,7 +89,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="UnreadSign.png" x="1018" y="117" w="3" h="6"/>
     <sprite n="XboxA.png" x="953" y="313" w="13" h="13"/>
     <sprite n="XboxB.png" x="953" y="328" w="13" h="13"/>
-    <sprite n="XboxInteract.png" x="982" y="151" w="14" h="14"/>
+    <sprite n="XboxInteract.png" x="982" y="154" w="14" h="14"/>
     <sprite n="XboxLeftShoulder.png" x="1003" y="89" w="16" h="12"/>
     <sprite n="XboxNextTab.png" x="1003" y="103" w="16" h="12"/>
     <sprite n="XboxPreviousTab.png" x="982" y="106" w="16" h="12"/>

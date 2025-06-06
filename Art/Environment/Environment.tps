@@ -326,6 +326,7 @@
                 <false/>
             </struct>
             <key type="filename">Environment-assets/BlessedTinder.png</key>
+            <key type="filename">Environment-assets/Orb.png</key>
             <key type="filename">FireflyParticles-assets/FireflyParticle2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
