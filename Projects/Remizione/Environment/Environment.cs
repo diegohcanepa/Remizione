@@ -27,21 +27,21 @@ namespace Remizione
                 CycleCooldown -= gameTime.ElapsedGameTime.Milliseconds;
 
                 if (CycleCooldown <= 0)
-                    BeginCycle(CurrentCycle == Cycle.Indulgence ? Cycle.Penance : Cycle.Indulgence);
+                {
+                    if (Cycle == Cycle.Indulgence)
+                        Cycle = Cycle.Penance;
+                    else
+                        Cycle = Cycle.Indulgence;
+
+                    CycleCooldown = GameSettings.CycleDuration;
+                    CycleCount++;
+                }
             }
 
             Rain.Update(gameTime);
         }
 
         #endregion
-
-        // BeginCycle
-        public void BeginCycle(Cycle cycle)
-        {
-            CurrentCycle = cycle;
-            CycleCooldown = Randomizer.Next(180_000, 300_000);
-            session.CycleCount++;
-        }
 
         // EnterRoom
         public void EnterRoom(GameRoom room)
@@ -50,10 +50,13 @@ namespace Remizione
         }
 
         // Cycle
-        public Cycle CurrentCycle { get; private set; }
+        public Cycle Cycle { get; set; } = Cycle.Indulgence;
 
         // CycleCooldown
-        public int CycleCooldown { get; set; }
+        public int CycleCooldown { get; set; } = GameSettings.CycleDuration;
+
+        // CycleCount
+        public int CycleCount { get; set; } = 1;
 
         // Rain
         public Rain Rain { get; }

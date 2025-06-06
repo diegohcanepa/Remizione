@@ -303,6 +303,18 @@ namespace Remizione
             if (sessionNode == null || sessionNode.Attributes == null)
                 throw new InvalidOperationException("Session node attributes not found");
 
+            // Cycle
+            if (sessionNode.Attributes[nameof(Environment.Cycle)]?.Value is string cycleValue)
+                this.Environment.Cycle = Enum.Parse<Cycle>(cycleValue);
+
+            // CycleCooldown
+            if (sessionNode.Attributes[nameof(Environment.CycleCooldown)]?.Value is string cycleCooldownValue)
+                this.Environment.CycleCooldown = XmlConvert.ToInt32(cycleCooldownValue);
+
+            // CycleCount
+            if (sessionNode.Attributes[nameof(Environment.CycleCount)]?.Value is string cycleCountValue)
+                this.Environment.CycleCount = XmlConvert.ToInt32(cycleCountValue);
+
             // FullHUD
             if (sessionNode.Attributes[nameof(FullHUD)]?.Value is string fullHUDValue)
                 FullHUD = XmlConvert.ToBoolean(fullHUDValue);
@@ -373,9 +385,6 @@ namespace Remizione
         {
             if (GetEntity<ProceduralRoom>("Purgatory") is ProceduralRoom purgatory)
             {
-                if (IsNewSession)
-                    Environment.BeginCycle(Cycle.Indulgence);
-
                 if (Player != null)
                 {
                     if (IsNewSession)
@@ -416,6 +425,15 @@ namespace Remizione
             // FullHUD
             output.WriteAttributeString(nameof(FullHUD), XmlConvert.ToString(FullHUD));
 
+            // Cycle
+            output.WriteAttributeString(nameof(Environment.Cycle), Environment.Cycle.ToString());
+
+            // CycleCooldown
+            output.WriteAttributeString(nameof(Environment.CycleCooldown), XmlConvert.ToString(Environment.CycleCooldown));
+
+            // CycleCount
+            output.WriteAttributeString(nameof(Environment.CycleCount), XmlConvert.ToString(Environment.CycleCount));
+
             // InventoryButton
             output.WriteAttributeString(nameof(InventoryButton), XmlConvert.ToString(InventoryButton));
 
@@ -448,10 +466,6 @@ namespace Remizione
 
         // CombatManager
         public CombatManager CombatManager { get; }
-
-        // CycleCount
-        [ScriptProperty]
-        public int CycleCount { get; set; }
 
         // DialogOptionId
         [ScriptProperty]

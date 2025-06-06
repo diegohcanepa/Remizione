@@ -15,6 +15,7 @@ namespace Remizione
         #region Private fields
 
         private readonly UIScore ashes;
+        private readonly UICycleMeter cycleMeter;
         private readonly UIDerivedStats playerStats;
         private readonly ImageSprite savingIcon;
         private readonly TextSprite sentence;
@@ -33,6 +34,7 @@ namespace Remizione
             this.session = session;
 
             this.playerStats = new(session.Game);
+            this.cycleMeter = new(session);
 
             // DestinationMark
             this.DestinationMark = new DestinationMark(session);
@@ -134,7 +136,10 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             if (session.FullHUD)
+            {
                 playerStats.Draw(gameTime);
+                cycleMeter.Draw(gameTime);
+            }
 
             if (session.IsCurrentScene)
             {
@@ -165,6 +170,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             playerStats.Update(gameTime);
+            cycleMeter.Update(gameTime);
             toolbar.Update(gameTime);
 
             UpdateSentence();

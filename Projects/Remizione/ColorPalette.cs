@@ -25,8 +25,9 @@ namespace Remizione
         // Cycle
         internal static class Cycle
         {
-            internal static Color Indulgence { get; } = new(76, 104, 133);
-            internal static Color Penance { get; } = new(59, 32, 39);
+            internal static Color Indulgence { get; } = ColorPalette.Text.TerraDark;
+            internal static Color Penance { get; } = new(157, 81, 81);
+            internal static Color PenanceActive { get; } = new(180, 67, 67);
         }
 
         // CreditHeading
