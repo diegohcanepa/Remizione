@@ -145,6 +145,11 @@ namespace Remizione
                         if (value == MouseCursorState.Target || value == MouseCursorState.TargetOn)
                             AnimateSwitch();
                     }
+                    else if (state == MouseCursorState.Target || state == MouseCursorState.TargetOn)
+                    {
+                        if (value == MouseCursorState.Cross)
+                            AnimateSwitch();
+                    }
 
                     state = value;
                     Invalidate();

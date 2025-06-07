@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:f38910157d3eb5a075fa8fdd63fbe6c9:e591be9108542bf3e7d8092cda5ab7a1:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:9aaa5bc0da8aaa062aa4f5c7ecb6c2e9:8fe90a1a9928aa4a3dca0fe371c03cad:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -25,7 +25,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="CharacterSheetContainer.png" x="866" y="148" w="100" h="117"/>
     <sprite n="CharacterSheetStatContainer.png" x="2" y="71" w="88" h="10"/>
     <sprite n="CheckMark.png" x="998" y="164" w="11" h="11"/>
-    <sprite n="CloseWindowButton.png" x="990" y="92" w="11" h="12"/>
+    <sprite n="CloseWindowButton.png" x="852" y="194" w="11" h="12"/>
     <sprite n="ContextMenuOptionSelector.png" x="982" y="99" w="4" h="5"/>
     <sprite n="CreditsBar.png" x="2" y="2" w="480" h="67"/>
     <sprite n="FaithIcon.png" x="953" y="283" w="13" h="13"/>
@@ -73,13 +73,13 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PlayStationY.png" x="2" y="184" w="52" h="52"/>
     <sprite n="PopupContainer.png" x="484" y="2" w="264" h="311"/>
     <sprite n="PopupContainerShadow.png" x="866" y="86" w="114" h="60"/>
-    <sprite n="PrayerIcon.png" x="852" y="194" w="10" h="12"/>
-    <sprite n="PrayIcon.png" x="982" y="137" w="14" h="15"/>
+    <sprite n="PrayerIcon.png" x="852" y="208" w="10" h="12"/>
+    <sprite n="PrayIcon.png" x="982" y="139" w="14" h="15"/>
     <sprite n="ProhibitionIcon.png" x="1003" y="42" w="17" h="17"/>
     <sprite n="ProhibitionMark.png" x="1011" y="164" w="11" h="11"/>
-    <sprite n="QuickSlot.png" x="982" y="120" w="15" h="15"/>
+    <sprite n="QuickSlot.png" x="982" y="122" w="15" h="15"/>
     <sprite n="QuickSlotShadow.png" x="999" y="131" w="15" h="15"/>
-    <sprite n="SavingIcon.png" x="852" y="208" w="9" h="9"/>
+    <sprite n="SavingIcon.png" x="990" y="92" w="11" h="14"/>
     <sprite n="SpeechBubbleCloseArrow.png" x="1018" y="125" w="3" h="2"/>
     <sprite n="SpeechBubblePipe.png" x="982" y="94" w="5" h="3"/>
     <sprite n="SpiritIcon.png" x="953" y="298" w="13" h="13"/>
@@ -89,10 +89,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="UnreadSign.png" x="1018" y="117" w="3" h="6"/>
     <sprite n="XboxA.png" x="953" y="313" w="13" h="13"/>
     <sprite n="XboxB.png" x="953" y="328" w="13" h="13"/>
-    <sprite n="XboxInteract.png" x="982" y="154" w="14" h="14"/>
+    <sprite n="XboxInteract.png" x="982" y="156" w="14" h="14"/>
     <sprite n="XboxLeftShoulder.png" x="1003" y="89" w="16" h="12"/>
     <sprite n="XboxNextTab.png" x="1003" y="103" w="16" h="12"/>
-    <sprite n="XboxPreviousTab.png" x="982" y="106" w="16" h="12"/>
+    <sprite n="XboxPreviousTab.png" x="982" y="108" w="16" h="12"/>
     <sprite n="XboxRightShoulder.png" x="1000" y="117" w="16" h="12"/>
     <sprite n="XboxRun.png" x="184" y="124" w="52" h="52"/>
     <sprite n="XboxX.png" x="953" y="343" w="13" h="13"/>

@@ -26,7 +26,7 @@ namespace Remizione.UI
             this.scoreText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Terra,
-                Scale = ScaleInfo.Text.VeryLarge,
+                Scale = ScaleInfo.Text.Huge,
             };
 
             // Title text
@@ -34,7 +34,7 @@ namespace Remizione.UI
             {
                 Color = ColorPalette.Text.TerraDark,
                 PivotOrigin = RectanglePoint.RightTop,
-                Scale = ScaleInfo.Text.Large,
+                Scale = ScaleInfo.Text.VeryLarge,
                 Text = title
             };
 

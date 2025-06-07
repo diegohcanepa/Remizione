@@ -46,7 +46,8 @@ namespace Remizione
             this.savingIcon = new ImageSprite(Game, Atlases.UI.SavingIcon)
             {
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -8, 6)
+                Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -6, 3),
+                Scale = ScaleInfo.UIElement.Medium
             };
 
             // Grace
@@ -54,7 +55,7 @@ namespace Remizione
             {
                 HideZero = true,
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.RightBottom, -5, -12),
+                Position = Screen.SafeArea.GetPoint(RectanglePoint.RightBottom, -5, -15),
             };
 
             // Sentence
@@ -138,7 +139,9 @@ namespace Remizione
             if (session.FullHUD)
             {
                 playerStats.Draw(gameTime);
-                cycleMeter.Draw(gameTime);
+                
+                if (!savingIcon.Tweens.IsTweening)
+                    cycleMeter.Draw(gameTime);
             }
 
             if (session.IsCurrentScene)

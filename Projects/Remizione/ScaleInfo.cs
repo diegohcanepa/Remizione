@@ -79,6 +79,7 @@ namespace Remizione
             internal static Vector2 Large { get; } = new(.08f);
             internal static Vector2 VeryLarge { get; } = new(.09f);
             internal static Vector2 ExtraLarge { get; } = new(.1f);
+            internal static Vector2 Huge { get; } = new(.11f);
         }
 
         // TextMenuContainerTitle
