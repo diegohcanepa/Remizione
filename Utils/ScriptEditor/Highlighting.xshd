@@ -96,7 +96,7 @@
 			<Word>await-option-menu</Word>
 			<Word>await-outcome-completion</Word>
 			<Word>await-outcome</Word>
-			<Word>await-pickup-message</Word>
+			<Word>await-pickup</Word>
 			<Word>await-player-approach</Word>			
 			<Word>await-popup</Word>
 			<Word>await-position-tween</Word>
@@ -142,7 +142,6 @@
 			<Word>enable-area-if</Word>
 			<Word>endif</Word>
 			<Word>if-hotspot-area</Word>
-			<Word>if-can-pickup</Word>
 			<Word>if-counter</Word>
 			<Word>if-entity-type</Word>
 			<Word>if-entity</Word>
@@ -213,7 +212,6 @@
 			<Word>hide-dialog-box</Word>
 			<Word>hide-message</Word>
 			<Word>kill-all-creatures</Word>
-			<Word>pickup</Word>
 			<Word>push-dialog</Word>
 			<Word>push-scene</Word>
 			<Word>put</Word>

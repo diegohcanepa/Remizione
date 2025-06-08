@@ -206,11 +206,6 @@
             <key type="filename">Sinner-assets/Death09.png</key>
             <key type="filename">Sinner-assets/Death10.png</key>
             <key type="filename">Sinner-assets/Death11.png</key>
-            <key type="filename">Sinner-assets/Death12.png</key>
-            <key type="filename">Sinner-assets/Death13.png</key>
-            <key type="filename">Sinner-assets/Death14.png</key>
-            <key type="filename">Sinner-assets/Death15.png</key>
-            <key type="filename">Sinner-assets/Death16.png</key>
             <key type="filename">Sinner-assets/Fatigue01.png</key>
             <key type="filename">Sinner-assets/Fatigue02.png</key>
             <key type="filename">Sinner-assets/Fatigue03.png</key>
@@ -245,6 +240,14 @@
             <key type="filename">Sinner-assets/MoveFast06.png</key>
             <key type="filename">Sinner-assets/MoveFast07.png</key>
             <key type="filename">Sinner-assets/MoveFast08.png</key>
+            <key type="filename">Sinner-assets/PickUp01.png</key>
+            <key type="filename">Sinner-assets/PickUp02.png</key>
+            <key type="filename">Sinner-assets/PickUp03.png</key>
+            <key type="filename">Sinner-assets/PickUp04.png</key>
+            <key type="filename">Sinner-assets/PickUp05.png</key>
+            <key type="filename">Sinner-assets/PickUp06.png</key>
+            <key type="filename">Sinner-assets/PickUp07.png</key>
+            <key type="filename">Sinner-assets/PickUp08.png</key>
             <key type="filename">Sinner-assets/Pray01.png</key>
             <key type="filename">Sinner-assets/Pray02.png</key>
             <key type="filename">Sinner-assets/Pray03.png</key>

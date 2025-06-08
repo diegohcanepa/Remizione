@@ -5,7 +5,7 @@ namespace Remizione
     /// <summary>
     /// Orb
     /// </summary>
-    public class Orb : PickupItem
+    public class Orb : Pickup
     {
         // Constructor
         public Orb(GameSession session, string name)

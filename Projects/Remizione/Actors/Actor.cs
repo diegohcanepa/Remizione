@@ -68,6 +68,7 @@ namespace Remizione
             this.StateMachine.RegisterState(new ActorHurtState(this));
             this.StateMachine.RegisterState(new ActorFatigueState(this));
             this.StateMachine.RegisterState(new ActorMoveState(this));
+            this.StateMachine.RegisterState(new ActorPickUpState(this));
             this.StateMachine.RegisterState(new ActorMoveFastState(this));
             this.StateMachine.RegisterState(new ActorCloseAttackState(this));
 
@@ -475,7 +476,7 @@ namespace Remizione
             var result = canApproach && MoveTo(destination);
             this.pendingInteractiveTarget = target;
 
-            if (target is PickupItem)
+            if (target is Pickup)
                 Session.HUD.DestinationMark.Position = null;
 
             if (!result)
@@ -735,6 +736,9 @@ namespace Remizione
         // IsInteractiveTarget
         public bool IsInteractiveTarget => session.Player?.InteractiveTarget == this;
 
+        // IsPickingUp
+        public bool IsPickingUp => StateMachine.CurrentState is ActorPickUpState;
+
         // IsPlayer
         public bool IsPlayer => Session.Player == this;
 
@@ -869,6 +873,16 @@ namespace Remizione
                 StateMachine.ChangeState(ActorStateNames.Move);
 
             return true;
+        }
+
+        // PickUp
+        public void PickUp(Pickup pickup, MetaItem? metaItem)
+        {
+            if (StateMachine.GetState(ActorStateNames.PickUp) is ActorPickUpState state)
+            {
+                state.Prepare(pickup, metaItem);
+                StateMachine.ChangeState(state.Name);
+            }
         }
 
         // PlayerNumber

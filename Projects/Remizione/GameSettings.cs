@@ -25,9 +25,6 @@ namespace Remizione
         // GameFolder
         public const string GameFolder = "Remizione";
 
-        // KeyFrame
-        public const string KeyFrame = "KeyFrame";
-
         // LogFileName
         public const string LogFileName = "ErrorLog.txt";
 

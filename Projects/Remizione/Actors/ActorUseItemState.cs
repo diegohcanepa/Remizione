@@ -48,7 +48,7 @@ namespace Remizione
         {
             if (!soundPlayed && Item != null && Owner.AnimationPlayer.Frame is SpriteFrame frame)
             {
-                if (frame.Label == GameSettings.KeyFrame)
+                if (frame.IsEvent)
                 {
                     Item.Use();
 

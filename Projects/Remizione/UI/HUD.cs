@@ -22,6 +22,7 @@ namespace Remizione
         private readonly GameSession session;
         private readonly TextSprite statusText;
         private readonly UIToolbar toolbar;
+        private readonly Meter willpowerMeter;
 
         #endregion
 
@@ -79,6 +80,15 @@ namespace Remizione
 
             // Toolbar
             toolbar = new UIToolbar(session);
+
+            // Willpower
+            this.willpowerMeter = new(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, 3.5f)
+            {
+                Alignment = HorizontalAlignment.Center,
+                Position = Screen.SafeArea.GetPoint(RectanglePoint.Top, 0, 4),
+                Value = 20,
+                MaximumValue = 20
+            };
         }
 
         #endregion
@@ -139,7 +149,11 @@ namespace Remizione
             if (session.FullHUD)
             {
                 playerStats.Draw(gameTime);
-                
+
+                Game.SpriteBatch.Begin(Game.Camera);
+                willpowerMeter.Draw(gameTime);
+                Game.SpriteBatch.End();
+
                 if (!savingIcon.Tweens.IsTweening)
                     cycleMeter.Draw(gameTime);
             }
@@ -175,6 +189,7 @@ namespace Remizione
             playerStats.Update(gameTime);
             cycleMeter.Update(gameTime);
             toolbar.Update(gameTime);
+            willpowerMeter.Update(gameTime);
 
             UpdateSentence();
             statusText.Update(gameTime);

@@ -169,7 +169,7 @@ namespace Remizione
         {
             scriptRegistry.RegisterEntity(typeof(Actor));
             scriptRegistry.RegisterEntity(typeof(Orb));
-            scriptRegistry.RegisterEntity(typeof(PickupItem));
+            scriptRegistry.RegisterEntity(typeof(Pickup));
             scriptRegistry.RegisterEntity(typeof(Prop));
             scriptRegistry.RegisterEntity(typeof(GameRoom));
             scriptRegistry.RegisterEntity(typeof(CreditsRoom));
@@ -182,6 +182,7 @@ namespace Remizione
             scriptRegistry.RegisterStatement("add-item", typeof(AddItemCommand), CodingContext.Any);
             scriptRegistry.RegisterStatement("add-light", typeof(AddLightCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("add-loot-item", typeof(AddLootItemCommand), CodingContext.EntityDeclaration);
+            scriptRegistry.RegisterStatement("await-pickup", typeof(AwaitPickUpCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("add-trigger-area", typeof(AddTriggerAreaCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("add-walk-area", typeof(AddWalkAreaCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("await-credits", typeof(AwaitCreditsCommand), CodingContext.Execution);
@@ -196,7 +197,6 @@ namespace Remizione
             scriptRegistry.RegisterStatement("hide-overlay-text", typeof(HideOverlayTextCommand));
             scriptRegistry.RegisterStatement("placement-condition", typeof(PlacementConditionCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("meta-item", typeof(MetaItemCommand), CodingContext.Declaration);
-            scriptRegistry.RegisterStatement("pickup", typeof(PickupCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("place-dynamic-prop", typeof(PlaceDynamicPropCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("say", typeof(SayCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("select-walk-area", typeof(SelectWalkAreaCommand));

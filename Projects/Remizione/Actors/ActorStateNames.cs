@@ -13,6 +13,7 @@
         public const string Idle = nameof(Idle);
         public const string Move = nameof(Move);
         public const string MoveFast = nameof(MoveFast);
+        public const string PickUp = nameof(PickUp);
         public const string Stand = nameof(Stand);
         public const string Talk = nameof(Talk);
         public const string ThrowObject = nameof(ThrowObject);

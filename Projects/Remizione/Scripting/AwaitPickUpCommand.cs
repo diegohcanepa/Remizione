@@ -2,29 +2,33 @@
 
 namespace Remizione.Scripting
 {
-    // PickupCommand
-    // Arguments: {Actor} {PickupItem}
-    internal sealed class PickupCommand : NonAwaitableCommand
+    // AwaitPickUpCommand
+    // Arguments: {Actor} {PickupItem} #sound:Name
+    [ForceAwait]
+    internal sealed class AwaitPickUpCommand : AwaitableCommand
     {
+        private Actor? actor;
+
         // Constructor
-        internal PickupCommand(Script script, string source, StatementBody args)
+        internal AwaitPickUpCommand(Script script, string source, StatementBody args)
             : base(script, source, args, 2)
         {
             AssertEntity<Actor>(0);
-            AssertEntity<PickupItem>(1);
+            AssertEntity<Pickup>(1);
         }
 
         // OnExecute
         protected override void OnExecute()
         {
-            if (AssertEntity<Actor>(0) is not Actor actor)
+            // Actor
+            actor = AssertEntity<Actor>(0);
+            if (actor == null)
                 return;
 
-            if (AssertEntity<PickupItem>(1) is not PickupItem pickupItem)
+            if (AssertEntity<Pickup>(1) is not Pickup pickupItem)
                 return;
 
-            if (MetaItem.Find(pickupItem.StaticName) is not MetaItem metaItem)
-                return;
+            var metaItem = MetaItem.Find(pickupItem.StaticName);
 
             if (!actor.Session.InventoryButton)
             {
@@ -33,7 +37,7 @@ namespace Remizione.Scripting
             }
 
             // Stackable item already in inventory
-            if (metaItem.IsStackable && actor.Inventory.GetItem(metaItem.Name) is Item item)
+            if (metaItem != null && metaItem.IsStackable && actor.Inventory.GetItem(metaItem.Name) is Item item)
             {
                 if (item.IsStackFull)
                 {
@@ -49,9 +53,16 @@ namespace Remizione.Scripting
                 return;
             }
 
-            actor.Inventory.Add(metaItem, 1);
-            pickupItem.Unparent();
-            actor.Session.HUD.Log.Show(LogVerb.PickedUp, metaItem.LocalizedName);
+            actor.PickUp(pickupItem, metaItem);
         }
+
+        // OnExecutionCompleted
+        protected override void OnExecutionCompleted()
+        {
+            actor = null;
+        }
+
+        // IsAwaiting
+        public override bool IsAwaiting => actor != null && actor.IsPickingUp;
     }
 }

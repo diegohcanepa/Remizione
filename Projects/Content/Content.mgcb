@@ -170,6 +170,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/MenuSelect.wav
 
+#begin Audio/FX/PickUpBag.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/PickUpBag.wav;Audio/FX/PickUpBag
+
 #begin Audio/FX/SinnerMaleDeathSetA1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

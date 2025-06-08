@@ -47,8 +47,8 @@ namespace Remizione
             {
                 turnList.Add(actor);
 
-                if (turnList.Count > 0 && AudioManager.Music.CurrentTag != "Anger")
-                    AudioManager.Music.PlayTag("Anger", 1000);
+                //if (turnList.Count > 0 && AudioManager.Music.CurrentTag != "Anger")
+                //    AudioManager.Music.PlayTag("Anger", 1000);
             }
         }
 
