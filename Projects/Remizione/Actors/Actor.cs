@@ -27,6 +27,7 @@ namespace Remizione
         private readonly FloatTween headTween = new();
         private int level = 1;
         private int maxFaith;
+        private int maxWillpower;
         private readonly FloatTween moveTween = new();
         private GameThing? pendingInteractiveTarget;
         private readonly List<Vector2> pendingPathNodes = [];
@@ -436,6 +437,11 @@ namespace Remizione
             UpdateFootstep();
         }
 
+        // OnWillpowerChanged
+        protected virtual void OnWillpowerChanged()
+        {
+        }
+
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
@@ -817,6 +823,21 @@ namespace Remizione
             }
         }
 
+        // MaxWillpower
+        [ScriptProperty]
+        public int MaxWillpower
+        {
+            get => maxWillpower;
+            set
+            {
+                if (value != maxWillpower)
+                {
+                    maxWillpower = value;
+                    Willpower = value;
+                }
+            }
+        }
+
         // MoveTo
         public override bool MoveTo(Vector2 destination)
         {
@@ -913,6 +934,7 @@ namespace Remizione
         {
             base.Replenish();
             Faith = MaxFaith;
+            Willpower = MaxWillpower;
         }
 
         // SacredWords
@@ -1034,6 +1056,7 @@ namespace Remizione
         }
 
         // Willpower
+        [ScriptProperty]
         public int Willpower
         {
             get => willpower;
@@ -1041,9 +1064,11 @@ namespace Remizione
             {
                 if (value != willpower)
                 {
-                    willpower = value;
+                    willpower = Math.Min(value, MaxWillpower);
                     if (willpower < 0)
                         willpower = 0;
+
+                    OnWillpowerChanged();
                 }
             }
         }

@@ -30,7 +30,12 @@ namespace Remizione
                 currentIndex = 0;
 
             if (CurrentActor != null)
+            {
+                if (session.HUD.Status == string.Empty && turnList.Count > 1)
+                    session.HUD.Status = Localization.GetValue(Message.ThreatsNearby);
+
                 CurrentActor.StartTurn();
+            }
         }
 
         #endregion
@@ -42,8 +47,8 @@ namespace Remizione
             {
                 turnList.Add(actor);
 
-                if (turnList.Count > 0 && AudioManager.Music.CurrentTag != "Anger")
-                    AudioManager.Music.PlayTag("Anger", 1000);
+                //if (turnList.Count > 0 && AudioManager.Music.CurrentTag != "Anger")
+                //    AudioManager.Music.PlayTag("Anger", 1000);
             }
         }
 
@@ -104,6 +109,8 @@ namespace Remizione
 
             AudioManager.Music.CurrentTag = string.Empty;
             AudioManager.Music.PlayTag("Back");
+
+            session.HUD.Status = string.Empty;
         }
 
         // TurnList

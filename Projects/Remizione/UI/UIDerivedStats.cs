@@ -10,28 +10,54 @@ namespace Remizione.UI
     public class UIDerivedStats : GameObject
     {
         private Actor? actor;
-        private readonly ColorTween[] colorTweens = [new ColorTween(), new ColorTween()];
+        private readonly ColorTween[] colorTweens;
         private readonly ImageSprite[] icons;
-        private readonly int[] lastKnownMaxValues = [int.MinValue, int.MinValue];
-        private readonly int[] lastKnownValues = [int.MinValue, int.MinValue];
+        private readonly int[] lastKnownMaxValues;
+        private readonly int[] lastKnownValues;
         private readonly TextSprite[] maxValues;
-        private readonly Vector2Tween[] scaleTweens = [new Vector2Tween(), new Vector2Tween()];
+        private readonly Vector2Tween[] scaleTweens;
+        private const int statCount = 3;
         private readonly TextSprite[] values;
 
         // Constructor
         public UIDerivedStats(RemizioneGame game)
             : base(game)
         {
-            icons = new ImageSprite[2];
+            colorTweens = new ColorTween[statCount];
+            for (var i = 0; i < statCount; i++)
+            {
+                colorTweens[i] = new ColorTween();
+            }
+
+            lastKnownMaxValues = new int[statCount];
+            for (var i = 0; i < statCount; i++)
+            {
+                lastKnownMaxValues[i] = int.MinValue;
+            }
+
+            lastKnownValues = new int[statCount];
+            for (var i = 0; i < statCount; i++)
+            {
+                lastKnownValues[i] = int.MinValue;
+            }
+
+            scaleTweens = new Vector2Tween[statCount];
+            for (var i = 0; i < statCount; i++)
+            {
+                scaleTweens[i] = new Vector2Tween();
+            }
+
+            icons = new ImageSprite[3];
             icons[0] = new ImageSprite(Game, Atlases.UI.SpiritIcon) { Scale = ScaleInfo.UIElement.Small };
             icons[1] = new ImageSprite(Game, Atlases.UI.FaithIcon) { Scale = ScaleInfo.UIElement.Small };
+            icons[2] = new ImageSprite(Game, Atlases.UI.WillpowerIcon) { Scale = ScaleInfo.UIElement.Small };
 
             icons[0].Position = new(4);
             icons[1].Position = icons[0].BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
+            icons[2].Position = icons[1].BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
 
-
-            this.maxValues = new TextSprite[2];
-            this.values = new TextSprite[2];
+            this.maxValues = new TextSprite[3];
+            this.values = new TextSprite[3];
 
             for (var i = 0; i < values.Length; i++)
             {
@@ -92,6 +118,7 @@ namespace Remizione.UI
             {
                 InvalidateCore(0, actor.HP, actor.MaxHP, animate);
                 InvalidateCore(1, actor.Faith, actor.MaxFaith, animate);
+                InvalidateCore(2, actor.Willpower, actor.MaxWillpower, animate);
             }
         }
 
@@ -108,13 +135,16 @@ namespace Remizione.UI
             Game.SpriteBatch.Begin(Game.Camera);
             icons[0].Draw(gameTime);
             icons[1].Draw(gameTime);
+            icons[2].Draw(gameTime);
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             values[0].Draw(gameTime);
             values[1].Draw(gameTime);
+            values[2].Draw(gameTime);
             maxValues[0].Draw(gameTime);
             maxValues[1].Draw(gameTime);
+            maxValues[2].Draw(gameTime);
             Game.SpriteBatch.End();
         }
 
@@ -124,6 +154,7 @@ namespace Remizione.UI
             Invalidate(true);
             values[0].Update(gameTime);
             values[1].Update(gameTime);
+            values[2].Update(gameTime);
         }
 
         #endregion
@@ -142,9 +173,11 @@ namespace Remizione.UI
                     {
                         lastKnownValues[0] = int.MinValue;
                         lastKnownValues[1] = int.MinValue;
+                        lastKnownValues[2] = int.MinValue;
 
                         lastKnownMaxValues[0] = int.MinValue;
                         lastKnownMaxValues[1] = int.MinValue;
+                        lastKnownMaxValues[2] = int.MinValue;
                     }
 
                     Invalidate(false);

@@ -20,8 +20,8 @@ namespace Remizione
         private readonly ImageSprite savingIcon;
         private readonly TextSprite sentence;
         private readonly GameSession session;
+        private readonly TextSprite statusText;
         private readonly UIToolbar toolbar;
-        private readonly UIWillpowerMeter willpowerMeter;
 
         #endregion
 
@@ -68,14 +68,17 @@ namespace Remizione
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
+            // Message text
+            this.statusText = new TextSprite(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Terra,
+                PivotOrigin = RectanglePoint.Top,
+                Position = Screen.Area.GetPoint(RectanglePoint.Top, 0, 8),
+                Scale = ScaleInfo.Text.VeryLarge
+            };
+
             // Toolbar
             toolbar = new UIToolbar(session);
-
-            // Willpower
-            this.willpowerMeter = new(Game)
-            {
-
-            };
         }
 
         #endregion
@@ -137,9 +140,6 @@ namespace Remizione
             {
                 playerStats.Draw(gameTime);
 
-                if (session.CombatManager.TurnList.Count > 0)
-                    willpowerMeter.Draw(gameTime);
-
                 if (!savingIcon.Tweens.IsTweening)
                     cycleMeter.Draw(gameTime);
             }
@@ -147,6 +147,7 @@ namespace Remizione
             if (session.IsCurrentScene)
             {
                 Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+                statusText.Draw(gameTime);
                 sentence.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
@@ -174,9 +175,9 @@ namespace Remizione
             playerStats.Update(gameTime);
             cycleMeter.Update(gameTime);
             toolbar.Update(gameTime);
-            willpowerMeter.Update(gameTime);
 
             UpdateSentence();
+            statusText.Update(gameTime);
 
             if (session.Player != null)
             {
@@ -216,13 +217,26 @@ namespace Remizione
         public void Reset()
         {
             playerStats.Actor = session.Player;
-            willpowerMeter.Actor = session.Player;
         }
 
         // ShowSavingIcon
         public void ShowSavingIcon()
         {
             savingIcon.Tweens.OpacityTween = FloatTween.Create(TweenStyle.QuadraticInOut, 1, .8f, 300, 10);
+        }
+
+        // Status
+        public string Status
+        {
+            get => statusText.Text ?? string.Empty;
+            set
+            {
+                if (statusText.Text != value)
+                {
+                    statusText.Text = value;
+                    statusText.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicInOut, 0, 1, 500);
+                }
+            }
         }
     }
 }
