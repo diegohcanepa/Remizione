@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using System;
 
 namespace Remizione.Creatures
 {
@@ -18,17 +17,19 @@ namespace Remizione.Creatures
             this.BodySize = ActorSize.Small;
         }
 
+        // OnLoad
         protected override void OnLoad()
         {
             base.OnLoad();
             moveCooldown = Randomizer.Next(10000, 30000);
         }
 
+        // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
 
-            if (!IsCombating && !IsFollowingPath && !IsAlert)
+            if (!Session.CombatManager.IsActive && !IsFollowingPath && !IsAlert)
             {
                 if (moveCooldown > 0)
                 {

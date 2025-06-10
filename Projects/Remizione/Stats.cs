@@ -139,6 +139,12 @@ namespace Remizione
             };
         }
 
+        // GetWillpower
+        public int GetWillpower()
+        {
+            return (int)((Devotion * 2) + (Mind * 2) + Fortitude) / 5;
+        }
+
         // HPGainPerLevel
         public int HPGainPerLevel { get; private set; } = 8;
 

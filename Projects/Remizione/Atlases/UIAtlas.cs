@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Remizione.UI;
 
 namespace Remizione
 {
@@ -46,6 +47,8 @@ namespace Remizione
             SpiritIcon = this[nameof(SpiritIcon)];
             UIControlShade = this[nameof(UIControlShade)];
             UnreadSign = this[nameof(UnreadSign)];
+            WillpowerUnitEmpty = this[nameof(WillpowerUnitEmpty)];
+            WillpowerUnitFull = this[nameof(WillpowerUnitFull)];
         }
 
         // BottomGradient
@@ -152,5 +155,11 @@ namespace Remizione
 
         // UnreadSign
         public AtlasImage UnreadSign { get; }
+
+        // WillpowerUnitEmpty
+        public AtlasImage WillpowerUnitEmpty { get; }
+
+        // WillpowerUnitFull
+        public AtlasImage WillpowerUnitFull { get; }
     }
 }

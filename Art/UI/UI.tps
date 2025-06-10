@@ -808,6 +808,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">UI-assets/WillpowerUnitEmpty.png</key>
+            <key type="filename">UI-assets/WillpowerUnitFull.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,2,2</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,2,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">XboxControls-assets/XboxLeftShoulder.png</key>
             <key type="filename">XboxControls-assets/XboxRightShoulder.png</key>
             <struct type="IndividualSpriteSettings">

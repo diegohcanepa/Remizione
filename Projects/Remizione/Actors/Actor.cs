@@ -39,6 +39,7 @@ namespace Remizione
         private float tinyMoveSpeedFactor = 1;
         private Item? weapon;
         private string weaponName = string.Empty;
+        private int willpower;
 
         #endregion
 
@@ -1029,6 +1030,21 @@ namespace Remizione
             {
                 if (value != weaponName)
                     weaponName = value;
+            }
+        }
+
+        // Willpower
+        public int Willpower
+        {
+            get => willpower;
+            set
+            {
+                if (value != willpower)
+                {
+                    willpower = value;
+                    if (willpower < 0)
+                        willpower = 0;
+                }
             }
         }
 

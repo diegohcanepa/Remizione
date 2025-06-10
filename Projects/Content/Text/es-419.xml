@@ -7,6 +7,8 @@
   <String Key="ActorProperty.Grace.Name">Gracia</String>
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Level.Name">Estado de Gracia</String>
+  <String Key="ActorProperty.Willpower.Description">La fuerza de voluntad exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
+  <String Key="ActorProperty.Willpower.Name">Fuerza de voluntad</String>
   <String Key="CombatOption.Attack">Atacar</String>
   <String Key="CombatOption.Guard">Defender</String>
   <String Key="CombatOption.UseItem">Usar item...</String>

@@ -83,6 +83,7 @@ namespace Remizione
             base.Enter();
             damageTaken = false;
             Owner.FaceToTarget();
+            Owner.Willpower -= 1;
         }
     }
 }

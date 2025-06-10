@@ -24,6 +24,7 @@ namespace Remizione
             Graphics.HardwareModeSwitch = false;
             GamePadDevice.Style = GamePadStyle.Xbox;
 
+            /*
             // The following lines restart your game through the Steam-client in case someone started it by double-clicking the exe.
             try
             {
@@ -40,6 +41,7 @@ namespace Remizione
                 //                    " It's likely not in the correct location. Refer to the README for more details.\n" + e);
                 Exit();
             }
+            */
         }
 
         #region Private members
@@ -66,6 +68,7 @@ namespace Remizione
         // OnInitialize
         protected override void OnInitialize()
         {
+            /*
             try
             {
                 if (SteamAPI.Init())
@@ -78,6 +81,7 @@ namespace Remizione
             {
                 Console.WriteLine(e);
             }
+            */
 
             base.OnInitialize();
         }
@@ -95,10 +99,10 @@ namespace Remizione
             }
 #endif
 
+            /*
             if (IsSteamRunning)
-            {
                 SteamAPI.RunCallbacks();
-            }
+            */
         }
 
         #endregion
