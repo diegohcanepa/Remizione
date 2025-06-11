@@ -24,7 +24,9 @@ namespace Remizione
                     actorTarget.FaceTo(Actor);
 
                 Actor.FastMove = true;
-                Actor.MoveTo(target.GetApproachPosition(Actor, false));
+                var destination = target.GetApproachPosition(Actor, false);
+                Actor.MoveTo(destination);
+                Actor.Willpower -= Actor.Stats.GetWillpowerMovementCost(Vector2.Distance(Actor.Position, destination));
             }
         }
 

@@ -293,11 +293,6 @@
             <key type="filename">Unredeemed-assets/Death09.png</key>
             <key type="filename">Unredeemed-assets/Death10.png</key>
             <key type="filename">Unredeemed-assets/Death11.png</key>
-            <key type="filename">Unredeemed-assets/Death12.png</key>
-            <key type="filename">Unredeemed-assets/Death13.png</key>
-            <key type="filename">Unredeemed-assets/Death14.png</key>
-            <key type="filename">Unredeemed-assets/Death15.png</key>
-            <key type="filename">Unredeemed-assets/Death16.png</key>
             <key type="filename">Unredeemed-assets/Fatigue01.png</key>
             <key type="filename">Unredeemed-assets/Fatigue02.png</key>
             <key type="filename">Unredeemed-assets/Fatigue03.png</key>

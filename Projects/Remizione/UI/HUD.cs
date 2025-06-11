@@ -144,13 +144,11 @@ namespace Remizione
                     cycleMeter.Draw(gameTime);
             }
 
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            statusText.Draw(gameTime);
             if (session.IsCurrentScene)
-            {
-                Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-                statusText.Draw(gameTime);
                 sentence.Draw(gameTime);
-                Game.SpriteBatch.End();
-            }
+            Game.SpriteBatch.End();
 
             if (session.Player != null && session.FullHUD)
             {
