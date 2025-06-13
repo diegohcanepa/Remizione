@@ -10,12 +10,14 @@ namespace Remizione
     public sealed class PlayerInputHandler<T> : InputHandler where T : Actor
     {
         //private bool inventoryLocked;
+        private InventoryScene inventoryScene;
 
         // Constructor
         public PlayerInputHandler(T actor, PlayerIndex playerIndex)
             : base(playerIndex)
         {
             this.Actor = actor;
+            this.inventoryScene = new(actor);
         }
 
         #region Private members
@@ -23,6 +25,13 @@ namespace Remizione
         // HandleGamePadInput
         private HandleInputResult HandleGamePadInput()
         {
+            // Inventory
+            if (InputBindings.ShowInventory.IsPressed(PlayerIndex.One))
+            {
+                inventoryScene.SceneController.Push();
+                return HandleInputResult.Handled;
+            }
+
             // Interaction
             if (Actor.InteractiveTarget != null && InputBindings.Interact.IsPressed(PlayerIndex.One))
             {

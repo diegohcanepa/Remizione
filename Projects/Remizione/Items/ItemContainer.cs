@@ -138,6 +138,46 @@ namespace Remizione
         // RequiresUpdate
         public bool RequiresUpdate { get; private set; }
 
+        // Select
+        public bool Select(Item item)
+        {
+            if (items.Contains(item))
+            {
+                SelectedItem = item;
+                SelectedIndex = items.IndexOf(item);
+                return true;
+            }
+            else
+                return false;
+        }
+
+        // SelectNext
+        public void SelectNext()
+        {
+            if (items.Count == 0)
+                return;
+
+            if (SelectedItem == null)
+            {
+                if (items.Count > 0)
+                    Select(items[0]);
+            }
+            else if (items.Count > 1)
+            {
+                var index = items.IndexOf(SelectedItem);
+                if (index == items.Count - 1)
+                    Select(items[0]);
+                else
+                    Select(items[index + 1]);
+            }
+        }
+
+        // SelectedIndex
+        public int SelectedIndex { get; private set; }
+
+        // SelectedItem
+        public Item? SelectedItem { get; private set; }
+
         // SetSerializationData
         public void SetSerializationData(string data)
         {

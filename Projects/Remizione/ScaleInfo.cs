@@ -98,5 +98,12 @@ namespace Remizione
             internal static Vector2 Medium { get; } = new(.75f);
             internal static Vector2 Large { get; } = Vector2.One;
         }
+
+        // UIItem
+        internal static class UIItem
+        {
+            internal static Vector2 Active { get; } = new Vector2(.8f);
+            internal static Vector2 Inactive { get; } = new Vector2(.6f);
+        }
     }
 }

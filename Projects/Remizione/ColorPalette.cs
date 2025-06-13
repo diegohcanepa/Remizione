@@ -149,5 +149,12 @@ namespace Remizione
 
         // UIControlShadow
         internal static Color UIControlShadow { get; } = Color.Black * .5f;
+
+        // UIItem
+        internal static class UIItem
+        {
+            internal static Color Active { get; } = Color.White;
+            internal static Color Inactive { get; } = Color.White * .5f;
+        }
     }
 }

@@ -53,6 +53,8 @@ namespace Remizione
             this.LocalizedName = Localization.GetItemName(this);
             this.Sound = sound;
             this.UseInterval = useInterval;
+
+            this.Image = Atlases.UI.GetImage(Name);
         }
 
         #endregion
@@ -87,6 +89,9 @@ namespace Remizione
 
         // HP
         public DiceExpression? HP { get; }
+
+        // Image
+        public AtlasImage? Image { get; }
 
         // IsStackable
         public bool IsStackable => Maximum > 1;

@@ -30,7 +30,7 @@ namespace Remizione.Scripting
 
             var metaItem = MetaItem.Find(pickupItem.StaticName);
 
-            if (!actor.Session.InventoryButton)
+            if (!actor.Session.InventoryEnabled)
             {
                 actor.Session.HUD.Log.Show(LogMessage.NoInventoryBag, true);
                 return;

@@ -236,6 +236,14 @@
                 <false/>
             </struct>
             <key type="filename">Inventory-assets/InventorySlotSelection.png</key>
+            <key type="filename">Items-assets/Battery.png</key>
+            <key type="filename">Items-assets/Chili.png</key>
+            <key type="filename">Items-assets/Cross.png</key>
+            <key type="filename">Items-assets/Duck.png</key>
+            <key type="filename">Items-assets/Lockpick.png</key>
+            <key type="filename">Items-assets/MissingItem.png</key>
+            <key type="filename">Items-assets/Ticket.png</key>
+            <key type="filename">UI-assets/ItemSlot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -868,21 +876,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UIIcons-assets/WillpowerIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,7,7</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,7,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">XboxControls-assets/XboxLeftShoulder.png</key>
             <key type="filename">XboxControls-assets/XboxRightShoulder.png</key>
             <struct type="IndividualSpriteSettings">
@@ -915,6 +908,7 @@
                     <filename>UIIcons-assets</filename>
                     <filename>MouseCursors-assets</filename>
                     <filename>HUDButtons-assets</filename>
+                    <filename>Items-assets</filename>
                 </array>
             </struct>
         </map>

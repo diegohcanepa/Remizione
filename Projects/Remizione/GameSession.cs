@@ -9,7 +9,6 @@ using Remizione.Scripting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Xml;
 
 namespace Remizione
@@ -30,7 +29,6 @@ namespace Remizione
         private readonly GiftsScene giftsScene;
         private bool inGameMenuLocked;
         private readonly InGameMenuScene inGameMenuScene;
-        private bool inventoryButton;
         private readonly OldInventoryScene inventoryScene;
         private readonly LootScene lootScene;
         private Actor? player;
@@ -111,13 +109,6 @@ namespace Remizione
 
             // No active player
             if (Player == null || Player.HasSpeechBubble)
-            {
-                MouseCursor.Instance.State = MouseCursorState.Arrow;
-                return;
-            }
-
-            // Arrow
-            if (HUD.IsMouseOverToolbarButton())
             {
                 MouseCursor.Instance.State = MouseCursorState.Arrow;
                 return;
@@ -223,9 +214,6 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
-            if (HUD.HandleInput(gameTime) == HandleInputResult.Handled)
-                return HandleInputResult.Handled;
-
             if (inGameMenuLocked && InputBindings.InGameMenu.IsKeyUp())
                 inGameMenuLocked = false;   
 
@@ -301,9 +289,9 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(FullHUD)]?.Value is string fullHUDValue)
                 FullHUD = XmlConvert.ToBoolean(fullHUDValue);
 
-            // InventoryButton
-            if (sessionNode.Attributes[nameof(InventoryButton)]?.Value is string inventoryButtonValue)
-                InventoryButton = XmlConvert.ToBoolean(inventoryButtonValue);
+            // InventoryEnabled
+            if (sessionNode.Attributes[nameof(InventoryEnabled)]?.Value is string inventoryEnabledValue)
+                InventoryEnabled = XmlConvert.ToBoolean(inventoryEnabledValue);
 
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
@@ -416,8 +404,8 @@ namespace Remizione
             // CycleCount
             output.WriteAttributeString(nameof(Environment.CycleCount), XmlConvert.ToString(Environment.CycleCount));
 
-            // InventoryButton
-            output.WriteAttributeString(nameof(InventoryButton), XmlConvert.ToString(InventoryButton));
+            // InventoryEnabled
+            output.WriteAttributeString(nameof(InventoryEnabled), XmlConvert.ToString(InventoryEnabled));
 
             // NextRainCooldown
             output.WriteAttributeString(nameof(NextRainCooldown), XmlConvert.ToString(NextRainCooldown));
@@ -488,20 +476,9 @@ namespace Remizione
         // HUD
         public HUD HUD { get; }
 
-        // InventoryButton
+        // InventoryEnabled
         [ScriptProperty]
-        public bool InventoryButton
-        {
-            get => inventoryButton;
-            set
-            {
-                if (value != inventoryButton)
-                {
-                    inventoryButton = value;
-                    HUD.InvalidateToolbar();
-                }
-            }
-        }
+        public bool InventoryEnabled { get; set; }
 
         // LightingSystem
         [ScriptProperty]

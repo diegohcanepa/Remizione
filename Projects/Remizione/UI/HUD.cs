@@ -10,7 +10,7 @@ namespace Remizione
     /// <summary>
     /// HUD
     /// </summary>
-    public sealed class HUD : GameObject, IInputHandler
+    public sealed class HUD : GameObject
     {
         #region Private fields
 
@@ -21,7 +21,6 @@ namespace Remizione
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
         private readonly TextSprite statusText;
-        private readonly UIToolbar toolbar;
 
         #endregion
 
@@ -69,9 +68,6 @@ namespace Remizione
                 Position = Screen.Area.GetPoint(RectanglePoint.Top, 0, 8),
                 Scale = ScaleInfo.Text.VeryLarge
             };
-
-            // Toolbar
-            toolbar = new UIToolbar(session);
         }
 
         #endregion
@@ -96,11 +92,7 @@ namespace Remizione
             prompt.Draw(gameTime);
 
             if (session.Player != null && session.FullHUD)
-            {
                 //grace.Draw(gameTime);
-                if (session.IsCurrentScene)
-                    toolbar.Draw(gameTime);
-            }
 
             Log.Draw(gameTime);
 
@@ -118,7 +110,6 @@ namespace Remizione
             playerStats.Update(gameTime);
             prompt.Update(gameTime);
             cycleMeter.Update(gameTime);
-            toolbar.Update(gameTime);
             statusText.Update(gameTime);
 
             if (session.Player != null)
@@ -136,21 +127,6 @@ namespace Remizione
 
         // DestinationMark
         public DestinationMark DestinationMark { get; }
-
-        // HandleInput
-        public HandleInputResult HandleInput(GameTime gameTime)
-        {
-            if (toolbar.HandleInput(gameTime) == HandleInputResult.Handled)
-                return HandleInputResult.Handled;
-
-            return HandleInputResult.Unhandled;
-        }
-
-        // InvalidateToolbar
-        public void InvalidateToolbar() => toolbar.Invalidate();
-
-        // IsMouseOverToolbarButton
-        public bool IsMouseOverToolbarButton() => toolbar.GetHoveredButton() != UIToolbarButton.None;
 
         // Log
         public UILog Log { get; }

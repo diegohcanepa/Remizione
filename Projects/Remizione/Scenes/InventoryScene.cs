@@ -5,6 +5,7 @@ using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 
 namespace Remizione
 {
@@ -16,7 +17,6 @@ namespace Remizione
         #region Constants
 
         private const int slotHeight = 22;
-        private const int slotStep = 24;
         private const int slotWidth = 18;
         private const int tweenDuration = 300;
 
@@ -28,20 +28,18 @@ namespace Remizione
         private readonly ImageSprite bottomGradient;
         private readonly UIControl buttonClose;
         private readonly UIControl buttonSelect;
-        private readonly UIContextMenu contextMenu;
+        //private readonly UIContextMenu contextMenu;
         private Item? combineItem;
         private Vector2 combineItemOriginalPosition;
-        private readonly ImageSprite emptySlot;
         private readonly FloatTween fadeTween = new();
         private readonly TextSprite itemDescription;
-        private Vector2[] itemPositions = new Vector2[0];
-        private readonly UIControl itemShortcutButton;
         private float lastKnownAmount;
-        private float lastKnownHitpoints;
         private bool moved;
         private readonly OptionKind[] options = new OptionKind[4];
         private readonly ImageSprite prohibitionMark;
+        private readonly ImageSprite[] slots = new ImageSprite[20];
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 200 };
+        private readonly List<UIItem> visualItems = new() { Capacity = 20 };
 
         #endregion
 
@@ -53,21 +51,39 @@ namespace Remizione
         {
             this.Owner = owner;
 
+            for (var i = 0; i < slots.Length; i++)
+            {
+                slots[i] = new(owner.Game, Atlases.UI.ItemSlot)
+                {
+                    PivotOrigin = RectanglePoint.Middle,
+                    Scale = ScaleInfo.UIElement.Small
+                };
+            }
+
+            for (var i = 0; i < visualItems.Capacity; i++)
+            {
+                visualItems.Add(new UIItem(owner.Game));
+            }
+
             // Context menu
-            contextMenu = new UIContextMenu(owner.Game);
+            //contextMenu = new UIContextMenu(owner.Game);
 
             // Close button
             buttonClose = new UIControl(owner.Game, InputBindings.Close)
             {
+                AllowContainer = true,
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom),
+                Small = true,
             };
 
             // Select button
             buttonSelect = new UIControl(Game, InputBindings.Select)
             {
+                AllowContainer = true,
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -12),
+                Small = true,
             };
 
             // Bottom gradient
@@ -76,13 +92,6 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
                 Scale = new Vector2(1, 1.2f)
-            };
-
-            // Empty slot
-            emptySlot = new ImageSprite(owner.Game, Atlases.UI.EmptyInventorySlot)
-            {
-                Color = Color.White * .5f,
-                PivotOrigin = RectanglePoint.Middle
             };
 
             // Item description
@@ -109,6 +118,7 @@ namespace Remizione
         // DoMoveOption
         private void DoMoveOption()
         {
+            /*
             moved = true;
 
             if (Owner.SelectedItem == null)
@@ -143,16 +153,20 @@ namespace Remizione
             Owner.Session.HUD.TopMessage.Hide();
 
             InputManager.Suspend(tweenDuration);
+            */
         }
 
         // DrawItems
         private void DrawItems(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
+            Game.SpriteBatch.Begin(Game.Camera);
 
-            for (int i = 0; i < Owner.Children.Count; i++)
+            for (int i = 0; i < slots.Length; i++)
             {
-                if (Owner.Children[i] is Item item)
+                slots[i].Draw(gameTime);
+
+                /*
+                if (visualItems[i] is UIItem item)
                 {
                     if (item == combineItem)
                     {
@@ -168,6 +182,7 @@ namespace Remizione
                         prohibitionMark.Draw(gameTime);
                     }
                 }
+                */
             }
 
             Game.SpriteBatch.End();
@@ -184,6 +199,7 @@ namespace Remizione
         // InvalidateContextMenu
         private void InvalidateContextMenu()
         {
+            /*
             contextMenu.Clear();
 
             Array.Fill(options, OptionKind.None);
@@ -208,13 +224,11 @@ namespace Remizione
                 {
                     if (Owner.Target == null || Owner.Target.InteractionMode == OperationMode.Manual)
                     {
-                        /*
                         var text = VladUtils.EncodeUseWithKey(Owner.Target);
                         var menuOption = contextMenu.AddOption(OptionKind.UseWith.ToString(), text, Atlases.UI.UseWithIcon);
                         menuOption.IsDisabled = Owner.Target == null;
                         options[index] = OptionKind.UseWith;
                         index++;
-                        */
                     }
                 }
             }
@@ -222,23 +236,19 @@ namespace Remizione
             // Combine
             if (combineItem != item)
             {
-                /*
                 if (item.AllowCombine || combineItem != null)
                 {
                     var menuOption = contextMenu.AddOption(OptionKind.Combine.ToString(), VladUtils.EncodeVerbKey(Verb.Combine), Atlases.UI.CombineIcon);
                     menuOption.IsDisabled = Owner.Children.Count <= 1 || !item.AllowCombine;
                     options[index] = OptionKind.Combine;
                 }
-                */
             }
 
             // Move
             if (combineItem == null && Owner.Children.Count > 1)
             {
-                /*
                 contextMenu.AddOption(OptionKind.Move.ToString(), Localization.GetValue(Verb.Move), Atlases.UI.MoveIcon);
                 options[index] = OptionKind.Move;
-                */
             }
 
             Vector2 pos;
@@ -248,10 +258,8 @@ namespace Remizione
             pos.X = itemPositions[Owner.SelectedItemIndex].X - 12;
             pos.Y = 212 - contextMenu.Height;
 
-            /*
             if (combineItem != null)
                 pos.Y -= slotHeight * ScaleInfo.ItemInventoryInactiveState.Y + 5;
-            */
 
             contextMenu.Position = pos;
 
@@ -260,11 +268,14 @@ namespace Remizione
                 moved = false;
                 contextMenu.Last();
             }
+            
+            */
         }
 
         // InvalidateContextMenuTitle
         private void InvalidateContextMenuTitle()
         {
+            /*
             if (Owner.SelectedItem is Item item)
             {
                 var title = item.GetLocalizedDisplayName();
@@ -278,14 +289,15 @@ namespace Remizione
 
                 contextMenu.Title = title;
             }
+            */
         }
 
         // InvalidateItemStats
         private void InvalidateItemStats()
         {
+            /*
             var item = Owner.SelectedItem;
 
-            /*
             if (item == null || string.IsNullOrWhiteSpace(item.DisplayName))
                 itemDescription.Text = Localization.GetValue(MessageKey.InventoryEmpty);
             else
@@ -301,14 +313,12 @@ namespace Remizione
         // LayoutItems
         private void LayoutItems()
         {
-            foreach (var item in Owner.Children.OfType<Item>())
+            for (var i = 0; i < visualItems.Count; i++)
             {
-                item.ChangeVisualState(ItemVisualState.Inactive, true);
-            }
+                if (i == slots.Length)
+                    break;
 
-            for (int i = 0; i < Owner.Children.Count; i++)
-            {
-                Owner.Children[i].Position = itemPositions[i];
+                visualItems[i].Position = slots[i].Position;
             }
 
             Invalidate();
@@ -317,25 +327,28 @@ namespace Remizione
         // LayoutSlots
         private void LayoutSlots()
         {
-            itemPositions = new Vector2[Owner.Children.Count];
-            var pos = new Vector2((Screen.NativeWidth - (slotWidth * Owner.Children.Count) - (4 * (Owner.Children.Count - 1))) / 2, 230);
-            for (int i = 0; i < itemPositions.Length; i++)
+            const int spacing = 2;
+            var maximum = Owner.Inventory.Size;
+            var imageWidth = slots[0].BoundingBox.Width;
+            var totalWidth = (maximum * imageWidth) + ((maximum - 1) * spacing);
+            var start = (Screen.NativeWidth - totalWidth) / 2;
+
+            for (int i = 0; i < Owner.Inventory.Size; i++)
             {
-                itemPositions[i] = pos;
-                pos.X += slotStep;
+                var x = start + (i * (imageWidth + spacing));
+                slots[i].Position = new(x, 100);
             }
         }
 
         // MoveSelection
         private bool MoveSelection(int direction)
         {
+            /*
             if (direction == 0 || Owner.Children.Count <= 1)
                 return false;
 
-            /*
             if (Owner.SelectedItem is Item item && item != combineItem)
                 item.ChangeVisualState(ItemVisualState.Inactive, false);
-            */
 
             var cycled = false;
 
@@ -360,7 +373,6 @@ namespace Remizione
                     Owner.SelectedItemIndex--;
             }
 
-            /*
             if (Owner.SelectedItem is Item selectedItem)
             {
                 if (selectedItem != combineItem)
@@ -393,12 +405,11 @@ namespace Remizione
         // PerformCombineOutcome
         private void PerformCombineOutcome()
         {
+            /*
             var item = Owner.SelectedItem;
 
             if (item == null || combineItem == null)
                 return;
-
-            /*
 
             // Item1+Item2
             var script = Owner.Session.ScriptLibrary.GetCompoundOutcome(combineItem.StaticName, item.StaticName);
@@ -424,6 +435,7 @@ namespace Remizione
             */
         }
 
+        /*
         // PerformOutcome
         private bool PerformOutcome()
         {
@@ -441,11 +453,9 @@ namespace Remizione
             if (outcome == null)
                 outcome = Owner.Session.ScriptLibrary.GetOutcome(item.Name + ScriptSyntax.ScriptCompoundSeparator + ScriptSyntax.AnyEntityOp);
 
-            /*
             // Default unhandled
             if (outcome == null)
                 outcome = Owner.Session.ScriptLibrary.GetRoutine(RoutineNames.DefaultUnhandledOutcome);
-            */
 
             if (outcome != null)
             {
@@ -456,10 +466,12 @@ namespace Remizione
 
             return outcome != null;
         }
+        */
 
         // PerformMenuOption
         private void PerformMenuOption()
         {
+            /*
             if (!contextMenu.HasOptions || Owner.SelectedItem == null || contextMenu.SelectedOption?.Key == null)
                 return;
 
@@ -467,13 +479,11 @@ namespace Remizione
             if (item == null)
                 return;
 
-            /*
             if (contextMenu.SelectedOption.IsDisabled || item.IsShaking)
             {
                 SoundManager.Play(SoundNames.InputError.ToString());
                 return;
             }
-            */
 
             var optionKind = Enum.Parse<OptionKind>(contextMenu.SelectedOption.Key);
 
@@ -487,7 +497,6 @@ namespace Remizione
             // Combine
             if (optionKind == OptionKind.Combine)
             {
-                /*
                 if (combineItem == null)
                 {
                     combineItem = Owner.SelectedItem;
@@ -505,7 +514,6 @@ namespace Remizione
                 }
                 else
                     PerformCombineOutcome();
-                */
 
                 return;
             }
@@ -519,11 +527,14 @@ namespace Remizione
 
             else
                 PerformVerbOutcome();
+
+            */
         }
 
         // PerformVerbOutcome
         private void PerformVerbOutcome()
         {
+            /*
             var item = Owner.SelectedItem;
             if (item == null)
                 return;
@@ -546,6 +557,7 @@ namespace Remizione
                 Owner.SelectedItem?.ChangeVisualState(ItemVisualState.Active, true);
                 Invalidate();
             }
+            */
         }
 
         // SelectNextItem
@@ -557,6 +569,7 @@ namespace Remizione
         // TerminateCombineMode
         private void TerminateCombineMode()
         {
+            /*
             if (combineItem != null)
             {
                 Owner.SelectItem(combineItem);
@@ -565,6 +578,7 @@ namespace Remizione
 
             LayoutItems();
             Owner.SelectedItem?.ChangeVisualState(ItemVisualState.Active, true);
+            */
         }
 
         #endregion
@@ -592,23 +606,20 @@ namespace Remizione
             DrawTexts(gameTime);
 
             // Context Menu
-            if (CanHandleInput && !fadeTween.IsRunning)
-                contextMenu.Draw(gameTime);
+            //if (CanHandleInput && !fadeTween.IsRunning)
+              //  contextMenu.Draw(gameTime);
 
             buttonClose.Draw(gameTime);
             buttonSelect.Draw(gameTime);
-
-            if (itemShortcutButton.InputBinding != null)
-                itemShortcutButton.Draw(gameTime);
         }
 
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
+            /*
             if (contextMenu.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            /*
             // Previous item
             if (InputBindings.MenuLeft.IsPressed(VladInputHelper.PlayerIndex) || stick.IsLeft(VladInputHelper.PlayerIndex))
                 SelectPreviousItem();
@@ -657,7 +668,7 @@ namespace Remizione
         {
             base.OnLoadContent();
 
-            Owner.Session.HUD.BottomMessage.Hide();
+            //Owner.Session.HUD.BottomMessage.Hide();
 
             LayoutSlots();
 
@@ -665,18 +676,15 @@ namespace Remizione
 
             combineItem = null;
 
-            // Load items
-            if (Owner.Children.Count > 0)
+            // Populate items
+            for (int i = 0; i < Owner.Inventory.Items.Count; i++)
             {
-                for (int i = 0; i < Owner.Children.Count; i++)
-                {
-                    Owner.Children[i].LoadContent();
-                }
+                visualItems[i].Item = Owner.Inventory.Items[i];
             }
 
             LayoutItems();
 
-            Owner.SelectedItem?.ChangeVisualState(ItemVisualState.Active, true);
+            //Owner.SelectedItem?.ChangeVisualState(ItemVisualState.Active, true);
 
             Invalidate();
 
@@ -688,7 +696,13 @@ namespace Remizione
         {
             base.OnUnloadContent();
 
+            for (var i = 0; i < visualItems.Count; i++)
+            {
+                visualItems[i].Reset();
+            }
+
             // Unload items
+            /*
             if (Owner.Children.Count > 0)
             {
                 for (int i = 0; i < Owner.Children.Count; i++)
@@ -696,21 +710,19 @@ namespace Remizione
                     Owner.Children[i].UnloadContent();
                 }
             }
+            */
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             fadeTween.Update(gameTime);
-            contextMenu.Update(gameTime);
+            //contextMenu.Update(gameTime);
             bottomGradient.Update(gameTime);
             stick.Stick = GamePadThumbStick.Left;
             stick.Update(gameTime);
             buttonClose.Update(gameTime);
             buttonSelect.Update(gameTime);
-
-            if (itemShortcutButton.InputBinding != null)
-                itemShortcutButton.Update(gameTime);
 
             itemDescription.Update(gameTime);
 
@@ -743,6 +755,6 @@ namespace Remizione
         }
 
         // Owner
-        public Actor Owner { get; }
+        public Actor Owner { get; set; }
     }
 }
