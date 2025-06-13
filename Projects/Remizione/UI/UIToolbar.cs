@@ -66,7 +66,7 @@ namespace Remizione.UI
         // Invalidate
         public void Invalidate()
         {
-            var pos = Screen.SafeArea.GetPoint(RectanglePoint.LeftBottom, 4, -4);
+            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 4, -4);
 
             if (session.InventoryButton)
             {

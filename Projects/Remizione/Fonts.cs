@@ -29,7 +29,7 @@ namespace Remizione
 
             Common.SpriteFont = assets[CommonAssetName];
             Common.SpriteFont.LineSpacing += 2;
-            Common.SpriteFont.Spacing = 5;
+            Common.SpriteFont.Spacing = 2;
 
             CommonOutline.SpriteFont = assets[CommonOutlineAssetName];
             CommonOutline.SpriteFont.LineSpacing += 2;
@@ -51,14 +51,14 @@ namespace Remizione
         }
 
         // Common
-        // Alkhemikal, Regular, 48, Antialiased
+        // SB Navigator, Regular, 48, Antialiased
         public static Font Common { get; } = new Font();
 
         // CommonAssetName
         public const string CommonAssetName = "Common";
 
         // CommonOutine
-        // Alkhemikal, Regular, 48, Antialiased, Outline 6
+        // SB Navigator, Regular, 48, Antialiased, Outline 6
         public static Font CommonOutline { get; } = new Font();
 
         // CommonOutlineAssetName

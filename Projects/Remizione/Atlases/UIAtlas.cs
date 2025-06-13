@@ -45,9 +45,12 @@ namespace Remizione
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
             SpiritIcon = this[nameof(SpiritIcon)];
+            UIControlContainerEdgeLarge = this[nameof(UIControlContainerEdgeLarge)];
+            UIControlContainerPatternLarge = this[nameof(UIControlContainerPatternLarge)];
+            UIControlContainerEdgeSmall = this[nameof(UIControlContainerEdgeSmall)];
+            UIControlContainerPatternSmall = this[nameof(UIControlContainerPatternSmall)];
             UIControlShade = this[nameof(UIControlShade)];
             UnreadSign = this[nameof(UnreadSign)];
-            WillpowerIcon = this[nameof(WillpowerIcon)];
         }
 
         // BottomGradient
@@ -149,13 +152,22 @@ namespace Remizione
         // SpiritIcon
         public AtlasImage SpiritIcon { get; }
 
+        // UIControlContainerEdgeLarge
+        public AtlasImage UIControlContainerEdgeLarge { get; }
+
+        // UIControlContainerPatternLarge
+        public AtlasImage UIControlContainerPatternLarge { get; }
+
+        // UIControlContainerEdgeSmall
+        public AtlasImage UIControlContainerEdgeSmall { get; }
+
+        // UIControlContainerPatternSmall
+        public AtlasImage UIControlContainerPatternSmall { get; }
+
         // UIControlShade
         public AtlasImage UIControlShade { get; }
 
         // UnreadSign
         public AtlasImage UnreadSign { get; }
-
-        // WillpowerIcon
-        public AtlasImage WillpowerIcon { get; }
     }
 }

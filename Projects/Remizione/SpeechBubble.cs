@@ -246,6 +246,9 @@ namespace Remizione
             {
                 if (text.TypingState == RunningState.Stopped)
                 {
+                    if (Actor.IsStandingOrMoving)
+                        Actor.StopTalking();
+
                     // Made one last scale tween, so pipe ends in a 1:1 scale
                     if (pipeTween.IsRunning)
                         pipeTween.Start(pipeTween.Style, pipe.Scale.Y, 1, pipeTween.Duration);
@@ -256,6 +259,9 @@ namespace Remizione
                 {
                     State = SpeechBubbleState.Idle;
                     text.StopTyping();
+
+                    if (Actor.IsStandingOrMoving)
+                        Actor.StopTalking();
                 }
             }
 
@@ -407,6 +413,9 @@ namespace Remizione
             Shake(text);
 
             arrowTween.Start(TweenStyle.QuinticIn, 0, .3f, 150, -1);
+
+            if (Actor.IsStandingOrMoving)
+                Actor.StartTalking();
 
             inputCooldown = 100;
         }

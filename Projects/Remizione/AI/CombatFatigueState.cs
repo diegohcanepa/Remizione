@@ -33,10 +33,6 @@ namespace Remizione
                 tween.Update(gameTime);
                 Actor.Faith = (int)tween.CurrentValue;
             }
-            else if (Actor.CanChangeState)
-            {
-                StateMachine.ExecuteAction(CombatStateSignal.EndTurn);
-            }
         }
     }
 }

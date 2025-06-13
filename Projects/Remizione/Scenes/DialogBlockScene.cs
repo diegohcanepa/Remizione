@@ -45,7 +45,7 @@ namespace Remizione
             this.buttonQuit = new UIControl(Game, InputBindings.Exit)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.RightBottom),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom),
             };
 
             fadeTween.Start(TweenStyle.Linear, 0, 1, 800);
@@ -98,7 +98,7 @@ namespace Remizione
         private void Layout()
         {
             menu.X = 15;
-            menu.Y = Screen.SafeArea.Bottom - menu.BoundingBox.Height - 2;
+            menu.Y = Screen.HUDArea.Bottom - menu.BoundingBox.Height - 2;
 
             if (dialogBlock.AllowQuit)
             {

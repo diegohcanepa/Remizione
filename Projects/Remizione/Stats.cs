@@ -66,7 +66,6 @@ namespace Remizione
         {
             actor.MaxFaith = GetMaxFaith();
             actor.MaxHP = GetMaxHP();
-            actor.MaxWillpower = GetMaxWillpower();
         }
 
         // FaithGainPerLevel
@@ -119,23 +118,10 @@ namespace Remizione
             return actor.Level * (HPGainPerLevel + GetModifier(Stat.Fortitude));
         }
 
-        // GetMaxWillpower
-        public int GetMaxWillpower() => (Devotion + Mind + Fortitude) / 5;
-
         // GetModifier
         public int GetModifier(Stat stat)
         {
             return (GetStatValue(stat) - 10) / 2;
-        }
-
-        // GetWillpowerMovementCost
-        public int GetWillpowerMovementCost(float distance)
-        {
-            float distanciaSegment = 15f + (Fortitude * 2f);
-            var result = (int)MathF.Ceiling(distance / distanciaSegment);
-
-            // Verifica si hay suficiente willpower
-            return actor.Willpower < result ? 0 : result;
         }
 
         // GetStatValue

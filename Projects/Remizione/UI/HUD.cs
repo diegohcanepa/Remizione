@@ -17,8 +17,8 @@ namespace Remizione
         private readonly UICycleMeter cycleMeter;
         private readonly UIScore grace;
         private readonly UIDerivedStats playerStats;
+        private readonly UIPrompt prompt;
         private readonly ImageSprite savingIcon;
-        private readonly TextSprite sentence;
         private readonly GameSession session;
         private readonly TextSprite statusText;
         private readonly UIToolbar toolbar;
@@ -55,18 +55,11 @@ namespace Remizione
             {
                 HideZero = true,
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.RightBottom, -5, -15),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -5, -15),
             };
 
-            // Sentence
-            this.sentence = new TextSprite(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Terra,
-                MaximumWidth = (int)(Screen.NativeWidth * .8f),
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.Bottom, 0, -4),
-                Scale = ScaleInfo.Text.VeryLarge
-            };
+            // Prompt
+            this.prompt = new(session);
 
             // Message text
             this.statusText = new TextSprite(Game, Fonts.CommonOutline)
@@ -79,54 +72,6 @@ namespace Remizione
 
             // Toolbar
             toolbar = new UIToolbar(session);
-        }
-
-        #endregion
-
-        #region Private members
-
-        // FormatSentenceText
-        private static string FormatSentenceText(string name)
-        {
-            const string dots = "...";
-
-            int totalLength = dots.Length + name.Length + dots.Length;
-
-            Span<char> buffer = stackalloc char[totalLength];
-
-            // Copy prefix
-            dots.AsSpan().CopyTo(buffer);
-            int offset = dots.Length;
-
-            // Copy name
-            name.AsSpan().CopyTo(buffer.Slice(offset));
-            offset += name.Length;
-
-            // Copy suffix
-            dots.AsSpan().CopyTo(buffer.Slice(offset));
-
-            // Return string from buffer
-            return new string(buffer);
-        }
-
-        // UpdateSentence
-        private void UpdateSentence()
-        {
-            if (session.IsCurrentScene && MouseCursor.Instance.State != MouseCursorState.Wait &&
-                session.Player?.InteractiveTarget is GameThing target &&
-                (!session.TargetMode || target.CanBeTargeted))
-            {
-                if (target != sentence.Tag)
-                {
-                    sentence.Tag = target;
-                    sentence.Text = FormatSentenceText(target.LocalizedDisplayName);
-                }
-            }
-            else
-            {
-                sentence.Text = null;
-                sentence.Tag = null;
-            }
         }
 
         #endregion
@@ -146,13 +91,13 @@ namespace Remizione
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             statusText.Draw(gameTime);
-            if (session.IsCurrentScene)
-                sentence.Draw(gameTime);
             Game.SpriteBatch.End();
+
+            prompt.Draw(gameTime);
 
             if (session.Player != null && session.FullHUD)
             {
-                grace.Draw(gameTime);
+                //grace.Draw(gameTime);
                 if (session.IsCurrentScene)
                     toolbar.Draw(gameTime);
             }
@@ -171,10 +116,9 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             playerStats.Update(gameTime);
+            prompt.Update(gameTime);
             cycleMeter.Update(gameTime);
             toolbar.Update(gameTime);
-
-            UpdateSentence();
             statusText.Update(gameTime);
 
             if (session.Player != null)

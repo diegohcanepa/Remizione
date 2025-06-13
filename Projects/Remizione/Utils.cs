@@ -74,7 +74,7 @@ namespace Remizione
             {
                 controlList[i].PivotOrigin = RectanglePoint.LeftBottom;
                 controlList[i].X = x;
-                controlList[i].Y = Screen.SafeArea.Bottom;
+                controlList[i].Y = Screen.HUDArea.Bottom;
                 x += controlList[i].BoundingBox.Width + spacing;
             }
         }
@@ -82,7 +82,7 @@ namespace Remizione
         // LayoutControlsVertically
         public static void LayoutControlsVertically(UIControl[] controlList, float spacing)
         {
-            var pos = Screen.SafeArea.GetPoint(RectanglePoint.RightBottom);
+            var pos = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom);
 
             for (var i = 0; i < controlList.Length; i++)
             {

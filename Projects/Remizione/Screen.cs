@@ -13,13 +13,13 @@ namespace Remizione
         // Center
         public static Vector2 Center { get; } = new Vector2(NativeWidth / 2, NativeHeight / 2);
 
+        // HUDArea
+        public static Rectangle HUDArea { get; } = new(4, 4, NativeWidth - 8, NativeHeight - 8);
+
         // NativeHeight
         public const int NativeHeight = 135;
 
         // NativeWidth
         public const int NativeWidth = 240;
-
-        // SafeArea
-        public static Rectangle SafeArea { get; } = new(2, 2, NativeWidth - 4, NativeHeight - 4);
     }
 }

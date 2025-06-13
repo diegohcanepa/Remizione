@@ -31,7 +31,7 @@ namespace Remizione
         private bool inGameMenuLocked;
         private readonly InGameMenuScene inGameMenuScene;
         private bool inventoryButton;
-        private readonly InventoryScene inventoryScene;
+        private readonly OldInventoryScene inventoryScene;
         private readonly LootScene lootScene;
         private Actor? player;
         private Vector2? playerPosition;
@@ -53,7 +53,6 @@ namespace Remizione
             this.HUD = new HUD(this);
             this.RandomSeed = 10000;// RandomSeed = System.Environment.TickCount;
             //this.RandomSeed = System.Environment.TickCount;
-            this.CombatManager = new CombatManager(this);
 
             ObjectPools = new ObjectPools(this);
             OverlayTexts = new OverlayTextManager(game);
@@ -68,7 +67,7 @@ namespace Remizione
                 {
                     Color = ColorPalette.HighlightedText,
                     PivotOrigin = RectanglePoint.LeftBottom,
-                    Position = Screen.SafeArea.GetPoint(RectanglePoint.LeftBottom),
+                    Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom),
                     Scale = ScaleInfo.Text.Medium,
                 };
 
@@ -117,13 +116,6 @@ namespace Remizione
                 return;
             }
 
-            // Wait
-            if (Player.TurnState != CombatTurnState.WaitingInput && CombatManager.TurnList.Count >= 2)
-            {
-                MouseCursor.Instance.State = MouseCursorState.Wait;
-                return;
-            }
-
             // Arrow
             if (HUD.IsMouseOverToolbarButton())
             {
@@ -131,15 +123,7 @@ namespace Remizione
                 return;
             }
 
-            if (TargetMode)
-            {
-                if (Player.InteractiveTarget != null && Player.InteractiveTarget.CanBeTargeted)
-                    MouseCursor.Instance.State = MouseCursorState.TargetOn;
-                else
-                    MouseCursor.Instance.State = MouseCursorState.Target;
-            }
-            else
-                MouseCursor.Instance.State = Player.InteractiveTarget == null ? MouseCursorState.Cross : MouseCursorState.CrossOn;
+            MouseCursor.Instance.State = Player.InteractiveTarget == null ? MouseCursorState.Cross : MouseCursorState.CrossOn;
         }
 
         #endregion
@@ -278,10 +262,7 @@ namespace Remizione
         protected override void OnOutcomeCompleted(Thing thing)
         {
             if (Player != null)
-            {
                 Player.SuspendInteraction(500);
-                Player.EndTurn();
-            }
         }
 
         // OnPause
@@ -464,9 +445,6 @@ namespace Remizione
         // ClearOverlayTexts
         [ScriptMethod(CodingContext.Any)]
         public void ClearOverlayTexts() => OverlayTexts.Clear();
-
-        // CombatManager
-        public CombatManager CombatManager { get; }
 
         // DialogOptionId
         [ScriptProperty]
@@ -656,14 +634,9 @@ namespace Remizione
             if (Player?.InteractiveTarget == null)
                 return;
 
-            Player.InteractiveTarget.Inventory.Add(MetaItem.Find("Apple"), 3);
-
             lootScene.Target = Player.InteractiveTarget;
             Game.SceneManager.Push(lootScene);
         }
-
-        // TargetMode
-        public bool TargetMode { get; set; }
 
         // WorldVersion
         public int WorldVersion { get; set; } = 1;

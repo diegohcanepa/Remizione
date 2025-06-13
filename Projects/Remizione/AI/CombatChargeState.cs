@@ -23,10 +23,8 @@ namespace Remizione
                 if (target is Actor actorTarget && actorTarget.IsAlert)
                     actorTarget.FaceTo(Actor);
 
-                Actor.FastMove = true;
                 var destination = target.GetApproachPosition(Actor, false);
                 Actor.MoveTo(destination);
-                Actor.Willpower -= Actor.Stats.GetWillpowerMovementCost(Vector2.Distance(Actor.Position, destination));
             }
         }
 

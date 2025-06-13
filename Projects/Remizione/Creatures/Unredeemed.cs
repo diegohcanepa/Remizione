@@ -29,7 +29,7 @@ namespace Remizione.Creatures
         {
             base.OnUpdate(gameTime);
 
-            if (!Session.CombatManager.IsActive && !IsFollowingPath && !IsAlert)
+            if (!IsFollowingPath && !IsAlert)
             {
                 if (moveCooldown > 0)
                 {

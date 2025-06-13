@@ -25,7 +25,7 @@ namespace Remizione
         // Cycle
         internal static class Cycle
         {
-            internal static Color Indulgence { get; } = ColorPalette.Text.TerraDark;
+            internal static Color Indulgence { get; } = new(104, 111, 153);
             internal static Color Penance { get; } = new(157, 81, 81);
             internal static Color PenanceActive { get; } = new(180, 67, 67);
         }
@@ -85,9 +85,9 @@ namespace Remizione
         // SpeechBubble
         internal static class SpeechBubble
         {
-            internal static Color Fill { get; } = ColorPalette.Text.TerraDarkest;
+            internal static Color Fill { get; } = new(223, 224, 232);
             internal static Color Shadow { get; } = Color.Black * .2f;
-            internal static Color Text { get; } = ColorPalette.Text.Default;
+            internal static Color Text { get; } = new(27, 31, 33);
         }
 
         // HPMeter
@@ -108,7 +108,7 @@ namespace Remizione
         internal static class Text
         {
             internal static Color Dark { get; } = new(163, 122, 123);
-            internal static Color Default { get; } = new(148, 121, 123);
+            internal static Color Default { get; } = new(163, 167, 194);
             internal static Color Disabled { get; } = new(80, 76, 76);
             internal static Color Fill { get; } = new(15, 42, 63);
             internal static Color Green { get; } = new(59, 125, 79);

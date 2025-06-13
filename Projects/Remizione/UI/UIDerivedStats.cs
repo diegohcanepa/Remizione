@@ -16,7 +16,7 @@ namespace Remizione.UI
         private readonly int[] lastKnownValues;
         private readonly TextSprite[] maxValues;
         private readonly Vector2Tween[] scaleTweens;
-        private const int statCount = 3;
+        private const int statCount = 2;
         private readonly TextSprite[] values;
 
         // Constructor
@@ -47,17 +47,15 @@ namespace Remizione.UI
                 scaleTweens[i] = new Vector2Tween();
             }
 
-            icons = new ImageSprite[3];
+            icons = new ImageSprite[statCount];
             icons[0] = new ImageSprite(Game, Atlases.UI.SpiritIcon) { Scale = ScaleInfo.UIElement.Small };
             icons[1] = new ImageSprite(Game, Atlases.UI.FaithIcon) { Scale = ScaleInfo.UIElement.Small };
-            icons[2] = new ImageSprite(Game, Atlases.UI.WillpowerIcon) { Scale = ScaleInfo.UIElement.Small };
 
             icons[0].Position = new(4);
             icons[1].Position = icons[0].BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
-            icons[2].Position = icons[1].BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
 
-            this.maxValues = new TextSprite[3];
-            this.values = new TextSprite[3];
+            this.maxValues = new TextSprite[statCount];
+            this.values = new TextSprite[statCount];
 
             for (var i = 0; i < values.Length; i++)
             {
@@ -65,14 +63,14 @@ namespace Remizione.UI
                 {
                     Color = ColorPalette.StatMeter.CurrentValue,
                     PivotOrigin = RectanglePoint.Left,
-                    Scale = ScaleInfo.Text.VeryLarge
+                    Scale = ScaleInfo.Text.Huge
                 };
 
                 this.maxValues[i] = new TextSprite(Game, Fonts.CommonOutline)
                 {
                     Color = ColorPalette.StatMeter.MaximumValue,
                     PivotOrigin = RectanglePoint.Left,
-                    Scale = ScaleInfo.Text.Small
+                    Scale = ScaleInfo.Text.Medium
                 };
 
                 this.values[i].Position = icons[i].BoundingBox.GetPoint(RectanglePoint.Right, 1, .5f);
@@ -118,7 +116,6 @@ namespace Remizione.UI
             {
                 InvalidateCore(0, actor.HP, actor.MaxHP, animate);
                 InvalidateCore(1, actor.Faith, actor.MaxFaith, animate);
-                InvalidateCore(2, actor.Willpower, actor.MaxWillpower, animate);
             }
         }
 
@@ -135,16 +132,13 @@ namespace Remizione.UI
             Game.SpriteBatch.Begin(Game.Camera);
             icons[0].Draw(gameTime);
             icons[1].Draw(gameTime);
-            icons[2].Draw(gameTime);
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             values[0].Draw(gameTime);
             values[1].Draw(gameTime);
-            values[2].Draw(gameTime);
             maxValues[0].Draw(gameTime);
             maxValues[1].Draw(gameTime);
-            maxValues[2].Draw(gameTime);
             Game.SpriteBatch.End();
         }
 
@@ -154,7 +148,6 @@ namespace Remizione.UI
             Invalidate(true);
             values[0].Update(gameTime);
             values[1].Update(gameTime);
-            values[2].Update(gameTime);
         }
 
         #endregion
@@ -173,11 +166,9 @@ namespace Remizione.UI
                     {
                         lastKnownValues[0] = int.MinValue;
                         lastKnownValues[1] = int.MinValue;
-                        lastKnownValues[2] = int.MinValue;
 
                         lastKnownMaxValues[0] = int.MinValue;
                         lastKnownMaxValues[1] = int.MinValue;
-                        lastKnownMaxValues[2] = int.MinValue;
                     }
 
                     Invalidate(false);

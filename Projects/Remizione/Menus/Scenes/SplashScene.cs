@@ -73,7 +73,7 @@ namespace Remizione.Menus
         private void ShowGradientSpot()
         {
             TransitionManager.CurrentTransition.Out(FadeDuration);
-            gradientSpot.Position = Screen.SafeArea.GetPoint(RectanglePoint.Left);
+            gradientSpot.Position = Screen.HUDArea.GetPoint(RectanglePoint.Left);
             gradientSpot.Tweens.XTween = FloatTween.Create(TweenStyle.CubicIn, gradientSpot.X, 240, 3000, GoToNextScene);
         }
 

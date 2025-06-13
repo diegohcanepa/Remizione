@@ -92,6 +92,36 @@
 /processorParam:Quality=Best
 /build:Audio/FX/AppleBite.wav
 
+#begin Audio/FX/BlipA1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/BlipA1.wav;Audio/FX/BlipA1
+
+#begin Audio/FX/BlipA2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/BlipA2.wav;Audio/FX/BlipA2
+
+#begin Audio/FX/BlipA3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/BlipA3.wav;Audio/FX/BlipA3
+
+#begin Audio/FX/BlipB1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/BlipB1.wav;Audio/FX/BlipB1
+
+#begin Audio/FX/BlipB2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/BlipB2.wav;Audio/FX/BlipB2
+
 #begin Audio/FX/BodyFallMedium1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -104,17 +134,17 @@
 /processorParam:Quality=Best
 /build:Audio/FX/CycleHorn.wav;Audio/FX/CycleHorn
 
-#begin Audio/FX/FootstepGrass1.wav
+#begin Audio/FX/FootstepA1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/FX/FootstepGrass1.wav
+/build:Audio/FX/FootstepA1.wav;Audio/FX/FootstepA1
 
-#begin Audio/FX/FootstepGrass2.wav
+#begin Audio/FX/FootstepA2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/FX/FootstepGrass2.wav
+/build:Audio/FX/FootstepA2.wav;Audio/FX/FootstepA2
 
 #begin Audio/FX/FootstepWater1.wav
 /importer:WavImporter
@@ -314,17 +344,11 @@
 /processorParam:Quality=Best
 /build:Audio/FX/UISelect.wav
 
-#begin Audio/Music/Anger1.wav
+#begin Audio/Music/Track01.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Music/Anger1.wav
-
-#begin Audio/Music/Main.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/Main.wav
+/build:Audio/Music/Track01.wav;Audio/Music/Track01
 
 #begin Effects/Blur.fx
 /importer:EffectImporter

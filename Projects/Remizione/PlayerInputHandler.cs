@@ -23,8 +23,6 @@ namespace Remizione
         // HandleGamePadInput
         private HandleInputResult HandleGamePadInput()
         {
-            Actor.FastMove = true;
-
             // Interaction
             if (Actor.InteractiveTarget != null && InputBindings.Interact.IsPressed(PlayerIndex.One))
             {
@@ -68,20 +66,6 @@ namespace Remizione
 
             MouseCursor.Instance.AnimateClick();
 
-            // Attack
-            if (Actor.Session.TargetMode)
-            {
-                if (Actor.InteractiveTarget != null)
-                {
-                    if (Actor.Session.CombatManager.TurnList.Count == 0)
-                        Actor.Session.CombatManager.Start(Actor);
-                    Actor.DoAttackTurn();
-                }
-
-                return true;
-            }
-
-            Actor.FastMove = true;
             if (Actor.InteractiveTarget != null)
             {
                 Actor.ApproachAndInteract(Actor.InteractiveTarget);
@@ -89,11 +73,7 @@ namespace Remizione
             else
             {
                 var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
-
-                if (Actor.Session.CombatManager.TurnList.Count > 1)
-                    Actor.DoMoveTurn(destination);
-                else
-                    Actor.MoveTo(destination);
+                Actor.MoveTo(destination);
             }
 
             return true;
@@ -103,10 +83,6 @@ namespace Remizione
         private bool TestMouseRightButtonClick()
         {
             var result = InputManager.DefaultPlayer.Mouse.IsRightButtonPressed();
-
-            if (result)
-                Actor.Session.TargetMode = !Actor.Session.TargetMode;
-
             return result;
         }
 

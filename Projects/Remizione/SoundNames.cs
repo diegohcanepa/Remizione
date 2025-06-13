@@ -9,6 +9,7 @@
         internal const string LootBagPickup = nameof(LootBagPickup);
         internal const string MenuDiscardItem = nameof(MenuDiscardItem);
         internal const string MenuSelect = nameof(MenuSelect);
+        internal const string Prompt = nameof(Prompt);
         internal const string Rain = nameof(Rain);
         internal const string ThrowablePickup = nameof(ThrowablePickup);
         internal const string Thunder = nameof(Thunder);

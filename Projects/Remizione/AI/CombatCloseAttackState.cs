@@ -28,8 +28,6 @@ namespace Remizione
         {
             if (attackLaunched)
             {
-                if (!Actor.IsAttacking)
-                    StateMachine.ExecuteAction(CombatStateSignal.EndTurn);
             }
             else
             {

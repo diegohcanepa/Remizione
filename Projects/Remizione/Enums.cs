@@ -15,13 +15,10 @@ namespace Remizione
     public enum AttackRollStat { Strength, Dexterity }
 
     // CombatStateSignal
-    public enum CombatStateSignal { Attack, CloseAttack, Decide, EndTurn, Fatigue, Move }
+    public enum CombatStateSignal { Attack, CloseAttack, Decide, Fatigue, Move }
 
     // CombatStateName
     public enum CombatStateName { Charge, CloseAttack, Decide, Fatigue, Move }
-
-    // CombatTurnState
-    public enum CombatTurnState { None, Waiting, WaitingInput, Busy }
 
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Videos, Voices, System, Text }
@@ -58,6 +55,9 @@ namespace Remizione
 
     // ItemProperty
     public enum ItemProperty { BaseDamage, Passive }
+
+    // ItemVisualState
+    public enum ItemVisualState { Active, Inactive, Combine, Combined }
 
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, Moon, MuzzleFlash, Outdoor, Lightning }

@@ -217,7 +217,7 @@ namespace Remizione
 
             // Create
             if (MetaItem.IsStackable && MetaItem.Action == ItemAction.Create)
-                return IsStackFull && actor != null && !actor.IsCombating;
+                return IsStackFull && actor != null;
 
             // Not enough HP
             if (MetaItem.HP is DiceExpression hpExp && hpExp.FixedValue < 0 && Owner.HP <= Math.Abs(hpExp.FixedValue))

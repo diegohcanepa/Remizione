@@ -36,7 +36,6 @@ namespace Remizione
         public override void Exit()
         {
             base.Exit();
-            Owner.EndTurn();
             Item = null;
         }
 

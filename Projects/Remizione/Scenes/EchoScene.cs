@@ -10,6 +10,7 @@ namespace Remizione
     /// </summary>
     public sealed class EchoScene : Scene
     {
+        private UIControl continueButton;
         private readonly ImageSprite gradient;
         private readonly FloatTween opacityTween = new();
         private readonly TextSprite textSprite;
@@ -20,16 +21,27 @@ namespace Remizione
         public EchoScene(RemizioneGame game)
             : base(game, SceneSettings.None)
         {
+            // Continue button
+            this.continueButton = new UIControl(Game, InputBindings.Continue)
+            {
+                AllowContainer = true,
+                DisplayMode = UIControlDisplayMode.ImageOnly,
+                PivotOrigin = RectanglePoint.RightBottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom)
+            };
+
+            // Text sprite
             this.textSprite = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.TerraLight,
-                MaximumWidth = (int)(Screen.NativeWidth * .7f),
+                Color = ColorPalette.Text.Default,
+                MaximumWidth = (int)(Screen.NativeWidth * .8f),
                 PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -15),
-                Scale = ScaleInfo.Text.VeryLarge
+                Scale = ScaleInfo.Text.Large
             };
 
+            // Gradient
             this.gradient = new(game, Atlases.UI.BottomGradient)
             {
                 PivotOrigin = RectanglePoint.Bottom,
@@ -71,6 +83,8 @@ namespace Remizione
             gradient.Draw(gameTime);
             textSprite.Draw(gameTime);
             Game.SpriteBatch.End();
+
+            continueButton.Draw(gameTime);
         }
 
         // OnHandleInput
@@ -78,6 +92,15 @@ namespace Remizione
         {
             if (HandleMouseInput())
                 return HandleInputResult.Handled;
+
+            if (continueButton.TestPressed(PlayerIndex.One))
+            {
+                if (textSprite.IsTyping)
+                    textSprite.StopTyping();
+                else
+                    SceneController.Pop();
+                return HandleInputResult.Handled;
+            }
 
             return base.OnHandleInput(gameTime);
         }
@@ -98,6 +121,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            continueButton.Update(gameTime);
             textSprite.Update(gameTime);
         }
 

@@ -21,7 +21,6 @@ namespace Remizione.UI
             {
                 DisplayMode = UIControlDisplayMode.ImageOnly,
                 ImageName = imageName,
-                ImageScale = ScaleInfo.UIElement.Large,
                 PivotOrigin = RectanglePoint.LeftBottom
             };
         }

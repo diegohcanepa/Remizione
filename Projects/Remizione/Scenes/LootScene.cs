@@ -79,7 +79,6 @@ namespace Remizione
             // Move button
             this.moveButton = new UIControl(Game, InputBindings.Interact)
             {
-                ContainerImage = Atlases.UI.GetImage("ButtonContainer"),
                 PivotOrigin = RectanglePoint.Middle,
                 X = Screen.Area.Center.X,
                 Y = playerContainer.BoundingBox.GetPoint(RectanglePoint.Middle).Y,

@@ -76,13 +76,6 @@ namespace Remizione
                 return;
             }
 
-            // EndTurn
-            if (signal == CombatStateSignal.EndTurn)
-            {
-                Actor.EndTurn();
-                return;
-            }
-
             // Fatigue
             if (signal == CombatStateSignal.Fatigue)
             {
@@ -101,7 +94,6 @@ namespace Remizione
         // Update
         public void Update(GameTime gameTime)
         {
-            if (Actor.Session.CombatManager.CurrentActor == Actor && Actor.TurnState != CombatTurnState.WaitingInput)
                 CurrentState?.Update(gameTime);
         }
     }

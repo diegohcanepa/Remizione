@@ -24,7 +24,7 @@ namespace Remizione
             {
                 DisplayMode = UIControlDisplayMode.ImageAndText,
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.RightBottom)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom)
             };
 
             LightingSystem = false;

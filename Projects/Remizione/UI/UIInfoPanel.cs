@@ -22,7 +22,7 @@ namespace Remizione.UI
                 Color = ColorPalette.Text.Default,
                 MaximumWidth = (int)(Screen.NativeWidth * .8f),
                 PivotOrigin = RectanglePoint.Top,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.Bottom, 0, -22),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -22),
                 Scale = ScaleInfo.Text.Large
             };
 

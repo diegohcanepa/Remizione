@@ -70,10 +70,7 @@ namespace Remizione
             {
                 var initialBlock = WorldManager.AddBlock(new(WorldManager.GridSize / 2), Session.WorldVersion, FirstBlockReservedSpace);
                 if (initialBlock.Light != null)
-                {
                     initialBlock.LightPosition = new Vector2(120,50);
-                    initialBlock.Light.Scale = new(3);
-                }
             }
             else
             {
@@ -176,13 +173,6 @@ namespace Remizione
         // FirstBlockReservedSpace
         [ScriptProperty]
         public Rectangle FirstBlockReservedSpace { get; set; }
-
-        // ScaleFirstBlockLight
-        [ScriptMethod]
-        public void ScaleFirstBlockLight()
-        {
-            WorldManager.Blocks[0].Light?.ScaleTo(TweenStyle.Linear, new Vector2(11, 6), 15000);
-        }
 
         // TerrainSound
         [ScriptProperty]

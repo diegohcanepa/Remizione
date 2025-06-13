@@ -13,18 +13,20 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly ImageSprite container;
+        private bool allowContainer;
+        private readonly ImageSprite containerPattern;
+        private readonly ImageSprite containerEdge;
         private UIControlDisplayMode displayMode;
         private string? imageName;
         private readonly ImageSprite image;
         private bool isEnabled = true;
-        private readonly float horzImagePadding = 1;
+        private const float horzImagePadding = 1.5f;
         private InputBinding? inputBinding;
         private readonly TextSprite label;
         private InputMethod lastKnownInputMethod;
         private RectanglePoint pivotOrigin;
         private Vector2 position;
-        private Color textColor = ColorPalette.Text.Default;
+        private bool small;
 
         #endregion
 
@@ -35,20 +37,26 @@ namespace Remizione
             : base(game)
         {
             // Container
-            this.container = new ImageSprite(game)
+            this.containerPattern = new ImageSprite(Game)
             {
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Right,
+                Scale = ScaleInfo.UIElement.Medium
+            };
+
+            // ContainerEdge
+            this.containerEdge = new ImageSprite(Game)
+            {
+                PivotOrigin = RectanglePoint.Right,
                 Scale = ScaleInfo.UIElement.Medium
             };
 
             // Label
             this.label = new TextSprite(game, Fonts.CommonOutline)
             {
-                ShadowColor = ColorPalette.UIControlShadow,
-                Scale = ScaleInfo.Text.Large
+                Color = ColorPalette.Text.Default
             };
 
-            this.image = new ImageSprite(game) { Scale = ScaleInfo.UIElement.Small };
+            this.image = new ImageSprite(game);
             this.inputBinding = inputBinding;
             this.label.Text = inputBinding == null ? string.Empty : Localization.EncodeKey(inputBinding);
 
@@ -89,6 +97,7 @@ namespace Remizione
         {
             // Image
             image.Image = GetInputBindingImage();
+            image.Scale = small ? ScaleInfo.UIElement.Small : ScaleInfo.UIElement.Medium;
             lastKnownInputMethod = InputManager.DefaultPlayer.LastInputMethod;
 
             if (DisplayMode == UIControlDisplayMode.ImageOnly)
@@ -99,31 +108,83 @@ namespace Remizione
             }
             else
             {
-                label.PivotOrigin = pivotOrigin;
-                label.Position = position;
+                image.PivotOrigin = pivotOrigin;
+                label.Scale = small ? ScaleInfo.Text.Medium : ScaleInfo.Text.Large;
+
+                containerPattern.Image = small ? Atlases.UI.UIControlContainerPatternSmall : Atlases.UI.UIControlContainerPatternLarge;
+                containerEdge.Image = small ? Atlases.UI.UIControlContainerEdgeSmall : Atlases.UI.UIControlContainerEdgeLarge;
 
                 if (!image.IsEmpty)
                 {
                     if (PivotOrigin == RectanglePoint.Right || PivotOrigin == RectanglePoint.RightBottom || PivotOrigin == RectanglePoint.RightTop)
                     {
-                        label.X -= image.BoundingBox.Width / 2;
-                        image.PivotOrigin = RectanglePoint.Left;
-                        image.Position = label.BoundingBox.GetPoint(RectanglePoint.Right, horzImagePadding, 0);
+                        image.Position = position;
+                        label.PivotOrigin = RectanglePoint.Right;
+                        label.Position = image.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, small ? .4f : .8f);
                     }
                     else
                     {
+                        label.Position = position;
+                        label.PivotOrigin = pivotOrigin;
                         label.X += image.BoundingBox.Width / 2;
                         image.PivotOrigin = RectanglePoint.Right;
-                        image.Position = label.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, -.5f);
+                        image.Position = label.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, small ? .4f : -.8f);
                     }
                 }
 
-                BoundingBox = RectangleF.Union(image.BoundingBox, label.BoundingBox);
+                if (AllowContainer && DisplayMode != UIControlDisplayMode.ImageOnly)
+                {
+                    containerPattern.ScaleX = TextBoundingBox.Width + 7;
+                    containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Middle, 0, small ? 0 : -.3f).Y;
+                    containerEdge.Y = containerPattern.Y;
 
-                if (image.IsEmpty)
-                    container.Position = label.BoundingBox.Center;
-                else
-                    container.Position = BoundingBox.Center;
+                    if (PivotOrigin == RectanglePoint.Right || PivotOrigin == RectanglePoint.RightBottom || PivotOrigin == RectanglePoint.RightTop)
+                    {
+                        containerEdge.Effects = SpriteEffects.None;
+                        containerEdge.PivotOrigin = RectanglePoint.Right;
+                        containerPattern.PivotOrigin = RectanglePoint.Right;
+                        containerPattern.X = ImageBoundingBox.GetPoint(RectanglePoint.Left).X + 5;
+                        containerEdge.X = containerPattern.BoundingBox.GetPoint(RectanglePoint.Left).X;
+                    }
+                    else
+                    {
+                        containerEdge.Effects = SpriteEffects.FlipHorizontally;
+                        containerEdge.PivotOrigin = RectanglePoint.Left;
+                        containerPattern.PivotOrigin = RectanglePoint.Left;
+                        containerPattern.X = ImageBoundingBox.GetPoint(RectanglePoint.Right).X - 5;
+                        containerEdge.X = containerPattern.BoundingBox.GetPoint(RectanglePoint.Right).X;
+                    }
+                }
+
+                InvalidateBoundingBox();
+            }
+        }
+
+        // InvalidateBoundingBox
+        private void InvalidateBoundingBox()
+        {
+            var labelBBox = DisplayMode == UIControlDisplayMode.ImageOnly ? RectangleF.Empty : label.BoundingBox;
+
+            if (image.IsEmpty && labelBBox.IsEmpty)
+            {
+                BoundingBox = RectangleF.Empty;
+            }
+            else if (image.IsEmpty && !labelBBox.IsEmpty)
+            {
+                BoundingBox = label.BoundingBox;
+            }
+            else if (!image.IsEmpty && labelBBox.IsEmpty)
+            {
+                BoundingBox = image.BoundingBox;
+            }
+            else if (allowContainer)
+            {
+                BoundingBox = RectangleF.Union(image.BoundingBox, containerPattern.BoundingBox, containerEdge.BoundingBox);
+            }
+            else
+            {
+                RectangleF bbox = RectangleF.Union(image.BoundingBox, labelBBox);
+                BoundingBox = new RectangleF(bbox.Left, bbox.Top, bbox.Width + horzImagePadding, bbox.Height);
             }
         }
 
@@ -137,13 +198,6 @@ namespace Remizione
             if (BoundingBox.IsEmpty)
                 return;
 
-            if (!container.IsEmpty)
-            {
-                Game.SpriteBatch.Begin(Game.Camera);
-                container.Draw(gameTime);
-                Game.SpriteBatch.End();
-            }
-
             if (!image.IsEmpty)
             {
                 Effect? shader = null;
@@ -155,6 +209,13 @@ namespace Remizione
                 }
 
                 Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, shader);
+
+                if (AllowContainer && DisplayMode != UIControlDisplayMode.ImageOnly)
+                {
+                    containerPattern.Draw(gameTime);
+                    containerEdge.Draw(gameTime);
+                }
+
                 image.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
@@ -170,7 +231,6 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            label.Color = textColor;
             image.Update(gameTime);
             label.Update(gameTime);
 
@@ -192,19 +252,23 @@ namespace Remizione
 
         #endregion
 
-        // BoundingBox
-        public RectangleF BoundingBox { get; private set; }
-
-        // Container
-        public AtlasImage? ContainerImage
+        // AllowContainer
+        public bool AllowContainer
         {
-            get => container.Image;
+            get => allowContainer;
             set
             {
-                container.Image = value;
-                Invalidate();
+                if (value != allowContainer)
+                {
+                    allowContainer = value;
+                    label.Font = value ? Fonts.Common : Fonts.CommonOutline;
+                    Invalidate();
+                }
             }
         }
+
+        // BoundingBox
+        public RectangleF BoundingBox { get; private set; }
 
         // DisplayMode
         public UIControlDisplayMode DisplayMode
@@ -235,20 +299,6 @@ namespace Remizione
                 if (value != imageName)
                 {
                     imageName = value;
-                    Invalidate();
-                }
-            }
-        }
-
-        // ImageScale
-        public Vector2 ImageScale
-        {
-            get => image.Scale;
-            set
-            {
-                if (value != image.Scale)
-                {
-                    image.Scale = value;
                     Invalidate();
                 }
             }
@@ -313,7 +363,21 @@ namespace Remizione
                 }
             }
         }
-        
+
+        // Small
+        public bool Small
+        {
+            get => small;
+            set
+            {
+                if (value != small)
+                {
+                    small = value;
+                    Invalidate();
+                }
+            }
+        }
+
         // Tag
         public object? Tag { get; set; }
 
@@ -357,11 +421,11 @@ namespace Remizione
         // TextColor
         public Color TextColor
         {
-            get => textColor;
+            get => label.Color;
             set
             {
-                if (value != textColor)
-                    textColor = value;
+                if (value != label.Color)
+                    label.Color = value;
             }
         }
 

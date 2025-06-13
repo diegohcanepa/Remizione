@@ -1,7 +1,6 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Remizione.UI
@@ -19,7 +18,7 @@ namespace Remizione.UI
         private readonly TextSprite symbol1;
         private readonly TextSprite symbol2;
         private readonly TextSprite symbol3;
-        private readonly Vector2 textScale = ScaleInfo.Text.ExtraLarge;
+        private readonly Vector2 textScale = ScaleInfo.Text.Huge;
 
         // Constructor
         public UICycleMeter(GameSession session)
@@ -31,7 +30,7 @@ namespace Remizione.UI
             this.symbol1 = new(Game, Fonts.CommonOutline)
             {
                 PivotOrigin = RectanglePoint.Top,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.RightTop, -8, 1),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -8, 1),
                 Scale = textScale,
                 Text = "6"
             };

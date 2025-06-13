@@ -56,7 +56,6 @@ namespace Remizione
                         }
                         else
                         {
-                            Owner.Session.CombatManager.Add(target);
                             target.ShowMessage(Message.Miss);
                         }
                     }
@@ -83,7 +82,6 @@ namespace Remizione
             base.Enter();
             damageTaken = false;
             Owner.FaceToTarget();
-            Owner.Willpower -= 1;
         }
     }
 }

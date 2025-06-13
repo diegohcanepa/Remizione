@@ -84,7 +84,7 @@ namespace Remizione.Menus
                 Color = ColorPalette.TextWhite,
                 MaximumWidth = 260,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.SafeArea.GetPoint(RectanglePoint.Bottom),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom),
                 Scale = ScaleInfo.Text.Medium,
                 Text = "@Menu.Messages.BestExperienceAdvice"
             };

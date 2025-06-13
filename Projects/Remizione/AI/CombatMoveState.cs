@@ -20,7 +20,6 @@ namespace Remizione
 
             if (StateMachine.Destination.HasValue)
             {
-                Actor.FastMove = true;
                 Actor.MoveTo(StateMachine.Destination.Value);
             }
         }
@@ -28,8 +27,6 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (!Actor.IsMoving)
-                StateMachine.ExecuteAction(CombatStateSignal.EndTurn);
         }
     }
 }
