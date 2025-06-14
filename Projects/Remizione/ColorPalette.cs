@@ -55,13 +55,6 @@ namespace Remizione
         // InteractiveTargetOutline
         internal static Vector4 InteractiveTargetOutline { get; } = (Color.LightCyan * .4f).ToVector4();
 
-        // InventoryItem
-        internal static class InventoryItem
-        {
-            internal static Color Active { get; } = Color.White;
-            internal static Color Inactive { get; } = Color.White * .5f;
-        }
-
         // MenuItemTextActive
         internal static Color MenuItemTextActive { get; } = new Color(240, 240, 240);
 

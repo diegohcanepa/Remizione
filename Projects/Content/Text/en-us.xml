@@ -37,7 +37,9 @@
   <String Key="InputBinding.Close">Close</String>
   <String Key="InputBinding.Continue">Continue</String>
   <String Key="InputBinding.Exit">Exit</String>
+  <String Key="InputBinding.Info">Info</String>
   <String Key="InputBinding.NextDialog">Next</String>
+  <String Key="InputBinding.Sacrifice">Sacrifice</String>
   <String Key="InputBinding.Select">Select</String>
   <String Key="Item.Apple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.Apple.Name">Apple</String>
@@ -47,7 +49,7 @@
   <String Key="Item.BlessedTinder.Name">Blessed tinder</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
   <String Key="Item.Chili.Name">Hot chili</String>
-  <String Key="Item.CrateFragment.Description"></String>
+  <String Key="Item.CrateFragment.Description" />
   <String Key="Item.CrateFragment.Name">Crate fragment</String>
   <String Key="Item.CrownOfThorns.Description">The crown of thorns makes you regain faith in exchange for physical punishment.</String>
   <String Key="Item.CrownOfThorns.Name">Crown of thorns</String>

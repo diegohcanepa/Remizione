@@ -8,7 +8,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 2, ActionArg, BonusArg, CategoryArg, CreationRoutineArg, DamageArg, DurabilityArg, FaithArg, HPArg, KnockbackArg, MaximumArg, ModifierArg, PassiveArg, RangeArg, SoundArg, UseIntervalArg)
+            : base(script, source, body, 2, ActionArg, AllowEmptyArg, BonusArg, CategoryArg, CreationRoutineArg, DamageArg, DurabilityArg, FaithArg, HPArg, KnockbackArg, MaximumArg, ModifierArg, PassiveArg, RangeArg, SacrificeRewardArg, SoundArg, UseIntervalArg)
         {
             var name = Parser.ParseName(this, 0);
             var category = Parser.ParseEnum<ItemContainerCategory>(this, 1);
@@ -24,10 +24,15 @@ namespace Remizione.Scripting
             var hp = Parser.ParseDiceExpressionArgument(this, HPArg);
             var passive = HasArg(PassiveArg);
             var range = Parser.ParseInt32Argument(this, RangeArg);
+            var sacrificeReward = Parser.ParseEnumArgument(this, SacrificeRewardArg, SacrificeReward.Faith);
             var sound = Parser.ParseSoundArgument(this, SoundArg);
             var useInterval = Parser.ParseInt32Argument(this, UseIntervalArg);
 
-            new MetaItem(name, category, action, passive, baseDamage, modifier, bonus, knockback, maximum, hp, fp, range, durability, sound, useInterval, creationRoutine);
+            _ = new MetaItem(name, category, action, passive, baseDamage, modifier, bonus, knockback, maximum, hp, fp, range, durability, sound, useInterval, creationRoutine)
+            {
+                AllowEmpty = HasArg(AllowEmptyArg),
+                SacrificeReward = sacrificeReward
+            };
         }
     }
 }

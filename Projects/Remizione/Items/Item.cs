@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Remizione
 {
@@ -159,6 +160,20 @@ namespace Remizione
                 
                 isDisplayTextDiry = true;
             }
+        }
+
+        // GetDisplayAmount
+        public string GetDisplayAmount()
+        {
+            if (MetaItem.Maximum > 1)
+            {
+                if (MetaItem.Maximum == 999)
+                    return count.ToString(CultureInfo.InvariantCulture);
+                else
+                    return $"{Count}/{MetaItem.Maximum}";
+            }
+            else
+                return string.Empty;
         }
 
         // GetLocalizedInfo

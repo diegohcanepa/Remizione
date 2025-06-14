@@ -108,6 +108,9 @@ namespace Remizione
             return string.Join(";", result);
         }
 
+        // IsEmpty
+        public bool IsEmpty => items.Count == 0;
+
         // IsFull
         public bool IsFull => Size > 0 && items.Count >= Size;
 
@@ -161,10 +164,10 @@ namespace Remizione
         public Item? SelectedItem { get; private set; }
 
         // SelectNext
-        public void SelectNext()
+        public bool SelectNext()
         {
-            if (items.Count == 0)
-                return;
+            if (items.Count <= 1)
+                return false;
 
             if (SelectedItem == null)
             {
@@ -179,13 +182,15 @@ namespace Remizione
                 else
                     Select(items[index + 1]);
             }
+
+            return true;
         }
 
         // SelectPrevious
-        public void SelectPrevious()
+        public bool SelectPrevious()
         {
-            if (items.Count == 0)
-                return;
+            if (items.Count <= 1)
+                return false;
 
             if (SelectedItem == null)
             {
@@ -200,6 +205,8 @@ namespace Remizione
                 else
                     Select(items[index - 1]);
             }
+
+            return true;
         }
 
         // SetSerializationData

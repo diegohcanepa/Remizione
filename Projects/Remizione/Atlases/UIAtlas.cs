@@ -19,6 +19,7 @@ namespace Remizione
             CloseWindowButton = this[nameof(CloseWindowButton)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
+            FaithGainIcon = this[nameof(FaithGainIcon)];
             FaithIcon = this[nameof(FaithIcon)];
             InventoryIcon = this[nameof(InventoryIcon)];
             InventorySlot = this[nameof(InventorySlot)];
@@ -37,11 +38,10 @@ namespace Remizione
             PrayerIcon = this[nameof(PrayerIcon)];
             ProhibitionIcon = this[nameof(ProhibitionIcon)];
             ProhibitionMark = this[nameof(ProhibitionMark)];
-            QuickSlot = this[nameof(QuickSlot)];
-            QuickSlotShadow = this[nameof(QuickSlotShadow)];
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
+            SpiritGainIcon = this[nameof(SpiritGainIcon)];
             SpiritIcon = this[nameof(SpiritIcon)];
             UIControlContainerEdgeLarge = this[nameof(UIControlContainerEdgeLarge)];
             UIControlContainerPatternLarge = this[nameof(UIControlContainerPatternLarge)];
@@ -83,6 +83,9 @@ namespace Remizione
 
         // ItemMenuContainerSelection
         public AtlasImage ItemMenuContainerSelection { get; }
+
+        // FaithGainIcon
+        public AtlasImage FaithGainIcon { get; }
 
         // FaithIcon
         public AtlasImage FaithIcon { get; }
@@ -126,12 +129,6 @@ namespace Remizione
         // ProhibitionMark
         public AtlasImage ProhibitionMark { get; }
 
-        // QuickSlot
-        public AtlasImage QuickSlot { get; }
-
-        // QuickSlotShadow
-        public AtlasImage QuickSlotShadow { get; }
-
         // SavingIcon
         public AtlasImage SavingIcon { get; }
 
@@ -140,6 +137,9 @@ namespace Remizione
 
         // SpeechBubblePipe
         public AtlasImage SpeechBubblePipe { get; }
+
+        // SpiritGainIcon
+        public AtlasImage SpiritGainIcon { get; }
 
         // SpiritIcon
         public AtlasImage SpiritIcon { get; }

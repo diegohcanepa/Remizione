@@ -38,7 +38,7 @@ namespace Remizione
         internal static class InventoryItem
         {
             internal static Vector2 Active { get; } = new Vector2(.6f);
-            internal static Vector2 Inactive { get; } = new Vector2(.5f);
+            internal static Vector2 Inactive { get; } = new Vector2(.4f);
         }
 
         // MenuItemTextActive
@@ -92,15 +92,13 @@ namespace Remizione
         // TextMenuContainerTitle
         internal static Vector2 TextMenuContainerTitle { get; } = new Vector2(.2f);
 
-        // TextQuickSlot
-        internal static Vector2 TextQuickSlot { get; } = new Vector2(.055f);
-
         // TextVersionInfo
         internal static Vector2 TextVersionInfo { get; } = new Vector2(.08f);
 
         // UIElement
         internal static class UIElement
         {
+            internal static Vector2 Tiny { get; } = new(.5f);
             internal static Vector2 Small { get; } = new(.6f);
             internal static Vector2 Medium { get; } = new(.75f);
             internal static Vector2 Large { get; } = Vector2.One;

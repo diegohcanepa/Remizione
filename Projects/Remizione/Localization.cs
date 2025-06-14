@@ -10,15 +10,6 @@ namespace Remizione
     /// </summary>
     internal static class Localization
     {
-        // EncodeKey
-        internal static string EncodeKey(InputBinding binding) => $"@InputBinding.{binding.Name}";
-
-        // EncodeKey
-        internal static string EncodeKey<TEnum>(TEnum value) where TEnum : Enum
-        {
-            return $"@{typeof(TEnum).Name}.{value}";
-        }
-
         // FormatPlayTime
         internal static string FormatPlayTime(TimeSpan value)
         {
@@ -72,7 +63,10 @@ namespace Remizione
         // GetValue
         internal static string GetValue<TEnum>(TEnum value) where TEnum:Enum
         {
-            return TextRepository.GetValue(EncodeKey(value));
+            return TextRepository.GetValue($"@{typeof(TEnum).Name}.{value}");
         }
+
+        // GetValue
+        internal static string GetValue(InputBinding binding) => TextRepository.GetValue($"InputBinding.{binding.Name}");
     }
 }

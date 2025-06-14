@@ -59,7 +59,7 @@ namespace Remizione
 
             this.image = new ImageSprite(game);
             this.inputBinding = inputBinding;
-            this.label.Text = inputBinding == null ? string.Empty : Localization.EncodeKey(inputBinding);
+            this.label.Text = inputBinding == null ? string.Empty : Localization.GetValue(inputBinding);
 
             Invalidate();
         }
@@ -82,9 +82,13 @@ namespace Remizione
             {
                 imageName = this.ImageName;
             }
-            else if (InputBinding != null && gamePad)
+            else if (InputBinding != null)
             {
-                imageName = InputBinding.Button.ToString();
+                if (gamePad)
+                    imageName = InputBinding.Button.ToString();
+                
+                else if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Keyboard)
+                    imageName = InputBinding.Keys[0].ToString();
             }
 
             if (gamePad && imageName != null && InputBinding != null)

@@ -12,7 +12,6 @@ namespace Remizione
         private readonly TextSprite amountText;
         private readonly ImageSprite iconImage;
         private Item? item;
-        private readonly TextSprite nameText;
         private readonly ImageSprite slotImage;
 
         // Constructor
@@ -41,14 +40,6 @@ namespace Remizione
                 Scale = ScaleInfo.Text.Small
             };
 
-            // Name text
-            nameText = new TextSprite(game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Bottom,
-                Scale = ScaleInfo.Text.Large
-            };
-
             Reset();
         }
 
@@ -62,21 +53,14 @@ namespace Remizione
             if (!animate)
             {
                 iconImage.Tweens.Reset();
-                iconImage.Color = IsSelected ? ColorPalette.InventoryItem.Active : ColorPalette.InventoryItem.Inactive;
                 iconImage.Scale = IsSelected ? ScaleInfo.InventoryItem.Active : ScaleInfo.InventoryItem.Inactive;
                 return;
             }
 
             if (IsSelected)
-            {
-                iconImage.Tweens.ColorTween = ColorTween.Create(TweenStyle.CubicInOut, iconImage.Color, Color.White, tweenDuration);
                 iconImage.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, iconImage.Scale, ScaleInfo.InventoryItem.Active, tweenDuration);
-            }
             else
-            {
-                iconImage.Tweens.ColorTween = ColorTween.Create(TweenStyle.CubicInOut, iconImage.Color, ColorPalette.InventoryItem.Inactive, tweenDuration);
                 iconImage.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, iconImage.Scale, ScaleInfo.InventoryItem.Inactive, tweenDuration);
-            }
         }
 
         #endregion
@@ -92,8 +76,6 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearWrap);
-            if (IsSelected)
-                nameText.Draw(gameTime);
             amountText.Draw(gameTime);
             Game.SpriteBatch.End();
         }
@@ -101,6 +83,11 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            if (item != null && item.MetaItem.IsStackable && item.MetaItem.AllowEmpty && item.Count == 0)
+                iconImage.Opacity = .5f;
+            else
+                iconImage.Opacity = 1;
+
             iconImage.Update(gameTime);
         }
 
@@ -124,8 +111,6 @@ namespace Remizione
 
                     if (item != null)
                     {
-                        nameText.Text = item.DisplayText;
-
                         if (item.MetaItem.Maximum > 1)
                             amountText.Text = $"{item.Count}/{item.MetaItem.Maximum}";
                         else
@@ -148,7 +133,6 @@ namespace Remizione
 
                 slotImage.Position = value;
                 amountText.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 3, -4);
-                nameText.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Top, 0, -1);
             }
         }
 
@@ -158,7 +142,6 @@ namespace Remizione
             Item = null;
             iconImage.Image = null;
             Position = Vector2.Zero;
-            nameText.Clear();
             Unselect(false);
         }
 

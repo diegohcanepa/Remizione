@@ -214,6 +214,9 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
+            if (HUD.HandleInput(gameTime) == HandleInputResult.Handled)
+                return HandleInputResult.Handled;
+
             if (inGameMenuLocked && InputBindings.InGameMenu.IsKeyUp())
                 inGameMenuLocked = false;   
 

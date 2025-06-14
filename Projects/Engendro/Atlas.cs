@@ -74,9 +74,7 @@ namespace Engendro
             }
 
             if (result == null)
-            {
                 images.TryGetValue(imageName, out result);
-            }
 
             return result;
         }

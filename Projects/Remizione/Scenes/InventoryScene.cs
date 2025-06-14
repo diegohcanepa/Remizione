@@ -1,11 +1,8 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
-using EngendroAdventure;
-using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
 
 namespace Remizione
 {
@@ -14,22 +11,16 @@ namespace Remizione
     /// </summary>
     public sealed class InventoryScene : Scene
     {
-        #region Constants
-
-        private const int tweenDuration = 300;
-
-        #endregion
-
         #region Private fields
 
-        private enum OptionKind { None, Verb, UseWith }
         private readonly ImageSprite bottomGradient;
         private readonly UIControl buttonClose;
         private readonly UIControl buttonInfo;
-        private float lastKnownAmount;
-        private bool moved;
-        private readonly OptionKind[] options = new OptionKind[4];
+        private readonly UIControl buttonSacrifice;
+        private readonly ImageSprite faithIcon;
+        private readonly TextSprite itemNameText;
         private InventorySlot? selectedSlot;
+        private readonly ImageSprite spiritIcon;
         private readonly InventorySlot[] slots = new InventorySlot[12];
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 200 };
 
@@ -63,7 +54,23 @@ namespace Remizione
                 AllowContainer = true,
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -10),
-                Text = "Info"
+            };
+
+            // Item name
+            itemNameText = new TextSprite(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Default,
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = new(Screen.NativeWidth / 2, 110),
+                Scale = ScaleInfo.Text.VeryLarge
+            };
+
+            // Sacrifice button
+            buttonSacrifice = new UIControl(owner.Game, InputBindings.Sacrifice)
+            {
+                AllowContainer = true,
+                PivotOrigin = RectanglePoint.RightBottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -20),
             };
 
             // Bottom gradient
@@ -72,6 +79,20 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
                 Scale = new Vector2(1, 1.2f)
+            };
+
+            // Faith icon
+            this.faithIcon = new(owner.Game, Atlases.UI.FaithGainIcon)
+            {
+                PivotOrigin = RectanglePoint.Right,              
+                Scale = ScaleInfo.UIElement.Small
+            };
+
+            // Spirit icon
+            this.spiritIcon = new(owner.Game, Atlases.UI.SpiritGainIcon)
+            {
+                PivotOrigin = RectanglePoint.Right,
+                Scale = ScaleInfo.UIElement.Small
             };
         }
 
@@ -97,19 +118,25 @@ namespace Remizione
         }
 
         // SelectNextItem
-        private void SelectNextItem()
+        private bool SelectNextItem()
         {
-            Owner.Inventory.SelectNext();
+            var result = Owner.Inventory.SelectNext();
+            
             if (Owner.Inventory.SelectedItem != null)
                 SelectSlot(Owner.Inventory.SelectedItem);
+
+            return result;
         }
 
         // SelectPreviousItem
-        private void SelectPreviousItem()
+        private bool SelectPreviousItem()
         {
-            Owner.Inventory.SelectPrevious();
+            var result = Owner.Inventory.SelectPrevious();
+            
             if (Owner.Inventory.SelectedItem != null)
                 SelectSlot(Owner.Inventory.SelectedItem);
+
+            return result;
         }
 
         // SelectSlot
@@ -134,6 +161,9 @@ namespace Remizione
             selectedSlot?.Unselect(IsContentLoaded);
             selectedSlot = slot;
             slot.Select(IsContentLoaded);
+
+            if (slot?.Item != null)
+                itemNameText.Text = slot.Item.DisplayText;
         }
 
         #endregion
@@ -149,6 +179,7 @@ namespace Remizione
             // Gradient
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             bottomGradient.Draw(gameTime);
+            itemNameText.Draw(gameTime);
             Game.SpriteBatch.End();
 
             for (int i = 0; i < Owner.Inventory.Size; i++)
@@ -157,42 +188,47 @@ namespace Remizione
             }
 
             buttonClose.Draw(gameTime);
-            buttonInfo.Draw(gameTime);
+
+            if (selectedSlot?.Item != null)
+            {
+                buttonInfo.Draw(gameTime);
+                buttonSacrifice.Draw(gameTime);
+
+                Game.SpriteBatch.Begin(Game.Camera);
+                if (selectedSlot.Item.MetaItem.SacrificeReward == SacrificeReward.Faith)
+                {
+                    faithIcon.Position = buttonSacrifice.BoundingBox.GetPoint(RectanglePoint.Left);
+                    faithIcon.Draw(gameTime);
+                }
+                else
+                {
+                    spiritIcon.Position = buttonSacrifice.BoundingBox.GetPoint(RectanglePoint.Left);
+                    spiritIcon.Draw(gameTime);
+                }
+                Game.SpriteBatch.End();
+            }
         }
 
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
-            //if (contextMenu.HandleInput(gameTime) == HandleInputResult.Handled)
-                //return HandleInputResult.Handled;
-
             // Previous item
             if (InputBindings.SelectLeft.IsPressed(PlayerIndex.One) || stick.IsLeft(PlayerIndex.One))
-                SelectPreviousItem();
+            {
+                if (SelectPreviousItem())
+                    Sound.Play(SoundNames.UINavigation);
+            }
 
             // Next item
             else if (InputBindings.SelectRight.IsPressed(PlayerIndex.One) || stick.IsRight(PlayerIndex.One))
-                SelectNextItem();
-
-            /*
-            // Menu Option
-            else if (InputBindings.Select.IsPressed(VladInputHelper.PlayerIndex))
-                PerformMenuOption();
-
-            // Diary
-            else if (buttonDiary.TestPressed(VladInputHelper.PlayerIndex))
             {
-                var scene = new DiaryScene(Owner.Session);
-                Game.SceneManager.Push(scene);
+                if (SelectNextItem())
+                    Sound.Play(SoundNames.UINavigation);
             }
-            */
 
-            // Close
+            // Close button
             else if (InputBindings.Close.IsPressed(PlayerIndex.One))
-            {
-                //SoundManager.Play(SoundNames.InventoryClose.ToString());
                 SceneController.Pop();
-            }
 
             return HandleInputResult.Handled;
         }
@@ -203,7 +239,7 @@ namespace Remizione
             Owner.Stand();
 
             base.OnLoadContent();
-            
+
             LayoutSlots();
 
             // Populate items
@@ -219,8 +255,6 @@ namespace Remizione
                 SelectSlot(slots[selectedIndex]);
 
             Invalidate();
-
-            //SoundManager.Play(SoundNames.InventoryOpen.ToString());
         }
 
         // OnUnloadContent
@@ -239,12 +273,12 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            //contextMenu.Update(gameTime);
             bottomGradient.Update(gameTime);
             stick.Stick = GamePadThumbStick.Left;
             stick.Update(gameTime);
             buttonClose.Update(gameTime);
             buttonInfo.Update(gameTime);
+            buttonSacrifice.Update(gameTime);
 
             // Update slots
             for (int i = 0; i < Owner.Inventory.Items.Count; i++)
@@ -256,16 +290,6 @@ namespace Remizione
         }
 
         #endregion
-
-        // CanHandleInput
-        //public override bool CanHandleInput => !Owner.Session.IsOutcomeInProgress && base.CanHandleInput;
-
-        // Close
-        public void Close()
-        {
-            //SoundManager.Play(SoundNames.InventoryClose.ToString());
-            SceneController.Pop();
-        }
 
         // Owner
         public Actor Owner { get; set; }

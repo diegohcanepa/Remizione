@@ -87,7 +87,7 @@ namespace Remizione
             this.discardButton = new UIControl(game, InputBindings.Select)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Text = Localization.EncodeKey(ItemAction.Discard),
+                //Text = Localization.EncodeKey(ItemAction.Discard),
                 TextColor = ColorPalette.Text.Default
             };
         }
@@ -161,7 +161,7 @@ namespace Remizione
             {
                 infoPanel.Title = option.LinkedObject.GetLocalizedInfo();
                 infoPanel.Text = option.LinkedObject.MetaItem.LocalizedDescription;
-                actionButton.Text = Localization.EncodeKey(option.LinkedObject.MetaItem.Action);
+                //actionButton.Text = Localization.EncodeKey(option.LinkedObject.MetaItem.Action);
             }
             else
                 infoPanel.Text = null;

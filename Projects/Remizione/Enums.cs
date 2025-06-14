@@ -111,6 +111,9 @@ namespace Remizione
     // RoomSampler
     public enum RoomSampler { PointClamp, LinearClamp }
 
+    // SacrificeReward
+    public enum SacrificeReward { Faith, Spirit }
+
     // ShadowSpotSize
     public enum ShadowSpotSize { None, Tiny, Small, Average, Large, Huge, Giant }
 

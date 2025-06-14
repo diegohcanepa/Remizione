@@ -69,6 +69,9 @@ namespace Remizione
         // Action
         public ItemAction Action { get; }
 
+        // AllowEmpty
+        public bool AllowEmpty { get; init; }
+
         // BaseDamage
         public DiceExpression? BaseDamage { get; }
 
@@ -119,6 +122,9 @@ namespace Remizione
 
         // Range
         public int Range { get; }
+
+        // SacrificeReward
+        public SacrificeReward SacrificeReward { get; init; } = SacrificeReward.Faith;
 
         // Sound
         public Sound? Sound { get; }

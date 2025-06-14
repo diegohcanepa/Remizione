@@ -11,38 +11,26 @@ namespace Remizione
     /// </summary>
     public sealed class QuickSlot : GameObject, IInputHandler
     {
+        private Actor? actor;
         private readonly TextSprite amountText;
-        private readonly InputBinding? inputBinding;
         private readonly ImageSprite itemImage;
         private readonly Vector2Tween itemImageScaleTween = new();
-        private ItemContainer? items;
-        private static readonly Vector2 itemScale = new(.4f);
         private int lastKnownCount;
         private Item? lastKnownItem;
-        private readonly ImageSprite shadowImage;
-        private readonly ColorTween slotColorTween = new();
         private readonly ImageSprite slotImage;
 
+        #region Constructor
+
         // Constructor
-        public QuickSlot(EngendroGame game, InputBinding? inputBinding)
+        public QuickSlot(EngendroGame game)
             : base(game)
         {
-            this.inputBinding = inputBinding;
-
             // Slot image
-            this.slotImage = new ImageSprite(Game, Atlases.UI.QuickSlot)
+            this.slotImage = new ImageSprite(Game, Atlases.UI.InventorySlot)
             {
-                Opacity = .8f,
-                PivotOrigin = RectanglePoint.Middle,
-                Scale = new(.75f)
-            };
-
-            // Slot shadow
-            this.shadowImage = new ImageSprite(Game, Atlases.UI.QuickSlotShadow)
-            {
-                Opacity = .2f,
-                PivotOrigin = RectanglePoint.Middle,
-                Scale = new(.75f)
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -2),
+                Scale = ScaleInfo.UIElement.Medium
             };
 
             // Item image
@@ -50,34 +38,36 @@ namespace Remizione
             {
                 PivotOrigin = RectanglePoint.Top,
                 Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Top, 0, 1.5f),
-                Scale = itemScale,
-                VisualParent = slotImage
+                Scale = ScaleInfo.UIElement.Tiny
             };
 
             // Amount
             this.amountText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.TextWhite,
-                PivotOrigin = RectanglePoint.RightBottom,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -1.5f, -.5f),
-                Scale = ScaleInfo.TextQuickSlot,
-                Spacing = -10,
-                VisualParent = slotImage
+                PivotOrigin = RectanglePoint.Top,
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2),
+                Scale = ScaleInfo.Text.Large,
+                Spacing = -5,
             };
         }
+
+        #endregion
 
         #region Protected members
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            if (!IsVisible)
+                return;
+
             Game.SpriteBatch.Begin(Game.Camera);
-            shadowImage.Draw(gameTime);
             slotImage.Draw(gameTime);
             itemImage.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            if (items?.SelectedItem != null && items.SelectedItem.MetaItem.Maximum != 1)
+            if (actor?.Inventory.SelectedItem != null && actor.Inventory.SelectedItem.MetaItem.IsStackable)
             {
                 if (lastKnownCount > 0)
                 {
@@ -91,23 +81,22 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (lastKnownItem != items?.SelectedItem)
+            if (!IsVisible)
+                return;
+
+            if (lastKnownItem != actor?.Inventory.SelectedItem)
             {
-                lastKnownItem = items?.SelectedItem;
-                itemImage.Image = items?.SelectedItem?.MetaItem.Image;
-
-                slotColorTween.Start(TweenStyle.Linear, Color.Green, Color.White, 70);
-                slotImage.Tweens.ColorTween = slotColorTween;
-
-                itemImageScaleTween.Start(TweenStyle.Linear, new Vector2(.3f), itemScale, 70);
+                lastKnownItem = actor?.Inventory.SelectedItem;
+                itemImage.Image = actor?.Inventory.SelectedItem?.MetaItem.Image;
+                itemImageScaleTween.Start(TweenStyle.Linear, new Vector2(.3f), ScaleInfo.UIElement.Tiny, 70);
                 itemImage.Tweens.ScaleTween = itemImageScaleTween;
             }
 
-            if (items?.SelectedItem != null && items.SelectedItem.Count != lastKnownCount)
+            if (actor?.Inventory.SelectedItem != null && actor.Inventory.SelectedItem.Count != lastKnownCount)
             {
-                lastKnownCount = items.SelectedItem.Count;
+                lastKnownCount = actor.Inventory.SelectedItem.Count;
                 itemImage.Opacity = lastKnownCount == 0 ? .3f : 1;
-                amountText.Text = lastKnownCount.ToString();
+                amountText.Text = actor.Inventory.SelectedItem.GetDisplayAmount();
                 amountText.Update(gameTime);
             }
 
@@ -117,47 +106,48 @@ namespace Remizione
 
         #endregion
 
-        // HandleInput
-        public HandleInputResult HandleInput(GameTime gameTime)
+        // Actor
+        public Actor? Actor
         {
-            if (inputBinding == null || Items == null)
-                return HandleInputResult.Unhandled;
-
-            if (inputBinding != null && inputBinding.IsPressed(0))
-            {
-                Sound.Play(SoundNames.UIQuickSlot);
-                Items?.SelectNext();
-                return HandleInputResult.Handled;
-            }
-
-            return HandleInputResult.Unhandled;
-        }
-
-        // Items
-        public ItemContainer? Items
-        {
-            get => items;
+            get => actor;
             set
             {
-                if (value != items)
+                if (value != actor)
                 {
-                    items = value;
-                    itemImage.Image = items?.SelectedItem?.MetaItem.Image;
+                    actor = value;
+                    itemImage.Image = actor?.Inventory.SelectedItem?.MetaItem.Image;
                     lastKnownCount = -1;
                     lastKnownItem = null;
                 }
             }
         }
 
-        // Position
-        public Vector2 Position
+        // HandleInput
+        public HandleInputResult HandleInput(GameTime gameTime)
         {
-            get => slotImage.Position;
-            set
+            if (actor == null)
+                return HandleInputResult.Unhandled;
+
+            if (InputBindings.QuickSlotNextItem.IsPressed(PlayerIndex.One))
             {
-                slotImage.Position = value;
-                shadowImage.Position = value + Vector2.UnitY / 2;
+                if (actor.Inventory.SelectNext())
+                    Sound.Play(SoundNames.UIQuickSlot);
+                
+                return HandleInputResult.Handled;
             }
+
+            else if (InputBindings.QuickSlotPreviousItem.IsPressed(PlayerIndex.One))
+            {
+                if (actor.Inventory.SelectPrevious())
+                    Sound.Play(SoundNames.UIQuickSlot);
+
+                return HandleInputResult.Handled;
+            }
+
+            return HandleInputResult.Unhandled;
         }
+
+        // IsVisible
+        public bool IsVisible => actor != null && !actor.Inventory.IsEmpty;
     }
 }

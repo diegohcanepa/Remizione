@@ -3,14 +3,13 @@ using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Remizione.UI;
-using System;
 
 namespace Remizione
 {
     /// <summary>
     /// HUD
     /// </summary>
-    public sealed class HUD : GameObject
+    public sealed class HUD : GameObject, IInputHandler
     {
         #region Private fields
 
@@ -18,6 +17,7 @@ namespace Remizione
         private readonly UIScore grace;
         private readonly UIDerivedStats playerStats;
         private readonly UIPrompt prompt;
+        private readonly QuickSlot quickSlot;
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
         private readonly TextSprite statusText;
@@ -60,6 +60,9 @@ namespace Remizione
             // Prompt
             this.prompt = new(session);
 
+            // Quick slot
+            this.quickSlot = new(Game);
+
             // Message text
             this.statusText = new TextSprite(Game, Fonts.CommonOutline)
             {
@@ -79,6 +82,7 @@ namespace Remizione
         {
             if (session.FullHUD)
             {
+                quickSlot.Draw(gameTime);
                 playerStats.Draw(gameTime);
 
                 if (!savingIcon.Tweens.IsTweening)
@@ -94,7 +98,7 @@ namespace Remizione
             if (session.Player != null && session.FullHUD)
                 //grace.Draw(gameTime);
 
-            Log.Draw(gameTime);
+                Log.Draw(gameTime);
 
             if (savingIcon.Tweens.IsTweening)
             {
@@ -107,6 +111,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            quickSlot.Update(gameTime);
             playerStats.Update(gameTime);
             prompt.Update(gameTime);
             cycleMeter.Update(gameTime);
@@ -128,6 +133,9 @@ namespace Remizione
         // DestinationMark
         public DestinationMark DestinationMark { get; }
 
+        // HandleInput
+        public HandleInputResult HandleInput(GameTime gameTime) => quickSlot.HandleInput(gameTime);
+
         // Log
         public UILog Log { get; }
 
@@ -135,6 +143,7 @@ namespace Remizione
         public void Reset()
         {
             playerStats.Actor = session.Player;
+            quickSlot.Actor = session.Player;
         }
 
         // ShowSavingIcon
