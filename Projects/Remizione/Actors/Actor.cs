@@ -361,7 +361,7 @@ namespace Remizione
 
             // SacredWords
             if (attributes[ItemContainerCategory.SacredWords.ToString()]?.Value is string sacredWordsData)
-                Inventory.SetSerializationData(sacredWordsData);
+                SacredWords.SetSerializationData(sacredWordsData);
 
             // Devotion
             if (attributes[nameof(Stats.Devotion)]?.Value is string devotion)

@@ -25,14 +25,11 @@ namespace Remizione
             InventorySlotSelection = this[nameof(InventorySlotSelection)];
             ItemMenuContainer = this[nameof(ItemMenuContainer)];
             ItemMenuContainerSelection = this[nameof(ItemMenuContainerSelection)];
-            ItemSlot = this[nameof(ItemSlot)];
             MessageContainer = this[nameof(MessageContainer)];
             MissingInputBinding = this[nameof(MissingInputBinding)];
             MouseCursorArrow = this[nameof(MouseCursorArrow)];
             MouseCursorCross = this[nameof(MouseCursorCross)];
             MouseCursorCrossOn = this[nameof(MouseCursorCrossOn)];
-            MouseCursorTarget = this[nameof(MouseCursorTarget)];
-            MouseCursorTargetOn = this[nameof(MouseCursorTargetOn)];
             MouseCursorWait = this[nameof(MouseCursorWait)];
             Pixel = this[nameof(Pixel)];
             PopupContainer = this[nameof(PopupContainer)];
@@ -87,9 +84,6 @@ namespace Remizione
         // ItemMenuContainerSelection
         public AtlasImage ItemMenuContainerSelection { get; }
 
-        // ItemSlot
-        public AtlasImage ItemSlot { get; }
-
         // FaithIcon
         public AtlasImage FaithIcon { get; }
 
@@ -110,12 +104,6 @@ namespace Remizione
 
         // MouseCursorCrossOn
         public AtlasImage MouseCursorCrossOn { get; }
-
-        // MouseCursorTarget
-        public AtlasImage MouseCursorTarget { get; }
-
-        // MouseCursorTargetOn
-        public AtlasImage MouseCursorTargetOn { get; }
 
         // MouseCursorWait
         public AtlasImage MouseCursorWait { get; }

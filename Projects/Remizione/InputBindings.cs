@@ -42,6 +42,7 @@ namespace Remizione
         internal static readonly InputBinding Continue = InputManager.AddBinding(nameof(Continue), GetButtonA(), Keys.E);
         internal static readonly InputBinding Close = InputManager.AddBinding(nameof(Close), GetButtonB(), Keys.Escape);
         internal static readonly InputBinding Exit = InputManager.AddBinding(nameof(Exit), GetButtonB(), Keys.Escape);
+        internal static readonly InputBinding Info = InputManager.AddBinding(nameof(Info), Buttons.Y, Keys.E, Keys.Enter);
         internal static readonly InputBinding Interact = InputManager.AddBinding(nameof(Interact), Buttons.Y, Keys.E, Keys.Enter);
         internal static readonly InputBinding ItemAction = InputManager.AddBinding(nameof(ItemAction), Buttons.X, Keys.E);
         internal static readonly InputBinding NextDialog = InputManager.AddBinding(nameof(NextDialog), Buttons.Y, Keys.E, Keys.Enter);
@@ -49,6 +50,12 @@ namespace Remizione
         internal static readonly InputBinding SelectDialogOption = InputManager.AddBinding(nameof(SelectDialogOption), Buttons.A, Keys.E, Keys.Enter);
         internal static readonly InputBinding ShowInventory = InputManager.AddBinding(nameof(ShowInventory), Buttons.RightShoulder, Keys.I);
         internal static readonly InputBinding SpeechBubble = InputManager.AddBinding(nameof(SpeechBubble), Buttons.Y, Keys.E, Keys.Enter);
+
+        // Quick slots
+        internal static readonly InputBinding QuickSlotBottom = InputManager.AddBinding(nameof(QuickSlotBottom), Buttons.DPadDown, Keys.Down);
+        internal static readonly InputBinding QuickSlotLeft = InputManager.AddBinding(nameof(QuickSlotLeft), Buttons.DPadLeft, Keys.Left);
+        internal static readonly InputBinding QuickSlotRight = InputManager.AddBinding(nameof(QuickSlotRight), Buttons.DPadRight, Keys.Right);
+        internal static readonly InputBinding QuickSlotTop = InputManager.AddBinding(nameof(QuickSlotTop), Buttons.DPadUp, Keys.Up);
 
         // Keyboard movement
         internal static readonly InputBinding KeyboardMoveDown = InputManager.AddBinding(nameof(KeyboardMoveDown), 0, Keys.S);

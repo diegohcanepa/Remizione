@@ -52,7 +52,7 @@ namespace Remizione.UI
             icons[1] = new ImageSprite(Game, Atlases.UI.FaithIcon) { Scale = ScaleInfo.UIElement.Small };
 
             icons[0].Position = new(4);
-            icons[1].Position = icons[0].BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
+            icons[1].Position = icons[0].BoundingBox.GetPoint(RectanglePoint.LeftBottom);
 
             this.maxValues = new TextSprite[statCount];
             this.values = new TextSprite[statCount];
@@ -73,7 +73,7 @@ namespace Remizione.UI
                     Scale = ScaleInfo.Text.Medium
                 };
 
-                this.values[i].Position = icons[i].BoundingBox.GetPoint(RectanglePoint.Right, 1, .5f);
+                this.values[i].Position = icons[i].BoundingBox.GetPoint(RectanglePoint.Right, .5f, 1);
             }
         }
 

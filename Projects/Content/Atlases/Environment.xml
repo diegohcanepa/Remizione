@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:c56e6df6c4f9ba48d8b65ccc9a8d0026:3e807e94f17912f59b12b91d82dd3aa9:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:33b3589d187604e8d61143d5b272f031:b113e76e5f5bc0879dadf95ebbf5a010:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,7 +20,7 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Environment.png" width="512" height="512">
-    <sprite n="Apple.png" x="364" y="64" w="2" h="3"/>
+    <sprite n="Apple.png" x="364" y="78" w="2" h="3"/>
     <sprite n="BlessedTinder.png" x="459" y="99" w="5" h="6"/>
     <sprite n="BloodSplashHigh01.png" x="384" y="260" w="13" h="18"/>
     <sprite n="BloodSplashHigh02.png" x="484" y="185" w="13" h="18"/>
@@ -36,6 +36,8 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="BloodSplashLow06.png" x="314" y="289" w="14" h="7"/>
     <sprite n="Chest.png" x="391" y="153" w="16" h="14"/>
     <sprite n="ChestShadow.png" x="390" y="169" w="16" h="14"/>
+    <sprite n="Chili.png" x="364" y="54" w="3" h="3"/>
+    <sprite n="ChiliShadow.png" x="364" y="74" w="3" h="2"/>
     <sprite n="CrateFragment.png" x="502" y="107" w="8" h="3"/>
     <sprite n="CrossA.png" x="336" y="181" w="19" h="22"/>
     <sprite n="CrossAShadow.png" x="336" y="205" w="19" h="22"/>
@@ -46,8 +48,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="CrossLargeA.png" x="405" y="224" w="23" h="39"/>
     <sprite n="CrossLargeAShadow.png" x="334" y="253" w="23" h="39"/>
     <sprite n="DefaultLight.png" x="471" y="46" w="39" h="39"/>
-    <sprite n="DustParticle1.png" x="364" y="54" w="3" h="3"/>
-    <sprite n="FireflyParticle1.png" x="364" y="59" w="3" h="3"/>
+    <sprite n="Duck.png" x="364" y="59" w="3" h="3"/>
+    <sprite n="DuckShadow.png" x="364" y="74" w="3" h="2"/>
+    <sprite n="DustParticle1.png" x="364" y="64" w="3" h="3"/>
+    <sprite n="FireflyParticle1.png" x="364" y="69" w="3" h="3"/>
     <sprite n="FireflyParticle2.png" x="459" y="107" w="5" h="5"/>
     <sprite n="FlatStonesA.png" x="415" y="99" w="42" h="26"/>
     <sprite n="FlatStonesB.png" x="364" y="99" w="49" h="32"/>
@@ -78,7 +82,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="RainParticle3.png" x="2" y="113" w="353" h="66"/>
     <sprite n="RainParticle4.png" x="2" y="181" w="332" h="44"/>
     <sprite n="RainParticle5.png" x="2" y="227" w="310" h="64"/>
-    <sprite n="RottenApple.png" x="364" y="69" w="2" h="3"/>
+    <sprite n="RottenApple.png" x="364" y="83" w="2" h="3"/>
     <sprite n="ShadowSpotAverage.png" x="502" y="120" w="6" h="3"/>
     <sprite n="SinnerCross.png" x="359" y="256" w="23" h="36"/>
     <sprite n="SinnerCrossShadow.png" x="459" y="185" w="23" h="36"/>

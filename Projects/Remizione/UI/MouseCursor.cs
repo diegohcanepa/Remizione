@@ -51,12 +51,6 @@ namespace Remizione
             else if (state == MouseCursorState.CrossOn)
                 cursorImage.Image = Atlases.UI.MouseCursorCrossOn;
 
-            else if (state == MouseCursorState.Target)
-                cursorImage.Image = Atlases.UI.MouseCursorTarget;
-
-            else if (state == MouseCursorState.TargetOn)
-                cursorImage.Image = Atlases.UI.MouseCursorTargetOn;
-
             else if (state == MouseCursorState.Wait)
                 cursorImage.Image = Atlases.UI.MouseCursorWait;
 
@@ -94,9 +88,6 @@ namespace Remizione
             cursorImage.Update(gameTime);
 
             shakeTween.Update(gameTime);
-
-            if (state == MouseCursorState.TargetOn && !scaleTween.IsRunning && !shakeTween.IsRunning)
-                cursorImage.Scale = attackTween.CurrentValue;
         }
 
         #endregion
@@ -140,17 +131,6 @@ namespace Remizione
             {
                 if (value != state)
                 {
-                    if (state == MouseCursorState.Cross)
-                    {
-                        if (value == MouseCursorState.Target || value == MouseCursorState.TargetOn)
-                            AnimateSwitch();
-                    }
-                    else if (state == MouseCursorState.Target || state == MouseCursorState.TargetOn)
-                    {
-                        if (value == MouseCursorState.Cross)
-                            AnimateSwitch();
-                    }
-
                     state = value;
                     Invalidate();
                 }

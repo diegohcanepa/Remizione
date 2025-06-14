@@ -311,6 +311,10 @@
             <key type="filename">Environment-assets/Apple.png</key>
             <key type="filename">Environment-assets/MoveDestinationMark.png</key>
             <key type="filename">FireflyParticles-assets/FireflyParticle1.png</key>
+            <key type="filename">Pickups-assets/Chili.png</key>
+            <key type="filename">Pickups-assets/ChiliShadow.png</key>
+            <key type="filename">Pickups-assets/Duck.png</key>
+            <key type="filename">Pickups-assets/DuckShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -799,6 +803,7 @@
                     <filename>RainDropImpacts-assets</filename>
                     <filename>SinnerCross-assets</filename>
                     <filename>InventoryBag-assets</filename>
+                    <filename>Pickups-assets</filename>
                 </array>
             </struct>
         </map>

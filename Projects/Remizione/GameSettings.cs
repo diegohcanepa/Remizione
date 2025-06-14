@@ -28,9 +28,6 @@ namespace Remizione
         // LogFileName
         public const string LogFileName = "ErrorLog.txt";
 
-        // PassiveSymbol
-        public const string PassiveSymbol = "*";
-
         // PropRevealOpacity
         public const float PropRevealOpacity = .5f;
 

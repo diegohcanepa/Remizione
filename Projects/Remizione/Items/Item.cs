@@ -41,21 +41,21 @@ namespace Remizione
                 return;
 
             var text = MetaItem.LocalizedName;
-            if (MetaItem.Passive)
-                text = GameSettings.PassiveSymbol + " " + text;
 
             // Add level
             if (Level > 0)
                 text += $" +{Level}";
 
+            /*
             // Count
             if (MetaItem.Maximum > 1)
             {
                 if (MetaItem.Maximum == 999)
                     text += $" ({Count})";
                 else
-                    text += $" ({Count} / {MetaItem.Maximum})";
+                    text += $" ({Count}/{MetaItem.Maximum})";
             }
+            */
 
             // Durability state
             else if (MetaItem.Durability > 0)
@@ -166,9 +166,6 @@ namespace Remizione
         {
             var values = new List<string>();
 
-            if (MetaItem.Passive)
-                values.Add(GameSettings.PassiveSymbol + Localization.GetValue(ItemProperty.Passive));
-
             if (MetaItem.BaseDamage != null)
             {
                 var value = $"{Localization.GetValue(ItemProperty.BaseDamage)}: {MetaItem.BaseDamage.GetValueRangeAsString(Level)}";
@@ -189,6 +186,12 @@ namespace Remizione
 
             return string.Join(" / ", values);
         }
+
+        // Index
+        public int Index => Container.Items.IndexOf(this);
+
+        // IsSelected
+        public bool IsSelected => Container.SelectedItem == this;
 
         // IsStackFull
         public bool IsStackFull => MetaItem.Maximum == 1 || Count >= MetaItem.Maximum;

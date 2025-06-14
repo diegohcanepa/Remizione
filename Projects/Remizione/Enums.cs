@@ -56,9 +56,6 @@ namespace Remizione
     // ItemProperty
     public enum ItemProperty { BaseDamage, Passive }
 
-    // ItemVisualState
-    public enum ItemVisualState { Active, Inactive, Combine, Combined }
-
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, Moon, MuzzleFlash, Outdoor, Lightning }
 
@@ -88,7 +85,7 @@ namespace Remizione
     public enum Message { None, Critical, Miss, NoFaith, ThreatsNearby }
 
     // MouseCursorState
-    public enum MouseCursorState { None, Cross, CrossOn, Target, TargetOn, Wait, Arrow }
+    public enum MouseCursorState { None, Cross, CrossOn, Wait, Arrow }
 
     // PlacementDistributionStrategy
     public enum PlacementDistributionStrategy { Random, Clump, NoiseMap }

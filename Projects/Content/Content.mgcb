@@ -284,6 +284,24 @@
 /processorParam:Quality=Best
 /build:Audio/FX/SmallWhooshA4.wav
 
+#begin Audio/FX/ThrowableDuck1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/ThrowableDuck1.wav;Audio/FX/ThrowableDuck1
+
+#begin Audio/FX/ThrowableDuck2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/ThrowableDuck2.wav;Audio/FX/ThrowableDuck2
+
+#begin Audio/FX/ThrowableDuck3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/ThrowableDuck3.wav;Audio/FX/ThrowableDuck3
+
 #begin Audio/FX/Thunder1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

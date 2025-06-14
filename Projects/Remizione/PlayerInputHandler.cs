@@ -26,7 +26,7 @@ namespace Remizione
         private HandleInputResult HandleGamePadInput()
         {
             // Inventory
-            if (InputBindings.ShowInventory.IsPressed(PlayerIndex.One))
+            if (InputBindings.ShowInventory.IsPressed(PlayerIndex.One) && !inventoryScene.IsCurrentScene)
             {
                 inventoryScene.SceneController.Push();
                 return HandleInputResult.Handled;

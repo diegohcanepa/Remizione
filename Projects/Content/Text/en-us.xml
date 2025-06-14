@@ -45,10 +45,14 @@
   <String Key="Item.BareHands.Name">Outburst</String>
   <String Key="Item.BlessedTinder.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.BlessedTinder.Name">Blessed tinder</String>
-  <String Key="Item.CrateFragment.Description" />
+  <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
+  <String Key="Item.Chili.Name">Hot chili</String>
+  <String Key="Item.CrateFragment.Description"></String>
   <String Key="Item.CrateFragment.Name">Crate fragment</String>
   <String Key="Item.CrownOfThorns.Description">The crown of thorns makes you regain faith in exchange for physical punishment.</String>
   <String Key="Item.CrownOfThorns.Name">Crown of thorns</String>
+  <String Key="Item.Duck.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
+  <String Key="Item.Duck.Name">Rubber duck</String>
   <String Key="Item.Gold.Description">A handful of gold dust.</String>
   <String Key="Item.Gold.Name">Gold dust</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>

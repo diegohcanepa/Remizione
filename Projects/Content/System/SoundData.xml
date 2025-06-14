@@ -23,6 +23,7 @@
 	<FX Name="SinnerMaleHurtSetA" MaxInstances="8" Sounds="1..8" Volume=".5" />
 	<FX Name="SmallWhooshA" MaxInstances="6" Sounds="1..4" />
 	<FX Name="Thunder" MaxInstances="4" Sounds="1..4" />
+	<FX Name="ThrowableDuck" MaxInstances="8" Sounds="1..3" />
 	<FX Name="UINavigation" MaxInstances="4" Sounds="1..4" />
 	<FX Name="UIQuickSlot" MaxInstances="6" />
 	<FX Name="UISelect" MaxInstances="4" />

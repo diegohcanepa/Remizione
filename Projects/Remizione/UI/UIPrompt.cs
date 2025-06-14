@@ -22,8 +22,7 @@ namespace Remizione.UI
             {
                 AllowContainer = true,
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom),
-                TextColor = new(255,194,161)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom)
             };
         }
 

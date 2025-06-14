@@ -53,7 +53,8 @@ namespace Remizione
             // Label
             this.label = new TextSprite(game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Default
+                Color = ColorPalette.Text.Default,
+                ShadowOffset = new(.5f)
             };
 
             this.image = new ImageSprite(game);
@@ -109,7 +110,7 @@ namespace Remizione
             else
             {
                 image.PivotOrigin = pivotOrigin;
-                label.Scale = small ? ScaleInfo.Text.Medium : ScaleInfo.Text.Large;
+                label.Scale = ScaleInfo.Text.Large;
 
                 containerPattern.Image = small ? Atlases.UI.UIControlContainerPatternSmall : Atlases.UI.UIControlContainerPatternLarge;
                 containerEdge.Image = small ? Atlases.UI.UIControlContainerEdgeSmall : Atlases.UI.UIControlContainerEdgeLarge;
@@ -135,7 +136,7 @@ namespace Remizione
                 if (AllowContainer && DisplayMode != UIControlDisplayMode.ImageOnly)
                 {
                     containerPattern.ScaleX = TextBoundingBox.Width + 7;
-                    containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Middle, 0, small ? 0 : -.3f).Y;
+                    containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Middle, 0, -.3f).Y;
                     containerEdge.Y = containerPattern.Y;
 
                     if (PivotOrigin == RectanglePoint.Right || PivotOrigin == RectanglePoint.RightBottom || PivotOrigin == RectanglePoint.RightTop)

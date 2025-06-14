@@ -100,7 +100,7 @@ namespace Remizione
             {
                 const int threshold = 8;
                 int extraSlots = Math.Max(0, Fortitude - threshold);
-                return Math.Min(minSize + extraSlots, maxSize);
+                return Math.Min(minSize + extraSlots, 10);
             }
             else
                 return maxSize;
