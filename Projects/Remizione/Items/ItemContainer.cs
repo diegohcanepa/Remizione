@@ -14,10 +14,9 @@ namespace Remizione
         private readonly List<Item> items = [];
 
         // Constructor
-        public ItemContainer(GameThing owner, ItemContainerCategory category, string displayName)
+        public ItemContainer(GameThing owner, string displayName)
         {
             this.Owner = owner;
-            this.Category = category;
             this.DisplayName = displayName;
 
             Items = new ReadOnlyCollection<Item>(items);
@@ -61,7 +60,7 @@ namespace Remizione
             {
                 item.Count += amount;
             }
-            else if (!IsFull)
+            else
             {
                 item = new Item(this, metaItem) { Count = amount };
                 items.Add(item);
@@ -76,9 +75,6 @@ namespace Remizione
 
             return item;
         }
-
-        // Category
-        public ItemContainerCategory Category { get; }
 
         // DisplayName
         public string DisplayName { get; }
@@ -110,9 +106,6 @@ namespace Remizione
 
         // IsEmpty
         public bool IsEmpty => items.Count == 0;
-
-        // IsFull
-        public bool IsFull => Size > 0 && items.Count >= Size;
 
         // Items
         public ReadOnlyCollection<Item> Items { get; }
@@ -226,19 +219,11 @@ namespace Remizione
             }
         }
 
-        // Size
-        public int Size => Owner.GetItemContainerSize(Category);
-
         // ToString
         public override string ToString()
         {
             if (toString == null)
-            {
                 toString = DisplayName;
-                if (Size > 0)
-                    toString += $" ({items.Count} / {Size})";
-            }
-
             return toString;
         }
 

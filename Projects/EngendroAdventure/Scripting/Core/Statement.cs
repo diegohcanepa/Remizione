@@ -93,6 +93,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string SpeedFactorArg = "#speed-factor";
         protected static readonly string StartDelayArg = "#start-delay";
         protected static readonly string StyleArg = "#style";
+        protected static readonly string SubAreaArg = "#sub-area";
         protected static readonly string TargetArg = "#target";
         protected static readonly string TransientArg = "#transient";
         protected static readonly string TransitionAwareArg = "#transition-aware";

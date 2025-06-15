@@ -93,23 +93,14 @@ namespace Remizione
                 return;
 
             var actor = Owner as Actor;
-            int damageAmount;
 
-            // Faith penalty
-            if (actor != null && (actor.Faith <= 0 || hitType == HitType.Glancing))
-            {
-                damageAmount = MetaItem.BaseDamage.MinimumValue;
-            }
-            else
-            {
-                damageAmount = MetaItem.BaseDamage.Roll();
+            int damageAmount = MetaItem.BaseDamage.Roll();
 
-                if (actor != null)
-                    damageAmount += actor.Stats.GetModifier(MetaItem.Modifier);
+            if (actor != null)
+                damageAmount += actor.Stats.GetModifier(MetaItem.Modifier);
 
-                if (hitType == HitType.Critical)
-                    damageAmount += Math.Max(MetaItem.BaseDamage.Roll(), MetaItem.BaseDamage.MaximumValue / 2);
-            }
+            if (hitType == HitType.Critical)
+                damageAmount += Math.Max(MetaItem.BaseDamage.Roll(), MetaItem.BaseDamage.MaximumValue / 2);
 
             if (MetaItem.Durability > 0 && Durability > 0)
                 Durability -= 1;
@@ -233,10 +224,6 @@ namespace Remizione
         {
             var actor = Owner as Actor;
 
-            // Create
-            if (MetaItem.IsStackable && MetaItem.Action == ItemAction.Create)
-                return IsStackFull && actor != null;
-
             // Not enough HP
             if (MetaItem.HP is DiceExpression hpExp && hpExp.FixedValue < 0 && Owner.HP <= Math.Abs(hpExp.FixedValue))
                 return false;
@@ -302,17 +289,13 @@ namespace Remizione
             if (MetaItem.Faith != null && Owner is Actor actor)
                 actor.Faith += MetaItem.Faith.Roll();
 
-            var action = MetaItem.Action;
-
-            if (MetaItem.Maximum > 1 && action != ItemAction.Create)
+            if (MetaItem.Maximum > 1)
             {
-                if (Count == 1)
+                if (Count == 1 && !MetaItem.AllowEmpty)
                     Container.Remove(this);
                 else
                     Count--;
             }
-            else if (action == ItemAction.Create || action == ItemAction.Use)
-                Container.Remove(this);
 
             InvalidateDisplayText();
 

@@ -104,13 +104,13 @@ namespace Remizione
         private void LayoutSlots()
         {
             const float spacing = 1;
-            var maximum = Owner.Inventory.Size;
+            var maximum = Owner.InventorySize;
             var slotSize = slots[0].BoundingBox.Width;
             var totalWidth = (maximum * slotSize) + ((maximum - 1) * spacing);
             var start = (Screen.NativeWidth - totalWidth) / 2;
             start += slots[0].BoundingBox.Width / 2;
 
-            for (int i = 0; i < Owner.Inventory.Size; i++)
+            for (int i = 0; i < Owner.InventorySize; i++)
             {
                 var x = start + (i * (slotSize + spacing));
                 slots[i].Position = new(x, 120);
@@ -182,7 +182,7 @@ namespace Remizione
             itemNameText.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            for (int i = 0; i < Owner.Inventory.Size; i++)
+            for (int i = 0; i < Owner.InventorySize; i++)
             {
                 slots[i].Draw(gameTime);
             }

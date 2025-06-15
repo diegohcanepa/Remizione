@@ -19,6 +19,7 @@ namespace Remizione
 
         private readonly FloatTween accelerationFactorTween = new();
         private BloodSplash? bloodSplash;
+        private readonly ActorCloseAttackState closeAttackState;
         private readonly CombatStateMachine combatStateMachine;
         private int faith;
         private int faithRecoveryCooldown;
@@ -28,7 +29,6 @@ namespace Remizione
         private readonly FloatTween headTween = new();
         private int level = 1;
         private int maxFaith;
-        private int maxWillpower;
         private readonly FloatTween moveTween = new();
         private GameThing? pendingInteractiveTarget;
         private readonly List<Vector2> pendingPathNodes = [];
@@ -41,7 +41,6 @@ namespace Remizione
         private float tinyMoveSpeedFactor = 1;
         private Item? weapon;
         private string weaponName = string.Empty;
-        private int willpower;
 
         #endregion
 
@@ -55,6 +54,7 @@ namespace Remizione
             this.Stats = new Stats(this);
 
             this.Atlas = Atlases.Actors;
+            this.CloseAttacks = new ItemContainer(this, string.Empty);
             this.IgnoreWalkArea = false;
             this.ShadowSpot = new ShadowSpot(this);
 
@@ -76,14 +76,10 @@ namespace Remizione
             ResetHeadTween();
             headTween.RandomizeTime();
 
-            this.Gifts = new ItemContainer(this, ItemContainerCategory.Gifts, Localization.GetValue(InGameMenuOptionName.Gifts));
-            this.Prayers = new ItemContainer(this, ItemContainerCategory.Prayers, Localization.GetValue(InGameMenuOptionName.Prayers));
-            this.SacredWords = new ItemContainer(this, ItemContainerCategory.SacredWords, Localization.GetValue(InGameMenuOptionName.SacredWords));
-
             this.standState = new ActorStandState(this);
+            this.closeAttackState = new ActorCloseAttackState(this);
 
             this.StateMachine = new ActorStateMachine(this, standState);
-            this.StateMachine.RegisterState(new ActorCreateState(this));
             this.StateMachine.RegisterState(new ActorUseItemState(this));
             this.StateMachine.RegisterState(new ActorDeathState(this));
             this.StateMachine.RegisterState(new ActorHurtState(this));
@@ -91,7 +87,7 @@ namespace Remizione
             this.StateMachine.RegisterState(new ActorMoveState(this));
             this.StateMachine.RegisterState(new ActorPickUpState(this));
             this.StateMachine.RegisterState(new ActorMoveFastState(this));
-            this.StateMachine.RegisterState(new ActorCloseAttackState(this));
+            this.StateMachine.RegisterState(closeAttackState);
 
             throwObjectState = new ActorThrowObjectState(this);
             this.StateMachine.RegisterState(throwObjectState);
@@ -359,10 +355,6 @@ namespace Remizione
         {
             base.OnRead(attributes);
 
-            // SacredWords
-            if (attributes[ItemContainerCategory.SacredWords.ToString()]?.Value is string sacredWordsData)
-                SacredWords.SetSerializationData(sacredWordsData);
-
             // Devotion
             if (attributes[nameof(Stats.Devotion)]?.Value is string devotion)
                 Stats.Devotion = XmlConvert.ToInt32(devotion);
@@ -475,8 +467,6 @@ namespace Remizione
         {
             base.OnWrite(output);
 
-            output.WriteAttributeString(ItemContainerCategory.SacredWords.ToString(), SacredWords.GetSerializationData());
-
             output.WriteAttributeString(nameof(Stats.Devotion), XmlConvert.ToString(Stats.Devotion));
             output.WriteAttributeString(nameof(Stats.Dexterity), XmlConvert.ToString(Stats.Dexterity));
             output.WriteAttributeString(nameof(Stats.Fortitude), XmlConvert.ToString(Stats.Fortitude));
@@ -560,20 +550,14 @@ namespace Remizione
         }
 
         // CloseAttack
-        public void CloseAttack() => StateMachine.ChangeState(ActorStateNames.CloseAttack);
-
-        // CreateItem
-        public void CreateItem(Item item)
+        public void CloseAttack()
         {
-            if (item.MetaItem.Action != ItemAction.Create)
-                return;
-
-            if (StateMachine.GetState(ActorStateNames.CreateItem) is ActorCreateState state)
-            {
-                state.Item = item;
-                StateMachine.ChangeState(state.Name);
-            }
+            closeAttackState.MetaItem = GetCloseAttack();
+            StateMachine.ChangeState(ActorStateNames.CloseAttack);
         }
+
+        // CloseAttacks
+        public ItemContainer CloseAttacks { get; }
 
         // FaceToTarget
         public void FaceToTarget()
@@ -629,30 +613,12 @@ namespace Remizione
         public Item? GetAttackItem()
         {
             var result = Inventory.GetItem(WeaponName);
-            result ??= Gifts.GetItem("UnarmedAttack");
+            //result ??= Gifts.GetItem("UnarmedAttack");
             return result;
         }
 
-        // GetItemContainer
-        public ItemContainer GetItemContainer(ItemContainerCategory category)
-        {
-            return category switch
-            {
-                ItemContainerCategory.Inventory => Inventory,
-                ItemContainerCategory.Gifts => Gifts,
-                ItemContainerCategory.Prayers => Prayers,
-                _ => throw new ArgumentOutOfRangeException(nameof(category), category, null),
-            };
-        }
-
-        // GetItemContainerSize
-        public override int GetItemContainerSize(ItemContainerCategory category)
-        {
-            return Stats.GetItemContainerSize(category);
-        }
-
-        // Gifts
-        public ItemContainer Gifts { get; }
+        // GetCloseAttack
+        public MetaItem? GetCloseAttack() => MetaItem.Find("Headbutt");
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
@@ -894,9 +860,6 @@ namespace Remizione
                 }
             }
         }
-
-        // Prayers
-        public ItemContainer Prayers { get; }
 
         // Replenish
         [ScriptMethod]

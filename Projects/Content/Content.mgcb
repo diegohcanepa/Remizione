@@ -182,6 +182,30 @@
 /processorParam:Quality=Best
 /build:Audio/FX/FootstepWater6.wav
 
+#begin Audio/FX/Headbutt1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Headbutt1.wav;Audio/FX/Headbutt1
+
+#begin Audio/FX/Headbutt2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Headbutt2.wav;Audio/FX/Headbutt2
+
+#begin Audio/FX/Headbutt3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Headbutt3.wav;Audio/FX/Headbutt3
+
+#begin Audio/FX/Headbutt4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Headbutt4.wav;Audio/FX/Headbutt4
+
 #begin Audio/FX/ImpactA.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

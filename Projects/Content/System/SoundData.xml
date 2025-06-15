@@ -15,6 +15,7 @@
 	<FX Name="CycleHorn" />
 	<FX Name="FootstepA" MaxInstances="8" Sounds="1..2" Volume=".5" />
 	<FX Name="FootstepWater" MaxInstances="8" Sounds="1..6" Volume=".5" />
+	<FX Name="Headbutt" MaxInstances="6" Sounds="1..4" Volume=".25" />
 	<FX Name="ImpactA" MaxInstances="6" />
 	<FX Name="MenuDiscardItem" MaxInstances="4" />
 	<FX Name="MenuSelect" MaxInstances="4" />

@@ -132,7 +132,7 @@ namespace Remizione
                 iconImage.X += .5f;
 
                 slotImage.Position = value;
-                amountText.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 3, -4);
+                amountText.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom);
             }
         }
 

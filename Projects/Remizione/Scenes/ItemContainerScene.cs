@@ -21,7 +21,6 @@ namespace Remizione
         private readonly ImageSprite containerSelection;
         private readonly UIControl discardButton;
         private readonly UIInfoPanel infoPanel;
-        private readonly ItemContainerCategory category;
         private readonly PopupMenu<Item> menu;
 
         #endregion
@@ -29,10 +28,9 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        protected ItemContainerScene(RemizioneGame game, ItemContainerCategory category, bool allowDiscard, bool allowAction)
+        protected ItemContainerScene(RemizioneGame game, bool allowDiscard, bool allowAction)
             : base(game, SceneSettings.None)
         {
-            this.category = category;
             this.allowDiscard = allowDiscard;
             this.allowAction = allowAction;
 
@@ -104,7 +102,7 @@ namespace Remizione
 
             if (menu.SelectedOption?.LinkedObject is Item item)
             {
-                actor.GetItemContainer(category).Remove(item.Name);
+                //actor.GetItemContainer(category).Remove(item.Name);
                 menu.RemoveSelectedOption();
                 InvalidateTitle();
                 Sound.Play(SoundNames.MenuDiscardItem);
@@ -134,11 +132,15 @@ namespace Remizione
         }
 
         // InvalidateTitle
-        private void InvalidateTitle() => menu.Title = Actor?.GetItemContainer(category).ToString();
+        private void InvalidateTitle()
+        {
+            //menu.Title = Actor?.GetItemContainer(category).ToString();
+        }
 
         // PerformItemAction
         private void PerformItemAction(Actor actor)
         {
+            /*
             if (menu.SelectedOption?.LinkedObject is Item item && item.MetaItem.Action != ItemAction.None)
             {
                 if (item.MetaItem.Action == ItemAction.Create)
@@ -152,11 +154,13 @@ namespace Remizione
 
                 SceneController.Pop();
             }
+            */
         }
 
         // SelectedOptionChanged
         private void SelectedOptionChanged(PopupMenuOption<Item>? option)
         {
+            /*
             if (option != null)
             {
                 infoPanel.Title = option.LinkedObject.GetLocalizedInfo();
@@ -167,6 +171,7 @@ namespace Remizione
                 infoPanel.Text = null;
 
             actionButton.IsEnabled = option != null && option.LinkedObject.MetaItem.Action != ItemAction.None && option.LinkedObject.MeetUsageConditions();
+            */
         }
 
         #endregion
@@ -224,6 +229,7 @@ namespace Remizione
         // OnLoadContent
         protected override void OnLoadContent()
         {
+            /*
             menu.Clear();
             MouseCursor.Instance.State = MouseCursorState.Arrow;
 
@@ -244,6 +250,7 @@ namespace Remizione
                 actionButton.Position = container.BoundingBox.GetPoint(RectanglePoint.RightBottom, -5, -4);
 
             InvalidateTitle();
+            */
         }
 
         // OnUpdate

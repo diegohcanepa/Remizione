@@ -3,19 +3,16 @@
 namespace Remizione.Scripting
 {
     // MetaItemCommand
-    // Arguments: {Name} {Category} [#damage:DiceRoll] [#degradation-interval:Integer] [#faith:Integer] [#knockback:Vector2] [#maximum:Integer] [#modifier:Stat] [#range:Integer] [#sound:Name] [#spirit:Integer]
+    // Arguments: {Name} [#damage:DiceRoll] [#degradation-interval:Integer] [#faith:Integer] [#knockback:Vector2] [#maximum:Integer] [#modifier:Stat] [#range:Integer] [#sound:Name] [#spirit:Integer]
     internal sealed class MetaItemCommand : NonAwaitableCommand
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 2, ActionArg, AllowEmptyArg, BonusArg, CategoryArg, CreationRoutineArg, DamageArg, DurabilityArg, FaithArg, HPArg, KnockbackArg, MaximumArg, ModifierArg, PassiveArg, RangeArg, SacrificeRewardArg, SoundArg, UseIntervalArg)
+            : base(script, source, body, 1, AllowEmptyArg, BonusArg, CategoryArg, DamageArg, DurabilityArg, FaithArg, HPArg, KnockbackArg, MaximumArg, ModifierArg, PassiveArg, RangeArg, SacrificeRewardArg, SoundArg, UseIntervalArg)
         {
             var name = Parser.ParseName(this, 0);
-            var category = Parser.ParseEnum<ItemContainerCategory>(this, 1);
-            var action = Parser.ParseEnumArgument(this, ActionArg, ItemAction.None);
             var bonus = Parser.ParseInt32Argument(this, BonusArg);
             var baseDamage = Parser.ParseDiceExpressionArgument(this, DamageArg) ?? null;
-            var creationRoutine = Parser.ParseRoutineArgument(this, CreationRoutineArg);
             var durability = Parser.ParseInt32Argument(this, DurabilityArg, -1);
             var knockback = Parser.ParseVector2Argument(this, KnockbackArg);
             var maximum = Parser.ParseInt32Argument(this, MaximumArg);
@@ -28,7 +25,7 @@ namespace Remizione.Scripting
             var sound = Parser.ParseSoundArgument(this, SoundArg);
             var useInterval = Parser.ParseInt32Argument(this, UseIntervalArg);
 
-            _ = new MetaItem(name, category, action, passive, baseDamage, modifier, bonus, knockback, maximum, hp, fp, range, durability, sound, useInterval, creationRoutine)
+            _ = new MetaItem(name, passive, baseDamage, modifier, bonus, knockback, maximum, hp, fp, range, durability, sound, useInterval)
             {
                 AllowEmpty = HasArg(AllowEmptyArg),
                 SacrificeReward = sacrificeReward

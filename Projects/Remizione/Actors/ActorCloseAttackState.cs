@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Remizione
 {
@@ -19,48 +20,35 @@ namespace Remizione
         #region Protected members
 
         // GetAnimationName
-        protected override string GetAnimationName() => Owner.GetAttackItem() is Item attackItem ? attackItem.Name.ToString() : string.Empty;
+        protected override string GetAnimationName() => MetaItem?.Name ?? string.Empty;
 
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (Owner.Target == null || Owner.GetAttackItem() is not Item attackItem)
+            if (MetaItem?.BaseDamage == null)
                 return;
 
-            if (!damageTaken && Owner.AnimationPlayer.Frame is SpriteFrame frame)
+            if (!damageTaken && Owner.Room != null && Owner.AnimationPlayer.Frame != null)
             {
-                if (frame.IsEvent)
+                for (var i = 0; i < Owner.Room.CulledThings.Count; i++)
                 {
-                    damageTaken = true;
-                    
-                    var attackRoll = Owner.Stats.RollAttack(AttackRollStat.Strength, 0, out bool criticalHit);
-                    var hitType = criticalHit ? HitType.Critical : HitType.Default;
+                    var target = Owner.Room.CulledThings[i] as GameThing;
 
-                    if (Owner.Target is Actor target)
+                    // Skip owner
+                    if (target == null || target == Owner)
+                        continue;
+
+                    if (target.HurtBox.Intersects(Owner.GetFrameSubArea()))
                     {
-                        var defenseRoll = criticalHit || target.IsTired ? 0 : target.Stats.GetDefense();
+                        damageTaken = true;
 
-                        if (hitType != HitType.Critical)
-                        {
-                            // 50% miss chances
-                            if (attackRoll < defenseRoll && DiceExpression.Dice10.Roll() <= 5)
-                            {
-                                hitType = HitType.Glancing;
-                                defenseRoll = 0;
-                            }
-                        }
+                        var damageAmount = MetaItem.BaseDamage.Roll();
+                        var criticalHit = DiceExpression.Dice20.Roll() == 20;
 
-                        if (attackRoll >= defenseRoll)
-                        {
-                            attackItem.ApplyDamage(Owner.Target, hitType);
-                        }
-                        else
-                        {
-                            target.ShowMessage(Message.Miss);
-                        }
+                        damageAmount += Owner.Stats.GetModifier(MetaItem.Modifier);
+                        if (criticalHit)
+                            damageAmount += Math.Max(MetaItem.BaseDamage.Roll(), MetaItem.BaseDamage.MaximumValue / 2);
                     }
-                    else
-                        attackItem.ApplyDamage(Owner.Target, hitType);
                 }
             }
         }
@@ -83,5 +71,8 @@ namespace Remizione
             damageTaken = false;
             Owner.FaceToTarget();
         }
+
+        // MetaItem
+        public MetaItem? MetaItem { get; set; }
     }
 }

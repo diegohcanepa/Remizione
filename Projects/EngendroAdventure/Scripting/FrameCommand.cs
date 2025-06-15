@@ -3,12 +3,12 @@
 namespace EngendroAdventure.Scripting
 {
     // FrameCommand
-    // Arguments: {Range:Int32Range} duration {Int32} [#goto:Label] [#label:Name] [#repeat:Integer] [#sound:Name] [#speed-factor:Float]
+    // Arguments: {Range:Int32Range} duration {Int32} [#goto:Label] [#label:Name] [#repeat:Integer] [#sound:Name] [#sub-area:Rectangle] [#speed-factor:Float]
     internal sealed class FrameCommand : NonAwaitableCommand
     {
         // Constructor
         internal FrameCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 3, EventFrameArg, FootstepArg, GotoArg, LabelArg, RepeatArg, SoundArg, SpeedFactorArg)
+            : base(script, source, body, 3, EventFrameArg, FootstepArg, GotoArg, LabelArg, RepeatArg, SoundArg, SubAreaArg, SpeedFactorArg)
         {
             if (AnimationCommand.ActiveAnimation == null)
                 throw ScriptExceptionBuilder.AnimationNotActive(this);
@@ -22,6 +22,7 @@ namespace EngendroAdventure.Scripting
             var speedFactor = Parser.ParseFloatArgument(this, SpeedFactorArg, 1);
             var footstep = HasArg(FootstepArg);
             var gotoLabel = Parser.ParseNameArgument(this, GotoArg) ?? string.Empty;
+            var subArea = Parser.ParseRectangleArgument(this, SubAreaArg);
 
             // Add frames
             var prefix = AnimationCommand.ActiveAnimationFramePrefix ?? AnimationCommand.ActiveAnimation.Name;
@@ -31,7 +32,7 @@ namespace EngendroAdventure.Scripting
                 for (var j = range.Minimum; j <= range.Maximum; j++)
                 {
                     var imageName = prefix + j.ToString(CultureInfo.InvariantCulture).PadLeft(AnimationCommand.ZeroPaddingLength, '0');
-                    AnimationCommand.ActiveAnimation.AddFrame(imageName, duration, isEventFrame, label, speedFactor, sound, footstep, gotoLabel);
+                    AnimationCommand.ActiveAnimation.AddFrame(imageName, duration, isEventFrame, label, speedFactor, sound, subArea, footstep, gotoLabel);
                 }
             }
         }

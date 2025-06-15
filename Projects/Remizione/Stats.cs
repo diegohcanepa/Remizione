@@ -90,22 +90,6 @@ namespace Remizione
             return (int)(baseCooldownMs * multiplier);
         }
 
-        // GetItemContainerSize
-        public int GetItemContainerSize(ItemContainerCategory category)
-        {
-            const int minSize = 5;
-            const int maxSize = 12;
-
-            if (category == ItemContainerCategory.Inventory)
-            {
-                const int threshold = 8;
-                int extraSlots = Math.Max(0, Fortitude - threshold);
-                return Math.Min(minSize + extraSlots, 10);
-            }
-            else
-                return maxSize;
-        }
-
         // GetMaxFaith
         public int GetMaxFaith()
         {

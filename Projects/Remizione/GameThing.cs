@@ -59,7 +59,7 @@ namespace Remizione
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
             this.PlacementConditions = new(placementConditions);
-            this.Inventory = new ItemContainer(this, ItemContainerCategory.Inventory, Localization.GetValue(InGameMenuOptionName.Inventory));
+            this.Inventory = new ItemContainer(this, Localization.GetValue(InGameMenuOptionName.Inventory));
         }
 
         #endregion
@@ -316,7 +316,7 @@ namespace Remizione
         protected override void OnRead(XmlAttributeCollection attributes)
         {
             // Inventory
-            if (attributes[ItemContainerCategory.Inventory.ToString()]?.Value is string inventoryData)
+            if (attributes[nameof(Inventory)]?.Value is string inventoryData)
                 Inventory.SetSerializationData(inventoryData);
         }
 
@@ -411,7 +411,7 @@ namespace Remizione
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
-            output.WriteAttributeString(ItemContainerCategory.Inventory.ToString(), Inventory.GetSerializationData());
+            output.WriteAttributeString(nameof(Inventory), Inventory.GetSerializationData());
         }
 
         #endregion
@@ -730,8 +730,14 @@ namespace Remizione
             return result;
         }
 
-        // GetItemContainerSize
-        public virtual int GetItemContainerSize(ItemContainerCategory category) => 8;
+        // GetFrameSubArea
+        public RectangleF GetFrameSubArea()
+        {
+            if (AnimationPlayer.Frame != null)
+                return this.GetAbsoluteBounds(AnimationPlayer.Frame.SubArea);
+            else
+                return RectangleF.Empty;
+        }
 
         // GetOverheadPosition
         public Vector2 GetOverheadPosition() => GetOverheadPosition(0, 0);
@@ -864,6 +870,10 @@ namespace Remizione
         [ScriptProperty]
         public Sound? HurtSound { get; set; }
 
+        // IgnoreThrowables
+        [ScriptProperty]
+        public bool IgnoreThrowables { get; set; } = true;
+
         // IgnoreWalkArea
         [ScriptProperty]
         public bool IgnoreWalkArea { get; set; } = true;
@@ -873,6 +883,9 @@ namespace Remizione
 
         // Inventory
         public ItemContainer Inventory { get; }
+
+        // InventorySize
+        public int InventorySize => 8;
 
         // IsAvailable
         public bool IsAvailable(WorldBlock worldBlock, Random random)

@@ -33,25 +33,13 @@ namespace Remizione
     public enum DustParticleKind { None, Dust, Ash }
 
     // HitType
-    public enum HitType { Default, Critical, Glancing }
+    public enum HitType { Default, Critical }
 
     // ImpactType
     public enum ImpactType { Low, Medium, High }
 
     // InGameMenuOptionName
     public enum InGameMenuOptionName { Attributes, Creatures, Inventory, Gifts, Map, Prayers, SacredWords, QuitToDesktop, Settings }
-
-    // ItemAction
-    public enum ItemAction { None, Create, Discard, Use, Wield }
-
-    // ItemContainerCategory
-    public enum ItemContainerCategory
-    {
-        Inventory,
-        Gifts,
-        Prayers,
-        SacredWords
-    }
 
     // ItemProperty
     public enum ItemProperty { BaseDamage, Passive }

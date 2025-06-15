@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Engendro.Audio;
-using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -17,7 +16,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(string name, ItemContainerCategory category, ItemAction action, bool passive, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, Sound? sound, int useInterval, Script? creationRoutine)
+        public MetaItem(string name, bool passive, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, Sound? sound, int useInterval)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -26,20 +25,8 @@ namespace Remizione
             else
                 items[name] = this;
 
-            if (passive && action != ItemAction.None)
-                throw new InvalidOperationException("A passive item cannot define an action.");
-
-            if (action == ItemAction.Create && creationRoutine == null)
-                throw new InvalidOperationException("A creatable item must specify a creation rountine.");
-
-            if (action != ItemAction.Create && creationRoutine != null)
-                throw new InvalidOperationException("A creation routine is only for creatable items.");
-
             this.Name = name;
-            this.Category = category;
             this.Bonus = bonus;
-            this.Action = action;
-            this.CreationRoutine = creationRoutine;
             this.Passive = passive;
             this.BaseDamage = baseDamage;
             this.Durability = durability;
@@ -66,9 +53,6 @@ namespace Remizione
 
         #endregion
 
-        // Action
-        public ItemAction Action { get; }
-
         // AllowEmpty
         public bool AllowEmpty { get; init; }
 
@@ -77,12 +61,6 @@ namespace Remizione
 
         // Bonus
         public int Bonus { get; }
-
-        // Category
-        public ItemContainerCategory Category { get; }
-
-        // CreationRoutine
-        public Script? CreationRoutine { get; }
 
         // Durability
         public int Durability { get; set; }
