@@ -22,25 +22,6 @@ namespace Remizione
             Items = new ReadOnlyCollection<Item>(items);
         }
 
-        #region Private members
-
-        // Invalidate
-        private void Invalidate()
-        {
-            RequiresUpdate = false;
-
-            for (var i = 0; i < items.Count; i++)
-            {
-                if (items[i].MetaItem.UseInterval > 0)
-                {
-                    RequiresUpdate = true;
-                    return;
-                }
-            }
-        }
-
-        #endregion
-
         // Add
         public Item? Add(string name, int amount)
         {
@@ -68,8 +49,6 @@ namespace Remizione
 
             if (SelectedItem == null)
                 SelectedItem = item;
-
-            Invalidate();
 
             toString = null;
 
@@ -133,9 +112,6 @@ namespace Remizione
             else
                 return false;
         }
-
-        // RequiresUpdate
-        public bool RequiresUpdate { get; private set; }
 
         // Select
         public bool Select(Item item)
@@ -230,12 +206,9 @@ namespace Remizione
         // Update
         public void Update(GameTime gameTime)
         {
-            if (RequiresUpdate)
+            for (var i = 0; i < items.Count; i++)
             {
-                for (var i = 0; i < items.Count; i++)
-                {
-                    items[i].Update(gameTime);
-                }
+                items[i].Update(gameTime);
             }
         }
     }

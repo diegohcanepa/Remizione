@@ -71,7 +71,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string ParentArg = "#parent";
         protected static readonly string PauseAwareArg = "#pause-aware";
         protected static readonly string PassesArg = "#passes";
-        protected static readonly string PassiveArg = "#passive";
+        protected static readonly string PassiveEffectCooldownArg = "#passive-effect-cooldown";
         protected static readonly string PercentageArg = "#percentage";
         protected static readonly string PersistentArg = "#persistent";
         protected static readonly string PitchArg = "#pitch";
@@ -99,7 +99,6 @@ namespace EngendroAdventure.Scripting
         protected static readonly string TransitionAwareArg = "#transition-aware";
         protected static readonly string TweenArg = "#tween";
         protected static readonly string UnparentArg = "#unparent";
-        protected static readonly string UseIntervalArg = "#use-interval";
         protected static readonly string VibrateArg = "#vibrate";
         protected static readonly string VolumeArg = "#volume";
         protected static readonly string WalkAreaArg = "#walk-area";

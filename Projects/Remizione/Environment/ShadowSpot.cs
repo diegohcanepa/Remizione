@@ -56,7 +56,9 @@ namespace Remizione
             {
                 spotImage.Effects = actor.Effects;
                 spotImage.Opacity = GetCurrentOpacity() * actor.Opacity;
-                spotImage.Position = actor.BoundingBox.GetPoint(RectanglePoint.Bottom, actor.IsFlippedHorizontally ? -Offset : Offset);
+                var x = actor.IsFlippedHorizontally ? -Offset.X : Offset.X;
+                var y = Offset.Y;
+                spotImage.Position = actor.BoundingBox.GetPoint(RectanglePoint.Bottom, x, y);
 
                 if (actor.Altitude > 0)
                     spotImage.Y += actor.Altitude;

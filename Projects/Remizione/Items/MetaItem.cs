@@ -16,7 +16,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(string name, bool passive, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, Sound? sound, int useInterval)
+        public MetaItem(string name, int passiveEffectCooldown, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, Sound? sound)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -27,7 +27,7 @@ namespace Remizione
 
             this.Name = name;
             this.Bonus = bonus;
-            this.Passive = passive;
+            this.PassiveEffectCooldown = passiveEffectCooldown;
             this.BaseDamage = baseDamage;
             this.Durability = durability;
             this.Knockback = knockback;
@@ -39,17 +39,8 @@ namespace Remizione
             this.LocalizedDescription = Localization.GetItemDescription(this);
             this.LocalizedName = Localization.GetItemName(this);
             this.Sound = sound;
-            this.UseInterval = useInterval;
-
             this.Image = Atlases.UI.GetImage(Name);
         }
-
-        #endregion
-
-        #region Static members
-
-        // Find
-        public static MetaItem? Find(string name) => items.TryGetValue(name, out var result) ? result : null;
 
         #endregion
 
@@ -68,11 +59,17 @@ namespace Remizione
         // Faith
         public DiceExpression? Faith { get; }
 
+        // Find
+        public static MetaItem? Find(string name) => items.TryGetValue(name, out var result) ? result : null;
+
         // HP
         public DiceExpression? HP { get; }
 
         // Image
         public AtlasImage? Image { get; }
+
+        // IsPassive
+        public bool IsPassive => PassiveEffectCooldown > 0;
 
         // IsStackable
         public bool IsStackable => Maximum > 1;
@@ -95,8 +92,8 @@ namespace Remizione
         // Name
         public string Name { get; }
 
-        // Passive
-        public bool Passive { get; }
+        // PassiveEffectCooldown
+        public int PassiveEffectCooldown { get; }
 
         // Range
         public int Range { get; }
@@ -109,8 +106,5 @@ namespace Remizione
 
         // ToString
         public override string ToString() => Name;
-
-        // UseInterval
-        public int UseInterval { get; }
     }
 }

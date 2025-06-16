@@ -28,7 +28,7 @@ namespace Remizione
         {
             this.Container = container;
             this.MetaItem = metaItem;
-            this.UseCooldown = metaItem.UseInterval;
+            this.PassiveEffectCooldown = metaItem.PassiveEffectCooldown;
         }
 
         #endregion
@@ -247,15 +247,18 @@ namespace Remizione
         // Owner
         public GameThing Owner => Container.Owner;
 
+        // PassiveEffectCooldown
+        public int PassiveEffectCooldown { get; set; }
+
         // Update
         public void Update(GameTime gameTime)
         {
-            if (MetaItem.UseInterval > 0)
+            if (MetaItem.PassiveEffectCooldown > 0)
             {
-                UseCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                if (UseCooldown <= 0)
+                PassiveEffectCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+                if (PassiveEffectCooldown <= 0)
                 {
-                    UseCooldown = MetaItem.UseInterval;
+                    PassiveEffectCooldown = MetaItem.PassiveEffectCooldown;
                     Use();
                 }
             }
@@ -301,8 +304,5 @@ namespace Remizione
 
             return true;
         }
-
-        // UseCooldown
-        public int UseCooldown { get; set; }
     }
 }

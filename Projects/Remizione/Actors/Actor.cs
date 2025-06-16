@@ -30,10 +30,12 @@ namespace Remizione
         private int level = 1;
         private int maxFaith;
         private readonly FloatTween moveTween = new();
+        private readonly FloatTween moveRotationTween = new();
         private GameThing? pendingInteractiveTarget;
         private readonly List<Vector2> pendingPathNodes = [];
         private PlayerNumber playerNumber = PlayerNumber.None;
         private readonly GameSession session;
+        private readonly ShadowSpot shadowSpot;
         private SpeechBubble? speechBubble;
         private readonly ActorStandState standState;
         private int suspendInteractionCooldown;
@@ -56,7 +58,7 @@ namespace Remizione
             this.Atlas = Atlases.Actors;
             this.CloseAttacks = new ItemContainer(this, string.Empty);
             this.IgnoreWalkArea = false;
-            this.ShadowSpot = new ShadowSpot(this);
+            this.shadowSpot = new ShadowSpot(this);
 
             headSprite = new AnimatedSprite(Game)
             {
@@ -287,6 +289,9 @@ namespace Remizione
             if (moveTween.IsRunning)
                 Y -= moveTween.CurrentValue;
 
+            if (moveRotationTween.IsRunning)
+                Rotation += moveRotationTween.CurrentValue;
+
             base.OnDraw(gameTime);
 
             if (StateMachine.CurrentState == standState && headSprite.Player.IsPlaying)
@@ -301,13 +306,15 @@ namespace Remizione
 
             if (moveTween.IsRunning)
                 Y += moveTween.CurrentValue;
+
+            if (moveRotationTween.IsRunning)
+                Rotation -= moveRotationTween.CurrentValue;
         }
 
         // OnDrawShadow
         protected override void OnDrawShadow(GameTime gameTime)
         {
-            base.OnDrawShadow(gameTime);
-            ShadowSpot.Draw(gameTime);
+            shadowSpot.Draw(gameTime);
         }
 
         // OnFaithChanged
@@ -398,6 +405,7 @@ namespace Remizione
             }
 
             accelerationFactorTween.Start(TweenStyle.Linear, .4f, 1, 150);
+            moveRotationTween.Start(TweenStyle.QuadraticInOut, 0, .05f, FastMove ? 100 : 200, -1);
         }
 
         // OnStopMoving
@@ -411,6 +419,7 @@ namespace Remizione
             FastMove = false;
             accelerationFactorTween.Stop();
             moveTween.Stop();
+            moveRotationTween.Stop();
             tinyMoveSpeedFactor = 1;
 
             if (!IsDead)
@@ -450,9 +459,10 @@ namespace Remizione
             accelerationFactorTween.Update(gameTime);
             headTween.Update(gameTime);
             headSprite.Update(gameTime);
-            ShadowSpot.Update(gameTime);
+            shadowSpot.Update(gameTime);
             speechBubble?.Update(gameTime);
             moveTween.Update(gameTime);
+            moveRotationTween.Update(gameTime);
             UpdateDirection();
             UpdateFootstep();
         }
@@ -869,9 +879,6 @@ namespace Remizione
             Faith = MaxFaith;
         }
 
-        // SacredWords
-        public ItemContainer SacredWords { get; }
-
         // Say
         public void Say(string text, bool awaitInput)
         {
@@ -890,12 +897,9 @@ namespace Remizione
         [ScriptProperty]
         public Vector2 ShadowOffset
         {
-            get => ShadowSpot.Offset;
-            set => ShadowSpot.Offset = value;
+            get => shadowSpot.Offset;
+            set => shadowSpot.Offset = value;
         }
-
-        // ShadowSpot
-        public ShadowSpot ShadowSpot { get; }
 
         // ShowMessage
         public void ShowMessage(Message message, int duration = 1000)

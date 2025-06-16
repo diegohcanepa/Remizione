@@ -8,7 +8,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, AllowEmptyArg, BonusArg, CategoryArg, DamageArg, DurabilityArg, FaithArg, HPArg, KnockbackArg, MaximumArg, ModifierArg, PassiveArg, RangeArg, SacrificeRewardArg, SoundArg, UseIntervalArg)
+            : base(script, source, body, 1, AllowEmptyArg, BonusArg, CategoryArg, DamageArg, DurabilityArg, FaithArg, HPArg, KnockbackArg, MaximumArg, ModifierArg, PassiveEffectCooldownArg, RangeArg, SacrificeRewardArg, SoundArg)
         {
             var name = Parser.ParseName(this, 0);
             var bonus = Parser.ParseInt32Argument(this, BonusArg);
@@ -19,13 +19,12 @@ namespace Remizione.Scripting
             var modifier = Parser.ParseEnumArgument(this, ModifierArg, Stat.Strength);
             var fp = Parser.ParseDiceExpressionArgument(this, FaithArg);
             var hp = Parser.ParseDiceExpressionArgument(this, HPArg);
-            var passive = HasArg(PassiveArg);
+            var passiveEffectCooldown = Parser.ParseInt32Argument(this, PassiveEffectCooldownArg);
             var range = Parser.ParseInt32Argument(this, RangeArg);
             var sacrificeReward = Parser.ParseEnumArgument(this, SacrificeRewardArg, SacrificeReward.Faith);
             var sound = Parser.ParseSoundArgument(this, SoundArg);
-            var useInterval = Parser.ParseInt32Argument(this, UseIntervalArg);
 
-            _ = new MetaItem(name, passive, baseDamage, modifier, bonus, knockback, maximum, hp, fp, range, durability, sound, useInterval)
+            _ = new MetaItem(name, passiveEffectCooldown, baseDamage, modifier, bonus, knockback, maximum, hp, fp, range, durability, sound)
             {
                 AllowEmpty = HasArg(AllowEmptyArg),
                 SacrificeReward = sacrificeReward
