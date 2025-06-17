@@ -21,8 +21,8 @@ namespace Remizione
             CreditsBar = this[nameof(CreditsBar)];
             FaithGainIcon = this[nameof(FaithGainIcon)];
             FaithIcon = this[nameof(FaithIcon)];
-            InventoryIcon = this[nameof(InventoryIcon)];
             InventorySlot = this[nameof(InventorySlot)];
+            InventorySlotSelected = this[nameof(InventorySlotSelected)];
             InventorySlotSelection = this[nameof(InventorySlotSelection)];
             ItemMenuContainer = this[nameof(ItemMenuContainer)];
             ItemMenuContainerSelection = this[nameof(ItemMenuContainerSelection)];
@@ -35,7 +35,6 @@ namespace Remizione
             Pixel = this[nameof(Pixel)];
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
-            PrayerIcon = this[nameof(PrayerIcon)];
             ProhibitionIcon = this[nameof(ProhibitionIcon)];
             ProhibitionMark = this[nameof(ProhibitionMark)];
             SavingIcon = this[nameof(SavingIcon)];
@@ -75,6 +74,9 @@ namespace Remizione
         // InventorySlot
         public AtlasImage InventorySlot { get; }
 
+        // InventorySlotSelected
+        public AtlasImage InventorySlotSelected { get; }
+
         // InventorySlotSelection
         public AtlasImage InventorySlotSelection { get; }
 
@@ -89,9 +91,6 @@ namespace Remizione
 
         // FaithIcon
         public AtlasImage FaithIcon { get; }
-
-        // InventoryIcon
-        public AtlasImage InventoryIcon { get; }
 
         // MessageContainer
         public AtlasImage MessageContainer { get; }
@@ -119,9 +118,6 @@ namespace Remizione
 
         // PopupContainerShadow
         public AtlasImage PopupContainerShadow { get; }
-
-        // PrayerIcon
-        public AtlasImage PrayerIcon { get; }
 
         // ProhibitionIcon
         public AtlasImage ProhibitionIcon { get; }

@@ -130,7 +130,7 @@ namespace Remizione
             if (target != null && Item != null)
             {
                 // TODO: Check ApplyDamage
-                //?Item.ApplyDamage .EndUse(target);
+                Item.ApplyDamage(target, HitType.Default);
                 if (ImpactSound != null)
                     PlaySound(ImpactSound);
             }

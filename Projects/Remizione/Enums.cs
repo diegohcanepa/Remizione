@@ -38,6 +38,9 @@ namespace Remizione
     // ImpactType
     public enum ImpactType { Low, Medium, High }
 
+    // ImpactWordKind
+    public enum ImpactWordKind { None, Kapow }
+
     // InGameMenuOptionName
     public enum InGameMenuOptionName { Attributes, Creatures, Inventory, Gifts, Map, Prayers, SacredWords, QuitToDesktop, Settings }
 
@@ -71,6 +74,9 @@ namespace Remizione
 
     // Message
     public enum Message { None, Critical, Miss, NoFaith, ThreatsNearby }
+
+    // MetaItemCategory
+    public enum MetaItemCategory { CloseAttack, Consumable, Throwable, }
 
     // MouseCursorState
     public enum MouseCursorState { None, Cross, CrossOn, Wait, Arrow }

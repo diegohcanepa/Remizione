@@ -28,7 +28,7 @@ namespace Remizione
             if (MetaItem?.BaseDamage == null)
                 return;
 
-            if (!damageTaken && Owner.Room != null && Owner.AnimationPlayer.Frame != null)
+            if (!damageTaken && Owner.Room != null && Owner.GetFrameSubArea() != RectangleF.Empty)
             {
                 for (var i = 0; i < Owner.Room.CulledThings.Count; i++)
                 {
@@ -43,11 +43,16 @@ namespace Remizione
                         damageTaken = true;
 
                         var damageAmount = MetaItem.BaseDamage.Roll();
-                        var criticalHit = DiceExpression.Dice20.Roll() == 20;
+                        var hitType = DiceExpression.Dice20.Roll() == 20 ? HitType.Critical : HitType.Default;
 
                         damageAmount += Owner.Stats.GetModifier(MetaItem.Modifier);
-                        if (criticalHit)
+                        if (hitType == HitType.Critical)
                             damageAmount += Math.Max(MetaItem.BaseDamage.Roll(), MetaItem.BaseDamage.MaximumValue / 2);
+
+                        damageAmount += MetaItem.Bonus;
+
+                        target.TakeDamage(Owner, damageAmount, hitType, MetaItem.Knockback);
+                        target.ApplyDamage(Owner);
                     }
                 }
             }

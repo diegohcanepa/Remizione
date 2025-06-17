@@ -13,6 +13,7 @@ namespace Remizione
         private readonly ImageSprite iconImage;
         private Item? item;
         private readonly ImageSprite slotImage;
+        private readonly ImageSprite slotImageSelected;
 
         // Constructor
         public InventorySlot(EngendroGame game)
@@ -27,6 +28,13 @@ namespace Remizione
 
             // Slot image
             this.slotImage = new(game, Atlases.UI.InventorySlot)
+            {
+                PivotOrigin = RectanglePoint.Middle,
+                Scale = ScaleInfo.UIElement.Medium
+            };
+
+            // Slot image selected
+            this.slotImageSelected = new(game, Atlases.UI.InventorySlotSelected)
             {
                 PivotOrigin = RectanglePoint.Middle,
                 Scale = ScaleInfo.UIElement.Medium
@@ -71,7 +79,12 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
-            slotImage.Draw(gameTime);
+
+            if (IsSelected)
+                slotImageSelected.Draw(gameTime);
+            else
+                slotImage.Draw(gameTime);
+
             iconImage.Draw(gameTime);
             Game.SpriteBatch.End();
 
@@ -116,6 +129,11 @@ namespace Remizione
                         else
                             amountText.Text = string.Empty;
                     }
+                    else
+                    {
+                        Unselect(false);
+                        amountText.Clear();
+                    }
 
                     iconImage.Image = item?.MetaItem.Image;
                 }
@@ -132,6 +150,7 @@ namespace Remizione
                 iconImage.X += .5f;
 
                 slotImage.Position = value;
+                slotImageSelected.Position = value;
                 amountText.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom);
             }
         }

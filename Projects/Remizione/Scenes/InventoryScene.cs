@@ -226,6 +226,20 @@ namespace Remizione
                     Sound.Play(SoundNames.UINavigation);
             }
 
+            // Sacrifice
+            else if (selectedSlot?.Item is Item item && InputBindings.Sacrifice.IsPressed(PlayerIndex.One))
+            {
+                if (item.MetaItem.SacrificeReward == SacrificeReward.Spirit)
+                    Owner.HP += 1;
+
+                else if (item.MetaItem.SacrificeReward == SacrificeReward.Faith)
+                    Owner.Faith += 1;
+
+                item.Remove();
+                selectedSlot.Item = null;
+                Populate();
+            }
+
             // Close button
             else if (InputBindings.Close.IsPressed(PlayerIndex.One))
                 SceneController.Pop();
@@ -242,19 +256,7 @@ namespace Remizione
 
             LayoutSlots();
 
-            // Populate items
-            var selectedIndex = -1;
-            for (int i = 0; i < Owner.Inventory.Items.Count; i++)
-            {
-                slots[i].Item = Owner.Inventory.Items[i];
-                if (Owner.Inventory.Items[i].IsSelected)
-                    selectedIndex = Owner.Inventory.Items[i].Index;
-            }
-
-            if (selectedIndex != -1)
-                SelectSlot(slots[selectedIndex]);
-
-            Invalidate();
+            Populate();
         }
 
         // OnUnloadContent
@@ -287,6 +289,30 @@ namespace Remizione
             }
 
             base.OnUpdate(gameTime);
+        }
+
+        // Populate
+        private void Populate()
+        {
+            itemNameText.Clear();
+
+            for (var i = 0; i < slots.Length; i++)
+            {
+                slots[i].Item = null;
+            }
+
+            selectedSlot = null;
+
+            var selectedIndex = -1;
+            for (int i = 0; i < Owner.Inventory.Items.Count; i++)
+            {
+                slots[i].Item = Owner.Inventory.Items[i];
+                if (Owner.Inventory.Items[i].IsSelected)
+                    selectedIndex = Owner.Inventory.Items[i].Index;
+            }
+
+            if (selectedIndex != -1)
+                SelectSlot(slots[selectedIndex]);
         }
 
         #endregion

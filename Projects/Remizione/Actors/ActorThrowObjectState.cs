@@ -7,7 +7,7 @@
     {
         // Constructor
         public ActorThrowObjectState(Actor owner)
-            : base(owner, "ThrowObject", false)
+            : base(owner, AnimationNames.ThrowObject, false)
         {
         }
 
@@ -23,11 +23,11 @@
         // Exit
         public override void Exit()
         {
-            //if (Item != null && Owner.Session.ObjectPools.GetThrowable(Item.Name) is Throwable throwable)
-            //{
-            //    throwable.Launch(Item);
-            //    Item = null;
-            //}
+            if (Item != null && Owner.Session.ObjectPools.GetThrowable(Item.Name) is Throwable throwable)
+            {
+                throwable.Launch(Item);
+                Item = null;
+            }
 
             base.Exit();
         }

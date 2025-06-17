@@ -126,6 +126,18 @@ namespace Remizione
             Game.SpriteBatch.End();
         }
 
+        // DrawImpactWords
+        private void DrawImpactWords(GameTime gameTime)
+        {
+            Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
+            for (int i = 0; i < CulledThings.Count; i++)
+            {
+                if (CulledThings[i] is GameThing thing)
+                    thing.DrawImpactWord(gameTime);
+            }
+            Game.SpriteBatch.End();
+        }
+
         // DrawShadows
         private void DrawShadows(GameTime gameTime)
         {
@@ -323,6 +335,9 @@ namespace Remizione
 
             // Draw texts (hit numbers, etc)
             DrawFloatingTexts(gameTime);
+
+            // Impact words
+            DrawImpactWords(gameTime);
 
             // Draw speech bubbles
             SpeechBubble.DrawSpeechBubbles(gameTime);

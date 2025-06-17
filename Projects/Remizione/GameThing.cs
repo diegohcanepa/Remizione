@@ -29,10 +29,13 @@ namespace Remizione
         private PlacementMode hotspotPlacement = PlacementMode.Relative;
         private int hp;
         private RectangleF hurtBox;
+        private Vector2Tween? hurtShakeTween;
         private FloatTween? hurtTween;
         private float floatingForce;
         private FloatTween? floatingTween;
         private HitType hitType;
+        private ImpactWord? impactWord;
+        private ImpactWordKind impactWordKind;
         private bool isHoleAreaDirty;
         private bool isHotspotDirty = true;
         private bool isHurtBoxDirty = true;
@@ -228,6 +231,7 @@ namespace Remizione
         {
             applyDamagePending = false;
             CumulativeDamage = 0;
+            impactWordKind = ImpactWordKind.None;
             knockback = Vector2.Zero;
         }
 
@@ -252,16 +256,13 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             if (floatingTween != null && floatingTween.IsRunning)
-            {
-                floatingTween.Update(gameTime);
                 Altitude += floatingTween.CurrentValue;
-            }
 
             if (hurtTween != null && hurtTween.IsRunning)
-            {
-                hurtTween.Update(gameTime);
                 Altitude += hurtTween.CurrentValue;
-            }
+
+            if (hurtShakeTween != null && hurtShakeTween.IsRunning)
+                Position += hurtShakeTween.CurrentValue;
 
             base.OnDraw(gameTime);
 
@@ -270,6 +271,9 @@ namespace Remizione
 
             if (hurtTween != null && hurtTween.IsRunning)
                 Altitude -= hurtTween.CurrentValue;
+
+            if (hurtShakeTween != null && hurtShakeTween.IsRunning)
+                Position -= hurtShakeTween.CurrentValue;
         }
 
         // OnDrawReflection
@@ -325,12 +329,15 @@ namespace Remizione
         {
             base.OnTransform(change);
 
-            isHotspotDirty = true;
-            isHurtBoxDirty = true;
-            shouldClampToWalkablePosition = true;
+            if (hurtShakeTween == null || !hurtShakeTween.IsRunning)
+            {
+                isHotspotDirty = true;
+                isHurtBoxDirty = true;
+                shouldClampToWalkablePosition = true;
 
-            if (change != TransformChange.Altitude)
-                MarkHoleAreaDirty();
+                if (change != TransformChange.Altitude)
+                    MarkHoleAreaDirty();
+            }
         }
 
         // OnUnload
@@ -340,13 +347,21 @@ namespace Remizione
 
             ResetApplyDamageValues();
 
+            if (impactWord != null)
+            {
+                Session.ImpactWordPool.Return(impactWord);
+                impactWord = null;
+            }
+
             OpacityFactor = 1;
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            floatingTween?.Update(gameTime);
             hurtTween?.Update(gameTime);
+            hurtShakeTween?.Update(gameTime);
 
             if (knockbackTween.IsRunning)
             {
@@ -363,6 +378,16 @@ namespace Remizione
             }
 
             base.OnUpdate(gameTime);
+
+            if (impactWord != null)
+            {
+                impactWord.Update(gameTime);
+                if (!impactWord.IsActive)
+                {
+                    Session.ImpactWordPool.Return(impactWord);
+                    impactWord = null;
+                }
+            }
 
             if (shouldClampToWalkablePosition)
             {
@@ -445,8 +470,6 @@ namespace Remizione
                 return;
             }
 
-            HP -= (int)CumulativeDamage;
-
             if (HurtSound != null)
                 PlaySound(HurtSound);
 
@@ -454,6 +477,22 @@ namespace Remizione
                 PlaySound(HurtImpactSound);
 
             OnDamageReaction(attacker);
+
+            // Impact word
+            if (HurtImpactSound != null && impactWordKind != ImpactWordKind.None && CollisionPolygon != null)
+            {
+                impactWord ??= Session.ImpactWordPool.Get();
+                impactWord.Show(impactWordKind, this.GetAbsolutePoint(CollisionPolygon.BoundingRectangleF.GetPoint(RectanglePoint.Top)));
+            }
+             
+            if (maxHP == 0)
+            {
+                hurtShakeTween ??= new();
+                hurtShakeTween.Start(TweenStyle.Linear, Vector2.Zero, HurtShake, 40, 4);
+                return;
+            }
+
+            HP -= (int)CumulativeDamage;
 
             var damageTextColor = hitType == HitType.Critical ? ColorPalette.TextDepracated.Dark : ColorPalette.Text.Default;
             var damageText = $"{(int)CumulativeDamage}";
@@ -616,6 +655,9 @@ namespace Remizione
                 damageMeter.Draw(gameTime);
             }
         }
+
+        // DrawImpactWord
+        public void DrawImpactWord(GameTime gameTime) => impactWord?.Draw(gameTime);
 
         // DrawLights
         public void DrawLights(GameTime gameTime, List<Light> renderedLights)
@@ -872,7 +914,7 @@ namespace Remizione
 
         // IgnoreThrowables
         [ScriptProperty]
-        public bool IgnoreThrowables { get; set; } = true;
+        public bool IgnoreThrowables { get; set; }
 
         // IgnoreWalkArea
         [ScriptProperty]
@@ -994,11 +1036,10 @@ namespace Remizione
                 return;
 
             this.hitType = hitType;
+            this.knockback = knockback;
             applyDamagePending = true;
             CumulativeDamage += amount;
-
-            if (knockback != Vector2.Zero)
-                this.knockback = knockback;
+            impactWordKind = ImpactWordKind.Kapow;
         }
 
         // ThrowableSpawnPosition

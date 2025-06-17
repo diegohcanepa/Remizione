@@ -3,14 +3,15 @@
 namespace Remizione.Scripting
 {
     // MetaItemCommand
-    // Arguments: {Name} [#damage:DiceRoll] [#degradation-interval:Integer] [#faith:Integer] [#knockback:Vector2] [#maximum:Integer] [#modifier:Stat] [#range:Integer] [#sound:Name] [#spirit:Integer]
+    // Arguments: {Name} {Category:MetaItemCategory} [#damage:DiceRoll] [#degradation-interval:Integer] [#faith:Integer] [#knockback:Vector2] [#maximum:Integer] [#modifier:Stat] [#range:Integer] [#sound:Name] [#spirit:Integer]
     internal sealed class MetaItemCommand : NonAwaitableCommand
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, AllowEmptyArg, BonusArg, CategoryArg, DamageArg, DurabilityArg, FaithArg, HPArg, KnockbackArg, MaximumArg, ModifierArg, PassiveEffectCooldownArg, RangeArg, SacrificeRewardArg, SoundArg)
+            : base(script, source, body, 2, AllowEmptyArg, BonusArg, DamageArg, DurabilityArg, FaithArg, HPArg, KnockbackArg, MaximumArg, ModifierArg, PassiveEffectCooldownArg, RangeArg, SacrificeRewardArg, SoundArg)
         {
             var name = Parser.ParseName(this, 0);
+            var category = Parser.ParseEnum<MetaItemCategory>(this, 1);
             var bonus = Parser.ParseInt32Argument(this, BonusArg);
             var baseDamage = Parser.ParseDiceExpressionArgument(this, DamageArg) ?? null;
             var durability = Parser.ParseInt32Argument(this, DurabilityArg, -1);
@@ -24,7 +25,7 @@ namespace Remizione.Scripting
             var sacrificeReward = Parser.ParseEnumArgument(this, SacrificeRewardArg, SacrificeReward.Faith);
             var sound = Parser.ParseSoundArgument(this, SoundArg);
 
-            _ = new MetaItem(name, passiveEffectCooldown, baseDamage, modifier, bonus, knockback, maximum, hp, fp, range, durability, sound)
+            _ = new MetaItem(name, category, passiveEffectCooldown, baseDamage, modifier, bonus, knockback, maximum, hp, fp, range, durability, sound)
             {
                 AllowEmpty = HasArg(AllowEmptyArg),
                 SacrificeReward = sacrificeReward

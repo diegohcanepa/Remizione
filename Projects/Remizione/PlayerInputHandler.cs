@@ -28,7 +28,14 @@ namespace Remizione
             // CloseAttack
             if (InputBindings.CloseAttack.IsPressed(PlayerIndex.One))
             {
-                Actor.CloseAttack();
+                Actor.PerformCloseAttack();
+                return HandleInputResult.Handled;
+            }
+
+            // Selected item
+            if (InputBindings.UseItem.IsPressed(PlayerIndex.One))
+            {
+                Actor.UseSelectedItem();
                 return HandleInputResult.Handled;
             }
 
@@ -45,16 +52,19 @@ namespace Remizione
                 Actor.Interact();
                 return HandleInputResult.Handled;
             }
-            
+
             // Movement
-            var direction = GetDirectionVectorFromLeftStick();
-            if (direction != Vector2.Zero)
+            if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad)
             {
-                Actor.Move(direction);
-            }
-            else if (Actor.IsMoving)
-            {
-                Actor.Stand();
+                var direction = GetDirectionVectorFromLeftStick();
+                if (direction != Vector2.Zero)
+                {
+                    Actor.Move(direction);
+                }
+                else if (Actor.IsMoving)
+                {
+                    Actor.Stand();
+                }
             }
 
             return HandleInputResult.Unhandled;
@@ -112,11 +122,8 @@ namespace Remizione
         {
             if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
                 return HandleMouseInput();
-
-            else if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad)
+            else
                 return HandleGamePadInput();
-
-            return HandleInputResult.Unhandled;
         }
     }
 }

@@ -50,6 +50,7 @@ namespace Remizione
             //this.RandomSeed = System.Environment.TickCount;
 
             ObjectPools = new ObjectPools(this);
+            ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(game), 100);
             OverlayTexts = new OverlayTextManager(game);
 
             Camera.SmoothSpeed = GameSettings.CameraSmoothSpeed;
@@ -472,6 +473,9 @@ namespace Remizione
 
         // HUD
         public HUD HUD { get; }
+
+        // ImpactWordPool
+        public ObjectPool<ImpactWord> ImpactWordPool { get; }
 
         // InventoryEnabled
         [ScriptProperty]

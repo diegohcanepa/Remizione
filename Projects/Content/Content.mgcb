@@ -326,6 +326,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/ThrowableDuck3.wav;Audio/FX/ThrowableDuck3
 
+#begin Audio/FX/ThrowablePickup.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/ThrowablePickup.wav;Audio/FX/ThrowablePickup
+
 #begin Audio/FX/Thunder1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

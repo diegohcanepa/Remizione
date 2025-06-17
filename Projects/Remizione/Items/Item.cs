@@ -121,7 +121,7 @@ namespace Remizione
             {
                 if (value != count)
                 {
-                    count = Math.Clamp(value, 1, MetaItem.Maximum);
+                    count = Math.Clamp(value, MetaItem.AllowEmpty ? 0 : 1, MetaItem.Maximum);
                     isDisplayTextDiry = true;
                 }
             }
@@ -266,6 +266,13 @@ namespace Remizione
 
         // Range
         public int Range => MetaItem.Range;
+
+        // Remove
+        public void Remove()
+        {
+            Container.SelectPrevious();
+            Container.Remove(this);
+        }
 
         // Replenish
         public void Replenish()

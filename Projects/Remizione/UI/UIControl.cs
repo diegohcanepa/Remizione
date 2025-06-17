@@ -17,12 +17,13 @@ namespace Remizione
         private readonly ImageSprite containerPattern;
         private readonly ImageSprite containerEdge;
         private UIControlDisplayMode displayMode;
+        private const float horzImagePadding = 1.5f;
         private string? imageName;
         private readonly ImageSprite image;
         private bool isEnabled = true;
-        private const float horzImagePadding = 1.5f;
         private InputBinding? inputBinding;
         private readonly TextSprite label;
+        private const string KeyboardPrefix = "Keyboard";
         private InputMethod lastKnownInputMethod;
         private RectanglePoint pivotOrigin;
         private Vector2 position;
@@ -87,12 +88,17 @@ namespace Remizione
                 if (gamePad)
                     imageName = InputBinding.Button.ToString();
                 
-                else if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Keyboard)
+                else if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Keyboard || InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
                     imageName = InputBinding.Keys[0].ToString();
             }
 
-            if (gamePad && imageName != null && InputBinding != null)
-                imageName = GamePadDevice.Style.ToString() + imageName;
+            if (imageName != null && InputBinding != null)
+            {
+                if (gamePad)
+                    imageName = GamePadDevice.Style.ToString() + imageName;
+                else
+                    imageName = KeyboardPrefix + imageName;
+            }
 
             return string.IsNullOrWhiteSpace(imageName) ? null : atlas.GetImage(imageName);
         }
@@ -102,7 +108,7 @@ namespace Remizione
         {
             // Image
             image.Image = GetInputBindingImage();
-            image.Scale = small ? ScaleInfo.UIElement.Small : ScaleInfo.UIElement.Medium;
+            image.Scale = small ? ScaleInfo.UIElement.Tiny : ScaleInfo.UIElement.Medium;
             lastKnownInputMethod = InputManager.DefaultPlayer.LastInputMethod;
 
             if (DisplayMode == UIControlDisplayMode.ImageOnly)

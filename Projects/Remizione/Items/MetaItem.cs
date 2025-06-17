@@ -16,7 +16,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(string name, int passiveEffectCooldown, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, Sound? sound)
+        public MetaItem(string name, MetaItemCategory category, int passiveEffectCooldown, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, Sound? sound)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -26,6 +26,7 @@ namespace Remizione
                 items[name] = this;
 
             this.Name = name;
+            this.Category = category;
             this.Bonus = bonus;
             this.PassiveEffectCooldown = passiveEffectCooldown;
             this.BaseDamage = baseDamage;
@@ -52,6 +53,9 @@ namespace Remizione
 
         // Bonus
         public int Bonus { get; }
+
+        // Category
+        public MetaItemCategory Category { get; }
 
         // Durability
         public int Durability { get; set; }

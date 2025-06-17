@@ -19,6 +19,8 @@ namespace Remizione
 
         private readonly FloatTween accelerationFactorTween = new();
         private BloodSplash? bloodSplash;
+        private MetaItem? closeAttackMetaItem;
+        private string closeAttackName = string.Empty;
         private readonly ActorCloseAttackState closeAttackState;
         private readonly CombatStateMachine combatStateMachine;
         private int faith;
@@ -56,7 +58,6 @@ namespace Remizione
             this.Stats = new Stats(this);
 
             this.Atlas = Atlases.Actors;
-            this.CloseAttacks = new ItemContainer(this, string.Empty);
             this.IgnoreWalkArea = false;
             this.shadowSpot = new ShadowSpot(this);
 
@@ -559,15 +560,20 @@ namespace Remizione
             return dot >= angleThreshold;
         }
 
-        // CloseAttack
-        public void CloseAttack()
+        // CloseAttackName
+        [ScriptProperty]
+        public string CloseAttackName
         {
-            closeAttackState.MetaItem = GetCloseAttack();
-            StateMachine.ChangeState(ActorStateNames.CloseAttack);
+            get => closeAttackName;
+            set
+            {
+                if (value != closeAttackName)
+                {
+                    closeAttackName = value;
+                    closeAttackMetaItem = MetaItem.Find(closeAttackName);
+                }
+            }
         }
-
-        // CloseAttacks
-        public ItemContainer CloseAttacks { get; }
 
         // FaceToTarget
         public void FaceToTarget()
@@ -626,9 +632,6 @@ namespace Remizione
             //result ??= Gifts.GetItem("UnarmedAttack");
             return result;
         }
-
-        // GetCloseAttack
-        public MetaItem? GetCloseAttack() => MetaItem.Find("Headbutt");
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
@@ -843,6 +846,17 @@ namespace Remizione
             return true;
         }
 
+        // PerformCloseAttack
+        public void PerformCloseAttack()
+        {
+            if (closeAttackMetaItem != null)
+            {
+                Stand();
+                closeAttackState.MetaItem = closeAttackMetaItem;
+                StateMachine.ChangeState(ActorStateNames.CloseAttack);
+            }
+        }
+
         // PickUp
         public void PickUp(Pickup pickup, MetaItem? metaItem)
         {
@@ -960,6 +974,21 @@ namespace Remizione
             {
                 state.Item = item;
                 StateMachine.ChangeState(state.Name);
+            }
+        }
+
+        // UseSelectedItem
+        public void UseSelectedItem()
+        {
+            if (Inventory.SelectedItem is Item item)
+            {
+                Stand();
+                
+                if (item.MetaItem.Category == MetaItemCategory.Throwable)
+                {
+                    throwObjectState.Item = item;
+                    StateMachine.ChangeState(throwObjectState.Name);
+                }
             }
         }
 

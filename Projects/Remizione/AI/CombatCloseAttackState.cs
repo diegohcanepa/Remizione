@@ -32,7 +32,7 @@ namespace Remizione
             else
             {
                 attackLaunched = true;
-                Actor.CloseAttack();
+                Actor.PerformCloseAttack();
             }
         }
     }

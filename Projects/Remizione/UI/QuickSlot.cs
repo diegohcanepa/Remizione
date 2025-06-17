@@ -18,6 +18,7 @@ namespace Remizione
         private int lastKnownCount;
         private Item? lastKnownItem;
         private readonly ImageSprite slotImage;
+        private readonly UIControl button;
 
         #region Constructor
 
@@ -26,7 +27,7 @@ namespace Remizione
             : base(game)
         {
             // Slot image
-            this.slotImage = new ImageSprite(Game, Atlases.UI.InventorySlot)
+            this.slotImage = new ImageSprite(Game, Atlases.UI.InventorySlotSelected)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -2),
@@ -48,7 +49,15 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.Top,
                 Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2),
                 Scale = ScaleInfo.Text.Large,
-                Spacing = -5,
+                Spacing = -5
+            };
+
+            // Button
+            this.button = new(game, InputBindings.UseItem)
+            {
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, 2, -4),
+                Small = true
             };
         }
 
@@ -67,6 +76,8 @@ namespace Remizione
             itemImage.Draw(gameTime);
             Game.SpriteBatch.End();
 
+            button.Draw(gameTime);
+
             if (actor?.Inventory.SelectedItem != null && actor.Inventory.SelectedItem.MetaItem.IsStackable)
             {
                 if (lastKnownCount > 0)
@@ -83,6 +94,8 @@ namespace Remizione
         {
             if (!IsVisible)
                 return;
+
+            button.Update(gameTime);
 
             if (lastKnownItem != actor?.Inventory.SelectedItem)
             {
