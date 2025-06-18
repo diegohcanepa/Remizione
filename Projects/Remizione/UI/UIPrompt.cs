@@ -21,8 +21,8 @@ namespace Remizione.UI
             this.control = new(Game, InputBindings.Interact)
             {
                 AllowContainer = true,
-                PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom)
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -5)
             };
         }
 

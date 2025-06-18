@@ -90,6 +90,13 @@ namespace EngendroAdventure
                 return;
             }
 
+            // Size
+            if (propertyInfo.PropertyType == typeof(Size))
+            {
+                propertyInfo.SetValue(entity, value == null ? Size.Empty : XmlConverterExtension.ToSize(value));
+                return;
+            }
+
             // String
             if (propertyInfo.PropertyType == typeof(string))
             {
@@ -213,6 +220,15 @@ namespace EngendroAdventure
             {
                 if (propValue is float value)
                     output.WriteAttributeString(storageName, XmlConvert.ToString(value));
+
+                return;
+            }
+
+            // Size
+            if (propertyInfo.PropertyType == typeof(Size))
+            {
+                if (propValue is Size value)
+                    output.WriteAttributeString(storageName, XmlConverterExtension.ToString(value));
 
                 return;
             }

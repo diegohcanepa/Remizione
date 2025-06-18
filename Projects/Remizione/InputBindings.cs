@@ -44,12 +44,12 @@ namespace Remizione
         internal static readonly InputBinding Exit = InputManager.AddBinding(nameof(Exit), GetButtonB(), Keys.Escape);
         internal static readonly InputBinding Info = InputManager.AddBinding(nameof(Info), Buttons.Y, Keys.E, Keys.Enter);
         internal static readonly InputBinding Interact = InputManager.AddBinding(nameof(Interact), Buttons.Y, Keys.E, Keys.Enter);
+        internal static readonly InputBinding Inventory = InputManager.AddBinding(nameof(Inventory), Buttons.RightShoulder, Keys.I);
         internal static readonly InputBinding ItemAction = InputManager.AddBinding(nameof(ItemAction), Buttons.X, Keys.E);
         internal static readonly InputBinding NextDialog = InputManager.AddBinding(nameof(NextDialog), Buttons.Y, Keys.E, Keys.Enter);
         internal static readonly InputBinding Sacrifice = InputManager.AddBinding(nameof(Sacrifice), Buttons.X, Keys.S);
         internal static readonly InputBinding Select = InputManager.AddBinding(nameof(Select), GetButtonA(), Keys.E, Keys.Enter);
         internal static readonly InputBinding SelectDialogOption = InputManager.AddBinding(nameof(SelectDialogOption), Buttons.A, Keys.E, Keys.Enter);
-        internal static readonly InputBinding ShowInventory = InputManager.AddBinding(nameof(ShowInventory), Buttons.RightShoulder, Keys.I);
         internal static readonly InputBinding SpeechBubble = InputManager.AddBinding(nameof(SpeechBubble), Buttons.Y, Keys.E, Keys.Enter);
         internal static readonly InputBinding UseItem = InputManager.AddBinding(nameof(UseItem), Buttons.X, Keys.Z);
 
@@ -68,7 +68,7 @@ namespace Remizione
         internal static readonly InputBinding SelectUp = InputManager.AddBinding(nameof(SelectUp), Buttons.DPadUp, Keys.Up, Keys.W);
 
         // Quick slot
-        internal static readonly InputBinding QuickSlotNextItem = InputManager.AddBinding(nameof(QuickSlotNextItem), Buttons.DPadRight, Keys.Right);
-        internal static readonly InputBinding QuickSlotPreviousItem = InputManager.AddBinding(nameof(QuickSlotPreviousItem), Buttons.DPadLeft, Keys.Left);
+        internal static readonly InputBinding QuickSlotNextWeaponItem = InputManager.AddBinding(nameof(QuickSlotNextWeaponItem), Buttons.DPadRight, Keys.Right);
+        internal static readonly InputBinding QuickSlotPreviousWeaponItem = InputManager.AddBinding(nameof(QuickSlotPreviousWeaponItem), Buttons.DPadLeft, Keys.Left);
     }
 }

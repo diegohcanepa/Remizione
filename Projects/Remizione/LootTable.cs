@@ -35,7 +35,6 @@ namespace Remizione
         // Add
         public void Add(string itemName, float dropChance)
         {
-            // TODO: Exception?
             if (string.IsNullOrEmpty(itemName))
                 return;
 

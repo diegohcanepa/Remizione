@@ -481,6 +481,9 @@ namespace Remizione
         [ScriptProperty]
         public bool InventoryEnabled { get; set; }
 
+        // IsConsoleVisible
+        public bool IsConsoleVisible => console?.IsActive ?? false;
+
         // LightingSystem
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;

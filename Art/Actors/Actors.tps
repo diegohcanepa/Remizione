@@ -173,6 +173,27 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Dog-assets/Bark01.png</key>
+            <key type="filename">Dog-assets/Bark02.png</key>
+            <key type="filename">Dog-assets/Move01.png</key>
+            <key type="filename">Dog-assets/Move02.png</key>
+            <key type="filename">Dog-assets/Stand01.png</key>
+            <key type="filename">Dog-assets/Stand02.png</key>
+            <key type="filename">Dog-assets/Stand03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,3,7,6</rect>
+                <key>scale9Paddings</key>
+                <rect>4,3,7,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Edmund-assets/Back01.png</key>
             <key type="filename">Edmund-assets/BackRaiseArm01.png</key>
             <key type="filename">Edmund-assets/BackRaiseArm02.png</key>
@@ -221,9 +242,11 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Monster-assets/Move01.png</key>
-            <key type="filename">Monster-assets/Move02.png</key>
-            <key type="filename">Monster-assets/Stand01.png</key>
+            <key type="filename">Grandma-assets/Stand01.png</key>
+            <key type="filename">Grandma-assets/StandHead01.png</key>
+            <key type="filename">Grandma-assets/StandHead02.png</key>
+            <key type="filename">Grandma-assets/TalkHead01.png</key>
+            <key type="filename">Grandma-assets/TalkHead02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -232,207 +255,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>5,5,9,11</rect>
+                <rect>5,5,11,10</rect>
                 <key>scale9Paddings</key>
-                <rect>5,5,9,11</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Sinner-assets/Cross01.png</key>
-            <key type="filename">Sinner-assets/Cross02.png</key>
-            <key type="filename">Sinner-assets/Cross03.png</key>
-            <key type="filename">Sinner-assets/Cross04.png</key>
-            <key type="filename">Sinner-assets/Cross05.png</key>
-            <key type="filename">Sinner-assets/Death01.png</key>
-            <key type="filename">Sinner-assets/Death02.png</key>
-            <key type="filename">Sinner-assets/Death03.png</key>
-            <key type="filename">Sinner-assets/Death04.png</key>
-            <key type="filename">Sinner-assets/Death05.png</key>
-            <key type="filename">Sinner-assets/Death06.png</key>
-            <key type="filename">Sinner-assets/Death07.png</key>
-            <key type="filename">Sinner-assets/Death08.png</key>
-            <key type="filename">Sinner-assets/Death09.png</key>
-            <key type="filename">Sinner-assets/Death10.png</key>
-            <key type="filename">Sinner-assets/Death11.png</key>
-            <key type="filename">Sinner-assets/Fatigue01.png</key>
-            <key type="filename">Sinner-assets/Fatigue02.png</key>
-            <key type="filename">Sinner-assets/Fatigue03.png</key>
-            <key type="filename">Sinner-assets/Fatigue04.png</key>
-            <key type="filename">Sinner-assets/Fatigue05.png</key>
-            <key type="filename">Sinner-assets/Fatigue06.png</key>
-            <key type="filename">Sinner-assets/Fatigue07.png</key>
-            <key type="filename">Sinner-assets/Fatigue08.png</key>
-            <key type="filename">Sinner-assets/Fatigue09.png</key>
-            <key type="filename">Sinner-assets/Fatigue10.png</key>
-            <key type="filename">Sinner-assets/Fatigue11.png</key>
-            <key type="filename">Sinner-assets/Fatigue12.png</key>
-            <key type="filename">Sinner-assets/Fatigue13.png</key>
-            <key type="filename">Sinner-assets/Fatigue14.png</key>
-            <key type="filename">Sinner-assets/Hurt01.png</key>
-            <key type="filename">Sinner-assets/Hurt02.png</key>
-            <key type="filename">Sinner-assets/Hurt03.png</key>
-            <key type="filename">Sinner-assets/Hurt04.png</key>
-            <key type="filename">Sinner-assets/Move01.png</key>
-            <key type="filename">Sinner-assets/Move02.png</key>
-            <key type="filename">Sinner-assets/Move03.png</key>
-            <key type="filename">Sinner-assets/Move04.png</key>
-            <key type="filename">Sinner-assets/Move05.png</key>
-            <key type="filename">Sinner-assets/Move06.png</key>
-            <key type="filename">Sinner-assets/Move07.png</key>
-            <key type="filename">Sinner-assets/Move08.png</key>
-            <key type="filename">Sinner-assets/MoveFast01.png</key>
-            <key type="filename">Sinner-assets/MoveFast02.png</key>
-            <key type="filename">Sinner-assets/MoveFast03.png</key>
-            <key type="filename">Sinner-assets/MoveFast04.png</key>
-            <key type="filename">Sinner-assets/MoveFast05.png</key>
-            <key type="filename">Sinner-assets/MoveFast06.png</key>
-            <key type="filename">Sinner-assets/MoveFast07.png</key>
-            <key type="filename">Sinner-assets/MoveFast08.png</key>
-            <key type="filename">Sinner-assets/PickUp01.png</key>
-            <key type="filename">Sinner-assets/PickUp02.png</key>
-            <key type="filename">Sinner-assets/PickUp03.png</key>
-            <key type="filename">Sinner-assets/PickUp04.png</key>
-            <key type="filename">Sinner-assets/PickUp05.png</key>
-            <key type="filename">Sinner-assets/PickUp06.png</key>
-            <key type="filename">Sinner-assets/PickUp07.png</key>
-            <key type="filename">Sinner-assets/PickUp08.png</key>
-            <key type="filename">Sinner-assets/Pray01.png</key>
-            <key type="filename">Sinner-assets/Pray02.png</key>
-            <key type="filename">Sinner-assets/Pray03.png</key>
-            <key type="filename">Sinner-assets/Pray04.png</key>
-            <key type="filename">Sinner-assets/Pray05.png</key>
-            <key type="filename">Sinner-assets/Pray06.png</key>
-            <key type="filename">Sinner-assets/Pray07.png</key>
-            <key type="filename">Sinner-assets/Pray08.png</key>
-            <key type="filename">Sinner-assets/Pray09.png</key>
-            <key type="filename">Sinner-assets/Pray10.png</key>
-            <key type="filename">Sinner-assets/Pray11.png</key>
-            <key type="filename">Sinner-assets/Pray12.png</key>
-            <key type="filename">Sinner-assets/Pray13.png</key>
-            <key type="filename">Sinner-assets/Pray14.png</key>
-            <key type="filename">Sinner-assets/Stand01.png</key>
-            <key type="filename">Sinner-assets/UnarmedAttack01.png</key>
-            <key type="filename">Sinner-assets/UnarmedAttack02.png</key>
-            <key type="filename">Sinner-assets/UnarmedAttack03.png</key>
-            <key type="filename">Sinner-assets/UnarmedAttack04.png</key>
-            <key type="filename">Sinner-assets/UnarmedAttack05.png</key>
-            <key type="filename">Sinner-assets/UnarmedAttack06.png</key>
-            <key type="filename">Sinner-assets/UnarmedAttack07.png</key>
-            <key type="filename">Sinner-assets/UnarmedAttack08.png</key>
-            <key type="filename">Sinner-assets/UseItem01.png</key>
-            <key type="filename">Sinner-assets/UseItem02.png</key>
-            <key type="filename">Sinner-assets/UseItem03.png</key>
-            <key type="filename">Sinner-assets/UseItem04.png</key>
-            <key type="filename">Sinner-assets/UseItem05.png</key>
-            <key type="filename">Sinner-assets/UseItem06.png</key>
-            <key type="filename">Unredeemed-assets/Cross01.png</key>
-            <key type="filename">Unredeemed-assets/Cross02.png</key>
-            <key type="filename">Unredeemed-assets/Cross03.png</key>
-            <key type="filename">Unredeemed-assets/Cross04.png</key>
-            <key type="filename">Unredeemed-assets/Cross05.png</key>
-            <key type="filename">Unredeemed-assets/Death01.png</key>
-            <key type="filename">Unredeemed-assets/Death02.png</key>
-            <key type="filename">Unredeemed-assets/Death03.png</key>
-            <key type="filename">Unredeemed-assets/Death04.png</key>
-            <key type="filename">Unredeemed-assets/Death05.png</key>
-            <key type="filename">Unredeemed-assets/Death06.png</key>
-            <key type="filename">Unredeemed-assets/Death07.png</key>
-            <key type="filename">Unredeemed-assets/Death08.png</key>
-            <key type="filename">Unredeemed-assets/Death09.png</key>
-            <key type="filename">Unredeemed-assets/Death10.png</key>
-            <key type="filename">Unredeemed-assets/Death11.png</key>
-            <key type="filename">Unredeemed-assets/Fatigue01.png</key>
-            <key type="filename">Unredeemed-assets/Fatigue02.png</key>
-            <key type="filename">Unredeemed-assets/Fatigue03.png</key>
-            <key type="filename">Unredeemed-assets/Fatigue04.png</key>
-            <key type="filename">Unredeemed-assets/Fatigue05.png</key>
-            <key type="filename">Unredeemed-assets/Fatigue06.png</key>
-            <key type="filename">Unredeemed-assets/Fatigue07.png</key>
-            <key type="filename">Unredeemed-assets/Fatigue08.png</key>
-            <key type="filename">Unredeemed-assets/Fatigue09.png</key>
-            <key type="filename">Unredeemed-assets/Fatigue10.png</key>
-            <key type="filename">Unredeemed-assets/Fatigue11.png</key>
-            <key type="filename">Unredeemed-assets/Fatigue12.png</key>
-            <key type="filename">Unredeemed-assets/Fatigue13.png</key>
-            <key type="filename">Unredeemed-assets/Fatigue14.png</key>
-            <key type="filename">Unredeemed-assets/Hurt01.png</key>
-            <key type="filename">Unredeemed-assets/Hurt02.png</key>
-            <key type="filename">Unredeemed-assets/Hurt03.png</key>
-            <key type="filename">Unredeemed-assets/Hurt04.png</key>
-            <key type="filename">Unredeemed-assets/Move01.png</key>
-            <key type="filename">Unredeemed-assets/Move02.png</key>
-            <key type="filename">Unredeemed-assets/Move03.png</key>
-            <key type="filename">Unredeemed-assets/Move04.png</key>
-            <key type="filename">Unredeemed-assets/Move05.png</key>
-            <key type="filename">Unredeemed-assets/Move06.png</key>
-            <key type="filename">Unredeemed-assets/Move07.png</key>
-            <key type="filename">Unredeemed-assets/Move08.png</key>
-            <key type="filename">Unredeemed-assets/MoveFast01.png</key>
-            <key type="filename">Unredeemed-assets/MoveFast02.png</key>
-            <key type="filename">Unredeemed-assets/MoveFast03.png</key>
-            <key type="filename">Unredeemed-assets/MoveFast04.png</key>
-            <key type="filename">Unredeemed-assets/MoveFast05.png</key>
-            <key type="filename">Unredeemed-assets/MoveFast06.png</key>
-            <key type="filename">Unredeemed-assets/MoveFast07.png</key>
-            <key type="filename">Unredeemed-assets/MoveFast08.png</key>
-            <key type="filename">Unredeemed-assets/Stand01.png</key>
-            <key type="filename">Unredeemed-assets/UnarmedAttack01.png</key>
-            <key type="filename">Unredeemed-assets/UnarmedAttack02.png</key>
-            <key type="filename">Unredeemed-assets/UnarmedAttack03.png</key>
-            <key type="filename">Unredeemed-assets/UnarmedAttack04.png</key>
-            <key type="filename">Unredeemed-assets/UnarmedAttack05.png</key>
-            <key type="filename">Unredeemed-assets/UnarmedAttack06.png</key>
-            <key type="filename">Unredeemed-assets/UnarmedAttack07.png</key>
-            <key type="filename">Unredeemed-assets/UnarmedAttack08.png</key>
-            <key type="filename">Unredeemed-assets/UseItem01.png</key>
-            <key type="filename">Unredeemed-assets/UseItem02.png</key>
-            <key type="filename">Unredeemed-assets/UseItem03.png</key>
-            <key type="filename">Unredeemed-assets/UseItem04.png</key>
-            <key type="filename">Unredeemed-assets/UseItem05.png</key>
-            <key type="filename">Unredeemed-assets/UseItem06.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,5,14,11</rect>
-                <key>scale9Paddings</key>
-                <rect>7,5,14,11</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Zabul-assets/Charge01.png</key>
-            <key type="filename">Zabul-assets/Charge02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,2,6,4</rect>
-                <key>scale9Paddings</key>
-                <rect>3,2,6,4</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Zabul-assets/Stand01.png</key>
-            <key type="filename">Zabul-assets/Stand02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,2,5,3</rect>
-                <key>scale9Paddings</key>
-                <rect>3,2,5,3</rect>
+                <rect>5,5,11,10</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -443,11 +268,9 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>Sinner-assets</filename>
-                    <filename>Monster-assets</filename>
-                    <filename>Zabul-assets</filename>
-                    <filename>Unredeemed-assets</filename>
                     <filename>Edmund-assets</filename>
+                    <filename>Grandma-assets</filename>
+                    <filename>Dog-assets</filename>
                 </array>
             </struct>
         </map>

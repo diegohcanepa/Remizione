@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:bd321361bfdd8773277b21da615308e0:fab425b75b2ebe46c1a4c746116f12c2:d18da10aadaa3e03b294d4b47f956c75$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="ThemeParkEntrance.png" width="256" height="256">
+    <sprite n="Foreground.png" x="2" y="139" w="95" h="49"/>
+    <sprite n="Foreground1.png" x="2" y="190" w="48" h="38"/>
+    <sprite n="Foreground2.png" x="2" y="139" w="95" h="49"/>
+    <sprite n="LampPost.png" x="244" y="2" w="10" h="32"/>
+    <sprite n="LampPostLight.png" x="2" y="230" w="19" h="19"/>
+    <sprite n="LeftFencePatch.png" x="87" y="190" w="27" h="29"/>
+    <sprite n="LeftForegroundBushes.png" x="23" y="230" w="69" h="18"/>
+    <sprite n="Raven01.png" x="244" y="36" w="9" h="9"/>
+    <sprite n="Raven02.png" x="244" y="47" w="9" h="9"/>
+    <sprite n="Raven03.png" x="244" y="58" w="9" h="9"/>
+    <sprite n="Raven04.png" x="244" y="69" w="9" h="9"/>
+    <sprite n="RightFencePatch.png" x="52" y="190" w="33" h="33"/>
+    <sprite n="Star1.png" x="244" y="80" w="5" h="5"/>
+    <sprite n="Star2.png" x="244" y="87" w="5" h="5"/>
+    <sprite n="Star3.png" x="244" y="94" w="5" h="5"/>
+    <sprite n="ThemeParkEntrance.png" x="2" y="2" w="240" h="135"/>
+</TextureAtlas>

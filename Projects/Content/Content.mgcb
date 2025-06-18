@@ -59,6 +59,51 @@
 #begin Atlases/Menu.xml
 /copy:Atlases/Menu.xml
 
+#begin Atlases/Purgatory.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Atlases/Purgatory.png
+
+#begin Atlases/Purgatory.xml
+/copy:Atlases/Purgatory.xml
+
+#begin Atlases/ThemePark.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Atlases/ThemePark.png
+
+#begin Atlases/ThemePark.xml
+/copy:Atlases/ThemePark.xml
+
+#begin Atlases/ThemeParkEntrance.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Atlases/ThemeParkEntrance.png
+
+#begin Atlases/ThemeParkEntrance.xml
+/copy:Atlases/ThemeParkEntrance.xml
+
 #begin Atlases/UI.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -79,6 +124,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Ambience/Ambience1.wav
+
+#begin Audio/Ambience/Night.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Ambience/Night.wav;Audio/Ambience/Night
 
 #begin Audio/Ambience/Rain.wav
 /importer:WavImporter
@@ -134,6 +185,36 @@
 /processorParam:Quality=Best
 /build:Audio/FX/CycleHorn.wav;Audio/FX/CycleHorn
 
+#begin Audio/FX/DogBark1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/DogBark1.wav;Audio/FX/DogBark1
+
+#begin Audio/FX/DogBark2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/DogBark2.wav;Audio/FX/DogBark2
+
+#begin Audio/FX/DoodleDoo.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/DoodleDoo.wav;Audio/FX/DoodleDoo
+
+#begin Audio/FX/ElectricZapStrong.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/ElectricZapStrong.wav;Audio/FX/ElectricZapStrong
+
+#begin Audio/FX/Fart.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Fart.wav;Audio/FX/Fart
+
 #begin Audio/FX/FootstepA1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -181,6 +262,24 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/FootstepWater6.wav
+
+#begin Audio/FX/Gesture1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Gesture1.wav;Audio/FX/Gesture1
+
+#begin Audio/FX/GhostCarLoop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/GhostCarLoop.wav;Audio/FX/GhostCarLoop
+
+#begin Audio/FX/GhostCarStop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/GhostCarStop.wav;Audio/FX/GhostCarStop
 
 #begin Audio/FX/Headbutt1.wav
 /importer:WavImporter
@@ -356,6 +455,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/Thunder4.wav
 
+#begin Audio/FX/TowerDoorClose.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/TowerDoorClose.wav;Audio/FX/TowerDoorClose
+
 #begin Audio/FX/UINavigation1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -391,6 +496,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/UISelect.wav
+
+#begin Audio/FX/ZapLoop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/ZapLoop.wav;Audio/FX/ZapLoop
 
 #begin Audio/Music/Track01.wav
 /importer:WavImporter

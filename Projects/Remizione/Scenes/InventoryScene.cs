@@ -14,7 +14,6 @@ namespace Remizione
         #region Private fields
 
         private readonly ImageSprite bottomGradient;
-        private readonly UIControl buttonClose;
         private readonly UIControl buttonInfo;
         private readonly UIControl buttonSacrifice;
         private readonly ImageSprite faithIcon;
@@ -40,20 +39,12 @@ namespace Remizione
                 slots[i] = new(owner.Game);
             }
 
-            // Close button
-            buttonClose = new UIControl(owner.Game, InputBindings.Close)
-            {
-                AllowContainer = true,
-                PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom),
-            };
-
             // Info button
             buttonInfo = new UIControl(Game, InputBindings.Info)
             {
                 AllowContainer = true,
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -10),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -3),
             };
 
             // Item name
@@ -70,7 +61,7 @@ namespace Remizione
             {
                 AllowContainer = true,
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -20),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -13),
             };
 
             // Bottom gradient
@@ -187,8 +178,6 @@ namespace Remizione
                 slots[i].Draw(gameTime);
             }
 
-            buttonClose.Draw(gameTime);
-
             if (selectedSlot?.Item != null)
             {
                 buttonInfo.Draw(gameTime);
@@ -240,8 +229,8 @@ namespace Remizione
                 Populate();
             }
 
-            // Close button
-            else if (InputBindings.Close.IsPressed(PlayerIndex.One))
+            // Close
+            else if (InputBindings.Inventory.IsPressed(PlayerIndex.One) || InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
                 SceneController.Pop();
 
             return HandleInputResult.Handled;
@@ -278,7 +267,6 @@ namespace Remizione
             bottomGradient.Update(gameTime);
             stick.Stick = GamePadThumbStick.Left;
             stick.Update(gameTime);
-            buttonClose.Update(gameTime);
             buttonInfo.Update(gameTime);
             buttonSacrifice.Update(gameTime);
 

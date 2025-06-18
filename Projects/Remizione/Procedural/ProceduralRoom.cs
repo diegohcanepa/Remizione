@@ -20,7 +20,6 @@ namespace Remizione
         public ProceduralRoom(GameSession session, string name)
             : base(session, name)
         {
-            AtlasName = string.Empty;
             LightingSystem = true;
             WorldManager = new WorldManager(session, new Size(Screen.NativeWidth, Screen.NativeHeight), 111);
         }
@@ -30,7 +29,18 @@ namespace Remizione
         // Regenerate
         private void Regenerate()
         {
-            Children.Clear();
+            var removeList = new List<GameThing>();
+            for (var i = 0; i < Children.Count; i++)
+            {
+                if (Children[i] is GameThing thing && thing.PlacementPhase != PlacementPhase.None)
+                    removeList.Add(thing);
+            }
+
+            for (var i = 0; i < removeList.Count; i++)
+            {
+                removeList[i].Unparent();
+            }
+
             RemoveWalkArea("");
 
             CustomWidth = WorldManager.GridSize * WorldManager.BlockSize.Width;
@@ -153,6 +163,10 @@ namespace Remizione
         }
 
         #endregion
+
+        // BlockSize
+        [ScriptProperty]
+        public Size BlockSize { get; set; } = new Size(Screen.NativeWidth, Screen.NativeHeight);
 
         // Expand
         public bool Expand(Vector2 playerPosition, EngendroAdventure.Direction direction)

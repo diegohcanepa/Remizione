@@ -41,10 +41,9 @@ namespace Remizione
         private SpeechBubble? speechBubble;
         private readonly ActorStandState standState;
         private int suspendInteractionCooldown;
-        private readonly ActorThrowObjectState throwObjectState;
+        private readonly ActorThrowItemState throwObjectState;
         private float tinyMoveSpeedFactor = 1;
-        private Item? weapon;
-        private string weaponName = string.Empty;
+        private readonly ActorUseItemState useItemState;
 
         #endregion
 
@@ -83,7 +82,6 @@ namespace Remizione
             this.closeAttackState = new ActorCloseAttackState(this);
 
             this.StateMachine = new ActorStateMachine(this, standState);
-            this.StateMachine.RegisterState(new ActorUseItemState(this));
             this.StateMachine.RegisterState(new ActorDeathState(this));
             this.StateMachine.RegisterState(new ActorHurtState(this));
             this.StateMachine.RegisterState(new ActorFatigueState(this));
@@ -92,8 +90,11 @@ namespace Remizione
             this.StateMachine.RegisterState(new ActorMoveFastState(this));
             this.StateMachine.RegisterState(closeAttackState);
 
-            throwObjectState = new ActorThrowObjectState(this);
+            throwObjectState = new ActorThrowItemState(this);
             this.StateMachine.RegisterState(throwObjectState);
+
+            useItemState = new ActorUseItemState(this);
+            this.StateMachine.RegisterState(useItemState);
 
             this.combatStateMachine = new(this);
         }
@@ -625,14 +626,6 @@ namespace Remizione
                 return this.GetAbsolutePoint(BloodSplashOrigin);
         }
 
-        // GetAttackItem
-        public Item? GetAttackItem()
-        {
-            var result = Inventory.GetItem(WeaponName);
-            //result ??= Gifts.GetItem("UnarmedAttack");
-            return result;
-        }
-
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
@@ -950,57 +943,26 @@ namespace Remizione
         // Target
         public GameThing? Target { get; private set; }
 
-        // ThrowObject
-        public virtual bool ThrowObject()
-        {
-            Stand();
-            /*
-            if (StateMachine.ChangeState(ActorStateNames.ThrowObject))
-            {
-                if (Throwables.SelectedItem != null && Throwables.SelectedItem.Consume())
-                    throwObjectState.Item = Throwables.SelectedItem;
-
-                return true;
-            }
-            */
-
-            return false;
-        }
-
-        // UseItem
-        public void UseItem(Item item)
-        {
-            if (StateMachine.GetState(ActorStateNames.UseItem) is ActorUseItemState state)
-            {
-                state.Item = item;
-                StateMachine.ChangeState(state.Name);
-            }
-        }
-
-        // UseSelectedItem
-        public void UseSelectedItem()
+        // UseCurrentInventoryItem
+        public void UseCurrentInventoryItem()
         {
             if (Inventory.SelectedItem is Item item)
             {
                 Stand();
-                
+
                 if (item.MetaItem.Category == MetaItemCategory.Throwable)
                 {
-                    throwObjectState.Item = item;
-                    StateMachine.ChangeState(throwObjectState.Name);
+                    if (item.Count > 0)
+                    {
+                        throwObjectState.Item = item;
+                        StateMachine.ChangeState(throwObjectState.Name);
+                    }
                 }
-            }
-        }
-
-        // WeaponName
-        [ScriptProperty]
-        public string WeaponName
-        {
-            get => weaponName;
-            set
-            {
-                if (value != weaponName)
-                    weaponName = value;
+                else
+                {
+                    useItemState.Item = item;
+                    StateMachine.ChangeState(useItemState.Name);
+                }
             }
         }
 

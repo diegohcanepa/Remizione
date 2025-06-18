@@ -44,6 +44,7 @@ namespace Remizione
         {
             this.Destination = destination;
 
+            /*
             // Attack
             if (signal == CombatStateSignal.Attack)
             {
@@ -61,6 +62,7 @@ namespace Remizione
 
                 return;
             }
+            */
 
             // Close attack
             if (signal == CombatStateSignal.CloseAttack)

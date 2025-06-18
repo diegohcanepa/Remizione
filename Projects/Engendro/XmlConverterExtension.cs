@@ -95,6 +95,12 @@ namespace Engendro
         }
 
         // ToString
+        public static string ToString(Size size)
+        {
+            return string.Format(CultureInfo.InvariantCulture, "{0},{1}", size.Width, size.Height);
+        }
+
+        // ToString
         public static string ToString(Vector2 vector)
         {
             return string.Format(CultureInfo.InvariantCulture, "{0},{1}", vector.X, vector.Y);
@@ -129,6 +135,15 @@ namespace Engendro
         public static string ToString(Color color)
         {
             return string.Format(CultureInfo.InvariantCulture, "{0},{1},{2},{3}", color.R, color.G, color.B, color.A);
+        }
+
+        // ToSize
+        public static Size ToSize(string value)
+        {
+            var coords = value.Split(',');
+            var x = int.Parse(coords[0].Trim(), CultureInfo.InvariantCulture);
+            var y = int.Parse(coords[1].Trim(), CultureInfo.InvariantCulture);
+            return new Size(x, y);
         }
 
         // ToVector2

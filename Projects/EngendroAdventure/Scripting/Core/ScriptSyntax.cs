@@ -188,6 +188,7 @@ namespace EngendroAdventure.Scripting
                                                                                                                   typeof(long),
                                                                                                                   typeof(Rectangle),
                                                                                                                   typeof(RectangleF),
+                                                                                                                  typeof(Size),
                                                                                                                   typeof(Script),
                                                                                                                   typeof(Sound),
                                                                                                                   typeof(string),

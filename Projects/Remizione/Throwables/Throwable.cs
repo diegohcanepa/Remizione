@@ -7,7 +7,8 @@ namespace Remizione
     /// <summary>
     /// Throwable
     /// </summary>
-    public abstract class Throwable : GameThing
+    public abstract class 
+        Throwable : GameThing
     {
         #region Private fields
 
@@ -129,7 +130,6 @@ namespace Remizione
             // Apply damage
             if (target != null && Item != null)
             {
-                // TODO: Check ApplyDamage
                 Item.ApplyDamage(target, HitType.Default);
                 if (ImpactSound != null)
                     PlaySound(ImpactSound);

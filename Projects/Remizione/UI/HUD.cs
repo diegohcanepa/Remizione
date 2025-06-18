@@ -82,7 +82,9 @@ namespace Remizione
         {
             if (session.FullHUD)
             {
-                quickSlot.Draw(gameTime);
+                if (!session.IsConsoleVisible)
+                    quickSlot.Draw(gameTime);
+
                 playerStats.Draw(gameTime);
 
                 if (!savingIcon.Tweens.IsTweening)

@@ -63,6 +63,27 @@ namespace Remizione
 
         #endregion
 
+        #region Private members
+
+        // SelectNextWeapon
+        private void SelectNextWeapon()
+        {
+            if (actor == null)
+                return;
+         
+            if (actor.Inventory.SelectNext())
+            {
+                Sound.Play(SoundNames.UIQuickSlot);
+            }
+        }
+
+        // SelectPreviousWeapon
+        private void SelectPreviousWeapon()
+        {
+        }
+
+        #endregion
+
         #region Protected members
 
         // OnDraw
@@ -141,7 +162,7 @@ namespace Remizione
             if (actor == null)
                 return HandleInputResult.Unhandled;
 
-            if (InputBindings.QuickSlotNextItem.IsPressed(PlayerIndex.One))
+            if (InputBindings.QuickSlotNextWeaponItem.IsPressed(PlayerIndex.One))
             {
                 if (actor.Inventory.SelectNext())
                     Sound.Play(SoundNames.UIQuickSlot);
@@ -149,7 +170,7 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
-            else if (InputBindings.QuickSlotPreviousItem.IsPressed(PlayerIndex.One))
+            else if (InputBindings.QuickSlotPreviousWeaponItem.IsPressed(PlayerIndex.One))
             {
                 if (actor.Inventory.SelectPrevious())
                     Sound.Play(SoundNames.UIQuickSlot);

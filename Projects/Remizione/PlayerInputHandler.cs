@@ -9,7 +9,7 @@ namespace Remizione
     /// </summary>
     public sealed class PlayerInputHandler<T> : InputHandler where T : Actor
     {
-        //private bool inventoryLocked;
+        private bool inventoryLocked;
         private InventoryScene inventoryScene;
 
         // Constructor
@@ -32,16 +32,25 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
-            // Selected item
+            // Use item
             if (InputBindings.UseItem.IsPressed(PlayerIndex.One))
             {
-                Actor.UseSelectedItem();
+                Actor.UseCurrentInventoryItem();
                 return HandleInputResult.Handled;
             }
 
             // Inventory
-            if (InputBindings.ShowInventory.IsPressed(PlayerIndex.One) && !inventoryScene.IsCurrentScene)
+            if (inventoryLocked)
             {
+                if (!InputBindings.Inventory.IsPressed(PlayerIndex.One))
+                {
+                    inventoryLocked = false;
+                    return HandleInputResult.Handled;
+                }
+            }
+            else if (InputBindings.Inventory.IsPressed(PlayerIndex.One))
+            {
+                inventoryLocked = true;
                 inventoryScene.SceneController.Push();
                 return HandleInputResult.Handled;
             }
@@ -109,6 +118,14 @@ namespace Remizione
         private bool TestMouseRightButtonClick()
         {
             var result = InputManager.DefaultPlayer.Mouse.IsRightButtonPressed();
+
+            // Inventory
+            if (result)
+            {
+                inventoryScene.SceneController.Push();
+                return true;
+            }
+
             return result;
         }
 
