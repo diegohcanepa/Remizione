@@ -51,8 +51,8 @@ namespace Remizione
             return position;
         }
 
-        // CollectNodes
-        public void CollectNodes(IList<PathNode> list)
+        // CollectPathNodes
+        public void CollectPathNodes(IList<PathNode> list)
         {
             for (var i = 0; i < nodes.Count; i++)
             {

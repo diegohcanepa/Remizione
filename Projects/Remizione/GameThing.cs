@@ -23,7 +23,6 @@ namespace Remizione
         private int damageMeterCooldown;
         private string displayName = string.Empty;
         private readonly Polygon holeInflatedPoly = new();
-        private PathNode[]? holeNodes;
         private readonly Polygon holePoly = new();
         private RectangleF hotspotBox;
         private PlacementMode hotspotPlacement = PlacementMode.Relative;
@@ -43,6 +42,7 @@ namespace Remizione
         private readonly Vector2Tween knockbackTween = new();
         private string localizedDisplayName = string.Empty;
         private int maxHP;
+        private PathNode[]? pathNodes;
         private readonly List<PlacementCondition> placementConditions = [];
         private RenderLayer renderLayer;
         private int renderLayerDepth;
@@ -82,10 +82,22 @@ namespace Remizione
             return position;
         }
 
-        // CollectNodes
-        void IHoleArea.CollectNodes(IList<PathNode> targetList)
+        // CollectPathNodes
+        void IHoleArea.CollectPathNodes(IList<PathNode> targetList)
         {
             InvalidateHoleArea();
+
+            if (CollisionPolygon == null || CollisionPolygon.Vertices.Count == 0)
+                return;
+
+            if (pathNodes == null || pathNodes.Length != CollisionPolygon.Vertices.Count)
+            {
+                pathNodes = new PathNode[CollisionPolygon.Vertices.Count];
+                for (var i = 0; i < pathNodes.Length; i++)
+                {
+                    pathNodes[i] = new PathNode();
+                }
+            }
 
             for (int i = 0; i < holeInflatedPoly.Vertices.Count; i++)
             {
@@ -93,12 +105,16 @@ namespace Remizione
                 if (holeInflatedPoly.IsVertexConcave(i))
                     continue;
 
-                // Is point ourside walk area
+                // Is point outside walk area
                 if (WalkArea != null && !WalkArea.IsInside(holeInflatedPoly.Vertices[i]))
                     continue;
 
-                if (holeNodes != null)
-                    targetList.Add(holeNodes[i]);
+                if (pathNodes[i] == null)
+                    pathNodes[i] = new PathNode(holeInflatedPoly.Vertices[i]);
+                else
+                    pathNodes[i].Position = holeInflatedPoly.Vertices[i];
+                
+                targetList.Add(pathNodes[i]);
             }
         }
 
@@ -194,13 +210,13 @@ namespace Remizione
             holePoly.SetVertices(vertices);
             holeInflatedPoly.SetVertices(vertices, .05f);
 
-            if (holeNodes == null || holeNodes.Length != vertices.Length)
+            if (pathNodes == null || pathNodes.Length != vertices.Length)
             {
-                holeNodes = new PathNode[vertices.Length];
-                for (int i = 0; i < vertices.Length; i++)
-                {
-                    holeNodes[i] = new PathNode(holeInflatedPoly.Vertices[i]);
-                }
+                pathNodes = new PathNode[vertices.Length];
+                //for (int i = 0; i < vertices.Length; i++)
+                //{
+                //    holeNodes[i] = new PathNode(holeInflatedPoly.Vertices[i]);
+                //}
             }
 
             isHoleAreaDirty = false;

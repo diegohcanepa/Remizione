@@ -87,7 +87,7 @@ namespace Engendro
                 Vector2 curr = polygon[i];
                 Vector2 next = polygon[(i + 1) % polygon.Length];
 
-                if (!Geometry.IsColinear(prev, curr, next))
+                if (!IsColinear(prev, curr, next))
                     result.Add(curr);
             }
 

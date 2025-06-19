@@ -13,8 +13,8 @@ namespace Remizione
         // ClampOutside
         Vector2 ClampOutside(Vector2 position);
 
-        // CollectNodes
-        void CollectNodes(IList<PathNode> list);
+        // CollectPathNodes
+        void CollectPathNodes(IList<PathNode> list);
 
         // Contains
         bool Contains(Vector2 point);

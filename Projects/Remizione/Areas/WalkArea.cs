@@ -167,7 +167,7 @@ namespace Remizione
             // Add hole nodes
             for (var i = 0; i < holeAreas.Count; i++)
             {
-                holeAreas[i].CollectNodes(linkedNodes);
+                holeAreas[i].CollectPathNodes(linkedNodes);
             }
 
             LinkNodes();
