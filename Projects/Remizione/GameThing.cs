@@ -91,13 +91,7 @@ namespace Remizione
                 return;
 
             if (pathNodes == null || pathNodes.Length != CollisionPolygon.Vertices.Count)
-            {
                 pathNodes = new PathNode[CollisionPolygon.Vertices.Count];
-                for (var i = 0; i < pathNodes.Length; i++)
-                {
-                    pathNodes[i] = new PathNode();
-                }
-            }
 
             for (int i = 0; i < holeInflatedPoly.Vertices.Count; i++)
             {
@@ -110,7 +104,7 @@ namespace Remizione
                     continue;
 
                 if (pathNodes[i] == null)
-                    pathNodes[i] = new PathNode(holeInflatedPoly.Vertices[i]);
+                    pathNodes[i] = new(holeInflatedPoly.Vertices[i]);
                 else
                     pathNodes[i].Position = holeInflatedPoly.Vertices[i];
                 
@@ -209,16 +203,7 @@ namespace Remizione
             CollisionPolygon.GetVertices(vertices, offset);
             holePoly.SetVertices(vertices);
             holeInflatedPoly.SetVertices(vertices, .05f);
-
-            if (pathNodes == null || pathNodes.Length != vertices.Length)
-            {
-                pathNodes = new PathNode[vertices.Length];
-                //for (int i = 0; i < vertices.Length; i++)
-                //{
-                //    holeNodes[i] = new PathNode(holeInflatedPoly.Vertices[i]);
-                //}
-            }
-
+            
             isHoleAreaDirty = false;
         }
 
