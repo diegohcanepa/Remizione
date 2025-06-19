@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Remizione.UI;
 
 namespace Remizione
 {
@@ -27,7 +26,6 @@ namespace Remizione
             ItemMenuContainer = this[nameof(ItemMenuContainer)];
             ItemMenuContainerSelection = this[nameof(ItemMenuContainerSelection)];
             MessageContainer = this[nameof(MessageContainer)];
-            MissingInputBinding = this[nameof(MissingInputBinding)];
             MouseCursorArrow = this[nameof(MouseCursorArrow)];
             MouseCursorCross = this[nameof(MouseCursorCross)];
             MouseCursorCrossOn = this[nameof(MouseCursorCrossOn)];
@@ -94,9 +92,6 @@ namespace Remizione
 
         // MessageContainer
         public AtlasImage MessageContainer { get; }
-
-        // MissingInputBinding
-        public AtlasImage MissingInputBinding { get; }
 
         // MouseCursorArrow
         public AtlasImage MouseCursorArrow { get; }

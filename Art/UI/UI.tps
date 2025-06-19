@@ -254,16 +254,8 @@
                 <false/>
             </struct>
             <key type="filename">KeyboardControls-assets/KeyboardE.png</key>
-            <key type="filename">PlayStationControls-assets/PlayStationA.png</key>
-            <key type="filename">PlayStationControls-assets/PlayStationB.png</key>
-            <key type="filename">PlayStationControls-assets/PlayStationInteract.png</key>
-            <key type="filename">PlayStationControls-assets/PlayStationNextDialog.png</key>
-            <key type="filename">PlayStationControls-assets/PlayStationX.png</key>
-            <key type="filename">PlayStationControls-assets/PlayStationY.png</key>
-            <key type="filename">UI-assets/MissingInputBinding.png</key>
             <key type="filename">XboxControls-assets/XboxA.png</key>
             <key type="filename">XboxControls-assets/XboxB.png</key>
-            <key type="filename">XboxControls-assets/XboxRun.png</key>
             <key type="filename">XboxControls-assets/XboxX.png</key>
             <key type="filename">XboxControls-assets/XboxY.png</key>
             <struct type="IndividualSpriteSettings">
@@ -377,105 +369,6 @@
                 <rect>2,3,5,5</rect>
                 <key>scale9Paddings</key>
                 <rect>2,3,5,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">PlayStationControls-assets/PlayStationChangeDifficulty.png</key>
-            <key type="filename">PlayStationControls-assets/PlayStationSelectSlot.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>13,14,25,27</rect>
-                <key>scale9Paddings</key>
-                <rect>13,14,25,27</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">PlayStationControls-assets/PlayStationDPadDown.png</key>
-            <key type="filename">PlayStationControls-assets/PlayStationDPadLeft.png</key>
-            <key type="filename">PlayStationControls-assets/PlayStationDPadRight.png</key>
-            <key type="filename">PlayStationControls-assets/PlayStationDPadUp.png</key>
-            <key type="filename">PlayStationControls-assets/PlayStationDiaryPages.png</key>
-            <key type="filename">PlayStationControls-assets/PlayStationDiaryTabs.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>15,13,30,25</rect>
-                <key>scale9Paddings</key>
-                <rect>15,13,30,25</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">PlayStationControls-assets/PlayStationDiaryShortcut.png</key>
-            <key type="filename">PlayStationControls-assets/PlayStationMatchesShortcut.png</key>
-            <key type="filename">PlayStationControls-assets/PlayStationRightShoulder.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,12,32,23</rect>
-                <key>scale9Paddings</key>
-                <rect>16,12,32,23</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">PlayStationControls-assets/PlayStationLeftShoulder.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>19,12,38,23</rect>
-                <key>scale9Paddings</key>
-                <rect>19,12,38,23</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">PlayStationControls-assets/PlayStationLeftTrigger.png</key>
-            <key type="filename">PlayStationControls-assets/PlayStationRightTrigger.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>13,12,25,23</rect>
-                <key>scale9Paddings</key>
-                <rect>13,12,25,23</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">PlayStationControls-assets/PlayStationMove.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>13,15,26,29</rect>
-                <key>scale9Paddings</key>
-                <rect>13,15,26,29</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -912,7 +805,6 @@
                     <filename>UI-assets</filename>
                     <filename>XboxControls-assets</filename>
                     <filename>KeyboardControls-assets</filename>
-                    <filename>PlayStationControls-assets</filename>
                     <filename>MessageContainer-assets</filename>
                     <filename>Inventory-assets</filename>
                     <filename>UIIcons-assets</filename>
