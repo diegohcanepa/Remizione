@@ -21,7 +21,7 @@ namespace Remizione
         private readonly ImageSprite containerSelection;
         private readonly UIControl discardButton;
         private readonly UIInfoPanel infoPanel;
-        private readonly PopupMenu<Item> menu;
+        private readonly UIPopupMenu<Item> menu;
 
         #endregion
 
@@ -158,7 +158,7 @@ namespace Remizione
         }
 
         // SelectedOptionChanged
-        private void SelectedOptionChanged(PopupMenuOption<Item>? option)
+        private void SelectedOptionChanged(UIPopupMenuOption<Item>? option)
         {
             /*
             if (option != null)

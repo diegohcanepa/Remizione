@@ -15,6 +15,8 @@ namespace Remizione
     {
         #region Private fields
 
+        private Color brightnessColor;
+        private float brightnessModifier;
         private int currentDrawIndex;
         private static DustEmitter dustEmitter = null!;
         private static FireflyEmitter fireflyEmitter = null!;
@@ -234,6 +236,9 @@ namespace Remizione
                     thing.DrawLights(gameTime, renderedLights);
             }
 
+            if (BrightnessModifier > 0)
+                Game.Shapes.DrawRectangle(Session.Viewport.ToRectangle(), brightnessColor);
+
             Game.SpriteBatch.End();
 
             if (AllowFireflyParticles)
@@ -300,9 +305,6 @@ namespace Remizione
 
             // Rain drop impacts
             Session.Environment.Rain.DrawImpacts(gameTime);
-
-            // Move destination mark
-            Session.HUD.DestinationMark.Draw(gameTime);
 
             // Doors (layer)
             DrawThings(gameTime, RenderLayer.Doors, interactiveTarget);
@@ -473,8 +475,23 @@ namespace Remizione
         [ScriptProperty]
         public bool AllowPauseMenu { get; set; } = true;
 
+        // BrightnessModifier
+        [ScriptProperty]
+        public float BrightnessModifier
+        {
+            get => brightnessModifier;
+            set
+            {
+                if (value != brightnessModifier)
+                {
+                    brightnessModifier = Math.Clamp(value, 0, 1);
+                    brightnessColor = Color.White * brightnessModifier;
+                }
+            }
+        }
+
         // CanPlaceDynamicPropAt
-        public bool CanPlaceDynamicPropAt(Prop prop, Vector2 position)
+        public bool CanPlaceDynamicPropAt(IsometricProp prop, Vector2 position)
         {
             if (prop.CollisionPolygon != null)
             {
@@ -523,7 +540,7 @@ namespace Remizione
         public NamedObjectReadOnlyCollection<Light> Lights { get; }
 
         // PlaceDynamicPropAt
-        public bool PlaceDynamicPropAt(Prop prop)
+        public bool PlaceDynamicPropAt(IsometricProp prop)
         {
             if (Session.Player is Actor actor)
             {
@@ -536,7 +553,7 @@ namespace Remizione
                 if (CanPlaceDynamicPropAt(prop, pos) == false)
                     return false;
 
-                if (Session.CreateDynamicThing(prop.StaticName, string.Empty) is Prop newProp)
+                if (Session.CreateDynamicThing(prop.StaticName, string.Empty) is IsometricProp newProp)
                 {
                     newProp.Position = actor.Position;
                     Children.Add(newProp);

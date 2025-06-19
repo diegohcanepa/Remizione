@@ -250,7 +250,7 @@ namespace Remizione
             {
                 for (var i = 0; i < worldBlock.ProceduralThings.Count; i++)
                 {
-                    if (worldBlock.ProceduralThings[i] is Prop prop && prop.GetFootstepSound(Position) is Sound sound)
+                    if (worldBlock.ProceduralThings[i] is IsometricProp prop && prop.GetFootstepSound(Position) is Sound sound)
                     {
                         footstepSoundInstance = PlaySound(sound);
                         return;
@@ -415,9 +415,6 @@ namespace Remizione
         {
             base.OnStopMoving();
 
-            if (IsPlayer)
-                session.HUD.DestinationMark.Position = null;
-
             FastMove = false;
             accelerationFactorTween.Stop();
             moveTween.Stop();
@@ -509,9 +506,6 @@ namespace Remizione
             var destination = target.GetApproachPosition(this, true);
             var result = MoveTo(destination);
             this.pendingInteractiveTarget = target;
-
-            if (target is Pickup)
-                Session.HUD.DestinationMark.Position = null;
 
             if (!result)
                 HandlePendingInteraction();
@@ -827,9 +821,6 @@ namespace Remizione
             MoveToNextPathNode();
 
             IsFollowingPath = true;
-
-            if (IsPlayer)
-                Session.HUD.DestinationMark.Position = path[^1];
 
             if (FastMove && StateMachine.CurrentState is ActorMoveState)
                 StateMachine.ChangeState(ActorStateNames.MoveFast);

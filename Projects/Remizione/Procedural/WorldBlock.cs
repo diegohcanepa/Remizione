@@ -10,7 +10,7 @@ namespace Remizione
     /// <summary>
     /// WorldBlock
     /// </summary>
-    public class WorldBlock : Prop
+    public class WorldBlock : IsometricProp
     {
         #region Private fields
 

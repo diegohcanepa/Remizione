@@ -10,7 +10,7 @@ namespace Remizione.Scripting
         internal PlaceDynamicPropCommand(Script script, string source, StatementBody body)
             : base(script, source, body, 1)
         {
-            if (Session.GetEntity<Prop>(Body.Clauses[0]) == null)
+            if (Session.GetEntity<IsometricProp>(Body.Clauses[0]) == null)
                 throw new ScriptException(this, $"The prop {Body.Clauses[0]} does not exist.");
         }
 
@@ -19,7 +19,7 @@ namespace Remizione.Scripting
         {
             if (Session is GameSession session && session.Room != null)
             {
-                var staticProp = Session.GetEntity<Prop>(Body.Clauses[0]);
+                var staticProp = Session.GetEntity<IsometricProp>(Body.Clauses[0]);
                 if (staticProp == null)
                     return;
 

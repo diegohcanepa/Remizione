@@ -6,7 +6,7 @@ namespace Remizione
     /// <summary>
     /// LootBag
     /// </summary>
-    public sealed class LootBag : Prop
+    public sealed class LootBag : IsometricProp
     {
         private readonly FloatTween altitudeTween = new();
         private bool isBeginCollected;

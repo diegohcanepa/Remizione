@@ -13,16 +13,16 @@ namespace Remizione
     {
         #region Private fields
 
-        private PopupMenu<Item> activeMenu;
+        private UIPopupMenu<Item> activeMenu;
         private readonly UIInfoPanel infoPanel;
         private const int margin = 22;
         private readonly UIControl moveButton;
         private readonly ImageSprite playerContainer;
         private readonly ImageSprite selectionContainer;
-        private readonly PopupMenu<Item> playerMenu;
+        private readonly UIPopupMenu<Item> playerMenu;
         private readonly GameSession session;
         private readonly ImageSprite targetContainer;
-        private readonly PopupMenu<Item> targetMenu;
+        private readonly UIPopupMenu<Item> targetMenu;
 
         #endregion
 
@@ -201,7 +201,7 @@ namespace Remizione
         }
 
         // SelectedOptionChanged
-        private void SelectedOptionChanged(PopupMenuOption<Item>? option)
+        private void SelectedOptionChanged(UIPopupMenuOption<Item>? option)
         {
             InvalidateInfo();
         }

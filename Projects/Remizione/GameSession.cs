@@ -138,6 +138,7 @@ namespace Remizione
         protected override void ExtendScriptRegistry(ScriptRegistry scriptRegistry)
         {
             scriptRegistry.RegisterEntity(typeof(Actor));
+            scriptRegistry.RegisterEntity(typeof(IsometricProp));
             scriptRegistry.RegisterEntity(typeof(Orb));
             scriptRegistry.RegisterEntity(typeof(Pickup));
             scriptRegistry.RegisterEntity(typeof(Prop));
@@ -457,7 +458,7 @@ namespace Remizione
 
         // FullHUD
         [ScriptProperty]
-        public bool FullHUD { get; set; } = true;
+        public bool FullHUD { get; set; }
 
         // Game
         public new RemizioneGame Game { get; }

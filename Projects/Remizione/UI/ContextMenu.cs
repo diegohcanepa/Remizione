@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Remizione.UI
+namespace Remizione
 {
     /// <summary>
     /// ContextMenu

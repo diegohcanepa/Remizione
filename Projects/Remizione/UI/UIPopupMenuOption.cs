@@ -3,20 +3,20 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace Remizione.UI
+namespace Remizione
 {
     /// <summary>
-    /// PopupMenuOption
+    /// UIPopupMenuOption
     /// </summary>
-    public sealed class PopupMenuOption<TLinkedObject> where TLinkedObject : class
+    public sealed class UIPopupMenuOption<TLinkedObject> where TLinkedObject : class
     {
         private readonly Action? action;
         private readonly ImageSprite icon;
-        private readonly PopupMenu<TLinkedObject> menu;
+        private readonly UIPopupMenu<TLinkedObject> menu;
         private readonly TextSprite nameText;
 
         // Constructor
-        public PopupMenuOption(PopupMenu<TLinkedObject> menu, TLinkedObject linkedObject, Action? action)
+        public UIPopupMenuOption(UIPopupMenu<TLinkedObject> menu, TLinkedObject linkedObject, Action? action)
         {
             this.menu = menu;
             this.LinkedObject = linkedObject;

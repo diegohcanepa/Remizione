@@ -14,7 +14,7 @@ namespace Remizione
         private readonly ImageSprite container;
         private readonly ImageSprite containerSelection;
         private readonly UIInfoPanel infoPanel;
-        private readonly PopupMenu<StatData> menu;
+        private readonly UIPopupMenu<StatData> menu;
 
         #region Constructor
 
@@ -77,7 +77,7 @@ namespace Remizione
         }
 
         // SelectedOptionChanged
-        private void SelectedOptionChanged(PopupMenuOption<StatData>? option)
+        private void SelectedOptionChanged(UIPopupMenuOption<StatData>? option)
         {
             if (option != null)
                 infoPanel.Text = option.LinkedObject.LocalizedDescription;

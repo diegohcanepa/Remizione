@@ -35,9 +35,6 @@ namespace Remizione
             this.playerStats = new(session.Game);
             this.cycleMeter = new(session);
 
-            // DestinationMark
-            this.DestinationMark = new DestinationMark(session);
-
             // Log
             this.Log = new(Game);
 
@@ -125,15 +122,11 @@ namespace Remizione
                 grace.Update(gameTime);
             }
 
-            DestinationMark.Update(gameTime);
             Log.Update(gameTime);
             savingIcon.Update(gameTime);
         }
 
         #endregion
-
-        // DestinationMark
-        public DestinationMark DestinationMark { get; }
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime) => quickSlot.HandleInput(gameTime);

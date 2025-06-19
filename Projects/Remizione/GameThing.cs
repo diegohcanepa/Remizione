@@ -574,7 +574,7 @@ namespace Remizione
                 return;
 
             // Clamp to a walkable position
-            if (WalkArea != null && WalkArea.Holes.Count > 0)
+            if (WalkArea != null)
             {
                 Position = WalkArea.ClampInside(Position, out _);
 

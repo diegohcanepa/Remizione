@@ -3,7 +3,6 @@ using Engendro.Audio;
 using Engendro.Input;
 using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
-using Remizione.UI;
 using System.Collections.Generic;
 
 namespace Remizione
@@ -147,9 +146,11 @@ namespace Remizione
 
             RemizioneGame.Effects.ColorReduction.SetColor(fadeTween.CurrentValue);
 
+            /*
             Game.SpriteBatch.Begin(Game.Camera);
             Game.Shapes.DrawRectangle(new RectangleF(0, menu.Y - 4, 240, 135 - menu.Y + 4), Color.Black * .5f);
             Game.SpriteBatch.End();
+            */
 
             menu.Draw(gameTime);
 

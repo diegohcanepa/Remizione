@@ -10,7 +10,7 @@ namespace Remizione
     /// </summary>
     public sealed class InGameMenuScene : Scene
     {
-        private readonly PopupMenu<string> menu;
+        private readonly UIPopupMenu<string> menu;
 
         #region Constructor
 

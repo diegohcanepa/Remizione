@@ -73,7 +73,7 @@ namespace Remizione
             iconSprite.Y = textSprite.BoundingBox.GetPoint(RectanglePoint.Left).Y;
 
             textSprite.Scale = menu.OptionTextScale;
-            textSprite.Color = IsSelected ? ColorPalette.Text.Default : ColorPalette.Text.Light;
+            textSprite.Color = IsSelected ? ColorPalette.Text.Light : ColorPalette.Text.Default;
             iconSprite.Color = textSprite.Color;
         }
 

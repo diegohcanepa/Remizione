@@ -11,6 +11,21 @@ namespace Engendro.PathFinding
     {
         private Vector2 position;
 
+        #region Constructors
+
+        // Constructor
+        public PathNode()
+        {
+        }
+
+        // Constructor
+        public PathNode(Vector2 position)
+        {
+            this.position = position;
+        }
+
+        #endregion
+
         #region ICompatable<T> explicit implementation
 
         // CompareTo
@@ -28,17 +43,6 @@ namespace Engendro.PathFinding
         }
 
         #endregion
-
-        // Constructor
-        public PathNode()
-        {
-        }
-
-        // Constructor
-        public PathNode(Vector2 position)
-        {
-            this.position = position;
-        }
 
         // FCost
         public float FCost => GCost + HCost;

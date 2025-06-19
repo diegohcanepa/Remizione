@@ -7,18 +7,18 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Remizione.UI
+namespace Remizione
 {
     /// <summary>
-    /// PopupMenu
+    /// UIPopupMenu
     /// </summary>
-    public sealed class PopupMenu<TLinkedObject> : GameObject, IInputHandler where TLinkedObject : class
+    public sealed class UIPopupMenu<TLinkedObject> : GameObject, IInputHandler where TLinkedObject : class
     {
         #region Private fields
 
-        private readonly List<PopupMenuOption<TLinkedObject>> optionList = [];
+        private readonly List<UIPopupMenuOption<TLinkedObject>> optionList = [];
         private Vector2 position;
-        private PopupMenuOption<TLinkedObject>? selectedOption;
+        private UIPopupMenuOption<TLinkedObject>? selectedOption;
         private readonly bool sorted;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 200 };
         private Vector2 textScale = ScaleInfo.Text.Large;
@@ -29,14 +29,14 @@ namespace Remizione.UI
         #region Constructor
 
         // Constructor
-        public PopupMenu(EngendroGame game, HorizontalAlignment horizontalAlignment, bool sorted, RectangleF? boundingBox = null)
+        public UIPopupMenu(EngendroGame game, HorizontalAlignment horizontalAlignment, bool sorted, RectangleF? boundingBox = null)
             : base(game)
         {
             this.sorted = sorted;
             this.HorizontalAlignment = horizontalAlignment;
             this.BoundingBox = boundingBox ?? RectangleF.Empty;
             this.Font = Fonts.CommonOutline;
-            this.Options = new ReadOnlyCollection<PopupMenuOption<TLinkedObject>>(optionList);
+            this.Options = new ReadOnlyCollection<UIPopupMenuOption<TLinkedObject>>(optionList);
 
             // Title
             this.titleText = new TextSprite(Game, Fonts.CommonOutline)
@@ -113,9 +113,9 @@ namespace Remizione.UI
         #endregion
 
         // AddOption
-        public PopupMenuOption<TLinkedObject> AddOption(TLinkedObject obj, Action? action = null)
+        public UIPopupMenuOption<TLinkedObject> AddOption(TLinkedObject obj, Action? action = null)
         {
-            PopupMenuOption<TLinkedObject> result = new(this, obj, action);
+            UIPopupMenuOption<TLinkedObject> result = new(this, obj, action);
             optionList.Add(result);
 
             if (sorted)
@@ -141,7 +141,7 @@ namespace Remizione.UI
         public Font Font { get; }
 
         // GetOptionAt
-        public PopupMenuOption<TLinkedObject>? GetOptionAt(Vector2 position)
+        public UIPopupMenuOption<TLinkedObject>? GetOptionAt(Vector2 position)
         {
             for (var i = 0; i < optionList.Count; i++)
             {
@@ -183,16 +183,16 @@ namespace Remizione.UI
         public HorizontalAlignment HorizontalAlignment { get; }
 
         // HoveredOption
-        public PopupMenuOption<TLinkedObject>? HoveredOption { get; private set; }
+        public UIPopupMenuOption<TLinkedObject>? HoveredOption { get; private set; }
 
         // OnPressed
-        public Action<PopupMenuOption<TLinkedObject>>? OnPressed { get; set; }
+        public Action<UIPopupMenuOption<TLinkedObject>>? OnPressed { get; set; }
 
         // OnSelectionChanged
-        public Action<PopupMenuOption<TLinkedObject>?>? OnSelectionChanged { get; set; }
+        public Action<UIPopupMenuOption<TLinkedObject>?>? OnSelectionChanged { get; set; }
 
         // Options
-        public ReadOnlyCollection<PopupMenuOption<TLinkedObject>> Options { get; }
+        public ReadOnlyCollection<UIPopupMenuOption<TLinkedObject>> Options { get; }
 
         // Position
         public Vector2 Position
@@ -273,7 +273,7 @@ namespace Remizione.UI
         }
 
         // SelectedOption
-        public PopupMenuOption<TLinkedObject>? SelectedOption
+        public UIPopupMenuOption<TLinkedObject>? SelectedOption
         {
             get => selectedOption;
             set
@@ -290,7 +290,7 @@ namespace Remizione.UI
         }
 
         // SelectOptionAt
-        public PopupMenuOption<TLinkedObject>? SelectOptionAt(Vector2 position)
+        public UIPopupMenuOption<TLinkedObject>? SelectOptionAt(Vector2 position)
         {
             var option = GetOptionAt(position);
             if(option != null)

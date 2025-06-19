@@ -85,9 +85,9 @@ namespace Remizione
         // SpeechBubble
         internal static class SpeechBubble
         {
-            internal static Color Fill { get; } = new(223, 224, 232);
+            internal static Color Fill { get; } = new(200, 200, 210);
             internal static Color Shadow { get; } = Color.Black * .2f;
-            internal static Color Text { get; } = new(27, 31, 33);
+            internal static Color Text { get; } = new Color(27, 31, 33) * .7f;
         }
 
         // HPMeter
