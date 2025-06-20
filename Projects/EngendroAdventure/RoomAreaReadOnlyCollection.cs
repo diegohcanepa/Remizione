@@ -38,7 +38,7 @@ namespace EngendroAdventure
         {
             for (var i = 0; i < Count; i++)
             {
-                if (this[i].Polygon.IsPointInside(position))
+                if (this[i].Polygon.Contains(position))
                 {
                     return this[i];
                 }

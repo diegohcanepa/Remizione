@@ -204,6 +204,9 @@ namespace Engendro
         // IsCurrentScene
         public bool IsCurrentScene => Game.SceneManager.CurrentScene == this;
 
+        // IsHidden
+        public virtual bool IsHidden => false;
+
         // IsPaused
         public bool IsPaused => pauseCount > 0;
 

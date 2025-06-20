@@ -228,6 +228,7 @@ namespace Remizione
                 }
 
                 image.Draw(gameTime);
+
                 Game.SpriteBatch.End();
             }
 

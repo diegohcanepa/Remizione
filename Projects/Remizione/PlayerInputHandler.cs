@@ -48,7 +48,7 @@ namespace Remizione
                     return HandleInputResult.Handled;
                 }
             }
-            else if (InputBindings.Inventory.IsPressed(PlayerIndex.One))
+            else if (Actor.Session.InventoryEnabled && InputBindings.Inventory.IsPressed(PlayerIndex.One))
             {
                 inventoryLocked = true;
                 inventoryScene.SceneController.Push();
@@ -118,14 +118,6 @@ namespace Remizione
         private bool TestMouseRightButtonClick()
         {
             var result = InputManager.DefaultPlayer.Mouse.IsRightButtonPressed();
-
-            // Inventory
-            if (result)
-            {
-                inventoryScene.SceneController.Push();
-                return true;
-            }
-
             return result;
         }
 

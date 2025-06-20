@@ -1,5 +1,7 @@
 ﻿using Engendro;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Remizione.UI
 {
@@ -9,7 +11,9 @@ namespace Remizione.UI
     public sealed class UIPrompt : GameObject
     {
         private readonly UIControl control;
+        private readonly TextSprite label;
         private readonly GameSession session;
+        private GameThing? target;
 
         // Constructor
         public UIPrompt(GameSession session)
@@ -22,7 +26,16 @@ namespace Remizione.UI
             {
                 AllowContainer = true,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -5)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -2)
+            };
+
+            // Label
+            this.label = new(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Highlight,
+                PivotOrigin = RectanglePoint.Middle,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -3),
+                Scale = ScaleInfo.Text.Huge
             };
         }
 
@@ -31,25 +44,36 @@ namespace Remizione.UI
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (session.IsCurrentScene && control.Tag != null)
-                control.Draw(gameTime);
+            if (session.IsCurrentScene && target != null)
+            {
+                if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
+                {
+                    Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+                    label.Draw(gameTime);
+                    Game.SpriteBatch.End();
+                }
+                else
+                    control.Draw(gameTime);
+            }
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (session.IsCurrentScene && MouseCursor.Instance.State != MouseCursorState.Wait && session.Player?.InteractiveTarget is GameThing target)
+            if (session.IsCurrentScene && MouseCursor.Instance.State != MouseCursorState.Wait && session.Player?.InteractiveTarget is GameThing currentTarget)
             {
-                if (target != control.Tag)
+                if (currentTarget != target)
                 {
-                    control.Tag = target;
-                    control.Text = target.LocalizedDisplayName;
+                    target = currentTarget;
+                    control.Text = currentTarget.LocalizedDisplayName;
+                    label.Text = currentTarget.LocalizedDisplayName;
                 }
             }
             else
             {
                 control.Text = null;
-                control.Tag = null;
+                label.Clear();
+                target = null;
             }
 
             control.Update(gameTime);

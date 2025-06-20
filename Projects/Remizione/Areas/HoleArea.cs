@@ -33,7 +33,7 @@ namespace Remizione
                 {
                     if (!inflatedPolygon.IsVertexConcave(i))
                     {
-                        if (walkArea.IsInside(inflatedPolygon.Vertices[i]))
+                        if (walkArea.Contains(inflatedPolygon.Vertices[i]))
                             nodes.Add(new PathNode(inflatedPolygon.Vertices[i]));
                     }
                 }
@@ -45,7 +45,7 @@ namespace Remizione
         // ClampOutside
         public Vector2 ClampOutside(Vector2 position)
         {
-            if (Polygon.IsPointInside(position))
+            if (Polygon.Contains(position))
                 position = inflatedPolygon.GetClosestPointOnEdge(position);
 
             return position;
@@ -61,7 +61,7 @@ namespace Remizione
         }
 
         // Contains
-        public bool Contains(Vector2 point) => Polygon.IsPointInside(point);
+        public bool Contains(Vector2 point) => Polygon.Contains(point);
 
         // InLineOfSight
         public bool InLineOfSight(Vector2 start, Vector2 end)

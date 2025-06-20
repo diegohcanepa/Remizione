@@ -26,7 +26,7 @@ namespace Remizione
         private int faith;
         private int faithRecoveryCooldown;
         private FloatingText? floatingMessage;
-        private SoundInstance? footstepSoundInstance;
+        private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
         private readonly FloatTween headTween = new();
         private int level = 1;
@@ -82,12 +82,11 @@ namespace Remizione
             this.closeAttackState = new ActorCloseAttackState(this);
 
             this.StateMachine = new ActorStateMachine(this, standState);
+            this.StateMachine.RegisterState(new ActorAnimateState(this));
             this.StateMachine.RegisterState(new ActorDeathState(this));
             this.StateMachine.RegisterState(new ActorHurtState(this));
-            this.StateMachine.RegisterState(new ActorFatigueState(this));
             this.StateMachine.RegisterState(new ActorMoveState(this));
             this.StateMachine.RegisterState(new ActorPickUpState(this));
-            this.StateMachine.RegisterState(new ActorMoveFastState(this));
             this.StateMachine.RegisterState(closeAttackState);
 
             throwObjectState = new ActorThrowItemState(this);
@@ -158,11 +157,7 @@ namespace Remizione
             if (pendingInteractiveTarget != null)
             {
                 FaceTo(pendingInteractiveTarget);
-
-                if (pendingInteractiveTarget.GetVerbs() == null)
-                    Interact(pendingInteractiveTarget);
-                else
-                    session.ShowContextMenu(pendingInteractiveTarget);
+                Interact(pendingInteractiveTarget);
             }
 
             pendingInteractiveTarget = null;
@@ -237,29 +232,24 @@ namespace Remizione
         // UpdateFootstep
         private void UpdateFootstep()
         {
-            if (Sprite.Player.Frame == null || !Sprite.Player.Frame.Footstep)
+            if (Sprite.Player.Frame == null || Sprite.Player.Frame == footstepLastUsedFrame || !Sprite.Player.Frame.Footstep)
                 return;
 
-            if (Room is not ProceduralRoom room)
-                return;
-
-            if (footstepSoundInstance != null && footstepSoundInstance.IsPlaying)
-                return;
-
-            if (room.WorldManager.GetBlockFromScreen(Position) is WorldBlock worldBlock)
+            if (Room is ProceduralRoom room)
             {
-                for (var i = 0; i < worldBlock.ProceduralThings.Count; i++)
+                if (room.WorldManager.GetBlockFromScreen(Position) is WorldBlock worldBlock)
                 {
-                    if (worldBlock.ProceduralThings[i] is IsometricProp prop && prop.GetFootstepSound(Position) is Sound sound)
+                    for (var i = 0; i < worldBlock.ProceduralThings.Count; i++)
                     {
-                        footstepSoundInstance = PlaySound(sound);
-                        return;
+                        if (worldBlock.ProceduralThings[i] is IsometricProp prop && prop.GetFootstepSound(Position) is Sound sound)
+                        {
+                            PlaySound(sound);
+                            footstepLastUsedFrame = Sprite.Player.Frame;
+                            return;
+                        }
                     }
                 }
             }
-
-            if (room.TerrainSound != null)
-                footstepSoundInstance = PlaySound(room.TerrainSound);
         }
 
         #endregion
@@ -299,6 +289,8 @@ namespace Remizione
             if (StateMachine.CurrentState == standState && headSprite.Player.IsPlaying)
             {
                 headSprite.Effects = Effects;
+                headSprite.Opacity = Opacity;
+                headSprite.OpacityFactor = OpacityFactor;
                 headSprite.Position = Position;
                 headSprite.Y += headTween.CurrentValue - Altitude;
                 headSprite.Draw(gameTime);
@@ -395,17 +387,8 @@ namespace Remizione
         // OnStartMoving
         protected override void OnStartMoving()
         {
-            if (FastMove)
-            {
-                StateMachine.ChangeState(ActorStateNames.MoveFast);
-                moveTween.Start(TweenStyle.QuadraticInOut, 0, .8f, 50, -1);
-            }
-            else
-            {
-                StateMachine.ChangeState(ActorStateNames.Move);
-                moveTween.Start(TweenStyle.QuadraticInOut, 0, .8f, 100, -1);
-            }
-
+            StateMachine.ChangeState(ActorStateNames.Move);
+            moveTween.Start(TweenStyle.QuadraticInOut, 0, .8f, 100, -1);
             accelerationFactorTween.Start(TweenStyle.Linear, .4f, 1, 150);
             moveRotationTween.Start(TweenStyle.QuadraticInOut, 0, .05f, FastMove ? 100 : 200, -1);
         }
@@ -438,6 +421,20 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            if (IsPlayer && !Session.IsAwaiting && InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
+            {
+                if (InputManager.DefaultPlayer.Mouse.WorldPosition(session.Camera).X >= X)
+                {
+                    if (Direction == FacingDirection.Left)
+                        Direction = FacingDirection.Right;
+                }
+                else
+                {
+                    if (Direction == FacingDirection.Right)
+                        Direction = FacingDirection.Left;
+                }
+            }
+
             combatStateMachine.Update(gameTime);
 
             UpdateFaithRecovery(gameTime);
@@ -493,6 +490,19 @@ namespace Remizione
         [ScriptProperty]
         public Affinity Affinity { get; set; } = Affinity.Neutral;
 
+        // Animate
+        public SpriteAnimation? Animate(string animationName, bool loop, AnimationDirection direction, bool preserve)
+        {
+            var result = AnimationPlayer.Play(animationName, loop, direction);
+            if (result != null && StateMachine.GetState(ActorStateNames.Animate) is ActorAnimateState animateState)
+            {
+                animateState.Preserve = preserve;
+                StateMachine.ChangeState(animateState.Name, true);
+            }
+
+            return result;
+        }
+
         // ApplyStats
         [ScriptMethod]
         public void ApplyStats() => Stats.Apply();
@@ -529,9 +539,7 @@ namespace Remizione
                     return false;
 
                 return StateMachine.CurrentState is ActorStandState ||
-                       StateMachine.CurrentState is ActorMoveState ||
-                       StateMachine.CurrentState is ActorMoveFastState ||
-                       StateMachine.CurrentState is ActorFatigueState;
+                       StateMachine.CurrentState is ActorMoveState;
             }
         }
 
@@ -609,6 +617,10 @@ namespace Remizione
             IsAlert = false;
             StateMachine.ChangeState(ActorStateNames.Fatigue);
         }
+
+        // FootstepSound
+        [ScriptProperty]
+        public Sound? FootstepSound { get; set; }
 
         // GetBloodSplashPosition
         public Vector2 GetBloodSplashPosition()
@@ -731,9 +743,6 @@ namespace Remizione
             */
         }
 
-        // IsTired
-        public bool IsTired => StateMachine.CurrentState is ActorFatigueState;
-
         // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;
 
@@ -822,10 +831,7 @@ namespace Remizione
 
             IsFollowingPath = true;
 
-            if (FastMove && StateMachine.CurrentState is ActorMoveState)
-                StateMachine.ChangeState(ActorStateNames.MoveFast);
-            else if (!FastMove && StateMachine.CurrentState is ActorMoveFastState)
-                StateMachine.ChangeState(ActorStateNames.Move);
+            StateMachine.ChangeState(ActorStateNames.Move);
 
             return true;
         }
@@ -897,6 +903,14 @@ namespace Remizione
         {
             get => shadowSpot.Offset;
             set => shadowSpot.Offset = value;
+        }
+
+        // ShadowSpotSize
+        [ScriptProperty]
+        public ShadowSpotSize ShadowSpotSize
+        {
+            get => shadowSpot.Size;
+            set => shadowSpot.Size = value;
         }
 
         // ShowMessage

@@ -34,20 +34,14 @@ namespace EngendroAdventure.Scripting
                     var script = scripts[i];
 
                     if (!script.IsDiscarded)
-                    {
                         script.Update(gameTime);
-                    }
 
                     // If script is done
                     if (script.IsCompleted || script.IsDiscarded)
-                    {
                         scripts.Remove(script);
-                    }
 
                     if (Session.IsDisposed)
-                    {
                         return;
-                    }
                 }
             }
         }
@@ -68,13 +62,9 @@ namespace EngendroAdventure.Scripting
         public void ExecuteCommand(string sourceLine)
         {
             if (Script.CreateStatement(Session.ScriptEnvironment, new Script.RuntimeScript(Session, sourceLine), sourceLine) is Command command)
-            {
                 command.Execute();
-            }
             else
-            {
                 throw new ScriptException($"Unrecognized command '{sourceLine}'.");
-            }
         }
 
         // IsExecutingScript
@@ -87,27 +77,21 @@ namespace EngendroAdventure.Scripting
         public void PauseScript(Script script)
         {
             if (scripts.Contains(script))
-            {
                 script.IsPaused = true;
-            }
         }
 
         // ResumeScript
         public void ResumeScript(Script script)
         {
             if (scripts.Contains(script))
-            {
                 script.IsPaused = false;
-            }
         }
 
         // RunScript
         public void RunScript(Script script)
         {
             if (IsExecutingScript(script))
-            {
                 return;
-            }
 
             script.PrepareForExecution();
             GameTime gameTime = new();
@@ -124,25 +108,19 @@ namespace EngendroAdventure.Scripting
         public void StartScript(Script script)
         {
             if (!script.IsCompiled)
-            {
                 throw new InvalidOperationException("Script not compiled.");
-            }
 
             // Check if the same script is not already running
             var isExecuting = IsExecutingScript(script);
             if (isExecuting && !script.IsDiscarded)
-            {
                 return;
-            }
 
             script.PrepareForExecution();
 
             if (!isExecuting)
             {
                 if (!scripts.Contains(script))
-                {
                     scripts.Add(script);
-                }
 
                 script.Update(emptyGameTime);
             }
@@ -152,9 +130,7 @@ namespace EngendroAdventure.Scripting
         public void StopScript(Script script)
         {
             if (IsExecutingScript(script))
-            {
                 script.Discard();
-            }
         }
     }
 }

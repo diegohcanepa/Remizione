@@ -24,7 +24,6 @@ namespace Remizione
         private enum AttributeName { RandomSeed, WorldVersion }
         private readonly CharacterSheetScene characterSheetScene;
         private readonly ScriptConsole? console;
-        private readonly ContextMenuScene contextMenuScene;
         private readonly EchoScene echoScene;
         private bool inGameMenuLocked;
         private readonly InGameMenuScene inGameMenuScene;
@@ -71,7 +70,6 @@ namespace Remizione
                 roomEditor = new RoomEditor(this);
             }
 
-            this.contextMenuScene = new(this);
             this.inGameMenuScene = new(this);
             this.characterSheetScene = new(Game);
             this.echoScene = new(Game);
@@ -96,20 +94,26 @@ namespace Remizione
         // UpdateMouseCursor
         private void UpdateMouseCursor()
         {
-            if (InputManager.Players[0].LastInputMethod == InputMethod.GamePad)
+            if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad)
             {
                 MouseCursor.Instance.State = MouseCursorState.None;
                 return;
             }
 
             // No active player
-            if (Player == null || Player.HasSpeechBubble)
+            if (AwaitingScript?.CurrentStatement is SayCommand)
             {
                 MouseCursor.Instance.State = MouseCursorState.Arrow;
                 return;
             }
 
-            MouseCursor.Instance.State = Player.InteractiveTarget == null ? MouseCursorState.Cross : MouseCursorState.CrossOn;
+            if (IsAwaiting)
+            {
+                MouseCursor.Instance.State = MouseCursorState.Wait;
+                return;
+            }
+
+            MouseCursor.Instance.State = Player?.InteractiveTarget == null ? MouseCursorState.Cross : MouseCursorState.CrossOn;
         }
 
         #endregion
@@ -153,11 +157,12 @@ namespace Remizione
             scriptRegistry.RegisterStatement("add-item", typeof(AddItemCommand), CodingContext.Any);
             scriptRegistry.RegisterStatement("add-light", typeof(AddLightCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("add-loot-item", typeof(AddLootItemCommand), CodingContext.EntityDeclaration);
-            scriptRegistry.RegisterStatement("await-pickup", typeof(AwaitPickUpCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("add-trigger-area", typeof(AddTriggerAreaCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("add-walk-area", typeof(AddWalkAreaCommand), CodingContext.EntityDeclaration);
+            scriptRegistry.RegisterStatement("animate", typeof(AnimateCommand));
             scriptRegistry.RegisterStatement("await-credits", typeof(AwaitCreditsCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-dialog-block", typeof(AwaitDialogBlockCommand), CodingContext.Execution);
+            scriptRegistry.RegisterStatement("await-pickup", typeof(AwaitPickUpCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-player-approach", typeof(AwaitPlayerApproachCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-popup", typeof(AwaitPopupCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("begin-rain", typeof(BeginRainCommand), CodingContext.Execution);
@@ -174,7 +179,6 @@ namespace Remizione
             scriptRegistry.RegisterStatement("set-light", typeof(SetLightCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("set-thing-light", typeof(SetThingLightCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
-            scriptRegistry.RegisterStatement("verbs", typeof(VerbsCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("vibrate", typeof(VibrateCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("x-tween", typeof(XTweenCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("y-tween", typeof(YTweenCommand), CodingContext.Execution);
@@ -369,9 +373,6 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-            if (IsCurrentScene)
-                UpdateMouseCursor();
-
             if (console != null)
             {
                 if (console.IsActive && roomEditor != null)
@@ -386,6 +387,9 @@ namespace Remizione
             HUD.Update(gameTime);
 
             OverlayTexts.Update(gameTime);
+
+            if (IsCurrentScene || (Game.SceneManager.CurrentScene != null && Game.SceneManager.CurrentScene.IsHidden))
+                UpdateMouseCursor();
         }
 
         // OnWrite
@@ -559,16 +563,6 @@ namespace Remizione
 
             characterSheetScene.Actor = Player;
             Game.SceneManager.Push(characterSheetScene);
-        }
-
-        // ShowContextMenu
-        public void ShowContextMenu(GameThing thing)
-        {
-            if (player == null)
-                return;
-
-            contextMenuScene.Target = thing;
-            Game.SceneManager.Push(contextMenuScene);
         }
 
         // ShowEcho

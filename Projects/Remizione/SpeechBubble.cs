@@ -255,8 +255,11 @@ namespace Remizione
 
                     State = SpeechBubbleState.Idle;
                 }
-                else if (AwaitInput && (InputBindings.SpeechBubble.IsPressed(0) || InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() || InputManager.DefaultPlayer.Mouse.IsRightButtonPressed()) && inputCooldown <= 0)
+                else if (AwaitInput && (InputBindings.SpeechBubble.IsPressed(0) || InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed()) && inputCooldown <= 0)
                 {
+                    if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
+                        MouseCursor.Instance.AnimateClick();
+
                     State = SpeechBubbleState.Idle;
                     text.StopTyping();
 
@@ -273,8 +276,11 @@ namespace Remizione
                     if (autoHideCooldown <= 0)
                         Hide();
                 }
-                else if (AwaitInput && (InputBindings.SpeechBubble.IsPressed(0) || InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() || InputManager.DefaultPlayer.Mouse.IsRightButtonPressed()))
+                else if (AwaitInput && (InputBindings.SpeechBubble.IsPressed(0) || InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed()))
                 {
+                    if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
+                        MouseCursor.Instance.AnimateClick();
+
                     Hide();
                 }
             }

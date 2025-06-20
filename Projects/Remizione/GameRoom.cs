@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Input;
 using EngendroAdventure;
 using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
@@ -179,7 +180,7 @@ namespace Remizione
                 {
                     ShaderEffect? effect = null;
 
-                    if (interactiveTarget == thing && thing.Highlight)
+                    if (interactiveTarget == thing && thing.Highlight && InputManager.DefaultPlayer.LastInputMethod != InputMethod.Mouse)
                     {
                         RemizioneGame.Effects.ColorSaturation.SetColor(.8f, .8f, .8f, 0);
                         effect = RemizioneGame.Effects.ColorSaturation;

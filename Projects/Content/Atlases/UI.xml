@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:438b4f49e49840632487cbaa2e8fe95f:4c53b9d78baa40691f0881c5f0f00f1d:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:4e3c1a0aedbdb0a8fb2065ef6a33d145:772259db7d7cf7dd61bf03cfe4308ed6:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -29,6 +29,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="CloseWindowButton.png" x="466" y="71" w="11" h="12"/>
     <sprite n="ContextMenuOptionSelector.png" x="506" y="2" w="4" h="5"/>
     <sprite n="CreditsBar.png" x="2" y="2" w="480" h="67"/>
+    <sprite n="DialogOptionBullet.png" x="506" y="9" w="4" h="4"/>
     <sprite n="Duck.png" x="484" y="24" w="20" h="20"/>
     <sprite n="FaithGainIcon.png" x="21" y="71" w="15" h="14"/>
     <sprite n="FaithIcon.png" x="38" y="71" w="15" h="14"/>
@@ -54,25 +55,24 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MouseCursorCross.png" x="245" y="494" w="9" h="11"/>
     <sprite n="MouseCursorCrossOn.png" x="256" y="494" w="9" h="11"/>
     <sprite n="MouseCursorWait.png" x="267" y="494" w="9" h="11"/>
-    <sprite n="Pixel.png" x="509" y="33" w="1" h="1"/>
+    <sprite n="Pixel.png" x="509" y="39" w="1" h="1"/>
     <sprite n="PopupContainer.png" x="2" y="90" w="264" h="311"/>
     <sprite n="PopupContainerShadow.png" x="219" y="432" w="114" h="60"/>
     <sprite n="ProhibitionIcon.png" x="2" y="71" w="17" h="17"/>
     <sprite n="ProhibitionMark.png" x="232" y="494" w="11" h="11"/>
     <sprite n="RottenApple.png" x="484" y="68" w="20" h="20"/>
     <sprite n="SavingIcon.png" x="121" y="71" w="11" h="14"/>
-    <sprite n="SpeechBubbleCloseArrow.png" x="506" y="17" w="3" h="2"/>
+    <sprite n="SpeechBubbleCloseArrow.png" x="506" y="23" w="3" h="2"/>
     <sprite n="SpeechBubblePipe.png" x="194" y="85" w="5" h="3"/>
     <sprite n="SpiritGainIcon.png" x="55" y="71" w="15" h="14"/>
     <sprite n="SpiritIcon.png" x="72" y="71" w="15" h="14"/>
     <sprite n="TipBalloon.png" x="180" y="71" w="12" h="13"/>
     <sprite n="UIControlContainerEdgeLarge.png" x="278" y="494" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeSmall.png" x="480" y="185" w="5" h="10"/>
-    <sprite n="UIControlContainerPatternLarge.png" x="506" y="21" w="1" h="11"/>
-    <sprite n="UIControlContainerPatternSmall.png" x="509" y="21" w="1" h="10"/>
+    <sprite n="UIControlContainerPatternLarge.png" x="506" y="27" w="1" h="11"/>
+    <sprite n="UIControlContainerPatternSmall.png" x="509" y="27" w="1" h="10"/>
     <sprite n="UIControlShade.png" x="194" y="71" w="50" h="12"/>
-    <sprite n="UIControlShadow.png" x="335" y="439" w="45" h="10"/>
-    <sprite n="UnreadSign.png" x="506" y="9" w="3" h="6"/>
+    <sprite n="UnreadSign.png" x="506" y="15" w="3" h="6"/>
     <sprite n="XboxA.png" x="410" y="71" w="12" h="12"/>
     <sprite n="XboxB.png" x="424" y="71" w="12" h="12"/>
     <sprite n="XboxInteract.png" x="105" y="71" w="14" h="14"/>

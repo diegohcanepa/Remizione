@@ -78,6 +78,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string PivotArg = "#pivot";
         protected static readonly string PlayerLevelArg = "#player-level";
         protected static readonly string PrefixArg = "#prefix";
+        protected static readonly string PreserveArg = "#preserve";
         protected static readonly string RadiansArg = "#radians";
         protected static readonly string RandomFrameArg = "#random-frame";
         protected static readonly string RangeArg = "#range";

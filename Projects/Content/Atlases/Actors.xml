@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:32b8e71bb0c81427261e9b6b9199fd23:0984fa81cfd15f84c7372183eebc2a12:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:36593bf7cc510abe6fb7bdc1f3193984:da458c0c949546bc292fd147b2d379af:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -23,10 +23,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Dog-assets/Bark01.png" x="32" y="240" w="14" h="12"/>
     <sprite n="Dog-assets/Bark02.png" x="48" y="240" w="14" h="12"/>
     <sprite n="Dog-assets/Move01.png" x="64" y="240" w="14" h="12"/>
-    <sprite n="Dog-assets/Move02.png" x="62" y="122" w="14" h="12"/>
+    <sprite n="Dog-assets/Move02.png" x="85" y="56" w="14" h="12"/>
     <sprite n="Dog-assets/Stand01.png" x="64" y="240" w="14" h="12"/>
-    <sprite n="Dog-assets/Stand02.png" x="62" y="136" w="14" h="12"/>
-    <sprite n="Dog-assets/Stand03.png" x="62" y="150" w="14" h="12"/>
+    <sprite n="Dog-assets/Stand02.png" x="85" y="70" w="14" h="12"/>
+    <sprite n="Dog-assets/Stand03.png" x="85" y="84" w="14" h="12"/>
     <sprite n="Edmund-assets/Back01.png" x="2" y="2" w="28" h="25"/>
     <sprite n="Edmund-assets/BackRaiseArm01.png" x="2" y="2" w="28" h="25"/>
     <sprite n="Edmund-assets/BackRaiseArm02.png" x="32" y="2" w="28" h="25"/>
@@ -66,4 +66,5 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Grandma-assets/StandHead02.png" x="62" y="56" w="21" h="20"/>
     <sprite n="Grandma-assets/TalkHead01.png" x="62" y="78" w="21" h="20"/>
     <sprite n="Grandma-assets/TalkHead02.png" x="62" y="100" w="21" h="20"/>
+    <sprite n="Reaper-assets/Stand01.png" x="62" y="122" w="22" h="17"/>
 </TextureAtlas>

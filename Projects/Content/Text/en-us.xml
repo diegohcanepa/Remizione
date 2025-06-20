@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Strings>
-  <String Key="Actor.Unredeemed">Unredeemed</String>
+  <String Key="Actor.Dog">Dog</String>
+  <String Key="Actor.Grandma">Sweet old lady</String>
   <String Key="ActorProperty.Gold.Description">Gold ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Gold.Name">Gold</String>
   <String Key="ActorProperty.Grace.Description">The ashes quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>

@@ -132,7 +132,7 @@ namespace Remizione
         {
             if (terrainPoly != null)
             {
-                if (terrainPoly.IsPointInside(position))
+                if (terrainPoly.Contains(position))
                     return TerrainSound;
             }
 

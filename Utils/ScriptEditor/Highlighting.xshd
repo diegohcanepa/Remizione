@@ -247,7 +247,7 @@
 
 		<!-- Visual statements -->
 		<Keywords fontWeight="regular" foreground="#9c5100">
-			<Word>act</Word>
+			<Word>animate</Word>
 			<Word>approach-to-target</Word>
 			<Word>approach</Word>
 			<Word>color-tween</Word>

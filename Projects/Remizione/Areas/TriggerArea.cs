@@ -62,7 +62,7 @@ namespace Remizione
 
             if (IsActive)
             {
-                if (!Polygon.IsPointInside(actor.Position))
+                if (!Polygon.Contains(actor.Position))
                 {
                     IsActive = false;
 
@@ -81,7 +81,7 @@ namespace Remizione
             }
             else
             {
-                if (Polygon.IsPointInside(actor.Position))
+                if (Polygon.Contains(actor.Position))
                 {
                     if (Await)
                     {

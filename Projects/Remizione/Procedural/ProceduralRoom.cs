@@ -188,10 +188,6 @@ namespace Remizione
         [ScriptProperty]
         public Rectangle FirstBlockReservedSpace { get; set; }
 
-        // TerrainSound
-        [ScriptProperty]
-        public Sound? TerrainSound { get; set; }
-
         // WorldManager
         public WorldManager WorldManager { get; }
     }

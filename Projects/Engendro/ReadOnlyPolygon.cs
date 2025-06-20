@@ -201,7 +201,28 @@ namespace Engendro
         // Clamp
         public Vector2 Clamp(Vector2 point)
         {
-            return !IsPointInside(point) ? GetClosestPointOnEdge(point) : point;
+            return !Contains(point) ? GetClosestPointOnEdge(point) : point;
+        }
+
+        // Contains (optimized with ChatGPT)
+        public bool Contains(Vector2 point)
+        {
+            if (IsEmpty || !BoundingRectangleF.Contains(point))
+                return false;
+
+            bool inside = false;
+            int count = vertices.Count;
+
+            for (int i = 0, j = count - 1; i < count; j = i++)
+            {
+                if ((vertices[i].Y > point.Y) != (vertices[j].Y > point.Y) &&
+                    point.X < (vertices[j].X - vertices[i].X) * (point.Y - vertices[i].Y) / (vertices[j].Y - vertices[i].Y) + vertices[i].X)
+                {
+                    inside = !inside;
+                }
+            }
+
+            return inside;
         }
 
         // GetClosestPointOnEdge
@@ -338,27 +359,6 @@ namespace Engendro
 
         // IsEmpty
         public bool IsEmpty => vertices.Count < 3;
-
-        // IsPointInside (optimized with ChatGPT)
-        public bool IsPointInside(Vector2 point)
-        {
-            if (IsEmpty || !BoundingRectangleF.Contains(point))
-                return false;
-
-            bool inside = false;
-            int count = vertices.Count;
-
-            for (int i = 0, j = count - 1; i < count; j = i++)
-            {
-                if ((vertices[i].Y > point.Y) != (vertices[j].Y > point.Y) &&
-                    point.X < (vertices[j].X - vertices[i].X) * (point.Y - vertices[i].Y) / (vertices[j].Y - vertices[i].Y) + vertices[i].X)
-                {
-                    inside = !inside;
-                }
-            }
-
-            return inside;
-        }
 
         // IsVertexConcave
         public bool IsVertexConcave(int vertex)

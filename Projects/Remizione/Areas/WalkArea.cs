@@ -208,11 +208,17 @@ namespace Remizione
         // ClampInside
         public Vector2 ClampInside(Vector2 point, out bool clamped)
         {
-            clamped = !IsInside(point);
+            clamped = !Contains(point);
             if (clamped)
                 point = deflatedPolygon.GetClosestPointOnEdge(point);
 
             return point;
+        }
+
+        // Contains
+        public bool Contains(Vector2 position)
+        {
+            return Polygon.Contains(position);
         }
 
         // FindPath
@@ -222,7 +228,7 @@ namespace Remizione
             if (requester.Position == destination)
                 return null;
 
-            if (!IsInside(destination))
+            if (!Contains(destination))
                 destination = ClampInside(destination, out _);
 
             Prepare(requester, destination);
@@ -307,16 +313,10 @@ namespace Remizione
             return true;
         }
 
-        // IsInside
-        public bool IsInside(Vector2 position)
-        {
-            return Polygon.IsPointInside(position);
-        }
-
         // IsWalkableAt
         public bool IsWalkableAt(Vector2 point)
         {
-            if (!IsInside(point))
+            if (!Contains(point))
                 return false;
 
             for (var i = 0; i < holeAreas.Count; i++)

@@ -111,7 +111,7 @@ namespace Remizione
                 Complete(target);
 
             // Out of bounds
-            else if (Room?.WalkArea != null && !Room.WalkArea.IsInside(Position))
+            else if (Room?.WalkArea != null && !Room.WalkArea.Contains(Position))
             {
                 outOfBounce = true;
                 Complete(null);

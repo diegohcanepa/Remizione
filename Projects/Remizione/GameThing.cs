@@ -47,7 +47,6 @@ namespace Remizione
         private RenderLayer renderLayer;
         private int renderLayerDepth;
         private bool shouldClampToWalkablePosition;
-        private List<Verb>? verbList;
         private WalkArea? walkArea;
         private string walkAreaName = string.Empty;
 
@@ -75,7 +74,7 @@ namespace Remizione
             if (CollisionPolygon != null)
             {
                 InvalidateHoleArea();
-                if (holePoly.IsPointInside(position))
+                if (holePoly.Contains(position))
                     position = holeInflatedPoly.GetClosestPointOnEdge(position);
             }
 
@@ -100,7 +99,7 @@ namespace Remizione
                     continue;
 
                 // Is point outside walk area
-                if (WalkArea != null && !WalkArea.IsInside(holeInflatedPoly.Vertices[i]))
+                if (WalkArea != null && !WalkArea.Contains(holeInflatedPoly.Vertices[i]))
                     continue;
 
                 if (pathNodes[i] == null)
@@ -116,7 +115,7 @@ namespace Remizione
         bool IHoleArea.Contains(Vector2 point)
         {
             InvalidateHoleArea();
-            return holePoly.IsPointInside(point);
+            return holePoly.Contains(point);
         }
 
         // InLineOfSight
@@ -448,20 +447,6 @@ namespace Remizione
             placementConditions.Add(condition);
         }
 
-        // AddVerbs
-        public void AddVerbs(params Verb[] verbs)
-        {
-            verbList ??= [];
-
-            for (var i = 0; i < verbs.Length; i++)
-            {
-                if (!verbList.Contains(verbs[i]))
-                    verbList.Add(verbs[i]);
-            }
-
-            verbList.Sort();
-        }
-
         // ApplyDamage
         public void ApplyDamage(GameThing attacker)
         {
@@ -735,10 +720,11 @@ namespace Remizione
 
             if (inFront)
             {
+                var offset = requesterBox.Width + 3;
                 if (Direction == FacingDirection.Left)
-                    result = box.GetPoint(RectanglePoint.LeftBottom, -requesterBox.Width / 2, 0);
+                    result = box.GetPoint(RectanglePoint.LeftBottom, -offset, 0);
                 else
-                    result = box.GetPoint(RectanglePoint.RightBottom, requesterBox.Width / 2, 0);
+                    result = box.GetPoint(RectanglePoint.RightBottom, offset, 0);
             }
             else
             {
@@ -813,9 +799,6 @@ namespace Remizione
 
         // GetThrowableSpawnPosition
         public Vector2 GetThrowableSpawnPosition() => this.GetAbsolutePoint(ThrowableSpawnPosition);
-
-        // GetVerbs
-        public Verb[]? GetVerbs() => verbList?.ToArray();
 
         // Grace
         [ScriptProperty]
@@ -1046,10 +1029,6 @@ namespace Remizione
         // ThrowableSpawnPosition
         [ScriptProperty]
         public Vector2 ThrowableSpawnPosition { get; set; }
-
-        // Verb
-        [ScriptProperty]
-        public Verb Verb { get; set; }
 
         // ViewAngle
         public float ViewAngle { get; set; } = 90;

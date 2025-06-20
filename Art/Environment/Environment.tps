@@ -351,6 +351,7 @@
                 <false/>
             </struct>
             <key type="filename">Environment-assets/CrateFragment.png</key>
+            <key type="filename">Environment-assets/ShadowSpotW8.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -486,7 +487,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Environment-assets/ShadowSpotAverage.png</key>
+            <key type="filename">Environment-assets/ShadowSpotW14.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -495,9 +496,25 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,1,3,2</rect>
+                <rect>4,1,7,1</rect>
                 <key>scale9Paddings</key>
-                <rect>2,1,3,2</rect>
+                <rect>4,1,7,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Environment-assets/ShadowSpotW6.png</key>
+            <key type="filename">Environment-assets/ShadowSpotW7.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,1,3,1</rect>
+                <key>scale9Paddings</key>
+                <rect>2,1,3,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

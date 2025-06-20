@@ -18,7 +18,6 @@ namespace Remizione
             states[CombatStateName.Charge] = new CombatChargeState(this);
             states[CombatStateName.CloseAttack] = new CombatCloseAttackState(this);
             states[CombatStateName.Decide] = new CombatDecideState(this);
-            states[CombatStateName.Fatigue] = new CombatFatigueState(this);
             states[CombatStateName.Move] = new CombatMoveState(this);
         }
 
@@ -75,13 +74,6 @@ namespace Remizione
             if (signal == CombatStateSignal.Decide)
             {
                 ChangeState(CombatStateName.Decide);
-                return;
-            }
-
-            // Fatigue
-            if (signal == CombatStateSignal.Fatigue)
-            {
-                ChangeState(CombatStateName.Fatigue);
                 return;
             }
 

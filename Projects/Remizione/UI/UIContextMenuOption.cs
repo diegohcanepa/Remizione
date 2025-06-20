@@ -36,6 +36,8 @@ namespace Remizione
                 Text = text
             };
 
+            this.Index = menu.OptionCount;
+
             Invalidate();
         }
 
@@ -55,6 +57,9 @@ namespace Remizione
             get => iconSprite.Scale;
             set => iconSprite.Scale = value;
         }
+
+        // Index
+        public int Index { get; }
 
         // Invalidate
         public void Invalidate()
@@ -108,6 +113,9 @@ namespace Remizione
         // Shake
         public void Shake()
         {
+            if (shakeTween.IsRunning)
+                return;
+
             shakeTween.Start(TweenStyle.Linear, textSprite.Y, textSprite.Y + .5f, 40, 4);
             textSprite.Tweens.YTween = shakeTween;
         }

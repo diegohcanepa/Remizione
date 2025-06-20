@@ -29,7 +29,7 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.Middle
             };
 
-            this.Size = ShadowSpotSize.Average;
+            this.Size = ShadowSpotSize.W6;
         }
 
         #endregion

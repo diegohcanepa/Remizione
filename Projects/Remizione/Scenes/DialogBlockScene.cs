@@ -35,7 +35,7 @@ namespace Remizione
             this.session = session;
             this.dialogBlock = dialogBlock;
 
-            this.menu = new UIContextMenu(Game, Game.Camera, Fonts.CommonOutline)
+            this.menu = new UIContextMenu(Game, Fonts.CommonOutline)
             {
                 OptionTextScale = ScaleInfo.ContextMenu.Option,
                 SelectInputBinding = InputBindings.SelectDialogOption
@@ -77,6 +77,22 @@ namespace Remizione
             }
         }
 
+        // HandleMouseInput
+        private bool HandleMouseInput()
+        {
+            if (menu.SelectedOption != null && InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
+            {
+                if (menu.GetOptionAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) != null)
+                {
+                    Sound.Play(SoundNames.UISelect);
+                    runSelectedOptionCooldown = 500;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         // InvalidateOptions
         private void InvalidateOptions()
         {
@@ -87,7 +103,7 @@ namespace Remizione
             foreach (var option in dialogBlock.AvailableOptions)
             {
                 var optionText = option.Text;
-                menu.AddOption(option.Id.ToString(), optionText, null);
+                menu.AddOption(option.Id.ToString(), optionText, Atlases.UI.GetImage("DialogOptionBullet"));
             }
 
             Layout();
@@ -96,7 +112,7 @@ namespace Remizione
         // Layout
         private void Layout()
         {
-            menu.X = 15;
+            menu.X = 5;
             menu.Y = Screen.HUDArea.Bottom - menu.BoundingBox.Height - 2;
 
             if (dialogBlock.AllowQuit)
@@ -167,6 +183,9 @@ namespace Remizione
             if (menu.HandleInput(gameTime) == HandleInputResult.Handled || runSelectedOptionCooldown > 0)
                 return HandleInputResult.Handled;
 
+            if (HandleMouseInput())
+                return HandleInputResult.Handled;
+
             // Quit
             else if (dialogBlock.AllowQuit && buttonQuit.TestPressed(0))
             {
@@ -204,7 +223,9 @@ namespace Remizione
             }
 
             fadeTween.Update(gameTime);
-            menu.Update(gameTime);
+
+            if (RunningOption == null)
+                menu.Update(gameTime);
 
             if (dialogBlock.AllowQuit)
                 buttonQuit.Update(gameTime);
@@ -219,9 +240,14 @@ namespace Remizione
                     SceneController.Pop();
                 }
             }
+
+            MouseCursor.Instance.State = menu.HoveredOption == null ? MouseCursorState.Cross : MouseCursorState.CrossOn;
         }
 
         #endregion
+
+        // IsHidden
+        public override bool IsHidden => RunningOption != null;
 
         // RunningOption
         public DialogOption? RunningOption { get; private set; }

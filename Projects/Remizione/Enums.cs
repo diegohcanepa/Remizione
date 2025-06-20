@@ -18,7 +18,7 @@ namespace Remizione
     public enum CombatStateSignal { Attack, CloseAttack, Decide, Fatigue, Move }
 
     // CombatStateName
-    public enum CombatStateName { Charge, CloseAttack, Decide, Fatigue, Move }
+    public enum CombatStateName { Charge, CloseAttack, Decide, Move }
 
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Videos, Voices, System, Text }
@@ -109,7 +109,7 @@ namespace Remizione
     public enum SacrificeReward { Faith, Spirit }
 
     // ShadowSpotSize
-    public enum ShadowSpotSize { None, Tiny, Small, Average, Large, Huge, Giant }
+    public enum ShadowSpotSize { None, W6, W7, W8, W14 }
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }
@@ -134,9 +134,6 @@ namespace Remizione
 
     // UIToolbarButton
     public enum UIToolbarButton { None, Inventory }
-
-    // Verb
-    public enum Verb { Examine, Insult, Talk, Trade, UseItem }
 
     // VolumeCategory
     public enum VolumeCategory { Ambient, FX, Music, Voice, Master }
