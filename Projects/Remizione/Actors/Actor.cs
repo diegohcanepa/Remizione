@@ -31,8 +31,8 @@ namespace Remizione
         private readonly FloatTween headTween = new();
         private int level = 1;
         private int maxFaith;
+        private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveTween = new();
-        private readonly FloatTween moveRotationTween = new();
         private GameThing? pendingInteractiveTarget;
         private readonly List<Vector2> pendingPathNodes = [];
         private PlayerNumber playerNumber = PlayerNumber.None;
@@ -281,19 +281,21 @@ namespace Remizione
             if (moveTween.IsRunning)
                 Y -= moveTween.CurrentValue;
 
-            if (moveRotationTween.IsRunning)
-                Rotation += moveRotationTween.CurrentValue;
+            if (moveBalancingTween.IsRunning)
+                Rotation += moveBalancingTween.CurrentValue;
 
             base.OnDraw(gameTime);
 
-            if (StateMachine.CurrentState == standState && headSprite.Player.IsPlaying)
+            if (AllowHeadAnimation)
             {
-                headSprite.Effects = Effects;
-                headSprite.Opacity = Opacity;
-                headSprite.OpacityFactor = OpacityFactor;
-                headSprite.Position = Position;
-                headSprite.Y += headTween.CurrentValue - Altitude;
-                headSprite.Draw(gameTime);
+                if (StateMachine.CurrentState == standState && headSprite.Player.IsPlaying)
+                {
+                    headSprite.Opacity = Opacity;
+                    headSprite.OpacityFactor = OpacityFactor;
+                    headSprite.MatchTransform(Sprite);
+                    headSprite.Y += headTween.CurrentValue - Altitude;
+                    headSprite.Draw(gameTime);
+                }
             }
 
             bloodSplash?.Draw(gameTime);
@@ -301,8 +303,8 @@ namespace Remizione
             if (moveTween.IsRunning)
                 Y += moveTween.CurrentValue;
 
-            if (moveRotationTween.IsRunning)
-                Rotation -= moveRotationTween.CurrentValue;
+            if (moveBalancingTween.IsRunning)
+                Rotation -= moveBalancingTween.CurrentValue;
         }
 
         // OnDrawShadow
@@ -388,9 +390,14 @@ namespace Remizione
         protected override void OnStartMoving()
         {
             StateMachine.ChangeState(ActorStateNames.Move);
-            moveTween.Start(TweenStyle.QuadraticInOut, 0, .8f, 100, -1);
+
+            if (AllowMoveTween)
+                moveTween.Start(TweenStyle.QuadraticInOut, 0, .8f, 100, -1);
+
+            if (AllowMoveBalancingTween)
+                moveBalancingTween.Start(TweenStyle.QuadraticInOut, 0, .05f, FastMove ? 100 : 200, -1);
+
             accelerationFactorTween.Start(TweenStyle.Linear, .4f, 1, 150);
-            moveRotationTween.Start(TweenStyle.QuadraticInOut, 0, .05f, FastMove ? 100 : 200, -1);
         }
 
         // OnStopMoving
@@ -401,7 +408,7 @@ namespace Remizione
             FastMove = false;
             accelerationFactorTween.Stop();
             moveTween.Stop();
-            moveRotationTween.Stop();
+            moveBalancingTween.Stop();
             tinyMoveSpeedFactor = 1;
 
             if (!IsDead)
@@ -454,11 +461,14 @@ namespace Remizione
 
             accelerationFactorTween.Update(gameTime);
             headTween.Update(gameTime);
-            headSprite.Update(gameTime);
+
+            if (AllowHeadAnimation)
+                headSprite.Update(gameTime);
+
             shadowSpot.Update(gameTime);
             speechBubble?.Update(gameTime);
             moveTween.Update(gameTime);
-            moveRotationTween.Update(gameTime);
+            moveBalancingTween.Update(gameTime);
             UpdateDirection();
             UpdateFootstep();
         }
@@ -489,6 +499,18 @@ namespace Remizione
         // Affinity
         [ScriptProperty]
         public Affinity Affinity { get; set; } = Affinity.Neutral;
+
+        // AllowHeadAnimation
+        [ScriptProperty]
+        public bool AllowHeadAnimation { get; set; } = true;
+
+        // AllowMoveBalancingTween
+        [ScriptProperty]
+        public bool AllowMoveBalancingTween { get; set; } = true;
+
+        // AllowMoveTween
+        [ScriptProperty]
+        public bool AllowMoveTween { get; set; } = true;
 
         // Animate
         public SpriteAnimation? Animate(string animationName, bool loop, AnimationDirection direction, bool preserve)
@@ -712,37 +734,6 @@ namespace Remizione
         // IsStandingOrMoving
         public bool IsStandingOrMoving => StateMachine.CurrentState is ActorStandState || StateMachine.CurrentState is ActorMoveState;
 
-        // IsTargetInAttackRange
-        public bool IsTargetInAttackRange()
-        {
-            return false;
-
-            /*
-            if (Target == null || CloseAttackItem == null)
-                return false;
-
-            Vector2 targetPos = Target.Position;
-            Vector2 toTarget = targetPos - Position;
-
-            // Out of range
-            float distance = toTarget.Length();
-            if (distance > CloseAttackItem.Range)
-                return false;
-
-            // Ensure player is not behind
-            //if ((Direction == FacingDirection.Right && toTarget.X < 0) ||
-              //  (Direction == FacingDirection.Left && toTarget.X > 0))
-            //{
-                return false;
-            //}
-
-            if (Math.Abs(Target.Y-Y) > 8)
-                return false;
-
-            return true;
-            */
-        }
-
         // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;
 
@@ -929,10 +920,22 @@ namespace Remizione
         public void Stand(bool forceRestart = false) => StateMachine.ChangeState(ActorStateNames.Stand, forceRestart);
 
         // StartTalking
-        public void StartTalking() => headSprite.Player.Play(ActorStateNames.Talk, true);
+        public void StartTalking()
+        {
+            if (AllowHeadAnimation)
+                headSprite.Player.Play(ActorStateNames.Talk, true);
+            else
+                Animate("Talk", true, AnimationDirection.Forward, false);
+        }
 
         // StopTalking
-        public void StopTalking() => headSprite.Player.Play(StateMachine.CurrentState.Name, true);
+        public void StopTalking()
+        {
+            if (AllowHeadAnimation)
+                headSprite.Player.Play(StateMachine.CurrentState.Name, true);
+            else
+                Stand(true);
+        }
 
         // Stats
         public Stats Stats { get; }

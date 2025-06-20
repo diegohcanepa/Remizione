@@ -210,6 +210,7 @@ Bla bla bla</String>
   <String Key="Noun.Bag">Bolsa</String>
   <String Key="Noun.Chest">Cofre de madera</String>
   <String Key="Noun.Cross">Cruz</String>
+  <String Key="Noun.GhostCar">Carrito</String>
   <String Key="Platform.NintendoSwitch.Messages.ControllerDisconnected">Por favor vuelve a conectar el mando para continuar.</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyButton">Pulse cualquier botón para continuar</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyKeyOrButton">Pulse cualquier tecla o botón para continuar</String>

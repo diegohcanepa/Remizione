@@ -84,6 +84,7 @@ namespace Remizione
             {
                 if (menu.GetOptionAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) != null)
                 {
+                    MouseCursor.Instance.AnimateClick();
                     Sound.Play(SoundNames.UISelect);
                     runSelectedOptionCooldown = 500;
                     return true;
@@ -246,8 +247,8 @@ namespace Remizione
 
         #endregion
 
-        // IsHidden
-        public override bool IsHidden => RunningOption != null;
+        // HasMouseControl
+        public override bool HasMouseControl => RunningOption == null;
 
         // RunningOption
         public DialogOption? RunningOption { get; private set; }

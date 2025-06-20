@@ -118,6 +118,11 @@ namespace Remizione
         private bool TestMouseRightButtonClick()
         {
             var result = InputManager.DefaultPlayer.Mouse.IsRightButtonPressed();
+
+            // Use item
+            if (result)
+                Actor.UseCurrentInventoryItem();
+
             return result;
         }
 

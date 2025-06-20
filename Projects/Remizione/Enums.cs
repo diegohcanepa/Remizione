@@ -109,7 +109,7 @@ namespace Remizione
     public enum SacrificeReward { Faith, Spirit }
 
     // ShadowSpotSize
-    public enum ShadowSpotSize { None, W6, W7, W8, W14 }
+    public enum ShadowSpotSize { None, W6, W7, W8, W11, W14 }
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }

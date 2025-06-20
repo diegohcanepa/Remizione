@@ -22,23 +22,26 @@ namespace Remizione
         // Update
         internal void Update(GameTime gameTime)
         {
-            if (CycleCooldown > 0)
+            if ((session.PurgatoryMode))
             {
-                CycleCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-
-                if (CycleCooldown <= 0)
+                if (CycleCooldown > 0)
                 {
-                    if (Cycle == Cycle.Indulgence)
-                        Cycle = Cycle.Penance;
-                    else
-                        Cycle = Cycle.Indulgence;
+                    CycleCooldown -= gameTime.ElapsedGameTime.Milliseconds;
 
-                    CycleCooldown = GameSettings.CycleDuration;
-                    CycleCount++;
+                    if (CycleCooldown <= 0)
+                    {
+                        if (Cycle == Cycle.Indulgence)
+                            Cycle = Cycle.Penance;
+                        else
+                            Cycle = Cycle.Indulgence;
+
+                        CycleCooldown = GameSettings.CycleDuration;
+                        CycleCount++;
+                    }
                 }
-            }
 
-            Rain.Update(gameTime);
+                Rain.Update(gameTime);
+            }
         }
 
         #endregion

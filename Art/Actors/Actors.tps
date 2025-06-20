@@ -261,7 +261,13 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Reaper-assets/Move01.png</key>
+            <key type="filename">Reaper-assets/Move02.png</key>
+            <key type="filename">Reaper-assets/Move03.png</key>
+            <key type="filename">Reaper-assets/Move04.png</key>
             <key type="filename">Reaper-assets/Stand01.png</key>
+            <key type="filename">Reaper-assets/Talk01.png</key>
+            <key type="filename">Reaper-assets/Talk02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

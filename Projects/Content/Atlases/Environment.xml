@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:1b82caceae24977c4e8e8688831f44ff:ba538366b3d31ffaa38f0e22777b2374:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:ad1aad44a6e6a59fe4730be79c93b879:bdaca98189d48240f99537834fbf7831:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -85,8 +85,9 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="RainParticle5.png" x="2" y="227" w="310" h="64"/>
     <sprite n="RottenApple.png" x="364" y="83" w="2" h="3"/>
     <sprite n="ShadowSpotW6.png" x="504" y="46" w="6" h="3"/>
-    <sprite n="ShadowSpotW7.png" x="344" y="253" w="7" h="3"/>
-    <sprite n="ShadowSpotW8.png" x="334" y="253" w="8" h="3"/>
+    <sprite n="ShadowSpotW7.png" x="490" y="181" w="7" h="3"/>
+    <sprite n="ShadowSpotW8.png" x="480" y="181" w="8" h="3"/>
+    <sprite n="ShadowSpotW11.png" x="334" y="253" w="11" h="3"/>
     <sprite n="ShadowSpotW14.png" x="481" y="176" w="14" h="3"/>
     <sprite n="SinnerCross.png" x="431" y="221" w="23" h="36"/>
     <sprite n="SinnerCrossShadow.png" x="404" y="243" w="23" h="36"/>

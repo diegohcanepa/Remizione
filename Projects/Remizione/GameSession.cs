@@ -58,15 +58,15 @@ namespace Remizione
 
             if (EngendroGame.DebugMode)
             {
-                TextSprite consoleText = new(game, Fonts.Common)
+                TextSprite consoleText = new(game, Fonts.CommonOutline)
                 {
                     Color = ColorPalette.HighlightedText,
                     PivotOrigin = RectanglePoint.LeftBottom,
                     Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom),
-                    Scale = ScaleInfo.Text.Medium,
+                    Scale = ScaleInfo.Text.VeryLarge,
                 };
 
-                console = new ScriptConsole(this, InputBindings.Console, consoleText, new RectangleF(0, 240, 480, 30)) { TextErrorColor = Color.DarkRed };
+                console = new ScriptConsole(this, InputBindings.Console, consoleText, new RectangleF(0, 240, 480, 30)) { TextErrorColor = ColorPalette.Text.Terra };
                 roomEditor = new RoomEditor(this);
             }
 
@@ -288,10 +288,6 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(Environment.CycleCount)]?.Value is string cycleCountValue)
                 this.Environment.CycleCount = XmlConvert.ToInt32(cycleCountValue);
 
-            // FullHUD
-            if (sessionNode.Attributes[nameof(FullHUD)]?.Value is string fullHUDValue)
-                FullHUD = XmlConvert.ToBoolean(fullHUDValue);
-
             // InventoryEnabled
             if (sessionNode.Attributes[nameof(InventoryEnabled)]?.Value is string inventoryEnabledValue)
                 InventoryEnabled = XmlConvert.ToBoolean(inventoryEnabledValue);
@@ -303,6 +299,10 @@ namespace Remizione
             // Player position
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
                 playerPosition = XmlConverterExtension.ToVector2(playerPositionValue);
+
+            // PurgatoryMode
+            if (sessionNode.Attributes[nameof(PurgatoryMode)]?.Value is string purgatoryModeValue)
+                PurgatoryMode = XmlConvert.ToBoolean(purgatoryModeValue);
 
             // NextRainCooldown
             if (sessionNode.Attributes[nameof(NextRainCooldown)]?.Value is string nextRainCooldown)
@@ -388,16 +388,13 @@ namespace Remizione
 
             OverlayTexts.Update(gameTime);
 
-            if (IsCurrentScene || (Game.SceneManager.CurrentScene != null && Game.SceneManager.CurrentScene.IsHidden))
+            if (IsCurrentScene || (Game.SceneManager.CurrentScene != null && !Game.SceneManager.CurrentScene.HasMouseControl))
                 UpdateMouseCursor();
         }
 
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
-            // FullHUD
-            output.WriteAttributeString(nameof(FullHUD), XmlConvert.ToString(FullHUD));
-
             // Cycle
             output.WriteAttributeString(nameof(Environment.Cycle), Environment.Cycle.ToString());
 
@@ -420,6 +417,9 @@ namespace Remizione
             // PlayerPosition
             if (playerPosition.HasValue)
                 output.WriteAttributeString(nameof(playerPosition), XmlConverterExtension.ToString(playerPosition.Value));
+
+            // PurgatoryMode
+            output.WriteAttributeString(nameof(PurgatoryMode), XmlConvert.ToString(PurgatoryMode));
 
             // RainRemainingTime
             output.WriteAttributeString(nameof(Environment.Rain.RemainingTime), XmlConvert.ToString(Environment.Rain.RemainingTime));
@@ -459,10 +459,6 @@ namespace Remizione
         // ExpandUp
         [ScriptMethod]
         public void ExpandUp() => ExpandRoom(Direction.Up);
-
-        // FullHUD
-        [ScriptProperty]
-        public bool FullHUD { get; set; }
 
         // Game
         public new RemizioneGame Game { get; }
@@ -521,6 +517,10 @@ namespace Remizione
                 }
             }
         }
+
+        // PurgatoryMode
+        [ScriptProperty]
+        public bool PurgatoryMode { get; set; }
 
         // PreviousRoom
         [ScriptProperty]

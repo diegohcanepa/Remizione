@@ -210,6 +210,7 @@ Bla bla bla</String>
   <String Key="Noun.Bag">Bag</String>
   <String Key="Noun.Chest">Wooden chest</String>
   <String Key="Noun.Cross">Cross</String>
+  <String Key="Noun.GhostCar">Ghost train car</String>
   <String Key="Platform.NintendoSwitch.Messages.ControllerDisconnected">Please reconnect your Joy-Con™ to continue.</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyButton">Press any button to continue</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyKeyOrButton">Press any key or button to continue</String>

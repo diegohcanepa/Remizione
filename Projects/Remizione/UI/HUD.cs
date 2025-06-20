@@ -77,7 +77,7 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (session.FullHUD)
+            if (session.PurgatoryMode)
             {
                 if (!session.IsConsoleVisible)
                     quickSlot.Draw(gameTime);
@@ -94,10 +94,10 @@ namespace Remizione
 
             prompt.Draw(gameTime);
 
-            if (session.Player != null && session.FullHUD)
+            //if (session.Player != null && session.FullHUD)
                 //grace.Draw(gameTime);
 
-                Log.Draw(gameTime);
+            Log.Draw(gameTime);
 
             if (savingIcon.Tweens.IsTweening)
             {
@@ -113,8 +113,12 @@ namespace Remizione
             quickSlot.Update(gameTime);
             playerStats.Update(gameTime);
             prompt.Update(gameTime);
-            cycleMeter.Update(gameTime);
-            statusText.Update(gameTime);
+
+            if (session.PurgatoryMode)
+            {
+                cycleMeter.Update(gameTime);
+                statusText.Update(gameTime);
+            }
 
             if (session.Player != null)
             {

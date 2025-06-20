@@ -246,7 +246,7 @@ namespace Remizione
             {
                 if (text.TypingState == RunningState.Stopped)
                 {
-                    if (Actor.IsStandingOrMoving)
+                    //if (Actor.IsStandingOrMoving)
                         Actor.StopTalking();
 
                     // Made one last scale tween, so pipe ends in a 1:1 scale
@@ -263,7 +263,7 @@ namespace Remizione
                     State = SpeechBubbleState.Idle;
                     text.StopTyping();
 
-                    if (Actor.IsStandingOrMoving)
+                    //if (Actor.IsStandingOrMoving)
                         Actor.StopTalking();
                 }
             }
