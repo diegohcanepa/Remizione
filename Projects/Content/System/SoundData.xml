@@ -29,6 +29,7 @@
 	<FX Name="MenuDiscardItem" MaxInstances="4" />
 	<FX Name="MenuSelect" MaxInstances="4" />
 	<FX Name="PickUpBag" MaxInstances="2" />
+	<FX Name="Raven" />
 	<FX Name="ReaperShowUp" />
 	<FX Name="SinnerMaleDeathSetA" MaxInstances="8" Sounds="1..1" Volume=".5" />
 	<FX Name="SinnerMaleHurtSetA" MaxInstances="8" Sounds="1..8" Volume=".5" />

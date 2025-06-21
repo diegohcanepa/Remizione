@@ -77,7 +77,7 @@ namespace Remizione
             WorldManager.BeginUpdate();
             if (Session.IsNewSession)
             {
-                var initialBlock = WorldManager.AddBlock(new(WorldManager.GridSize / 2), Session.WorldVersion, FirstBlockReservedSpace);
+                var initialBlock = WorldManager.AddBlock(new(WorldManager.GridSize / 2), Session.WorldVersion, !PreserveFirstBlock);
                 if (initialBlock.Light != null)
                     initialBlock.LightPosition = new Vector2(120, 50);
             }
@@ -85,7 +85,8 @@ namespace Remizione
             {
                 for (var i = 0; i < worldBlockData.Count; i++)
                 {
-                    WorldManager.AddBlock(worldBlockData[i].gridPosition, worldBlockData[i].worldVersion);
+                    var populate = i > 0 || !PreserveFirstBlock;
+                    WorldManager.AddBlock(worldBlockData[i].gridPosition, worldBlockData[i].worldVersion, populate);
 
                     foreach (var keyValue in worldBlockData[i].states)
                     {
@@ -183,9 +184,9 @@ namespace Remizione
             return false;
         }
 
-        // FirstBlockReservedSpace
+        // PreserveFirstBlock
         [ScriptProperty]
-        public Rectangle FirstBlockReservedSpace { get; set; }
+        public bool PreserveFirstBlock { get; set; }
 
         // WorldManager
         public WorldManager WorldManager { get; }

@@ -9,7 +9,6 @@ namespace Remizione
     /// </summary>
     public sealed class PlayerInputHandler<T> : InputHandler where T : Actor
     {
-        private bool inventoryLocked;
         private readonly InventoryScene inventoryScene;
 
         // Constructor
@@ -40,17 +39,8 @@ namespace Remizione
             }
 
             // Inventory
-            if (inventoryLocked)
+            if (Actor.Session.InventoryEnabled && InputBindings.Inventory.IsPressed(PlayerIndex.One))
             {
-                if (!InputBindings.Inventory.IsPressed(PlayerIndex.One))
-                {
-                    inventoryLocked = false;
-                    return HandleInputResult.Handled;
-                }
-            }
-            else if (Actor.Session.InventoryEnabled && InputBindings.Inventory.IsPressed(PlayerIndex.One))
-            {
-                inventoryLocked = true;
                 inventoryScene.SceneController.Push();
                 return HandleInputResult.Handled;
             }

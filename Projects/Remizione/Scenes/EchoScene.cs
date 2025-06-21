@@ -39,7 +39,7 @@ namespace Remizione
                 PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -15),
-                Scale = ScaleInfo.Text.Large
+                Scale = ScaleInfo.Text.VeryLarge
             };
 
             // Gradient

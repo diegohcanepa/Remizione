@@ -120,6 +120,12 @@ namespace Remizione
 
         #region Protected members
 
+        protected override void OnLoadContent()
+        {
+            base.OnLoadContent();
+            InputManager.Reset();
+        }
+
         // CanHandleRoomInput
         protected override bool CanHandleRoomInput
         {

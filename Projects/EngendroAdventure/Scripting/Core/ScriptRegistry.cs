@@ -56,7 +56,7 @@ namespace EngendroAdventure.Scripting.Core
             RegisterStatement("if-flag", typeof(IfFlagStatement), CodingContext.Execution);
             RegisterStatement("if-not-null", typeof(IfNotNullStatement));
             RegisterStatement("if-parent", typeof(IfParentStatement));
-            RegisterStatement("if-random-numer", typeof(IfRandomNumberStatement));
+            RegisterStatement("if-random-number", typeof(IfRandomNumberStatement));
             RegisterStatement("if-roll", typeof(IfRollStatement));
             RegisterStatement("if-routine-running", typeof(IfRoutineRunningStatement));
             RegisterStatement("if", typeof(IfCoreStatement), CodingContext.Execution);
@@ -71,7 +71,7 @@ namespace EngendroAdventure.Scripting.Core
             RegisterStatement("focus-xy", typeof(FocusXYCommand), CodingContext.Execution);
             RegisterStatement("follow", typeof(FollowCommand), CodingContext.Execution);
             RegisterStatement("frame", typeof(FrameCommand), CodingContext.EntityDeclaration);
-            RegisterStatement("generate-random-number", typeof(GenerateRandomNumberCommand), CodingContext.Execution);
+            RegisterStatement("generate-random-number", typeof(GenerateRandomNumberCommand), CodingContext.Any);
             RegisterStatement("increment-counter", typeof(IncrementCounterCommand));
             RegisterStatement("move", typeof(MoveCommand), CodingContext.Execution);
             RegisterStatement(ScriptSyntax.NewKeyword, typeof(NewCommand), CodingContext.Instantiation);

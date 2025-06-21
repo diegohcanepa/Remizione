@@ -720,7 +720,7 @@ namespace Remizione
 
             if (inFront)
             {
-                var offset = requesterBox.Width + 3;
+                var offset = this is Actor ? requesterBox.Width + 3 : requesterBox.Width / 2;
                 if (Direction == FacingDirection.Left)
                     result = box.GetPoint(RectanglePoint.LeftBottom, -offset, 0);
                 else

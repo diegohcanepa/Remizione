@@ -186,8 +186,6 @@ namespace Remizione
         // Show
         public void Show(Vector2 position, bool fromBottom)
         {
-            InputManager.DefaultPlayer.Reset();
-
             IsVisible = true;
 
             optionList.Sort((a, b) => a.ToString().CompareTo(b.ToString()));

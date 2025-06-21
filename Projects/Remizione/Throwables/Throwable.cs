@@ -400,7 +400,7 @@ namespace Remizione
             xTween.Start(TweenStyle.Linear, LaunchPosition.X, LaunchPosition.X + offset, Duration);
             Tweens.XTween = xTween;
 
-            yTween.Start(TweenStyle.CubicIn, LaunchPosition.Y, FloorPosition.Y, Duration);
+            yTween.Start(TweenStyle.CubicIn, LaunchPosition.Y, LaunchPosition.Y, Duration);
             Tweens.YTween = yTween;
 
             instantBounce = false;

@@ -10,7 +10,7 @@ namespace Engendro.Input
         #region Protected members
 
         // CanUpdate
-        protected virtual bool CanUpdate => !InputManager.IsSuspended;
+        protected virtual bool CanUpdate => true;
 
         // OnUpdate
         protected virtual void OnUpdate(GameTime gameTime)

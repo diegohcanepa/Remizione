@@ -335,6 +335,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/PickUpBag.wav;Audio/FX/PickUpBag
 
+#begin Audio/FX/Raven.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Raven.wav;Audio/FX/Raven
+
 #begin Audio/FX/ReaperShowUp.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

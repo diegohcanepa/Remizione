@@ -28,7 +28,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public WorldBlock(WorldManager manager, Point worldGridPosition, int worldVersion, Rectangle? reservedSpace = null)
+        public WorldBlock(WorldManager manager, Point worldGridPosition, int worldVersion, bool populate = true)
             : base(manager.Session, string.Empty)
         {
             this.WorldVersion = worldVersion;
@@ -90,13 +90,8 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.Right
             };
 
-            if (reservedSpace.HasValue)
-            {
-                decorationGrid.ReserveSpace(reservedSpace.Value);
-                mainGrid.ReserveSpace(reservedSpace.Value);
-            }
-
-            Populate();
+            if (populate)
+                Populate();
         }
 
         #endregion
