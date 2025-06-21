@@ -67,7 +67,7 @@ namespace Remizione
             text.Text = value;
             text.Position = origin;
             yTween.Start(TweenStyle.CubicOut, origin.Y, origin.Y - 2, duration);
-            opacityTween.StartDelay = duration - fadeDuration; 
+            opacityTween.StartDelay = duration - fadeDuration;
             opacityTween.Start(TweenStyle.CubicIn, 1, 0, fadeDuration);
 
             text.Tweens.OpacityTween = opacityTween;

@@ -1,7 +1,6 @@
 ﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Remizione.UI;
 
 namespace Remizione
 {

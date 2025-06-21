@@ -70,7 +70,7 @@ namespace Remizione
         {
             if (actor == null)
                 return;
-         
+
             if (actor.Inventory.SelectNext())
             {
                 Sound.Play(SoundNames.UIQuickSlot);
@@ -166,7 +166,7 @@ namespace Remizione
             {
                 if (actor.Inventory.SelectNext())
                     Sound.Play(SoundNames.UIQuickSlot);
-                
+
                 return HandleInputResult.Handled;
             }
 

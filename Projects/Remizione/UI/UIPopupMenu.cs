@@ -69,7 +69,7 @@ namespace Remizione
         private void Layout()
         {
             var pos = Position;
-            
+
             for (var i = 0; i < optionList.Count; i++)
             {
                 var option = optionList[i];
@@ -293,7 +293,7 @@ namespace Remizione
         public UIPopupMenuOption<TLinkedObject>? SelectOptionAt(Vector2 position)
         {
             var option = GetOptionAt(position);
-            if(option != null)
+            if (option != null)
                 SelectedOption = option;
 
             return option;

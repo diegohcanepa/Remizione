@@ -157,7 +157,7 @@ namespace EngendroAdventure
         protected void InvalidateCulledThings()
         {
             var count = 0;
-            
+
             for (int i = 0; i < Children.Count; i++)
             {
                 if (Children[i].IsActiveInGameLoop)

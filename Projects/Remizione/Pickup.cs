@@ -6,7 +6,7 @@ namespace Remizione
     /// <summary>
     /// Pickup
     /// </summary>
-    public class Pickup : GameThing
+    public class Pickup : Prop
     {
         // Constructor
         public Pickup(GameSession session, string name)

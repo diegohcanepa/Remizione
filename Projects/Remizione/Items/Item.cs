@@ -148,7 +148,7 @@ namespace Remizione
                 this.durability = value;
                 if (durability < 0)
                     durability = 0;
-                
+
                 isDisplayTextDiry = true;
             }
         }

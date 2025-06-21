@@ -7,7 +7,7 @@ namespace Remizione
     /// <summary>
     /// Throwable
     /// </summary>
-    public abstract class 
+    public abstract class
         Throwable : GameThing
     {
         #region Private fields

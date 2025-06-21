@@ -39,7 +39,7 @@ namespace Remizione
         {
             this.Session = session;
             this.lightning = new Light(Game, "<Lightning>")
-            { 
+            {
                 ImageName = nameof(Atlases.Environment.LightningLight),
                 LightKind = LightKind.Lightning,
                 Scale = new Vector2(8)

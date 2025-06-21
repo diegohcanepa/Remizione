@@ -218,7 +218,7 @@ namespace Remizione
                 return HandleInputResult.Handled;
 
             if (inGameMenuLocked && InputBindings.InGameMenu.IsKeyUp())
-                inGameMenuLocked = false;   
+                inGameMenuLocked = false;
 
             if (!inGameMenuLocked && !InputManager.DefaultPlayer.Keyboard.IsShiftDown() && InputBindings.InGameMenu.IsPressed(PlayerIndex.One))
             {

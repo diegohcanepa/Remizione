@@ -223,7 +223,7 @@ namespace Remizione
                 pos.Y += option.TextBoundingBox.Height;
             }
 
-            BoundingBox = new RectangleF(position.X-2, position.Y-2, Width + 4, Height+4);
+            BoundingBox = new RectangleF(position.X - 2, position.Y - 2, Width + 4, Height + 4);
         }
 
         // TextScale

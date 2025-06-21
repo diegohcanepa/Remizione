@@ -87,7 +87,7 @@ namespace Remizione
             {
                 if (gamePad)
                     imageName = InputBinding.Button.ToString();
-                
+
                 else if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Keyboard || InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
                     imageName = InputBinding.Keys[0].ToString();
             }
@@ -212,7 +212,7 @@ namespace Remizione
             if (!image.IsEmpty)
             {
                 Effect? shader = null;
-                
+
                 if (IsMouseOver)
                 {
                     RemizioneGame.Effects.ColorSaturation.SetColor(.7f, .7f, .7f, 1);
@@ -342,7 +342,7 @@ namespace Remizione
                     isEnabled = value;
                     label.OpacityFactor = isEnabled ? 1 : .3f;
                 }
-            }   
+            }
         }
 
         // IsMouseOver
@@ -449,7 +449,7 @@ namespace Remizione
             {
                 if (value != label.Scale)
                 {
-                    label.Scale= value;
+                    label.Scale = value;
                     Invalidate();
                 }
             }

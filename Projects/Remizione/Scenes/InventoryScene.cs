@@ -75,7 +75,7 @@ namespace Remizione
             // Faith icon
             this.faithIcon = new(owner.Game, Atlases.UI.FaithGainIcon)
             {
-                PivotOrigin = RectanglePoint.Right,              
+                PivotOrigin = RectanglePoint.Right,
                 Scale = ScaleInfo.UIElement.Small
             };
 
@@ -112,7 +112,7 @@ namespace Remizione
         private bool SelectNextItem()
         {
             var result = Owner.Inventory.SelectNext();
-            
+
             if (Owner.Inventory.SelectedItem != null)
                 SelectSlot(Owner.Inventory.SelectedItem);
 
@@ -123,7 +123,7 @@ namespace Remizione
         private bool SelectPreviousItem()
         {
             var result = Owner.Inventory.SelectPrevious();
-            
+
             if (Owner.Inventory.SelectedItem != null)
                 SelectSlot(Owner.Inventory.SelectedItem);
 

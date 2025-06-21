@@ -34,8 +34,8 @@ namespace Remizione.UI
             {
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Middle,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -3),
-                Scale = ScaleInfo.Text.Huge
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -7),
+                Scale = ScaleInfo.Text.VeryLarge
             };
         }
 

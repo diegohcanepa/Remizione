@@ -47,7 +47,7 @@ namespace Remizione.UI
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-            
+
             if (ShowGradient)
                 gradient.Draw(gameTime);
 

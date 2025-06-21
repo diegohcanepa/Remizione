@@ -61,7 +61,7 @@ namespace Remizione
         }
 
         // GetValue
-        internal static string GetValue<TEnum>(TEnum value) where TEnum:Enum
+        internal static string GetValue<TEnum>(TEnum value) where TEnum : Enum
         {
             return TextRepository.GetValue($"@{typeof(TEnum).Name}.{value}");
         }

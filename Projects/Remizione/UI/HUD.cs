@@ -95,7 +95,7 @@ namespace Remizione
             prompt.Draw(gameTime);
 
             //if (session.Player != null && session.FullHUD)
-                //grace.Draw(gameTime);
+            //grace.Draw(gameTime);
 
             Log.Draw(gameTime);
 

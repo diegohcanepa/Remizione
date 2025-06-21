@@ -95,7 +95,7 @@ namespace Remizione.UI
         #endregion
 
         // Hide
-        public void Hide() => fadeTween.Stop(); 
+        public void Hide() => fadeTween.Stop();
 
         // Show
         public void Show(LogMessage message, bool isWarning) => ShowCore(Localization.GetValue(message), string.Empty, isWarning);

@@ -164,6 +164,6 @@ namespace Remizione
                 Stat.Charisma => DiceExpression.Dice20.Roll() + GetModifier(Stat.Charisma),
                 _ => DiceExpression.Dice20.Roll()
             };
-        }   
+        }
     }
 }

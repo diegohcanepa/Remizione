@@ -122,7 +122,7 @@ namespace Remizione
             internal static Color Terra { get; } = new(143, 77, 87);
             internal static Color TerraLight { get; } = new(189, 106, 98);
             internal static Color TerraLighter { get; } = new(255, 174, 112);
-        }   
+        }
 
         // TextDepracated
         internal static class TextDepracated

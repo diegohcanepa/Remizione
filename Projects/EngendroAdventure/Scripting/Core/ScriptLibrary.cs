@@ -268,7 +268,7 @@ namespace EngendroAdventure.Scripting
         {
             CodeContract.NotEmpty(entityStaticName, nameof(entityStaticName));
             return declarations.ContainsKey(entityStaticName);
-        }   
+        }
 
         // Path
         public string Path { get; }

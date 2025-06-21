@@ -8,14 +8,13 @@ namespace Remizione
     /// <summary>
     /// IsometricProp
     /// </summary>
-    public class IsometricProp : GameThing
+    public class IsometricProp : Prop
     {
         #region Private fields
 
         private bool isRevealBoxDirty;
         private RectangleF revealBox;
         private readonly FloatTween revealTween = new();
-        private readonly ImageSprite shadow;
         private Polygon? terrainPoly;
 
         #endregion
@@ -27,21 +26,11 @@ namespace Remizione
             : base(session, name)
         {
             this.Atlas = Atlases.Environment;
-            
-            // Shadow
-            this.shadow = new ImageSprite(session.Game)
-            {
-                Opacity = ColorPalette.ShadowOpacity,
-                PivotOrigin = RectanglePoint.Bottom,
-            };
         }
 
         #endregion
 
         #region Private members
-
-        // InvalidateShadowImage
-        private void InvalidateShadowImage() => shadow.Image = Atlas?.GetImage(GetDefaultImageName() + "Shadow");
 
         // InvalidateTerrainArea
         private void InvalidateTerrainArea()
@@ -93,14 +82,10 @@ namespace Remizione
 
         #region Protected members
 
-        // OnDrawShadow
-        protected override void OnDrawShadow(GameTime gameTime) => shadow.Draw(gameTime);
-
         // OnLoad
         protected override void OnLoad()
         {
             base.OnLoad();
-            InvalidateShadowImage();
             InvalidateTerrainArea();
         }
 
@@ -108,11 +93,7 @@ namespace Remizione
         protected override void OnTransform(TransformChange change)
         {
             base.OnTransform(change);
-
-            shadow?.MatchTransform(Sprite);
-
             isRevealBoxDirty = true;
-
             InvalidateTerrainArea();
         }
 

@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Remizione.UI;
@@ -130,7 +129,7 @@ namespace Remizione
 
             if (Actor == null)
                 return;
-            
+
             menu.AddOption(new StatData(Actor.Level));
             menu.AddOption(new StatData(DerivedStat.Spirit, Actor.HP, Actor.MaxHP));
             menu.AddOption(new StatData(DerivedStat.Faith, Actor.Faith, Actor.MaxFaith));

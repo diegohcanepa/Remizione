@@ -271,7 +271,7 @@ namespace Remizione
         }
 
         // ScaleTo
-        public void ScaleTo(TweenStyle style,  Vector2 value, int duration)
+        public void ScaleTo(TweenStyle style, Vector2 value, int duration)
         {
             lightSprite.Tweens.ScaleTween = Vector2Tween.Create(style, lightSprite.Scale, value, duration);
         }

@@ -54,7 +54,7 @@ namespace Remizione
     public enum LightState { Off, On, TurningOn, TurningOff }
 
     // LogMessage
-    public enum LogMessage { CannoPlaceItem, EnoughOfThat, InventoryFull, NoInventoryBag } 
+    public enum LogMessage { CannoPlaceItem, EnoughOfThat, InventoryFull, NoInventoryBag }
 
     // LogVerb
     public enum LogVerb { Discarded, Lost, PickedUp, Restored }

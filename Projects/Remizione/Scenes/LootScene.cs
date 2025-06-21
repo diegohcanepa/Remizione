@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Remizione.UI;
@@ -143,7 +142,7 @@ namespace Remizione
         // InvalidateTitles
         private void InvalidateTitles()
         {
-            
+
             if (session.Player != null)
             {
                 var title = TextRepository.GetValue("Misc.Inventory");
@@ -164,7 +163,7 @@ namespace Remizione
                 targetMenu.Title = title;
 
                 if (IsTargetInventoryFull)
-                    targetMenu.TitleColor =  ColorPalette.Text.Terra;
+                    targetMenu.TitleColor = ColorPalette.Text.Terra;
                 else
                     targetMenu.ResetColors();
             }

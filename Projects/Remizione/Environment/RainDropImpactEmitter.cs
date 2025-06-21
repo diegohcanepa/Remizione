@@ -44,10 +44,10 @@ namespace Remizione
         private static AnimatedSprite CreateAnimatedSprite(EngendroGame game)
         {
             return new(game)
-            { 
-                Atlas = Atlases.Environment, 
-                Color = Color.White * .2f, 
-                PivotOrigin = RectanglePoint.Middle, 
+            {
+                Atlas = Atlases.Environment,
+                Color = Color.White * .2f,
+                PivotOrigin = RectanglePoint.Middle,
                 Scale = new(.5f)
             };
         }

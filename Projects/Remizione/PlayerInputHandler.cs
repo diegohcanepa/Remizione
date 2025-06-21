@@ -10,7 +10,7 @@ namespace Remizione
     public sealed class PlayerInputHandler<T> : InputHandler where T : Actor
     {
         private bool inventoryLocked;
-        private InventoryScene inventoryScene;
+        private readonly InventoryScene inventoryScene;
 
         // Constructor
         public PlayerInputHandler(T actor, PlayerIndex playerIndex)

@@ -12,7 +12,7 @@ namespace EngendroAdventure.Scripting
         {
             if (AnimationCommand.ActiveAnimation == null)
                 throw ScriptExceptionBuilder.AnimationNotActive(this);
-            
+
             var range = Parser.ParseInt32Range(this, 0);
             var duration = Parser.ParseInt32(this, 2);
             var isEventFrame = HasArg(EventFrameArg);

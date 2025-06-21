@@ -102,7 +102,7 @@ namespace Remizione
             if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
             {
                 HoveredOption = GetOptionAt(InputManager.DefaultPlayer.Mouse.VirtualPosition);
-        
+
                 if (HoveredOption != null)
                 {
                     if (HoveredOption.Index != SelectedIndex)

@@ -25,7 +25,7 @@ namespace Remizione
             };
 
             UpdateColor();
-}
+        }
 
         #region Private members
 

@@ -88,7 +88,7 @@ namespace Remizione
         // Update
         public void Update(GameTime gameTime)
         {
-                CurrentState?.Update(gameTime);
+            CurrentState?.Update(gameTime);
         }
     }
 }

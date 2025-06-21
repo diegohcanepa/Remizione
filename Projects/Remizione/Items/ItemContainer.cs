@@ -79,7 +79,7 @@ namespace Remizione
             {
                 result.Add($"{item.Name}:{item.Count}:{item.Durability}");
             }
-            
+
             return string.Join(";", result);
         }
 

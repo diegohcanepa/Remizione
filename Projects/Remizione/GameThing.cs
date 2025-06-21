@@ -106,7 +106,7 @@ namespace Remizione
                     pathNodes[i] = new(holeInflatedPoly.Vertices[i]);
                 else
                     pathNodes[i].Position = holeInflatedPoly.Vertices[i];
-                
+
                 targetList.Add(pathNodes[i]);
             }
         }
@@ -202,7 +202,7 @@ namespace Remizione
             CollisionPolygon.GetVertices(vertices, offset);
             holePoly.SetVertices(vertices);
             holeInflatedPoly.SetVertices(vertices, .05f);
-            
+
             isHoleAreaDirty = false;
         }
 
@@ -470,7 +470,7 @@ namespace Remizione
                 impactWord ??= Session.ImpactWordPool.Get();
                 impactWord.Show(impactWordKind, this.GetAbsolutePoint(CollisionPolygon.BoundingRectangleF.GetPoint(RectanglePoint.Top)));
             }
-             
+
             if (maxHP == 0)
             {
                 hurtShakeTween ??= new();

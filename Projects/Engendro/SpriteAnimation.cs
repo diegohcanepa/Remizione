@@ -125,7 +125,7 @@ namespace Engendro
             for (var i = 0; i < frameList.Count; i++)
             {
                 if (frameList[i].Label == label)
-                   return frameList[i];
+                    return frameList[i];
             }
 
             return null;

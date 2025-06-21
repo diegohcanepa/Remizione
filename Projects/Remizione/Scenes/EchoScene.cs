@@ -10,7 +10,7 @@ namespace Remizione
     /// </summary>
     public sealed class EchoScene : Scene
     {
-        private UIControl continueButton;
+        private readonly UIControl continueButton;
         private readonly ImageSprite gradient;
         private readonly FloatTween opacityTween = new();
         private readonly TextSprite textSprite;
@@ -27,7 +27,8 @@ namespace Remizione
                 AllowContainer = true,
                 DisplayMode = UIControlDisplayMode.ImageOnly,
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom),
+                Small = true
             };
 
             // Text sprite

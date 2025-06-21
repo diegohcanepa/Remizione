@@ -193,7 +193,7 @@ namespace EngendroAdventure
             else
             {
                 return DefaultImageName;
-            }   
+            }
         }
 
         // MatchTransform
@@ -610,7 +610,7 @@ namespace EngendroAdventure
                     }
 
                     parent = value;
-                    
+
                     OnParentChanged(previousParent);
                 }
             }

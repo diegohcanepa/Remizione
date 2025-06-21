@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -54,7 +53,7 @@ namespace Remizione
             for (var i = 0; i < WorldManager.Blocks.Count; i++)
             {
                 Children.Add(WorldManager.Blocks[i]);
-                
+
                 foreach (var thing in WorldManager.Blocks[i].ProceduralThings)
                 {
                     if (thing.StateID >= 0)
@@ -80,7 +79,7 @@ namespace Remizione
             {
                 var initialBlock = WorldManager.AddBlock(new(WorldManager.GridSize / 2), Session.WorldVersion, FirstBlockReservedSpace);
                 if (initialBlock.Light != null)
-                    initialBlock.LightPosition = new Vector2(120,50);
+                    initialBlock.LightPosition = new Vector2(120, 50);
             }
             else
             {

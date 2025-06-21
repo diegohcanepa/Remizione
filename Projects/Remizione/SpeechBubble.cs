@@ -247,7 +247,7 @@ namespace Remizione
                 if (text.TypingState == RunningState.Stopped)
                 {
                     //if (Actor.IsStandingOrMoving)
-                        Actor.StopTalking();
+                    Actor.StopTalking();
 
                     // Made one last scale tween, so pipe ends in a 1:1 scale
                     if (pipeTween.IsRunning)
@@ -264,7 +264,7 @@ namespace Remizione
                     text.StopTyping();
 
                     //if (Actor.IsStandingOrMoving)
-                        Actor.StopTalking();
+                    Actor.StopTalking();
                 }
             }
 
