@@ -24,7 +24,7 @@ namespace Remizione
             this.text = new TextSprite(session.Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
-                Scale = ScaleInfo.Text.Large,
+                Scale = ScaleInfo.Text.Huge,
                 PivotOrigin = RectanglePoint.Bottom
             };
         }

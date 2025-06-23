@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Engendro.Audio;
+using Engendro.Input;
 using Engendro.PathFinding;
 using EngendroAdventure;
 using EngendroAdventure.Scripting;
@@ -471,7 +472,7 @@ namespace Remizione
                 impactWord.Show(impactWordKind, this.GetAbsolutePoint(CollisionPolygon.BoundingRectangleF.GetPoint(RectanglePoint.Top)));
             }
 
-            if (maxHP == 0)
+            if (maxHP == 0 && (HurtSound != null || HurtImpactSound != null))
             {
                 hurtShakeTween ??= new();
                 hurtShakeTween.Start(TweenStyle.Linear, Vector2.Zero, HurtShake, 40, 4);
@@ -487,11 +488,14 @@ namespace Remizione
 
             Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), damageText, damageTextColor);
 
-            damageMeterCooldown = 1500;
-            if (damageMeter == null)
+            if (MaxHP > 0)
             {
-                damageMeter = new(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore) { MaximumValue = 10 };
-                InvalidateDamageMeter();
+                damageMeterCooldown = 1500;
+                if (damageMeter == null)
+                {
+                    damageMeter = new(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore) { MaximumValue = 10 };
+                    InvalidateDamageMeter();
+                }
             }
 
             if (knockback == Vector2.Zero && HP <= 0)
@@ -943,6 +947,18 @@ namespace Remizione
 
         // IsEmittingLight
         public virtual bool IsEmittingLight => Light != null && Light.IsEmitting;
+
+        // IsMouseOver
+        public bool IsMouseOver()
+        {
+            if (InputManager.DefaultPlayer.LastInputMethod != InputMethod.Mouse)
+                return false;
+
+            if (HotspotBox.IsEmpty)
+                return BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera));
+            else
+                return HotspotBox.Contains(InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera));
+        }
 
         // IsWalkAreaHole
         [ScriptProperty]

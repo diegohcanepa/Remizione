@@ -70,19 +70,27 @@ namespace Engendro.Input
             {
                 Mouse.Update(gameTime);
                 Keyboard.Update(gameTime);
+
+                if (Mouse.HasInput())
+                {
+                    if (InputManager.AllowMouse)
+                        LastInputMethod = InputMethod.Mouse;
+                }
+
+                else if (Keyboard.HasInput())
+                {
+                    LastInputMethod = InputMethod.Keyboard;
+                    InputManager.AllowMouse = true;    
+                }
             }
 
             // GamePad
             GamePad.Update(gameTime);
-
-            if (Mouse.HasInput())
-                LastInputMethod = InputMethod.Mouse;
-
-            else if (Keyboard.HasInput())
-                LastInputMethod = InputMethod.Keyboard;
-
-            else if (GamePad.HasInput())
+            if (GamePad.HasInput())
+            {
+                InputManager.AllowMouse = false;
                 LastInputMethod = InputMethod.GamePad;
+            }
         }
 
         #endregion

@@ -7,8 +7,7 @@ namespace Remizione
     /// <summary>
     /// Throwable
     /// </summary>
-    public abstract class
-        Throwable : GameThing
+    public abstract class Throwable : GameThing
     {
         #region Private fields
 
@@ -214,7 +213,7 @@ namespace Remizione
                 if (collectCooldown < 0)
                     collectCooldown = 0;
             }
-            else if (scaleTween.IsRunning || DistanceTo(Item.Owner) <= 5)
+            else if (scaleTween.IsRunning || DistanceTo(Item.Owner) <= 10)
             {
                 if (!scaleTween.IsRunning)
                 {

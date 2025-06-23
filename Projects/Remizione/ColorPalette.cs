@@ -93,8 +93,8 @@ namespace Remizione
         // HPMeter
         internal static class HPMeter
         {
-            internal static Color Back { get; } = new(20, 24, 46);
-            internal static Color Fore { get; } = new(82, 51, 63);
+            internal static Color Back { get; } = new(82, 51, 63);
+            internal static Color Fore { get; } = new(173, 47, 69);
         }
 
         // StatMeter

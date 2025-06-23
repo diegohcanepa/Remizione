@@ -23,9 +23,6 @@ namespace Engendro.Input
 
         #region Protected members
 
-        // CanUpdate
-        protected override bool CanUpdate => InputManager.AllowKeyboard && base.CanUpdate;
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
@@ -83,8 +80,5 @@ namespace Engendro.Input
             previousState = new KeyboardState();
             state = new KeyboardState();
         }
-
-        // State
-        public KeyboardState State => state;
     }
 }

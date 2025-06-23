@@ -106,6 +106,8 @@ namespace Remizione
         {
             if (items.Remove(item))
             {
+                if (SelectedItem == item)
+                    SelectedItem = null;
                 toString = null;
                 return true;
             }
@@ -119,15 +121,11 @@ namespace Remizione
             if (items.Contains(item))
             {
                 SelectedItem = item;
-                SelectedIndex = items.IndexOf(item);
                 return true;
             }
             else
                 return false;
         }
-
-        // SelectedIndex
-        public int SelectedIndex { get; private set; }
 
         // SelectedItem
         public Item? SelectedItem { get; private set; }

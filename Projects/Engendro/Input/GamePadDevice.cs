@@ -11,7 +11,6 @@ namespace Engendro.Input
         #region Private fields
 
         private static bool allowVibration = true;
-        private GamePadState currentState;
         private GamePadState previousState;
         private int suspendVibrationInterval;
         private readonly Timer vibrationTimer = new();
@@ -60,16 +59,13 @@ namespace Engendro.Input
 
         #region Protected members
 
-        // CanUpdate
-        protected override bool CanUpdate => InputManager.AllowGamePad && base.CanUpdate;
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             if (Player.AssignedGamepad.HasValue)
             {
-                previousState = currentState;
-                currentState = GamePad.GetState(Player.AssignedGamepad.Value, DeadZone);
+                previousState = State;
+                State = GamePad.GetState(Player.AssignedGamepad.Value, DeadZone);
 
                 if (vibrationTimer.IsRunning)
                 {
@@ -113,34 +109,34 @@ namespace Engendro.Input
         public override bool HasInput()
         {
             // Disconnected
-            if (!currentState.IsConnected)
+            if (!State.IsConnected)
                 return false;
 
             // Check buttons
-            if (currentState.Buttons.A == ButtonState.Pressed ||
-                currentState.Buttons.B == ButtonState.Pressed ||
-                currentState.Buttons.X == ButtonState.Pressed ||
-                currentState.Buttons.Y == ButtonState.Pressed ||
-                currentState.Buttons.Start == ButtonState.Pressed ||
-                currentState.Buttons.Back == ButtonState.Pressed ||
-                currentState.Buttons.LeftShoulder == ButtonState.Pressed ||
-                currentState.Buttons.RightShoulder == ButtonState.Pressed ||
-                currentState.Buttons.LeftStick == ButtonState.Pressed ||
-                currentState.Buttons.RightStick == ButtonState.Pressed ||
-                currentState.Buttons.BigButton == ButtonState.Pressed) // Botón Xbox/Home
+            if (State.Buttons.A == ButtonState.Pressed ||
+                State.Buttons.B == ButtonState.Pressed ||
+                State.Buttons.X == ButtonState.Pressed ||
+                State.Buttons.Y == ButtonState.Pressed ||
+                State.Buttons.Start == ButtonState.Pressed ||
+                State.Buttons.Back == ButtonState.Pressed ||
+                State.Buttons.LeftShoulder == ButtonState.Pressed ||
+                State.Buttons.RightShoulder == ButtonState.Pressed ||
+                State.Buttons.LeftStick == ButtonState.Pressed ||
+                State.Buttons.RightStick == ButtonState.Pressed ||
+                State.Buttons.BigButton == ButtonState.Pressed) // Botón Xbox/Home
                 return true;
 
             // Check triggers
-            if (currentState.Triggers.Left > 0.0f || currentState.Triggers.Right > 0.0f)
+            if (State.Triggers.Left > 0.0f || State.Triggers.Right > 0.0f)
                 return true;
 
             // Check sticks
-            if (currentState.ThumbSticks.Left.Length() > .1f || currentState.ThumbSticks.Right.Length() > .1f)
+            if (State.ThumbSticks.Left.Length() > .1f || State.ThumbSticks.Right.Length() > .1f)
                 return true;
 
             // Check DPad
-            if (currentState.DPad.Up == ButtonState.Pressed || currentState.DPad.Down == ButtonState.Pressed ||
-                currentState.DPad.Left == ButtonState.Pressed || currentState.DPad.Right == ButtonState.Pressed)
+            if (State.DPad.Up == ButtonState.Pressed || State.DPad.Down == ButtonState.Pressed ||
+                State.DPad.Left == ButtonState.Pressed || State.DPad.Right == ButtonState.Pressed)
                 return true;
 
             return false;
@@ -154,7 +150,7 @@ namespace Engendro.Input
 
             button = SwapButtonAccordingly(button);
 
-            return currentState.IsButtonDown(button);
+            return State.IsButtonDown(button);
         }
 
         // IsButtonPressed
@@ -165,7 +161,7 @@ namespace Engendro.Input
 
             button = SwapButtonAccordingly(button);
 
-            return currentState.IsButtonDown(button) && previousState.IsButtonUp(button);
+            return State.IsButtonDown(button) && previousState.IsButtonUp(button);
         }
 
         // IsButtonUp
@@ -176,33 +172,33 @@ namespace Engendro.Input
 
             button = SwapButtonAccordingly(button);
 
-            return currentState.IsButtonUp(button) && previousState.IsButtonDown(button);
+            return State.IsButtonUp(button) && previousState.IsButtonDown(button);
         }
 
         // IsConnected
-        public bool IsConnected => currentState.IsConnected;
+        public bool IsConnected => State.IsConnected;
 
         // LeftThumbStickPosition
-        public Vector2 LeftThumbStickPosition => currentState.ThumbSticks.Left;
+        public Vector2 LeftThumbStickPosition => State.ThumbSticks.Left;
 
         // LeftTriggerPosition
-        public float LeftTriggerPosition => currentState.Triggers.Left;
+        public float LeftTriggerPosition => State.Triggers.Left;
 
         // Reset
         public override void Reset()
         {
-            currentState = new GamePadState();
+            State = new GamePadState();
             previousState = new GamePadState();
         }
 
         // RightThumbStickPosition
-        public Vector2 RightThumbStickPosition => currentState.ThumbSticks.Right;
+        public Vector2 RightThumbStickPosition => State.ThumbSticks.Right;
 
         // RightTriggerPosition
-        public float RightTriggerPosition => currentState.Triggers.Right;
+        public float RightTriggerPosition => State.Triggers.Right;
 
-        // Style
-        public static GamePadStyle Style { get; set; }
+        // State
+        public GamePadState State { get; private set; }
 
         // StopVibration
         public void StopVibration()
@@ -212,6 +208,9 @@ namespace Engendro.Input
             if (Player.AssignedGamepad.HasValue)
                 GamePad.SetVibration(Player.AssignedGamepad.Value, 0, 0);
         }
+
+        // Style
+        public static GamePadStyle Style { get; set; }
 
         // SuspendVibration
         public void SuspendVibration(int duration) => suspendVibrationInterval = duration;

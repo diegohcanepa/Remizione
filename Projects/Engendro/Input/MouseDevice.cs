@@ -49,14 +49,18 @@ namespace Engendro.Input
 
         #region Protected members
 
-        // CanUpdate
-        protected override bool CanUpdate => InputManager.AllowMouse && base.CanUpdate;
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             previousState = state;
             state = Mouse.GetState();
+
+            if (state.LeftButton == ButtonState.Pressed || 
+                state.RightButton == ButtonState.Pressed || 
+                state.MiddleButton == ButtonState.Pressed ||
+                state.XButton1 == ButtonState.Pressed ||
+                state.XButton2 == ButtonState.Pressed)
+                InputManager.AllowMouse = true;
         }
 
         #endregion
@@ -108,9 +112,6 @@ namespace Engendro.Input
 
         // Reset
         public override void Reset() => previousState = state;
-
-        // State
-        public MouseState State => state;
 
         // Tag
         public object? Tag { get; set; }
