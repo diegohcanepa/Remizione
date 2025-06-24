@@ -30,7 +30,7 @@ namespace Remizione
             this.slotImage = new ImageSprite(Game, Atlases.UI.InventorySlotSelected)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -2),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -4),
                 Scale = ScaleInfo.UIElement.Medium
             };
 

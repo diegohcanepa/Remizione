@@ -18,6 +18,7 @@ namespace Remizione
             CloseWindowButton = this[nameof(CloseWindowButton)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
+            DialogArrowLarge = this[nameof(DialogArrowLarge)];
             FaithGainIcon = this[nameof(FaithGainIcon)];
             FaithIcon = this[nameof(FaithIcon)];
             GraceGainIcon = this[nameof(GraceGainIcon)];
@@ -70,6 +71,9 @@ namespace Remizione
 
         // CreditsBar
         public AtlasImage CreditsBar { get; }
+
+        // DialogArrowLarge
+        public AtlasImage DialogArrowLarge { get; }
 
         // InventorySlot
         public AtlasImage InventorySlot { get; }

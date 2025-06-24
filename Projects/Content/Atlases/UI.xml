@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:cc3da9e945674377f4c746add5a40cbc:710d22372fd2d04fbe651597bf4aa20a:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:27fac463ee9a2a4cb7b10f840219226f:350533a8ba720fb0d84a1bbea80f1701:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -22,13 +22,14 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 <TextureAtlas imagePath="UI.png" width="512" height="512">
     <sprite n="BottomGradient.png" x="268" y="90" w="240" h="53"/>
     <sprite n="ButtonContainer.png" x="183" y="71" w="44" h="13"/>
-    <sprite n="CharacterSheetContainer.png" x="268" y="246" w="100" h="117"/>
+    <sprite n="CharacterSheetContainer.png" x="268" y="251" w="100" h="117"/>
     <sprite n="CharacterSheetStatContainer.png" x="385" y="78" w="88" h="10"/>
     <sprite n="CheckMark.png" x="499" y="211" w="11" h="11"/>
     <sprite n="Chili.png" x="484" y="2" w="20" h="20"/>
     <sprite n="CloseWindowButton.png" x="486" y="199" w="11" h="12"/>
     <sprite n="ContextMenuOptionSelector.png" x="506" y="2" w="4" h="5"/>
     <sprite n="CreditsBar.png" x="2" y="2" w="480" h="67"/>
+    <sprite n="DialogArrowLarge.png" x="485" y="213" w="7" h="5"/>
     <sprite n="DialogOptionBullet.png" x="506" y="9" w="4" h="4"/>
     <sprite n="Duck.png" x="484" y="24" w="20" h="20"/>
     <sprite n="FaithGainIcon.png" x="36" y="71" w="15" h="14"/>
@@ -55,7 +56,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="KeyboardZ.png" x="311" y="494" w="12" h="12"/>
     <sprite n="MessageContainer.png" x="219" y="403" w="251" h="27"/>
     <sprite n="MissingItem.png" x="484" y="46" w="20" h="20"/>
-    <sprite n="MouseCursorArrow.png" x="485" y="213" w="6" h="6"/>
+    <sprite n="MouseCursorArrow.png" x="485" y="220" w="6" h="6"/>
     <sprite n="MouseCursorCross.png" x="500" y="185" w="9" h="11"/>
     <sprite n="MouseCursorCrossOn.png" x="500" y="198" w="9" h="11"/>
     <sprite n="MouseCursorWait.png" x="21" y="71" w="13" h="15"/>
@@ -71,12 +72,12 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="SpiritGainIcon.png" x="104" y="71" w="15" h="14"/>
     <sprite n="SpiritIcon.png" x="121" y="71" w="15" h="14"/>
     <sprite n="TipBalloon.png" x="229" y="71" w="12" h="13"/>
-    <sprite n="UIControlContainerEdgeLarge.png" x="485" y="221" w="5" h="11"/>
-    <sprite n="UIControlContainerEdgeLeftLarge.png" x="492" y="221" w="5" h="11"/>
+    <sprite n="UIControlContainerEdgeLarge.png" x="472" y="226" w="5" h="11"/>
+    <sprite n="UIControlContainerEdgeLeftLarge.png" x="493" y="224" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeLeftSmall.png" x="475" y="78" w="5" h="10"/>
-    <sprite n="UIControlContainerEdgeRightLarge.png" x="472" y="226" w="5" h="11"/>
-    <sprite n="UIControlContainerEdgeRightSmall.png" x="499" y="224" w="5" h="10"/>
-    <sprite n="UIControlContainerEdgeSmall.png" x="479" y="234" w="5" h="10"/>
+    <sprite n="UIControlContainerEdgeRightLarge.png" x="500" y="224" w="5" h="11"/>
+    <sprite n="UIControlContainerEdgeRightSmall.png" x="479" y="228" w="5" h="10"/>
+    <sprite n="UIControlContainerEdgeSmall.png" x="472" y="239" w="5" h="10"/>
     <sprite n="UIControlContainerPatternLarge.png" x="506" y="27" w="1" h="11"/>
     <sprite n="UIControlContainerPatternSmall.png" x="509" y="27" w="1" h="10"/>
     <sprite n="UIControlShade.png" x="243" y="71" w="50" h="12"/>

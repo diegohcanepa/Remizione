@@ -282,6 +282,29 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Sister-assets/Move01.png</key>
+            <key type="filename">Sister-assets/Move02.png</key>
+            <key type="filename">Sister-assets/Move03.png</key>
+            <key type="filename">Sister-assets/Move04.png</key>
+            <key type="filename">Sister-assets/Stand01.png</key>
+            <key type="filename">Sister-assets/StandHead01.png</key>
+            <key type="filename">Sister-assets/StandHead02.png</key>
+            <key type="filename">Sister-assets/TalkHead01.png</key>
+            <key type="filename">Sister-assets/TalkHead02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,7,19,13</rect>
+                <key>scale9Paddings</key>
+                <rect>10,7,19,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileLists</key>
         <map type="SpriteSheetMap">
@@ -293,6 +316,7 @@
                     <filename>Grandma-assets</filename>
                     <filename>Dog-assets</filename>
                     <filename>Reaper-assets</filename>
+                    <filename>Sister-assets</filename>
                 </array>
             </struct>
         </map>

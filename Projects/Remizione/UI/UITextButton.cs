@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,23 +8,18 @@ namespace Remizione
     /// <summary>
     /// UITextButton
     /// </summary>
-    public sealed class UITextButton : GameObject, IBoundingBox
+    public sealed class UITextButton : UIControl
     {
         #region Private fields
 
+        private RectangleF boundingBox;
         private readonly ImageSprite containerPattern;
         private readonly ImageSprite containerEdgeLeft;
         private const float horzImagePadding = 1.5f;
         private string? imageName;
         private readonly ImageSprite image;
-        private bool isEnabled = true;
-        private InputBinding? inputBinding;
         private readonly TextSprite label;
-        private const string KeyboardPrefix = "Keyboard";
-        private InputMethod lastKnownInputMethod;
         private RectanglePoint pivotOrigin;
-        private Vector2 position;
-        private bool small;
 
         #endregion
 
@@ -33,7 +27,7 @@ namespace Remizione
 
         // Constructor
         public UITextButton(EngendroGame game, InputBinding? inputBinding = null)
-            : base(game)
+            : base(game, inputBinding)
         {
             // Container
             this.containerPattern = new ImageSprite(Game)
@@ -53,11 +47,10 @@ namespace Remizione
             this.label = new TextSprite(game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
-                ShadowOffset = new(.5f)
+                //ShadowOffset = new(.5f)
             };
 
             this.image = new ImageSprite(game);
-            this.inputBinding = inputBinding;
             this.label.Text = inputBinding == null ? string.Empty : Localization.GetValue(inputBinding);
 
             Invalidate();
@@ -68,39 +61,38 @@ namespace Remizione
         #region Private members
 
         // Invalidate
-        private void Invalidate()
+        protected override void Invalidate()
         {
             // Image
-            image.Image = UIButton.GetInputBindingImage(ImageName, InputBinding);
-            image.Scale = small ? ScaleInfo.UIElement.Tiny : ScaleInfo.UIElement.Medium;
-            lastKnownInputMethod = InputManager.DefaultPlayer.LastInputMethod;
+            image.Image = GetInputBindingImage(ImageName, InputBinding);
+            image.Scale = Small ? ScaleInfo.UIElement.Tiny : ScaleInfo.UIElement.Medium;
 
             image.PivotOrigin = pivotOrigin;
             label.Scale = ScaleInfo.Text.Large;
 
-            containerPattern.Image = small ? Atlases.UI.UIControlContainerPatternSmall : Atlases.UI.UIControlContainerPatternLarge;
-            containerEdgeLeft.Image = small ? Atlases.UI.UIControlContainerEdgeSmall : Atlases.UI.UIControlContainerEdgeLarge;
+            containerPattern.Image = Small ? Atlases.UI.UIControlContainerPatternSmall : Atlases.UI.UIControlContainerPatternLarge;
+            containerEdgeLeft.Image = Small ? Atlases.UI.UIControlContainerEdgeSmall : Atlases.UI.UIControlContainerEdgeLarge;
 
             if (!image.IsEmpty)
             {
                 if (PivotOrigin == RectanglePoint.Right || PivotOrigin == RectanglePoint.RightBottom || PivotOrigin == RectanglePoint.RightTop)
                 {
-                    image.Position = position;
+                    image.Position = Position;
                     label.PivotOrigin = RectanglePoint.Right;
-                    label.Position = image.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, small ? .4f : .8f);
+                    label.Position = image.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, Small ? .4f : .8f);
                 }
                 else
                 {
-                    label.Position = position;
+                    label.Position = Position;
                     label.PivotOrigin = pivotOrigin;
                     label.X += image.BoundingBox.Width / 2;
                     image.PivotOrigin = RectanglePoint.Right;
-                    image.Position = label.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, small ? .4f : -.8f);
+                    image.Position = label.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, Small ? .4f : -.8f);
                 }
             }
 
             containerPattern.ScaleX = label.BoundingBox.Width + 7;
-            containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Middle, 0, -.3f).Y;
+            containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Middle, 0, -.1f).Y;
             containerEdgeLeft.Y = containerPattern.Y;
 
             if (PivotOrigin == RectanglePoint.Right || PivotOrigin == RectanglePoint.RightBottom || PivotOrigin == RectanglePoint.RightTop)
@@ -121,6 +113,8 @@ namespace Remizione
             }
 
             InvalidateBoundingBox();
+
+            label.OpacityFactor = IsEnabled ? 1 : .3f;
         }
 
         // InvalidateBoundingBox
@@ -130,19 +124,19 @@ namespace Remizione
 
             if (image.IsEmpty && labelBBox.IsEmpty)
             {
-                BoundingBox = RectangleF.Empty;
+                boundingBox = RectangleF.Empty;
             }
             else if (image.IsEmpty && !labelBBox.IsEmpty)
             {
-                BoundingBox = label.BoundingBox;
+                boundingBox = label.BoundingBox;
             }
             else if (!image.IsEmpty && labelBBox.IsEmpty)
             {
-                BoundingBox = image.BoundingBox;
+                boundingBox = image.BoundingBox;
             }
             else
             {
-                BoundingBox = RectangleF.Union(image.BoundingBox, containerPattern.BoundingBox, containerEdgeLeft.BoundingBox);
+                boundingBox = RectangleF.Union(image.BoundingBox, containerPattern.BoundingBox, containerEdgeLeft.BoundingBox);
             }
         }
 
@@ -184,29 +178,22 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (InputManager.DefaultPlayer.LastInputMethod != lastKnownInputMethod)
-                Invalidate();
+            base.OnUpdate(gameTime);
 
             image.Update(gameTime);
             label.Update(gameTime);
 
-            IsMouseOver = false;
-
-            if (IsEnabled)
-            {
-                if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
-                {
-                    IsMouseOver = BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);
-                    if (IsMouseOver)
-                        label.Color = ColorPalette.Text.Hover;
-                }
-            }
+            if (IsMouseOver)
+                label.Color = ColorPalette.Text.Hover;
         }
 
         #endregion
 
+        // AllowContainer
+        public bool AllowContainer { get; set; } = true;
+
         // BoundingBox
-        public RectangleF BoundingBox { get; private set; }
+        public override RectangleF BoundingBox => boundingBox;
 
         // HasText
         public bool HasText => !label.IsEmpty;
@@ -228,38 +215,6 @@ namespace Remizione
             }
         }
 
-        // InputBinding
-        public InputBinding? InputBinding
-        {
-            get => inputBinding;
-            set
-            {
-                if (value != inputBinding)
-                {
-                    inputBinding = value;
-                    lastKnownInputMethod = InputMethod.None;
-                    Invalidate();
-                }
-            }
-        }
-
-        // IsEnabled
-        public bool IsEnabled
-        {
-            get => isEnabled;
-            set
-            {
-                if (value != isEnabled)
-                {
-                    isEnabled = value;
-                    label.OpacityFactor = isEnabled ? 1 : .3f;
-                }
-            }
-        }
-
-        // IsMouseOver
-        public bool IsMouseOver { get; private set; }
-
         // PivotOrigin
         public RectanglePoint PivotOrigin
         {
@@ -272,62 +227,6 @@ namespace Remizione
                     Invalidate();
                 }
             }
-        }
-
-        // Position
-        public Vector2 Position
-        {
-            get => position;
-            set
-            {
-                if (value != position)
-                {
-                    position = value;
-                    Invalidate();
-                }
-            }
-        }
-
-        // Small
-        public bool Small
-        {
-            get => small;
-            set
-            {
-                if (value != small)
-                {
-                    small = value;
-                    Invalidate();
-                }
-            }
-        }
-
-        // Tag
-        public object? Tag { get; set; }
-
-        // TestPressed
-        public bool TestPressed(PlayerIndex playerIndex)
-        {
-            if (!IsEnabled)
-                return false;
-
-            var result = false;
-
-            if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad)
-            {
-                if (inputBinding != null && inputBinding.IsPressed(playerIndex))
-                    result = true;
-            }
-            else
-            {
-                if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() && IsMouseOver)
-                    result = true;
-            }
-
-            if (result)
-                Sound.Play(SoundNames.MenuSelect);
-
-            return result;
         }
 
         // Text
@@ -352,34 +251,6 @@ namespace Remizione
             {
                 if (value != label.Color)
                     label.Color = value;
-            }
-        }
-
-        // X
-        public float X
-        {
-            get => position.X;
-            set
-            {
-                if (value != position.X)
-                {
-                    position.X = value;
-                    Invalidate();
-                }
-            }
-        }
-
-        // Y
-        public float Y
-        {
-            get => position.Y;
-            set
-            {
-                if (value != position.Y)
-                {
-                    position.Y = value;
-                    Invalidate();
-                }
             }
         }
     }

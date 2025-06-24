@@ -13,8 +13,10 @@ namespace Remizione
         #region Private fields
 
         private InputBinding? inputBinding;
+        private bool isEnabled = true;
         private const string KeyboardPrefix = "Keyboard";
         private InputMethod lastKnownInputMethod;
+        private Vector2 position;
         private bool small;
 
         #endregion
@@ -26,7 +28,6 @@ namespace Remizione
             : base(game)
         {
             this.inputBinding = inputBinding;
-            Invalidate();
         }
 
         #endregion
@@ -66,19 +67,12 @@ namespace Remizione
             return string.IsNullOrWhiteSpace(imageName) ? null : atlas.GetImage(imageName);
         }
 
-        // Invalidate
-        private void Invalidate()
-        {
-            OnInvalidate();
-            lastKnownInputMethod = InputManager.DefaultPlayer.LastInputMethod;
-        }
-
         #endregion
 
         #region Protected members
 
-        // OnInvalidate
-        protected virtual void OnInvalidate()
+        // Invalidate
+        protected virtual void Invalidate()
         {
         }
 
@@ -86,7 +80,10 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             if (InputManager.DefaultPlayer.LastInputMethod != lastKnownInputMethod)
+            {
+                lastKnownInputMethod = InputManager.DefaultPlayer.LastInputMethod;
                 Invalidate();
+            }
 
             IsMouseOver = false;
 
@@ -117,10 +114,35 @@ namespace Remizione
         }
 
         // IsEnabled
-        public bool IsEnabled { get; set; }
+        public bool IsEnabled
+        {
+            get => isEnabled;
+            set
+            {
+                if (value != isEnabled)
+                {
+                    isEnabled = value;
+                    Invalidate();
+                }
+            }
+        }
 
         // IsMouseOver
         public bool IsMouseOver { get; private set; }
+
+        // Position
+        public Vector2 Position
+        {
+            get => position;
+            set
+            {
+                if (value != position)
+                {
+                    position = value;
+                    Invalidate();
+                }
+            }
+        }
 
         // Small
         public bool Small
@@ -162,6 +184,34 @@ namespace Remizione
                 Sound.Play(SoundNames.MenuSelect);
 
             return result;
+        }
+
+        // X
+        public float X
+        {
+            get => position.X;
+            set
+            {
+                if (value != position.X)
+                {
+                    position.X = value;
+                    Invalidate();
+                }
+            }
+        }
+
+        // Y
+        public float Y
+        {
+            get => position.Y;
+            set
+            {
+                if (value != position.Y)
+                {
+                    position.Y = value;
+                    Invalidate();
+                }
+            }
         }
     }
 }

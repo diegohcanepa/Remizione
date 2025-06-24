@@ -10,7 +10,7 @@ namespace Remizione
     /// </summary>
     public sealed class EchoScene : Scene
     {
-        private readonly UITextButton continueButton;
+        private readonly ImageSprite arrow;
         private readonly ImageSprite gradient;
         private readonly FloatTween opacityTween = new();
         private readonly TextSprite textSprite;
@@ -21,12 +21,16 @@ namespace Remizione
         public EchoScene(RemizioneGame game)
             : base(game, SceneSettings.None)
         {
-            // Continue button
-            this.continueButton = new UITextButton(Game, InputBindings.Continue)
+            // Arrow
+            this.arrow = new(game, Atlases.UI.DialogArrowLarge)
             {
-                PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom),
+                Color = ColorPalette.Text.Default,
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -5, -3),
+                Scale = ScaleInfo.UIElement.Medium
             };
+
+            arrow.Tweens.YTween = FloatTween.Create(TweenStyle.CubicInOut, arrow.Y, arrow.Y + 1, 250, -1);
 
             // Text sprite
             this.textSprite = new TextSprite(Game, Fonts.CommonOutline)
@@ -82,7 +86,9 @@ namespace Remizione
             textSprite.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            continueButton.Draw(gameTime);
+            Game.SpriteBatch.Begin(Game.Camera);
+            arrow.Draw(gameTime);
+            Game.SpriteBatch.End();
         }
 
         // OnHandleInput
@@ -91,7 +97,7 @@ namespace Remizione
             if (HandleMouseInput())
                 return HandleInputResult.Handled;
 
-            if (continueButton.TestPressed(PlayerIndex.One))
+            if (InputBindings.Continue.IsPressed(PlayerIndex.One))
             {
                 if (textSprite.IsTyping)
                     textSprite.StopTyping();
@@ -119,7 +125,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            continueButton.Update(gameTime);
+            arrow.Update(gameTime);
             textSprite.Update(gameTime);
         }
 

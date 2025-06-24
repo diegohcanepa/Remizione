@@ -29,7 +29,7 @@ namespace Engendro
         #region Internal members
 
         // InvalidateImage
-        public void InvalidateImage()
+        internal void InvalidateImage()
         {
             Image = Animation.Sprite.Atlas?.GetImage(Animation.Sprite.ImagePath + ImageName);
         }

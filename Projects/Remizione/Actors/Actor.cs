@@ -32,7 +32,7 @@ namespace Remizione
         private int level = 1;
         private int maxFaith;
         private readonly FloatTween moveBalancingTween = new();
-        private readonly FloatTween moveTween = new();
+        private readonly FloatTween moveVerticalTween = new();
         private GameThing? pendingInteractiveTarget;
         private readonly List<Vector2> pendingPathNodes = [];
         private PlayerNumber playerNumber = PlayerNumber.None;
@@ -278,8 +278,8 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (moveTween.IsRunning)
-                Y -= moveTween.CurrentValue;
+            if (moveVerticalTween.IsRunning)
+                Y -= moveVerticalTween.CurrentValue;
 
             if (moveBalancingTween.IsRunning)
                 Rotation += moveBalancingTween.CurrentValue;
@@ -300,8 +300,8 @@ namespace Remizione
 
             bloodSplash?.Draw(gameTime);
 
-            if (moveTween.IsRunning)
-                Y += moveTween.CurrentValue;
+            if (moveVerticalTween.IsRunning)
+                Y += moveVerticalTween.CurrentValue;
 
             if (moveBalancingTween.IsRunning)
                 Rotation -= moveBalancingTween.CurrentValue;
@@ -392,10 +392,10 @@ namespace Remizione
             StateMachine.ChangeState(ActorStateNames.Move);
 
             if (AllowMoveTween)
-                moveTween.Start(TweenStyle.QuadraticInOut, 0, .8f, 100, -1);
+                moveVerticalTween.Start(TweenStyle.QuadraticInOut, 0, .8f, 100, -1);
 
             if (AllowMoveBalancingTween)
-                moveBalancingTween.Start(TweenStyle.QuadraticInOut, 0, .05f, FastMove ? 100 : 200, -1);
+                moveBalancingTween.Start(TweenStyle.QuadraticInOut, 0, .02f, FastMove ? 100 : 200, -1);
 
             accelerationFactorTween.Start(TweenStyle.Linear, .4f, 1, 150);
         }
@@ -407,7 +407,7 @@ namespace Remizione
 
             FastMove = false;
             accelerationFactorTween.Stop();
-            moveTween.Stop();
+            moveVerticalTween.Stop();
             moveBalancingTween.Stop();
             tinyMoveSpeedFactor = 1;
 
@@ -467,7 +467,7 @@ namespace Remizione
 
             shadowSpot.Update(gameTime);
             speechBubble?.Update(gameTime);
-            moveTween.Update(gameTime);
+            moveVerticalTween.Update(gameTime);
             moveBalancingTween.Update(gameTime);
             UpdateDirection();
             UpdateFootstep();

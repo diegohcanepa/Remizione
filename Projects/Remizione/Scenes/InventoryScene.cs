@@ -105,6 +105,37 @@ namespace Remizione
 
         #region Private members
 
+        // GetSlotAt
+        private InventorySlot? GetSlotAt(Vector2 position)
+        {
+            for (int i = 0; i < slots.Length; i++)
+            {
+                if (slots[i].BoundingBox.Contains(position))
+                    return slots[i];
+            }
+         
+            return null;
+        }
+
+        // HandleMouseInput
+        private bool HandleMouseInput()
+        {
+            if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
+                return false;
+
+            if (GetSlotAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is InventorySlot slot)
+            {
+                if (slot.Item != null)
+                {
+                    SelectSlot(slot);
+                    MouseCursor.Instance.AnimateClick();
+                    Sound.Play(SoundNames.UINavigation);
+                }
+            }
+
+            return false;
+        }
+
         // LayoutSlots
         private void LayoutSlots()
         {
@@ -218,7 +249,7 @@ namespace Remizione
                 buttonSacrifice.Draw(gameTime);
 
                 Game.SpriteBatch.Begin(Game.Camera);
-                
+
                 if (selectedSlot.Item.MetaItem.SacrificeReward == SacrificeReward.Faith)
                 {
                     faithIcon.Position = buttonSacrifice.BoundingBox.GetPoint(RectanglePoint.Left);
@@ -242,6 +273,12 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
+            if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
+            {
+                if (HandleMouseInput())
+                    return HandleInputResult.Handled;
+            }
+
             // Close
             if (buttonClose.TestPressed(PlayerIndex.One))
             {
@@ -320,6 +357,9 @@ namespace Remizione
                 slots[i].Update(gameTime);
             }
 
+            if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
+                MouseCursor.Instance.State = GetSlotAt(InputManager.DefaultPlayer.Mouse.VirtualPosition)?.Item != null ? MouseCursorState.CrossOn : MouseCursorState.Cross;
+    
             base.OnUpdate(gameTime);
         }
 
