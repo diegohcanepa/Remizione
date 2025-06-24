@@ -15,7 +15,7 @@ namespace Remizione
         private UIPopupMenu<Item> activeMenu;
         private readonly UIInfoPanel infoPanel;
         private const int margin = 22;
-        private readonly UIControl moveButton;
+        private readonly UITextButton moveButton;
         private readonly ImageSprite playerContainer;
         private readonly ImageSprite selectionContainer;
         private readonly UIPopupMenu<Item> playerMenu;
@@ -76,13 +76,12 @@ namespace Remizione
             };
 
             // Move button
-            this.moveButton = new UIControl(Game, InputBindings.Interact)
+            this.moveButton = new UITextButton(Game, InputBindings.Interact)
             {
                 PivotOrigin = RectanglePoint.Middle,
                 X = Screen.Area.Center.X,
                 Y = playerContainer.BoundingBox.GetPoint(RectanglePoint.Middle).Y,
                 TextColor = ColorPalette.Text.Default,
-                TextScale = ScaleInfo.Text.VeryLarge,
                 Text = "Move"
             };
 

@@ -13,13 +13,13 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly UIControl actionButton;
+        private readonly UITextButton actionButton;
         private readonly bool allowAction;
         private readonly bool allowDiscard;
         //private readonly UIControl closeButton;
         private readonly ImageSprite container;
         private readonly ImageSprite containerSelection;
-        private readonly UIControl discardButton;
+        private readonly UITextButton discardButton;
         private readonly UIInfoPanel infoPanel;
         private readonly UIPopupMenu<Item> menu;
 
@@ -63,7 +63,7 @@ namespace Remizione
             };
 
             // Action
-            this.actionButton = new UIControl(game, InputBindings.Select)
+            this.actionButton = new UITextButton(game, InputBindings.Select)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 TextColor = ColorPalette.Text.Default
@@ -82,7 +82,7 @@ namespace Remizione
             */
 
             // Discard
-            this.discardButton = new UIControl(game, InputBindings.Select)
+            this.discardButton = new UITextButton(game, InputBindings.Select)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
                 //Text = Localization.EncodeKey(ItemAction.Discard),

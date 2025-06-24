@@ -22,9 +22,7 @@ namespace Remizione
         }
 
         // Attacks
-        internal static readonly InputBinding CloseAttack = InputManager.AddBinding(nameof(CloseAttack), Buttons.A, Keys.Z);
-        internal static readonly InputBinding Run = InputManager.AddBinding(nameof(Run), Buttons.B, Keys.Z);
-        internal static readonly InputBinding ThrowObject = InputManager.AddBinding(nameof(ThrowObject), Buttons.X, Keys.X);
+        internal static readonly InputBinding CloseAttack = InputManager.AddBinding(nameof(CloseAttack), Buttons.A);
 
         // Menu
         internal static readonly InputBinding Console = InputManager.AddBinding(nameof(Console), null, Keys.Tab);

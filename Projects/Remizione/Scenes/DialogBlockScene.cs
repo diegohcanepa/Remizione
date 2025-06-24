@@ -14,7 +14,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly UIControl buttonQuit;
+        private readonly UITextButton buttonQuit;
         private bool completed;
         private readonly DialogBlock dialogBlock;
         private readonly FloatTween fadeTween = new();
@@ -41,7 +41,7 @@ namespace Remizione
                 SelectInputBinding = InputBindings.SelectDialogOption
             };
 
-            this.buttonQuit = new UIControl(Game, InputBindings.Exit)
+            this.buttonQuit = new UITextButton(Game, InputBindings.Exit)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom),
@@ -118,7 +118,7 @@ namespace Remizione
 
             if (dialogBlock.AllowQuit)
             {
-                var buttons = new List<UIControl>();
+                var buttons = new List<UITextButton>();
 
                 if (dialogBlock.AllowQuit)
                     buttons.Add(buttonQuit);

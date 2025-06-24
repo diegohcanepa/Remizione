@@ -10,7 +10,7 @@ namespace Remizione.UI
     /// </summary>
     public sealed class UIPrompt : GameObject
     {
-        private readonly UIControl control;
+        private readonly UITextButton control;
         private readonly TextSprite label;
         private readonly GameSession session;
         private GameThing? target;
@@ -24,7 +24,6 @@ namespace Remizione.UI
             // Control
             this.control = new(Game, InputBindings.Interact)
             {
-                AllowContainer = true,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -2)
             };

@@ -32,7 +32,7 @@ namespace Remizione
         private RectangleF bubbleArea;
         private readonly ImageSprite bubbleImage;
         private readonly ImageSprite bubbleImage2;
-        private readonly UIControl button;
+        private readonly UITextButton button;
         private int buttonDrawDelay;
         private int inputCooldown;
         private readonly ImageSprite pipe;
@@ -65,9 +65,8 @@ namespace Remizione
             this.bubbleImage2 = new ImageSprite(Game, Atlases.UI.Pixel);
 
             // Button
-            this.button = new UIControl(Game, InputBindings.NextDialog)
+            this.button = new UITextButton(Game, InputBindings.NextDialog)
             {
-                DisplayMode = UIControlDisplayMode.ImageAndText,
                 PivotOrigin = RectanglePoint.RightBottom,
             };
 

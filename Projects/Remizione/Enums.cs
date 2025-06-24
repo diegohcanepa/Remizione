@@ -126,9 +126,6 @@ namespace Remizione
     // ThrowableBounceIntensity
     public enum ThrowableBounceIntensity { Low, Medium, High }
 
-    // UIControlDisplayMode
-    public enum UIControlDisplayMode { ImageAndText, ImageOnly }
-
     // UIControlGroupLayoutStyle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
 

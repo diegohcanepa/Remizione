@@ -10,7 +10,7 @@ namespace Remizione
     /// </summary>
     public sealed class EchoScene : Scene
     {
-        private readonly UIControl continueButton;
+        private readonly UITextButton continueButton;
         private readonly ImageSprite gradient;
         private readonly FloatTween opacityTween = new();
         private readonly TextSprite textSprite;
@@ -22,13 +22,10 @@ namespace Remizione
             : base(game, SceneSettings.None)
         {
             // Continue button
-            this.continueButton = new UIControl(Game, InputBindings.Continue)
+            this.continueButton = new UITextButton(Game, InputBindings.Continue)
             {
-                AllowContainer = true,
-                DisplayMode = UIControlDisplayMode.ImageOnly,
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom),
-                Small = true
             };
 
             // Text sprite

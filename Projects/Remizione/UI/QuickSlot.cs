@@ -18,7 +18,7 @@ namespace Remizione
         private int lastKnownCount;
         private Item? lastKnownItem;
         private readonly ImageSprite slotImage;
-        private readonly UIControl button;
+        private readonly UIButton button;
 
         #region Constructor
 
@@ -56,7 +56,7 @@ namespace Remizione
             this.button = new(game, InputBindings.UseItem)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, 2, -4),
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -2),
                 Small = true
             };
         }

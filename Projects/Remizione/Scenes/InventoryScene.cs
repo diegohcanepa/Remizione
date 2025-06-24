@@ -14,9 +14,9 @@ namespace Remizione
         #region Private fields
 
         private readonly ImageSprite bottomGradient;
-        private readonly UIControl buttonClose;
-        private readonly UIControl buttonInfo;
-        private readonly UIControl buttonSacrifice;
+        private readonly UITextButton buttonClose;
+        private readonly UITextButton buttonInfo;
+        private readonly UITextButton buttonSacrifice;
         private readonly ImageSprite faithIcon;
         private readonly ImageSprite graceIcon;
         private readonly TextSprite itemNameText;
@@ -42,17 +42,15 @@ namespace Remizione
             }
 
             // Close button
-            buttonClose = new UIControl(owner.Game, InputBindings.Close)
+            buttonClose = new UITextButton(owner.Game, InputBindings.Close)
             {
-                AllowContainer = true,
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom),
             };
 
             // Info button
-            buttonInfo = new UIControl(Game, InputBindings.Info)
+            buttonInfo = new UITextButton(Game, InputBindings.Info)
             {
-                AllowContainer = true,
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -10),
             };
@@ -67,9 +65,8 @@ namespace Remizione
             };
 
             // Sacrifice button
-            buttonSacrifice = new UIControl(owner.Game, InputBindings.Sacrifice)
+            buttonSacrifice = new UITextButton(owner.Game, InputBindings.Sacrifice)
             {
-                AllowContainer = true,
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -20),
             };

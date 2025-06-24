@@ -11,7 +11,7 @@ namespace Remizione.UI
     /// </summary>
     public sealed class UIControlGroup : GameObject
     {
-        private readonly List<UIControl> controlList = [];
+        private readonly List<UITextButton> controlList = [];
         private UIControlGroupLayoutStyle layoutStyle;
         private float spacing = 2;
 
@@ -19,7 +19,7 @@ namespace Remizione.UI
         public UIControlGroup(EngendroGame game)
             : base(game)
         {
-            this.Controls = new ReadOnlyCollection<UIControl>(controlList);
+            this.Controls = new ReadOnlyCollection<UITextButton>(controlList);
         }
 
         #region Protected members
@@ -63,15 +63,15 @@ namespace Remizione.UI
         #endregion
 
         // Add
-        public UIControl Add(string text, InputBinding? inputBinding)
+        public UITextButton Add(string text, InputBinding? inputBinding)
         {
             return Add(text, inputBinding);
         }
 
         // Add
-        public UIControl Add(string text, InputBinding? gameInput, string? imageName)
+        public UITextButton Add(string text, InputBinding? gameInput, string? imageName)
         {
-            UIControl control = new(Game, gameInput)
+            UITextButton control = new(Game, gameInput)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Text = text
@@ -90,10 +90,10 @@ namespace Remizione.UI
         }
 
         // Controls
-        public ReadOnlyCollection<UIControl> Controls { get; }
+        public ReadOnlyCollection<UITextButton> Controls { get; }
 
         // FirstControl
-        public UIControl? FirstControl => controlList.Count == 0 ? null : controlList[0];
+        public UITextButton? FirstControl => controlList.Count == 0 ? null : controlList[0];
 
         // IsActiveInGameLoop
         public override bool IsActiveInGameLoop => IsVisible && base.IsActiveInGameLoop;

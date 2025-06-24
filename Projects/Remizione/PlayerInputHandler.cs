@@ -111,7 +111,7 @@ namespace Remizione
 
             // Use item
             if (result)
-                Actor.UseCurrentInventoryItem();
+                Actor.PerformCloseAttack();
 
             return result;
         }
