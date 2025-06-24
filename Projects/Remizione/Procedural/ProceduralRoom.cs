@@ -100,6 +100,8 @@ namespace Remizione
                     }
                 }
 
+                WorldManager.Blocks[0].Expand(EngendroAdventure.Direction.Up);
+
                 worldBlockData.Clear();
             }
             WorldManager.EndUpdate();

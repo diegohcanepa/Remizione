@@ -18,7 +18,7 @@ namespace Remizione.UI
         private readonly TextSprite symbol1;
         private readonly TextSprite symbol2;
         private readonly TextSprite symbol3;
-        private readonly Vector2 textScale = ScaleInfo.Text.Huge;
+        private readonly Vector2 textScale = new Vector2(.12f);
 
         // Constructor
         public UICycleMeter(GameSession session)
@@ -27,10 +27,10 @@ namespace Remizione.UI
             this.session = session;
             this.lastKnownCycle = session.Environment.Cycle;
 
-            this.symbol1 = new(Game, Fonts.CommonOutline)
+            this.symbol3 = new(Game, Fonts.CommonOutline)
             {
-                PivotOrigin = RectanglePoint.Top,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -8, 1),
+                PivotOrigin = RectanglePoint.RightTop,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, 0, -1),
                 Scale = textScale,
                 Text = "6"
             };
@@ -38,17 +38,15 @@ namespace Remizione.UI
             this.symbol2 = new(Game, Fonts.CommonOutline)
             {
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = symbol1.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -4f, 0),
-                Rotation = 4,
+                Position = symbol3.BoundingBox.GetPoint(RectanglePoint.LeftTop, .5f, 0),
                 Scale = textScale,
                 Text = "6"
             };
 
-            this.symbol3 = new(Game, Fonts.CommonOutline)
+            this.symbol1 = new(Game, Fonts.CommonOutline)
             {
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = symbol1.BoundingBox.GetPoint(RectanglePoint.RightBottom, 1.2f, 3),
-                Rotation = -4,
+                Position = symbol2.BoundingBox.GetPoint(RectanglePoint.LeftTop, .5f, 0),
                 Scale = textScale,
                 Text = "6"
             };

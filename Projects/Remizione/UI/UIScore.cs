@@ -12,16 +12,22 @@ namespace Remizione.UI
         private const int duration = 2000;
 
         private int deltaScore;
+        private readonly ImageSprite icon;
         private bool isInitializing = true;
         private int score;
         private readonly TextSprite scoreText;
-        private readonly TextSprite titleText;
         private readonly FloatTween tween = new();
 
         // Constructor
-        public UIScore(RemizioneGame game, string title)
+        public UIScore(RemizioneGame game, AtlasImage iconImage)
             : base(game)
         {
+            // Icon
+            this.icon = new(game, iconImage)
+            {
+                Scale = ScaleInfo.UIElement.Small
+            };
+
             // Score text
             this.scoreText = new TextSprite(Game, Fonts.CommonOutline)
             {
@@ -29,26 +35,28 @@ namespace Remizione.UI
                 Scale = ScaleInfo.Text.Huge,
             };
 
-            // Title text
-            this.titleText = new TextSprite(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.TerraDark,
-                PivotOrigin = RectanglePoint.RightTop,
-                Scale = ScaleInfo.Text.VeryLarge,
-                Text = title
-            };
-
             this.Score = 0;
 
             isInitializing = true;
         }
 
-        #region Invalidate
+        #region Private members
 
         // Invalidate
         private void Invalidate()
         {
-            scoreText.Position = titleText.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1);
+            if (icon.PivotOrigin == RectanglePoint.RightBottom || 
+                icon.PivotOrigin == RectanglePoint.RightTop || 
+                icon.PivotOrigin == RectanglePoint.Right)
+            {
+                scoreText.PivotOrigin = RectanglePoint.Right;
+                scoreText.Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, 0, 1);
+            }
+            else
+            {
+                scoreText.PivotOrigin = RectanglePoint.Left;
+                scoreText.Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 0, 1);
+            }
         }
 
         #endregion
@@ -61,9 +69,12 @@ namespace Remizione.UI
             if (score == 0 && HideZero)
                 return;
 
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
+            icon.Draw(gameTime);
+            Game.SpriteBatch.End();
+
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.AlphaBlend, null);
             scoreText.Draw(gameTime);
-            titleText.Draw(gameTime);
             Game.SpriteBatch.End();
         }
 
@@ -85,7 +96,7 @@ namespace Remizione.UI
         #endregion
 
         // BoundingBox
-        public RectangleF BoundingBox => RectangleF.Intersects(scoreText.BoundingBox, titleText.BoundingBox);
+        public RectangleF BoundingBox => scoreText.BoundingBox;
 
         // Color
         public Color Color
@@ -100,23 +111,23 @@ namespace Remizione.UI
         // PivotOrigin
         public RectanglePoint PivotOrigin
         {
-            get => scoreText.PivotOrigin;
+            get => icon.PivotOrigin;
             set
             {
-                scoreText.PivotOrigin = value;
-                titleText.PivotOrigin = value;
+                icon.PivotOrigin = value;
+                Invalidate();
             }
         }
 
         // Position
         public Vector2 Position
         {
-            get => titleText.Position;
+            get => icon.Position;
             set
             {
-                if (value != titleText.Position)
+                if (value != icon.Position)
                 {
-                    titleText.Position = value;
+                    icon.Position = value;
                     Invalidate();
                 }
             }
@@ -136,7 +147,6 @@ namespace Remizione.UI
                     score = value;
                     scoreText.Text = score.ToString();
                     isInitializing = false;
-                    Invalidate();
                 }
             }
         }

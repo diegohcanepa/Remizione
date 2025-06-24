@@ -8,7 +8,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 2, AllowEmptyArg, BonusArg, DamageArg, DurabilityArg, FaithArg, HPArg, KnockbackArg, MaximumArg, ModifierArg, PassiveEffectCooldownArg, RangeArg, SacrificeRewardArg, SoundArg)
+            : base(script, source, body, 2, AllowEmptyArg, BonusArg, DamageArg, DurabilityArg, FaithArg, HPArg, KnockbackArg, MaximumArg, ModifierArg, PassiveEffectCooldownArg, RangeArg, SacrificeRewardArg, SacrificeRewardAmountArg, SoundArg)
         {
             var name = Parser.ParseName(this, 0);
             var category = Parser.ParseEnum<MetaItemCategory>(this, 1);
@@ -23,12 +23,14 @@ namespace Remizione.Scripting
             var passiveEffectCooldown = Parser.ParseInt32Argument(this, PassiveEffectCooldownArg);
             var range = Parser.ParseInt32Argument(this, RangeArg);
             var sacrificeReward = Parser.ParseEnumArgument(this, SacrificeRewardArg, SacrificeReward.Faith);
+            var sacrificeRewardAmount = Parser.ParseEnumArgument(this, SacrificeRewardAmountArg, 1);
             var sound = Parser.ParseSoundArgument(this, SoundArg);
 
             _ = new MetaItem(name, category, passiveEffectCooldown, baseDamage, modifier, bonus, knockback, maximum, hp, fp, range, durability, sound)
             {
                 AllowEmpty = HasArg(AllowEmptyArg),
-                SacrificeReward = sacrificeReward
+                SacrificeReward = sacrificeReward,
+                SacrificeRewardAmount = sacrificeRewardAmount
             };
         }
     }

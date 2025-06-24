@@ -35,7 +35,7 @@ namespace Remizione.UI
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Middle,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -7),
-                Scale = ScaleInfo.Text.VeryLarge
+                Scale = ScaleInfo.Text.Huge
             };
         }
 
@@ -46,14 +46,16 @@ namespace Remizione.UI
         {
             if (session.IsCurrentScene && target != null)
             {
-                if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
+                if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad)
+                {
+                    control.Draw(gameTime);
+                }
+                else
                 {
                     Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
                     label.Draw(gameTime);
                     Game.SpriteBatch.End();
                 }
-                else
-                    control.Draw(gameTime);
             }
         }
 

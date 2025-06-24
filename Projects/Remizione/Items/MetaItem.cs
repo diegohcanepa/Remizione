@@ -105,6 +105,9 @@ namespace Remizione
         // SacrificeReward
         public SacrificeReward SacrificeReward { get; init; } = SacrificeReward.Faith;
 
+        // SacrificeRewardAmount
+        public int SacrificeRewardAmount { get; init; } = 1;
+
         // Sound
         public Sound? Sound { get; }
 

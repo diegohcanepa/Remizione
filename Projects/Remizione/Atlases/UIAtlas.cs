@@ -20,6 +20,8 @@ namespace Remizione
             CreditsBar = this[nameof(CreditsBar)];
             FaithGainIcon = this[nameof(FaithGainIcon)];
             FaithIcon = this[nameof(FaithIcon)];
+            GraceGainIcon = this[nameof(GraceGainIcon)];
+            GraceIcon = this[nameof(GraceIcon)];
             InventorySlot = this[nameof(InventorySlot)];
             InventorySlotSelected = this[nameof(InventorySlotSelected)];
             InventorySlotSelection = this[nameof(InventorySlotSelection)];
@@ -90,6 +92,12 @@ namespace Remizione
         // FaithIcon
         public AtlasImage FaithIcon { get; }
 
+        // GraceGainIcon
+        public AtlasImage GraceGainIcon { get; }
+
+        // GraceIcon
+        public AtlasImage GraceIcon { get; }
+
         // MessageContainer
         public AtlasImage MessageContainer { get; }
 
@@ -135,13 +143,13 @@ namespace Remizione
         // SpiritIcon
         public AtlasImage SpiritIcon { get; }
 
-        // UIControlContainerEdgeLarge
+        // UIControlContainerEdgeLeftLarge
         public AtlasImage UIControlContainerEdgeLarge { get; }
 
         // UIControlContainerPatternLarge
         public AtlasImage UIControlContainerPatternLarge { get; }
 
-        // UIControlContainerEdgeSmall
+        // UIControlContainerEdgeLeftSmall
         public AtlasImage UIControlContainerEdgeSmall { get; }
 
         // UIControlContainerPatternSmall

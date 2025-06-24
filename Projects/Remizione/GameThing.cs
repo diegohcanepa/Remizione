@@ -486,7 +486,7 @@ namespace Remizione
             if (hitType == HitType.Critical)
                 damageText += " " + TextRepository.GetValue("HitType.Critical");
 
-            Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), damageText, damageTextColor);
+            Session.ObjectPools.FloatingTexts.Get()?.ShowAsDamage(GetFloatingTextPosition(knockback), damageText, damageTextColor);
 
             if (MaxHP > 0)
             {

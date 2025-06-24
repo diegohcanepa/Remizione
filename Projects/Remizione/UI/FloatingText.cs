@@ -13,6 +13,7 @@ namespace Remizione
         private readonly FloatTween opacityTween = new();
         private readonly GameSession session;
         private readonly TextSprite text;
+        private readonly FloatTween xTween = new();
         private readonly FloatTween yTween = new();
 
         // Constructor
@@ -28,6 +29,32 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.Bottom
             };
         }
+
+        #region Private members
+
+        // ShowCore
+        private void ShowCore(Vector2 origin, string value, Color color, Vector2 distance, int duration)
+        {
+            if (duration < fadeDuration)
+                duration = fadeDuration;
+
+            text.Color = color;
+            text.Text = value;
+            text.Position = origin;
+            yTween.Start(TweenStyle.CubicOut, origin.Y, origin.Y + distance.Y, duration);
+
+            if (distance.X != 0)
+                xTween.Start(TweenStyle.CubicOut, origin.X, origin.X + distance.X, duration);
+
+            opacityTween.StartDelay = duration - fadeDuration;
+            opacityTween.Start(TweenStyle.CubicIn, 1, 0, fadeDuration);
+
+            text.Tweens.OpacityTween = opacityTween;
+            text.Tweens.XTween = xTween;
+            text.Tweens.YTween = yTween;
+        }
+
+        #endregion
 
         #region Protected members
 
@@ -49,29 +76,21 @@ namespace Remizione
         #endregion
 
         // IsVisible
-        public bool IsVisible => yTween.IsRunning || opacityTween.IsRunning;
+        public bool IsVisible => xTween.IsRunning || yTween.IsRunning || opacityTween.IsRunning;
 
         // MessageId
         public int MessageId { get; set; }
 
         // Show
-        public void Show(Vector2 origin, string value) => Show(origin, value, ColorPalette.Text.Default);
-
-        // Show
         public void Show(Vector2 origin, string value, Color color, int duration = 1000)
         {
-            if (duration < fadeDuration)
-                duration = fadeDuration;
+            ShowCore(origin, value, color, new Vector2(2, 0), duration);
+        }
 
-            text.Color = color;
-            text.Text = value;
-            text.Position = origin;
-            yTween.Start(TweenStyle.CubicOut, origin.Y, origin.Y - 2, duration);
-            opacityTween.StartDelay = duration - fadeDuration;
-            opacityTween.Start(TweenStyle.CubicIn, 1, 0, fadeDuration);
-
-            text.Tweens.OpacityTween = opacityTween;
-            text.Tweens.YTween = yTween;
+        // ShowAsDamage
+        public void ShowAsDamage(Vector2 origin, string value, Color color)
+        {
+            ShowCore(origin, value, color, new Vector2(Randomizer.Next(-5, 5), Randomizer.Next(-12, -1)), 1000);
         }
     }
 }

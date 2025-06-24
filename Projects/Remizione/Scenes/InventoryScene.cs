@@ -14,10 +14,11 @@ namespace Remizione
         #region Private fields
 
         private readonly ImageSprite bottomGradient;
+        private readonly UIControl buttonClose;
         private readonly UIControl buttonInfo;
         private readonly UIControl buttonSacrifice;
         private readonly ImageSprite faithIcon;
-        private readonly UIControl buttonClose;
+        private readonly ImageSprite graceIcon;
         private readonly TextSprite itemNameText;
         private InventorySlot? selectedSlot;
         private readonly ImageSprite spiritIcon;
@@ -88,6 +89,13 @@ namespace Remizione
                 Scale = ScaleInfo.UIElement.Small
             };
 
+            // Grace icon
+            this.graceIcon = new(owner.Game, Atlases.UI.GraceGainIcon)
+            {
+                PivotOrigin = RectanglePoint.Right,
+                Scale = ScaleInfo.UIElement.Small
+            };
+
             // Spirit icon
             this.spiritIcon = new(owner.Game, Atlases.UI.SpiritGainIcon)
             {
@@ -115,6 +123,25 @@ namespace Remizione
                 var x = start + (i * (slotSize + spacing));
                 slots[i].Position = new(x, 120);
             }
+        }
+
+        // Sacrifice
+        private void Sacrifice(Item item)
+        {
+            if (item.MetaItem.SacrificeReward == SacrificeReward.Spirit)
+                Owner.HP += item.MetaItem.SacrificeRewardAmount;
+
+            else if (item.MetaItem.SacrificeReward == SacrificeReward.Faith)
+                Owner.Faith += item.MetaItem.SacrificeRewardAmount;
+
+            else if (item.MetaItem.SacrificeReward == SacrificeReward.Grace)
+                Owner.Grace += item.MetaItem.SacrificeRewardAmount;
+
+            item.Remove();
+            if (selectedSlot?.Item == item)
+                selectedSlot.Item = null;
+
+            Populate();
         }
 
         // SelectNextItem
@@ -194,16 +221,23 @@ namespace Remizione
                 buttonSacrifice.Draw(gameTime);
 
                 Game.SpriteBatch.Begin(Game.Camera);
+                
                 if (selectedSlot.Item.MetaItem.SacrificeReward == SacrificeReward.Faith)
                 {
                     faithIcon.Position = buttonSacrifice.BoundingBox.GetPoint(RectanglePoint.Left);
                     faithIcon.Draw(gameTime);
+                }
+                else if (selectedSlot.Item.MetaItem.SacrificeReward == SacrificeReward.Grace)
+                {
+                    graceIcon.Position = buttonSacrifice.BoundingBox.GetPoint(RectanglePoint.Left);
+                    graceIcon.Draw(gameTime);
                 }
                 else
                 {
                     spiritIcon.Position = buttonSacrifice.BoundingBox.GetPoint(RectanglePoint.Left);
                     spiritIcon.Draw(gameTime);
                 }
+
                 Game.SpriteBatch.End();
             }
         }
@@ -211,8 +245,14 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
+            // Close
+            if (buttonClose.TestPressed(PlayerIndex.One))
+            {
+                SceneController.Pop();
+            }
+
             // Previous item
-            if (InputBindings.SelectLeft.IsPressed(PlayerIndex.One) || stick.IsLeft(PlayerIndex.One))
+            else if (InputBindings.SelectLeft.IsPressed(PlayerIndex.One) || stick.IsLeft(PlayerIndex.One))
             {
                 if (SelectPreviousItem())
                     Sound.Play(SoundNames.UINavigation);
@@ -226,22 +266,18 @@ namespace Remizione
             }
 
             // Sacrifice
-            else if (selectedSlot?.Item is Item item && InputBindings.Sacrifice.IsPressed(PlayerIndex.One))
+            else if (selectedSlot?.Item is Item item)
             {
-                if (item.MetaItem.SacrificeReward == SacrificeReward.Spirit)
-                    Owner.HP += 1;
+                if (buttonSacrifice.TestPressed(PlayerIndex.One))
+                {
+                    Sacrifice(item);
+                }
 
-                else if (item.MetaItem.SacrificeReward == SacrificeReward.Faith)
-                    Owner.Faith += 1;
+                else if (buttonInfo.TestPressed(PlayerIndex.One))
+                {
 
-                item.Remove();
-                selectedSlot.Item = null;
-                Populate();
+                }
             }
-
-            // Close
-            else if (InputBindings.Close.IsPressed(PlayerIndex.One))
-                SceneController.Pop();
 
             return HandleInputResult.Handled;
         }

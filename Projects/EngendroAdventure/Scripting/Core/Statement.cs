@@ -87,6 +87,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string ReverseArg = "#reverse";
         protected static readonly string RightArg = "#right";
         protected static readonly string RightTriggerArg = "#right-trigger";
+        protected static readonly string SacrificeRewardAmountArg = "#sacrifice-reward-amount";
         protected static readonly string SacrificeRewardArg = "#sacrifice-reward";
         protected static readonly string ScaleArg = "#scale";
         protected static readonly string ScopeArg = "#scope";

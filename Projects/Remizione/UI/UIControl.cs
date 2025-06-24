@@ -15,7 +15,8 @@ namespace Remizione
 
         private bool allowContainer;
         private readonly ImageSprite containerPattern;
-        private readonly ImageSprite containerEdge;
+        private readonly ImageSprite containerEdgeLeft;
+        private readonly ImageSprite containerEdgeRight;
         private UIControlDisplayMode displayMode;
         private const float horzImagePadding = 1.5f;
         private string? imageName;
@@ -44,10 +45,17 @@ namespace Remizione
                 Scale = ScaleInfo.UIElement.Medium
             };
 
-            // ContainerEdge
-            this.containerEdge = new ImageSprite(Game)
+            // ContainerEdgeLeft
+            this.containerEdgeLeft = new ImageSprite(Game)
             {
                 PivotOrigin = RectanglePoint.Right,
+                Scale = ScaleInfo.UIElement.Medium
+            };
+
+            // ContainerEdgeRight
+            this.containerEdgeRight = new ImageSprite(Game)
+            {
+                PivotOrigin = RectanglePoint.Left,
                 Scale = ScaleInfo.UIElement.Medium
             };
 
@@ -123,7 +131,7 @@ namespace Remizione
                 label.Scale = ScaleInfo.Text.Large;
 
                 containerPattern.Image = small ? Atlases.UI.UIControlContainerPatternSmall : Atlases.UI.UIControlContainerPatternLarge;
-                containerEdge.Image = small ? Atlases.UI.UIControlContainerEdgeSmall : Atlases.UI.UIControlContainerEdgeLarge;
+                containerEdgeLeft.Image = small ? Atlases.UI.UIControlContainerEdgeSmall : Atlases.UI.UIControlContainerEdgeLarge;
 
                 if (!image.IsEmpty)
                 {
@@ -147,23 +155,23 @@ namespace Remizione
                 {
                     containerPattern.ScaleX = TextBoundingBox.Width + 7;
                     containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Middle, 0, -.3f).Y;
-                    containerEdge.Y = containerPattern.Y;
+                    containerEdgeLeft.Y = containerPattern.Y;
 
                     if (PivotOrigin == RectanglePoint.Right || PivotOrigin == RectanglePoint.RightBottom || PivotOrigin == RectanglePoint.RightTop)
                     {
-                        containerEdge.Effects = SpriteEffects.None;
-                        containerEdge.PivotOrigin = RectanglePoint.Right;
+                        containerEdgeLeft.Effects = SpriteEffects.None;
+                        containerEdgeLeft.PivotOrigin = RectanglePoint.Right;
                         containerPattern.PivotOrigin = RectanglePoint.Right;
                         containerPattern.X = ImageBoundingBox.GetPoint(RectanglePoint.Left).X + 5;
-                        containerEdge.X = containerPattern.BoundingBox.GetPoint(RectanglePoint.Left).X;
+                        containerEdgeLeft.X = containerPattern.BoundingBox.GetPoint(RectanglePoint.Left).X;
                     }
                     else
                     {
-                        containerEdge.Effects = SpriteEffects.FlipHorizontally;
-                        containerEdge.PivotOrigin = RectanglePoint.Left;
+                        containerEdgeLeft.Effects = SpriteEffects.FlipHorizontally;
+                        containerEdgeLeft.PivotOrigin = RectanglePoint.Left;
                         containerPattern.PivotOrigin = RectanglePoint.Left;
                         containerPattern.X = ImageBoundingBox.GetPoint(RectanglePoint.Right).X - 5;
-                        containerEdge.X = containerPattern.BoundingBox.GetPoint(RectanglePoint.Right).X;
+                        containerEdgeLeft.X = containerPattern.BoundingBox.GetPoint(RectanglePoint.Right).X;
                     }
                 }
 
@@ -190,7 +198,7 @@ namespace Remizione
             }
             else if (allowContainer)
             {
-                BoundingBox = RectangleF.Union(image.BoundingBox, containerPattern.BoundingBox, containerEdge.BoundingBox);
+                BoundingBox = RectangleF.Union(image.BoundingBox, containerPattern.BoundingBox, containerEdgeLeft.BoundingBox);
             }
             else
             {
@@ -224,7 +232,7 @@ namespace Remizione
                 if (AllowContainer && DisplayMode != UIControlDisplayMode.ImageOnly)
                 {
                     containerPattern.Draw(gameTime);
-                    containerEdge.Draw(gameTime);
+                    containerEdgeLeft.Draw(gameTime);
                 }
 
                 image.Draw(gameTime);
@@ -401,11 +409,16 @@ namespace Remizione
 
             var result = false;
 
-            if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() && IsMouseOver)
-                result = true;
-
-            if (inputBinding != null && inputBinding.IsPressed(playerIndex))
-                result = true;
+            if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad)
+            {
+                if (inputBinding != null && inputBinding.IsPressed(playerIndex))
+                    result = true;
+            }
+            else
+            {
+                if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() && IsMouseOver)
+                    result = true;
+            }
 
             if (result)
                 Sound.Play(SoundNames.MenuSelect);

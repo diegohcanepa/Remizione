@@ -27,7 +27,7 @@ namespace Remizione
     public enum Cycle { Indulgence, Penance }
 
     // DerivedStat
-    public enum DerivedStat { Spirit, Faith }
+    public enum DerivedStat { Spirit, Faith, Grace }
 
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
@@ -106,7 +106,7 @@ namespace Remizione
     public enum RoomSampler { PointClamp, LinearClamp }
 
     // SacrificeReward
-    public enum SacrificeReward { Faith, Spirit }
+    public enum SacrificeReward { Faith, Spirit, Grace }
 
     // ShadowSpotSize
     public enum ShadowSpotSize { None, W6, W7, W8, W11, W14 }

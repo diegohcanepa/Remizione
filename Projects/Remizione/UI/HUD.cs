@@ -47,11 +47,11 @@ namespace Remizione
             };
 
             // Grace
-            this.grace = new UIScore(session.Game, TextRepository.GetValue("ActorProperty.Grace.Name"))
+            this.grace = new UIScore(session.Game, Atlases.UI.GraceIcon)
             {
                 HideZero = true,
-                PivotOrigin = RectanglePoint.RightTop,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -5, -15),
+                PivotOrigin = RectanglePoint.RightBottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -4, -4),
             };
 
             // Prompt
@@ -84,6 +84,8 @@ namespace Remizione
 
                 playerStats.Draw(gameTime);
 
+                grace.Draw(gameTime);
+
                 if (!savingIcon.Tweens.IsTweening)
                     cycleMeter.Draw(gameTime);
             }
@@ -93,9 +95,6 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             prompt.Draw(gameTime);
-
-            //if (session.Player != null && session.FullHUD)
-            //grace.Draw(gameTime);
 
             Log.Draw(gameTime);
 
