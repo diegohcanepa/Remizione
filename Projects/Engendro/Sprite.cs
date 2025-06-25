@@ -17,7 +17,6 @@ namespace Engendro
         private AtlasImage? internalImage;
         private float opacity = 1;
         private float opacityFactor = 1;
-        private Vector2 origin;
         private RectanglePoint pivotOrigin;
         private Vector2 position;
         private float rotation;
@@ -31,6 +30,7 @@ namespace Engendro
         protected Sprite(EngendroGame game)
             : base(game)
         {
+            this.Pivot = new SpritePivot(this);
             this.Tweens = new TweenManager(this);
         }
 
@@ -91,12 +91,12 @@ namespace Engendro
             if (InternalImage.TextureArea.IsEmpty)
             {
                 // No, so draw the entire texture
-                Game.SpriteBatch.Draw(InternalImage.Atlas.Texture, pos, null, Color * opacity * OpacityFactor, Rotation, Origin, Scale, Effects, 0);
+                Game.SpriteBatch.Draw(InternalImage.Atlas.Texture, pos, null, Color * opacity * OpacityFactor, Rotation, Pivot.Position, Scale, Effects, 0);
             }
             else
             {
                 // Yes, so just draw the specified SourceRect
-                Game.SpriteBatch.Draw(InternalImage.Atlas.Texture, pos, InternalImage.TextureArea, Color * opacity * OpacityFactor, Rotation, Origin, Scale, Effects, 0);
+                Game.SpriteBatch.Draw(InternalImage.Atlas.Texture, pos, InternalImage.TextureArea, Color * opacity * OpacityFactor, Rotation, Pivot.Position, Scale, Effects, 0);
             }
         }
 
@@ -164,7 +164,7 @@ namespace Engendro
                     }
                     else
                     {
-                        var origin = this.Origin;
+                        var origin = this.Pivot.Position;
 
                         boundingBox = new RectangleF(X + (-origin.X * ScaleX) + (VisualParent == null ? 0 : VisualParent.X),
                                                      Y + (-origin.Y * ScaleY) + (VisualParent == null ? 0 : VisualParent.Y) - Altitude,
@@ -362,71 +362,8 @@ namespace Engendro
             }
         }
 
-        // Origin
-        public Vector2 Origin
-        {
-            get
-            {
-                switch (PivotOrigin)
-                {
-                    // Bottom
-                    case RectanglePoint.Bottom:
-                        origin.X = Width / 2;
-                        origin.Y = Height;
-                        break;
-
-                    // LeftBottom
-                    case RectanglePoint.LeftBottom:
-                        origin.X = 0;
-                        origin.Y = Height;
-                        break;
-
-                    // RightBottom
-                    case RectanglePoint.RightBottom:
-                        origin.X = Width;
-                        origin.Y = Height;
-                        break;
-
-                    // Left
-                    case RectanglePoint.Left:
-                        origin.X = 0;
-                        origin.Y = Height / 2;
-                        break;
-
-                    // Middle
-                    case RectanglePoint.Middle:
-                        origin.X = Width / 2;
-                        origin.Y = Height / 2;
-                        break;
-
-                    // Right
-                    case RectanglePoint.Right:
-                        origin.X = Width;
-                        origin.Y = Height / 2;
-                        break;
-
-                    // Top
-                    case RectanglePoint.Top:
-                        origin.X = Width / 2;
-                        origin.Y = 0;
-                        break;
-
-                    // LeftTop
-                    case RectanglePoint.LeftTop:
-                        origin.X = 0;
-                        origin.Y = 0;
-                        break;
-
-                    // RightTop
-                    case RectanglePoint.RightTop:
-                        origin.X = Width;
-                        origin.Y = 0;
-                        break;
-                }
-
-                return origin;
-            }
-        }
+        // Pivot
+        public SpritePivot Pivot { get; }
 
         // PivotOrigin
         public RectanglePoint PivotOrigin
@@ -582,6 +519,120 @@ namespace Engendro
                     position.Y = value;
                     IsBoundingBoxDirty = true;
                     OnTransform(TransformChange.Position);
+                }
+            }
+        }
+
+        /// <summary>
+        /// SpritePivot
+        /// </summary>
+        public sealed class SpritePivot
+        {
+            private Vector2 position;
+            private readonly Sprite sprite;
+
+            // Constructor
+            internal SpritePivot(Sprite sprite)
+            {
+                this.sprite = sprite;
+            }
+
+            // AtBottom
+            public bool AtBottom => sprite.PivotOrigin == RectanglePoint.LeftBottom ||
+                                    sprite.PivotOrigin == RectanglePoint.RightBottom ||
+                                    sprite.PivotOrigin == RectanglePoint.Bottom;
+
+            // AtLeft
+            public bool AtLeft => sprite.PivotOrigin == RectanglePoint.LeftBottom ||
+                                  sprite.PivotOrigin == RectanglePoint.LeftTop ||
+                                  sprite.PivotOrigin == RectanglePoint.Left;
+
+            // AtMiddle
+            public bool AtMiddle => sprite.PivotOrigin == RectanglePoint.Middle;
+
+            // AtMiddleX
+            public bool AtMiddleX => sprite.PivotOrigin == RectanglePoint.Bottom ||
+                                     sprite.PivotOrigin == RectanglePoint.Top ||
+                                     sprite.PivotOrigin == RectanglePoint.Middle;
+
+            // AtMiddleY
+            public bool AtMiddleY => sprite.PivotOrigin == RectanglePoint.Left ||
+                                     sprite.PivotOrigin == RectanglePoint.Right ||
+                                     sprite.PivotOrigin == RectanglePoint.Middle;
+
+            // AtRight
+            public bool AtRight => sprite.PivotOrigin == RectanglePoint.RightBottom ||
+                                   sprite.PivotOrigin == RectanglePoint.RightTop ||
+                                   sprite.PivotOrigin == RectanglePoint.Right;
+
+            // AtTop
+            public bool AtTop => sprite.PivotOrigin == RectanglePoint.LeftTop ||
+                                 sprite.PivotOrigin == RectanglePoint.RightTop ||
+                                 sprite.PivotOrigin == RectanglePoint.Top;
+
+            // Position
+            public Vector2 Position
+            {
+                get
+                {
+                    switch (sprite.PivotOrigin)
+                    {
+                        // Bottom
+                        case RectanglePoint.Bottom:
+                            position.X = sprite.Width / 2;
+                            position.Y = sprite.Height;
+                            break;
+
+                        // LeftBottom
+                        case RectanglePoint.LeftBottom:
+                            position.X = 0;
+                            position.Y = sprite.Height;
+                            break;
+
+                        // RightBottom
+                        case RectanglePoint.RightBottom:
+                            position.X = sprite.Width;
+                            position.Y = sprite.Height;
+                            break;
+
+                        // Left
+                        case RectanglePoint.Left:
+                            position.X = 0;
+                            position.Y = sprite.Height / 2;
+                            break;
+
+                        // Middle
+                        case RectanglePoint.Middle:
+                            position.X = sprite.Width / 2;
+                            position.Y = sprite.Height / 2;
+                            break;
+
+                        // Right
+                        case RectanglePoint.Right:
+                            position.X = sprite.Width;
+                            position.Y = sprite.Height / 2;
+                            break;
+
+                        // Top
+                        case RectanglePoint.Top:
+                            position.X = sprite.Width / 2;
+                            position.Y = 0;
+                            break;
+
+                        // LeftTop
+                        case RectanglePoint.LeftTop:
+                            position.X = 0;
+                            position.Y = 0;
+                            break;
+
+                        // RightTop
+                        case RectanglePoint.RightTop:
+                            position.X = sprite.Width;
+                            position.Y = 0;
+                            break;
+                    }
+
+                    return position;
                 }
             }
         }

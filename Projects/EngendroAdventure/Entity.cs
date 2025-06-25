@@ -587,9 +587,6 @@ namespace EngendroAdventure
             set => Sprite.Opacity = value;
         }
 
-        // Origin
-        public Vector2 Origin => Sprite.Origin;
-
         // Parent
         public Entity? Parent
         {
@@ -638,6 +635,9 @@ namespace EngendroAdventure
                 this.persistent = value;
             }
         }
+
+        // Origin
+        public Vector2 Origin => Sprite.Pivot.Position;
 
         // PivotOrigin
         [ScriptProperty]

@@ -70,5 +70,37 @@ namespace Engendro
 
             return position;
         }
+
+        // HasBottomPivot
+        public static bool HasBottomPivot(RectanglePoint value)
+        {
+            return value == RectanglePoint.LeftBottom ||
+                   value == RectanglePoint.RightBottom ||
+                   value == RectanglePoint.Bottom;
+        }
+
+        // HasLeftPivot
+        public static bool HasLeftPivot(RectanglePoint value)
+        {
+            return value == RectanglePoint.LeftBottom ||
+                   value == RectanglePoint.LeftTop ||
+                   value == RectanglePoint.Left;
+        }
+
+        // HasRightPivot
+        public static bool HasRightPivot(RectanglePoint value)
+        {
+            return value == RectanglePoint.RightBottom ||
+                   value == RectanglePoint.RightTop ||
+                   value == RectanglePoint.Right;
+        }
+
+        // HasTopPivot
+        public static bool HasTopPivot(RectanglePoint value)
+        {
+            return value == RectanglePoint.LeftTop ||
+                   value == RectanglePoint.RightTop ||
+                   value == RectanglePoint.Top;
+        }
     }
 }

@@ -140,7 +140,7 @@ namespace Remizione
                     if (Room.CulledThings[i] == Session.Player)
                         continue;
 
-                    if (Room.CulledThings[i] is GameThing thing && thing.HotspotBox.Contains(mousePos))
+                    if (Room.CulledThings[i] is GameThing thing && thing.RuntimeHotspot.Contains(mousePos))
                         return thing;
                 }
             }

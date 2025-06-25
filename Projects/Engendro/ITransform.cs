@@ -10,7 +10,6 @@ namespace Engendro
         int Height { get; }
         bool IsFlippedHorizontally { get; }
         bool IsFlippedVertically { get; }
-        Vector2 Origin { get; }
         RectanglePoint PivotOrigin { get; set; }
         Vector2 Position { get; set; }
         float X { get; set; }

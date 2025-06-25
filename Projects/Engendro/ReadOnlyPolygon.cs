@@ -204,6 +204,16 @@ namespace Engendro
             return !Contains(point) ? GetClosestPointOnEdge(point) : point;
         }
 
+        // Clear
+        public void Clear()
+        {
+            vertices.Clear();
+            boundingRectangle = Rectangle.Empty;
+            boundingRectangleF = RectangleF.Empty;
+            vertexTypes = null;
+            Orientation = PolygonOrientation.CounterClockwise;
+        }
+
         // Contains (optimized with ChatGPT)
         public bool Contains(Vector2 point)
         {

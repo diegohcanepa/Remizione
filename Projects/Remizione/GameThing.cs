@@ -25,7 +25,7 @@ namespace Remizione
         private string displayName = string.Empty;
         private readonly Polygon holeInflatedPoly = new();
         private readonly Polygon holePoly = new();
-        private RectangleF hotspotBox;
+        private Polygon hotspotPoly = new();
         private PlacementMode hotspotPlacement = PlacementMode.Relative;
         private int hp;
         private RectangleF hurtBox;
@@ -72,7 +72,7 @@ namespace Remizione
         // ClampOutside
         Vector2 IHoleArea.ClampOutside(Vector2 position)
         {
-            if (CollisionPolygon != null)
+            if (Collider != null)
             {
                 InvalidateHoleArea();
                 if (holePoly.Contains(position))
@@ -87,11 +87,11 @@ namespace Remizione
         {
             InvalidateHoleArea();
 
-            if (CollisionPolygon == null || CollisionPolygon.Vertices.Count == 0)
+            if (Collider == null || Collider.Vertices.Count == 0)
                 return;
 
-            if (pathNodes == null || pathNodes.Length != CollisionPolygon.Vertices.Count)
-                pathNodes = new PathNode[CollisionPolygon.Vertices.Count];
+            if (pathNodes == null || pathNodes.Length != Collider.Vertices.Count)
+                pathNodes = new PathNode[Collider.Vertices.Count];
 
             for (int i = 0; i < holeInflatedPoly.Vertices.Count; i++)
             {
@@ -151,7 +151,7 @@ namespace Remizione
                         continue;
 
                     // If thing is an obstacle (walk area hole)
-                    if (thing.CollisionPolygon != null)
+                    if (thing.Collider != null)
                     {
                         if (thing is IHoleArea holeArea && holeArea.Contains(Position))
                             Position = holeArea.ClampOutside(Position);
@@ -183,6 +183,24 @@ namespace Remizione
             }
         }
 
+        // GetPivotBasedPolyOffset
+        private Vector2 GetPivotBasedPolyOffset()
+        {
+            var result = new Vector2(X, Y);
+
+            if (Sprite.Pivot.AtMiddleX)
+                result.X -= BoundingBox.Width / 2;
+            else if (Sprite.Pivot.AtRight)
+                result.X -= BoundingBox.Width;
+
+            if (Sprite.Pivot.AtMiddleY)
+                result.Y -= BoundingBox.Height / 2;
+            else if (Sprite.Pivot.AtBottom)
+                result.Y -= BoundingBox.Height;
+
+            return result;
+        }
+
         // InvalidateDamageMeter
         private void InvalidateDamageMeter()
         {
@@ -193,14 +211,14 @@ namespace Remizione
         // InvalidateHoleArea
         private void InvalidateHoleArea()
         {
-            if (!isHoleAreaDirty || CollisionPolygon == null)
+            if (!isHoleAreaDirty || Collider == null)
                 return;
 
-            int vertexCount = CollisionPolygon.Vertices.Count;
+            int vertexCount = Collider.Vertices.Count;
             var vertices = new Vector2[vertexCount];
 
-            var offset = new Vector2(X - BoundingBox.Width / 2, Y - BoundingBox.Height);
-            CollisionPolygon.GetVertices(vertices, offset);
+            var offset = GetPivotBasedPolyOffset();
+            Collider.GetVertices(vertices, offset);
             holePoly.SetVertices(vertices);
             holeInflatedPoly.SetVertices(vertices, .05f);
 
@@ -466,10 +484,10 @@ namespace Remizione
             OnDamageReaction(attacker);
 
             // Impact word
-            if (HurtImpactSound != null && impactWordKind != ImpactWordKind.None && CollisionPolygon != null)
+            if (HurtImpactSound != null && impactWordKind != ImpactWordKind.None && Collider != null)
             {
                 impactWord ??= Session.ImpactWordPool.Get();
-                impactWord.Show(impactWordKind, this.GetAbsolutePoint(CollisionPolygon.BoundingRectangleF.GetPoint(RectanglePoint.Top)));
+                impactWord.Show(impactWordKind, this.GetAbsolutePoint(Collider.BoundingRectangleF.GetPoint(RectanglePoint.Top)));
             }
 
             if (maxHP == 0 && (HurtSound != null || HurtImpactSound != null))
@@ -549,7 +567,7 @@ namespace Remizione
             if (string.IsNullOrWhiteSpace(DisplayName))
                 return false;
 
-            return HotspotBox.Contains(requester.GetAbsolutePoint(requester.HotspotDetectorPosition));
+            return RuntimeHotspot.Contains(requester.GetAbsolutePoint(requester.HotspotDetectorPosition));
         }
 
         // CellMargin
@@ -582,9 +600,9 @@ namespace Remizione
         [ScriptProperty]
         public bool CollisionDetection { get; set; } = true;
 
-        // CollisionPolygon
+        // Collider
         [ScriptProperty]
-        public Polygon? CollisionPolygon { get; set; }
+        public Polygon? Collider { get; set; }
 
         // CumulativeDamage
         public float CumulativeDamage { get; set; }
@@ -599,8 +617,8 @@ namespace Remizione
         // DrawDebugBoxes
         public void DrawDebugBoxes()
         {
-            if (ShowHotspotBoxes)
-                DrawBox(Game, HotspotBox, Color.Purple * .2f);
+            //if (ShowHotspotBoxes)
+              //  DrawBox(Game, HotspotBox, Color.Purple * .2f);
 
             if (ShowHurtBoxes)
                 DrawBox(Game, HurtBox, Color.Red * .2f);
@@ -712,11 +730,11 @@ namespace Remizione
             if (ApproachPosition != Vector2.Zero)
                 return this.GetAbsolutePoint(ApproachPosition);
 
-            var box = HotspotBox;
+            var box = RuntimeHotspot.BoundingRectangleF;
             if (box.IsEmpty)
                 box = BoundingBox;
 
-            var requesterBox = requester.HotspotBox;
+            var requesterBox = requester.RuntimeHotspot.BoundingRectangleF;
             if (requesterBox.IsEmpty)
                 requesterBox = requester.BoundingBox;
 
@@ -790,10 +808,10 @@ namespace Remizione
         {
             RectangleF bbox;
 
-            if (CollisionPolygon == null)
+            if (Collider == null)
                 bbox = BoundingBox;
             else
-                bbox = CollisionPolygon.BoundingRectangleF;
+                bbox = Collider.BoundingRectangleF;
 
             int width = (int)Math.Ceiling(bbox.Width / cellSize) + CellMargin * 2;
             int height = (int)Math.Ceiling(bbox.Height / cellSize) + CellMargin * 2;
@@ -812,31 +830,9 @@ namespace Remizione
         [ScriptProperty]
         public bool Highlight { get; set; } = true;
 
-        // HotspotArea
+        // Hotspot
         [ScriptProperty]
-        public Rectangle HotspotArea { get; set; }
-
-        // HotspotBox
-        public virtual RectangleF HotspotBox
-        {
-            get
-            {
-                if (isHotspotDirty)
-                {
-                    if (HotspotArea.IsEmpty)
-                        hotspotBox = RectangleF.Empty;
-
-                    if (HotspotPlacement == PlacementMode.Relative)
-                        hotspotBox = Sprite.GetAbsoluteBounds(HotspotArea);
-                    else
-                        hotspotBox = HotspotArea;
-
-                    isHotspotDirty = false;
-                }
-
-                return hotspotBox;
-            }
-        }
+        public Polygon Hotspot { get; set; } = new();
 
         // HotspotPlacement
         [ScriptProperty]
@@ -954,15 +950,15 @@ namespace Remizione
             if (InputManager.DefaultPlayer.LastInputMethod != InputMethod.Mouse)
                 return false;
 
-            if (HotspotBox.IsEmpty)
+            if (RuntimeHotspot.IsEmpty)
                 return BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera));
             else
-                return HotspotBox.Contains(InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera));
+                return RuntimeHotspot.Contains(InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera));
         }
 
         // IsWalkAreaHole
         [ScriptProperty]
-        public virtual bool IsWalkAreaHole => CollisionPolygon != null;
+        public virtual bool IsWalkAreaHole => Collider != null;
 
         // Light
         public Light? Light { get; set; }
@@ -1022,6 +1018,36 @@ namespace Remizione
 
         // Room
         public new GameRoom? Room => Parent as GameRoom;
+
+        // RuntimeHotspot
+        public Polygon RuntimeHotspot
+        {
+            get
+            {
+                if (isHotspotDirty)
+                {
+                    if (Hotspot.IsEmpty)
+                        hotspotPoly.Clear();
+
+                    else if (HotspotPlacement == PlacementMode.Relative)
+                    {
+                        var offset = GetPivotBasedPolyOffset();
+                        var vertices = new Vector2[Hotspot.Vertices.Count];
+                        Hotspot.GetVertices(vertices, offset);
+                        hotspotPoly.SetVertices(vertices);
+                    }
+                    else
+                    {
+                        isHotspotDirty = false;
+                        return Hotspot;
+                    }
+
+                    isHotspotDirty = false;
+                }
+
+                return hotspotPoly;
+            }
+        }
 
         // Session
         public new GameSession Session { get; }

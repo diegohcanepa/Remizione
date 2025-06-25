@@ -494,9 +494,9 @@ namespace Remizione
         // CanPlaceDynamicPropAt
         public bool CanPlaceDynamicPropAt(IsometricProp prop, Vector2 position)
         {
-            if (prop.CollisionPolygon != null)
+            if (prop.Collider != null)
             {
-                var box = new RectangleF(position, prop.CollisionPolygon.BoundingRectangleF.Size);
+                var box = new RectangleF(position, prop.Collider.BoundingRectangleF.Size);
                 box.Inflate(5, 5);
 
                 for (int i = 0; i < CulledThings.Count; i++)
