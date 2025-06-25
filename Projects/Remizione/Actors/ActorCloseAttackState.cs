@@ -38,7 +38,7 @@ namespace Remizione
                     if (target == null || target == Owner)
                         continue;
 
-                    if (target.HurtBox.Intersects(Owner.GetFrameSubArea()))
+                    if (target.RuntimeHotspot.BoundingRectangleF.Intersects(Owner.GetFrameSubArea()))
                     {
                         damageTaken = true;
 

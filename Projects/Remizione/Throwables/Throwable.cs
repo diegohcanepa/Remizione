@@ -92,7 +92,7 @@ namespace Remizione
                         hit = holeArea.Contains(Position);
 
                     if (!hit)
-                        hit = target.HurtBox.Contains(Position);
+                        hit = target.RuntimeHotspot.Contains(Position);
 
                     if (hit)
                         return target;

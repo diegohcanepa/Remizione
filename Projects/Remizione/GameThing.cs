@@ -552,7 +552,7 @@ namespace Remizione
             if (diff > 3)
                 return false;
 
-            return HurtBox.Intersects(otherThing.HurtBox);
+            return RuntimeHotspot.BoundingRectangleF.Intersects(otherThing.RuntimeHotspot.BoundingRectangleF);
         }
 
         // CanBeTargeted
@@ -617,11 +617,8 @@ namespace Remizione
         // DrawDebugBoxes
         public void DrawDebugBoxes()
         {
-            //if (ShowHotspotBoxes)
-              //  DrawBox(Game, HotspotBox, Color.Purple * .2f);
-
-            if (ShowHurtBoxes)
-                DrawBox(Game, HurtBox, Color.Red * .2f);
+            if (ShowHotspotBoxes)
+                DrawBox(Game, RuntimeHotspot.BoundingRectangleF, Color.Purple * .2f);
         }
 
         // ShowHotspotBoxes
@@ -862,25 +859,6 @@ namespace Remizione
                     InvalidateDamageMeter();
                     OnHPChanged();
                 }
-            }
-        }
-
-        // HurtArea
-        [ScriptProperty]
-        public Rectangle HurtArea { get; set; }
-
-        // HurtBox
-        public RectangleF HurtBox
-        {
-            get
-            {
-                if (isHurtBoxDirty)
-                {
-                    hurtBox = HurtArea.IsEmpty ? RectangleF.Empty : this.GetAbsoluteBounds(HurtArea);
-                    isHurtBoxDirty = false;
-                }
-
-                return hurtBox;
             }
         }
 
