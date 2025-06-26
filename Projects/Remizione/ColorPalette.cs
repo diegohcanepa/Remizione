@@ -124,17 +124,6 @@ namespace Remizione
             internal static Color TerraLighter { get; } = new(255, 174, 112);
         }
 
-        // TextDepracated
-        internal static class TextDepracated
-        {
-            internal static Color Dark { get; } = new(189, 106, 98);
-            internal static Color DarkRed { get; } = new(82, 51, 63);
-            internal static Color Green { get; } = new(59, 125, 79);
-            internal static Color Highlight { get; } = new(240, 181, 65);
-            internal static Color Light { get; } = new Color(223, 224, 232) * .7f;
-            internal static Color LightRed { get; } = new(143, 77, 87);
-        }
-
         // TextWhite
         internal static Color TextWhite { get; } = new Color(223, 224, 232);
 
@@ -149,5 +138,12 @@ namespace Remizione
 
         // UIControlShadow
         internal static Color UIControlShadow { get; } = Color.Black * .5f;
+
+        // UIDerivedStatIcon
+        internal static class UIDerivedStatIcon
+        {
+            internal static Color NegativeAmount { get; } = new(173, 47, 69);
+            internal static Color PositiveAmount { get; } = new(59, 125, 79);
+        }
     }
 }

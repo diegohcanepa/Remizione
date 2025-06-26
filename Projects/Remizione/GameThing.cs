@@ -499,7 +499,7 @@ namespace Remizione
 
             HP -= (int)CumulativeDamage;
 
-            var damageTextColor = hitType == HitType.Critical ? ColorPalette.TextDepracated.Dark : ColorPalette.Text.Default;
+            var damageTextColor = hitType == HitType.Critical ? ColorPalette.Text.TerraLight : ColorPalette.Text.Default;
             var damageText = $"{(int)CumulativeDamage}";
             if (hitType == HitType.Critical)
                 damageText += " " + TextRepository.GetValue("HitType.Critical");

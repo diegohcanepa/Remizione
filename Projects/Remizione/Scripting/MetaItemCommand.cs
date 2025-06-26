@@ -3,7 +3,7 @@
 namespace Remizione.Scripting
 {
     // MetaItemCommand
-    // Arguments: {Name} {Category:MetaItemCategory} [#damage:DiceRoll] [#degradation-interval:Integer] [#faith:Integer] [#knockback:Vector2] [#maximum:Integer] [#modifier:Stat] [#range:Integer] [#sound:Name] [#spirit:Integer]
+    // Arguments: {Name} {Category:MetaItemCategory} [#damage:DiceRoll] [#degradation-interval:Integer] [#faith:Integer] [#knockback:Vector2] [#maximum:Integer] [#modifier:Stat] [#range:Integer] [#sound:Name] [#sacrifice-reward:DerivedStat] [#sacrifice-reward-amount:Integer] [#spirit:Integer]
     internal sealed class MetaItemCommand : NonAwaitableCommand
     {
         // Constructor
@@ -22,8 +22,8 @@ namespace Remizione.Scripting
             var hp = Parser.ParseDiceExpressionArgument(this, HPArg);
             var passiveEffectCooldown = Parser.ParseInt32Argument(this, PassiveEffectCooldownArg);
             var range = Parser.ParseInt32Argument(this, RangeArg);
-            var sacrificeReward = Parser.ParseEnumArgument(this, SacrificeRewardArg, SacrificeReward.Faith);
-            var sacrificeRewardAmount = Parser.ParseEnumArgument(this, SacrificeRewardAmountArg, 1);
+            var sacrificeReward = Parser.ParseEnumArgument(this, SacrificeRewardArg, DerivedStat.Faith);
+            var sacrificeRewardAmount = Parser.ParseInt32Argument(this, SacrificeRewardAmountArg, 1);
             var sound = Parser.ParseSoundArgument(this, SoundArg);
 
             _ = new MetaItem(name, category, passiveEffectCooldown, baseDamage, modifier, bonus, knockback, maximum, hp, fp, range, durability, sound)

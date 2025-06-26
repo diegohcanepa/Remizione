@@ -916,7 +916,7 @@ namespace Remizione
         public void ShowMessage(Message message, int duration = 1000)
         {
             floatingMessage ??= session.ObjectPools.FloatingTexts.Get();
-            floatingMessage.Show(GetOverheadPosition(), Localization.GetValue(message), ColorPalette.TextDepracated.Dark, duration);
+            floatingMessage.Show(GetOverheadPosition(), Localization.GetValue(message), ColorPalette.Text.TerraLight, duration);
         }
 
         // SpeechBubbleSound

@@ -770,10 +770,13 @@
             </struct>
             <key type="filename">UIIcons-assets/FaithGainIcon.png</key>
             <key type="filename">UIIcons-assets/FaithIcon.png</key>
+            <key type="filename">UIIcons-assets/FaithLossIcon.png</key>
             <key type="filename">UIIcons-assets/GraceGainIcon.png</key>
             <key type="filename">UIIcons-assets/GraceIcon.png</key>
+            <key type="filename">UIIcons-assets/GraceLossIcon.png</key>
             <key type="filename">UIIcons-assets/SpiritGainIcon.png</key>
             <key type="filename">UIIcons-assets/SpiritIcon.png</key>
+            <key type="filename">UIIcons-assets/SpiritLossIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

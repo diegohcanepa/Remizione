@@ -17,12 +17,10 @@ namespace Remizione
         private readonly UITextButton buttonClose;
         private readonly UITextButton buttonInfo;
         private readonly UITextButton buttonSacrifice;
-        private readonly ImageSprite faithIcon;
-        private readonly ImageSprite graceIcon;
         private readonly TextSprite itemNameText;
         private InventorySlot? selectedSlot;
-        private readonly ImageSprite spiritIcon;
         private readonly InventorySlot[] slots = new InventorySlot[12];
+        private readonly UIDerivedStatIcon statIcon;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 200 };
 
         #endregion
@@ -79,25 +77,10 @@ namespace Remizione
                 Scale = new Vector2(1, 1.2f)
             };
 
-            // Faith icon
-            this.faithIcon = new(owner.Game, Atlases.UI.FaithGainIcon)
+            // Stat icon
+            this.statIcon = new(owner.Game, DerivedStat.Spirit)
             {
                 PivotOrigin = RectanglePoint.Right,
-                Scale = ScaleInfo.UIElement.Small
-            };
-
-            // Grace icon
-            this.graceIcon = new(owner.Game, Atlases.UI.GraceGainIcon)
-            {
-                PivotOrigin = RectanglePoint.Right,
-                Scale = ScaleInfo.UIElement.Small
-            };
-
-            // Spirit icon
-            this.spiritIcon = new(owner.Game, Atlases.UI.SpiritGainIcon)
-            {
-                PivotOrigin = RectanglePoint.Right,
-                Scale = ScaleInfo.UIElement.Small
             };
         }
 
@@ -156,13 +139,13 @@ namespace Remizione
         // Sacrifice
         private void Sacrifice(Item item)
         {
-            if (item.MetaItem.SacrificeReward == SacrificeReward.Spirit)
+            if (item.MetaItem.SacrificeReward == DerivedStat.Spirit)
                 Owner.HP += item.MetaItem.SacrificeRewardAmount;
 
-            else if (item.MetaItem.SacrificeReward == SacrificeReward.Faith)
+            else if (item.MetaItem.SacrificeReward == DerivedStat.Faith)
                 Owner.Faith += item.MetaItem.SacrificeRewardAmount;
 
-            else if (item.MetaItem.SacrificeReward == SacrificeReward.Grace)
+            else if (item.MetaItem.SacrificeReward == DerivedStat.Grace)
                 Owner.Grace += item.MetaItem.SacrificeRewardAmount;
 
             item.Remove();
@@ -218,7 +201,11 @@ namespace Remizione
             slot.Select(IsContentLoaded);
 
             if (slot?.Item != null)
+            {
                 itemNameText.Text = slot.Item.DisplayText;
+                statIcon.Stat = slot.Item.MetaItem.SacrificeReward;
+                statIcon.Amount = slot.Item.MetaItem.SacrificeRewardAmount;
+            }
         }
 
         #endregion
@@ -247,26 +234,8 @@ namespace Remizione
                 buttonClose.Draw(gameTime);
                 buttonInfo.Draw(gameTime);
                 buttonSacrifice.Draw(gameTime);
-
-                Game.SpriteBatch.Begin(Game.Camera);
-
-                if (selectedSlot.Item.MetaItem.SacrificeReward == SacrificeReward.Faith)
-                {
-                    faithIcon.Position = buttonSacrifice.BoundingBox.GetPoint(RectanglePoint.Left);
-                    faithIcon.Draw(gameTime);
-                }
-                else if (selectedSlot.Item.MetaItem.SacrificeReward == SacrificeReward.Grace)
-                {
-                    graceIcon.Position = buttonSacrifice.BoundingBox.GetPoint(RectanglePoint.Left);
-                    graceIcon.Draw(gameTime);
-                }
-                else
-                {
-                    spiritIcon.Position = buttonSacrifice.BoundingBox.GetPoint(RectanglePoint.Left);
-                    spiritIcon.Draw(gameTime);
-                }
-
-                Game.SpriteBatch.End();
+                statIcon.Position = buttonSacrifice.BoundingBox.GetPoint(RectanglePoint.Left);
+                statIcon.Draw(gameTime);
             }
         }
 

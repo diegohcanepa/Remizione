@@ -103,7 +103,7 @@ namespace Remizione
         public int Range { get; }
 
         // SacrificeReward
-        public SacrificeReward SacrificeReward { get; init; } = SacrificeReward.Faith;
+        public DerivedStat SacrificeReward { get; init; } = DerivedStat.Faith;
 
         // SacrificeRewardAmount
         public int SacrificeRewardAmount { get; init; } = 1;
