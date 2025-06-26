@@ -28,7 +28,6 @@ namespace Remizione
         private Polygon hotspotPoly = new();
         private PlacementMode hotspotPlacement = PlacementMode.Relative;
         private int hp;
-        private RectangleF hurtBox;
         private Vector2Tween? hurtShakeTween;
         private FloatTween? hurtTween;
         private float floatingForce;
@@ -38,7 +37,6 @@ namespace Remizione
         private ImpactWordKind impactWordKind;
         private bool isHoleAreaDirty;
         private bool isHotspotDirty = true;
-        private bool isHurtBoxDirty = true;
         private Vector2 knockback;
         private readonly Vector2Tween knockbackTween = new();
         private string localizedDisplayName = string.Empty;
@@ -351,7 +349,6 @@ namespace Remizione
             if (hurtShakeTween == null || !hurtShakeTween.IsRunning)
             {
                 isHotspotDirty = true;
-                isHurtBoxDirty = true;
                 shouldClampToWalkablePosition = true;
 
                 if (change != TransformChange.Altitude)
@@ -490,12 +487,15 @@ namespace Remizione
                 impactWord.Show(impactWordKind, this.GetAbsolutePoint(Collider.BoundingRectangleF.GetPoint(RectanglePoint.Top)));
             }
 
-            if (maxHP == 0 && (HurtSound != null || HurtImpactSound != null))
+            if (HurtSound != null || HurtImpactSound != null)
             {
                 hurtShakeTween ??= new();
                 hurtShakeTween.Start(TweenStyle.Linear, Vector2.Zero, HurtShake, 40, 4);
                 return;
             }
+
+            if (MaxHP == 0)
+                return;
 
             HP -= (int)CumulativeDamage;
 
@@ -506,21 +506,18 @@ namespace Remizione
 
             Session.ObjectPools.FloatingTexts.Get()?.ShowAsDamage(GetFloatingTextPosition(knockback), damageText, damageTextColor);
 
-            if (MaxHP > 0)
+            damageMeterCooldown = 1500;
+            if (damageMeter == null)
             {
-                damageMeterCooldown = 1500;
-                if (damageMeter == null)
-                {
-                    damageMeter = new(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore) { MaximumValue = 10 };
-                    InvalidateDamageMeter();
-                }
+                damageMeter = new(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore) { MaximumValue = 10 };
+                InvalidateDamageMeter();
             }
 
             if (knockback == Vector2.Zero && HP <= 0)
             {
                 Die();
             }
-            else if (MaxHP > 0)
+            else
             {
                 var destination = Position;
                 destination.Y += knockback.Y;
@@ -623,9 +620,6 @@ namespace Remizione
 
         // ShowHotspotBoxes
         public static bool ShowHotspotBoxes { get; set; }
-
-        // ShowHurtBoxes
-        public static bool ShowHurtBoxes { get; set; }
 #endif
 
         // DeathSound

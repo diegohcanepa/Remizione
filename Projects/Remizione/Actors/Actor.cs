@@ -20,6 +20,7 @@ namespace Remizione
         private readonly FloatTween accelerationFactorTween = new();
         private BloodSplash? bloodSplash;
         private MetaItem? closeAttackMetaItem;
+        private bool closeAttackPeding;
         private string closeAttackName = string.Empty;
         private readonly ActorCloseAttackState closeAttackState;
         private readonly CombatStateMachine combatStateMachine;
@@ -64,7 +65,7 @@ namespace Remizione
             {
                 Atlas = Atlas,
                 ImagePath = ImagePath,
-                PivotOrigin = PivotOrigin
+                PivotOrigin = PivotOrigin,
             };
 
             var anim = headSprite.AddAnimation("Stand");
@@ -111,6 +112,7 @@ namespace Remizione
                 {
                     if (Room.CulledThings[i] == this)
                         continue;
+                    
                     else if (Room.CulledThings[i] is GameThing target && target.CanInteract(this))
                         return target;
                 }
@@ -137,10 +139,10 @@ namespace Remizione
 
                 for (var i = Room.CulledThings.Count - 1; i >= 0; i--)
                 {
-                    if (Room.CulledThings[i] == Session.Player)
+                    if (Room.CulledThings[i] == this)
                         continue;
 
-                    if (Room.CulledThings[i] is GameThing thing && thing.RuntimeHotspot.Contains(mousePos))
+                    else if (Room.CulledThings[i] is GameThing thing && thing.RuntimeHotspot.Contains(mousePos))
                         return thing;
                 }
             }
@@ -157,9 +159,13 @@ namespace Remizione
             if (pendingInteractiveTarget != null)
             {
                 FaceTo(pendingInteractiveTarget);
-                Interact(pendingInteractiveTarget);
+                if (closeAttackPeding)
+                    PerformCloseAttack();
+                else
+                    Interact(pendingInteractiveTarget);
             }
 
+            closeAttackPeding = false;
             pendingInteractiveTarget = null;
         }
 
@@ -428,7 +434,8 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (IsPlayer && Session.IsCurrentScene && !Session.IsAwaiting && InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
+            /*
+            if (IsPlayer && StateMachine.CurrentState is ActorStandState && Session.IsCurrentScene && !Session.IsAwaiting && InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
             {
                 if (InputManager.DefaultPlayer.Mouse.WorldPosition(session.Camera).X >= X)
                 {
@@ -440,7 +447,7 @@ namespace Remizione
                     if (Direction == FacingDirection.Right)
                         Direction = FacingDirection.Left;
                 }
-            }
+            }*/
 
             combatStateMachine.Update(gameTime);
 
@@ -530,14 +537,15 @@ namespace Remizione
         public void ApplyStats() => Stats.Apply();
 
         // ApproachAndInteract
-        public bool ApproachAndInteract(GameThing target)
+        public bool ApproachAndInteract(GameThing target, bool closeAttack)
         {
             if (!IsPlayer)
                 return false;
 
-            var destination = target.GetApproachPosition(this, true);
+            var destination = closeAttack && target.IsWalkAreaHole ? (target as IHoleArea).Polygon.GetClosestPointOnEdge(Position) : target.GetApproachPosition(this, true);
             var result = MoveTo(destination);
             this.pendingInteractiveTarget = target;
+            this.closeAttackPeding = closeAttack;
 
             if (!result)
                 HandlePendingInteraction();
