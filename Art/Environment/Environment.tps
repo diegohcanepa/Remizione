@@ -626,6 +626,51 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Lightning-assets/Lightning01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,34,17,69</rect>
+                <key>scale9Paddings</key>
+                <rect>9,34,17,69</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Lightning-assets/Lightning02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,35,17,70</rect>
+                <key>scale9Paddings</key>
+                <rect>9,35,17,70</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Lightning-assets/Lightning03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,35,19,69</rect>
+                <key>scale9Paddings</key>
+                <rect>9,35,19,69</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">LootBag-assets/LootBag.png</key>
             <key type="filename">LootBag-assets/LootBagShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -857,6 +902,7 @@
                     <filename>Pickups-assets</filename>
                     <filename>ImpactWords-assets</filename>
                     <filename>Throwables-assets</filename>
+                    <filename>Lightning-assets</filename>
                 </array>
             </struct>
         </map>

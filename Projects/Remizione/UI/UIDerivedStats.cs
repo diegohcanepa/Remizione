@@ -48,7 +48,7 @@ namespace Remizione.UI
             }
 
             icons = new ImageSprite[statCount];
-            icons[0] = new ImageSprite(Game, Atlases.UI.SpiritIcon) { Scale = ScaleInfo.UIElement.Small };
+            icons[0] = new ImageSprite(Game, Atlases.UI.HPIcon) { Scale = ScaleInfo.UIElement.Small };
             icons[1] = new ImageSprite(Game, Atlases.UI.FaithIcon) { Scale = ScaleInfo.UIElement.Small };
 
             icons[0].Position = new(4);

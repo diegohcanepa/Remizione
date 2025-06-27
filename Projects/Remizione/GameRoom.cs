@@ -319,6 +319,8 @@ namespace Remizione
             // Foreround (layer)
             DrawThings(gameTime, RenderLayer.Foreground, interactiveTarget);
 
+            Session.Environment.Lightning.Draw(gameTime);
+
             // Rain
             if (Session.Environment.Rain.IsRaining)
                 Session.Environment.Rain.Draw(gameTime);

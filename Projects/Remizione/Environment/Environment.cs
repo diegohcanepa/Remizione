@@ -13,6 +13,7 @@ namespace Remizione
         public Environment(GameSession session)
         {
             this.session = session;
+            this.Lightning = new(session);
             this.Rain = new Rain(session);
         }
 
@@ -21,8 +22,10 @@ namespace Remizione
         // Update
         internal void Update(GameTime gameTime)
         {
-            if ((session.PurgatoryMode))
+            if (session.PurgatoryMode)
             {
+                Lightning.Update(gameTime);
+
                 if (CycleCooldown > 0)
                 {
                     CycleCooldown -= gameTime.ElapsedGameTime.Milliseconds;
@@ -59,6 +62,9 @@ namespace Remizione
 
         // CycleCount
         public int CycleCount { get; set; } = 1;
+
+        // Lightning
+        public Lightning Lightning { get; }
 
         // Rain
         public Rain Rain { get; }

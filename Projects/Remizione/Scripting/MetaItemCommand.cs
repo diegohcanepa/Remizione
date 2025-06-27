@@ -12,25 +12,24 @@ namespace Remizione.Scripting
         {
             var name = Parser.ParseName(this, 0);
             var category = Parser.ParseEnum<MetaItemCategory>(this, 1);
-            var bonus = Parser.ParseInt32Argument(this, BonusArg);
-            var baseDamage = Parser.ParseDiceExpressionArgument(this, DamageArg) ?? null;
-            var durability = Parser.ParseInt32Argument(this, DurabilityArg, -1);
-            var knockback = Parser.ParseVector2Argument(this, KnockbackArg);
             var maximum = Parser.ParseInt32Argument(this, MaximumArg);
-            var modifier = Parser.ParseEnumArgument(this, ModifierArg, Stat.Strength);
-            var fp = Parser.ParseDiceExpressionArgument(this, FaithArg);
-            var hp = Parser.ParseDiceExpressionArgument(this, HPArg);
-            var passiveEffectCooldown = Parser.ParseInt32Argument(this, PassiveEffectCooldownArg);
-            var range = Parser.ParseInt32Argument(this, RangeArg);
-            var sacrificeReward = Parser.ParseEnumArgument(this, SacrificeRewardArg, DerivedStat.Faith);
-            var sacrificeRewardAmount = Parser.ParseInt32Argument(this, SacrificeRewardAmountArg, 1);
-            var sound = Parser.ParseSoundArgument(this, SoundArg);
 
-            _ = new MetaItem(name, category, passiveEffectCooldown, baseDamage, modifier, bonus, knockback, maximum, hp, fp, range, durability, sound)
+            _ = new MetaItem(name, category, maximum)
             {
                 AllowEmpty = HasArg(AllowEmptyArg),
-                SacrificeReward = sacrificeReward,
-                SacrificeRewardAmount = sacrificeRewardAmount
+                BaseDamage = Parser.ParseDiceExpressionArgument(this, DamageArg) ?? null,
+                Bonus = Parser.ParseInt32Argument(this, BonusArg),
+                Durability = Parser.ParseInt32Argument(this, DurabilityArg, -1),
+                Faith = Parser.ParseDiceExpressionArgument(this, FaithArg),
+                Grace = Parser.ParseDiceExpressionArgument(this, GraceArg),
+                HP = Parser.ParseDiceExpressionArgument(this, HPArg),
+                Knockback = Parser.ParseVector2Argument(this, KnockbackArg),
+                Modifier = Parser.ParseEnumArgument(this, ModifierArg, Stat.Strength),
+                PassiveEffectCooldown = Parser.ParseInt32Argument(this, PassiveEffectCooldownArg),
+                Range = Parser.ParseInt32Argument(this, RangeArg),
+                SacrificeReward = Parser.ParseEnumArgument(this, SacrificeRewardArg, DerivedStat.Faith),
+                SacrificeRewardAmount = Parser.ParseInt32Argument(this, SacrificeRewardAmountArg, 1),
+                Sound = Parser.ParseSoundArgument(this, SoundArg)
             };
         }
     }

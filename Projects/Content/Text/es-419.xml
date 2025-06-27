@@ -17,8 +17,10 @@
   <String Key="Cycle.Penance">Penitencia</String>
   <String Key="DerivedStat.Faith.Description">La Fé, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="DerivedStat.Faith.Name">Fé</String>
-  <String Key="DerivedStat.Spirit.Description">El Espíritu quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="DerivedStat.Spirit.Name">Espíritu</String>
+  <String Key="DerivedStat.Grace.Description">La gracia quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
+  <String Key="DerivedStat.Grace.Name">Gracia</String>
+  <String Key="DerivedStat.HP.Description">El Espíritu quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
+  <String Key="DerivedStat.HP.Name">Espíritu</String>
   <String Key="DurabilityState.Broken">Roto</String>
   <String Key="DurabilityState.Cracked">Resquebrajado</String>
   <String Key="DurabilityState.Sturdy">Integro</String>

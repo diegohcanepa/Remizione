@@ -37,9 +37,7 @@ namespace Engendro
             CodeContract.ValidName(name, nameof(name));
 
             if (animations.Contains(name))
-            {
                 CodeContract.ThrowDuplicatedNameException(nameof(name));
-            }
 
             SpriteAnimation result = new(this, name);
             animations.Add(result);
@@ -51,9 +49,7 @@ namespace Engendro
             }
 
             if (animations.Count == 1)
-            {
                 Player.Animation = result;
-            }
 
             return result;
         }
@@ -104,13 +100,9 @@ namespace Engendro
         internal void InvalidateInternalImage()
         {
             if (Player.Frame == null)
-            {
                 InternalImage = string.IsNullOrWhiteSpace(DefaultImageName) ? null : Atlas?.GetImage(ImagePath + DefaultImageName);
-            }
             else
-            {
                 InternalImage = Atlas?.GetImage(ImagePath + Player.Frame.ImageName);
-            }
         }
 
         #endregion

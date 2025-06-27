@@ -20,7 +20,7 @@ namespace Remizione
         private readonly TextSprite itemNameText;
         private InventorySlot? selectedSlot;
         private readonly InventorySlot[] slots = new InventorySlot[12];
-        private readonly UIDerivedStatIcon statIcon;
+        private readonly UIDerivedStatModifier statModifier;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 200 };
 
         #endregion
@@ -78,8 +78,9 @@ namespace Remizione
             };
 
             // Stat icon
-            this.statIcon = new(owner.Game, DerivedStat.Spirit)
+            this.statModifier = new(owner.Game, DerivedStat.HP)
             {
+                IsBonus = true,
                 PivotOrigin = RectanglePoint.Right,
             };
         }
@@ -103,6 +104,12 @@ namespace Remizione
         // HandleMouseInput
         private bool HandleMouseInput()
         {
+            if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
+            {
+                SceneController.Pop();
+                return true;
+            }
+
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
 
@@ -115,7 +122,7 @@ namespace Remizione
                     Sound.Play(SoundNames.UINavigation);
                 }
             }
-
+            
             return false;
         }
 
@@ -139,7 +146,7 @@ namespace Remizione
         // Sacrifice
         private void Sacrifice(Item item)
         {
-            if (item.MetaItem.SacrificeReward == DerivedStat.Spirit)
+            if (item.MetaItem.SacrificeReward == DerivedStat.HP)
                 Owner.HP += item.MetaItem.SacrificeRewardAmount;
 
             else if (item.MetaItem.SacrificeReward == DerivedStat.Faith)
@@ -203,8 +210,8 @@ namespace Remizione
             if (slot?.Item != null)
             {
                 itemNameText.Text = slot.Item.DisplayText;
-                statIcon.Stat = slot.Item.MetaItem.SacrificeReward;
-                statIcon.Amount = slot.Item.MetaItem.SacrificeRewardAmount;
+                statModifier.Stat = slot.Item.MetaItem.SacrificeReward;
+                statModifier.Amount = slot.Item.MetaItem.SacrificeRewardAmount;
             }
         }
 
@@ -234,8 +241,8 @@ namespace Remizione
                 buttonClose.Draw(gameTime);
                 buttonInfo.Draw(gameTime);
                 buttonSacrifice.Draw(gameTime);
-                statIcon.Position = buttonSacrifice.BoundingBox.GetPoint(RectanglePoint.Left);
-                statIcon.Draw(gameTime);
+                statModifier.Position = buttonSacrifice.BoundingBox.GetPoint(RectanglePoint.Left);
+                statModifier.Draw(gameTime);
             }
         }
 

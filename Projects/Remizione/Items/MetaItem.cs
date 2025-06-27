@@ -16,7 +16,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(string name, MetaItemCategory category, int passiveEffectCooldown, DiceExpression? baseDamage, Stat modifier, int bonus, Vector2 knockback, int maximum, DiceExpression? hp, DiceExpression? faith, int range, int durability, Sound? sound)
+        public MetaItem(string name, MetaItemCategory category, int maximum)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -27,19 +27,9 @@ namespace Remizione
 
             this.Name = name;
             this.Category = category;
-            this.Bonus = bonus;
-            this.PassiveEffectCooldown = passiveEffectCooldown;
-            this.BaseDamage = baseDamage;
-            this.Durability = durability;
-            this.Knockback = knockback;
             this.Maximum = Math.Max(1, maximum);
-            this.Faith = faith;
-            this.HP = hp;
-            this.Range = range;
-            this.Modifier = modifier;
             this.LocalizedDescription = Localization.GetItemDescription(this);
             this.LocalizedName = Localization.GetItemName(this);
-            this.Sound = sound;
             this.Image = Atlases.UI.GetImage(Name);
         }
 
@@ -49,25 +39,31 @@ namespace Remizione
         public bool AllowEmpty { get; init; }
 
         // BaseDamage
-        public DiceExpression? BaseDamage { get; }
+        public DiceExpression? BaseDamage { get; init; }
 
         // Bonus
-        public int Bonus { get; }
+        public int Bonus { get; init; }
 
         // Category
         public MetaItemCategory Category { get; }
 
         // Durability
-        public int Durability { get; set; }
+        public int Durability { get; init; }
 
         // Faith
-        public DiceExpression? Faith { get; }
+        public DiceExpression? Faith { get; init; }
 
         // Find
         public static MetaItem? Find(string name) => items.TryGetValue(name, out var result) ? result : null;
 
+        // Grace
+        public DiceExpression? Grace { get; init; }
+
+        // HasUsageCost
+        public bool HasUsageCost => HP != null || Faith != null || Grace != null;
+
         // HP
-        public DiceExpression? HP { get; }
+        public DiceExpression? HP { get; init; }
 
         // Image
         public AtlasImage? Image { get; }
@@ -79,7 +75,7 @@ namespace Remizione
         public bool IsStackable => Maximum > 1;
 
         // Knockback
-        public Vector2 Knockback { get; }
+        public Vector2 Knockback { get; init; }
 
         // LocalizedDescription
         public string LocalizedDescription { get; }
@@ -88,19 +84,19 @@ namespace Remizione
         public string LocalizedName { get; }
 
         // Maximum
-        public int Maximum { get; }
+        public int Maximum { get; init; }
 
         // Modifier
-        public Stat Modifier { get; }
+        public Stat Modifier { get; init; }
 
         // Name
         public string Name { get; }
 
         // PassiveEffectCooldown
-        public int PassiveEffectCooldown { get; }
+        public int PassiveEffectCooldown { get; init; }
 
         // Range
-        public int Range { get; }
+        public int Range { get; init; }
 
         // SacrificeReward
         public DerivedStat SacrificeReward { get; init; } = DerivedStat.Faith;
@@ -109,7 +105,7 @@ namespace Remizione
         public int SacrificeRewardAmount { get; init; } = 1;
 
         // Sound
-        public Sound? Sound { get; }
+        public Sound? Sound { get; init; }
 
         // ToString
         public override string ToString() => Name;

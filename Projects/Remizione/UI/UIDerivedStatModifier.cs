@@ -7,31 +7,34 @@ using System.Globalization;
 namespace Remizione
 {
     /// <summary>
-    /// UIDerivedStatIcon
+    /// UIDerivedStatModifier
     /// </summary>
-    public sealed class UIDerivedStatIcon : GameObject
+    public sealed class UIDerivedStatModifier : GameObject
     {
+        #region Private fields
+
         private int amount;
         private readonly TextSprite amountText;
-        private readonly ImageSprite icon;
+        private readonly ImageSprite containerImage;
+        private bool isBonus;
         private DerivedStat stat;
+
+        #endregion
 
         #region Constructor
 
         // Constructor
-        public UIDerivedStatIcon(EngendroGame game, DerivedStat stat, int amount = 0)
+        public UIDerivedStatModifier(EngendroGame game, DerivedStat stat, int amount = 0)
             : base(game)
         {
             // Amount text
             this.amountText = new TextSprite(game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Terra,
-                PivotOrigin = RectanglePoint.Left,
-                Scale = ScaleInfo.Text.Medium,
+                Scale = ScaleInfo.Text.Medium
             };
 
             // Icon
-            this.icon = new ImageSprite(game)
+            this.containerImage = new ImageSprite(game)
             {
                 Scale = ScaleInfo.UIElement.Small
             };
@@ -47,10 +50,23 @@ namespace Remizione
         // Invalidate
         private void Invalidate()
         {
-            var offset = (icon.BoundingBox.Width / 2) - amountText.BoundingBox.Width + 1;
-            amountText.Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, offset / 2, .5f);
-            amountText.Color = Amount < 0 ? ColorPalette.UIDerivedStatIcon.NegativeAmount : ColorPalette.UIDerivedStatIcon.PositiveAmount;
-            icon.Image = Atlases.UI.GetImage($"{Stat}AmountIcon");
+            var suffix = containerImage.Pivot.AtLeft ? "Left" : "Right";
+            containerImage.Image = Atlases.UI.GetImage($"{Stat}AmountIcon{suffix}");
+
+            var offset = (containerImage.BoundingBox.Width / 2) - amountText.BoundingBox.Width + 1;
+
+            if (containerImage.Pivot.AtLeft)
+            {
+                amountText.PivotOrigin = RectanglePoint.Right;
+                amountText.Position = containerImage.BoundingBox.GetPoint(RectanglePoint.Right, -offset / 2, .5f);
+            }
+            else
+            {
+                amountText.PivotOrigin = RectanglePoint.Left;
+                amountText.Position = containerImage.BoundingBox.GetPoint(RectanglePoint.Left, offset / 2, .5f);
+            }
+
+            amountText.Color = IsBonus ? ColorPalette.Text.Green : ColorPalette.Text.Terra;
         }
 
         #endregion
@@ -61,7 +77,7 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
-            icon.Draw(gameTime);
+            containerImage.Draw(gameTime);
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
@@ -73,7 +89,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             amountText.Update(gameTime);
-            icon.Update(gameTime);
+            containerImage.Update(gameTime);
         }
 
         #endregion
@@ -87,20 +103,34 @@ namespace Remizione
                 if (value != amount)
                 {
                     amount = value;
-                    var sign = amount < 0 ? "-" : "+";
+                    var sign = IsBonus ? "+" : string.Empty;
                     amountText.Text = sign + Math.Abs(amount).ToString(CultureInfo.InvariantCulture);
                     Invalidate();
                 }
             }   
         }
 
+        // IsBonus
+        public bool IsBonus
+        {
+            get => isBonus;
+            set
+            {
+                if (value != isBonus)
+                {
+                    isBonus = value;
+                    Invalidate();
+                }
+            }
+        }
+
         // PivotOrigin
         public RectanglePoint PivotOrigin
         {
-            get => icon.PivotOrigin;
+            get => containerImage.PivotOrigin;
             set
             {
-                icon.PivotOrigin = value;
+                containerImage.PivotOrigin = value;
                 Invalidate();
             }
         }
@@ -108,10 +138,10 @@ namespace Remizione
         // Position
         public Vector2 Position
         {
-            get => icon.Position;
+            get => containerImage.Position;
             set
             {
-                icon.Position = value;
+                containerImage.Position = value;
                 Invalidate();
             }
         }

@@ -26,6 +26,7 @@
 	<FX Name="GhostCarStop" />
 	<FX Name="Headbutt" MaxInstances="6" Sounds="1..4" Volume=".25" />
 	<FX Name="ImpactA" MaxInstances="6" />
+	<FX Name="Lightning" MaxInstances="4" />
 	<FX Name="MenuDiscardItem" MaxInstances="4" />
 	<FX Name="MenuSelect" MaxInstances="4" />
 	<FX Name="PickUpBag" MaxInstances="2" />

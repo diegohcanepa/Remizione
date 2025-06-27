@@ -138,12 +138,5 @@ namespace Remizione
 
         // UIControlShadow
         internal static Color UIControlShadow { get; } = Color.Black * .5f;
-
-        // UIDerivedStatIcon
-        internal static class UIDerivedStatIcon
-        {
-            internal static Color NegativeAmount { get; } = new(173, 47, 69);
-            internal static Color PositiveAmount { get; } = new(59, 125, 79);
-        }
     }
 }

@@ -27,7 +27,7 @@ namespace Remizione
     public enum Cycle { Indulgence, Penance }
 
     // DerivedStat
-    public enum DerivedStat { Spirit, Faith, Grace }
+    public enum DerivedStat { HP, Faith, Grace }
 
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }

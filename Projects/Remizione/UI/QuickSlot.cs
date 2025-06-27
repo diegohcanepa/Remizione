@@ -13,12 +13,13 @@ namespace Remizione
     {
         private Actor? actor;
         private readonly TextSprite amountText;
+        private readonly UITextButton button;
         private readonly ImageSprite itemImage;
         private readonly Vector2Tween itemImageScaleTween = new();
         private int lastKnownCount;
         private Item? lastKnownItem;
         private readonly ImageSprite slotImage;
-        private readonly UIButton button;
+        private readonly UIDerivedStatModifier statModifier;
 
         #region Constructor
 
@@ -30,7 +31,7 @@ namespace Remizione
             this.slotImage = new ImageSprite(Game, Atlases.UI.InventorySlotSelected)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -4),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -6),
                 Scale = ScaleInfo.UIElement.Medium
             };
 
@@ -47,7 +48,7 @@ namespace Remizione
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Top,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2),
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 0),
                 Scale = ScaleInfo.Text.Large,
                 Spacing = -5
             };
@@ -56,8 +57,15 @@ namespace Remizione
             this.button = new(game, InputBindings.UseItem)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -2),
-                Small = true
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, 7, -1),
+                Text = "Use"
+            };
+
+            // Stat icon
+            this.statModifier = new(game, DerivedStat.HP)
+            {
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = button.BoundingBox.GetPoint(RectanglePoint.LeftTop)
             };
         }
 
@@ -99,13 +107,19 @@ namespace Remizione
 
             button.Draw(gameTime);
 
-            if (actor?.Inventory.SelectedItem != null && actor.Inventory.SelectedItem.MetaItem.IsStackable)
+            if (actor?.Inventory.SelectedItem != null)
             {
-                if (lastKnownCount > 0)
+                if (actor.Inventory.SelectedItem.MetaItem.IsStackable && lastKnownCount > 0)
                 {
                     Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
                     amountText.Draw(gameTime);
                     Game.SpriteBatch.End();
+                }
+
+                if (actor.Inventory.SelectedItem.MetaItem.HasUsageCost)
+                {
+                    statModifier.Amount = 1;
+                    statModifier.Draw(gameTime);
                 }
             }
         }
@@ -117,20 +131,26 @@ namespace Remizione
                 return;
 
             button.Update(gameTime);
+            statModifier.Update(gameTime);
 
             if (lastKnownItem != actor?.Inventory.SelectedItem)
             {
                 lastKnownItem = actor?.Inventory.SelectedItem;
-                itemImage.Image = actor?.Inventory.SelectedItem?.MetaItem.Image;
-                itemImageScaleTween.Start(TweenStyle.Linear, new Vector2(.3f), ScaleInfo.UIElement.Tiny, 70);
-                itemImage.Tweens.ScaleTween = itemImageScaleTween;
+
+                if (lastKnownItem != null)
+                {
+                    itemImage.Image = lastKnownItem.MetaItem.Image;
+                    itemImageScaleTween.Start(TweenStyle.Linear, new Vector2(.3f), ScaleInfo.UIElement.Tiny, 70);
+                    itemImage.Tweens.ScaleTween = itemImageScaleTween;
+                    //statModifier.Amount = lastKnownItem.MetaItem.UsageCost ?? 0;
+                }
             }
 
-            if (actor?.Inventory.SelectedItem != null && actor.Inventory.SelectedItem.Count != lastKnownCount)
+            if (lastKnownItem != null && lastKnownItem.Count != lastKnownCount)
             {
-                lastKnownCount = actor.Inventory.SelectedItem.Count;
+                lastKnownCount = lastKnownItem.Count;
                 itemImage.Opacity = lastKnownCount == 0 ? .3f : 1;
-                amountText.Text = actor.Inventory.SelectedItem.GetDisplayAmount();
+                amountText.Text = lastKnownItem.GetDisplayAmount();
                 amountText.Update(gameTime);
             }
 
