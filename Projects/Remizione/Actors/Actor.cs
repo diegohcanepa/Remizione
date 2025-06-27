@@ -977,6 +977,11 @@ namespace Remizione
 
                 else if (item.MetaItem.Category == MetaItemCategory.Crafting)
                 {
+                    if (item.MetaItem.Craft is string craft)
+                    {
+                        if (Session.ScriptLibrary.GetRoutine($"Craft{craft}") is Script script)
+                            Session.AwaitScript(script);
+                    }
                 }
 
                 else

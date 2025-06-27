@@ -213,36 +213,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Chest-assets/Chest.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,4,7,7</rect>
-                <key>scale9Paddings</key>
-                <rect>4,4,7,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Chest-assets/ChestShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,1,8,3</rect>
-                <key>scale9Paddings</key>
-                <rect>4,1,8,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">CrossA-assets/CrossA.png</key>
             <key type="filename">CrossA-assets/CrossAShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -870,6 +840,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Trunk-assets/Trunk.png</key>
+            <key type="filename">Trunk-assets/TrunkShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,8,7</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,8,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileLists</key>
         <map type="SpriteSheetMap">
@@ -896,7 +882,6 @@
                     <filename>LargeRockA-assets</filename>
                     <filename>LargeRockB-assets</filename>
                     <filename>SmallRockB-assets</filename>
-                    <filename>Chest-assets</filename>
                     <filename>LootBag-assets</filename>
                     <filename>RainDropImpacts-assets</filename>
                     <filename>SinnerCross-assets</filename>
@@ -906,6 +891,7 @@
                     <filename>Throwables-assets</filename>
                     <filename>Lightning-assets</filename>
                     <filename>PieceOfWood-assets</filename>
+                    <filename>Trunk-assets</filename>
                 </array>
             </struct>
         </map>

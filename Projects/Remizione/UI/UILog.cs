@@ -49,7 +49,7 @@ namespace Remizione.UI
                 return;
             }
 
-            verbText.Color = isWarning ? ColorPalette.Text.Terra : ColorPalette.Text.Default;
+            verbText.Color = isWarning ? ColorPalette.Text.Highlight : ColorPalette.Text.Default;
             verbText.Position = new Vector2(5, 28);
             verbText.Text = verb;
 

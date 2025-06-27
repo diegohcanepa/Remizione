@@ -542,9 +542,11 @@ namespace Remizione
         // Lights
         public NamedObjectReadOnlyCollection<Light> Lights { get; }
 
-        // PlaceDynamicPropAt
-        public bool PlaceDynamicPropAt(IsometricProp prop)
+        // PlaceDynamicProp
+        public IsometricProp? PlaceDynamicProp(IsometricProp prop)
         {
+            IsometricProp? result = null;
+
             if (Session.Player is Actor actor)
             {
                 var pos = actor.Position;
@@ -553,19 +555,20 @@ namespace Remizione
                 else
                     pos.X -= 5;
 
-                if (CanPlaceDynamicPropAt(prop, pos) == false)
-                    return false;
-
-                if (Session.CreateDynamicThing(prop.StaticName, string.Empty) is IsometricProp newProp)
+                if (CanPlaceDynamicPropAt(prop, pos))
                 {
-                    newProp.Position = actor.Position;
-                    Children.Add(newProp);
+                    result = Session.CreateDynamicThing(prop.StaticName, string.Empty) as IsometricProp;
+                    if (result != null)
+                    {
+                        result.Position = actor.Position;
+                        Children.Add(result);
+                    }
+                    else
+                        return null;
                 }
-                else
-                    return false;
             }
 
-            return true;
+            return result;
         }
 
         // RemoveWalkArea

@@ -67,7 +67,7 @@ namespace Remizione
         #region Private members
 
         // GetInputBindingImage
-        private AtlasImage? GetInputBindingImage(string? sourceImageName, InputBinding? inputBinding)
+        private static AtlasImage? GetInputBindingImage(string? sourceImageName, InputBinding? inputBinding)
         {
             const string KeyboardPrefix = "Keyboard";
 
@@ -141,22 +141,22 @@ namespace Remizione
 
             label.Scale = Small ? ScaleInfo.Text.Large : ScaleInfo.Text.VeryLarge;
 
-            containerPattern.Image = Small ? Atlases.UI.UIControlContainerPatternSmall : Atlases.UI.UIControlContainerPatternLarge;
-            containerEdgeLeft.Image = Small ? Atlases.UI.UIControlContainerEdgeSmall : Atlases.UI.UIControlContainerEdgeLarge;
+            containerPattern.Image = Atlases.UI.UIControlContainerPatternLarge;
+            containerEdgeLeft.Image = Atlases.UI.UIControlContainerEdgeLarge;
 
             if (image.Pivot.AtRight)
             {
                 label.PivotOrigin = RectanglePoint.Right;
-                label.Position = image.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, Small ? .4f : .8f);
+                label.Position = image.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, Small ? .6f : .7f);
             }
             else
             {
                 label.PivotOrigin = RectanglePoint.Left;
-                label.Position = image.BoundingBox.GetPoint(RectanglePoint.Right, horzImagePadding, Small ? .4f : .8f);
+                label.Position = image.BoundingBox.GetPoint(RectanglePoint.Right, horzImagePadding, Small ? .6f : .7f);
             }
 
-            containerPattern.ScaleX = label.BoundingBox.Width + 7;
-            containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Middle, 0, -.1f).Y;
+            containerPattern.ScaleX = label.BoundingBox.Width + 6;
+            containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Middle, 0, -.5f).Y;
             containerEdgeLeft.Y = containerPattern.Y;
 
             if (image.Pivot.AtRight)

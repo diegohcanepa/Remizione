@@ -67,27 +67,6 @@ namespace Remizione
 
         #endregion
 
-        #region Private members
-
-        // SelectNextWeapon
-        private void SelectNextWeapon()
-        {
-            if (actor == null)
-                return;
-
-            if (actor.Inventory.SelectNext())
-            {
-                Sound.Play(SoundNames.UIQuickSlot);
-            }
-        }
-
-        // SelectPreviousWeapon
-        private void SelectPreviousWeapon()
-        {
-        }
-
-        #endregion
-
         #region Protected members
 
         // OnDraw

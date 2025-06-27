@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:18d3f10b615510df2a7a28844b49503e:c00b8472912b92c7e3fe913bc28cbdd1:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:313b6ed7b5eab4f45245dda2590ba169:581b5a4c5ddc8a87ad8831c1115dc82a:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -66,7 +66,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MouseCursorCrossOn.png" x="485" y="254" w="9" h="11"/>
     <sprite n="MouseCursorWait.png" x="21" y="71" w="13" h="15"/>
     <sprite n="PieceOfWood.png" x="484" y="68" w="20" h="20"/>
-    <sprite n="Pixel.png" x="509" y="39" w="1" h="1"/>
+    <sprite n="Pixel.png" x="509" y="38" w="1" h="1"/>
     <sprite n="PopupContainer.png" x="2" y="90" w="264" h="311"/>
     <sprite n="PopupContainerShadow.png" x="219" y="432" w="114" h="60"/>
     <sprite n="ProhibitionIcon.png" x="2" y="71" w="17" h="17"/>
@@ -82,9 +82,9 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="UIControlContainerEdgeLeftSmall.png" x="503" y="265" w="5" h="10"/>
     <sprite n="UIControlContainerEdgeRightLarge.png" x="496" y="265" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeRightSmall.png" x="503" y="277" w="5" h="10"/>
-    <sprite n="UIControlContainerEdgeSmall.png" x="480" y="267" w="5" h="10"/>
+    <sprite n="UIControlContainerEdgeSmall.png" x="480" y="267" w="5" h="9"/>
     <sprite n="UIControlContainerPatternLarge.png" x="506" y="27" w="1" h="11"/>
-    <sprite n="UIControlContainerPatternSmall.png" x="509" y="27" w="1" h="10"/>
+    <sprite n="UIControlContainerPatternSmall.png" x="509" y="27" w="1" h="9"/>
     <sprite n="UIControlShade.png" x="378" y="71" w="50" h="12"/>
     <sprite n="UnreadSign.png" x="506" y="15" w="3" h="6"/>
     <sprite n="XboxA.png" x="494" y="159" w="12" h="12"/>

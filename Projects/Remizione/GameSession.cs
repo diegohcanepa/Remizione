@@ -258,8 +258,7 @@ namespace Remizione
         // OnOutcomeCompleted
         protected override void OnOutcomeCompleted(Thing thing)
         {
-            if (Player != null)
-                Player.SuspendInteraction(500);
+            Player?.SuspendInteraction(250);
         }
 
         // OnPause
