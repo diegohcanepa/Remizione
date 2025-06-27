@@ -25,7 +25,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string ColorArg = "#color";
         protected static readonly string ConditionArg = "#condition";
         protected static readonly string CostArg = "#cost";
-        protected static readonly string CreationRoutineArg = "#creation-routine";
+        protected static readonly string CraftArg = "#craft";
         protected static readonly string CyclesArg = "#cycles";
         protected static readonly string DamageArg = "#damage";
         protected static readonly string DecimalsArg = "#decimals";

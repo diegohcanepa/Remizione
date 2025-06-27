@@ -564,7 +564,7 @@ namespace Remizione
             if (string.IsNullOrWhiteSpace(DisplayName))
                 return false;
 
-            return RuntimeHotspot.Contains(requester.GetAbsolutePoint(requester.HotspotDetectorPosition));
+            return RuntimeHotspot.BoundingRectangleF.Intersects(requester.GetAbsoluteBounds(requester.HotspotDetectorArea));
         }
 
         // CellMargin

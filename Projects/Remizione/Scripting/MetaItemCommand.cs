@@ -8,7 +8,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 2, AllowEmptyArg, BonusArg, DamageArg, DurabilityArg, FaithArg, HPArg, KnockbackArg, MaximumArg, ModifierArg, PassiveEffectCooldownArg, RangeArg, SacrificeRewardArg, SacrificeRewardAmountArg, SoundArg)
+            : base(script, source, body, 2, AllowEmptyArg, BonusArg, CraftArg, DamageArg, DurabilityArg, FaithArg, HPArg, KnockbackArg, MaximumArg, ModifierArg, PassiveEffectCooldownArg, RangeArg, SacrificeRewardArg, SacrificeRewardAmountArg, SoundArg)
         {
             var name = Parser.ParseName(this, 0);
             var category = Parser.ParseEnum<MetaItemCategory>(this, 1);
@@ -19,6 +19,7 @@ namespace Remizione.Scripting
                 AllowEmpty = HasArg(AllowEmptyArg),
                 BaseDamage = Parser.ParseDiceExpressionArgument(this, DamageArg) ?? null,
                 Bonus = Parser.ParseInt32Argument(this, BonusArg),
+                Craft = Parser.ParseNameArgument(this, CraftArg),
                 Durability = Parser.ParseInt32Argument(this, DurabilityArg, -1),
                 Faith = Parser.ParseDiceExpressionArgument(this, FaithArg),
                 Grace = Parser.ParseDiceExpressionArgument(this, GraceArg),

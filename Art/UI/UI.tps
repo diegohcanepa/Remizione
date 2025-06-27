@@ -539,6 +539,7 @@
                 <false/>
             </struct>
             <key type="filename">UI-assets/InventorySlotSelected.png</key>
+            <key type="filename">UI-assets/QuickSlot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -768,7 +769,12 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UIIcons-assets/FaithAmountIcon.png</key>
+            <key type="filename">UIIcons-assets/FaithAmountIconLeft.png</key>
+            <key type="filename">UIIcons-assets/FaithAmountIconRight.png</key>
+            <key type="filename">UIIcons-assets/GraceAmountIconLeft.png</key>
+            <key type="filename">UIIcons-assets/GraceAmountIconRight.png</key>
+            <key type="filename">UIIcons-assets/HPAmountIconLeft.png</key>
+            <key type="filename">UIIcons-assets/HPAmountIconRight.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -777,9 +783,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>10,4,19,7</rect>
+                <rect>7,4,15,7</rect>
                 <key>scale9Paddings</key>
-                <rect>10,4,19,7</rect>
+                <rect>7,4,15,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -797,22 +803,6 @@
                 <rect>4,4,7,7</rect>
                 <key>scale9Paddings</key>
                 <rect>4,4,7,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UIIcons-assets/GraceAmountIcon.png</key>
-            <key type="filename">UIIcons-assets/HPAmountIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,4,15,7</rect>
-                <key>scale9Paddings</key>
-                <rect>7,4,15,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

@@ -15,7 +15,6 @@ namespace Remizione.UI
         private readonly int[] lastKnownMaxValues;
         private readonly int[] lastKnownValues;
         private readonly TextSprite[] maxValues;
-        private readonly Vector2Tween[] scaleTweens;
         private const int statCount = 2;
         private readonly TextSprite[] values;
 
@@ -39,12 +38,6 @@ namespace Remizione.UI
             for (var i = 0; i < statCount; i++)
             {
                 lastKnownValues[i] = int.MinValue;
-            }
-
-            scaleTweens = new Vector2Tween[statCount];
-            for (var i = 0; i < statCount; i++)
-            {
-                scaleTweens[i] = new Vector2Tween();
             }
 
             icons = new ImageSprite[statCount];
@@ -103,9 +96,7 @@ namespace Remizione.UI
             if (animate)
             {
                 colorTweens[index].Start(TweenStyle.Linear, ColorPalette.Text.Terra, color, 350, 6);
-                scaleTweens[index].Start(TweenStyle.Linear, values[index].Scale, values[index].Scale * .9f, 250, 2);
                 values[index].Tweens.ColorTween = colorTweens[index];
-                values[index].Tweens.ScaleTween = scaleTweens[index];
             }
         }
 

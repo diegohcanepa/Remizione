@@ -37,6 +37,7 @@ namespace Remizione
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
             ProhibitionIcon = this[nameof(ProhibitionIcon)];
             ProhibitionMark = this[nameof(ProhibitionMark)];
+            QuickSlot = this[nameof(QuickSlot)];
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
@@ -125,6 +126,9 @@ namespace Remizione
 
         // ProhibitionMark
         public AtlasImage ProhibitionMark { get; }
+
+        // QuickSlot
+        public AtlasImage QuickSlot { get; }
 
         // SavingIcon
         public AtlasImage SavingIcon { get; }

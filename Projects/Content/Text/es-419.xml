@@ -52,6 +52,8 @@
   <String Key="Item.Duck.Name">Patito de hule</String>
   <String Key="Item.Gold.Description">Un puñado de polvo de oro.</String>
   <String Key="Item.Gold.Name">Polvo de oro</String>
+  <String Key="Item.PieceOfWood.Description">Un pedazo de madera viejo. Si juntas los suficientes podrás pedirle un cofre al Señor.</String>
+  <String Key="Item.PieceOfWood.Name">Trozo de madera</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Manzana putrefacta</String>
   <String Key="ItemAction.Create">Crear</String>
@@ -210,9 +212,9 @@ Bla bla bla</String>
   <String Key="Misc.Yes">Sí</String>
   <String Key="Misc.YouAreDead">ESTÁS MUERTO.</String>
   <String Key="Noun.Bag">Bolsa</String>
-  <String Key="Noun.Chest">Cofre de madera</String>
   <String Key="Noun.Cross">Cruz</String>
   <String Key="Noun.GhostCar">Carrito</String>
+  <String Key="Noun.Trunk">Baúl</String>
   <String Key="Platform.NintendoSwitch.Messages.ControllerDisconnected">Por favor vuelve a conectar el mando para continuar.</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyButton">Pulse cualquier botón para continuar</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyKeyOrButton">Pulse cualquier tecla o botón para continuar</String>

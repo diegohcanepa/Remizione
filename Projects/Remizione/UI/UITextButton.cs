@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,27 +9,33 @@ namespace Remizione
     /// <summary>
     /// UITextButton
     /// </summary>
-    public sealed class UITextButton : UIControl
+    public sealed class UITextButton : GameObject, IBoundingBox
     {
         #region Private fields
 
-        private RectangleF boundingBox;
         private readonly ImageSprite containerPattern;
         private readonly ImageSprite containerEdgeLeft;
         private const float horzImagePadding = 1.5f;
-        private string? imageName;
         private readonly ImageSprite image;
+        private string? imageName;
+        private InputBinding? inputBinding;
+        private bool isEnabled = true;
         private readonly TextSprite label;
+        private InputMethod lastKnownInputMethod;
         private RectanglePoint pivotOrigin;
+        private Vector2 position;
+        private bool small;
 
         #endregion
 
-        #region Constructors
+        #region Constructor
 
         // Constructor
         public UITextButton(EngendroGame game, InputBinding? inputBinding = null)
-            : base(game, inputBinding)
+            : base(game)
         {
+            this.inputBinding = inputBinding;
+
             // Container
             this.containerPattern = new ImageSprite(Game)
             {
@@ -47,7 +54,6 @@ namespace Remizione
             this.label = new TextSprite(game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
-                //ShadowOffset = new(.5f)
             };
 
             this.image = new ImageSprite(game);
@@ -60,42 +66,100 @@ namespace Remizione
 
         #region Private members
 
+        // GetInputBindingImage
+        private AtlasImage? GetInputBindingImage(string? sourceImageName, InputBinding? inputBinding)
+        {
+            const string KeyboardPrefix = "Keyboard";
+
+            if (Atlases.UI is not UIAtlas atlas)
+                return null;
+
+            var gamePad = InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad;
+
+            string? imageName = null;
+
+            if (!string.IsNullOrWhiteSpace(sourceImageName))
+            {
+                imageName = sourceImageName;
+            }
+            else if (inputBinding != null)
+            {
+                if (gamePad)
+                    imageName = inputBinding.Button.ToString();
+                else
+                    imageName = inputBinding.Keys[0].ToString();
+            }
+
+            if (imageName != null && inputBinding != null)
+            {
+                if (gamePad)
+                    imageName = GamePadDevice.Style.ToString() + imageName;
+                else
+                    imageName = KeyboardPrefix + imageName;
+            }
+
+            return string.IsNullOrWhiteSpace(imageName) ? null : atlas.GetImage(imageName);
+        }
+
         // Invalidate
-        protected override void Invalidate()
+        private void Invalidate()
         {
             // Image
             image.Image = GetInputBindingImage(ImageName, InputBinding);
-            image.Scale = Small ? ScaleInfo.UIElement.Tiny : ScaleInfo.UIElement.Medium;
-
+            image.Scale = Small ? ScaleInfo.UIElement.Small : ScaleInfo.UIElement.Medium;
             image.PivotOrigin = pivotOrigin;
-            label.Scale = ScaleInfo.Text.Large;
+            image.Position = Position;
+
+            if (HasText)
+            {
+                LayoutText();
+                BoundingBox = RectangleF.Union(image.BoundingBox, containerPattern.BoundingBox, containerEdgeLeft.BoundingBox);
+            }
+            else
+            {
+                BoundingBox = image.BoundingBox;
+            }
+
+            label.OpacityFactor = IsEnabled ? 1 : .3f;
+
+            if (pivotOrigin == RectanglePoint.Bottom || pivotOrigin == RectanglePoint.Top)
+            {
+                var offset = BoundingBox.Width / 2 - (image.BoundingBox.Width / 2);
+
+                image.X -= offset;
+                containerEdgeLeft.X -= offset;
+                containerPattern.X -= offset;
+                label.X -= offset;
+            }
+        }
+
+        // LayoutText
+        private void LayoutText()
+        {
+            if (image.IsEmpty)
+                return;
+
+            label.Scale = Small ? ScaleInfo.Text.Large : ScaleInfo.Text.VeryLarge;
 
             containerPattern.Image = Small ? Atlases.UI.UIControlContainerPatternSmall : Atlases.UI.UIControlContainerPatternLarge;
             containerEdgeLeft.Image = Small ? Atlases.UI.UIControlContainerEdgeSmall : Atlases.UI.UIControlContainerEdgeLarge;
 
-            if (!image.IsEmpty)
+            if (image.Pivot.AtRight)
             {
-                if (PivotOrigin == RectanglePoint.Right || PivotOrigin == RectanglePoint.RightBottom || PivotOrigin == RectanglePoint.RightTop)
-                {
-                    image.Position = Position;
-                    label.PivotOrigin = RectanglePoint.Right;
-                    label.Position = image.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, Small ? .4f : .8f);
-                }
-                else
-                {
-                    label.Position = Position;
-                    label.PivotOrigin = pivotOrigin;
-                    label.X += image.BoundingBox.Width / 2;
-                    image.PivotOrigin = RectanglePoint.Right;
-                    image.Position = label.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, Small ? .4f : -.8f);
-                }
+                label.PivotOrigin = RectanglePoint.Right;
+                label.Position = image.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, Small ? .4f : .8f);
+            }
+            else
+            {
+                label.PivotOrigin = RectanglePoint.Left;
+                label.Position = image.BoundingBox.GetPoint(RectanglePoint.Right, horzImagePadding, Small ? .4f : .8f);
             }
 
             containerPattern.ScaleX = label.BoundingBox.Width + 7;
             containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Middle, 0, -.1f).Y;
             containerEdgeLeft.Y = containerPattern.Y;
 
-            if (PivotOrigin == RectanglePoint.Right || PivotOrigin == RectanglePoint.RightBottom || PivotOrigin == RectanglePoint.RightTop)
+            if (image.Pivot.AtRight)
             {
                 containerEdgeLeft.Effects = SpriteEffects.None;
                 containerEdgeLeft.PivotOrigin = RectanglePoint.Right;
@@ -111,33 +175,6 @@ namespace Remizione
                 containerPattern.X = ImageBoundingBox.GetPoint(RectanglePoint.Right).X - 5;
                 containerEdgeLeft.X = containerPattern.BoundingBox.GetPoint(RectanglePoint.Right).X;
             }
-
-            InvalidateBoundingBox();
-
-            label.OpacityFactor = IsEnabled ? 1 : .3f;
-        }
-
-        // InvalidateBoundingBox
-        private void InvalidateBoundingBox()
-        {
-            var labelBBox = label.BoundingBox;
-
-            if (image.IsEmpty && labelBBox.IsEmpty)
-            {
-                boundingBox = RectangleF.Empty;
-            }
-            else if (image.IsEmpty && !labelBBox.IsEmpty)
-            {
-                boundingBox = label.BoundingBox;
-            }
-            else if (!image.IsEmpty && labelBBox.IsEmpty)
-            {
-                boundingBox = image.BoundingBox;
-            }
-            else
-            {
-                boundingBox = RectangleF.Union(image.BoundingBox, containerPattern.BoundingBox, containerEdgeLeft.BoundingBox);
-            }
         }
 
         #endregion
@@ -147,28 +184,25 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (BoundingBox.IsEmpty)
+            if (image.IsEmpty)
                 return;
 
-            if (!image.IsEmpty)
+            Effect? shader = null;
+
+            if (IsMouseOver)
             {
-                Effect? shader = null;
-
-                if (IsMouseOver)
-                {
-                    RemizioneGame.Effects.ColorSaturation.SetColor(.7f, .7f, .7f, 1);
-                    shader = RemizioneGame.Effects.ColorSaturation.Effect;
-                }
-
-                Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, shader);
-
-                containerPattern.Draw(gameTime);
-                containerEdgeLeft.Draw(gameTime);
-
-                image.Draw(gameTime);
-
-                Game.SpriteBatch.End();
+                RemizioneGame.Effects.ColorSaturation.SetColor(.7f, .7f, .7f, 1);
+                shader = RemizioneGame.Effects.ColorSaturation.Effect;
             }
+
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, shader);
+
+            containerPattern.Draw(gameTime);
+            containerEdgeLeft.Draw(gameTime);
+
+            image.Draw(gameTime);
+
+            Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             label.Draw(gameTime);
@@ -178,7 +212,19 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            base.OnUpdate(gameTime);
+            if (InputManager.DefaultPlayer.LastInputMethod != lastKnownInputMethod)
+            {
+                lastKnownInputMethod = InputManager.DefaultPlayer.LastInputMethod;
+                Invalidate();
+            }
+
+            IsMouseOver = false;
+
+            if (IsEnabled)
+            {
+                if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
+                    IsMouseOver = BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);
+            }
 
             image.Update(gameTime);
             label.Update(gameTime);
@@ -189,11 +235,8 @@ namespace Remizione
 
         #endregion
 
-        // AllowContainer
-        public bool AllowContainer { get; set; } = true;
-
         // BoundingBox
-        public override RectangleF BoundingBox => boundingBox;
+        public RectangleF BoundingBox { get; private set; }
 
         // HasText
         public bool HasText => !label.IsEmpty;
@@ -215,6 +258,37 @@ namespace Remizione
             }
         }
 
+        // InputBinding
+        public InputBinding? InputBinding
+        {
+            get => inputBinding;
+            set
+            {
+                if (value != inputBinding)
+                {
+                    inputBinding = value;
+                    Invalidate();
+                }
+            }
+        }
+
+        // IsEnabled
+        public bool IsEnabled
+        {
+            get => isEnabled;
+            set
+            {
+                if (value != isEnabled)
+                {
+                    isEnabled = value;
+                    Invalidate();
+                }
+            }
+        }
+
+        // IsMouseOver
+        public bool IsMouseOver { get; private set; }
+
         // PivotOrigin
         public RectanglePoint PivotOrigin
         {
@@ -227,6 +301,62 @@ namespace Remizione
                     Invalidate();
                 }
             }
+        }
+
+        // Position
+        public Vector2 Position
+        {
+            get => position;
+            set
+            {
+                if (value != position)
+                {
+                    position = value;
+                    Invalidate();
+                }
+            }
+        }
+
+        // Small
+        public bool Small
+        {
+            get => small;
+            set
+            {
+                if (value != small)
+                {
+                    small = value;
+                    Invalidate();
+                }
+            }
+        }
+
+        // Tag
+        public object? Tag { get; set; }
+
+        // TestPressed
+        public bool TestPressed(PlayerIndex playerIndex)
+        {
+            if (!IsEnabled)
+                return false;
+
+            var result = false;
+
+            if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad)
+            {
+                if (inputBinding != null && inputBinding.IsPressed(playerIndex))
+                    result = true;
+            }
+            else
+            {
+                if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() && IsMouseOver)
+                    result = true;
+            }
+
+            if (result)
+                Sound.Play(SoundNames.MenuSelect);
+
+            return result;
         }
 
         // Text
@@ -251,6 +381,34 @@ namespace Remizione
             {
                 if (value != label.Color)
                     label.Color = value;
+            }
+        }
+
+        // X
+        public float X
+        {
+            get => position.X;
+            set
+            {
+                if (value != position.X)
+                {
+                    position.X = value;
+                    Invalidate();
+                }
+            }
+        }
+
+        // Y
+        public float Y
+        {
+            get => position.Y;
+            set
+            {
+                if (value != position.Y)
+                {
+                    position.Y = value;
+                    Invalidate();
+                }
             }
         }
     }

@@ -52,6 +52,8 @@
   <String Key="Item.Duck.Name">Rubber duck</String>
   <String Key="Item.Gold.Description">A handful of gold dust.</String>
   <String Key="Item.Gold.Name">Gold dust</String>
+  <String Key="Item.PieceOfWood.Description" />
+  <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
   <String Key="ItemAction.Create">Craft</String>
@@ -210,9 +212,9 @@ Bla bla bla</String>
   <String Key="Misc.Yes">Yes</String>
   <String Key="Misc.YouAreDead">YOU'RE DEAD.</String>
   <String Key="Noun.Bag">Bag</String>
-  <String Key="Noun.Chest">Wooden chest</String>
   <String Key="Noun.Cross">Cross</String>
   <String Key="Noun.GhostCar">Ghost train car</String>
+  <String Key="Noun.Trunk">Trunk</String>
   <String Key="Platform.NintendoSwitch.Messages.ControllerDisconnected">Please reconnect your Joy-Con™ to continue.</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyButton">Press any button to continue</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyKeyOrButton">Press any key or button to continue</String>

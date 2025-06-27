@@ -296,8 +296,14 @@ namespace Remizione
             if (MetaItem.HP != null)
                 Owner.HP += MetaItem.HP.Roll();
 
-            if (MetaItem.Faith != null && Owner is Actor actor)
-                actor.Faith += MetaItem.Faith.Roll();
+            if (Owner is Actor actor)
+            {
+                if (MetaItem.Faith != null)
+                    actor.Faith += MetaItem.Faith.Roll();
+
+                if (MetaItem.Grace != null)
+                    actor.Grace += MetaItem.Grace.Roll();
+            }
 
             if (MetaItem.Maximum > 1)
             {

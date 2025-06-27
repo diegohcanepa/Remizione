@@ -10,7 +10,7 @@ namespace Remizione.UI
     /// </summary>
     public sealed class UIPrompt : GameObject
     {
-        private readonly UITextButton control;
+        private readonly UITextButton button;
         private readonly TextSprite label;
         private readonly GameSession session;
         private GameThing? target;
@@ -21,11 +21,11 @@ namespace Remizione.UI
         {
             this.session = session;
 
-            // Control
-            this.control = new(Game, InputBindings.Interact)
+            // Button
+            this.button = new(Game, InputBindings.Interact)
             {
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -2)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -4)
             };
 
             // Label
@@ -47,7 +47,7 @@ namespace Remizione.UI
             {
                 if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad)
                 {
-                    control.Draw(gameTime);
+                    button.Draw(gameTime);
                 }
                 else
                 {
@@ -66,18 +66,18 @@ namespace Remizione.UI
                 if (currentTarget != target)
                 {
                     target = currentTarget;
-                    control.Text = currentTarget.LocalizedDisplayName;
+                    button.Text = currentTarget.LocalizedDisplayName;
                     label.Text = currentTarget.LocalizedDisplayName;
                 }
             }
             else
             {
-                control.Text = null;
+                button.Text = null;
                 label.Clear();
                 target = null;
             }
 
-            control.Update(gameTime);
+            button.Update(gameTime);
         }
 
         #endregion

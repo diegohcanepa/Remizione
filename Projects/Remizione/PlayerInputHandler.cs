@@ -30,14 +30,7 @@ namespace Remizione
                 Actor.PerformCloseAttack();
                 return HandleInputResult.Handled;
             }
-
-            // Use item
-            if (InputBindings.UseItem.IsPressed(PlayerIndex.One))
-            {
-                Actor.UseCurrentInventoryItem();
-                return HandleInputResult.Handled;
-            }
-
+         
             // Inventory
             if (Actor.Session.InventoryEnabled && InputBindings.Inventory.IsPressed(PlayerIndex.One))
             {
@@ -88,8 +81,6 @@ namespace Remizione
                 Actor.MoveTo(destination);
                 return HandleInputResult.Handled;
             }
-
-            return HandleInputResult.Unhandled;
         }
 
         #endregion

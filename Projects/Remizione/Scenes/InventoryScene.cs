@@ -17,7 +17,9 @@ namespace Remizione
         private readonly UITextButton buttonClose;
         private readonly UITextButton buttonInfo;
         private readonly UITextButton buttonSacrifice;
+        private readonly UITextButton buttonSelect;
         private readonly TextSprite itemNameText;
+        private Item? originalSelectedItem;
         private InventorySlot? selectedSlot;
         private readonly InventorySlot[] slots = new InventorySlot[12];
         private readonly UIDerivedStatModifier statModifier;
@@ -43,14 +45,16 @@ namespace Remizione
             buttonClose = new UITextButton(owner.Game, InputBindings.Close)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -4),
+                Small = true,
             };
 
             // Info button
             buttonInfo = new UITextButton(Game, InputBindings.Info)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -10),
+                Position = buttonClose.BoundingBox.GetPoint(RectanglePoint.RightTop, 0, -2),
+                Small = true,
             };
 
             // Item name
@@ -66,7 +70,16 @@ namespace Remizione
             buttonSacrifice = new UITextButton(owner.Game, InputBindings.Sacrifice)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -20),
+                Position = buttonInfo.BoundingBox.GetPoint(RectanglePoint.RightTop, 0, -2),
+                Small = true,
+            };
+
+            // Select button
+            buttonSelect = new UITextButton(owner.Game, InputBindings.Select)
+            {
+                PivotOrigin = RectanglePoint.RightBottom,
+                Position = buttonSacrifice.BoundingBox.GetPoint(RectanglePoint.RightTop, 0, -2),
+                Small = true,
             };
 
             // Bottom gradient
@@ -97,7 +110,7 @@ namespace Remizione
                 if (slots[i].BoundingBox.Contains(position))
                     return slots[i];
             }
-         
+
             return null;
         }
 
@@ -122,7 +135,7 @@ namespace Remizione
                     Sound.Play(SoundNames.UINavigation);
                 }
             }
-            
+
             return false;
         }
 
@@ -238,12 +251,14 @@ namespace Remizione
 
             if (selectedSlot?.Item != null)
             {
-                buttonClose.Draw(gameTime);
                 buttonInfo.Draw(gameTime);
                 buttonSacrifice.Draw(gameTime);
+                buttonSelect.Draw(gameTime);
                 statModifier.Position = buttonSacrifice.BoundingBox.GetPoint(RectanglePoint.Left);
                 statModifier.Draw(gameTime);
             }
+
+            buttonClose.Draw(gameTime);
         }
 
         // OnHandleInput
@@ -258,6 +273,16 @@ namespace Remizione
             // Close
             if (buttonClose.TestPressed(PlayerIndex.One))
             {
+                SceneController.Pop();
+            }
+
+            if (selectedSlot?.Item == null)
+                return HandleInputResult.Unhandled;
+
+            // Select
+            if (buttonSelect.TestPressed(PlayerIndex.One))
+            {
+                originalSelectedItem = selectedSlot.Item;
                 SceneController.Pop();
             }
 
@@ -297,6 +322,8 @@ namespace Remizione
         {
             Owner.Stand();
 
+            originalSelectedItem = Owner.Inventory.SelectedItem;
+
             base.OnLoadContent();
 
             LayoutSlots();
@@ -314,6 +341,9 @@ namespace Remizione
                 slots[i].Reset();
             }
 
+            if (originalSelectedItem != null)
+                Owner.Inventory.Select(originalSelectedItem);
+
             selectedSlot = null;
         }
 
@@ -326,6 +356,7 @@ namespace Remizione
             buttonClose.Update(gameTime);
             buttonInfo.Update(gameTime);
             buttonSacrifice.Update(gameTime);
+            buttonSelect.Update(gameTime);
 
             // Update slots
             for (int i = 0; i < Owner.Inventory.Items.Count; i++)
@@ -335,7 +366,7 @@ namespace Remizione
 
             if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
                 MouseCursor.Instance.State = GetSlotAt(InputManager.DefaultPlayer.Mouse.VirtualPosition)?.Item != null ? MouseCursorState.CrossOn : MouseCursorState.Cross;
-    
+
             base.OnUpdate(gameTime);
         }
 

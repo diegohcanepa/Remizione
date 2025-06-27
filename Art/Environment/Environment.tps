@@ -519,6 +519,8 @@
             </struct>
             <key type="filename">Environment-assets/ShadowSpotW6.png</key>
             <key type="filename">Environment-assets/ShadowSpotW7.png</key>
+            <key type="filename">PieceOfWood-assets/PieceOfWood.png</key>
+            <key type="filename">PieceOfWood-assets/PieceOfWoodShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -903,6 +905,7 @@
                     <filename>ImpactWords-assets</filename>
                     <filename>Throwables-assets</filename>
                     <filename>Lightning-assets</filename>
+                    <filename>PieceOfWood-assets</filename>
                 </array>
             </struct>
         </map>

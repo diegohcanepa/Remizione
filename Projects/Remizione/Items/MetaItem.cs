@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Engendro.Audio;
+using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,9 @@ namespace Remizione
 
         // Category
         public MetaItemCategory Category { get; }
+
+        // Craft
+        public string? Craft { get; init; }
 
         // Durability
         public int Durability { get; init; }
@@ -109,5 +113,10 @@ namespace Remizione
 
         // ToString
         public override string ToString() => Name;
+
+        // Validate
+        public void Validate()
+        {
+        }
     }
 }

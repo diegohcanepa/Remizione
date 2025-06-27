@@ -689,9 +689,9 @@ namespace Remizione
             }
         }
 
-        // HotspotDetectorPosition
+        // HotspotDetectorArea
         [ScriptProperty]
-        public Vector2 HotspotDetectorPosition { get; set; }
+        public Rectangle HotspotDetectorArea { get; set; }
 
         // Interact
         public bool Interact(GameThing? target = null)
@@ -959,8 +959,8 @@ namespace Remizione
         // Target
         public GameThing? Target { get; private set; }
 
-        // UseCurrentInventoryItem
-        public void UseCurrentInventoryItem()
+        // UseSelectedItem
+        public void UseSelectedItem()
         {
             if (Inventory.SelectedItem is Item item)
             {
@@ -974,6 +974,11 @@ namespace Remizione
                         StateMachine.ChangeState(throwObjectState.Name);
                     }
                 }
+
+                else if (item.MetaItem.Category == MetaItemCategory.Crafting)
+                {
+                }
+
                 else
                 {
                     useItemState.Item = item;

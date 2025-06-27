@@ -11,6 +11,8 @@ namespace Remizione
     /// </summary>
     public sealed class QuickSlot : GameObject, IInputHandler
     {
+        #region Private fields
+
         private Actor? actor;
         private readonly TextSprite amountText;
         private readonly UITextButton button;
@@ -19,7 +21,8 @@ namespace Remizione
         private int lastKnownCount;
         private Item? lastKnownItem;
         private readonly ImageSprite slotImage;
-        private readonly UIDerivedStatModifier statModifier;
+        
+        #endregion
 
         #region Constructor
 
@@ -28,7 +31,7 @@ namespace Remizione
             : base(game)
         {
             // Slot image
-            this.slotImage = new ImageSprite(Game, Atlases.UI.InventorySlotSelected)
+            this.slotImage = new ImageSprite(Game, Atlases.UI.QuickSlot)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -6),
@@ -53,19 +56,12 @@ namespace Remizione
                 Spacing = -5
             };
 
-            // Button
+            // TextButton
             this.button = new(game, InputBindings.UseItem)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, 7, -1),
-                Text = "Use"
-            };
-
-            // Stat icon
-            this.statModifier = new(game, DerivedStat.HP)
-            {
-                PivotOrigin = RectanglePoint.LeftBottom,
-                Position = button.BoundingBox.GetPoint(RectanglePoint.LeftTop)
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1),
+                Small = true
             };
         }
 
@@ -105,21 +101,15 @@ namespace Remizione
             itemImage.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            button.Draw(gameTime);
-
-            if (actor?.Inventory.SelectedItem != null)
+            if (lastKnownItem != null)
             {
-                if (actor.Inventory.SelectedItem.MetaItem.IsStackable && lastKnownCount > 0)
+                button.Draw(gameTime);
+
+                if (lastKnownItem.MetaItem.IsStackable)
                 {
                     Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
                     amountText.Draw(gameTime);
                     Game.SpriteBatch.End();
-                }
-
-                if (actor.Inventory.SelectedItem.MetaItem.HasUsageCost)
-                {
-                    statModifier.Amount = 1;
-                    statModifier.Draw(gameTime);
                 }
             }
         }
@@ -131,7 +121,6 @@ namespace Remizione
                 return;
 
             button.Update(gameTime);
-            statModifier.Update(gameTime);
 
             if (lastKnownItem != actor?.Inventory.SelectedItem)
             {
@@ -142,7 +131,21 @@ namespace Remizione
                     itemImage.Image = lastKnownItem.MetaItem.Image;
                     itemImageScaleTween.Start(TweenStyle.Linear, new Vector2(.3f), ScaleInfo.UIElement.Tiny, 70);
                     itemImage.Tweens.ScaleTween = itemImageScaleTween;
-                    //statModifier.Amount = lastKnownItem.MetaItem.UsageCost ?? 0;
+
+                    if (lastKnownItem.MetaItem.Category == MetaItemCategory.Crafting)
+                    {
+                        if (actor != null && lastKnownItem.MetaItem.Craft is string entityName)
+                        {
+                            if (actor.Session.GetEntity<GameThing>(entityName) is GameThing thing)
+                                button.Text = thing.LocalizedDisplayName;
+                            else
+                                button.Text = null;
+                        }
+                    }
+                    else
+                    {
+                        amountText.Color = ColorPalette.Text.Default;
+                    }
                 }
             }
 
@@ -152,6 +155,18 @@ namespace Remizione
                 itemImage.Opacity = lastKnownCount == 0 ? .3f : 1;
                 amountText.Text = lastKnownItem.GetDisplayAmount();
                 amountText.Update(gameTime);
+
+                if (lastKnownItem.MetaItem.Category == MetaItemCategory.Crafting)
+                {
+                    button.IsEnabled = lastKnownItem.IsStackFull;
+                    amountText.Color = button.IsEnabled ? ColorPalette.Text.Green : amountText.Color = ColorPalette.Text.Terra;
+                    button.TextColor = button.IsEnabled ? ColorPalette.Text.Green : ColorPalette.Text.Default;
+                }
+                else
+                {
+                    amountText.Color = ColorPalette.Text.Default;
+                    button.IsEnabled = true;
+                }
             }
 
             slotImage.Update(gameTime);
@@ -182,6 +197,13 @@ namespace Remizione
             if (actor == null)
                 return HandleInputResult.Unhandled;
 
+            // Use item
+            if (button.IsEnabled && InputBindings.UseItem.IsPressed(PlayerIndex.One))
+            {
+                actor.UseSelectedItem();
+                return HandleInputResult.Handled;
+            }
+
             if (InputBindings.QuickSlotNextWeaponItem.IsPressed(PlayerIndex.One))
             {
                 if (actor.Inventory.SelectNext())
@@ -202,6 +224,6 @@ namespace Remizione
         }
 
         // IsVisible
-        public bool IsVisible => actor != null && !actor.Inventory.IsEmpty;
+        public bool IsVisible => actor != null && !actor.Inventory.IsEmpty && actor.Session.IsCurrentScene;
     }
 }
