@@ -115,6 +115,19 @@ namespace Remizione
                 return false;
         }
 
+        // RemoveSelected
+        public bool RemoveSelected()
+        {
+            var itemToRemove = SelectedItem;
+
+            if (itemToRemove == null)
+                return false;
+            
+            SelectNext();
+            Remove(itemToRemove);
+            return true;
+        }
+
         // Select
         public bool Select(Item item)
         {

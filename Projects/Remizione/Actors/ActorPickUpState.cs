@@ -63,7 +63,7 @@ namespace Remizione
                     if (metaItem != null)
                     {
                         Owner.Inventory.Add(metaItem, 1);
-                        Owner.Session.HUD.Log.Show(LogVerb.PickedUp, metaItem.LocalizedName);
+                        Owner.Session.HUD.Log.Show(LogVerb.PickedUp, metaItem.LocalizedName, metaItem.Image);
                     }
 
                     if (pickup.PickUpSound is Sound sound)

@@ -659,6 +659,23 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">PortableToilet-assets/PortableToilet01.png</key>
+            <key type="filename">PortableToilet-assets/PortableToilet02.png</key>
+            <key type="filename">PortableToilet-assets/PortableToiletShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,9,15,18</rect>
+                <key>scale9Paddings</key>
+                <rect>7,9,15,18</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">RainDropImpacts-assets/RainDropImpactA01.png</key>
             <key type="filename">RainDropImpacts-assets/RainDropImpactA02.png</key>
             <key type="filename">RainDropImpacts-assets/RainDropImpactA03.png</key>
@@ -892,6 +909,7 @@
                     <filename>Lightning-assets</filename>
                     <filename>PieceOfWood-assets</filename>
                     <filename>Trunk-assets</filename>
+                    <filename>PortableToilet-assets</filename>
                 </array>
             </struct>
         </map>

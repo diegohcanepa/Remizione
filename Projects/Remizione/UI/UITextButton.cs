@@ -15,6 +15,7 @@ namespace Remizione
 
         private readonly ImageSprite containerPattern;
         private readonly ImageSprite containerEdgeLeft;
+        private bool hideText;
         private const float horzImagePadding = 1.5f;
         private readonly ImageSprite image;
         private string? imageName;
@@ -35,6 +36,7 @@ namespace Remizione
             : base(game)
         {
             this.inputBinding = inputBinding;
+            this.Camera = game.Camera;
 
             // Container
             this.containerPattern = new ImageSprite(Game)
@@ -195,7 +197,7 @@ namespace Remizione
                 shader = RemizioneGame.Effects.ColorSaturation.Effect;
             }
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, shader);
+            Game.SpriteBatch.Begin(Camera, SamplerState.PointClamp, shader);
 
             containerPattern.Draw(gameTime);
             containerEdgeLeft.Draw(gameTime);
@@ -204,7 +206,7 @@ namespace Remizione
 
             Game.SpriteBatch.End();
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            Game.SpriteBatch.Begin(Camera, SamplerState.LinearClamp);
             label.Draw(gameTime);
             Game.SpriteBatch.End();
         }
@@ -238,8 +240,25 @@ namespace Remizione
         // BoundingBox
         public RectangleF BoundingBox { get; private set; }
 
+        // Camera
+        public Camera Camera { get; set; }
+
         // HasText
-        public bool HasText => !label.IsEmpty;
+        public bool HasText => !HideText && !label.IsEmpty;
+
+        // HideText
+        public bool HideText
+        {
+            get => hideText;
+            set
+            {
+                if (value != hideText)
+                {
+                    hideText = value;
+                    Invalidate();
+                }
+            }
+        }
 
         // ImageBoundingBox
         public RectangleF ImageBoundingBox => image.BoundingBox;

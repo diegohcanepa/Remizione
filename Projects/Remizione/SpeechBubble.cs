@@ -32,8 +32,6 @@ namespace Remizione
         private RectangleF bubbleArea;
         private readonly ImageSprite bubbleImage;
         private readonly ImageSprite bubbleImage2;
-        private readonly UITextButton button;
-        private int buttonDrawDelay;
         private int inputCooldown;
         private readonly ImageSprite pipe;
         private readonly float pipeHeight;
@@ -55,7 +53,7 @@ namespace Remizione
             this.arrowImage = new ImageSprite(Game, Atlases.UI.SpeechBubbleCloseArrow)
             {
                 Color = ColorPalette.SpeechBubble.Text,
-                Scale = new Vector2(.75f)
+                Scale = ScaleInfo.UIElement.Medium
             };
 
             // Bubble 1
@@ -63,12 +61,6 @@ namespace Remizione
 
             // Bubble 2
             this.bubbleImage2 = new ImageSprite(Game, Atlases.UI.Pixel);
-
-            // Button
-            this.button = new UITextButton(Game, InputBindings.NextDialog)
-            {
-                PivotOrigin = RectanglePoint.RightBottom,
-            };
 
             // Pipe
             pipe = new ImageSprite(Game, Atlases.UI.SpeechBubblePipe)
@@ -264,6 +256,8 @@ namespace Remizione
 
                     //if (Actor.IsStandingOrMoving)
                     Actor.StopTalking();
+
+                    Layout();
                 }
             }
 
@@ -305,9 +299,6 @@ namespace Remizione
                 text.Position -= shakeTween.CurrentValue;
 
             Game.SpriteBatch.End();
-
-            if (ModalInstance != null && State == SpeechBubbleState.Idle && buttonDrawDelay <= 0)
-                button.Draw(gameTime);
         }
 
         // OnUpdate
@@ -316,21 +307,14 @@ namespace Remizione
             if (inputCooldown > 0)
                 inputCooldown -= gameTime.ElapsedGameTime.Milliseconds;
 
-            if (ModalInstance != null)
-            {
-                if (buttonDrawDelay > 0)
-                    buttonDrawDelay -= gameTime.ElapsedGameTime.Milliseconds;
-                else
-                    button.Update(gameTime);
-            }
-
             UpdateState(gameTime);
             arrowTween.Update(gameTime);
             pipeTween.Update(gameTime);
             shakeTween.Update(gameTime);
             text.Update(gameTime);
 
-            Layout();
+            if (State == SpeechBubbleState.Typing)
+                Layout();
         }
 
         #endregion
@@ -384,10 +368,7 @@ namespace Remizione
             AwaitInput = awaitInput;
 
             if (awaitInput)
-            {
                 ModalInstance = this;
-                buttonDrawDelay = 5000;
-            }
 
             if (!activeBubbles.Contains(this))
                 activeBubbles.Add(this);

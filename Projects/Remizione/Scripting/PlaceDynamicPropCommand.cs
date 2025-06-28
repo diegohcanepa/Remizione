@@ -27,12 +27,14 @@ namespace Remizione.Scripting
 
                 if (session.Room.PlaceDynamicProp(staticProp) is GameThing thing)
                 {
-                    thing.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, Vector2.Zero, Vector2.One, 250);
-                    session.Environment.Lightning.Show(thing.Position - new Vector2(0, 5));
+                    var tween = new Vector2Tween() { StartDelay = 250 };
+                    tween.Start(TweenStyle.CubicIn, Vector2.Zero, Vector2.One, 250);
+                    thing.Tweens.ScaleTween = tween;
+                    session.Player?.Inventory.RemoveSelected();
                 }
                 else
                 {
-                    session.HUD.Log.Show(LogMessage.CannoPlaceItem, true);
+                    session.HUD.Message.Show(HUDMessageKind.CannotPlaceItem, true);
                     return;
                 }
             }

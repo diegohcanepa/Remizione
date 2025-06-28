@@ -27,6 +27,10 @@
   <String Key="DurabilityState.Used">Used</String>
   <String Key="DurabilityState.Worn">Worn</String>
   <String Key="HitType.Critical">Critical!</String>
+  <String Key="HUDMessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
+  <String Key="HUDMessageKind.EnoughOfThat">You already have enough of that.</String>
+  <String Key="HUDMessageKind.InventoryFull">You cannot carry more items.</String>
+  <String Key="HUDMessageKind.NoInventoryBag">You have nowhere to store things.</String>
   <String Key="InGameMenuOptionName.Attributes">Attributes</String>
   <String Key="InGameMenuOptionName.Creatures">Creatures</String>
   <String Key="InGameMenuOptionName.Gifts">Gifts</String>
@@ -69,10 +73,6 @@
   <String Key="Languages.es-es">Español (España)</String>
   <String Key="Languages.fr-fr">Français</String>
   <String Key="Languages.ru-ru">Русский</String>
-  <String Key="LogMessage.CannotPlaceItem">There is not enough space on the ground.</String>
-  <String Key="LogMessage.EnoughOfThat">You already have enough of that.</String>
-  <String Key="LogMessage.InventoryFull">You cannot carry more items.</String>
-  <String Key="LogMessage.NoInventoryBag">You have nowhere to store things.</String>
   <String Key="LogVerb.Discarded">Discarded</String>
   <String Key="LogVerb.Lost">Lost</String>
   <String Key="LogVerb.PickedUp">Picked up</String>
@@ -214,6 +214,7 @@ Bla bla bla</String>
   <String Key="Noun.Bag">Bag</String>
   <String Key="Noun.Cross">Cross</String>
   <String Key="Noun.GhostCar">Ghost train car</String>
+  <String Key="Noun.PortableToilet">Little purgatory</String>
   <String Key="Noun.Trunk">Trunk</String>
   <String Key="Platform.NintendoSwitch.Messages.ControllerDisconnected">Please reconnect your Joy-Con™ to continue.</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyButton">Press any button to continue</String>

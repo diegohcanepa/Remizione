@@ -35,6 +35,9 @@ namespace Remizione
     // HitType
     public enum HitType { Default, Critical }
 
+    // HUDMessageKind
+    public enum HUDMessageKind { CannotPlaceItem, EnoughOfThat, InventoryFull, NoInventoryBag }
+
     // ImpactType
     public enum ImpactType { Low, Medium, High }
 
@@ -52,9 +55,6 @@ namespace Remizione
 
     // LightState
     public enum LightState { Off, On, TurningOn, TurningOff }
-
-    // LogMessage
-    public enum LogMessage { CannoPlaceItem, EnoughOfThat, InventoryFull, NoInventoryBag }
 
     // LogVerb
     public enum LogVerb { Discarded, Lost, PickedUp, Restored }

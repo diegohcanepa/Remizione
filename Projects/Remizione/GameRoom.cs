@@ -550,17 +550,21 @@ namespace Remizione
             if (Session.Player is Actor actor)
             {
                 var pos = actor.Position;
+                var offset = prop.BoundingBox.Width / 2 + 5;
+
                 if (actor.Direction == FacingDirection.Right)
-                    pos.X += 5;
+                    pos.X += offset;
                 else
-                    pos.X -= 5;
+                    pos.X -= offset;
+
+                pos.Y += prop.BoundingBox.Height - prop.Hotspot.BoundingRectangle.Height;
 
                 if (CanPlaceDynamicPropAt(prop, pos))
                 {
                     result = Session.CreateDynamicThing(prop.StaticName, string.Empty) as IsometricProp;
                     if (result != null)
                     {
-                        result.Position = actor.Position;
+                        result.Position = pos;
                         Children.Add(result);
                     }
                     else

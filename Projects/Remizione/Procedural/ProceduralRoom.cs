@@ -80,6 +80,7 @@ namespace Remizione
                 var initialBlock = WorldManager.AddBlock(new(WorldManager.GridSize / 2), Session.WorldVersion, !PreserveFirstBlock);
                 if (initialBlock.Light != null)
                     initialBlock.LightPosition = new Vector2(120, 50);
+                WorldManager.Blocks[0].Expand(EngendroAdventure.Direction.Up);
             }
             else
             {

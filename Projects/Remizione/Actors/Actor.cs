@@ -103,6 +103,39 @@ namespace Remizione
 
         #region Private members
 
+        // Craft
+        private bool Craft()
+        {
+            if (Room == null)
+                return false;
+
+            if (Inventory.SelectedItem is not Item item || item.MetaItem.Category != MetaItemCategory.Crafting || item.MetaItem.Craft == null)
+                return false;
+
+            var staticProp = Session.GetEntity<IsometricProp>(item.MetaItem.Craft);
+            if (staticProp == null)
+                return false;
+
+            if (Room.PlaceDynamicProp(staticProp) is GameThing thing)
+            {
+                var tween = new Vector2Tween() { StartDelay = 250 };
+                tween.Start(TweenStyle.CubicIn, Vector2.Zero, Vector2.One, 250);
+                thing.Tweens.ScaleTween = tween;
+                Session.Environment.Lightning.Show(thing.Position - new Vector2(0, 5));
+                Session.Player?.Inventory.RemoveSelected();
+
+                if (Session.ScriptLibrary.GetRoutine($"OnCraft{item.MetaItem.Craft}") is Script script)
+                    Session.AwaitScript(script);
+
+                return true;
+            }
+            else
+            {
+                Session.HUD.Message.Show(HUDMessageKind.CannotPlaceItem, true);
+                return false;
+            }
+        }
+
         // FindGamePadTarget
         private GameThing? FindGamePadTarget()
         {
@@ -976,12 +1009,8 @@ namespace Remizione
                 }
 
                 else if (item.MetaItem.Category == MetaItemCategory.Crafting)
-                {
-                    if (item.MetaItem.Craft is string craft)
-                    {
-                        if (Session.ScriptLibrary.GetRoutine($"Craft{craft}") is Script script)
-                            Session.AwaitScript(script);
-                    }
+                { 
+                    Craft();
                 }
 
                 else

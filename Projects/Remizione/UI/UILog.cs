@@ -11,7 +11,8 @@ namespace Remizione.UI
     public sealed class UILog : GameObject
     {
         private readonly FloatTween fadeTween = new() { StartDelay = 1500 };
-        private readonly Queue<(string verb, string noun, bool isWarning)> queue = [];
+        private readonly ImageSprite icon;
+        private readonly Queue<(string verb, string noun, bool isWarning, AtlasImage? image)> queue = [];
         private readonly TextSprite nounText;
         private readonly TextSprite verbText;
 
@@ -19,6 +20,12 @@ namespace Remizione.UI
         public UILog(EngendroGame game)
             : base(game)
         {
+            this.icon = new ImageSprite(game)
+            {
+                PivotOrigin = RectanglePoint.LeftTop,
+                Scale = ScaleInfo.UIElement.Medium
+            };
+
             this.verbText = new(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
@@ -37,7 +44,7 @@ namespace Remizione.UI
         #region Private members
 
         // ShowCore
-        private void ShowCore(string verb, string noun, bool isWarning)
+        private void ShowCore(string verb, string noun, bool isWarning, AtlasImage? image)
         {
             if (isWarning)
             {
@@ -45,7 +52,7 @@ namespace Remizione.UI
             }
             else if (fadeTween.IsRunning)
             {
-                queue.Enqueue(new(verb, noun, isWarning));
+                queue.Enqueue(new(verb, noun, isWarning, image));
                 return;
             }
 
@@ -55,6 +62,8 @@ namespace Remizione.UI
 
             nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
             nounText.Text = noun;
+            icon.Image = image;
+            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
 
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 1000);
         }
@@ -72,6 +81,7 @@ namespace Remizione.UI
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             verbText.Draw(gameTime);
             nounText.Draw(gameTime);
+            icon.Draw(gameTime);
             Game.SpriteBatch.End();
         }
 
@@ -81,14 +91,16 @@ namespace Remizione.UI
             fadeTween.Update(gameTime);
             verbText.Update(gameTime);
             nounText.Update(gameTime);
+            icon.Update(gameTime);
 
             verbText.Opacity = fadeTween.IsRunning ? fadeTween.CurrentValue : 1;
-            nounText.Opacity = fadeTween.IsRunning ? fadeTween.CurrentValue : 1;
+            nounText.Opacity = verbText.Opacity;
+            icon.Opacity = verbText.Opacity;
 
             if (!fadeTween.IsRunning && queue.Count > 0)
             {
-                var log = queue.Dequeue();
-                ShowCore(log.verb, log.noun, log.isWarning);
+                var (verb, noun, isWarning, image) = queue.Dequeue();
+                ShowCore(verb, noun, isWarning, image);
             }
         }
 
@@ -98,9 +110,9 @@ namespace Remizione.UI
         public void Hide() => fadeTween.Stop();
 
         // Show
-        public void Show(LogMessage message, bool isWarning) => ShowCore(Localization.GetValue(message), string.Empty, isWarning);
+        public void Show(string message, bool isWarning, AtlasImage? image = null) => ShowCore(message, string.Empty, isWarning, image);
 
         // Show
-        public void Show(LogVerb verb, string noun) => ShowCore(Localization.GetValue(verb), noun, false);
+        public void Show(LogVerb verb, string noun, AtlasImage? image = null) => ShowCore(Localization.GetValue(verb), noun, false, image);
     }
 }

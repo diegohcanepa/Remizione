@@ -209,17 +209,71 @@
 /processorParam:Quality=Best
 /build:Audio/FX/DoodleDoo.wav;Audio/FX/DoodleDoo
 
+#begin Audio/FX/DoorToilet.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/DoorToilet.wav;Audio/FX/DoorToilet
+
 #begin Audio/FX/ElectricZapStrong.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/ElectricZapStrong.wav;Audio/FX/ElectricZapStrong
 
+#begin Audio/FX/Error1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Error1.wav;Audio/FX/Error1
+
+#begin Audio/FX/Error2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Error2.wav;Audio/FX/Error2
+
 #begin Audio/FX/Fart.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/Fart.wav;Audio/FX/Fart
+
+#begin Audio/FX/FartLong1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/FartLong1.wav;Audio/FX/FartLong1
+
+#begin Audio/FX/FartLong2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/FartLong2.wav;Audio/FX/FartLong2
+
+#begin Audio/FX/FartLong3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/FartLong3.wav;Audio/FX/FartLong3
+
+#begin Audio/FX/FartLong4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/FartLong4.wav;Audio/FX/FartLong4
+
+#begin Audio/FX/FartLong5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/FartLong5.wav;Audio/FX/FartLong5
+
+#begin Audio/FX/FartLong6.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/FartLong6.wav;Audio/FX/FartLong6
 
 #begin Audio/FX/FootstepA1.wav
 /importer:WavImporter

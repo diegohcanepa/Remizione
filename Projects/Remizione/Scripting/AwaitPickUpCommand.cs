@@ -32,7 +32,7 @@ namespace Remizione.Scripting
 
             if (!actor.Session.InventoryEnabled)
             {
-                actor.Session.HUD.Log.Show(LogMessage.NoInventoryBag, true);
+                actor.Session.HUD.Message.Show(HUDMessageKind.NoInventoryBag, true);
                 return;
             }
 
@@ -41,7 +41,7 @@ namespace Remizione.Scripting
             {
                 if (item.IsStackFull)
                 {
-                    actor.Session.HUD.Log.Show(LogMessage.EnoughOfThat, true);
+                    actor.Session.HUD.Message.Show(HUDMessageKind.EnoughOfThat, true);
                     return;
                 }
             }
@@ -49,7 +49,7 @@ namespace Remizione.Scripting
             // Inventory is full
             if (actor.Inventory.Items.Count == actor.InventorySize)
             {
-                actor.Session.HUD.Log.Show(LogMessage.InventoryFull, true);
+                actor.Session.HUD.Message.Show(HUDMessageKind.InventoryFull, true);
                 return;
             }
 

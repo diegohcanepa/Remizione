@@ -38,6 +38,9 @@ namespace Remizione
             // Log
             this.Log = new(Game);
 
+            // Message
+            this.Message = new(Game);
+
             // Saving icon
             this.savingIcon = new ImageSprite(Game, Atlases.UI.SavingIcon)
             {
@@ -97,6 +100,7 @@ namespace Remizione
             prompt.Draw(gameTime);
 
             Log.Draw(gameTime);
+            Message.Draw(gameTime);
 
             if (savingIcon.Tweens.IsTweening)
             {
@@ -126,6 +130,8 @@ namespace Remizione
             }
 
             Log.Update(gameTime);
+            Message.Update(gameTime);
+
             savingIcon.Update(gameTime);
         }
 
@@ -136,6 +142,9 @@ namespace Remizione
 
         // Log
         public UILog Log { get; }
+
+        // Message
+        public HUDMessage Message { get; }
 
         // Reset
         public void Reset()
