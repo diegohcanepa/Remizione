@@ -111,19 +111,14 @@ namespace Remizione
                     itemImageScaleTween.Start(TweenStyle.Linear, new Vector2(.3f), ScaleInfo.UIElement.Tiny, 70);
                     itemImage.Tweens.ScaleTween = itemImageScaleTween;
 
-                    if (lastKnownItem.MetaItem.Category == MetaItemCategory.Crafting)
+                    if (lastKnownItem.MetaItem.CraftProp != null)
                     {
-                        if (actor != null && lastKnownItem.MetaItem.Craft is string entityName)
-                        {
-                            if (actor.Session.GetEntity<GameThing>(entityName) is GameThing thing)
-                                button.Text = thing.LocalizedDisplayName;
-                            else
-                                button.Text = null;
-                        }
+                        button.Text = lastKnownItem.MetaItem.CraftProp.LocalizedDisplayName;
                     }
                     else
                     {
                         amountText.Color = ColorPalette.Text.Default;
+                        button.Text = null;
                     }
                 }
             }

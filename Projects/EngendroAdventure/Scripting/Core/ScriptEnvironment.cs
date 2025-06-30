@@ -179,7 +179,7 @@ namespace EngendroAdventure.Scripting
             if (session.State == GameSessionState.Uninitialized)
                 throw new InvalidOperationException("Game session not initialized.");
 
-            if (session.State != GameSessionState.Idle && session.ScriptLibrary.CompilationPhase != CompilationPhase.Instantiation)
+            if (session.State != GameSessionState.Idle && session.State != GameSessionState.AwaitingScripts && session.ScriptLibrary.CompilationPhase != CompilationPhase.Instantiation)
                 throw new InvalidOperationException();
 
             if (string.IsNullOrWhiteSpace(instanceName))

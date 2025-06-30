@@ -279,7 +279,6 @@
             </struct>
             <key type="filename">DustParticles-assets/DustParticle1.png</key>
             <key type="filename">Environment-assets/Apple.png</key>
-            <key type="filename">Environment-assets/MoveDestinationMark.png</key>
             <key type="filename">FireflyParticles-assets/FireflyParticle1.png</key>
             <key type="filename">Pickups-assets/Chili.png</key>
             <key type="filename">Pickups-assets/ChiliShadow.png</key>
@@ -317,6 +316,21 @@
                 <rect>1,1,3,3</rect>
                 <key>scale9Paddings</key>
                 <rect>1,1,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Environment-assets/CraftingMark.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,3,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

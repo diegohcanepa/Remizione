@@ -12,13 +12,16 @@ namespace Remizione
         public EnvironmentAtlas(EngendroGame game)
             : base(game.Content, "Environment", ContentHelper.EncodePath(ContentFolder.Atlases, "Environment"), false)
         {
+            CraftingMark = this[nameof(CraftingMark)];
             DefaultLight = this[nameof(DefaultLight)];
             DustParticles = CreateReadOnlyCollection("DustParticle", 1, 1);
             FireflyParticles = CreateReadOnlyCollection("FireflyParticle", 1, 2);
             LightningLight = this[nameof(LightningLight)];
-            MoveDestinationMark = this[nameof(MoveDestinationMark)];
             RainParticles = CreateReadOnlyCollection("RainParticle", 1, 5);
         }
+
+        // CraftingMark
+        public AtlasImage CraftingMark { get; }
 
         // DefaultLight
         public AtlasImage DefaultLight { get; }
@@ -31,9 +34,6 @@ namespace Remizione
 
         // LightningLight
         public AtlasImage LightningLight { get; }
-
-        // MoveDestinationMark
-        public AtlasImage MoveDestinationMark { get; }
 
         // RainParticles
         public ReadOnlyCollection<AtlasImage> RainParticles { get; }

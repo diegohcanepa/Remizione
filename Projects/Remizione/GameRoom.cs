@@ -304,6 +304,9 @@ namespace Remizione
             // Shadows
             DrawShadows(gameTime);
 
+            // Craft destination mark
+            Session.HUD.CraftingMark.Draw(gameTime);
+
             // Rain drop impacts
             Session.Environment.Rain.DrawImpacts(gameTime);
 
@@ -493,30 +496,6 @@ namespace Remizione
             }
         }
 
-        // CanPlaceDynamicPropAt
-        public bool CanPlaceDynamicPropAt(IsometricProp prop, Vector2 position)
-        {
-            if (prop.Collider != null)
-            {
-                var box = new RectangleF(position, prop.Collider.BoundingRectangleF.Size);
-                box.Inflate(5, 5);
-
-                for (int i = 0; i < CulledThings.Count; i++)
-                {
-                    if (CulledThings[i] == prop)
-                        continue;
-
-                    if (CulledThings[i] is IHoleArea holeArea)
-                    {
-                        if (holeArea.Polygon.BoundingRectangleF.Intersects(box))
-                            return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
         // CanUseLightingSystem
         public bool CanUseLightingSystem => Session.LightingSystem && LightingSystem;
 
@@ -541,39 +520,6 @@ namespace Remizione
 
         // Lights
         public NamedObjectReadOnlyCollection<Light> Lights { get; }
-
-        // PlaceDynamicProp
-        public IsometricProp? PlaceDynamicProp(IsometricProp prop)
-        {
-            IsometricProp? result = null;
-
-            if (Session.Player is Actor actor)
-            {
-                var pos = actor.Position;
-                var offset = prop.BoundingBox.Width / 2 + 5;
-
-                if (actor.Direction == FacingDirection.Right)
-                    pos.X += offset;
-                else
-                    pos.X -= offset;
-
-                pos.Y += prop.BoundingBox.Height - prop.Hotspot.BoundingRectangle.Height;
-
-                if (CanPlaceDynamicPropAt(prop, pos))
-                {
-                    result = Session.CreateDynamicThing(prop.StaticName, string.Empty) as IsometricProp;
-                    if (result != null)
-                    {
-                        result.Position = pos;
-                        Children.Add(result);
-                    }
-                    else
-                        return null;
-                }
-            }
-
-            return result;
-        }
 
         // RemoveWalkArea
         public bool RemoveWalkArea(string name)

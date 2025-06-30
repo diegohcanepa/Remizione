@@ -4,6 +4,7 @@ using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -51,6 +52,9 @@ namespace Remizione
         // Craft
         public string? Craft { get; init; }
 
+        // CraftProp
+        public IsometricProp? CraftProp { get; private set; }
+
         // Durability
         public int Durability { get; init; }
 
@@ -71,6 +75,9 @@ namespace Remizione
 
         // Image
         public AtlasImage? Image { get; }
+
+        // Items
+        public static IEnumerable<MetaItem> Items => items.Values;
 
         // IsPassive
         public bool IsPassive => PassiveEffectCooldown > 0;
@@ -115,8 +122,10 @@ namespace Remizione
         public override string ToString() => Name;
 
         // Validate
-        public void Validate()
+        public void Validate(GameSession session)
         {
+            if (Craft != null)
+                CraftProp = session.GetEntity<IsometricProp>(Craft) ?? throw new InvalidOperationException($"Meta item validation error: Craft '{Craft}' not found for meta item '{Name}'.");
         }
     }
 }

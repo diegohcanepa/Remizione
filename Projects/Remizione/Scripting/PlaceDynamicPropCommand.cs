@@ -19,17 +19,19 @@ namespace Remizione.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            if (Session is GameSession session && session.Room != null)
+            /*
+            if (Session is GameSession session && session.Room is ProceduralRoom room)
             {
                 var staticProp = Session.GetEntity<IsometricProp>(Body.Clauses[0]);
                 if (staticProp == null)
                     return;
 
-                if (session.Room.PlaceDynamicProp(staticProp) is GameThing thing)
+                if (room.PlaceDynamicProp(staticProp) is GameThing thing)
                 {
                     var tween = new Vector2Tween() { StartDelay = 250 };
                     tween.Start(TweenStyle.CubicIn, Vector2.Zero, Vector2.One, 250);
                     thing.Tweens.ScaleTween = tween;
+                    session.Environment.Lightning.Show(thing.Position - new Vector2(0, 5));
                     session.Player?.Inventory.RemoveSelected();
                 }
                 else
@@ -38,6 +40,7 @@ namespace Remizione.Scripting
                     return;
                 }
             }
+            */
         }
     }
 }

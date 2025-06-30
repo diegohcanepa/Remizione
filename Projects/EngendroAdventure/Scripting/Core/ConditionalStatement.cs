@@ -2,7 +2,7 @@
 {
     // ConditionalStatement
     // Arguments: {Entity}[.{PropertyName}] {== | != | >} {Entity}[.{PropertyName}]
-    internal abstract class ConditionalStatement : SelectionStatement
+    public abstract class ConditionalStatement : SelectionStatement
     {
         // Constructor
         internal ConditionalStatement(Script script, StatementType statementType, string source, StatementBody body)

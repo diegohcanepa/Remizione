@@ -103,39 +103,6 @@ namespace Remizione
 
         #region Private members
 
-        // Craft
-        private bool Craft()
-        {
-            if (Room == null)
-                return false;
-
-            if (Inventory.SelectedItem is not Item item || item.MetaItem.Category != MetaItemCategory.Crafting || item.MetaItem.Craft == null)
-                return false;
-
-            var staticProp = Session.GetEntity<IsometricProp>(item.MetaItem.Craft);
-            if (staticProp == null)
-                return false;
-
-            if (Room.PlaceDynamicProp(staticProp) is GameThing thing)
-            {
-                var tween = new Vector2Tween() { StartDelay = 250 };
-                tween.Start(TweenStyle.CubicIn, Vector2.Zero, Vector2.One, 250);
-                thing.Tweens.ScaleTween = tween;
-                Session.Environment.Lightning.Show(thing.Position - new Vector2(0, 5));
-                Session.Player?.Inventory.RemoveSelected();
-
-                if (Session.ScriptLibrary.GetRoutine($"OnCraft{item.MetaItem.Craft}") is Script script)
-                    Session.AwaitScript(script);
-
-                return true;
-            }
-            else
-            {
-                Session.HUD.Message.Show(HUDMessageKind.CannotPlaceItem, true);
-                return false;
-            }
-        }
-
         // FindGamePadTarget
         private GameThing? FindGamePadTarget()
         {
@@ -207,6 +174,35 @@ namespace Remizione
         {
             base.MoveTo(pendingPathNodes[0]);
             pendingPathNodes.RemoveAt(0);
+        }
+
+        // PerformCraftAction
+        private bool PerformCraftAction()
+        {
+            if (!GetCraftData(out var position, out var prop, out var canPlace) || prop == null || position == null)
+                return false;
+
+            if (!canPlace)
+            {
+                Session.HUD.Message.Show(HUDMessageKind.CannotPlaceItem, true);
+                return false;
+            }
+
+            if (Session.ScriptLibrary.GetRoutine($"OnCraft{prop.StaticName}") is Script script)
+                Session.AwaitScript(script);
+
+            return true;
+        }
+
+        // PerformThrowAction
+        private bool PerformThrowAction()
+        {
+            if (Inventory.SelectedItem == null || Inventory.SelectedItem.MetaItem.Category != MetaItemCategory.Throwable || Inventory.SelectedItem.Count <= 0)
+                return false;
+
+            throwObjectState.Item = Inventory.SelectedItem;
+            StateMachine.ChangeState(throwObjectState.Name);
+            return true;
         }
 
         // ResetHeadTween
@@ -641,6 +637,23 @@ namespace Remizione
             }
         }
 
+        // Craft
+        [ScriptMethod(CodingContext.Execution)]
+        public void Craft()
+        {
+            if (GetCraftData(out var position, out var prop, out var canPlace) && prop != null && canPlace && position != null)
+            {
+                if (Room is ProceduralRoom room && room.PlaceDynamicProp(prop, position.Value) is GameThing thing)
+                {
+                    var tween = new Vector2Tween() { StartDelay = 250 };
+                    tween.Start(TweenStyle.CubicIn, Vector2.Zero, Vector2.One, 250);
+                    thing.Tweens.ScaleTween = tween;
+                    session.Environment.Lightning.Show(thing.Position - new Vector2(0, 5));
+                    session.Player?.Inventory.RemoveSelected();
+                }
+            }
+        }
+
         // FaceToTarget
         public void FaceToTarget()
         {
@@ -693,6 +706,42 @@ namespace Remizione
                 return Vector2.Zero;
             else
                 return this.GetAbsolutePoint(BloodSplashOrigin);
+        }
+
+        // GetCraftData
+        public bool GetCraftData(out Vector2? position, out IsometricProp? prop, out bool canPlace)
+        {
+            position = null;
+            prop = null;
+            canPlace = false;
+
+            if (Inventory.SelectedItem == null || 
+                Inventory.SelectedItem.MetaItem.Category != MetaItemCategory.Crafting || 
+                !Inventory.SelectedItem.IsStackFull)
+                return false;
+
+            if (Room is not ProceduralRoom room)
+                return false;
+
+            prop = Inventory.SelectedItem.MetaItem.CraftProp;
+            if (prop == null)
+                return false;
+
+            var pos = this.Position;
+            var offset = prop.BoundingBox.Width / 2 + 5;
+
+            if (Direction == FacingDirection.Right)
+                pos.X += offset;
+            else
+                pos.X -= offset;
+
+            pos.Y = Y;
+
+            position = pos;
+
+            canPlace = room.CanPlaceDynamicPropAt(prop, pos);
+
+            return true;
         }
 
         // HandleInput
@@ -999,25 +1048,23 @@ namespace Remizione
             {
                 Stand();
 
+                // Throwable
                 if (item.MetaItem.Category == MetaItemCategory.Throwable)
                 {
-                    if (item.Count > 0)
-                    {
-                        throwObjectState.Item = item;
-                        StateMachine.ChangeState(throwObjectState.Name);
-                    }
+                    PerformThrowAction();
+                    return;
                 }
 
-                else if (item.MetaItem.Category == MetaItemCategory.Crafting)
-                { 
-                    Craft();
-                }
-
-                else
+                // Crafting
+                if (item.MetaItem.Category == MetaItemCategory.Crafting)
                 {
-                    useItemState.Item = item;
-                    StateMachine.ChangeState(useItemState.Name);
+                    PerformCraftAction();
+                    return;
                 }
+
+                // Use
+                useItemState.Item = item;
+                StateMachine.ChangeState(useItemState.Name);
             }
         }
 

@@ -11,9 +11,15 @@ namespace Remizione
     /// </summary>
     public sealed class ProceduralRoom : GameRoom
     {
+        #region Private fields
+
         private const string EmptyList = "[none]";
         private const string WorldBlocksAttributeName = "WorldBlocks";
         private readonly List<(Point gridPosition, int worldVersion, Dictionary<string, int> states)> worldBlockData = [];
+
+        #endregion
+
+        #region Constructor
 
         // Constructor
         public ProceduralRoom(GameSession session, string name)
@@ -22,6 +28,8 @@ namespace Remizione
             LightingSystem = true;
             WorldManager = new WorldManager(session, new Size(Screen.NativeWidth, Screen.NativeHeight), 111);
         }
+
+        #endregion
 
         #region Private members
 
@@ -171,6 +179,30 @@ namespace Remizione
         [ScriptProperty]
         public Size BlockSize { get; set; } = new Size(Screen.NativeWidth, Screen.NativeHeight);
 
+        // CanPlaceDynamicPropAt
+        public bool CanPlaceDynamicPropAt(IsometricProp prop, Vector2 position)
+        {
+            if (prop.Collider != null)
+            {
+                var box = new RectangleF(position, prop.Collider.BoundingRectangleF.Size);
+                box.Inflate(5, 5);
+
+                for (int i = 0; i < CulledThings.Count; i++)
+                {
+                    if (CulledThings[i] == prop)
+                        continue;
+
+                    if (CulledThings[i] is IHoleArea holeArea)
+                    {
+                        if (holeArea.Polygon.BoundingRectangleF.Intersects(box))
+                            return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
         // Expand
         public bool Expand(Vector2 playerPosition, EngendroAdventure.Direction direction)
         {
@@ -185,6 +217,26 @@ namespace Remizione
             }
 
             return false;
+        }
+
+        // PlaceDynamicProp
+        public IsometricProp? PlaceDynamicProp(IsometricProp prop, Vector2 position)
+        {
+            IsometricProp? result = null;
+
+            if (CanPlaceDynamicPropAt(prop, position))
+            {
+                result = Session.CreateDynamicThing(prop.StaticName, string.Empty) as IsometricProp;
+                if (result != null)
+                {
+                    result.Position = position;
+                    Children.Add(result);
+                }
+                else
+                    return null;
+            }
+
+            return result;
         }
 
         // PreserveFirstBlock
