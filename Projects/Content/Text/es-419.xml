@@ -31,6 +31,7 @@
   <String Key="HUDMessageKind.EnoughOfThat">Ya tienes suficiente.</String>
   <String Key="HUDMessageKind.InventoryFull">No puedes llevar más objetos.</String>
   <String Key="HUDMessageKind.NoInventoryBag">No tienes donde guardar cosas.</String>
+  <String Key="HUDMessageKind.NotEnoughFaith">Estás falto de Fé.</String>
   <String Key="InGameMenuOptionName.Attributes">Atributos</String>
   <String Key="InGameMenuOptionName.Creatures">Criaturas</String>
   <String Key="InGameMenuOptionName.Gifts">Dones</String>
@@ -211,11 +212,6 @@ Bla bla bla</String>
   <String Key="Misc.WanderingSpirit">Tu espíritu errante</String>
   <String Key="Misc.Yes">Sí</String>
   <String Key="Misc.YouAreDead">ESTÁS MUERTO.</String>
-  <String Key="Noun.Bag">Bolsa</String>
-  <String Key="Noun.Cross">Cruz</String>
-  <String Key="Noun.GhostCar">Carrito</String>
-  <String Key="Noun.PortableToilet">Pequeño purgatorio</String>
-  <String Key="Noun.Trunk">Baúl</String>
   <String Key="Platform.NintendoSwitch.Messages.ControllerDisconnected">Por favor vuelve a conectar el mando para continuar.</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyButton">Pulse cualquier botón para continuar</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyKeyOrButton">Pulse cualquier tecla o botón para continuar</String>
@@ -248,6 +244,11 @@ Bla bla bla</String>
   <String Key="Playtime.LessThanAMinute">Menos de un minuto</String>
   <String Key="Playtime.Minute">minuto</String>
   <String Key="Playtime.Minutes">minutos</String>
+  <String Key="Prop.Bag">Bolsa</String>
+  <String Key="Prop.Cross">Cruz</String>
+  <String Key="Prop.GhostCar">Carrito</String>
+  <String Key="Prop.PortableToilet">Pequeño purgatorio</String>
+  <String Key="Prop.Trunk">Baúl</String>
   <String Key="Stat.Charisma.Description">Carsima enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Stat.Charisma.Name">Carisma</String>
   <String Key="Stat.Devotion.Description">La devoción ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>

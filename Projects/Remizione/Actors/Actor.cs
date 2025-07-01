@@ -24,6 +24,7 @@ namespace Remizione
         private string closeAttackName = string.Empty;
         private readonly ActorCloseAttackState closeAttackState;
         private readonly CombatStateMachine combatStateMachine;
+        private CraftingData? craftingData;
         private int faith;
         private int faithRecoveryCooldown;
         private FloatingText? floatingMessage;
@@ -179,16 +180,29 @@ namespace Remizione
         // PerformCraftAction
         private bool PerformCraftAction()
         {
-            if (!GetCraftData(out var position, out var prop, out var canPlace) || prop == null || position == null)
-                return false;
+            var craftingData = GetCraftingData();
 
-            if (!canPlace)
+            if (craftingData.Prop == null || craftingData.Position == null || !craftingData.EnoughAmount)
+            {
+                Sound.Play(SoundNames.Error);
+                return false;
+            }
+
+            if (!craftingData.EnoughFaith)
+            {
+                Session.HUD.Message.Show(HUDMessageKind.NotEnoughFaith, true);
+                return false;
+            }
+
+            if (!craftingData.CanPlace)
             {
                 Session.HUD.Message.Show(HUDMessageKind.CannotPlaceItem, true);
                 return false;
             }
 
-            if (Session.ScriptLibrary.GetRoutine($"OnCraft{prop.StaticName}") is Script script)
+            Stand();
+
+            if (Session.ScriptLibrary.GetRoutine($"OnCraft{craftingData.Prop.StaticName}") is Script script)
                 Session.AwaitScript(script);
 
             return true;
@@ -200,6 +214,7 @@ namespace Remizione
             if (Inventory.SelectedItem == null || Inventory.SelectedItem.MetaItem.Category != MetaItemCategory.Throwable || Inventory.SelectedItem.Count <= 0)
                 return false;
 
+            Stand();
             throwObjectState.Item = Inventory.SelectedItem;
             StateMachine.ChangeState(throwObjectState.Name);
             return true;
@@ -641,9 +656,11 @@ namespace Remizione
         [ScriptMethod(CodingContext.Execution)]
         public void Craft()
         {
-            if (GetCraftData(out var position, out var prop, out var canPlace) && prop != null && canPlace && position != null)
+            var craftingData = GetCraftingData();
+
+            if (craftingData.Room != null && craftingData.Prop != null && craftingData.Position != null)
             {
-                if (Room is ProceduralRoom room && room.PlaceDynamicProp(prop, position.Value) is GameThing thing)
+                if (craftingData.Room.PlaceDynamicProp(craftingData.Prop, craftingData.Position.Value) is GameThing thing)
                 {
                     var tween = new Vector2Tween() { StartDelay = 250 };
                     tween.Start(TweenStyle.CubicIn, Vector2.Zero, Vector2.One, 250);
@@ -708,40 +725,12 @@ namespace Remizione
                 return this.GetAbsolutePoint(BloodSplashOrigin);
         }
 
-        // GetCraftData
-        public bool GetCraftData(out Vector2? position, out IsometricProp? prop, out bool canPlace)
+        // GetCraftingData
+        public CraftingData GetCraftingData()
         {
-            position = null;
-            prop = null;
-            canPlace = false;
-
-            if (Inventory.SelectedItem == null || 
-                Inventory.SelectedItem.MetaItem.Category != MetaItemCategory.Crafting || 
-                !Inventory.SelectedItem.IsStackFull)
-                return false;
-
-            if (Room is not ProceduralRoom room)
-                return false;
-
-            prop = Inventory.SelectedItem.MetaItem.CraftProp;
-            if (prop == null)
-                return false;
-
-            var pos = this.Position;
-            var offset = prop.BoundingBox.Width / 2 + 5;
-
-            if (Direction == FacingDirection.Right)
-                pos.X += offset;
-            else
-                pos.X -= offset;
-
-            pos.Y = Y;
-
-            position = pos;
-
-            canPlace = room.CanPlaceDynamicPropAt(prop, pos);
-
-            return true;
+            craftingData ??= new CraftingData(this);
+            craftingData.Invalidate();
+            return craftingData;
         }
 
         // HandleInput
@@ -1046,8 +1035,6 @@ namespace Remizione
         {
             if (Inventory.SelectedItem is Item item)
             {
-                Stand();
-
                 // Throwable
                 if (item.MetaItem.Category == MetaItemCategory.Throwable)
                 {
@@ -1063,6 +1050,7 @@ namespace Remizione
                 }
 
                 // Use
+                Stand();
                 useItemState.Item = item;
                 StateMachine.ChangeState(useItemState.Name);
             }

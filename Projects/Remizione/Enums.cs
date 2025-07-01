@@ -36,7 +36,7 @@ namespace Remizione
     public enum HitType { Default, Critical }
 
     // HUDMessageKind
-    public enum HUDMessageKind { CannotPlaceItem, EnoughOfThat, InventoryFull, NoInventoryBag }
+    public enum HUDMessageKind { CannotPlaceItem, EnoughOfThat, InventoryFull, NoInventoryBag, NotEnoughFaith }
 
     // ImpactType
     public enum ImpactType { Low, Medium, High }
@@ -51,7 +51,7 @@ namespace Remizione
     public enum ItemProperty { BaseDamage, Passive }
 
     // LightKind
-    public enum LightKind { Default, Lantern, Fire, Fireplace, Moon, MuzzleFlash, Outdoor, Lightning }
+    public enum LightKind { Default, Lantern, Fire, Fireplace, Global, MuzzleFlash, Outdoor }
 
     // LightState
     public enum LightState { Off, On, TurningOn, TurningOff }

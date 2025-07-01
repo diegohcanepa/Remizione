@@ -21,7 +21,7 @@ namespace Remizione
         private int currentDrawIndex;
         private static DustEmitter dustEmitter = null!;
         private static FireflyEmitter fireflyEmitter = null!;
-        private readonly Light lightning;
+        private static Light globalLight = null!;
         private RenderTarget2D? lightMapTarget;
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
@@ -38,12 +38,6 @@ namespace Remizione
             : base(session, name)
         {
             this.Session = session;
-            this.lightning = new Light(Game, "<Lightning>")
-            {
-                ImageName = nameof(Atlases.Environment.LightningLight),
-                LightKind = LightKind.Lightning,
-                Scale = new Vector2(8)
-            };
 
             this.Lights = new NamedObjectReadOnlyCollection<Light>(lights);
             this.TriggerAreas = new RoomAreaReadOnlyCollection<TriggerArea>(triggerAreas);
@@ -51,6 +45,21 @@ namespace Remizione
 
             dustEmitter ??= new DustEmitter(session, 6, 1000, 35);
             fireflyEmitter ??= new FireflyEmitter(session, 1, 500, 20);
+
+            if (globalLight == null)
+            {
+                globalLight = new Light(Game, "GlobalLight")
+                {
+                    Color = Color.White,
+                    LightKind = LightKind.Global,
+                    ImageName = "GlobalLight",
+                    PivotOrigin = RectanglePoint.Middle,
+                    Position = Screen.Center,
+                    Scale = new Vector2(3, 2)
+                };
+
+                globalLight.Prepare(Atlases.Environment);
+            }
         }
 
         #endregion
@@ -208,6 +217,18 @@ namespace Remizione
             Game.GraphicsDevice.SetRenderTarget(renderTarget);
 
             Game.GraphicsDevice.Clear(LightMapColor);
+
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
+
+            if (globalLight.IsFlashing)
+                globalLight.Color = Color.LightBlue * .9f;
+            else
+                globalLight.Color = Color.White;
+
+            globalLight.Draw(gameTime);
+            renderedLights.Add(globalLight);
+            Game.SpriteBatch.End();
+
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
 
             // Owned lights
@@ -221,13 +242,6 @@ namespace Remizione
                         renderedLights.Add(lights[i]);
                     }
                 }
-            }
-
-            if (lightning.IsFlashing)
-            {
-                lightning.Position = Session.Camera.VisibleBox.Center;
-                lightning.Draw(gameTime);
-                renderedLights.Add(lightning);
             }
 
             // Light sources
@@ -322,8 +336,6 @@ namespace Remizione
             // Foreround (layer)
             DrawThings(gameTime, RenderLayer.Foreground, interactiveTarget);
 
-            Session.Environment.Lightning.Draw(gameTime);
-
             // Rain
             if (Session.Environment.Rain.IsRaining)
                 Session.Environment.Rain.Draw(gameTime);
@@ -409,6 +421,17 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
+            if (Session.Environment.Cycle == Cycle.Indulgence)
+            {
+                if (!globalLight.IsEmitting)
+                    globalLight.TurnOn();
+            }
+            else
+            {
+                if (globalLight.IsEmitting)
+                    globalLight.TurnOff();
+            }
+
             TestTriggerAreas();
 
             // Lights
@@ -417,8 +440,7 @@ namespace Remizione
                 lights[i].Update(gameTime);
             }
 
-            if (lightning.IsFlashing)
-                lightning.Update(gameTime);
+            globalLight.Update(gameTime);
 
             // Dust particles
             if (DustParticleKind != DustParticleKind.None)
@@ -551,25 +573,12 @@ namespace Remizione
         public new GameSession Session { get; }
 
         // ShowLightning
-        public void ShowLightning(bool extendedDuration)
+        public void ShowLightning()
         {
-            var interval = extendedDuration ? new Int32Range(100, 150) : new Int32Range(50, 80);
-            int count = extendedDuration ? 18 : 6;
-            //var lightCount = 0;
-
-            for (int i = 0; i < Lights.Count; i++)
-            {
-                /*
-                if (Lights[i].Environmental)
-                {
-                    Lights[i].Flash(interval, count);
-                    lightCount++;
-                }
-                */
-            }
-
+            var interval = new Int32Range(30);
+            int count = 8;
             if (IsOutdoor)
-                lightning.Flash(interval, count);
+                globalLight.Flash(interval, count);
         }
 
         // TriggerAreas

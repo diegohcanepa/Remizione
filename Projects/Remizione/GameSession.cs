@@ -360,21 +360,7 @@ namespace Remizione
         // OnStart
         protected override void OnStart()
         {
-            foreach (MetaItem metaItem in MetaItem.Items)
-            {
-                metaItem.Validate(this);
-            }
-
-            if (GetEntity<ProceduralRoom>("Purgatory") is ProceduralRoom purgatory)
-            {
-                if (Player != null)
-                {
-                    if (IsNewSession)
-                        Player.Position = purgatory.WorldManager.Blocks[0].BoundingBox.Center;
-
-                    Camera.FollowTarget(Player, true);
-                }
-            }
+            MetaItem.Validate(this);
         }
 
         // OnUpdate

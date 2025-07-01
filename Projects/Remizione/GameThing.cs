@@ -480,17 +480,18 @@ namespace Remizione
 
             OnDamageReaction(attacker);
 
-            // Impact word
-            if (HurtImpactSound != null && impactWordKind != ImpactWordKind.None && Collider != null)
-            {
-                impactWord ??= Session.ImpactWordPool.Get();
-                impactWord.Show(impactWordKind, this.GetAbsolutePoint(Collider.BoundingRectangleF.GetPoint(RectanglePoint.Top)));
-            }
-
             if (HurtSound != null || HurtImpactSound != null)
             {
                 hurtShakeTween ??= new();
                 hurtShakeTween.Start(TweenStyle.Linear, Vector2.Zero, HurtShake, 40, 4);
+
+                // Impact word
+                if (Collider != null)
+                {
+                    impactWord ??= Session.ImpactWordPool.Get();
+                    impactWord.Show(impactWordKind, this.GetAbsolutePoint(Collider.BoundingRectangleF.GetPoint(RectanglePoint.Top)));
+                }
+
                 return;
             }
 

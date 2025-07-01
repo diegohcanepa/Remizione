@@ -17,7 +17,7 @@ namespace Remizione
         public const string ContentRootDirectory = "Content";
 
         // CycleDuration
-        public const int CycleDuration = 180_000;
+        public const int CycleDuration = 30_000;
 
         // DefaultTransitionDuration
         public const int DefaultTransitionDuration = 500;

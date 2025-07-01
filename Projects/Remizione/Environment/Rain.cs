@@ -179,7 +179,7 @@ namespace Remizione
         {
             if (RemainingTime > 15000 || force)
             {
-                session.Room?.ShowLightning(extendedDuration);
+                session.Room?.ShowLightning();
 
                 var soundName = SoundNames.Thunder.ToString();
 

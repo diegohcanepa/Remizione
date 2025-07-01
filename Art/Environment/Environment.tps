@@ -519,7 +519,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">FlatStonesA-assets/FlatStonesA.png</key>
+            <key type="filename">FlatStones-assets/FlatStonesA.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -534,7 +534,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">FlatStonesB-assets/FlatStonesB.png</key>
+            <key type="filename">FlatStones-assets/FlatStonesB.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -546,6 +546,156 @@
                 <rect>12,8,25,16</rect>
                 <key>scale9Paddings</key>
                 <rect>12,8,25,16</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">FlatStones-assets/FlatStonesC.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>15,5,29,9</rect>
+                <key>scale9Paddings</key>
+                <rect>15,5,29,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">FlatStones-assets/FlatStonesD.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,4,9,8</rect>
+                <key>scale9Paddings</key>
+                <rect>5,4,9,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">FlatStones-assets/FlatStonesE.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,7,22,15</rect>
+                <key>scale9Paddings</key>
+                <rect>11,7,22,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">FlatStones-assets/FlatStonesF.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,3,11,5</rect>
+                <key>scale9Paddings</key>
+                <rect>5,3,11,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Grass-assets/GrassA.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>18,9,35,17</rect>
+                <key>scale9Paddings</key>
+                <rect>18,9,35,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Grass-assets/GrassB.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>18,8,35,17</rect>
+                <key>scale9Paddings</key>
+                <rect>18,8,35,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Grass-assets/GrassC.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>20,11,39,21</rect>
+                <key>scale9Paddings</key>
+                <rect>20,11,39,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Grass-assets/GrassD.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>29,15,58,29</rect>
+                <key>scale9Paddings</key>
+                <rect>29,15,58,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Grass-assets/GrassE.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,6,15,13</rect>
+                <key>scale9Paddings</key>
+                <rect>7,6,15,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Grass-assets/GrassF.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,5,23,11</rect>
+                <key>scale9Paddings</key>
+                <rect>12,5,23,11</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -902,13 +1052,11 @@
                     <filename>BloodSplashLow-assets</filename>
                     <filename>BloodSplashHigh-assets</filename>
                     <filename>TerrainBlocks-assets</filename>
-                    <filename>FlatStonesA-assets</filename>
                     <filename>TreeA-assets</filename>
                     <filename>TreeB-assets</filename>
                     <filename>TreeC-assets</filename>
                     <filename>CrossB-assets</filename>
                     <filename>CrossC-assets</filename>
-                    <filename>FlatStonesB-assets</filename>
                     <filename>SmallRockA-assets</filename>
                     <filename>LargeRockA-assets</filename>
                     <filename>LargeRockB-assets</filename>
@@ -924,6 +1072,8 @@
                     <filename>PieceOfWood-assets</filename>
                     <filename>Trunk-assets</filename>
                     <filename>PortableToilet-assets</filename>
+                    <filename>Grass-assets</filename>
+                    <filename>FlatStones-assets</filename>
                 </array>
             </struct>
         </map>

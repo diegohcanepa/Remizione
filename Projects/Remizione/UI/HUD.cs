@@ -17,7 +17,6 @@ namespace Remizione
         private readonly UIScore grace;
         private readonly UIDerivedStats playerStats;
         private readonly UIPrompt prompt;
-        private readonly QuickSlot quickSlot;
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
         private readonly TextSprite statusText;
@@ -64,7 +63,7 @@ namespace Remizione
             this.prompt = new(session);
 
             // Quick slot
-            this.quickSlot = new(Game);
+            this.QuickSlot = new(Game);
 
             // Message text
             this.statusText = new TextSprite(Game, Fonts.CommonOutline)
@@ -86,7 +85,7 @@ namespace Remizione
             if (session.PurgatoryMode)
             {
                 if (!session.IsConsoleVisible)
-                    quickSlot.Draw(gameTime);
+                    QuickSlot.Draw(gameTime);
 
                 playerStats.Draw(gameTime);
 
@@ -117,7 +116,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             CraftingMark.Update(gameTime);
-            quickSlot.Update(gameTime);
+            QuickSlot.Update(gameTime);
             playerStats.Update(gameTime);
             prompt.Update(gameTime);
 
@@ -145,7 +144,7 @@ namespace Remizione
         public CraftingMark CraftingMark { get; }
 
         // HandleInput
-        public HandleInputResult HandleInput(GameTime gameTime) => quickSlot.HandleInput(gameTime);
+        public HandleInputResult HandleInput(GameTime gameTime) => QuickSlot.HandleInput(gameTime);
 
         // Log
         public UILog Log { get; }
@@ -153,11 +152,14 @@ namespace Remizione
         // Message
         public HUDMessage Message { get; }
 
+        // QuickSlot
+        public QuickSlot QuickSlot { get; }
+
         // Reset
         public void Reset()
         {
             playerStats.Actor = session.Player;
-            quickSlot.Actor = session.Player;
+            QuickSlot.Actor = session.Player;
         }
 
         // ShowSavingIcon

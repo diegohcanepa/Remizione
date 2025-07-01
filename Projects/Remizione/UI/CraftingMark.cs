@@ -47,11 +47,11 @@ namespace Remizione.UI
             if (session.Player == null || session.IsAwaiting)
                 return;
 
-            session.Player.GetCraftData(out var position, out var prop, out var canPlace);
-            if (prop != null && position != null)
+            var craftingData = session.Player.GetCraftingData();
+            if (craftingData.Prop != null && craftingData.Position != null)
             {
-                image.Position = position.Value;
-                image.Color = canPlace ? ColorPalette.Text.Green : ColorPalette.Text.Red;
+                image.Position = craftingData.Position.Value;
+                image.Color = craftingData.CanPlace ? ColorPalette.Text.Green : ColorPalette.Text.Red;
                 IsVisible = true;
             }
 

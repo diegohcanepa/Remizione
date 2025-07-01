@@ -51,6 +51,7 @@ namespace Remizione
             this.randomSeed = GetSeed(manager.Session.RandomSeed, Index);
             this.random = new Random(randomSeed);
 
+            /*
             Light = new Light(Manager.Session.Game, "GlobalLight")
             {
                 Color = Color.White,
@@ -59,6 +60,7 @@ namespace Remizione
             };
 
             LightPosition = Screen.Center;
+            */
 
             borderImages = new ImageSprite[4];
 

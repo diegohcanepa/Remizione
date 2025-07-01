@@ -70,22 +70,18 @@ namespace Remizione
                     unlitTweenDuration = 1000;
                     break;
 
-                // Moon
-                case LightKind.Moon:
+                // Global
+                case LightKind.Global:
                     lightSprite.Tweens.Reset();
-                    lightSprite.Color = new Color(45, 63, 120) * .7f;
+                    lightSprite.Color = Color.White;
+                    litTweenDuration = 3000;
+                    unlitTweenDuration = 3000;
                     break;
 
                 // MuzzleFlash
                 case LightKind.MuzzleFlash:
                     lightSprite.Tweens.Reset();
                     lightSprite.Color = Color * .7f;
-                    break;
-
-                // Lightning
-                case LightKind.Lightning:
-                    lightSprite.Tweens.Reset();
-                    lightSprite.Color = new Color(50, 50, 255);
                     break;
 
                 // Outdoor
@@ -213,6 +209,9 @@ namespace Remizione
 
         // IsFlashing
         public bool IsFlashing => flashBlinker.IsRunning;
+
+        // IsFlashingOn
+        public bool IsFlashingOn => flashBlinker.IsRunning && flashBlinker.CurrentValue;
 
         // LightKind
         public LightKind LightKind
