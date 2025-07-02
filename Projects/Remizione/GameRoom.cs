@@ -25,7 +25,7 @@ namespace Remizione
         private RenderTarget2D? lightMapTarget;
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
-        private readonly List<Light> renderedLights = [];
+        private static Light playerLight = null!;
         private readonly List<TriggerArea> triggerAreas = [];
         private readonly List<WalkArea> walkAreas = [];
 
@@ -46,20 +46,27 @@ namespace Remizione
             dustEmitter ??= new DustEmitter(session, 6, 1000, 35);
             fireflyEmitter ??= new FireflyEmitter(session, 1, 500, 20);
 
-            if (globalLight == null)
+            // Global light
+            globalLight ??= new Light(Game, "GlobalLight")
             {
-                globalLight = new Light(Game, "GlobalLight")
+                Color = Color.White,
+                LightKind = LightKind.Global,
+                ImageName = "GlobalLight",
+                PivotOrigin = RectanglePoint.Middle,
+                Position = Screen.Center,
+                Scale = new Vector2(2.5f, 1.7f)
+            };
+            globalLight.Prepare(Atlases.Environment);
+
+            // Player light
+            playerLight ??= new Light(Game, "PlayerLight")
                 {
-                    Color = Color.White,
-                    LightKind = LightKind.Global,
-                    ImageName = "GlobalLight",
+                    LightKind = LightKind.Player,
                     PivotOrigin = RectanglePoint.Middle,
                     Position = Screen.Center,
-                    Scale = new Vector2(3, 2)
+                    Scale = new Vector2(6, 5)
                 };
-
-                globalLight.Prepare(Atlases.Environment);
-            }
+            playerLight.TurnOff(true);
         }
 
         #endregion
@@ -189,7 +196,12 @@ namespace Remizione
                 {
                     ShaderEffect? effect = null;
 
-                    if (interactiveTarget == thing && thing.Highlight && InputManager.DefaultPlayer.LastInputMethod != InputMethod.Mouse)
+                    if (thing.IsBlinkingDamage)
+                    {
+                        RemizioneGame.Effects.ColorReduction.SetColor(50, 50, 50, 1);
+                        effect = RemizioneGame.Effects.ColorReduction;
+                    }
+                    else if (interactiveTarget == thing && thing.Highlight && InputManager.DefaultPlayer.LastInputMethod != InputMethod.Mouse)
                     {
                         RemizioneGame.Effects.ColorSaturation.SetColor(.8f, .8f, .8f, 0);
                         effect = RemizioneGame.Effects.ColorSaturation;
@@ -212,8 +224,6 @@ namespace Remizione
             // Save current render target
             var previousRenderTarget = Game.RenderTargets.CurrentTarget;
 
-            renderedLights.Clear();
-
             Game.GraphicsDevice.SetRenderTarget(renderTarget);
 
             Game.GraphicsDevice.Clear(LightMapColor);
@@ -226,7 +236,7 @@ namespace Remizione
                 globalLight.Color = Color.White;
 
             globalLight.Draw(gameTime);
-            renderedLights.Add(globalLight);
+
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
@@ -239,7 +249,6 @@ namespace Remizione
                     if (lights[i].BoundingBox.Intersects(Session.Camera.CullingBox))
                     {
                         lights[i].Draw(gameTime);
-                        renderedLights.Add(lights[i]);
                     }
                 }
             }
@@ -248,7 +257,13 @@ namespace Remizione
             for (int i = 0; i < CulledThings.Count; i++)
             {
                 if (CulledThings[i] is GameThing thing && thing.IsEmittingLight && CulledThings[i].IsInCullingBox)
-                    thing.DrawLights(gameTime, renderedLights);
+                    thing.DrawLights(gameTime);
+            }
+
+            if (Session.Player != null)
+            {
+                playerLight.Position = Session.Player.BoundingBox.GetPoint(RectanglePoint.Middle, 0, 5);
+                playerLight.Draw(gameTime);
             }
 
             if (BrightnessModifier > 0)
@@ -425,11 +440,17 @@ namespace Remizione
             {
                 if (!globalLight.IsEmitting)
                     globalLight.TurnOn();
+
+                if (playerLight.IsEmitting)
+                    playerLight.TurnOff();
             }
             else
             {
                 if (globalLight.IsEmitting)
                     globalLight.TurnOff();
+
+                if (!playerLight.IsEmitting)
+                    playerLight.TurnOn();
             }
 
             TestTriggerAreas();
@@ -441,6 +462,7 @@ namespace Remizione
             }
 
             globalLight.Update(gameTime);
+            playerLight.Update(gameTime);
 
             // Dust particles
             if (DustParticleKind != DustParticleKind.None)

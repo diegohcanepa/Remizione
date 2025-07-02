@@ -9,7 +9,7 @@ namespace Remizione
     public interface ILightSource
     {
         // DrawLights
-        void DrawLights(GameTime gameTime, List<Light> renderedLights);
+        void DrawLights(GameTime gameTime);
 
         // IsEmittingLight
         bool IsEmittingLight { get; }

@@ -74,8 +74,8 @@ namespace Remizione
                 case LightKind.Global:
                     lightSprite.Tweens.Reset();
                     lightSprite.Color = Color.White;
-                    litTweenDuration = 3000;
-                    unlitTweenDuration = 3000;
+                    litTweenDuration = 5000;
+                    unlitTweenDuration = 5000;
                     break;
 
                 // MuzzleFlash
@@ -88,6 +88,14 @@ namespace Remizione
                 case LightKind.Outdoor:
                     lightSprite.Tweens.Reset();
                     lightSprite.Color = ColorPalette.OutdoorLight;
+                    break;
+
+                // Player
+                case LightKind.Player:
+                    lightSprite.Tweens.Reset();
+                    lightSprite.Color = Color.Cyan;
+                    litTweenDuration = 5000;
+                    unlitTweenDuration = 5000;
                     break;
 
                 // Default

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:97254a63b41739b4a26947e7c1ba01dd:13cea372fb9ae75accb38ffd2e1cb0d0:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:c1577ca2da4beada5addd41526c4dccb:903e5fe7e68cddf89cbcf5ba7b1c62a9:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,13 +20,8 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Actors.png" width="256" height="256">
-    <sprite n="Dog-assets/Bark01.png" x="234" y="95" w="14" h="12"/>
-    <sprite n="Dog-assets/Bark02.png" x="234" y="109" w="14" h="12"/>
-    <sprite n="Dog-assets/Move01.png" x="161" y="103" w="14" h="12"/>
-    <sprite n="Dog-assets/Move02.png" x="177" y="106" w="14" h="12"/>
-    <sprite n="Dog-assets/Stand01.png" x="161" y="103" w="14" h="12"/>
-    <sprite n="Dog-assets/Stand02.png" x="161" y="117" w="14" h="12"/>
-    <sprite n="Dog-assets/Stand03.png" x="193" y="106" w="14" h="12"/>
+    <sprite n="Baal-assets/Stand01.png" x="234" y="95" w="18" h="14"/>
+    <sprite n="Baal-assets/Stand02.png" x="234" y="111" w="18" h="14"/>
     <sprite n="Edmund-assets/Back01.png" x="2" y="86" w="28" h="25"/>
     <sprite n="Edmund-assets/BackRaiseArm01.png" x="2" y="86" w="28" h="25"/>
     <sprite n="Edmund-assets/BackRaiseArm02.png" x="2" y="113" w="28" h="25"/>

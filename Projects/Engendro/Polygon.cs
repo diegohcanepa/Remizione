@@ -20,8 +20,34 @@ namespace Engendro
         {
         }
 
+        // FlipCore
+        private void FlipCore(float? originX, float? originY)
+        {
+            var vertices = GetVertices();
+
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                if (originX.HasValue)
+                    vertices[i].X = 2 * originX.Value - vertices[i].X;
+
+                if (originY.HasValue)
+                    vertices[i].Y = 2 * originY.Value - vertices[i].Y;
+            }
+
+            SetVertices(vertices);
+        }
+
         // Deflate
         public void Deflate(float distance) => DeflateCore(distance);
+
+        // Flip
+        public void Flip(float originX, float originY) => FlipCore(originX, originY);
+
+        // FlipHorizontally
+        public void FlipHorizontally(float originX) => FlipCore(originX, null);
+
+        // FlipVertically
+        public void FlipVertically(float originY) => FlipCore(null, originY);
 
         // Inflate
         public void Inflate(float distance) => InflateCore(distance);

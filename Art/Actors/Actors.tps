@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.7.0</string>
+        <string>7.8.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -173,13 +173,9 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Dog-assets/Bark01.png</key>
-            <key type="filename">Dog-assets/Bark02.png</key>
-            <key type="filename">Dog-assets/Move01.png</key>
-            <key type="filename">Dog-assets/Move02.png</key>
-            <key type="filename">Dog-assets/Stand01.png</key>
-            <key type="filename">Dog-assets/Stand02.png</key>
-            <key type="filename">Dog-assets/Stand03.png</key>
+            <key type="filename">Baal-assets/Stand01.png</key>
+            <key type="filename">Baal-assets/Stand02.png</key>
+            <key type="filename">Baal-assets/Stand03.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -188,9 +184,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>4,3,7,6</rect>
+                <rect>5,5,10,10</rect>
                 <key>scale9Paddings</key>
-                <rect>4,3,7,6</rect>
+                <rect>5,5,10,10</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -317,9 +313,9 @@
                 <array>
                     <filename>Edmund-assets</filename>
                     <filename>Grandma-assets</filename>
-                    <filename>Dog-assets</filename>
                     <filename>Reaper-assets</filename>
                     <filename>Sister-assets</filename>
+                    <filename>Baal-assets</filename>
                 </array>
             </struct>
         </map>

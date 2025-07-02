@@ -51,17 +51,6 @@ namespace Remizione
             this.randomSeed = GetSeed(manager.Session.RandomSeed, Index);
             this.random = new Random(randomSeed);
 
-            /*
-            Light = new Light(Manager.Session.Game, "GlobalLight")
-            {
-                Color = Color.White,
-                PivotOrigin = RectanglePoint.Middle,
-                Scale = new(20, 12)
-            };
-
-            LightPosition = Screen.Center;
-            */
-
             borderImages = new ImageSprite[4];
 
             // Top

@@ -51,7 +51,7 @@ namespace Remizione
     public enum ItemProperty { BaseDamage, Passive }
 
     // LightKind
-    public enum LightKind { Default, Lantern, Fire, Fireplace, Global, MuzzleFlash, Outdoor }
+    public enum LightKind { Default, Lantern, Fire, Fireplace, Global, MuzzleFlash, Outdoor, Player }
 
     // LightState
     public enum LightState { Off, On, TurningOn, TurningOff }

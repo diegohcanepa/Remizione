@@ -15,8 +15,6 @@
 	<FX Name="BlipC" MaxInstances="4" Volume=".5" />
 	<FX Name="BodyFallMedium" MaxInstances="8" Sounds="1..1" />
 	<FX Name="CycleHorn" />
-	<FX Name="DogBark" MaxInstances="3" Sounds="1..2" />
-	<FX Name="DoodleDoo" />
 	<FX Name="DoorToilet" />
 	<FX Name="ElectricZapStrong" />
 	<FX Name="Error" MaxInstances="4" Sounds="1..2" />

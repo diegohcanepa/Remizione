@@ -148,6 +148,7 @@ namespace Remizione
         protected override void ExtendScriptRegistry(ScriptRegistry scriptRegistry)
         {
             scriptRegistry.RegisterEntity(typeof(Actor));
+            scriptRegistry.RegisterEntity(typeof(Baal));
             scriptRegistry.RegisterEntity(typeof(IsometricProp));
             scriptRegistry.RegisterEntity(typeof(Orb));
             scriptRegistry.RegisterEntity(typeof(Pickup));

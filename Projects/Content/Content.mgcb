@@ -191,24 +191,6 @@
 /processorParam:Quality=Best
 /build:Audio/FX/CycleHorn.wav;Audio/FX/CycleHorn
 
-#begin Audio/FX/DogBark1.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/DogBark1.wav;Audio/FX/DogBark1
-
-#begin Audio/FX/DogBark2.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/DogBark2.wav;Audio/FX/DogBark2
-
-#begin Audio/FX/DoodleDoo.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/DoodleDoo.wav;Audio/FX/DoodleDoo
-
 #begin Audio/FX/DoorToilet.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

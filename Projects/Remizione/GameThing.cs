@@ -20,6 +20,7 @@ namespace Remizione
         #region Private fields
 
         private bool applyDamagePending;
+        private readonly Blinker<bool> blinker = new(false, true);
         private Meter? damageMeter;
         private int damageMeterCooldown;
         private string displayName = string.Empty;
@@ -179,6 +180,8 @@ namespace Remizione
                     lootBag.Drop(Position, itemName);
                 }
             }
+
+            Unparent();
         }
 
         // GetPivotBasedPolyOffset
@@ -299,7 +302,7 @@ namespace Remizione
         }
 
         // OnDrawLights
-        protected virtual void OnDrawLights(GameTime gameTime, List<Light> renderedLights)
+        protected virtual void OnDrawLights(GameTime gameTime)
         {
         }
 
@@ -322,6 +325,7 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
+            isHoleAreaDirty = true;
             InvalidateHoleArea();
             InvalidateWalkArea();
         }
@@ -412,6 +416,19 @@ namespace Remizione
             }
 
             Light?.Update(gameTime);
+
+            if (blinker.IsRunning)
+            {
+                blinker.Update(gameTime);
+
+                if (!blinker.IsRunning)
+                    OpacityFactor = 1;
+
+                else if (blinker.CurrentValue)
+                    OpacityFactor = .8f;
+                else
+                    OpacityFactor = .5f;
+            }
         }
 
         // OnUpdateEmittingSound
@@ -491,12 +508,13 @@ namespace Remizione
                     impactWord ??= Session.ImpactWordPool.Get();
                     impactWord.Show(impactWordKind, this.GetAbsolutePoint(Collider.BoundingRectangleF.GetPoint(RectanglePoint.Top)));
                 }
-
-                return;
             }
 
             if (MaxHP == 0)
                 return;
+
+            if (CumulativeDamage > 0)
+                blinker.Start(20, 4);
 
             HP -= (int)CumulativeDamage;
 
@@ -615,12 +633,18 @@ namespace Remizione
         // DrawDebugBoxes
         public void DrawDebugBoxes()
         {
-            if (ShowHotspotBoxes)
+            if (ShowColliders)
+                DrawBox(Game, holePoly.BoundingRectangleF, Color.Red * .2f);
+
+            if (ShowHotspots)
                 DrawBox(Game, RuntimeHotspot.BoundingRectangleF, Color.Purple * .2f);
         }
 
-        // ShowHotspotBoxes
-        public static bool ShowHotspotBoxes { get; set; }
+        // ShowColliders
+        public static bool ShowColliders { get; set; }
+
+        // ShowHotspots
+        public static bool ShowHotspots { get; set; }
 #endif
 
         // DeathSound
@@ -660,16 +684,15 @@ namespace Remizione
         public void DrawImpactWord(GameTime gameTime) => impactWord?.Draw(gameTime);
 
         // DrawLights
-        public void DrawLights(GameTime gameTime, List<Light> renderedLights)
+        public void DrawLights(GameTime gameTime)
         {
             if (Light != null)
             {
                 Light.Position = this.GetAbsolutePoint(LightPosition);
                 Light.Draw(gameTime);
-                renderedLights.Add(Light);
             }
 
-            OnDrawLights(gameTime, renderedLights);
+            OnDrawLights(gameTime);
         }
 
         // DrawReflection
@@ -911,6 +934,9 @@ namespace Remizione
                 return false;
         }
 
+        // IsBlinkingDamage
+        public bool IsBlinkingDamage => blinker.IsRunning && blinker.CurrentValue;
+
         // IsDead
         public bool IsDead => HP <= 0 && MaxHP > 0;
 
@@ -992,6 +1018,9 @@ namespace Remizione
         // Room
         public new GameRoom? Room => Parent as GameRoom;
 
+        // RuntimeCollider
+        public Polygon RuntimeCollider => holeInflatedPoly;
+
         // RuntimeHotspot
         public Polygon RuntimeHotspot
         {
@@ -1005,9 +1034,13 @@ namespace Remizione
                     else if (HotspotPlacement == PlacementMode.Relative)
                     {
                         var offset = GetPivotBasedPolyOffset();
+                        offset.Y -= Altitude;
+
                         var vertices = new Vector2[Hotspot.Vertices.Count];
                         Hotspot.GetVertices(vertices, offset);
                         hotspotPoly.SetVertices(vertices);
+                        if (IsFlippedHorizontally)
+                            hotspotPoly.FlipHorizontally(X);
                     }
                     else
                     {

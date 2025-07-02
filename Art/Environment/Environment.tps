@@ -231,6 +231,7 @@
             </struct>
             <key type="filename">CrossB-assets/CrossB.png</key>
             <key type="filename">CrossB-assets/CrossBShadow.png</key>
+            <key type="filename">Environment-assets/DefaultLight.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -303,8 +304,6 @@
                 <false/>
             </struct>
             <key type="filename">Environment-assets/BlessedTinder.png</key>
-            <key type="filename">Environment-assets/Orb.png</key>
-            <key type="filename">FireflyParticles-assets/FireflyParticle2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -313,9 +312,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>1,1,3,3</rect>
+                <rect>1,2,3,3</rect>
                 <key>scale9Paddings</key>
-                <rect>1,1,3,3</rect>
+                <rect>1,2,3,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -350,7 +349,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Environment-assets/DefaultLight.png</key>
+            <key type="filename">Environment-assets/GlobalLight.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -359,14 +358,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>10,10,19,19</rect>
+                <rect>64,56,128,113</rect>
                 <key>scale9Paddings</key>
-                <rect>10,10,19,19</rect>
+                <rect>64,56,128,113</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
             <key type="filename">Environment-assets/LightningLight.png</key>
-            <key type="filename">TerrainBlocks-assets/TerrainBlockDefault.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -375,9 +373,25 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>60,34,120,67</rect>
+                <rect>67,40,133,79</rect>
                 <key>scale9Paddings</key>
-                <rect>60,34,120,67</rect>
+                <rect>67,40,133,79</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Environment-assets/Orb.png</key>
+            <key type="filename">FireflyParticles-assets/FireflyParticle2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,3,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -390,9 +404,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>91,13,183,25</rect>
+                <rect>45,11,89,21</rect>
                 <key>scale9Paddings</key>
-                <rect>91,13,183,25</rect>
+                <rect>45,11,89,21</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -405,9 +419,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>90,14,180,29</rect>
+                <rect>33,10,66,19</rect>
                 <key>scale9Paddings</key>
-                <rect>90,14,180,29</rect>
+                <rect>33,10,66,19</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -420,9 +434,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>88,17,177,33</rect>
+                <rect>40,8,80,17</rect>
                 <key>scale9Paddings</key>
-                <rect>88,17,177,33</rect>
+                <rect>40,8,80,17</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -435,9 +449,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>83,11,166,22</rect>
+                <rect>22,8,43,17</rect>
                 <key>scale9Paddings</key>
-                <rect>83,11,166,22</rect>
+                <rect>22,8,43,17</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -910,6 +924,21 @@
                 <rect>4,2,7,5</rect>
                 <key>scale9Paddings</key>
                 <rect>4,2,7,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">TerrainBlocks-assets/TerrainBlockDefault.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>60,34,120,67</rect>
+                <key>scale9Paddings</key>
+                <rect>60,34,120,67</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
