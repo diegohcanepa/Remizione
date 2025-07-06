@@ -11,7 +11,7 @@ namespace Remizione
         #region Private fields
 
         private readonly Actor actor;
-        private ShadowSpotSize size;
+        private int size;
         private readonly ImageSprite spotImage;
 
         #endregion
@@ -29,7 +29,7 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.Middle
             };
 
-            this.Size = ShadowSpotSize.W6;
+            this.Size = 6;
         }
 
         #endregion
@@ -52,7 +52,7 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (size != ShadowSpotSize.None)
+            if (!spotImage.IsEmpty)
             {
                 spotImage.Effects = actor.Effects;
                 spotImage.Opacity = GetCurrentOpacity() * actor.Opacity;
@@ -73,7 +73,7 @@ namespace Remizione
         public Vector2 Offset { get; set; }
 
         // Size
-        public ShadowSpotSize Size
+        public int Size
         {
             get => size;
             set
@@ -81,7 +81,7 @@ namespace Remizione
                 if (value != size)
                 {
                     this.size = value;
-                    spotImage.Image = value == ShadowSpotSize.None ? null : Atlases.Environment.GetImage(nameof(ShadowSpot) + value.ToString());
+                    spotImage.Image = Atlases.Environment.GetImage($"{nameof(ShadowSpot)}{value}");
                 }
             }
         }

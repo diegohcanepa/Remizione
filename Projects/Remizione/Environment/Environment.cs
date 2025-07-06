@@ -17,6 +17,23 @@ namespace Remizione
             this.Rain = new Rain(session);
         }
 
+        #region Private members
+
+        // LerpColorCubicIn
+        private Color LerpColorCubicIn(Color a, Color b, float t)
+        {
+            t = t * t * t; // easing Cubic In
+
+            byte r = (byte)(a.R + (b.R - a.R) * t);
+            byte g = (byte)(a.G + (b.G - a.G) * t);
+            byte bVal = (byte)(a.B + (b.B - a.B) * t);
+            byte aVal = (byte)(a.A + (b.A - a.A) * t);
+
+            return new Color(r, g, bVal, aVal);
+        }
+
+        #endregion
+
         #region Internal members
 
         // Update
@@ -62,6 +79,18 @@ namespace Remizione
 
         // CycleCount
         public int CycleCount { get; set; } = 1;
+
+        // GlobalLightColor
+        public Color GlobalLightColor
+        {
+            get
+            {
+                if (Cycle == Cycle.Indulgence)
+                    return LerpColorCubicIn(Color.White, Color.IndianRed, 1 - ((float)CycleCooldown / GameSettings.CycleDuration));
+                else
+                    return Color.IndianRed;
+            }
+        }
 
         // Lightning
         public Lightning Lightning { get; }

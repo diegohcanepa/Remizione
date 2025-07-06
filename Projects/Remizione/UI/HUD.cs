@@ -14,12 +14,13 @@ namespace Remizione
         #region Private fields
 
         private readonly UICycleMeter cycleMeter;
-        private readonly UIScore grace;
+        private readonly UIHealthMeter healthMeter;
         private readonly UIDerivedStats playerStats;
         private readonly UIPrompt prompt;
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
         private readonly TextSprite statusText;
+        private readonly UIScore tickets;
 
         #endregion
 
@@ -33,6 +34,7 @@ namespace Remizione
 
             this.playerStats = new(session.Game);
             this.cycleMeter = new(session);
+            this.healthMeter = new(session.Game);
 
             // CraftPositionMark
             this.CraftingMark = new CraftingMark(session);
@@ -51,8 +53,8 @@ namespace Remizione
                 Scale = ScaleInfo.UIElement.Medium
             };
 
-            // Grace
-            this.grace = new UIScore(session.Game, Atlases.UI.GraceIcon)
+            // Tickets
+            this.tickets = new UIScore(session.Game, Atlases.UI.TicketsIcon, ColorPalette.Text.Default)
             {
                 HideZero = true,
                 PivotOrigin = RectanglePoint.RightBottom,
@@ -87,12 +89,14 @@ namespace Remizione
                 if (!session.IsConsoleVisible)
                     QuickSlot.Draw(gameTime);
 
-                playerStats.Draw(gameTime);
+                healthMeter.Draw(gameTime);
 
-                grace.Draw(gameTime);
+                //playerStats.Draw(gameTime);
 
-                if (!savingIcon.Tweens.IsTweening)
-                    cycleMeter.Draw(gameTime);
+                tickets.Draw(gameTime);
+
+                //if (!savingIcon.Tweens.IsTweening)
+                //    cycleMeter.Draw(gameTime);
             }
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
@@ -118,6 +122,7 @@ namespace Remizione
             CraftingMark.Update(gameTime);
             QuickSlot.Update(gameTime);
             playerStats.Update(gameTime);
+            healthMeter.Update(gameTime);
             prompt.Update(gameTime);
 
             if (session.PurgatoryMode)
@@ -128,8 +133,8 @@ namespace Remizione
 
             if (session.Player != null)
             {
-                grace.Score = session.Player.Grace;
-                grace.Update(gameTime);
+                tickets.Score = session.Player.Tickets;
+                tickets.Update(gameTime);
             }
 
             Log.Update(gameTime);
@@ -158,6 +163,7 @@ namespace Remizione
         // Reset
         public void Reset()
         {
+            healthMeter.Actor = session.Player;
             playerStats.Actor = session.Player;
             QuickSlot.Actor = session.Player;
         }

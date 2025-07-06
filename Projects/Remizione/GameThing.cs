@@ -170,7 +170,7 @@ namespace Remizione
             OnDeath();
 
             if (Session.Player != null && Session.Player != this)
-                Session.Player.Grace += Grace;
+                Session.Player.Tickets += Tickets;
 
             if (LootTable.Find(StaticName) is LootTable lootTable)
             {
@@ -212,7 +212,10 @@ namespace Remizione
         // InvalidateHoleArea
         private void InvalidateHoleArea()
         {
-            if (!isHoleAreaDirty || Collider == null)
+            if (Collider == null)
+                return;
+
+            if (!isHoleAreaDirty)
                 return;
 
             int vertexCount = Collider.Vertices.Count;
@@ -261,6 +264,15 @@ namespace Remizione
 
         // CanCheckCollisions
         protected virtual bool CanCheckCollisions() => CollisionDetection;
+
+        // GetPixelAreaForGrid
+        protected virtual RectangleF GetPixelAreaForGrid()
+        {
+            if (Collider == null)
+                return BoundingBox;
+            else
+                return Collider.BoundingRectangleF;
+        }
 
         // OnDamageReaction
         protected virtual void OnDamageReaction(GameThing attacker)
@@ -350,7 +362,7 @@ namespace Remizione
         {
             base.OnTransform(change);
 
-            if (hurtShakeTween == null || !hurtShakeTween.IsRunning)
+            //if (hurtShakeTween == null || !hurtShakeTween.IsRunning)
             {
                 isHotspotDirty = true;
                 shouldClampToWalkablePosition = true;
@@ -518,6 +530,7 @@ namespace Remizione
 
             HP -= (int)CumulativeDamage;
 
+            /*
             var damageTextColor = hitType == HitType.Critical ? ColorPalette.Text.TerraLight : ColorPalette.Text.Default;
             var damageText = $"{(int)CumulativeDamage}";
             if (hitType == HitType.Critical)
@@ -531,6 +544,7 @@ namespace Remizione
                 damageMeter = new(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore) { MaximumValue = 10 };
                 InvalidateDamageMeter();
             }
+            */
 
             if (knockback == Vector2.Zero && HP <= 0)
             {
@@ -821,13 +835,7 @@ namespace Remizione
         // GetRequiredGridSpace
         public Size GetRequiredGridSpace(int cellSize)
         {
-            RectangleF bbox;
-
-            if (Collider == null)
-                bbox = BoundingBox;
-            else
-                bbox = Collider.BoundingRectangleF;
-
+            var bbox = GetPixelAreaForGrid();
             int width = (int)Math.Ceiling(bbox.Width / cellSize) + CellMargin * 2;
             int height = (int)Math.Ceiling(bbox.Height / cellSize) + CellMargin * 2;
 
@@ -836,10 +844,6 @@ namespace Remizione
 
         // GetThrowableSpawnPosition
         public Vector2 GetThrowableSpawnPosition() => this.GetAbsolutePoint(ThrowableSpawnPosition);
-
-        // Grace
-        [ScriptProperty]
-        public int Grace { get; set; }
 
         // Highlight
         [ScriptProperty]
@@ -1077,6 +1081,10 @@ namespace Remizione
         // ThrowableSpawnPosition
         [ScriptProperty]
         public Vector2 ThrowableSpawnPosition { get; set; }
+
+        // Tickets
+        [ScriptProperty]
+        public int Tickets { get; set; }
 
         // ViewAngle
         public float ViewAngle { get; set; } = 90;

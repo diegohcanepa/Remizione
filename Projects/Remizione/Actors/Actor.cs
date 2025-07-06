@@ -25,14 +25,11 @@ namespace Remizione
         private readonly ActorCloseAttackState closeAttackState;
         private readonly CombatStateMachine combatStateMachine;
         private CraftingData? craftingData;
-        private int faith;
-        private int faithRecoveryCooldown;
         private FloatingText? floatingMessage;
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
         private readonly FloatTween headTween = new();
         private int level = 1;
-        private int maxFaith;
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private GameThing? pendingInteractiveTarget;
@@ -188,11 +185,13 @@ namespace Remizione
                 return false;
             }
 
+            /*
             if (!craftingData.EnoughFaith)
             {
                 Session.HUD.Message.Show(HUDMessageKind.NotEnoughFaith, true);
                 return false;
             }
+            */
 
             if (!craftingData.CanPlace)
             {
@@ -247,20 +246,6 @@ namespace Remizione
                     Sprite.FlipLeft();
                 else
                     Sprite.FlipRight();
-            }
-        }
-
-        // UpdateFaithRecovery
-        private void UpdateFaithRecovery(GameTime gameTime)
-        {
-            if (faithRecoveryCooldown > 0)
-            {
-                faithRecoveryCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-            }
-            else
-            {
-                faithRecoveryCooldown = Stats.GetFaithRecoveryInterval();
-                Faith++;
             }
         }
 
@@ -361,11 +346,6 @@ namespace Remizione
         protected override void OnDrawShadow(GameTime gameTime)
         {
             shadowSpot.Draw(gameTime);
-        }
-
-        // OnFaithChanged
-        protected virtual void OnFaithChanged()
-        {
         }
 
         // OnHurt
@@ -495,7 +475,6 @@ namespace Remizione
 
             combatStateMachine.Update(gameTime);
 
-            UpdateFaithRecovery(gameTime);
             UpdateFloatingMessage(gameTime);
             StateMachine.Update(gameTime);
 
@@ -578,7 +557,7 @@ namespace Remizione
 
         // ApplyStats
         [ScriptMethod]
-        public void ApplyStats() => Stats.Apply();
+        //public void ApplyStats() => Stats.Apply();
 
         // ApproachAndInteract
         public bool ApproachAndInteract(GameThing target, bool closeAttack)
@@ -676,24 +655,6 @@ namespace Remizione
         {
             if (Target != null)
                 FaceTo(Target);
-        }
-
-        // Faith
-        [ScriptProperty]
-        public int Faith
-        {
-            get => faith;
-            set
-            {
-                if (value != faith)
-                {
-                    faith = Math.Min(value, MaxFaith);
-                    if (faith < 0)
-                        faith = 0;
-
-                    OnFaithChanged();
-                }
-            }
         }
 
         // FastMove
@@ -816,10 +777,6 @@ namespace Remizione
         // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;
 
-        // IsBroken
-        [ScriptProperty]
-        public bool IsBroken => !IsDead && (float)HP / MaxHP < .3f;
-
         // Level
         [ScriptProperty]
         public int Level
@@ -833,22 +790,7 @@ namespace Remizione
                         value = 1;
 
                     level = value;
-                    Stats.Apply();
-                }
-            }
-        }
-
-        // MaxFaith
-        [ScriptProperty]
-        public int MaxFaith
-        {
-            get => maxFaith;
-            set
-            {
-                if (value != maxFaith)
-                {
-                    maxFaith = value;
-                    Faith = value;
+                    //Stats.Apply();
                 }
             }
         }
@@ -945,14 +887,6 @@ namespace Remizione
             }
         }
 
-        // Replenish
-        [ScriptMethod]
-        public override void Replenish()
-        {
-            base.Replenish();
-            Faith = MaxFaith;
-        }
-
         // Say
         public void Say(string text, bool awaitInput)
         {
@@ -977,7 +911,7 @@ namespace Remizione
 
         // ShadowSpotSize
         [ScriptProperty]
-        public ShadowSpotSize ShadowSpotSize
+        public int ShadowSpotSize
         {
             get => shadowSpot.Size;
             set => shadowSpot.Size = value;

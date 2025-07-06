@@ -86,15 +86,12 @@ namespace Remizione
 
                 if (Room.CulledThings[i] is GameThing target && !target.IgnoreThrowables && !target.IsDead)
                 {
-                    var hit = false;
-
-                    if (target is IHoleArea holeArea)
-                        hit = holeArea.Contains(Position);
-
-                    if (!hit)
-                        hit = target.RuntimeHotspot.Contains(Position);
-
-                    if (hit)
+                    if (target.IsWalkAreaHole)
+                    {
+                        if (target is IHoleArea holeArea && holeArea.Contains(Position))
+                            return target;
+                    }
+                    else if (target.RuntimeHotspot.Contains(Position))
                         return target;
                 }
             }
@@ -160,7 +157,7 @@ namespace Remizione
             Rotation = 0;
             RotationSpeed = 0;
 
-            collectCooldown = 300;
+            collectCooldown = 600;
         }
 
         // FirstBounce

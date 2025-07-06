@@ -69,6 +69,7 @@ namespace Remizione
         {
             int x = (OffsetX + col) * CellSize;
             int y = (OffsetY + row) * CellSize;
+            
             return new(x, y);
         }
 

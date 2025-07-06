@@ -175,7 +175,6 @@
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">Baal-assets/Stand01.png</key>
             <key type="filename">Baal-assets/Stand02.png</key>
-            <key type="filename">Baal-assets/Stand03.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -304,6 +303,38 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">YellowSnail-assets/Move01.png</key>
+            <key type="filename">YellowSnail-assets/Move02.png</key>
+            <key type="filename">YellowSnail-assets/Stand01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,3,10,6</rect>
+                <key>scale9Paddings</key>
+                <rect>5,3,10,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">YellowSnail-assets/Stand02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,2,5,3</rect>
+                <key>scale9Paddings</key>
+                <rect>3,2,5,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileLists</key>
         <map type="SpriteSheetMap">
@@ -316,6 +347,7 @@
                     <filename>Reaper-assets</filename>
                     <filename>Sister-assets</filename>
                     <filename>Baal-assets</filename>
+                    <filename>YellowSnail-assets</filename>
                 </array>
             </struct>
         </map>

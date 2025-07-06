@@ -22,7 +22,7 @@ namespace Remizione.Scripting
                 Craft = Parser.ParseNameArgument(this, CraftArg),
                 Durability = Parser.ParseInt32Argument(this, DurabilityArg, -1),
                 Faith = Parser.ParseDiceExpressionArgument(this, FaithArg),
-                Grace = Parser.ParseDiceExpressionArgument(this, GraceArg),
+                Tickets = Parser.ParseDiceExpressionArgument(this, TicketsArg),
                 HP = Parser.ParseDiceExpressionArgument(this, HPArg),
                 Knockback = Parser.ParseVector2Argument(this, KnockbackArg),
                 Modifier = Parser.ParseEnumArgument(this, ModifierArg, Stat.Strength),

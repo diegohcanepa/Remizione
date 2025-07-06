@@ -228,12 +228,14 @@ namespace Remizione
             if (MetaItem.HP is DiceExpression hpExp && hpExp.FixedValue < 0 && Owner.HP <= Math.Abs(hpExp.FixedValue))
                 return false;
 
+            /*
             // Not enough faith
             if (actor != null)
             {
                 if (MetaItem.Faith is DiceExpression faithExp && faithExp.FixedValue < 0 && actor.Faith <= faithExp.FixedValue)
                     return false;
             }
+            */
 
             return true;
         }
@@ -298,11 +300,8 @@ namespace Remizione
 
             if (Owner is Actor actor)
             {
-                if (MetaItem.Faith != null)
-                    actor.Faith += MetaItem.Faith.Roll();
-
-                if (MetaItem.Grace != null)
-                    actor.Grace += MetaItem.Grace.Roll();
+                if (MetaItem.Tickets != null)
+                    actor.Tickets += MetaItem.Tickets.Roll();
             }
 
             if (MetaItem.Maximum > 1)

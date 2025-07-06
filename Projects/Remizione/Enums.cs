@@ -27,7 +27,7 @@ namespace Remizione
     public enum Cycle { Indulgence, Penance }
 
     // DerivedStat
-    public enum DerivedStat { HP, Faith, Grace }
+    public enum DerivedStat { HP, Faith, Tickets }
 
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
@@ -104,9 +104,6 @@ namespace Remizione
 
     // RoomSampler
     public enum RoomSampler { PointClamp, LinearClamp }
-
-    // ShadowSpotSize
-    public enum ShadowSpotSize { None, W6, W7, W8, W11, W14 }
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }

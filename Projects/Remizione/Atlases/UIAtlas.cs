@@ -20,7 +20,9 @@ namespace Remizione
             CreditsBar = this[nameof(CreditsBar)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             FaithIcon = this[nameof(FaithIcon)];
-            GraceIcon = this[nameof(GraceIcon)];
+            HeartEmptyIcon = this[nameof(HeartEmptyIcon)];
+            HeartHalfIcon = this[nameof(HeartHalfIcon)];
+            HeartIcon = this[nameof(HeartIcon)];
             HPIcon = this[nameof(HPIcon)];
             InventorySlot = this[nameof(InventorySlot)];
             InventorySlotSelected = this[nameof(InventorySlotSelected)];
@@ -41,6 +43,7 @@ namespace Remizione
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
+            TicketsIcon = this[nameof(TicketsIcon)];
             UIControlContainerEdgeLarge = this[nameof(UIControlContainerEdgeLarge)];
             UIControlContainerPatternLarge = this[nameof(UIControlContainerPatternLarge)];
             UIControlContainerEdgeSmall = this[nameof(UIControlContainerEdgeSmall)];
@@ -91,8 +94,14 @@ namespace Remizione
         // FaithIcon
         public AtlasImage FaithIcon { get; }
 
-        // GraceIcon
-        public AtlasImage GraceIcon { get; }
+        // HeartEmptyIcon
+        public AtlasImage HeartEmptyIcon { get; }
+
+        // HeartHalfIcon
+        public AtlasImage HeartHalfIcon { get; }
+
+        // HeartIcon
+        public AtlasImage HeartIcon { get; }
 
         // HPIcon
         public AtlasImage HPIcon { get; }
@@ -138,6 +147,9 @@ namespace Remizione
 
         // SpeechBubblePipe
         public AtlasImage SpeechBubblePipe { get; }
+
+        // TicketsIcon
+        public AtlasImage TicketsIcon { get; }
 
         // UIControlContainerEdgeLeftLarge
         public AtlasImage UIControlContainerEdgeLarge { get; }

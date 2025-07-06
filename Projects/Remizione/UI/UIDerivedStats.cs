@@ -106,7 +106,6 @@ namespace Remizione.UI
             if (actor != null)
             {
                 InvalidateCore(0, actor.HP, actor.MaxHP, animate);
-                InvalidateCore(1, actor.Faith, actor.MaxFaith, animate);
             }
         }
 

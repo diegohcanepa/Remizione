@@ -73,7 +73,6 @@ namespace Remizione
                 // Global
                 case LightKind.Global:
                     lightSprite.Tweens.Reset();
-                    lightSprite.Color = Color.White;
                     litTweenDuration = 5000;
                     unlitTweenDuration = 5000;
                     break;

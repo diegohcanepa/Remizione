@@ -45,7 +45,6 @@ namespace EngendroAdventure.Scripting
         protected static readonly string FootstepArg = "#footstep";
         protected static readonly string FrameArg = "#frame";
         protected static readonly string GotoArg = "#goto";
-        protected static readonly string GraceArg = "#grace";
         protected static readonly string HPArg = "#hp";
         protected static readonly string ImageArg = "#image";
         protected static readonly string ImmediateArg = "#immediate";
@@ -98,6 +97,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string StyleArg = "#style";
         protected static readonly string SubAreaArg = "#sub-area";
         protected static readonly string TargetArg = "#target";
+        protected static readonly string TicketsArg = "#tickets";
         protected static readonly string TransientArg = "#transient";
         protected static readonly string TransitionAwareArg = "#transition-aware";
         protected static readonly string TweenArg = "#tween";

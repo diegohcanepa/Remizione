@@ -19,19 +19,19 @@ namespace Remizione.UI
         private readonly FloatTween tween = new();
 
         // Constructor
-        public UIScore(RemizioneGame game, AtlasImage iconImage)
+        public UIScore(RemizioneGame game, AtlasImage iconImage, Color textColor)
             : base(game)
         {
             // Icon
             this.icon = new(game, iconImage)
             {
-                Scale = ScaleInfo.UIElement.Small
+                Scale = ScaleInfo.UIElement.Tiny
             };
 
             // Score text
             this.scoreText = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Terra,
+                Color = textColor,
                 Scale = ScaleInfo.Text.Huge,
             };
 

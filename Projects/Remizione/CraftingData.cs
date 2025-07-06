@@ -36,7 +36,7 @@ namespace Remizione
             EnoughAmount = selectedItem.IsStackFull;
 
             // Enough faith
-            EnoughFaith = selectedItem.MetaItem.Faith == null || selectedItem.MetaItem.Faith.MaximumValue <= actor.Faith;
+           // EnoughFaith = selectedItem.MetaItem.Faith == null || selectedItem.MetaItem.Faith.MaximumValue <= actor.Faith;
 
             // Prop
             Prop = selectedItem.MetaItem.CraftProp;

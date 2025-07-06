@@ -14,7 +14,7 @@ namespace Remizione
         public Stats(Actor actor)
         {
             this.actor = actor;
-            Apply();
+            //Apply();
         }
 
         #region Primary stats
@@ -61,12 +61,14 @@ namespace Remizione
 
         #endregion
 
+        /*
         // Apply
         public void Apply()
         {
             actor.MaxFaith = GetMaxFaith();
             actor.MaxHP = GetMaxHP();
         }
+        */
 
         // FaithGainPerLevel
         public int FaithGainPerLevel { get; private set; } = 20;

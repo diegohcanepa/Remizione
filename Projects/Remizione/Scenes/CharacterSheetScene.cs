@@ -132,7 +132,6 @@ namespace Remizione
 
             menu.AddOption(new StatData(Actor.Level));
             menu.AddOption(new StatData(DerivedStat.HP, Actor.HP, Actor.MaxHP));
-            menu.AddOption(new StatData(DerivedStat.Faith, Actor.Faith, Actor.MaxFaith));
 
             for (int i = 0; i < 6; i++)
             {

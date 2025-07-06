@@ -64,7 +64,7 @@ namespace Remizione
                     LightKind = LightKind.Player,
                     PivotOrigin = RectanglePoint.Middle,
                     Position = Screen.Center,
-                    Scale = new Vector2(6, 5)
+                    Scale = new Vector2(3)
                 };
             playerLight.TurnOff(true);
         }
@@ -233,7 +233,7 @@ namespace Remizione
             if (globalLight.IsFlashing)
                 globalLight.Color = Color.LightBlue * .9f;
             else
-                globalLight.Color = Color.White;
+                globalLight.Color = Session.Environment.GlobalLightColor;
 
             globalLight.Draw(gameTime);
 
@@ -262,7 +262,7 @@ namespace Remizione
 
             if (Session.Player != null)
             {
-                playerLight.Position = Session.Player.BoundingBox.GetPoint(RectanglePoint.Middle, 0, 5);
+                playerLight.Position = Session.Player.GetAbsolutePoint(15,15);
                 playerLight.Draw(gameTime);
             }
 

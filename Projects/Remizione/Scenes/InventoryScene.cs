@@ -162,11 +162,8 @@ namespace Remizione
             if (item.MetaItem.SacrificeReward == DerivedStat.HP)
                 Owner.HP += item.MetaItem.SacrificeRewardAmount;
 
-            else if (item.MetaItem.SacrificeReward == DerivedStat.Faith)
-                Owner.Faith += item.MetaItem.SacrificeRewardAmount;
-
-            else if (item.MetaItem.SacrificeReward == DerivedStat.Grace)
-                Owner.Grace += item.MetaItem.SacrificeRewardAmount;
+            else if (item.MetaItem.SacrificeReward == DerivedStat.Tickets)
+                Owner.Tickets += item.MetaItem.SacrificeRewardAmount;
 
             item.Remove();
             if (selectedSlot?.Item == item)

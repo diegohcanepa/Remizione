@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.7.0</string>
+        <string>7.8.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -334,7 +334,7 @@
                 <false/>
             </struct>
             <key type="filename">Environment-assets/CrateFragment.png</key>
-            <key type="filename">Environment-assets/ShadowSpotW8.png</key>
+            <key type="filename">Environment-assets/ShadowSpot8.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -485,7 +485,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Environment-assets/ShadowSpotW11.png</key>
+            <key type="filename">Environment-assets/ShadowSpot10.png</key>
+            <key type="filename">Environment-assets/ShadowSpot11.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -497,6 +498,69 @@
                 <rect>3,1,5,1</rect>
                 <key>scale9Paddings</key>
                 <rect>3,1,5,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Environment-assets/ShadowSpot6.png</key>
+            <key type="filename">Environment-assets/ShadowSpot7.png</key>
+            <key type="filename">PieceOfWood-assets/PieceOfWood.png</key>
+            <key type="filename">PieceOfWood-assets/PieceOfWoodShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,1,3,1</rect>
+                <key>scale9Paddings</key>
+                <rect>2,1,3,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Environment-assets/ShadowSpot9.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,1,5,1</rect>
+                <key>scale9Paddings</key>
+                <rect>2,1,5,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Environment-assets/ShadowSpotW12.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,1,6,1</rect>
+                <key>scale9Paddings</key>
+                <rect>3,1,6,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Environment-assets/ShadowSpotW13.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,1,7,1</rect>
+                <key>scale9Paddings</key>
+                <rect>3,1,7,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -512,24 +576,6 @@
                 <rect>4,1,7,1</rect>
                 <key>scale9Paddings</key>
                 <rect>4,1,7,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/ShadowSpotW6.png</key>
-            <key type="filename">Environment-assets/ShadowSpotW7.png</key>
-            <key type="filename">PieceOfWood-assets/PieceOfWood.png</key>
-            <key type="filename">PieceOfWood-assets/PieceOfWoodShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,1,3,1</rect>
-                <key>scale9Paddings</key>
-                <rect>2,1,3,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -943,6 +989,7 @@
                 <false/>
             </struct>
             <key type="filename">TerrainBlocks-assets/TerrainBlockDefaultBottom.png</key>
+            <key type="filename">TerrainBlocks-assets/TerrainBlockDefaultTop.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -951,9 +998,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>50,3,99,5</rect>
+                <rect>60,2,120,3</rect>
                 <key>scale9Paddings</key>
-                <rect>50,3,99,5</rect>
+                <rect>60,2,120,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -966,9 +1013,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>3,34,5,67</rect>
+                <rect>2,34,4,67</rect>
                 <key>scale9Paddings</key>
-                <rect>3,34,5,67</rect>
+                <rect>2,34,4,67</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -981,24 +1028,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>3,31,5,62</rect>
+                <rect>3,34,5,67</rect>
                 <key>scale9Paddings</key>
-                <rect>3,31,5,62</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">TerrainBlocks-assets/TerrainBlockDefaultTop.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>60,3,120,5</rect>
-                <key>scale9Paddings</key>
-                <rect>60,3,120,5</rect>
+                <rect>3,34,5,67</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
