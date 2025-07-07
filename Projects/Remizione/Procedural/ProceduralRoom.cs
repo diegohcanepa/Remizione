@@ -26,7 +26,7 @@ namespace Remizione
             : base(session, name)
         {
             LightingSystem = true;
-            WorldManager = new WorldManager(session, new Size(Screen.NativeWidth, Screen.NativeHeight), 111);
+            WorldManager = new WorldManager(session, new Size(Screen.NativeWidth, Screen.NativeHeight), 11);
         }
 
         #endregion
