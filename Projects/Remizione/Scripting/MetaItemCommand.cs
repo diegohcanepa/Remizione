@@ -19,7 +19,6 @@ namespace Remizione.Scripting
                 AllowEmpty = HasArg(AllowEmptyArg),
                 BaseDamage = Parser.ParseDiceExpressionArgument(this, DamageArg) ?? null,
                 Bonus = Parser.ParseInt32Argument(this, BonusArg),
-                Craft = Parser.ParseNameArgument(this, CraftArg),
                 Durability = Parser.ParseInt32Argument(this, DurabilityArg, -1),
                 Faith = Parser.ParseDiceExpressionArgument(this, FaithArg),
                 Tickets = Parser.ParseDiceExpressionArgument(this, TicketsArg),
@@ -30,7 +29,7 @@ namespace Remizione.Scripting
                 Range = Parser.ParseInt32Argument(this, RangeArg),
                 SacrificeReward = Parser.ParseEnumArgument(this, SacrificeRewardArg, DerivedStat.Faith),
                 SacrificeRewardAmount = Parser.ParseInt32Argument(this, SacrificeRewardAmountArg, 1),
-                Sound = Parser.ParseSoundArgument(this, SoundArg)
+                Sound = Parser.ParseSoundArgument(this, SoundArg),
             };
         }
     }

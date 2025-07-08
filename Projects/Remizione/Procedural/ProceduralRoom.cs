@@ -1,7 +1,8 @@
 ﻿using Engendro;
-using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Xml;
 
 namespace Remizione
@@ -13,9 +14,13 @@ namespace Remizione
     {
         #region Private fields
 
-        private const string EmptyList = "[none]";
-        private const string WorldBlocksAttributeName = "WorldBlocks";
-        private readonly List<(Point gridPosition, int worldVersion, Dictionary<string, int> states)> worldBlockData = [];
+        private const string ProcStates = "ProcStates";
+
+        private RoomGrid? decorationGrid;
+        private RoomGrid? mainGrid;
+        private readonly List<GameThing> proceduralThings = [];
+        private readonly Random random;
+        private readonly int randomSeed;
 
         #endregion
 
@@ -26,63 +31,216 @@ namespace Remizione
             : base(session, name)
         {
             LightingSystem = true;
-            WorldManager = new WorldManager(session, new Size(Screen.NativeWidth, Screen.NativeHeight), 11);
+
+            this.ProceduralThings = new(proceduralThings);
+            this.randomSeed = GetSeed(Session.RandomSeed, Session.Level);
+            this.random = new Random(randomSeed);
         }
 
         #endregion
 
         #region Private members
 
-        // Regenerate
-        private void Regenerate()
+        // CreateDynamicThing
+        private GameThing CreateDynamicThing(string staticName)
         {
-            var removeList = new List<GameThing>();
-            for (var i = 0; i < Children.Count; i++)
+            if (Session.CreateDynamicThing(staticName, $"{Name}-{staticName}*{proceduralThings.Count}") is not GameThing result)
+                throw new InvalidOperationException($"Failed to create dynamic thing '{staticName}'.");
+
+            return result;
+        }
+
+        // DistributeClumped
+        private void DistributeClumped(GameThing thing)
+        {
+            if (mainGrid == null || decorationGrid == null)
+                return;
+
+            if (thing.InstancesPerBlock.IsEmpty)
+                return;
+
+            var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
+            int totalCount = random.Next(thing.InstancesPerBlock.Minimum, thing.InstancesPerBlock.Maximum + 1);
+            int clumpSize = 3 + random.Next(3);
+            int clumpCount = (totalCount + clumpSize - 1) / clumpSize;
+
+            Size sizeInCells = thing.GetRequiredGridSpace(RoomGrid.CellSize);
+
+            for (int i = 0; i < clumpCount; i++)
             {
-                if (Children[i] is GameThing thing && thing.PlacementPhase != PlacementPhase.None)
-                    removeList.Add(thing);
-            }
+                if (!targetGrid.TryReserveSpace(sizeInCells, out int baseCol, out int baseRow))
+                    break;
 
-            for (var i = 0; i < removeList.Count; i++)
-            {
-                removeList[i].Unparent();
-            }
+                PlaceDynamicThing(thing, baseCol, baseRow);
 
-            RemoveWalkArea("");
-
-            CustomWidth = WorldManager.GridSize * WorldManager.BlockSize.Width;
-            CustomHeight = WorldManager.GridSize * WorldManager.BlockSize.Height;
-
-            // Define walk area
-            var vertices = WorldManager.GetWalkareaVertices();
-            AddWalkArea("", vertices);
-
-            // Add existing blocks
-            for (var i = 0; i < WorldManager.Blocks.Count; i++)
-            {
-                Children.Add(WorldManager.Blocks[i]);
-
-                foreach (var thing in WorldManager.Blocks[i].ProceduralThings)
+                for (int j = 0; j < clumpSize - 1; j++)
                 {
-                    if (thing.StateID >= 0)
-                        Children.Add(thing);
+                    int offsetCol = baseCol + random.Next(-1, 2);
+                    int offsetRow = baseRow + random.Next(-1, 2);
+
+                    if (targetGrid.TryReserveSpace(sizeInCells, out int col, out int row, offsetCol, offsetRow))
+                        PlaceDynamicThing(thing, col, row);
                 }
             }
+        }
 
-            if (Session.Player != null)
-                Children.Add(Session.Player);
+        // DistributeRandomly
+        private void DistributeRandomly(GameThing thing)
+        {
+            if (mainGrid == null || decorationGrid == null)
+                return;
+
+            if (thing.InstancesPerBlock.IsEmpty)
+                return;
+
+            var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
+            Size sizeInCells = thing.GetRequiredGridSpace(RoomGrid.CellSize);
+            var count = random.Next(thing.InstancesPerBlock.Minimum, thing.InstancesPerBlock.Maximum + 1);
+
+            for (int i = 0; i < count; i++)
+            {
+                // Intentos limitados para evitar bucles infinitos si no hay espacio
+                int maxAttempts = 20 + (sizeInCells.Width * sizeInCells.Height) * 2;
+                bool placed = false;
+
+                for (int attempt = 0; attempt < maxAttempts && !placed; attempt++)
+                {
+                    int col = random.Next(targetGrid.ColCount - sizeInCells.Width + 1);
+                    int row = random.Next(targetGrid.RowCount - sizeInCells.Height + 1);
+
+                    if (targetGrid.TryReserveSpace(sizeInCells, out int finalCol, out int finalRow, col, row))
+                    {
+                        PlaceDynamicThing(thing, finalCol, finalRow);
+                        placed = true;
+                    }
+                }
+            }
+        }
+
+        // DistributeWithNoiseMap
+        private void DistributeWithNoiseMap(GameThing thing, int seed)
+        {
+            if (mainGrid == null || decorationGrid == null)
+                return;
+
+            if (thing.InstancesPerBlock.IsEmpty)
+                return;
+
+            var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
+            Size sizeInCells = thing.GetRequiredGridSpace(RoomGrid.CellSize);
+            float noiseThreshold = 0.2f;
+            int attempts = 100;
+
+            for (int i = 0; i < attempts; i++)
+            {
+                if (!targetGrid.TryReserveSpace(sizeInCells, out int col, out int row))
+                    break;
+
+                float noise = GetNoise(col, row, seed);
+                if (noise > noiseThreshold)
+                    continue;
+
+                PlaceDynamicThing(thing, col, row);
+            }
+        }
+
+        // GetNoise
+        private static float GetNoise(int col, int row, int seed)
+        {
+            unchecked
+            {
+                int hash = seed;
+                hash = (hash * 397) ^ col;
+                hash = (hash * 397) ^ row;
+
+                // Mezcla adicional para mayor dispersión
+                hash ^= (hash >> 13);
+                hash *= 0x5bd1e995;
+                hash ^= (hash >> 15);
+
+                // Normaliza a 0..1
+                uint uhash = (uint)hash;
+                return (uhash & 0xFFFFFF) / (float)0xFFFFFF;
+            }
+        }
+
+        // GetSeed
+        private static int GetSeed(int seed, int salt)
+        {
+            uint h = (uint)seed;
+
+            h ^= (uint)salt * 0x9E3779B9; // golden number (Knuth)
+            h ^= h >> 16;
+            h *= 0x85EBCA6B;
+            h ^= h >> 13;
+            h *= 0xC2B2AE35;
+            h ^= h >> 16;
+
+            return (int)h;
+        }
+
+        // PlaceDynamicThing
+        private void PlaceDynamicThing(GameThing thing, int col, int row)
+        {
+            if (mainGrid == null || decorationGrid == null)
+                return;
+
+            var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
+            var instance = CreateDynamicThing(thing.StaticName);
+            instance.Position = targetGrid.GetPosition(col, row);
+            instance.Y += instance.BoundingBox.Height;
+            instance.X += instance.BoundingBox.Width / 2;
+            proceduralThings.Add(instance);
+            Children.Add(instance);
+        }
+
+        // Populate
+        private void Populate()
+        {
+            foreach (var phase in Enum.GetValues<PlacementPhase>())
+            {
+                if (phase == PlacementPhase.None)
+                    continue;
+
+                foreach (var thing in Session.GetStaticThings(phase))
+                {
+                    if (thing.WorldVersion > Session.WorldVersion)
+                        continue;
+
+                    if (!thing.IsAvailable(random))
+                        continue;
+
+                    switch (thing.DistributionStrategy)
+                    {
+                        // RandomCell
+                        case PlacementDistributionStrategy.Random:
+                            DistributeRandomly(thing);
+                            break;
+
+                        // Clump
+                        case PlacementDistributionStrategy.Clump:
+                            DistributeClumped(thing);
+                            break;
+
+                        // NoiseMap
+                        case PlacementDistributionStrategy.NoiseMap:
+                            DistributeWithNoiseMap(thing, randomSeed);
+                            break;
+                    }
+                }
+            }
         }
 
         #endregion
 
         #region Protected members
 
+        /*
         // OnInitialize
         protected override void OnInitialize()
         {
             base.OnInitialize();
 
-            WorldManager.BeginUpdate();
             if (Session.IsNewSession)
             {
                 var initialBlock = WorldManager.AddBlock(new(WorldManager.GridSize / 2), Session.WorldVersion, !PreserveFirstBlock);
@@ -113,37 +271,33 @@ namespace Remizione
 
                 worldBlockData.Clear();
             }
-            WorldManager.EndUpdate();
 
             Regenerate();
+        }
+        */
+
+        // OnLoad
+        protected override void OnLoad()
+        {
+            base.OnLoad();
+
+            this.decorationGrid = new RoomGrid("Decoration", Width, Height);
+            this.mainGrid = new RoomGrid("Main", Width, Height);
+
+            Populate();
         }
 
         // OnRead
         protected override void OnRead(XmlAttributeCollection attributes)
         {
-            // World blocks
-            if (attributes[WorldBlocksAttributeName]?.Value is string worldBlocksValue)
+            if (attributes[ProcStates]?.Value is string stateData)
             {
-                var list = worldBlocksValue.Split(';');
-
-                foreach (var item in list)
+                var thingStates = new Dictionary<string, int>();
+                var states = stateData.Split(',');
+                foreach (var state in states)
                 {
-                    var blockData = item.Split(':');
-                    var gridPosition = XmlConverterExtension.ToPoint(blockData[0]);
-                    var worldVersion = int.Parse(blockData[1]);
-                    var thingStates = new Dictionary<string, int>();
-
-                    if (blockData[2] != EmptyList)
-                    {
-                        var states = blockData[2].Split(',');
-                        foreach (var state in states)
-                        {
-                            var values = state.Split('=');
-                            thingStates[values[0]] = int.Parse(values[1]);
-                        }
-                    }
-
-                    worldBlockData.Add((gridPosition, worldVersion, thingStates));
+                    var values = state.Split('=');
+                    thingStates[values[0]] = int.Parse(values[1]);
                 }
             }
         }
@@ -151,33 +305,24 @@ namespace Remizione
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
-            var data = new List<string>();
             var stateData = new List<string>();
 
-            foreach (var block in WorldManager.Blocks)
+            // Collect state data for procedural things
+            stateData.Clear();
+            foreach (var thing in ProceduralThings)
             {
-                // Collect state data for procedural things in block
-                stateData.Clear();
-                foreach (var thing in block.ProceduralThings)
-                {
-                    if (thing.StateID != 0)
-                        stateData.Add($"{thing.Name}={thing.StateID}");
-                }
-
-                var stateDataValue = stateData.Count == 0 ? "[none]" : string.Join(",", stateData);
-                var value = $"{block.WorldGridPosition.X},{block.WorldGridPosition.Y}:{block.WorldVersion}:{stateDataValue}";
-                data.Add(value);
+                if (thing.StateID != 0)
+                    stateData.Add($"{thing.Name}={thing.StateID}");
             }
 
-            var attrValue = string.Join(";", data);
-            output.WriteAttributeString(WorldBlocksAttributeName, attrValue);
+            if (stateData.Count > 0)
+            {
+                var value = string.Join(",", stateData);
+                output.WriteAttributeString(ProcStates, value);
+            }
         }
 
         #endregion
-
-        // BlockSize
-        [ScriptProperty]
-        public Size BlockSize { get; set; } = new Size(Screen.NativeWidth, Screen.NativeHeight);
 
         // CanPlaceDynamicPropAt
         public bool CanPlaceDynamicPropAt(IsometricProp prop, Vector2 position)
@@ -185,7 +330,6 @@ namespace Remizione
             if (prop.Collider != null)
             {
                 var box = new RectangleF(position, prop.Collider.BoundingRectangleF.Size);
-                //box.Inflate(5, 5);
 
                 for (int i = 0; i < CulledThings.Count; i++)
                 {
@@ -201,22 +345,6 @@ namespace Remizione
             }
 
             return true;
-        }
-
-        // Expand
-        public bool Expand(Vector2 playerPosition, EngendroAdventure.Direction direction)
-        {
-            if (WorldManager.GetBlockFromScreen(playerPosition) is WorldBlock currentBlock)
-            {
-                WorldManager.BeginUpdate();
-                currentBlock.Expand(direction);
-                WorldManager.EndUpdate();
-                Regenerate();
-
-                return true;
-            }
-
-            return false;
         }
 
         // PlaceDynamicProp
@@ -239,11 +367,7 @@ namespace Remizione
             return result;
         }
 
-        // PreserveFirstBlock
-        [ScriptProperty]
-        public bool PreserveFirstBlock { get; set; }
-
-        // WorldManager
-        public WorldManager WorldManager { get; }
+        // ProceduralThings
+        public ReadOnlyCollection<GameThing> ProceduralThings { get; }
     }
 }

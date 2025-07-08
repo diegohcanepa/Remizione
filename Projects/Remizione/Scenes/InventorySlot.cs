@@ -43,9 +43,9 @@ namespace Remizione
             // Amount text
             amountText = new TextSprite(game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Top,
-                Scale = ScaleInfo.Text.Small
+                Color = ColorPalette.Text.Terra,
+                PivotOrigin = RectanglePoint.Bottom,
+                Scale = ScaleInfo.Text.Medium
             };
 
             Reset();
@@ -151,7 +151,7 @@ namespace Remizione
 
                 slotImage.Position = value;
                 slotImageSelected.Position = value;
-                amountText.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom);
+                amountText.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 4);
             }
         }
 

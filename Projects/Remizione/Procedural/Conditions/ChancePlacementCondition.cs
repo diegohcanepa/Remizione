@@ -17,7 +17,7 @@ namespace Remizione
         public float Chance { get; }
 
         // IsAvailable
-        public override bool IsAvailable(GameThing thing, WorldBlock block, Random random)
+        public override bool IsAvailable(GameThing thing, Random random)
         {
             return random.NextDouble() < Chance;
         }

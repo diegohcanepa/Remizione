@@ -15,7 +15,7 @@ namespace Remizione
         }
 
         // IsAvailable
-        public override bool IsAvailable(GameThing thing, WorldBlock block, Random random)
+        public override bool IsAvailable(GameThing thing, Random random)
         {
             if (thing.Session.Player == null)
                 return false;

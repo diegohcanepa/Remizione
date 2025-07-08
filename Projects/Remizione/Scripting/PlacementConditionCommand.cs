@@ -13,25 +13,11 @@ namespace Remizione.Scripting
             var thing = AssertEntityNotNull<GameThing>(Script.EntityName);
             thing.PlacementPhase = Parser.ParseEnum<PlacementPhase>(this, 0);
 
-            // Block tag
-            if (HasArg(BlockTagArg))
-            {
-                var tag = Parser.ParseEnumArgument<WorldBlockTag>(this, BlockTagArg);
-                thing.AddPlacementCondition(new BlockTagPlacementCondition(tag));
-            }
-
             // Chance
             if (HasArg(ChanceArg))
             {
                 var chance = Parser.ParseRatioArgument(this, ChanceArg);
                 thing.AddPlacementCondition(new ChancePlacementCondition(chance));
-            }
-
-            // Cycles
-            if (HasArg(CyclesArg))
-            {
-                var cycles = Parser.ParseInt32RangeArgument(this, InstancesArg);
-                thing.AddPlacementCondition(new WorldCyclesPlacementCondition(cycles));
             }
 
             // Instances
@@ -43,13 +29,6 @@ namespace Remizione.Scripting
             {
                 var playerLevel = Parser.ParseInt32RangeArgument(this, PlayerLevelArg);
                 thing.AddPlacementCondition(new PlayerLevelPlacementCondition(playerLevel));
-            }
-
-            // World size
-            if (HasArg(WorldSizeArg))
-            {
-                var worldSize = Parser.ParseInt32RangeArgument(this, WorldSizeArg);
-                thing.AddPlacementCondition(new WorldSizePlacementCondition(worldSize));
             }
         }
     }

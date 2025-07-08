@@ -1,10 +1,8 @@
 ﻿using Engendro;
 using Engendro.Audio;
-using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -48,12 +46,6 @@ namespace Remizione
 
         // Category
         public MetaItemCategory Category { get; }
-
-        // Craft
-        public string? Craft { get; init; }
-
-        // CraftProp
-        public IsometricProp? CraftProp { get; private set; }
 
         // Durability
         public int Durability { get; init; }
@@ -117,15 +109,5 @@ namespace Remizione
 
         // ToString
         public override string ToString() => Name;
-
-        // Validate
-        public static void Validate(GameSession session)
-        {
-            foreach (MetaItem metaItem in items.Values)
-            {
-                if (metaItem.Craft != null)
-                    metaItem.CraftProp = session.GetEntity<IsometricProp>(metaItem.Craft) ?? throw new InvalidOperationException($"Meta item validation error: Craft '{metaItem.Craft}' not found for meta item '{metaItem.Name}'.");
-            }
-        }
     }
 }

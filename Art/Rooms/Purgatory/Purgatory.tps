@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.7.0</string>
+        <string>7.8.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -191,6 +191,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Purgatory-assets/Purgatory.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>120,68,240,135</rect>
+                <key>scale9Paddings</key>
+                <rect>120,68,240,135</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">StartingTower-assets/StartingTower.png</key>
             <key type="filename">StartingTower-assets/StartingTowerShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -265,6 +280,7 @@
                     <filename>StartingTower-assets</filename>
                     <filename>StartingTowerDoor-assets</filename>
                     <filename>GhostCar-assets</filename>
+                    <filename>Purgatory-assets</filename>
                 </array>
             </struct>
         </map>

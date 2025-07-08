@@ -50,9 +50,8 @@ namespace Remizione
             // Amount
             this.amountText = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Top,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 0),
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -1),
                 Scale = ScaleInfo.Text.Large,
                 Spacing = -5
             };
@@ -61,7 +60,7 @@ namespace Remizione
             this.button = new(game, InputBindings.UseItem)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, 1, -1),
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -2, 0),
                 Small = true
             };
 
@@ -87,17 +86,8 @@ namespace Remizione
                 itemImage.Image = lastKnownItem.MetaItem.Image;
                 itemImageScaleTween.Start(TweenStyle.Linear, new Vector2(.3f), ScaleInfo.UIElement.Tiny, 70);
                 itemImage.Tweens.ScaleTween = itemImageScaleTween;
-
-                if (lastKnownItem.MetaItem.CraftProp != null)
-                {
-                    button.Text = lastKnownItem.MetaItem.CraftProp.LocalizedDisplayName;
-                    statModifier.Amount = lastKnownItem.MetaItem.Faith != null ? lastKnownItem.MetaItem.Faith.MaximumValue : 0;
-                }
-                else
-                {
-                    amountText.Color = ColorPalette.Text.Default;
-                    button.Text = null;
-                }
+                amountText.Color = ColorPalette.Text.Default;
+                button.Text = null;
 
                 InvalidateItemAmount(gameTime, true);
             }
@@ -112,18 +102,8 @@ namespace Remizione
                 itemImage.Opacity = lastKnownCount == 0 ? .3f : 1;
                 amountText.Text = lastKnownItem.GetDisplayAmount();
                 amountText.Update(gameTime);
-
-                if (lastKnownItem.MetaItem.Category == MetaItemCategory.Crafting)
-                {
-                    button.IsEnabled = lastKnownItem.IsStackFull;
-                    amountText.Color = button.IsEnabled ? ColorPalette.Text.Green : amountText.Color = ColorPalette.Text.Terra;
-                    button.TextColor = button.IsEnabled ? ColorPalette.Text.Green : ColorPalette.Text.Default;
-                }
-                else
-                {
-                    amountText.Color = ColorPalette.Text.Default;
-                    button.IsEnabled = true;
-                }
+                amountText.Color = ColorPalette.Text.Terra;
+                button.IsEnabled = true;
             }
         }
 
@@ -152,9 +132,6 @@ namespace Remizione
                     amountText.Draw(gameTime);
                     Game.SpriteBatch.End();
                 }
-
-                if (lastKnownItem.MetaItem.CraftProp != null && lastKnownItem.MetaItem.Faith != null)
-                    statModifier.Draw(gameTime);
             }
         }
 

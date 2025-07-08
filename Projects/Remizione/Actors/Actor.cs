@@ -24,7 +24,6 @@ namespace Remizione
         private string closeAttackName = string.Empty;
         private readonly ActorCloseAttackState closeAttackState;
         private readonly CombatStateMachine combatStateMachine;
-        private CraftingData? craftingData;
         private FloatingText? floatingMessage;
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
@@ -174,39 +173,6 @@ namespace Remizione
             pendingPathNodes.RemoveAt(0);
         }
 
-        // PerformCraftAction
-        private bool PerformCraftAction()
-        {
-            var craftingData = GetCraftingData();
-
-            if (craftingData.Prop == null || craftingData.Position == null || !craftingData.EnoughAmount)
-            {
-                Sound.Play(SoundNames.Error);
-                return false;
-            }
-
-            /*
-            if (!craftingData.EnoughFaith)
-            {
-                Session.HUD.Message.Show(HUDMessageKind.NotEnoughFaith, true);
-                return false;
-            }
-            */
-
-            if (!craftingData.CanPlace)
-            {
-                Session.HUD.Message.Show(HUDMessageKind.CannotPlaceItem, true);
-                return false;
-            }
-
-            Stand();
-
-            if (Session.ScriptLibrary.GetRoutine($"OnCraft{craftingData.Prop.StaticName}") is Script script)
-                Session.AwaitScript(script);
-
-            return true;
-        }
-
         // PerformThrowAction
         private bool PerformThrowAction()
         {
@@ -272,16 +238,13 @@ namespace Remizione
 
             if (Room is ProceduralRoom room)
             {
-                if (room.WorldManager.GetBlockFromScreen(Position) is WorldBlock worldBlock)
+                for (var i = 0; i < room.ProceduralThings.Count; i++)
                 {
-                    for (var i = 0; i < worldBlock.ProceduralThings.Count; i++)
+                    if (room.ProceduralThings[i] is IsometricProp prop && prop.GetFootstepSound(Position) is Sound sound)
                     {
-                        if (worldBlock.ProceduralThings[i] is IsometricProp prop && prop.GetFootstepSound(Position) is Sound sound)
-                        {
-                            PlaySound(sound);
-                            footstepLastUsedFrame = Sprite.Player.Frame;
-                            return;
-                        }
+                        PlaySound(sound);
+                        footstepLastUsedFrame = Sprite.Player.Frame;
+                        return;
                     }
                 }
             }
@@ -631,25 +594,6 @@ namespace Remizione
             }
         }
 
-        // Craft
-        [ScriptMethod(CodingContext.Execution)]
-        public void Craft()
-        {
-            var craftingData = GetCraftingData();
-
-            if (craftingData.Room != null && craftingData.Prop != null && craftingData.Position != null)
-            {
-                if (craftingData.Room.PlaceDynamicProp(craftingData.Prop, craftingData.Position.Value) is GameThing thing)
-                {
-                    var tween = new Vector2Tween() { StartDelay = 250 };
-                    tween.Start(TweenStyle.CubicIn, Vector2.Zero, Vector2.One, 250);
-                    thing.Tweens.ScaleTween = tween;
-                    session.Environment.Lightning.Show(thing.Position - new Vector2(0, 5));
-                    session.Player?.Inventory.RemoveSelected();
-                }
-            }
-        }
-
         // FaceToTarget
         public void FaceToTarget()
         {
@@ -684,14 +628,6 @@ namespace Remizione
                 return Vector2.Zero;
             else
                 return this.GetAbsolutePoint(BloodSplashOrigin);
-        }
-
-        // GetCraftingData
-        public CraftingData GetCraftingData()
-        {
-            craftingData ??= new CraftingData(this);
-            craftingData.Invalidate();
-            return craftingData;
         }
 
         // HandleInput
@@ -976,12 +912,14 @@ namespace Remizione
                     return;
                 }
 
+                /*
                 // Crafting
                 if (item.MetaItem.Category == MetaItemCategory.Crafting)
                 {
                     PerformCraftAction();
                     return;
                 }
+                */
 
                 // Use
                 Stand();

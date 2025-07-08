@@ -82,15 +82,6 @@ namespace Remizione
 
         #region Private members
 
-        // ExpandRoom
-        private bool ExpandRoom(Direction direction)
-        {
-            if (Player == null || Room is not ProceduralRoom proceduralRoom)
-                return false;
-
-            return proceduralRoom.Expand(Player.Position, direction);
-        }
-
         // UpdateMouseCursor
         private void UpdateMouseCursor()
         {
@@ -150,12 +141,12 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(Actor));
             scriptRegistry.RegisterEntity(typeof(Baal));
             scriptRegistry.RegisterEntity(typeof(IsometricProp));
+            scriptRegistry.RegisterEntity(typeof(ProceduralRoom));
             scriptRegistry.RegisterEntity(typeof(Orb));
             scriptRegistry.RegisterEntity(typeof(Pickup));
             scriptRegistry.RegisterEntity(typeof(Prop));
             scriptRegistry.RegisterEntity(typeof(GameRoom));
             scriptRegistry.RegisterEntity(typeof(CreditsRoom));
-            scriptRegistry.RegisterEntity(typeof(ProceduralRoom));
             scriptRegistry.RegisterEntity(typeof(Snail));
             scriptRegistry.RegisterEntity(typeof(Unredeemed));
             scriptRegistry.RegisterEntity(typeof(Zabul));
@@ -359,12 +350,6 @@ namespace Remizione
                 HUD.ShowSavingIcon();
         }
 
-        // OnStart
-        protected override void OnStart()
-        {
-            MetaItem.Validate(this);
-        }
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
@@ -441,22 +426,6 @@ namespace Remizione
         // Environment
         public Environment Environment { get; }
 
-        // ExpandDown
-        [ScriptMethod]
-        public void ExpandDown() => ExpandRoom(Direction.Down);
-
-        // ExpandLeft
-        [ScriptMethod]
-        public void ExpandLeft() => ExpandRoom(Direction.Left);
-
-        // ExpandRight
-        [ScriptMethod]
-        public void ExpandRight() => ExpandRoom(Direction.Right);
-
-        // ExpandUp
-        [ScriptMethod]
-        public void ExpandUp() => ExpandRoom(Direction.Up);
-
         // Game
         public new RemizioneGame Game { get; }
 
@@ -481,6 +450,9 @@ namespace Remizione
 
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
+
+        // Level
+        public int Level { get; set; }
 
         // LightingSystem
         [ScriptProperty]

@@ -70,6 +70,20 @@ namespace Remizione
             return null;
         }
 
+        // GetItems
+        public Item[] GetItems(MetaItemCategory category)
+        {
+            var result = new List<Item>();
+
+            for (var i = 0; i < items.Count; i++)
+            {
+                if (items[i].MetaItem.Category == category)
+                    result.Add(items[i]);
+            }
+
+            return result.ToArray();
+        }
+
         // GetSerializationData
         public string GetSerializationData()
         {

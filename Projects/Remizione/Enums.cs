@@ -76,7 +76,7 @@ namespace Remizione
     public enum Message { None, Critical, Miss, NoFaith, ThreatsNearby }
 
     // MetaItemCategory
-    public enum MetaItemCategory { CloseAttack, Consumable, Crafting, Throwable }
+    public enum MetaItemCategory { Misc, Consumable, Throwable }
 
     // MouseCursorState
     public enum MouseCursorState { None, Cross, CrossOn, Wait, Arrow }

@@ -36,9 +36,6 @@ namespace Remizione
             this.cycleMeter = new(session);
             this.healthMeter = new(session.Game);
 
-            // CraftPositionMark
-            this.CraftingMark = new CraftingMark(session);
-
             // Log
             this.Log = new(Game);
 
@@ -119,7 +116,6 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            CraftingMark.Update(gameTime);
             QuickSlot.Update(gameTime);
             playerStats.Update(gameTime);
             healthMeter.Update(gameTime);
@@ -144,9 +140,6 @@ namespace Remizione
         }
 
         #endregion
-
-        // CraftingMark
-        public CraftingMark CraftingMark { get; }
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime) => QuickSlot.HandleInput(gameTime);

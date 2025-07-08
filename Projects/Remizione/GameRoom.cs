@@ -333,9 +333,6 @@ namespace Remizione
             // Shadows
             DrawShadows(gameTime);
 
-            // Craft destination mark
-            Session.HUD.CraftingMark.Draw(gameTime);
-
             // Rain drop impacts
             Session.Environment.Rain.DrawImpacts(gameTime);
 

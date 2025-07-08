@@ -345,7 +345,7 @@ namespace Remizione
         // OnParentChanged
         protected override void OnParentChanged(Entity? previousParent)
         {
-            if (!Session.IsInitializing && WorldBlockOrigin != null)
+            //if (!Session.IsInitializing && WorldBlockOrigin != null)
                 StateID = -1;
         }
 
@@ -914,11 +914,11 @@ namespace Remizione
         public int InventorySize => 8;
 
         // IsAvailable
-        public bool IsAvailable(WorldBlock worldBlock, Random random)
+        public bool IsAvailable(Random random)
         {
             for (int i = 0; i < placementConditions.Count; i++)
             {
-                if (!placementConditions[i].IsAvailable(this, worldBlock, random))
+                if (!placementConditions[i].IsAvailable(this, random))
                     return false;
             }
 
@@ -1109,9 +1109,6 @@ namespace Remizione
                 }
             }
         }
-
-        // WorldBlockOrigin
-        public WorldBlock? WorldBlockOrigin { get; set; }
 
         // WorldVersion
         [ScriptProperty]

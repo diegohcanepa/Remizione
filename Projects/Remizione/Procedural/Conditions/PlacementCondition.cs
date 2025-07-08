@@ -8,6 +8,6 @@ namespace Remizione
     public abstract class PlacementCondition
     {
         // IsAvailable
-        public abstract bool IsAvailable(GameThing thing, WorldBlock block, Random random);
+        public abstract bool IsAvailable(GameThing thing, Random random);
     }
 }

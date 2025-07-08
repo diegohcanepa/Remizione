@@ -26,7 +26,6 @@ namespace Remizione
             HPIcon = this[nameof(HPIcon)];
             InventorySlot = this[nameof(InventorySlot)];
             InventorySlotSelected = this[nameof(InventorySlotSelected)];
-            InventorySlotSelection = this[nameof(InventorySlotSelection)];
             ItemMenuContainer = this[nameof(ItemMenuContainer)];
             ItemMenuContainerSelection = this[nameof(ItemMenuContainerSelection)];
             MessageContainer = this[nameof(MessageContainer)];
@@ -48,8 +47,6 @@ namespace Remizione
             UIControlContainerPatternLarge = this[nameof(UIControlContainerPatternLarge)];
             UIControlContainerEdgeSmall = this[nameof(UIControlContainerEdgeSmall)];
             UIControlContainerPatternSmall = this[nameof(UIControlContainerPatternSmall)];
-            UIControlShade = this[nameof(UIControlShade)];
-            UnreadSign = this[nameof(UnreadSign)];
         }
 
         // BottomGradient
@@ -81,9 +78,6 @@ namespace Remizione
 
         // InventorySlotSelected
         public AtlasImage InventorySlotSelected { get; }
-
-        // InventorySlotSelection
-        public AtlasImage InventorySlotSelection { get; }
 
         // ItemMenuContainer
         public AtlasImage ItemMenuContainer { get; }
@@ -162,11 +156,5 @@ namespace Remizione
 
         // UIControlContainerPatternSmall
         public AtlasImage UIControlContainerPatternSmall { get; }
-
-        // UIControlShade
-        public AtlasImage UIControlShade { get; }
-
-        // UnreadSign
-        public AtlasImage UnreadSign { get; }
     }
 }

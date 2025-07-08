@@ -16,6 +16,7 @@ namespace Remizione
             : base(playerIndex)
         {
             this.Actor = actor;
+            //this.inventoryScene = new(actor);
             this.inventoryScene = new(actor);
         }
 
