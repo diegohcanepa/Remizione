@@ -71,6 +71,9 @@ namespace Remizione
         // IsStackable
         public bool IsStackable => Maximum > 1;
 
+        // IsThrowable
+        public bool IsThrowable { get; init; }
+
         // Knockback
         public Vector2 Knockback { get; init; }
 
@@ -94,12 +97,6 @@ namespace Remizione
 
         // Range
         public int Range { get; init; }
-
-        // SacrificeReward
-        public DerivedStat SacrificeReward { get; init; } = DerivedStat.Faith;
-
-        // SacrificeRewardAmount
-        public int SacrificeRewardAmount { get; init; } = 1;
 
         // Sound
         public Sound? Sound { get; init; }

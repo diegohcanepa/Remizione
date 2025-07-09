@@ -2,25 +2,16 @@
 <Strings>
   <String Key="Actor.Dog">Dog</String>
   <String Key="Actor.Grandma">Sweet old lady</String>
-  <String Key="ActorProperty.Gold.Description">Gold ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="ActorProperty.Gold.Name">Gold</String>
   <String Key="ActorProperty.Grace.Description">The ashes quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Grace.Name">Grace</String>
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Level.Name">State of Grace</String>
-  <String Key="ActorProperty.Willpower.Description">Willpower exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="ActorProperty.Willpower.Name">Willpower</String>
-  <String Key="CombatOption.Attack">Attack</String>
-  <String Key="CombatOption.Guard">Guard</String>
-  <String Key="CombatOption.UseItem">Use item...</String>
   <String Key="Cycle.Indulgence">Indulgence</String>
   <String Key="Cycle.Penance">Penance</String>
-  <String Key="DerivedStat.Faith.Description">La Fé, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="DerivedStat.Faith.Name">Faith</String>
-  <String Key="DerivedStat.Grace.Description">Grace quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="DerivedStat.Grace.Name">Grace</String>
   <String Key="DerivedStat.HP.Description">El Espíritu quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="DerivedStat.HP.Name">Spirit</String>
+  <String Key="DerivedStat.Tickets.Description">Grace quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
+  <String Key="DerivedStat.Tickets.Name">Grace</String>
   <String Key="DurabilityState.Broken">Broken</String>
   <String Key="DurabilityState.Cracked">Cracked</String>
   <String Key="DurabilityState.Sturdy">Sturdy</String>
@@ -57,14 +48,10 @@
   <String Key="Item.Duck.Name">Rubber duck</String>
   <String Key="Item.Gold.Description">A handful of gold dust.</String>
   <String Key="Item.Gold.Name">Gold dust</String>
-  <String Key="Item.PieceOfWood.Description" />
+  <String Key="Item.PieceOfWood.Description"></String>
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
-  <String Key="ItemAction.Create">Craft</String>
-  <String Key="ItemAction.Discard">Discard</String>
-  <String Key="ItemAction.Use">Use</String>
-  <String Key="ItemAction.Wield">Wield</String>
   <String Key="ItemProperty.BaseDamage">Base damage</String>
   <String Key="ItemProperty.Passive">Passive</String>
   <String Key="Languages.Abbreviations">Miss | Mr. | DR.</String>
@@ -171,6 +158,9 @@
   <String Key="MessageBox.QuitToMenu">Quit to main menu?</String>
   <String Key="MessageBox.SlotDeleted">The slot has been deleted.</String>
   <String Key="MessageBox.Warning">Warning!</String>
+  <String Key="MetaItemCategory.Consumables">Consumables</String>
+  <String Key="MetaItemCategory.Equipment">Equipment</String>
+  <String Key="MetaItemCategory.Misc">Misc</String>
   <String Key="Misc.And">and</String>
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>

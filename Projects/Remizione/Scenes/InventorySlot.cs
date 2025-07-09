@@ -23,21 +23,21 @@ namespace Remizione
             this.iconImage = new(game)
             {
                 PivotOrigin = RectanglePoint.Middle,
-                Scale = ScaleInfo.UIElement.Medium
+                //Scale = ScaleInfo.UIElement.Medium
             };
 
             // Slot image
             this.slotImage = new(game, Atlases.UI.InventorySlot)
             {
                 PivotOrigin = RectanglePoint.Middle,
-                Scale = ScaleInfo.UIElement.Medium
+                //Scale = ScaleInfo.UIElement.Medium
             };
 
             // Slot image selected
             this.slotImageSelected = new(game, Atlases.UI.InventorySlotSelected)
             {
                 PivotOrigin = RectanglePoint.Middle,
-                Scale = ScaleInfo.UIElement.Medium
+                //Scale = ScaleInfo.UIElement.Medium
             };
 
             // Amount text

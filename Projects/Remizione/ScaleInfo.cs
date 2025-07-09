@@ -37,8 +37,8 @@ namespace Remizione
         // InventoryItem
         internal static class InventoryItem
         {
-            internal static Vector2 Active { get; } = new Vector2(.6f);
-            internal static Vector2 Inactive { get; } = new Vector2(.4f);
+            internal static Vector2 Active { get; } = new Vector2(.8f);
+            internal static Vector2 Inactive { get; } = new Vector2(.6f);
         }
 
         // MenuItemTextActive

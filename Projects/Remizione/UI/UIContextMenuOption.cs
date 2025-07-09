@@ -31,15 +31,39 @@ namespace Remizione
 
             this.textSprite = new TextSprite(menu.Game, menu.Font)
             {
-                Color = ColorPalette.ContextMenu.OptionText,
                 Scale = menu.OptionTextScale,
                 Text = text
             };
 
-            this.Index = menu.OptionCount;
+            this.Index = menu.Options.Count;
 
             Invalidate();
         }
+
+        #region Private members
+
+        // Invalidate
+        private void Invalidate()
+        {
+            iconSprite.PivotOrigin = RectanglePoint.LeftTop;
+            iconSprite.Position = position;
+            textSprite.Position = position;
+
+            if (!iconSprite.IsEmpty)
+                textSprite.X += iconSprite.BoundingBox.Width + 2;
+
+            BoundingBox = RectangleF.Union(textSprite.BoundingBox, iconSprite.BoundingBox);
+
+            iconSprite.PivotOrigin = RectanglePoint.Middle;
+            iconSprite.X += iconSprite.BoundingBox.Width * .5f;
+            iconSprite.Y = textSprite.BoundingBox.GetPoint(RectanglePoint.Left).Y;
+
+            textSprite.Scale = menu.OptionTextScale;
+            textSprite.Color = IsSelected ? menu.OptionSelectedColor : menu.OptionColor;
+            iconSprite.Color = textSprite.Color;
+        }
+
+        #endregion
 
         // BoundingBox
         public RectangleF BoundingBox { get; private set; }
@@ -60,27 +84,6 @@ namespace Remizione
 
         // Index
         public int Index { get; }
-
-        // Invalidate
-        public void Invalidate()
-        {
-            iconSprite.PivotOrigin = RectanglePoint.LeftTop;
-            iconSprite.Position = position;
-            textSprite.Position = position;
-
-            if (!iconSprite.IsEmpty)
-                textSprite.X += iconSprite.BoundingBox.Width + 2;
-
-            BoundingBox = RectangleF.Union(textSprite.BoundingBox, iconSprite.BoundingBox);
-
-            iconSprite.PivotOrigin = RectanglePoint.Middle;
-            iconSprite.X += iconSprite.BoundingBox.Width * .5f;
-            iconSprite.Y = textSprite.BoundingBox.GetPoint(RectanglePoint.Left).Y;
-
-            textSprite.Scale = menu.OptionTextScale;
-            textSprite.Color = IsSelected ? ColorPalette.Text.Light : ColorPalette.Text.Default;
-            iconSprite.Color = textSprite.Color;
-        }
 
         // IsSelected
         public bool IsSelected

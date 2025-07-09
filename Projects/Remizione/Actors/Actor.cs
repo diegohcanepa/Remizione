@@ -176,7 +176,7 @@ namespace Remizione
         // PerformThrowAction
         private bool PerformThrowAction()
         {
-            if (Inventory.SelectedItem == null || Inventory.SelectedItem.MetaItem.Category != MetaItemCategory.Throwable || Inventory.SelectedItem.Count <= 0)
+            if (Inventory.SelectedItem == null || !Inventory.SelectedItem.MetaItem.IsThrowable || Inventory.SelectedItem.Count <= 0)
                 return false;
 
             Stand();
@@ -906,20 +906,11 @@ namespace Remizione
             if (Inventory.SelectedItem is Item item)
             {
                 // Throwable
-                if (item.MetaItem.Category == MetaItemCategory.Throwable)
+                if (item.MetaItem.IsThrowable)
                 {
                     PerformThrowAction();
                     return;
                 }
-
-                /*
-                // Crafting
-                if (item.MetaItem.Category == MetaItemCategory.Crafting)
-                {
-                    PerformCraftAction();
-                    return;
-                }
-                */
 
                 // Use
                 Stand();

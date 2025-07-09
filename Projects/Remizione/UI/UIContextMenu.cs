@@ -72,7 +72,7 @@ namespace Remizione
             if (SelectedIndex != -1)
             {
                 optionList[SelectedIndex].IsSelected = true;
-                optionSelector.Position = optionList[SelectedIndex].BoundingBox.GetPoint(RectanglePoint.Left, -1, -.5f);
+                optionSelector.Position = optionList[SelectedIndex].BoundingBox.GetPoint(RectanglePoint.Left, -1, -.75f);
             }
         }
 
@@ -117,6 +117,7 @@ namespace Remizione
             stick.Stick = GamePadThumbStick.Left;
             stick.Update(gameTime);
             optionSelector.Update(gameTime);
+            optionSelector.Color = OptionSelectedColor;
 
             for (var i = 0; i < optionList.Count; i++)
             {
@@ -219,11 +220,14 @@ namespace Remizione
             return true;
         }
 
-        // OptionCount
-        public int OptionCount => optionList.Count;
+        // OptionColor
+        public Color OptionColor { get; set; } = ColorPalette.Text.Default;
 
         // Options
         public ReadOnlyCollection<UIContextMenuOption> Options { get; }
+
+        // OptionSelectedColor
+        public Color OptionSelectedColor { get; set; } = ColorPalette.Text.Highlight;
 
         // OptionSelectorImage
         public AtlasImage? OptionSelectorImage

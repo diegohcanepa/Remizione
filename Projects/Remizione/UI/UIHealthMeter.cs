@@ -25,7 +25,7 @@ namespace Remizione.UI
 
             for (var i = 0; i < hearts.Length; i++)
             {
-                hearts[i] = new(Game, Atlases.UI.HeartIcon) { Scale = ScaleInfo.UIElement.Tiny };
+                hearts[i] = new(Game, Atlases.UI.HeartIcon) { Scale = ScaleInfo.UIElement.Small };
                 hearts[i].Position = pos;
                 pos.X += hearts[i].BoundingBox.Width;
             }

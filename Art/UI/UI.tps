@@ -173,6 +173,22 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Items-assets/Apple.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorWait.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,4,7,7</rect>
+                <key>scale9Paddings</key>
+                <rect>3,4,7,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Items-assets/Chili.png</key>
             <key type="filename">Items-assets/Duck.png</key>
             <key type="filename">Items-assets/MissingItem.png</key>
@@ -326,21 +342,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MouseCursors-assets/MouseCursorWait.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,4,7,7</rect>
-                <key>scale9Paddings</key>
-                <rect>3,4,7,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">UI-assets/BottomGradient.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -488,6 +489,21 @@
                 <rect>24,1,47,3</rect>
                 <key>scale9Paddings</key>
                 <rect>24,1,47,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UI-assets/InventoryCategoryContainer.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>25,5,50,10</rect>
+                <key>scale9Paddings</key>
+                <rect>25,5,50,10</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -733,21 +749,6 @@
                 <rect>0,2,1,4</rect>
                 <key>scale9Paddings</key>
                 <rect>0,2,1,4</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UI-assets/UIControlShade.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>13,3,25,6</rect>
-                <key>scale9Paddings</key>
-                <rect>13,3,25,6</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

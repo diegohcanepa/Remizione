@@ -13,11 +13,16 @@ namespace Remizione
     {
         #region Private fields
 
+        private MetaItemCategory activeCategory = MetaItemCategory.Equipment;
         private readonly ImageSprite bottomGradient;
         private readonly UITextButton buttonClose;
+        private readonly TextSprite categoryText;
+        private readonly ImageSprite inventoryCategoryContainer;
         private readonly TextSprite itemNameText;
         private readonly UIContextMenu menu;
+        private readonly UITextButton nextCategory;
         private Item? originalSelectedItem;
+        private readonly UITextButton previousCategory;
         private InventorySlot? selectedSlot;
         private readonly InventorySlot[] slots = new InventorySlot[12];
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 200 };
@@ -43,13 +48,14 @@ namespace Remizione
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -2),
+                Small = true
             };
 
             // Item name
             itemNameText = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Bottom,
+                Color = ColorPalette.Text.Highlight,
+                PivotOrigin = RectanglePoint.LeftBottom,
                 Position = new(Screen.NativeWidth / 2, 100),
                 Scale = ScaleInfo.Text.VeryLarge
             };
@@ -62,14 +68,50 @@ namespace Remizione
                 Scale = new Vector2(1, 1.2f)
             };
 
+            // Menu
             menu = new UIContextMenu(Game)
             {
-                OptionTextScale = ScaleInfo.Text.ExtraLarge
+                OptionColor = ColorPalette.Text.Terra,
+                OptionSelectedColor = ColorPalette.Text.Default,
+                OptionTextScale = ScaleInfo.Text.VeryLarge,
             };
 
             menu.AddOption("Select", "Select");
             menu.AddOption("Info", "Info");
             menu.AddOption("Discard", "Discard");
+
+            // Inventory category container
+            inventoryCategoryContainer = new ImageSprite(owner.Game, Atlases.UI.GetImage("InventoryCategoryContainer"))
+            {
+                Opacity = .7f,
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -2),
+            };
+
+            // Category text
+            categoryText = new TextSprite(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Default,
+                PivotOrigin = RectanglePoint.Middle,
+                Position = inventoryCategoryContainer.BoundingBox.Center,
+                Scale = ScaleInfo.Text.Large
+            };
+
+            // Previous category
+            previousCategory = new UITextButton(owner.Game, InputBindings.PreviousTab)
+            {
+                ImageName = nameof(InputBindings.PreviousTab),
+                PivotOrigin = RectanglePoint.Right,
+                Position = inventoryCategoryContainer.BoundingBox.GetPoint(RectanglePoint.Left),
+            };
+
+            // Next category
+            nextCategory = new UITextButton(owner.Game, InputBindings.NextTab)
+            {
+                ImageName = nameof(InputBindings.NextTab),
+                PivotOrigin = RectanglePoint.Left,
+                Position = inventoryCategoryContainer.BoundingBox.GetPoint(RectanglePoint.Right),
+            };
         }
 
         #endregion
@@ -133,12 +175,6 @@ namespace Remizione
         // Sacrifice
         private void Sacrifice(Item item)
         {
-            if (item.MetaItem.SacrificeReward == DerivedStat.HP)
-                Owner.HP += item.MetaItem.SacrificeRewardAmount;
-
-            else if (item.MetaItem.SacrificeReward == DerivedStat.Tickets)
-                Owner.Tickets += item.MetaItem.SacrificeRewardAmount;
-
             item.Remove();
             if (selectedSlot?.Item == item)
                 selectedSlot.Item = null;
@@ -195,6 +231,7 @@ namespace Remizione
             {
                 itemNameText.Text = slot.Item.DisplayText;
                 menu.Position = slot.BoundingBox.GetPoint(RectanglePoint.Top, -menu.BoundingBox.Width / 2, -(menu.BoundingBox.Height+2));
+                itemNameText.Position = menu.BoundingBox.GetPoint(RectanglePoint.LeftTop, -4, 1);
             }
         }
 
@@ -211,6 +248,8 @@ namespace Remizione
             // Gradient
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             bottomGradient.Draw(gameTime);
+            inventoryCategoryContainer.Draw(gameTime);
+            categoryText.Draw(gameTime);
             itemNameText.Draw(gameTime);
             Game.SpriteBatch.End();
 
@@ -222,7 +261,9 @@ namespace Remizione
             if (selectedSlot?.Item != null)
                 menu.Draw(gameTime);
 
-            buttonClose.Draw(gameTime);
+            //buttonClose.Draw(gameTime);
+            previousCategory.Draw(gameTime);
+            nextCategory.Draw(gameTime);
         }
 
         // OnHandleInput
@@ -326,6 +367,8 @@ namespace Remizione
             stick.Update(gameTime);
             buttonClose.Update(gameTime);
             menu.Update(gameTime);
+            nextCategory.Update(gameTime);  
+            previousCategory.Update(gameTime);
 
             // Update slots
             for (int i = 0; i < Owner.Inventory.Items.Count; i++)
@@ -342,6 +385,8 @@ namespace Remizione
         // Populate
         private void Populate()
         {
+            categoryText.Text = Localization.GetValue(activeCategory);
+
             itemNameText.Clear();
 
             for (var i = 0; i < slots.Length; i++)
