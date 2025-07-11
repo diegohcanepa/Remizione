@@ -49,15 +49,6 @@ namespace Remizione
             {
                 if (frame.IsEvent)
                 {
-                    var nextItem = Owner.Inventory.SelectNext(MetaItemCategory.Consumable);
-                    if (nextItem == null || nextItem == Item)
-                        nextItem = Owner.Inventory.SelectNext(MetaItemCategory.Equipment);
-
-                    Item.Use();
-
-                    if (Owner.Inventory.SelectedItem == null && nextItem != null)
-                        Owner.Inventory.Select(nextItem);
-
                     if (Item.MetaItem.Sound != null)
                         Owner.PlaySound(Item.MetaItem.Sound);
 

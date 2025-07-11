@@ -180,7 +180,18 @@ namespace Remizione
                 return false;
 
             Stand();
-            consumeState.Item = Inventory.SelectedItem;
+
+            var itemToConsume = Inventory.SelectedItem;
+            var nextItem = Inventory.SelectNext(MetaItemCategory.Consumable);
+            if (nextItem == null || nextItem == itemToConsume)
+                nextItem = Inventory.SelectNext(MetaItemCategory.Equipment);
+
+            itemToConsume.Use();
+
+            if (Inventory.SelectedItem == null && nextItem != null)
+                Inventory.Select(nextItem);
+
+            consumeState.Item = itemToConsume;
             StateMachine.ChangeState(consumeState.Name);
             return true;
         }
@@ -192,6 +203,7 @@ namespace Remizione
                 return false;
 
             Stand();
+            Inventory.SelectedItem.Use();
             throwObjectState.Item = Inventory.SelectedItem;
             StateMachine.ChangeState(throwObjectState.Name);
             return true;
@@ -700,6 +712,9 @@ namespace Remizione
 
         // InteractiveTarget
         public GameThing? InteractiveTarget { get; private set; }
+
+        // InventorySelectedItemName
+        public string InventorySelectedItemName { get; set; } = string.Empty;
 
         // IsAlert
         public bool IsAlert { get; set; }

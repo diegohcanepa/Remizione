@@ -427,7 +427,7 @@ namespace Remizione
                 }
             }
 
-            item.Use();
+            //item.Use();
         }
 
         // MaxDistance

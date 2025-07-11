@@ -43,10 +43,8 @@ namespace Remizione
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
             TicketsIcon = this[nameof(TicketsIcon)];
-            UIControlContainerEdgeLarge = this[nameof(UIControlContainerEdgeLarge)];
-            UIControlContainerPatternLarge = this[nameof(UIControlContainerPatternLarge)];
-            UIControlContainerEdgeSmall = this[nameof(UIControlContainerEdgeSmall)];
-            UIControlContainerPatternSmall = this[nameof(UIControlContainerPatternSmall)];
+            UITextButtonContainerEdge = this[nameof(UITextButtonContainerEdge)];
+            UITextButtonContainerPattern = this[nameof(UITextButtonContainerPattern)];
         }
 
         // BottomGradient
@@ -145,16 +143,10 @@ namespace Remizione
         // TicketsIcon
         public AtlasImage TicketsIcon { get; }
 
-        // UIControlContainerEdgeLeftLarge
-        public AtlasImage UIControlContainerEdgeLarge { get; }
+        // UITextButtonContainerEdge
+        public AtlasImage UITextButtonContainerEdge { get; }
 
-        // UIControlContainerPatternLarge
-        public AtlasImage UIControlContainerPatternLarge { get; }
-
-        // UIControlContainerEdgeLeftSmall
-        public AtlasImage UIControlContainerEdgeSmall { get; }
-
-        // UIControlContainerPatternSmall
-        public AtlasImage UIControlContainerPatternSmall { get; }
+        // UITextButtonContainerPattern
+        public AtlasImage UITextButtonContainerPattern { get; }
     }
 }

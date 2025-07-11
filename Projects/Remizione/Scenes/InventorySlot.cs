@@ -96,7 +96,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (item != null && item.MetaItem.IsStackable && item.MetaItem.AllowEmpty && item.Count == 0)
+            if (item != null && item.MetaItem.IsStackable && item.Count == 0)
                 iconImage.Opacity = .5f;
             else
                 iconImage.Opacity = 1;

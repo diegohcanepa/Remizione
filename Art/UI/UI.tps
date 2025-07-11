@@ -688,12 +688,11 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UI-assets/UIControlContainerEdgeLarge.png</key>
+            <key type="filename">UI-assets/UIControlContainerEdge.png</key>
             <key type="filename">UI-assets/UIControlContainerEdgeLeftLarge.png</key>
             <key type="filename">UI-assets/UIControlContainerEdgeLeftSmall.png</key>
             <key type="filename">UI-assets/UIControlContainerEdgeRightLarge.png</key>
             <key type="filename">UI-assets/UIControlContainerEdgeRightSmall.png</key>
-            <key type="filename">UI-assets/UIControlContainerEdgeSmall.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -708,7 +707,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UI-assets/UIControlContainerPatternLarge.png</key>
+            <key type="filename">UI-assets/UIControlContainerPattern.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -717,24 +716,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>0,2,1,5</rect>
+                <rect>0,3,1,5</rect>
                 <key>scale9Paddings</key>
-                <rect>0,2,1,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UI-assets/UIControlContainerPatternSmall.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>0,2,1,4</rect>
-                <key>scale9Paddings</key>
-                <rect>0,2,1,4</rect>
+                <rect>0,3,1,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

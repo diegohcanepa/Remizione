@@ -25,7 +25,6 @@ namespace Remizione
         private InputMethod lastKnownInputMethod;
         private RectanglePoint pivotOrigin;
         private Vector2 position;
-        private bool small;
 
         #endregion
 
@@ -39,14 +38,14 @@ namespace Remizione
             this.Camera = game.Camera;
 
             // Container
-            this.containerPattern = new ImageSprite(Game)
+            this.containerPattern = new ImageSprite(Game, Atlases.UI.UITextButtonContainerPattern)
             {
                 PivotOrigin = RectanglePoint.Right,
                 Scale = ScaleInfo.UIElement.Medium
             };
 
             // ContainerEdgeLeft
-            this.containerEdgeLeft = new ImageSprite(Game)
+            this.containerEdgeLeft = new ImageSprite(Game, Atlases.UI.UITextButtonContainerEdge)
             {
                 PivotOrigin = RectanglePoint.Right,
                 Scale = ScaleInfo.UIElement.Medium
@@ -56,9 +55,14 @@ namespace Remizione
             this.label = new TextSprite(game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
+                Scale = ScaleInfo.Text.VeryLarge
             };
 
-            this.image = new ImageSprite(game);
+            this.image = new ImageSprite(game)
+            {
+                Scale = ScaleInfo.UIElement.Medium,
+            };
+
             this.label.Text = inputBinding == null ? string.Empty : Localization.GetValue(inputBinding);
 
             Invalidate();
@@ -108,7 +112,6 @@ namespace Remizione
         {
             // Image
             image.Image = GetInputBindingImage(ImageName, InputBinding);
-            image.Scale = Small ? ScaleInfo.UIElement.Small : ScaleInfo.UIElement.Medium;
             image.PivotOrigin = pivotOrigin;
             image.Position = Position;
 
@@ -141,24 +144,19 @@ namespace Remizione
             if (image.IsEmpty)
                 return;
 
-            label.Scale = Small ? ScaleInfo.Text.Large : ScaleInfo.Text.VeryLarge;
-
-            containerPattern.Image = Atlases.UI.UIControlContainerPatternLarge;
-            containerEdgeLeft.Image = Atlases.UI.UIControlContainerEdgeLarge;
-
             if (image.Pivot.AtRight)
             {
                 label.PivotOrigin = RectanglePoint.Right;
-                label.Position = image.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, Small ? .6f : .7f);
+                label.Position = image.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, .7f);
             }
             else
             {
                 label.PivotOrigin = RectanglePoint.Left;
-                label.Position = image.BoundingBox.GetPoint(RectanglePoint.Right, horzImagePadding, Small ? .6f : .7f);
+                label.Position = image.BoundingBox.GetPoint(RectanglePoint.Right, horzImagePadding, .7f);
             }
 
             containerPattern.ScaleX = label.BoundingBox.Width + 6;
-            containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Middle, 0, -.5f).Y;
+            containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Middle, 0, -.4f).Y;
             containerEdgeLeft.Y = containerPattern.Y;
 
             if (image.Pivot.AtRight)
@@ -334,20 +332,6 @@ namespace Remizione
                 if (value != position)
                 {
                     position = value;
-                    Invalidate();
-                }
-            }
-        }
-
-        // Small
-        public bool Small
-        {
-            get => small;
-            set
-            {
-                if (value != small)
-                {
-                    small = value;
                     Invalidate();
                 }
             }

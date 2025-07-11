@@ -143,6 +143,15 @@ namespace Remizione
         }
 
         // Select
+        public bool Select(string name)
+        {
+            if (GetItem(name) is Item item)
+                return Select(item);
+            else
+                return false;
+        }
+
+        // Select
         public bool Select(Item item)
         {
             if (items.Contains(item))

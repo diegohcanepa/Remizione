@@ -61,7 +61,6 @@ namespace Remizione
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3, -4),
-                Small = true
             };
         }
 

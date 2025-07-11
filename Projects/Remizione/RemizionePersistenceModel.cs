@@ -18,6 +18,7 @@ namespace Remizione
             persistentType.Map(nameof(Actor.Effects));
             persistentType.Map(nameof(Actor.HP));
             persistentType.Map(nameof(Actor.Position));
+            persistentType.Map(nameof(Actor.InventorySelectedItemName));
         }
     }
 }

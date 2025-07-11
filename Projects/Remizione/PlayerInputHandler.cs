@@ -9,7 +9,7 @@ namespace Remizione
     /// </summary>
     public sealed class PlayerInputHandler<T> : InputHandler where T : Actor
     {
-        private readonly NewInventoryScene inventoryScene;
+        private readonly InventoryScene inventoryScene;
 
         // Constructor
         public PlayerInputHandler(T actor, PlayerIndex playerIndex)
