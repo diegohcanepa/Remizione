@@ -4,15 +4,15 @@ using Microsoft.Xna.Framework;
 namespace Remizione
 {
     /// <summary>
-    /// ActorUseItemState
+    /// ActorConsumeState
     /// </summary>
-    public sealed class ActorUseItemState : ActorAnimatedState
+    public sealed class ActorConsumeState : ActorAnimatedState
     {
         private bool soundPlayed;
 
         // Constructor
-        public ActorUseItemState(Actor owner)
-            : base(owner, ActorStateNames.UseItem, false)
+        public ActorConsumeState(Actor owner)
+            : base(owner, ActorStateNames.Consume, false)
         {
         }
 
@@ -49,7 +49,14 @@ namespace Remizione
             {
                 if (frame.IsEvent)
                 {
+                    var nextItem = Owner.Inventory.SelectNext(MetaItemCategory.Consumable);
+                    if (nextItem == null || nextItem == Item)
+                        nextItem = Owner.Inventory.SelectNext(MetaItemCategory.Equipment);
+
                     Item.Use();
+
+                    if (Owner.Inventory.SelectedItem == null && nextItem != null)
+                        Owner.Inventory.Select(nextItem);
 
                     if (Item.MetaItem.Sound != null)
                         Owner.PlaySound(Item.MetaItem.Sound);

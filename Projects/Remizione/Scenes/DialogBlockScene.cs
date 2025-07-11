@@ -18,7 +18,7 @@ namespace Remizione
         private bool completed;
         private readonly DialogBlock dialogBlock;
         private readonly FloatTween fadeTween = new();
-        private readonly UIContextMenu menu;
+        private readonly UIContextMenu<string> menu;
         private Script? runningScript;
         private int runSelectedOptionCooldown;
         private readonly GameSession session;
@@ -35,7 +35,7 @@ namespace Remizione
             this.session = session;
             this.dialogBlock = dialogBlock;
 
-            this.menu = new UIContextMenu(Game, Fonts.CommonOutline)
+            this.menu = new UIContextMenu<string>(Game, Fonts.CommonOutline)
             {
                 OptionTextScale = ScaleInfo.ContextMenu.Option,
                 SelectInputBinding = InputBindings.SelectDialogOption
@@ -130,7 +130,7 @@ namespace Remizione
         // RunSelectedOption
         private void RunSelectedOption()
         {
-            if (menu.SelectedOption is UIContextMenuOption menuOption)
+            if (menu.SelectedOption is UIContextMenuOption<string> menuOption)
             {
                 RunningOption = dialogBlock.GetOption(int.Parse(menuOption.Key));
 

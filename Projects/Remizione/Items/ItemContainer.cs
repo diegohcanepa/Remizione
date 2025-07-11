@@ -158,10 +158,10 @@ namespace Remizione
         public Item? SelectedItem { get; private set; }
 
         // SelectNext
-        public bool SelectNext()
+        public Item? SelectNext()
         {
             if (items.Count <= 1)
-                return false;
+                return null;
 
             if (SelectedItem == null)
             {
@@ -177,14 +177,27 @@ namespace Remizione
                     Select(items[index + 1]);
             }
 
-            return true;
+            return SelectedItem;
+        }
+
+        // SelectNext
+        public Item? SelectNext(MetaItemCategory category)
+        {
+            for (var i = 0; i < Items.Count; i++)
+            {
+                SelectNext();
+                if (SelectedItem?.MetaItem is MetaItem metaItem && metaItem.Category == category)
+                    return SelectedItem;
+            }
+
+            return null;
         }
 
         // SelectPrevious
-        public bool SelectPrevious()
+        public Item? SelectPrevious()
         {
             if (items.Count <= 1)
-                return false;
+                return null;
 
             if (SelectedItem == null)
             {
@@ -200,7 +213,20 @@ namespace Remizione
                     Select(items[index - 1]);
             }
 
-            return true;
+            return SelectedItem;
+        }
+
+        // SelectPrevious
+        public Item? SelectPrevious(MetaItemCategory category)
+        {
+            for (var i = Items.Count - 1; i >= 0; i--)
+            {
+                SelectPrevious();
+                if (SelectedItem?.MetaItem is MetaItem metaItem && metaItem.Category == category)
+                    return SelectedItem;
+            }
+
+            return null;
         }
 
         // SetSerializationData

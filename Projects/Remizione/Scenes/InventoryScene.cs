@@ -19,7 +19,7 @@ namespace Remizione
         private readonly TextSprite categoryText;
         private readonly ImageSprite inventoryCategoryContainer;
         private readonly TextSprite itemNameText;
-        private readonly UIContextMenu menu;
+        private readonly UIContextMenu<string> menu;
         private readonly UITextButton nextCategory;
         private Item? originalSelectedItem;
         private readonly UITextButton previousCategory;
@@ -69,7 +69,7 @@ namespace Remizione
             };
 
             // Menu
-            menu = new UIContextMenu(Game)
+            menu = new UIContextMenu<string>(Game)
             {
                 OptionColor = ColorPalette.Text.Terra,
                 OptionSelectedColor = ColorPalette.Text.Default,
@@ -182,28 +182,6 @@ namespace Remizione
             Populate();
         }
 
-        // SelectNextItem
-        private bool SelectNextItem()
-        {
-            var result = Owner.Inventory.SelectNext();
-
-            if (Owner.Inventory.SelectedItem != null)
-                SelectSlot(Owner.Inventory.SelectedItem);
-
-            return result;
-        }
-
-        // SelectPreviousItem
-        private bool SelectPreviousItem()
-        {
-            var result = Owner.Inventory.SelectPrevious();
-
-            if (Owner.Inventory.SelectedItem != null)
-                SelectSlot(Owner.Inventory.SelectedItem);
-
-            return result;
-        }
-
         // SelectSlot
         private void SelectSlot(Item item)
         {
@@ -294,7 +272,6 @@ namespace Remizione
                 originalSelectedItem = selectedSlot.Item;
                 SceneController.Pop();
             }
-            */
 
             // Previous item
             else if (InputBindings.SelectLeft.IsPressed(PlayerIndex.One) || stick.IsLeft(PlayerIndex.One))
@@ -309,6 +286,7 @@ namespace Remizione
                 if (SelectNextItem())
                     Sound.Play(SoundNames.UINavigation);
             }
+                        */
 
             /*
             // Sacrifice

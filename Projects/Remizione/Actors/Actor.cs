@@ -24,6 +24,7 @@ namespace Remizione
         private string closeAttackName = string.Empty;
         private readonly ActorCloseAttackState closeAttackState;
         private readonly CombatStateMachine combatStateMachine;
+        private readonly ActorConsumeState consumeState;
         private FloatingText? floatingMessage;
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
@@ -41,7 +42,6 @@ namespace Remizione
         private int suspendInteractionCooldown;
         private readonly ActorThrowItemState throwObjectState;
         private float tinyMoveSpeedFactor = 1;
-        private readonly ActorUseItemState useItemState;
 
         #endregion
 
@@ -90,8 +90,8 @@ namespace Remizione
             throwObjectState = new ActorThrowItemState(this);
             this.StateMachine.RegisterState(throwObjectState);
 
-            useItemState = new ActorUseItemState(this);
-            this.StateMachine.RegisterState(useItemState);
+            consumeState = new ActorConsumeState(this);
+            this.StateMachine.RegisterState(consumeState);
 
             this.combatStateMachine = new(this);
         }
@@ -173,10 +173,22 @@ namespace Remizione
             pendingPathNodes.RemoveAt(0);
         }
 
+        // PerformConsumeAction
+        private bool PerformConsumeAction()
+        {
+            if (Inventory.SelectedItem == null || Inventory.SelectedItem.MetaItem.Category != MetaItemCategory.Consumable || Inventory.SelectedItem.Count <= 0)
+                return false;
+
+            Stand();
+            consumeState.Item = Inventory.SelectedItem;
+            StateMachine.ChangeState(consumeState.Name);
+            return true;
+        }
+
         // PerformThrowAction
         private bool PerformThrowAction()
         {
-            if (Inventory.SelectedItem == null || !Inventory.SelectedItem.MetaItem.IsThrowable || Inventory.SelectedItem.Count <= 0)
+            if (Inventory.SelectedItem == null || Inventory.SelectedItem.MetaItem.Action != ItemAction.Throw || Inventory.SelectedItem.Count <= 0)
                 return false;
 
             Stand();
@@ -906,16 +918,12 @@ namespace Remizione
             if (Inventory.SelectedItem is Item item)
             {
                 // Throwable
-                if (item.MetaItem.IsThrowable)
-                {
+                if (item.MetaItem.Action == ItemAction.Throw)
                     PerformThrowAction();
-                    return;
-                }
 
-                // Use
-                Stand();
-                useItemState.Item = item;
-                StateMachine.ChangeState(useItemState.Name);
+                // Consume
+                else if (item.MetaItem.Category == MetaItemCategory.Consumable)
+                    PerformConsumeAction();
             }
         }
 

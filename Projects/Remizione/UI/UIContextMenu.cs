@@ -11,11 +11,11 @@ namespace Remizione
     /// <summary>
     /// UIContextMenu
     /// </summary>
-    public sealed class UIContextMenu : GameObject, IInputHandler
+    public sealed class UIContextMenu<T> : GameObject, IInputHandler
     {
         #region Private fields
 
-        private readonly List<UIContextMenuOption> optionList = [];
+        private readonly List<UIContextMenuOption<T>> optionList = [];
         private readonly ImageSprite optionSelector;
         private Vector2 optionTextScale = ScaleInfo.ContextMenu.Option;
         private Vector2 position;
@@ -38,7 +38,7 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.Right
             };
 
-            this.Options = new ReadOnlyCollection<UIContextMenuOption>(optionList);
+            this.Options = new ReadOnlyCollection<UIContextMenuOption<T>>(optionList);
         }
 
         #endregion
@@ -128,9 +128,9 @@ namespace Remizione
         #endregion
 
         // AddOption
-        public UIContextMenuOption AddOption(string key, string text, AtlasImage? icon = null)
+        public UIContextMenuOption<T> AddOption(T key, string text, AtlasImage? icon = null)
         {
-            UIContextMenuOption result = new(this, key, text, icon);
+            UIContextMenuOption<T> result = new(this, key, text, icon);
             optionList.Add(result);
 
             if (SelectedIndex == -1)
@@ -155,7 +155,7 @@ namespace Remizione
         public Font Font { get; }
 
         // GetOptionAt
-        public UIContextMenuOption? GetOptionAt(Vector2 position)
+        public UIContextMenuOption<T>? GetOptionAt(Vector2 position)
         {
             for (var i = 0; i < optionList.Count; i++)
             {
@@ -193,7 +193,7 @@ namespace Remizione
         public int Height { get; private set; }
 
         // HoveredOption
-        public UIContextMenuOption? HoveredOption { get; private set; }
+        public UIContextMenuOption<T>? HoveredOption { get; private set; }
 
         // Last
         public void Last()
@@ -224,7 +224,7 @@ namespace Remizione
         public Color OptionColor { get; set; } = ColorPalette.Text.Default;
 
         // Options
-        public ReadOnlyCollection<UIContextMenuOption> Options { get; }
+        public ReadOnlyCollection<UIContextMenuOption<T>> Options { get; }
 
         // OptionSelectedColor
         public Color OptionSelectedColor { get; set; } = ColorPalette.Text.Highlight;
@@ -297,7 +297,7 @@ namespace Remizione
         }
 
         // SelectedOption
-        public UIContextMenuOption? SelectedOption => selectedIndex == -1 ? null : optionList[selectedIndex];
+        public UIContextMenuOption<T>? SelectedOption => selectedIndex == -1 ? null : optionList[selectedIndex];
 
         // SelectInputBinding
         public InputBinding? SelectInputBinding { get; set; }

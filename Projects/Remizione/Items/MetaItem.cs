@@ -35,6 +35,9 @@ namespace Remizione
 
         #endregion
 
+        // Action
+        public ItemAction Action { get; init; }
+
         // AllowEmpty
         public bool AllowEmpty { get; init; }
 
@@ -70,9 +73,6 @@ namespace Remizione
 
         // IsStackable
         public bool IsStackable => Maximum > 1;
-
-        // IsThrowable
-        public bool IsThrowable { get; init; }
 
         // Knockback
         public Vector2 Knockback { get; init; }

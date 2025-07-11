@@ -6,13 +6,13 @@ namespace Remizione
     /// <summary>
     /// UIContextMenuOption
     /// </summary>
-    public sealed class UIContextMenuOption
+    public sealed class UIContextMenuOption<T>
     {
         #region Private fields
 
         private readonly ImageSprite iconSprite;
         private bool isSelected;
-        private readonly UIContextMenu menu;
+        private readonly UIContextMenu<T> menu;
         private Vector2 position;
         private readonly FloatTween shakeTween = new();
         private readonly TextSprite textSprite;
@@ -20,7 +20,7 @@ namespace Remizione
         #endregion
 
         // Constructor
-        public UIContextMenuOption(UIContextMenu menu, string key, string text, AtlasImage? icon)
+        public UIContextMenuOption(UIContextMenu<T> menu, T key, string text, AtlasImage? icon)
         {
             this.menu = menu;
             this.Key = key;
@@ -100,7 +100,7 @@ namespace Remizione
         }
 
         // Key
-        public string Key { get; }
+        public T Key { get; }
 
         // Position
         public Vector2 Position

@@ -95,7 +95,6 @@ namespace EngendroAdventure.Scripting
         protected static readonly string StyleArg = "#style";
         protected static readonly string SubAreaArg = "#sub-area";
         protected static readonly string TargetArg = "#target";
-        protected static readonly string ThrowableArg = "#throwable";
         protected static readonly string TicketsArg = "#tickets";
         protected static readonly string TransientArg = "#transient";
         protected static readonly string TransitionAwareArg = "#transition-aware";

@@ -21,9 +21,6 @@ namespace Remizione
             return EngendroGame.RunningPlatform == RunningPlatform.NintendoSwitch ? Buttons.A : Buttons.B;
         }
 
-        // Attacks
-        internal static readonly InputBinding CloseAttack = InputManager.AddBinding(nameof(CloseAttack), Buttons.A);
-
         // Menu
         internal static readonly InputBinding Console = InputManager.AddBinding(nameof(Console), null, Keys.Tab);
         internal static readonly InputBinding DeleteSlot = InputManager.AddBinding(nameof(DeleteSlot), Buttons.Y, Keys.F8);
@@ -39,10 +36,10 @@ namespace Remizione
         internal static readonly InputBinding Back = InputManager.AddBinding(nameof(Back), GetButtonB(), Keys.Escape);
         internal static readonly InputBinding Continue = InputManager.AddBinding(nameof(Continue), GetButtonA(), Keys.E);
         internal static readonly InputBinding Close = InputManager.AddBinding(nameof(Close), GetButtonB(), Keys.Escape);
+        internal static readonly InputBinding Equip = InputManager.AddBinding(nameof(Equip), Buttons.A, Keys.E);
         internal static readonly InputBinding Exit = InputManager.AddBinding(nameof(Exit), GetButtonB(), Keys.Escape);
-        internal static readonly InputBinding Info = InputManager.AddBinding(nameof(Info), Buttons.Y, Keys.I, Keys.Enter);
-        internal static readonly InputBinding Interact = InputManager.AddBinding(nameof(Interact), Buttons.Y, Keys.E, Keys.Enter);
-        internal static readonly InputBinding Inventory = InputManager.AddBinding(nameof(Inventory), Buttons.RightShoulder, Keys.I);
+        internal static readonly InputBinding Interact = InputManager.AddBinding(nameof(Interact), Buttons.A, Keys.E, Keys.Enter);
+        internal static readonly InputBinding Inventory = InputManager.AddBinding(nameof(Inventory), Buttons.Y, Keys.I);
         internal static readonly InputBinding ItemAction = InputManager.AddBinding(nameof(ItemAction), Buttons.X, Keys.E);
         internal static readonly InputBinding NextDialog = InputManager.AddBinding(nameof(NextDialog), Buttons.Y, Keys.E, Keys.Enter);
         internal static readonly InputBinding Sacrifice = InputManager.AddBinding(nameof(Sacrifice), Buttons.X, Keys.S);
@@ -50,6 +47,7 @@ namespace Remizione
         internal static readonly InputBinding SelectDialogOption = InputManager.AddBinding(nameof(SelectDialogOption), Buttons.A, Keys.E, Keys.Enter);
         internal static readonly InputBinding SpeechBubble = InputManager.AddBinding(nameof(SpeechBubble), Buttons.Y, Keys.E, Keys.Enter);
         internal static readonly InputBinding UseItem = InputManager.AddBinding(nameof(UseItem), Buttons.X, Keys.Z);
+        internal static readonly InputBinding ViewAll = InputManager.AddBinding(nameof(ViewAll), Buttons.Y, Keys.A);
 
         // Keyboard movement
         internal static readonly InputBinding KeyboardMoveDown = InputManager.AddBinding(nameof(KeyboardMoveDown), 0, Keys.S);
@@ -66,7 +64,9 @@ namespace Remizione
         internal static readonly InputBinding SelectUp = InputManager.AddBinding(nameof(SelectUp), Buttons.DPadUp, Keys.Up, Keys.W);
 
         // Quick slot
-        internal static readonly InputBinding QuickSlotNextWeaponItem = InputManager.AddBinding(nameof(QuickSlotNextWeaponItem), Buttons.DPadRight, Keys.Right);
-        internal static readonly InputBinding QuickSlotPreviousWeaponItem = InputManager.AddBinding(nameof(QuickSlotPreviousWeaponItem), Buttons.DPadLeft, Keys.Left);
+        internal static readonly InputBinding QuickSlotNextConsumable = InputManager.AddBinding(nameof(QuickSlotNextConsumable), Buttons.DPadDown, Keys.Down);
+        internal static readonly InputBinding QuickSlotNextEquipment = InputManager.AddBinding(nameof(QuickSlotNextEquipment), Buttons.DPadRight, Keys.Right);
+        internal static readonly InputBinding QuickSlotPreviousConsumable = InputManager.AddBinding(nameof(QuickSlotPreviousConsumable), Buttons.DPadUp, Keys.Up);
+        internal static readonly InputBinding QuickSlotPreviousEquipment = InputManager.AddBinding(nameof(QuickSlotPreviousEquipment), Buttons.DPadLeft, Keys.Left);
     }
 }

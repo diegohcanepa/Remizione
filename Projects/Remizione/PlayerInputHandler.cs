@@ -25,13 +25,6 @@ namespace Remizione
         // HandleGamePadInput
         private HandleInputResult HandleGamePadInput()
         {
-            // CloseAttack
-            if (InputBindings.CloseAttack.IsPressed(PlayerIndex.One))
-            {
-                Actor.PerformCloseAttack();
-                return HandleInputResult.Handled;
-            }
-         
             // Inventory
             if (Actor.Session.InventoryEnabled && InputBindings.Inventory.IsPressed(PlayerIndex.One))
             {

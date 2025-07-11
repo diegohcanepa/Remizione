@@ -219,27 +219,6 @@ namespace Remizione
             }
         }
 
-        // MeetUsageConditions
-        public bool MeetUsageConditions()
-        {
-            var actor = Owner as Actor;
-
-            // Not enough HP
-            if (MetaItem.HP is DiceExpression hpExp && hpExp.FixedValue < 0 && Owner.HP <= Math.Abs(hpExp.FixedValue))
-                return false;
-
-            /*
-            // Not enough faith
-            if (actor != null)
-            {
-                if (MetaItem.Faith is DiceExpression faithExp && faithExp.FixedValue < 0 && actor.Faith <= faithExp.FixedValue)
-                    return false;
-            }
-            */
-
-            return true;
-        }
-
         // MetaItem
         public MetaItem MetaItem { get; }
 
@@ -292,9 +271,6 @@ namespace Remizione
         // Use
         public bool Use()
         {
-            if (!MeetUsageConditions())
-                return false;
-
             if (MetaItem.HP != null)
                 Owner.HP += MetaItem.HP.Roll();
 

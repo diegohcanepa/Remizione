@@ -15,13 +15,16 @@ namespace Remizione
     {
         #region Private fields
 
+        private readonly TextSprite amountText;
         private const float animationSpeed = 14;
         private readonly ImageSprite bottomGradient;
+        private readonly UITextButton buttonClose;
+        private readonly UITextButton buttonViewAll;
         private readonly TextSprite itemNameText;
-        private static readonly Vector2 slotPosition = new(Screen.Center.X, Screen.HUDArea.Bottom - 14);
+        private readonly List<InventoryItem> items = [];
         private int selectedIndex;
         private readonly ImageSprite slotImage;
-        private readonly List<InventoryItem> slots = [];
+        private static readonly Vector2 slotPosition = new(Screen.Center.X, Screen.HUDArea.Bottom - 18);
         private const int spaceBetweenIcons = 15;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 150 };
         private const int visibleRange = 13;
@@ -55,10 +58,35 @@ namespace Remizione
             // Item name
             itemNameText = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Highlight,
+                Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Top),
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Top, 0, -1),
+                Scale = ScaleInfo.Text.ExtraLarge
+            };
+
+            // Amount text
+            amountText = new TextSprite(Game, Fonts.Common)
+            {
+                Color = ColorPalette.Text.Default,
+                PivotOrigin = RectanglePoint.Top,
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -1),
                 Scale = ScaleInfo.Text.VeryLarge
+            };
+
+            // Close button
+            buttonClose = new UITextButton(owner.Game, InputBindings.Close)
+            {
+                PivotOrigin = RectanglePoint.RightBottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -2),
+                //Small = true
+            };
+
+            // View all button
+            buttonViewAll = new UITextButton(owner.Game, InputBindings.ViewAll)
+            {
+                PivotOrigin = RectanglePoint.RightBottom,
+                Position = buttonClose.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -10),
+                //Small = true
             };
         }
 
@@ -72,33 +100,81 @@ namespace Remizione
             for (int i = -visibleRange; i <= visibleRange; i++)
             {
                 int index = (int)visualIndex + i;
-                if (index < 0 || index >= slots.Count)
+                if (index < 0 || index >= items.Count)
                     continue;
 
                 // desplazamiento relativo animado
                 float offset = i - (visualIndex - (int)visualIndex);
-                slots[index].Position = slotPosition + new Vector2(offset * spaceBetweenIcons, 0);
+                items[index].Position = slotPosition + new Vector2(offset * spaceBetweenIcons, 0);
 
                 // Escala y opacidad basadas en distancia
                 float distance = MathF.Abs(offset);
                 float scale = MathF.Max(.6f, .8f - distance * .2f); // escala mínima 0.6
                 float alpha = MathF.Max(.3f, 1 - distance * .3f); // transparencia mínima 0.3
 
-                slots[index].Opacity = alpha;
-                slots[index].Scale = new(scale);
+                items[index].Opacity = alpha;
+                items[index].Scale = new(scale);
 
-                slots[index].Draw(gameTime);
+                items[index].Draw(gameTime);
+            }
+        }
+
+        // GetInventoryItemAt
+        private InventoryItem? GetInventoryItemAt(Vector2 position)
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].BoundingBox.Contains(position))
+                    return items[i];
+            }
+
+            return null;
+        }
+
+        // HandleMouseInput
+        private bool HandleMouseInput()
+        {
+            if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
+            {
+                SceneController.Pop();
+                return true;
+            }
+
+            if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
+                return false;
+
+            if (GetInventoryItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is InventoryItem item)
+            {
+                Select(items.IndexOf(item));
+                MouseCursor.Instance.AnimateClick();
+                Sound.Play(SoundNames.UINavigation);
+            }
+
+            return false;
+        }
+
+        // Select
+        private void Select(string name)
+        {
+            for (var i = 0; i < items.Count; i++)
+            {
+                if (items[i].Item.Name == name)
+                {
+                    Select(i);
+                    return;
+                }
             }
         }
 
         // Select
         private void Select(int index)
         {
-            if (index >= slots.Count)
+            if (index >= items.Count)
                 return;
 
             selectedIndex = index;
-            itemNameText.Text = slots[index].Item.DisplayText;
+            itemNameText.Text = items[index].Item.DisplayText;
+            amountText.Text = items[index].Item.GetDisplayAmount();
         }
 
         #endregion
@@ -115,17 +191,34 @@ namespace Remizione
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             bottomGradient.Draw(gameTime);
             itemNameText.Draw(gameTime);
+            amountText.Draw(gameTime);
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera);
             slotImage.Draw(gameTime);
             DrawItems(gameTime);
             Game.SpriteBatch.End();
+
+            buttonClose.Draw(gameTime);
+            buttonViewAll.Draw(gameTime);
         }
 
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
+            if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
+            {
+                if (HandleMouseInput())
+                    return HandleInputResult.Handled;
+            }
+
+            // Close
+            if (buttonClose.TestPressed(PlayerIndex.One))
+            {
+                SceneController.Pop();
+                return HandleInputResult.Handled;
+            }
+
             if (InputBindings.SelectLeft.IsPressed(PlayerIndex.One) || stick.IsLeft(PlayerIndex.One))
             {
                 Select(Math.Max(0, selectedIndex - 1));
@@ -135,7 +228,7 @@ namespace Remizione
 
             else if (InputBindings.SelectRight.IsPressed(PlayerIndex.One) || stick.IsRight(PlayerIndex.One))
             {
-                Select(Math.Min(slots.Count - 1, selectedIndex + 1));
+                Select(Math.Min(items.Count - 1, selectedIndex + 1));
                 Sound.Play(SoundNames.UINavigation);
                 return HandleInputResult.Handled;
             }
@@ -149,20 +242,29 @@ namespace Remizione
             Owner.Stand();
             base.OnLoadContent();
 
-            slots.Clear();
+            // Load items
+            items.Clear();
             for (var i = 0; i < Owner.Inventory.Items.Count; i++)
             {
-                slots.Add(new(Owner.Inventory.Items[i]));
+                var obj = Owner.Inventory.Items[i];
+                if (obj.MetaItem.Category != MetaItemCategory.Misc)
+                    items.Add(new(obj));
             }
 
-            Select(0);
+            if (Owner.Inventory.SelectedItem is Item item)
+            { 
+                Select(item.Name);
+                visualIndex = selectedIndex;
+            }
         }
 
         // OnUnloadContent
         protected override void OnUnloadContent()
         {
             base.OnUnloadContent();
-            slots.Clear();
+
+            if (selectedIndex >= 0)
+                Owner.Inventory.Select(items[selectedIndex].Item);
         }
 
         // OnUpdate
@@ -175,6 +277,9 @@ namespace Remizione
             visualIndex += (selectedIndex - visualIndex) * MathF.Min(1f, animationSpeed * deltaTime);
 
             base.OnUpdate(gameTime);
+
+            buttonClose.Update(gameTime);
+            buttonViewAll.Update(gameTime);
         }
 
         #endregion
@@ -210,6 +315,9 @@ namespace Remizione
             protected override void OnUpdate(GameTime gameTime)
             {
             }
+
+            // BoundingBox
+            public RectangleF BoundingBox => image.BoundingBox;
 
             // Item
             public Item Item { get; }

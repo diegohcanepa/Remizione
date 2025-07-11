@@ -196,6 +196,10 @@
             <key type="filename">Edmund-assets/Bend01.png</key>
             <key type="filename">Edmund-assets/Bend02.png</key>
             <key type="filename">Edmund-assets/Bend03.png</key>
+            <key type="filename">Edmund-assets/Consume01.png</key>
+            <key type="filename">Edmund-assets/Consume02.png</key>
+            <key type="filename">Edmund-assets/Consume03.png</key>
+            <key type="filename">Edmund-assets/Consume04.png</key>
             <key type="filename">Edmund-assets/Headbutt01.png</key>
             <key type="filename">Edmund-assets/Headbutt02.png</key>
             <key type="filename">Edmund-assets/Headbutt03.png</key>

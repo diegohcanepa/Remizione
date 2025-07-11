@@ -35,11 +35,18 @@
   <String Key="InputBinding.Back">Back</String>
   <String Key="InputBinding.Close">Close</String>
   <String Key="InputBinding.Continue">Continue</String>
+  <String Key="InputBinding.Equip">Equip</String>
   <String Key="InputBinding.Exit">Exit</String>
   <String Key="InputBinding.Info">Info</String>
+  <String Key="InputBinding.Inspect">Inspect</String>
   <String Key="InputBinding.NextDialog">Next</String>
   <String Key="InputBinding.Sacrifice">Sacrifice</String>
   <String Key="InputBinding.Select">Select</String>
+  <String Key="InputBinding.UseItem">Use</String>
+  <String Key="InputBinding.ViewAll">View all</String>
+  <String Key="InventoryOption.Descartar">Discard</String>
+  <String Key="InventoryOption.Inspect">Inspect</String>
+  <String Key="InventoryOption.Select">Select</String>
   <String Key="Item.Apple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.Apple.Name">Apple</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
@@ -48,7 +55,7 @@
   <String Key="Item.Duck.Name">Rubber duck</String>
   <String Key="Item.Gold.Description">A handful of gold dust.</String>
   <String Key="Item.Gold.Name">Gold dust</String>
-  <String Key="Item.PieceOfWood.Description"></String>
+  <String Key="Item.PieceOfWood.Description" />
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
