@@ -207,21 +207,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Items-assets/PieceOfWood.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,4,5,7</rect>
-                <key>scale9Paddings</key>
-                <rect>3,4,5,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">KeyboardControls-assets/KeyboardE.png</key>
             <key type="filename">XboxControls-assets/XboxA.png</key>
             <key type="filename">XboxControls-assets/XboxB.png</key>
@@ -275,24 +260,6 @@
                 <rect>3,3,6,6</rect>
                 <key>scale9Paddings</key>
                 <rect>3,3,6,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">KeyboardControls-assets/KeyboardInteract.png</key>
-            <key type="filename">UI-assets/CheckMark.png</key>
-            <key type="filename">UI-assets/ProhibitionMark.png</key>
-            <key type="filename">XboxControls-assets/XboxInteract.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -399,6 +366,22 @@
                 <rect>22,3,44,5</rect>
                 <key>scale9Paddings</key>
                 <rect>22,3,44,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UI-assets/CheckMark.png</key>
+            <key type="filename">UI-assets/ProhibitionMark.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -688,11 +671,11 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UI-assets/UIControlContainerEdge.png</key>
             <key type="filename">UI-assets/UIControlContainerEdgeLeftLarge.png</key>
             <key type="filename">UI-assets/UIControlContainerEdgeLeftSmall.png</key>
             <key type="filename">UI-assets/UIControlContainerEdgeRightLarge.png</key>
             <key type="filename">UI-assets/UIControlContainerEdgeRightSmall.png</key>
+            <key type="filename">UI-assets/UITextButtonContainerEdge.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -707,7 +690,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UI-assets/UIControlContainerPattern.png</key>
+            <key type="filename">UI-assets/UITextButtonContainerPattern.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

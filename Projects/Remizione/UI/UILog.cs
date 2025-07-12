@@ -30,14 +30,14 @@ namespace Remizione.UI
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Left,
-                Scale = ScaleInfo.Text.Large
+                Scale = ScaleInfo.Text.VeryLarge
             };
 
             this.nounText = new(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default * .7f,
                 PivotOrigin = RectanglePoint.LeftTop,
-                Scale = ScaleInfo.Text.Large
+                Scale = ScaleInfo.Text.VeryLarge
             };
         }
 
@@ -57,13 +57,13 @@ namespace Remizione.UI
             }
 
             verbText.Color = isWarning ? ColorPalette.Text.Highlight : ColorPalette.Text.Default;
-            verbText.Position = new Vector2(5, 28);
+            verbText.Position = new Vector2(5, 20);
             verbText.Text = verb;
 
             nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
             nounText.Text = noun;
             icon.Image = image;
-            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
+            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -3);
 
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 1000);
         }
@@ -81,6 +81,9 @@ namespace Remizione.UI
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             verbText.Draw(gameTime);
             nounText.Draw(gameTime);
+            Game.SpriteBatch.End();
+
+            Game.SpriteBatch.Begin(Game.Camera);
             icon.Draw(gameTime);
             Game.SpriteBatch.End();
         }

@@ -15,8 +15,9 @@
         public const string Idle = nameof(Idle);
         public const string Move = nameof(Move);
         public const string PickUp = nameof(PickUp);
+        public const string ShockZap = nameof(ShockZap);
         public const string Stand = nameof(Stand);
         public const string Talk = nameof(Talk);
-        public const string ThrowObject = nameof(ThrowObject);
+        public const string ThrowItem = nameof(ThrowItem);
     }
 }

@@ -13,6 +13,7 @@
         internal const string MenuSelect = nameof(MenuSelect);
         internal const string Prompt = nameof(Prompt);
         internal const string Rain = nameof(Rain);
+        internal const string ShockZap = nameof(ShockZap);
         internal const string ThrowablePickup = nameof(ThrowablePickup);
         internal const string Thunder = nameof(Thunder);
         internal const string UINavigation = nameof(UINavigation);

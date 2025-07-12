@@ -173,46 +173,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">BloodSplashHigh-assets/BloodSplashHigh01.png</key>
-            <key type="filename">BloodSplashHigh-assets/BloodSplashHigh02.png</key>
-            <key type="filename">BloodSplashHigh-assets/BloodSplashHigh03.png</key>
-            <key type="filename">BloodSplashHigh-assets/BloodSplashHigh04.png</key>
-            <key type="filename">BloodSplashHigh-assets/BloodSplashHigh05.png</key>
-            <key type="filename">BloodSplashHigh-assets/BloodSplashHigh06.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,5,7,9</rect>
-                <key>scale9Paddings</key>
-                <rect>3,5,7,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">BloodSplashLow-assets/BloodSplashLow01.png</key>
-            <key type="filename">BloodSplashLow-assets/BloodSplashLow02.png</key>
-            <key type="filename">BloodSplashLow-assets/BloodSplashLow03.png</key>
-            <key type="filename">BloodSplashLow-assets/BloodSplashLow04.png</key>
-            <key type="filename">BloodSplashLow-assets/BloodSplashLow05.png</key>
-            <key type="filename">BloodSplashLow-assets/BloodSplashLow06.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,2,7,3</rect>
-                <key>scale9Paddings</key>
-                <rect>4,2,7,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">CrossA-assets/CrossA.png</key>
             <key type="filename">CrossA-assets/CrossAShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -279,7 +239,6 @@
                 <false/>
             </struct>
             <key type="filename">DustParticles-assets/DustParticle1.png</key>
-            <key type="filename">Environment-assets/Apple.png</key>
             <key type="filename">FireflyParticles-assets/FireflyParticle1.png</key>
             <key type="filename">Pickups-assets/Chili.png</key>
             <key type="filename">Pickups-assets/ChiliShadow.png</key>
@@ -303,21 +262,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Environment-assets/BlessedTinder.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,2,3,3</rect>
-                <key>scale9Paddings</key>
-                <rect>1,2,3,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Environment-assets/CraftingMark.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -330,22 +274,6 @@
                 <rect>2,2,3,3</rect>
                 <key>scale9Paddings</key>
                 <rect>2,2,3,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/CrateFragment.png</key>
-            <key type="filename">Environment-assets/ShadowSpot8.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,1,4,1</rect>
-                <key>scale9Paddings</key>
-                <rect>2,1,4,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -376,22 +304,6 @@
                 <rect>67,40,133,79</rect>
                 <key>scale9Paddings</key>
                 <rect>67,40,133,79</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/Orb.png</key>
-            <key type="filename">FireflyParticles-assets/FireflyParticle2.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,3,3</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,3,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -470,21 +382,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Environment-assets/RottenApple.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,1,2</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,1,2</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Environment-assets/ShadowSpot10.png</key>
             <key type="filename">Environment-assets/ShadowSpot11.png</key>
             <struct type="IndividualSpriteSettings">
@@ -516,6 +413,21 @@
                 <rect>2,1,3,1</rect>
                 <key>scale9Paddings</key>
                 <rect>2,1,3,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Environment-assets/ShadowSpot8.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,1,4,1</rect>
+                <key>scale9Paddings</key>
+                <rect>2,1,4,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -576,6 +488,22 @@
                 <rect>4,1,7,1</rect>
                 <key>scale9Paddings</key>
                 <rect>4,1,7,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">FireflyParticles-assets/FireflyParticle2.png</key>
+            <key type="filename">Pickups-assets/Orb.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,3,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -883,6 +811,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Pickups-assets/Apple.png</key>
+            <key type="filename">Pickups-assets/RottenApple.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,1,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>2,1,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">PortableToilet-assets/PortableToilet01.png</key>
             <key type="filename">PortableToilet-assets/PortableToilet02.png</key>
             <key type="filename">PortableToilet-assets/PortableToiletShadow.png</key>
@@ -1110,8 +1054,6 @@
                     <filename>DustParticles-assets</filename>
                     <filename>CrossA-assets</filename>
                     <filename>CrossLargeA-assets</filename>
-                    <filename>BloodSplashLow-assets</filename>
-                    <filename>BloodSplashHigh-assets</filename>
                     <filename>TerrainBlocks-assets</filename>
                     <filename>TreeA-assets</filename>
                     <filename>TreeB-assets</filename>

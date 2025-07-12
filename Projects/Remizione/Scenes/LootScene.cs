@@ -260,15 +260,15 @@ namespace Remizione
                 return;
 
             // Player items
-            for (int i = 0; i < session.Player.Inventory.Items.Count; i++)
+            for (int i = 0; i < session.Player.Inventory.Count; i++)
             {
-                playerMenu.AddOption(session.Player.Inventory.Items[i]);
+                playerMenu.AddOption(session.Player.Inventory[i]);
             }
 
             // Target items
-            for (int i = 0; i < Target.Inventory.Items.Count; i++)
+            for (int i = 0; i < Target.Inventory.Count; i++)
             {
-                targetMenu.AddOption(Target.Inventory.Items[i]);
+                targetMenu.AddOption(Target.Inventory[i]);
             }
 
             InvalidateTitles();

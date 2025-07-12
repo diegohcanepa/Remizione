@@ -18,9 +18,7 @@ namespace Remizione
         #region Private fields
 
         private readonly FloatTween accelerationFactorTween = new();
-        private BloodSplash? bloodSplash;
         private MetaItem? closeAttackMetaItem;
-        private bool closeAttackPeding;
         private string closeAttackName = string.Empty;
         private readonly ActorCloseAttackState closeAttackState;
         private readonly CombatStateMachine combatStateMachine;
@@ -37,10 +35,11 @@ namespace Remizione
         private PlayerNumber playerNumber = PlayerNumber.None;
         private readonly GameSession session;
         private readonly ShadowSpot shadowSpot;
+        private readonly ActorShockZapState shockZapState;
         private SpeechBubble? speechBubble;
         private readonly ActorStandState standState;
         private int suspendInteractionCooldown;
-        private readonly ActorThrowItemState throwObjectState;
+        private readonly ActorThrowItemState throwItemState;
         private float tinyMoveSpeedFactor = 1;
 
         #endregion
@@ -87,11 +86,14 @@ namespace Remizione
             this.StateMachine.RegisterState(new ActorPickUpState(this));
             this.StateMachine.RegisterState(closeAttackState);
 
-            throwObjectState = new ActorThrowItemState(this);
-            this.StateMachine.RegisterState(throwObjectState);
+            throwItemState = new ActorThrowItemState(this);
+            this.StateMachine.RegisterState(throwItemState);
 
             consumeState = new ActorConsumeState(this);
             this.StateMachine.RegisterState(consumeState);
+
+            shockZapState = new ActorShockZapState(this);
+            this.StateMachine.RegisterState(shockZapState);
 
             this.combatStateMachine = new(this);
         }
@@ -109,7 +111,7 @@ namespace Remizione
                 {
                     if (Room.CulledThings[i] == this)
                         continue;
-                    
+
                     else if (Room.CulledThings[i] is GameThing target && target.CanInteract(this))
                         return target;
                 }
@@ -156,13 +158,9 @@ namespace Remizione
             if (pendingInteractiveTarget != null)
             {
                 FaceTo(pendingInteractiveTarget);
-                if (closeAttackPeding)
-                    PerformCloseAttack();
-                else
-                    Interact(pendingInteractiveTarget);
+                Interact(pendingInteractiveTarget);
             }
 
-            closeAttackPeding = false;
             pendingInteractiveTarget = null;
         }
 
@@ -176,6 +174,9 @@ namespace Remizione
         // PerformConsumeAction
         private bool PerformConsumeAction()
         {
+            if (!CanChangeState)
+                return false;
+
             if (Inventory.SelectedItem == null || Inventory.SelectedItem.MetaItem.Category != MetaItemCategory.Consumable || Inventory.SelectedItem.Count <= 0)
                 return false;
 
@@ -196,16 +197,33 @@ namespace Remizione
             return true;
         }
 
+        // PerformShockZap
+        private void PerformShockZap(GameThing attacker)
+        {
+            if (session.IsAwaiting)
+                return;
+
+            Stand();
+
+            if (MetaItem.Find("ShockZap") is MetaItem metaItem)
+                metaItem.ApplyDamage(attacker, this, HitType.Default);
+
+            StateMachine.ChangeState(shockZapState.Name);
+        }
+
         // PerformThrowAction
         private bool PerformThrowAction()
         {
+            if (!CanChangeState)
+                return false;
+
             if (Inventory.SelectedItem == null || Inventory.SelectedItem.MetaItem.Action != ItemAction.Throw || Inventory.SelectedItem.Count <= 0)
                 return false;
 
             Stand();
             Inventory.SelectedItem.Use();
-            throwObjectState.Item = Inventory.SelectedItem;
-            StateMachine.ChangeState(throwObjectState.Name);
+            throwItemState.Item = Inventory.SelectedItem;
+            StateMachine.ChangeState(throwItemState.Name);
             return true;
         }
 
@@ -284,6 +302,13 @@ namespace Remizione
         // InputHandler
         protected InputHandler? InputHandler { get; set; }
 
+        // OnCollision
+        protected override void OnCollision(GameThing thing)
+        {
+            if (thing.ShockZap)
+                PerformShockZap(thing);
+        }
+
         // OnDamageReaction
         protected override void OnDamageReaction(GameThing attacker)
         {
@@ -320,8 +345,6 @@ namespace Remizione
                 }
             }
 
-            bloodSplash?.Draw(gameTime);
-
             if (moveVerticalTween.IsRunning)
                 Y += moveVerticalTween.CurrentValue;
 
@@ -339,14 +362,7 @@ namespace Remizione
         protected override void OnHurt(GameThing attacker)
         {
             IsAlert = true;
-
             StateMachine.ChangeState(ActorStateNames.Hurt);
-
-            if (BloodSplashOrigin != Vector2.Zero)
-            {
-                bloodSplash ??= new BloodSplash(Game, this);
-                bloodSplash.Show(BodySize, GetBloodSplashPosition());
-            }
         }
 
         // OnLoad
@@ -467,8 +483,6 @@ namespace Remizione
 
             base.OnUpdate(gameTime);
 
-            bloodSplash?.Update(gameTime);
-
             if (suspendInteractionCooldown > 0 && !session.IsAwaiting)
                 suspendInteractionCooldown -= gameTime.ElapsedGameTime.Milliseconds;
 
@@ -547,15 +561,14 @@ namespace Remizione
         //public void ApplyStats() => Stats.Apply();
 
         // ApproachAndInteract
-        public bool ApproachAndInteract(GameThing target, bool closeAttack)
+        public bool ApproachAndInteract(GameThing target)
         {
             if (!IsPlayer)
                 return false;
 
-            var destination = closeAttack && target.IsWalkAreaHole ? (target as IHoleArea).Polygon.GetClosestPointOnEdge(Position) : target.GetApproachPosition(this, true);
+            var destination = target.IsWalkAreaHole ? (target as IHoleArea).Polygon.GetClosestPointOnEdge(Position) : target.GetApproachPosition(this, true);
             var result = MoveTo(destination);
             this.pendingInteractiveTarget = target;
-            this.closeAttackPeding = closeAttack;
 
             if (!result)
                 HandlePendingInteraction();
@@ -737,7 +750,6 @@ namespace Remizione
         // IsStandingOrMoving
         public bool IsStandingOrMoving => StateMachine.CurrentState is ActorStandState || StateMachine.CurrentState is ActorMoveState;
 
-        // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;
 
         // Level
@@ -812,14 +824,17 @@ namespace Remizione
         }
 
         // PerformCloseAttack
-        public void PerformCloseAttack()
+        public bool PerformCloseAttack()
         {
-            if (closeAttackMetaItem != null)
+            if (CanChangeState && closeAttackMetaItem != null)
             {
                 Stand();
                 closeAttackState.MetaItem = closeAttackMetaItem;
                 StateMachine.ChangeState(ActorStateNames.CloseAttack);
+                return true;
             }
+
+            return false;
         }
 
         // PickUp

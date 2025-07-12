@@ -44,7 +44,7 @@ namespace Remizione
         // CreateDynamicThing
         private GameThing CreateDynamicThing(string staticName)
         {
-            if (Session.CreateDynamicThing(staticName, $"{Name}-{staticName}*{proceduralThings.Count}") is not GameThing result)
+            if (Session.CreateDynamicThing(staticName, $"{staticName}*{Name}_{proceduralThings.Count}") is not GameThing result)
                 throw new InvalidOperationException($"Failed to create dynamic thing '{staticName}'.");
 
             return result;

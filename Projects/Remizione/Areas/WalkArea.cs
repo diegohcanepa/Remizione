@@ -78,7 +78,7 @@ namespace Remizione
                 if (Room.CulledThings[i] == requester)
                     continue;
 
-                if (Room.CulledThings[i] is IHoleArea holeArea && !holeArea.Polygon.IsEmpty)
+                if (Room.CulledThings[i] is IHoleArea holeArea && holeArea.IsActive && !holeArea.Polygon.IsEmpty)
                 {
                     if (holeArea.Polygon.BoundingRectangleF.Intersects(clipBox))
                         list.Add(holeArea);
@@ -236,7 +236,7 @@ namespace Remizione
             var start = deflatedPolygon.Clamp(requester.Position);
             destination = deflatedPolygon.Clamp(destination);
 
-            // Staight path
+            // Straight path
             if (InLineOfSight(start, destination))
                 return [destination];
 

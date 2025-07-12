@@ -42,6 +42,13 @@ namespace Remizione
 
         #endregion
 
+        #region IHoleArea explicit implementation
+        
+        // IsActive
+        bool IHoleArea.IsActive => true;
+
+        #endregion
+
         // ClampOutside
         public Vector2 ClampOutside(Vector2 position)
         {

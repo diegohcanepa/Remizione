@@ -16,6 +16,7 @@
 	<FX Name="BodyFallMedium" MaxInstances="8" Sounds="1..1" />
 	<FX Name="CycleHorn" />
 	<FX Name="DoorToilet" />
+	<FX Name="EdmundHurt" MaxInstances="4" Sounds="1..2" />
 	<FX Name="ElectricZapStrong" />
 	<FX Name="Error" MaxInstances="4" Sounds="1..2" />
 	<FX Name="Fart" />
@@ -30,9 +31,14 @@
 	<FX Name="Lightning" MaxInstances="4" />
 	<FX Name="MenuDiscardItem" MaxInstances="4" />
 	<FX Name="MenuSelect" MaxInstances="4" />
-	<FX Name="PickUpBag" MaxInstances="2" />
+	<FX Name="PickupBag" MaxInstances="2" />
+	<FX Name="PickupBottle" MaxInstances="2" />
+	<FX Name="PickupCoin" MaxInstances="2" />
+	<FX Name="PickupGeneric" MaxInstances="2" />
+	<FX Name="PickupKey" MaxInstances="2" />
 	<FX Name="Raven" />
 	<FX Name="ReaperShowUp" />
+	<FX Name="ShockZap" MaxInstances="6" Sounds="1..2" />
 	<FX Name="SinnerMaleDeathSetA" MaxInstances="8" Sounds="1..1" Volume=".5" />
 	<FX Name="SinnerMaleHurtSetA" MaxInstances="8" Sounds="1..8" Volume=".5" />
 	<FX Name="SmallWhooshA" MaxInstances="6" Sounds="1..4" />

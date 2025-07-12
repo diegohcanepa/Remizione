@@ -24,7 +24,7 @@ namespace Remizione.Scripting
                 Faith = Parser.ParseDiceExpressionArgument(this, FaithArg),
                 HP = Parser.ParseDiceExpressionArgument(this, HPArg),
                 Knockback = Parser.ParseVector2Argument(this, KnockbackArg),
-                Modifier = Parser.ParseEnumArgument(this, ModifierArg, Stat.Strength),
+                Modifier = Parser.ParseEnumArgument(this, ModifierArg, StatModifier.None),
                 PassiveEffectCooldown = Parser.ParseInt32Argument(this, PassiveEffectCooldownArg),
                 Range = Parser.ParseInt32Argument(this, RangeArg),
                 Sound = Parser.ParseSoundArgument(this, SoundArg),

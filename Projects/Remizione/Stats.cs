@@ -76,52 +76,36 @@ namespace Remizione
         // GetDefense
         public int GetDefense(int armorBonus = 0, int miscBonus = 0)
         {
-            return 10 + GetModifier(Stat.Dexterity) + armorBonus + miscBonus;
-        }
-
-        // GetFaithRecoveryInterval
-        public int GetFaithRecoveryInterval()
-        {
-            const int baseCooldownMs = 30000; // 15 segundos en milisegundos
-            int modifier = GetModifier(Stat.Devotion);
-
-            // Cada punto de modificador reduce el cooldown un 10%
-            float multiplier = 1f - (modifier * 0.1f);
-            multiplier = Math.Clamp(multiplier, 0.25f, 1f); // mínimo 25% del base
-
-            return (int)(baseCooldownMs * multiplier);
-        }
-
-        // GetMaxFaith
-        public int GetMaxFaith()
-        {
-            return actor.Level * (FaithGainPerLevel + GetModifier(Stat.Devotion));
+            return 10 + GetModifier(StatModifier.Dexterity) + armorBonus + miscBonus;
         }
 
         // GetMaxHP
         public int GetMaxHP()
         {
-            return actor.Level * (HPGainPerLevel + GetModifier(Stat.Fortitude));
+            return actor.Level * (HPGainPerLevel + GetModifier(StatModifier.Fortitude));
         }
 
         // GetModifier
-        public int GetModifier(Stat stat)
+        public int GetModifier(StatModifier statModifier)
         {
-            return (GetStatValue(stat) - 10) / 2;
+            if (statModifier == StatModifier.None)
+                return 0;
+            else
+                return (GetStatValue(statModifier) - 10) / 2;
         }
 
         // GetStatValue
-        public int GetStatValue(Stat stat)
+        public int GetStatValue(StatModifier statModifier)
         {
-            return stat switch
+            return statModifier switch
             {
-                Stat.Fortitude => Fortitude,
-                Stat.Devotion => Devotion,
-                Stat.Dexterity => Dexterity,
-                Stat.Charisma => Charisma,
-                Stat.Mind => Mind,
-                Stat.Strength => Strength,
-                _ => throw new System.NotImplementedException()
+                StatModifier.Fortitude => Fortitude,
+                StatModifier.Devotion => Devotion,
+                StatModifier.Dexterity => Dexterity,
+                StatModifier.Charisma => Charisma,
+                StatModifier.Mind => Mind,
+                StatModifier.Strength => Strength,
+                _ => throw new NotImplementedException()
             };
         }
 
@@ -129,30 +113,15 @@ namespace Remizione
         public int HPGainPerLevel { get; private set; } = 8;
 
         // PerformSkillCheck
-        public int PerformSkillCheck(Stat stat) => DiceExpression.Dice20.Roll() + GetStatValue(stat);
+        public int PerformSkillCheck(StatModifier statModifier) => DiceExpression.Dice20.Roll() + GetStatValue(statModifier);
 
         // RollAttack
         public int RollAttack(AttackRollStat stat, int bonus, out bool criticalHit)
         {
-            int modifier = stat == AttackRollStat.Dexterity ? GetModifier(Stat.Dexterity) : GetModifier(Stat.Strength);
+            int modifier = stat == AttackRollStat.Dexterity ? GetModifier(StatModifier.Dexterity) : GetModifier(StatModifier.Strength);
             var d20 = DiceExpression.Dice20.Roll();
             criticalHit = d20 == 20;
             return d20 + modifier + bonus;
-        }
-
-        // RollInitiative
-        public int RollInitiative()
-        {
-            return DiceExpression.Dice20.Roll() + GetModifier(Stat.Dexterity);
-        }
-
-        // RollInitiative
-        public bool RollInitiative(Actor target)
-        {
-            var targetInitiative = target.Stats.RollInitiative();
-            var thisInitiative = RollInitiative();
-
-            return thisInitiative >= targetInitiative;
         }
 
         // RollSavingThrow
@@ -160,10 +129,10 @@ namespace Remizione
         {
             return stat switch
             {
-                Stat.Mind => DiceExpression.Dice20.Roll() + GetModifier(Stat.Mind),
-                Stat.Fortitude => DiceExpression.Dice20.Roll() + GetModifier(Stat.Fortitude),
-                Stat.Devotion => DiceExpression.Dice20.Roll() + GetModifier(Stat.Devotion),
-                Stat.Charisma => DiceExpression.Dice20.Roll() + GetModifier(Stat.Charisma),
+                Stat.Mind => DiceExpression.Dice20.Roll() + GetModifier(StatModifier.Mind),
+                Stat.Fortitude => DiceExpression.Dice20.Roll() + GetModifier(StatModifier.Fortitude),
+                Stat.Devotion => DiceExpression.Dice20.Roll() + GetModifier(StatModifier.Devotion),
+                Stat.Charisma => DiceExpression.Dice20.Roll() + GetModifier(StatModifier.Charisma),
                 _ => DiceExpression.Dice20.Roll()
             };
         }

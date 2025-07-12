@@ -27,7 +27,7 @@ namespace Remizione
         private string? previousSelectedItemName;
         private int selectedIndex;
         private readonly ImageSprite slotImage;
-        private static readonly Vector2 slotPosition = new(Screen.Center.X, Screen.HUDArea.Bottom - 18);
+        private static readonly Vector2 slotPosition = new(Screen.Center.X, Screen.HUDArea.Bottom - 20);
         private const int spaceBetweenIcons = 15;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 150 };
         private const int visibleRange = 13;
@@ -72,7 +72,7 @@ namespace Remizione
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Top,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -1),
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1),
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
@@ -262,7 +262,7 @@ namespace Remizione
                 if (usedItem != null)
                 {
                     Owner.UseSelectedItem();
-                    if (!Owner.Inventory.Items.Contains(usedItem.Item))
+                    if (!Owner.Inventory.Contains(usedItem.Item))
                     { 
                         items.Remove(usedItem);
                         if (Owner.Inventory.SelectedItem is Item item)
@@ -274,9 +274,9 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
-            // Move left
             if (items.Count > 1)
             {
+                // Move left
                 if (InputBindings.SelectLeft.IsPressed(PlayerIndex.One) || stick.IsLeft(PlayerIndex.One))
                 {
                     Select(Math.Max(0, selectedIndex - 1));
@@ -289,6 +289,26 @@ namespace Remizione
                 if (InputBindings.SelectRight.IsPressed(PlayerIndex.One) || stick.IsRight(PlayerIndex.One))
                 {
                     Select(Math.Min(items.Count - 1, selectedIndex + 1));
+                    Owner.InventorySelectedItemName = items[selectedIndex].Item.Name;
+                    Sound.Play(SoundNames.UINavigation);
+                    return HandleInputResult.Handled;
+                }
+
+                // Move Down (Jump to first equipment)
+                if (InputBindings.SelectDown.IsPressed(PlayerIndex.One) || stick.IsDown(PlayerIndex.One))
+                {
+                    if (Owner.Inventory.SelectNext(MetaItemCategory.Equipment) is Item item)
+                        Select(item.Name);
+                    Owner.InventorySelectedItemName = items[selectedIndex].Item.Name;
+                    Sound.Play(SoundNames.UINavigation);
+                    return HandleInputResult.Handled;
+                }
+
+                // Move Up (Jump to first consumable)
+                if (InputBindings.SelectUp.IsPressed(PlayerIndex.One) || stick.IsUp(PlayerIndex.One))
+                {
+                    if (Owner.Inventory.SelectNext(MetaItemCategory.Consumable) is Item item)
+                        Select(item.Name);
                     Owner.InventorySelectedItemName = items[selectedIndex].Item.Name;
                     Sound.Play(SoundNames.UINavigation);
                     return HandleInputResult.Handled;
@@ -307,13 +327,20 @@ namespace Remizione
 
             // Load items
             items.Clear();
-            for (var i = 0; i < Owner.Inventory.Items.Count; i++)
+            for (var i = 0; i < Owner.Inventory.Count; i++)
             {
-                var obj = Owner.Inventory.Items[i];
-                if (obj.MetaItem.Category != MetaItemCategory.Misc)
+                var obj = Owner.Inventory[i];
+                if (obj.MetaItem.Category == MetaItemCategory.Equipment)
                     items.Add(new(obj));
             }
-            
+
+            for (var i = 0; i < Owner.Inventory.Count; i++)
+            {
+                var obj = Owner.Inventory[i];
+                if (obj.MetaItem.Category == MetaItemCategory.Consumable)
+                    items.Add(new(obj));
+            }
+
             // Preserve current selection
             previousSelectedItemName = Owner.Inventory.SelectedItem?.Name;
 

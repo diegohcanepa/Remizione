@@ -117,6 +117,9 @@ namespace Remizione
     // Stat
     public enum Stat { Strength, Dexterity, Fortitude, Devotion, Mind, Charisma }
 
+    // StatModifier
+    public enum StatModifier { None, Strength, Dexterity, Fortitude, Devotion, Mind, Charisma }
+
     // TerrainKind
     public enum TerrainKind { None }
 

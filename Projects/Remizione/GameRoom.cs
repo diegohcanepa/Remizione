@@ -198,8 +198,11 @@ namespace Remizione
 
                     if (thing.IsBlinkingDamage)
                     {
-                        RemizioneGame.Effects.ColorReduction.SetColor(50, 50, 50, 1);
-                        effect = RemizioneGame.Effects.ColorReduction;
+                        if (thing != Session.Player)
+                        {
+                            RemizioneGame.Effects.ColorReduction.SetColor(50, 50, 50, 1);
+                            effect = RemizioneGame.Effects.ColorReduction;
+                        }
                     }
                     else if (interactiveTarget == thing && thing.Highlight && InputManager.DefaultPlayer.LastInputMethod != InputMethod.Mouse)
                     {

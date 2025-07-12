@@ -42,8 +42,8 @@ namespace Remizione.UI
             fullHearts = actor.HP / 2;
             hasHalfHeart = actor.HP % 2 == 1;
             totalHearts = actor.MaxHP / 2;
-            if (hasHalfHeart)
-                totalHearts += 1;
+            //if (hasHalfHeart)
+              //  totalHearts += 1;
 
             for (int i = 0; i < totalHearts; i++)
             {

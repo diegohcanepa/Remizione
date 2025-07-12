@@ -41,6 +41,25 @@ namespace Remizione
         // AllowEmpty
         public bool AllowEmpty { get; init; }
 
+        // ApplyDamage
+        public bool ApplyDamage(GameThing attacker, GameThing target, HitType hitType)
+        {
+            if (BaseDamage == null)
+                return false;
+
+            int damageAmount = BaseDamage.Roll();
+            if (attacker is Actor actor)
+                damageAmount += actor.Stats.GetModifier(Modifier);
+
+            if (hitType == HitType.Critical)
+                damageAmount += Math.Max(BaseDamage.Roll(), BaseDamage.MaximumValue / 2);
+
+            target.TakeDamage(attacker, damageAmount + Bonus, hitType, Knockback);
+            target.ApplyDamage(attacker);
+
+            return true;
+        }
+
         // BaseDamage
         public DiceExpression? BaseDamage { get; init; }
 
@@ -87,7 +106,7 @@ namespace Remizione
         public int Maximum { get; init; }
 
         // Modifier
-        public Stat Modifier { get; init; }
+        public StatModifier Modifier { get; init; }
 
         // Name
         public string Name { get; }

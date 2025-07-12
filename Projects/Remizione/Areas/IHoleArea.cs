@@ -22,6 +22,9 @@ namespace Remizione
         // InLineOfSight
         bool InLineOfSight(Vector2 start, Vector2 end);
 
+        // IsActive
+        bool IsActive { get; }
+
         // Name
         string Name { get; }
 

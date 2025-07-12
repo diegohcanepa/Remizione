@@ -6,20 +6,18 @@ using System.Collections.ObjectModel;
 namespace Remizione
 {
     /// <summary>
-    /// ItemContainer
+    /// Inventory
     /// </summary>
-    public sealed class ItemContainer
+    public sealed class Inventory
     {
         private string? toString;
         private readonly List<Item> items = [];
 
         // Constructor
-        public ItemContainer(GameThing owner, string displayName)
+        public Inventory(GameThing owner, string displayName)
         {
             this.Owner = owner;
             this.DisplayName = displayName;
-
-            Items = new ReadOnlyCollection<Item>(items);
         }
 
         // Add
@@ -55,6 +53,12 @@ namespace Remizione
             return item;
         }
 
+        // Contains
+        public bool Contains(Item item) => items.Contains(item);
+
+        // Count
+        public int Count => items.Count;
+
         // DisplayName
         public string DisplayName { get; }
 
@@ -89,7 +93,7 @@ namespace Remizione
         {
             var result = new List<string>();
 
-            foreach (var item in Items)
+            foreach (var item in items)
             {
                 result.Add($"{item.Name}:{item.Count}:{item.Durability}");
             }
@@ -97,11 +101,14 @@ namespace Remizione
             return string.Join(";", result);
         }
 
+        // IndexOf
+        public int IndexOf(Item item) => items.IndexOf(item);
+
+        // Indexer
+        public Item this[int index] => items[index];
+
         // IsEmpty
         public bool IsEmpty => items.Count == 0;
-
-        // Items
-        public ReadOnlyCollection<Item> Items { get; }
 
         // Owner
         public GameThing Owner { get; }
@@ -192,7 +199,7 @@ namespace Remizione
         // SelectNext
         public Item? SelectNext(MetaItemCategory category)
         {
-            for (var i = 0; i < Items.Count; i++)
+            for (var i = 0; i < items.Count; i++)
             {
                 SelectNext();
                 if (SelectedItem?.MetaItem is MetaItem metaItem && metaItem.Category == category)
@@ -228,7 +235,7 @@ namespace Remizione
         // SelectPrevious
         public Item? SelectPrevious(MetaItemCategory category)
         {
-            for (var i = Items.Count - 1; i >= 0; i--)
+            for (var i = items.Count - 1; i >= 0; i--)
             {
                 SelectPrevious();
                 if (SelectedItem?.MetaItem is MetaItem metaItem && metaItem.Category == category)
@@ -258,8 +265,7 @@ namespace Remizione
         // ToString
         public override string ToString()
         {
-            if (toString == null)
-                toString = DisplayName;
+            toString ??= DisplayName;
             return toString;
         }
 

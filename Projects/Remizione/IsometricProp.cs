@@ -120,6 +120,12 @@ namespace Remizione
             return null;
         }
 
+        // HitTest
+        public override bool HitTest(Vector2 value)
+        {
+            return (this as IHoleArea).Contains(value);
+        }
+
         // RevealArea
         [ScriptProperty]
         public Rectangle RevealArea { get; set; }

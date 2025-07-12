@@ -24,7 +24,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public Item(ItemContainer container, MetaItem metaItem)
+        public Item(Inventory container, MetaItem metaItem)
         {
             this.Container = container;
             this.MetaItem = metaItem;
@@ -89,29 +89,15 @@ namespace Remizione
         // ApplyDamage
         public void ApplyDamage(GameThing target, HitType hitType)
         {
-            if (MetaItem.BaseDamage == null)
-                return;
-
-            var actor = Owner as Actor;
-
-            int damageAmount = MetaItem.BaseDamage.Roll();
-
-            if (actor != null)
-                damageAmount += actor.Stats.GetModifier(MetaItem.Modifier);
-
-            if (hitType == HitType.Critical)
-                damageAmount += Math.Max(MetaItem.BaseDamage.Roll(), MetaItem.BaseDamage.MaximumValue / 2);
-
-            if (MetaItem.Durability > 0 && Durability > 0)
-                Durability -= 1;
-
-            target.TakeDamage(Container.Owner, damageAmount + MetaItem.Bonus, hitType, Knockback);
-
-            target.ApplyDamage(Container.Owner);
+            if (MetaItem.ApplyDamage(Owner, target, hitType))
+            {
+                if (MetaItem.Durability > 0 && Durability > 0)
+                    Durability -= 1;
+            }
         }
 
         // Container
-        public ItemContainer Container { get; private set; }
+        public Inventory Container { get; private set; }
 
         // Count
         public int Count
@@ -194,7 +180,7 @@ namespace Remizione
         }
 
         // Index
-        public int Index => Container.Items.IndexOf(this);
+        public int Index => Container.IndexOf(this);
 
         // IsSelected
         public bool IsSelected => Container.SelectedItem == this;

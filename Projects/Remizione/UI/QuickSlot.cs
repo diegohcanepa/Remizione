@@ -35,7 +35,6 @@ namespace Remizione
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -2),
-                //Scale = ScaleInfo.UIElement.Medium
             };
 
             // Item image
@@ -60,7 +59,7 @@ namespace Remizione
             this.button = new(game, InputBindings.UseItem)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3, -4),
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3, -2),
             };
         }
 
@@ -101,7 +100,7 @@ namespace Remizione
         {
             if (actor != null)
             {
-                for (var i = 0; i < actor.Inventory.Items.Count; i++)
+                for (var i = 0; i < actor.Inventory.Count; i++)
                 {
                     actor.Inventory.SelectNext();
                     if (actor.Inventory.SelectedItem?.MetaItem is MetaItem metaItem && metaItem.Category == category)
@@ -117,7 +116,7 @@ namespace Remizione
         {
             if (actor != null)
             {
-                for (var i = actor.Inventory.Items.Count-1; i >= 0; i--)
+                for (var i = actor.Inventory.Count-1; i >= 0; i--)
                 {
                     actor.Inventory.SelectPrevious();
                     if (actor.Inventory.SelectedItem?.MetaItem is MetaItem metaItem && metaItem.Category == category)

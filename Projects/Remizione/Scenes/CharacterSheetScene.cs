@@ -135,7 +135,7 @@ namespace Remizione
 
             for (int i = 0; i < 6; i++)
             {
-                menu.AddOption(new StatData((Stat)i, Actor.Stats.GetStatValue((Stat)i)));
+                menu.AddOption(new StatData((Stat)i, Actor.Stats.GetStatValue((StatModifier)i)));
             }
 
             menu.SelectFirst();

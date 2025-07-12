@@ -12,6 +12,7 @@ namespace Remizione
             : base(session, name)
         {
             Scale = new(.75f);
+            ShockZap = true;
         }
 
         // OnUpdate

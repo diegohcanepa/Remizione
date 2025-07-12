@@ -47,7 +47,7 @@ namespace Remizione.Scripting
             }
 
             // Inventory is full
-            if (actor.Inventory.Items.Count == actor.InventorySize)
+            if (actor.Inventory.Count == actor.InventorySize)
             {
                 actor.Session.HUD.Message.Show(HUDMessageKind.InventoryFull, true);
                 return;

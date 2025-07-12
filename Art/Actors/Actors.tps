@@ -200,10 +200,6 @@
             <key type="filename">Edmund-assets/Consume02.png</key>
             <key type="filename">Edmund-assets/Consume03.png</key>
             <key type="filename">Edmund-assets/Consume04.png</key>
-            <key type="filename">Edmund-assets/Headbutt01.png</key>
-            <key type="filename">Edmund-assets/Headbutt02.png</key>
-            <key type="filename">Edmund-assets/Headbutt03.png</key>
-            <key type="filename">Edmund-assets/Headbutt04.png</key>
             <key type="filename">Edmund-assets/LookBehind01.png</key>
             <key type="filename">Edmund-assets/LookBehind02.png</key>
             <key type="filename">Edmund-assets/Move01.png</key>
@@ -220,6 +216,7 @@
             <key type="filename">Edmund-assets/RaiseArm01.png</key>
             <key type="filename">Edmund-assets/RaiseArm02.png</key>
             <key type="filename">Edmund-assets/RaiseArm03.png</key>
+            <key type="filename">Edmund-assets/ShockZap01.png</key>
             <key type="filename">Edmund-assets/Stand01.png</key>
             <key type="filename">Edmund-assets/Stand02.png</key>
             <key type="filename">Edmund-assets/Stand03.png</key>
@@ -228,8 +225,11 @@
             <key type="filename">Edmund-assets/StandHead02.png</key>
             <key type="filename">Edmund-assets/TalkHead01.png</key>
             <key type="filename">Edmund-assets/TalkHead02.png</key>
-            <key type="filename">Edmund-assets/ThrowObject01.png</key>
-            <key type="filename">Edmund-assets/ThrowObject02.png</key>
+            <key type="filename">Edmund-assets/ThrowItem01.png</key>
+            <key type="filename">Edmund-assets/ThrowItem02.png</key>
+            <key type="filename">Edmund-assets/ThrowItem03.png</key>
+            <key type="filename">Edmund-assets/ThrowItem04.png</key>
+            <key type="filename">Edmund-assets/ThrowItem05.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -241,6 +241,21 @@
                 <rect>7,6,14,13</rect>
                 <key>scale9Paddings</key>
                 <rect>7,6,14,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Edmund-assets/ShockZap02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,7,8</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,7,8</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

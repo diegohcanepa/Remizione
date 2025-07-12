@@ -62,19 +62,28 @@ namespace Remizione
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() && !InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
                 return HandleInputResult.Unhandled;
 
-            MouseCursor.Instance.AnimateClick();
-
-            if (Actor.InteractiveTarget != null)
+            if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
             {
-                Actor.ApproachAndInteract(Actor.InteractiveTarget, InputManager.DefaultPlayer.Mouse.IsRightButtonPressed());
-                return HandleInputResult.Handled;
+                MouseCursor.Instance.AnimateClick();
+
+                if (Actor.InteractiveTarget != null)
+                {
+                    Actor.ApproachAndInteract(Actor.InteractiveTarget);
+                    return HandleInputResult.Handled;
+                }
+                else
+                {
+                    var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
+                    Actor.MoveTo(destination);
+                    return HandleInputResult.Handled;
+                }
             }
             else
             {
-                var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
-                Actor.MoveTo(destination);
-                return HandleInputResult.Handled;
+                Actor.UseSelectedItem();
             }
+
+            return HandleInputResult.Unhandled;
         }
 
         #endregion

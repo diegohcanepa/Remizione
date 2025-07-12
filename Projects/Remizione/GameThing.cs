@@ -26,7 +26,7 @@ namespace Remizione
         private string displayName = string.Empty;
         private readonly Polygon holeInflatedPoly = new();
         private readonly Polygon holePoly = new();
-        private Polygon hotspotPoly = new();
+        private readonly Polygon hotspotPoly = new();
         private PlacementMode hotspotPlacement = PlacementMode.Relative;
         private int hp;
         private Vector2Tween? hurtShakeTween;
@@ -36,7 +36,7 @@ namespace Remizione
         private HitType hitType;
         private ImpactWord? impactWord;
         private ImpactWordKind impactWordKind;
-        private bool isHoleAreaDirty;
+        private bool isCollisionDirty;
         private bool isHotspotDirty = true;
         private Vector2 knockback;
         private readonly Vector2Tween knockbackTween = new();
@@ -61,7 +61,7 @@ namespace Remizione
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
             this.PlacementConditions = new(placementConditions);
-            this.Inventory = new ItemContainer(this, Localization.GetValue(InGameMenuOptionName.Inventory));
+            this.Inventory = new Inventory(this, Localization.GetValue(InGameMenuOptionName.Inventory));
         }
 
         #endregion
@@ -73,7 +73,7 @@ namespace Remizione
         {
             if (Collider != null)
             {
-                InvalidateHoleArea();
+                InvalidateCollisionPolygons();
                 if (holePoly.Contains(position))
                     position = holeInflatedPoly.GetClosestPointOnEdge(position);
             }
@@ -84,7 +84,7 @@ namespace Remizione
         // CollectPathNodes
         void IHoleArea.CollectPathNodes(IList<PathNode> targetList)
         {
-            InvalidateHoleArea();
+            InvalidateCollisionPolygons();
 
             if (Collider == null || Collider.Vertices.Count == 0)
                 return;
@@ -114,16 +114,19 @@ namespace Remizione
         // Contains
         bool IHoleArea.Contains(Vector2 point)
         {
-            InvalidateHoleArea();
+            InvalidateCollisionPolygons();
             return holePoly.Contains(point);
         }
 
         // InLineOfSight
         bool IHoleArea.InLineOfSight(Vector2 start, Vector2 end)
         {
-            InvalidateHoleArea();
+            InvalidateCollisionPolygons();
             return holePoly.InLineOfSight(start, end);
         }
+
+        // IsActive
+        bool IHoleArea.IsActive => IsWalkAreaHole;
 
         // Polygon
         ReadOnlyPolygon IHoleArea.Polygon => holePoly;
@@ -141,7 +144,7 @@ namespace Remizione
             for (int i = 0; i < Room.CulledThings.Count; i++)
             {
                 // Skip if it is the same thing
-                if (Room.CulledThings[i] == this || Room.CulledThings[i].IsMoving)
+                if (Room.CulledThings[i] == this)
                     continue;
 
                 if (Room.CulledThings[i] is GameThing thing)
@@ -153,7 +156,10 @@ namespace Remizione
                     if (thing.Collider != null)
                     {
                         if (thing is IHoleArea holeArea && holeArea.Contains(Position))
+                        {
                             Position = holeArea.ClampOutside(Position);
+                            OnCollision(thing);
+                        }
                     }
                 }
             }
@@ -202,20 +208,13 @@ namespace Remizione
             return result;
         }
 
-        // InvalidateDamageMeter
-        private void InvalidateDamageMeter()
-        {
-            if (damageMeter != null)
-                damageMeter.Value = HP * 100 / MaxHP / damageMeter.MaximumValue;
-        }
-
-        // InvalidateHoleArea
-        private void InvalidateHoleArea()
+        // InvalidateCollisionPolygons
+        private void InvalidateCollisionPolygons(bool enforce = false)
         {
             if (Collider == null)
                 return;
 
-            if (!isHoleAreaDirty)
+            if (!enforce && !isCollisionDirty)
                 return;
 
             int vertexCount = Collider.Vertices.Count;
@@ -226,7 +225,14 @@ namespace Remizione
             holePoly.SetVertices(vertices);
             holeInflatedPoly.SetVertices(vertices, .05f);
 
-            isHoleAreaDirty = false;
+            isCollisionDirty = false;
+        }
+
+        // InvalidateDamageMeter
+        private void InvalidateDamageMeter()
+        {
+            if (damageMeter != null)
+                damageMeter.Value = HP * 100 / MaxHP / damageMeter.MaximumValue;
         }
 
         // InvalidateWalkArea
@@ -238,15 +244,7 @@ namespace Remizione
                 walkArea = null;
 
             shouldClampToWalkablePosition = true;
-
-            MarkHoleAreaDirty();
-        }
-
-        // MarkHoleAreaDirty
-        private void MarkHoleAreaDirty()
-        {
-            if (IsWalkAreaHole)
-                isHoleAreaDirty = true;
+            isCollisionDirty = true;
         }
 
         // ResetApplyDamageValues
@@ -272,6 +270,11 @@ namespace Remizione
                 return BoundingBox;
             else
                 return Collider.BoundingRectangleF;
+        }
+
+        // OnCollision
+        protected virtual void OnCollision(GameThing thing)
+        {
         }
 
         // OnDamageReaction
@@ -337,8 +340,8 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            isHoleAreaDirty = true;
-            InvalidateHoleArea();
+            isCollisionDirty = true;
+            InvalidateCollisionPolygons();
             InvalidateWalkArea();
         }
 
@@ -368,7 +371,7 @@ namespace Remizione
                 shouldClampToWalkablePosition = true;
 
                 if (change != TransformChange.Altitude)
-                    MarkHoleAreaDirty();
+                    InvalidateCollisionPolygons(true);
             }
         }
 
@@ -849,6 +852,12 @@ namespace Remizione
         [ScriptProperty]
         public bool Highlight { get; set; } = true;
 
+        // HitTest
+        public virtual bool HitTest(Vector2 value)
+        {
+            return RuntimeHotspot.Contains(value);
+        }
+
         // Hotspot
         [ScriptProperty]
         public Polygon Hotspot { get; set; } = new();
@@ -908,7 +917,7 @@ namespace Remizione
         public Int32Range InstancesPerBlock { get; set; } = new Int32Range(1);
 
         // Inventory
-        public ItemContainer Inventory { get; }
+        public Inventory Inventory { get; }
 
         // InventorySize
         public int InventorySize => 8;
@@ -1062,6 +1071,10 @@ namespace Remizione
         // Session
         public new GameSession Session { get; }
 
+        // ShockZap 
+        [ScriptProperty]
+        public bool ShockZap { get; set; }
+
         // StateID
         public int StateID { get; set; }
 
@@ -1075,7 +1088,7 @@ namespace Remizione
             this.knockback = knockback;
             applyDamagePending = true;
             CumulativeDamage += amount;
-            impactWordKind = ImpactWordKind.Kapow;
+            impactWordKind = ImpactWordKind.None;
         }
 
         // ThrowableSpawnPosition

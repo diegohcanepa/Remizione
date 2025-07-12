@@ -86,6 +86,10 @@ namespace Remizione
 
                 if (Room.CulledThings[i] is GameThing target && !target.IgnoreThrowables && !target.IsDead)
                 {
+                    if (target.HitTest(Position))
+                        return target;
+
+                    /*
                     if (target.IsWalkAreaHole)
                     {
                         if (target is IHoleArea holeArea && holeArea.Contains(Position))
@@ -93,6 +97,7 @@ namespace Remizione
                     }
                     else if (target.RuntimeHotspot.Contains(Position))
                         return target;
+                    */
                 }
             }
 
