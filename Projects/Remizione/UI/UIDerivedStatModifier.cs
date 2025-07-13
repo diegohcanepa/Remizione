@@ -107,7 +107,7 @@ namespace Remizione
                     amountText.Text = sign + Math.Abs(amount).ToString(CultureInfo.InvariantCulture);
                     Invalidate();
                 }
-            }   
+            }
         }
 
         // IsBonus

@@ -116,7 +116,7 @@ namespace Remizione
         {
             if (actor != null)
             {
-                for (var i = actor.Inventory.Count-1; i >= 0; i--)
+                for (var i = actor.Inventory.Count - 1; i >= 0; i--)
                 {
                     actor.Inventory.SelectPrevious();
                     if (actor.Inventory.SelectedItem?.MetaItem is MetaItem metaItem && metaItem.Category == category)

@@ -27,7 +27,7 @@ namespace Remizione.UI
             {
                 hearts[i] = new(Game, Atlases.UI.HeartIcon) { Scale = ScaleInfo.UIElement.Small };
                 hearts[i].Position = pos;
-                pos.X += hearts[i].BoundingBox.Width;
+                pos.X += hearts[i].BoundingBox.Width + 1;
             }
         }
 
@@ -43,7 +43,7 @@ namespace Remizione.UI
             hasHalfHeart = actor.HP % 2 == 1;
             totalHearts = actor.MaxHP / 2;
             //if (hasHalfHeart)
-              //  totalHearts += 1;
+            //  totalHearts += 1;
 
             for (int i = 0; i < totalHearts; i++)
             {
@@ -52,7 +52,7 @@ namespace Remizione.UI
 
                 else if (i == fullHearts && hasHalfHeart)
                     hearts[i].Image = Atlases.UI.HeartHalfIcon;
-                
+
                 else
                     hearts[i].Image = Atlases.UI.HeartEmptyIcon;
             }

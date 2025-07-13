@@ -80,7 +80,7 @@ namespace Engendro.Input
                 else if (Keyboard.HasInput())
                 {
                     LastInputMethod = InputMethod.Keyboard;
-                    InputManager.AllowMouse = true;    
+                    InputManager.AllowMouse = true;
                 }
             }
 

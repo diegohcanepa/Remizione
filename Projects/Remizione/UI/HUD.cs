@@ -13,9 +13,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly UICycleMeter cycleMeter;
         private readonly UIHealthMeter healthMeter;
-        private readonly UIDerivedStats playerStats;
         private readonly UIPrompt prompt;
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
@@ -32,8 +30,6 @@ namespace Remizione
         {
             this.session = session;
 
-            this.playerStats = new(session.Game);
-            this.cycleMeter = new(session);
             this.healthMeter = new(session.Game);
 
             // Log
@@ -117,15 +113,11 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             QuickSlot.Update(gameTime);
-            playerStats.Update(gameTime);
             healthMeter.Update(gameTime);
             prompt.Update(gameTime);
 
             if (session.PurgatoryMode)
-            {
-                cycleMeter.Update(gameTime);
                 statusText.Update(gameTime);
-            }
 
             if (session.Player != null)
             {
@@ -157,7 +149,6 @@ namespace Remizione
         public void Reset()
         {
             healthMeter.Actor = session.Player;
-            playerStats.Actor = session.Player;
             QuickSlot.Actor = session.Player;
         }
 

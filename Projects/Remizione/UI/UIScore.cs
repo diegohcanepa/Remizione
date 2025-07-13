@@ -45,8 +45,8 @@ namespace Remizione.UI
         // Invalidate
         private void Invalidate()
         {
-            if (icon.PivotOrigin == RectanglePoint.RightBottom || 
-                icon.PivotOrigin == RectanglePoint.RightTop || 
+            if (icon.PivotOrigin == RectanglePoint.RightBottom ||
+                icon.PivotOrigin == RectanglePoint.RightTop ||
                 icon.PivotOrigin == RectanglePoint.Right)
             {
                 scoreText.PivotOrigin = RectanglePoint.Right;

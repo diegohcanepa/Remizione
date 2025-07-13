@@ -55,8 +55,8 @@ namespace Engendro.Input
             previousState = state;
             state = Mouse.GetState();
 
-            if (state.LeftButton == ButtonState.Pressed || 
-                state.RightButton == ButtonState.Pressed || 
+            if (state.LeftButton == ButtonState.Pressed ||
+                state.RightButton == ButtonState.Pressed ||
                 state.MiddleButton == ButtonState.Pressed ||
                 state.XButton1 == ButtonState.Pressed ||
                 state.XButton2 == ButtonState.Pressed)

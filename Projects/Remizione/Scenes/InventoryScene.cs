@@ -263,7 +263,7 @@ namespace Remizione
                 {
                     Owner.UseSelectedItem();
                     if (!Owner.Inventory.Contains(usedItem.Item))
-                    { 
+                    {
                         items.Remove(usedItem);
                         if (Owner.Inventory.SelectedItem is Item item)
                             Select(item.Name);
@@ -322,7 +322,7 @@ namespace Remizione
         protected override void OnLoadContent()
         {
             Owner.Stand();
-            
+
             base.OnLoadContent();
 
             // Load items
@@ -375,7 +375,7 @@ namespace Remizione
         {
             bottomGradient.Update(gameTime);
             stick.Update(gameTime);
-            
+
             var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             visualIndex += (selectedIndex - visualIndex) * MathF.Min(1f, animationSpeed * deltaTime);
 
@@ -436,8 +436,8 @@ namespace Remizione
 
             // Position
             public Vector2 Position
-            { 
-                get => image.Position; 
+            {
+                get => image.Position;
                 set => image.Position = value;
             }
 

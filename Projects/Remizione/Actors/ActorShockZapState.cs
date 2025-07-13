@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using EngendroAdventure;
 using Microsoft.Xna.Framework;
 
@@ -35,7 +34,7 @@ namespace Remizione
             base.Enter();
             cooldown = 300;
 
-            yTween.Start(TweenStyle.CubicOut, Owner.Y, Owner.Y-3, 150, 2);
+            yTween.Start(TweenStyle.CubicOut, Owner.Y, Owner.Y - 3, 150, 2);
             xTween.Start(TweenStyle.CubicOut, Owner.X, Owner.X + (Owner.Direction == FacingDirection.Right ? -15 : 15), 300);
 
             Owner.PlaySound(SoundNames.ShockZap);

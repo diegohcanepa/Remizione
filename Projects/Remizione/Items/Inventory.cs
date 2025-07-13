@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -143,7 +142,7 @@ namespace Remizione
 
             if (itemToRemove == null)
                 return false;
-            
+
             SelectNext();
             Remove(itemToRemove);
             return true;

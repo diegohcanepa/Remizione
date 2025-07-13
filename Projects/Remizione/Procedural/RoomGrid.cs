@@ -65,7 +65,7 @@ namespace Remizione
         {
             int x = col * CellSize;
             int y = row * CellSize;
-            
+
             return new(x, y);
         }
 

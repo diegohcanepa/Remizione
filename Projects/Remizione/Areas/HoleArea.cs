@@ -43,7 +43,7 @@ namespace Remizione
         #endregion
 
         #region IHoleArea explicit implementation
-        
+
         // IsActive
         bool IHoleArea.IsActive => true;
 

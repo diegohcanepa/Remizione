@@ -11,6 +11,7 @@ namespace Remizione
         private readonly ImageSprite image;
         private readonly FloatTween opacityTween = new();
         private readonly FloatTween rotationTween = new();
+        private readonly Vector2Tween scaleTween = new();
         private readonly GameSession session;
         private readonly FloatTween xTween = new();
         private readonly FloatTween yTween = new();
@@ -53,22 +54,25 @@ namespace Remizione
         // Show
         public void Show(Vector2 origin, bool half)
         {
-            var distance = new Vector2(Randomizer.Next(-8, 8), Randomizer.Next(-22, -10));
+            var distance = new Vector2(Randomizer.Next(-13, 13), Randomizer.Next(-22, -10));
             var duration = Randomizer.Next(1000, 3000);
-            var fadeDuration = Randomizer.Next(500, 1400);
 
             image.Image = half ? Atlases.UI.MiniHeartHalfIcon : Atlases.UI.MiniHeartIcon;
 
-            yTween.Start(TweenStyle.Linear, origin.Y, origin.Y + distance.Y, duration);
+            yTween.Start(TweenStyle.CubicOut, origin.Y, origin.Y + distance.Y, duration * 2);
 
-            if (distance.X != 0)
+            //if (distance.X != 0)
                 xTween.Start(TweenStyle.CubicOut, origin.X, origin.X + distance.X, duration);
 
-            opacityTween.StartDelay = duration - fadeDuration;
-            opacityTween.Start(TweenStyle.CubicIn, 1, 0, fadeDuration);
+            opacityTween.StartDelay = (int)(duration * .9f);
+            opacityTween.Start(TweenStyle.CubicIn, 1, 0, duration - opacityTween.StartDelay);
 
-            rotationTween.Start(TweenStyle.CubicOut, -4, 4, 100, -1);
+            var r = Randomizer.Next(6, 10);
+            rotationTween.Start(TweenStyle.Linear, -r, r, 100, -1);
 
+            scaleTween.Start(TweenStyle.Linear, Vector2.Zero, ScaleInfo.UIElement.Medium, Randomizer.Next(100, 300));
+
+            image.Tweens.ScaleTween = scaleTween;
             image.Tweens.XTween = xTween;
             image.Tweens.YTween = yTween;
             image.Tweens.OpacityTween = opacityTween;

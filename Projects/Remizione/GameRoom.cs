@@ -60,12 +60,12 @@ namespace Remizione
 
             // Player light
             playerLight ??= new Light(Game, "PlayerLight")
-                {
-                    LightKind = LightKind.Player,
-                    PivotOrigin = RectanglePoint.Middle,
-                    Position = Screen.Center,
-                    Scale = new Vector2(3)
-                };
+            {
+                LightKind = LightKind.Player,
+                PivotOrigin = RectanglePoint.Middle,
+                Position = Screen.Center,
+                Scale = new Vector2(3)
+            };
             playerLight.TurnOff(true);
         }
 
@@ -180,18 +180,6 @@ namespace Remizione
             Game.SpriteBatch.End();
         }
 
-        // DrawThingUIElements
-        private void DrawThingUIElements(GameTime gameTime)
-        {
-            Game.SpriteBatch.Begin(Session.Camera);
-            for (int i = 0; i < CulledThings.Count; i++)
-            {
-                if (CulledThings[i] is GameThing thing)
-                    thing.DrawDamagerMeter(gameTime);
-            }
-            Game.SpriteBatch.End();
-        }
-
         // DrawThings
         private void DrawThings(GameTime gameTime, RenderLayer renderLayer, GameThing? interactiveTarget)
         {
@@ -276,7 +264,7 @@ namespace Remizione
 
             if (Session.Player != null)
             {
-                playerLight.Position = Session.Player.GetAbsolutePoint(15,15);
+                playerLight.Position = Session.Player.GetAbsolutePoint(15, 15);
                 playerLight.Draw(gameTime);
             }
 
@@ -375,9 +363,6 @@ namespace Remizione
 
             // Foreround (layer)
             DrawThings(gameTime, RenderLayer.ForegroundNoLight, interactiveTarget);
-
-            // DrawThingUIElements
-            DrawThingUIElements(gameTime);
 
             // Draw hearts
             DrawFloatingHearts(gameTime);

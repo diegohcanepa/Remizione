@@ -21,8 +21,6 @@ namespace Remizione
 
         private bool applyDamagePending;
         private readonly Blinker<bool> blinker = new(false, true);
-        private Meter? damageMeter;
-        private int damageMeterCooldown;
         private string displayName = string.Empty;
         private readonly Polygon holeInflatedPoly = new();
         private readonly Polygon holePoly = new();
@@ -167,8 +165,6 @@ namespace Remizione
         // Die
         private void Die()
         {
-            damageMeterCooldown = 0;
-
             if (DeathSound != null)
                 PlaySound(DeathSound);
 
@@ -225,13 +221,6 @@ namespace Remizione
             holeInflatedPoly.SetVertices(vertices, .05f);
 
             isCollisionDirty = false;
-        }
-
-        // InvalidateDamageMeter
-        private void InvalidateDamageMeter()
-        {
-            if (damageMeter != null)
-                damageMeter.Value = HP * 100 / MaxHP / damageMeter.MaximumValue;
         }
 
         // InvalidateWalkArea
@@ -348,7 +337,7 @@ namespace Remizione
         protected override void OnParentChanged(Entity? previousParent)
         {
             //if (!Session.IsInitializing && WorldBlockOrigin != null)
-                StateID = -1;
+            StateID = -1;
         }
 
         // OnRead
@@ -403,12 +392,6 @@ namespace Remizione
                 Position = knockbackTween.CurrentValue;
                 if (!knockbackTween.IsRunning && IsDead)
                     Die();
-            }
-
-            if (damageMeterCooldown > 0)
-            {
-                damageMeterCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                damageMeter?.Update(gameTime);
             }
 
             base.OnUpdate(gameTime);
@@ -534,22 +517,6 @@ namespace Remizione
                 CumulativeDamage = HP;
 
             HP -= (int)CumulativeDamage;
-
-            /*
-            var damageTextColor = hitType == HitType.Critical ? ColorPalette.Text.TerraLight : ColorPalette.Text.Default;
-            var damageText = $"{(int)CumulativeDamage}";
-            if (hitType == HitType.Critical)
-                damageText += " " + TextRepository.GetValue("HitType.Critical");
-
-            Session.ObjectPools.FloatingTexts.Get()?.ShowAsDamage(GetFloatingTextPosition(knockback), damageText, damageTextColor);
-
-            damageMeterCooldown = 1500;
-            if (damageMeter == null)
-            {
-                damageMeter = new(Game, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore) { MaximumValue = 10 };
-                InvalidateDamageMeter();
-            }
-            */
 
             if (knockback == Vector2.Zero && HP <= 0)
             {
@@ -688,16 +655,6 @@ namespace Remizione
         // DistributionStrategy
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public PlacementDistributionStrategy DistributionStrategy { get; set; }
-
-        // DrawDamagerMeter
-        public void DrawDamagerMeter(GameTime gameTime)
-        {
-            if (damageMeterCooldown > 0 && damageMeter != null)
-            {
-                damageMeter.Position = GetOverheadPosition(-5, -3);
-                damageMeter.Draw(gameTime);
-            }
-        }
 
         // DrawImpactWord
         public void DrawImpactWord(GameTime gameTime) => impactWord?.Draw(gameTime);
@@ -889,7 +846,6 @@ namespace Remizione
                 if (value != hp)
                 {
                     hp = Math.Min(value, MaxHP);
-                    InvalidateDamageMeter();
                     OnHPChanged();
                 }
             }

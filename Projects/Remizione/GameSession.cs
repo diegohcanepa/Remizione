@@ -27,7 +27,6 @@ namespace Remizione
         private readonly EchoScene echoScene;
         private bool inGameMenuLocked;
         private readonly InGameMenuScene inGameMenuScene;
-        private readonly LootScene lootScene;
         private Actor? player;
         private Vector2? playerPosition;
         private int rainRemainingTime;
@@ -73,7 +72,6 @@ namespace Remizione
             this.inGameMenuScene = new(this);
             this.characterSheetScene = new(Game);
             this.echoScene = new(Game);
-            this.lootScene = new(this);
 
             LocalizationSource = LocalizationSource.Script;
         }
@@ -547,17 +545,6 @@ namespace Remizione
             inGameMenuLocked = true;
             HUD.Log.Hide();
             Game.SceneManager.Push(inGameMenuScene);
-        }
-
-        // ShowLootScene
-        [ScriptMethod]
-        public void ShowLootScene()
-        {
-            if (Player?.InteractiveTarget == null)
-                return;
-
-            lootScene.Target = Player.InteractiveTarget;
-            Game.SceneManager.Push(lootScene);
         }
 
         // WorldVersion

@@ -437,60 +437,6 @@
 /processorParam:Quality=Best
 /build:Audio/FX/ShockZap2.wav;Audio/FX/ShockZap2
 
-#begin Audio/FX/SinnerMaleDeathSetA1.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/SinnerMaleDeathSetA1.wav
-
-#begin Audio/FX/SinnerMaleHurtSetA1.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/SinnerMaleHurtSetA1.wav
-
-#begin Audio/FX/SinnerMaleHurtSetA2.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/SinnerMaleHurtSetA2.wav
-
-#begin Audio/FX/SinnerMaleHurtSetA3.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/SinnerMaleHurtSetA3.wav
-
-#begin Audio/FX/SinnerMaleHurtSetA4.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/SinnerMaleHurtSetA4.wav
-
-#begin Audio/FX/SinnerMaleHurtSetA5.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/SinnerMaleHurtSetA5.wav
-
-#begin Audio/FX/SinnerMaleHurtSetA6.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/SinnerMaleHurtSetA6.wav
-
-#begin Audio/FX/SinnerMaleHurtSetA7.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/SinnerMaleHurtSetA7.wav
-
-#begin Audio/FX/SinnerMaleHurtSetA8.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/SinnerMaleHurtSetA8.wav
-
 #begin Audio/FX/SmallWhooshA1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
