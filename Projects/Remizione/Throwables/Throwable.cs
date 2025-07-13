@@ -131,7 +131,7 @@ namespace Remizione
             // Apply damage
             if (target != null && Item != null)
             {
-                Item.ApplyDamage(target, HitType.Default);
+                Item.ApplyDamage(target);
                 if (ImpactSound != null)
                     PlaySound(ImpactSound);
             }

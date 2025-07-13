@@ -23,7 +23,6 @@ namespace Remizione
         private readonly ActorCloseAttackState closeAttackState;
         private readonly CombatStateMachine combatStateMachine;
         private readonly ActorConsumeState consumeState;
-        private FloatingText? floatingMessage;
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
         private readonly FloatTween headTween = new();
@@ -200,13 +199,15 @@ namespace Remizione
         // PerformShockZap
         private void PerformShockZap(GameThing attacker)
         {
-            if (session.IsAwaiting)
+            if (session.IsAwaiting || !CanChangeState)
                 return;
 
             Stand();
 
+            InputManager.DefaultPlayer.GamePad.Vibrate(200, 1, 1);
+
             if (MetaItem.Find("ShockZap") is MetaItem metaItem)
-                metaItem.ApplyDamage(attacker, this, HitType.Default);
+                metaItem.ApplyDamage(attacker, this);
 
             StateMachine.ChangeState(shockZapState.Name);
         }
@@ -254,21 +255,6 @@ namespace Remizione
                     Sprite.FlipLeft();
                 else
                     Sprite.FlipRight();
-            }
-        }
-
-        // UpdateFloatingMessage
-        private void UpdateFloatingMessage(GameTime gameTime)
-        {
-            if (floatingMessage != null)
-            {
-                if (floatingMessage.IsVisible)
-                    floatingMessage.Update(gameTime);
-                else
-                {
-                    session.ObjectPools.FloatingTexts.Return(floatingMessage);
-                    floatingMessage = null;
-                }
             }
         }
 
@@ -359,8 +345,22 @@ namespace Remizione
         }
 
         // OnHurt
-        protected override void OnHurt(GameThing attacker)
+        protected override void OnHurt(GameThing attacker, int damage, Vector2 knockback)
         {
+            if (IsPlayer)
+            {
+                var fullHearts = damage / 2;
+                var hasHalfHeart = damage % 2 == 1;
+
+                for (var i = 0; i < fullHearts; i++)
+                {
+                    Session.ObjectPools.FloatingHearts.Get()?.Show(GetFloatingTextPosition(knockback), false);
+                }
+
+                if (hasHalfHeart)
+                    Session.ObjectPools.FloatingHearts.Get()?.Show(GetFloatingTextPosition(knockback), true);
+            }
+
             IsAlert = true;
             StateMachine.ChangeState(ActorStateNames.Hurt);
         }
@@ -478,7 +478,6 @@ namespace Remizione
 
             combatStateMachine.Update(gameTime);
 
-            UpdateFloatingMessage(gameTime);
             StateMachine.Update(gameTime);
 
             base.OnUpdate(gameTime);
@@ -893,13 +892,6 @@ namespace Remizione
         {
             get => shadowSpot.Size;
             set => shadowSpot.Size = value;
-        }
-
-        // ShowMessage
-        public void ShowMessage(Message message, int duration = 1000)
-        {
-            floatingMessage ??= session.ObjectPools.FloatingTexts.Get();
-            floatingMessage.Show(GetOverheadPosition(), Localization.GetValue(message), ColorPalette.Text.TerraLight, duration);
         }
 
         // SpeechBubbleSound

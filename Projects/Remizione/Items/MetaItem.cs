@@ -42,7 +42,7 @@ namespace Remizione
         public bool AllowEmpty { get; init; }
 
         // ApplyDamage
-        public bool ApplyDamage(GameThing attacker, GameThing target, HitType hitType)
+        public bool ApplyDamage(GameThing attacker, GameThing target)
         {
             if (BaseDamage == null)
                 return false;
@@ -51,10 +51,7 @@ namespace Remizione
             if (attacker is Actor actor)
                 damageAmount += actor.Stats.GetModifier(Modifier);
 
-            if (hitType == HitType.Critical)
-                damageAmount += Math.Max(BaseDamage.Roll(), BaseDamage.MaximumValue / 2);
-
-            target.TakeDamage(attacker, damageAmount + Bonus, hitType, Knockback);
+            target.TakeDamage(attacker, damageAmount + Bonus, Knockback);
             target.ApplyDamage(attacker);
 
             return true;

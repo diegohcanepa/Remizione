@@ -87,9 +87,9 @@ namespace Remizione
         #endregion
 
         // ApplyDamage
-        public void ApplyDamage(GameThing target, HitType hitType)
+        public void ApplyDamage(GameThing target)
         {
-            if (MetaItem.ApplyDamage(Owner, target, hitType))
+            if (MetaItem.ApplyDamage(Owner, target))
             {
                 if (MetaItem.Durability > 0 && Durability > 0)
                     Durability -= 1;

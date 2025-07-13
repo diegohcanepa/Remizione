@@ -279,6 +279,8 @@
                 <false/>
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
+            <key type="filename">UIIcons-assets/MiniHeartHalfIcon.png</key>
+            <key type="filename">UIIcons-assets/MiniHeartIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

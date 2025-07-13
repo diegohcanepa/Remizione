@@ -33,7 +33,6 @@ namespace Remizione
         private FloatTween? hurtTween;
         private float floatingForce;
         private FloatTween? floatingTween;
-        private HitType hitType;
         private ImpactWord? impactWord;
         private ImpactWordKind impactWordKind;
         private bool isCollisionDirty;
@@ -332,7 +331,7 @@ namespace Remizione
         }
 
         // OnHurt
-        protected virtual void OnHurt(GameThing attacker)
+        protected virtual void OnHurt(GameThing attacker, int damage, Vector2 knockback)
         {
         }
 
@@ -531,6 +530,9 @@ namespace Remizione
             if (CumulativeDamage > 0)
                 blinker.Start(20, 4);
 
+            if (CumulativeDamage > HP)
+                CumulativeDamage = HP;
+
             HP -= (int)CumulativeDamage;
 
             /*
@@ -568,7 +570,7 @@ namespace Remizione
                 hurtTween ??= new();
                 hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
 
-                OnHurt(attacker);
+                OnHurt(attacker, (int)CumulativeDamage, knockback);
             }
 
             ResetApplyDamageValues();
@@ -1079,12 +1081,11 @@ namespace Remizione
         public int StateID { get; set; }
 
         // TakeDamage
-        public void TakeDamage(GameThing attacker, int amount, HitType hitType, Vector2 knockback)
+        public void TakeDamage(GameThing attacker, int amount, Vector2 knockback)
         {
             if (IsDead)
                 return;
 
-            this.hitType = hitType;
             this.knockback = knockback;
             applyDamagePending = true;
             CumulativeDamage += amount;

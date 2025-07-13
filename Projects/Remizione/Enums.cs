@@ -32,9 +32,6 @@ namespace Remizione
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
 
-    // HitType
-    public enum HitType { Default, Critical }
-
     // HUDMessageKind
     public enum HUDMessageKind { CannotPlaceItem, EnoughOfThat, InventoryFull, NoInventoryBag, NotEnoughFaith }
 

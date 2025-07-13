@@ -29,6 +29,8 @@ namespace Remizione
             ItemMenuContainer = this[nameof(ItemMenuContainer)];
             ItemMenuContainerSelection = this[nameof(ItemMenuContainerSelection)];
             MessageContainer = this[nameof(MessageContainer)];
+            MiniHeartHalfIcon = this[nameof(MiniHeartHalfIcon)];
+            MiniHeartIcon = this[nameof(MiniHeartIcon)];
             MouseCursorArrow = this[nameof(MouseCursorArrow)];
             MouseCursorCross = this[nameof(MouseCursorCross)];
             MouseCursorCrossOn = this[nameof(MouseCursorCrossOn)];
@@ -100,6 +102,12 @@ namespace Remizione
 
         // MessageContainer
         public AtlasImage MessageContainer { get; }
+
+        // MiniHeartHalfIcon
+        public AtlasImage MiniHeartHalfIcon { get; }
+
+        // MiniHeartIcon
+        public AtlasImage MiniHeartIcon { get; }
 
         // MouseCursorArrow
         public AtlasImage MouseCursorArrow { get; }

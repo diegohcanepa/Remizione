@@ -116,11 +116,10 @@ namespace Remizione
         public int PerformSkillCheck(StatModifier statModifier) => DiceExpression.Dice20.Roll() + GetStatValue(statModifier);
 
         // RollAttack
-        public int RollAttack(AttackRollStat stat, int bonus, out bool criticalHit)
+        public int RollAttack(AttackRollStat stat, int bonus)
         {
             int modifier = stat == AttackRollStat.Dexterity ? GetModifier(StatModifier.Dexterity) : GetModifier(StatModifier.Strength);
             var d20 = DiceExpression.Dice20.Roll();
-            criticalHit = d20 == 20;
             return d20 + modifier + bonus;
         }
 

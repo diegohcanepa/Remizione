@@ -134,6 +134,17 @@ namespace Remizione
             }
         }
 
+        // DrawFloatingHearts
+        private void DrawFloatingHearts(GameTime gameTime)
+        {
+            Game.SpriteBatch.Begin(Session.Camera);
+            for (var i = Session.ObjectPools.FloatingHearts.InUse.Count - 1; i >= 0; i--)
+            {
+                Session.ObjectPools.FloatingHearts.InUse[i].Draw(gameTime);
+            }
+            Game.SpriteBatch.End();
+        }
+
         // DrawFloatingTexts
         private void DrawFloatingTexts(GameTime gameTime)
         {
@@ -368,6 +379,9 @@ namespace Remizione
             // DrawThingUIElements
             DrawThingUIElements(gameTime);
 
+            // Draw hearts
+            DrawFloatingHearts(gameTime);
+
             // Draw texts (hit numbers, etc)
             DrawFloatingTexts(gameTime);
 
@@ -471,6 +485,12 @@ namespace Remizione
             // Firefly particles
             if (AllowFireflyParticles)
                 fireflyEmitter?.Update(gameTime);
+
+            // Floating hearts
+            for (var i = 0; i < Session.ObjectPools.FloatingHearts.InUse.Count; i++)
+            {
+                Session.ObjectPools.FloatingHearts.InUse[i].Update(gameTime);
+            }
 
             // Floating texts
             for (var i = 0; i < Session.ObjectPools.FloatingTexts.InUse.Count; i++)

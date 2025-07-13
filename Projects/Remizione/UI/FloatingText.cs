@@ -78,9 +78,6 @@ namespace Remizione
         // IsVisible
         public bool IsVisible => xTween.IsRunning || yTween.IsRunning || opacityTween.IsRunning;
 
-        // MessageId
-        public int MessageId { get; set; }
-
         // Show
         public void Show(Vector2 origin, string value, Color color, int duration = 1000)
         {
