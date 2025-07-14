@@ -337,6 +337,9 @@ namespace Remizione
             }
         }
 
+        // Sound
+        public Sound? Sound { get; set; }
+
         // Tag
         public object? Tag { get; set; }
 
@@ -360,7 +363,12 @@ namespace Remizione
             }
 
             if (result)
-                Sound.Play(SoundNames.MenuSelect);
+            {
+                if (Sound != null)
+                    Sound.Play();
+                else
+                    Sound.Play(SoundNames.UISelectA);
+            }
 
             return result;
         }

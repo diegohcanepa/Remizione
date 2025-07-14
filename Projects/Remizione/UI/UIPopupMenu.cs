@@ -281,7 +281,7 @@ namespace Remizione
                 if (value != selectedOption)
                 {
                     if (selectedOption != null && value != null)
-                        Sound.Play(SoundNames.MenuSelect);
+                        Sound.Play(SoundNames.UISelectA);
 
                     selectedOption = value;
                     OnSelectionChanged?.Invoke(selectedOption);

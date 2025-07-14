@@ -105,7 +105,7 @@ namespace Remizione
                 //actor.GetItemContainer(category).Remove(item.Name);
                 menu.RemoveSelectedOption();
                 InvalidateTitle();
-                Sound.Play(SoundNames.MenuDiscardItem);
+                //Sound.Play(SoundNames.MenuDiscardItem);
             }
         }
 

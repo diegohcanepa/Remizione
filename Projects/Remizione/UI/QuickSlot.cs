@@ -206,7 +206,7 @@ namespace Remizione
             if (InputBindings.QuickSlotNextEquipment.IsPressed(PlayerIndex.One))
             {
                 if (SelectNext(MetaItemCategory.Equipment))
-                    Sound.Play(SoundNames.UIQuickSlot);
+                    Sound.Play(SoundNames.UIHover);
 
                 return HandleInputResult.Handled;
             }
@@ -214,7 +214,7 @@ namespace Remizione
             else if (InputBindings.QuickSlotPreviousEquipment.IsPressed(PlayerIndex.One))
             {
                 if (SelectPrevious(MetaItemCategory.Equipment))
-                    Sound.Play(SoundNames.UIQuickSlot);
+                    Sound.Play(SoundNames.UIHover);
 
                 return HandleInputResult.Handled;
             }
@@ -222,7 +222,7 @@ namespace Remizione
             else if (InputBindings.QuickSlotNextConsumable.IsPressed(PlayerIndex.One))
             {
                 if (SelectNext(MetaItemCategory.Consumable))
-                    Sound.Play(SoundNames.UIQuickSlot);
+                    Sound.Play(SoundNames.UIHover);
 
                 return HandleInputResult.Handled;
             }
@@ -230,7 +230,7 @@ namespace Remizione
             else if (InputBindings.QuickSlotPreviousConsumable.IsPressed(PlayerIndex.One))
             {
                 if (SelectPrevious(MetaItemCategory.Consumable))
-                    Sound.Play(SoundNames.UIQuickSlot);
+                    Sound.Play(SoundNames.UIHover);
 
                 return HandleInputResult.Handled;
             }

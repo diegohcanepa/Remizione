@@ -185,12 +185,6 @@
 /processorParam:Quality=Best
 /build:Audio/FX/BodyFallMedium1.wav
 
-#begin Audio/FX/CycleHorn.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/CycleHorn.wav;Audio/FX/CycleHorn
-
 #begin Audio/FX/DoorToilet.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -335,30 +329,6 @@
 /processorParam:Quality=Best
 /build:Audio/FX/GhostCarStop.wav;Audio/FX/GhostCarStop
 
-#begin Audio/FX/Headbutt1.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/Headbutt1.wav;Audio/FX/Headbutt1
-
-#begin Audio/FX/Headbutt2.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/Headbutt2.wav;Audio/FX/Headbutt2
-
-#begin Audio/FX/Headbutt3.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/Headbutt3.wav;Audio/FX/Headbutt3
-
-#begin Audio/FX/Headbutt4.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/Headbutt4.wav;Audio/FX/Headbutt4
-
 #begin Audio/FX/ImpactA.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -370,18 +340,6 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/Lightning.wav;Audio/FX/Lightning
-
-#begin Audio/FX/MenuDiscardItem.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/MenuDiscardItem.wav
-
-#begin Audio/FX/MenuSelect.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/MenuSelect.wav
 
 #begin Audio/FX/PickupBag.wav
 /importer:WavImporter
@@ -418,12 +376,6 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/Raven.wav;Audio/FX/Raven
-
-#begin Audio/FX/ReaperShowUp.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/ReaperShowUp.wav;Audio/FX/ReaperShowUp
 
 #begin Audio/FX/ShockZap1.wav
 /importer:WavImporter
@@ -515,41 +467,35 @@
 /processorParam:Quality=Best
 /build:Audio/FX/TowerDoorClose.wav;Audio/FX/TowerDoorClose
 
-#begin Audio/FX/UINavigation1.wav
+#begin Audio/FX/UIHover.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/FX/UINavigation1.wav
+/build:Audio/FX/UIHover.wav;Audio/FX/UIHover
 
-#begin Audio/FX/UINavigation2.wav
+#begin Audio/FX/UIInventoryOpen.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/FX/UINavigation2.wav
+/build:Audio/FX/UIInventoryOpen.wav;Audio/FX/UIInventoryOpen
 
-#begin Audio/FX/UINavigation3.wav
+#begin Audio/FX/UISelectA.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/FX/UINavigation3.wav
+/build:Audio/FX/UISelectA.wav;Audio/FX/UISelectA
 
-#begin Audio/FX/UINavigation4.wav
+#begin Audio/FX/UISelectB.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/FX/UINavigation4.wav
+/build:Audio/FX/UISelectB.wav;Audio/FX/UISelectB
 
-#begin Audio/FX/UIQuickSlot.wav
+#begin Audio/FX/WhooshA.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/FX/UIQuickSlot.wav
-
-#begin Audio/FX/UISelect.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/UISelect.wav
+/build:Audio/FX/WhooshA.wav;Audio/FX/WhooshA
 
 #begin Audio/FX/ZapLoop.wav
 /importer:WavImporter

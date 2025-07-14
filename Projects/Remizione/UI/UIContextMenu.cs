@@ -108,7 +108,7 @@ namespace Remizione
                     if (HoveredOption.Index != SelectedIndex)
                     {
                         SelectedIndex = HoveredOption.Index;
-                        Sound.Play(SoundNames.UINavigation);
+                        Sound.Play(SoundNames.UIHover);
                         HoveredOption.Shake();
                     }
                 }
@@ -213,7 +213,7 @@ namespace Remizione
             else
                 SelectedIndex++;
 
-            Sound.Play(SoundNames.UINavigation);
+            Sound.Play(SoundNames.UIHover);
 
             SelectedOption?.Shake();
 
@@ -275,7 +275,7 @@ namespace Remizione
             else
                 SelectedIndex--;
 
-            Sound.Play(SoundNames.UINavigation);
+            Sound.Play(SoundNames.UIHover);
 
             SelectedOption?.Shake();
 

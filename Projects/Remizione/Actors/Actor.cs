@@ -587,7 +587,7 @@ namespace Remizione
         {
             get
             {
-                if (IsDead)
+                if (IsDead || session.IsAwaiting)
                     return false;
 
                 return StateMachine.CurrentState is ActorStandState ||
@@ -948,6 +948,10 @@ namespace Remizione
                     PerformConsumeAction();
             }
         }
+
+        // WhooshSound
+        [ScriptProperty]
+        public Sound? WhooshSound { get; set; }
 
         /// <summary>
         /// ActorStateMachine

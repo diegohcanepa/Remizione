@@ -85,7 +85,7 @@ namespace Remizione
                 if (menu.GetOptionAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) != null)
                 {
                     MouseCursor.Instance.AnimateClick();
-                    Sound.Play(SoundNames.UISelect);
+                    Sound.Play(SoundNames.UISelectA);
                     runSelectedOptionCooldown = 500;
                     return true;
                 }
@@ -196,7 +196,7 @@ namespace Remizione
             // Select
             else if (menu.SelectInputBinding != null && menu.SelectInputBinding.IsPressed(PlayerIndex.One))
             {
-                Sound.Play(SoundNames.UISelect);
+                Sound.Play(SoundNames.UISelectA);
                 runSelectedOptionCooldown = 500;
                 return HandleInputResult.Handled;
             }

@@ -50,7 +50,12 @@ namespace Remizione
                 if (frame.IsEvent)
                 {
                     if (Owner.Session.ObjectPools.GetThrowable(Item.Name) is Throwable throwable)
+                    {
+                        if (Owner.WhooshSound != null)
+                            Owner.PlaySound(Owner.WhooshSound);
+
                         throwable.Launch(Item);
+                    }
 
                     itemUsed = true;
                 }

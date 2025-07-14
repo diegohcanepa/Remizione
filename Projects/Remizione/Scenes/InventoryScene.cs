@@ -95,6 +95,7 @@ namespace Remizione
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -22),
+                Sound = Sound.Find(SoundNames.UISelectB)
             };
 
             // Use button
@@ -162,7 +163,7 @@ namespace Remizione
             {
                 Select(items.IndexOf(item));
                 MouseCursor.Instance.AnimateClick();
-                Sound.Play(SoundNames.UINavigation);
+                Sound.Play(SoundNames.UIHover);
             }
 
             return false;
@@ -277,21 +278,27 @@ namespace Remizione
             if (items.Count > 1)
             {
                 // Move left
-                if (InputBindings.SelectLeft.IsPressed(PlayerIndex.One) || stick.IsLeft(PlayerIndex.One))
+                if (selectedIndex > 0)
                 {
-                    Select(Math.Max(0, selectedIndex - 1));
-                    Owner.InventorySelectedItemName = items[selectedIndex].Item.Name;
-                    Sound.Play(SoundNames.UINavigation);
-                    return HandleInputResult.Handled;
+                    if (InputBindings.SelectLeft.IsPressed(PlayerIndex.One) || stick.IsLeft(PlayerIndex.One))
+                    {
+                        Select(Math.Max(0, selectedIndex - 1));
+                        Owner.InventorySelectedItemName = items[selectedIndex].Item.Name;
+                        Sound.Play(SoundNames.UIHover);
+                        return HandleInputResult.Handled;
+                    }
                 }
 
                 // Move right
-                if (InputBindings.SelectRight.IsPressed(PlayerIndex.One) || stick.IsRight(PlayerIndex.One))
+                if (selectedIndex < items.Count - 1)
                 {
-                    Select(Math.Min(items.Count - 1, selectedIndex + 1));
-                    Owner.InventorySelectedItemName = items[selectedIndex].Item.Name;
-                    Sound.Play(SoundNames.UINavigation);
-                    return HandleInputResult.Handled;
+                    if (InputBindings.SelectRight.IsPressed(PlayerIndex.One) || stick.IsRight(PlayerIndex.One))
+                    {
+                        Select(Math.Min(items.Count - 1, selectedIndex + 1));
+                        Owner.InventorySelectedItemName = items[selectedIndex].Item.Name;
+                        Sound.Play(SoundNames.UIHover);
+                        return HandleInputResult.Handled;
+                    }
                 }
 
                 // Move Down (Jump to first equipment)
@@ -300,7 +307,7 @@ namespace Remizione
                     if (Owner.Inventory.SelectNext(MetaItemCategory.Equipment) is Item item)
                         Select(item.Name);
                     Owner.InventorySelectedItemName = items[selectedIndex].Item.Name;
-                    Sound.Play(SoundNames.UINavigation);
+                    Sound.Play(SoundNames.UIHover);
                     return HandleInputResult.Handled;
                 }
 
@@ -310,7 +317,7 @@ namespace Remizione
                     if (Owner.Inventory.SelectNext(MetaItemCategory.Consumable) is Item item)
                         Select(item.Name);
                     Owner.InventorySelectedItemName = items[selectedIndex].Item.Name;
-                    Sound.Play(SoundNames.UINavigation);
+                    Sound.Play(SoundNames.UIHover);
                     return HandleInputResult.Handled;
                 }
             }
@@ -321,6 +328,8 @@ namespace Remizione
         // OnLoadContent
         protected override void OnLoadContent()
         {
+            Sound.Play(SoundNames.UIInventoryOpen);
+
             Owner.Stand();
 
             base.OnLoadContent();
