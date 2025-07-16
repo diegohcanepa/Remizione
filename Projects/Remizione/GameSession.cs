@@ -271,17 +271,9 @@ namespace Remizione
             if (sessionNode == null || sessionNode.Attributes == null)
                 throw new InvalidOperationException("Session node attributes not found");
 
-            // Cycle
-            if (sessionNode.Attributes[nameof(Environment.Cycle)]?.Value is string cycleValue)
-                this.Environment.Cycle = Enum.Parse<Cycle>(cycleValue);
-
-            // CycleCooldown
-            if (sessionNode.Attributes[nameof(Environment.CycleCooldown)]?.Value is string cycleCooldownValue)
-                this.Environment.CycleCooldown = XmlConvert.ToInt32(cycleCooldownValue);
-
-            // CycleCount
-            if (sessionNode.Attributes[nameof(Environment.CycleCount)]?.Value is string cycleCountValue)
-                this.Environment.CycleCount = XmlConvert.ToInt32(cycleCountValue);
+            // GameplayMode
+            if (sessionNode.Attributes[nameof(GameplayMode)]?.Value is string gameplayMode)
+                GameplayMode = Enum.Parse<GameplayMode>(gameplayMode);
 
             // InventoryEnabled
             if (sessionNode.Attributes[nameof(InventoryEnabled)]?.Value is string inventoryEnabledValue)
@@ -294,10 +286,6 @@ namespace Remizione
             // Player position
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
                 playerPosition = XmlConverterExtension.ToVector2(playerPositionValue);
-
-            // PurgatoryMode
-            if (sessionNode.Attributes[nameof(PurgatoryMode)]?.Value is string purgatoryModeValue)
-                PurgatoryMode = XmlConvert.ToBoolean(purgatoryModeValue);
 
             // NextRainCooldown
             if (sessionNode.Attributes[nameof(NextRainCooldown)]?.Value is string nextRainCooldown)
@@ -375,14 +363,8 @@ namespace Remizione
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
-            // Cycle
-            output.WriteAttributeString(nameof(Environment.Cycle), Environment.Cycle.ToString());
-
-            // CycleCooldown
-            output.WriteAttributeString(nameof(Environment.CycleCooldown), XmlConvert.ToString(Environment.CycleCooldown));
-
-            // CycleCount
-            output.WriteAttributeString(nameof(Environment.CycleCount), XmlConvert.ToString(Environment.CycleCount));
+            // GameplayMode
+            output.WriteAttributeString(nameof(GameplayMode), XmlConvert.ToString((int)GameplayMode));
 
             // InventoryEnabled
             output.WriteAttributeString(nameof(InventoryEnabled), XmlConvert.ToString(InventoryEnabled));
@@ -397,9 +379,6 @@ namespace Remizione
             // PlayerPosition
             if (playerPosition.HasValue)
                 output.WriteAttributeString(nameof(playerPosition), XmlConverterExtension.ToString(playerPosition.Value));
-
-            // PurgatoryMode
-            output.WriteAttributeString(nameof(PurgatoryMode), XmlConvert.ToString(PurgatoryMode));
 
             // RainRemainingTime
             output.WriteAttributeString(nameof(Environment.Rain.RemainingTime), XmlConvert.ToString(Environment.Rain.RemainingTime));
@@ -426,6 +405,10 @@ namespace Remizione
 
         // Game
         public new RemizioneGame Game { get; }
+
+        // GameplayMode
+        [ScriptProperty]
+        public GameplayMode GameplayMode { get; set; }
 
         // GetStaticThings
         public IEnumerable<GameThing> GetStaticThings(PlacementPhase phase)
@@ -484,10 +467,6 @@ namespace Remizione
                 }
             }
         }
-
-        // PurgatoryMode
-        [ScriptProperty]
-        public bool PurgatoryMode { get; set; }
 
         // PreviousRoom
         [ScriptProperty]

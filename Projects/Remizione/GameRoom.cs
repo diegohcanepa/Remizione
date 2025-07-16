@@ -435,23 +435,6 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-            if (Session.Environment.Cycle == Cycle.Indulgence)
-            {
-                if (!globalLight.IsEmitting)
-                    globalLight.TurnOn();
-
-                if (playerLight.IsEmitting)
-                    playerLight.TurnOff();
-            }
-            else
-            {
-                if (globalLight.IsEmitting)
-                    globalLight.TurnOff();
-
-                if (!playerLight.IsEmitting)
-                    playerLight.TurnOn();
-            }
-
             TestTriggerAreas();
 
             // Lights

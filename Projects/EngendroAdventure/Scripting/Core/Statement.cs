@@ -48,6 +48,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string HPArg = "#hp";
         protected static readonly string ImageArg = "#image";
         protected static readonly string ImmediateArg = "#immediate";
+        protected static readonly string ImpactWordArg = "#impact-word";
         protected static readonly string IndexArg = "#index";
         protected static readonly string InstancesArg = "#instances";
         protected static readonly string KindArg = "#kind";

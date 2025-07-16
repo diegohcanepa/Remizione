@@ -34,13 +34,6 @@ namespace Remizione
             internal static Vector2 Title { get; } = new(.1f);
         }
 
-        // InventoryItem
-        internal static class InventoryItem
-        {
-            internal static Vector2 Active { get; } = new Vector2(.8f);
-            internal static Vector2 Inactive { get; } = new Vector2(.6f);
-        }
-
         // MenuItemTextActive
         internal static Vector2 MenuItemTextActive { get; } = new Vector2(.14f);
 

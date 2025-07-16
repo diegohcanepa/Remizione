@@ -351,16 +351,11 @@ namespace Remizione
 
             var result = false;
 
-            if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad)
-            {
-                if (inputBinding != null && inputBinding.IsPressed(playerIndex))
-                    result = true;
-            }
-            else
-            {
-                if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() && IsMouseOver)
-                    result = true;
-            }
+            if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() && IsMouseOver)
+                result = true;
+            
+            else if (inputBinding != null && inputBinding.IsPressed(playerIndex))
+                result = true;
 
             if (result)
             {

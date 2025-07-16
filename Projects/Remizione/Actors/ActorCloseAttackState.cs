@@ -52,7 +52,7 @@ namespace Remizione
                         damageAmount += Owner.Stats.GetModifier(MetaItem.Modifier);
                         damageAmount += MetaItem.Bonus;
 
-                        target.TakeDamage(Owner, damageAmount, MetaItem.Knockback);
+                        target.TakeDamage(Owner, damageAmount, MetaItem.Knockback, MetaItem.ImpactWord);
                         target.ApplyDamage(Owner);
                     }
                 }

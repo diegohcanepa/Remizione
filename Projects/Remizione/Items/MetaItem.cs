@@ -51,7 +51,7 @@ namespace Remizione
             if (attacker is Actor actor)
                 damageAmount += actor.Stats.GetModifier(Modifier);
 
-            target.TakeDamage(attacker, damageAmount + Bonus, Knockback);
+            target.TakeDamage(attacker, damageAmount + Bonus, Knockback, ImpactWord);
             target.ApplyDamage(attacker);
 
             return true;
@@ -83,6 +83,9 @@ namespace Remizione
 
         // Image
         public AtlasImage? Image { get; }
+
+        // ImpactWord
+        public ImpactWordKind ImpactWord { get; init; }
 
         // IsPassive
         public bool IsPassive => PassiveEffectCooldown > 0;

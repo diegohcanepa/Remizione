@@ -13,7 +13,6 @@ namespace Remizione
         private readonly ImageSprite iconImage;
         private Item? item;
         private readonly ImageSprite slotImage;
-        private readonly ImageSprite slotImageSelected;
 
         // Constructor
         public InventorySlot(EngendroGame game)
@@ -23,27 +22,19 @@ namespace Remizione
             this.iconImage = new(game)
             {
                 PivotOrigin = RectanglePoint.Middle,
-                //Scale = ScaleInfo.UIElement.Medium
+                Scale = ScaleInfo.UIElement.Medium
             };
 
             // Slot image
             this.slotImage = new(game, Atlases.UI.InventorySlot)
             {
-                PivotOrigin = RectanglePoint.Middle,
-                //Scale = ScaleInfo.UIElement.Medium
-            };
-
-            // Slot image selected
-            this.slotImageSelected = new(game, Atlases.UI.InventorySlotSelected)
-            {
-                PivotOrigin = RectanglePoint.Middle,
                 //Scale = ScaleInfo.UIElement.Medium
             };
 
             // Amount text
             amountText = new TextSprite(game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Terra,
+                Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.Text.Medium
             };
@@ -51,40 +42,13 @@ namespace Remizione
             Reset();
         }
 
-        #region Private fields
-
-        // ChangeVisualState
-        private void ChangeVisualState(bool animate)
-        {
-            const int tweenDuration = 300;
-
-            if (!animate)
-            {
-                iconImage.Tweens.Reset();
-                iconImage.Scale = IsSelected ? ScaleInfo.InventoryItem.Active : ScaleInfo.InventoryItem.Inactive;
-                return;
-            }
-
-            if (IsSelected)
-                iconImage.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, iconImage.Scale, ScaleInfo.InventoryItem.Active, tweenDuration);
-            else
-                iconImage.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, iconImage.Scale, ScaleInfo.InventoryItem.Inactive, tweenDuration);
-        }
-
-        #endregion
-
         #region Protected members
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
-
-            if (IsSelected)
-                slotImageSelected.Draw(gameTime);
-            else
-                slotImage.Draw(gameTime);
-
+            slotImage.Draw(gameTime);
             iconImage.Draw(gameTime);
             Game.SpriteBatch.End();
 
@@ -109,9 +73,6 @@ namespace Remizione
         // BoundingBox
         public RectangleF BoundingBox => slotImage.BoundingBox;
 
-        // IsSelected
-        public bool IsSelected { get; private set; }
-
         // Item
         public Item? Item
         {
@@ -131,7 +92,6 @@ namespace Remizione
                     }
                     else
                     {
-                        Unselect(false);
                         amountText.Clear();
                     }
 
@@ -146,12 +106,9 @@ namespace Remizione
             get => iconImage.Position;
             set
             {
-                iconImage.Position = value;
-                iconImage.X += .5f;
-
                 slotImage.Position = value;
-                slotImageSelected.Position = value;
-                amountText.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 4);
+                iconImage.Position = slotImage.BoundingBox.Center;
+                amountText.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 2);
             }
         }
 
@@ -161,21 +118,6 @@ namespace Remizione
             Item = null;
             iconImage.Image = null;
             Position = Vector2.Zero;
-            Unselect(false);
-        }
-
-        // Select
-        public void Select(bool animate)
-        {
-            IsSelected = true;
-            ChangeVisualState(animate);
-        }
-
-        // Unselect
-        public void Unselect(bool animate)
-        {
-            IsSelected = false;
-            ChangeVisualState(animate);
         }
     }
 }

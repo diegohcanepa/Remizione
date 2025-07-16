@@ -77,7 +77,7 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (session.PurgatoryMode)
+            if (session.GameplayMode == GameplayMode.Survival)
             {
                 if (!session.IsConsoleVisible)
                     QuickSlot.Draw(gameTime);
@@ -116,7 +116,7 @@ namespace Remizione
             healthMeter.Update(gameTime);
             prompt.Update(gameTime);
 
-            if (session.PurgatoryMode)
+            if (session.GameplayMode == GameplayMode.Survival)
                 statusText.Update(gameTime);
 
             if (session.Player != null)

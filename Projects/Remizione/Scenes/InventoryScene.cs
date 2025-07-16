@@ -30,6 +30,7 @@ namespace Remizione
         private static readonly Vector2 slotPosition = new(Screen.Center.X, Screen.HUDArea.Bottom - 20);
         private const int spaceBetweenIcons = 15;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 150 };
+        private readonly FullInventoryScene fullInventoryScene;
         private const int visibleRange = 13;
         private float visualIndex;
 
@@ -104,6 +105,8 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -32),
             };
+
+            this.fullInventoryScene = new(owner);
         }
 
         #endregion
@@ -256,6 +259,13 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
+            // ViewAll
+            if (buttonViewAll.TestPressed(PlayerIndex.One))
+            {
+                fullInventoryScene.SceneController.Push();
+                return HandleInputResult.Handled;
+            }
+
             // Use
             if (buttonUse.TestPressed(PlayerIndex.One))
             {
@@ -301,21 +311,19 @@ namespace Remizione
                     }
                 }
 
-                // Move Down (Jump to first equipment)
-                if (InputBindings.SelectDown.IsPressed(PlayerIndex.One) || stick.IsDown(PlayerIndex.One))
+                // Move up (first item)
+                if (InputBindings.SelectUp.IsPressed(PlayerIndex.One) || stick.IsUp(PlayerIndex.One))
                 {
-                    if (Owner.Inventory.SelectNext(MetaItemCategory.Equipment) is Item item)
-                        Select(item.Name);
+                    Select(0);
                     Owner.InventorySelectedItemName = items[selectedIndex].Item.Name;
                     Sound.Play(SoundNames.UIHover);
                     return HandleInputResult.Handled;
                 }
 
-                // Move Up (Jump to first consumable)
-                if (InputBindings.SelectUp.IsPressed(PlayerIndex.One) || stick.IsUp(PlayerIndex.One))
+                // Move down (last item)
+                if (InputBindings.SelectDown.IsPressed(PlayerIndex.One) || stick.IsDown(PlayerIndex.One))
                 {
-                    if (Owner.Inventory.SelectNext(MetaItemCategory.Consumable) is Item item)
-                        Select(item.Name);
+                    Select(items.Count-1);
                     Owner.InventorySelectedItemName = items[selectedIndex].Item.Name;
                     Sound.Play(SoundNames.UIHover);
                     return HandleInputResult.Handled;

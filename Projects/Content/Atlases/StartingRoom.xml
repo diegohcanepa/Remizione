@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:3afbbc81e74585c6b5d03a4ad7275667:9faa54b2f7bc61ee5e0a8f5f600fb194:cdb90ff98fe37bd947a4a1daed8bb701$ -->
+<!-- $TexturePacker:SmartUpdate:3f815493a0be8d31fae0795f3ba240b6:411e0529877299e12de567b11af8d8b8:b3a14e562a5573aebdf37272c77d6cd4$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,12 +19,12 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Purgatory.png" width="512" height="512">
+<TextureAtlas imagePath="StartingRoom.png" width="512" height="512">
     <sprite n="GhostCar01.png" x="40" y="462" w="29" h="29"/>
     <sprite n="GhostCar02.png" x="71" y="462" w="29" h="29"/>
     <sprite n="GhostCar03.png" x="102" y="462" w="29" h="29"/>
     <sprite n="GhostCar04.png" x="112" y="274" w="29" h="29"/>
-    <sprite n="Purgatory.png" x="2" y="2" w="480" h="270"/>
+    <sprite n="StartingRoom.png" x="2" y="2" w="480" h="270"/>
     <sprite n="StartingTower.png" x="2" y="274" w="108" h="92"/>
     <sprite n="StartingTowerDoor01.png" x="484" y="2" w="20" h="30"/>
     <sprite n="StartingTowerDoor02.png" x="484" y="34" w="20" h="30"/>

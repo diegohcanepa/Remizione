@@ -491,6 +491,84 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">FenceA-assets/FenceA.png</key>
+            <key type="filename">FenceA-assets/FenceAShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,5,11,9</rect>
+                <key>scale9Paddings</key>
+                <rect>5,5,11,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">FenceB-assets/FenceB.png</key>
+            <key type="filename">FenceB-assets/FenceBShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,6,17,13</rect>
+                <key>scale9Paddings</key>
+                <rect>9,6,17,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">FenceC-assets/FenceC.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,7,19,13</rect>
+                <key>scale9Paddings</key>
+                <rect>10,7,19,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">FenceC-assets/FenceCShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,5,21,11</rect>
+                <key>scale9Paddings</key>
+                <rect>11,5,21,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">FenceD-assets/FenceD.png</key>
+            <key type="filename">FenceD-assets/FenceDShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,8,23,17</rect>
+                <key>scale9Paddings</key>
+                <rect>12,8,23,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">FireflyParticles-assets/FireflyParticle2.png</key>
             <key type="filename">Pickups-assets/Orb.png</key>
             <struct type="IndividualSpriteSettings">
@@ -699,6 +777,21 @@
                 <rect>8,4,15,7</rect>
                 <key>scale9Paddings</key>
                 <rect>8,4,15,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ImpactWords-assets/Zap.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,3,10,7</rect>
+                <key>scale9Paddings</key>
+                <rect>5,3,10,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1077,6 +1170,10 @@
                     <filename>PortableToilet-assets</filename>
                     <filename>Grass-assets</filename>
                     <filename>FlatStones-assets</filename>
+                    <filename>FenceA-assets</filename>
+                    <filename>FenceB-assets</filename>
+                    <filename>FenceC-assets</filename>
+                    <filename>FenceD-assets</filename>
                 </array>
             </struct>
         </map>

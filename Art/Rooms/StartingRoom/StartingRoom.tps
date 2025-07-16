@@ -124,7 +124,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../Projects/Content/Atlases/Purgatory.xml</filename>
+                <filename>../../../Projects/Content/Atlases/StartingRoom.xml</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -191,7 +191,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Purgatory-assets/Purgatory.png</key>
+            <key type="filename">StartingRoom-assets/StartingRoom.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -280,7 +280,7 @@
                     <filename>StartingTower-assets</filename>
                     <filename>StartingTowerDoor-assets</filename>
                     <filename>GhostCar-assets</filename>
-                    <filename>Purgatory-assets</filename>
+                    <filename>StartingRoom-assets</filename>
                 </array>
             </struct>
         </map>

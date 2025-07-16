@@ -39,26 +39,9 @@ namespace Remizione
         // Update
         internal void Update(GameTime gameTime)
         {
-            if (session.PurgatoryMode)
+            if (session.GameplayMode == GameplayMode.Survival)
             {
                 Lightning.Update(gameTime);
-
-                if (CycleCooldown > 0)
-                {
-                    CycleCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-
-                    if (CycleCooldown <= 0)
-                    {
-                        if (Cycle == Cycle.Indulgence)
-                            Cycle = Cycle.Penance;
-                        else
-                            Cycle = Cycle.Indulgence;
-
-                        CycleCooldown = GameSettings.CycleDuration;
-                        CycleCount++;
-                    }
-                }
-
                 Rain.Update(gameTime);
             }
         }
@@ -71,26 +54,8 @@ namespace Remizione
             Rain.EnterRoom();
         }
 
-        // Cycle
-        public Cycle Cycle { get; set; } = Cycle.Indulgence;
-
-        // CycleCooldown
-        public int CycleCooldown { get; set; } = GameSettings.CycleDuration;
-
-        // CycleCount
-        public int CycleCount { get; set; } = 1;
-
         // GlobalLightColor
-        public Color GlobalLightColor
-        {
-            get
-            {
-                if (Cycle == Cycle.Indulgence)
-                    return LerpColorCubicIn(Color.White, Color.IndianRed, 1 - ((float)CycleCooldown / GameSettings.CycleDuration));
-                else
-                    return Color.IndianRed;
-            }
-        }
+        public Color GlobalLightColor => Color.White;
 
         // Lightning
         public Lightning Lightning { get; }

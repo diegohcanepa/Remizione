@@ -11,7 +11,7 @@ namespace Remizione
         public Snail(GameSession session, string name)
             : base(session, name)
         {
-            Scale = new(.75f);
+            // .Scale = new(.75f);
             ShockZap = true;
         }
 

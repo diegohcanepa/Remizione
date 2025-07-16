@@ -59,7 +59,7 @@
 #begin Atlases/Menu.xml
 /copy:Atlases/Menu.xml
 
-#begin Atlases/Purgatory.png
+#begin Atlases/StartingRoom.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -69,10 +69,10 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Atlases/Purgatory.png
+/build:Atlases/StartingRoom.png
 
-#begin Atlases/Purgatory.xml
-/copy:Atlases/Purgatory.xml
+#begin Atlases/StartingRoom.xml
+/copy:Atlases/StartingRoom.xml
 
 #begin Atlases/ThemePark.png
 /importer:TextureImporter

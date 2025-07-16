@@ -55,7 +55,7 @@
   <String Key="Item.Duck.Name">Rubber duck</String>
   <String Key="Item.Gold.Description">A handful of gold dust.</String>
   <String Key="Item.Gold.Name">Gold dust</String>
-  <String Key="Item.PieceOfWood.Description" />
+  <String Key="Item.PieceOfWood.Description"></String>
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
@@ -165,7 +165,7 @@
   <String Key="MessageBox.QuitToMenu">Quit to main menu?</String>
   <String Key="MessageBox.SlotDeleted">The slot has been deleted.</String>
   <String Key="MessageBox.Warning">Warning!</String>
-  <String Key="MetaItemCategory.Consumables">Consumables</String>
+  <String Key="MetaItemCategory.Consumable">Consumables</String>
   <String Key="MetaItemCategory.Equipment">Equipment</String>
   <String Key="MetaItemCategory.Misc">Misc</String>
   <String Key="Misc.And">and</String>

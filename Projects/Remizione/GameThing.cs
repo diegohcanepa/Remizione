@@ -185,6 +185,19 @@ namespace Remizione
             Unparent();
         }
 
+        // GetImpactWordPosition
+        private Vector2? GetImpactWordPosition()
+        {
+            if (HitTestSource == HitTestSource.Collider && Collider != null)
+                return this.GetAbsolutePoint(Collider.BoundingRectangleF.GetPoint(RectanglePoint.Top));
+
+            else if (HitTestSource == HitTestSource.Hotspot && RuntimeHotspot != null)
+                return RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top);
+
+            else
+                return null;
+        }
+
         // GetPivotBasedPolyOffset
         private Vector2 GetPivotBasedPolyOffset()
         {
@@ -396,15 +409,7 @@ namespace Remizione
 
             base.OnUpdate(gameTime);
 
-            if (impactWord != null)
-            {
-                impactWord.Update(gameTime);
-                if (!impactWord.IsActive)
-                {
-                    Session.ImpactWordPool.Return(impactWord);
-                    impactWord = null;
-                }
-            }
+            impactWord?.Update(gameTime);
 
             if (shouldClampToWalkablePosition)
             {
@@ -500,10 +505,10 @@ namespace Remizione
                 hurtShakeTween.Start(TweenStyle.Linear, Vector2.Zero, HurtShake, 40, 4);
 
                 // Impact word
-                if (Collider != null)
+                if (impactWordKind != ImpactWordKind.None && GetImpactWordPosition() is Vector2 wordPos)
                 {
                     impactWord ??= Session.ImpactWordPool.Get();
-                    impactWord.Show(impactWordKind, this.GetAbsolutePoint(Collider.BoundingRectangleF.GetPoint(RectanglePoint.Top)));
+                    impactWord.Show(impactWordKind, wordPos);
                 }
             }
 
@@ -812,10 +817,16 @@ namespace Remizione
         public bool Highlight { get; set; } = true;
 
         // HitTest
-        public virtual bool HitTest(Vector2 value)
+        public bool HitTest(Vector2 value)
         {
-            return RuntimeHotspot.Contains(value);
+            if (HitTestSource == HitTestSource.Hotspot)
+                return RuntimeHotspot.Contains(value);
+            else
+                return (this as IHoleArea).Contains(value);
         }
+
+        // HitTestSource
+        public virtual HitTestSource HitTestSource => HitTestSource.Hotspot;
 
         // Hotspot
         [ScriptProperty]
@@ -1037,15 +1048,15 @@ namespace Remizione
         public int StateID { get; set; }
 
         // TakeDamage
-        public void TakeDamage(GameThing attacker, int amount, Vector2 knockback)
+        public void TakeDamage(GameThing attacker, int amount, Vector2 knockback, ImpactWordKind impactWordKind)
         {
             if (IsDead)
                 return;
 
             this.knockback = knockback;
-            applyDamagePending = true;
-            CumulativeDamage += amount;
-            impactWordKind = ImpactWordKind.None;
+            this.applyDamagePending = true;
+            this.CumulativeDamage += amount;
+            this.impactWordKind = impactWordKind;
         }
 
         // ThrowableSpawnPosition

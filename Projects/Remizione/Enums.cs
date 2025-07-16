@@ -23,14 +23,17 @@ namespace Remizione
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Videos, Voices, System, Text }
 
-    // Cycle
-    public enum Cycle { Indulgence, Penance }
-
     // DerivedStat
     public enum DerivedStat { HP, Faith, Tickets }
 
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
+
+    // GameplayMode
+    public enum GameplayMode { Adventure, Survival }
+
+    // HitTestSource
+    public enum HitTestSource { Hotspot, Collider }
 
     // HUDMessageKind
     public enum HUDMessageKind { CannotPlaceItem, EnoughOfThat, InventoryFull, NoInventoryBag, NotEnoughFaith }
@@ -39,7 +42,7 @@ namespace Remizione
     public enum ImpactType { Low, Medium, High }
 
     // ImpactWordKind
-    public enum ImpactWordKind { None, Kapow }
+    public enum ImpactWordKind { None, Kapow, Zap }
 
     // InGameMenuOptionName
     public enum InGameMenuOptionName { Attributes, Creatures, Inventory, Gifts, Map, Prayers, SacredWords, QuitToDesktop, Settings }
@@ -101,9 +104,6 @@ namespace Remizione
 
     // RenderLayer
     public enum RenderLayer { BehindBackground, Background, Doors, Default, Foreground, ForegroundNoLight }
-
-    // RoomAreaKind
-    public enum RoomAreaKind { Trigger, Walk }
 
     // RoomSampler
     public enum RoomSampler { PointClamp, LinearClamp }
