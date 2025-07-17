@@ -12,8 +12,6 @@ namespace Remizione
             : base(game.Content, "UI", ContentHelper.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
             BottomGradient = this[nameof(BottomGradient)];
-            CharacterSheetContainer = this[nameof(CharacterSheetContainer)];
-            CharacterSheetStatContainer = this[nameof(CharacterSheetStatContainer)];
             CheckMark = this[nameof(CheckMark)];
             CloseWindowButton = this[nameof(CloseWindowButton)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
@@ -24,10 +22,10 @@ namespace Remizione
             HeartHalfIcon = this[nameof(HeartHalfIcon)];
             HeartIcon = this[nameof(HeartIcon)];
             HPIcon = this[nameof(HPIcon)];
+            InventoryGridContainer = this[nameof(InventoryGridContainer)];
+            InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
             InventorySlot = this[nameof(InventorySlot)];
             InventorySlotSelected = this[nameof(InventorySlotSelected)];
-            ItemMenuContainer = this[nameof(ItemMenuContainer)];
-            ItemMenuContainerSelection = this[nameof(ItemMenuContainerSelection)];
             MessageContainer = this[nameof(MessageContainer)];
             MiniHeartHalfIcon = this[nameof(MiniHeartHalfIcon)];
             MiniHeartIcon = this[nameof(MiniHeartIcon)];
@@ -52,12 +50,6 @@ namespace Remizione
         // BottomGradient
         public AtlasImage BottomGradient { get; }
 
-        // CharacterSheetContainer
-        public AtlasImage CharacterSheetContainer { get; }
-
-        // CharacterSheetStatContainer
-        public AtlasImage CharacterSheetStatContainer { get; }
-
         // CheckMark
         public AtlasImage CheckMark { get; }
 
@@ -73,17 +65,17 @@ namespace Remizione
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
 
+        // InventoryGridContainer
+        public AtlasImage InventoryGridContainer { get; }
+
+        // InventoryInfoContainer
+        public AtlasImage InventoryInfoContainer { get; }
+
         // InventorySlot
         public AtlasImage InventorySlot { get; }
 
         // InventorySlotSelected
         public AtlasImage InventorySlotSelected { get; }
-
-        // ItemMenuContainer
-        public AtlasImage ItemMenuContainer { get; }
-
-        // ItemMenuContainerSelection
-        public AtlasImage ItemMenuContainerSelection { get; }
 
         // FaithIcon
         public AtlasImage FaithIcon { get; }

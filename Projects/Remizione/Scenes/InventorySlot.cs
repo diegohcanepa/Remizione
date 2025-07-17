@@ -11,28 +11,32 @@ namespace Remizione
     {
         private readonly TextSprite amountText;
         private readonly ImageSprite iconImage;
+        private readonly InventoryGrid grid;
         private Item? item;
+        private readonly ImageSprite selectedSlotImage;
         private readonly ImageSprite slotImage;
 
         // Constructor
-        public InventorySlot(EngendroGame game)
-            : base(game)
+        public InventorySlot(InventoryGrid grid)
+            : base(grid.Game)
         {
+            this.grid = grid;
+
             // Icon image
-            this.iconImage = new(game)
+            this.iconImage = new(Game)
             {
                 PivotOrigin = RectanglePoint.Middle,
                 Scale = ScaleInfo.UIElement.Medium
             };
 
             // Slot image
-            this.slotImage = new(game, Atlases.UI.InventorySlot)
-            {
-                //Scale = ScaleInfo.UIElement.Medium
-            };
+            this.slotImage = new(Game, Atlases.UI.InventorySlot);
+
+            // Selected slot image
+            this.selectedSlotImage = new(Game, Atlases.UI.InventorySlotSelected);
 
             // Amount text
-            amountText = new TextSprite(game, Fonts.CommonOutline)
+            amountText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Bottom,
@@ -48,7 +52,10 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
-            slotImage.Draw(gameTime);
+            if (IsSelected)
+                selectedSlotImage.Draw(gameTime);
+            else
+                slotImage.Draw(gameTime);
             iconImage.Draw(gameTime);
             Game.SpriteBatch.End();
 
@@ -72,6 +79,9 @@ namespace Remizione
 
         // BoundingBox
         public RectangleF BoundingBox => slotImage.BoundingBox;
+
+        // IsSelected
+        public bool IsSelected => grid.SelectedSlot == this;
 
         // Item
         public Item? Item
@@ -103,10 +113,11 @@ namespace Remizione
         // Position
         public Vector2 Position
         {
-            get => iconImage.Position;
+            get => slotImage.Position;
             set
             {
                 slotImage.Position = value;
+                selectedSlotImage.Position = value;
                 iconImage.Position = slotImage.BoundingBox.Center;
                 amountText.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 2);
             }

@@ -3,7 +3,6 @@ using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 
 namespace Remizione
@@ -13,68 +12,102 @@ namespace Remizione
     /// </summary>
     public sealed class InventoryScene : Scene
     {
-        #region Private fields
+        private const int maxInfoTextWidth = 80;
 
-        private readonly TextSprite amountText;
-        private const float animationSpeed = 14;
-        private readonly ImageSprite bottomGradient;
         private readonly UITextButton buttonClose;
-        private readonly UITextButton buttonSelect;
+        private readonly UITextButton buttonEquip;
         private readonly UITextButton buttonUse;
-        private readonly UITextButton buttonViewAll;
-        private readonly TextSprite itemNameText;
-        private readonly List<InventoryItem> items = [];
-        private string? previousSelectedItemName;
-        private int selectedIndex;
-        private readonly ImageSprite slotImage;
-        private static readonly Vector2 slotPosition = new(Screen.Center.X, Screen.HUDArea.Bottom - 20);
-        private const int spaceBetweenIcons = 15;
-        private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 150 };
-        private readonly FullInventoryScene fullInventoryScene;
-        private const int visibleRange = 13;
-        private float visualIndex;
+        private readonly List<MetaItemCategory> categories = [MetaItemCategory.Consumable, MetaItemCategory.Equipment, MetaItemCategory.Misc];
+        private readonly TextSprite categoryText;
+        private readonly InventoryGrid grid;
+        private readonly ImageSprite gridContainerImage;
+        private readonly UIHealthMeter healthMeter;
+        private readonly ImageSprite infoContainerImage;
+        private readonly TextSprite itemDescription;
+        private readonly TextSprite itemName;
+        private InputMethod lastKnownInput;
+        private readonly UITextButton nextTabButton;
+        private readonly UITextButton previousTabButton;
 
-        #endregion
 
         #region Constructor
 
         // Constructor
         public InventoryScene(Actor owner)
-            : base(owner.Game)
+            : base(owner.Game, SceneSettings.PausePreviousScenes | SceneSettings.ExclusiveDraw)
         {
             this.Owner = owner;
 
-            // Bottom gradient
-            bottomGradient = new ImageSprite(owner.Game, Atlases.UI.BottomGradient)
+            BackgroundColor = Color.Black;
+
+            this.healthMeter = new(Game)
             {
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
-                Scale = new Vector2(1, 1.2f)
+                Actor = owner,
             };
 
-            // SlotImage
-            this.slotImage = new(Game, Atlases.UI.InventorySlot)
+            // Grid container
+            this.gridContainerImage = new(Game, Atlases.UI.InventoryGridContainer)
             {
-                PivotOrigin = RectanglePoint.Middle,
-                Position = slotPosition
+                PivotOrigin = RectanglePoint.LeftTop,
+                Position = new(10, 28),
+            };
+
+            // grid
+            this.grid = new(owner.Inventory, 6, 4)
+            {
+                Position = gridContainerImage.BoundingBox.GetPoint(RectanglePoint.LeftTop, 3, 3)
+            };
+
+            // Previous tab button
+            this.previousTabButton = new(Game, InputBindings.PreviousTab)
+            {
+                ImageName = nameof(InputBindings.PreviousTab),
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = gridContainerImage.BoundingBox.GetPoint(RectanglePoint.LeftTop, 4, -1),
+            };
+
+            // Next tab button
+            this.nextTabButton = new(Game, InputBindings.NextTab)
+            {
+                ImageName = nameof(InputBindings.NextTab),
+                PivotOrigin = RectanglePoint.RightBottom,
+                Position = gridContainerImage.BoundingBox.GetPoint(RectanglePoint.RightTop, -6, -1)
+            };
+
+            // Category
+            this.categoryText = new(Game, Fonts.Common)
+            {
+                Color = ColorPalette.Text.Default,
+                PivotOrigin = RectanglePoint.Bottom,
+                Scale = ScaleInfo.Text.Huge,
+                Position = gridContainerImage.BoundingBox.GetPoint(RectanglePoint.Top, 0, -1)
+            };
+
+            // Info container
+            this.infoContainerImage = new(Game, Atlases.UI.InventoryInfoContainer)
+            {
+                PivotOrigin = RectanglePoint.LeftTop,
+                Position = gridContainerImage.BoundingBox.GetPoint(RectanglePoint.RightTop, 3, 0)
             };
 
             // Item name
-            itemNameText = new TextSprite(Game, Fonts.CommonOutline)
+            this.itemName = new TextSprite(Game, Fonts.Common)
             {
-                Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Top, 0, -1),
-                Scale = ScaleInfo.Text.ExtraLarge
+                Color = ColorPalette.Text.Terra,
+                PivotOrigin = RectanglePoint.LeftTop,
+                Position = new Vector2(6, 4),
+                Scale = ScaleInfo.Text.VeryLarge,
+                VisualParent = infoContainerImage,
+                ShadowOffset = new Vector2(0, .75f)
             };
 
-            // Amount text
-            amountText = new TextSprite(Game, Fonts.Common)
+            // Item description
+            this.itemDescription = new TextSprite(Game, Fonts.Common)
             {
-                Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Top,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1),
-                Scale = ScaleInfo.Text.VeryLarge
+                Color = ColorPalette.Text.Dark,
+                PivotOrigin = RectanglePoint.LeftTop,
+                MaximumWidth = maxInfoTextWidth,
+                Scale = ScaleInfo.Text.Large,
             };
 
             // Close button
@@ -84,125 +117,110 @@ namespace Remizione
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -2),
             };
 
-            // View all button
-            buttonViewAll = new UITextButton(owner.Game, InputBindings.ViewAll)
+            // Equip button
+            buttonEquip = new UITextButton(owner.Game, InputBindings.Equip)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -12),
-            };
-
-            // Select button
-            buttonSelect = new UITextButton(owner.Game, InputBindings.Select)
-            {
-                PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -22),
-                Sound = Sound.Find(SoundNames.UISelectB)
             };
 
             // Use button
             buttonUse = new UITextButton(owner.Game, InputBindings.UseItem)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -32),
             };
-
-            this.fullInventoryScene = new(owner);
         }
 
         #endregion
 
         #region Private members
 
-        // DrawItems
-        private void DrawItems(GameTime gameTime)
-        {
-            for (int i = -visibleRange; i <= visibleRange; i++)
-            {
-                int index = (int)visualIndex + i;
-                if (index < 0 || index >= items.Count)
-                    continue;
-
-                // desplazamiento relativo animado
-                float offset = i - (visualIndex - (int)visualIndex);
-                items[index].Position = slotPosition + new Vector2(offset * spaceBetweenIcons, 0);
-
-                // Escala y opacidad basadas en distancia
-                float distance = MathF.Abs(offset);
-                float scale = MathF.Max(.6f, .8f - distance * .2f); // escala mínima 0.6
-                float alpha = MathF.Max(.3f, 1 - distance * .3f); // transparencia mínima 0.3
-
-                items[index].Opacity = alpha;
-                items[index].Scale = new(scale);
-
-                items[index].Draw(gameTime);
-            }
-        }
-
-        // GetInventoryItemAt
-        private InventoryItem? GetInventoryItemAt(Vector2 position)
-        {
-            for (int i = 0; i < items.Count; i++)
-            {
-                if (items[i].BoundingBox.Contains(position))
-                    return items[i];
-            }
-
-            return null;
-        }
-
         // HandleMouseInput
         private bool HandleMouseInput()
         {
-            if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
-            {
-                SceneController.Pop();
-                return true;
-            }
-
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
 
-            if (GetInventoryItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is InventoryItem item)
+            /*
+            if (grid.GetSlotAt(InputManager.DefaultPlayer.Mouse.VirtualPosition)?.Item is Item item)
             {
+                sele
+
                 Select(items.IndexOf(item));
                 MouseCursor.Instance.AnimateClick();
                 Sound.Play(SoundNames.UIHover);
             }
+            */
 
             return false;
         }
 
-        // InvalidateSlot
-        private void InvalidateSlot()
+        // InvalidateCategory
+        private void InvalidateCategory()
         {
-            amountText.Text = selectedIndex < 0 ? null : items[selectedIndex].Item.GetDisplayAmount();
+            grid.Fill(Owner.Session.SelectedItemCategory);
+            categoryText.Text = Localization.GetValue(Owner.Session.SelectedItemCategory);
+
+            var itemName = string.Empty;
+            if (Owner.Session.SelectedItemCategory == MetaItemCategory.Consumable)
+                grid.SelectSlot(Owner.Session.DefaultConsumableItem);
+            else if (Owner.Session.SelectedItemCategory == MetaItemCategory.Equipment)
+                grid.SelectSlot(Owner.Session.DefaultEquipmentItem);
+            else if (Owner.Session.SelectedItemCategory == MetaItemCategory.Misc)
+                grid.SelectSlot(Owner.Session.DefaultMiscItem);
+            else
+                grid.SelectSlot(0);
+
+            InvalidateItemInfo();
         }
 
-        // Select
-        private void Select(string name)
+        // InvalidateItemInfo
+        private void InvalidateItemInfo()
         {
-            for (var i = 0; i < items.Count; i++)
+            if (grid.SelectedSlot?.Item is Item item)
             {
-                if (items[i].Item.Name == name)
-                {
-                    Select(i);
-                    return;
-                }
+                itemName.Text = TextRepository.GetValue($"Item.{item.Name}.Name") + (item.Level == 0 ? string.Empty : $" +{item.Level}");
+                itemDescription.Text = $"@Item.{item.Name}.Description";
+                itemDescription.Position = itemName.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
+                //itemActionButton.TextColor = ColorPalette.Text.Light;
+                //itemActionButton.Text = item.MetaItem.Action == ItemAction.None ? null : $"@ItemActions.{item.MetaItem.Action}";
+            }
+            else
+            {
+                itemName.Text = null;
+                itemDescription.Text = null;
+                //itemActionButton.Text = null;
             }
         }
 
-        // Select
-        private void Select(int index)
+        // LayoutButtons
+        private void LayoutButtons()
         {
-            if (index >= items.Count)
-                return;
+            buttonEquip.Position = buttonClose.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -5, 0);
+            buttonUse.Position = buttonEquip.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -5, 0);
+        }
 
-            selectedIndex = index;
-            itemNameText.Text = index < 0 ? null : items[index].Item.DisplayText;
-            if (selectedIndex >= 0)
-                Owner.Inventory.Select(items[selectedIndex].Item);
+        // NextCategory
+        private void NextCategory()
+        {
+            var index = categories.IndexOf(Owner.Session.SelectedItemCategory);
+            if (index == categories.Count - 1)
+                Owner.Session.SelectedItemCategory = categories[0];
+            else
+                Owner.Session.SelectedItemCategory = categories[index + 1];
 
-            InvalidateSlot();
+            InvalidateCategory();
+        }
+
+        // PreviousCategory
+        private void PreviousCategory()
+        {
+            var index = categories.IndexOf(Owner.Session.SelectedItemCategory);
+            if (index == 0)
+                Owner.Session.SelectedItemCategory = categories[^1];
+            else
+                Owner.Session.SelectedItemCategory = categories[index - 1];
+
+            InvalidateCategory();
         }
 
         #endregion
@@ -212,30 +230,53 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (!IsCurrentScene || Owner.Session.IsOutcomeInProgress)
-                return;
+            base.OnDraw(gameTime);
 
-            // Gradient
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-            bottomGradient.Draw(gameTime);
-            itemNameText.Draw(gameTime);
-            amountText.Draw(gameTime);
-            Game.SpriteBatch.End();
+            healthMeter.Draw(gameTime);
 
             Game.SpriteBatch.Begin(Game.Camera);
-            slotImage.Draw(gameTime);
-            DrawItems(gameTime);
+            gridContainerImage.Draw(gameTime);
+            infoContainerImage.Draw(gameTime);
             Game.SpriteBatch.End();
 
             buttonClose.Draw(gameTime);
-            buttonViewAll.Draw(gameTime);
-            buttonSelect.Draw(gameTime);
+            buttonEquip.Draw(gameTime);
             buttonUse.Draw(gameTime);
+
+            grid.Draw(gameTime);
+            nextTabButton.Draw(gameTime);
+            previousTabButton.Draw(gameTime);
+
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearWrap);
+            categoryText.Draw(gameTime);
+            itemName.Draw(gameTime);
+            itemDescription.Draw(gameTime);
+            Game.SpriteBatch.End();
         }
 
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
+            // Grid
+            if (grid.HandleInput(gameTime) == HandleInputResult.Handled)
+            {
+                InvalidateItemInfo();
+
+                if (grid.SelectedSlot?.Item is Item item)
+                {
+                    if (item.MetaItem.Category == MetaItemCategory.Consumable)
+                        Owner.Session.DefaultConsumableItem = item.Name;
+
+                    else if (item.MetaItem.Category == MetaItemCategory.Equipment)
+                        Owner.Session.DefaultEquipmentItem = item.Name;
+
+                    else if (item.MetaItem.Category == MetaItemCategory.Misc)
+                        Owner.Session.DefaultMiscItem = item.Name;
+                }
+
+                return HandleInputResult.Handled;
+            }
+
             // Mouse input
             if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
             {
@@ -250,220 +291,61 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
-            // Select
-            if (buttonSelect.TestPressed(PlayerIndex.One))
+            // Next category
+            if (nextTabButton.TestPressed(PlayerIndex.One))
             {
-                Owner.InventorySelectedItemName = items[selectedIndex].Item.Name;
-                previousSelectedItemName = Owner.InventorySelectedItemName;
-                SceneController.Pop();
+                NextCategory();
                 return HandleInputResult.Handled;
             }
 
-            // ViewAll
-            if (buttonViewAll.TestPressed(PlayerIndex.One))
+            // Previous category
+            if (previousTabButton.TestPressed(PlayerIndex.One))
             {
-                fullInventoryScene.SceneController.Push();
+                PreviousCategory();
                 return HandleInputResult.Handled;
             }
 
-            // Use
-            if (buttonUse.TestPressed(PlayerIndex.One))
-            {
-                var usedItem = items[selectedIndex];
-                if (usedItem != null)
-                {
-                    Owner.UseSelectedItem();
-                    if (!Owner.Inventory.Contains(usedItem.Item))
-                    {
-                        items.Remove(usedItem);
-                        if (Owner.Inventory.SelectedItem is Item item)
-                            Select(item.Name);
-                    }
-                    InvalidateSlot();
-                }
-
-                return HandleInputResult.Handled;
-            }
-
-            if (items.Count > 1)
-            {
-                // Move left
-                if (selectedIndex > 0)
-                {
-                    if (InputBindings.SelectLeft.IsPressed(PlayerIndex.One) || stick.IsLeft(PlayerIndex.One))
-                    {
-                        Select(Math.Max(0, selectedIndex - 1));
-                        Owner.InventorySelectedItemName = items[selectedIndex].Item.Name;
-                        Sound.Play(SoundNames.UIHover);
-                        return HandleInputResult.Handled;
-                    }
-                }
-
-                // Move right
-                if (selectedIndex < items.Count - 1)
-                {
-                    if (InputBindings.SelectRight.IsPressed(PlayerIndex.One) || stick.IsRight(PlayerIndex.One))
-                    {
-                        Select(Math.Min(items.Count - 1, selectedIndex + 1));
-                        Owner.InventorySelectedItemName = items[selectedIndex].Item.Name;
-                        Sound.Play(SoundNames.UIHover);
-                        return HandleInputResult.Handled;
-                    }
-                }
-
-                // Move up (first item)
-                if (InputBindings.SelectUp.IsPressed(PlayerIndex.One) || stick.IsUp(PlayerIndex.One))
-                {
-                    Select(0);
-                    Owner.InventorySelectedItemName = items[selectedIndex].Item.Name;
-                    Sound.Play(SoundNames.UIHover);
-                    return HandleInputResult.Handled;
-                }
-
-                // Move down (last item)
-                if (InputBindings.SelectDown.IsPressed(PlayerIndex.One) || stick.IsDown(PlayerIndex.One))
-                {
-                    Select(items.Count-1);
-                    Owner.InventorySelectedItemName = items[selectedIndex].Item.Name;
-                    Sound.Play(SoundNames.UIHover);
-                    return HandleInputResult.Handled;
-                }
-            }
-
-            return HandleInputResult.Handled;
+            return HandleInputResult.Unhandled;
         }
 
         // OnLoadContent
         protected override void OnLoadContent()
         {
-            Sound.Play(SoundNames.UIInventoryOpen);
-
-            Owner.Stand();
-
             base.OnLoadContent();
 
-            // Load items
-            items.Clear();
-            for (var i = 0; i < Owner.Inventory.Count; i++)
-            {
-                var obj = Owner.Inventory[i];
-                if (obj.MetaItem.Category == MetaItemCategory.Equipment)
-                    items.Add(new(obj));
-            }
+            Sound.Play(SoundNames.UIInventoryOpen);
+            lastKnownInput = InputMethod.None;
+            LayoutButtons();
 
-            for (var i = 0; i < Owner.Inventory.Count; i++)
-            {
-                var obj = Owner.Inventory[i];
-                if (obj.MetaItem.Category == MetaItemCategory.Consumable)
-                    items.Add(new(obj));
-            }
-
-            // Preserve current selection
-            previousSelectedItemName = Owner.Inventory.SelectedItem?.Name;
-
-            if (Owner.Inventory.GetItem(Owner.InventorySelectedItemName) == null)
-                Owner.InventorySelectedItemName = string.Empty;
-
-            // Select current selected item or restore last inventory selection
-            if (string.IsNullOrWhiteSpace(Owner.InventorySelectedItemName))
-            {
-                if (Owner.Inventory.SelectedItem is Item item)
-                    Select(item.Name);
-            }
-            else
-            {
-                Select(Owner.InventorySelectedItemName);
-            }
-
-            visualIndex = selectedIndex;
-        }
-
-        // OnUnloadContent
-        protected override void OnUnloadContent()
-        {
-            base.OnUnloadContent();
-
-            if (previousSelectedItemName != null)
-                Owner.Inventory.Select(previousSelectedItemName);
+            InvalidateCategory();
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            bottomGradient.Update(gameTime);
-            stick.Update(gameTime);
-
-            var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            visualIndex += (selectedIndex - visualIndex) * MathF.Min(1f, animationSpeed * deltaTime);
-
             base.OnUpdate(gameTime);
-
             buttonClose.Update(gameTime);
-            buttonViewAll.Update(gameTime);
-            buttonSelect.Update(gameTime);
+            buttonEquip.Update(gameTime);
             buttonUse.Update(gameTime);
+            categoryText.Update(gameTime);
+            grid.Update(gameTime);
+            gridContainerImage.Update(gameTime);
+            healthMeter.Update(gameTime);
+            itemName.Update(gameTime);
+            itemDescription.Update(gameTime);
+            nextTabButton.Update(gameTime);
+            previousTabButton.Update(gameTime);
+
+            if (lastKnownInput != InputManager.DefaultPlayer.LastInputMethod)
+            {
+                LayoutButtons();
+                lastKnownInput = InputManager.DefaultPlayer.LastInputMethod;
+            }
         }
 
         #endregion
 
         // Owner
         public Actor Owner { get; set; }
-
-        // InventoryItem
-        private sealed class InventoryItem : GameObject
-        {
-            private readonly ImageSprite image;
-
-            // Constructor
-            public InventoryItem(Item item)
-                : base(item.Owner.Game)
-            {
-                this.Item = item;
-
-                // Image
-                this.image = new(Game, item.MetaItem.Image)
-                {
-                    PivotOrigin = RectanglePoint.Middle
-                };
-            }
-
-            // OnDraw
-            protected override void OnDraw(GameTime gameTime)
-            {
-                image.Draw(gameTime);
-            }
-
-            // OnUpdate
-            protected override void OnUpdate(GameTime gameTime)
-            {
-            }
-
-            // BoundingBox
-            public RectangleF BoundingBox => image.BoundingBox;
-
-            // Item
-            public Item Item { get; }
-
-            // Opacity
-            public float Opacity
-            {
-                get => image.Opacity;
-                set => image.Opacity = value;
-            }
-
-            // Position
-            public Vector2 Position
-            {
-                get => image.Position;
-                set => image.Position = value;
-            }
-
-            // Scale
-            public Vector2 Scale
-            {
-                get => image.Scale;
-                set => image.Scale = value;
-            }
-        }
     }
 }

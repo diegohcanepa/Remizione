@@ -1,7 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 
-namespace Remizione.UI
+namespace Remizione
 {
     /// <summary>
     /// UIHealthMeter
@@ -25,9 +25,13 @@ namespace Remizione.UI
 
             for (var i = 0; i < hearts.Length; i++)
             {
-                hearts[i] = new(Game, Atlases.UI.HeartIcon) { Scale = ScaleInfo.UIElement.Small };
-                hearts[i].Position = pos;
-                pos.X += hearts[i].BoundingBox.Width + 1;
+                hearts[i] = new(Game, Atlases.UI.HeartIcon)
+                {
+                    Scale = ScaleInfo.UIElement.Small,
+                    Position = pos
+                };
+
+                pos.X += hearts[i].BoundingBox.Width + .5f;
             }
         }
 
@@ -42,8 +46,6 @@ namespace Remizione.UI
             fullHearts = actor.HP / 2;
             hasHalfHeart = actor.HP % 2 == 1;
             totalHearts = actor.MaxHP / 2;
-            //if (hasHalfHeart)
-            //  totalHearts += 1;
 
             for (int i = 0; i < totalHearts; i++)
             {

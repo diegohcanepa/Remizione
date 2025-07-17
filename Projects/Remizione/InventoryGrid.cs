@@ -1,5 +1,7 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
+using EngendroAdventure;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
@@ -8,16 +10,16 @@ namespace Remizione
     /// <summary>
     /// InventoryGrid
     /// </summary>
-    internal sealed class InventoryGrid : GameObject, IInputHandler
+    public sealed class InventoryGrid : GameObject, IInputHandler
     {
         const int slotSize = 20;
 
         private readonly int columns;
         private Vector2 position;
         private readonly int rows;
-        private readonly ImageSprite selectionImage;
         private int selectedSlotIndex;
         private readonly List<InventorySlot> slots;
+        private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 100 };
 
         // Constructor
         public InventoryGrid(Inventory inventory, int columns, int rows)
@@ -28,18 +30,9 @@ namespace Remizione
             this.rows = rows;
             this.slots = new List<InventorySlot>(columns * rows);
 
-            // Selection image
-            this.selectionImage = new ImageSprite(Game, null)//Atlases.UI.InventorySlotSelection)
-            {
-                Color = ColorPalette.Text.Dark,
-                Opacity = .8f,
-                Scale = new(.75f)
-            };
-            this.selectionImage.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicInOut, .4f, .8f, 1000, -1);
-
             for (int i = 0; i < columns * rows; i++)
             {
-                slots.Add(new InventorySlot(inventory.Owner.Game));
+                slots.Add(new InventorySlot(this));
             }
 
             Layout();
@@ -80,21 +73,13 @@ namespace Remizione
             {
                 slots[i].Position = GetSlotPosition(i);
                 slots[i].Draw(gameTime);
-
-                if (selectedSlotIndex == i)
-                {
-                    Game.SpriteBatch.Begin(Game.Camera);
-                    selectionImage.Position = SelectedSlot.Position;
-                    selectionImage.Draw(gameTime);
-                    Game.SpriteBatch.End();
-                }
             }
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            selectionImage.Update(gameTime);
+            stick.Update(gameTime);
         }
 
         #endregion
@@ -163,51 +148,104 @@ namespace Remizione
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
-            if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
+            if (HandleMouseInput())
+                return HandleInputResult.Handled;
+
+            // Move up
+            if (InputBindings.SelectUp.IsPressed(0) || stick.IsUp(PlayerIndex.One))
             {
-                if (GetSlotAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is InventorySlot slot)
-                {
-                    if (slot != SelectedSlot)
-                    {
-                        SelectSlot(slot);
-                        return HandleInputResult.Handled;
-                    }
-                }
+                Move(Direction.Up);
+                return HandleInputResult.Handled;
+            }
+
+            // Move left
+            else if (InputBindings.SelectLeft.IsPressed(0) || stick.IsLeft(PlayerIndex.One))
+            {
+                Move(Direction.Left);
+                return HandleInputResult.Handled;
+            }
+
+            // Move down
+            if (InputBindings.SelectDown.IsPressed(0) || stick.IsDown(PlayerIndex.One))
+            {
+                Move(Direction.Down);
+                return HandleInputResult.Handled;
+            }
+
+            // Move right
+            if (InputBindings.SelectRight.IsPressed(0) || stick.IsRight(PlayerIndex.One))
+            {
+                Move(Direction.Right);
+                return HandleInputResult.Handled;
             }
 
             return HandleInputResult.Unhandled;
         }
 
-        // MoveDown
-        public void MoveDown()
+        // HandleMouseInput
+        public bool HandleMouseInput()
         {
-            int row = SelectedSlotIndex / columns;
-            row = (row + 1) % rows; // Movimiento cíclico vertical
-            SelectedSlotIndex = row * columns + (SelectedSlotIndex % columns);
+            if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
+            {
+                if (GetSlotAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is InventorySlot slot)
+                {
+                    MouseCursor.Instance.AnimateClick();
+
+                    if (slot.Item == null)
+                    {
+                        Sound.Play(SoundNames.Error);
+                    }
+                    else if (slot != SelectedSlot)
+                    {
+                        SelectSlot(slot);
+                        Sound.Play(SoundNames.UIHover);
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
-        // MoveLeft
-        public void MoveLeft()
+        // Move
+        public bool Move(Direction direction)
         {
-            int col = SelectedSlotIndex % columns;
-            col = (col - 1 + columns) % columns; // Movimiento cíclico horizontal
-            SelectedSlotIndex = (SelectedSlotIndex / columns) * columns + col;
-        }
+            int index, col, row;
+            switch (direction)
+            {
+                case Direction.Down:
+                    row = SelectedSlotIndex / columns;
+                    row = (row + 1) % rows; // Movimiento cíclico vertical
+                    index = row * columns + (SelectedSlotIndex % columns);
+                    break;
 
-        // MoveRight
-        public void MoveRight()
-        {
-            int col = SelectedSlotIndex % columns;
-            col = (col + 1) % columns; // Movimiento cíclico horizontal
-            SelectedSlotIndex = (SelectedSlotIndex / columns) * columns + col;
-        }
+                case Direction.Left:
+                    col = SelectedSlotIndex % columns;
+                    col = (col - 1 + columns) % columns; // Movimiento cíclico horizontal
+                    index = (SelectedSlotIndex / columns) * columns + col;
+                    break;
 
-        // MoveUp
-        public void MoveUp()
-        {
-            int row = SelectedSlotIndex / columns;
-            row = (row - 1 + rows) % rows; // Movimiento cíclico vertical
-            SelectedSlotIndex = row * columns + (SelectedSlotIndex % columns);
+                case Direction.Right:
+                    col = SelectedSlotIndex % columns;
+                    col = (col + 1) % columns; // Movimiento cíclico horizontal
+                    index = (SelectedSlotIndex / columns) * columns + col;
+                    break;
+
+                default:
+                    row = SelectedSlotIndex / columns;
+                    row = (row - 1 + rows) % rows; // Movimiento cíclico vertical
+                    index = row * columns + (SelectedSlotIndex % columns);
+                    break;
+            }
+
+            if (slots[index].Item != null)
+            {
+                SelectedSlotIndex = index;
+                Sound.Play(SoundNames.UIHover);
+                return true;
+            }
+            else
+                return false;
         }
 
         // Inventory
@@ -242,6 +280,21 @@ namespace Remizione
         }
 
         // SelectSlot
+        public bool SelectSlot(string itemName)
+        {
+            for (var i = 0; i < slots.Count; i++)
+            {
+                if (slots[i].Item?.Name == itemName)
+                {
+                    SelectSlot(i);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        // SelectSlot
         public bool SelectSlot(InventorySlot slot)
         {
             for (var i = 0; i < slots.Count; i++)
@@ -265,7 +318,7 @@ namespace Remizione
             get => selectedSlotIndex;
             set
             {
-                if (value != selectedSlotIndex)
+                //if (value != selectedSlotIndex)
                 {
                     if (SelectedSlot?.Item is Item item)
                         item.Unread = false;

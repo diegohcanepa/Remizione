@@ -326,51 +326,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UI-assets/ButtonContainer.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>14,3,27,5</rect>
-                <key>scale9Paddings</key>
-                <rect>14,3,27,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UI-assets/CharacterSheetContainer.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>26,30,52,59</rect>
-                <key>scale9Paddings</key>
-                <rect>26,30,52,59</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UI-assets/CharacterSheetStatContainer.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>22,3,44,5</rect>
-                <key>scale9Paddings</key>
-                <rect>22,3,44,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">UI-assets/CheckMark.png</key>
             <key type="filename">UI-assets/ProhibitionMark.png</key>
             <struct type="IndividualSpriteSettings">
@@ -492,6 +447,36 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">UI-assets/InventoryGridContainer.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>29,27,57,53</rect>
+                <key>scale9Paddings</key>
+                <rect>29,27,57,53</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UI-assets/InventoryInfoContainer.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>25,27,49,53</rect>
+                <key>scale9Paddings</key>
+                <rect>25,27,49,53</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">UI-assets/InventorySlot.png</key>
             <key type="filename">UI-assets/QuickSlot.png</key>
             <struct type="IndividualSpriteSettings">
@@ -520,36 +505,6 @@
                 <rect>4,5,9,9</rect>
                 <key>scale9Paddings</key>
                 <rect>4,5,9,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UI-assets/ItemMenuContainer.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>23,25,45,51</rect>
-                <key>scale9Paddings</key>
-                <rect>23,25,45,51</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UI-assets/ItemMenuContainerSelection.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>22,2,44,4</rect>
-                <key>scale9Paddings</key>
-                <rect>22,2,44,4</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

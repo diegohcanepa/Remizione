@@ -22,7 +22,6 @@ namespace Remizione
         #region Private fields
 
         private enum AttributeName { RandomSeed, WorldVersion }
-        private readonly CharacterSheetScene characterSheetScene;
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
         private bool inGameMenuLocked;
@@ -70,7 +69,6 @@ namespace Remizione
             }
 
             this.inGameMenuScene = new(this);
-            this.characterSheetScene = new(Game);
             this.echoScene = new(Game);
 
             LocalizationSource = LocalizationSource.Script;
@@ -396,6 +394,15 @@ namespace Remizione
         [ScriptMethod(CodingContext.Any)]
         public void ClearOverlayTexts() => OverlayTexts.Clear();
 
+        // DefaultConsumableItem
+        public string DefaultConsumableItem { get; set; } = string.Empty;
+
+        // DefaultEquipmentItem
+        public string DefaultEquipmentItem { get; set; } = string.Empty;
+
+        // DefaultMiscItem
+        public string DefaultMiscItem { get; set; } = string.Empty;
+
         // DialogOptionId
         [ScriptProperty]
         public int DialogOptionId { get; set; }
@@ -487,6 +494,9 @@ namespace Remizione
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
 
+        // SelectedItemCategory
+        public MetaItemCategory SelectedItemCategory { get; set; } = MetaItemCategory.Consumable;
+
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)
         {
@@ -499,16 +509,6 @@ namespace Remizione
 
             else
                 Camera.Shake(TweenStyle.Linear, new Vector2(3.4f), 50, 4);
-        }
-
-        // ShowCharacterSheet
-        public void ShowCharacterSheet()
-        {
-            if (Player == null)
-                return;
-
-            characterSheetScene.Actor = Player;
-            Game.SceneManager.Push(characterSheetScene);
         }
 
         // ShowEcho

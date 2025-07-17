@@ -27,7 +27,8 @@ namespace Remizione
             menu.AddOption(Localization.GetValue(InGameMenuOptionName.SacredWords));
             menu.AddOption(Localization.GetValue(InGameMenuOptionName.Prayers));
             menu.AddOption(Localization.GetValue(InGameMenuOptionName.Gifts));
-            menu.AddOption(Localization.GetValue(InGameMenuOptionName.Attributes), session.ShowCharacterSheet); menu.AddOption(Localization.GetValue(InGameMenuOptionName.Map));
+            menu.AddOption(Localization.GetValue(InGameMenuOptionName.Attributes));
+            menu.AddOption(Localization.GetValue(InGameMenuOptionName.Map));
             menu.AddOption(Localization.GetValue(InGameMenuOptionName.Creatures));
             menu.AddOption(Localization.GetValue(InGameMenuOptionName.Settings));
         }
