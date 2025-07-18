@@ -273,10 +273,6 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(GameplayMode)]?.Value is string gameplayMode)
                 GameplayMode = Enum.Parse<GameplayMode>(gameplayMode);
 
-            // InventoryEnabled
-            if (sessionNode.Attributes[nameof(InventoryEnabled)]?.Value is string inventoryEnabledValue)
-                InventoryEnabled = XmlConvert.ToBoolean(inventoryEnabledValue);
-
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
                 Player = GetEntity<Actor>(player);
@@ -364,9 +360,6 @@ namespace Remizione
             // GameplayMode
             output.WriteAttributeString(nameof(GameplayMode), XmlConvert.ToString((int)GameplayMode));
 
-            // InventoryEnabled
-            output.WriteAttributeString(nameof(InventoryEnabled), XmlConvert.ToString(InventoryEnabled));
-
             // NextRainCooldown
             output.WriteAttributeString(nameof(NextRainCooldown), XmlConvert.ToString(NextRainCooldown));
 
@@ -432,10 +425,6 @@ namespace Remizione
         // ImpactWordPool
         public ObjectPool<ImpactWord> ImpactWordPool { get; }
 
-        // InventoryEnabled
-        [ScriptProperty]
-        public bool InventoryEnabled { get; set; }
-
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
 
@@ -496,6 +485,19 @@ namespace Remizione
 
         // SelectedItemCategory
         public MetaItemCategory SelectedItemCategory { get; set; } = MetaItemCategory.Consumable;
+
+        // SetDefaultItem
+        public void SetDefaultItem(Item item)
+        {
+            if (item.MetaItem.Category == MetaItemCategory.Consumable)
+                DefaultConsumableItem = item.Name;
+
+            else if (item.MetaItem.Category == MetaItemCategory.Equipment)
+                DefaultEquipmentItem = item.Name;
+
+            else if (item.MetaItem.Category == MetaItemCategory.Misc)
+                DefaultMiscItem = item.Name;
+        }
 
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)

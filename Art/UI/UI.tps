@@ -279,6 +279,7 @@
                 <false/>
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
+            <key type="filename">UI-assets/CheckMark.png</key>
             <key type="filename">UIIcons-assets/MiniHeartHalfIcon.png</key>
             <key type="filename">UIIcons-assets/MiniHeartIcon.png</key>
             <struct type="IndividualSpriteSettings">
@@ -323,22 +324,6 @@
                 <rect>60,8,120,15</rect>
                 <key>scale9Paddings</key>
                 <rect>60,8,120,15</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UI-assets/CheckMark.png</key>
-            <key type="filename">UI-assets/ProhibitionMark.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -568,6 +553,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">UI-assets/ProhibitionMark.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">UI-assets/SavingIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -659,6 +659,21 @@
                 <rect>0,3,1,5</rect>
                 <key>scale9Paddings</key>
                 <rect>0,3,1,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UI-assets/UnreadSign.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,2,1,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,2,1,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

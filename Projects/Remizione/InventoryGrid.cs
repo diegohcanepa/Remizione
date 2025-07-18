@@ -71,7 +71,6 @@ namespace Remizione
         {
             for (int i = 0; i < slots.Count; i++)
             {
-                slots[i].Position = GetSlotPosition(i);
                 slots[i].Draw(gameTime);
             }
         }
@@ -113,6 +112,18 @@ namespace Remizione
             }
 
             SelectSlot(0);
+        }
+
+        // GetSlot
+        public InventorySlot? GetSlot(Item item)
+        {
+            for (var i = 0; i < slots.Count; i++)
+            {
+                if (slots[i].Item == item)
+                    return slots[i];    
+            }
+
+            return null;
         }
 
         // GetSlotAt

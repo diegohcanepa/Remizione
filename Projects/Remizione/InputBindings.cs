@@ -62,11 +62,5 @@ namespace Remizione
         internal static readonly InputBinding SelectLeft = InputManager.AddBinding(nameof(SelectLeft), Buttons.DPadLeft, Keys.Left, Keys.A);
         internal static readonly InputBinding SelectRight = InputManager.AddBinding(nameof(SelectRight), Buttons.DPadRight, Keys.Right, Keys.D);
         internal static readonly InputBinding SelectUp = InputManager.AddBinding(nameof(SelectUp), Buttons.DPadUp, Keys.Up, Keys.W);
-
-        // Quick slot
-        internal static readonly InputBinding QuickSlotNextConsumable = InputManager.AddBinding(nameof(QuickSlotNextConsumable), Buttons.DPadDown, Keys.Down);
-        internal static readonly InputBinding QuickSlotNextEquipment = InputManager.AddBinding(nameof(QuickSlotNextEquipment), Buttons.DPadRight, Keys.Right);
-        internal static readonly InputBinding QuickSlotPreviousConsumable = InputManager.AddBinding(nameof(QuickSlotPreviousConsumable), Buttons.DPadUp, Keys.Up);
-        internal static readonly InputBinding QuickSlotPreviousEquipment = InputManager.AddBinding(nameof(QuickSlotPreviousEquipment), Buttons.DPadLeft, Keys.Left);
     }
 }

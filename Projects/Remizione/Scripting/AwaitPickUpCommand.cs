@@ -30,12 +30,6 @@ namespace Remizione.Scripting
 
             var metaItem = MetaItem.Find(pickupItem.StaticName);
 
-            if (!actor.Session.InventoryEnabled)
-            {
-                actor.Session.HUD.Message.Show(HUDMessageKind.NoInventoryBag, true);
-                return;
-            }
-
             // Stackable item already in inventory
             if (metaItem != null && metaItem.IsStackable && actor.Inventory.GetItem(metaItem.Name) is Item item)
             {

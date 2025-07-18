@@ -16,7 +16,6 @@ namespace Remizione
             : base(playerIndex)
         {
             this.Actor = actor;
-            //this.inventoryScene = new(actor);
             this.inventoryScene = new(actor);
         }
 
@@ -26,7 +25,7 @@ namespace Remizione
         private HandleInputResult HandleGamePadInput()
         {
             // Inventory
-            if (Actor.Session.InventoryEnabled && InputBindings.Inventory.IsPressed(PlayerIndex.One))
+            if (InputBindings.Inventory.IsPressed(PlayerIndex.One))
             {
                 inventoryScene.SceneController.Push();
                 return HandleInputResult.Handled;

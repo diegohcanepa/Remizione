@@ -95,36 +95,40 @@ namespace Remizione
             }
         }
 
-        // SelectNext
-        private bool SelectNext(MetaItemCategory category)
+        // SelectFirst
+        private bool SelectFirst()
         {
             if (actor != null)
-            {
-                for (var i = 0; i < actor.Inventory.Count; i++)
-                {
-                    actor.Inventory.SelectNext();
-                    if (actor.Inventory.SelectedItem?.MetaItem is MetaItem metaItem && metaItem.Category == category)
-                        return true;
-                }
-            }
+                return actor.Inventory.SelectFirst(MetaItemCategory.Equipment) != null;
+            else
+                return false;
+        }
 
-            return false;
+        // SelectLast
+        private bool SelectLast()
+        {
+            if (actor != null)
+                return actor.Inventory.SelectLast(MetaItemCategory.Equipment) != null;
+            else
+                return false;
+        }
+
+        // SelectNext
+        private bool SelectNext()
+        {
+            if (actor != null)
+                return actor.Inventory.SelectNext(MetaItemCategory.Equipment) != null;
+            else
+                return false;
         }
 
         // SelectPrevious
-        private bool SelectPrevious(MetaItemCategory category)
+        private bool SelectPrevious()
         {
             if (actor != null)
-            {
-                for (var i = actor.Inventory.Count - 1; i >= 0; i--)
-                {
-                    actor.Inventory.SelectPrevious();
-                    if (actor.Inventory.SelectedItem?.MetaItem is MetaItem metaItem && metaItem.Category == category)
-                        return true;
-                }
-            }
-
-            return false;
+                return actor.Inventory.SelectPrevious(MetaItemCategory.Equipment) != null;
+            else
+                return false;
         }
 
         #endregion
@@ -144,7 +148,7 @@ namespace Remizione
 
             if (lastKnownItem != null)
             {
-                button.Draw(gameTime);
+                //button.Draw(gameTime);
 
                 if (lastKnownItem.MetaItem.IsStackable)
                 {
@@ -203,33 +207,37 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
-            if (InputBindings.QuickSlotNextEquipment.IsPressed(PlayerIndex.One))
+            // First item
+            if (InputBindings.SelectUp.IsPressed(PlayerIndex.One))
             {
-                if (SelectNext(MetaItemCategory.Equipment))
+                if (SelectFirst())
                     Sound.Play(SoundNames.UIHover);
 
                 return HandleInputResult.Handled;
             }
 
-            else if (InputBindings.QuickSlotPreviousEquipment.IsPressed(PlayerIndex.One))
+            // Last item
+            else if (InputBindings.SelectDown.IsPressed(PlayerIndex.One))
             {
-                if (SelectPrevious(MetaItemCategory.Equipment))
+                if (SelectLast())
                     Sound.Play(SoundNames.UIHover);
 
                 return HandleInputResult.Handled;
             }
 
-            else if (InputBindings.QuickSlotNextConsumable.IsPressed(PlayerIndex.One))
+            // Previous item
+            else if (InputBindings.SelectLeft.IsPressed(PlayerIndex.One))
             {
-                if (SelectNext(MetaItemCategory.Consumable))
+                if (SelectPrevious())
                     Sound.Play(SoundNames.UIHover);
 
                 return HandleInputResult.Handled;
             }
 
-            else if (InputBindings.QuickSlotPreviousConsumable.IsPressed(PlayerIndex.One))
+            // Last item
+            else if (InputBindings.SelectRight.IsPressed(PlayerIndex.One))
             {
-                if (SelectPrevious(MetaItemCategory.Consumable))
+                if (SelectNext())
                     Sound.Play(SoundNames.UIHover);
 
                 return HandleInputResult.Handled;

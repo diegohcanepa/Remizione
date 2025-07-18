@@ -15,12 +15,13 @@ namespace Remizione
         private const int maxInfoTextWidth = 80;
 
         private readonly UITextButton buttonClose;
-        private readonly UITextButton buttonEquip;
-        private readonly UITextButton buttonUse;
+        private readonly UITextButton buttonSelect;
         private readonly List<MetaItemCategory> categories = [MetaItemCategory.Consumable, MetaItemCategory.Equipment, MetaItemCategory.Misc];
         private readonly TextSprite categoryText;
-        private readonly InventoryGrid grid;
         private readonly ImageSprite gridContainerImage;
+        private Item? equippedItem;
+        private readonly InventoryGrid grid;
+        private readonly ImageSprite checkMark;
         private readonly UIHealthMeter healthMeter;
         private readonly ImageSprite infoContainerImage;
         private readonly TextSprite itemDescription;
@@ -43,6 +44,13 @@ namespace Remizione
             this.healthMeter = new(Game)
             {
                 Actor = owner,
+            };
+
+            // Checkmark
+            this.checkMark = new(Game, Atlases.UI.CheckMark)
+            {
+                PivotOrigin = RectanglePoint.RightTop,
+                Scale = ScaleInfo.UIElement.Medium
             };
 
             // Grid container
@@ -118,13 +126,7 @@ namespace Remizione
             };
 
             // Equip button
-            buttonEquip = new UITextButton(owner.Game, InputBindings.Equip)
-            {
-                PivotOrigin = RectanglePoint.RightBottom,
-            };
-
-            // Use button
-            buttonUse = new UITextButton(owner.Game, InputBindings.UseItem)
+            buttonSelect = new UITextButton(owner.Game, InputBindings.Select)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
             };
@@ -133,26 +135,6 @@ namespace Remizione
         #endregion
 
         #region Private members
-
-        // HandleMouseInput
-        private bool HandleMouseInput()
-        {
-            if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
-                return false;
-
-            /*
-            if (grid.GetSlotAt(InputManager.DefaultPlayer.Mouse.VirtualPosition)?.Item is Item item)
-            {
-                sele
-
-                Select(items.IndexOf(item));
-                MouseCursor.Instance.AnimateClick();
-                Sound.Play(SoundNames.UIHover);
-            }
-            */
-
-            return false;
-        }
 
         // InvalidateCategory
         private void InvalidateCategory()
@@ -171,6 +153,19 @@ namespace Remizione
                 grid.SelectSlot(0);
 
             InvalidateItemInfo();
+            InvalidateEquippedItem();
+        }
+
+        // InvalidateEquippedItem
+        private void InvalidateEquippedItem()
+        {        
+            if (equippedItem != null && grid.GetSlot(equippedItem) is InventorySlot slot)
+            {
+                checkMark.Image = Atlases.UI.CheckMark;
+                checkMark.Position = slot.BoundingBox.GetPoint(RectanglePoint.RightBottom, -1, -8);
+            }
+            else
+                checkMark.Image = null;
         }
 
         // InvalidateItemInfo
@@ -181,22 +176,18 @@ namespace Remizione
                 itemName.Text = TextRepository.GetValue($"Item.{item.Name}.Name") + (item.Level == 0 ? string.Empty : $" +{item.Level}");
                 itemDescription.Text = $"@Item.{item.Name}.Description";
                 itemDescription.Position = itemName.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
-                //itemActionButton.TextColor = ColorPalette.Text.Light;
-                //itemActionButton.Text = item.MetaItem.Action == ItemAction.None ? null : $"@ItemActions.{item.MetaItem.Action}";
             }
             else
             {
                 itemName.Text = null;
                 itemDescription.Text = null;
-                //itemActionButton.Text = null;
             }
         }
 
         // LayoutButtons
         private void LayoutButtons()
         {
-            buttonEquip.Position = buttonClose.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -5, 0);
-            buttonUse.Position = buttonEquip.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -5, 0);
+            buttonSelect.Position = buttonClose.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -5, 0);
         }
 
         // NextCategory
@@ -240,10 +231,19 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             buttonClose.Draw(gameTime);
-            buttonEquip.Draw(gameTime);
-            buttonUse.Draw(gameTime);
+
+            if (grid.SelectedSlot?.Item != null)
+                buttonSelect.Draw(gameTime);
 
             grid.Draw(gameTime);
+
+            if (equippedItem != null && equippedItem.MetaItem.Category == Owner.Session.SelectedItemCategory)
+            {
+                Game.SpriteBatch.Begin(Game.Camera);
+                checkMark.Draw(gameTime);
+                Game.SpriteBatch.End();
+            }
+
             nextTabButton.Draw(gameTime);
             previousTabButton.Draw(gameTime);
 
@@ -261,27 +261,10 @@ namespace Remizione
             if (grid.HandleInput(gameTime) == HandleInputResult.Handled)
             {
                 InvalidateItemInfo();
-
-                if (grid.SelectedSlot?.Item is Item item)
-                {
-                    if (item.MetaItem.Category == MetaItemCategory.Consumable)
-                        Owner.Session.DefaultConsumableItem = item.Name;
-
-                    else if (item.MetaItem.Category == MetaItemCategory.Equipment)
-                        Owner.Session.DefaultEquipmentItem = item.Name;
-
-                    else if (item.MetaItem.Category == MetaItemCategory.Misc)
-                        Owner.Session.DefaultMiscItem = item.Name;
-                }
-
+                if (grid.SelectedSlot?.Item != null)
+                    Owner.Session.SetDefaultItem(grid.SelectedSlot.Item);
+                
                 return HandleInputResult.Handled;
-            }
-
-            // Mouse input
-            if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
-            {
-                if (HandleMouseInput())
-                    return HandleInputResult.Handled;
             }
 
             // Close
@@ -289,6 +272,17 @@ namespace Remizione
             {
                 SceneController.Pop();
                 return HandleInputResult.Handled;
+            }
+
+            if (grid.SelectedSlot?.Item is Item item)
+            {
+                // Equip
+                if (buttonSelect.TestPressed(PlayerIndex.One))
+                {
+                    equippedItem = item;
+                    InvalidateEquippedItem();
+                    return HandleInputResult.Handled;
+                }
             }
 
             // Next category
@@ -313,6 +307,9 @@ namespace Remizione
         {
             base.OnLoadContent();
 
+            equippedItem = Owner.Inventory.SelectedItem;
+            InvalidateEquippedItem();
+
             Sound.Play(SoundNames.UIInventoryOpen);
             lastKnownInput = InputMethod.None;
             LayoutButtons();
@@ -320,13 +317,21 @@ namespace Remizione
             InvalidateCategory();
         }
 
+        // OnUnload
+        protected override void OnUnloadContent()
+        {
+            base.OnUnloadContent();
+
+            if (equippedItem != null)
+                Owner.Inventory.Select(equippedItem);
+        }
+
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
             buttonClose.Update(gameTime);
-            buttonEquip.Update(gameTime);
-            buttonUse.Update(gameTime);
+            buttonSelect.Update(gameTime);
             categoryText.Update(gameTime);
             grid.Update(gameTime);
             gridContainerImage.Update(gameTime);

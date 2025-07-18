@@ -172,6 +172,36 @@ namespace Remizione
         // SelectedItem
         public Item? SelectedItem { get; private set; }
 
+        // SelectFirst
+        public Item? SelectFirst(MetaItemCategory category)
+        {
+            for (var i = 0; i < items.Count; i++)
+            {
+                if (items[i]?.MetaItem is MetaItem metaItem && metaItem.Category == category)
+                {
+                    Select(items[i]);
+                    return items[i];
+                }
+            }
+
+            return null;
+        }
+
+        // SelectLast
+        public Item? SelectLast(MetaItemCategory category)
+        {
+            for (var i = items.Count - 1; i >= 0; i--)
+            {
+                if (items[i]?.MetaItem is MetaItem metaItem && metaItem.Category == category)
+                {
+                    Select(items[i]);
+                    return items[i];
+                }
+            }
+
+            return null;
+        }
+
         // SelectNext
         public Item? SelectNext()
         {

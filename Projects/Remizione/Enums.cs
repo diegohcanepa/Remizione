@@ -36,7 +36,7 @@ namespace Remizione
     public enum HitTestSource { Hotspot, Collider }
 
     // HUDMessageKind
-    public enum HUDMessageKind { CannotPlaceItem, EnoughOfThat, InventoryFull, NoInventoryBag, NotEnoughFaith }
+    public enum HUDMessageKind { CannotPlaceItem, EnoughOfThat, InventoryFull, NotEnoughFaith }
 
     // ImpactType
     public enum ImpactType { Low, Medium, High }

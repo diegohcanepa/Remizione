@@ -263,39 +263,27 @@ namespace Engendro
         public void FlipRight()
         {
             if (IsFlippedVertically)
-            {
                 Effects = SpriteEffects.FlipVertically;
-            }
             else
-            {
                 Effects = SpriteEffects.None;
-            }
         }
 
         // FlipUp
         public void FlipUp()
         {
             if (IsFlippedHorizontally)
-            {
                 Effects = SpriteEffects.FlipHorizontally;
-            }
             else
-            {
                 Effects = SpriteEffects.None;
-            }
         }
 
         // FlipVertically
         public void FlipVertically()
         {
             if (IsFlippedVertically)
-            {
                 FlipUp();
-            }
             else
-            {
                 FlipDown();
-            }
         }
 
         // Height
@@ -304,17 +292,11 @@ namespace Engendro
             get
             {
                 if (InternalImage == null)
-                {
                     return 0;
-                }
                 else if (InternalImage.TextureArea.IsEmpty)
-                {
                     return InternalImage.Atlas.Texture.Height;
-                }
                 else
-                {
                     return InternalImage.TextureArea.Height;
-                }
             }
         }
 

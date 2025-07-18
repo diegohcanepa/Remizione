@@ -81,7 +81,7 @@ namespace Remizione
         public RectangleF BoundingBox => slotImage.BoundingBox;
 
         // IsSelected
-        public bool IsSelected => grid.SelectedSlot == this;
+        public bool IsSelected => grid.SelectedSlot == this && Item != null;
 
         // Item
         public Item? Item

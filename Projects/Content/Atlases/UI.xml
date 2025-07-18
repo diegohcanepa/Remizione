@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:9647e04a2dff7d22123c9e73d93bf312:fdaa873beb58292f014c4b776e4ae1d2:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:209b69d3a86507e7592ea18ba8813d92:b38b30f00502e19a0e75964f8c7e6c2a:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -22,12 +22,12 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 <TextureAtlas imagePath="UI.png" width="512" height="512">
     <sprite n="Apple.png" x="484" y="2" w="20" h="20"/>
     <sprite n="BottomGradient.png" x="268" y="90" w="240" h="53"/>
-    <sprite n="CheckMark.png" x="211" y="489" w="11" h="11"/>
+    <sprite n="CheckMark.png" x="86" y="503" w="7" h="6"/>
     <sprite n="Chili.png" x="484" y="24" w="20" h="20"/>
     <sprite n="CloseWindowButton.png" x="156" y="489" w="11" h="12"/>
     <sprite n="ContextMenuOptionSelector.png" x="506" y="2" w="4" h="5"/>
     <sprite n="CreditsBar.png" x="2" y="2" w="480" h="67"/>
-    <sprite n="DialogArrowLarge.png" x="94" y="503" w="7" h="5"/>
+    <sprite n="DialogArrowLarge.png" x="103" y="503" w="7" h="5"/>
     <sprite n="DialogOptionBullet.png" x="506" y="9" w="4" h="4"/>
     <sprite n="Duck.png" x="484" y="46" w="20" h="20"/>
     <sprite n="FaithAmountIconLeft.png" x="56" y="71" w="29" h="14"/>
@@ -57,28 +57,29 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MiniHeartHalfIcon.png" x="463" y="78" w="7" h="7"/>
     <sprite n="MiniHeartIcon.png" x="472" y="78" w="7" h="7"/>
     <sprite n="MissingItem.png" x="484" y="68" w="20" h="20"/>
-    <sprite n="MouseCursorArrow.png" x="86" y="503" w="6" h="6"/>
-    <sprite n="MouseCursorCross.png" x="234" y="465" w="9" h="11"/>
-    <sprite n="MouseCursorCrossOn.png" x="245" y="465" w="9" h="11"/>
+    <sprite n="MouseCursorArrow.png" x="95" y="503" w="6" h="6"/>
+    <sprite n="MouseCursorCross.png" x="221" y="465" w="9" h="11"/>
+    <sprite n="MouseCursorCrossOn.png" x="232" y="465" w="9" h="11"/>
     <sprite n="MouseCursorWait.png" x="41" y="71" w="13" h="15"/>
-    <sprite n="Pixel.png" x="509" y="19" w="1" h="1"/>
+    <sprite n="Pixel.png" x="509" y="27" w="1" h="1"/>
     <sprite n="PopupContainer.png" x="2" y="90" w="264" h="311"/>
     <sprite n="PopupContainerShadow.png" x="221" y="403" w="114" h="60"/>
     <sprite n="ProhibitionIcon.png" x="22" y="71" w="17" h="17"/>
-    <sprite n="ProhibitionMark.png" x="221" y="465" w="11" h="11"/>
+    <sprite n="ProhibitionMark.png" x="211" y="489" w="11" h="11"/>
     <sprite n="QuickSlot.png" x="45" y="489" w="19" h="18"/>
     <sprite n="RottenApple.png" x="2" y="489" w="20" h="20"/>
     <sprite n="SavingIcon.png" x="214" y="71" w="11" h="14"/>
-    <sprite n="SpeechBubbleCloseArrow.png" x="506" y="15" w="3" h="2"/>
+    <sprite n="SpeechBubbleCloseArrow.png" x="506" y="23" w="3" h="2"/>
     <sprite n="SpeechBubblePipe.png" x="241" y="85" w="5" h="3"/>
     <sprite n="TicketsIcon.png" x="2" y="71" w="18" h="17"/>
     <sprite n="TipBalloon.png" x="227" y="71" w="12" h="13"/>
-    <sprite n="UIControlContainerEdgeLeftLarge.png" x="256" y="465" w="5" h="11"/>
+    <sprite n="UIControlContainerEdgeLeftLarge.png" x="243" y="465" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeLeftSmall.png" x="387" y="78" w="5" h="10"/>
-    <sprite n="UIControlContainerEdgeRightLarge.png" x="263" y="465" w="5" h="11"/>
+    <sprite n="UIControlContainerEdgeRightLarge.png" x="250" y="465" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeRightSmall.png" x="394" y="78" w="5" h="10"/>
-    <sprite n="UITextButtonContainerEdge.png" x="270" y="465" w="5" h="11"/>
-    <sprite n="UITextButtonContainerPattern.png" x="506" y="19" w="1" h="11"/>
+    <sprite n="UITextButtonContainerEdge.png" x="257" y="465" w="5" h="11"/>
+    <sprite n="UITextButtonContainerPattern.png" x="506" y="27" w="1" h="11"/>
+    <sprite n="UnreadSign.png" x="506" y="15" w="3" h="6"/>
     <sprite n="XboxA.png" x="100" y="489" w="12" h="12"/>
     <sprite n="XboxB.png" x="114" y="489" w="12" h="12"/>
     <sprite n="XboxLeftShoulder.png" x="295" y="71" w="16" h="12"/>
