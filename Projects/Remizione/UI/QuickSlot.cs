@@ -70,7 +70,7 @@ namespace Remizione
         // InvalidateItem
         private void InvalidateItem(GameTime gameTime)
         {
-            lastKnownItem = actor?.Inventory.SelectedItem;
+            lastKnownItem = actor?.Equipment.SelectedItem;
 
             if (lastKnownItem != null)
             {
@@ -99,7 +99,7 @@ namespace Remizione
         private bool SelectFirst()
         {
             if (actor != null)
-                return actor.Inventory.SelectFirst(MetaItemCategory.Equipment) != null;
+                return actor.Equipment.SelectFirst() != null;
             else
                 return false;
         }
@@ -108,7 +108,7 @@ namespace Remizione
         private bool SelectLast()
         {
             if (actor != null)
-                return actor.Inventory.SelectLast(MetaItemCategory.Equipment) != null;
+                return actor.Equipment.SelectLast() != null;
             else
                 return false;
         }
@@ -117,7 +117,7 @@ namespace Remizione
         private bool SelectNext()
         {
             if (actor != null)
-                return actor.Inventory.SelectNext(MetaItemCategory.Equipment) != null;
+                return actor.Equipment.SelectNext() != null;
             else
                 return false;
         }
@@ -126,7 +126,7 @@ namespace Remizione
         private bool SelectPrevious()
         {
             if (actor != null)
-                return actor.Inventory.SelectPrevious(MetaItemCategory.Equipment) != null;
+                return actor.Equipment.SelectPrevious() != null;
             else
                 return false;
         }
@@ -148,7 +148,7 @@ namespace Remizione
 
             if (lastKnownItem != null)
             {
-                //button.Draw(gameTime);
+                button.Draw(gameTime);
 
                 if (lastKnownItem.MetaItem.IsStackable)
                 {
@@ -167,7 +167,7 @@ namespace Remizione
 
             button.Update(gameTime);
 
-            if (lastKnownItem != actor?.Inventory.SelectedItem)
+            if (lastKnownItem != actor?.Equipment.SelectedItem)
                 InvalidateItem(gameTime);
             else
                 InvalidateItemAmount(gameTime, false);
@@ -187,7 +187,7 @@ namespace Remizione
                 if (value != actor)
                 {
                     actor = value;
-                    itemImage.Image = actor?.Inventory.SelectedItem?.MetaItem.Image;
+                    itemImage.Image = actor?.Equipment.SelectedItem?.MetaItem.Image;
                     lastKnownCount = -1;
                     lastKnownItem = null;
                 }
@@ -247,6 +247,6 @@ namespace Remizione
         }
 
         // IsVisible
-        public bool IsVisible => actor != null && !actor.Inventory.IsEmpty && actor.Session.IsCurrentScene;
+        public bool IsVisible => actor != null && !actor.Equipment.IsEmpty && actor.Session.IsCurrentScene;
     }
 }

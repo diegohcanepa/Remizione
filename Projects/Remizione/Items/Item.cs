@@ -24,9 +24,9 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public Item(Inventory container, MetaItem metaItem)
+        public Item(Inventory inventory, MetaItem metaItem)
         {
-            this.Container = container;
+            this.Inventory = inventory;
             this.MetaItem = metaItem;
             this.PassiveEffectCooldown = metaItem.PassiveEffectCooldown;
         }
@@ -95,9 +95,6 @@ namespace Remizione
                     Durability -= 1;
             }
         }
-
-        // Container
-        public Inventory Container { get; private set; }
 
         // Count
         public int Count
@@ -170,20 +167,17 @@ namespace Remizione
                 values.Add(value);
             }
 
-            if (MetaItem.Faith != null)
-            {
-                var value = $"{TextRepository.GetValue($"DerivedStat.Faith.Name")}: {MetaItem.Faith.GetValueRangeAsString()}";
-                values.Add(value);
-            }
-
             return string.Join(" / ", values);
         }
 
         // Index
-        public int Index => Container.IndexOf(this);
+        public int Index => Inventory.IndexOf(this);
+
+        // Inventory
+        public Inventory Inventory { get; private set; }
 
         // IsSelected
-        public bool IsSelected => Container.SelectedItem == this;
+        public bool IsSelected => Inventory.SelectedItem == this;
 
         // IsStackFull
         public bool IsStackFull => MetaItem.Maximum == 1 || Count >= MetaItem.Maximum;
@@ -212,11 +206,12 @@ namespace Remizione
         public string Name => MetaItem.Name;
 
         // Owner
-        public GameThing Owner => Container.Owner;
+        public GameThing Owner => Inventory.Owner;
 
         // PassiveEffectCooldown
         public int PassiveEffectCooldown { get; set; }
 
+        /*
         // Update
         public void Update(GameTime gameTime)
         {
@@ -230,6 +225,7 @@ namespace Remizione
                 }
             }
         }
+        */
 
         // Range
         public int Range => MetaItem.Range;
@@ -237,8 +233,8 @@ namespace Remizione
         // Remove
         public void Remove()
         {
-            Container.SelectPrevious();
-            Container.Remove(this);
+            Inventory.SelectPrevious();
+            Inventory.Remove(this);
         }
 
         // Replenish
@@ -269,7 +265,7 @@ namespace Remizione
             if (MetaItem.Maximum > 1)
             {
                 if (Count == 1 && !MetaItem.AllowEmpty)
-                    Container.Remove(this);
+                    Inventory.Remove(this);
                 else
                     Count--;
             }

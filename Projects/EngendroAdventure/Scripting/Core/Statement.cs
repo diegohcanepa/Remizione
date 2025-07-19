@@ -38,7 +38,6 @@ namespace EngendroAdventure.Scripting
         protected static readonly string EventFrameArg = "#event";
         protected static readonly string FaceArg = "#face";
         protected static readonly string FadeArg = "#fade";
-        protected static readonly string FaithArg = "#faith";
         protected static readonly string FlipArg = "#flip";
         protected static readonly string FocusArg = "#focus";
         protected static readonly string FollowArg = "#follow";

@@ -173,6 +173,7 @@ namespace Remizione
         // PerformConsumeAction
         private bool PerformConsumeAction()
         {
+            /*
             if (!CanChangeState)
                 return false;
 
@@ -193,6 +194,8 @@ namespace Remizione
 
             consumeState.Item = itemToConsume;
             StateMachine.ChangeState(consumeState.Name);
+            */
+
             return true;
         }
 
@@ -218,12 +221,12 @@ namespace Remizione
             if (!CanChangeState)
                 return false;
 
-            if (Inventory.SelectedItem == null || Inventory.SelectedItem.MetaItem.Action != ItemAction.Throw || Inventory.SelectedItem.Count <= 0)
+            if (Equipment.SelectedItem == null || Equipment.SelectedItem.MetaItem.Action != ItemAction.Throw || Equipment.SelectedItem.Count <= 0)
                 return false;
 
             Stand();
-            Inventory.SelectedItem.Use();
-            throwItemState.Item = Inventory.SelectedItem;
+            Equipment.SelectedItem.Use();
+            throwItemState.Item = Equipment.SelectedItem;
             StateMachine.ChangeState(throwItemState.Name);
             return true;
         }
@@ -937,14 +940,14 @@ namespace Remizione
         // UseSelectedItem
         public void UseSelectedItem()
         {
-            if (Inventory.SelectedItem is Item item)
+            if (Equipment.SelectedItem is Item item)
             {
                 // Throwable
                 if (item.MetaItem.Action == ItemAction.Throw)
                     PerformThrowAction();
 
                 // Consume
-                else if (item.MetaItem.Category == MetaItemCategory.Consumable)
+                else if (item.MetaItem.Category == InventoryCategory.Consumables)
                     PerformConsumeAction();
             }
         }

@@ -387,15 +387,6 @@ namespace Remizione
         [ScriptMethod(CodingContext.Any)]
         public void ClearOverlayTexts() => OverlayTexts.Clear();
 
-        // DefaultConsumableItem
-        public string DefaultConsumableItem { get; set; } = string.Empty;
-
-        // DefaultEquipmentItem
-        public string DefaultEquipmentItem { get; set; } = string.Empty;
-
-        // DefaultMiscItem
-        public string DefaultMiscItem { get; set; } = string.Empty;
-
         // DialogOptionId
         [ScriptProperty]
         public int DialogOptionId { get; set; }
@@ -483,21 +474,8 @@ namespace Remizione
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
 
-        // SelectedItemCategory
-        public MetaItemCategory SelectedItemCategory { get; set; } = MetaItemCategory.Consumable;
-
-        // SetDefaultItem
-        public void SetDefaultItem(Item item)
-        {
-            if (item.MetaItem.Category == MetaItemCategory.Consumable)
-                DefaultConsumableItem = item.Name;
-
-            else if (item.MetaItem.Category == MetaItemCategory.Equipment)
-                DefaultEquipmentItem = item.Name;
-
-            else if (item.MetaItem.Category == MetaItemCategory.Misc)
-                DefaultMiscItem = item.Name;
-        }
+        // SelectedInventoryCategory
+        public InventoryCategory SelectedInventoryCategory { get; set; } = InventoryCategory.Consumables;
 
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)

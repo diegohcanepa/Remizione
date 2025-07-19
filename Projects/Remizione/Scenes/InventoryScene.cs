@@ -12,15 +12,20 @@ namespace Remizione
     /// </summary>
     public sealed class InventoryScene : Scene
     {
+        #region Private fields
+
         private const int maxInfoTextWidth = 80;
 
+        private InventoryGrid activeGrid;
         private readonly UITextButton buttonClose;
-        private readonly UITextButton buttonSelect;
-        private readonly List<MetaItemCategory> categories = [MetaItemCategory.Consumable, MetaItemCategory.Equipment, MetaItemCategory.Misc];
+        private readonly UITextButton buttonConsume;
+        private readonly UITextButton buttonDiscard;
+        private readonly UITextButton buttonEquip;
+        private readonly List<InventoryCategory> categories = [InventoryCategory.Consumables, InventoryCategory.Equipment, InventoryCategory.KeyItems];
         private readonly TextSprite categoryText;
         private readonly ImageSprite gridContainerImage;
         private Item? equippedItem;
-        private readonly InventoryGrid grid;
+        private readonly Dictionary<InventoryCategory, InventoryGrid> grids = [];
         private readonly ImageSprite checkMark;
         private readonly UIHealthMeter healthMeter;
         private readonly ImageSprite infoContainerImage;
@@ -30,6 +35,7 @@ namespace Remizione
         private readonly UITextButton nextTabButton;
         private readonly UITextButton previousTabButton;
 
+        #endregion
 
         #region Constructor
 
@@ -60,11 +66,17 @@ namespace Remizione
                 Position = new(10, 28),
             };
 
-            // grid
-            this.grid = new(owner.Inventory, 6, 4)
+            // Grids
+            grids[InventoryCategory.Consumables] = new InventoryGrid(owner.GetInventory(InventoryCategory.Consumables), 6, 4);
+            grids[InventoryCategory.Equipment] = new InventoryGrid(owner.GetInventory(InventoryCategory.Equipment), 6, 4);
+            grids[InventoryCategory.KeyItems] = new InventoryGrid(owner.GetInventory(InventoryCategory.KeyItems), 6, 4);
+
+            foreach (var grid in grids.Values)
             {
-                Position = gridContainerImage.BoundingBox.GetPoint(RectanglePoint.LeftTop, 3, 3)
-            };
+                grid.Position = gridContainerImage.BoundingBox.GetPoint(RectanglePoint.LeftTop, 3, 3);
+            }
+
+            activeGrid = grids[InventoryCategory.Consumables];
 
             // Previous tab button
             this.previousTabButton = new(Game, InputBindings.PreviousTab)
@@ -115,7 +127,7 @@ namespace Remizione
                 Color = ColorPalette.Text.Dark,
                 PivotOrigin = RectanglePoint.LeftTop,
                 MaximumWidth = maxInfoTextWidth,
-                Scale = ScaleInfo.Text.Large,
+                Scale = ScaleInfo.Text.Large
             };
 
             // Close button
@@ -125,10 +137,26 @@ namespace Remizione
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -2),
             };
 
+            // Consume button
+            buttonConsume = new UITextButton(owner.Game, InputBindings.ConsumeItem)
+            {
+                AllowSound = false,
+                PivotOrigin = RectanglePoint.RightBottom,
+                Position = infoContainerImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3, -3)
+            };
+
+            // Discard button
+            buttonDiscard = new UITextButton(owner.Game, InputBindings.Discard)
+            {
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = infoContainerImage.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 3, -3)
+            };
+
             // Equip button
-            buttonSelect = new UITextButton(owner.Game, InputBindings.Select)
+            buttonEquip = new UITextButton(owner.Game, InputBindings.Equip)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
+                Position = infoContainerImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3, -3)
             };
         }
 
@@ -136,30 +164,40 @@ namespace Remizione
 
         #region Private members
 
+        // DrawButtons
+        private void DrawButtons(GameTime gameTime)
+        {
+            buttonClose.Draw(gameTime);
+
+            if (activeGrid.SelectedSlot.Item is not Item item)
+                return;
+
+            buttonDiscard.Draw(gameTime);
+
+            if (item.MetaItem.Category == InventoryCategory.Equipment)
+            {
+                buttonEquip.IsEnabled = equippedItem != item;
+                buttonEquip.Draw(gameTime);
+            }
+            else if (item.MetaItem.Category == InventoryCategory.Consumables)
+            {
+                buttonConsume.Draw(gameTime);
+            }
+        }
+
         // InvalidateCategory
         private void InvalidateCategory()
         {
-            grid.Fill(Owner.Session.SelectedItemCategory);
-            categoryText.Text = Localization.GetValue(Owner.Session.SelectedItemCategory);
-
-            var itemName = string.Empty;
-            if (Owner.Session.SelectedItemCategory == MetaItemCategory.Consumable)
-                grid.SelectSlot(Owner.Session.DefaultConsumableItem);
-            else if (Owner.Session.SelectedItemCategory == MetaItemCategory.Equipment)
-                grid.SelectSlot(Owner.Session.DefaultEquipmentItem);
-            else if (Owner.Session.SelectedItemCategory == MetaItemCategory.Misc)
-                grid.SelectSlot(Owner.Session.DefaultMiscItem);
-            else
-                grid.SelectSlot(0);
-
+            activeGrid = grids[Owner.Session.SelectedInventoryCategory];
+            categoryText.Text = Localization.GetValue(Owner.Session.SelectedInventoryCategory);
             InvalidateItemInfo();
             InvalidateEquippedItem();
         }
 
         // InvalidateEquippedItem
         private void InvalidateEquippedItem()
-        {        
-            if (equippedItem != null && grid.GetSlot(equippedItem) is InventorySlot slot)
+        {
+            if (equippedItem != null && grids[InventoryCategory.Equipment].GetSlot(equippedItem) is InventorySlot slot)
             {
                 checkMark.Image = Atlases.UI.CheckMark;
                 checkMark.Position = slot.BoundingBox.GetPoint(RectanglePoint.RightBottom, -1, -8);
@@ -171,7 +209,7 @@ namespace Remizione
         // InvalidateItemInfo
         private void InvalidateItemInfo()
         {
-            if (grid.SelectedSlot?.Item is Item item)
+            if (activeGrid.SelectedSlot?.Item is Item item)
             {
                 itemName.Text = TextRepository.GetValue($"Item.{item.Name}.Name") + (item.Level == 0 ? string.Empty : $" +{item.Level}");
                 itemDescription.Text = $"@Item.{item.Name}.Description";
@@ -184,20 +222,14 @@ namespace Remizione
             }
         }
 
-        // LayoutButtons
-        private void LayoutButtons()
-        {
-            buttonSelect.Position = buttonClose.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -5, 0);
-        }
-
         // NextCategory
         private void NextCategory()
         {
-            var index = categories.IndexOf(Owner.Session.SelectedItemCategory);
+            var index = categories.IndexOf(Owner.Session.SelectedInventoryCategory);
             if (index == categories.Count - 1)
-                Owner.Session.SelectedItemCategory = categories[0];
+                Owner.Session.SelectedInventoryCategory = categories[0];
             else
-                Owner.Session.SelectedItemCategory = categories[index + 1];
+                Owner.Session.SelectedInventoryCategory = categories[index + 1];
 
             InvalidateCategory();
         }
@@ -205,11 +237,11 @@ namespace Remizione
         // PreviousCategory
         private void PreviousCategory()
         {
-            var index = categories.IndexOf(Owner.Session.SelectedItemCategory);
+            var index = categories.IndexOf(Owner.Session.SelectedInventoryCategory);
             if (index == 0)
-                Owner.Session.SelectedItemCategory = categories[^1];
+                Owner.Session.SelectedInventoryCategory = categories[^1];
             else
-                Owner.Session.SelectedItemCategory = categories[index - 1];
+                Owner.Session.SelectedInventoryCategory = categories[index - 1];
 
             InvalidateCategory();
         }
@@ -225,19 +257,17 @@ namespace Remizione
 
             healthMeter.Draw(gameTime);
 
+            // Containers
             Game.SpriteBatch.Begin(Game.Camera);
             gridContainerImage.Draw(gameTime);
             infoContainerImage.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            buttonClose.Draw(gameTime);
+            DrawButtons(gameTime);
 
-            if (grid.SelectedSlot?.Item != null)
-                buttonSelect.Draw(gameTime);
+            activeGrid.Draw(gameTime);
 
-            grid.Draw(gameTime);
-
-            if (equippedItem != null && equippedItem.MetaItem.Category == Owner.Session.SelectedItemCategory)
+            if (equippedItem != null && equippedItem.MetaItem.Category == Owner.Session.SelectedInventoryCategory)
             {
                 Game.SpriteBatch.Begin(Game.Camera);
                 checkMark.Draw(gameTime);
@@ -258,12 +288,9 @@ namespace Remizione
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
             // Grid
-            if (grid.HandleInput(gameTime) == HandleInputResult.Handled)
+            if (activeGrid.HandleInput(gameTime) == HandleInputResult.Handled)
             {
                 InvalidateItemInfo();
-                if (grid.SelectedSlot?.Item != null)
-                    Owner.Session.SetDefaultItem(grid.SelectedSlot.Item);
-                
                 return HandleInputResult.Handled;
             }
 
@@ -274,14 +301,28 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
-            if (grid.SelectedSlot?.Item is Item item)
+            if (activeGrid.SelectedSlot.Item != null)
             {
-                // Equip
-                if (buttonSelect.TestPressed(PlayerIndex.One))
+                // Consume
+                if (activeGrid.Inventory.Category == InventoryCategory.Consumables)
                 {
-                    equippedItem = item;
-                    InvalidateEquippedItem();
-                    return HandleInputResult.Handled;
+                    if (buttonConsume.TestPressed(PlayerIndex.One))
+                    {
+                        activeGrid.SelectedSlot.PerformDefaultAction();
+                        InvalidateItemInfo();
+                        return HandleInputResult.Handled;
+                    }
+                }
+
+                // Equip
+                if (activeGrid.Inventory.Category == InventoryCategory.Equipment)
+                {
+                    if (buttonEquip.TestPressed(PlayerIndex.One))
+                    {
+                        equippedItem = activeGrid.SelectedSlot.Item;
+                        InvalidateEquippedItem();
+                        return HandleInputResult.Handled;
+                    }
                 }
             }
 
@@ -307,23 +348,18 @@ namespace Remizione
         {
             base.OnLoadContent();
 
-            equippedItem = Owner.Inventory.SelectedItem;
+            foreach (var grid in grids.Values)
+            {
+                grid.Populate();
+            }
+
+            equippedItem = Owner.Equipment.SelectedItem;
             InvalidateEquippedItem();
 
             Sound.Play(SoundNames.UIInventoryOpen);
             lastKnownInput = InputMethod.None;
-            LayoutButtons();
 
             InvalidateCategory();
-        }
-
-        // OnUnload
-        protected override void OnUnloadContent()
-        {
-            base.OnUnloadContent();
-
-            if (equippedItem != null)
-                Owner.Inventory.Select(equippedItem);
         }
 
         // OnUpdate
@@ -331,9 +367,11 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
             buttonClose.Update(gameTime);
-            buttonSelect.Update(gameTime);
+            buttonConsume.Update(gameTime);
+            buttonDiscard.Update(gameTime);
+            buttonEquip.Update(gameTime);
             categoryText.Update(gameTime);
-            grid.Update(gameTime);
+            activeGrid.Update(gameTime);
             gridContainerImage.Update(gameTime);
             healthMeter.Update(gameTime);
             itemName.Update(gameTime);
@@ -342,10 +380,7 @@ namespace Remizione
             previousTabButton.Update(gameTime);
 
             if (lastKnownInput != InputManager.DefaultPlayer.LastInputMethod)
-            {
-                LayoutButtons();
                 lastKnownInput = InputManager.DefaultPlayer.LastInputMethod;
-            }
         }
 
         #endregion

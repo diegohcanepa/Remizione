@@ -34,15 +34,16 @@ namespace Remizione
 
         // Misc
         internal static readonly InputBinding Back = InputManager.AddBinding(nameof(Back), GetButtonB(), Keys.Escape);
+        internal static readonly InputBinding ConsumeItem = InputManager.AddBinding(nameof(ConsumeItem), Buttons.A, Keys.E);
         internal static readonly InputBinding Continue = InputManager.AddBinding(nameof(Continue), GetButtonA(), Keys.E);
         internal static readonly InputBinding Close = InputManager.AddBinding(nameof(Close), GetButtonB(), Keys.Escape);
+        internal static readonly InputBinding Discard = InputManager.AddBinding(nameof(Discard), Buttons.X, Keys.S);
         internal static readonly InputBinding Equip = InputManager.AddBinding(nameof(Equip), Buttons.A, Keys.E);
         internal static readonly InputBinding Exit = InputManager.AddBinding(nameof(Exit), GetButtonB(), Keys.Escape);
         internal static readonly InputBinding Interact = InputManager.AddBinding(nameof(Interact), Buttons.A, Keys.E, Keys.Enter);
         internal static readonly InputBinding Inventory = InputManager.AddBinding(nameof(Inventory), Buttons.Y, Keys.I);
         internal static readonly InputBinding ItemAction = InputManager.AddBinding(nameof(ItemAction), Buttons.X, Keys.E);
         internal static readonly InputBinding NextDialog = InputManager.AddBinding(nameof(NextDialog), Buttons.Y, Keys.E, Keys.Enter);
-        internal static readonly InputBinding Sacrifice = InputManager.AddBinding(nameof(Sacrifice), Buttons.X, Keys.S);
         internal static readonly InputBinding Select = InputManager.AddBinding(nameof(Select), GetButtonA(), Keys.E, Keys.Enter);
         internal static readonly InputBinding SelectDialogOption = InputManager.AddBinding(nameof(SelectDialogOption), Buttons.A, Keys.E, Keys.Enter);
         internal static readonly InputBinding SpeechBubble = InputManager.AddBinding(nameof(SpeechBubble), Buttons.Y, Keys.E, Keys.Enter);

@@ -12,6 +12,8 @@ namespace Remizione
     /// </summary>
     public sealed class InventoryGrid : GameObject, IInputHandler
     {
+        #region Private fields
+
         const int slotSize = 20;
 
         private readonly int columns;
@@ -20,6 +22,10 @@ namespace Remizione
         private int selectedSlotIndex;
         private readonly List<InventorySlot> slots;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 100 };
+
+        #endregion
+
+        #region Constructor
 
         // Constructor
         public InventoryGrid(Inventory inventory, int columns, int rows)
@@ -35,8 +41,11 @@ namespace Remizione
                 slots.Add(new InventorySlot(this));
             }
 
+            Populate();
             Layout();
         }
+
+        #endregion
 
         #region Private members
 
@@ -60,6 +69,47 @@ namespace Remizione
             }
 
             BoundingBox = new(slots[0].BoundingBox.Left, slots[0].BoundingBox.Top, columns * slotSize, rows * slotSize);
+        }
+
+        // Move
+        private bool Move(Direction direction)
+        {
+            int index, col, row;
+            switch (direction)
+            {
+                case Direction.Down:
+                    row = SelectedSlotIndex / columns;
+                    row = (row + 1) % rows; // Movimiento cíclico vertical
+                    index = row * columns + (SelectedSlotIndex % columns);
+                    break;
+
+                case Direction.Left:
+                    col = SelectedSlotIndex % columns;
+                    col = (col - 1 + columns) % columns; // Movimiento cíclico horizontal
+                    index = (SelectedSlotIndex / columns) * columns + col;
+                    break;
+
+                case Direction.Right:
+                    col = SelectedSlotIndex % columns;
+                    col = (col + 1) % columns; // Movimiento cíclico horizontal
+                    index = (SelectedSlotIndex / columns) * columns + col;
+                    break;
+
+                default:
+                    row = SelectedSlotIndex / columns;
+                    row = (row - 1 + rows) % rows; // Movimiento cíclico vertical
+                    index = row * columns + (SelectedSlotIndex % columns);
+                    break;
+            }
+
+            if (slots[index].Item != null)
+            {
+                SelectedSlotIndex = index;
+                Sound.Play(SoundNames.UIHover);
+                return true;
+            }
+            else
+                return false;
         }
 
         #endregion
@@ -93,25 +143,6 @@ namespace Remizione
             {
                 slots[i].Item = null;
             }
-        }
-
-        // Fill
-        public void Fill(MetaItemCategory category)
-        {
-            Clear();
-
-            int index = 0;
-            
-            foreach (var item in Inventory.GetItems(category))
-            {
-                if (index >= slots.Count)
-                    break;
-
-                slots[index].Item = item;
-                index++;
-            }
-
-            SelectSlot(0);
         }
 
         // GetSlot
@@ -218,49 +249,30 @@ namespace Remizione
             return false;
         }
 
-        // Move
-        public bool Move(Direction direction)
-        {
-            int index, col, row;
-            switch (direction)
-            {
-                case Direction.Down:
-                    row = SelectedSlotIndex / columns;
-                    row = (row + 1) % rows; // Movimiento cíclico vertical
-                    index = row * columns + (SelectedSlotIndex % columns);
-                    break;
-
-                case Direction.Left:
-                    col = SelectedSlotIndex % columns;
-                    col = (col - 1 + columns) % columns; // Movimiento cíclico horizontal
-                    index = (SelectedSlotIndex / columns) * columns + col;
-                    break;
-
-                case Direction.Right:
-                    col = SelectedSlotIndex % columns;
-                    col = (col + 1) % columns; // Movimiento cíclico horizontal
-                    index = (SelectedSlotIndex / columns) * columns + col;
-                    break;
-
-                default:
-                    row = SelectedSlotIndex / columns;
-                    row = (row - 1 + rows) % rows; // Movimiento cíclico vertical
-                    index = row * columns + (SelectedSlotIndex % columns);
-                    break;
-            }
-
-            if (slots[index].Item != null)
-            {
-                SelectedSlotIndex = index;
-                Sound.Play(SoundNames.UIHover);
-                return true;
-            }
-            else
-                return false;
-        }
-
         // Inventory
         public Inventory Inventory { get; }
+
+        // Populate
+        public void Populate()
+        {
+            Clear();
+
+            int index = 0;
+
+            foreach (var item in Inventory.GetItems())
+            {
+                if (index >= slots.Count)
+                    break;
+
+                slots[index].Item = item;
+                index++;
+            }
+
+            if (Inventory.SelectedItem != null)
+                SelectSlot(Inventory.SelectedItem.Name);
+            else
+                SelectSlot(0);
+        }
 
         // Position
         public Vector2 Position
@@ -329,7 +341,7 @@ namespace Remizione
             get => selectedSlotIndex;
             set
             {
-                //if (value != selectedSlotIndex)
+                if (value != selectedSlotIndex)
                 {
                     if (SelectedSlot?.Item is Item item)
                         item.Unread = false;

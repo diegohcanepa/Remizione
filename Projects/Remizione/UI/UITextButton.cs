@@ -238,6 +238,9 @@ namespace Remizione
 
         #endregion
 
+        // AllowSound
+        public bool AllowSound { get; set; } = true;
+
         // BoundingBox
         public RectangleF BoundingBox { get; private set; }
 
@@ -357,7 +360,7 @@ namespace Remizione
             else if (inputBinding != null && inputBinding.IsPressed(playerIndex))
                 result = true;
 
-            if (result)
+            if (result && AllowSound)
             {
                 if (Sound != null)
                     Sound.Play();

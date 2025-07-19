@@ -58,7 +58,9 @@ namespace Remizione
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
             this.PlacementConditions = new(placementConditions);
-            this.Inventory = new Inventory(this, Localization.GetValue(InGameMenuOptionName.Inventory));
+            this.Consumables = new Inventory(this, InventoryCategory.Consumables);
+            this.Equipment = new Inventory(this, InventoryCategory.Equipment);
+            this.Misc = new Inventory(this, InventoryCategory.KeyItems);
         }
 
         #endregion
@@ -356,9 +358,17 @@ namespace Remizione
         // OnRead
         protected override void OnRead(XmlAttributeCollection attributes)
         {
-            // Inventory
-            if (attributes[nameof(Inventory)]?.Value is string inventoryData)
-                Inventory.SetSerializationData(inventoryData);
+            // Consumables
+            if (attributes[nameof(Consumables)]?.Value is string consumablesData)
+                Consumables.SetSerializationData(consumablesData);
+
+            // Equipment
+            if (attributes[nameof(Equipment)]?.Value is string equipmentData)
+                Equipment.SetSerializationData(equipmentData);
+
+            // Misc
+            if (attributes[nameof(Misc)]?.Value is string miscData)
+                Misc.SetSerializationData(miscData);
         }
 
         // OnTransform
@@ -471,7 +481,9 @@ namespace Remizione
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
-            output.WriteAttributeString(nameof(Inventory), Inventory.GetSerializationData());
+            output.WriteAttributeString(nameof(Consumables), Consumables.GetSerializationData());
+            output.WriteAttributeString(nameof(Equipment), Equipment.GetSerializationData());
+            output.WriteAttributeString(nameof(Misc), Misc.GetSerializationData());
         }
 
         #endregion
@@ -611,6 +623,9 @@ namespace Remizione
         [ScriptProperty]
         public Polygon? Collider { get; set; }
 
+        // Consumables
+        public Inventory Consumables { get; }
+
         // CumulativeDamage
         public float CumulativeDamage { get; set; }
 
@@ -688,6 +703,9 @@ namespace Remizione
             if (!IsDead)
                 OnDrawShadow(gameTime);
         }
+
+        // Equipment
+        public Inventory Equipment { get; }
 
         // FaceTo
         public void FaceTo(GameThing thing)
@@ -784,6 +802,18 @@ namespace Remizione
                 return this.GetAbsoluteBounds(AnimationPlayer.Frame.SubArea);
             else
                 return RectangleF.Empty;
+        }
+
+        // GetInventory
+        public Inventory GetInventory(InventoryCategory category)
+        {
+            return category switch
+            {
+                InventoryCategory.Consumables => Consumables,
+                InventoryCategory.Equipment => Equipment,
+                InventoryCategory.KeyItems => Misc,
+                _ => throw new ArgumentException($"Invalid inventory category: {category}", nameof(category)),
+            };
         }
 
         // GetOverheadPosition
@@ -885,12 +915,6 @@ namespace Remizione
         // InstancesPerBlock
         public Int32Range InstancesPerBlock { get; set; } = new Int32Range(1);
 
-        // Inventory
-        public Inventory Inventory { get; }
-
-        // InventorySize
-        public int InventorySize => 8;
-
         // IsAvailable
         public bool IsAvailable(Random random)
         {
@@ -964,6 +988,9 @@ namespace Remizione
                 }
             }
         }
+
+        // Misc
+        public Inventory Misc { get; }
 
         // OverheadOrigin
         [ScriptProperty]

@@ -9,12 +9,18 @@ namespace Remizione
     /// </summary>
     public sealed class InventorySlot : GameObject
     {
+        #region Private fields
+
         private readonly TextSprite amountText;
-        private readonly ImageSprite iconImage;
         private readonly InventoryGrid grid;
+        private readonly ImageSprite iconImage;
         private Item? item;
         private readonly ImageSprite selectedSlotImage;
         private readonly ImageSprite slotImage;
+
+        #endregion
+
+        #region Constructor
 
         // Constructor
         public InventorySlot(InventoryGrid grid)
@@ -42,9 +48,9 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.Text.Medium
             };
-
-            Reset();
         }
+
+        #endregion
 
         #region Protected members
 
@@ -92,21 +98,24 @@ namespace Remizione
                 if (value != item)
                 {
                     item = value;
-
-                    if (item != null)
-                    {
-                        if (item.MetaItem.Maximum > 1)
-                            amountText.Text = $"{item.Count}/{item.MetaItem.Maximum}";
-                        else
-                            amountText.Text = string.Empty;
-                    }
-                    else
-                    {
-                        amountText.Clear();
-                    }
-
                     iconImage.Image = item?.MetaItem.Image;
+                    Refresh();
                 }
+            }
+        }
+
+        // PerformDefaultAction
+        public void PerformDefaultAction()
+        {
+            if (Item == null)
+                return;
+
+            if (Item.MetaItem.Category == InventoryCategory.Consumables)
+            {
+                Item.MetaItem.Sound?.Play();
+                Item.Use();
+                if (Item.Index < 0)
+                    Item = null;
             }
         }
 
@@ -123,12 +132,20 @@ namespace Remizione
             }
         }
 
-        // Reset
-        public void Reset()
+        // Refresh
+        public void Refresh()
         {
-            Item = null;
-            iconImage.Image = null;
-            Position = Vector2.Zero;
+            if (item != null)
+            {
+                if (item.MetaItem.Maximum > 1)
+                    amountText.Text = $"{item.Count}/{item.MetaItem.Maximum}";
+                else
+                    amountText.Text = string.Empty;
+            }
+            else
+            {
+                amountText.Clear();
+            }
         }
     }
 }

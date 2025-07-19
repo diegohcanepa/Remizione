@@ -83,13 +83,7 @@ namespace Remizione
                     QuickSlot.Draw(gameTime);
 
                 healthMeter.Draw(gameTime);
-
-                //playerStats.Draw(gameTime);
-
                 tickets.Draw(gameTime);
-
-                //if (!savingIcon.Tweens.IsTweening)
-                //    cycleMeter.Draw(gameTime);
             }
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);

@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Remizione
@@ -9,14 +8,14 @@ namespace Remizione
     /// </summary>
     public sealed class Inventory
     {
-        private string? toString;
         private readonly List<Item> items = [];
+        private const string NoneValue = "[None]";
 
         // Constructor
-        public Inventory(GameThing owner, string displayName)
+        public Inventory(GameThing owner, InventoryCategory category)
         {
             this.Owner = owner;
-            this.DisplayName = displayName;
+            this.Category = category;
         }
 
         // Add
@@ -29,6 +28,9 @@ namespace Remizione
         // Add
         public Item? Add(MetaItem metaItem, int amount)
         {
+            if (metaItem.Category != Category)
+                throw new InvalidOperationException($"Meta item '{metaItem.Name}' does not belong to the category '{Category}'.");
+
             if (!metaItem.IsStackable)
                 amount = 1;
 
@@ -47,19 +49,17 @@ namespace Remizione
             if (SelectedItem == null)
                 SelectedItem = item;
 
-            toString = null;
-
             return item;
         }
+
+        // Category
+        public InventoryCategory Category { get; }
 
         // Contains
         public bool Contains(Item item) => items.Contains(item);
 
         // Count
         public int Count => items.Count;
-
-        // DisplayName
-        public string DisplayName { get; }
 
         // GetItem
         public Item? GetItem(string name)
@@ -74,23 +74,15 @@ namespace Remizione
         }
 
         // GetItems
-        public Item[] GetItems(MetaItemCategory category)
-        {
-            var result = new List<Item>();
-
-            for (var i = 0; i < items.Count; i++)
-            {
-                if (items[i].MetaItem.Category == category)
-                    result.Add(items[i]);
-            }
-
-            return result.ToArray();
-        }
+        public Item[] GetItems() => items.ToArray();
 
         // GetSerializationData
         public string GetSerializationData()
         {
-            var result = new List<string>();
+            var result = new List<string>
+            {
+                SelectedItem is null ? NoneValue : SelectedItem.Name
+            };
 
             foreach (var item in items)
             {
@@ -128,24 +120,11 @@ namespace Remizione
             {
                 if (SelectedItem == item)
                     SelectedItem = null;
-                toString = null;
+
                 return true;
             }
             else
                 return false;
-        }
-
-        // RemoveSelected
-        public bool RemoveSelected()
-        {
-            var itemToRemove = SelectedItem;
-
-            if (itemToRemove == null)
-                return false;
-
-            SelectNext();
-            Remove(itemToRemove);
-            return true;
         }
 
         // Select
@@ -173,30 +152,24 @@ namespace Remizione
         public Item? SelectedItem { get; private set; }
 
         // SelectFirst
-        public Item? SelectFirst(MetaItemCategory category)
+        public Item? SelectFirst()
         {
-            for (var i = 0; i < items.Count; i++)
+            if (items.Count > 0)
             {
-                if (items[i]?.MetaItem is MetaItem metaItem && metaItem.Category == category)
-                {
-                    Select(items[i]);
-                    return items[i];
-                }
+                Select(items[0]);
+                return SelectedItem;
             }
 
             return null;
         }
 
         // SelectLast
-        public Item? SelectLast(MetaItemCategory category)
+        public Item? SelectLast()
         {
-            for (var i = items.Count - 1; i >= 0; i--)
+            if (items.Count > 0)
             {
-                if (items[i]?.MetaItem is MetaItem metaItem && metaItem.Category == category)
-                {
-                    Select(items[i]);
-                    return items[i];
-                }
+                Select(items[^1]);
+                return SelectedItem;
             }
 
             return null;
@@ -225,19 +198,6 @@ namespace Remizione
             return SelectedItem;
         }
 
-        // SelectNext
-        public Item? SelectNext(MetaItemCategory category)
-        {
-            for (var i = 0; i < items.Count; i++)
-            {
-                SelectNext();
-                if (SelectedItem?.MetaItem is MetaItem metaItem && metaItem.Category == category)
-                    return SelectedItem;
-            }
-
-            return null;
-        }
-
         // SelectPrevious
         public Item? SelectPrevious()
         {
@@ -261,19 +221,6 @@ namespace Remizione
             return SelectedItem;
         }
 
-        // SelectPrevious
-        public Item? SelectPrevious(MetaItemCategory category)
-        {
-            for (var i = items.Count - 1; i >= 0; i--)
-            {
-                SelectPrevious();
-                if (SelectedItem?.MetaItem is MetaItem metaItem && metaItem.Category == category)
-                    return SelectedItem;
-            }
-
-            return null;
-        }
-
         // SetSerializationData
         public void SetSerializationData(string data)
         {
@@ -284,27 +231,21 @@ namespace Remizione
 
             var itemList = data.Split(';');
 
-            foreach (var item in itemList)
+            for (var i = 0; i < itemList.Length; i++)
             {
-                var itemData = item.Split(':');
-                Add(itemData[0], int.Parse(itemData[1]));
+                if (i == 0)
+                {
+                    SelectedItem = GetItem(itemList[i]);
+                }
+                else
+                {
+                    var itemData = itemList[i].Split(':');
+                    Add(itemData[0], int.Parse(itemData[1]));
+                }
             }
         }
 
-        // ToString
-        public override string ToString()
-        {
-            toString ??= DisplayName;
-            return toString;
-        }
-
-        // Update
-        public void Update(GameTime gameTime)
-        {
-            for (var i = 0; i < items.Count; i++)
-            {
-                items[i].Update(gameTime);
-            }
-        }
+        // Size
+        public int Size { get; set; } = 6;
     }
 }

@@ -185,7 +185,7 @@ namespace Remizione
             {
                 Unparent();
                 Session.ObjectPools.ReturnThrowable(this);
-                player.Inventory.Add(Item.Name, 1);
+                player.Equipment.Add(Item.Name, 1);
             }
         }
 

@@ -16,7 +16,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(string name, MetaItemCategory category, int maximum)
+        public MetaItem(string name, InventoryCategory category, int maximum)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -64,19 +64,16 @@ namespace Remizione
         public int Bonus { get; init; }
 
         // Category
-        public MetaItemCategory Category { get; }
+        public InventoryCategory Category { get; }
 
         // Durability
         public int Durability { get; init; }
-
-        // Faith
-        public DiceExpression? Faith { get; init; }
 
         // Find
         public static MetaItem? Find(string name) => items.TryGetValue(name, out var result) ? result : null;
 
         // HasUsageCost
-        public bool HasUsageCost => HP != null || Faith != null || Tickets != null;
+        public bool HasUsageCost => HP != null || Tickets != null;
 
         // HP
         public DiceExpression? HP { get; init; }

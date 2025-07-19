@@ -50,6 +50,9 @@ namespace Remizione
     // InventoryOption
     public enum InventoryOption { Inspect, Select, Discard }
 
+    // InventoryCategory
+    public enum InventoryCategory { None, Consumables, Equipment, KeyItems }
+
     // ItemAction
     public enum ItemAction { UseWith, Consume, Throw }
 
@@ -80,9 +83,6 @@ namespace Remizione
 
     // Message
     public enum Message { None, Critical, Miss, NoFaith, ThreatsNearby }
-
-    // MetaItemCategory
-    public enum MetaItemCategory { None, Consumable, Equipment, Misc }
 
     // MouseCursorState
     public enum MouseCursorState { None, Cross, CrossOn, Wait, Arrow }
