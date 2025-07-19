@@ -13,7 +13,7 @@ namespace Remizione
 
         private readonly TextSprite amountText;
         private readonly InventoryGrid grid;
-        private readonly ImageSprite iconImage;
+        private readonly ImageSprite icon;
         private Item? item;
         private readonly ImageSprite selectedSlotImage;
         private readonly ImageSprite slotImage;
@@ -29,7 +29,7 @@ namespace Remizione
             this.grid = grid;
 
             // Icon image
-            this.iconImage = new(Game)
+            this.icon = new(Game)
             {
                 PivotOrigin = RectanglePoint.Middle,
                 Scale = ScaleInfo.UIElement.Medium
@@ -46,7 +46,7 @@ namespace Remizione
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Bottom,
-                Scale = ScaleInfo.Text.Medium
+                Scale = ScaleInfo.Text.Large
             };
         }
 
@@ -62,7 +62,7 @@ namespace Remizione
                 selectedSlotImage.Draw(gameTime);
             else
                 slotImage.Draw(gameTime);
-            iconImage.Draw(gameTime);
+            icon.Draw(gameTime);
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearWrap);
@@ -74,11 +74,11 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             if (item != null && item.MetaItem.IsStackable && item.Count == 0)
-                iconImage.Opacity = .5f;
+                icon.Opacity = .5f;
             else
-                iconImage.Opacity = 1;
+                icon.Opacity = 1;
 
-            iconImage.Update(gameTime);
+            icon.Update(gameTime);
         }
 
         #endregion
@@ -98,7 +98,7 @@ namespace Remizione
                 if (value != item)
                 {
                     item = value;
-                    iconImage.Image = item?.MetaItem.Image;
+                    icon.Image = item?.MetaItem.Image;
                     Refresh();
                 }
             }
@@ -116,6 +116,9 @@ namespace Remizione
                 Item.Use();
                 if (Item.Index < 0)
                     Item = null;
+                Refresh();
+                icon.Scale = ScaleInfo.UIElement.Medium;
+                icon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, icon.Scale, icon.Scale * 1.2f, 100, 2);
             }
         }
 
@@ -127,8 +130,8 @@ namespace Remizione
             {
                 slotImage.Position = value;
                 selectedSlotImage.Position = value;
-                iconImage.Position = slotImage.BoundingBox.Center;
-                amountText.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 2);
+                icon.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Middle, 0, -1);
+                amountText.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1.5f);
             }
         }
 
@@ -141,6 +144,8 @@ namespace Remizione
                     amountText.Text = $"{item.Count}/{item.MetaItem.Maximum}";
                 else
                     amountText.Text = string.Empty;
+
+                icon.Opacity = item.Count == 0 ? .3f : 1;
             }
             else
             {

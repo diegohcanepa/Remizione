@@ -10,6 +10,8 @@ namespace Engendro
     {
         private static readonly Random random = new();
 
+        #region Constructor
+
         // Constructor
         public DiceExpression(string expression)
         {
@@ -27,6 +29,8 @@ namespace Engendro
             else
                 throw new ArgumentException($"Invalid dice expression: {expression}");
         }
+
+        #endregion
 
         #region Private members
 

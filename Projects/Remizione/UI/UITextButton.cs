@@ -25,6 +25,7 @@ namespace Remizione
         private InputMethod lastKnownInputMethod;
         private RectanglePoint pivotOrigin;
         private Vector2 position;
+        private readonly Vector2Tween scaleTween = new();
 
         #endregion
 
@@ -58,6 +59,7 @@ namespace Remizione
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
+            // Image
             this.image = new ImageSprite(game)
             {
                 Scale = ScaleInfo.UIElement.Medium,
@@ -156,7 +158,7 @@ namespace Remizione
             }
 
             containerPattern.ScaleX = label.BoundingBox.Width + 6;
-            containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Middle, 0, -.4f).Y;
+            containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Middle, 0, 0).Y;
             containerEdgeLeft.Y = containerPattern.Y;
 
             if (image.Pivot.AtRight)
@@ -237,6 +239,9 @@ namespace Remizione
         }
 
         #endregion
+
+        // AllowPressEffect
+        public bool AllowPressEffect { get; set; } = true;
 
         // AllowSound
         public bool AllowSound { get; set; } = true;
@@ -366,6 +371,20 @@ namespace Remizione
                     Sound.Play();
                 else
                     Sound.Play(SoundNames.UISelectA);
+            }
+
+            if (AllowPressEffect)
+            {
+                if (result && !scaleTween.IsRunning)
+                {
+                    scaleTween.Start(TweenStyle.Linear, ScaleInfo.UIElement.Medium, image.Scale * .95f, 60, 2);
+                    image.Tweens.ScaleTween = scaleTween;
+                }
+            }
+            else
+            {
+                scaleTween.Stop();
+                image.Scale = ScaleInfo.UIElement.Medium;
             }
 
             return result;

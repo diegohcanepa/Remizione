@@ -163,7 +163,7 @@ namespace Remizione
 
             if (MetaItem.HP != null)
             {
-                var value = $"{TextRepository.GetValue($"DerivedStat.Spirit.Name")}: {MetaItem.HP.GetValueRangeAsString()}";
+                var value = $"{TextRepository.GetValue($"DerivedStat.HP.Name")}: {MetaItem.HP.GetValueRangeAsString()}";
                 values.Add(value);
             }
 

@@ -207,9 +207,26 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">KeyboardControls-assets/KeyboardD.png</key>
+            <key type="filename">KeyboardControls-assets/KeyboardI.png</key>
+            <key type="filename">KeyboardControls-assets/KeyboardS.png</key>
+            <key type="filename">KeyboardControls-assets/KeyboardX.png</key>
+            <key type="filename">KeyboardControls-assets/KeyboardZ.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,6,6</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,6,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">KeyboardControls-assets/KeyboardE.png</key>
-            <key type="filename">XboxControls-assets/XboxA.png</key>
-            <key type="filename">XboxControls-assets/XboxB.png</key>
             <key type="filename">XboxControls-assets/XboxX.png</key>
             <key type="filename">XboxControls-assets/XboxY.png</key>
             <struct type="IndividualSpriteSettings">
@@ -242,24 +259,6 @@
                 <rect>4,3,8,6</rect>
                 <key>scale9Paddings</key>
                 <rect>4,3,8,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">KeyboardControls-assets/KeyboardI.png</key>
-            <key type="filename">KeyboardControls-assets/KeyboardS.png</key>
-            <key type="filename">KeyboardControls-assets/KeyboardX.png</key>
-            <key type="filename">KeyboardControls-assets/KeyboardZ.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,6,6</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,6,6</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -697,6 +696,8 @@
             </struct>
             <key type="filename">UIIcons-assets/FaithIcon.png</key>
             <key type="filename">UIIcons-assets/HPIcon.png</key>
+            <key type="filename">XboxControls-assets/XboxA.png</key>
+            <key type="filename">XboxControls-assets/XboxB.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

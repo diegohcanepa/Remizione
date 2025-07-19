@@ -148,7 +148,7 @@ namespace Remizione
 
             if (lastKnownItem != null)
             {
-                button.Draw(gameTime);
+                //button.Draw(gameTime);
 
                 if (lastKnownItem.MetaItem.IsStackable)
                 {

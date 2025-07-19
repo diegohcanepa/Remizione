@@ -129,6 +129,16 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             stick.Update(gameTime);
+
+            for (int i = 0; i < slots.Count; i++)
+            {
+                slots[i].Update(gameTime);
+            }
+
+            if (GetSlotAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is InventorySlot slot && slot.Item != null)
+                MouseCursor.Instance.State = MouseCursorState.CrossOn;
+            else
+                MouseCursor.Instance.State = MouseCursorState.Cross;
         }
 
         #endregion

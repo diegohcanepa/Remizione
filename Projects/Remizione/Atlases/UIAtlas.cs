@@ -17,13 +17,13 @@ namespace Remizione
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
-            FaithIcon = this[nameof(FaithIcon)];
             HeartEmptyIcon = this[nameof(HeartEmptyIcon)];
             HeartHalfIcon = this[nameof(HeartHalfIcon)];
             HeartIcon = this[nameof(HeartIcon)];
             HPIcon = this[nameof(HPIcon)];
             InventoryGridContainer = this[nameof(InventoryGridContainer)];
             InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
+            InventoryNavigationBar = this[nameof(InventoryNavigationBar)];
             InventorySlot = this[nameof(InventorySlot)];
             InventorySlotSelected = this[nameof(InventorySlotSelected)];
             MessageContainer = this[nameof(MessageContainer)];
@@ -71,14 +71,14 @@ namespace Remizione
         // InventoryInfoContainer
         public AtlasImage InventoryInfoContainer { get; }
 
+        // InventoryNavigationBar
+        public AtlasImage InventoryNavigationBar { get; }
+
         // InventorySlot
         public AtlasImage InventorySlot { get; }
 
         // InventorySlotSelected
         public AtlasImage InventorySlotSelected { get; }
-
-        // FaithIcon
-        public AtlasImage FaithIcon { get; }
 
         // HeartEmptyIcon
         public AtlasImage HeartEmptyIcon { get; }

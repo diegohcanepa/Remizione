@@ -474,9 +474,6 @@ namespace Remizione
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
 
-        // SelectedInventoryCategory
-        public InventoryCategory SelectedInventoryCategory { get; set; } = InventoryCategory.Consumables;
-
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)
         {

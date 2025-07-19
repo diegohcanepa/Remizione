@@ -24,7 +24,7 @@ namespace Remizione
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Videos, Voices, System, Text }
 
     // DerivedStat
-    public enum DerivedStat { HP, Faith, Tickets }
+    public enum DerivedStat { HP, Tickets }
 
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }

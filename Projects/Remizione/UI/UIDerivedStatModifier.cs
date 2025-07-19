@@ -16,7 +16,6 @@ namespace Remizione
         private int amount;
         private readonly TextSprite amountText;
         private readonly ImageSprite containerImage;
-        private bool isBonus;
         private DerivedStat stat;
 
         #endregion
@@ -50,23 +49,20 @@ namespace Remizione
         // Invalidate
         private void Invalidate()
         {
-            var suffix = containerImage.Pivot.AtLeft ? "Left" : "Right";
-            containerImage.Image = Atlases.UI.GetImage($"{Stat}AmountIcon{suffix}");
-
-            var offset = (containerImage.BoundingBox.Width / 2) - amountText.BoundingBox.Width + 1;
+            containerImage.Image = Atlases.UI.GetImage($"{Stat}Icon");
 
             if (containerImage.Pivot.AtLeft)
             {
                 amountText.PivotOrigin = RectanglePoint.Right;
-                amountText.Position = containerImage.BoundingBox.GetPoint(RectanglePoint.Right, -offset / 2, .5f);
+                amountText.Position = containerImage.BoundingBox.GetPoint(RectanglePoint.Right);
             }
             else
             {
                 amountText.PivotOrigin = RectanglePoint.Left;
-                amountText.Position = containerImage.BoundingBox.GetPoint(RectanglePoint.Left, offset / 2, .5f);
+                amountText.Position = containerImage.BoundingBox.GetPoint(RectanglePoint.Left);
             }
 
-            amountText.Color = IsBonus ? ColorPalette.Text.Green : ColorPalette.Text.Terra;
+            amountText.Color = amount >= 0 ? ColorPalette.Text.Default : ColorPalette.Text.Red;
         }
 
         #endregion
@@ -103,22 +99,8 @@ namespace Remizione
                 if (value != amount)
                 {
                     amount = value;
-                    var sign = IsBonus ? "+" : string.Empty;
+                    var sign = amount > 0 ? "+" : "-";
                     amountText.Text = sign + Math.Abs(amount).ToString(CultureInfo.InvariantCulture);
-                    Invalidate();
-                }
-            }
-        }
-
-        // IsBonus
-        public bool IsBonus
-        {
-            get => isBonus;
-            set
-            {
-                if (value != isBonus)
-                {
-                    isBonus = value;
                     Invalidate();
                 }
             }
