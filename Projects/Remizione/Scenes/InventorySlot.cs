@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -15,6 +16,7 @@ namespace Remizione
         private readonly InventoryGrid grid;
         private readonly ImageSprite icon;
         private Item? item;
+        private readonly ImageSprite lockIcon;
         private readonly ImageSprite selectedSlotImage;
         private readonly ImageSprite slotImage;
 
@@ -41,6 +43,13 @@ namespace Remizione
             // Selected slot image
             this.selectedSlotImage = new(Game, Atlases.UI.InventorySlotSelected);
 
+            // Lock icon image
+            this.lockIcon = new(Game, Atlases.UI.InventorySlotLockIcon)
+            {
+                PivotOrigin = RectanglePoint.Middle,
+                Opacity = .4f,
+            };
+
             // Amount text
             amountText = new TextSprite(Game, Fonts.CommonOutline)
             {
@@ -62,7 +71,15 @@ namespace Remizione
                 selectedSlotImage.Draw(gameTime);
             else
                 slotImage.Draw(gameTime);
-            icon.Draw(gameTime);
+
+            if (Item == null)
+            {
+                if (Index >= grid.Inventory.Size)
+                    lockIcon.Draw(gameTime);
+            }
+            else
+                icon.Draw(gameTime);
+
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearWrap);
@@ -86,8 +103,14 @@ namespace Remizione
         // BoundingBox
         public RectangleF BoundingBox => slotImage.BoundingBox;
 
+        // Index
+        public int Index => grid.IndexOf(this);
+
+        // IsMouseOver
+        public bool IsMouseOver => BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);
+
         // IsSelected
-        public bool IsSelected => grid.SelectedSlot == this && Item != null;
+        public bool IsSelected => Item != null && (grid.SelectedSlot == this || IsMouseOver);
 
         // Item
         public Item? Item
@@ -131,6 +154,7 @@ namespace Remizione
                 slotImage.Position = value;
                 selectedSlotImage.Position = value;
                 icon.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Middle, 0, -1);
+                lockIcon.Position = icon.Position;
                 amountText.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1.5f);
             }
         }

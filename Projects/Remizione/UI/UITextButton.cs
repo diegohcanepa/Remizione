@@ -364,7 +364,7 @@ namespace Remizione
 
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() && IsMouseOver)
                 result = true;
-            
+
             else if (inputBinding != null && inputBinding.IsPressed(playerIndex))
                 result = true;
 

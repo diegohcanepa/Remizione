@@ -335,6 +335,18 @@
 /processorParam:Quality=Best
 /build:Audio/FX/ImpactA.wav
 
+#begin Audio/FX/ItemDiscard.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/ItemDiscard.wav;Audio/FX/ItemDiscard
+
+#begin Audio/FX/ItemEquip.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/ItemEquip.wav;Audio/FX/ItemEquip
+
 #begin Audio/FX/Lightning.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

@@ -59,7 +59,7 @@ namespace Remizione
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    slots[index].Position = pos;            
+                    slots[index].Position = pos;
                     pos.X += slotSize;
                     index++;
                 }
@@ -155,13 +155,25 @@ namespace Remizione
             }
         }
 
+        // DiscardSelectedItem
+        public void DiscardSelectedItem()
+        {
+            if (SelectedItem is Item item)
+            {
+                SelectedSlot.Item = null;
+                Inventory.Remove(item);
+                if (Inventory.SelectedItem != null)
+                    SelectSlot(Inventory.SelectedItem.Name);
+            }
+        }
+
         // GetSlot
         public InventorySlot? GetSlot(Item item)
         {
             for (var i = 0; i < slots.Count; i++)
             {
                 if (slots[i].Item == item)
-                    return slots[i];    
+                    return slots[i];
             }
 
             return null;
@@ -259,6 +271,9 @@ namespace Remizione
             return false;
         }
 
+        // IndexOf
+        public int IndexOf(InventorySlot slot) => slots.IndexOf(slot);
+
         // Inventory
         public Inventory Inventory { get; }
 
@@ -341,6 +356,9 @@ namespace Remizione
 
             return false;
         }
+
+        // SelectedItem
+        public Item? SelectedItem => SelectedSlot?.Item;
 
         // SelectedSlot
         public InventorySlot SelectedSlot => slots[selectedSlotIndex];

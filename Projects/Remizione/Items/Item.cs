@@ -256,12 +256,6 @@ namespace Remizione
             if (MetaItem.HP != null)
                 Owner.HP += MetaItem.HP.Roll();
 
-            if (Owner is Actor actor)
-            {
-                if (MetaItem.Tickets != null)
-                    actor.Tickets += MetaItem.Tickets.Roll();
-            }
-
             if (MetaItem.Maximum > 1)
             {
                 if (Count == 1 && !MetaItem.AllowEmpty)

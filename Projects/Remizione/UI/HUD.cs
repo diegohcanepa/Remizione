@@ -18,7 +18,7 @@ namespace Remizione
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
         private readonly TextSprite statusText;
-        private readonly UIScore tickets;
+        private readonly UITicketsMeter ticketsMeter;
 
         #endregion
 
@@ -31,6 +31,7 @@ namespace Remizione
             this.session = session;
 
             this.healthMeter = new(session.Game);
+            this.ticketsMeter = new(session.Game);
 
             // Log
             this.Log = new(Game);
@@ -44,14 +45,6 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.RightTop,
                 Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -6, 3),
                 Scale = ScaleInfo.UIElement.Medium
-            };
-
-            // Tickets
-            this.tickets = new UIScore(session.Game, Atlases.UI.TicketsIcon, ColorPalette.Text.Default)
-            {
-                HideZero = true,
-                PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -4, -4),
             };
 
             // Prompt
@@ -83,7 +76,7 @@ namespace Remizione
                     QuickSlot.Draw(gameTime);
 
                 healthMeter.Draw(gameTime);
-                tickets.Draw(gameTime);
+                ticketsMeter.Draw(gameTime);
             }
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
@@ -108,16 +101,12 @@ namespace Remizione
         {
             QuickSlot.Update(gameTime);
             healthMeter.Update(gameTime);
+            ticketsMeter.Update(gameTime);
+
             prompt.Update(gameTime);
 
             if (session.GameplayMode == GameplayMode.Survival)
                 statusText.Update(gameTime);
-
-            if (session.Player != null)
-            {
-                tickets.Score = session.Player.Tickets;
-                tickets.Update(gameTime);
-            }
 
             Log.Update(gameTime);
             Message.Update(gameTime);
@@ -144,6 +133,7 @@ namespace Remizione
         {
             healthMeter.Actor = session.Player;
             QuickSlot.Actor = session.Player;
+            ticketsMeter.Actor = session.Player;
         }
 
         // ShowSavingIcon

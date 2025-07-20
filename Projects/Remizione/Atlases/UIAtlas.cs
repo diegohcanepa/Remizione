@@ -20,7 +20,6 @@ namespace Remizione
             HeartEmptyIcon = this[nameof(HeartEmptyIcon)];
             HeartHalfIcon = this[nameof(HeartHalfIcon)];
             HeartIcon = this[nameof(HeartIcon)];
-            HPIcon = this[nameof(HPIcon)];
             InventoryCategoryConsumables = this[nameof(InventoryCategoryConsumables)];
             InventoryCategoryEquipment = this[nameof(InventoryCategoryEquipment)];
             InventoryCategoryKeyItems = this[nameof(InventoryCategoryKeyItems)];
@@ -29,6 +28,7 @@ namespace Remizione
             InventoryInfoTitleContainer = this[nameof(InventoryInfoTitleContainer)];
             InventoryNavigationBar = this[nameof(InventoryNavigationBar)];
             InventorySlot = this[nameof(InventorySlot)];
+            InventorySlotLockIcon = this[nameof(InventorySlotLockIcon)];
             InventorySlotSelected = this[nameof(InventorySlotSelected)];
             MessageContainer = this[nameof(MessageContainer)];
             MiniHeartHalfIcon = this[nameof(MiniHeartHalfIcon)];
@@ -46,7 +46,9 @@ namespace Remizione
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
-            TicketsIcon = this[nameof(TicketsIcon)];
+            TicketGreenIcon = this[nameof(TicketGreenIcon)];
+            TicketRedIcon = this[nameof(TicketRedIcon)];
+            TicketYellowIcon = this[nameof(TicketYellowIcon)];
             UITextButtonContainerEdge = this[nameof(UITextButtonContainerEdge)];
             UITextButtonContainerPattern = this[nameof(UITextButtonContainerPattern)];
         }
@@ -93,6 +95,9 @@ namespace Remizione
         // InventorySlot
         public AtlasImage InventorySlot { get; }
 
+        // InventorySlotLockIcon
+        public AtlasImage InventorySlotLockIcon { get; }
+
         // InventorySlotSelected
         public AtlasImage InventorySlotSelected { get; }
 
@@ -104,9 +109,6 @@ namespace Remizione
 
         // HeartIcon
         public AtlasImage HeartIcon { get; }
-
-        // HPIcon
-        public AtlasImage HPIcon { get; }
 
         // MessageContainer
         public AtlasImage MessageContainer { get; }
@@ -156,8 +158,14 @@ namespace Remizione
         // SpeechBubblePipe
         public AtlasImage SpeechBubblePipe { get; }
 
-        // TicketsIcon
-        public AtlasImage TicketsIcon { get; }
+        // TicketGreenIcon
+        public AtlasImage TicketGreenIcon { get; }
+
+        // TicketRedIcon
+        public AtlasImage TicketRedIcon { get; }
+
+        // TicketYellowIcon
+        public AtlasImage TicketYellowIcon { get; }
 
         // UITextButtonContainerEdge
         public AtlasImage UITextButtonContainerEdge { get; }

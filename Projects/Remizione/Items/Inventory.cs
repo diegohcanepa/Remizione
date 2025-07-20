@@ -119,7 +119,14 @@ namespace Remizione
             if (items.Remove(item))
             {
                 if (SelectedItem == item)
-                    SelectedItem = null;
+                {
+                    if (item.Index > 0)
+                        Select(items[item.Index - 1]);
+                    else if (item.Index < items.Count - 1)
+                        Select(items[item.Index + 1]);
+                    else
+                        SelectedItem = null;
+                }
 
                 return true;
             }

@@ -26,6 +26,8 @@
 	<FX Name="GhostCarLoop" />
 	<FX Name="GhostCarStop" />
 	<FX Name="ImpactA" MaxInstances="6" />
+	<FX Name="ItemDiscard" MaxInstances="4" />
+	<FX Name="ItemEquip" MaxInstances="4" />
 	<FX Name="Lightning" MaxInstances="4" />
 	<FX Name="PickupBag" MaxInstances="2" />
 	<FX Name="PickupBottle" MaxInstances="2" />

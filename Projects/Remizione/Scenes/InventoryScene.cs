@@ -40,6 +40,7 @@ namespace Remizione
         private readonly ImageSprite navigationBar;
         private readonly UITextButton nextCategoryButton;
         private readonly UITextButton previousCategoryButton;
+        private readonly UITicketsMeter ticketsMeter;
 
         #endregion
 
@@ -59,6 +60,12 @@ namespace Remizione
                 Actor = owner,
             };
 
+            // Tickets meter
+            this.ticketsMeter = new(Game)
+            {
+                Actor = owner,
+            };
+
             // Checkmark
             this.checkMark = new(Game, Atlases.UI.CheckMark)
             {
@@ -70,7 +77,7 @@ namespace Remizione
             this.gridContainer = new(Game, Atlases.UI.InventoryGridContainer)
             {
                 PivotOrigin = RectanglePoint.LeftTop,
-                Position = new(10, 26),
+                Position = new(10, 28),
             };
 
             // Grids
@@ -199,8 +206,8 @@ namespace Remizione
             buttonConsume = new UITextButton(owner.Game, InputBindings.ConsumeItem)
             {
                 AllowSound = false,
-                PivotOrigin = RectanglePoint.RightBottom,
-                Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3, -3)
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 5, -3)
             };
 
             // Discard button
@@ -213,8 +220,8 @@ namespace Remizione
             // Equip button
             buttonEquip = new UITextButton(owner.Game, InputBindings.Equip)
             {
-                PivotOrigin = RectanglePoint.RightBottom,
-                Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3, -3)
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 5, -3)
             };
         }
 
@@ -227,7 +234,7 @@ namespace Remizione
         {
             buttonClose.Draw(gameTime);
 
-            if (activeGrid.SelectedSlot.Item is not Item item)
+            if (activeGrid.SelectedItem is not Item item)
                 return;
 
             buttonDiscard.Draw(gameTime);
@@ -270,7 +277,7 @@ namespace Remizione
         // InvalidateItemInfo
         private void InvalidateItemInfo()
         {
-            if (activeGrid.SelectedSlot?.Item is Item item)
+            if (activeGrid.SelectedItem is Item item)
             {
                 itemName.Text = TextRepository.GetValue($"Item.{item.Name}.Name") + (item.Level == 0 ? string.Empty : $" +{item.Level}");
                 itemDescription.Text = $"@Item.{item.Name}.Description";
@@ -283,7 +290,7 @@ namespace Remizione
                 itemName.Clear();
                 itemDescription.Clear();
                 itemStats.Clear();
-                itemIcon.Image = null;  
+                itemIcon.Image = null;
             }
         }
 
@@ -321,6 +328,7 @@ namespace Remizione
             base.OnDraw(gameTime);
 
             healthMeter.Draw(gameTime);
+            ticketsMeter.Draw(gameTime);
 
             // Containers
             Game.SpriteBatch.Begin(Game.Camera);
@@ -377,8 +385,22 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
-            if (activeGrid.SelectedSlot.Item != null)
+            if (activeGrid.SelectedItem is Item selectedItem)
             {
+                // Discard
+                if (buttonDiscard.TestPressed(PlayerIndex.One))
+                {
+                    Sound.Play(SoundNames.ItemDiscard);
+                    activeGrid.DiscardSelectedItem();
+                    if (selectedItem == equippedItem)
+                    {
+                        equippedItem = activeGrid.SelectedItem;
+                        InvalidateEquippedItem();
+                    }
+                    InvalidateItemInfo();
+                    return HandleInputResult.Handled;
+                }
+
                 // Consume
                 if (activeGrid.Inventory.Category == InventoryCategory.Consumables)
                 {
@@ -395,7 +417,8 @@ namespace Remizione
                 {
                     if (buttonEquip.TestPressed(PlayerIndex.One))
                     {
-                        equippedItem = activeGrid.SelectedSlot.Item;
+                        Sound.Play(SoundNames.ItemEquip);
+                        equippedItem = selectedItem;
                         InvalidateEquippedItem();
                         return HandleInputResult.Handled;
                     }
@@ -461,6 +484,7 @@ namespace Remizione
             activeGrid.Update(gameTime);
             gridContainer.Update(gameTime);
             healthMeter.Update(gameTime);
+            ticketsMeter.Update(gameTime);
             itemName.Update(gameTime);
             itemDescription.Update(gameTime);
             itemStats.Update(gameTime);

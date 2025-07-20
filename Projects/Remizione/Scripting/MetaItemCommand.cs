@@ -28,7 +28,6 @@ namespace Remizione.Scripting
                 PassiveEffectCooldown = Parser.ParseInt32Argument(this, PassiveEffectCooldownArg),
                 Range = Parser.ParseInt32Argument(this, RangeArg),
                 Sound = Parser.ParseSoundArgument(this, SoundArg),
-                Tickets = Parser.ParseDiceExpressionArgument(this, TicketsArg)
             };
         }
     }

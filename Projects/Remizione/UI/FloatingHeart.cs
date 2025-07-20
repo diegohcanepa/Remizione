@@ -62,7 +62,7 @@ namespace Remizione
             yTween.Start(TweenStyle.CubicOut, origin.Y, origin.Y + distance.Y, duration * 2);
 
             //if (distance.X != 0)
-                xTween.Start(TweenStyle.CubicOut, origin.X, origin.X + distance.X, duration);
+            xTween.Start(TweenStyle.CubicOut, origin.X, origin.X + distance.X, duration);
 
             opacityTween.StartDelay = (int)(duration * .9f);
             opacityTween.Start(TweenStyle.CubicIn, 1, 0, duration - opacityTween.StartDelay);

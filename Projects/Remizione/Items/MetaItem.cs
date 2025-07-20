@@ -72,9 +72,6 @@ namespace Remizione
         // Find
         public static MetaItem? Find(string name) => items.TryGetValue(name, out var result) ? result : null;
 
-        // HasUsageCost
-        public bool HasUsageCost => HP != null || Tickets != null;
-
         // HP
         public DiceExpression? HP { get; init; }
 
@@ -116,9 +113,6 @@ namespace Remizione
 
         // Sound
         public Sound? Sound { get; init; }
-
-        // Tickets
-        public DiceExpression? Tickets { get; init; }
 
         // ToString
         public override string ToString() => Name;

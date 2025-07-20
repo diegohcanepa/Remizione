@@ -19,12 +19,13 @@ namespace Remizione.UI
         private readonly FloatTween tween = new();
 
         // Constructor
-        public UIScore(RemizioneGame game, AtlasImage iconImage, Color textColor)
+        public UIScore(EngendroGame game, AtlasImage iconImage, Color textColor)
             : base(game)
         {
             // Icon
             this.icon = new(game, iconImage)
             {
+                PivotOrigin = RectanglePoint.RightTop,
                 Scale = ScaleInfo.UIElement.Tiny
             };
 
@@ -32,7 +33,8 @@ namespace Remizione.UI
             this.scoreText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = textColor,
-                Scale = ScaleInfo.Text.Huge,
+                PivotOrigin = RectanglePoint.Top,
+                Scale = ScaleInfo.Text.VeryLarge,
             };
 
             this.Score = 0;
@@ -40,35 +42,11 @@ namespace Remizione.UI
             isInitializing = true;
         }
 
-        #region Private members
-
-        // Invalidate
-        private void Invalidate()
-        {
-            if (icon.PivotOrigin == RectanglePoint.RightBottom ||
-                icon.PivotOrigin == RectanglePoint.RightTop ||
-                icon.PivotOrigin == RectanglePoint.Right)
-            {
-                scoreText.PivotOrigin = RectanglePoint.Right;
-                scoreText.Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, 0, 1);
-            }
-            else
-            {
-                scoreText.PivotOrigin = RectanglePoint.Left;
-                scoreText.Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 0, 1);
-            }
-        }
-
-        #endregion
-
         #region Protected members
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (score == 0 && HideZero)
-                return;
-
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             icon.Draw(gameTime);
             Game.SpriteBatch.End();
@@ -105,20 +83,6 @@ namespace Remizione.UI
             set => scoreText.Color = value;
         }
 
-        // HideZero
-        public bool HideZero { get; set; }
-
-        // PivotOrigin
-        public RectanglePoint PivotOrigin
-        {
-            get => icon.PivotOrigin;
-            set
-            {
-                icon.PivotOrigin = value;
-                Invalidate();
-            }
-        }
-
         // Position
         public Vector2 Position
         {
@@ -128,7 +92,7 @@ namespace Remizione.UI
                 if (value != icon.Position)
                 {
                     icon.Position = value;
-                    Invalidate();
+                    scoreText.Position = icon.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -3);
                 }
             }
         }
