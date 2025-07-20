@@ -22,16 +22,18 @@ namespace Remizione
         private readonly UITextButton buttonDiscard;
         private readonly UITextButton buttonEquip;
         private readonly List<InventoryCategory> categories = [InventoryCategory.Consumables, InventoryCategory.Equipment, InventoryCategory.KeyItems];
+        private readonly ImageSprite[] categoryIcons;
         private readonly TextSprite categoryText;
         private readonly ImageSprite checkMark;
-        private readonly ImageSprite checkMarkItemInfo;
         private InventoryCategory currentCategory;
         private Item? equippedItem;
         private readonly ImageSprite gridContainer;
         private readonly Dictionary<InventoryCategory, InventoryGrid> grids = [];
         private readonly UIHealthMeter healthMeter;
         private readonly ImageSprite infoContainer;
+        private readonly ImageSprite infoTitleContainer;
         private readonly TextSprite itemDescription;
+        private readonly ImageSprite itemIcon;
         private readonly TextSprite itemName;
         private readonly TextSprite itemStats;
         private InputMethod lastKnownInput;
@@ -68,7 +70,7 @@ namespace Remizione
             this.gridContainer = new(Game, Atlases.UI.InventoryGridContainer)
             {
                 PivotOrigin = RectanglePoint.LeftTop,
-                Position = new(10, 24),
+                Position = new(10, 26),
             };
 
             // Grids
@@ -89,6 +91,22 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = gridContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 0)
             };
+
+            // Category icons
+            categoryIcons = new ImageSprite[categories.Count];
+            for (int i = 0; i < categoryIcons.Length; i++)
+            {
+                categoryIcons[i] = new(Game, Atlases.UI.GetImage($"InventoryCategory{categories[i]}"))
+                {
+                    PivotOrigin = RectanglePoint.Middle,
+                    Scale = ScaleInfo.UIElement.Medium
+                };
+            }
+
+            categoryIcons[1].Position = navigationBar.BoundingBox.GetPoint(RectanglePoint.Top, 0, -5);
+            categoryIcons[0].Position = categoryIcons[1].BoundingBox.GetPoint(RectanglePoint.Left, -7, 0);
+            categoryIcons[2].Position = categoryIcons[1].BoundingBox.GetPoint(RectanglePoint.Right, 7, 0);
+
 
             // Previous tab button
             this.previousCategoryButton = new(Game, InputBindings.PreviousTab)
@@ -111,7 +129,7 @@ namespace Remizione
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Middle,
-                Scale = ScaleInfo.Text.Huge,
+                Scale = ScaleInfo.Text.ExtraLarge,
                 Position = navigationBar.BoundingBox.GetPoint(RectanglePoint.Middle, 0, .5f),
                 ShadowOffset = new Vector2(0, .75f)
             };
@@ -123,14 +141,28 @@ namespace Remizione
                 Position = gridContainer.BoundingBox.GetPoint(RectanglePoint.RightTop, 3, 0)
             };
 
+            // Info title container
+            this.infoTitleContainer = new(Game, Atlases.UI.InventoryInfoTitleContainer)
+            {
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.Top)
+            };
+
+            // Item icon
+            this.itemIcon = new(Game)
+            {
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = infoTitleContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -4, 1),
+                Scale = ScaleInfo.UIElement.Medium
+            };
+
             // Item name
             this.itemName = new TextSprite(Game, Fonts.Common)
             {
                 Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.LeftTop,
-                Position = new Vector2(6, 3),
+                PivotOrigin = RectanglePoint.Middle,
+                Position = infoTitleContainer.BoundingBox.GetPoint(RectanglePoint.Middle, 0, 1.3f),
                 Scale = ScaleInfo.Text.ExtraLarge,
-                VisualParent = infoContainer,
                 ShadowOffset = new Vector2(0, .75f)
             };
 
@@ -140,6 +172,7 @@ namespace Remizione
                 Color = ColorPalette.Text.Dark,
                 PivotOrigin = RectanglePoint.LeftTop,
                 MaximumWidth = maxInfoTextWidth,
+                Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 6, 3),
                 Scale = ScaleInfo.Text.VeryLarge,
                 ShadowOffset = new Vector2(0, .75f)
             };
@@ -147,18 +180,11 @@ namespace Remizione
             // Item stats
             this.itemStats = new TextSprite(Game, Fonts.Common)
             {
-                Color = ColorPalette.Text.Highlight,
+                Color = ColorPalette.Text.Terra,
                 PivotOrigin = RectanglePoint.LeftTop,
                 MaximumWidth = maxInfoTextWidth,
                 Scale = ScaleInfo.Text.VeryLarge,
                 ShadowOffset = new Vector2(0, .75f)
-            };
-
-            // Checkmark item info
-            this.checkMarkItemInfo = new(Game, Atlases.UI.CheckMark)
-            {
-                PivotOrigin = RectanglePoint.RightTop,
-                Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.RightTop, -4, 3),
             };
 
             // Close button
@@ -166,11 +192,11 @@ namespace Remizione
             {
                 AllowPressEffect = false,
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, 7),
+                Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, 4),
             };
 
             // Consume button
-            buttonConsume = new UITextButton(owner.Game, InputBindings.UseItem)
+            buttonConsume = new UITextButton(owner.Game, InputBindings.ConsumeItem)
             {
                 AllowSound = false,
                 PivotOrigin = RectanglePoint.RightBottom,
@@ -180,9 +206,8 @@ namespace Remizione
             // Discard button
             buttonDiscard = new UITextButton(owner.Game, InputBindings.Discard)
             {
-                PivotOrigin = RectanglePoint.LeftBottom,
-                Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 5, -3),
-                TextColor = ColorPalette.Text.TerraLight,
+                PivotOrigin = RectanglePoint.LeftTop,
+                Position = gridContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 4)
             };
 
             // Equip button
@@ -205,7 +230,7 @@ namespace Remizione
             if (activeGrid.SelectedSlot.Item is not Item item)
                 return;
 
-            //buttonDiscard.Draw(gameTime);
+            buttonDiscard.Draw(gameTime);
 
             if (item.MetaItem.Category == InventoryCategory.Equipment)
             {
@@ -224,6 +249,10 @@ namespace Remizione
             categoryText.Text = Localization.GetValue(currentCategory);
             InvalidateItemInfo();
             InvalidateEquippedItem();
+
+            categoryIcons[0].Opacity = currentCategory == InventoryCategory.Consumables ? 1f : .4f;
+            categoryIcons[1].Opacity = currentCategory == InventoryCategory.Equipment ? 1f : .4f;
+            categoryIcons[2].Opacity = currentCategory == InventoryCategory.KeyItems ? 1f : .4f;
         }
 
         // InvalidateEquippedItem
@@ -245,15 +274,16 @@ namespace Remizione
             {
                 itemName.Text = TextRepository.GetValue($"Item.{item.Name}.Name") + (item.Level == 0 ? string.Empty : $" +{item.Level}");
                 itemDescription.Text = $"@Item.{item.Name}.Description";
-                itemDescription.Position = itemName.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
                 itemStats.Text = item.GetLocalizedInfo();
                 itemStats.Position = itemDescription.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
+                itemIcon.Image = item.MetaItem.Image;
             }
             else
             {
                 itemName.Clear();
                 itemDescription.Clear();
                 itemStats.Clear();
+                itemIcon.Image = null;  
             }
         }
 
@@ -296,7 +326,16 @@ namespace Remizione
             Game.SpriteBatch.Begin(Game.Camera);
             navigationBar.Draw(gameTime);
             gridContainer.Draw(gameTime);
+            infoTitleContainer.Draw(gameTime);
             infoContainer.Draw(gameTime);
+
+            for (int i = 0; i < categoryIcons.Length; i++)
+            {
+                categoryIcons[i].Draw(gameTime);
+            }
+
+            itemIcon.Draw(gameTime);
+
             Game.SpriteBatch.End();
 
             DrawButtons(gameTime);
@@ -307,17 +346,13 @@ namespace Remizione
             {
                 Game.SpriteBatch.Begin(Game.Camera);
                 checkMark.Draw(gameTime);
-
-                if (equippedItem == activeGrid.SelectedSlot.Item)
-                    checkMarkItemInfo.Draw(gameTime);
-
                 Game.SpriteBatch.End();
             }
 
             nextCategoryButton.Draw(gameTime);
             previousCategoryButton.Draw(gameTime);
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearWrap);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             categoryText.Draw(gameTime);
             itemName.Draw(gameTime);
             itemDescription.Draw(gameTime);

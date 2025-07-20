@@ -209,9 +209,12 @@ namespace Remizione
 
             Game.SpriteBatch.End();
 
-            Game.SpriteBatch.Begin(Camera, SamplerState.LinearClamp);
-            label.Draw(gameTime);
-            Game.SpriteBatch.End();
+            if (HasText)
+            {
+                Game.SpriteBatch.Begin(Camera, SamplerState.LinearClamp);
+                label.Draw(gameTime);
+                Game.SpriteBatch.End();
+            }
         }
 
         // OnUpdate

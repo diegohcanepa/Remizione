@@ -33,7 +33,7 @@
   <String Key="InGameMenuOptionName.Settings">Settings</String>
   <String Key="InputBinding.Back">Back</String>
   <String Key="InputBinding.Close">Close</String>
-  <String Key="InputBinding.ConsumeItem">Use</String>
+  <String Key="InputBinding.ConsumeItem">Consume</String>
   <String Key="InputBinding.Continue">Continue</String>
   <String Key="InputBinding.Discard">Discard</String>
   <String Key="InputBinding.Equip">Equip</String>
@@ -46,9 +46,6 @@
   <String Key="InventoryCategory.Consumables">Consumables</String>
   <String Key="InventoryCategory.Equipment">Equipment</String>
   <String Key="InventoryCategory.KeyItems">Key items</String>
-  <String Key="InventoryOption.Descartar">Discard</String>
-  <String Key="InventoryOption.Inspect">Inspect</String>
-  <String Key="InventoryOption.Select">Select</String>
   <String Key="Item.Apple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.Apple.Name">Apple</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>

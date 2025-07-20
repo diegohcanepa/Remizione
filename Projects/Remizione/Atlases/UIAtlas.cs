@@ -21,8 +21,12 @@ namespace Remizione
             HeartHalfIcon = this[nameof(HeartHalfIcon)];
             HeartIcon = this[nameof(HeartIcon)];
             HPIcon = this[nameof(HPIcon)];
+            InventoryCategoryConsumables = this[nameof(InventoryCategoryConsumables)];
+            InventoryCategoryEquipment = this[nameof(InventoryCategoryEquipment)];
+            InventoryCategoryKeyItems = this[nameof(InventoryCategoryKeyItems)];
             InventoryGridContainer = this[nameof(InventoryGridContainer)];
             InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
+            InventoryInfoTitleContainer = this[nameof(InventoryInfoTitleContainer)];
             InventoryNavigationBar = this[nameof(InventoryNavigationBar)];
             InventorySlot = this[nameof(InventorySlot)];
             InventorySlotSelected = this[nameof(InventorySlotSelected)];
@@ -65,11 +69,23 @@ namespace Remizione
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
 
+        // InventoryCategoryConsumables
+        public AtlasImage InventoryCategoryConsumables { get; }
+
+        // InventoryCategoryEquipment
+        public AtlasImage InventoryCategoryEquipment { get; }
+
+        // InventoryCategoryKeyItems
+        public AtlasImage InventoryCategoryKeyItems { get; }
+
         // InventoryGridContainer
         public AtlasImage InventoryGridContainer { get; }
 
         // InventoryInfoContainer
         public AtlasImage InventoryInfoContainer { get; }
+
+        // InventoryInfoTitleContainer
+        public AtlasImage InventoryInfoTitleContainer { get; }
 
         // InventoryNavigationBar
         public AtlasImage InventoryNavigationBar { get; }

@@ -47,9 +47,6 @@ namespace Remizione
     // InGameMenuOptionName
     public enum InGameMenuOptionName { Attributes, Creatures, Inventory, Gifts, Map, Prayers, SacredWords, QuitToDesktop, Settings }
 
-    // InventoryOption
-    public enum InventoryOption { Inspect, Select, Discard }
-
     // InventoryCategory
     public enum InventoryCategory { None, Consumables, Equipment, KeyItems }
 

@@ -27,6 +27,7 @@ namespace Remizione
             // Inventory
             if (InputBindings.Inventory.IsPressed(PlayerIndex.One))
             {
+                Actor.Session.Camera.FocusTarget();
                 inventoryScene.SceneController.Push();
                 return HandleInputResult.Handled;
             }
