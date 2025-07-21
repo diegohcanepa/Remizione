@@ -60,7 +60,7 @@ namespace Remizione
             this.PlacementConditions = new(placementConditions);
             this.Consumables = new Inventory(this, InventoryCategory.Consumables);
             this.Equipment = new Inventory(this, InventoryCategory.Equipment);
-            this.Misc = new Inventory(this, InventoryCategory.KeyItems);
+            this.KeyItems = new Inventory(this, InventoryCategory.KeyItems);
         }
 
         #endregion
@@ -371,8 +371,8 @@ namespace Remizione
                 Equipment.SetSerializationData(equipmentData);
 
             // Misc
-            if (attributes[nameof(Misc)]?.Value is string miscData)
-                Misc.SetSerializationData(miscData);
+            if (attributes[nameof(KeyItems)]?.Value is string miscData)
+                KeyItems.SetSerializationData(miscData);
         }
 
         // OnTransform
@@ -487,7 +487,7 @@ namespace Remizione
         {
             output.WriteAttributeString(nameof(Consumables), Consumables.GetSerializationData());
             output.WriteAttributeString(nameof(Equipment), Equipment.GetSerializationData());
-            output.WriteAttributeString(nameof(Misc), Misc.GetSerializationData());
+            output.WriteAttributeString(nameof(KeyItems), KeyItems.GetSerializationData());
         }
 
         #endregion
@@ -815,7 +815,7 @@ namespace Remizione
             {
                 InventoryCategory.Consumables => Consumables,
                 InventoryCategory.Equipment => Equipment,
-                InventoryCategory.KeyItems => Misc,
+                InventoryCategory.KeyItems => KeyItems,
                 _ => throw new ArgumentException($"Invalid inventory category: {category}", nameof(category)),
             };
         }
@@ -973,6 +973,9 @@ namespace Remizione
         [ScriptProperty]
         public virtual bool IsWalkAreaHole => Collider != null;
 
+        // KeyItems
+        public Inventory KeyItems { get; }
+
         // Light
         public Light? Light { get; set; }
 
@@ -996,9 +999,6 @@ namespace Remizione
                 }
             }
         }
-
-        // Misc
-        public Inventory Misc { get; }
 
         // OverheadOrigin
         [ScriptProperty]

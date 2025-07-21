@@ -361,11 +361,15 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">KeyboardControls-assets/KeyboardBagSlot.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardD.png</key>
+            <key type="filename">KeyboardControls-assets/KeyboardEquipmentSlot.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardI.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardS.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardX.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardZ.png</key>
+            <key type="filename">XboxControls-assets/XboxBagSlot.png</key>
+            <key type="filename">XboxControls-assets/XboxEquipmentSlot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -480,21 +484,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UI-assets/BottomGradient.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>60,8,120,15</rect>
-                <key>scale9Paddings</key>
-                <rect>60,8,120,15</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
+            <key type="filename">UI-assets/BagSlot.png</key>
             <key type="filename">UI-assets/CloseWindowButton.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -507,6 +497,21 @@
                 <rect>3,3,5,6</rect>
                 <key>scale9Paddings</key>
                 <rect>3,3,5,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UI-assets/BottomGradient.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>60,8,120,15</rect>
+                <key>scale9Paddings</key>
+                <rect>60,8,120,15</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -739,23 +744,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UIIcons-assets/HPIcon.png</key>
-            <key type="filename">XboxControls-assets/XboxA.png</key>
-            <key type="filename">XboxControls-assets/XboxB.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,4,7,7</rect>
-                <key>scale9Paddings</key>
-                <rect>4,4,7,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">UIIcons-assets/HeartEmptyIcon.png</key>
             <key type="filename">UIIcons-assets/HeartHalfIcon.png</key>
             <key type="filename">UIIcons-assets/HeartIcon.png</key>
@@ -773,7 +761,9 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UIIcons-assets/TicketsIcon.png</key>
+            <key type="filename">UIIcons-assets/TicketGreenIcon.png</key>
+            <key type="filename">UIIcons-assets/TicketRedIcon.png</key>
+            <key type="filename">UIIcons-assets/TicketYellowIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -785,6 +775,22 @@
                 <rect>5,4,9,9</rect>
                 <key>scale9Paddings</key>
                 <rect>5,4,9,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">XboxControls-assets/XboxA.png</key>
+            <key type="filename">XboxControls-assets/XboxB.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,7,7</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,7,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

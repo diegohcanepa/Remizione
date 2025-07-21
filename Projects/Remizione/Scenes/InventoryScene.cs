@@ -218,7 +218,7 @@ namespace Remizione
             };
 
             // Equip button
-            buttonEquip = new UITextButton(owner.Game, InputBindings.Equip)
+            buttonEquip = new UITextButton(owner.Game, InputBindings.EquipItem)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 5, -3)

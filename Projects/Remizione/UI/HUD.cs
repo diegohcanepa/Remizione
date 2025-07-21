@@ -50,8 +50,11 @@ namespace Remizione
             // Prompt
             this.prompt = new(session);
 
-            // Quick slot
-            this.QuickSlot = new(Game);
+            // Bag slot
+            this.BagSlot = new(Game);
+
+            // Equipment slot
+            this.EquipmentSlot = new(Game);
 
             // Message text
             this.statusText = new TextSprite(Game, Fonts.CommonOutline)
@@ -73,7 +76,10 @@ namespace Remizione
             if (session.GameplayMode == GameplayMode.Survival)
             {
                 if (!session.IsConsoleVisible)
-                    QuickSlot.Draw(gameTime);
+                {
+                    BagSlot.Draw(gameTime);
+                    EquipmentSlot.Draw(gameTime);
+                }
 
                 healthMeter.Draw(gameTime);
                 ticketsMeter.Draw(gameTime);
@@ -99,7 +105,8 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            QuickSlot.Update(gameTime);
+            BagSlot.Update(gameTime);
+            EquipmentSlot.Update(gameTime);
             healthMeter.Update(gameTime);
             ticketsMeter.Update(gameTime);
 
@@ -116,8 +123,23 @@ namespace Remizione
 
         #endregion
 
+        // BagSlot
+        public BagSlot BagSlot { get; }
+
+        // EquipmentSlot
+        public EquipmentSlot EquipmentSlot { get; }
+
         // HandleInput
-        public HandleInputResult HandleInput(GameTime gameTime) => QuickSlot.HandleInput(gameTime);
+        public HandleInputResult HandleInput(GameTime gameTime)
+        {
+            if (EquipmentSlot.HandleInput(gameTime) == HandleInputResult.Handled)
+                return HandleInputResult.Handled;
+
+            if (BagSlot.HandleInput(gameTime) == HandleInputResult.Handled)
+                return HandleInputResult.Handled;
+
+            return HandleInputResult.Unhandled;
+        }
 
         // Log
         public UILog Log { get; }
@@ -125,14 +147,12 @@ namespace Remizione
         // Message
         public HUDMessage Message { get; }
 
-        // QuickSlot
-        public QuickSlot QuickSlot { get; }
-
         // Reset
         public void Reset()
         {
             healthMeter.Actor = session.Player;
-            QuickSlot.Actor = session.Player;
+            BagSlot.Actor = session.Player;
+            EquipmentSlot.Actor = session.Player;
             ticketsMeter.Actor = session.Player;
         }
 

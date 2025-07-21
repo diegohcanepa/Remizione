@@ -11,6 +11,7 @@ namespace Remizione
         public UIAtlas(EngendroGame game)
             : base(game.Content, "UI", ContentHelper.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
+            BagSlot = this[nameof(BagSlot)];
             BottomGradient = this[nameof(BottomGradient)];
             CheckMark = this[nameof(CheckMark)];
             CloseWindowButton = this[nameof(CloseWindowButton)];
@@ -52,6 +53,9 @@ namespace Remizione
             UITextButtonContainerEdge = this[nameof(UITextButtonContainerEdge)];
             UITextButtonContainerPattern = this[nameof(UITextButtonContainerPattern)];
         }
+
+        // BagSlot
+        public AtlasImage BagSlot { get; }
 
         // BottomGradient
         public AtlasImage BottomGradient { get; }

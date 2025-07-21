@@ -7,9 +7,9 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Remizione
 {
     /// <summary>
-    /// QuickSlot
+    /// EquipmentSlot
     /// </summary>
-    public sealed class QuickSlot : GameObject, IInputHandler
+    public sealed class EquipmentSlot : GameObject, IInputHandler
     {
         #region Private fields
 
@@ -27,7 +27,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public QuickSlot(EngendroGame game)
+        public EquipmentSlot(EngendroGame game)
             : base(game)
         {
             // Slot image
@@ -50,7 +50,7 @@ namespace Remizione
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Top,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2),
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -3),
                 Scale = ScaleInfo.Text.Large,
                 Spacing = -5
             };
@@ -58,6 +58,7 @@ namespace Remizione
             // Button
             this.button = new(game, InputBindings.UseItem)
             {
+                ImageName = "EquipmentSlot",
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3, -2),
             };
@@ -148,7 +149,7 @@ namespace Remizione
 
             if (lastKnownItem != null)
             {
-                //button.Draw(gameTime);
+                button.Draw(gameTime);
 
                 if (lastKnownItem.MetaItem.IsStackable)
                 {

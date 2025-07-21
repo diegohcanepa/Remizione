@@ -26,6 +26,7 @@ namespace Remizione
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
         private readonly FloatTween headTween = new();
+        private InventoryScene? inventoryScene;
         private int level = 1;
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
@@ -895,6 +896,16 @@ namespace Remizione
         {
             get => shadowSpot.Size;
             set => shadowSpot.Size = value;
+        }
+
+        // ShowInventory
+        public void ShowInventory()
+        {
+            Stand();
+            inventoryScene ??= new InventoryScene(this);
+            if (Session.Camera.Target == this)
+                Session.Camera.FocusTarget();
+            inventoryScene.SceneController.Push();
         }
 
         // SpeechBubbleSound
