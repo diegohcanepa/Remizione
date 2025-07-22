@@ -173,21 +173,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Inventory-assets/InventoryCategoryConsumables.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,5,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Inventory-assets/InventoryCategoryContainer.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -200,23 +185,6 @@
                 <rect>15,2,30,3</rect>
                 <key>scale9Paddings</key>
                 <rect>15,2,30,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Inventory-assets/InventoryCategoryEquipment.png</key>
-            <key type="filename">Inventory-assets/InventoryCategoryKeyItems.png</key>
-            <key type="filename">UI-assets/ProhibitionMark.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -324,6 +292,25 @@
                 <rect>1,2,1,3</rect>
                 <key>scale9Paddings</key>
                 <rect>1,2,1,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryConsumables.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryEquipment.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryKeyItems.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategorySkills.png</key>
+            <key type="filename">UI-assets/ProhibitionMark.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -825,6 +812,7 @@
                     <filename>MouseCursors-assets</filename>
                     <filename>Items-assets</filename>
                     <filename>Inventory-assets</filename>
+                    <filename>InventoryCategoryIcons-assets</filename>
                 </array>
             </struct>
         </map>

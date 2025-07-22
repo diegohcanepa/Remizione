@@ -32,7 +32,7 @@ namespace Remizione.Scripting
 
             if (metaItem != null)
             {
-                var inventory = actor.GetInventory(metaItem.Category);
+                var inventory = actor.Inventory.GetContainer(metaItem.Category);
 
                 // Stackable item already in inventory
                 if (metaItem.IsStackable && inventory.GetItem(metaItem.Name) is Item item)

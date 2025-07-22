@@ -28,10 +28,10 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public InventoryGrid(Inventory inventory, int columns, int rows)
-            : base(inventory.Owner.Game)
+        public InventoryGrid(ItemContainer itemContainer, int columns, int rows)
+            : base(itemContainer.Owner.Game)
         {
-            this.Inventory = inventory;
+            this.ItemContainer = itemContainer;
             this.columns = columns;
             this.rows = rows;
             this.slots = new List<InventorySlot>(columns * rows);
@@ -161,9 +161,9 @@ namespace Remizione
             if (SelectedItem is Item item)
             {
                 SelectedSlot.Item = null;
-                Inventory.Remove(item);
-                if (Inventory.SelectedItem != null)
-                    SelectSlot(Inventory.SelectedItem.Name);
+                ItemContainer.Remove(item);
+                if (ItemContainer.SelectedItem != null)
+                    SelectSlot(ItemContainer.SelectedItem.Name);
             }
         }
 
@@ -274,8 +274,8 @@ namespace Remizione
         // IndexOf
         public int IndexOf(InventorySlot slot) => slots.IndexOf(slot);
 
-        // Inventory
-        public Inventory Inventory { get; }
+        // ItemContainer
+        public ItemContainer ItemContainer { get; }
 
         // Populate
         public void Populate()
@@ -284,7 +284,7 @@ namespace Remizione
 
             int index = 0;
 
-            foreach (var item in Inventory.GetItems())
+            foreach (var item in ItemContainer.GetItems())
             {
                 if (index >= slots.Count)
                     break;
@@ -293,8 +293,8 @@ namespace Remizione
                 index++;
             }
 
-            if (Inventory.SelectedItem != null)
-                SelectSlot(Inventory.SelectedItem.Name);
+            if (ItemContainer.SelectedItem != null)
+                SelectSlot(ItemContainer.SelectedItem.Name);
             else
                 SelectSlot(0);
         }

@@ -4,15 +4,15 @@ using System.Collections.Generic;
 namespace Remizione
 {
     /// <summary>
-    /// Inventory
+    /// ItemContainer
     /// </summary>
-    public sealed class Inventory
+    public sealed class ItemContainer
     {
         private readonly List<Item> items = [];
         private const string NoneValue = "[None]";
 
         // Constructor
-        public Inventory(GameThing owner, InventoryCategory category)
+        public ItemContainer(GameThing owner, InventoryCategory category)
         {
             this.Owner = owner;
             this.Category = category;

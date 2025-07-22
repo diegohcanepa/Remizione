@@ -62,7 +62,7 @@ namespace Remizione
                 {
                     if (metaItem != null)
                     {
-                        Owner.GetInventory(metaItem.Category).Add(metaItem, 1);
+                        Owner.Inventory.GetContainer(metaItem.Category).Add(metaItem, 1);
                         Owner.Session.HUD.Log.Show(LogVerb.PickedUp, metaItem.LocalizedName, metaItem.Image);
                     }
 

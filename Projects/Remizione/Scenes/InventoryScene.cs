@@ -21,7 +21,7 @@ namespace Remizione
         private readonly UITextButton buttonConsume;
         private readonly UITextButton buttonDiscard;
         private readonly UITextButton buttonEquip;
-        private readonly List<InventoryCategory> categories = [InventoryCategory.Consumables, InventoryCategory.Equipment, InventoryCategory.KeyItems];
+        private readonly List<InventoryCategory> categories = [InventoryCategory.Consumables, InventoryCategory.Equipment, InventoryCategory.KeyItems, InventoryCategory.Skills];
         private readonly ImageSprite[] categoryIcons;
         private readonly TextSprite categoryText;
         private readonly ImageSprite checkMark;
@@ -80,14 +80,13 @@ namespace Remizione
                 Position = new(10, 28),
             };
 
-            // Grids
-            grids[InventoryCategory.Consumables] = new InventoryGrid(owner.GetInventory(InventoryCategory.Consumables), 6, 4);
-            grids[InventoryCategory.Equipment] = new InventoryGrid(owner.GetInventory(InventoryCategory.Equipment), 6, 4);
-            grids[InventoryCategory.KeyItems] = new InventoryGrid(owner.GetInventory(InventoryCategory.KeyItems), 6, 4);
-
-            foreach (var grid in grids.Values)
+            var gridPos = gridContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 3, 3);
+            foreach (var category in categories)
             {
-                grid.Position = gridContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 3, 3);
+                grids[category] = new InventoryGrid(owner.Inventory.GetContainer(category), 6, 4)
+                {
+                    Position = gridPos
+                };
             }
 
             activeGrid = grids[InventoryCategory.Consumables];
@@ -109,11 +108,6 @@ namespace Remizione
                     Scale = ScaleInfo.UIElement.Medium
                 };
             }
-
-            categoryIcons[1].Position = navigationBar.BoundingBox.GetPoint(RectanglePoint.Top, 0, -5);
-            categoryIcons[0].Position = categoryIcons[1].BoundingBox.GetPoint(RectanglePoint.Left, -7, 0);
-            categoryIcons[2].Position = categoryIcons[1].BoundingBox.GetPoint(RectanglePoint.Right, 7, 0);
-
 
             // Previous tab button
             this.previousCategoryButton = new(Game, InputBindings.PreviousTab)
@@ -223,6 +217,8 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 5, -3)
             };
+
+            LayoutCategoryIcons();
         }
 
         #endregion
@@ -257,9 +253,10 @@ namespace Remizione
             InvalidateItemInfo();
             InvalidateEquippedItem();
 
-            categoryIcons[0].Opacity = currentCategory == InventoryCategory.Consumables ? 1f : .4f;
-            categoryIcons[1].Opacity = currentCategory == InventoryCategory.Equipment ? 1f : .4f;
-            categoryIcons[2].Opacity = currentCategory == InventoryCategory.KeyItems ? 1f : .4f;
+            foreach (var category in categories)
+            {
+                categoryIcons[categories.IndexOf(category)].Opacity = currentCategory == category ? 1f : .4f;
+            }
         }
 
         // InvalidateEquippedItem
@@ -291,6 +288,23 @@ namespace Remizione
                 itemDescription.Clear();
                 itemStats.Clear();
                 itemIcon.Image = null;
+            }
+        }
+
+        // LayoutCategoryIcons
+        private void LayoutCategoryIcons()
+        {
+            const int spacing = 2;
+
+            var iconWidth = categoryIcons[0].BoundingBox.Width;
+            var totalWidth = categoryIcons.Length * iconWidth + (categoryIcons.Length - 1) * spacing;
+            float x = (navigationBar.BoundingBox.GetPoint(RectanglePoint.Top).X - totalWidth / 2) + (iconWidth / 2);
+            float y = navigationBar.BoundingBox.GetPoint(RectanglePoint.Top, 0, -5).Y;
+
+            for (var i = 0; i < categoryIcons.Length; i++)
+            {
+                categoryIcons[i].X = x + i * (iconWidth + spacing);
+                categoryIcons[i].Y = y;
             }
         }
 
@@ -402,7 +416,7 @@ namespace Remizione
                 }
 
                 // Consume
-                if (activeGrid.Inventory.Category == InventoryCategory.Consumables)
+                if (activeGrid.ItemContainer.Category == InventoryCategory.Consumables)
                 {
                     if (buttonConsume.TestPressed(PlayerIndex.One))
                     {
@@ -413,7 +427,7 @@ namespace Remizione
                 }
 
                 // Equip
-                if (activeGrid.Inventory.Category == InventoryCategory.Equipment)
+                if (activeGrid.ItemContainer.Category == InventoryCategory.Equipment)
                 {
                     if (buttonEquip.TestPressed(PlayerIndex.One))
                     {
@@ -456,7 +470,7 @@ namespace Remizione
             }
 
             currentCategory = InventoryCategory.Consumables;
-            equippedItem = Owner.Equipment.SelectedItem;
+            equippedItem = Owner.Inventory.Equipment.SelectedItem;
             InvalidateEquippedItem();
             lastKnownInput = InputMethod.None;
 
@@ -469,7 +483,7 @@ namespace Remizione
             base.OnUnloadContent();
 
             if (equippedItem != null)
-                Owner.Equipment.Select(equippedItem);
+                Owner.Inventory.Equipment.Select(equippedItem);
         }
 
         // OnUpdate

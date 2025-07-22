@@ -71,7 +71,7 @@ namespace Remizione
         // InvalidateItem
         private void InvalidateItem(GameTime gameTime)
         {
-            lastKnownItem = actor?.Equipment.SelectedItem;
+            lastKnownItem = actor?.Inventory.Equipment.SelectedItem;
 
             if (lastKnownItem != null)
             {
@@ -100,7 +100,7 @@ namespace Remizione
         private bool SelectFirst()
         {
             if (actor != null)
-                return actor.Equipment.SelectFirst() != null;
+                return actor.Inventory.Equipment.SelectFirst() != null;
             else
                 return false;
         }
@@ -109,7 +109,7 @@ namespace Remizione
         private bool SelectLast()
         {
             if (actor != null)
-                return actor.Equipment.SelectLast() != null;
+                return actor.Inventory.Equipment.SelectLast() != null;
             else
                 return false;
         }
@@ -118,7 +118,7 @@ namespace Remizione
         private bool SelectNext()
         {
             if (actor != null)
-                return actor.Equipment.SelectNext() != null;
+                return actor.Inventory.Equipment.SelectNext() != null;
             else
                 return false;
         }
@@ -127,7 +127,7 @@ namespace Remizione
         private bool SelectPrevious()
         {
             if (actor != null)
-                return actor.Equipment.SelectPrevious() != null;
+                return actor.Inventory.Equipment.SelectPrevious() != null;
             else
                 return false;
         }
@@ -168,7 +168,7 @@ namespace Remizione
 
             button.Update(gameTime);
 
-            if (lastKnownItem != actor?.Equipment.SelectedItem)
+            if (lastKnownItem != actor?.Inventory.Equipment.SelectedItem)
                 InvalidateItem(gameTime);
             else
                 InvalidateItemAmount(gameTime, false);
@@ -188,7 +188,7 @@ namespace Remizione
                 if (value != actor)
                 {
                     actor = value;
-                    itemImage.Image = actor?.Equipment.SelectedItem?.MetaItem.Image;
+                    itemImage.Image = actor?.Inventory.Equipment.SelectedItem?.MetaItem.Image;
                     lastKnownCount = -1;
                     lastKnownItem = null;
                 }
@@ -248,6 +248,6 @@ namespace Remizione
         }
 
         // IsVisible
-        public bool IsVisible => actor != null && !actor.Equipment.IsEmpty && actor.Session.IsCurrentScene;
+        public bool IsVisible => actor != null && !actor.Inventory.Equipment.IsEmpty && actor.Session.IsCurrentScene;
     }
 }

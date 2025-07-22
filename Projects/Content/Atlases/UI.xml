@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:baa415a52141cdb089ff0ef525cdaf6b:3dd5f74e3bf0c96d8b3606bff5789802:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:db9b79311e6c83a8363f7b3e8e4cd309:bdf036ff5794e02ad2db157207229456:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -32,20 +32,21 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="DialogOptionBullet.png" x="506" y="9" w="4" h="4"/>
     <sprite n="Duck.png" x="484" y="46" w="20" h="20"/>
     <sprite n="GoalOrnament.png" x="387" y="71" w="94" h="5"/>
-    <sprite n="HeartEmptyIcon.png" x="287" y="494" w="9" h="9"/>
-    <sprite n="HeartHalfIcon.png" x="298" y="494" w="9" h="9"/>
-    <sprite n="HeartIcon.png" x="309" y="494" w="9" h="9"/>
-    <sprite n="InventoryCategoryConsumables.png" x="320" y="494" w="9" h="9"/>
+    <sprite n="HeartEmptyIcon.png" x="300" y="494" w="9" h="9"/>
+    <sprite n="HeartHalfIcon.png" x="311" y="494" w="9" h="9"/>
+    <sprite n="HeartIcon.png" x="322" y="494" w="9" h="9"/>
+    <sprite n="InventoryCategoryConsumables.png" x="190" y="490" w="11" h="11"/>
     <sprite n="InventoryCategoryContainer.png" x="190" y="503" w="60" h="7"/>
-    <sprite n="InventoryCategoryEquipment.png" x="190" y="490" w="11" h="11"/>
-    <sprite n="InventoryCategoryKeyItems.png" x="203" y="490" w="11" h="11"/>
-    <sprite n="InventoryCategorySkills.png" x="274" y="494" w="11" h="9"/>
+    <sprite n="InventoryCategoryEquipment.png" x="203" y="490" w="11" h="11"/>
+    <sprite n="InventoryCategoryKeyItems.png" x="216" y="490" w="11" h="11"/>
+    <sprite n="InventoryCategorySkills.png" x="252" y="494" w="11" h="11"/>
     <sprite n="InventoryGridContainer.png" x="2" y="403" w="124" h="85"/>
     <sprite n="InventoryInfoContainer.png" x="128" y="403" w="92" h="85"/>
-    <sprite n="InventoryInfoTitleContainer.png" x="340" y="494" w="80" h="8"/>
+    <sprite n="InventoryInfoTitleContainer.png" x="345" y="432" w="80" h="8"/>
     <sprite n="InventoryNavigationBar.png" x="394" y="78" w="88" h="9"/>
     <sprite n="InventorySlot.png" x="66" y="490" w="18" h="19"/>
-    <sprite n="InventorySlotLockIcon.png" x="331" y="494" w="7" h="9"/>
+    <sprite n="InventorySlotLockIcon.png" x="333" y="494" w="7" h="9"/>
+    <sprite n="InventorySlotQuestionIcon.png" x="342" y="494" w="7" h="9"/>
     <sprite n="InventorySlotSelected.png" x="24" y="490" w="19" h="19"/>
     <sprite n="KeyboardBagSlot.png" x="121" y="490" w="12" h="12"/>
     <sprite n="KeyboardD.png" x="214" y="71" w="14" h="14"/>
@@ -64,14 +65,14 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MiniHeartIcon.png" x="238" y="494" w="7" h="7"/>
     <sprite n="MissingItem.png" x="484" y="68" w="20" h="20"/>
     <sprite n="MouseCursorArrow.png" x="132" y="504" w="6" h="6"/>
-    <sprite n="MouseCursorCross.png" x="252" y="494" w="9" h="11"/>
-    <sprite n="MouseCursorCrossOn.png" x="263" y="494" w="9" h="11"/>
+    <sprite n="MouseCursorCross.png" x="278" y="494" w="9" h="11"/>
+    <sprite n="MouseCursorCrossOn.png" x="289" y="494" w="9" h="11"/>
     <sprite n="MouseCursorWait.png" x="81" y="71" w="13" h="15"/>
     <sprite n="Pixel.png" x="509" y="27" w="1" h="1"/>
     <sprite n="PopupContainer.png" x="2" y="90" w="264" h="311"/>
     <sprite n="PopupContainerShadow.png" x="229" y="432" w="114" h="60"/>
     <sprite n="ProhibitionIcon.png" x="62" y="71" w="17" h="17"/>
-    <sprite n="ProhibitionMark.png" x="216" y="490" w="11" h="11"/>
+    <sprite n="ProhibitionMark.png" x="265" y="494" w="11" h="11"/>
     <sprite n="QuickSlot.png" x="45" y="490" w="19" h="19"/>
     <sprite n="RottenApple.png" x="2" y="490" w="20" h="20"/>
     <sprite n="SavingIcon.png" x="374" y="71" w="11" h="14"/>

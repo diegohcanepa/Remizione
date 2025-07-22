@@ -24,7 +24,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public Item(Inventory inventory, MetaItem metaItem)
+        public Item(ItemContainer inventory, MetaItem metaItem)
         {
             this.Inventory = inventory;
             this.MetaItem = metaItem;
@@ -174,7 +174,7 @@ namespace Remizione
         public int Index => Inventory.IndexOf(this);
 
         // Inventory
-        public Inventory Inventory { get; private set; }
+        public ItemContainer Inventory { get; private set; }
 
         // IsSelected
         public bool IsSelected => Inventory.SelectedItem == this;

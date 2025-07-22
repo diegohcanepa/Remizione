@@ -51,16 +51,11 @@ namespace Remizione
             : base(session, name)
         {
             this.session = session;
-
-            this.Consumables = new Inventory(this, InventoryCategory.Consumables);
-            this.Equipment = new Inventory(this, InventoryCategory.Equipment);
-            this.KeyItems = new Inventory(this, InventoryCategory.KeyItems);
-            this.Skills = new Inventory(this, InventoryCategory.KeyItems);
-
             this.Stats = new Stats(this);
 
             this.Atlas = Atlases.Actors;
             this.IgnoreWalkArea = false;
+            this.Inventory = new(this);
             this.shadowSpot = new ShadowSpot(this);
 
             headSprite = new AnimatedSprite(Game)
@@ -228,14 +223,15 @@ namespace Remizione
             if (!CanChangeState)
                 return false;
 
-            if (Equipment.SelectedItem == null || 
-                Equipment.SelectedItem.MetaItem.Action != ItemAction.Throw || 
-                Equipment.SelectedItem.Count <= 0)
+            if (Inventory.Equipment.SelectedItem is not Item item)
+                return false;
+
+            if (item.MetaItem.Action != ItemAction.Throw || item.Count <= 0)
                 return false;
 
             Stand();
-            Equipment.SelectedItem.Use();
-            throwItemState.Item = Equipment.SelectedItem;
+            item.Use();
+            throwItemState.Item = item;
             StateMachine.ChangeState(throwItemState.Name);
             return true;
         }
@@ -404,20 +400,20 @@ namespace Remizione
             base.OnRead(attributes);
 
             // Consumables
-            if (attributes[nameof(Consumables)]?.Value is string consumablesData)
-                Consumables.SetSerializationData(consumablesData);
+            if (attributes[nameof(Inventory.Consumables)]?.Value is string consumablesData)
+                Inventory.Consumables.SetSerializationData(consumablesData);
 
             // Equipment
-            if (attributes[nameof(Equipment)]?.Value is string equipmentData)
-                Equipment.SetSerializationData(equipmentData);
+            if (attributes[nameof(Inventory.Equipment)]?.Value is string equipmentData)
+                Inventory.Equipment.SetSerializationData(equipmentData);
 
             // KeyItems
-            if (attributes[nameof(KeyItems)]?.Value is string keyItemsData)
-                KeyItems.SetSerializationData(keyItemsData);
+            if (attributes[nameof(Inventory.KeyItems)]?.Value is string keyItemsData)
+                Inventory.KeyItems.SetSerializationData(keyItemsData);
 
             // Skills
-            if (attributes[nameof(Skills)]?.Value is string skillsData)
-                Equipment.SetSerializationData(skillsData);
+            if (attributes[nameof(Inventory.Skills)]?.Value is string skillsData)
+                Inventory.Skills.SetSerializationData(skillsData);
 
             // Devotion
             if (attributes[nameof(Stats.Devotion)]?.Value is string devotion)
@@ -541,10 +537,10 @@ namespace Remizione
         {
             base.OnWrite(output);
 
-            output.WriteAttributeString(nameof(Consumables), Consumables.GetSerializationData());
-            output.WriteAttributeString(nameof(Equipment), Equipment.GetSerializationData());
-            output.WriteAttributeString(nameof(KeyItems), KeyItems.GetSerializationData());
-            output.WriteAttributeString(nameof(Skills), Skills.GetSerializationData());
+            output.WriteAttributeString(nameof(Inventory.Consumables), Inventory.Consumables.GetSerializationData());
+            output.WriteAttributeString(nameof(Inventory.Equipment), Inventory.Equipment.GetSerializationData());
+            output.WriteAttributeString(nameof(Inventory.KeyItems), Inventory.KeyItems.GetSerializationData());
+            output.WriteAttributeString(nameof(Inventory.Skills), Inventory.Skills.GetSerializationData());
 
             output.WriteAttributeString(nameof(Stats.Devotion), XmlConvert.ToString(Stats.Devotion));
             output.WriteAttributeString(nameof(Stats.Dexterity), XmlConvert.ToString(Stats.Dexterity));
@@ -663,12 +659,6 @@ namespace Remizione
             }
         }
 
-        // Consumables
-        public Inventory Consumables { get; }
-
-        // Equipment
-        public Inventory Equipment { get; }
-
         // FaceToTarget
         public void FaceToTarget()
         {
@@ -703,19 +693,6 @@ namespace Remizione
                 return Vector2.Zero;
             else
                 return this.GetAbsolutePoint(BloodSplashOrigin);
-        }
-
-        // GetInventory
-        public Inventory GetInventory(InventoryCategory category)
-        {
-            return category switch
-            {
-                InventoryCategory.Consumables => Consumables,
-                InventoryCategory.Equipment => Equipment,
-                InventoryCategory.KeyItems => KeyItems,
-                InventoryCategory.Skills => Skills,
-                _ => throw new ArgumentException($"Invalid inventory category: {category}", nameof(category)),
-            };
         }
 
         // HandleInput
@@ -777,6 +754,9 @@ namespace Remizione
         // InteractiveTarget
         public GameThing? InteractiveTarget { get; private set; }
 
+        // Inventory
+        public Inventory Inventory { get; }
+
         // InventorySelectedItemName
         public string InventorySelectedItemName { get; set; } = string.Empty;
 
@@ -803,9 +783,6 @@ namespace Remizione
 
         // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;
-
-        // KeyItems
-        public Inventory KeyItems { get; }
 
         // Level
         [ScriptProperty]
@@ -960,9 +937,6 @@ namespace Remizione
             inventoryScene.SceneController.Push();
         }
 
-        // Skills
-        public Inventory Skills { get; }
-
         // SpeechBubbleSound
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public Sound? SpeechBubbleSound { get; set; }
@@ -1006,7 +980,7 @@ namespace Remizione
         // UseSelectedItem
         public void UseSelectedItem()
         {
-            if (Equipment.SelectedItem is Item item)
+            if (Inventory.Equipment.SelectedItem is Item item)
             {
                 // Throwable
                 if (item.MetaItem.Action == ItemAction.Throw)
