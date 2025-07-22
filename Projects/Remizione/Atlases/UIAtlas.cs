@@ -47,9 +47,9 @@ namespace Remizione
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
+            TicketGoldenIcon = this[nameof(TicketGoldenIcon)];
             TicketGreenIcon = this[nameof(TicketGreenIcon)];
-            TicketRedIcon = this[nameof(TicketRedIcon)];
-            TicketYellowIcon = this[nameof(TicketYellowIcon)];
+            TicketWhiteIcon = this[nameof(TicketWhiteIcon)];
             UITextButtonContainerEdge = this[nameof(UITextButtonContainerEdge)];
             UITextButtonContainerPattern = this[nameof(UITextButtonContainerPattern)];
         }
@@ -162,14 +162,14 @@ namespace Remizione
         // SpeechBubblePipe
         public AtlasImage SpeechBubblePipe { get; }
 
+        // TicketGoldenIcon
+        public AtlasImage TicketGoldenIcon { get; }
+
         // TicketGreenIcon
         public AtlasImage TicketGreenIcon { get; }
 
-        // TicketRedIcon
-        public AtlasImage TicketRedIcon { get; }
-
-        // TicketYellowIcon
-        public AtlasImage TicketYellowIcon { get; }
+        // TicketWhiteIcon
+        public AtlasImage TicketWhiteIcon { get; }
 
         // UITextButtonContainerEdge
         public AtlasImage UITextButtonContainerEdge { get; }

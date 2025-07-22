@@ -269,6 +269,10 @@ namespace Remizione
             if (sessionNode == null || sessionNode.Attributes == null)
                 throw new InvalidOperationException("Session node attributes not found");
 
+            // Countdown
+            if (sessionNode.Attributes[nameof(Countdown)]?.Value is string countdown)
+                this.Countdown = XmlConvert.ToInt32(countdown);
+
             // GameplayMode
             if (sessionNode.Attributes[nameof(GameplayMode)]?.Value is string gameplayMode)
                 GameplayMode = Enum.Parse<GameplayMode>(gameplayMode);
@@ -335,6 +339,15 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
+            if (GameplayMode == GameplayMode.Survival && Countdown > 0)
+            {
+                Countdown -= gameTime.ElapsedGameTime.Milliseconds;
+                /*
+                if (Countdown <= 0)
+                    Game.SceneManager.Push(new GameOverScene(Game, GameOverReason.TimeOut));
+                */
+            }
+
             if (console != null)
             {
                 if (console.IsActive && roomEditor != null)
@@ -357,6 +370,9 @@ namespace Remizione
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
+            // Countdown
+            output.WriteAttributeString(nameof(Countdown), XmlConvert.ToString(Countdown));
+
             // GameplayMode
             output.WriteAttributeString(nameof(GameplayMode), XmlConvert.ToString((int)GameplayMode));
 
@@ -382,6 +398,10 @@ namespace Remizione
         }
 
         #endregion
+
+        // Countdown
+        [ScriptProperty]
+        public int Countdown { get; set; } = 0;
 
         // ClearOverlayTexts
         [ScriptMethod(CodingContext.Any)]
@@ -426,6 +446,9 @@ namespace Remizione
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;
 
+        // MaximumLevel
+        public int MaximumLevel => 100;
+
         // NextRainCooldown
         [ScriptProperty(CodingContext.Any)]
         public int NextRainCooldown { get; private set; }
@@ -461,6 +484,9 @@ namespace Remizione
 
         // RandomSeed
         public int RandomSeed { get; private set; }
+
+        // RestartCountdown
+        public void RestartCountdown() => Countdown = Randomizer.Next(GameSettings.CountdownMinimum, GameSettings.CountdownMaximum);
 
         // RestorePlayerPosition
         [ScriptMethod]

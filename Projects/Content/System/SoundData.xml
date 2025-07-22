@@ -43,6 +43,7 @@
 	<FX Name="ThrowablePickup" MaxInstances="8" />
 	<FX Name="UIHover" MaxInstances="4" />
 	<FX Name="UIInventoryOpen" MaxInstances="2" />
+	<FX Name="UIPrompt" MaxInstances="4" Volume=".1" />
 	<FX Name="UISelectA" MaxInstances="4" />
 	<FX Name="UISelectB" MaxInstances="4" />
 	<FX Name="WhooshA" MaxInstances="6" />

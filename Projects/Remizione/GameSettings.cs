@@ -16,8 +16,8 @@ namespace Remizione
         // ContentRootDirectory
         public const string ContentRootDirectory = "Content";
 
-        // CycleDuration
-        public const int CycleDuration = 245_000;
+        // CountdownAlert
+        public const int CountdownAlert = 30_000;
 
         // DefaultTransitionDuration
         public const int DefaultTransitionDuration = 500;
@@ -27,6 +27,12 @@ namespace Remizione
 
         // LogFileName
         public const string LogFileName = "ErrorLog.txt";
+
+        // CountdownMaximum
+        public const int CountdownMaximum = 120_000;
+
+        // CountdownMinimum
+        public const int CountdownMinimum = 60_000;
 
         // PropRevealOpacity
         public const float PropRevealOpacity = .5f;

@@ -51,7 +51,7 @@ namespace Remizione
     public enum InventoryCategory { None, Consumables, Equipment, KeyItems }
 
     // ItemAction
-    public enum ItemAction { UseWith, Consume, Throw }
+    public enum ItemAction { None, Throw }
 
     // ItemProperty
     public enum ItemProperty { BaseDamage, Passive }
@@ -68,6 +68,9 @@ namespace Remizione
     // MenuItemName
     public enum MenuItemName { Options, Resume, Start, Exit, ExitToMainMenu, Yes, No, Cancel, Accept, Credits, WishlistNow, Memoirs }
 
+    // Message
+    public enum Message { None, Critical, Miss, NoFaith, ThreatsNearby }
+
     // MessageBoxOptions
     [Flags]
     public enum MessageBoxOptions
@@ -77,9 +80,6 @@ namespace Remizione
         Cancel = 4,
         Accept = 8
     }
-
-    // Message
-    public enum Message { None, Critical, Miss, NoFaith, ThreatsNearby }
 
     // MouseCursorState
     public enum MouseCursorState { None, Cross, CrossOn, Wait, Arrow }
@@ -92,9 +92,6 @@ namespace Remizione
 
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
-
-    // QTEResult
-    public enum QTEResult { Failure, Success }
 
     // RainDropImpactKind
     public enum RainDropImpactKind { None, Ground, Water }
@@ -117,21 +114,12 @@ namespace Remizione
     // TerrainKind
     public enum TerrainKind { None }
 
-    // TextSize
-    public enum TextSize { Small, Medium, Large }
-
     // ThrowableBounceIntensity
     public enum ThrowableBounceIntensity { Low, Medium, High }
 
     // UIControlGroupLayoutStyle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
 
-    // UIToolbarButton
-    public enum UIToolbarButton { None, Inventory }
-
     // VolumeCategory
     public enum VolumeCategory { Ambient, FX, Music, Voice, Master }
-
-    // WorldBlockTag
-    public enum WorldBlockTag { Dark }
 }

@@ -13,11 +13,13 @@ namespace Remizione
     {
         #region Private fields
 
+        private readonly UICountdownMeter countdownMeter;
         private readonly UIHealthMeter healthMeter;
         private readonly UIPrompt prompt;
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
         private readonly TextSprite statusText;
+        private readonly UIProgressMeter progressMeter;
         private readonly UITicketsMeter ticketsMeter;
 
         #endregion
@@ -30,7 +32,9 @@ namespace Remizione
         {
             this.session = session;
 
+            this.countdownMeter = new(session);
             this.healthMeter = new(session.Game);
+            this.progressMeter = new(session);
             this.ticketsMeter = new(session.Game);
 
             // Log
@@ -81,7 +85,9 @@ namespace Remizione
                     EquipmentSlot.Draw(gameTime);
                 }
 
+                countdownMeter.Draw(gameTime);
                 healthMeter.Draw(gameTime);
+                progressMeter.Draw(gameTime);
                 ticketsMeter.Draw(gameTime);
             }
 
@@ -105,9 +111,11 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            countdownMeter.Update(gameTime);
             BagSlot.Update(gameTime);
             EquipmentSlot.Update(gameTime);
             healthMeter.Update(gameTime);
+            progressMeter.Update(gameTime);
             ticketsMeter.Update(gameTime);
 
             prompt.Update(gameTime);

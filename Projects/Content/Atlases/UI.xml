@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:a16904b28940e4c11d73269adf55a2aa:9934aeabeebf08f6d6418b1c5caded66:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:c5503b5451bf3d72c4d9fa41a6608289:2f9f54c4c77779ffdb2a4b24a1432c56:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -76,9 +76,9 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="SavingIcon.png" x="374" y="71" w="11" h="14"/>
     <sprite n="SpeechBubbleCloseArrow.png" x="506" y="23" w="3" h="2"/>
     <sprite n="SpeechBubblePipe.png" x="116" y="505" w="5" h="3"/>
-    <sprite n="TicketGreenIcon.png" x="2" y="71" w="18" h="17"/>
-    <sprite n="TicketRedIcon.png" x="22" y="71" w="18" h="17"/>
-    <sprite n="TicketYellowIcon.png" x="42" y="71" w="18" h="17"/>
+    <sprite n="TicketGoldenIcon.png" x="2" y="71" w="18" h="17"/>
+    <sprite n="TicketGreenIcon.png" x="22" y="71" w="18" h="17"/>
+    <sprite n="TicketWhiteIcon.png" x="42" y="71" w="18" h="17"/>
     <sprite n="TipBalloon.png" x="107" y="490" w="12" h="13"/>
     <sprite n="UIControlContainerEdgeLeftLarge.png" x="505" y="145" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeLeftSmall.png" x="387" y="78" w="5" h="10"/>

@@ -761,9 +761,9 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">UIIcons-assets/TicketGoldenIcon.png</key>
             <key type="filename">UIIcons-assets/TicketGreenIcon.png</key>
-            <key type="filename">UIIcons-assets/TicketRedIcon.png</key>
-            <key type="filename">UIIcons-assets/TicketYellowIcon.png</key>
+            <key type="filename">UIIcons-assets/TicketWhiteIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

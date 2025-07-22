@@ -205,13 +205,13 @@ namespace Remizione.Menus
 
             var playerIndex = PlayerIndex.One;
 
-            if (InputBindings.PreviousMenuItem.IsPressed(playerIndex) || stick.IsUp(playerIndex))
+            if (InputBindings.SelectUp.IsPressed(playerIndex) || stick.IsUp(playerIndex))
             {
                 PreviousItem();
                 return HandleInputResult.Handled;
             }
 
-            else if (InputBindings.NextMenuItem.IsPressed(playerIndex) || stick.IsDown(playerIndex))
+            else if (InputBindings.SelectDown.IsPressed(playerIndex) || stick.IsDown(playerIndex))
             {
                 NextItem();
                 return HandleInputResult.Handled;

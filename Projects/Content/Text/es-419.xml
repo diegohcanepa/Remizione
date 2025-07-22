@@ -6,8 +6,6 @@
   <String Key="ActorProperty.Grace.Name">Gracia</String>
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Level.Name">Estado de Gracia</String>
-  <String Key="Cycle.Indulgence">Indulgencia</String>
-  <String Key="Cycle.Penance">Penitencia</String>
   <String Key="DerivedStat.HP.Description">El Espíritu quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="DerivedStat.HP.Name">Salud</String>
   <String Key="DerivedStat.Tickets.Description">La gracia quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
@@ -36,7 +34,7 @@
   <String Key="InputBinding.ConsumeItem">Consumir</String>
   <String Key="InputBinding.Continue">Continuar</String>
   <String Key="InputBinding.Discard">Descartar</String>
-  <String Key="InputBinding.Equip">Equipar</String>
+  <String Key="InputBinding.EquipItem">Equipar</String>
   <String Key="InputBinding.Exit">Salir</String>
   <String Key="InputBinding.Info">Info</String>
   <String Key="InputBinding.Inspect">Examinar</String>
@@ -201,6 +199,7 @@ Bla bla bla</String>
   <String Key="Misc.SelectSlot">Seleccionar ranura</String>
   <String Key="Misc.Sins">PECADOS</String>
   <String Key="Misc.Stamina">Resistencia</String>
+  <String Key="Misc.Thresholds">Umbrales</String>
   <String Key="Misc.Unknown">???</String>
   <String Key="Misc.WanderingSpirit">Tu espíritu errante</String>
   <String Key="Misc.Yes">Sí</String>

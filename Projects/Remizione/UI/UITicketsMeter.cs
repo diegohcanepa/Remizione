@@ -18,7 +18,7 @@ namespace Remizione
         {
             tickets = new UIScore[3];
 
-            tickets[0] = new UIScore(game, Atlases.UI.TicketYellowIcon, ColorPalette.Text.Default)
+            tickets[0] = new UIScore(game, Atlases.UI.TicketGoldenIcon, ColorPalette.Text.Default)
             {
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -3, 0),
             };
@@ -28,7 +28,7 @@ namespace Remizione
                 Position = new(tickets[0].Position.X - 20, tickets[0].Position.Y)
             };
 
-            tickets[2] = new UIScore(game, Atlases.UI.TicketRedIcon, ColorPalette.Text.Default)
+            tickets[2] = new UIScore(game, Atlases.UI.TicketWhiteIcon, ColorPalette.Text.Default)
             {
                 Position = new(tickets[1].Position.X - 20, tickets[0].Position.Y)
             };
@@ -44,11 +44,11 @@ namespace Remizione
             if (actor == null)
                 return;
 
-            tickets[0].Score = actor.YellowTickets;
+            tickets[0].Score = actor.WhiteTickets;
             tickets[1].Score = actor.GreenTickets;
-            tickets[2].Score = actor.RedTickets;
+            tickets[2].Score = actor.GoldenTickets;
 
-            if (actor.GreenTickets == 0 || actor.RedTickets == 0)
+            if (actor.GreenTickets == 0 || actor.GoldenTickets == 0)
                 Layout();
         }
 

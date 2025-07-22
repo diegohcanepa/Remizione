@@ -222,7 +222,9 @@ namespace Remizione
             if (!CanChangeState)
                 return false;
 
-            if (Equipment.SelectedItem == null || Equipment.SelectedItem.MetaItem.Action != ItemAction.Throw || Equipment.SelectedItem.Count <= 0)
+            if (Equipment.SelectedItem == null || 
+                Equipment.SelectedItem.MetaItem.Action != ItemAction.Throw || 
+                Equipment.SelectedItem.Count <= 0)
                 return false;
 
             Stand();

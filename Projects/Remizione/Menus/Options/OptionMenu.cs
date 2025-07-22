@@ -158,25 +158,25 @@ namespace Remizione.Menus
 
             var playerIndex = PlayerIndex.One;
 
-            if (InputBindings.PreviousMenuItem.IsPressed(playerIndex) || stick.IsUp(playerIndex))
+            if (InputBindings.SelectLeft.IsPressed(playerIndex) || stick.IsUp(playerIndex))
             {
                 PreviousOption();
                 return HandleInputResult.Handled;
             }
 
-            else if (InputBindings.NextMenuItem.IsPressed(playerIndex) || stick.IsDown(playerIndex))
+            else if (InputBindings.SelectRight.IsPressed(playerIndex) || stick.IsDown(playerIndex))
             {
                 NextOption();
                 return HandleInputResult.Handled;
             }
 
-            else if (InputBindings.NextMenuItemValue.IsPressed(playerIndex) || stick.IsRight(playerIndex))
+            else if (InputBindings.SelectRight.IsPressed(playerIndex) || stick.IsRight(playerIndex))
             {
                 SelectedOption.NextValue();
                 return HandleInputResult.Handled;
             }
 
-            else if (InputBindings.PreviousMenuItemValue.IsPressed(playerIndex) || stick.IsLeft(playerIndex))
+            else if (InputBindings.SelectLeft.IsPressed(playerIndex) || stick.IsLeft(playerIndex))
             {
                 SelectedOption.PreviousValue();
                 return HandleInputResult.Handled;

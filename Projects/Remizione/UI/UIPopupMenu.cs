@@ -158,13 +158,13 @@ namespace Remizione
             if (HandleMouseInput())
                 return HandleInputResult.Handled;
 
-            if (InputBindings.NextMenuItem.IsPressed(PlayerIndex.One) || stick.IsDown(0))
+            if (InputBindings.SelectDown.IsPressed(PlayerIndex.One) || stick.IsDown(0))
             {
                 SelectNext();
                 return HandleInputResult.Handled;
             }
 
-            if (InputBindings.PreviousMenuItem.IsPressed(PlayerIndex.One) || stick.IsUp(0))
+            if (InputBindings.SelectUp.IsPressed(PlayerIndex.One) || stick.IsUp(0))
             {
                 SelectPrevious();
                 return HandleInputResult.Handled;

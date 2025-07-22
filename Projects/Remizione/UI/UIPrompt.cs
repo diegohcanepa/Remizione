@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -68,6 +69,7 @@ namespace Remizione.UI
                     target = currentTarget;
                     button.Text = currentTarget.LocalizedDisplayName;
                     label.Text = currentTarget.LocalizedDisplayName;
+                    Sound.Play(SoundNames.UIPrompt);
                 }
             }
             else

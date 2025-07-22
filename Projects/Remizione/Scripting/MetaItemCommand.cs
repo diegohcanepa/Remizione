@@ -16,7 +16,7 @@ namespace Remizione.Scripting
 
             _ = new MetaItem(name, category, maximum)
             {
-                Action = Parser.ParseEnumArgument(this, ActionArg, ItemAction.UseWith),
+                Action = Parser.ParseEnumArgument(this, ActionArg, ItemAction.None),
                 AllowEmpty = HasArg(AllowEmptyArg),
                 BaseDamage = Parser.ParseDiceExpressionArgument(this, DamageArg) ?? null,
                 Bonus = Parser.ParseInt32Argument(this, BonusArg),

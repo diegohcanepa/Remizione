@@ -175,8 +175,8 @@ namespace Remizione
             if (Session.Player != null && Session.Player != this)
             {
                 Session.Player.GreenTickets += GreenTickets;
-                Session.Player.RedTickets += RedTickets;
-                Session.Player.YellowTickets += YellowTickets;
+                Session.Player.GoldenTickets += GoldenTickets;
+                Session.Player.WhiteTickets += WhiteTickets;
             }
 
             if (LootTable.Find(StaticName) is LootTable lootTable)
@@ -846,6 +846,10 @@ namespace Remizione
         // GetThrowableSpawnPosition
         public Vector2 GetThrowableSpawnPosition() => this.GetAbsolutePoint(ThrowableSpawnPosition);
 
+        // GoldenTickets
+        [ScriptProperty]
+        public int GoldenTickets { get; set; }
+
         // GreenTickets
         [ScriptProperty]
         public int GreenTickets { get; set; }
@@ -1010,10 +1014,6 @@ namespace Remizione
         // PlacementPhase
         public PlacementPhase PlacementPhase { get; set; }
 
-        // RedTickets
-        [ScriptProperty]
-        public int RedTickets { get; set; }
-
         // RenderLayer
         [ScriptProperty]
         public RenderLayer RenderLayer
@@ -1126,12 +1126,12 @@ namespace Remizione
             }
         }
 
+        // WhiteTickets
+        [ScriptProperty]
+        public int WhiteTickets { get; set; }
+
         // WorldVersion
         [ScriptProperty]
         public int WorldVersion { get; set; } = 1;
-
-        // YellowTickets
-        [ScriptProperty]
-        public int YellowTickets { get; set; }
     }
 }
