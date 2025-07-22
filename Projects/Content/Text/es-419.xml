@@ -44,6 +44,7 @@
   <String Key="InventoryCategory.Consumables">Consumibles</String>
   <String Key="InventoryCategory.Equipment">Equipo</String>
   <String Key="InventoryCategory.KeyItems">Objetos clave</String>
+  <String Key="InventoryCategory.Skills">Habilidades</String>
   <String Key="Item.Apple.Description">Una apetitoza manzana en su punto justo.</String>
   <String Key="Item.Apple.Name">Manzana</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>

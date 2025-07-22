@@ -51,6 +51,12 @@ namespace Remizione
             : base(session, name)
         {
             this.session = session;
+
+            this.Consumables = new Inventory(this, InventoryCategory.Consumables);
+            this.Equipment = new Inventory(this, InventoryCategory.Equipment);
+            this.KeyItems = new Inventory(this, InventoryCategory.KeyItems);
+            this.Skills = new Inventory(this, InventoryCategory.KeyItems);
+
             this.Stats = new Stats(this);
 
             this.Atlas = Atlases.Actors;
@@ -397,6 +403,22 @@ namespace Remizione
         {
             base.OnRead(attributes);
 
+            // Consumables
+            if (attributes[nameof(Consumables)]?.Value is string consumablesData)
+                Consumables.SetSerializationData(consumablesData);
+
+            // Equipment
+            if (attributes[nameof(Equipment)]?.Value is string equipmentData)
+                Equipment.SetSerializationData(equipmentData);
+
+            // KeyItems
+            if (attributes[nameof(KeyItems)]?.Value is string keyItemsData)
+                KeyItems.SetSerializationData(keyItemsData);
+
+            // Skills
+            if (attributes[nameof(Skills)]?.Value is string skillsData)
+                Equipment.SetSerializationData(skillsData);
+
             // Devotion
             if (attributes[nameof(Stats.Devotion)]?.Value is string devotion)
                 Stats.Devotion = XmlConvert.ToInt32(devotion);
@@ -519,6 +541,11 @@ namespace Remizione
         {
             base.OnWrite(output);
 
+            output.WriteAttributeString(nameof(Consumables), Consumables.GetSerializationData());
+            output.WriteAttributeString(nameof(Equipment), Equipment.GetSerializationData());
+            output.WriteAttributeString(nameof(KeyItems), KeyItems.GetSerializationData());
+            output.WriteAttributeString(nameof(Skills), Skills.GetSerializationData());
+
             output.WriteAttributeString(nameof(Stats.Devotion), XmlConvert.ToString(Stats.Devotion));
             output.WriteAttributeString(nameof(Stats.Dexterity), XmlConvert.ToString(Stats.Dexterity));
             output.WriteAttributeString(nameof(Stats.Fortitude), XmlConvert.ToString(Stats.Fortitude));
@@ -636,6 +663,12 @@ namespace Remizione
             }
         }
 
+        // Consumables
+        public Inventory Consumables { get; }
+
+        // Equipment
+        public Inventory Equipment { get; }
+
         // FaceToTarget
         public void FaceToTarget()
         {
@@ -670,6 +703,19 @@ namespace Remizione
                 return Vector2.Zero;
             else
                 return this.GetAbsolutePoint(BloodSplashOrigin);
+        }
+
+        // GetInventory
+        public Inventory GetInventory(InventoryCategory category)
+        {
+            return category switch
+            {
+                InventoryCategory.Consumables => Consumables,
+                InventoryCategory.Equipment => Equipment,
+                InventoryCategory.KeyItems => KeyItems,
+                InventoryCategory.Skills => Skills,
+                _ => throw new ArgumentException($"Invalid inventory category: {category}", nameof(category)),
+            };
         }
 
         // HandleInput
@@ -755,7 +801,11 @@ namespace Remizione
         // IsStandingOrMoving
         public bool IsStandingOrMoving => StateMachine.CurrentState is ActorStandState || StateMachine.CurrentState is ActorMoveState;
 
+        // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;
+
+        // KeyItems
+        public Inventory KeyItems { get; }
 
         // Level
         [ScriptProperty]
@@ -909,6 +959,9 @@ namespace Remizione
                 Session.Camera.FocusTarget();
             inventoryScene.SceneController.Push();
         }
+
+        // Skills
+        public Inventory Skills { get; }
 
         // SpeechBubbleSound
         [ScriptProperty(CodingContext.EntityDeclaration)]

@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Xml;
 
 namespace Remizione
 {
@@ -58,9 +57,6 @@ namespace Remizione
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
             this.PlacementConditions = new(placementConditions);
-            this.Consumables = new Inventory(this, InventoryCategory.Consumables);
-            this.Equipment = new Inventory(this, InventoryCategory.Equipment);
-            this.KeyItems = new Inventory(this, InventoryCategory.KeyItems);
         }
 
         #endregion
@@ -359,22 +355,6 @@ namespace Remizione
             StateID = -1;
         }
 
-        // OnRead
-        protected override void OnRead(XmlAttributeCollection attributes)
-        {
-            // Consumables
-            if (attributes[nameof(Consumables)]?.Value is string consumablesData)
-                Consumables.SetSerializationData(consumablesData);
-
-            // Equipment
-            if (attributes[nameof(Equipment)]?.Value is string equipmentData)
-                Equipment.SetSerializationData(equipmentData);
-
-            // Misc
-            if (attributes[nameof(KeyItems)]?.Value is string miscData)
-                KeyItems.SetSerializationData(miscData);
-        }
-
         // OnTransform
         protected override void OnTransform(TransformChange change)
         {
@@ -480,14 +460,6 @@ namespace Remizione
 
             instance.Pan = pan;
             instance.Volume.Current = volume * masterVolume;
-        }
-
-        // OnWrite
-        protected override void OnWrite(XmlWriter output)
-        {
-            output.WriteAttributeString(nameof(Consumables), Consumables.GetSerializationData());
-            output.WriteAttributeString(nameof(Equipment), Equipment.GetSerializationData());
-            output.WriteAttributeString(nameof(KeyItems), KeyItems.GetSerializationData());
         }
 
         #endregion
@@ -627,9 +599,6 @@ namespace Remizione
         [ScriptProperty]
         public Polygon? Collider { get; set; }
 
-        // Consumables
-        public Inventory Consumables { get; }
-
         // CumulativeDamage
         public float CumulativeDamage { get; set; }
 
@@ -707,9 +676,6 @@ namespace Remizione
             if (!IsDead)
                 OnDrawShadow(gameTime);
         }
-
-        // Equipment
-        public Inventory Equipment { get; }
 
         // FaceTo
         public void FaceTo(GameThing thing)
@@ -806,18 +772,6 @@ namespace Remizione
                 return this.GetAbsoluteBounds(AnimationPlayer.Frame.SubArea);
             else
                 return RectangleF.Empty;
-        }
-
-        // GetInventory
-        public Inventory GetInventory(InventoryCategory category)
-        {
-            return category switch
-            {
-                InventoryCategory.Consumables => Consumables,
-                InventoryCategory.Equipment => Equipment,
-                InventoryCategory.KeyItems => KeyItems,
-                _ => throw new ArgumentException($"Invalid inventory category: {category}", nameof(category)),
-            };
         }
 
         // GetOverheadPosition
@@ -976,9 +930,6 @@ namespace Remizione
         // IsWalkAreaHole
         [ScriptProperty]
         public virtual bool IsWalkAreaHole => Collider != null;
-
-        // KeyItems
-        public Inventory KeyItems { get; }
 
         // Light
         public Light? Light { get; set; }
