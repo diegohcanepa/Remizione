@@ -18,6 +18,7 @@ namespace Remizione
 
         private RoomGrid? decorationGrid;
         private RoomGrid? mainGrid;
+        private readonly Dictionary<string, PlacementData> placementDataDictionary = [];
         private readonly List<GameThing> proceduralThings = [];
         private readonly Random random;
         private readonly int randomSeed;
@@ -51,16 +52,13 @@ namespace Remizione
         }
 
         // DistributeClumped
-        private void DistributeClumped(GameThing thing)
+        private void DistributeClumped(GameThing thing, PlacementData placementData)
         {
             if (mainGrid == null || decorationGrid == null)
                 return;
 
-            if (thing.InstancesPerBlock.IsEmpty)
-                return;
-
             var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
-            int totalCount = random.Next(thing.InstancesPerBlock.Minimum, thing.InstancesPerBlock.Maximum + 1);
+            int totalCount = random.Next(placementData.Instances.Minimum, placementData.Instances.Maximum + 1);
             int clumpSize = 3 + random.Next(3);
             int clumpCount = (totalCount + clumpSize - 1) / clumpSize;
 
@@ -85,17 +83,14 @@ namespace Remizione
         }
 
         // DistributeRandomly
-        private void DistributeRandomly(GameThing thing)
+        private void DistributeRandomly(GameThing thing, PlacementData placementData)
         {
             if (mainGrid == null || decorationGrid == null)
                 return;
 
-            if (thing.InstancesPerBlock.IsEmpty)
-                return;
-
             var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
             Size sizeInCells = thing.GetRequiredGridSpace(RoomGrid.CellSize);
-            var count = random.Next(thing.InstancesPerBlock.Minimum, thing.InstancesPerBlock.Maximum + 1);
+            var count = random.Next(placementData.Instances.Minimum, placementData.Instances.Maximum + 1);
 
             for (int i = 0; i < count; i++)
             {
@@ -118,12 +113,9 @@ namespace Remizione
         }
 
         // DistributeWithNoiseMap
-        private void DistributeWithNoiseMap(GameThing thing, int seed)
+        private void DistributeWithNoiseMap(GameThing thing, PlacementData placementData, int seed)
         {
             if (mainGrid == null || decorationGrid == null)
-                return;
-
-            if (thing.InstancesPerBlock.IsEmpty)
                 return;
 
             var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
@@ -179,6 +171,22 @@ namespace Remizione
             return (int)h;
         }
 
+        // GetStaticThings
+        private IEnumerable<GameThing> GetStaticThings(PlacementPhase phase)
+        {
+            foreach (var entity in Session.Entities)
+            {
+                if (entity is not GameThing gameThing)
+                    continue;
+
+                if (placementDataDictionary.TryGetValue(gameThing.StaticName, out var placementData))
+                {
+                    if (placementData.Phase == phase)
+                        yield return gameThing;
+                }
+            }
+        }
+
         // PlaceDynamicThing
         private void PlaceDynamicThing(GameThing thing, int col, int row)
         {
@@ -202,29 +210,32 @@ namespace Remizione
                 if (phase == PlacementPhase.None)
                     continue;
 
-                foreach (var thing in Session.GetStaticThings(phase))
+                foreach (var thing in GetStaticThings(phase))
                 {
                     if (thing.WorldVersion > Session.WorldVersion)
                         continue;
 
-                    if (!thing.IsAvailable(random))
+                    if (!placementDataDictionary.TryGetValue(thing.StaticName, out var placementData))
                         continue;
 
-                    switch (thing.DistributionStrategy)
+                    if (!placementData.IsAvailable(thing, random))
+                        continue;
+
+                    switch (placementData.DistributionStrategy)
                     {
                         // RandomCell
                         case PlacementDistributionStrategy.Random:
-                            DistributeRandomly(thing);
+                            DistributeRandomly(thing, placementData);
                             break;
 
                         // Clump
                         case PlacementDistributionStrategy.Clump:
-                            DistributeClumped(thing);
+                            DistributeClumped(thing, placementData);
                             break;
 
                         // NoiseMap
                         case PlacementDistributionStrategy.NoiseMap:
-                            DistributeWithNoiseMap(thing, randomSeed);
+                            DistributeWithNoiseMap(thing, placementData, randomSeed);
                             break;
                     }
                 }
@@ -320,6 +331,19 @@ namespace Remizione
                 var value = string.Join(",", stateData);
                 output.WriteAttributeString(ProcStates, value);
             }
+        }
+
+        #endregion
+
+        #region Internal members
+
+        // AddPlacementData
+        internal void AddPlacementData(string staticName, PlacementData placementData)
+        {
+            if (placementDataDictionary.ContainsKey(staticName))
+                throw new InvalidOperationException($"Placement info with name '{staticName}' already exists.");
+
+            placementDataDictionary.Add(staticName, placementData);
         }
 
         #endregion

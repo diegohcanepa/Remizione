@@ -230,16 +230,19 @@ namespace Remizione
 
             Game.GraphicsDevice.Clear(LightMapColor);
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
+            if (AllowGlobalLight)
+            {
+                Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
 
-            if (globalLight.IsFlashing)
-                globalLight.Color = Color.LightBlue * .9f;
-            else
-                globalLight.Color = Session.Environment.GlobalLightColor;
+                if (globalLight.IsFlashing)
+                    globalLight.Color = Color.LightBlue * .9f;
+                else
+                    globalLight.Color = Session.Environment.GlobalLightColor;
 
-            globalLight.Draw(gameTime);
+                globalLight.Draw(gameTime);
 
-            Game.SpriteBatch.End();
+                Game.SpriteBatch.End();
+            }
 
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
 
@@ -443,7 +446,9 @@ namespace Remizione
                 lights[i].Update(gameTime);
             }
 
-            globalLight.Update(gameTime);
+            if (AllowGlobalLight)
+                globalLight.Update(gameTime);
+
             playerLight.Update(gameTime);
 
             // Dust particles
@@ -508,6 +513,10 @@ namespace Remizione
         // AllowFireflyParticles
         [ScriptProperty]
         public bool AllowFireflyParticles { get; set; }
+
+        // AllowGlobalLight
+        [ScriptProperty]
+        public bool AllowGlobalLight { get; set; }
 
         // AllowPauseMenu
         [ScriptProperty]

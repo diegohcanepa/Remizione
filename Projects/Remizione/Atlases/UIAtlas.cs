@@ -22,7 +22,7 @@ namespace Remizione
             HeartHalfIcon = this[nameof(HeartHalfIcon)];
             HeartIcon = this[nameof(HeartIcon)];
             InventoryCategoryConsumables = this[nameof(InventoryCategoryConsumables)];
-            InventoryCategoryEquipment = this[nameof(InventoryCategoryEquipment)];
+            InventoryCategoryJunk = this[nameof(InventoryCategoryJunk)];
             InventoryCategoryKeyItems = this[nameof(InventoryCategoryKeyItems)];
             InventoryCategorySkills = this[nameof(InventoryCategorySkills)];
             InventoryGridContainer = this[nameof(InventoryGridContainer)];
@@ -80,8 +80,8 @@ namespace Remizione
         // InventoryCategoryConsumables
         public AtlasImage InventoryCategoryConsumables { get; }
 
-        // InventoryCategoryEquipment
-        public AtlasImage InventoryCategoryEquipment { get; }
+        // InventoryCategoryJunk
+        public AtlasImage InventoryCategoryJunk { get; }
 
         // InventoryCategoryKeyItems
         public AtlasImage InventoryCategoryKeyItems { get; }

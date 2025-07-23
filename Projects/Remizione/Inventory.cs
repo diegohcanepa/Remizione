@@ -11,7 +11,7 @@ namespace Remizione
         public Inventory(Actor owner)
         {
             this.Consumables = new ItemContainer(owner, InventoryCategory.Consumables);
-            this.Equipment = new ItemContainer(owner, InventoryCategory.Equipment);
+            this.Junk = new ItemContainer(owner, InventoryCategory.Junk);
             this.KeyItems = new ItemContainer(owner, InventoryCategory.KeyItems);
             this.Skills = new ItemContainer(owner, InventoryCategory.Skills)
             {
@@ -22,21 +22,21 @@ namespace Remizione
         // Consumables
         public ItemContainer Consumables { get; }
 
-        // Equipment
-        public ItemContainer Equipment { get; }
-
         // GetContainer
         public ItemContainer GetContainer(InventoryCategory category)
         {
             return category switch
             {
                 InventoryCategory.Consumables => Consumables,
-                InventoryCategory.Equipment => Equipment,
+                InventoryCategory.Junk => Junk,
                 InventoryCategory.KeyItems => KeyItems,
                 InventoryCategory.Skills => Skills,
                 _ => throw new ArgumentException($"Invalid inventory category: {category}", nameof(category)),
             };
         }
+
+        // Junk
+        public ItemContainer Junk { get; }
 
         // KeyItems
         public ItemContainer KeyItems { get; }

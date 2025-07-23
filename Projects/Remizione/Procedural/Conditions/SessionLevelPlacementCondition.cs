@@ -4,12 +4,12 @@ using System;
 namespace Remizione
 {
     /// <summary>
-    /// PlayerLevelPlacementCondition
+    /// SessionLevelPlacementCondition
     /// </summary>
-    public sealed class PlayerLevelPlacementCondition : PlacementCondition
+    public sealed class SessionLevelPlacementCondition : PlacementCondition
     {
         // Constructor
-        public PlayerLevelPlacementCondition(Int32Range range)
+        public SessionLevelPlacementCondition(Int32Range range)
         {
             this.Range = range;
         }
@@ -17,10 +17,7 @@ namespace Remizione
         // IsAvailable
         public override bool IsAvailable(GameThing thing, Random random)
         {
-            if (thing.Session.Player == null)
-                return false;
-            else
-                return Range.Contains(thing.Session.Player.Level);
+            return Range.Contains(thing.Session.Level);
         }
 
         // Range

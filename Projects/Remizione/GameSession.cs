@@ -30,7 +30,7 @@ namespace Remizione
         private Vector2? playerPosition;
         private int rainRemainingTime;
         private readonly RoomEditor? roomEditor;
-        private readonly Dictionary<PlacementPhase, List<GameThing>> staticThings = [];
+        private readonly List<GameThing> staticThings = [];
 
         #endregion
 
@@ -166,7 +166,7 @@ namespace Remizione
             scriptRegistry.RegisterStatement("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             scriptRegistry.RegisterStatement("exit-session", typeof(ExitSessionCommand));
             scriptRegistry.RegisterStatement("hide-overlay-text", typeof(HideOverlayTextCommand));
-            scriptRegistry.RegisterStatement("placement-condition", typeof(PlacementConditionCommand), CodingContext.EntityDeclaration);
+            scriptRegistry.RegisterStatement("placement-data", typeof(PlacementDataCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("meta-item", typeof(MetaItemCommand), CodingContext.Declaration);
             scriptRegistry.RegisterStatement("say", typeof(SayCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("select-walk-area", typeof(SelectWalkAreaCommand));
@@ -221,26 +221,6 @@ namespace Remizione
             }
             else
                 return base.OnHandleInput(gameTime);
-        }
-
-        // OnInitializeEntities
-        protected override void OnInitializeEntities()
-        {
-            // Add dictionary entries
-            if (staticThings.Count == 0)
-            {
-                foreach (var phase in Enum.GetValues<PlacementPhase>())
-                {
-                    staticThings.Add(phase, []);
-                }
-            }
-
-            // Distribute entities
-            foreach (var entity in Entities)
-            {
-                if (entity is GameThing thing)
-                    staticThings[thing.PlacementPhase].Add(thing);
-            }
         }
 
         // OnOutcomeCompleted
@@ -420,15 +400,6 @@ namespace Remizione
         // GameplayMode
         [ScriptProperty]
         public GameplayMode GameplayMode { get; set; }
-
-        // GetStaticThings
-        public IEnumerable<GameThing> GetStaticThings(PlacementPhase phase)
-        {
-            foreach (var thing in staticThings[phase])
-            {
-                yield return thing;
-            }
-        }
 
         // HUD
         public HUD HUD { get; }

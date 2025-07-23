@@ -90,17 +90,27 @@ namespace EngendroAdventure.Scripting
             // Step 1: Run initialization scripts
             RunInitializationScripts(false);
 
-            // Step 2: Create declared entities
+            // Step 2: Create declared entities (rooms)
             foreach (var script in scripts.Values)
             {
-                if (script.HasCapability(ScriptCapability.EntityDeclaration))
+                if (script.HasCapability(ScriptCapability.EntityDeclaration) && script.ScriptType == ScriptType.Room)
                 {
                     var createdEntity = script.CreateEntity();
                     createdEntity.Persistent = script.Persistent;
                 }
             }
 
-            // Step 3: Run post-initialization scripts
+            // Step 3: Create declared entities (things)
+            foreach (var script in scripts.Values)
+            {
+                if (script.HasCapability(ScriptCapability.EntityDeclaration) && script.ScriptType != ScriptType.Room)
+                {
+                    var createdEntity = script.CreateEntity();
+                    createdEntity.Persistent = script.Persistent;
+                }
+            }
+
+            // Step 4: Run post-initialization scripts
             RunInitializationScripts(true);
         }
 

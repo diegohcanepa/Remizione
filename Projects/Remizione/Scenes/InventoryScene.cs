@@ -21,7 +21,7 @@ namespace Remizione
         private readonly UITextButton buttonConsume;
         private readonly UITextButton buttonDiscard;
         private readonly UITextButton buttonEquip;
-        private readonly List<InventoryCategory> categories = [InventoryCategory.Consumables, InventoryCategory.Equipment, InventoryCategory.KeyItems, InventoryCategory.Skills];
+        private readonly List<InventoryCategory> categories = [InventoryCategory.Consumables, InventoryCategory.Junk, InventoryCategory.KeyItems, InventoryCategory.Skills];
         private readonly ImageSprite[] categoryIcons;
         private readonly TextSprite categoryText;
         private readonly ImageSprite checkMark;
@@ -235,7 +235,7 @@ namespace Remizione
 
             buttonDiscard.Draw(gameTime);
 
-            if (item.MetaItem.Category == InventoryCategory.Equipment)
+            if (item.MetaItem.Category == InventoryCategory.Junk)
             {
                 buttonEquip.Draw(gameTime);
             }
@@ -262,7 +262,7 @@ namespace Remizione
         // InvalidateEquippedItem
         private void InvalidateEquippedItem()
         {
-            if (equippedItem != null && grids[InventoryCategory.Equipment].GetSlot(equippedItem) is InventorySlot slot)
+            if (equippedItem != null && grids[InventoryCategory.Junk].GetSlot(equippedItem) is InventorySlot slot)
             {
                 checkMark.Image = Atlases.UI.CheckMark;
                 checkMark.Position = slot.BoundingBox.GetPoint(RectanglePoint.RightBottom, -1, -8);
@@ -427,7 +427,7 @@ namespace Remizione
                 }
 
                 // Equip
-                if (activeGrid.ItemContainer.Category == InventoryCategory.Equipment)
+                if (activeGrid.ItemContainer.Category == InventoryCategory.Junk)
                 {
                     if (buttonEquip.TestPressed(PlayerIndex.One))
                     {
@@ -470,7 +470,7 @@ namespace Remizione
             }
 
             currentCategory = InventoryCategory.Consumables;
-            equippedItem = Owner.Inventory.Equipment.SelectedItem;
+            equippedItem = Owner.Inventory.Junk.SelectedItem;
             InvalidateEquippedItem();
             lastKnownInput = InputMethod.None;
 
@@ -483,7 +483,7 @@ namespace Remizione
             base.OnUnloadContent();
 
             if (equippedItem != null)
-                Owner.Inventory.Equipment.Select(equippedItem);
+                Owner.Inventory.Junk.Select(equippedItem);
         }
 
         // OnUpdate

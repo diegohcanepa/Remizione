@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:db9b79311e6c83a8363f7b3e8e4cd309:bdf036ff5794e02ad2db157207229456:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:407d9d5c908c185733bca6e04ccbf7d0:afef11da443c5fdd09df97c6f8720173:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -37,7 +37,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="HeartIcon.png" x="322" y="494" w="9" h="9"/>
     <sprite n="InventoryCategoryConsumables.png" x="190" y="490" w="11" h="11"/>
     <sprite n="InventoryCategoryContainer.png" x="190" y="503" w="60" h="7"/>
-    <sprite n="InventoryCategoryEquipment.png" x="203" y="490" w="11" h="11"/>
+    <sprite n="InventoryCategoryJunk.png" x="203" y="490" w="11" h="11"/>
     <sprite n="InventoryCategoryKeyItems.png" x="216" y="490" w="11" h="11"/>
     <sprite n="InventoryCategorySkills.png" x="252" y="494" w="11" h="11"/>
     <sprite n="InventoryGridContainer.png" x="2" y="403" w="124" h="85"/>

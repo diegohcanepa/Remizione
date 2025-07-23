@@ -223,7 +223,7 @@ namespace Remizione
             if (!CanChangeState)
                 return false;
 
-            if (Inventory.Equipment.SelectedItem is not Item item)
+            if (Inventory.Junk.SelectedItem is not Item item)
                 return false;
 
             if (item.MetaItem.Action != ItemAction.Throw || item.Count <= 0)
@@ -403,9 +403,9 @@ namespace Remizione
             if (attributes[nameof(Inventory.Consumables)]?.Value is string consumablesData)
                 Inventory.Consumables.SetSerializationData(consumablesData);
 
-            // Equipment
-            if (attributes[nameof(Inventory.Equipment)]?.Value is string equipmentData)
-                Inventory.Equipment.SetSerializationData(equipmentData);
+            // Junk
+            if (attributes[nameof(Inventory.Junk)]?.Value is string junkData)
+                Inventory.Junk.SetSerializationData(junkData);
 
             // KeyItems
             if (attributes[nameof(Inventory.KeyItems)]?.Value is string keyItemsData)
@@ -538,7 +538,7 @@ namespace Remizione
             base.OnWrite(output);
 
             output.WriteAttributeString(nameof(Inventory.Consumables), Inventory.Consumables.GetSerializationData());
-            output.WriteAttributeString(nameof(Inventory.Equipment), Inventory.Equipment.GetSerializationData());
+            output.WriteAttributeString(nameof(Inventory.Junk), Inventory.Junk.GetSerializationData());
             output.WriteAttributeString(nameof(Inventory.KeyItems), Inventory.KeyItems.GetSerializationData());
             output.WriteAttributeString(nameof(Inventory.Skills), Inventory.Skills.GetSerializationData());
 
@@ -980,7 +980,7 @@ namespace Remizione
         // UseSelectedItem
         public void UseSelectedItem()
         {
-            if (Inventory.Equipment.SelectedItem is Item item)
+            if (Inventory.Junk.SelectedItem is Item item)
             {
                 // Throwable
                 if (item.MetaItem.Action == ItemAction.Throw)

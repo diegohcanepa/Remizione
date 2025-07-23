@@ -15,7 +15,6 @@ namespace EngendroAdventure.Scripting
         protected static readonly string AmountArg = "#amount";
         protected static readonly string AnimationArg = "#animation";
         protected static readonly string AtArg = "#at";
-        protected static readonly string BlockTagArg = "#block-tag";
         protected static readonly string BonusArg = "#bonus";
         protected static readonly string BounceDelayArg = "#bounce-delay";
         protected static readonly string BouncesArg = "#bounces";
@@ -25,13 +24,12 @@ namespace EngendroAdventure.Scripting
         protected static readonly string ColorArg = "#color";
         protected static readonly string ConditionArg = "#condition";
         protected static readonly string CostArg = "#cost";
-        protected static readonly string CraftArg = "#craft";
-        protected static readonly string CyclesArg = "#cycles";
         protected static readonly string DamageArg = "#damage";
         protected static readonly string DecimalsArg = "#decimals";
         protected static readonly string DelayArg = "#delay";
         protected static readonly string DepthOffsetArg = "#depth-offset";
         protected static readonly string DisableArg = "#disable";
+        protected static readonly string DistributionArg = "#distribution";
         protected static readonly string DurabilityArg = "#durability";
         protected static readonly string DurationArg = "#duration";
         protected static readonly string EmitterArg = "#emitter";
@@ -76,7 +74,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string PersistentArg = "#persistent";
         protected static readonly string PitchArg = "#pitch";
         protected static readonly string PivotArg = "#pivot";
-        protected static readonly string PlayerLevelArg = "#player-level";
+        protected static readonly string ProgressArg = "#progress";
         protected static readonly string PrefixArg = "#prefix";
         protected static readonly string PreserveArg = "#preserve";
         protected static readonly string RadiansArg = "#radians";
@@ -103,7 +101,6 @@ namespace EngendroAdventure.Scripting
         protected static readonly string VibrateArg = "#vibrate";
         protected static readonly string VolumeArg = "#volume";
         protected static readonly string WalkAreaArg = "#walk-area";
-        protected static readonly string WorldSizeArg = "#world-size";
         protected static readonly string ZeroPaddingArg = "#zero-padding";
 
         #endregion

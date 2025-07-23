@@ -113,12 +113,14 @@
 			<Word>await-this-routine</Word>
 			<Word>await-transition</Word>
 			<Word>await</Word>
+			<Word>begin-placement-data</Word>
 			<Word>const</Word>
+			<Word>end-placement-data</Word>			
 			<Word>ensure-session-scene</Word>
 			<Word>exit-session</Word>
 			<Word>meta-item</Word>
 			<Word>pause-routine</Word>
-			<Word>placement-condition</Word>
+			<Word>placement-data</Word>
 			<Word>pop-scene</Word>
 			<Word>reload</Word>
 			<Word>restart-session</Word>

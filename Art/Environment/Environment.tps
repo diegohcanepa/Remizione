@@ -937,6 +937,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">PortalOutdoor-assets/PortalOutdoor.png</key>
+            <key type="filename">PortalOutdoor-assets/PortalOutdoorShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,19,33,38</rect>
+                <key>scale9Paddings</key>
+                <rect>16,19,33,38</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">RainDropImpacts-assets/RainDropImpactA01.png</key>
             <key type="filename">RainDropImpacts-assets/RainDropImpactA02.png</key>
             <key type="filename">RainDropImpacts-assets/RainDropImpactA03.png</key>
@@ -1174,6 +1190,7 @@
                     <filename>FenceB-assets</filename>
                     <filename>FenceC-assets</filename>
                     <filename>FenceD-assets</filename>
+                    <filename>PortalOutdoor-assets</filename>
                 </array>
             </struct>
         </map>

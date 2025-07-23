@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿/// @M05A92,MZAMZA21 
+using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Engendro.PathFinding;
@@ -7,12 +8,11 @@ using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Remizione
 {
     /// <summary>
-    /// GameThing
+    /// GameThing 
     /// </summary>
     public abstract class GameThing : Thing, IHoleArea, ILightSource
     {
@@ -39,7 +39,6 @@ namespace Remizione
         private string localizedDisplayName = string.Empty;
         private int maxHP;
         private PathNode[]? pathNodes;
-        private readonly List<PlacementCondition> placementConditions = [];
         private RenderLayer renderLayer;
         private int renderLayerDepth;
         private bool shouldClampToWalkablePosition;
@@ -56,7 +55,6 @@ namespace Remizione
         {
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
-            this.PlacementConditions = new(placementConditions);
         }
 
         #endregion
@@ -464,12 +462,6 @@ namespace Remizione
 
         #endregion
 
-        // AddPlacementCondition
-        public void AddPlacementCondition(PlacementCondition condition)
-        {
-            placementConditions.Add(condition);
-        }
-
         // ApplyDamage
         public void ApplyDamage(GameThing attacker)
         {
@@ -644,10 +636,6 @@ namespace Remizione
                 }
             }
         }
-
-        // DistributionStrategy
-        [ScriptProperty(CodingContext.EntityDeclaration)]
-        public PlacementDistributionStrategy DistributionStrategy { get; set; }
 
         // DrawImpactWord
         public void DrawImpactWord(GameTime gameTime) => impactWord?.Draw(gameTime);
@@ -878,21 +866,6 @@ namespace Remizione
         [ScriptProperty]
         public bool IgnoreWalkArea { get; set; } = true;
 
-        // InstancesPerBlock
-        public Int32Range InstancesPerBlock { get; set; } = new Int32Range(1);
-
-        // IsAvailable
-        public bool IsAvailable(Random random)
-        {
-            for (int i = 0; i < placementConditions.Count; i++)
-            {
-                if (!placementConditions[i].IsAvailable(this, random))
-                    return false;
-            }
-
-            return true;
-        }
-
         // IsBehind
         public bool IsBehind(GameThing thing)
         {
@@ -958,12 +931,6 @@ namespace Remizione
         // OverheadOrigin
         [ScriptProperty]
         public Vector2 OverheadOrigin { get; set; }
-
-        // PlacementConditions
-        public ReadOnlyCollection<PlacementCondition> PlacementConditions { get; }
-
-        // PlacementPhase
-        public PlacementPhase PlacementPhase { get; set; }
 
         // RenderLayer
         [ScriptProperty]

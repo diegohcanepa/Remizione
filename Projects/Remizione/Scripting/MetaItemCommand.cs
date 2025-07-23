@@ -8,7 +8,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 2, ActionArg, AllowEmptyArg, BonusArg, CraftArg, DamageArg, DurabilityArg, HPArg, ImpactWordArg, KnockbackArg, MaximumArg, ModifierArg, PassiveEffectCooldownArg, RangeArg, SoundArg)
+            : base(script, source, body, 2, ActionArg, AllowEmptyArg, BonusArg, DamageArg, DurabilityArg, HPArg, ImpactWordArg, KnockbackArg, MaximumArg, ModifierArg, PassiveEffectCooldownArg, RangeArg, SoundArg)
         {
             var name = Parser.ParseName(this, 0);
             var category = Parser.ParseEnum<InventoryCategory>(this, 1);
