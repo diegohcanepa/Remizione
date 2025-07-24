@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Remizione
 {
@@ -81,6 +82,7 @@ namespace Remizione
         {
             var result = new List<string>
             {
+                Size.ToString(CultureInfo.InvariantCulture),
                 SelectedItem is null ? NoneValue : SelectedItem.Name
             };
 
@@ -240,7 +242,11 @@ namespace Remizione
 
             for (var i = 0; i < itemList.Length; i++)
             {
-                if (i == 0)
+                if (i==0)
+                {
+                    Size = int.Parse(itemList[i], CultureInfo.InvariantCulture);
+                }
+                else if (i == 1)
                 {
                     SelectedItem = GetItem(itemList[i]);
                 }

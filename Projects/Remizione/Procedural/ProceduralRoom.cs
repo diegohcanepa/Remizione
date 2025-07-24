@@ -290,10 +290,13 @@ namespace Remizione
         // OnLoad
         protected override void OnLoad()
         {
-            base.OnLoad();
+            CustomWidth = Screen.NativeWidth * (BlockSize.Width <= 0 ? 1 : BlockSize.Width);
+            CustomHeight = Screen.NativeHeight * (BlockSize.Height <= 0 ? 1 : BlockSize.Height);
 
-            this.decorationGrid = new RoomGrid("Decoration", Width, Height);
-            this.mainGrid = new RoomGrid("Main", Width, Height);
+            this.decorationGrid = new RoomGrid("Decoration", CustomWidth, CustomHeight);
+            this.mainGrid = new RoomGrid("Main", CustomWidth, CustomHeight);
+
+            base.OnLoad();
 
             Populate();
         }
@@ -347,6 +350,9 @@ namespace Remizione
         }
 
         #endregion
+
+        // BlockSize
+        public Size BlockSize { get; set; }
 
         // CanPlaceDynamicPropAt
         public bool CanPlaceDynamicPropAt(IsometricProp prop, Vector2 position)

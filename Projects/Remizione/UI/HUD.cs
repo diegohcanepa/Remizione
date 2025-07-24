@@ -60,6 +60,9 @@ namespace Remizione
             // Equipment slot
             this.EquipmentSlot = new(Game);
 
+            // Trincket slot
+            this.TrincketSlot = new(Game);
+
             // Message text
             this.statusText = new TextSprite(Game, Fonts.CommonOutline)
             {
@@ -83,11 +86,16 @@ namespace Remizione
                 {
                     BagSlot.Draw(gameTime);
                     EquipmentSlot.Draw(gameTime);
+                    TrincketSlot.Draw(gameTime);
                 }
 
-                countdownMeter.Draw(gameTime);
                 healthMeter.Draw(gameTime);
-                progressMeter.Draw(gameTime);
+
+                if (session.IsCountdownActive)
+                    countdownMeter.Draw(gameTime);
+                else
+                    progressMeter.Draw(gameTime);
+
                 ticketsMeter.Draw(gameTime);
             }
 
@@ -114,6 +122,7 @@ namespace Remizione
             countdownMeter.Update(gameTime);
             BagSlot.Update(gameTime);
             EquipmentSlot.Update(gameTime);
+            TrincketSlot.Update(gameTime);
             healthMeter.Update(gameTime);
             progressMeter.Update(gameTime);
             ticketsMeter.Update(gameTime);
@@ -140,6 +149,9 @@ namespace Remizione
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
+            if (session.IsConsoleVisible)
+                return HandleInputResult.Unhandled;
+
             if (EquipmentSlot.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
@@ -161,6 +173,7 @@ namespace Remizione
             healthMeter.Actor = session.Player;
             BagSlot.Actor = session.Player;
             EquipmentSlot.Actor = session.Player;
+            TrincketSlot.Actor = session.Player;
             ticketsMeter.Actor = session.Player;
         }
 
@@ -183,5 +196,8 @@ namespace Remizione
                 }
             }
         }
+
+        // TrincketSlot
+        public TrinketSlot TrincketSlot { get; }
     }
 }

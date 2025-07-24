@@ -49,8 +49,6 @@ namespace Remizione
                 return false;
 
             int damageAmount = BaseDamage.Roll();
-            if (attacker is Actor actor)
-                damageAmount += actor.Stats.GetModifier(Modifier);
 
             target.TakeDamage(attacker, damageAmount + Bonus, Knockback, ImpactWord);
             target.ApplyDamage(attacker);

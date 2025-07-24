@@ -124,7 +124,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../Projects/Content/Atlases/Actors.xml</filename>
+                <filename>../../../Projects/Content/Atlases/OutdoorRoom.xml</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -145,7 +145,7 @@
         <key>trimSpriteNames</key>
         <false/>
         <key>prependSmartFolderName</key>
-        <true/>
+        <false/>
         <key>autodetectAnimations</key>
         <true/>
         <key>globalSpriteSettings</key>
@@ -173,8 +173,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Baal-assets/Stand01.png</key>
-            <key type="filename">Baal-assets/Stand02.png</key>
+            <key type="filename">OutdoorRoom-assets/TerrainBlockDefault.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -183,56 +182,14 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>5,5,10,10</rect>
+                <rect>60,34,120,67</rect>
                 <key>scale9Paddings</key>
-                <rect>5,5,10,10</rect>
+                <rect>60,34,120,67</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Berta-assets/Stand01.png</key>
-            <key type="filename">Berta-assets/StandHead01.png</key>
-            <key type="filename">Berta-assets/StandHead02.png</key>
-            <key type="filename">Edmund-assets/Back01.png</key>
-            <key type="filename">Edmund-assets/BackRaiseArm01.png</key>
-            <key type="filename">Edmund-assets/BackRaiseArm02.png</key>
-            <key type="filename">Edmund-assets/BackRaiseArm03.png</key>
-            <key type="filename">Edmund-assets/Bend01.png</key>
-            <key type="filename">Edmund-assets/Bend02.png</key>
-            <key type="filename">Edmund-assets/Bend03.png</key>
-            <key type="filename">Edmund-assets/Consume01.png</key>
-            <key type="filename">Edmund-assets/Consume02.png</key>
-            <key type="filename">Edmund-assets/Consume03.png</key>
-            <key type="filename">Edmund-assets/Consume04.png</key>
-            <key type="filename">Edmund-assets/LookBehind01.png</key>
-            <key type="filename">Edmund-assets/LookBehind02.png</key>
-            <key type="filename">Edmund-assets/Move01.png</key>
-            <key type="filename">Edmund-assets/Move02.png</key>
-            <key type="filename">Edmund-assets/Move03.png</key>
-            <key type="filename">Edmund-assets/Move04.png</key>
-            <key type="filename">Edmund-assets/PickUp01.png</key>
-            <key type="filename">Edmund-assets/PickUp02.png</key>
-            <key type="filename">Edmund-assets/PickUp03.png</key>
-            <key type="filename">Edmund-assets/PickUp04.png</key>
-            <key type="filename">Edmund-assets/Pray01.png</key>
-            <key type="filename">Edmund-assets/Pray02.png</key>
-            <key type="filename">Edmund-assets/Pray03.png</key>
-            <key type="filename">Edmund-assets/RaiseArm01.png</key>
-            <key type="filename">Edmund-assets/RaiseArm02.png</key>
-            <key type="filename">Edmund-assets/RaiseArm03.png</key>
-            <key type="filename">Edmund-assets/ShockZap01.png</key>
-            <key type="filename">Edmund-assets/Stand01.png</key>
-            <key type="filename">Edmund-assets/Stand02.png</key>
-            <key type="filename">Edmund-assets/Stand03.png</key>
-            <key type="filename">Edmund-assets/Stand04.png</key>
-            <key type="filename">Edmund-assets/StandHead01.png</key>
-            <key type="filename">Edmund-assets/StandHead02.png</key>
-            <key type="filename">Edmund-assets/TalkHead01.png</key>
-            <key type="filename">Edmund-assets/TalkHead02.png</key>
-            <key type="filename">Edmund-assets/ThrowItem01.png</key>
-            <key type="filename">Edmund-assets/ThrowItem02.png</key>
-            <key type="filename">Edmund-assets/ThrowItem03.png</key>
-            <key type="filename">Edmund-assets/ThrowItem04.png</key>
-            <key type="filename">Edmund-assets/ThrowItem05.png</key>
+            <key type="filename">OutdoorRoom-assets/TerrainBlockDefaultBottom.png</key>
+            <key type="filename">OutdoorRoom-assets/TerrainBlockDefaultTop.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -241,13 +198,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>7,6,14,13</rect>
+                <rect>60,2,120,3</rect>
                 <key>scale9Paddings</key>
-                <rect>7,6,14,13</rect>
+                <rect>60,2,120,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Edmund-assets/ShockZap02.png</key>
+            <key type="filename">OutdoorRoom-assets/TerrainBlockDefaultLeft.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -256,17 +213,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>4,4,7,8</rect>
+                <rect>2,34,4,67</rect>
                 <key>scale9Paddings</key>
-                <rect>4,4,7,8</rect>
+                <rect>2,34,4,67</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Grandma-assets/Stand01.png</key>
-            <key type="filename">Grandma-assets/StandHead01.png</key>
-            <key type="filename">Grandma-assets/StandHead02.png</key>
-            <key type="filename">Grandma-assets/TalkHead01.png</key>
-            <key type="filename">Grandma-assets/TalkHead02.png</key>
+            <key type="filename">OutdoorRoom-assets/TerrainBlockDefaultRight.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -275,70 +228,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>5,5,11,10</rect>
+                <rect>3,34,5,67</rect>
                 <key>scale9Paddings</key>
-                <rect>5,5,11,10</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Monk-assets/Move01.png</key>
-            <key type="filename">Monk-assets/Move02.png</key>
-            <key type="filename">Monk-assets/Stand01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,5,11,10</rect>
-                <key>scale9Paddings</key>
-                <rect>6,5,11,10</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Reaper-assets/Move01.png</key>
-            <key type="filename">Reaper-assets/Move02.png</key>
-            <key type="filename">Reaper-assets/Move03.png</key>
-            <key type="filename">Reaper-assets/Move04.png</key>
-            <key type="filename">Reaper-assets/Stand01.png</key>
-            <key type="filename">Reaper-assets/Talk01.png</key>
-            <key type="filename">Reaper-assets/Talk02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,4,11,9</rect>
-                <key>scale9Paddings</key>
-                <rect>6,4,11,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Sister-assets/Move01.png</key>
-            <key type="filename">Sister-assets/Move02.png</key>
-            <key type="filename">Sister-assets/Move03.png</key>
-            <key type="filename">Sister-assets/Move04.png</key>
-            <key type="filename">Sister-assets/Stand01.png</key>
-            <key type="filename">Sister-assets/StandHead01.png</key>
-            <key type="filename">Sister-assets/StandHead02.png</key>
-            <key type="filename">Sister-assets/TalkHead01.png</key>
-            <key type="filename">Sister-assets/TalkHead02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>10,7,19,13</rect>
-                <key>scale9Paddings</key>
-                <rect>10,7,19,13</rect>
+                <rect>3,34,5,67</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -349,13 +241,7 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>Edmund-assets</filename>
-                    <filename>Grandma-assets</filename>
-                    <filename>Reaper-assets</filename>
-                    <filename>Sister-assets</filename>
-                    <filename>Baal-assets</filename>
-                    <filename>Monk-assets</filename>
-                    <filename>Berta-assets</filename>
+                    <filename>OutdoorRoom-assets</filename>
                 </array>
             </struct>
         </map>

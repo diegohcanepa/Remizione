@@ -78,7 +78,10 @@ namespace Remizione
                 slotImage.Draw(gameTime);
 
             if (Item == null)
-                stateIcon.Draw(gameTime);
+            {
+                if (Index > grid.ItemContainer.Size-1 || grid.ItemContainer.Category == InventoryCategory.Skills)
+                    stateIcon.Draw(gameTime);
+            }
             else
                 icon.Draw(gameTime);
 

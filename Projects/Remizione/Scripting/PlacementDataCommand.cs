@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using EngendroAdventure;
 using EngendroAdventure.Scripting;
 using System.Collections.Generic;
 
@@ -13,6 +14,10 @@ namespace Remizione.Scripting
             : base(script, source, body, 2, ChanceArg, DistributionArg, InstancesArg, ProgressArg)
         {
             var thing = AssertEntityNotNull<GameThing>(script.EntityName);
+
+            if (thing.EntityKind == EntityKind.Static)
+                return;
+
             var room = AssertEntityNotNull<ProceduralRoom>(0);
             var phase = Parser.ParseEnum<PlacementPhase>(this, 1);
             var distributionStrategy = Parser.ParseEnumArgument(this, DistributionArg, PlacementDistributionStrategy.Random);

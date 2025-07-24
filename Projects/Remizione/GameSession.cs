@@ -319,7 +319,7 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-            if (GameplayMode == GameplayMode.Survival && Countdown > 0)
+            if (GameplayMode == GameplayMode.Survival && Countdown > 0 && IsCurrentScene)
             {
                 Countdown -= gameTime.ElapsedGameTime.Milliseconds;
                 /*
@@ -409,6 +409,9 @@ namespace Remizione
 
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
+
+        // IsCountdownActive
+        public bool IsCountdownActive => Countdown.IsBetween(0, GameSettings.CountdownAlert) && GameplayMode == GameplayMode.Survival;
 
         // Level
         public int Level { get; set; }

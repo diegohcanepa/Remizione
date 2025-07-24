@@ -311,7 +311,7 @@
                 <false/>
             </struct>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryConsumables.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryEquipment.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryJunk.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryKeyItems.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategorySkills.png</key>
             <key type="filename">UI-assets/ProhibitionMark.png</key>
@@ -638,6 +638,7 @@
                 <false/>
             </struct>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
+            <key type="filename">UI-assets/TrinketSlot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

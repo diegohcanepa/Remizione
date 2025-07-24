@@ -45,13 +45,14 @@ namespace Remizione
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
             ProhibitionIcon = this[nameof(ProhibitionIcon)];
             ProhibitionMark = this[nameof(ProhibitionMark)];
-            QuickSlot = this[nameof(QuickSlot)];
+            EquipmentSlot = this[nameof(EquipmentSlot)];
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
             TicketGoldenIcon = this[nameof(TicketGoldenIcon)];
             TicketGreenIcon = this[nameof(TicketGreenIcon)];
             TicketWhiteIcon = this[nameof(TicketWhiteIcon)];
+            TrinketSlot = this[nameof(TrinketSlot)];
             UITextButtonContainerEdge = this[nameof(UITextButtonContainerEdge)];
             UITextButtonContainerPattern = this[nameof(UITextButtonContainerPattern)];
         }
@@ -76,6 +77,9 @@ namespace Remizione
 
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
+
+        // EquipmentSlot
+        public AtlasImage EquipmentSlot { get; }
 
         // InventoryCategoryConsumables
         public AtlasImage InventoryCategoryConsumables { get; }
@@ -158,9 +162,6 @@ namespace Remizione
         // ProhibitionMark
         public AtlasImage ProhibitionMark { get; }
 
-        // QuickSlot
-        public AtlasImage QuickSlot { get; }
-
         // SavingIcon
         public AtlasImage SavingIcon { get; }
 
@@ -178,6 +179,9 @@ namespace Remizione
 
         // TicketWhiteIcon
         public AtlasImage TicketWhiteIcon { get; }
+
+        // TrinketSlot
+        public AtlasImage TrinketSlot { get; }
 
         // UITextButtonContainerEdge
         public AtlasImage UITextButtonContainerEdge { get; }

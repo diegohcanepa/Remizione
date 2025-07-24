@@ -31,7 +31,7 @@ namespace Remizione
             : base(game)
         {
             // Slot image
-            this.slotImage = new ImageSprite(Game, Atlases.UI.QuickSlot)
+            this.slotImage = new ImageSprite(Game, Atlases.UI.EquipmentSlot)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -2),

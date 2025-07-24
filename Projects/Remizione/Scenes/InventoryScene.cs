@@ -21,7 +21,7 @@ namespace Remizione
         private readonly UITextButton buttonConsume;
         private readonly UITextButton buttonDiscard;
         private readonly UITextButton buttonEquip;
-        private readonly List<InventoryCategory> categories = [InventoryCategory.Consumables, InventoryCategory.Junk, InventoryCategory.KeyItems, InventoryCategory.Skills];
+        private readonly List<InventoryCategory> categories = [InventoryCategory.Consumables, InventoryCategory.Junk, InventoryCategory.KeyItems, InventoryCategory.Trinkets, InventoryCategory.Skills];
         private readonly ImageSprite[] categoryIcons;
         private readonly TextSprite categoryText;
         private readonly ImageSprite checkMark;
@@ -41,6 +41,7 @@ namespace Remizione
         private readonly UITextButton nextCategoryButton;
         private readonly UITextButton previousCategoryButton;
         private readonly UITicketsMeter ticketsMeter;
+        private readonly TrinketSlot trinketSlot;
 
         #endregion
 
@@ -56,6 +57,12 @@ namespace Remizione
 
             // Health meter
             this.healthMeter = new(Game)
+            {
+                Actor = owner,
+            };
+
+            // Trinket slot
+            this.trinketSlot = new(Game)
             {
                 Actor = owner,
             };
@@ -77,9 +84,10 @@ namespace Remizione
             this.gridContainer = new(Game, Atlases.UI.InventoryGridContainer)
             {
                 PivotOrigin = RectanglePoint.LeftTop,
-                Position = new(10, 28),
+                Position = new(10, 30),
             };
 
+            // Create grids for each category
             var gridPos = gridContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 3, 3);
             foreach (var category in categories)
             {
@@ -341,6 +349,7 @@ namespace Remizione
         {
             base.OnDraw(gameTime);
 
+            trinketSlot.Draw(gameTime);
             healthMeter.Draw(gameTime);
             ticketsMeter.Draw(gameTime);
 
@@ -497,6 +506,7 @@ namespace Remizione
             categoryText.Update(gameTime);
             activeGrid.Update(gameTime);
             gridContainer.Update(gameTime);
+            trinketSlot.Update(gameTime);
             healthMeter.Update(gameTime);
             ticketsMeter.Update(gameTime);
             itemName.Update(gameTime);

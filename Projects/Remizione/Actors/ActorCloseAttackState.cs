@@ -49,7 +49,6 @@ namespace Remizione
 
                         var damageAmount = MetaItem.BaseDamage.Roll();
 
-                        damageAmount += Owner.Stats.GetModifier(MetaItem.Modifier);
                         damageAmount += MetaItem.Bonus;
 
                         target.TakeDamage(Owner, damageAmount, MetaItem.Knockback, MetaItem.ImpactWord);

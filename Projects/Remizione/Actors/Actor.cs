@@ -51,7 +51,6 @@ namespace Remizione
             : base(session, name)
         {
             this.session = session;
-            this.Stats = new Stats(this);
 
             this.Atlas = Atlases.Actors;
             this.IgnoreWalkArea = false;
@@ -415,29 +414,9 @@ namespace Remizione
             if (attributes[nameof(Inventory.Skills)]?.Value is string skillsData)
                 Inventory.Skills.SetSerializationData(skillsData);
 
-            // Devotion
-            if (attributes[nameof(Stats.Devotion)]?.Value is string devotion)
-                Stats.Devotion = XmlConvert.ToInt32(devotion);
-
-            // Dexterity
-            if (attributes[nameof(Stats.Dexterity)]?.Value is string dexterity)
-                Stats.Dexterity = XmlConvert.ToInt32(dexterity);
-
-            // Fortitude
-            if (attributes[nameof(Stats.Fortitude)]?.Value is string fortitude)
-                Stats.Fortitude = XmlConvert.ToInt32(fortitude);
-
-            // Mind
-            if (attributes[nameof(Stats.Mind)]?.Value is string mind)
-                Stats.Mind = XmlConvert.ToInt32(mind);
-
-            // Charisma
-            if (attributes[nameof(Stats.Charisma)]?.Value is string charisma)
-                Stats.Charisma = XmlConvert.ToInt32(charisma);
-
-            // Strength
-            if (attributes[nameof(Stats.Strength)]?.Value is string strength)
-                Stats.Strength = XmlConvert.ToInt32(strength);
+            // Trinkets
+            if (attributes[nameof(Inventory.Trinkets)]?.Value is string trinketsData)
+                Inventory.Skills.SetSerializationData(trinketsData);
         }
 
         // OnSelectTarget
@@ -541,13 +520,7 @@ namespace Remizione
             output.WriteAttributeString(nameof(Inventory.Junk), Inventory.Junk.GetSerializationData());
             output.WriteAttributeString(nameof(Inventory.KeyItems), Inventory.KeyItems.GetSerializationData());
             output.WriteAttributeString(nameof(Inventory.Skills), Inventory.Skills.GetSerializationData());
-
-            output.WriteAttributeString(nameof(Stats.Devotion), XmlConvert.ToString(Stats.Devotion));
-            output.WriteAttributeString(nameof(Stats.Dexterity), XmlConvert.ToString(Stats.Dexterity));
-            output.WriteAttributeString(nameof(Stats.Fortitude), XmlConvert.ToString(Stats.Fortitude));
-            output.WriteAttributeString(nameof(Stats.Mind), XmlConvert.ToString(Stats.Mind));
-            output.WriteAttributeString(nameof(Stats.Charisma), XmlConvert.ToString(Stats.Charisma));
-            output.WriteAttributeString(nameof(Stats.Strength), XmlConvert.ToString(Stats.Strength));
+            output.WriteAttributeString(nameof(Inventory.Trinkets), Inventory.Trinkets.GetSerializationData());
         }
 
         // StateMachine
@@ -962,9 +935,6 @@ namespace Remizione
             else
                 Stand(true);
         }
-
-        // Stats
-        public Stats Stats { get; }
 
         // SuspendInteraction
         public void SuspendInteraction(int duration)

@@ -24,8 +24,8 @@ namespace Remizione.UI
             this.text = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Red,
-                PivotOrigin = RectanglePoint.LeftTop,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 3, 7),
+                PivotOrigin = RectanglePoint.Top,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 0),
                 Scale = ScaleInfo.Text.Giant,
             };
         }
@@ -35,7 +35,7 @@ namespace Remizione.UI
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (!session.Countdown.IsBetween(0, GameSettings.CountdownAlert))
+            if (!session.IsCountdownActive)
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.AlphaBlend, null);

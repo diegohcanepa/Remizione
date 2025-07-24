@@ -17,6 +17,7 @@ namespace Remizione
             {
                 Size = 24
             };
+            this.Trinkets = new ItemContainer(owner, InventoryCategory.Trinkets);
         }
 
         // Consumables
@@ -31,6 +32,7 @@ namespace Remizione
                 InventoryCategory.Junk => Junk,
                 InventoryCategory.KeyItems => KeyItems,
                 InventoryCategory.Skills => Skills,
+                InventoryCategory.Trinkets => Trinkets,
                 _ => throw new ArgumentException($"Invalid inventory category: {category}", nameof(category)),
             };
         }
@@ -43,5 +45,8 @@ namespace Remizione
 
         // Skills
         public ItemContainer Skills { get; }
+
+        // Trinkets
+        public ItemContainer Trinkets { get; }
     }
 }

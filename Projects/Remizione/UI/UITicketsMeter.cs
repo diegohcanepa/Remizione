@@ -20,17 +20,14 @@ namespace Remizione
 
             tickets[0] = new UIScore(game, Atlases.UI.TicketGoldenIcon, ColorPalette.Text.Default)
             {
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -3, 0),
             };
 
             tickets[1] = new UIScore(game, Atlases.UI.TicketGreenIcon, ColorPalette.Text.Default)
             {
-                Position = new(tickets[0].Position.X - 20, tickets[0].Position.Y)
             };
 
             tickets[2] = new UIScore(game, Atlases.UI.TicketWhiteIcon, ColorPalette.Text.Default)
             {
-                Position = new(tickets[1].Position.X - 20, tickets[0].Position.Y)
             };
 
             Layout();
@@ -58,7 +55,7 @@ namespace Remizione
             if (actor == null)
                 return; 
 
-            var pos = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, 0, 0);
+            var pos = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -4, 0);
 
             tickets[0].Position = pos;
             

@@ -45,6 +45,7 @@
   <String Key="InventoryCategory.Junk">Cachivaches</String>
   <String Key="InventoryCategory.KeyItems">Objetos clave</String>
   <String Key="InventoryCategory.Skills">Habilidades</String>
+  <String Key="InventoryCategory.Trinkets">Chucherias</String>
   <String Key="Item.Apple.Description">Una apetitoza manzana en su punto justo.</String>
   <String Key="Item.Apple.Name">Manzana</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
