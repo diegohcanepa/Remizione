@@ -44,11 +44,13 @@ namespace Remizione
         #region Private members
 
         // InvalidateItem
-        private void InvalidateItem(GameTime gameTime)
+        private void InvalidateItem()
         {
             lastKnownItem = actor?.Inventory.Trinkets.SelectedItem;
             if (lastKnownItem != null)
                 itemImage.Image = lastKnownItem.MetaItem.Image;
+            else
+                itemImage.Image = Atlases.UI.InventorySlotSadIcon;
         }
 
         #endregion
@@ -68,7 +70,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             if (lastKnownItem != actor?.Inventory.Trinkets.SelectedItem)
-                InvalidateItem(gameTime);
+                InvalidateItem();
         }
 
         #endregion
@@ -82,8 +84,8 @@ namespace Remizione
                 if (value != actor)
                 {
                     actor = value;
-                    itemImage.Image = actor?.Inventory.Trinkets.SelectedItem?.MetaItem.Image;
                     lastKnownItem = null;
+                    InvalidateItem();
                 }
             }
         }

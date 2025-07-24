@@ -62,6 +62,8 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3, -2),
             };
+
+            InvalidateItem();
         }
 
         #endregion
@@ -69,7 +71,7 @@ namespace Remizione
         #region Private members
 
         // InvalidateItem
-        private void InvalidateItem(GameTime gameTime)
+        private void InvalidateItem()
         {
             lastKnownItem = actor?.Inventory.Junk.SelectedItem;
 
@@ -79,19 +81,23 @@ namespace Remizione
                 itemImageScaleTween.Start(TweenStyle.Linear, new Vector2(.3f), ScaleInfo.UIElement.Medium, 70);
                 itemImage.Tweens.ScaleTween = itemImageScaleTween;
                 button.Text = null;
-                InvalidateItemAmount(gameTime, true);
+                InvalidateItemAmount(true);
+            }
+            else
+            {
+                itemImage.Image = Atlases.UI.InventorySlotSadIcon;
+                itemImageScaleTween.Stop();
             }
         }
 
         // InvalidateItemAmount
-        private void InvalidateItemAmount(GameTime gameTime, bool enforce)
+        private void InvalidateItemAmount(bool enforce)
         {
             if (lastKnownItem != null && (lastKnownItem.Count != lastKnownCount || enforce))
             {
                 lastKnownCount = lastKnownItem.Count;
                 itemImage.Opacity = lastKnownCount == 0 ? .3f : 1;
                 amountText.Text = lastKnownItem.GetDisplayAmount();
-                amountText.Update(gameTime);
                 button.IsEnabled = true;
             }
         }
@@ -169,9 +175,9 @@ namespace Remizione
             button.Update(gameTime);
 
             if (lastKnownItem != actor?.Inventory.Junk.SelectedItem)
-                InvalidateItem(gameTime);
+                InvalidateItem();
             else
-                InvalidateItemAmount(gameTime, false);
+                InvalidateItemAmount(false);
 
             slotImage.Update(gameTime);
             itemImage.Update(gameTime);
@@ -188,9 +194,9 @@ namespace Remizione
                 if (value != actor)
                 {
                     actor = value;
-                    itemImage.Image = actor?.Inventory.Junk.SelectedItem?.MetaItem.Image;
                     lastKnownCount = -1;
                     lastKnownItem = null;
+                    InvalidateItem();
                 }
             }
         }
@@ -248,6 +254,6 @@ namespace Remizione
         }
 
         // IsVisible
-        public bool IsVisible => actor != null && !actor.Inventory.Junk.IsEmpty && actor.Session.IsCurrentScene;
+        public bool IsVisible => actor != null && actor.Session.IsCurrentScene;
     }
 }

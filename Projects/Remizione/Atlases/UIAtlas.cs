@@ -32,6 +32,7 @@ namespace Remizione
             InventorySlot = this[nameof(InventorySlot)];
             InventorySlotLockIcon = this[nameof(InventorySlotLockIcon)];
             InventorySlotQuestionIcon = this[nameof(InventorySlotQuestionIcon)];
+            InventorySlotSadIcon = this[nameof(InventorySlotSadIcon)];
             InventorySlotSelected = this[nameof(InventorySlotSelected)];
             MessageContainer = this[nameof(MessageContainer)];
             MiniHeartHalfIcon = this[nameof(MiniHeartHalfIcon)];
@@ -113,6 +114,9 @@ namespace Remizione
 
         // InventorySlotQuestionIcon
         public AtlasImage InventorySlotQuestionIcon { get; }
+
+        // InventorySlotSadIcon
+        public AtlasImage InventorySlotSadIcon { get; }
 
         // InventorySlotSelected
         public AtlasImage InventorySlotSelected { get; }

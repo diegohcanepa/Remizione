@@ -47,14 +47,22 @@ namespace Remizione
                 items.Add(item);
             }
 
-            if (SelectedItem == null)
+            /*
+            if (Category != InventoryCategory.Trinkets && SelectedItem == null)
                 SelectedItem = item;
+            */
 
             return item;
         }
 
         // Category
         public InventoryCategory Category { get; }
+
+        // ClearSelection
+        public void ClearSelection()
+        {
+            SelectedItem = null;
+        }
 
         // Contains
         public bool Contains(Item item) => items.Contains(item);

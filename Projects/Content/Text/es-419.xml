@@ -46,10 +46,14 @@
   <String Key="InventoryCategory.KeyItems">Objetos clave</String>
   <String Key="InventoryCategory.Skills">Habilidades</String>
   <String Key="InventoryCategory.Trinkets">Chucherias</String>
+  <String Key="InventoryVerb.Equip">Equipar</String>
+  <String Key="InventoryVerb.Unequip">Desequipar</String>
   <String Key="Item.Apple.Description">Una apetitoza manzana en su punto justo.</String>
   <String Key="Item.Apple.Name">Manzana</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
   <String Key="Item.Chili.Name">Chile picante</String>
+  <String Key="Item.Cross.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
+  <String Key="Item.Cross.Name">Cruz de Zumbito</String>
   <String Key="Item.Duck.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Duck.Name">Patito de hule</String>
   <String Key="Item.Gold.Description">Un puñado de polvo de oro.</String>
@@ -255,9 +259,4 @@ Bla bla bla</String>
   <String Key="Stat.Mind.Name">Mente</String>
   <String Key="Stat.Strength.Description">La fuerza enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Stat.Strength.Name">Fuerza</String>
-  <String Key="Verb.Examine">Examinar</String>
-  <String Key="Verb.Insult">Insultar</String>
-  <String Key="Verb.Talk">Hablar</String>
-  <String Key="Verb.Trade">Comerciar</String>
-  <String Key="Verb.UseItem">Usar objeto...</String>
 </Strings>

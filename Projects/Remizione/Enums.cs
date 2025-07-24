@@ -50,6 +50,9 @@ namespace Remizione
     // InventoryCategory
     public enum InventoryCategory { None, Consumables, Junk, KeyItems, Skills, Trinkets }
 
+    // InventoryVerb
+    public enum InventoryVerb { Equip, Unequip }
+
     // ItemAction
     public enum ItemAction { None, Throw }
 

@@ -416,7 +416,7 @@ namespace Remizione
 
             // Trinkets
             if (attributes[nameof(Inventory.Trinkets)]?.Value is string trinketsData)
-                Inventory.Skills.SetSerializationData(trinketsData);
+                Inventory.Trinkets.SetSerializationData(trinketsData);
         }
 
         // OnSelectTarget

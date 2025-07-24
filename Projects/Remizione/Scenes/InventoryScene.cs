@@ -26,7 +26,8 @@ namespace Remizione
         private readonly TextSprite categoryText;
         private readonly ImageSprite checkMark;
         private InventoryCategory currentCategory;
-        private Item? equippedItem;
+        private Item? equippedJunk;
+        private Item? equippedTrinket;
         private readonly ImageSprite gridContainer;
         private readonly Dictionary<InventoryCategory, InventoryGrid> grids = [];
         private readonly UIHealthMeter healthMeter;
@@ -222,6 +223,7 @@ namespace Remizione
             // Equip button
             buttonEquip = new UITextButton(owner.Game, InputBindings.EquipItem)
             {
+                AllowSound = false,
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 5, -3)
             };
@@ -243,7 +245,7 @@ namespace Remizione
 
             buttonDiscard.Draw(gameTime);
 
-            if (item.MetaItem.Category == InventoryCategory.Junk)
+            if (item.MetaItem.Category == InventoryCategory.Junk || item.MetaItem.Category == InventoryCategory.Trinkets)
             {
                 buttonEquip.Draw(gameTime);
             }
@@ -259,7 +261,15 @@ namespace Remizione
             activeGrid = grids[currentCategory];
             categoryText.Text = Localization.GetValue(currentCategory);
             InvalidateItemInfo();
-            InvalidateEquippedItem();
+
+            if (activeGrid.ItemContainer.Category == InventoryCategory.Junk)
+            {
+                InvalidateEquippedJunk();
+            }
+            else if (activeGrid.ItemContainer.Category == InventoryCategory.Trinkets)
+            {
+                InvalidateEquippedTrinket();
+            }
 
             foreach (var category in categories)
             {
@@ -267,16 +277,36 @@ namespace Remizione
             }
         }
 
-        // InvalidateEquippedItem
-        private void InvalidateEquippedItem()
+        // InvalidateEquippedJunk
+        private void InvalidateEquippedJunk()
         {
-            if (equippedItem != null && grids[InventoryCategory.Junk].GetSlot(equippedItem) is InventorySlot slot)
+            if (equippedJunk != null && grids[InventoryCategory.Junk].GetSlot(equippedJunk) is InventorySlot slot)
             {
+                buttonEquip.Text = Localization.GetValue(InventoryVerb.Unequip);
                 checkMark.Image = Atlases.UI.CheckMark;
                 checkMark.Position = slot.BoundingBox.GetPoint(RectanglePoint.RightBottom, -1, -8);
             }
             else
+            {
+                buttonEquip.Text = Localization.GetValue(InventoryVerb.Equip);
                 checkMark.Image = null;
+            }
+        }
+
+        // InvalidateEquippedTrinket
+        private void InvalidateEquippedTrinket()
+        {
+            if (equippedTrinket != null && grids[InventoryCategory.Trinkets].GetSlot(equippedTrinket) is InventorySlot slot)
+            {
+                buttonEquip.Text = Localization.GetValue(InventoryVerb.Unequip);
+                checkMark.Image = Atlases.UI.CheckMark;
+                checkMark.Position = slot.BoundingBox.GetPoint(RectanglePoint.RightBottom, -1, -8);
+            }
+            else
+            {
+                buttonEquip.Text = Localization.GetValue(InventoryVerb.Equip);
+                checkMark.Image = null;
+            }
         }
 
         // InvalidateItemInfo
@@ -373,7 +403,8 @@ namespace Remizione
 
             activeGrid.Draw(gameTime);
 
-            if (equippedItem != null && equippedItem.MetaItem.Category == currentCategory)
+            if ( (equippedJunk != null && equippedJunk.MetaItem.Category == currentCategory) ||
+                 (equippedTrinket != null && equippedTrinket.MetaItem.Category == currentCategory))
             {
                 Game.SpriteBatch.Begin(Game.Camera);
                 checkMark.Draw(gameTime);
@@ -415,11 +446,18 @@ namespace Remizione
                 {
                     Sound.Play(SoundNames.ItemDiscard);
                     activeGrid.DiscardSelectedItem();
-                    if (selectedItem == equippedItem)
+                    
+                    if (selectedItem == equippedJunk)
                     {
-                        equippedItem = activeGrid.SelectedItem;
-                        InvalidateEquippedItem();
+                        equippedJunk = activeGrid.SelectedItem;
+                        InvalidateEquippedJunk();
                     }
+                    else if (selectedItem == equippedTrinket)
+                    {
+                        equippedTrinket = activeGrid.SelectedItem;
+                        InvalidateEquippedTrinket();
+                    }
+
                     InvalidateItemInfo();
                     return HandleInputResult.Handled;
                 }
@@ -435,14 +473,48 @@ namespace Remizione
                     }
                 }
 
-                // Equip
+                // Equip junk
                 if (activeGrid.ItemContainer.Category == InventoryCategory.Junk)
                 {
                     if (buttonEquip.TestPressed(PlayerIndex.One))
                     {
                         Sound.Play(SoundNames.ItemEquip);
-                        equippedItem = selectedItem;
-                        InvalidateEquippedItem();
+
+                        if (equippedJunk == null)
+                        {
+                            equippedJunk = selectedItem;
+                            Owner.Inventory.Junk.Select(equippedJunk);
+                        }
+                        else
+                        {
+                            equippedJunk = null;
+                            Owner.Inventory.Junk.ClearSelection();
+                        }
+
+                        InvalidateEquippedJunk();
+                        return HandleInputResult.Handled;
+                    }
+                }
+
+                // Equip trinket
+                if (activeGrid.ItemContainer.Category == InventoryCategory.Trinkets)
+                {
+                    if (buttonEquip.TestPressed(PlayerIndex.One))
+                    {
+                        Sound.Play(SoundNames.ItemEquip);
+
+                        if (equippedTrinket == null)
+                        {
+                            equippedTrinket = selectedItem;
+                            Owner.Inventory.Trinkets.Select(equippedTrinket);
+                        }
+                        else
+                        {
+                            equippedTrinket = null;
+                            Owner.Inventory.Trinkets.ClearSelection();
+                        }
+
+                        InvalidateEquippedTrinket();
                         return HandleInputResult.Handled;
                     }
                 }
@@ -479,8 +551,9 @@ namespace Remizione
             }
 
             currentCategory = InventoryCategory.Consumables;
-            equippedItem = Owner.Inventory.Junk.SelectedItem;
-            InvalidateEquippedItem();
+            
+            equippedJunk = Owner.Inventory.Junk.SelectedItem;
+            equippedTrinket = Owner.Inventory.Trinkets.SelectedItem;
             lastKnownInput = InputMethod.None;
 
             InvalidateCategory();
@@ -491,8 +564,15 @@ namespace Remizione
         {
             base.OnUnloadContent();
 
-            if (equippedItem != null)
-                Owner.Inventory.Junk.Select(equippedItem);
+            if (equippedJunk != null)
+                Owner.Inventory.Junk.Select(equippedJunk);
+            else
+                Owner.Inventory.Junk.ClearSelection();
+
+            if (equippedTrinket != null)
+                Owner.Inventory.Trinkets.Select(equippedTrinket);
+            else
+                Owner.Inventory.Trinkets.ClearSelection();
         }
 
         // OnUpdate
