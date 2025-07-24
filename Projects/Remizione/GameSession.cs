@@ -21,16 +21,14 @@ namespace Remizione
     {
         #region Private fields
 
-        private enum AttributeName { RandomSeed, WorldVersion }
+        private enum AttributeName { ProcStates, RandomSeed, WorldVersion }
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
-        private bool inGameMenuLocked;
-        private readonly InGameMenuScene inGameMenuScene;
         private Actor? player;
         private Vector2? playerPosition;
+        private readonly Dictionary<string, int> proceduralThingStates = [];
         private int rainRemainingTime;
         private readonly RoomEditor? roomEditor;
-        private readonly List<GameThing> staticThings = [];
 
         #endregion
 
@@ -43,8 +41,8 @@ namespace Remizione
             this.Game = game;
             this.Environment = new Environment(this);
             this.HUD = new HUD(this);
-            this.RandomSeed = 10000;// RandomSeed = System.Environment.TickCount;
-            //this.RandomSeed = System.Environment.TickCount;
+            //this.RandomSeed = 10000;
+            this.RandomSeed = System.Environment.TickCount;
 
             ObjectPools = new ObjectPools(this);
             ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(game), 100);
@@ -68,7 +66,6 @@ namespace Remizione
                 roomEditor = new RoomEditor(this);
             }
 
-            this.inGameMenuScene = new(this);
             this.echoScene = new(Game);
 
             LocalizationSource = LocalizationSource.Script;
@@ -210,15 +207,6 @@ namespace Remizione
         {
             if (HUD.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
-
-            if (inGameMenuLocked && InputBindings.InGameMenu.IsKeyUp())
-                inGameMenuLocked = false;
-
-            if (!inGameMenuLocked && !InputManager.DefaultPlayer.Keyboard.IsShiftDown() && InputBindings.InGameMenu.IsPressed(PlayerIndex.One))
-            {
-                ShowInGameMenu();
-                return HandleInputResult.Handled;
-            }
             else
                 return base.OnHandleInput(gameTime);
         }
@@ -264,6 +252,17 @@ namespace Remizione
             // Player position
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
                 playerPosition = XmlConverterExtension.ToVector2(playerPositionValue);
+
+            // Procedural thing states
+            if (sessionNode.Attributes[AttributeName.ProcStates.ToString()]?.Value is string procStates)
+            {
+                var states = procStates.Split(',');
+                foreach (var state in states)
+                {
+                    var values = state.Split('=');
+                    proceduralThingStates[values[0]] = int.Parse(values[1]);
+                }
+            }
 
             // NextRainCooldown
             if (sessionNode.Attributes[nameof(NextRainCooldown)]?.Value is string nextRainCooldown)
@@ -319,7 +318,7 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-            if (GameplayMode == GameplayMode.Survival && Countdown > 0 && IsCurrentScene)
+            if (GameplayMode == GameplayMode.Survival && Countdown > 0)
             {
                 Countdown -= gameTime.ElapsedGameTime.Milliseconds;
                 /*
@@ -373,6 +372,24 @@ namespace Remizione
             // RandomSeed
             output.WriteAttributeString(AttributeName.RandomSeed.ToString(), XmlConvert.ToString(RandomSeed));
 
+            // Collect state data for procedural things
+            if (Room is ProceduralRoom proceduralRoom)
+            {
+                var stateData = new List<string>();
+
+                foreach (var thing in proceduralRoom.ProceduralThings)
+                {
+                    if (thing.StateID != 0)
+                        stateData.Add($"{thing.Name}={thing.StateID}");
+                }
+
+                if (stateData.Count > 0)
+                {
+                    var value = string.Join(",", stateData);
+                    output.WriteAttributeString(AttributeName.ProcStates.ToString(), value);
+                }
+            }
+
             // WorldVersion
             output.WriteAttributeString(AttributeName.WorldVersion.ToString(), XmlConvert.ToString(WorldVersion));
         }
@@ -400,6 +417,15 @@ namespace Remizione
         // GameplayMode
         [ScriptProperty]
         public GameplayMode GameplayMode { get; set; }
+
+        // GetProceduralThingState
+        public int GetProceduralThingState(string name)
+        {
+            if (proceduralThingStates.TryGetValue(name, out int state))
+                return state;
+            
+            return 0;
+        }
 
         // HUD
         public HUD HUD { get; }
@@ -493,14 +519,6 @@ namespace Remizione
         {
             echoScene.Text = text;
             Game.SceneManager.Push(echoScene);
-        }
-
-        // ShowInGameMenu
-        public void ShowInGameMenu()
-        {
-            inGameMenuLocked = true;
-            HUD.Log.Hide();
-            Game.SceneManager.Push(inGameMenuScene);
         }
 
         // WorldVersion

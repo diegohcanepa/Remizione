@@ -15,7 +15,7 @@ namespace Remizione.Scripting
         {
             var thing = AssertEntityNotNull<GameThing>(script.EntityName);
 
-            if (thing.EntityKind == EntityKind.Static)
+            if (thing.EntityKind != EntityKind.Static)
                 return;
 
             var room = AssertEntityNotNull<ProceduralRoom>(0);

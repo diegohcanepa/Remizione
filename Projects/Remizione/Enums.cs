@@ -44,9 +44,6 @@ namespace Remizione
     // ImpactWordKind
     public enum ImpactWordKind { None, Kapow, Zap }
 
-    // InGameMenuOptionName
-    public enum InGameMenuOptionName { Attributes, Creatures, Inventory, Gifts, Map, Prayers, SacredWords, QuitToDesktop, Settings }
-
     // InventoryCategory
     public enum InventoryCategory { None, Consumables, Junk, KeyItems, Skills, Trinkets }
 

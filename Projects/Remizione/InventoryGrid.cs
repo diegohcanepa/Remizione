@@ -367,16 +367,7 @@ namespace Remizione
         public int SelectedSlotIndex
         {
             get => selectedSlotIndex;
-            set
-            {
-                if (value != selectedSlotIndex)
-                {
-                    if (SelectedSlot?.Item is Item item)
-                        item.Unread = false;
-
-                    selectedSlotIndex = value;
-                }
-            }
+            set => selectedSlotIndex = value;
         }
     }
 }

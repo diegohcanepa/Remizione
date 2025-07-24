@@ -20,15 +20,6 @@
   <String Key="HUDMessageKind.EnoughOfThat">Ya tienes suficiente.</String>
   <String Key="HUDMessageKind.InventoryFull">No puedes llevar más objetos.</String>
   <String Key="HUDMessageKind.NotEnoughFaith">Estás falto de Fé.</String>
-  <String Key="InGameMenuOptionName.Attributes">Atributos</String>
-  <String Key="InGameMenuOptionName.Creatures">Criaturas</String>
-  <String Key="InGameMenuOptionName.Gifts">Dones</String>
-  <String Key="InGameMenuOptionName.Inventory">Bolsa</String>
-  <String Key="InGameMenuOptionName.Map">Mapa</String>
-  <String Key="InGameMenuOptionName.Prayers">Plegarias</String>
-  <String Key="InGameMenuOptionName.QuitToDesktop">Salir al escritorio</String>
-  <String Key="InGameMenuOptionName.SacredWords">Verbum Sacrum</String>
-  <String Key="InGameMenuOptionName.Settings">Configuración</String>
   <String Key="InputBinding.Back">Atrás</String>
   <String Key="InputBinding.Close">Cerrar</String>
   <String Key="InputBinding.ConsumeItem">Consumir</String>

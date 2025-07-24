@@ -431,7 +431,7 @@ namespace Remizione
                 moveVerticalTween.Start(TweenStyle.QuadraticInOut, 0, .8f, 100, -1);
 
             if (AllowMoveBalancingTween)
-                moveBalancingTween.Start(TweenStyle.QuadraticInOut, 0, .02f, FastMove ? 100 : 200, -1);
+                moveBalancingTween.Start(TweenStyle.QuadraticInOut, 0, .03f, FastMove ? 100 : 200, -1);
 
             accelerationFactorTween.Start(TweenStyle.Linear, .4f, 1, 150);
         }
@@ -464,7 +464,6 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            /*
             if (IsPlayer && StateMachine.CurrentState is ActorStandState && Session.IsCurrentScene && !Session.IsAwaiting && InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
             {
                 if (InputManager.DefaultPlayer.Mouse.WorldPosition(session.Camera).X >= X)
@@ -477,7 +476,7 @@ namespace Remizione
                     if (Direction == FacingDirection.Right)
                         Direction = FacingDirection.Left;
                 }
-            }*/
+            }
 
             combatStateMachine.Update(gameTime);
 
@@ -504,6 +503,8 @@ namespace Remizione
             moveBalancingTween.Update(gameTime);
             UpdateDirection();
             UpdateFootstep();
+
+            Inventory.Trinkets.SelectedItem?.Update(gameTime);
         }
 
         // OnWillpowerChanged

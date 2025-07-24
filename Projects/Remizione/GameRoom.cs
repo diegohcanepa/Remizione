@@ -301,6 +301,13 @@ namespace Remizione
 
         #region Protected members
 
+        // ClearWalkAreas
+        protected void ClearWalkAreas()
+        {
+            walkAreas.Clear();
+            WalkArea = null;
+        }
+
         // GetAtlasPath
         protected override string GetAtlasPath()
         {
@@ -321,7 +328,7 @@ namespace Remizione
 
             currentDrawIndex = 0;
 
-            // Find outlined target
+            // Hightlighted target
             var interactiveTarget = Session.Player?.InteractiveTarget;
 
             // BehindBackground (layer)
@@ -330,6 +337,7 @@ namespace Remizione
             // Room Background
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
             base.OnDraw(gameTime);
+            OnDrawCustomBackground(gameTime);
             Game.SpriteBatch.End();
 
             // Background (layer)
@@ -382,6 +390,11 @@ namespace Remizione
 #if DEBUG
             DrawDebugBoxes();
 #endif
+        }
+
+        // OnDrawCustomBackground
+        protected virtual void OnDrawCustomBackground(GameTime gameTime)
+        {
         }
 
         // OnHandleInput

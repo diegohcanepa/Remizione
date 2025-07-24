@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:b1eec159e5efc337ff45c2c4fc4342a9:d7d29b1c9e7a69475454305bed49999e:da3f7f1f414a8264822e11b2c17cb9e4$ -->
+<!-- $TexturePacker:SmartUpdate:ad7d246520ba867cafd90e5980dbb617:252140010437f1b90ba41a693477ac69:da3f7f1f414a8264822e11b2c17cb9e4$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,10 +19,6 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="OutdoorRoom.png" width="512" height="512">
-    <sprite n="TerrainBlockDefault.png" x="2" y="2" w="240" h="135"/>
-    <sprite n="TerrainBlockDefaultBottom.png" x="244" y="2" w="240" h="7"/>
-    <sprite n="TerrainBlockDefaultLeft.png" x="498" y="2" w="8" h="135"/>
-    <sprite n="TerrainBlockDefaultRight.png" x="486" y="2" w="10" h="135"/>
-    <sprite n="TerrainBlockDefaultTop.png" x="244" y="11" w="240" h="7"/>
+<TextureAtlas imagePath="OutdoorRoom.png" width="256" height="256">
+    <sprite n="TerrainBlock.png" x="2" y="2" w="240" h="135"/>
 </TextureAtlas>

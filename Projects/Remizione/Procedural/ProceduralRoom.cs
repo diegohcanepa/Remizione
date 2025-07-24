@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -14,14 +15,15 @@ namespace Remizione
     {
         #region Private fields
 
-        private const string ProcStates = "ProcStates";
-
         private RoomGrid? decorationGrid;
         private RoomGrid? mainGrid;
         private readonly Dictionary<string, PlacementData> placementDataDictionary = [];
         private readonly List<GameThing> proceduralThings = [];
         private readonly Random random;
         private readonly int randomSeed;
+        private readonly ImageSprite terrainBlock;
+        private int terrainCols;
+        private int terrainRows;
 
         #endregion
 
@@ -36,6 +38,7 @@ namespace Remizione
             this.ProceduralThings = new(proceduralThings);
             this.randomSeed = GetSeed(Session.RandomSeed, Session.Level);
             this.random = new Random(randomSeed);
+            this.terrainBlock = new ImageSprite(session.Game);
         }
 
         #endregion
@@ -210,7 +213,9 @@ namespace Remizione
                 if (phase == PlacementPhase.None)
                     continue;
 
-                foreach (var thing in GetStaticThings(phase))
+                var list = new List<GameThing>(GetStaticThings(phase));
+
+                foreach (var thing in list)
                 {
                     if (thing.WorldVersion > Session.WorldVersion)
                         continue;
@@ -240,100 +245,67 @@ namespace Remizione
                     }
                 }
             }
+
+            // Restore saved states
+            foreach (var thing in proceduralThings)
+            {
+                thing.StateID = Session.GetProceduralThingState(thing.Name);
+                if (thing.StateID < 0)
+                    thing.Unparent();
+            }
         }
 
         #endregion
 
         #region Protected members
 
-        /*
-        // OnInitialize
-        protected override void OnInitialize()
+        // OnDrawCustomBackground
+        protected override void OnDrawCustomBackground(GameTime gameTime)
         {
-            base.OnInitialize();
+            terrainBlock.Position = Vector2.Zero;
 
-            if (Session.IsNewSession)
+            for (var i = 0; i < terrainRows; i++)
             {
-                var initialBlock = WorldManager.AddBlock(new(WorldManager.GridSize / 2), Session.WorldVersion, !PreserveFirstBlock);
-                if (initialBlock.Light != null)
-                    initialBlock.LightPosition = new Vector2(120, 50);
-                WorldManager.Blocks[0].Expand(EngendroAdventure.Direction.Up);
-            }
-            else
-            {
-                for (var i = 0; i < worldBlockData.Count; i++)
+                for (var j = 0; j < terrainCols; j++)
                 {
-                    var populate = i > 0 || !PreserveFirstBlock;
-                    WorldManager.AddBlock(worldBlockData[i].gridPosition, worldBlockData[i].worldVersion, populate);
-
-                    foreach (var keyValue in worldBlockData[i].states)
-                    {
-                        var thing = Session.GetEntity<GameThing>(keyValue.Key);
-                        if (thing != null)
-                        {
-                            thing.StateID = keyValue.Value;
-                            if (thing.StateID < 0)
-                                thing.Unparent();
-                        }
-                    }
+                    terrainBlock.Draw(gameTime);
+                    terrainBlock.X += terrainBlock.BoundingBox.Width;
                 }
 
-                WorldManager.Blocks[0].Expand(EngendroAdventure.Direction.Up);
-
-                worldBlockData.Clear();
+                terrainBlock.X = 0;
+                terrainBlock.Y += terrainBlock.BoundingBox.Height;
             }
-
-            Regenerate();
         }
-        */
 
         // OnLoad
         protected override void OnLoad()
         {
-            CustomWidth = Screen.NativeWidth * (BlockSize.Width <= 0 ? 1 : BlockSize.Width);
-            CustomHeight = Screen.NativeHeight * (BlockSize.Height <= 0 ? 1 : BlockSize.Height);
+            const int walkAreaMargin = 15;
+
+            terrainCols = random.Next(TerrainColRange.Minimum, TerrainColRange.Maximum + 1);
+            terrainRows = terrainCols == 1 ? 1 : random.Next(TerrainRowRange.Minimum, TerrainRowRange.Maximum + 1);
+
+            CustomWidth = Screen.NativeWidth * (terrainCols <= 0 ? 1 : terrainCols);
+            CustomHeight = Screen.NativeHeight * (terrainRows <= 0 ? 1 : terrainRows);
 
             this.decorationGrid = new RoomGrid("Decoration", CustomWidth, CustomHeight);
             this.mainGrid = new RoomGrid("Main", CustomWidth, CustomHeight);
 
+            ClearWalkAreas();
+
+            Vector2[] vertices = [new(walkAreaMargin, walkAreaMargin), 
+                                  new(CustomWidth - walkAreaMargin, walkAreaMargin), 
+                                  new(CustomWidth - walkAreaMargin, CustomHeight - walkAreaMargin),
+                                  new(walkAreaMargin, CustomHeight - walkAreaMargin)
+                                 ];
+            
+            AddWalkArea("<Default>", vertices);
+
             base.OnLoad();
 
+            terrainBlock.Image = Atlas?.GetImage("TerrainBlock");
+
             Populate();
-        }
-
-        // OnRead
-        protected override void OnRead(XmlAttributeCollection attributes)
-        {
-            if (attributes[ProcStates]?.Value is string stateData)
-            {
-                var thingStates = new Dictionary<string, int>();
-                var states = stateData.Split(',');
-                foreach (var state in states)
-                {
-                    var values = state.Split('=');
-                    thingStates[values[0]] = int.Parse(values[1]);
-                }
-            }
-        }
-
-        // OnWrite
-        protected override void OnWrite(XmlWriter output)
-        {
-            var stateData = new List<string>();
-
-            // Collect state data for procedural things
-            stateData.Clear();
-            foreach (var thing in ProceduralThings)
-            {
-                if (thing.StateID != 0)
-                    stateData.Add($"{thing.Name}={thing.StateID}");
-            }
-
-            if (stateData.Count > 0)
-            {
-                var value = string.Join(",", stateData);
-                output.WriteAttributeString(ProcStates, value);
-            }
         }
 
         #endregion
@@ -350,9 +322,6 @@ namespace Remizione
         }
 
         #endregion
-
-        // BlockSize
-        public Size BlockSize { get; set; }
 
         // CanPlaceDynamicPropAt
         public bool CanPlaceDynamicPropAt(IsometricProp prop, Vector2 position)
@@ -399,5 +368,13 @@ namespace Remizione
 
         // ProceduralThings
         public ReadOnlyCollection<GameThing> ProceduralThings { get; }
+
+        // TerrainColRange
+        [ScriptProperty(CodingContext.Declaration)]
+        public Int32Range TerrainColRange { get; set; } = new(1, 3);
+
+        // TerrainRowRange
+        [ScriptProperty(CodingContext.Declaration)]
+        public Int32Range TerrainRowRange { get; set; } = new(1, 3);
     }
 }

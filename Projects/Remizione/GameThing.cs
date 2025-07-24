@@ -1,4 +1,4 @@
-﻿/// @M05A92,MZAMZA21 
+﻿/// M05A92,MZAMZA21 
 using Engendro;
 using Engendro.Audio;
 using Engendro.Input;

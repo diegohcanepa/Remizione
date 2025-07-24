@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:2d0ddb2cfa1b3fbce71e268a285e1429:f15080a0e82ae3390c1a574e77021343:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:8530a0446cee40d42e3aca22e9a878ca:2d74812c8c45e36d8ee948fc5f2e80c0:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -72,14 +72,14 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MouseCursorCross.png" x="491" y="184" w="9" h="11"/>
     <sprite n="MouseCursorCrossOn.png" x="491" y="197" w="9" h="11"/>
     <sprite n="MouseCursorWait.png" x="98" y="71" w="13" h="15"/>
-    <sprite n="Pixel.png" x="509" y="27" w="1" h="1"/>
+    <sprite n="Pixel.png" x="509" y="19" w="1" h="1"/>
     <sprite n="PopupContainer.png" x="2" y="90" w="264" h="311"/>
     <sprite n="PopupContainerShadow.png" x="225" y="442" w="114" h="60"/>
     <sprite n="ProhibitionIcon.png" x="62" y="71" w="17" h="17"/>
     <sprite n="ProhibitionMark.png" x="491" y="171" w="11" h="11"/>
     <sprite n="RottenApple.png" x="24" y="490" w="20" h="20"/>
     <sprite n="SavingIcon.png" x="129" y="490" w="11" h="14"/>
-    <sprite n="SpeechBubbleCloseArrow.png" x="506" y="23" w="3" h="2"/>
+    <sprite n="SpeechBubbleCloseArrow.png" x="506" y="15" w="3" h="2"/>
     <sprite n="SpeechBubblePipe.png" x="417" y="82" w="5" h="3"/>
     <sprite n="TicketGoldenIcon.png" x="2" y="71" w="18" h="17"/>
     <sprite n="TicketGreenIcon.png" x="22" y="71" w="18" h="17"/>
@@ -91,8 +91,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="UIControlContainerEdgeRightLarge.png" x="504" y="158" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeRightSmall.png" x="491" y="243" w="5" h="10"/>
     <sprite n="UITextButtonContainerEdge.png" x="504" y="171" w="5" h="11"/>
-    <sprite n="UITextButtonContainerPattern.png" x="506" y="27" w="1" h="11"/>
-    <sprite n="UnreadSign.png" x="506" y="15" w="3" h="6"/>
+    <sprite n="UITextButtonContainerPattern.png" x="506" y="19" w="1" h="11"/>
     <sprite n="XboxA.png" x="327" y="71" w="14" h="14"/>
     <sprite n="XboxB.png" x="343" y="71" w="14" h="14"/>
     <sprite n="XboxBagSlot.png" x="184" y="490" w="12" h="12"/>

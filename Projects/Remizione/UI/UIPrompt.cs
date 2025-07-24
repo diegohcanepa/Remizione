@@ -69,7 +69,9 @@ namespace Remizione.UI
                     target = currentTarget;
                     button.Text = currentTarget.LocalizedDisplayName;
                     label.Text = currentTarget.LocalizedDisplayName;
-                    Sound.Play(SoundNames.UIPrompt);
+
+                    if (InputManager.DefaultPlayer.LastInputMethod != InputMethod.Mouse)
+                        Sound.Play(SoundNames.UIPrompt);
                 }
             }
             else

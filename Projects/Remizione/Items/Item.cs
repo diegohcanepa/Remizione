@@ -247,8 +247,21 @@ namespace Remizione
         // ToString
         public override string ToString() => DisplayText;
 
-        // Unread
-        public bool Unread { get; set; }
+        // Update
+        public void Update(GameTime gameTime)
+        {
+            /*
+            if (MetaItem.PassiveEffectCooldown > 0 && PassiveEffectCooldown <= 0)
+            {
+                PassiveEffectCooldown = MetaItem.PassiveEffectCooldown;
+                Use();
+            }
+            else if (PassiveEffectCooldown > 0)
+            {
+                PassiveEffectCooldown -= 1; // Assuming this is called every frame, adjust as necessary
+            }
+            */
+        }
 
         // Use
         public bool Use()
