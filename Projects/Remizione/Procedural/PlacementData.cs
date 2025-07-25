@@ -13,9 +13,8 @@ namespace Remizione
         private readonly List<PlacementCondition> conditions = [];
 
         // Constructor
-        public PlacementData(PlacementPhase phase, PlacementDistributionStrategy distributionStrategy, PlacementCondition[] conditions, Int32Range instances)
+        public PlacementData(PlacementDistributionStrategy distributionStrategy, PlacementCondition[] conditions, Int32Range instances)
         {
-            this.Phase = phase;
             this.DistributionStrategy = distributionStrategy;
             this.conditions.AddRange(conditions);
             this.Conditions = new(conditions);
@@ -45,8 +44,5 @@ namespace Remizione
 
             return true;
         }
-
-        // Phase
-        public PlacementPhase Phase { get; }
     }
 }

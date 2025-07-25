@@ -6,12 +6,12 @@ using System.Collections.Generic;
 namespace Remizione.Scripting
 {
     // PlacementDataCommand
-    // Arguments: {Room} {Phase:PlacementPhase} [#chance:Ratio] [#distribution:DistributionStrategy] [#instances:Int32Range] [#progress:Int32Range]
+    // Arguments: {Room} [#chance:Ratio] [#distribution:DistributionStrategy] [#instances:Int32Range] [#progress:Int32Range]
     internal sealed class PlacementDataCommand : NonAwaitableCommand
     {
         // Constructor
         internal PlacementDataCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 2, ChanceArg, DistributionArg, InstancesArg, ProgressArg)
+            : base(script, source, body, 1, ChanceArg, DistributionArg, InstancesArg, ProgressArg)
         {
             var thing = AssertEntityNotNull<GameThing>(script.EntityName);
 
@@ -19,7 +19,6 @@ namespace Remizione.Scripting
                 return;
 
             var room = AssertEntityNotNull<ProceduralRoom>(0);
-            var phase = Parser.ParseEnum<PlacementPhase>(this, 1);
             var distributionStrategy = Parser.ParseEnumArgument(this, DistributionArg, PlacementDistributionStrategy.Random);
             var maxInstances = HasArg(InstancesArg) ? Parser.ParseInt32RangeArgument(this, InstancesArg) : new Int32Range(1);
             var conditions = new List<PlacementCondition>();
@@ -39,7 +38,7 @@ namespace Remizione.Scripting
             }
 
             // Placement data
-            var placementData = new PlacementData(phase, distributionStrategy, conditions.ToArray(), maxInstances);
+            var placementData = new PlacementData(distributionStrategy, conditions.ToArray(), maxInstances);
             room.AddPlacementData(thing.StaticName, placementData);
         }
     }

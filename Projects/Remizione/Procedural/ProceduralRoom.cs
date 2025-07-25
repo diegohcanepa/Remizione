@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Xml;
 
 namespace Remizione
 {
@@ -17,7 +16,7 @@ namespace Remizione
 
         private RoomGrid? decorationGrid;
         private RoomGrid? mainGrid;
-        private readonly Dictionary<string, PlacementData> placementDataDictionary = [];
+        private readonly Dictionary<string, List<PlacementData>> placementDataDictionary = [];
         private readonly List<GameThing> proceduralThings = [];
         private readonly Random random;
         private readonly int randomSeed;
@@ -182,11 +181,8 @@ namespace Remizione
                 if (entity is not GameThing gameThing)
                     continue;
 
-                if (placementDataDictionary.TryGetValue(gameThing.StaticName, out var placementData))
-                {
-                    if (placementData.Phase == phase)
-                        yield return gameThing;
-                }
+                if (gameThing.PlacementPhase == phase)
+                    yield return gameThing;
             }
         }
 
@@ -220,28 +216,33 @@ namespace Remizione
                     if (thing.WorldVersion > Session.WorldVersion)
                         continue;
 
-                    if (!placementDataDictionary.TryGetValue(thing.StaticName, out var placementData))
+                    if (!placementDataDictionary.TryGetValue(thing.StaticName, out var placementDataList))
                         continue;
 
-                    if (!placementData.IsAvailable(thing, random))
-                        continue;
-
-                    switch (placementData.DistributionStrategy)
+                    for (var i = 0; i < placementDataList.Count; i++)
                     {
-                        // RandomCell
-                        case PlacementDistributionStrategy.Random:
-                            DistributeRandomly(thing, placementData);
-                            break;
+                        var placementData = placementDataList[i];
 
-                        // Clump
-                        case PlacementDistributionStrategy.Clump:
-                            DistributeClumped(thing, placementData);
-                            break;
+                        if (!placementData.IsAvailable(thing, random))
+                            continue;
 
-                        // NoiseMap
-                        case PlacementDistributionStrategy.NoiseMap:
-                            DistributeWithNoiseMap(thing, placementData, randomSeed);
-                            break;
+                        switch (placementData.DistributionStrategy)
+                        {
+                            // RandomCell
+                            case PlacementDistributionStrategy.Random:
+                                DistributeRandomly(thing, placementData);
+                                break;
+
+                            // Clump
+                            case PlacementDistributionStrategy.Clump:
+                                DistributeClumped(thing, placementData);
+                                break;
+
+                            // NoiseMap 
+                            case PlacementDistributionStrategy.NoiseMap:
+                                DistributeWithNoiseMap(thing, placementData, randomSeed);
+                                break;
+                        }
                     }
                 }
             }
@@ -293,12 +294,12 @@ namespace Remizione
 
             ClearWalkAreas();
 
-            Vector2[] vertices = [new(walkAreaMargin, walkAreaMargin), 
-                                  new(CustomWidth - walkAreaMargin, walkAreaMargin), 
+            Vector2[] vertices = [new(walkAreaMargin, walkAreaMargin),
+                                  new(CustomWidth - walkAreaMargin, walkAreaMargin),
                                   new(CustomWidth - walkAreaMargin, CustomHeight - walkAreaMargin),
                                   new(walkAreaMargin, CustomHeight - walkAreaMargin)
                                  ];
-            
+
             AddWalkArea("<Default>", vertices);
 
             base.OnLoad();
@@ -315,10 +316,10 @@ namespace Remizione
         // AddPlacementData
         internal void AddPlacementData(string staticName, PlacementData placementData)
         {
-            if (placementDataDictionary.ContainsKey(staticName))
-                throw new InvalidOperationException($"Placement info with name '{staticName}' already exists.");
-
-            placementDataDictionary.Add(staticName, placementData);
+            if (placementDataDictionary.TryGetValue(staticName, out var existingList))
+                existingList.Add(placementData);
+            else
+                placementDataDictionary.Add(staticName, [placementData]);
         }
 
         #endregion

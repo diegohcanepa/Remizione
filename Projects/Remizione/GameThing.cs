@@ -932,6 +932,10 @@ namespace Remizione
         [ScriptProperty]
         public Vector2 OverheadOrigin { get; set; }
 
+        // PlacementPhase
+        [ScriptProperty]
+        public PlacementPhase PlacementPhase { get; set; }
+
         // RenderLayer
         [ScriptProperty]
         public RenderLayer RenderLayer
