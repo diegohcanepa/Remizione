@@ -414,7 +414,7 @@ namespace Remizione
             nextCategoryButton.Draw(gameTime);
             previousCategoryButton.Draw(gameTime);
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             categoryText.Draw(gameTime);
             itemName.Draw(gameTime);
             itemDescription.Draw(gameTime);

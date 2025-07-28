@@ -558,10 +558,6 @@ namespace Remizione
             return result;
         }
 
-        // ApplyStats
-        [ScriptMethod]
-        //public void ApplyStats() => Stats.Apply();
-
         // ApproachAndInteract
         public bool ApproachAndInteract(GameThing target)
         {
@@ -758,24 +754,6 @@ namespace Remizione
         // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;
 
-        // Level
-        [ScriptProperty]
-        public int Level
-        {
-            get => level;
-            set
-            {
-                if (value != level)
-                {
-                    if (value < 0)
-                        value = 1;
-
-                    level = value;
-                    //Stats.Apply();
-                }
-            }
-        }
-
         // MoveTo
         public override bool MoveTo(Vector2 destination)
         {
@@ -916,7 +894,7 @@ namespace Remizione
         public Sound? SpeechBubbleSound { get; set; }
 
         // Stand
-        [ScriptMethod(CodingContext.Any)]
+        [ScriptMethod()]
         public void Stand(bool forceRestart = false) => StateMachine.ChangeState(ActorStateNames.Stand, forceRestart);
 
         // StartTalking

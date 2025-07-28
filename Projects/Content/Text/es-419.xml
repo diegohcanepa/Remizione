@@ -238,16 +238,5 @@ Bla bla bla</String>
   <String Key="Prop.GhostCar">Carrito</String>
   <String Key="Prop.PortableToilet">Pequeño purgatorio</String>
   <String Key="Prop.Trunk">Baúl</String>
-  <String Key="Stat.Charisma.Description">Carsima enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="Stat.Charisma.Name">Carisma</String>
-  <String Key="Stat.Devotion.Description">La devoción ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="Stat.Devotion.Name">Devoción</String>
-  <String Key="Stat.Dexterity.Description">La destreza minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="Stat.Dexterity.Name">Destreza</String>
-  <String Key="Stat.Fortitude.Description">La fortaleza quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="Stat.Fortitude.Name">Fortaleza</String>
-  <String Key="Stat.Mind.Description">La mente veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="Stat.Mind.Name">Mente</String>
-  <String Key="Stat.Strength.Description">La fuerza enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="Stat.Strength.Name">Fuerza</String>
+  <String Key="Verb.Enter">Entrar</String>
 </Strings>

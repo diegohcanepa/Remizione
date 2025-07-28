@@ -49,7 +49,7 @@
   <String Key="Item.Duck.Name">Rubber duck</String>
   <String Key="Item.Gold.Description">A handful of gold dust.</String>
   <String Key="Item.Gold.Name">Gold dust</String>
-  <String Key="Item.PieceOfWood.Description" />
+  <String Key="Item.PieceOfWood.Description"></String>
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
@@ -238,16 +238,5 @@ Bla bla bla</String>
   <String Key="Prop.GhostCar">Ghost train car</String>
   <String Key="Prop.PortableToilet">Little purgatory</String>
   <String Key="Prop.Trunk">Trunk</String>
-  <String Key="Stat.Charisma.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="Stat.Charisma.Name">Charisma</String>
-  <String Key="Stat.Devotion.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="Stat.Devotion.Name">Devotion</String>
-  <String Key="Stat.Dexterity.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="Stat.Dexterity.Name">Dexterity</String>
-  <String Key="Stat.Fortitude.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="Stat.Fortitude.Name">Fortitude</String>
-  <String Key="Stat.Mind.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="Stat.Mind.Name">Mind</String>
-  <String Key="Stat.Strength.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="Stat.Strength.Name">Strength</String>
+  <String Key="Verb.Enter">Enter</String>
 </Strings>

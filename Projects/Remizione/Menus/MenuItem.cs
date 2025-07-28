@@ -53,7 +53,7 @@ namespace Remizione.Menus
         // DrawText
         private void DrawText(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
 
             var color = textSprite.Color;
             var pos = textSprite.Position;
@@ -77,7 +77,7 @@ namespace Remizione.Menus
         {
             if (IsSelected)
             {
-                Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+                Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
                 highlightSprite.Position = BoundingBox.Center;
                 highlightSprite.Y = BoundingBox.Center.Y - 1;
                 highlightSprite.Draw(gameTime);
@@ -86,7 +86,7 @@ namespace Remizione.Menus
 
             if (!icon.IsEmpty)
             {
-                Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+                Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
                 icon.Draw(gameTime);
                 Game.SpriteBatch.End();
             }

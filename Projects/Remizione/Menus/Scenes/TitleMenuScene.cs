@@ -171,7 +171,7 @@ namespace Remizione.Menus
 
             Game.SpriteBatch.End();
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             Game.Shapes.DrawRectangle(Screen.Area, Color.Black * darknessTween.CurrentValue);
             Game.SpriteBatch.End();
 

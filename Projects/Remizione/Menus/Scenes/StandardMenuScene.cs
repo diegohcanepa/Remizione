@@ -47,7 +47,7 @@ namespace Remizione.Menus
         {
             base.OnDraw(gameTime);
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             titleSprite.Draw(gameTime);
             Game.SpriteBatch.End();
 

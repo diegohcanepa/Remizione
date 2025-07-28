@@ -101,7 +101,7 @@ namespace Remizione
         {
             base.OnDraw(gameTime);
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
 
             for (int i = 0; i < lines.Count; i++)
             {

@@ -186,21 +186,15 @@ namespace EngendroAdventure
         protected override void OnDraw(GameTime gameTime)
         {
             if (!IsActive)
-            {
                 return;
-            }
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
-            Game.Shapes.DrawRectangle(BackgroundArea, Color.Black);
-            Game.SpriteBatch.End();
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            Game.Shapes.DrawRectangle(BackgroundArea, Color.Black);
             textSprite.Draw(gameTime);
 
             if (!hasError && !string.IsNullOrWhiteSpace(inputText))
-            {
                 cursorSprite.Draw(gameTime);
-            }
 
             Game.SpriteBatch.End();
         }

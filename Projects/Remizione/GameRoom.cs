@@ -148,7 +148,7 @@ namespace Remizione
         // DrawFloatingTexts
         private void DrawFloatingTexts(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp);
+            Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp);
             for (var i = Session.ObjectPools.FloatingTexts.InUse.Count - 1; i >= 0; i--)
             {
                 Session.ObjectPools.FloatingTexts.InUse[i].Draw(gameTime);
@@ -209,7 +209,7 @@ namespace Remizione
                         effect = RemizioneGame.Effects.ColorSaturation;
                     }
 
-                    Game.SpriteBatch.Begin(Session.Camera, RoomSampler == RoomSampler.PointClamp ? SamplerState.PointClamp : SamplerState.LinearClamp, BlendState.AlphaBlend, effect?.Effect);
+                    Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, effect?.Effect);
                     thing.Draw(gameTime);
                     Game.SpriteBatch.End();
                     currentDrawIndex++;
@@ -590,10 +590,6 @@ namespace Remizione
 
             return false;
         }
-
-        // RoomSampler
-        [ScriptProperty(CodingContext.EntityDeclaration)]
-        public RoomSampler RoomSampler { get; set; } = RoomSampler.PointClamp;
 
         // SelectWalkArea
         public void SelectWalkArea(string name)

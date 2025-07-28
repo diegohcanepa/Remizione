@@ -559,7 +559,7 @@ namespace Remizione
 
         // CellMargin
         [ScriptProperty]
-        public int CellMargin { get; set; }
+        public int CellMargin { get; set; } = 1;
 
         // ClampToWalkablePosition
         public void ClampToWalkablePosition()

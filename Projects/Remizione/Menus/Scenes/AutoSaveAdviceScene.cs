@@ -69,7 +69,7 @@ namespace Remizione.Menus
             icon.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             text.Draw(gameTime);
             Game.SpriteBatch.End();
         }

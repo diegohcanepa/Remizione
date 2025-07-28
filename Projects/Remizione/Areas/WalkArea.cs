@@ -259,9 +259,7 @@ namespace Remizione
         public Vector2 GetWalkablePoint(Vector2 point)
         {
             if (IsWalkableAt(point))
-            {
                 return point;
-            }
 
             for (var i = 0; i < holeAreas.Count; i++)
             {
@@ -273,9 +271,7 @@ namespace Remizione
             }
 
             if (IsWalkableAt(point))
-            {
                 return point;
-            }
 
             var distance = float.PositiveInfinity;
             PathNode? closestNode = null;

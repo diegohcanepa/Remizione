@@ -99,7 +99,7 @@ namespace Remizione
                 ticketsMeter.Draw(gameTime);
             }
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             statusText.Draw(gameTime);
             Game.SpriteBatch.End();
 

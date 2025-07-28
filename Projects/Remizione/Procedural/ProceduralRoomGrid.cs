@@ -5,9 +5,9 @@ using System;
 namespace Remizione
 {
     /// <summary>
-    /// RoomGrid
+    /// ProceduralRoomGrid
     /// </summary>
-    public sealed class RoomGrid
+    public sealed class ProceduralRoomGrid
     {
         private readonly bool[,] occupied;
         private const float usagePercent = .8f;
@@ -15,7 +15,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public RoomGrid(string name, int width, int height)
+        public ProceduralRoomGrid(string name, int width, int height)
         {
             this.Name = name;
 

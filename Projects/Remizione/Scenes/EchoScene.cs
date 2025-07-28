@@ -81,7 +81,7 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             gradient.Draw(gameTime);
             textSprite.Draw(gameTime);
             Game.SpriteBatch.End();

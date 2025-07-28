@@ -171,7 +171,7 @@ namespace Remizione.Menus
             bottomOrnament.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             title.Draw(gameTime);
             message.Draw(gameTime);
             subMessage.Draw(gameTime);

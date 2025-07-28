@@ -23,7 +23,7 @@ namespace Remizione.UI
             // Title
             this.title = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Terra,
+                Color = ColorPalette.Text.Orange,
                 PivotOrigin = RectanglePoint.Top,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Top),
                 Scale = ScaleInfo.Text.Large,
@@ -33,7 +33,7 @@ namespace Remizione.UI
             // Progress
             this.progress = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Terra,
+                Color = ColorPalette.Text.Orange,
                 PivotOrigin = RectanglePoint.Top,
                 Position = title.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2),
                 Scale = ScaleInfo.Text.VeryLarge,
@@ -45,7 +45,7 @@ namespace Remizione.UI
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.AlphaBlend, null);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
             title.Draw(gameTime);
             progress.Draw(gameTime);
             Game.SpriteBatch.End();

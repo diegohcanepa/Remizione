@@ -288,7 +288,7 @@ namespace Remizione
         {
             DrawBubble(gameTime);
 
-            Game.SpriteBatch.Begin(Actor.Session.Camera, SamplerState.LinearClamp);
+            Game.SpriteBatch.Begin(Actor.Session.Camera, SamplerState.PointClamp);
 
             if (shakeTween.IsRunning)
                 text.Position += shakeTween.CurrentValue;

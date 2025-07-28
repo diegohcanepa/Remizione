@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using EngendroAdventure;
 using EngendroAdventure.Scripting;
@@ -8,6 +9,7 @@ using Remizione.Creatures;
 using Remizione.Scripting;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 
@@ -24,11 +26,13 @@ namespace Remizione
         private enum AttributeName { ProcStates, RandomSeed, WorldVersion }
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
+        private readonly SoundInstance exitAlarmSound;
         private Actor? player;
         private Vector2? playerPosition;
         private readonly Dictionary<string, int> proceduralThingStates = [];
         private int rainRemainingTime;
         private readonly RoomEditor? roomEditor;
+        private readonly List<GameThing> staticThings = [];
 
         #endregion
 
@@ -43,14 +47,15 @@ namespace Remizione
             this.HUD = new HUD(this);
             //this.RandomSeed = 10000;
             this.RandomSeed = System.Environment.TickCount;
+            this.StaticThings = new ReadOnlyCollection<GameThing>(staticThings);
 
             ObjectPools = new ObjectPools(this);
             ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(game), 100);
             OverlayTexts = new OverlayTextManager(game);
 
-            Camera.SmoothSpeed = GameSettings.CameraSmoothSpeed;
-
             BackgroundColor = ColorPalette.BackgroundColor;
+            Camera.SmoothSpeed = GameSettings.CameraSmoothSpeed;
+            exitAlarmSound = Sound.FindNotNull(SoundNames.ExitAlarm).PopInstance() ?? throw new InvalidOperationException($"Sound '{SoundNames.ExitAlarm}' not found.");
 
             if (EngendroGame.DebugMode)
             {
@@ -104,12 +109,6 @@ namespace Remizione
 
         #region Protected members
 
-        protected override void OnLoadContent()
-        {
-            base.OnLoadContent();
-            InputManager.Reset();
-        }
-
         // CanHandleRoomInput
         protected override bool CanHandleRoomInput
         {
@@ -133,6 +132,7 @@ namespace Remizione
         {
             scriptRegistry.RegisterEntity(typeof(Actor));
             scriptRegistry.RegisterEntity(typeof(Baal));
+            scriptRegistry.RegisterEntity(typeof(OutgoingGhostCar));
             scriptRegistry.RegisterEntity(typeof(IsometricProp));
             scriptRegistry.RegisterEntity(typeof(ProceduralRoom));
             scriptRegistry.RegisterEntity(typeof(Orb));
@@ -143,6 +143,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(Snail));
             scriptRegistry.RegisterEntity(typeof(Unredeemed));
             scriptRegistry.RegisterEntity(typeof(Zabul));
+            scriptRegistry.RegisterEntity(typeof(RoomConnector));
 
             scriptRegistry.RegisterStatement("add-dialog-option", typeof(AddDialogOptionCommand));
             scriptRegistry.RegisterStatement("add-hole", typeof(AddHoleCommand), CodingContext.EntityDeclaration);
@@ -313,14 +314,30 @@ namespace Remizione
                 HUD.ShowSavingIcon();
         }
 
+        // OnStart
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            foreach (var entity in Entities)
+            {
+                if (entity is GameThing thing && thing.EntityKind == EntityKind.Static)
+                    staticThings.Add(thing);
+            }
+        }
+
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
 
-            if (GameplayMode == GameplayMode.Survival && Countdown > 0)
+            if (GameplayMode == GameplayMode.Survival && Countdown >= 0)
             {
                 Countdown -= gameTime.ElapsedGameTime.Milliseconds;
+
+                if (IsCountdownActive && !exitAlarmSound.IsPlaying)
+                    exitAlarmSound.Play();
+
                 /*
                 if (Countdown <= 0)
                     Game.SceneManager.Push(new GameOverScene(Game, GameOverReason.TimeOut));
@@ -460,6 +477,10 @@ namespace Remizione
         // ObjectPools
         public ObjectPools ObjectPools { get; }
 
+        // OutgoingGhostCar
+        [ScriptProperty]
+        public OutgoingGhostCar? OutgoingGhostCar => OutcomeTarget as OutgoingGhostCar;
+
         // OverlayTexts
         public OverlayTextManager OverlayTexts { get; }
 
@@ -486,7 +507,13 @@ namespace Remizione
         public int RandomSeed { get; private set; }
 
         // RestartCountdown
-        public void RestartCountdown() => Countdown = Randomizer.Next(GameSettings.CountdownMinimum, GameSettings.CountdownMaximum);
+        [ScriptMethod]
+        public void RestartCountdown()
+        {
+            exitAlarmSound.Stop();
+            Countdown = Randomizer.Next(GameSettings.CountdownMinimum, GameSettings.CountdownMaximum);
+            Level++;
+        }
 
         // RestorePlayerPosition
         [ScriptMethod]
@@ -520,6 +547,9 @@ namespace Remizione
             echoScene.Text = text;
             Game.SceneManager.Push(echoScene);
         }
+
+        // StaticThings
+        public ReadOnlyCollection<GameThing> StaticThings { get; }
 
         // WorldVersion
         public int WorldVersion { get; set; } = 1;

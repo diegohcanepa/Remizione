@@ -85,14 +85,14 @@ namespace Remizione.Menus
 
             if (menu.SelectedOption != null)
             {
-                Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+                Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
                 optionDescription.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
 
             DrawVersionInformation(gameTime);
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             mouseInfo.Draw(gameTime);
             Game.SpriteBatch.End();
         }

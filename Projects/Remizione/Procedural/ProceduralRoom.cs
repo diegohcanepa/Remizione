@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using EngendroAdventure;
 using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
 using System;
@@ -14,8 +15,8 @@ namespace Remizione
     {
         #region Private fields
 
-        private RoomGrid? decorationGrid;
-        private RoomGrid? mainGrid;
+        private ProceduralRoomGrid? decorationGrid;
+        private ProceduralRoomGrid? mainGrid;
         private readonly Dictionary<string, List<PlacementData>> placementDataDictionary = [];
         private readonly List<GameThing> proceduralThings = [];
         private readonly Random random;
@@ -50,6 +51,8 @@ namespace Remizione
             if (Session.CreateDynamicThing(staticName, $"{staticName}*{Name}_{proceduralThings.Count}") is not GameThing result)
                 throw new InvalidOperationException($"Failed to create dynamic thing '{staticName}'.");
 
+
+
             return result;
         }
 
@@ -64,7 +67,7 @@ namespace Remizione
             int clumpSize = 3 + random.Next(3);
             int clumpCount = (totalCount + clumpSize - 1) / clumpSize;
 
-            Size sizeInCells = thing.GetRequiredGridSpace(RoomGrid.CellSize);
+            Size sizeInCells = thing.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
 
             for (int i = 0; i < clumpCount; i++)
             {
@@ -91,7 +94,7 @@ namespace Remizione
                 return;
 
             var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
-            Size sizeInCells = thing.GetRequiredGridSpace(RoomGrid.CellSize);
+            Size sizeInCells = thing.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
             var count = random.Next(placementData.Instances.Minimum, placementData.Instances.Maximum + 1);
 
             for (int i = 0; i < count; i++)
@@ -121,7 +124,7 @@ namespace Remizione
                 return;
 
             var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
-            Size sizeInCells = thing.GetRequiredGridSpace(RoomGrid.CellSize);
+            Size sizeInCells = thing.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
             float noiseThreshold = 0.2f;
             int attempts = 100;
 
@@ -174,16 +177,17 @@ namespace Remizione
         }
 
         // GetStaticThings
-        private IEnumerable<GameThing> GetStaticThings(PlacementPhase phase)
+        private List<GameThing> GetStaticThings(PlacementPhase phase)
         {
-            foreach (var entity in Session.Entities)
-            {
-                if (entity is not GameThing gameThing)
-                    continue;
+            var result = new List<GameThing>();
 
-                if (gameThing.PlacementPhase == phase)
-                    yield return gameThing;
+            for (var i = 0; i < Session.StaticThings.Count; i++)
+            {
+                if (Session.StaticThings[i].PlacementPhase == phase)
+                    result.Add(Session.StaticThings[i]);
             }
+
+            return result;
         }
 
         // PlaceDynamicThing
@@ -204,12 +208,23 @@ namespace Remizione
         // Populate
         private void Populate()
         {
+            // Entrance rail
+            if (Session.GetEntity<GameThing>("EntranceRail") is GameThing entranceRail)
+            {
+                var sizeInCells = entranceRail.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
+                if (mainGrid != null && mainGrid.TryReserveSpace(sizeInCells, out int col, out int row))
+                {
+                    proceduralThings.Add(entranceRail);
+                    Children.Add(entranceRail);
+                }
+            }
+
             foreach (var phase in Enum.GetValues<PlacementPhase>())
             {
                 if (phase == PlacementPhase.None)
                     continue;
 
-                var list = new List<GameThing>(GetStaticThings(phase));
+                var list = GetStaticThings(phase);
 
                 foreach (var thing in list)
                 {
@@ -254,6 +269,29 @@ namespace Remizione
                 if (thing.StateID < 0)
                     thing.Unparent();
             }
+
+            SetupGhostCars();
+        }
+
+        // SetupGhostCars
+        private void SetupGhostCars()
+        {
+            var childList = new List<Thing>(Children);
+            
+            foreach (var thing in childList)
+            {
+                if (thing is RoomConnector roomConnector)
+                {
+                    var staticName = roomConnector.NW ? "OutgoingGhostCarNW" : "OutgoingGhostCarNE";
+
+                    if (CreateDynamicThing(staticName) is not OutgoingGhostCar car)
+                        throw new InvalidOperationException("Failed to create GhostCar instance.");
+
+                    Children.Add(car);
+                    roomConnector.GhostCar = car;
+                    car.Position = roomConnector.BoundingBox.GetPoint(RectanglePoint.RightBottom) + roomConnector.GhostCarOffset;
+                }
+            }
         }
 
         #endregion
@@ -289,8 +327,8 @@ namespace Remizione
             CustomWidth = Screen.NativeWidth * (terrainCols <= 0 ? 1 : terrainCols);
             CustomHeight = Screen.NativeHeight * (terrainRows <= 0 ? 1 : terrainRows);
 
-            this.decorationGrid = new RoomGrid("Decoration", CustomWidth, CustomHeight);
-            this.mainGrid = new RoomGrid("Main", CustomWidth, CustomHeight);
+            this.decorationGrid = new ProceduralRoomGrid("Decoration", CustomWidth, CustomHeight);
+            this.mainGrid = new ProceduralRoomGrid("Main", CustomWidth, CustomHeight);
 
             ClearWalkAreas();
 
@@ -372,7 +410,7 @@ namespace Remizione
 
         // TerrainColRange
         [ScriptProperty(CodingContext.Declaration)]
-        public Int32Range TerrainColRange { get; set; } = new(1, 3);
+        public Int32Range TerrainColRange { get; set; } = new(2, 4);
 
         // TerrainRowRange
         [ScriptProperty(CodingContext.Declaration)]

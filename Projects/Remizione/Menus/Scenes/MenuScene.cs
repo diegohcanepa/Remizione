@@ -43,7 +43,7 @@ namespace Remizione.Menus
         // DrawVersionInformation
         protected void DrawVersionInformation(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             version.Draw(gameTime);
             Game.SpriteBatch.End();
         }

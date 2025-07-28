@@ -88,19 +88,19 @@ namespace Remizione
     public enum PlacementDistributionStrategy { Random, Clump, NoiseMap }
 
     // PlacementPhase
-    public enum PlacementPhase { None, Terrain, NonSolidDecoration, NaturalObject, ArtificialObject, Actor }
+    public enum PlacementPhase { None, Terrain, NonSolidDecoration, RoomConnector, NaturalObject, ArtificialObject, Actor }
 
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
+
+    // ProceduralRoomTheme
+    public enum ProceduralRoomTheme { Outdoor }
 
     // RainDropImpactKind
     public enum RainDropImpactKind { None, Ground, Water }
 
     // RenderLayer
     public enum RenderLayer { BehindBackground, Background, Doors, Default, Foreground, ForegroundNoLight }
-
-    // RoomSampler
-    public enum RoomSampler { PointClamp, LinearClamp }
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }

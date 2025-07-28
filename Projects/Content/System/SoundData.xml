@@ -18,6 +18,7 @@
 	<FX Name="EdmundHurt" MaxInstances="4" Sounds="1..2" />
 	<FX Name="ElectricZapStrong" />
 	<FX Name="Error" MaxInstances="4" Sounds="1..2" />
+	<FX Name="ExitAlarm" />
 	<FX Name="Fart" />
 	<FX Name="FartLong" MaxInstances="4" Sounds="1..6" />
 	<FX Name="FootstepA" MaxInstances="8" Sounds="1..2" Volume=".5" />

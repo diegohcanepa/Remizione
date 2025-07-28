@@ -25,7 +25,7 @@ namespace Remizione
         {
             if (texts.Count > 0)
             {
-                Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, null);
+                Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, null);
                 for (var i = 0; i < texts.Count; i++)
                 {
                     texts[i].TextSprite.Draw(gameTime);

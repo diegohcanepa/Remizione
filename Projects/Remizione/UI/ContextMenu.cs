@@ -72,9 +72,6 @@ namespace Remizione
         {
             Game.SpriteBatch.Begin(Camera);
             Game.Shapes.DrawRectangle(BoundingBox, Color.Black);
-            Game.SpriteBatch.End();
-
-            Game.SpriteBatch.Begin(Camera, SamplerState.LinearClamp);
 
             for (var i = 0; i < optionList.Count; i++)
             {

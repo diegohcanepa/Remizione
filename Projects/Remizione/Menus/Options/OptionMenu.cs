@@ -52,9 +52,6 @@ namespace Remizione.Menus
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             highlightSprite.Draw(gameTime);
-            Game.SpriteBatch.End();
-
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             for (var i = 0; i < options.Count; i++)
             {
                 options[i].Draw(gameTime);

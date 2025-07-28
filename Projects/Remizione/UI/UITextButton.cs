@@ -198,23 +198,15 @@ namespace Remizione
             }
 
             Game.SpriteBatch.Begin(Camera, SamplerState.PointClamp, shader);
-
             if (HasText)
             {
                 containerPattern.Draw(gameTime);
                 containerEdgeLeft.Draw(gameTime);
+                label.Draw(gameTime);
             }
 
             image.Draw(gameTime);
-
             Game.SpriteBatch.End();
-
-            if (HasText)
-            {
-                Game.SpriteBatch.Begin(Camera, SamplerState.LinearClamp);
-                label.Draw(gameTime);
-                Game.SpriteBatch.End();
-            }
         }
 
         // OnUpdate

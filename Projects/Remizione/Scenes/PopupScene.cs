@@ -48,9 +48,6 @@ namespace Remizione
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             //DrawBackgroundShade();
             container.Draw(gameTime);
-            Game.SpriteBatch.End();
-
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             titleSprite.Draw(gameTime);
             text.Draw(gameTime);
             shadow.Draw(gameTime);

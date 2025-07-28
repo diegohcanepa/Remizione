@@ -115,6 +115,7 @@ namespace Remizione
             internal static Color Highlight { get; } = new(190, 170, 150);
             internal static Color Hover { get; } = new(167, 143, 145);
             internal static Color Light { get; } = new(200, 165, 138);
+            internal static Color Orange { get; } = new(171, 81, 48);
             internal static Color Red { get; } = new(173, 47, 69);
             internal static Color TerraDarker { get; } = new(61, 41, 54);
             internal static Color TerraDarkest { get; } = new(41, 29, 43);

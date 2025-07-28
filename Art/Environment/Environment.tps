@@ -262,6 +262,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">EntranceRail-assets/EntranceRail.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,8,31,15</rect>
+                <key>scale9Paddings</key>
+                <rect>16,8,31,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Environment-assets/CraftingMark.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -795,6 +810,24 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">IncomingGhostCar-assets/IncomingGhostCar01.png</key>
+            <key type="filename">IncomingGhostCar-assets/IncomingGhostCar02.png</key>
+            <key type="filename">IncomingGhostCar-assets/IncomingGhostCar03.png</key>
+            <key type="filename">IncomingGhostCar-assets/IncomingGhostCar04.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,7,15,15</rect>
+                <key>scale9Paddings</key>
+                <rect>7,7,15,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">InventoryBag-assets/InventoryBag.png</key>
             <key type="filename">InventoryBag-assets/InventoryBagShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -904,6 +937,24 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">OutgoingGhostCarNW-assets/OutgoingGhostCarNW01.png</key>
+            <key type="filename">OutgoingGhostCarNW-assets/OutgoingGhostCarNW02.png</key>
+            <key type="filename">OutgoingGhostCarNW-assets/OutgoingGhostCarNW03.png</key>
+            <key type="filename">OutgoingGhostCarNW-assets/OutgoingGhostCarNWShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,8,20,15</rect>
+                <key>scale9Paddings</key>
+                <rect>10,8,20,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Pickups-assets/Apple.png</key>
             <key type="filename">Pickups-assets/RottenApple.png</key>
             <struct type="IndividualSpriteSettings">
@@ -937,22 +988,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PortalOutdoor-assets/PortalOutdoor.png</key>
-            <key type="filename">PortalOutdoor-assets/PortalOutdoorShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,19,33,38</rect>
-                <key>scale9Paddings</key>
-                <rect>16,19,33,38</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">RainDropImpacts-assets/RainDropImpactA01.png</key>
             <key type="filename">RainDropImpacts-assets/RainDropImpactA02.png</key>
             <key type="filename">RainDropImpacts-assets/RainDropImpactA03.png</key>
@@ -975,6 +1010,27 @@
                 <rect>6,4,13,8</rect>
                 <key>scale9Paddings</key>
                 <rect>6,4,13,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">RoomConnectorOutdoor-assets/RoomConnectorOutdoor01.png</key>
+            <key type="filename">RoomConnectorOutdoor-assets/RoomConnectorOutdoor02.png</key>
+            <key type="filename">RoomConnectorOutdoor-assets/RoomConnectorOutdoor03.png</key>
+            <key type="filename">RoomConnectorOutdoor-assets/RoomConnectorOutdoor04.png</key>
+            <key type="filename">RoomConnectorOutdoor-assets/RoomConnectorOutdoor05.png</key>
+            <key type="filename">RoomConnectorOutdoor-assets/RoomConnectorOutdoorShadow.png</key>
+            <key type="filename">RoomConnectorOutdoor-assets/StartingTowerDoor01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,19,33,38</rect>
+                <key>scale9Paddings</key>
+                <rect>16,19,33,38</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1128,7 +1184,10 @@
                     <filename>FenceB-assets</filename>
                     <filename>FenceC-assets</filename>
                     <filename>FenceD-assets</filename>
-                    <filename>PortalOutdoor-assets</filename>
+                    <filename>RoomConnectorOutdoor-assets</filename>
+                    <filename>IncomingGhostCar-assets</filename>
+                    <filename>EntranceRail-assets</filename>
+                    <filename>OutgoingGhostCarNW-assets</filename>
                 </array>
             </struct>
         </map>

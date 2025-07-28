@@ -103,7 +103,7 @@ namespace Remizione.Menus
         protected override void OnDraw(GameTime gameTime)
         {
             base.OnDraw(gameTime);
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             Image.Draw(gameTime);
 
             if (!Image.IsEmpty)

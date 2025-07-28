@@ -6,6 +6,7 @@
     internal static class SoundNames
     {
         internal const string Error = nameof(Error);
+        internal const string ExitAlarm = nameof(ExitAlarm);
         internal const string ItemDiscard = nameof(ItemDiscard);
         internal const string ItemEquip = nameof(ItemEquip);
         internal const string Lightning = nameof(Lightning);

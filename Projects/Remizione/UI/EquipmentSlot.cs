@@ -159,7 +159,7 @@ namespace Remizione
 
                 if (lastKnownItem.MetaItem.IsStackable)
                 {
-                    Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+                    Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
                     amountText.Draw(gameTime);
                     Game.SpriteBatch.End();
                 }

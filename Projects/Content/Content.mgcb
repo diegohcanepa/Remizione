@@ -236,6 +236,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/Error2.wav;Audio/FX/Error2
 
+#begin Audio/FX/ExitAlarm.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/ExitAlarm.wav;Audio/FX/ExitAlarm
+
 #begin Audio/FX/Fart.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

@@ -35,7 +35,7 @@ namespace Remizione
             if (!fadeTween.IsRunning)
                 return;
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             messageText.Draw(gameTime);
             Game.SpriteBatch.End();
         }
