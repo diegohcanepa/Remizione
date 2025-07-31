@@ -3,14 +3,14 @@
 namespace Remizione.Scripting
 {
     // AddItemCommand
-    // Syntax: {ItemName} to {Actor} [#amount:Integer]
+    // Syntax: {Item} to {Actor} [#amount:Integer]
     internal sealed class AddItemCommand : NonAwaitableCommand
     {
         private readonly MetaItem? metaItem;
 
         // Constructor
         internal AddItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 3, AmountArg)
+            : base(script, source, body, 3, AmountArg, EquipArg)
         {
             var itemName = Parser.ParseName(this, 0);
             AssertKeyword(1, "to");
@@ -30,7 +30,9 @@ namespace Remizione.Scripting
                 return;
 
             var amount = Parser.ParseInt32Argument(this, AmountArg, 1);
-            actor.Inventory.GetContainer(metaItem.Category).Add(metaItem.Name, amount);
+            var container = actor.Inventory.GetContainer(metaItem.Category);
+            if (container.Add(metaItem.Name, amount) is Item item && HasArg(EquipArg))
+                item.Equip();
         }
     }
 }

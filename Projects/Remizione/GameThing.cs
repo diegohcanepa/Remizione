@@ -1,5 +1,4 @@
-﻿/// M05A92,MZAMZA21 
-using Engendro;
+﻿using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Engendro.PathFinding;
@@ -643,6 +642,9 @@ namespace Remizione
         // DrawLights
         public void DrawLights(GameTime gameTime)
         {
+            if (!IsEmittingLight)
+                return;
+
             if (Light != null)
             {
                 Light.Position = this.GetAbsolutePoint(LightPosition);

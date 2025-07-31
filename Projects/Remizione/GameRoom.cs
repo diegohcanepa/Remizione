@@ -21,7 +21,6 @@ namespace Remizione
         private int currentDrawIndex;
         private static DustEmitter dustEmitter = null!;
         private static FireflyEmitter fireflyEmitter = null!;
-        private static Light globalLight = null!;
         private RenderTarget2D? lightMapTarget;
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
@@ -45,18 +44,6 @@ namespace Remizione
 
             dustEmitter ??= new DustEmitter(session, 6, 1000, 35);
             fireflyEmitter ??= new FireflyEmitter(session, 1, 500, 20);
-
-            // Global light
-            globalLight ??= new Light(Game, "GlobalLight")
-            {
-                Color = Color.White,
-                LightKind = LightKind.Global,
-                ImageName = "GlobalLight",
-                PivotOrigin = RectanglePoint.Middle,
-                Position = Screen.Center,
-                Scale = new Vector2(2.5f, 1.7f)
-            };
-            globalLight.Prepare(Atlases.Environment);
 
             // Player light
             playerLight ??= new Light(Game, "PlayerLight")
@@ -234,12 +221,12 @@ namespace Remizione
             {
                 Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
 
-                if (globalLight.IsFlashing)
-                    globalLight.Color = Color.LightBlue * .9f;
+                if (Session.GlobalLight.IsFlashing)
+                    Session.GlobalLight.Color = Color.LightBlue * .9f;
                 else
-                    globalLight.Color = Session.Environment.GlobalLightColor;
+                    Session.GlobalLight.Color = Session.Environment.GlobalLightColor;
 
-                globalLight.Draw(gameTime);
+                Session.GlobalLight.Draw(gameTime);
 
                 Game.SpriteBatch.End();
             }
@@ -460,7 +447,7 @@ namespace Remizione
             }
 
             if (AllowGlobalLight)
-                globalLight.Update(gameTime);
+                Session.GlobalLight.Update(gameTime);
 
             playerLight.Update(gameTime);
 
@@ -606,7 +593,7 @@ namespace Remizione
             var interval = new Int32Range(30);
             int count = 8;
             if (IsOutdoor)
-                globalLight.Flash(interval, count);
+                Session.GlobalLight.Flash(interval, count);
         }
 
         // TriggerAreas

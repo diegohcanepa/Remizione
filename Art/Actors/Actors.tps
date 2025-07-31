@@ -189,9 +189,29 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Berta-assets/Move01.png</key>
+            <key type="filename">Berta-assets/Move02.png</key>
+            <key type="filename">Berta-assets/Move03.png</key>
+            <key type="filename">Berta-assets/Move04.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,4,5,9</rect>
+                <key>scale9Paddings</key>
+                <rect>3,4,5,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Berta-assets/Stand01.png</key>
             <key type="filename">Berta-assets/StandHead01.png</key>
             <key type="filename">Berta-assets/StandHead02.png</key>
+            <key type="filename">Berta-assets/TalkHead01.png</key>
+            <key type="filename">Berta-assets/TalkHead02.png</key>
             <key type="filename">Edmund-assets/Back01.png</key>
             <key type="filename">Edmund-assets/BackRaiseArm01.png</key>
             <key type="filename">Edmund-assets/BackRaiseArm02.png</key>

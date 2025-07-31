@@ -564,7 +564,7 @@ namespace Remizione
             if (!IsPlayer)
                 return false;
 
-            var destination = target.IsWalkAreaHole ? (target as IHoleArea).Polygon.GetClosestPointOnEdge(Position) : target.GetApproachPosition(this, true);
+            var destination = target.GetApproachPosition(this, true);
             var result = MoveTo(destination);
             this.pendingInteractiveTarget = target;
 
@@ -654,6 +654,10 @@ namespace Remizione
         // FootstepSound
         [ScriptProperty]
         public Sound? FootstepSound { get; set; }
+
+        // Gender
+        [ScriptProperty]
+        public Gender Gender { get; set; }
 
         // GetBloodSplashPosition
         public Vector2 GetBloodSplashPosition()
@@ -880,6 +884,7 @@ namespace Remizione
         }
 
         // ShowInventory
+        [ScriptMethod]
         public void ShowInventory()
         {
             Stand();

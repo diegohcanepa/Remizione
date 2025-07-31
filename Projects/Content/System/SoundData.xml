@@ -6,6 +6,8 @@
 	<Ambience Name="Rain" MaxInstances="2" />
 	
 	<!-- Music -->
+	<Music Name="Arrival" MaxInstances="2" />
+	<Music Name="FirstSteps" MaxInstances="2" />
 	<Music Name="Track01" MaxInstances="2" Tags="Back"/>
 	
 	<!-- FX -->
@@ -18,6 +20,7 @@
 	<FX Name="EdmundHurt" MaxInstances="4" Sounds="1..2" />
 	<FX Name="ElectricZapStrong" />
 	<FX Name="Error" MaxInstances="4" Sounds="1..2" />
+	<FX Name="EvilLaugh" MaxInstances="4" Sounds="1..4" />
 	<FX Name="ExitAlarm" />
 	<FX Name="Fart" />
 	<FX Name="FartLong" MaxInstances="4" Sounds="1..6" />
@@ -38,6 +41,7 @@
 	<FX Name="Raven" />
 	<FX Name="ShockZap" MaxInstances="6" Sounds="1..2" />
 	<FX Name="SmallWhooshA" MaxInstances="6" Sounds="1..4" />
+	<FX Name="SummonA" MaxInstances="4" />
 	<FX Name="TowerDoorClose" />
 	<FX Name="Thunder" MaxInstances="4" Sounds="1..4" />
 	<FX Name="ThrowableDuck" MaxInstances="8" Sounds="1..3" />

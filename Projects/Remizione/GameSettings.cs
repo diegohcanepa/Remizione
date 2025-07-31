@@ -34,6 +34,9 @@ namespace Remizione
         // CountdownMinimum
         public const int CountdownMinimum = 60_000;
 
+        // MaximumLevel
+        public const int MaximumLevel = 100;
+
         // PropRevealOpacity
         public const float PropRevealOpacity = .5f;
 

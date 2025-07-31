@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Strings>
+  <String Key="Actor.Berta">Berta</String>
   <String Key="Actor.Dog">Perro</String>
   <String Key="Actor.Grandma">Dulce ancianita</String>
   <String Key="ActorProperty.Grace.Description">La gracia quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
@@ -236,7 +237,9 @@ Bla bla bla</String>
   <String Key="Prop.Bag">Bolsa</String>
   <String Key="Prop.Cross">Cruz</String>
   <String Key="Prop.GhostCar">Carrito</String>
+  <String Key="Prop.PilgrimSack">Saco del Peregrino</String>
   <String Key="Prop.PortableToilet">Pequeño purgatorio</String>
+  <String Key="Prop.Sign">Cartel</String>
   <String Key="Prop.Trunk">Baúl</String>
   <String Key="Verb.Enter">Entrar</String>
 </Strings>

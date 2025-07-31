@@ -57,7 +57,7 @@ namespace Remizione.UI
             if (lastKnownValue != session.Level)
             {
                 lastKnownValue = session.Level;
-                progress.Text = $"{session.Level}/{session.MaximumLevel}";
+                progress.Text = $"{session.Level}/{GameSettings.MaximumLevel}";
             }
         }
 

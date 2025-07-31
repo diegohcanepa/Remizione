@@ -74,6 +74,19 @@ namespace Remizione
             this.echoScene = new(Game);
 
             LocalizationSource = LocalizationSource.Script;
+
+            // Global light
+            this.GlobalLight ??= new Light(Game, "GlobalLight")
+            {
+                Color = Color.White,
+                LightKind = LightKind.Global,
+                ImageName = "GlobalLight",
+                PivotOrigin = RectanglePoint.Middle,
+                Position = Screen.Center,
+                Scale = new Vector2(1, 1.4f)
+            };
+            
+            this.GlobalLight.Prepare(Atlases.Environment);
         }
 
         #endregion
@@ -415,7 +428,7 @@ namespace Remizione
 
         // Countdown
         [ScriptProperty]
-        public int Countdown { get; set; } = 0;
+        public int Countdown { get; set; } = -1;
 
         // ClearOverlayTexts
         [ScriptMethod(CodingContext.Any)]
@@ -444,6 +457,9 @@ namespace Remizione
             return 0;
         }
 
+        // GlobalLight
+        public Light GlobalLight { get; }
+
         // HUD
         public HUD HUD { get; }
 
@@ -456,15 +472,26 @@ namespace Remizione
         // IsCountdownActive
         public bool IsCountdownActive => Countdown.IsBetween(0, GameSettings.CountdownAlert) && GameplayMode == GameplayMode.Survival;
 
+        // IsHUDVisible
+        [ScriptProperty]
+        public bool IsHUDVisible { get; set; } = true;
+
         // Level
-        public int Level { get; set; }
+        [ScriptProperty]
+        public int Level { get; private set; }
 
         // LightingSystem
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;
 
-        // MaximumLevel
-        public int MaximumLevel => 100;
+        // NextLevel
+        [ScriptMethod]
+        public void NextLevel()
+        {
+            exitAlarmSound.Stop(3000);
+            Countdown = Randomizer.Next(GameSettings.CountdownMinimum, GameSettings.CountdownMaximum);
+            Level++;
+        }
 
         // NextRainCooldown
         [ScriptProperty(CodingContext.Any)]
@@ -505,23 +532,6 @@ namespace Remizione
 
         // RandomSeed
         public int RandomSeed { get; private set; }
-
-        // RestartCountdown
-        [ScriptMethod]
-        public void RestartCountdown()
-        {
-            exitAlarmSound.Stop();
-            Countdown = Randomizer.Next(GameSettings.CountdownMinimum, GameSettings.CountdownMaximum);
-            Level++;
-        }
-
-        // RestorePlayerPosition
-        [ScriptMethod]
-        public void RestorePlayerPosition()
-        {
-            if (Player != null && playerPosition.HasValue)
-                Player.Position = playerPosition.Value;
-        }
 
         // Room
         [ScriptProperty]

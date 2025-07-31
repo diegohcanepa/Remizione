@@ -107,6 +107,9 @@ namespace Remizione
         // PassiveEffectCooldown
         public int PassiveEffectCooldown { get; init; }
 
+        // PreventDiscard
+        public bool PreventDiscard { get; init; }
+
         // Range
         public int Range { get; init; }
 

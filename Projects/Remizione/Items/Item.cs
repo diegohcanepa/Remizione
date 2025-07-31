@@ -24,9 +24,9 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public Item(ItemContainer inventory, MetaItem metaItem)
+        public Item(ItemContainer container, MetaItem metaItem)
         {
-            this.Inventory = inventory;
+            this.Container = container;
             this.MetaItem = metaItem;
             this.PassiveEffectCooldown = metaItem.PassiveEffectCooldown;
         }
@@ -96,6 +96,9 @@ namespace Remizione
             }
         }
 
+        // Container
+        public ItemContainer Container { get; private set; }
+
         // Count
         public int Count
         {
@@ -136,6 +139,15 @@ namespace Remizione
             }
         }
 
+        // Equip
+        public bool Equip()
+        {
+            if (MetaItem.Category == InventoryCategory.Junk || MetaItem.Category == InventoryCategory.Trinkets)
+                return Container.Select(MetaItem.Name);
+            else
+                return false;
+        }
+
         // GetDisplayAmount
         public string GetDisplayAmount()
         {
@@ -171,13 +183,10 @@ namespace Remizione
         }
 
         // Index
-        public int Index => Inventory.IndexOf(this);
-
-        // Inventory
-        public ItemContainer Inventory { get; private set; }
+        public int Index => Container.IndexOf(this);
 
         // IsSelected
-        public bool IsSelected => Inventory.SelectedItem == this;
+        public bool IsSelected => Container.SelectedItem == this;
 
         // IsStackFull
         public bool IsStackFull => MetaItem.Maximum == 1 || Count >= MetaItem.Maximum;
@@ -206,7 +215,7 @@ namespace Remizione
         public string Name => MetaItem.Name;
 
         // Owner
-        public GameThing Owner => Inventory.Owner;
+        public GameThing Owner => Container.Owner;
 
         // PassiveEffectCooldown
         public int PassiveEffectCooldown { get; set; }
@@ -233,8 +242,8 @@ namespace Remizione
         // Remove
         public void Remove()
         {
-            Inventory.SelectPrevious();
-            Inventory.Remove(this);
+            Container.SelectPrevious();
+            Container.Remove(this);
         }
 
         // Replenish
@@ -272,7 +281,7 @@ namespace Remizione
             if (MetaItem.Maximum > 1)
             {
                 if (Count == 1 && !MetaItem.AllowEmpty)
-                    Inventory.Remove(this);
+                    Container.Remove(this);
                 else
                     Count--;
             }

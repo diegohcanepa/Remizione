@@ -32,6 +32,9 @@ namespace Remizione
     // GameplayMode
     public enum GameplayMode { Adventure, Survival }
 
+    // Gender
+    public enum Gender { Male, Female }
+
     // HitTestSource
     public enum HitTestSource { Hotspot, Collider }
 

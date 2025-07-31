@@ -8,7 +8,9 @@ namespace Remizione
     /// </summary>
     public class RoomConnector : IsometricProp
     {
-        private const string Open = "Open";
+        private bool isOpened;
+        private const string ClosedState = "Closed";
+        private const string OpenState = "Open";
 
         // Constructor
         public RoomConnector(GameSession session, string name)
@@ -24,24 +26,22 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            AnimationPlayer.Play("Closed");
+            isOpened = false;
+            AnimationPlayer.Play(ClosedState);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-
-            if (IsOpen && AnimationPlayer.Animation?.Name != Open)
-            {
-                AnimationPlayer.Play(Open, false);
-                GhostCar?.TurnOn();
-            }
+            if (Session.IsCountdownActive && !isOpened)
+                Open();
         }
 
         #endregion
 
         // GhostCar
+        [ScriptProperty]
         public OutgoingGhostCar? GhostCar { get; set; }
 
         // GhostCarOffset
@@ -50,7 +50,18 @@ namespace Remizione
 
         // IsOpen
         [ScriptProperty]
-        public bool IsOpen => Session.IsCountdownActive;
+        public bool IsOpen => Session.IsCountdownActive || isOpened;
+
+        // Open
+        [ScriptMethod]
+        public void Open()
+        {
+            if (!isOpened && AnimationPlayer.Animation?.Name != OpenState)
+            {
+                AnimationPlayer.Play(OpenState, false);
+                GhostCar?.TurnOn();
+            }
+        }
 
         // RoomTheme
         [ScriptProperty]

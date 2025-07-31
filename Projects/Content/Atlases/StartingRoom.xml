@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:77cc064a42c9aea35306868f023ee0b0:ea6aca977780573f990b14898b78cd43:b3a14e562a5573aebdf37272c77d6cd4$ -->
+<!-- $TexturePacker:SmartUpdate:5c23f07813d030fb38dd35473825e363:5ecbdb549090703399e784ef2c426f18:b3a14e562a5573aebdf37272c77d6cd4$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,18 +19,18 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="StartingRoom.png" width="512" height="512">
-    <sprite n="GhostCar01.png" x="40" y="462" w="29" h="29"/>
-    <sprite n="GhostCar02.png" x="71" y="462" w="29" h="29"/>
-    <sprite n="GhostCar03.png" x="102" y="462" w="29" h="29"/>
-    <sprite n="GhostCar04.png" x="112" y="274" w="29" h="29"/>
-    <sprite n="StartingRoom.png" x="2" y="2" w="480" h="270"/>
-    <sprite n="StartingTower.png" x="2" y="274" w="108" h="92"/>
-    <sprite n="StartingTowerDoor01.png" x="484" y="2" w="20" h="30"/>
-    <sprite n="StartingTowerDoor02.png" x="484" y="34" w="20" h="30"/>
-    <sprite n="StartingTowerDoor03.png" x="484" y="66" w="20" h="30"/>
-    <sprite n="StartingTowerDoor04.png" x="484" y="98" w="20" h="30"/>
-    <sprite n="StartingTowerPatch.png" x="2" y="462" w="36" h="40"/>
-    <sprite n="StartingTowerShadow.png" x="2" y="368" w="108" h="92"/>
-    <sprite n="StartingTowerTrack.png" x="112" y="305" w="46" h="27"/>
+<TextureAtlas imagePath="StartingRoom.png" width="1024" height="1024">
+    <sprite n="GhostCar01.png" x="871" y="31" w="29" h="29"/>
+    <sprite n="GhostCar02.png" x="956" y="2" w="29" h="29"/>
+    <sprite n="GhostCar03.png" x="987" y="2" w="29" h="29"/>
+    <sprite n="GhostCar04.png" x="956" y="33" w="29" h="29"/>
+    <sprite n="StartingRoom.png" x="2" y="2" w="647" h="270"/>
+    <sprite n="StartingTower.png" x="651" y="2" w="108" h="92"/>
+    <sprite n="StartingTowerDoor01.png" x="987" y="33" w="20" h="30"/>
+    <sprite n="StartingTowerDoor02.png" x="902" y="44" w="20" h="30"/>
+    <sprite n="StartingTowerDoor03.png" x="871" y="62" w="20" h="30"/>
+    <sprite n="StartingTowerDoor04.png" x="924" y="44" w="20" h="30"/>
+    <sprite n="StartingTowerPatch.png" x="919" y="2" w="35" h="40"/>
+    <sprite n="StartingTowerShadow.png" x="761" y="2" w="108" h="92"/>
+    <sprite n="StartingTowerTrack.png" x="871" y="2" w="46" h="27"/>
 </TextureAtlas>

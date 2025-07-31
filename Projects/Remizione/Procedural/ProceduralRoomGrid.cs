@@ -55,7 +55,7 @@ namespace Remizione
         #endregion
 
         // CellSize
-        public const int CellSize = 20;
+        public const int CellSize = 14;
 
         // ColCount
         public int ColCount { get; }

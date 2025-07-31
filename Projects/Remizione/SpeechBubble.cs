@@ -148,7 +148,7 @@ namespace Remizione
             // Origin
             var origin = Actor.GetOverheadPosition();
             origin.Y -= 1;
-            origin.X = Actor.X;
+            //origin.X = Actor.X;
 
             pipe.Effects = SpriteEffects.None;
             pipe.PivotOrigin = RectanglePoint.Bottom;

@@ -173,6 +173,22 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">BigSign-assets/BigSign.png</key>
+            <key type="filename">BigSign-assets/BigSignShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,14,16,27</rect>
+                <key>scale9Paddings</key>
+                <rect>8,14,16,27</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">CrossA-assets/CrossA.png</key>
             <key type="filename">CrossA-assets/CrossAShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -828,22 +844,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">InventoryBag-assets/InventoryBag.png</key>
-            <key type="filename">InventoryBag-assets/InventoryBagShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,4,4</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,4,4</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">LargeRockA-assets/LargeRockA.png</key>
             <key type="filename">LargeRockA-assets/LargeRockAShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -968,6 +968,22 @@
                 <rect>2,1,3,3</rect>
                 <key>scale9Paddings</key>
                 <rect>2,1,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PilgrimSack-assets/PilgrimSack.png</key>
+            <key type="filename">PilgrimSack-assets/PilgrimSackShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,4,4</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,4,4</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1170,7 +1186,6 @@
                     <filename>LootBag-assets</filename>
                     <filename>RainDropImpacts-assets</filename>
                     <filename>SinnerCross-assets</filename>
-                    <filename>InventoryBag-assets</filename>
                     <filename>Pickups-assets</filename>
                     <filename>ImpactWords-assets</filename>
                     <filename>Throwables-assets</filename>
@@ -1188,6 +1203,8 @@
                     <filename>IncomingGhostCar-assets</filename>
                     <filename>EntranceRail-assets</filename>
                     <filename>OutgoingGhostCarNW-assets</filename>
+                    <filename>BigSign-assets</filename>
+                    <filename>PilgrimSack-assets</filename>
                 </array>
             </struct>
         </map>

@@ -21,7 +21,7 @@ namespace Remizione
         private readonly UITextButton buttonConsume;
         private readonly UITextButton buttonDiscard;
         private readonly UITextButton buttonEquip;
-        private readonly List<InventoryCategory> categories = [InventoryCategory.Consumables, InventoryCategory.Junk, InventoryCategory.KeyItems, InventoryCategory.Trinkets, InventoryCategory.Skills];
+        private readonly List<InventoryCategory> categories = [InventoryCategory.Junk, InventoryCategory.Consumables, InventoryCategory.KeyItems, InventoryCategory.Trinkets, InventoryCategory.Skills];
         private readonly ImageSprite[] categoryIcons;
         private readonly TextSprite categoryText;
         private readonly ImageSprite checkMark;
@@ -243,7 +243,8 @@ namespace Remizione
             if (activeGrid.SelectedItem is not Item item)
                 return;
 
-            buttonDiscard.Draw(gameTime);
+            if (!item.MetaItem.PreventDiscard)
+                buttonDiscard.Draw(gameTime);
 
             if (item.MetaItem.Category == InventoryCategory.Junk || item.MetaItem.Category == InventoryCategory.Trinkets)
             {
@@ -379,9 +380,12 @@ namespace Remizione
         {
             base.OnDraw(gameTime);
 
-            trinketSlot.Draw(gameTime);
-            healthMeter.Draw(gameTime);
-            ticketsMeter.Draw(gameTime);
+            if (Owner.Session.Room is ProceduralRoom)
+            {
+                trinketSlot.Draw(gameTime);
+                healthMeter.Draw(gameTime);
+                ticketsMeter.Draw(gameTime);
+            }
 
             // Containers
             Game.SpriteBatch.Begin(Game.Camera);
@@ -442,7 +446,7 @@ namespace Remizione
             if (activeGrid.SelectedItem is Item selectedItem)
             {
                 // Discard
-                if (buttonDiscard.TestPressed(PlayerIndex.One))
+                if (!selectedItem.MetaItem.PreventDiscard && buttonDiscard.TestPressed(PlayerIndex.One))
                 {
                     Sound.Play(SoundNames.ItemDiscard);
                     activeGrid.DiscardSelectedItem();
@@ -550,7 +554,7 @@ namespace Remizione
                 grid.Populate();
             }
 
-            currentCategory = InventoryCategory.Consumables;
+            currentCategory = InventoryCategory.Junk;
             
             equippedJunk = Owner.Inventory.Junk.SelectedItem;
             equippedTrinket = Owner.Inventory.Trinkets.SelectedItem;

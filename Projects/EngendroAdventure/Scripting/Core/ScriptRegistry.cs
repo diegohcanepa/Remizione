@@ -37,6 +37,7 @@ namespace EngendroAdventure.Scripting.Core
             RegisterStatement("await-outcome-completion", typeof(AwaitOutcomeCompletionCommand), CodingContext.Execution);
             RegisterStatement("await-routine", typeof(AwaitRoutineCommand), CodingContext.Execution);
             RegisterStatement("await-script", typeof(AwaitScriptCommand), CodingContext.Execution);
+            RegisterStatement("await-session-scene", typeof(AwaitSessionSceneCommand), CodingContext.Execution);
             RegisterStatement("await-shake", typeof(AwaitShakeCommand), CodingContext.Execution);
             RegisterStatement("await-sound", typeof(AwaitSoundCommand), CodingContext.Execution);
             RegisterStatement("await-sync-scripts", typeof(AwaitSyncScriptsCommand), CodingContext.Execution);

@@ -184,7 +184,7 @@ namespace EngendroAdventure
         public bool InCurrentRoom => Room != null && Room == Session.Room;
 
         // IsActiveInGameLoop
-        public override bool IsActiveInGameLoop => IgnoreCulling || IsInCullingBox || Tweens.IsTweeningPosition;
+        public override bool IsActiveInGameLoop => IgnoreCulling || IsInCullingBox || Tweens.IsTweeningPosition || IsMoving;
 
         // IsInCullingBox
         public virtual bool IsInCullingBox => Session.Camera.CullingBox.Contains(Position) || BoundingBox.Intersects(Session.Camera.CullingBox);

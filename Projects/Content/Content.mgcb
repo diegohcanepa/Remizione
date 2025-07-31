@@ -236,6 +236,30 @@
 /processorParam:Quality=Best
 /build:Audio/FX/Error2.wav;Audio/FX/Error2
 
+#begin Audio/FX/EvilLaugh1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/EvilLaugh1.wav;Audio/FX/EvilLaugh1
+
+#begin Audio/FX/EvilLaugh2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/EvilLaugh2.wav;Audio/FX/EvilLaugh2
+
+#begin Audio/FX/EvilLaugh3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/EvilLaugh3.wav;Audio/FX/EvilLaugh3
+
+#begin Audio/FX/EvilLaugh4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/EvilLaugh4.wav;Audio/FX/EvilLaugh4
+
 #begin Audio/FX/ExitAlarm.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -446,6 +470,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/SmallWhooshA4.wav
 
+#begin Audio/FX/SummonA.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SummonA.wav;Audio/FX/SummonA
+
 #begin Audio/FX/ThrowableDuck1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -541,6 +571,18 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/ZapLoop.wav;Audio/FX/ZapLoop
+
+#begin Audio/Music/Arrival.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Arrival.wav;Audio/Music/Arrival
+
+#begin Audio/Music/FirstSteps.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/FirstSteps.wav;Audio/Music/FirstSteps
 
 #begin Audio/Music/Track01.wav
 /importer:WavImporter

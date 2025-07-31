@@ -33,6 +33,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string DurabilityArg = "#durability";
         protected static readonly string DurationArg = "#duration";
         protected static readonly string EmitterArg = "#emitter";
+        protected static readonly string EquipArg = "#equip";
         protected static readonly string EventFrameArg = "#event";
         protected static readonly string FaceArg = "#face";
         protected static readonly string FadeArg = "#fade";
@@ -77,6 +78,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string ProgressArg = "#progress";
         protected static readonly string PrefixArg = "#prefix";
         protected static readonly string PreserveArg = "#preserve";
+        protected static readonly string PreventDiscardArg = "#prevent-discard";
         protected static readonly string RadiansArg = "#radians";
         protected static readonly string RandomFrameArg = "#random-frame";
         protected static readonly string RangeArg = "#range";

@@ -3,12 +3,12 @@
 namespace Remizione.Scripting
 {
     // MetaItemCommand
-    // Arguments: {Name} {Category:InventoryCategory} [#damage:DiceRoll] [#degradation-interval:Integer] [#knockback:Vector2] [#maximum:Integer] [#modifier:Stat] [#range:Integer] [#sound:Name]
+    // Arguments: {Name} {Category:InventoryCategory} [#allow-empty] [#damage:DiceRoll] [#degradation-interval:Integer] [#knockback:Vector2] [#maximum:Integer] [#modifier:Stat] [#prevent-discard] [#range:Integer] [#sound:Name]
     internal sealed class MetaItemCommand : NonAwaitableCommand
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 2, ActionArg, AllowEmptyArg, BonusArg, DamageArg, DurabilityArg, HPArg, ImpactWordArg, KnockbackArg, MaximumArg, ModifierArg, PassiveEffectCooldownArg, RangeArg, SoundArg)
+            : base(script, source, body, 2, ActionArg, AllowEmptyArg, BonusArg, DamageArg, DurabilityArg, HPArg, ImpactWordArg, KnockbackArg, MaximumArg, ModifierArg, PassiveEffectCooldownArg, PreventDiscardArg, RangeArg, SoundArg)
         {
             var name = Parser.ParseName(this, 0);
             var category = Parser.ParseEnum<InventoryCategory>(this, 1);
@@ -26,6 +26,7 @@ namespace Remizione.Scripting
                 Knockback = Parser.ParseVector2Argument(this, KnockbackArg),
                 Modifier = Parser.ParseEnumArgument(this, ModifierArg, StatModifier.None),
                 PassiveEffectCooldown = Parser.ParseInt32Argument(this, PassiveEffectCooldownArg),
+                PreventDiscard = HasArg(PreventDiscardArg),
                 Range = Parser.ParseInt32Argument(this, RangeArg),
                 Sound = Parser.ParseSoundArgument(this, SoundArg),
             };
