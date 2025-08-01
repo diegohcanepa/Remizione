@@ -464,7 +464,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (IsPlayer && StateMachine.CurrentState is ActorStandState && Session.IsCurrentScene && !Session.IsAwaiting && InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
+            if (Session.GameplayMode == GameplayMode.Survival && IsPlayer && StateMachine.CurrentState is ActorStandState && Session.IsCurrentScene && !Session.IsAwaiting && InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
             {
                 if (InputManager.DefaultPlayer.Mouse.WorldPosition(session.Camera).X >= X)
                 {

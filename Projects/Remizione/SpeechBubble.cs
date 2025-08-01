@@ -38,6 +38,7 @@ namespace Remizione
         private readonly FloatTween pipeTween = new();
         private readonly Vector2Tween shakeTween = new();
         private readonly TextSprite text;
+        private readonly TextSprite title;
 
         #endregion
 
@@ -72,6 +73,14 @@ namespace Remizione
 
             // Text
             this.text = new TextSprite(Game, Fonts.Common)
+            {
+                Color = ColorPalette.SpeechBubble.Text,
+                MaximumWidth = maxWidth,
+                PivotOrigin = RectanglePoint.LeftTop
+            };
+
+            // Title
+            this.title = new TextSprite(Game, Fonts.Common)
             {
                 Color = ColorPalette.SpeechBubble.Text,
                 MaximumWidth = maxWidth,

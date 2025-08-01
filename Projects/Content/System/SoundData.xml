@@ -9,7 +9,7 @@
 	<Music Name="Arrival" MaxInstances="2" />
 	<Music Name="FirstSteps" MaxInstances="2" />
 	<Music Name="PilgrimPath01" MaxInstances="2" Tags="PilgrimPath" />
-	<Music Name="Track01" MaxInstances="2" Tags="Back"/>
+	<Music Name="ThemePark" MaxInstances="2" />
 	
 	<!-- FX -->
 	<FX Name="AppleBite" MaxInstances="2" />
@@ -17,6 +17,7 @@
 	<FX Name="BlipB" MaxInstances="4" Sounds="1..2" Volume=".5" />
 	<FX Name="BlipC" MaxInstances="4" Volume=".5" />
 	<FX Name="BodyFallMedium" MaxInstances="8" Sounds="1..1" />
+	<FX Name="DoodleDoo" />
 	<FX Name="DoorToilet" />
 	<FX Name="EdmundHurt" MaxInstances="4" Sounds="1..2" />
 	<FX Name="ElectricZapStrong" />
