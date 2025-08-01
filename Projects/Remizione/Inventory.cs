@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Remizione
 {
@@ -42,6 +43,24 @@ namespace Remizione
 
         // KeyItems
         public ItemContainer KeyItems { get; }
+
+        // NotifyRoomChanged
+        public void NotifyRoomChanged()
+        {
+            foreach (var category in Enum.GetValues<InventoryCategory>())
+            {
+                if (category != InventoryCategory.None)
+                {
+                    var items = GetContainer(category).GetItems();
+
+                    for (var i = 0; i < items.Length; i++)
+                    {
+                        if (items[i].MetaItem.ReplenishPerRoom)
+                            items[i].Replenish();
+                    }
+                }
+            }
+        }
 
         // Skills
         public ItemContainer Skills { get; }

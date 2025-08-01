@@ -11,7 +11,7 @@ namespace Remizione
         public UIAtlas(EngendroGame game)
             : base(game.Content, "UI", ContentHelper.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
-            BagSlot = this[nameof(BagSlot)];
+            SackSlot = this[nameof(SackSlot)];
             BottomGradient = this[nameof(BottomGradient)];
             CheckMark = this[nameof(CheckMark)];
             CloseWindowButton = this[nameof(CloseWindowButton)];
@@ -51,15 +51,12 @@ namespace Remizione
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
             TicketGoldenIcon = this[nameof(TicketGoldenIcon)];
-            TicketGreenIcon = this[nameof(TicketGreenIcon)];
+            TicketRedIcon = this[nameof(TicketRedIcon)];
             TicketWhiteIcon = this[nameof(TicketWhiteIcon)];
             TrinketSlot = this[nameof(TrinketSlot)];
             UITextButtonContainerEdge = this[nameof(UITextButtonContainerEdge)];
             UITextButtonContainerPattern = this[nameof(UITextButtonContainerPattern)];
         }
-
-        // BagSlot
-        public AtlasImage BagSlot { get; }
 
         // BottomGradient
         public AtlasImage BottomGradient { get; }
@@ -166,6 +163,9 @@ namespace Remizione
         // ProhibitionMark
         public AtlasImage ProhibitionMark { get; }
 
+        // SackSlot
+        public AtlasImage SackSlot { get; }
+
         // SavingIcon
         public AtlasImage SavingIcon { get; }
 
@@ -178,8 +178,8 @@ namespace Remizione
         // TicketGoldenIcon
         public AtlasImage TicketGoldenIcon { get; }
 
-        // TicketGreenIcon
-        public AtlasImage TicketGreenIcon { get; }
+        // TicketRedIcon
+        public AtlasImage TicketRedIcon { get; }
 
         // TicketWhiteIcon
         public AtlasImage TicketWhiteIcon { get; }

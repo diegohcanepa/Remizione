@@ -113,6 +113,9 @@ namespace Remizione
         // Range
         public int Range { get; init; }
 
+        // ReplenishPerRoom
+        public bool ReplenishPerRoom { get; init; }
+
         // Sound
         public Sound? Sound { get; init; }
 

@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using EngendroAdventure;
 using EngendroAdventure.Scripting;
 using Microsoft.Xna.Framework;
@@ -319,6 +320,9 @@ namespace Remizione
         // OnLoad
         protected override void OnLoad()
         {
+            AudioManager.Music.PlayTag("PilgrimPath");
+            Session.GlobalLight.Scale = new(2, 1.4f);
+
             const int walkAreaMargin = 15;
 
             terrainCols = random.Next(TerrainColRange.Minimum, TerrainColRange.Maximum + 1);

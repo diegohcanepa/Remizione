@@ -256,6 +256,26 @@ namespace Remizione
             }
         }
 
+        // HandleMouseInput
+        private bool HandleMouseInput()
+        {
+            if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
+            {
+                for (var i = 0; i < categoryIcons.Length; i++)
+                {
+                    if (categoryIcons[i].BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
+                    {
+                        currentCategory = categories[i];
+                        Sound.Play(SoundNames.UISelectA);
+                        InvalidateCategory();
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         // InvalidateCategory
         private void InvalidateCategory()
         {
@@ -429,6 +449,9 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
+            if (HandleMouseInput())
+                return HandleInputResult.Handled;
+
             // Grid
             if (activeGrid.HandleInput(gameTime) == HandleInputResult.Handled)
             {

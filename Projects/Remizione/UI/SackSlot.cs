@@ -7,12 +7,13 @@ namespace Remizione
     /// <summary>
     /// BagSlot
     /// </summary>
-    public sealed class BagSlot : GameObject, IInputHandler
+    public sealed class SackSlot : GameObject, IInputHandler
     {
         #region Private fields
 
         private Actor? actor;
         private readonly UITextButton button;
+        private readonly GameSession session;
         private readonly ImageSprite slotImage;
 
         #endregion
@@ -20,18 +21,20 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public BagSlot(EngendroGame game)
-            : base(game)
+        public SackSlot(GameSession session)
+            : base(session.Game)
         {
+            this.session = session;
+
             // Slot image
-            this.slotImage = new ImageSprite(Game, Atlases.UI.BagSlot)
+            this.slotImage = new ImageSprite(Game, Atlases.UI.SackSlot)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -2, -2),
             };
 
             // Button
-            this.button = new(game, InputBindings.Inventory)
+            this.button = new(Game, InputBindings.Inventory)
             {
                 AllowPressEffect = false,
                 ImageName = "BagSlot",
@@ -40,9 +43,6 @@ namespace Remizione
             };
         }
 
-        #endregion
-
-        #region Private members
         #endregion
 
         #region Protected members
@@ -66,6 +66,12 @@ namespace Remizione
             if (!IsVisible)
                 return;
 
+            var opacity = actor?.Session.IsAwaiting == true ? .3f : 1f;    
+
+            button.ButtonOpacity = opacity;
+            slotImage.Opacity = opacity;
+            button.IsEnabled = opacity == 1;
+
             button.Update(gameTime);
             slotImage.Update(gameTime);
         }
@@ -88,7 +94,10 @@ namespace Remizione
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
-            if (actor != null && button.TestPressed(PlayerIndex.One))
+            if (actor == null || session.IsAwaiting)
+                return HandleInputResult.Unhandled;
+
+            if (button.TestPressed(PlayerIndex.One))
             {
                 actor.ShowInventory();
                 return HandleInputResult.Handled;

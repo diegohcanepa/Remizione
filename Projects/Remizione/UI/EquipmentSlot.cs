@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
+using EngendroAdventure;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -20,6 +21,7 @@ namespace Remizione
         private readonly Vector2Tween itemImageScaleTween = new();
         private int lastKnownCount;
         private Item? lastKnownItem;
+        private readonly GameSession session;
         private readonly ImageSprite slotImage;
 
         #endregion
@@ -27,9 +29,11 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public EquipmentSlot(EngendroGame game)
-            : base(game)
+        public EquipmentSlot(GameSession session)
+            : base(session.Game)
         {
+            this.session = session;
+
             // Slot image
             this.slotImage = new ImageSprite(Game, Atlases.UI.EquipmentSlot)
             {
@@ -56,7 +60,7 @@ namespace Remizione
             };
 
             // Button
-            this.button = new(game, InputBindings.UseItem)
+            this.button = new(Game, InputBindings.UseItem)
             {
                 ImageName = "EquipmentSlot",
                 PivotOrigin = RectanglePoint.LeftBottom,
@@ -172,13 +176,20 @@ namespace Remizione
             if (!IsVisible)
                 return;
 
-            button.Update(gameTime);
-
             if (lastKnownItem != actor?.Inventory.Junk.SelectedItem)
                 InvalidateItem();
             else
                 InvalidateItemAmount(false);
 
+            var opacity = actor?.Session.IsAwaiting == true ? .3f : 1f;
+
+            amountText.Opacity = opacity;
+            button.ButtonOpacity = opacity;
+            button.IsEnabled = opacity == 1;    
+            itemImage.Opacity = opacity;
+            slotImage.Opacity = opacity;
+
+            button.Update(gameTime);
             slotImage.Update(gameTime);
             itemImage.Update(gameTime);
         }
@@ -204,7 +215,7 @@ namespace Remizione
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
-            if (actor == null)
+            if (actor == null || session.IsAwaiting)
                 return HandleInputResult.Unhandled;
 
             // Use item

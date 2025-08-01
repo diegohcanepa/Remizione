@@ -584,6 +584,12 @@
 /processorParam:Quality=Best
 /build:Audio/Music/FirstSteps.wav;Audio/Music/FirstSteps
 
+#begin Audio/Music/PilgrimPath01.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/PilgrimPath01.wav;Audio/Music/PilgrimPath01
+
 #begin Audio/Music/Track01.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

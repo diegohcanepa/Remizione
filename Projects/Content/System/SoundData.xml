@@ -8,6 +8,7 @@
 	<!-- Music -->
 	<Music Name="Arrival" MaxInstances="2" />
 	<Music Name="FirstSteps" MaxInstances="2" />
+	<Music Name="PilgrimPath01" MaxInstances="2" Tags="PilgrimPath" />
 	<Music Name="Track01" MaxInstances="2" Tags="Back"/>
 	
 	<!-- FX -->

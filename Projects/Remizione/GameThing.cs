@@ -167,7 +167,7 @@ namespace Remizione
 
             if (Session.Player != null && Session.Player != this)
             {
-                Session.Player.GreenTickets += GreenTickets;
+                Session.Player.RedTickets += RedTickets;
                 Session.Player.GoldenTickets += GoldenTickets;
                 Session.Player.WhiteTickets += WhiteTickets;
             }
@@ -794,10 +794,6 @@ namespace Remizione
         [ScriptProperty]
         public int GoldenTickets { get; set; }
 
-        // GreenTickets
-        [ScriptProperty]
-        public int GreenTickets { get; set; }
-
         // Highlight
         [ScriptProperty]
         public bool Highlight { get; set; } = true;
@@ -937,6 +933,10 @@ namespace Remizione
         // PlacementPhase
         [ScriptProperty]
         public PlacementPhase PlacementPhase { get; set; }
+
+        // RedTickets
+        [ScriptProperty]
+        public int RedTickets { get; set; }
 
         // RenderLayer
         [ScriptProperty]

@@ -251,6 +251,7 @@
             <key type="filename">Inventory-assets/InventorySlot.png</key>
             <key type="filename">Inventory-assets/InventorySlotSelected.png</key>
             <key type="filename">UI-assets/EquipmentSlot.png</key>
+            <key type="filename">UI-assets/SackSlot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -488,22 +489,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UI-assets/BagSlot.png</key>
-            <key type="filename">UI-assets/CloseWindowButton.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,5,6</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,5,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">UI-assets/BottomGradient.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -516,6 +501,21 @@
                 <rect>60,8,120,15</rect>
                 <key>scale9Paddings</key>
                 <rect>60,8,120,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UI-assets/CloseWindowButton.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,5,6</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,5,6</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -767,7 +767,7 @@
                 <false/>
             </struct>
             <key type="filename">UIIcons-assets/TicketGoldenIcon.png</key>
-            <key type="filename">UIIcons-assets/TicketGreenIcon.png</key>
+            <key type="filename">UIIcons-assets/TicketRedIcon.png</key>
             <key type="filename">UIIcons-assets/TicketWhiteIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

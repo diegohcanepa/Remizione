@@ -83,7 +83,6 @@ namespace Remizione
                 ImageName = "GlobalLight",
                 PivotOrigin = RectanglePoint.Middle,
                 Position = Screen.Center,
-                Scale = new Vector2(1, 1.4f)
             };
             
             this.GlobalLight.Prepare(Atlases.Environment);
@@ -213,7 +212,10 @@ namespace Remizione
         protected override void OnEnterRoom(Room room)
         {
             if (room is GameRoom gameRoom)
+            {
+                player?.Inventory.NotifyRoomChanged();
                 Environment.EnterRoom(gameRoom);
+            }
         }
 
         // OnHandleInput
@@ -459,6 +461,14 @@ namespace Remizione
 
         // GlobalLight
         public Light GlobalLight { get; }
+
+        // GlobalLightSize
+        [ScriptProperty]
+        public Vector2 GlobalLightSize
+        {
+            get => GlobalLight.Scale;
+            set => GlobalLight.Scale = value;
+        }
 
         // HUD
         public HUD HUD { get; }

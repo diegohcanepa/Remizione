@@ -244,6 +244,13 @@ namespace Remizione
         // BoundingBox
         public RectangleF BoundingBox { get; private set; }
 
+        // ButtonOpacity
+        public float ButtonOpacity
+        {
+            get => image.OpacityFactor;
+            set => image.OpacityFactor = value;
+        }
+
         // Camera
         public Camera Camera { get; set; }
 

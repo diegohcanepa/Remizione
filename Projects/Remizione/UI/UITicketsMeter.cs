@@ -18,11 +18,11 @@ namespace Remizione
         {
             tickets = new UIScore[3];
 
-            tickets[0] = new UIScore(game, Atlases.UI.TicketGoldenIcon, ColorPalette.Text.Default)
+            tickets[0] = new UIScore(game, Atlases.UI.TicketRedIcon, ColorPalette.Text.Default)
             {
             };
 
-            tickets[1] = new UIScore(game, Atlases.UI.TicketGreenIcon, ColorPalette.Text.Default)
+            tickets[1] = new UIScore(game, Atlases.UI.TicketGoldenIcon, ColorPalette.Text.Default)
             {
             };
 
@@ -41,11 +41,11 @@ namespace Remizione
             if (actor == null)
                 return;
 
-            tickets[0].Score = actor.WhiteTickets;
-            tickets[1].Score = actor.GreenTickets;
-            tickets[2].Score = actor.GoldenTickets;
+            tickets[0].Score = actor.RedTickets;
+            tickets[1].Score = actor.GoldenTickets;
+            tickets[2].Score = actor.WhiteTickets;
 
-            if (actor.GreenTickets == 0 || actor.GoldenTickets == 0)
+            if (actor.RedTickets == 0 || actor.GoldenTickets == 0)
                 Layout();
         }
 

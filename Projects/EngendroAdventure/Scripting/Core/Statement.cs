@@ -84,6 +84,7 @@ namespace EngendroAdventure.Scripting
         protected static readonly string RangeArg = "#range";
         protected static readonly string RelativeArg = "#relative";
         protected static readonly string RepeatArg = "#repeat";
+        protected static readonly string ReplenishPerRoomArg = "#replenish-per-room";
         protected static readonly string ReverseArg = "#reverse";
         protected static readonly string RightArg = "#right";
         protected static readonly string RightTriggerArg = "#right-trigger";

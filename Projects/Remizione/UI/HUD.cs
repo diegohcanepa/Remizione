@@ -54,10 +54,10 @@ namespace Remizione
             this.prompt = new(session);
 
             // Bag slot
-            this.BagSlot = new(Game);
+            this.BagSlot = new(session);
 
             // Equipment slot
-            this.EquipmentSlot = new(Game);
+            this.EquipmentSlot = new(session);
 
             // Trincket slot
             this.TrincketSlot = new(Game);
@@ -129,7 +129,7 @@ namespace Remizione
         #endregion
 
         // BagSlot
-        public BagSlot BagSlot { get; }
+        public SackSlot BagSlot { get; }
 
         // EquipmentSlot
         public EquipmentSlot EquipmentSlot { get; }
@@ -137,6 +137,9 @@ namespace Remizione
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
+            if (session.IsAwaiting)
+                return HandleInputResult.Unhandled;
+
             if (session.IsConsoleVisible || session.GameplayMode == GameplayMode.Adventure)
                 return HandleInputResult.Unhandled;
 
