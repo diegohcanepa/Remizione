@@ -461,6 +461,10 @@ namespace Remizione
 
         #endregion
 
+        // AllowInteraction
+        [ScriptProperty]
+        public bool AllowInteraction { get; set; } = true;
+
         // ApplyDamage
         public void ApplyDamage(GameThing attacker)
         {
@@ -547,7 +551,7 @@ namespace Remizione
         // CanInteract
         public bool CanInteract(Actor requester)
         {
-            if (requester == this)
+            if (requester == this || !AllowInteraction)
                 return false;
 
             if (string.IsNullOrWhiteSpace(DisplayName))

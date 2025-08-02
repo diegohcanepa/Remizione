@@ -82,9 +82,10 @@ namespace Remizione
             // Title
             this.title = new TextSprite(Game, Fonts.Common)
             {
-                Color = ColorPalette.SpeechBubble.Text,
+                Color = ColorPalette.SpeechBubble.Title,
                 MaximumWidth = maxWidth,
-                PivotOrigin = RectanglePoint.LeftTop
+                PivotOrigin = RectanglePoint.LeftTop,
+                Scale = ScaleInfo.Text.Medium
             };
         }
 
@@ -140,6 +141,19 @@ namespace Remizione
         // GetBubbleArea
         private RectangleF GetBubbleArea(ref Vector2 origin)
         {
+            float w = Math.Max(text.BoundingBox.Width, title.BoundingBox.Width);
+            float h = title.BoundingBox.Height + text.MeasureDisplayText().Y + 2;
+
+            bubbleArea = new RectangleF(origin.X - (w / 2), origin.Y - h - pipe.BoundingBox.Height + 1, w, h);
+            bubbleArea.Inflate(textPadding);
+
+            return bubbleArea;
+        }
+
+        /*
+        // GetBubbleArea
+        private RectangleF GetBubbleArea(ref Vector2 origin)
+        {
             float w = text.BoundingBox.Width;
             float h = text.MeasureDisplayText().Y + 2;
 
@@ -148,6 +162,7 @@ namespace Remizione
 
             return bubbleArea;
         }
+        */
 
         // Layout
         private void Layout()
@@ -213,8 +228,8 @@ namespace Remizione
                 bubbleImage2.Scale = new Vector2(bbox.Width + 2, bbox.Height - 2);
             }
 
-            arrowImage.Position = bubbleImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -2.5f, -2.5f - arrowTween.CurrentValue);
-            text.Position = bubbleImage.BoundingBox.GetPoint(RectanglePoint.LeftTop, 2, 2);
+            title.Position = bubbleImage.BoundingBox.GetPoint(RectanglePoint.LeftTop, 2, 2);
+            text.Position = title.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -.5f);
         }
 
         // Shake
@@ -298,6 +313,8 @@ namespace Remizione
             DrawBubble(gameTime);
 
             Game.SpriteBatch.Begin(Actor.Session.Camera, SamplerState.PointClamp);
+            
+            title.Draw(gameTime);
 
             if (shakeTween.IsRunning)
                 text.Position += shakeTween.CurrentValue;
@@ -321,9 +338,12 @@ namespace Remizione
             pipeTween.Update(gameTime);
             shakeTween.Update(gameTime);
             text.Update(gameTime);
+            title.Update(gameTime);
 
             if (State == SpeechBubbleState.Typing)
                 Layout();
+
+            arrowImage.Position = bubbleImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -2.5f, -2.5f - arrowTween.CurrentValue);
         }
 
         #endregion
@@ -352,7 +372,8 @@ namespace Remizione
                 ModalInstance = null;
 
             AwaitInput = false;
-            text.Text = null;
+            text.Clear();
+            title.Clear();
             text.StopTyping();
             shakeTween.Stop();
             arrowTween.Stop();
@@ -363,7 +384,7 @@ namespace Remizione
         public static SpeechBubble? ModalInstance { get; private set; }
 
         // Show
-        public void Show(string text, bool awaitInput)
+        public void Show(string title, string text, bool awaitInput)
         {
             if (string.IsNullOrWhiteSpace(text))
                 return;
@@ -383,6 +404,7 @@ namespace Remizione
                 activeBubbles.Add(this);
 
             this.text.Text = text;
+            this.title.Text = title;
 
             if (awaitInput)
                 autoHideCooldown = 0;

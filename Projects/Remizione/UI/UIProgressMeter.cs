@@ -27,7 +27,7 @@ namespace Remizione.UI
                 PivotOrigin = RectanglePoint.Top,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Top),
                 Scale = ScaleInfo.Text.Large,
-                Text = TextRepository.GetValue("Misc.Thresholds")
+                Text = TextRepository.GetValue("Misc.Threshold")
             };
 
             // Progress

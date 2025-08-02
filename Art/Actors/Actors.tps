@@ -189,24 +189,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Berta-assets/Back01.png</key>
             <key type="filename">Berta-assets/Move01.png</key>
-            <key type="filename">Berta-assets/Move02.png</key>
-            <key type="filename">Berta-assets/Move03.png</key>
-            <key type="filename">Berta-assets/Move04.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,4,5,9</rect>
-                <key>scale9Paddings</key>
-                <rect>3,4,5,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Berta-assets/Stand01.png</key>
             <key type="filename">Berta-assets/StandHead01.png</key>
             <key type="filename">Berta-assets/StandHead02.png</key>
@@ -224,7 +208,6 @@
             <key type="filename">Edmund-assets/Consume03.png</key>
             <key type="filename">Edmund-assets/Consume04.png</key>
             <key type="filename">Edmund-assets/LookBehind01.png</key>
-            <key type="filename">Edmund-assets/LookBehind02.png</key>
             <key type="filename">Edmund-assets/Move01.png</key>
             <key type="filename">Edmund-assets/Move02.png</key>
             <key type="filename">Edmund-assets/Move03.png</key>
@@ -264,6 +247,23 @@
                 <rect>7,6,14,13</rect>
                 <key>scale9Paddings</key>
                 <rect>7,6,14,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Berta-assets/Move02.png</key>
+            <key type="filename">Berta-assets/Move03.png</key>
+            <key type="filename">Berta-assets/Move04.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,4,5,9</rect>
+                <key>scale9Paddings</key>
+                <rect>3,4,5,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

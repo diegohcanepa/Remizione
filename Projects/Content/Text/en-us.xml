@@ -2,7 +2,9 @@
 <Strings>
   <String Key="Actor.Berta">Bertha</String>
   <String Key="Actor.Dog">Dog</String>
+  <String Key="Actor.Edmund">Edmund</String>
   <String Key="Actor.Grandma">Sweet old lady</String>
+  <String Key="Actor.Sister">Sister Ham</String>
   <String Key="ActorProperty.Grace.Description">The ashes quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Grace.Name">Grace</String>
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
@@ -197,7 +199,7 @@ Bla bla bla</String>
   <String Key="Misc.SelectSlot">Select slot</String>
   <String Key="Misc.Sins">SINS</String>
   <String Key="Misc.Stamina">Stamina</String>
-  <String Key="Misc.Thresholds">Thresholds</String>
+  <String Key="Misc.Threshold">Threshold</String>
   <String Key="Misc.Unknown">???</String>
   <String Key="Misc.WanderingSpirit">Your wandering spirit</String>
   <String Key="Misc.Yes">Yes</String>

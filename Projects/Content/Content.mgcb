@@ -140,6 +140,12 @@
 /processorParam:Quality=Best
 /build:Audio/Ambience/Ambience1.wav
 
+#begin Audio/Ambience/Day.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Ambience/Day.wav;Audio/Ambience/Day
+
 #begin Audio/Ambience/Night.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -313,6 +319,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/FartLong6.wav;Audio/FX/FartLong6
+
+#begin Audio/FX/FenceOpen.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/FenceOpen.wav;Audio/FX/FenceOpen
 
 #begin Audio/FX/FootstepA1.wav
 /importer:WavImporter

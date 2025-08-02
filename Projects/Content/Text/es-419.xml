@@ -2,7 +2,9 @@
 <Strings>
   <String Key="Actor.Berta">Berta</String>
   <String Key="Actor.Dog">Perro</String>
+  <String Key="Actor.Edmund">Edmundo</String>
   <String Key="Actor.Grandma">Dulce ancianita</String>
+  <String Key="Actor.Sister">Sor Jamona</String>
   <String Key="ActorProperty.Grace.Description">La gracia quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Grace.Name">Gracia</String>
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
@@ -197,7 +199,7 @@ Bla bla bla</String>
   <String Key="Misc.SelectSlot">Seleccionar ranura</String>
   <String Key="Misc.Sins">PECADOS</String>
   <String Key="Misc.Stamina">Resistencia</String>
-  <String Key="Misc.Thresholds">Umbrales</String>
+  <String Key="Misc.Threshold">Umbral</String>
   <String Key="Misc.Unknown">???</String>
   <String Key="Misc.WanderingSpirit">Tu espíritu errante</String>
   <String Key="Misc.Yes">Sí</String>

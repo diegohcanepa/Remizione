@@ -57,7 +57,7 @@ namespace Remizione.UI
             }
 
             verbText.Color = isWarning ? ColorPalette.Text.Highlight : ColorPalette.Text.Default;
-            verbText.Position = new Vector2(5, 20);
+            verbText.Position = new Vector2(5, 25);
             verbText.Text = verb;
 
             nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.LeftBottom);

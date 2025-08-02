@@ -630,6 +630,7 @@ namespace Remizione
         }
 
         // FaceToTarget
+        [ScriptMethod]
         public void FaceToTarget()
         {
             if (Target != null)
@@ -857,7 +858,7 @@ namespace Remizione
         public void Say(string text, bool awaitInput)
         {
             speechBubble ??= new SpeechBubble(this);
-            speechBubble.Show(text, awaitInput);
+            speechBubble.Show(DisplayName, text, awaitInput);
         }
 
         // SelectTarget
