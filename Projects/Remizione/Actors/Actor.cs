@@ -109,10 +109,7 @@ namespace Remizione
             {
                 for (int i = Room.CulledThings.Count - 1; i >= 0; i--)
                 {
-                    if (Room.CulledThings[i] == this)
-                        continue;
-
-                    else if (Room.CulledThings[i] is GameThing target && target.CanInteract(this))
+                    if (Room.CulledThings[i] is GameThing target && target.CanInteract(this))
                         return target;
                 }
             }
@@ -138,10 +135,7 @@ namespace Remizione
 
                 for (var i = Room.CulledThings.Count - 1; i >= 0; i--)
                 {
-                    if (Room.CulledThings[i] == this)
-                        continue;
-
-                    else if (Room.CulledThings[i] is GameThing thing && thing.RuntimeHotspot.Contains(mousePos))
+                    if (Room.CulledThings[i] is GameThing thing && thing.CanInteract(this, mousePos))
                         return thing;
                 }
             }

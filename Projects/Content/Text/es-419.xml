@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Strings>
-  <String Key="Actor.Berta">Berta</String>
+  <String Key="Actor.Berta">Berta Idle</String>
   <String Key="Actor.Dog">Perro</String>
-  <String Key="Actor.Edmund">Edmundo</String>
+  <String Key="Actor.Edmund">Edmundo Idle</String>
   <String Key="Actor.Grandma">Dulce ancianita</String>
   <String Key="Actor.Sister">Sor Jamona</String>
   <String Key="ActorProperty.Grace.Description">La gracia quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>

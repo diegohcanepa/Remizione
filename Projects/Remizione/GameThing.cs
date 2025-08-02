@@ -127,6 +127,18 @@ namespace Remizione
 
         #region Private members
 
+        // CanInteractCore
+        private bool CanInteractCore(Actor requester)
+        {
+            if (requester == this || !AllowInteraction)
+                return false;
+
+            if (string.IsNullOrWhiteSpace(DisplayName))
+                return false;
+
+            return true;
+        }
+
         // CheckCollisions
         private void CheckCollisions()
         {
@@ -551,13 +563,22 @@ namespace Remizione
         // CanInteract
         public bool CanInteract(Actor requester)
         {
-            if (requester == this || !AllowInteraction)
+            if (!CanInteractCore(requester))
                 return false;
 
-            if (string.IsNullOrWhiteSpace(DisplayName))
+            if (holeInflatedPoly.IsEmpty)
+                return BoundingBox.Intersects(requester.GetAbsoluteBounds(requester.HotspotDetectorArea));
+            else
+                return holeInflatedPoly.BoundingRectangleF.Intersects(requester.GetAbsoluteBounds(requester.HotspotDetectorArea));
+        }
+
+        // CanInteract
+        public bool CanInteract(Actor requester, Vector2 mousePos)
+        {
+            if (!CanInteractCore(requester))
                 return false;
 
-            return holeInflatedPoly.BoundingRectangleF.Intersects(requester.GetAbsoluteBounds(requester.HotspotDetectorArea));
+            return RuntimeHotspot.Contains(mousePos);
         }
 
         // CellMargin
