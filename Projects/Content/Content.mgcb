@@ -446,6 +446,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/PickupKey.wav;Audio/FX/PickupKey
 
+#begin Audio/FX/PotteryBreak1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/PotteryBreak1.wav;Audio/FX/PotteryBreak1
+
 #begin Audio/FX/Raven.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

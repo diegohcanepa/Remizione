@@ -193,7 +193,7 @@ namespace Remizione
                 }
             }
 
-            Unparent();
+            //Unparent();
         }
 
         // GetImpactWordPosition
@@ -431,6 +431,7 @@ namespace Remizione
 
                 else if (blinker.CurrentValue)
                     OpacityFactor = .8f;
+
                 else
                     OpacityFactor = .5f;
             }
@@ -510,7 +511,7 @@ namespace Remizione
             if (MaxHP == 0)
                 return;
 
-            if (CumulativeDamage > 0)
+            if (CumulativeDamage > 0 && !PreventBlink)
                 blinker.Start(20, 4);
 
             if (CumulativeDamage > HP)
@@ -518,7 +519,7 @@ namespace Remizione
 
             HP -= (int)CumulativeDamage;
 
-            if (knockback == Vector2.Zero && HP <= 0)
+            if ((PreventKnockback || knockback == Vector2.Zero) && HP <= 0)
             {
                 Die();
             }
@@ -958,6 +959,14 @@ namespace Remizione
         // PlacementPhase
         [ScriptProperty]
         public PlacementPhase PlacementPhase { get; set; }
+
+        // PreventBlink
+        [ScriptProperty]
+        public bool PreventBlink { get; set; }
+
+        // PreventKnockback
+        [ScriptProperty]
+        public bool PreventKnockback { get; set; }
 
         // RedTickets
         [ScriptProperty]

@@ -316,6 +316,9 @@
                 <false/>
             </struct>
             <key type="filename">Environment-assets/CraftingMark.png</key>
+            <key type="filename">PotteryA-assets/PotteryAPiece1.png</key>
+            <key type="filename">PotteryA-assets/PotteryAPiece3.png</key>
+            <key type="filename">PotteryA-assets/PotteryAPiece4.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1072,6 +1075,37 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">PotteryA-assets/PotteryA.png</key>
+            <key type="filename">PotteryA-assets/PotteryAShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,5,6,9</rect>
+                <key>scale9Paddings</key>
+                <rect>3,5,6,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PotteryA-assets/PotteryAPiece2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,2,2,4</rect>
+                <key>scale9Paddings</key>
+                <rect>1,2,2,4</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">RainDropImpacts-assets/RainDropImpactA01.png</key>
             <key type="filename">RainDropImpacts-assets/RainDropImpactA02.png</key>
             <key type="filename">RainDropImpacts-assets/RainDropImpactA03.png</key>
@@ -1296,6 +1330,7 @@
                     <filename>LargeRockC-assets</filename>
                     <filename>LargeRockD-assets</filename>
                     <filename>CrucifiedA-assets</filename>
+                    <filename>PotteryA-assets</filename>
                 </array>
             </struct>
         </map>
