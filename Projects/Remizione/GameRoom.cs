@@ -220,14 +220,7 @@ namespace Remizione
             if (AllowGlobalLight)
             {
                 Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
-
-                if (Session.GlobalLight.IsFlashing)
-                    Session.GlobalLight.Color = Color.LightBlue * .9f;
-                else
-                    Session.GlobalLight.Color = Session.Environment.GlobalLightColor;
-
-                Session.GlobalLight.Draw(gameTime);
-
+                Session.Environment.GlobalLight.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
 
@@ -447,7 +440,7 @@ namespace Remizione
             }
 
             if (AllowGlobalLight)
-                Session.GlobalLight.Update(gameTime);
+                Session.Environment.GlobalLight.Update(gameTime);
 
             playerLight.Update(gameTime);
 
@@ -544,6 +537,14 @@ namespace Remizione
         [ScriptProperty]
         public DustParticleKind DustParticleKind { get; set; } = DustParticleKind.Ash;
 
+        // GlobalLightSize
+        [ScriptProperty]
+        public Vector2 GlobalLightSize
+        {
+            get => Session.Environment.GlobalLight.Scale;
+            set => Session.Environment.GlobalLight.Scale = value;
+        }
+
         // IsOutdoor
         [ScriptProperty]
         public bool IsOutdoor { get; set; } = true;
@@ -593,7 +594,7 @@ namespace Remizione
             var interval = new Int32Range(30);
             int count = 8;
             if (IsOutdoor)
-                Session.GlobalLight.Flash(interval, count);
+                Session.Environment.GlobalLight.Flash(interval, count);
         }
 
         // TriggerAreas

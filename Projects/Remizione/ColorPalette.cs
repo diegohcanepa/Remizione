@@ -46,6 +46,13 @@ namespace Remizione
             internal static Color Fore { get; } = new(82, 51, 63);
         }
 
+        // GlobalLight
+        internal static class GlobalLight
+        {
+            internal static Color Critical { get; } = new(255, 64, 64);
+            internal static Color Default { get; } = Color.White;
+        }
+
         // HighlightedText
         internal static Color HighlightedText { get; } = new Color(215, 215, 170);
 

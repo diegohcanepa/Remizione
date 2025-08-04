@@ -321,7 +321,7 @@ namespace Remizione
         protected override void OnLoad()
         {
             AudioManager.Music.PlayTag("PilgrimPath");
-            Session.GlobalLight.Scale = new(2, 1.4f);
+            Session.Environment.GlobalLight.Scale = new(2, 1.4f);
 
             const int walkAreaMargin = 15;
 

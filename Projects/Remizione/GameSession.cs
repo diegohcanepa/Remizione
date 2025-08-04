@@ -72,18 +72,6 @@ namespace Remizione
             this.echoScene = new(Game);
 
             LocalizationSource = LocalizationSource.Script;
-
-            // Global light
-            this.GlobalLight ??= new Light(Game, "GlobalLight")
-            {
-                Color = Color.White,
-                LightKind = LightKind.Global,
-                ImageName = "GlobalLight",
-                PivotOrigin = RectanglePoint.Middle,
-                Position = Screen.Center,
-            };
-            
-            this.GlobalLight.Prepare(Atlases.Environment);
         }
 
         #endregion
@@ -452,17 +440,6 @@ namespace Remizione
                 return state;
             
             return 0;
-        }
-
-        // GlobalLight
-        public Light GlobalLight { get; }
-
-        // GlobalLightSize
-        [ScriptProperty]
-        public Vector2 GlobalLightSize
-        {
-            get => GlobalLight.Scale;
-            set => GlobalLight.Scale = value;
         }
 
         // HUD

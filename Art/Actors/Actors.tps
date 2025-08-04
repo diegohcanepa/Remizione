@@ -191,6 +191,9 @@
             </struct>
             <key type="filename">Berta-assets/Back01.png</key>
             <key type="filename">Berta-assets/Move01.png</key>
+            <key type="filename">Berta-assets/RaiseArm01.png</key>
+            <key type="filename">Berta-assets/RaiseArm02.png</key>
+            <key type="filename">Berta-assets/RaiseArm03.png</key>
             <key type="filename">Berta-assets/Stand01.png</key>
             <key type="filename">Berta-assets/StandHead01.png</key>
             <key type="filename">Berta-assets/StandHead02.png</key>

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Engendro;
+using Microsoft.Xna.Framework;
 
 namespace Remizione
 {
@@ -7,6 +8,7 @@ namespace Remizione
     /// </summary>
     public sealed class Environment
     {
+        private readonly ColorTween alarmTween = new();
         private readonly GameSession session;
 
         // Constructor
@@ -15,34 +17,40 @@ namespace Remizione
             this.session = session;
             this.Lightning = new(session);
             this.Rain = new Rain(session);
+
+            // Global light
+            this.GlobalLight ??= new Light(session.Game, "GlobalLight")
+            {
+                Color = ColorPalette.GlobalLight.Default,
+                LightKind = LightKind.Global,
+                ImageName = "GlobalLight",
+                PivotOrigin = RectanglePoint.Middle,
+                Position = Screen.Center,
+            };
+
+            this.GlobalLight.Prepare(Atlases.Environment);
         }
-
-        #region Private members
-
-        // LerpColorCubicIn
-        private Color LerpColorCubicIn(Color a, Color b, float t)
-        {
-            t = t * t * t; // easing Cubic In
-
-            byte r = (byte)(a.R + (b.R - a.R) * t);
-            byte g = (byte)(a.G + (b.G - a.G) * t);
-            byte bVal = (byte)(a.B + (b.B - a.B) * t);
-            byte aVal = (byte)(a.A + (b.A - a.A) * t);
-
-            return new Color(r, g, bVal, aVal);
-        }
-
-        #endregion
 
         #region Internal members
+
+        // GlobalLight
+        internal Light GlobalLight { get; }
 
         // Update
         internal void Update(GameTime gameTime)
         {
-            if (session.GameplayMode == GameplayMode.Survival)
+            if (session.GameplayMode == GameplayMode.Survival && session.Room is ProceduralRoom)
             {
+                if (session.Countdown <= GameSettings.CountdownCritical && !alarmTween.IsRunning)
+                    alarmTween.Start(TweenStyle.QuadraticInOut, ColorPalette.GlobalLight.Default, ColorPalette.GlobalLight.Critical, 400, -1);
+
                 Lightning.Update(gameTime);
                 Rain.Update(gameTime);
+
+                if (alarmTween.IsRunning)
+                    alarmTween.Update(gameTime);
+
+                GlobalLight.Color = alarmTween.IsRunning ? alarmTween.CurrentValue : ColorPalette.GlobalLight.Default;
             }
         }
 
@@ -52,10 +60,9 @@ namespace Remizione
         public void EnterRoom(GameRoom room)
         {
             Rain.EnterRoom();
+            alarmTween.Stop();
+            GlobalLight.Color = ColorPalette.GlobalLight.Default;
         }
-
-        // GlobalLightColor
-        public Color GlobalLightColor => Color.White;
 
         // Lightning
         public Lightning Lightning { get; }
