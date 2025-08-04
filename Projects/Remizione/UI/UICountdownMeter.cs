@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -10,9 +11,11 @@ namespace Remizione.UI
     /// </summary>
     public class UICountdownMeter : GameObject
     {
+        private SoundInstance? alarmSound;
         private int lastKnownValue = -1;
         private readonly GameSession session;
         private readonly TextSprite text;
+        private readonly Vector2Tween scaleTween = new();
 
         // Constructor
         public UICountdownMeter(GameSession session)
@@ -46,17 +49,35 @@ namespace Remizione.UI
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (!session.Countdown.IsBetween(0, GameSettings.CountdownAlert))
+            if (!session.Countdown.IsBetween(0, GameSettings.CountdownWarning))
                 return;
 
             if (lastKnownValue != session.Countdown)
             {
+                if (alarmSound == null && session.Countdown < GameSettings.CountdownCritical)
+                {
+                    alarmSound = Sound.Play(SoundNames.ExitAlarm, true);
+                    scaleTween.Start(TweenStyle.QuadraticInOut, ScaleInfo.Text.Giant, ScaleInfo.Text.Giant * 1.04f, 300, -1);
+                    text.Tweens.ScaleTween = scaleTween;
+                }
+
                 lastKnownValue = session.Countdown;
                 var t = TimeSpan.FromMilliseconds(session.Countdown);
                 text.Text = string.Format("{0:D2}:{1:D2}", (int)t.TotalMinutes, t.Seconds);
             }
+
+            text.Update(gameTime);
         }
 
         #endregion
+
+        // StopAlarm
+        public void StopAlarm()
+        {
+            text.Tweens.Reset();
+            text.Scale = ScaleInfo.Text.Giant;
+            alarmSound?.Stop(3000);
+            alarmSound = null;
+        }
     }
 }

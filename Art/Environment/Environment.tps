@@ -208,6 +208,12 @@
             <key type="filename">CrossB-assets/CrossB.png</key>
             <key type="filename">CrossB-assets/CrossBShadow.png</key>
             <key type="filename">Environment-assets/DefaultLight.png</key>
+            <key type="filename">TombstoneA-assets/TombstoneA.png</key>
+            <key type="filename">TombstoneA-assets/TombstoneAShadow.png</key>
+            <key type="filename">TombstoneC-assets/TombstoneC.png</key>
+            <key type="filename">TombstoneC-assets/TombstoneCShadow.png</key>
+            <key type="filename">TombstoneD-assets/TombstoneD.png</key>
+            <key type="filename">TombstoneD-assets/TombstoneDShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -251,6 +257,22 @@
                 <rect>6,10,11,19</rect>
                 <key>scale9Paddings</key>
                 <rect>6,10,11,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">CrucifiedA-assets/CrucifiedA.png</key>
+            <key type="filename">CrucifiedA-assets/CrucifiedAShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,10,11,19</rect>
+                <key>scale9Paddings</key>
+                <rect>5,10,11,19</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -876,6 +898,52 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">LargeRockC-assets/LargeRockC.png</key>
+            <key type="filename">LargeRockC-assets/LargeRockCShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,10,17,20</rect>
+                <key>scale9Paddings</key>
+                <rect>9,10,17,20</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">LargeRockD-assets/LargeRockD.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,8,17,15</rect>
+                <key>scale9Paddings</key>
+                <rect>9,8,17,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">LargeRockD-assets/LargeRockDShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,4,23,8</rect>
+                <key>scale9Paddings</key>
+                <rect>11,4,23,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Lightning-assets/Lightning01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1098,6 +1166,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">TombstoneB-assets/TombstoneB.png</key>
+            <key type="filename">TombstoneB-assets/TombstoneBShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,7,8</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,7,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">TreeA-assets/TreeA.png</key>
             <key type="filename">TreeA-assets/TreeAShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -1205,6 +1289,13 @@
                     <filename>OutgoingGhostCarNW-assets</filename>
                     <filename>BigSign-assets</filename>
                     <filename>PilgrimSack-assets</filename>
+                    <filename>TombstoneA-assets</filename>
+                    <filename>TombstoneB-assets</filename>
+                    <filename>TombstoneC-assets</filename>
+                    <filename>TombstoneD-assets</filename>
+                    <filename>LargeRockC-assets</filename>
+                    <filename>LargeRockD-assets</filename>
+                    <filename>CrucifiedA-assets</filename>
                 </array>
             </struct>
         </map>

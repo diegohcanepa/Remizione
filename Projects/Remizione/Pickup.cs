@@ -13,6 +13,7 @@ namespace Remizione
             : base(session, name)
         {
             this.Atlas = Atlases.Environment;
+            this.CellMargin = 0;
             this.DisplayName = $"Item.{StaticName}.Name";
             this.IgnoreWalkArea = false;
         }

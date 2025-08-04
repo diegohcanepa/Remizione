@@ -26,7 +26,6 @@ namespace Remizione
         private enum AttributeName { ProcStates, RandomSeed, WorldVersion }
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
-        private readonly SoundInstance exitAlarmSound;
         private Actor? player;
         private Vector2? playerPosition;
         private readonly Dictionary<string, int> proceduralThingStates = [];
@@ -55,7 +54,6 @@ namespace Remizione
 
             BackgroundColor = ColorPalette.BackgroundColor;
             Camera.SmoothSpeed = GameSettings.CameraSmoothSpeed;
-            exitAlarmSound = Sound.FindNotNull(SoundNames.ExitAlarm).PopInstance() ?? throw new InvalidOperationException($"Sound '{SoundNames.ExitAlarm}' not found.");
 
             if (EngendroGame.DebugMode)
             {
@@ -350,9 +348,6 @@ namespace Remizione
             {
                 Countdown -= gameTime.ElapsedGameTime.Milliseconds;
 
-                if (IsCountdownActive && !exitAlarmSound.IsPlaying)
-                    exitAlarmSound.Play();
-
                 /*
                 if (Countdown <= 0)
                     Game.SceneManager.Push(new GameOverScene(Game, GameOverReason.TimeOut));
@@ -480,7 +475,7 @@ namespace Remizione
         public bool IsConsoleVisible => console?.IsActive ?? false;
 
         // IsCountdownActive
-        public bool IsCountdownActive => Countdown.IsBetween(0, GameSettings.CountdownAlert) && GameplayMode == GameplayMode.Survival;
+        public bool IsCountdownActive => Countdown.IsBetween(0, GameSettings.CountdownWarning) && GameplayMode == GameplayMode.Survival;
 
         // IsHUDVisible
         [ScriptProperty]
@@ -498,8 +493,8 @@ namespace Remizione
         [ScriptMethod]
         public void NextLevel()
         {
-            exitAlarmSound.Stop(3000);
             Countdown = Randomizer.Next(GameSettings.CountdownMinimum, GameSettings.CountdownMaximum);
+            HUD.CountdownMeter.StopAlarm();
             Level++;
         }
 

@@ -27,7 +27,6 @@ namespace Remizione
         private readonly AnimatedSprite headSprite;
         private readonly FloatTween headTween = new();
         private InventoryScene? inventoryScene;
-        private int level = 1;
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private GameThing? pendingInteractiveTarget;

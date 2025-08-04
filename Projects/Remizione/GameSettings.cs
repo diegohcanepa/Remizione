@@ -16,8 +16,11 @@ namespace Remizione
         // ContentRootDirectory
         public const string ContentRootDirectory = "Content";
 
-        // CountdownAlert
-        public const int CountdownAlert = 30_000;
+        // CountdownCritical
+        public const int CountdownCritical = 10_000;
+
+        // CountdownWarning
+        public const int CountdownWarning = 30_000;
 
         // DefaultTransitionDuration
         public const int DefaultTransitionDuration = 500;

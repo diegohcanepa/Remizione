@@ -1,7 +1,6 @@
 ﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Remizione.UI;
 
 namespace Remizione
@@ -13,7 +12,6 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly UICountdownMeter countdownMeter;
         private readonly UIHealthMeter healthMeter;
         private readonly UIPrompt prompt;
         private readonly ImageSprite savingIcon;
@@ -31,7 +29,7 @@ namespace Remizione
         {
             this.session = session;
 
-            this.countdownMeter = new(session);
+            this.CountdownMeter = new(session);
             this.healthMeter = new(session.Game);
             this.progressMeter = new(session);
             this.ticketsMeter = new(session.Game);
@@ -88,7 +86,7 @@ namespace Remizione
                     }
 
                     if (session.IsCountdownActive)
-                        countdownMeter.Draw(gameTime);
+                        CountdownMeter.Draw(gameTime);
                     else if (session.Room is ProceduralRoom)
                         progressMeter.Draw(gameTime);
                 }
@@ -110,7 +108,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            countdownMeter.Update(gameTime);
+            CountdownMeter.Update(gameTime);
             BagSlot.Update(gameTime);
             EquipmentSlot.Update(gameTime);
             TrincketSlot.Update(gameTime);
@@ -130,6 +128,9 @@ namespace Remizione
 
         // BagSlot
         public SackSlot BagSlot { get; }
+
+        // CountdownMeter
+        public UICountdownMeter CountdownMeter { get; }
 
         // EquipmentSlot
         public EquipmentSlot EquipmentSlot { get; }
