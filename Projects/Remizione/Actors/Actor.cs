@@ -302,8 +302,8 @@ namespace Remizione
             FaceTo(attacker);
         }
 
-        // OnDeath
-        protected override void OnDeath()
+        // OnDie
+        protected override void OnDie()
         {
             StateMachine.ChangeState(ActorStateNames.Death);
         }

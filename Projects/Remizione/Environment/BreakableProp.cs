@@ -32,8 +32,8 @@ namespace Remizione
 
         #region Protected members
 
-        // OnDeath
-        protected override void OnDeath()
+        // OnDie
+        protected override void OnDie()
         {
             for (var i = 0; i < pieces.Count; i++)
             {

@@ -175,7 +175,7 @@ namespace Remizione
             if (DeathSound != null)
                 PlaySound(DeathSound);
 
-            OnDeath();
+            OnDie();
 
             if (Session.Player != null && Session.Player != this)
             {
@@ -192,8 +192,6 @@ namespace Remizione
                     lootBag.Drop(Position, itemName);
                 }
             }
-
-            //Unparent();
         }
 
         // GetImpactWordPosition
@@ -294,8 +292,8 @@ namespace Remizione
         {
         }
 
-        // OnDeath
-        protected virtual void OnDeath()
+        // OnDie
+        protected virtual void OnDie()
         {
         }
 
