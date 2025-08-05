@@ -1,0 +1,24 @@
+﻿using Engendro.Audio;
+
+namespace Remizione
+{
+    /// <summary>
+    /// Pottery
+    /// </summary>
+    public class Pottery : BreakableProp
+    {
+        // Constructor
+        public Pottery(GameSession session, string name)
+            : base(session, name)
+        {
+            DeathSound = Sound.Find(SoundNames.PotteryBreak);
+            DepthOffset = -4;
+            HitTestSource = HitTestSource.Hotspot;
+            HurtShake = new(1.5f, 0);
+            HurtSound = Sound.Find(SoundNames.ImpactA);
+            MaxHP = 6;
+            PreventBlink = true;
+            PreventKnockback = true;
+        }
+    }
+}

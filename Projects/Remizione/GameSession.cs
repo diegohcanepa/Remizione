@@ -131,18 +131,19 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(Actor));
             scriptRegistry.RegisterEntity(typeof(Baal));
             scriptRegistry.RegisterEntity(typeof(BreakableProp));
-            scriptRegistry.RegisterEntity(typeof(OutgoingGhostCar));
-            scriptRegistry.RegisterEntity(typeof(IsometricProp));
-            scriptRegistry.RegisterEntity(typeof(ProceduralRoom));
-            scriptRegistry.RegisterEntity(typeof(Orb));
-            scriptRegistry.RegisterEntity(typeof(Pickup));
-            scriptRegistry.RegisterEntity(typeof(Prop));
-            scriptRegistry.RegisterEntity(typeof(GameRoom));
             scriptRegistry.RegisterEntity(typeof(CreditsRoom));
+            scriptRegistry.RegisterEntity(typeof(GameRoom));
+            scriptRegistry.RegisterEntity(typeof(IsometricProp));
+            scriptRegistry.RegisterEntity(typeof(Orb));
+            scriptRegistry.RegisterEntity(typeof(OutgoingGhostCar));
+            scriptRegistry.RegisterEntity(typeof(Pickup));
+            scriptRegistry.RegisterEntity(typeof(Pottery));
+            scriptRegistry.RegisterEntity(typeof(ProceduralRoom));
+            scriptRegistry.RegisterEntity(typeof(Prop));
+            scriptRegistry.RegisterEntity(typeof(RoomConnector));
             scriptRegistry.RegisterEntity(typeof(Snail));
             scriptRegistry.RegisterEntity(typeof(Unredeemed));
             scriptRegistry.RegisterEntity(typeof(Zabul));
-            scriptRegistry.RegisterEntity(typeof(RoomConnector));
 
             scriptRegistry.RegisterStatement("add-dialog-option", typeof(AddDialogOptionCommand));
             scriptRegistry.RegisterStatement("add-hole", typeof(AddHoleCommand), CodingContext.EntityDeclaration);

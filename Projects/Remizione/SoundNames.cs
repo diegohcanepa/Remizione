@@ -7,10 +7,12 @@
     {
         internal const string Error = nameof(Error);
         internal const string ExitAlarm = nameof(ExitAlarm);
+        internal const string ImpactA = nameof(ImpactA);
         internal const string ItemDiscard = nameof(ItemDiscard);
         internal const string ItemEquip = nameof(ItemEquip);
         internal const string Lightning = nameof(Lightning);
         internal const string LootBagPickup = nameof(LootBagPickup);
+        internal const string PotteryBreak = nameof(PotteryBreak);
         internal const string Rain = nameof(Rain);
         internal const string ShockZap = nameof(ShockZap);
         internal const string ThrowablePickup = nameof(ThrowablePickup);

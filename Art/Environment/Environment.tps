@@ -316,9 +316,10 @@
                 <false/>
             </struct>
             <key type="filename">Environment-assets/CraftingMark.png</key>
-            <key type="filename">PotteryA-assets/PotteryAPiece1.png</key>
-            <key type="filename">PotteryA-assets/PotteryAPiece3.png</key>
             <key type="filename">PotteryA-assets/PotteryAPiece4.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece1.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece3.png</key>
+            <key type="filename">PotteryE-assets/PotteryEPiece4.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -627,6 +628,9 @@
             </struct>
             <key type="filename">FireflyParticles-assets/FireflyParticle2.png</key>
             <key type="filename">Pickups-assets/Orb.png</key>
+            <key type="filename">PotteryA-assets/PotteryAPiece5.png</key>
+            <key type="filename">PotteryB-assets/PotteryBPiece3.png</key>
+            <key type="filename">PotteryB-assets/PotteryBPiece6.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1028,6 +1032,11 @@
             </struct>
             <key type="filename">Pickups-assets/Apple.png</key>
             <key type="filename">Pickups-assets/RottenApple.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece2.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece5.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece6.png</key>
+            <key type="filename">PotteryE-assets/PotteryEPiece3.png</key>
+            <key type="filename">PotteryE-assets/PotteryEPiece5.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1076,6 +1085,8 @@
                 <false/>
             </struct>
             <key type="filename">PotteryA-assets/PotteryA.png</key>
+            <key type="filename">PotteryA-assets/PotteryAPiece1.png</key>
+            <key type="filename">PotteryA-assets/PotteryAPiece3.png</key>
             <key type="filename">PotteryA-assets/PotteryAShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1091,7 +1102,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PotteryA-assets/PotteryAPiece2.png</key>
+            <key type="filename">PotteryA-assets/PotteryAPiece6.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1100,9 +1111,171 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>1,2,2,4</rect>
+                <rect>1,2,3,3</rect>
                 <key>scale9Paddings</key>
-                <rect>1,2,2,4</rect>
+                <rect>1,2,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PotteryB-assets/PotteryB.png</key>
+            <key type="filename">PotteryB-assets/PotteryBShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,5,7,11</rect>
+                <key>scale9Paddings</key>
+                <rect>3,5,7,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PotteryB-assets/PotteryBPiece1.png</key>
+            <key type="filename">PotteryB-assets/PotteryBPiece2.png</key>
+            <key type="filename">PotteryD-assets/PotteryDPiece1.png</key>
+            <key type="filename">PotteryD-assets/PotteryDPiece3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,3,2</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,3,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PotteryB-assets/PotteryBPiece4.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece4.png</key>
+            <key type="filename">PotteryD-assets/PotteryDPiece4.png</key>
+            <key type="filename">PotteryD-assets/PotteryDPiece5.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,2,2</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,2,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PotteryB-assets/PotteryBPiece5.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,1,3,2</rect>
+                <key>scale9Paddings</key>
+                <rect>2,1,3,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PotteryC-assets/PotteryC.png</key>
+            <key type="filename">PotteryC-assets/PotteryCShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,5,7,9</rect>
+                <key>scale9Paddings</key>
+                <rect>4,5,7,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PotteryD-assets/PotteryD.png</key>
+            <key type="filename">PotteryD-assets/PotteryDShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,4,5,7</rect>
+                <key>scale9Paddings</key>
+                <rect>3,4,5,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PotteryD-assets/PotteryDPiece2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,2,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,2,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PotteryE-assets/PotteryE.png</key>
+            <key type="filename">PotteryE-assets/PotteryEShadow.png</key>
+            <key type="filename">TombstoneB-assets/TombstoneB.png</key>
+            <key type="filename">TombstoneB-assets/TombstoneBShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,7,8</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,7,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PotteryE-assets/PotteryEPiece1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,1,2</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,1,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PotteryE-assets/PotteryEPiece2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,1,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,1,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1197,22 +1370,6 @@
                 <rect>4,2,7,5</rect>
                 <key>scale9Paddings</key>
                 <rect>4,2,7,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">TombstoneB-assets/TombstoneB.png</key>
-            <key type="filename">TombstoneB-assets/TombstoneBShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,4,7,8</rect>
-                <key>scale9Paddings</key>
-                <rect>4,4,7,8</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1331,6 +1488,10 @@
                     <filename>LargeRockD-assets</filename>
                     <filename>CrucifiedA-assets</filename>
                     <filename>PotteryA-assets</filename>
+                    <filename>PotteryB-assets</filename>
+                    <filename>PotteryC-assets</filename>
+                    <filename>PotteryD-assets</filename>
+                    <filename>PotteryE-assets</filename>
                 </array>
             </struct>
         </map>

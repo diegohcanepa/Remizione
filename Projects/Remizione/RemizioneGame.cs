@@ -53,7 +53,7 @@ namespace Remizione
         // DefaultStart
         private void DefaultStart()
         {
-            VladUtils.PlayMenuBackgroundSound();
+            //VladUtils.PlayMenuBackgroundSound();
 
             var publisherSplash = new SplashScene(this, Atlases.Menu.PublisherLogo, Screen.Center - new Vector2(0, 22), .16f);
             var developerSplash = new SplashScene(this, Atlases.Menu.DeveloperLogo, Screen.Center - new Vector2(0, 20), .21f);

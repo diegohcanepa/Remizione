@@ -42,7 +42,7 @@
 	<FX Name="PickupCoin" MaxInstances="2" />
 	<FX Name="PickupGeneric" MaxInstances="2" />
 	<FX Name="PickupKey" MaxInstances="2" />
-	<FX Name="PotteryBreak" MaxInstances="4" Sounds="1..1" />
+	<FX Name="PotteryBreak" MaxInstances="4" Sounds="1..2" />
 	<FX Name="Raven" />
 	<FX Name="ShockZap" MaxInstances="6" Sounds="1..2" />
 	<FX Name="SmallWhooshA" MaxInstances="6" Sounds="1..4" />

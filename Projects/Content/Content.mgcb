@@ -452,6 +452,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/PotteryBreak1.wav;Audio/FX/PotteryBreak1
 
+#begin Audio/FX/PotteryBreak2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/PotteryBreak2.wav;Audio/FX/PotteryBreak2
+
 #begin Audio/FX/Raven.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

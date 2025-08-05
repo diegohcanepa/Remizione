@@ -9,7 +9,7 @@ namespace Remizione
     public sealed class LootBag : IsometricProp
     {
         private readonly FloatTween altitudeTween = new();
-        private bool isBeginCollected;
+        //private bool isBeginCollected;
         private readonly FloatTween opacityTween = new();
         private readonly Vector2Tween scaleTween = new();
 
@@ -70,7 +70,7 @@ namespace Remizione
         {
             Loot = null;
             Scale = Vector2.One;
-            isBeginCollected = false;
+            //isBeginCollected = false;
 
             if (Session.Room != null && MetaItem.Find(itemName) is MetaItem metaItem)
             {

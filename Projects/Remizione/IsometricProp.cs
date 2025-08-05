@@ -26,6 +26,7 @@ namespace Remizione
             : base(session, name)
         {
             this.Atlas = Atlases.Environment;
+            this.HitTestSource = HitTestSource.Collider;
         }
 
         #endregion
@@ -119,9 +120,6 @@ namespace Remizione
 
             return null;
         }
-
-        // HitTestSource
-        public override HitTestSource HitTestSource => HitTestSource.Collider;
 
         // RevealArea
         [ScriptProperty]

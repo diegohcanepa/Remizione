@@ -519,7 +519,7 @@ namespace Remizione
 
             HP -= (int)CumulativeDamage;
 
-            if ((PreventKnockback || knockback == Vector2.Zero) && HP <= 0)
+            if (knockback == Vector2.Zero && HP <= 0)
             {
                 Die();
             }
@@ -834,7 +834,7 @@ namespace Remizione
         }
 
         // HitTestSource
-        public virtual HitTestSource HitTestSource => HitTestSource.Hotspot;
+        public HitTestSource HitTestSource { get; init; }
 
         // Hotspot
         [ScriptProperty]
@@ -1050,7 +1050,7 @@ namespace Remizione
             if (IsDead)
                 return;
 
-            this.knockback = knockback;
+            this.knockback = PreventKnockback ? Vector2.Zero : knockback;
             this.applyDamagePending = true;
             this.CumulativeDamage += amount;
             this.impactWordKind = impactWordKind;
