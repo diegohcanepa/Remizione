@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:fa9d00b6cc81ff94fa00dd11539cda3c:c10e3358754cbdc8dd598e3ef4fd7822:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:bcda30d7249864f64d7d755f2a210a08:61dee2a9539b4148b017ea82132d316b:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,7 +20,7 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Environment.png" width="1024" height="1024">
-    <sprite n="Apple.png" x="664" y="227" w="6" h="5"/>
+    <sprite n="Apple.png" x="664" y="235" w="6" h="5"/>
     <sprite n="BigSign.png" x="165" y="248" w="32" h="54"/>
     <sprite n="BigSignShadow.png" x="163" y="304" w="32" h="54"/>
     <sprite n="Chili.png" x="1019" y="306" w="2" h="1"/>
@@ -100,22 +100,22 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PotteryAPiece3.png" x="722" y="242" w="5" h="4"/>
     <sprite n="PotteryAPiece4.png" x="1019" y="260" w="3" h="5"/>
     <sprite n="PotteryAPiece5.png" x="261" y="247" w="5" h="5"/>
-    <sprite n="PotteryAPiece6.png" x="976" y="162" w="5" h="6"/>
+    <sprite n="PotteryAPiece6.png" x="992" y="162" w="5" h="6"/>
     <sprite n="PotteryAShadow.png" x="187" y="188" w="12" h="19"/>
-    <sprite n="PotteryB.png" x="473" y="225" w="13" h="21"/>
+    <sprite n="PotteryB.png" x="489" y="225" w="13" h="21"/>
     <sprite n="PotteryBPiece1.png" x="722" y="248" w="5" h="4"/>
     <sprite n="PotteryBPiece2.png" x="722" y="254" w="5" h="4"/>
     <sprite n="PotteryBPiece3.png" x="261" y="254" w="5" h="5"/>
     <sprite n="PotteryBPiece4.png" x="268" y="165" w="4" h="4"/>
     <sprite n="PotteryBPiece5.png" x="346" y="122" w="6" h="4"/>
     <sprite n="PotteryBPiece6.png" x="722" y="228" w="5" h="5"/>
-    <sprite n="PotteryBShadow.png" x="453" y="243" w="13" h="21"/>
+    <sprite n="PotteryBShadow.png" x="473" y="230" w="13" h="21"/>
     <sprite n="PotteryC.png" x="585" y="218" w="15" h="19"/>
     <sprite n="PotteryCPiece1.png" x="357" y="106" w="7" h="6"/>
     <sprite n="PotteryCPiece2.png" x="357" y="114" w="7" h="5"/>
     <sprite n="PotteryCPiece3.png" x="357" y="89" w="7" h="7"/>
     <sprite n="PotteryCPiece4.png" x="268" y="171" w="4" h="4"/>
-    <sprite n="PotteryCPiece5.png" x="664" y="234" w="6" h="5"/>
+    <sprite n="PotteryCPiece5.png" x="664" y="242" w="6" h="5"/>
     <sprite n="PotteryCPiece6.png" x="357" y="121" w="7" h="5"/>
     <sprite n="PotteryCShadow.png" x="545" y="224" w="15" h="19"/>
     <sprite n="PotteryD.png" x="187" y="214" w="11" h="15"/>
@@ -128,9 +128,9 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PotteryE.png" x="596" y="252" w="14" h="16"/>
     <sprite n="PotteryEPiece1.png" x="1019" y="274" w="3" h="4"/>
     <sprite n="PotteryEPiece2.png" x="1019" y="267" w="3" h="5"/>
-    <sprite n="PotteryEPiece3.png" x="664" y="241" w="6" h="5"/>
-    <sprite n="PotteryEPiece4.png" x="968" y="162" w="6" h="6"/>
-    <sprite n="PotteryEPiece5.png" x="664" y="248" w="6" h="5"/>
+    <sprite n="PotteryEPiece3.png" x="664" y="249" w="6" h="5"/>
+    <sprite n="PotteryEPiece4.png" x="664" y="227" w="6" h="6"/>
+    <sprite n="PotteryEPiece5.png" x="664" y="256" w="6" h="5"/>
     <sprite n="PotteryEPiece6.png" x="722" y="235" w="5" h="5"/>
     <sprite n="PotteryEShadow.png" x="612" y="259" w="14" h="16"/>
     <sprite n="RainDropImpactA01.png" x="702" y="61" w="25" h="16"/>
@@ -155,16 +155,16 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="RoomConnectorOutdoor04.png" x="2" y="182" w="65" h="79"/>
     <sprite n="RoomConnectorOutdoor05.png" x="2" y="263" w="65" h="79"/>
     <sprite n="RoomConnectorOutdoorShadow.png" x="366" y="173" w="65" h="79"/>
-    <sprite n="RottenApple.png" x="664" y="255" w="6" h="5"/>
-    <sprite n="ShadowSpot6.png" x="664" y="262" w="6" h="3"/>
+    <sprite n="RottenApple.png" x="664" y="263" w="6" h="5"/>
+    <sprite n="ShadowSpot6.png" x="715" y="277" w="6" h="3"/>
     <sprite n="ShadowSpot7.png" x="699" y="223" w="7" h="3"/>
     <sprite n="ShadowSpot8.png" x="357" y="84" w="8" h="3"/>
     <sprite n="ShadowSpot9.png" x="357" y="59" w="9" h="3"/>
     <sprite n="ShadowSpot10.png" x="357" y="54" w="10" h="3"/>
     <sprite n="ShadowSpot11.png" x="715" y="272" w="11" h="3"/>
     <sprite n="ShadowSpotW12.png" x="187" y="209" w="12" h="3"/>
-    <sprite n="ShadowSpotW13.png" x="983" y="167" w="13" h="3"/>
-    <sprite n="ShadowSpotW14.png" x="983" y="162" w="14" h="3"/>
+    <sprite n="ShadowSpotW13.png" x="453" y="243" w="13" h="3"/>
+    <sprite n="ShadowSpotW14.png" x="473" y="225" w="14" h="3"/>
     <sprite n="SinnerCross.png" x="341" y="176" w="23" h="36"/>
     <sprite n="SinnerCrossShadow.png" x="341" y="214" w="23" h="36"/>
     <sprite n="SmallRockA.png" x="562" y="242" w="15" h="11"/>
@@ -192,5 +192,6 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="TreeCShadow.png" x="999" y="46" w="23" h="42"/>
     <sprite n="Trunk.png" x="678" y="107" w="22" h="18"/>
     <sprite n="TrunkShadow.png" x="243" y="301" w="22" h="18"/>
+    <sprite n="WaterPuddleA.png" x="968" y="162" w="22" h="7"/>
     <sprite n="Zap.png" x="672" y="266" w="20" h="13"/>
 </TextureAtlas>

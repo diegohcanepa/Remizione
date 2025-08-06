@@ -38,7 +38,7 @@
   <String Key="InventoryCategory.Consumables">Consumibles</String>
   <String Key="InventoryCategory.Junk">Cachivaches</String>
   <String Key="InventoryCategory.KeyItems">Objetos clave</String>
-  <String Key="InventoryCategory.Skills">Habilidades</String>
+  <String Key="InventoryCategory.Traits">Ventajas y desventajas</String>
   <String Key="InventoryCategory.Trinkets">Chucherias</String>
   <String Key="InventoryVerb.Equip">Equipar</String>
   <String Key="InventoryVerb.Unequip">Desequipar</String>

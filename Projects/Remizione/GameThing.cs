@@ -810,6 +810,15 @@ namespace Remizione
             return new Size(width, height);
         }
 
+        // GetFootstepSound
+        public Sound? GetFootstepSound(Vector2 position)
+        {
+            if (RuntimeHotspot?.Contains(position) == true)
+                return TerrainSound;
+
+            return null;
+        }
+
         // GetThrowableSpawnPosition
         public Vector2 GetThrowableSpawnPosition() => this.GetAbsolutePoint(ThrowableSpawnPosition);
 
@@ -1056,6 +1065,14 @@ namespace Remizione
             this.CumulativeDamage += amount;
             this.impactWordKind = impactWordKind;
         }
+
+        // TerrainParticleColor
+        [ScriptProperty]
+        public Color TerrainParticleColor { get; set; }
+
+        // TerrainSound
+        [ScriptProperty]
+        public Sound? TerrainSound { get; set; }
 
         // ThrowableSpawnPosition
         [ScriptProperty]

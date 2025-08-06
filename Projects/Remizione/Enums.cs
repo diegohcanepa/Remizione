@@ -48,7 +48,7 @@ namespace Remizione
     public enum ImpactWordKind { None, Kapow, Zap }
 
     // InventoryCategory
-    public enum InventoryCategory { None, Consumables, Junk, KeyItems, Skills, Trinkets }
+    public enum InventoryCategory { None, Consumables, Junk, KeyItems, Traits, Trinkets }
 
     // InventoryVerb
     public enum InventoryVerb { Equip, Unequip }

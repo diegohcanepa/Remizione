@@ -59,19 +59,19 @@ namespace Engendro
         // AddFrame
         public SpriteFrame AddFrame(string imageName, int duration)
         {
-            return AddFrame(imageName, duration, false, string.Empty, 1, string.Empty, Rectangle.Empty, false, string.Empty);
+            return AddFrame(imageName, duration, false, string.Empty, 1, string.Empty, Rectangle.Empty, string.Empty);
         }
 
         // AddFrame
         public SpriteFrame AddFrame(string imageName, int duration, string label)
         {
-            return AddFrame(imageName, duration, false, label, 1, string.Empty, Rectangle.Empty, false, string.Empty);
+            return AddFrame(imageName, duration, false, label, 1, string.Empty, Rectangle.Empty, string.Empty);
         }
 
         // AddFrame
-        public SpriteFrame AddFrame(string imageName, int duration, bool isEventFrame, string label, float speedFactor, string soundName, Rectangle subArea, bool footstep, string gotoLabel)
+        public SpriteFrame AddFrame(string imageName, int duration, bool isEventFrame, string label, float speedFactor, string soundName, Rectangle subArea, string gotoLabel)
         {
-            SpriteFrame result = new(this, frameList.Count, imageName, duration, isEventFrame, label, speedFactor, soundName, subArea, footstep, gotoLabel);
+            SpriteFrame result = new(this, frameList.Count, imageName, duration, isEventFrame, label, speedFactor, soundName, subArea, gotoLabel);
             frameList.Add(result);
             Invalidate();
 

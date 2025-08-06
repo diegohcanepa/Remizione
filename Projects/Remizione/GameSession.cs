@@ -143,6 +143,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(RoomConnector));
             scriptRegistry.RegisterEntity(typeof(Snail));
             scriptRegistry.RegisterEntity(typeof(Unredeemed));
+            scriptRegistry.RegisterEntity(typeof(WaterPuddle));
             scriptRegistry.RegisterEntity(typeof(Zabul));
 
             scriptRegistry.RegisterStatement("add-dialog-option", typeof(AddDialogOptionCommand));

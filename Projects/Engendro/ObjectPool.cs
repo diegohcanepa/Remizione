@@ -15,13 +15,18 @@ namespace Engendro
         private readonly Queue<T> pool = new();
 
         // Constructor
-        public ObjectPool(Func<T> objectGenerator, int maxSize)
+        public ObjectPool(Func<T> objectGenerator, int maxSize, int precacheAmount = 0)
         {
             CodeContract.GreaterThanZero(maxSize, nameof(maxSize));
 
             this.maxSize = maxSize;
             this.objectGenerator = objectGenerator;
             this.InUse = new ReadOnlyCollection<T>(inUse);
+
+            for (var i = 0; i < precacheAmount; i++)
+            {
+                pool.Enqueue(objectGenerator());
+            }
         }
 
         // Available

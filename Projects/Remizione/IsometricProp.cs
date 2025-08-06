@@ -15,7 +15,6 @@ namespace Remizione
         private bool isRevealBoxDirty;
         private RectangleF revealBox;
         private readonly FloatTween revealTween = new();
-        private Polygon? terrainPoly;
 
         #endregion
 
@@ -32,21 +31,6 @@ namespace Remizione
         #endregion
 
         #region Private members
-
-        // InvalidateTerrainArea
-        private void InvalidateTerrainArea()
-        {
-            if (TerrainPolygon == null)
-                return;
-
-            int vertexCount = TerrainPolygon.Vertices.Count;
-            var vertices = new Vector2[vertexCount];
-
-            var offset = new Vector2(X - BoundingBox.Width / 2, Y - BoundingBox.Height);
-            TerrainPolygon.GetVertices(vertices, offset);
-            terrainPoly ??= new();
-            terrainPoly.SetVertices(vertices);
-        }
 
         // UpdateOpacityFactor
         private void UpdateOpacityFactor(GameTime gameTime)
@@ -83,19 +67,11 @@ namespace Remizione
 
         #region Protected members
 
-        // OnLoad
-        protected override void OnLoad()
-        {
-            base.OnLoad();
-            InvalidateTerrainArea();
-        }
-
         // OnTransform
         protected override void OnTransform(TransformChange change)
         {
             base.OnTransform(change);
             isRevealBoxDirty = true;
-            InvalidateTerrainArea();
         }
 
         // OnUpdate
@@ -108,18 +84,6 @@ namespace Remizione
         }
 
         #endregion
-
-        // GetFootstepSound
-        public Sound? GetFootstepSound(Vector2 position)
-        {
-            if (terrainPoly != null)
-            {
-                if (terrainPoly.Contains(position))
-                    return TerrainSound;
-            }
-
-            return null;
-        }
 
         // RevealArea
         [ScriptProperty]
@@ -139,13 +103,5 @@ namespace Remizione
                 return revealBox;
             }
         }
-
-        // TerrainPolygon
-        [ScriptProperty]
-        public Polygon? TerrainPolygon { get; set; }
-
-        // TerrainSound
-        [ScriptProperty]
-        public Sound? TerrainSound { get; set; }
     }
 }

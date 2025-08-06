@@ -50,7 +50,7 @@ namespace Remizione
                 Opacity = .4f,
             };
 
-            if (grid.ItemContainer.Category == InventoryCategory.Skills)
+            if (grid.ItemContainer.Category == InventoryCategory.Traits)
                 stateIcon.Image = Atlases.UI.InventorySlotQuestionIcon;
             else
                 stateIcon.Image = Atlases.UI.InventorySlotLockIcon;
@@ -79,7 +79,7 @@ namespace Remizione
 
             if (Item == null)
             {
-                if (Index > grid.ItemContainer.Size-1 || grid.ItemContainer.Category == InventoryCategory.Skills)
+                if (Index > grid.ItemContainer.Size-1 || grid.ItemContainer.Category == InventoryCategory.Traits)
                     stateIcon.Draw(gameTime);
             }
             else

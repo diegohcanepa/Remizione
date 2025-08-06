@@ -23,6 +23,7 @@ namespace Remizione
         private readonly ActorCloseAttackState closeAttackState;
         private readonly CombatStateMachine combatStateMachine;
         private readonly ActorConsumeState consumeState;
+        private FootstepEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
         private readonly FloatTween headTween = new();
@@ -261,21 +262,28 @@ namespace Remizione
         // UpdateFootstep
         private void UpdateFootstep()
         {
-            if (Sprite.Player.Frame == null || Sprite.Player.Frame == footstepLastUsedFrame || !Sprite.Player.Frame.Footstep)
+            if (Room == null)
                 return;
 
-            if (Room is ProceduralRoom room)
+            if (Sprite.Player.Frame == null || Sprite.Player.Frame == footstepLastUsedFrame || !Sprite.Player.Frame.IsEvent)
+                return;
+
+            for (var i = 0; i < Room.CulledThings.Count; i++)
             {
-                for (var i = 0; i < room.ProceduralThings.Count; i++)
+                if (Room.CulledThings[i] is GameThing thing && thing.TerrainSound != null && thing.GetFootstepSound(Position) is Sound sound)
                 {
-                    if (room.ProceduralThings[i] is IsometricProp prop && prop.GetFootstepSound(Position) is Sound sound)
-                    {
-                        PlaySound(sound);
-                        footstepLastUsedFrame = Sprite.Player.Frame;
-                        return;
-                    }
+                    footstepEffect ??= new(Game);
+                    if (!footstepEffect.IsActive)
+                        footstepEffect.Spawn(Position, thing.TerrainParticleColor);
+
+                    PlaySound(sound);
+                    footstepLastUsedFrame = Sprite.Player.Frame;
+                    return;
                 }
             }
+
+            PlaySound(SoundNames.FootstepA);
+            footstepLastUsedFrame = Sprite.Player.Frame;
         }
 
         #endregion
@@ -336,6 +344,8 @@ namespace Remizione
 
             if (moveBalancingTween.IsRunning)
                 Rotation -= moveBalancingTween.CurrentValue;
+
+            footstepEffect?.Draw(gameTime);
         }
 
         // OnDrawShadow
@@ -403,9 +413,9 @@ namespace Remizione
             if (attributes[nameof(Inventory.KeyItems)]?.Value is string keyItemsData)
                 Inventory.KeyItems.SetSerializationData(keyItemsData);
 
-            // Skills
-            if (attributes[nameof(Inventory.Skills)]?.Value is string skillsData)
-                Inventory.Skills.SetSerializationData(skillsData);
+            // Traits
+            if (attributes[nameof(Inventory.Traits)]?.Value is string traitsData)
+                Inventory.Traits.SetSerializationData(traitsData);
 
             // Trinkets
             if (attributes[nameof(Inventory.Trinkets)]?.Value is string trinketsData)
@@ -496,6 +506,7 @@ namespace Remizione
             moveBalancingTween.Update(gameTime);
             UpdateDirection();
             UpdateFootstep();
+            footstepEffect?.Update(gameTime);
 
             Inventory.Trinkets.SelectedItem?.Update(gameTime);
         }
@@ -513,7 +524,7 @@ namespace Remizione
             output.WriteAttributeString(nameof(Inventory.Consumables), Inventory.Consumables.GetSerializationData());
             output.WriteAttributeString(nameof(Inventory.Junk), Inventory.Junk.GetSerializationData());
             output.WriteAttributeString(nameof(Inventory.KeyItems), Inventory.KeyItems.GetSerializationData());
-            output.WriteAttributeString(nameof(Inventory.Skills), Inventory.Skills.GetSerializationData());
+            output.WriteAttributeString(nameof(Inventory.Traits), Inventory.Traits.GetSerializationData());
             output.WriteAttributeString(nameof(Inventory.Trinkets), Inventory.Trinkets.GetSerializationData());
         }
 

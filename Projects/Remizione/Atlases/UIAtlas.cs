@@ -24,7 +24,7 @@ namespace Remizione
             InventoryCategoryConsumables = this[nameof(InventoryCategoryConsumables)];
             InventoryCategoryJunk = this[nameof(InventoryCategoryJunk)];
             InventoryCategoryKeyItems = this[nameof(InventoryCategoryKeyItems)];
-            InventoryCategorySkills = this[nameof(InventoryCategorySkills)];
+            InventoryCategoryTraits = this[nameof(InventoryCategoryTraits)];
             InventoryGridContainer = this[nameof(InventoryGridContainer)];
             InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
             InventoryInfoTitleContainer = this[nameof(InventoryInfoTitleContainer)];
@@ -88,8 +88,8 @@ namespace Remizione
         // InventoryCategoryKeyItems
         public AtlasImage InventoryCategoryKeyItems { get; }
 
-        // InventoryCategorySkills
-        public AtlasImage InventoryCategorySkills { get; }
+        // InventoryCategoryTraits
+        public AtlasImage InventoryCategoryTraits { get; }
 
         // InventoryGridContainer
         public AtlasImage InventoryGridContainer { get; }

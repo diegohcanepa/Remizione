@@ -314,7 +314,7 @@
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryConsumables.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryJunk.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryKeyItems.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategorySkills.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryTraits.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryTrinkets.png</key>
             <key type="filename">UI-assets/ProhibitionMark.png</key>
             <struct type="IndividualSpriteSettings">
