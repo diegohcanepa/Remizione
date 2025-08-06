@@ -3,21 +3,24 @@
 namespace Remizione.Scripting
 {
     // AddLootItemCommand
-    // Arguments: {ItemName} {DropChance}
+    // Arguments: {MetaItem} weight {float}
     internal sealed class AddLootItemCommand : NonAwaitableCommand
     {
         // Constructor
         internal AddLootItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 2)
+            : base(script, source, body, 3)
         {
-            var thing = AssertEntityNotNull<GameThing>(Script.EntityName);
-            var itemName = Parser.ParseName(this, 0);
-            var dropChance = Parser.ParseFloat(this, 1);
+            if (string.IsNullOrWhiteSpace(BeginLootTableCommand.ActiveName))
+                throw new ScriptException(script, "You need to call begin-loot-table first.");
 
-            var lootTable = LootTable.Find(thing.StaticName);
-            lootTable ??= LootTable.Register(thing.StaticName);
+            var itemName = body.Clauses[0];
+            AssertKeyword(1, "weight");
+            var weight = Parser.ParseFloat(this, 2);
 
-            lootTable.Add(itemName, dropChance);
+            var lootTable = LootTable.Find(BeginLootTableCommand.ActiveName);
+            lootTable ??= LootTable.Register(BeginLootTableCommand.ActiveName);
+
+            lootTable.Add(itemName, weight);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using Engendro.Input;
 using EngendroAdventure;
 using EngendroAdventure.Scripting;
@@ -134,6 +133,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(CreditsRoom));
             scriptRegistry.RegisterEntity(typeof(GameRoom));
             scriptRegistry.RegisterEntity(typeof(IsometricProp));
+            scriptRegistry.RegisterEntity(typeof(LootBag));
             scriptRegistry.RegisterEntity(typeof(Orb));
             scriptRegistry.RegisterEntity(typeof(OutgoingGhostCar));
             scriptRegistry.RegisterEntity(typeof(Pickup));
@@ -149,7 +149,7 @@ namespace Remizione
             scriptRegistry.RegisterStatement("add-hole", typeof(AddHoleCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("add-item", typeof(AddItemCommand), CodingContext.Any);
             scriptRegistry.RegisterStatement("add-light", typeof(AddLightCommand), CodingContext.EntityDeclaration);
-            scriptRegistry.RegisterStatement("add-loot-item", typeof(AddLootItemCommand), CodingContext.EntityDeclaration);
+            scriptRegistry.RegisterStatement("add-loot-item", typeof(AddLootItemCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("add-trigger-area", typeof(AddTriggerAreaCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("add-walk-area", typeof(AddWalkAreaCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("animate", typeof(AnimateCommand));
@@ -158,9 +158,11 @@ namespace Remizione
             scriptRegistry.RegisterStatement("await-pickup", typeof(AwaitPickUpCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-player-approach", typeof(AwaitPlayerApproachCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-popup", typeof(AwaitPopupCommand), CodingContext.Execution);
+            scriptRegistry.RegisterStatement("begin-loot-table", typeof(BeginLootTableCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("begin-rain", typeof(BeginRainCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("create-dialog-block", typeof(CreateDialogBlockCommand));
             scriptRegistry.RegisterStatement("echo", typeof(EchoCommand), CodingContext.Execution);
+            scriptRegistry.RegisterStatement("end-loot-table", typeof(EndLootTableCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             scriptRegistry.RegisterStatement("exit-session", typeof(ExitSessionCommand));
             scriptRegistry.RegisterStatement("hide-overlay-text", typeof(HideOverlayTextCommand));
@@ -324,7 +326,10 @@ namespace Remizione
 
             foreach (var entity in Entities)
             {
-                if (entity is GameThing thing && thing.EntityKind == EntityKind.Static)
+                if (entity is not GameThing thing)
+                    continue;
+
+                if (thing.EntityKind == EntityKind.Static)
                     staticThings.Add(thing);
             }
         }
@@ -440,7 +445,7 @@ namespace Remizione
         {
             if (proceduralThingStates.TryGetValue(name, out int state))
                 return state;
-            
+
             return 0;
         }
 

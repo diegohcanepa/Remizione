@@ -16,6 +16,7 @@ namespace Remizione
             HitTestSource = HitTestSource.Hotspot;
             HurtShake = new(1.5f, 0);
             HurtSound = Sound.Find(SoundNames.ImpactA);
+            LootTableName = nameof(Pottery);
             MaxHP = 6;
             PreventBlink = true;
             PreventKnockback = true;

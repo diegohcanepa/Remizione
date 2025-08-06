@@ -54,6 +54,7 @@ namespace Remizione
         {
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
+            this.LootTableName = StaticName;
         }
 
         #endregion
@@ -184,12 +185,21 @@ namespace Remizione
                 Session.Player.WhiteTickets += WhiteTickets;
             }
 
-            if (LootTable.Find(StaticName) is LootTable lootTable)
+            DropLootBag();
+        }
+
+        // DropLootBag
+        private void DropLootBag()
+        {
+            if (Room is ProceduralRoom room)
             {
-                if (Session.ObjectPools.LootBags.Get() is LootBag lootBag)
+                if (LootTable.Find(LootTableName) is LootTable lootTable)
                 {
-                    var itemName = lootTable.GetLoot();
-                    lootBag.Drop(Position, itemName);
+                    if (room.SpawnThing(nameof(LootBag)) is LootBag lootBag)
+                    {
+                        if (lootTable.GetLoot() is MetaItem metaItem)
+                            lootBag.Drop(Position, metaItem);
+                    }
                 }
             }
         }
@@ -319,11 +329,6 @@ namespace Remizione
 
             if (hurtShakeTween != null && hurtShakeTween.IsRunning)
                 Position -= hurtShakeTween.CurrentValue;
-        }
-
-        // OnDrawReflection
-        protected virtual void OnDrawReflection(GameTime gameTime)
-        {
         }
 
         // OnDrawLights
@@ -678,12 +683,6 @@ namespace Remizione
             OnDrawLights(gameTime);
         }
 
-        // DrawReflection
-        public void DrawReflection(GameTime gameTime)
-        {
-            OnDrawReflection(gameTime);
-        }
-
         // DrawShadow
         public void DrawShadow(GameTime gameTime)
         {
@@ -934,6 +933,10 @@ namespace Remizione
 
         // LocalizedDisplayName
         public string LocalizedDisplayName => localizedDisplayName;
+
+        // LootTableName
+        [ScriptProperty]
+        public string LootTableName { get; init; }
 
         // MaxHP
         [ScriptProperty]

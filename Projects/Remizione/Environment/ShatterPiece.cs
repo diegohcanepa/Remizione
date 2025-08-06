@@ -4,40 +4,63 @@ using System;
 
 namespace Remizione
 {
+    /// <summary>
+    /// ShatterPiece
+    /// </summary>
     public class ShatterPiece : GameObject
     {
-        private float bounceFactor = 0.6f;
-        private float gravity = 300;
+        #region Private fields
+
+        private float angularVelocity;
+        private const float bounceFactor = .6f;
+        private float delayTimer;
+        private const float gravity = 300;
         private float groundY;
         private readonly ImageSprite image;
-        private float life = 2;
-        private Vector2 velocity;
-        private float angularVelocity;
-
         private float launchDelay;
-        private float delayTimer;
         private bool launched;
+        private float life = 2;
+        private readonly BreakableProp owner;
+        private Vector2 velocity;
 
-        public ShatterPiece(RemizioneGame game, AtlasImage image)
-            : base(game)
+        #endregion
+
+        #region Constructor
+
+        // Constructor
+        public ShatterPiece(BreakableProp owner, AtlasImage image)
+            : base(owner.Game)
         {
-            this.image = new(game, image)
+            this.owner = owner;
+
+            this.image = new(Game, image)
             {
                 PivotOrigin = RectanglePoint.Middle
             };
         }
 
+        #endregion
+
+        #region Private members
+
+        // RandomBetween
         private static float RandomBetween(float min, float max)
         {
             return (float)(Random.Shared.NextDouble() * (max - min) + min);
         }
 
+        #endregion
+
+        #region Protected members
+
+        // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
             if (launched)
                 image.Draw(gameTime);
         }
 
+        // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -47,14 +70,11 @@ namespace Remizione
                 delayTimer += dt;
                 if (delayTimer >= launchDelay)
                 {
-                    // Velocidad más contenida
-                    velocity = new(
-                        RandomBetween(-30f, 30f),   // menos dispersión horizontal
-                        RandomBetween(-20f, 10f)    // caída más natural
-                    );
+                    velocity = new(RandomBetween(-30f, 30f), RandomBetween(-20f, 10f));
                     angularVelocity = RandomBetween(-5f, 5f);
                     launched = true;
                 }
+                
                 return;
             }
 
@@ -69,8 +89,8 @@ namespace Remizione
             {
                 image.Y = groundY;
                 velocity.Y *= -bounceFactor;
-                velocity.X *= 0.7f;
-                angularVelocity *= 0.7f;
+                velocity.X *= .7f;
+                angularVelocity *= .7f;
 
                 if (Math.Abs(velocity.Y) < 6f)
                     velocity.Y = 0;
@@ -81,13 +101,12 @@ namespace Remizione
             image.Update(gameTime);
         }
 
-        public bool IsDead => life <= 0;
+        #endregion
 
-        public void Launch(BreakableProp requester)
+        // Launch
+        public void Launch()
         {
-            var bounds = requester.BoundingBox;
-
-            // Offset vertical aleatorio para evitar que todas salgan alineadas en Y
+            var bounds = owner.BoundingBox;
             float yOffset = RandomBetween(-4f, 2f);
 
             image.Position = new(RandomBetween(bounds.Left + 2f, bounds.Right - 2f), 
@@ -95,9 +114,8 @@ namespace Remizione
 
             image.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.One, new(.75f), 400);
 
-            groundY = requester.Y + Randomizer.Next(-3, 3);
-
-            launchDelay = RandomBetween(0f, 0.1f);
+            groundY = owner.Y + Randomizer.Next(-3, 3);
+            launchDelay = RandomBetween(0f, .1f);
             delayTimer = 0f;
             launched = false;
         }

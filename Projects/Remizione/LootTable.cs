@@ -33,38 +33,42 @@ namespace Remizione
         #endregion
 
         // Add
-        public void Add(string itemName, float dropChance)
+        public void Add(string itemName, float weight)
         {
             if (string.IsNullOrEmpty(itemName))
                 return;
 
-            CodeContract.GreaterThanZero(dropChance, nameof(dropChance));
-            items.Add((itemName, dropChance));
+            CodeContract.GreaterThanZero(weight, nameof(weight));
+            items.Add((itemName, weight));
         }
 
-        // Get
-        public string GetLoot()
+        // GetLoot
+        public MetaItem? GetLoot()
         {
             if (items.Count == 0)
-                return string.Empty;
+                return null;
 
             float totalWeight = 0f;
-            foreach (var loot in items)
+
+            for (var i = 0; i < items.Count; i++)
             {
-                totalWeight += loot.weight;
+                totalWeight += items[i].weight;
             }
 
             float roll = (float)_random.NextDouble() * totalWeight;
 
-            foreach (var loot in items)
+            for (var i = 0; i < items.Count; i++)
             {
-                if (roll < loot.weight)
-                    return loot.itemName;
-
-                roll -= loot.weight;
+                if (roll < items[i].weight)
+                    return MetaItem.Find(items[i].itemName);
+                
+                roll -= items[i].weight;
             }
 
-            return string.Empty;
+            return null;
         }
+
+        // Nothing
+        public const string Nothing = "<Nothing>";
     }
 }

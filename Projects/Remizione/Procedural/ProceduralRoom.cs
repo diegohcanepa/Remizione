@@ -22,6 +22,7 @@ namespace Remizione
         private readonly List<GameThing> proceduralThings = [];
         private readonly Random random;
         private readonly int randomSeed;
+        private readonly List<GameThing> spawnableThings = [];
         private readonly ImageSprite terrainBlock;
         private int terrainCols;
         private int terrainRows;
@@ -37,6 +38,7 @@ namespace Remizione
             LightingSystem = true;
 
             this.ProceduralThings = new(proceduralThings);
+            this.SpawnableThings = new(spawnableThings);
             this.randomSeed = GetSeed(Session.RandomSeed, Session.Level);
             this.random = new Random(randomSeed);
             this.terrainBlock = new ImageSprite(session.Game);
@@ -45,17 +47,6 @@ namespace Remizione
         #endregion
 
         #region Private members
-
-        // CreateDynamicThing
-        private GameThing CreateDynamicThing(string staticName)
-        {
-            if (Session.CreateDynamicThing(staticName, $"{staticName}*{Name}_{proceduralThings.Count}") is not GameThing result)
-                throw new InvalidOperationException($"Failed to create dynamic thing '{staticName}'.");
-
-
-
-            return result;
-        }
 
         // DistributeClumped
         private void DistributeClumped(GameThing thing, PlacementData placementData)
@@ -198,7 +189,7 @@ namespace Remizione
                 return;
 
             var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
-            var instance = CreateDynamicThing(thing.StaticName);
+            var instance = CreateProceduralThing(thing.StaticName);
             instance.Position = targetGrid.GetPosition(col, row);
             instance.Y += instance.BoundingBox.Height;
             instance.X += instance.BoundingBox.Width / 2;
@@ -285,7 +276,7 @@ namespace Remizione
                 {
                     var staticName = roomConnector.NW ? "OutgoingGhostCarNW" : "OutgoingGhostCarNE";
 
-                    if (CreateDynamicThing(staticName) is not OutgoingGhostCar car)
+                    if (CreateProceduralThing(staticName) is not OutgoingGhostCar car)
                         throw new InvalidOperationException("Failed to create GhostCar instance.");
 
                     Children.Add(car);
@@ -364,6 +355,15 @@ namespace Remizione
                 placementDataDictionary.Add(staticName, [placementData]);
         }
 
+        // CreateProceduralThing
+        internal GameThing CreateProceduralThing(string staticName)
+        {
+            if (Session.CreateDynamicThing(staticName, $"{staticName}*{Name}_{proceduralThings.Count}") is not GameThing result)
+                throw new InvalidOperationException($"Failed to create procedural thing '{staticName}'.");
+
+            return result;
+        }
+
         #endregion
 
         // CanPlaceDynamicPropAt
@@ -411,6 +411,20 @@ namespace Remizione
 
         // ProceduralThings
         public ReadOnlyCollection<GameThing> ProceduralThings { get; }
+
+        // SpawnThing
+        public GameThing SpawnThing(string staticName)
+        {
+            if (Session.CreateDynamicThing(staticName, $"{staticName}*{Name}_spawn_{spawnableThings.Count}") is not GameThing result)
+                throw new InvalidOperationException($"Failed to spawn thing '{staticName}'.");
+
+            spawnableThings.Add(result);
+
+            return result;
+        }
+
+        // SpawnableThings
+        public ReadOnlyCollection<GameThing> SpawnableThings { get; }
 
         // TerrainColRange
         [ScriptProperty(CodingContext.Declaration)]

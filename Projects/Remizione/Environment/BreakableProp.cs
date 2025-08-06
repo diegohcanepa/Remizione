@@ -22,7 +22,7 @@ namespace Remizione
             {
                 if (Atlas?.GetImage($"{StaticName}Piece{index}") is AtlasImage image)
                 {
-                    pieces.Add(new(session.Game, image));
+                    pieces.Add(new(this, image));
                     index++;
                 }
                 else
@@ -37,7 +37,7 @@ namespace Remizione
         {
             for (var i = 0; i < pieces.Count; i++)
             {
-                pieces[i].Launch(this);
+                pieces[i].Launch();
                 RenderLayer = RenderLayer.Background;
             }
         }
@@ -67,6 +67,8 @@ namespace Remizione
                 {
                     pieces[i].Update(gameTime);
                 }
+
+                StateID = -1;
             }
         }
 

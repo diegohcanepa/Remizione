@@ -631,6 +631,7 @@
             <key type="filename">PotteryA-assets/PotteryAPiece5.png</key>
             <key type="filename">PotteryB-assets/PotteryBPiece3.png</key>
             <key type="filename">PotteryB-assets/PotteryBPiece6.png</key>
+            <key type="filename">PotteryE-assets/PotteryEPiece6.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

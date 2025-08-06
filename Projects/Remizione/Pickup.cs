@@ -8,14 +8,31 @@ namespace Remizione
     /// </summary>
     public class Pickup : Prop
     {
+        private string itemName = string.Empty;
+
         // Constructor
         public Pickup(GameSession session, string name)
             : base(session, name)
         {
             this.Atlas = Atlases.Environment;
             this.CellMargin = 0;
-            this.DisplayName = $"Item.{StaticName}.Name";
             this.IgnoreWalkArea = false;
+            this.ItemName = StaticName;
+        }
+
+        // ItemName
+        [ScriptProperty]
+        public string ItemName
+        {
+            get => itemName;
+            protected set
+            {
+                if (itemName != value)
+                {
+                    itemName = value;
+                    DisplayName = $"Item.{itemName}.Name";
+                }
+            }
         }
 
         // PickUpSound

@@ -31,9 +31,6 @@ namespace Remizione
             return null;
         }
 
-        // LootBags
-        public ObjectPool<LootBag> LootBags { get; } = new ObjectPool<LootBag>(() => new LootBag(session), 20);
-
         // ReturnThrowable
         public void ReturnThrowable(Throwable throwable)
         {

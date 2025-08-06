@@ -30,10 +30,7 @@ namespace EngendroAdventure
             if (EntityKind != EntityKind.Anonymous)
             {
                 OutcomeScript = session.ScriptLibrary.GetOutcome(name);
-                if (OutcomeScript == null)
-                {
-                    OutcomeScript = session.ScriptLibrary.GetOutcome(StaticName);
-                }
+                OutcomeScript ??= session.ScriptLibrary.GetOutcome(StaticName);
             }
         }
 

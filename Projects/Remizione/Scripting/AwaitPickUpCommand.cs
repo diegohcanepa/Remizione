@@ -21,38 +21,37 @@ namespace Remizione.Scripting
         protected override void OnExecute()
         {
             // Actor
-            actor = AssertEntity<Actor>(0);
-            if (actor == null)
+            if (AssertEntity<Actor>(0) is not Actor actor)
                 return;
 
-            if (AssertEntity<Pickup>(1) is not Pickup pickupItem)
+            // Pickup
+            if (AssertEntity<Pickup>(1) is not Pickup pickup)
                 return;
 
-            var metaItem = MetaItem.Find(pickupItem.StaticName);
+            // MetaItem
+            if (MetaItem.Find(pickup.ItemName) is not MetaItem metaItem)
+                return;
 
-            if (metaItem != null)
+            var inventory = actor.Inventory.GetContainer(metaItem.Category);
+
+            // Stackable item already in inventory
+            if (metaItem.IsStackable && inventory.GetItem(metaItem.Name) is Item item)
             {
-                var inventory = actor.Inventory.GetContainer(metaItem.Category);
-
-                // Stackable item already in inventory
-                if (metaItem.IsStackable && inventory.GetItem(metaItem.Name) is Item item)
+                if (item.IsStackFull)
                 {
-                    if (item.IsStackFull)
-                    {
-                        actor.Session.HUD.Message.Show(HUDMessageKind.EnoughOfThat, true);
-                        return;
-                    }
-                }
-
-                // Inventory is full
-                if (inventory.Count == inventory.Size)
-                {
-                    actor.Session.HUD.Message.Show(HUDMessageKind.InventoryFull, true);
+                    actor.Session.HUD.Message.Show(HUDMessageKind.EnoughOfThat, true);
                     return;
                 }
             }
 
-            actor.PickUp(pickupItem, metaItem);
+            // Inventory is full
+            if (inventory.Count == inventory.Size)
+            {
+                actor.Session.HUD.Message.Show(HUDMessageKind.InventoryFull, true);
+                return;
+            }
+
+            actor.PickUp(pickup, metaItem);
         }
 
         // OnExecutionCompleted

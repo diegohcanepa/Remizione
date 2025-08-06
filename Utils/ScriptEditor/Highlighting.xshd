@@ -193,6 +193,12 @@
 			<Word>terminate-dialog-block</Word>
 		</Keywords>
 
+		<!-- Begin/End -->
+		<Keywords fontWeight="regular" foreground="#935BBA">
+			<Word>begin-loot-table</Word>
+			<Word>end-loot-table</Word>
+		</Keywords>
+
 		<!-- Miscellaneous names -->
 		<Keywords fontWeight="regular" foreground="#2B91AF">
 			<Word>add-hole</Word>
