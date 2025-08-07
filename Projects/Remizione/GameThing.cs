@@ -195,10 +195,10 @@ namespace Remizione
             {
                 if (LootTable.Find(LootTableName) is LootTable lootTable)
                 {
-                    if (room.SpawnThing(nameof(LootBag)) is LootBag lootBag)
+                    if (room.CreateDynamicThing(nameof(LootBag)) is LootBag lootBag)
                     {
                         if (lootTable.GetLoot() is MetaItem metaItem)
-                            lootBag.Drop(Position, metaItem);
+                            lootBag.Drop(room, Position, metaItem);
                     }
                 }
             }
@@ -358,13 +358,6 @@ namespace Remizione
             isCollisionDirty = true;
             InvalidateCollisionPolygons();
             InvalidateWalkArea();
-        }
-
-        // OnParentChanged
-        protected override void OnParentChanged(Entity? previousParent)
-        {
-            //if (!Session.IsInitializing && WorldBlockOrigin != null)
-            StateID = -1;
         }
 
         // OnTransform
@@ -617,6 +610,10 @@ namespace Remizione
             if (CanCheckCollisions())
                 CheckCollisions();
         }
+
+        // CollisionDamage
+        [ScriptProperty]
+        public DamageKind CollisionDamage { get; set; }
 
         // CollisionDetection
         [ScriptProperty]
@@ -1053,10 +1050,6 @@ namespace Remizione
 
         // Session
         public new GameSession Session { get; }
-
-        // ShockZap 
-        [ScriptProperty]
-        public bool ShockZap { get; set; }
 
         // TakeDamage
         public void TakeDamage(GameThing attacker, int amount, Vector2 knockback, ImpactWordKind impactWordKind)

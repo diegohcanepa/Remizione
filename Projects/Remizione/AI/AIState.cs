@@ -8,9 +8,10 @@ namespace Remizione
     public abstract class AIState
     {
         // Constructor
-        protected AIState(AIStateMachine stateMachine)
+        protected AIState(AIStateMachine stateMachine, AIStateName stateName)
         {
             this.StateMachine = stateMachine;
+            this.Name = stateName;
         }
 
         // Actor
@@ -26,11 +27,11 @@ namespace Remizione
         {
         }
 
-        // HandleSignal
-        public virtual bool HandleSignal(AIStateSignal signal) => false;
-
         // StateMachine
         public AIStateMachine StateMachine { get; }
+
+        // Name
+        public AIStateName Name { get; }
 
         // Update
         public virtual void Update(GameTime gameTime)

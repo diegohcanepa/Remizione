@@ -11,17 +11,17 @@ namespace Remizione
     // Affinity
     public enum Affinity { Good, Neutral, Evil }
 
-    // AIStateSignal
-    public enum AIStateSignal { Attack, CloseAttack, Decide, Fatigue, Move }
+    // AIStateName
+    public enum AIStateName { Charge, CloseAttack, Decide, Move, Patrol, RangeAttack }
 
     // AttackRollStat
     public enum AttackRollStat { Strength, Dexterity }
 
-    // CombatStateName
-    public enum CombatStateName { Charge, CloseAttack, Decide, Move }
-
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Videos, Voices, System, Text }
+
+    // DamageKind
+    public enum DamageKind { None, Physical, Fire, Cold, Lightning, Acid, Poison }
 
     // DerivedStat
     public enum DerivedStat { HP, Tickets }

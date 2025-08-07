@@ -3,13 +3,13 @@
 namespace Remizione
 {
     /// <summary>
-    /// CombatChargeState
+    /// AIChargeState
     /// </summary>
-    public sealed class CombatChargeState : AIState
+    public sealed class AIChargeState : AIState
     {
         // Constructor
-        public CombatChargeState(AIStateMachine stateMachine)
-            : base(stateMachine)
+        public AIChargeState(AIStateMachine stateMachine)
+            : base(stateMachine, AIStateName.Charge)
         {
         }
 
@@ -20,9 +20,6 @@ namespace Remizione
         {
             if (Actor.Target is GameThing target)
             {
-                if (target is Actor actorTarget && actorTarget.IsAlert)
-                    actorTarget.FaceTo(Actor);
-
                 var destination = target.GetApproachPosition(Actor, false);
                 Actor.MoveTo(destination);
             }

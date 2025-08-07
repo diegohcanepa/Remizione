@@ -5,13 +5,13 @@ namespace Remizione
     /// <summary>
     /// CombatCloseAttackState
     /// </summary>
-    public sealed class CombatCloseAttackState : AIState
+    public sealed class AICloseAttackState : AIState
     {
         private bool attackLaunched;
 
         // Constructor
-        public CombatCloseAttackState(AIStateMachine stateMachine)
-            : base(stateMachine)
+        public AICloseAttackState(AIStateMachine stateMachine)
+            : base(stateMachine, AIStateName.CloseAttack)
         {
         }
 

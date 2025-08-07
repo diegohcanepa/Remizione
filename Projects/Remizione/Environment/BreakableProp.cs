@@ -67,8 +67,6 @@ namespace Remizione
                 {
                     pieces[i].Update(gameTime);
                 }
-
-                StateID = -1;
             }
         }
 

@@ -30,6 +30,7 @@ namespace Remizione
         private int rainRemainingTime;
         private readonly RoomEditor? roomEditor;
         private readonly List<GameThing> staticThings = [];
+        private readonly Dictionary<string, GameThing> staticThingsDict = [];
 
         #endregion
 
@@ -251,6 +252,10 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(GameplayMode)]?.Value is string gameplayMode)
                 GameplayMode = Enum.Parse<GameplayMode>(gameplayMode);
 
+            // Level
+            if (sessionNode.Attributes[nameof(Level)]?.Value is string level)
+                this.Countdown = XmlConvert.ToInt32(level);
+
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
                 Player = GetEntity<Actor>(player);
@@ -319,7 +324,10 @@ namespace Remizione
                     continue;
 
                 if (thing.EntityKind == EntityKind.Static)
+                {
                     staticThings.Add(thing);
+                    staticThingsDict.Add(thing.StaticName, thing);
+                }
             }
         }
 
@@ -366,6 +374,9 @@ namespace Remizione
             // GameplayMode
             output.WriteAttributeString(nameof(GameplayMode), XmlConvert.ToString((int)GameplayMode));
 
+            // Level
+            output.WriteAttributeString(nameof(Level), XmlConvert.ToString(Level));
+
             // NextRainCooldown
             output.WriteAttributeString(nameof(NextRainCooldown), XmlConvert.ToString(NextRainCooldown));
 
@@ -410,6 +421,12 @@ namespace Remizione
         // GameplayMode
         [ScriptProperty]
         public GameplayMode GameplayMode { get; set; }
+
+        // GetStaticThing
+        public GameThing? GetStaticThing(string name)
+        {
+            return staticThingsDict.TryGetValue(name, out var thing) ? thing : null;
+        }
 
         // HUD
         public HUD HUD { get; }

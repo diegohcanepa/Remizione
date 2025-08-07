@@ -18,7 +18,6 @@ namespace Remizione
         #region Private fields
 
         private readonly FloatTween accelerationFactorTween = new();
-        private readonly AIStateMachine aiStateMachine;
         private MetaItem? closeAttackMetaItem;
         private string closeAttackName = string.Empty;
         private readonly ActorCloseAttackState closeAttackState;
@@ -95,7 +94,7 @@ namespace Remizione
             shockZapState = new ActorShockZapState(this);
             this.StateMachine.RegisterState(shockZapState);
 
-            this.aiStateMachine = new(this);
+            this.AIStateMachine = new(this);
         }
 
         #endregion
@@ -290,6 +289,9 @@ namespace Remizione
 
         #region Protected members
 
+        // AIStateMachine
+        protected AIStateMachine AIStateMachine { get; }
+
         // CalculateSpeed
         protected override float CalculateSpeed() => base.CalculateSpeed() * (FastMove ? FastMoveFactor : 1) * tinyMoveSpeedFactor * (accelerationFactorTween.IsRunning ? accelerationFactorTween.CurrentValue : 1);
 
@@ -299,7 +301,7 @@ namespace Remizione
         // OnCollision
         protected override void OnCollision(GameThing thing)
         {
-            if (thing.ShockZap)
+            if (thing.CollisionDamage == DamageKind.Lightning)
                 PerformShockZap(thing);
         }
 
@@ -481,7 +483,7 @@ namespace Remizione
                 }
             }
 
-            aiStateMachine.Update(gameTime);
+            AIStateMachine.Update(gameTime);
 
             StateMachine.Update(gameTime);
 

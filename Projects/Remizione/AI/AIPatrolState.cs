@@ -3,25 +3,23 @@
 namespace Remizione
 {
     /// <summary>
-    /// CombatMoveState
+    /// AIPatrolState
     /// </summary>
-    public sealed class CombatMoveState : AIState
+    public sealed class AIPatrolState : AIState
     {
         // Constructor
-        public CombatMoveState(AIStateMachine stateMachine)
-            : base(stateMachine)
+        public AIPatrolState(AIStateMachine stateMachine)
+            : base(stateMachine, AIStateName.Patrol)
         {
         }
 
         // Enter
         public override void Enter()
         {
-            base.Enter();
-
+            /*
             if (StateMachine.Destination.HasValue)
-            {
                 Actor.MoveTo(StateMachine.Destination.Value);
-            }
+            */
         }
 
         // Update

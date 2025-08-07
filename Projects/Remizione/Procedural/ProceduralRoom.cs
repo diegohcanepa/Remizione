@@ -17,12 +17,11 @@ namespace Remizione
         #region Private fields
 
         private ProceduralRoomGrid? decorationGrid;
+        private readonly List<GameThing> dynamicThings = [];
         private ProceduralRoomGrid? mainGrid;
         private readonly Dictionary<string, List<PlacementData>> placementDataDictionary = [];
-        private readonly List<GameThing> proceduralThings = [];
         private readonly Random random;
         private readonly int randomSeed;
-        private readonly List<GameThing> spawnableThings = [];
         private readonly ImageSprite terrainBlock;
         private int terrainCols;
         private int terrainRows;
@@ -37,8 +36,7 @@ namespace Remizione
         {
             LightingSystem = true;
 
-            this.ProceduralThings = new(proceduralThings);
-            this.SpawnableThings = new(spawnableThings);
+            this.DynamicThings = new(dynamicThings);
             this.randomSeed = GetSeed(Session.RandomSeed, Session.Level);
             this.random = new Random(randomSeed);
             this.terrainBlock = new ImageSprite(session.Game);
@@ -47,6 +45,15 @@ namespace Remizione
         #endregion
 
         #region Private members
+
+        // CreateDynamicThingCore
+        private GameThing CreateDynamicThingCore(string staticName)
+        {
+            if (Session.CreateDynamicThing(staticName, $"{staticName}*{Name}_{dynamicThings.Count}") is not GameThing result)
+                throw new InvalidOperationException($"Failed to create dynamic thing from'{staticName}'.");
+
+            return result;
+        }
 
         // DistributeClumped
         private void DistributeClumped(GameThing thing, PlacementData placementData)
@@ -189,11 +196,11 @@ namespace Remizione
                 return;
 
             var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
-            var instance = CreateProceduralThing(thing.StaticName);
+            var instance = CreateDynamicThingCore(thing.StaticName);
             instance.Position = targetGrid.GetPosition(col, row);
             instance.Y += instance.BoundingBox.Height;
             instance.X += instance.BoundingBox.Width / 2;
-            proceduralThings.Add(instance);
+            dynamicThings.Add(instance);
             Children.Add(instance);
         }
 
@@ -206,7 +213,7 @@ namespace Remizione
                 var sizeInCells = entranceRail.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
                 if (mainGrid != null && mainGrid.TryReserveSpace(sizeInCells, out int col, out int row))
                 {
-                    proceduralThings.Add(entranceRail);
+                    dynamicThings.Add(entranceRail);
                     Children.Add(entranceRail);
                 }
             }
@@ -268,7 +275,7 @@ namespace Remizione
                 {
                     var staticName = roomConnector.NW ? "OutgoingGhostCarNW" : "OutgoingGhostCarNE";
 
-                    if (CreateProceduralThing(staticName) is not OutgoingGhostCar car)
+                    if (CreateDynamicThingCore(staticName) is not OutgoingGhostCar car)
                         throw new InvalidOperationException("Failed to create GhostCar instance.");
 
                     Children.Add(car);
@@ -347,27 +354,18 @@ namespace Remizione
                 placementDataDictionary.Add(staticName, [placementData]);
         }
 
-        // CreateProceduralThing
-        internal GameThing CreateProceduralThing(string staticName)
-        {
-            if (Session.CreateDynamicThing(staticName, $"{staticName}*{Name}_{proceduralThings.Count}") is not GameThing result)
-                throw new InvalidOperationException($"Failed to create procedural thing '{staticName}'.");
-
-            return result;
-        }
-
         #endregion
 
-        // CanPlacePropAt
-        public bool CanPlacePropAt(IsometricProp prop, Vector2 position)
+        // CanPlaceThingAt
+        public bool CanPlaceThingAt(GameThing thing, Vector2 position)
         {
-            if (prop.Collider != null)
+            if (thing.Collider != null)
             {
-                var box = new RectangleF(position, prop.Collider.BoundingRectangleF.Size);
+                var box = new RectangleF(position, thing.Collider.BoundingRectangleF.Size);
 
                 for (int i = 0; i < CulledThings.Count; i++)
                 {
-                    if (CulledThings[i] == prop)
+                    if (CulledThings[i] == thing)
                         continue;
 
                     if (CulledThings[i] is IHoleArea holeArea)
@@ -381,14 +379,23 @@ namespace Remizione
             return true;
         }
 
-        // PlaceDynamicPropAt
-        public IsometricProp? PlaceDynamicPropAt(IsometricProp prop, Vector2 position)
-        {
-            IsometricProp? result = null;
+        // DynamicThings
+        public ReadOnlyCollection<GameThing> DynamicThings { get; }
 
-            if (CanPlacePropAt(prop, position))
+        // CreateDynamicThing
+        public GameThing? CreateDynamicThing(string staticName)
+        {
+            return CreateDynamicThingCore(staticName);
+        }
+
+        // PlaceDynamicThingAt
+        public GameThing? PlaceDynamicThingAt(GameThing thing, Vector2 position)
+        {
+            GameThing? result = null;
+
+            if (CanPlaceThingAt(thing, position))
             {
-                result = Session.CreateDynamicThing(prop.StaticName, string.Empty) as IsometricProp;
+                result = Session.CreateDynamicThing(thing.StaticName, string.Empty) as GameThing;
                 if (result != null)
                 {
                     result.Position = position;
@@ -400,23 +407,6 @@ namespace Remizione
 
             return result;
         }
-
-        // ProceduralThings
-        public ReadOnlyCollection<GameThing> ProceduralThings { get; }
-
-        // SpawnThing
-        public GameThing SpawnThing(string staticName)
-        {
-            if (Session.CreateDynamicThing(staticName, $"{staticName}*{Name}_spawn_{spawnableThings.Count}") is not GameThing result)
-                throw new InvalidOperationException($"Failed to spawn thing '{staticName}'.");
-
-            spawnableThings.Add(result);
-
-            return result;
-        }
-
-        // SpawnableThings
-        public ReadOnlyCollection<GameThing> SpawnableThings { get; }
 
         // TerrainColRange
         [ScriptProperty(CodingContext.Declaration)]

@@ -24,7 +24,7 @@ namespace Remizione
         #endregion
 
         // Drop
-        public void Drop(Vector2 position, MetaItem metaItem)
+        public void Drop(GameRoom room, Vector2 position, MetaItem metaItem)
         {
             if (Session.Room == null)
                 return;
@@ -32,7 +32,7 @@ namespace Remizione
             ItemName = metaItem.Name;
 
             Position = position;
-            Session.Room.Children.Add(this);
+            room.Children.Add(this);
 
             altitudeTween.Start(TweenStyle.QuadraticIn, 8, 0, 250);
             opacityTween.Start(TweenStyle.CubicIn, 0, 1, 100);
