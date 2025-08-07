@@ -5,12 +5,12 @@ namespace Remizione
     /// <summary>
     /// CombatCloseAttackState
     /// </summary>
-    public sealed class CombatCloseAttackState : CombatState
+    public sealed class CombatCloseAttackState : AIState
     {
         private bool attackLaunched;
 
         // Constructor
-        public CombatCloseAttackState(CombatStateMachine stateMachine)
+        public CombatCloseAttackState(AIStateMachine stateMachine)
             : base(stateMachine)
         {
         }

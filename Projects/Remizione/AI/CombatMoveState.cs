@@ -5,10 +5,10 @@ namespace Remizione
     /// <summary>
     /// CombatMoveState
     /// </summary>
-    public sealed class CombatMoveState : CombatState
+    public sealed class CombatMoveState : AIState
     {
         // Constructor
-        public CombatMoveState(CombatStateMachine stateMachine)
+        public CombatMoveState(AIStateMachine stateMachine)
             : base(stateMachine)
         {
         }

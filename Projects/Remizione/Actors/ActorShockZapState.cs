@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using EngendroAdventure;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -10,8 +9,6 @@ namespace Remizione
     public sealed class ActorShockZapState : ActorAnimatedState
     {
         private int cooldown;
-        private readonly FloatTween xTween = new();
-        private readonly FloatTween yTween = new();
 
         // Constructor
         public ActorShockZapState(Actor owner)
@@ -33,10 +30,6 @@ namespace Remizione
         {
             base.Enter();
             cooldown = 300;
-
-            yTween.Start(TweenStyle.CubicOut, Owner.Y, Owner.Y - 3, 150, 2);
-            xTween.Start(TweenStyle.CubicOut, Owner.X, Owner.X + (Owner.Direction == FacingDirection.Right ? -15 : 15), 300);
-
             Owner.PlaySound(SoundNames.ShockZap);
         }
 
@@ -44,11 +37,6 @@ namespace Remizione
         public override void Update(GameTime gameTime)
         {
             cooldown -= gameTime.ElapsedGameTime.Milliseconds;
-            xTween.Update(gameTime);
-            yTween.Update(gameTime);
-
-            //Owner.X = xTween.CurrentValue;
-            //Owner.Y = yTween.CurrentValue;
         }
     }
 }

@@ -254,14 +254,6 @@ namespace Remizione
                 }
             }
 
-            // Restore saved states
-            foreach (var thing in proceduralThings)
-            {
-                thing.StateID = Session.GetProceduralThingState(thing.Name);
-                if (thing.StateID < 0)
-                    thing.Unparent();
-            }
-
             SetupGhostCars();
         }
 
@@ -366,8 +358,8 @@ namespace Remizione
 
         #endregion
 
-        // CanPlaceDynamicPropAt
-        public bool CanPlaceDynamicPropAt(IsometricProp prop, Vector2 position)
+        // CanPlacePropAt
+        public bool CanPlacePropAt(IsometricProp prop, Vector2 position)
         {
             if (prop.Collider != null)
             {
@@ -389,12 +381,12 @@ namespace Remizione
             return true;
         }
 
-        // PlaceDynamicProp
-        public IsometricProp? PlaceDynamicProp(IsometricProp prop, Vector2 position)
+        // PlaceDynamicPropAt
+        public IsometricProp? PlaceDynamicPropAt(IsometricProp prop, Vector2 position)
         {
             IsometricProp? result = null;
 
-            if (CanPlaceDynamicPropAt(prop, position))
+            if (CanPlacePropAt(prop, position))
             {
                 result = Session.CreateDynamicThing(prop.StaticName, string.Empty) as IsometricProp;
                 if (result != null)

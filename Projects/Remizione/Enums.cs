@@ -11,11 +11,11 @@ namespace Remizione
     // Affinity
     public enum Affinity { Good, Neutral, Evil }
 
+    // AIStateSignal
+    public enum AIStateSignal { Attack, CloseAttack, Decide, Fatigue, Move }
+
     // AttackRollStat
     public enum AttackRollStat { Strength, Dexterity }
-
-    // CombatStateSignal
-    public enum CombatStateSignal { Attack, CloseAttack, Decide, Fatigue, Move }
 
     // CombatStateName
     public enum CombatStateName { Charge, CloseAttack, Decide, Move }

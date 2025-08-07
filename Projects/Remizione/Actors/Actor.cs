@@ -18,10 +18,10 @@ namespace Remizione
         #region Private fields
 
         private readonly FloatTween accelerationFactorTween = new();
+        private readonly AIStateMachine aiStateMachine;
         private MetaItem? closeAttackMetaItem;
         private string closeAttackName = string.Empty;
         private readonly ActorCloseAttackState closeAttackState;
-        private readonly CombatStateMachine combatStateMachine;
         private readonly ActorConsumeState consumeState;
         private FootstepEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -95,7 +95,7 @@ namespace Remizione
             shockZapState = new ActorShockZapState(this);
             this.StateMachine.RegisterState(shockZapState);
 
-            this.combatStateMachine = new(this);
+            this.aiStateMachine = new(this);
         }
 
         #endregion
@@ -481,7 +481,7 @@ namespace Remizione
                 }
             }
 
-            combatStateMachine.Update(gameTime);
+            aiStateMachine.Update(gameTime);
 
             StateMachine.Update(gameTime);
 

@@ -4,14 +4,14 @@ using System.Collections.Generic;
 namespace Remizione
 {
     /// <summary>
-    /// CombatStateMachine
+    /// AIStateMachine
     /// </summary>
-    public sealed class CombatStateMachine
+    public sealed class AIStateMachine
     {
-        private readonly Dictionary<CombatStateName, CombatState> states = [];
+        private readonly Dictionary<CombatStateName, AIState> states = [];
 
         // Constructor
-        public CombatStateMachine(Actor actor)
+        public AIStateMachine(Actor actor)
         {
             this.Actor = actor;
 
@@ -33,13 +33,13 @@ namespace Remizione
         }
 
         // CurrentState
-        public CombatState? CurrentState { get; private set; }
+        public AIState? CurrentState { get; private set; }
 
         // Destination
         public Vector2? Destination { get; private set; }
 
         // ExecuteAction
-        public void ExecuteAction(CombatStateSignal signal, Vector2? destination = null)
+        public void ExecuteAction(AIStateSignal signal, Vector2? destination = null)
         {
             this.Destination = destination;
 
@@ -64,21 +64,21 @@ namespace Remizione
             */
 
             // Close attack
-            if (signal == CombatStateSignal.CloseAttack)
+            if (signal == AIStateSignal.CloseAttack)
             {
                 ChangeState(CombatStateName.CloseAttack);
                 return;
             }
 
             // Decide
-            if (signal == CombatStateSignal.Decide)
+            if (signal == AIStateSignal.Decide)
             {
                 ChangeState(CombatStateName.Decide);
                 return;
             }
 
             // Move
-            if (signal == CombatStateSignal.Move)
+            if (signal == AIStateSignal.Move)
             {
                 ChangeState(CombatStateName.Move);
                 return;

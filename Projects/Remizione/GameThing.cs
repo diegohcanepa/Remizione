@@ -529,12 +529,19 @@ namespace Remizione
             else
             {
                 var destination = Position;
-                destination.Y += knockback.Y;
 
                 if (X > attacker.X)
                     destination.X += knockback.X;
                 else
                     destination.X -= knockback.X;
+
+                var bottomDistance = Math.Abs(Y - attacker.Y);
+                var topDistance = Math.Abs(Y - attacker.BoundingBox.Top);
+
+                if (bottomDistance < topDistance) 
+                    destination.Y += knockback.Y;
+                else
+                    destination.Y -= knockback.Y;
 
                 knockbackTween.Start(TweenStyle.CubicOut, Position, destination, 400, 0);
 
@@ -1050,9 +1057,6 @@ namespace Remizione
         // ShockZap 
         [ScriptProperty]
         public bool ShockZap { get; set; }
-
-        // StateID
-        public int StateID { get; set; }
 
         // TakeDamage
         public void TakeDamage(GameThing attacker, int amount, Vector2 knockback, ImpactWordKind impactWordKind)

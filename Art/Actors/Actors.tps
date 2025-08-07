@@ -226,6 +226,7 @@
             <key type="filename">Edmund-assets/RaiseArm02.png</key>
             <key type="filename">Edmund-assets/RaiseArm03.png</key>
             <key type="filename">Edmund-assets/ShockZap01.png</key>
+            <key type="filename">Edmund-assets/ShockZap02.png</key>
             <key type="filename">Edmund-assets/Stand01.png</key>
             <key type="filename">Edmund-assets/Stand02.png</key>
             <key type="filename">Edmund-assets/Stand03.png</key>
@@ -270,7 +271,13 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Edmund-assets/ShockZap02.png</key>
+            <key type="filename">BloodyEye-assets/Move01.png</key>
+            <key type="filename">BloodyEye-assets/Move02.png</key>
+            <key type="filename">BloodyEye-assets/Move03.png</key>
+            <key type="filename">BloodyEye-assets/Stand01.png</key>
+            <key type="filename">BloodyEye-assets/Stand02.png</key>
+            <key type="filename">BloodyEye-assets/Stand03.png</key>
+            <key type="filename">BloodyEye-assets/Stand04.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -279,9 +286,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>4,4,7,8</rect>
+                <rect>9,4,18,7</rect>
                 <key>scale9Paddings</key>
-                <rect>4,4,7,8</rect>
+                <rect>9,4,18,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -379,6 +386,7 @@
                     <filename>Baal-assets</filename>
                     <filename>Monk-assets</filename>
                     <filename>Berta-assets</filename>
+                    <filename>BloodyEye-assets</filename>
                 </array>
             </struct>
         </map>

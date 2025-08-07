@@ -22,12 +22,11 @@ namespace Remizione
     {
         #region Private fields
 
-        private enum AttributeName { ProcStates, RandomSeed, WorldVersion }
+        private enum AttributeName { RandomSeed, WorldVersion }
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
         private Actor? player;
         private Vector2? playerPosition;
-        private readonly Dictionary<string, int> proceduralThingStates = [];
         private int rainRemainingTime;
         private readonly RoomEditor? roomEditor;
         private readonly List<GameThing> staticThings = [];
@@ -129,6 +128,7 @@ namespace Remizione
         {
             scriptRegistry.RegisterEntity(typeof(Actor));
             scriptRegistry.RegisterEntity(typeof(Baal));
+            scriptRegistry.RegisterEntity(typeof(BloodyEye));
             scriptRegistry.RegisterEntity(typeof(BreakableProp));
             scriptRegistry.RegisterEntity(typeof(CreditsRoom));
             scriptRegistry.RegisterEntity(typeof(GameRoom));
@@ -141,7 +141,6 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(ProceduralRoom));
             scriptRegistry.RegisterEntity(typeof(Prop));
             scriptRegistry.RegisterEntity(typeof(RoomConnector));
-            scriptRegistry.RegisterEntity(typeof(Snail));
             scriptRegistry.RegisterEntity(typeof(Unredeemed));
             scriptRegistry.RegisterEntity(typeof(WaterPuddle));
             scriptRegistry.RegisterEntity(typeof(Zabul));
@@ -259,17 +258,6 @@ namespace Remizione
             // Player position
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
                 playerPosition = XmlConverterExtension.ToVector2(playerPositionValue);
-
-            // Procedural thing states
-            if (sessionNode.Attributes[AttributeName.ProcStates.ToString()]?.Value is string procStates)
-            {
-                var states = procStates.Split(',');
-                foreach (var state in states)
-                {
-                    var values = state.Split('=');
-                    proceduralThingStates[values[0]] = int.Parse(values[1]);
-                }
-            }
 
             // NextRainCooldown
             if (sessionNode.Attributes[nameof(NextRainCooldown)]?.Value is string nextRainCooldown)
@@ -395,24 +383,6 @@ namespace Remizione
             // RandomSeed
             output.WriteAttributeString(AttributeName.RandomSeed.ToString(), XmlConvert.ToString(RandomSeed));
 
-            // Collect state data for procedural things
-            if (Room is ProceduralRoom proceduralRoom)
-            {
-                var stateData = new List<string>();
-
-                foreach (var thing in proceduralRoom.ProceduralThings)
-                {
-                    if (thing.StateID != 0)
-                        stateData.Add($"{thing.Name}={thing.StateID}");
-                }
-
-                if (stateData.Count > 0)
-                {
-                    var value = string.Join(",", stateData);
-                    output.WriteAttributeString(AttributeName.ProcStates.ToString(), value);
-                }
-            }
-
             // WorldVersion
             output.WriteAttributeString(AttributeName.WorldVersion.ToString(), XmlConvert.ToString(WorldVersion));
         }
@@ -440,15 +410,6 @@ namespace Remizione
         // GameplayMode
         [ScriptProperty]
         public GameplayMode GameplayMode { get; set; }
-
-        // GetProceduralThingState
-        public int GetProceduralThingState(string name)
-        {
-            if (proceduralThingStates.TryGetValue(name, out int state))
-                return state;
-
-            return 0;
-        }
 
         // HUD
         public HUD HUD { get; }

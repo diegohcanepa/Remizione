@@ -15,7 +15,7 @@ namespace Engendro
         private readonly Queue<T> pool = new();
 
         // Constructor
-        public ObjectPool(Func<T> objectGenerator, int maxSize, int precacheAmount = 0)
+        public ObjectPool(Func<T> objectGenerator, int maxSize, int precachedSize = 0)
         {
             CodeContract.GreaterThanZero(maxSize, nameof(maxSize));
 
@@ -23,7 +23,7 @@ namespace Engendro
             this.objectGenerator = objectGenerator;
             this.InUse = new ReadOnlyCollection<T>(inUse);
 
-            for (var i = 0; i < precacheAmount; i++)
+            for (var i = 0; i < precachedSize; i++)
             {
                 pool.Enqueue(objectGenerator());
             }
