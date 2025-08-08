@@ -26,7 +26,7 @@ namespace Remizione
             this.spotImage = new ImageSprite(Game)
             {
                 Color = ColorPalette.ShadowSpot,
-                PivotOrigin = RectanglePoint.Middle
+                PivotOrigin = RectanglePoint.Center
             };
 
             this.Size = 6;

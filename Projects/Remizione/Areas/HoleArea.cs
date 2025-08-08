@@ -1,7 +1,7 @@
 ﻿using Engendro;
 using Engendro.PathFinding;
-using EngendroAdventure;
-using EngendroAdventure.Scripting;
+using Adberration;
+using Adberration.Scripting;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 

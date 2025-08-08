@@ -1,5 +1,5 @@
 ﻿using Engendro;
-using EngendroAdventure.Scripting;
+using Adberration.Scripting;
 using Microsoft.Xna.Framework;
 
 namespace Remizione.Scripting

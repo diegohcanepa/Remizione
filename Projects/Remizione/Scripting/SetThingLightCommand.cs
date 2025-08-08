@@ -1,5 +1,5 @@
 ﻿using Engendro;
-using EngendroAdventure.Scripting;
+using Adberration.Scripting;
 
 namespace Remizione.Scripting
 {
@@ -26,7 +26,7 @@ namespace Remizione.Scripting
             var position = Parser.ParseVector2(this, 2);
             var color = Parser.ParseColorArgument(this, ColorArg);
             var kind = Parser.ParseEnumArgument(this, KindArg, LightKind.Default);
-            var pivot = Parser.ParseEnumArgument<RectanglePoint>(this, PivotArg, RectanglePoint.Middle);
+            var pivot = Parser.ParseEnumArgument<RectanglePoint>(this, PivotArg, RectanglePoint.Center);
             var scale = Parser.ParseVector2Argument(this, ScaleArg);
 
             thing.Light = new Light(Game, "")

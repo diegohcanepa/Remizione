@@ -47,7 +47,7 @@ namespace Remizione
             {
                 Atlas = Atlases.Environment,
                 Color = Color.White * .2f,
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Center,
                 Scale = new(.5f)
             };
         }

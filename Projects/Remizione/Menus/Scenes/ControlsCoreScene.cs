@@ -48,7 +48,7 @@ namespace Remizione.Menus
             // Image
             this.image = new ImageSprite(game, image)
             {
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Center,
                 Position = new Vector2(Screen.Center.X, Screen.Center.Y + verticalOffset),
                 Scale = new Vector2(imageScale)
             };

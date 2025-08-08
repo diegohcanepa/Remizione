@@ -41,11 +41,11 @@ namespace Remizione
             this.Duration = duration;
             this.IgnoreCulling = true;
             this.Reusable = reusable;
-            this.PivotOrigin = RectanglePoint.Middle;
+            this.PivotOrigin = RectanglePoint.Center;
             this.Shadow = new ImageSprite(session.Game)
             {
                 Opacity = ColorPalette.ShadowOpacity,
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Center,
             };
 
             this.BounceIntensity = ThrowableBounceIntensity.Medium;
@@ -88,16 +88,6 @@ namespace Remizione
                 {
                     if (target.HitTest(Position))
                         return target;
-
-                    /*
-                    if (target.IsWalkAreaHole)
-                    {
-                        if (target is IHoleArea holeArea && holeArea.Contains(Position))
-                            return target;
-                    }
-                    else if (target.RuntimeHotspot.Contains(Position))
-                        return target;
-                    */
                 }
             }
 

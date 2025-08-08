@@ -39,14 +39,14 @@ namespace Remizione.Menus
 
             Image = new ImageSprite(game, image)
             {
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Center,
                 Position = imagePosition,
                 Scale = new Vector2(imageScale)
             };
 
             gradientSpot = new ImageSprite(game, Atlases.Menu.FadeCircle)
             {
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Center,
                 Scale = new Vector2(1.8f)
             };
 

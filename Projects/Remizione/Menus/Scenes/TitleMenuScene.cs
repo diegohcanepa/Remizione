@@ -38,7 +38,7 @@ namespace Remizione.Menus
             // Background
             background = new ImageSprite(game, Atlases.Menu.TitleScreen)
             {
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Center,
                 Position = Screen.Center,
             };
 

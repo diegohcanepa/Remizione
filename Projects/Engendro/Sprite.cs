@@ -530,17 +530,17 @@ namespace Engendro
                                   sprite.PivotOrigin == RectanglePoint.Left;
 
             // AtMiddle
-            public bool AtMiddle => sprite.PivotOrigin == RectanglePoint.Middle;
+            public bool AtMiddle => sprite.PivotOrigin == RectanglePoint.Center;
 
             // AtMiddleX
             public bool AtMiddleX => sprite.PivotOrigin == RectanglePoint.Bottom ||
                                      sprite.PivotOrigin == RectanglePoint.Top ||
-                                     sprite.PivotOrigin == RectanglePoint.Middle;
+                                     sprite.PivotOrigin == RectanglePoint.Center;
 
             // AtMiddleY
             public bool AtMiddleY => sprite.PivotOrigin == RectanglePoint.Left ||
                                      sprite.PivotOrigin == RectanglePoint.Right ||
-                                     sprite.PivotOrigin == RectanglePoint.Middle;
+                                     sprite.PivotOrigin == RectanglePoint.Center;
 
             // AtRight
             public bool AtRight => sprite.PivotOrigin == RectanglePoint.RightBottom ||
@@ -584,7 +584,7 @@ namespace Engendro
                             break;
 
                         // Middle
-                        case RectanglePoint.Middle:
+                        case RectanglePoint.Center:
                             position.X = sprite.Width / 2;
                             position.Y = sprite.Height / 2;
                             break;

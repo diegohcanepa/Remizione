@@ -24,7 +24,7 @@ namespace Remizione
                 Color = ColorPalette.GlobalLight.Default,
                 LightKind = LightKind.Global,
                 ImageName = "GlobalLight",
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Center,
                 Position = Screen.Center,
             };
 

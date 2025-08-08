@@ -33,7 +33,7 @@ namespace Remizione.Menus
             highlightSprite = new ImageSprite(Game, Atlases.Menu.MenuItemHighlight)
             {
                 Opacity = .5f,
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Center,
                 X = Screen.Area.Center.X,
                 Scale = new Vector2(.8f)
             };

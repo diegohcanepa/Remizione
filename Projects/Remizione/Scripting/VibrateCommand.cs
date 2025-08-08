@@ -1,5 +1,5 @@
 ﻿using Engendro.Input;
-using EngendroAdventure.Scripting;
+using Adberration.Scripting;
 
 namespace Remizione.Scripting
 {

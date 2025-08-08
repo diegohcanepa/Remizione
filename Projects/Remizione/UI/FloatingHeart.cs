@@ -24,7 +24,7 @@ namespace Remizione
 
             this.image = new(Game, Atlases.UI.MiniHeartIcon)
             {
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Center,
                 Scale = ScaleInfo.UIElement.Medium
             };
         }

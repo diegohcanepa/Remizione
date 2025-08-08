@@ -1,7 +1,7 @@
 ﻿using Engendro;
 using Engendro.Audio;
-using EngendroAdventure;
-using EngendroAdventure.Scripting;
+using Adberration;
+using Adberration.Scripting;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -51,6 +51,8 @@ namespace Remizione
         {
             if (Session.CreateDynamicThing(staticName, $"{staticName}*{Name}_{dynamicThings.Count}") is not GameThing result)
                 throw new InvalidOperationException($"Failed to create dynamic thing from'{staticName}'.");
+
+            dynamicThings.Add(result);
 
             return result;
         }
@@ -200,7 +202,6 @@ namespace Remizione
             instance.Position = targetGrid.GetPosition(col, row);
             instance.Y += instance.BoundingBox.Height;
             instance.X += instance.BoundingBox.Width / 2;
-            dynamicThings.Add(instance);
             Children.Add(instance);
         }
 
@@ -212,10 +213,7 @@ namespace Remizione
             {
                 var sizeInCells = entranceRail.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
                 if (mainGrid != null && mainGrid.TryReserveSpace(sizeInCells, out int col, out int row))
-                {
-                    dynamicThings.Add(entranceRail);
                     Children.Add(entranceRail);
-                }
             }
 
             foreach (var phase in Enum.GetValues<PlacementPhase>())
@@ -341,6 +339,22 @@ namespace Remizione
             Populate();
         }
 
+        // OnUnload
+        protected override void OnUnload()
+        {
+            base.OnUnload();
+            
+            Children.Clear();
+
+            for (var i = 0; i < dynamicThings.Count; i++)
+            {
+                if (dynamicThings[i].EntityKind == EntityKind.DynamicVolatile)
+                    dynamicThings[i].Unregister();
+                else
+                    dynamicThings[i].Unparent();
+            }
+        }
+
         #endregion
 
         #region Internal members
@@ -359,7 +373,7 @@ namespace Remizione
         // CanPlaceThingAt
         public bool CanPlaceThingAt(GameThing thing, Vector2 position)
         {
-            if (thing.Collider != null)
+            if (!thing.Collider.IsEmpty)
             {
                 var box = new RectangleF(position, thing.Collider.BoundingRectangleF.Size);
 

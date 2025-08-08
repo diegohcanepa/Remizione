@@ -392,11 +392,23 @@
 /processorParam:Quality=Best
 /build:Audio/FX/GhostCarStop.wav;Audio/FX/GhostCarStop
 
+#begin Audio/FX/Guts.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Guts.wav;Audio/FX/Guts
+
 #begin Audio/FX/ImpactA.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/ImpactA.wav
+
+#begin Audio/FX/ImpactB.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/ImpactB.wav;Audio/FX/ImpactB
 
 #begin Audio/FX/ItemDiscard.wav
 /importer:WavImporter

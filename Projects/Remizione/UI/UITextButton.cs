@@ -158,7 +158,7 @@ namespace Remizione
             }
 
             containerPattern.ScaleX = label.BoundingBox.Width + 6;
-            containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Middle, 0, 0).Y;
+            containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Center, 0, 0).Y;
             containerEdgeLeft.Y = containerPattern.Y;
 
             if (image.Pivot.AtRight)

@@ -32,7 +32,7 @@ namespace Remizione.Menus
             {
                 Color = ColorPalette.TextWhite,
                 MaximumWidth = 250,
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Center,
                 Position = new Vector2(Screen.Center.X, 100),
                 Text = TextRepository.GetValue("@Menu.Messages.AutoSaveAdvice"),
                 Scale = ScaleInfo.Text.Medium

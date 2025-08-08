@@ -33,7 +33,7 @@ namespace Remizione
             this.lightSprite = new ImageSprite(Game)
             {
                 Image = Atlases.Environment.DefaultLight,
-                PivotOrigin = RectanglePoint.Middle
+                PivotOrigin = RectanglePoint.Center
             };
         }
 

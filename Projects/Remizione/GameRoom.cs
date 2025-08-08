@@ -1,7 +1,7 @@
 ﻿using Engendro;
 using Engendro.Input;
-using EngendroAdventure;
-using EngendroAdventure.Scripting;
+using Adberration;
+using Adberration.Scripting;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -49,7 +49,7 @@ namespace Remizione
             playerLight ??= new Light(Game, "PlayerLight")
             {
                 LightKind = LightKind.Player,
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Center,
                 Position = Screen.Center,
                 Scale = new Vector2(3)
             };

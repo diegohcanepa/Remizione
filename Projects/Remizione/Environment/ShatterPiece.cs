@@ -12,7 +12,7 @@ namespace Remizione
         #region Private fields
 
         private float angularVelocity;
-        private const float bounceFactor = .6f;
+        private const float bounceFactor = .8f;
         private float delayTimer;
         private const float gravity = 300;
         private float groundY;
@@ -20,7 +20,7 @@ namespace Remizione
         private float launchDelay;
         private bool launched;
         private float life = 2;
-        private readonly BreakableProp owner;
+        private readonly GameThing owner;
         private Vector2 velocity;
 
         #endregion
@@ -28,14 +28,14 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public ShatterPiece(BreakableProp owner, AtlasImage image)
+        public ShatterPiece(GameThing owner, AtlasImage image)
             : base(owner.Game)
         {
             this.owner = owner;
 
             this.image = new(Game, image)
             {
-                PivotOrigin = RectanglePoint.Middle
+                PivotOrigin = RectanglePoint.Center
             };
         }
 
@@ -109,15 +109,20 @@ namespace Remizione
             var bounds = owner.BoundingBox;
             float yOffset = RandomBetween(-4f, 2f);
 
-            image.Position = new(RandomBetween(bounds.Left + 2f, bounds.Right - 2f), 
+            image.Position = new(RandomBetween(bounds.Left + 5f, bounds.Right - 5f), 
                                 RandomBetween(bounds.Top, bounds.Bottom) + yOffset);
 
-            image.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.One, new(.75f), 400);
-
             groundY = owner.Y + Randomizer.Next(-3, 3);
-            launchDelay = RandomBetween(0f, .1f);
-            delayTimer = 0f;
+            launchDelay = RandomBetween(0, .1f);
+            delayTimer = 0;
             launched = false;
+        }
+
+        // Opacity
+        public float Opacity
+        {
+            get => image.Opacity;
+            set => image.Opacity = value;
         }
     }
 }

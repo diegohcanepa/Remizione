@@ -1,8 +1,8 @@
 ﻿using Engendro;
 using Engendro.Input;
-using EngendroAdventure;
-using EngendroAdventure.Scripting;
-using EngendroAdventure.Scripting.Core;
+using Adberration;
+using Adberration.Scripting;
+using Adberration.Scripting.Core;
 using Microsoft.Xna.Framework;
 using Remizione.Creatures;
 using Remizione.Scripting;
@@ -135,6 +135,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(GameRoom));
             scriptRegistry.RegisterEntity(typeof(IsometricProp));
             scriptRegistry.RegisterEntity(typeof(LootBag));
+            scriptRegistry.RegisterEntity(typeof(OcculusMinion));
             scriptRegistry.RegisterEntity(typeof(Orb));
             scriptRegistry.RegisterEntity(typeof(OutgoingGhostCar));
             scriptRegistry.RegisterEntity(typeof(Pickup));

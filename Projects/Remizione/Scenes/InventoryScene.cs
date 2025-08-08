@@ -113,7 +113,7 @@ namespace Remizione
             {
                 categoryIcons[i] = new(Game, Atlases.UI.GetImage($"InventoryCategory{categories[i]}"))
                 {
-                    PivotOrigin = RectanglePoint.Middle,
+                    PivotOrigin = RectanglePoint.Center,
                     Scale = ScaleInfo.UIElement.Medium
                 };
             }
@@ -138,9 +138,9 @@ namespace Remizione
             this.categoryText = new(Game, Fonts.Common)
             {
                 Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Center,
                 Scale = ScaleInfo.Text.ExtraLarge,
-                Position = navigationBar.BoundingBox.GetPoint(RectanglePoint.Middle, 0, .5f),
+                Position = navigationBar.BoundingBox.GetPoint(RectanglePoint.Center, 0, .5f),
                 ShadowOffset = new Vector2(0, .75f)
             };
 
@@ -170,8 +170,8 @@ namespace Remizione
             this.itemName = new TextSprite(Game, Fonts.Common)
             {
                 Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Middle,
-                Position = infoTitleContainer.BoundingBox.GetPoint(RectanglePoint.Middle, 0, 1.3f),
+                PivotOrigin = RectanglePoint.Center,
+                Position = infoTitleContainer.BoundingBox.GetPoint(RectanglePoint.Center, 0, 1.3f),
                 Scale = ScaleInfo.Text.ExtraLarge,
                 ShadowOffset = new Vector2(0, .75f)
             };

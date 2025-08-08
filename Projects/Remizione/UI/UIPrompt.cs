@@ -33,7 +33,7 @@ namespace Remizione.UI
             this.label = new(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Highlight,
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Center,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -7),
                 Scale = ScaleInfo.Text.Huge
             };

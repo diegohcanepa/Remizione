@@ -1,4 +1,4 @@
-﻿using EngendroAdventure.Scripting;
+﻿using Adberration.Scripting;
 using Remizione.Menus;
 
 namespace Remizione.Scripting

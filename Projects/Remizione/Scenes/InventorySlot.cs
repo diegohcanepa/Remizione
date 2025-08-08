@@ -33,7 +33,7 @@ namespace Remizione
             // Icon image
             this.icon = new(Game)
             {
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Center,
                 Scale = ScaleInfo.UIElement.Medium
             };
 
@@ -46,7 +46,7 @@ namespace Remizione
             // State icon image
             this.stateIcon = new(Game)
             {
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Center,
                 Opacity = .4f,
             };
 
@@ -158,7 +158,7 @@ namespace Remizione
             {
                 slotImage.Position = value;
                 selectedSlotImage.Position = value;
-                icon.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Middle, 0, -1);
+                icon.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Center, 0, -1);
                 stateIcon.Position = icon.Position;
                 amountText.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1.5f);
             }

@@ -1,7 +1,7 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
-using EngendroAdventure;
+using Adberration;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -44,8 +44,8 @@ namespace Remizione
             // Item image
             this.itemImage = new ImageSprite(Game)
             {
-                PivotOrigin = RectanglePoint.Middle,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Middle),
+                PivotOrigin = RectanglePoint.Center,
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Center),
                 Scale = ScaleInfo.UIElement.Medium
             };
 

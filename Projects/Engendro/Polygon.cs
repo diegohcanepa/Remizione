@@ -20,6 +20,8 @@ namespace Engendro
         {
         }
 
+        #region Private fields
+
         // FlipCore
         private void FlipCore(float? originX, float? originY)
         {
@@ -36,6 +38,8 @@ namespace Engendro
 
             SetVertices(vertices);
         }
+
+        #endregion
 
         // Deflate
         public void Deflate(float distance) => DeflateCore(distance);

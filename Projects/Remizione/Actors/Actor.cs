@@ -1,8 +1,8 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
-using EngendroAdventure;
-using EngendroAdventure.Scripting;
+using Adberration;
+using Adberration.Scripting;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -295,6 +295,9 @@ namespace Remizione
         // CalculateSpeed
         protected override float CalculateSpeed() => base.CalculateSpeed() * (FastMove ? FastMoveFactor : 1) * tinyMoveSpeedFactor * (accelerationFactorTween.IsRunning ? accelerationFactorTween.CurrentValue : 1);
 
+        // CanCheckCollisions
+        protected override bool CanCheckCollisions() => !IsFollowingPath && base.CanCheckCollisions();
+
         // InputHandler
         protected InputHandler? InputHandler { get; set; }
 
@@ -315,7 +318,23 @@ namespace Remizione
         // OnDie
         protected override void OnDie()
         {
-            StateMachine.ChangeState(ActorStateNames.Death);
+            if (Guts > 0)
+            {
+                if (Room != null)
+                {
+                    var guts = new Guts(Session, Guts)
+                    {
+                        Position = Position
+                    };
+                    Room.Children.Add(guts);
+                    guts.PlaySound(SoundNames.Guts);
+                    Unparent();
+                }
+            }
+            else
+            {
+                StateMachine.ChangeState(ActorStateNames.Death);
+            }
         }
 
         // OnDraw
@@ -675,6 +694,10 @@ namespace Remizione
             else
                 return this.GetAbsolutePoint(BloodSplashOrigin);
         }
+
+        // Guts
+        [ScriptProperty]
+        public int Guts { get; set; }
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)

@@ -1,6 +1,6 @@
 ﻿using Engendro;
 using Engendro.Audio;
-using EngendroAdventure.Scripting;
+using Adberration.Scripting;
 using Microsoft.Xna.Framework;
 
 namespace Remizione

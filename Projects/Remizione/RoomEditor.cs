@@ -1,8 +1,8 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
-using EngendroAdventure;
-using EngendroAdventure.Scripting;
+using Adberration;
+using Adberration.Scripting;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -116,6 +116,7 @@ namespace Remizione
                 awaitingScript = "(None)";
 
             DrawText(gameTime, text, $"Awaiting script: {awaitingScript}");
+            DrawText(gameTime, text, $"Registered entities: {session.Entities.Count}");
         }
 
         // DrawSoundData

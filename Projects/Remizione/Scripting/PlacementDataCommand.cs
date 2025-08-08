@@ -1,6 +1,6 @@
 ﻿using Engendro;
-using EngendroAdventure;
-using EngendroAdventure.Scripting;
+using Adberration;
+using Adberration.Scripting;
 using System.Collections.Generic;
 
 namespace Remizione.Scripting

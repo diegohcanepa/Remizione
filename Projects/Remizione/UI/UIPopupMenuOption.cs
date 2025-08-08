@@ -29,7 +29,7 @@ namespace Remizione
             };
 
             if (menu.HorizontalAlignment == HorizontalAlignment.Center)
-                nameText.PivotOrigin = RectanglePoint.Middle;
+                nameText.PivotOrigin = RectanglePoint.Center;
 
             else if (menu.HorizontalAlignment == HorizontalAlignment.Left)
                 nameText.PivotOrigin = RectanglePoint.LeftTop;

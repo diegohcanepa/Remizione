@@ -27,7 +27,7 @@ namespace Remizione
         {
             this.bindings = inputBindings;
 
-            this.container = new ImageSprite(session.Game, Atlases.UI.PopupContainer) { PivotOrigin = RectanglePoint.Middle, Position = Screen.Area.Center.ToVector2() };
+            this.container = new ImageSprite(session.Game, Atlases.UI.PopupContainer) { PivotOrigin = RectanglePoint.Center, Position = Screen.Area.Center.ToVector2() };
             this.shadow = new ImageSprite(session.Game, Atlases.UI.PopupContainerShadow) { Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, 7, 7) };
 
             this.titleSprite = new TextSprite(session.Game, Fonts.Common) { Color = ColorPalette.PopupTitle, PivotOrigin = RectanglePoint.Top, Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 12), Scale = ScaleInfo.PopupTitle, Text = title };

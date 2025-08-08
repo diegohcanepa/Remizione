@@ -328,6 +328,25 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">OcculusMinion-assets/Stand01.png</key>
+            <key type="filename">OcculusMinion-assets/Stand02.png</key>
+            <key type="filename">OcculusMinion-assets/Stand03.png</key>
+            <key type="filename">OcculusMinion-assets/Stand04.png</key>
+            <key type="filename">OcculusMinion-assets/Stand05.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,3,13,5</rect>
+                <key>scale9Paddings</key>
+                <rect>6,3,13,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Reaper-assets/Move01.png</key>
             <key type="filename">Reaper-assets/Move02.png</key>
             <key type="filename">Reaper-assets/Move03.png</key>
@@ -387,6 +406,7 @@
                     <filename>Monk-assets</filename>
                     <filename>Berta-assets</filename>
                     <filename>BloodyEye-assets</filename>
+                    <filename>OcculusMinion-assets</filename>
                 </array>
             </struct>
         </map>

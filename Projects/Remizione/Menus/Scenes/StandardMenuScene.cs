@@ -28,7 +28,7 @@ namespace Remizione.Menus
             titleSprite = new TextSprite(Game, Fonts.Common)
             {
                 Color = ColorPalette.TextStandardMenuTitle,
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Center,
                 Position = new Vector2(Screen.Center.X, 25),
                 Scale = ScaleInfo.TextMenuContainerTitle,
                 Text = title

@@ -32,7 +32,7 @@ namespace Remizione
             else
                 Instance = this;
 
-            this.cursorImage = new ImageSprite(game) { PivotOrigin = RectanglePoint.Middle, Scale = ScaleInfo.UIElement.Medium };
+            this.cursorImage = new ImageSprite(game) { PivotOrigin = RectanglePoint.Center, Scale = ScaleInfo.UIElement.Medium };
         }
 
         #endregion
@@ -55,7 +55,7 @@ namespace Remizione
                 cursorImage.Image = Atlases.UI.MouseCursorWait;
 
             cursorImage.Scale = ScaleInfo.UIElement.Medium;
-            cursorImage.PivotOrigin = state == MouseCursorState.Arrow ? RectanglePoint.LeftTop : RectanglePoint.Middle;
+            cursorImage.PivotOrigin = state == MouseCursorState.Arrow ? RectanglePoint.LeftTop : RectanglePoint.Center;
         }
 
         #endregion

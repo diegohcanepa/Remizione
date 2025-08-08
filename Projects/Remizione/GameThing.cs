@@ -2,8 +2,8 @@
 using Engendro.Audio;
 using Engendro.Input;
 using Engendro.PathFinding;
-using EngendroAdventure;
-using EngendroAdventure.Scripting;
+using Adberration;
+using Adberration.Scripting;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -19,8 +19,9 @@ namespace Remizione
 
         private bool applyDamagePending;
         private readonly Blinker<bool> blinker = new(false, true);
+        private PlacementMode colliderPlacement = PlacementMode.Relative;
         private string displayName = string.Empty;
-        private readonly Polygon holeInflatedPoly = new();
+        private readonly Polygon holePolyInflated = new();
         private readonly Polygon holePoly = new();
         private readonly Polygon hotspotPoly = new();
         private PlacementMode hotspotPlacement = PlacementMode.Relative;
@@ -41,6 +42,7 @@ namespace Remizione
         private RenderLayer renderLayer;
         private int renderLayerDepth;
         private bool shouldClampToWalkablePosition;
+        private bool shouldUnregister;
         private WalkArea? walkArea;
         private string walkAreaName = string.Empty;
 
@@ -64,11 +66,11 @@ namespace Remizione
         // ClampOutside
         Vector2 IHoleArea.ClampOutside(Vector2 position)
         {
-            if (Collider != null)
+            if (!Collider.IsEmpty)
             {
                 InvalidateCollisionPolygons();
                 if (holePoly.Contains(position))
-                    position = holeInflatedPoly.GetClosestPointOnEdge(position);
+                    position = holePolyInflated.GetClosestPointOnEdge(position);
             }
 
             return position;
@@ -79,26 +81,26 @@ namespace Remizione
         {
             InvalidateCollisionPolygons();
 
-            if (Collider == null || Collider.Vertices.Count == 0)
+            if (Collider.IsEmpty)
                 return;
 
             if (pathNodes == null || pathNodes.Length != Collider.Vertices.Count)
                 pathNodes = new PathNode[Collider.Vertices.Count];
 
-            for (int i = 0; i < holeInflatedPoly.Vertices.Count; i++)
+            for (int i = 0; i < holePolyInflated.Vertices.Count; i++)
             {
                 // Is point concave?
-                if (holeInflatedPoly.IsVertexConcave(i))
+                if (holePolyInflated.IsVertexConcave(i))
                     continue;
 
                 // Is point outside walk area
-                if (WalkArea != null && !WalkArea.Contains(holeInflatedPoly.Vertices[i]))
+                if (WalkArea != null && !WalkArea.Contains(holePolyInflated.Vertices[i]))
                     continue;
 
                 if (pathNodes[i] == null)
-                    pathNodes[i] = new(holeInflatedPoly.Vertices[i]);
+                    pathNodes[i] = new(holePolyInflated.Vertices[i]);
                 else
-                    pathNodes[i].Position = holeInflatedPoly.Vertices[i];
+                    pathNodes[i].Position = holePolyInflated.Vertices[i];
 
                 targetList.Add(pathNodes[i]);
             }
@@ -158,7 +160,7 @@ namespace Remizione
                         continue;
 
                     // If thing is an obstacle (walk area hole)
-                    if (thing.Collider != null)
+                    if (thing.RuntimeCollider.Contains(Position))
                     {
                         if (thing is IHoleArea holeArea && holeArea.Contains(Position))
                         {
@@ -207,12 +209,14 @@ namespace Remizione
         // GetImpactWordPosition
         private Vector2? GetImpactWordPosition()
         {
-            if (HitTestSource == HitTestSource.Collider && Collider != null)
+            if (HitTestSource == HitTestSource.Collider && !Collider.IsEmpty)
+            {
                 return this.GetAbsolutePoint(Collider.BoundingRectangleF.GetPoint(RectanglePoint.Top));
-
+            }
             else if (HitTestSource == HitTestSource.Hotspot && RuntimeHotspot != null)
+            {
                 return RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top);
-
+            }
             else
                 return null;
         }
@@ -236,12 +240,9 @@ namespace Remizione
         }
 
         // InvalidateCollisionPolygons
-        private void InvalidateCollisionPolygons(bool enforce = false)
+        private void InvalidateCollisionPolygons()
         {
-            if (Collider == null)
-                return;
-
-            if (!enforce && !isCollisionDirty)
+            if (Collider.IsEmpty || !isCollisionDirty)
                 return;
 
             int vertexCount = Collider.Vertices.Count;
@@ -249,8 +250,15 @@ namespace Remizione
 
             var offset = GetPivotBasedPolyOffset();
             Collider.GetVertices(vertices, offset);
+            
             holePoly.SetVertices(vertices);
-            holeInflatedPoly.SetVertices(vertices, .05f);
+            holePolyInflated.SetVertices(vertices, .05f);
+
+            if (IsFlippedHorizontally)
+            {
+                holePoly.FlipHorizontally(X);
+                holePolyInflated.FlipHorizontally(X);
+            }
 
             isCollisionDirty = false;
         }
@@ -286,7 +294,7 @@ namespace Remizione
         // GetPixelAreaForGrid
         protected virtual RectangleF GetPixelAreaForGrid()
         {
-            if (Collider == null)
+            if (Collider.IsEmpty)
                 return BoundingBox;
             else
                 return Collider.BoundingRectangleF;
@@ -365,13 +373,13 @@ namespace Remizione
         {
             base.OnTransform(change);
 
-            //if (hurtShakeTween == null || !hurtShakeTween.IsRunning)
-            {
-                isHotspotDirty = true;
-                shouldClampToWalkablePosition = true;
+            isHotspotDirty = true;
+            shouldClampToWalkablePosition = true;
 
-                if (change != TransformChange.Altitude)
-                    InvalidateCollisionPolygons(true);
+            if (change != TransformChange.Altitude)
+            {
+                isCollisionDirty = true;
+                InvalidateCollisionPolygons();
             }
         }
 
@@ -410,7 +418,7 @@ namespace Remizione
 
             impactWord?.Update(gameTime);
 
-            if (shouldClampToWalkablePosition)
+            if (shouldClampToWalkablePosition || Session.Player == this)
             {
                 ClampToWalkablePosition();
                 shouldClampToWalkablePosition = false;
@@ -570,10 +578,10 @@ namespace Remizione
             if (!CanInteractCore(requester))
                 return false;
 
-            if (holeInflatedPoly.IsEmpty)
+            if (holePolyInflated.IsEmpty)
                 return BoundingBox.Intersects(requester.GetAbsoluteBounds(requester.HotspotDetectorArea));
             else
-                return holeInflatedPoly.BoundingRectangleF.Intersects(requester.GetAbsoluteBounds(requester.HotspotDetectorArea));
+                return holePolyInflated.BoundingRectangleF.Intersects(requester.GetAbsoluteBounds(requester.HotspotDetectorArea));
         }
 
         // CanInteract
@@ -588,6 +596,21 @@ namespace Remizione
         // CellMargin
         [ScriptProperty]
         public int CellMargin { get; set; } = 1;
+
+        // ColliderPlacement
+        [ScriptProperty]
+        public PlacementMode ColliderPlacement
+        {
+            get => colliderPlacement;
+            set
+            {
+                if (value != colliderPlacement)
+                {
+                    colliderPlacement = value;
+                    isCollisionDirty = true;
+                }
+            }
+        }
 
         // ClampToWalkablePosition
         public void ClampToWalkablePosition()
@@ -621,7 +644,7 @@ namespace Remizione
 
         // Collider
         [ScriptProperty]
-        public Polygon? Collider { get; set; }
+        public Polygon Collider { get; set; } = new();
 
         // CumulativeDamage
         public float CumulativeDamage { get; set; }
@@ -936,7 +959,7 @@ namespace Remizione
 
         // IsWalkAreaHole
         [ScriptProperty]
-        public virtual bool IsWalkAreaHole => Collider != null;
+        public virtual bool IsWalkAreaHole => !Collider.IsEmpty;
 
         // Light
         public Light? Light { get; set; }
@@ -1012,7 +1035,7 @@ namespace Remizione
         public new GameRoom? Room => Parent as GameRoom;
 
         // RuntimeCollider
-        public Polygon RuntimeCollider => holeInflatedPoly;
+        public Polygon RuntimeCollider => holePolyInflated;
 
         // RuntimeHotspot
         public Polygon RuntimeHotspot
@@ -1022,8 +1045,9 @@ namespace Remizione
                 if (isHotspotDirty)
                 {
                     if (Hotspot.IsEmpty)
+                    {
                         hotspotPoly.Clear();
-
+                    }
                     else if (HotspotPlacement == PlacementMode.Relative)
                     {
                         var offset = GetPivotBasedPolyOffset();

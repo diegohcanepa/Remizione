@@ -33,8 +33,8 @@ namespace Remizione
             // Item image
             this.itemImage = new ImageSprite(Game)
             {
-                PivotOrigin = RectanglePoint.Middle,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Middle),
+                PivotOrigin = RectanglePoint.Center,
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Center),
                 Scale = ScaleInfo.UIElement.Medium
             };
         }

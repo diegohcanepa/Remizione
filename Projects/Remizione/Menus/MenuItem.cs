@@ -32,14 +32,14 @@ namespace Remizione.Menus
             this.icon = new ImageSprite(Game, iconImage) { PivotOrigin = RectanglePoint.Left, Scale = new Vector2(.2f) };
             this.textSprite = new TextSprite(Game, Fonts.Common)
             {
-                PivotOrigin = RectanglePoint.Middle,
+                PivotOrigin = RectanglePoint.Center,
                 Text = $"@Menu.Items.{Name}"
             };
 
             highlightSprite = new ImageSprite(Game, Atlases.Menu.MenuItemHighlight)
             {
                 Opacity = .5f,
-                PivotOrigin = RectanglePoint.Middle
+                PivotOrigin = RectanglePoint.Center
             };
             highlightSprite.Tweens.OpacityTween = FloatTween.Create(TweenStyle.QuadraticInOut, .5f, .8f, 800, -1);
 

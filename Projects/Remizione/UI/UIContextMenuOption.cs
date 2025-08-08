@@ -54,7 +54,7 @@ namespace Remizione
 
             BoundingBox = RectangleF.Union(textSprite.BoundingBox, iconSprite.BoundingBox);
 
-            iconSprite.PivotOrigin = RectanglePoint.Middle;
+            iconSprite.PivotOrigin = RectanglePoint.Center;
             iconSprite.X += iconSprite.BoundingBox.Width * .5f;
             iconSprite.Y = textSprite.BoundingBox.GetPoint(RectanglePoint.Left).Y;
 

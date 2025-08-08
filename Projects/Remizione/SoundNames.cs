@@ -9,6 +9,7 @@
         internal const string ExitAlarm = nameof(ExitAlarm);
         internal const string FootstepA = nameof(FootstepA);
         internal const string FootstepWater = nameof(FootstepWater);
+        internal const string Guts = nameof(Guts);
         internal const string ImpactA = nameof(ImpactA);
         internal const string ItemDiscard = nameof(ItemDiscard);
         internal const string ItemEquip = nameof(ItemEquip);
