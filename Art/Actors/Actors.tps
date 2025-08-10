@@ -328,6 +328,9 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">OcculusMinion-assets/Move01.png</key>
+            <key type="filename">OcculusMinion-assets/Move02.png</key>
+            <key type="filename">OcculusMinion-assets/Move03.png</key>
             <key type="filename">OcculusMinion-assets/Stand01.png</key>
             <key type="filename">OcculusMinion-assets/Stand02.png</key>
             <key type="filename">OcculusMinion-assets/Stand03.png</key>

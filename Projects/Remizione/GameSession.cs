@@ -25,6 +25,7 @@ namespace Remizione
         private enum AttributeName { RandomSeed, WorldVersion }
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
+        private readonly Dictionary<string, MetaItem[]> friendlyItems = [];
         private Actor? player;
         private Vector2? playerPosition;
         private int rainRemainingTime;
@@ -154,7 +155,7 @@ namespace Remizione
             scriptRegistry.RegisterStatement("add-loot-item", typeof(AddLootItemCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("add-trigger-area", typeof(AddTriggerAreaCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("add-walk-area", typeof(AddWalkAreaCommand), CodingContext.EntityDeclaration);
-            scriptRegistry.RegisterStatement("animate", typeof(AnimateCommand));
+            scriptRegistry.RegisterStatement("animate-actor", typeof(AnimateActorCommand));
             scriptRegistry.RegisterStatement("await-credits", typeof(AwaitCreditsCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-dialog-block", typeof(AwaitDialogBlockCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-pickup", typeof(AwaitPickUpCommand), CodingContext.Execution);
@@ -167,9 +168,11 @@ namespace Remizione
             scriptRegistry.RegisterStatement("end-loot-table", typeof(EndLootTableCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             scriptRegistry.RegisterStatement("exit-session", typeof(ExitSessionCommand));
+            scriptRegistry.RegisterStatement("friendly-items", typeof(FriendlyItemsCommand));
             scriptRegistry.RegisterStatement("hide-overlay-text", typeof(HideOverlayTextCommand));
-            scriptRegistry.RegisterStatement("placement-data", typeof(PlacementDataCommand), CodingContext.EntityDeclaration);
+            scriptRegistry.RegisterStatement("if-has-friendly-items-for", typeof(IfHasFriendlyItemsForStatement));
             scriptRegistry.RegisterStatement("meta-item", typeof(MetaItemCommand), CodingContext.Declaration);
+            scriptRegistry.RegisterStatement("placement-data", typeof(PlacementDataCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("say", typeof(SayCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("select-walk-area", typeof(SelectWalkAreaCommand));
             scriptRegistry.RegisterStatement("set-light", typeof(SetLightCommand), CodingContext.Execution);
@@ -255,7 +258,7 @@ namespace Remizione
 
             // Level
             if (sessionNode.Attributes[nameof(Level)]?.Value is string level)
-                this.Countdown = XmlConvert.ToInt32(level);
+                this.Level = XmlConvert.ToInt32(level);
 
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
@@ -416,12 +419,25 @@ namespace Remizione
         // Environment
         public Environment Environment { get; }
 
+        // FriendlyItemTarget
+        [ScriptProperty]
+        public GameThing? FriendlyItemTarget { get; set; }
+
         // Game
         public new RemizioneGame Game { get; }
 
         // GameplayMode
         [ScriptProperty]
         public GameplayMode GameplayMode { get; set; }
+
+        // GetFriendlyItems
+        public MetaItem[] GetFriendlyItems(string staticName)
+        {
+            if (friendlyItems.TryGetValue(staticName, out var items))
+                return items;
+            else
+                return Array.Empty<MetaItem>();
+        }
 
         // GetStaticThing
         public GameThing? GetStaticThing(string name)
@@ -501,6 +517,12 @@ namespace Remizione
 
         // RandomSeed
         public int RandomSeed { get; private set; }
+
+        // RegisterFriendlyItems
+        public void RegisterFriendlyItems(string staticName, params MetaItem[] metaItems)
+        {
+            friendlyItems[staticName] = metaItems;
+        }
 
         // Room
         [ScriptProperty]

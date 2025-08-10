@@ -3,15 +3,15 @@ using Adberration.Scripting;
 
 namespace Remizione.Scripting
 {
-    // AnimateCommand
+    // AnimateActorCommand
     // Arguments: {Actor} {AnimationName} [#looped] [#preserve] [#reverse]
-    internal sealed class AnimateCommand : AwaitableCommand
+    internal sealed class AnimateActorCommand : AwaitableCommand
     {
         private Actor? actor;
         private SpriteAnimation? animation;
 
         // Constructor
-        internal AnimateCommand(Script script, string source, StatementBody body)
+        internal AnimateActorCommand(Script script, string source, StatementBody body)
             : base(script, source, body, 2, LoopedArg, PreserveArg, ReverseArg)
         {
             AssertEntity<Actor>(0);

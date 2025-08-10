@@ -3,7 +3,7 @@
 namespace Remizione.Scripting
 {
     // SayCommand
-    // Arguments: {Actor} {"Text"} [#condition:Flag[...,Flag]] [#literal] [#title:"String"] [#lid:Integer]
+    // Arguments: {Actor} {"Text"} [#condition:Flag[...,Flag]] [#literal] [#no-await] [#title:"String"] [#lid:Integer]
     [ForceAwait]
     internal sealed class SayCommand : LocalizableCommand
     {

@@ -169,10 +169,18 @@ namespace Remizione
         {
             if (item != null)
             {
+                amountText.Color = ColorPalette.Text.Default;
+
                 if (item.MetaItem.Maximum > 1)
+                {
                     amountText.Text = $"{item.Count}/{item.MetaItem.Maximum}";
+                    if (item.IsStackFull)
+                        amountText.Color = ColorPalette.Text.Terra;
+                }
                 else
+                {
                     amountText.Text = string.Empty;
+                }
 
                 icon.Opacity = item.Count == 0 ? .3f : 1;
             }

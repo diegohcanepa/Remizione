@@ -1,7 +1,6 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
-using Adberration;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -185,7 +184,7 @@ namespace Remizione
 
             amountText.Opacity = opacity;
             button.ButtonOpacity = opacity;
-            button.IsEnabled = opacity == 1;    
+            button.IsEnabled = opacity == 1;
             itemImage.Opacity = opacity;
             slotImage.Opacity = opacity;
 

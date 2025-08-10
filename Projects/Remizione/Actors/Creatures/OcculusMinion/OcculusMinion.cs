@@ -13,7 +13,7 @@
             AllowMoveTween = false;
             AllowMoveBalancingTween = false;
             CollisionDamage = DamageKind.Lightning;
-            PreventBlink = true;
+            //PreventBlink = true;
             PreventKnockback = true;
         }
 

@@ -18,6 +18,7 @@ namespace Remizione
         #region Private fields
 
         private readonly FloatTween accelerationFactorTween = new();
+        private ChooseFriendlyItemScene? chooseFriendlyItemScene;
         private MetaItem? closeAttackMetaItem;
         private string closeAttackName = string.Empty;
         private readonly ActorCloseAttackState closeAttackState;
@@ -637,6 +638,17 @@ namespace Remizione
             float angleThreshold = MathF.Cos(MathHelper.ToRadians(ViewAngle / 2f));
 
             return dot >= angleThreshold;
+        }
+
+        // ChooseFrindlyItem
+        [ScriptMethod]
+        public void ChooseFriendlyItem()
+        {
+            Stand();
+            chooseFriendlyItemScene ??= new ChooseFriendlyItemScene(this);
+            Session.FriendlyItemTarget = Session.OutcomeTarget as GameThing;
+            chooseFriendlyItemScene.Text = "Abrir baúl";
+            chooseFriendlyItemScene.SceneController.Push();
         }
 
         // CloseAttackName

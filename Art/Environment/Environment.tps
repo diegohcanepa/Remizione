@@ -866,6 +866,7 @@
             </struct>
             <key type="filename">Guts-assets/Gut11.png</key>
             <key type="filename">Guts-assets/Gut3.png</key>
+            <key type="filename">PotteryA-assets/PotteryAPiece2.png</key>
             <key type="filename">PotteryD-assets/PotteryDPiece2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

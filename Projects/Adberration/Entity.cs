@@ -52,7 +52,7 @@ namespace Adberration
             // Dynamic
             else if (name.Contains(ScriptSyntax.DynamicSuffix))
             {
-                EntityKind = Session.State == GameSessionState.LoadingScripts ? EntityKind.Dynamic : EntityKind.DynamicVolatile;
+                EntityKind = Session.State == GameSessionState.LoadingScripts ? EntityKind.Dynamic : EntityKind.DynamicRuntime;
             }
 
             // Static

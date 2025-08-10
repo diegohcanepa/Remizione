@@ -347,9 +347,11 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Items-assets/Battery.png</key>
             <key type="filename">Items-assets/Chili.png</key>
             <key type="filename">Items-assets/Cross.png</key>
             <key type="filename">Items-assets/Duck.png</key>
+            <key type="filename">Items-assets/Lockpick.png</key>
             <key type="filename">Items-assets/MissingItem.png</key>
             <key type="filename">Items-assets/RottenApple.png</key>
             <struct type="IndividualSpriteSettings">

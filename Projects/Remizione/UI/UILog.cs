@@ -63,7 +63,7 @@ namespace Remizione.UI
             nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
             nounText.Text = noun;
             icon.Image = image;
-            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -3);
+            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
 
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 1000);
         }

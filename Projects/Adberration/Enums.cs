@@ -4,7 +4,7 @@
     public enum Direction { Left, Up, Right, Down }
 
     // EntityKind
-    public enum EntityKind { Static, Dynamic, DynamicVolatile, Anonymous }
+    public enum EntityKind { Static, Dynamic, DynamicRuntime, Anonymous }
 
     // FacingDirection
     public enum FacingDirection { Right, Left }

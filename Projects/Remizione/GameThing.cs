@@ -36,13 +36,11 @@ namespace Remizione
         private bool isHotspotDirty = true;
         private Vector2 knockback;
         private readonly Vector2Tween knockbackTween = new();
-        private string localizedDisplayName = string.Empty;
         private int maxHP;
         private PathNode[]? pathNodes;
         private RenderLayer renderLayer;
         private int renderLayerDepth;
         private bool shouldClampToWalkablePosition;
-        private bool shouldUnregister;
         private WalkArea? walkArea;
         private string walkAreaName = string.Empty;
 
@@ -193,7 +191,7 @@ namespace Remizione
         // DropLootBag
         private void DropLootBag()
         {
-            if (Room is ProceduralRoom room)
+            if (Session.Room is ProceduralRoom room)
             {
                 if (LootTable.Find(LootTableName) is LootTable lootTable)
                 {
@@ -687,7 +685,7 @@ namespace Remizione
                 if (value != displayName)
                 {
                     displayName = value;
-                    localizedDisplayName = TextRepository.GetValue(DisplayName);
+                    LocalizedDisplayName = TextRepository.GetValue(DisplayName);
                 }
             }
         }
@@ -968,7 +966,7 @@ namespace Remizione
         public Vector2 LightPosition { get; set; }
 
         // LocalizedDisplayName
-        public string LocalizedDisplayName => localizedDisplayName;
+        public string LocalizedDisplayName { get; protected set; } = string.Empty;
 
         // LootTableName
         [ScriptProperty]

@@ -348,7 +348,7 @@ namespace Remizione
 
             for (var i = 0; i < dynamicThings.Count; i++)
             {
-                if (dynamicThings[i].EntityKind == EntityKind.DynamicVolatile)
+                if (dynamicThings[i].EntityKind == EntityKind.DynamicRuntime)
                     dynamicThings[i].Unregister();
                 else
                     dynamicThings[i].Unparent();

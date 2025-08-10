@@ -572,6 +572,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/TowerDoorClose.wav;Audio/FX/TowerDoorClose
 
+#begin Audio/FX/TrunkOpen.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/TrunkOpen.wav;Audio/FX/TrunkOpen
+
 #begin Audio/FX/UIHover.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

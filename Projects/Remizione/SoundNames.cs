@@ -14,7 +14,7 @@
         internal const string ItemDiscard = nameof(ItemDiscard);
         internal const string ItemEquip = nameof(ItemEquip);
         internal const string Lightning = nameof(Lightning);
-        internal const string LootBagPickup = nameof(LootBagPickup);
+        internal const string PickupBag = nameof(PickupBag);
         internal const string PotteryBreak = nameof(PotteryBreak);
         internal const string Rain = nameof(Rain);
         internal const string ShockZap = nameof(ShockZap);

@@ -44,6 +44,8 @@
   <String Key="InventoryVerb.Unequip">Desequipar</String>
   <String Key="Item.Apple.Description">Una apetitoza manzana en su punto justo.</String>
   <String Key="Item.Apple.Name">Manzana</String>
+  <String Key="Item.Battery.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
+  <String Key="Item.Battery.Name">Batería</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
   <String Key="Item.Chili.Name">Chile picante</String>
   <String Key="Item.Cross.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
@@ -52,6 +54,8 @@
   <String Key="Item.Duck.Name">Patito de hule</String>
   <String Key="Item.Gold.Description">Un puñado de polvo de oro.</String>
   <String Key="Item.Gold.Name">Polvo de oro</String>
+  <String Key="Item.Lockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
+  <String Key="Item.Lockpick.Name">Ganzúa</String>
   <String Key="Item.PieceOfWood.Description">Un pedazo de madera viejo. Si juntas los suficientes podrás pedirle un cofre al Señor.</String>
   <String Key="Item.PieceOfWood.Name">Trozo de madera</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>

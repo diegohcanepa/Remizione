@@ -53,6 +53,7 @@
 	<FX Name="Thunder" MaxInstances="4" Sounds="1..4" />
 	<FX Name="ThrowableDuck" MaxInstances="8" Sounds="1..3" Volume=".4"/>
 	<FX Name="ThrowablePickup" MaxInstances="8" />
+	<FX Name="TrunkOpen" />
 	<FX Name="UIHover" MaxInstances="4" />
 	<FX Name="UIInventoryOpen" MaxInstances="2" />
 	<FX Name="UIPrompt" MaxInstances="4" Volume=".1" />

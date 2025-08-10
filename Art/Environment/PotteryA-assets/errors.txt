@@ -1,1 +1,0 @@
-[8/5/2025, 12:16:40 PM] layer "PotteryAPiece2.png": Duplicate path: PotteryAPiece2.png

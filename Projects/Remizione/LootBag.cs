@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -18,6 +19,7 @@ namespace Remizione
             : base(session, name)
         {
             IgnoreThrowables = true;
+            PickUpSound = Sound.Find(SoundNames.PickupBag);
             Scale = new(.75f);
         }
 
@@ -39,6 +41,8 @@ namespace Remizione
 
             Tweens.AltitudeTween = altitudeTween;
             Tweens.OpacityTween = opacityTween;
+
+            LocalizedDisplayName = $"{TextRepository.GetValue("Prop.Bag")} ({LocalizedDisplayName})";
         }
     }
 }

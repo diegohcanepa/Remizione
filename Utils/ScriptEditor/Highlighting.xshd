@@ -114,11 +114,10 @@
 			<Word>await-this-routine</Word>
 			<Word>await-transition</Word>
 			<Word>await</Word>
-			<Word>begin-placement-data</Word>
 			<Word>const</Word>
-			<Word>end-placement-data</Word>			
 			<Word>ensure-session-scene</Word>
 			<Word>exit-session</Word>
+			<Word>friendly-items</Word>
 			<Word>meta-item</Word>
 			<Word>pause-routine</Word>
 			<Word>placement-data</Word>
@@ -149,6 +148,8 @@
 			<Word>if-entity-type</Word>
 			<Word>if-entity</Word>
 			<Word>if-flag</Word>
+			<Word>if-friendly-item</Word>
+			<Word>if-has-friendly-items-for</Word>
 			<Word>if-not-null</Word>
 			<Word>if-parent</Word>
 			<Word>if-random-number</Word>
@@ -256,7 +257,7 @@
 
 		<!-- Visual statements -->
 		<Keywords fontWeight="regular" foreground="#9c5100">
-			<Word>animate</Word>
+			<Word>animate-actor</Word>
 			<Word>approach-to-target</Word>
 			<Word>approach</Word>
 			<Word>color-tween</Word>
