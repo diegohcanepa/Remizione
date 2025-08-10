@@ -1479,7 +1479,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Trunk-assets/Trunk.png</key>
+            <key type="filename">Trunk-assets/Trunk01.png</key>
+            <key type="filename">Trunk-assets/Trunk02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,6,11,11</rect>
+                <key>scale9Paddings</key>
+                <rect>5,6,11,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Trunk-assets/TrunkShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

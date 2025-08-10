@@ -845,18 +845,6 @@ namespace Adberration
         // Unparent
         public abstract void Unparent();
 
-        // Unregister
-        public void Unregister()
-        {
-            if (EntityKind == EntityKind.Anonymous)
-                return;
-
-            if (EntityKind == EntityKind.Static || EntityKind == EntityKind.Dynamic)
-                throw new InvalidOperationException();
-
-            Session.UnregisterEntity(this);
-        }
-
         // Width
         public int Width => Sprite.Width;
 

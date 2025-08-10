@@ -851,6 +851,10 @@ namespace Remizione
         [ScriptProperty]
         public int GoldenTickets { get; set; }
 
+        // HasFriendlyItems
+        [ScriptProperty]
+        public bool HasFriendlyItems => Session.HasFriendlyItems(StaticName);
+
         // Highlight
         [ScriptProperty]
         public bool Highlight { get; set; } = true;

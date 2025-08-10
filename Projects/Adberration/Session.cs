@@ -706,13 +706,6 @@ namespace Adberration
         // ScriptEnvironment
         internal ScriptEnvironment ScriptEnvironment { get; private set; }
 
-        // UnregisterEntity
-        internal void UnregisterEntity(Entity entity)
-        {
-            entities.Remove(entity.Name);
-            entityList.Remove(entity);
-        }
-
         #endregion
 
         // AllowSaving
@@ -796,6 +789,25 @@ namespace Adberration
         // Chapter
         [ScriptProperty]
         public int Chapter { get; set; }
+
+        // CleanUpRuntimeEntities
+        public void CleanUpRuntimeEntities()
+        {
+            var runtimeEntities = new List<Entity>();
+            
+            for (var i = 0; i < entityList.Count; i++)
+            {
+                if (entityList[i].EntityKind == EntityKind.DynamicRuntime)
+                    runtimeEntities.Add(entityList[i]);
+            }
+
+            for (var i = 0; i < runtimeEntities.Count; i++)
+            {
+                runtimeEntities[i].Unparent();
+                entities.Remove(runtimeEntities[i].Name);
+                entityList.Remove(runtimeEntities[i]);
+            }
+        }
 
         // CreateDynamicThing
         public Thing CreateDynamicThing(string staticName, string instanceName) => ScriptEnvironment.CreateDynamicThing(staticName, instanceName, false);

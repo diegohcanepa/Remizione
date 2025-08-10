@@ -149,7 +149,6 @@
 			<Word>if-entity</Word>
 			<Word>if-flag</Word>
 			<Word>if-friendly-item</Word>
-			<Word>if-has-friendly-items-for</Word>
 			<Word>if-not-null</Word>
 			<Word>if-parent</Word>
 			<Word>if-random-number</Word>

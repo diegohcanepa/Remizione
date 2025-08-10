@@ -170,7 +170,6 @@ namespace Remizione
             scriptRegistry.RegisterStatement("exit-session", typeof(ExitSessionCommand));
             scriptRegistry.RegisterStatement("friendly-items", typeof(FriendlyItemsCommand));
             scriptRegistry.RegisterStatement("hide-overlay-text", typeof(HideOverlayTextCommand));
-            scriptRegistry.RegisterStatement("if-has-friendly-items-for", typeof(IfHasFriendlyItemsForStatement));
             scriptRegistry.RegisterStatement("meta-item", typeof(MetaItemCommand), CodingContext.Declaration);
             scriptRegistry.RegisterStatement("placement-data", typeof(PlacementDataCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("say", typeof(SayCommand), CodingContext.Execution);
@@ -444,6 +443,9 @@ namespace Remizione
         {
             return staticThingsDict.TryGetValue(name, out var thing) ? thing : null;
         }
+
+        // HasFriendlyItems
+        public bool HasFriendlyItems(string staticName) => friendlyItems.ContainsKey(staticName);
 
         // HUD
         public HUD HUD { get; }
