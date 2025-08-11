@@ -671,7 +671,7 @@ namespace Adberration
 
             for (var i = 0; i < things.Count; i++)
             {
-                if (things[i].Persistent && things[i].EntityKind != EntityKind.Anonymous)
+                if (things[i].Persistent && things[i].InstanceKind != InstanceKind.Anonymous)
                     list.Add(things[i].Name);
             }
 
@@ -688,10 +688,10 @@ namespace Adberration
         // RegisterEntity
         internal void RegisterEntity(Entity entity)
         {
-            if (State != GameSessionState.LoadingScripts && !ScriptEnvironment.IsCreatingDynamicEntity)
+            if (State != GameSessionState.LoadingScripts && !ScriptEnvironment.IsCreatingClone)
                 throw new InvalidOperationException("This action can be performed during the initialization phase only.");
 
-            if (!ScriptEnvironment.IsCreatingDynamicEntity)
+            if (!ScriptEnvironment.IsCreatingClone)
             {
                 NameValidator.CheckName(entity.Name);
 
@@ -797,7 +797,7 @@ namespace Adberration
             
             for (var i = 0; i < entityList.Count; i++)
             {
-                if (entityList[i].EntityKind == EntityKind.DynamicRuntime)
+                if (entityList[i].InstanceKind == InstanceKind.RuntimeClone)
                     runtimeEntities.Add(entityList[i]);
             }
 
@@ -809,8 +809,8 @@ namespace Adberration
             }
         }
 
-        // CreateDynamicThing
-        public Thing CreateDynamicThing(string staticName, string instanceName) => ScriptEnvironment.CreateDynamicThing(staticName, instanceName, false);
+        // CreateRuntimeClone
+        public Thing CreateRuntimeClone(string staticName, string instanceName) => ScriptEnvironment.CreateRuntimeClone(staticName, instanceName, false);
 
         // CreateFlagCondition
         public FlagCondition CreateFlagCondition(IList<string> flags)

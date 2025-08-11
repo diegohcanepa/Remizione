@@ -13,7 +13,7 @@ namespace Remizione.Scripting
             : base(script, source, body, 1)
         {
             var thing = AssertEntityNotNull<GameThing>(Script.EntityName);
-            if (thing.EntityKind != EntityKind.Static)
+            if (thing.InstanceKind != InstanceKind.Static)
                 return;
 
             var names = Parser.ParseNames(this, 0);

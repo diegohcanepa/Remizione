@@ -25,8 +25,8 @@
 		<Keywords fontWeight="bold" foreground="Purple">
 			<Word>{</Word>
 			<Word>}</Word>
+			<Word>Cloning</Word>
 			<Word>Declaration</Word>
-			<Word>Instantiation</Word>
 			<Word>Initialization</Word>
 			<Word>Room </Word>
 			<Word>EnterRoom</Word>
@@ -42,7 +42,7 @@
 		<!-- Identifiers -->
 		<Keywords fontWeight="regular" foreground="Purple">
 			<Word>Class:</Word>
-			<Word>Instantiable</Word>
+			<Word>Cloneable</Word>
 			<Word>Persistent</Word>
 		</Keywords>
 
@@ -75,7 +75,7 @@
 			<Word>damage-bonus-effect</Word>
 			<Word>flag</Word>
 			<Word>is</Word>
-			<Word>new</Word>
+			<Word>clone</Word>
 			<Word>=>></Word>
 			<Word>=></Word>
 			<Word>await-animation</Word>

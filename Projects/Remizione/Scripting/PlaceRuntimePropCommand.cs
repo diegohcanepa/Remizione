@@ -2,12 +2,12 @@
 
 namespace Remizione.Scripting
 {
-    // PlaceDynamicPropCommand
+    // PlaceRuntimePropCommand
     // Syntax: {StaticName}
-    internal sealed class PlaceDynamicPropCommand : NonAwaitableCommand
+    internal sealed class PlaceRuntimePropCommand : NonAwaitableCommand
     {
         // Constructor
-        internal PlaceDynamicPropCommand(Script script, string source, StatementBody body)
+        internal PlaceRuntimePropCommand(Script script, string source, StatementBody body)
             : base(script, source, body, 1)
         {
             if (Session.GetEntity<IsometricProp>(Body.Clauses[0]) == null)
@@ -24,7 +24,7 @@ namespace Remizione.Scripting
                 if (staticProp == null)
                     return;
 
-                if (room.PlaceDynamicProp(staticProp) is GameThing thing)
+                if (room.PlaceRuntimeProp(staticProp) is GameThing thing)
                 {
                     var tween = new Vector2Tween() { StartDelay = 250 };
                     tween.Start(TweenStyle.CubicIn, Vector2.Zero, Vector2.One, 250);

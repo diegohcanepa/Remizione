@@ -38,22 +38,22 @@ namespace Adberration.Scripting
 
         #region Private members
 
-        // CreateDynamicThingCore
-        private Thing? CreateDynamicThingCore(string staticName, string instanceName)
+        // CreateRuntimeCloneCore
+        private Thing? CreateRuntimeCloneCore(string staticName, string instanceName)
         {
             CodeContract.NotDisposed(nameof(Session), session.IsDisposed);
 
-            if (!ScriptSyntax.IsDynamicName(instanceName))
-                throw new InvalidOperationException($"'{instanceName}' must contains the dynamic identifier (*).");
+            if (!ScriptSyntax.IsClonedName(instanceName))
+                throw new InvalidOperationException($"'{instanceName}' must contains the clone identifier (*).");
 
-            IsCreatingDynamicEntity = true;
+            IsCreatingClone = true;
 
             // Get declaration script from library
-            var declarationScript = session.ScriptLibrary.GetScript(ScriptType.Thing, staticName) ?? throw new InvalidOperationException($"'{staticName}' cannot have dynamic instances. Use the Instantible keyword.");
+            var declarationScript = session.ScriptLibrary.GetScript(ScriptType.Thing, staticName) ?? throw new InvalidOperationException($"'{staticName}' cannot be cloned. Use the Clonable keyword.");
 
-            // Check if thing is instantiable
-            if (!declarationScript.Instantiable)
-                throw new InvalidOperationException($"'{staticName}' is not instantiable.");
+            // Check if thing is cloneable
+            if (!declarationScript.Cloneable)
+                throw new InvalidOperationException($"'{staticName}' is not cloneable.");
 
             if (declarationScript.Persistent && ScriptSyntax.IsRuntimeName(instanceName))
                 throw new InvalidOperationException($"Cannot create persistent entities at runtime.");
@@ -65,18 +65,18 @@ namespace Adberration.Scripting
             declarationScript.Compile();
             session.ScriptProcessor.RunScript(declarationScript);
 
-            IsCreatingDynamicEntity = false;
+            IsCreatingClone = false;
 
             return result;
         }
 
-        // CreateDynamicEntityName
-        private string CreateDynamicEntityName(string typeName)
+        // CreateRuntimeCloneName
+        private string CreateRuntimeCloneName(string typeName)
         {
             var counter = 1;
             while (true)
             {
-                var result = typeName + ScriptSyntax.DynamicSuffix + counter.ToString(CultureInfo.InvariantCulture) + ScriptSyntax.RuntimeNameSuffix;
+                var result = typeName + ScriptSyntax.CloneSuffix + counter.ToString(CultureInfo.InvariantCulture) + ScriptSyntax.RuntimeNameSuffix;
                 if (session.GetEntity(result) == null)
                     return result;
 
@@ -99,7 +99,7 @@ namespace Adberration.Scripting
                 CodingContext.Declaration => scriptType == ScriptType.Declaration,
 
                 // Instantiation
-                CodingContext.Instantiation => scriptType == ScriptType.Instantiation || scriptType == ScriptType.Room || scriptType == ScriptType.Thing,
+                CodingContext.Instantiation => scriptType == ScriptType.Cloning || scriptType == ScriptType.Room || scriptType == ScriptType.Thing,
 
                 // Initialization
                 CodingContext.Initialization => scriptType == ScriptType.Initialization,
@@ -173,19 +173,19 @@ namespace Adberration.Scripting
                 throw new InvalidOperationException($"Coding context out of scope. The valid context for '{memberName}' is '{context}'.");
         }
 
-        // CreateDynamicThing
-        internal Thing CreateDynamicThing(string staticName, string instanceName, bool persistent)
+        // CreateRuntimeClone
+        internal Thing CreateRuntimeClone(string staticName, string instanceName, bool persistent)
         {
             if (session.State == GameSessionState.Uninitialized)
                 throw new InvalidOperationException("Game session not initialized.");
 
-            if (session.State != GameSessionState.Idle && session.State != GameSessionState.AwaitingScripts && session.ScriptLibrary.CompilationPhase != CompilationPhase.Instantiation)
+            if (session.State != GameSessionState.Idle && session.State != GameSessionState.AwaitingScripts && session.ScriptLibrary.CompilationPhase != CompilationPhase.Cloning)
                 throw new InvalidOperationException();
 
             if (string.IsNullOrWhiteSpace(instanceName))
-                instanceName = CreateDynamicEntityName(staticName);
+                instanceName = CreateRuntimeCloneName(staticName);
 
-            var result = CreateDynamicThingCore(staticName, instanceName) ?? throw new InvalidOperationException("Cannot create dynamic entity.");
+            var result = CreateRuntimeCloneCore(staticName, instanceName) ?? throw new InvalidOperationException("Unable to clone entity.");
 
             if (persistent)
                 result.Persistent = persistent;
@@ -329,8 +329,8 @@ namespace Adberration.Scripting
         // IsConstantDeclared
         internal bool IsConstantDeclared(string name) => constants.ContainsKey(name);
 
-        // IsCreatingDynamicEntity
-        internal bool IsCreatingDynamicEntity { get; private set; }
+        // IsCreatingClone
+        internal bool IsCreatingClone { get; private set; }
 
         // IsEntityTypeRegistered
         internal bool IsEntityTypeRegistered(string name)

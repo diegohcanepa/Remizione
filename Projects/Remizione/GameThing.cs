@@ -195,7 +195,7 @@ namespace Remizione
             {
                 if (LootTable.Find(LootTableName) is LootTable lootTable)
                 {
-                    if (room.CreateDynamicThing(nameof(LootBag)) is LootBag lootBag)
+                    if (room.CreateRuntimeClone(nameof(LootBag)) is LootBag lootBag)
                     {
                         if (lootTable.GetLoot() is MetaItem metaItem)
                             lootBag.Drop(room, Position, metaItem);

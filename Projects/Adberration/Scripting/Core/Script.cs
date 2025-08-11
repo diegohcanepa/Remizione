@@ -180,7 +180,7 @@ namespace Adberration.Scripting
             }
 
             Persistent = tokens.Contains(ScriptSyntax.PersistentKeyword);
-            Instantiable = tokens.Contains(ScriptSyntax.InstantiableKeyword);
+            Cloneable = tokens.Contains(ScriptSyntax.CloneableKeyword);
 
             // Assign Entity Name
             if (HasCapability(ScriptCapability.EntityContext))
@@ -257,11 +257,11 @@ namespace Adberration.Scripting
 
                 sourceLines.Add(line);
 
-                if (line.StartsWith(ScriptSyntax.NewKeyword + " ") && lines[0] == ScriptSyntax.CodeBlockStart)
+                if (line.StartsWith(ScriptSyntax.CloneKeyword + " ") && lines[0] == ScriptSyntax.CodeBlockStart)
                 {
                     var tokens = Tokenize(line);
                     if (tokens.Length < 2)
-                        throw new InvalidOperationException("Dynamic entity name expected.");
+                        throw new InvalidOperationException("Clone name expected.");
 
                     ParseInitBody(lines, tokens[1]);
                 }
@@ -278,8 +278,8 @@ namespace Adberration.Scripting
                 // Get line
                 var line = lines[0];
 
-                if (line.StartsWith(ScriptSyntax.NewKeyword + " "))
-                    throw new InvalidOperationException($"The '{ScriptSyntax.NewKeyword}' keyword is not valid in this context.");
+                if (line.StartsWith(ScriptSyntax.CloneKeyword + " "))
+                    throw new InvalidOperationException($"The '{ScriptSyntax.CloneKeyword}' keyword is not valid in this context.");
 
                 lines.RemoveAt(0);
 
@@ -574,6 +574,9 @@ namespace Adberration.Scripting
         // ClassName
         public string? ClassName { get; private set; }
 
+        // Cloneable
+        public bool Cloneable { get; private set; }
+
         // CurrentStatement
         public Statement? CurrentStatement => currentLineIndex < 0 ? null : statements[currentLineIndex];
 
@@ -593,7 +596,7 @@ namespace Adberration.Scripting
                 return ScriptType != ScriptType.EnterRoom &&
                        ScriptType != ScriptType.Routine &&
                        ScriptType != ScriptType.NewSession &&
-                       ScriptType != ScriptType.Instantiation &&
+                       ScriptType != ScriptType.Cloning &&
                        ScriptType != ScriptType.Declaration &&
                        ScriptType != ScriptType.Initialization;
             }
@@ -611,8 +614,8 @@ namespace Adberration.Scripting
             if (value == ScriptCapability.Discard)
             {
                 return ScriptType == ScriptType.Declaration ||
-                       ScriptType == ScriptType.Instantiation ||
-                       (ScriptType == ScriptType.Thing && !Instantiable);
+                       ScriptType == ScriptType.Cloning ||
+                       (ScriptType == ScriptType.Thing && !Cloneable);
             }
 
             // EntityDeclaration
@@ -621,9 +624,6 @@ namespace Adberration.Scripting
 
             return false;
         }
-
-        // Instantiable
-        public bool Instantiable { get; private set; }
 
         // IsCompiled
         public bool IsCompiled { get; private set; }

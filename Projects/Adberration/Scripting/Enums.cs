@@ -7,7 +7,7 @@
     public enum ComparisonOperator { Equality, Inequality, LessThan, LessThanOrEqual, GreaterThan, GreaterThanOrEqual }
 
     // CompilationPhase
-    internal enum CompilationPhase { None, Declarations, Instantiation, Routines, Outcomes }
+    internal enum CompilationPhase { None, Declarations, Cloning, Routines, Outcomes }
 
     // NameValidationError
     public enum NameValidationError { None, Null, Empty, InvalidCharacters, ReservedWord }
@@ -23,7 +23,7 @@
     }
 
     // ScriptType
-    public enum ScriptType { Declaration, Initialization, Instantiation, Room, Thing, Load, Unload, Enter, EnterRoom, Outcome, Routine, NewSession }
+    public enum ScriptType { Declaration, Initialization, Cloning, Room, Thing, Load, Unload, Enter, EnterRoom, Outcome, Routine, NewSession }
 
     // StatementType
     public enum StatementType { If, Else, Endif, Restart, Return, AwaitableCommand, NonAwaitableCommmand, LocalizationComment }

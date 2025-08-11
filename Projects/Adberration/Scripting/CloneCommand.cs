@@ -1,15 +1,15 @@
 ﻿namespace Adberration.Scripting
 {
-    // NewCommand
-    // Arguments: {DynamicName} [#at:Vector2] [#parent:Entity] [#persistent] [#range:Int32Range]
-    internal sealed class NewCommand : NonAwaitableCommand
+    // CloneCommand
+    // Arguments: {CloneName} [#at:Vector2] [#parent:Entity] [#persistent] [#range:Int32Range]
+    internal sealed class CloneCommand : NonAwaitableCommand
     {
         // Constructor
-        internal NewCommand(Script script, string source, StatementBody body)
+        internal CloneCommand(Script script, string source, StatementBody body)
             : base(script, source, body, 1, AtArg, ParentArg, PersistentArg, RangeArg)
         {
-            //            if (!body.Clauses[0].Contains(ScriptSyntax.DynamicSuffix))
-            //              throw new ScriptException(this, "Invalid dynamic name.");
+            //            if (!body.Clauses[0].Contains(ScriptSyntax.CloneSuffix))
+            //              throw new ScriptException(this, "Invalid clone name.");
 
             Parser.ParseInt32RangeArgument(this, RangeArg);
 
@@ -24,24 +24,24 @@
             // Check if declaration script exists
             var declarationScript = Session.ScriptLibrary.GetDeclaration(staticName) ?? throw new ScriptException(this, $"The entity class '{staticName}' is not declared.");
 
-            // Check if entity is instantiable
-            if (!declarationScript.Instantiable)
-                throw new ScriptException($"The entity '{staticName}' cannot create dynamic instances. Use the '{ScriptSyntax.InstantiableKeyword}' keyword.");
+            // Check if entity is cloneable
+            if (!declarationScript.Cloneable)
+                throw new ScriptException($"The entity '{staticName}' cannot create clones. Use the '{ScriptSyntax.CloneableKeyword}' keyword.");
 
-            // Ensures that a dynamic entity is created in a dynamic declaration script
-            if (Script.ScriptType != ScriptType.Instantiation)
+            // Ensures that a cloned entity is created in a clone declaration script
+            if (Script.ScriptType != ScriptType.Cloning)
             {
-                var message = $"Dynamic entites can only be declared in [DynamicDeclaration] scripts.";
+                var message = $"Clones can only be declared in [{ScriptType.Cloning}] scripts.";
                 throw new ScriptException(this, message);
             }
         }
 
-        // CreateInstance
-        private void CreateInstance(string name)
+        // CreateCloneInstance
+        private void CreateCloneInstance(string name)
         {
             var staticName = ScriptSyntax.GetStaticName(name);
             var instanceName = name == staticName ? string.Empty : name;
-            var thing = Session.ScriptEnvironment.CreateDynamicThing(staticName, instanceName, HasArg(PersistentArg));
+            var thing = Session.ScriptEnvironment.CreateRuntimeClone(staticName, instanceName, HasArg(PersistentArg));
 
             // Parent (assign parent at last place to ensure correct values before the controller starts)
             var flag = Body.Args.GetArg(ParentArg);
@@ -65,11 +65,11 @@
                 var range = Parser.ParseInt32RangeArgument(this, RangeArg);
                 for (var i = range.Minimum; i <= range.Maximum; i++)
                 {
-                    CreateInstance(Body.Clauses[0] + i.ToString());
+                    CreateCloneInstance(Body.Clauses[0] + i.ToString());
                 }
             }
             else
-                CreateInstance(Body.Clauses[0]);
+                CreateCloneInstance(Body.Clauses[0]);
         }
 
         #endregion

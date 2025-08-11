@@ -17,7 +17,7 @@ namespace Remizione
         #region Private fields
 
         private ProceduralRoomGrid? decorationGrid;
-        private readonly List<GameThing> dynamicThings = [];
+        private int instanceCount;
         private ProceduralRoomGrid? mainGrid;
         private readonly Dictionary<string, List<PlacementData>> placementDataDictionary = [];
         private readonly Random random;
@@ -36,7 +36,6 @@ namespace Remizione
         {
             LightingSystem = true;
 
-            this.DynamicThings = new(dynamicThings);
             this.randomSeed = GetSeed(Session.RandomSeed, Session.Level);
             this.random = new Random(randomSeed);
             this.terrainBlock = new ImageSprite(session.Game);
@@ -46,13 +45,13 @@ namespace Remizione
 
         #region Private members
 
-        // CreateDynamicThingCore
-        private GameThing CreateDynamicThingCore(string staticName)
+        // CreateRuntimeCloneCore
+        private GameThing CreateRuntimeCloneCore(string staticName)
         {
-            if (Session.CreateDynamicThing(staticName, $"{staticName}*{Name}_{dynamicThings.Count}") is not GameThing result)
-                throw new InvalidOperationException($"Failed to create dynamic thing from'{staticName}'.");
+            if (Session.CreateRuntimeClone(staticName, $"{staticName}*{Name}_{instanceCount}") is not GameThing result)
+                throw new InvalidOperationException($"Failed to create runtime clone from'{staticName}'.");
 
-            dynamicThings.Add(result);
+            instanceCount++;
 
             return result;
         }
@@ -75,7 +74,7 @@ namespace Remizione
                 if (!targetGrid.TryReserveSpace(sizeInCells, out int baseCol, out int baseRow))
                     break;
 
-                PlaceDynamicThing(thing, baseCol, baseRow);
+                PlaceRuntimeThing(thing, baseCol, baseRow);
 
                 for (int j = 0; j < clumpSize - 1; j++)
                 {
@@ -83,7 +82,7 @@ namespace Remizione
                     int offsetRow = baseRow + random.Next(-1, 2);
 
                     if (targetGrid.TryReserveSpace(sizeInCells, out int col, out int row, offsetCol, offsetRow))
-                        PlaceDynamicThing(thing, col, row);
+                        PlaceRuntimeThing(thing, col, row);
                 }
             }
         }
@@ -111,7 +110,7 @@ namespace Remizione
 
                     if (targetGrid.TryReserveSpace(sizeInCells, out int finalCol, out int finalRow, col, row))
                     {
-                        PlaceDynamicThing(thing, finalCol, finalRow);
+                        PlaceRuntimeThing(thing, finalCol, finalRow);
                         placed = true;
                     }
                 }
@@ -138,7 +137,7 @@ namespace Remizione
                 if (noise > noiseThreshold)
                     continue;
 
-                PlaceDynamicThing(thing, col, row);
+                PlaceRuntimeThing(thing, col, row);
             }
         }
 
@@ -191,14 +190,14 @@ namespace Remizione
             return result;
         }
 
-        // PlaceDynamicThing
-        private void PlaceDynamicThing(GameThing thing, int col, int row)
+        // PlaceRuntimeThing
+        private void PlaceRuntimeThing(GameThing thing, int col, int row)
         {
             if (mainGrid == null || decorationGrid == null)
                 return;
 
             var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
-            var instance = CreateDynamicThingCore(thing.StaticName);
+            var instance = CreateRuntimeCloneCore(thing.StaticName);
             instance.Position = targetGrid.GetPosition(col, row);
             instance.Y += instance.BoundingBox.Height;
             instance.X += instance.BoundingBox.Width / 2;
@@ -273,7 +272,7 @@ namespace Remizione
                 {
                     var staticName = roomConnector.NW ? "OutgoingGhostCarNW" : "OutgoingGhostCarNE";
 
-                    if (CreateDynamicThingCore(staticName) is not OutgoingGhostCar car)
+                    if (CreateRuntimeCloneCore(staticName) is not OutgoingGhostCar car)
                         throw new InvalidOperationException("Failed to create GhostCar instance.");
 
                     Children.Add(car);
@@ -385,23 +384,20 @@ namespace Remizione
             return true;
         }
 
-        // DynamicThings
-        public ReadOnlyCollection<GameThing> DynamicThings { get; }
-
-        // CreateDynamicThing
-        public GameThing? CreateDynamicThing(string staticName)
+        // CreateRuntimeClone
+        public GameThing? CreateRuntimeClone(string staticName)
         {
-            return CreateDynamicThingCore(staticName);
+            return CreateRuntimeCloneCore(staticName);
         }
 
-        // PlaceDynamicThingAt
-        public GameThing? PlaceDynamicThingAt(GameThing thing, Vector2 position)
+        // PlaceRuntimeCloneAt
+        public GameThing? PlaceRuntimeCloneAt(GameThing thing, Vector2 position)
         {
             GameThing? result = null;
 
             if (CanPlaceThingAt(thing, position))
             {
-                result = Session.CreateDynamicThing(thing.StaticName, string.Empty) as GameThing;
+                result = Session.CreateRuntimeClone(thing.StaticName, string.Empty) as GameThing;
                 if (result != null)
                 {
                     result.Position = position;

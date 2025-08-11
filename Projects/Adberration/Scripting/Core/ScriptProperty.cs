@@ -276,7 +276,7 @@ namespace Adberration.Scripting
             }
             else
             {
-                if (ScriptSyntax.IsDynamicName(value) && Session.State == GameSessionState.LoadingScripts)
+                if (ScriptSyntax.IsClonedName(value) && Session.State == GameSessionState.LoadingScripts)
                 {
                     throw new ScriptException(statement, "Dynamic entities cannot be assigned during initialization.");
                 }

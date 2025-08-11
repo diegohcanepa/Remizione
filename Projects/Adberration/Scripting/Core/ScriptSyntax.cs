@@ -33,6 +33,9 @@ namespace Adberration.Scripting
         // ClassKeyword
         public const string ClassKeyword = "Class";
 
+        // CloneableKeyword
+        public const string CloneableKeyword = "Cloneable";
+
         // CodeBlockEnd
         public const string CodeBlockEnd = "}";
 
@@ -42,8 +45,11 @@ namespace Adberration.Scripting
         // ConstantPrefix
         public const string ConstantPrefix = "%";
 
-        // DynamicSuffix
-        public const string DynamicSuffix = "*";
+        // CloneKeyword
+        public const string CloneKeyword = "clone";
+
+        // CloneSuffix
+        public const string CloneSuffix = "*";
 
         // EqualityOp
         public const string EqualityOp = "==";
@@ -54,7 +60,7 @@ namespace Adberration.Scripting
             if (string.IsNullOrWhiteSpace(name))
                 return name;
 
-            var index = name.IndexOf(DynamicSuffix, StringComparison.OrdinalIgnoreCase);
+            var index = name.IndexOf(CloneSuffix, StringComparison.OrdinalIgnoreCase);
             if (index != -1)
             {
                 name = name.Substring(0, index);
@@ -75,17 +81,14 @@ namespace Adberration.Scripting
         // InequalityOp
         public const string InequalityOp = "!=";
 
-        // InstantiableKeyword
-        public const string InstantiableKeyword = "Instantiable";
+        // IsClonedName
+        public static bool IsClonedName(string name) => name.Contains(CloneSuffix);
 
         // IsDeclarationReservedWord
         public static bool IsDeclarationReservedWord(string value)
         {
-            return value == InstantiableKeyword || value == ClassKeyword || value == PersistentKeyword;
+            return value == CloneableKeyword || value == ClassKeyword || value == PersistentKeyword;
         }
-
-        // IsDynamicName
-        public static bool IsDynamicName(string name) => name.Contains(DynamicSuffix);
 
         // IsNumericType
         public static bool IsNumericType(Type type) => SupportedNumericTypes.Contains(type);
@@ -122,9 +125,6 @@ namespace Adberration.Scripting
 
         // MethodReference
         public const string MethodReference = "=>>";
-
-        // NewKeyword
-        public const string NewKeyword = "new";
 
         // NotInOp
         public const string NotInOp = "not-in";

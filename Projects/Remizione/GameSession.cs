@@ -326,7 +326,7 @@ namespace Remizione
                 if (entity is not GameThing thing)
                     continue;
 
-                if (thing.EntityKind == EntityKind.Static)
+                if (thing.InstanceKind == InstanceKind.Static)
                 {
                     staticThings.Add(thing);
                     staticThingsDict.Add(thing.StaticName, thing);

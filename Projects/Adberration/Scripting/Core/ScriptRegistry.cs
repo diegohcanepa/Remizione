@@ -63,6 +63,7 @@ namespace Adberration.Scripting.Core
             RegisterStatement("if", typeof(IfCoreStatement), CodingContext.Execution);
             RegisterStatement("restart", typeof(RestartStatement));
             RegisterStatement("return", typeof(ReturnStatement));
+            RegisterStatement(ScriptSyntax.CloneKeyword, typeof(CloneCommand), CodingContext.Instantiation);
             RegisterStatement("counter", typeof(CounterCommand), CodingContext.Declaration);
             RegisterStatement("decrement-counter", typeof(DecrementCounterCommand));
             RegisterStatement("export-localizable-texts", typeof(ExportLocalizableTextsCommand));
@@ -75,7 +76,6 @@ namespace Adberration.Scripting.Core
             RegisterStatement("generate-random-number", typeof(GenerateRandomNumberCommand), CodingContext.Any);
             RegisterStatement("increment-counter", typeof(IncrementCounterCommand));
             RegisterStatement("move", typeof(MoveCommand), CodingContext.Execution);
-            RegisterStatement(ScriptSyntax.NewKeyword, typeof(NewCommand), CodingContext.Instantiation);
             RegisterStatement("opacity-tween", typeof(OpacityTweenCommand));
             RegisterStatement("pause-routine", typeof(PauseRoutineCommand), CodingContext.Execution);
             RegisterStatement("play-animation", typeof(PlayAnimationCommand));

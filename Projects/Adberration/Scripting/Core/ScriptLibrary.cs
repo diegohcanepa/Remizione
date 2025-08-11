@@ -171,11 +171,11 @@ namespace Adberration.Scripting
                 }
             }
 
-            // Compile dynamic things scripts
-            CompilationPhase = CompilationPhase.Instantiation;
+            // Compile cloning scripts
+            CompilationPhase = CompilationPhase.Cloning;
             foreach (var script in AllScripts)
             {
-                if (script.ScriptType == ScriptType.Instantiation)
+                if (script.ScriptType == ScriptType.Cloning)
                 {
                     script.Compile();
                     Session.ScriptProcessor.RunScript(script);
