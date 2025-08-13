@@ -43,9 +43,9 @@ namespace Remizione
             if (actor == null)
                 return;
 
-            fullHearts = actor.HP / 2;
-            hasHalfHeart = actor.HP % 2 == 1;
-            totalHearts = actor.MaxHP / 2;
+            fullHearts = actor.Health / 2;
+            hasHalfHeart = actor.Health % 2 == 1;
+            totalHearts = actor.MaxHealth / 2;
 
             for (int i = 0; i < totalHearts; i++)
             {
@@ -59,8 +59,8 @@ namespace Remizione
                     hearts[i].Image = Atlases.UI.HeartEmptyIcon;
             }
 
-            lastKnownValue = actor.HP;
-            lastKnownMaxValue = actor.MaxHP;
+            lastKnownValue = actor.Health;
+            lastKnownMaxValue = actor.MaxHealth;
         }
 
         #endregion
@@ -86,7 +86,7 @@ namespace Remizione
         {
             if (actor != null)
             {
-                if (lastKnownValue != actor.HP || lastKnownMaxValue != actor.MaxHP)
+                if (lastKnownValue != actor.Health || lastKnownMaxValue != actor.MaxHealth)
                     Invalidate();
             }
         }

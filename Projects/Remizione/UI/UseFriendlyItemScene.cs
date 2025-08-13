@@ -10,9 +10,9 @@ using System.Collections.Generic;
 namespace Remizione
 {
     /// <summary>
-    /// ChooseFriendlyItemScene
+    /// UseFriendlyItemScene
     /// </summary>
-    public sealed class ChooseFriendlyItemScene : Scene
+    public sealed class UseFriendlyItemScene : Scene
     {
         #region Private fields
 
@@ -21,13 +21,15 @@ namespace Remizione
         private readonly ImageSprite bottomGradient;
         private readonly UITextButton buttonClose;
         private readonly UITextButton buttonUse;
+        private readonly TextSprite itemChanceText;
         private readonly TextSprite itemNameText;
         private int selectedIndex;
         private readonly ImageSprite slotImage;
         private static readonly Vector2 slotPosition = new(Screen.Center.X, Screen.HUDArea.Bottom - 16);
         private const int spaceBetweenIcons = 15;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 150 };
-        private readonly TextSprite text;
+        private Prop? target;
+        private readonly TextSprite title;
         private const int visibleRange = 13;
         private float visualIndex;
         private readonly List<VisualItem> visualItems = [];
@@ -37,7 +39,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public ChooseFriendlyItemScene(Actor owner)
+        public UseFriendlyItemScene(Actor owner)
             : base(owner.Game)
         {
             this.Owner = owner;
@@ -66,12 +68,19 @@ namespace Remizione
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
+            // Item chance
+            itemChanceText = new TextSprite(Game, Fonts.CommonOutline)
+            {
+                PivotOrigin = RectanglePoint.Left,
+                Scale = ScaleInfo.Text.Large
+            };
+
             // Amount text
             amountText = new TextSprite(Game, Fonts.Common)
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Top,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2),
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -3),
                 Scale = ScaleInfo.Text.ExtraLarge
             };
 
@@ -82,13 +91,13 @@ namespace Remizione
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -2),
             };
 
-            // Text
-            text = new TextSprite(Game, Fonts.CommonOutline)
+            // Title
+            title = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -25),
-                Scale = ScaleInfo.Text.ExtraLarge
+                Scale = ScaleInfo.Text.Huge
             };
 
             // Use button
@@ -176,8 +185,24 @@ namespace Remizione
                 return;
 
             selectedIndex = index;
-            itemNameText.Text = index < 0 ? null : visualItems[index].Item.DisplayText;
-            
+            var item = visualItems[index].Item;
+            itemNameText.Text = index < 0 ? null : item.DisplayText;
+            itemChanceText.Clear();
+
+            if (target != null && item.Chance > 0)
+            {
+                var chance = item.Chance - Math.Abs(target.Penalty);
+
+                if (chance == item.Chance)
+                    itemChanceText.Color = ColorPalette.Text.Green;
+                else
+                    itemChanceText.Color = ColorPalette.Text.Terra;
+
+                itemChanceText.Text = $"[{chance}%]";
+
+                itemChanceText.Position = itemNameText.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0);
+            }
+
             InvalidateSlot();
         }
 
@@ -200,8 +225,9 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera);
-            text.Draw(gameTime);
+            title.Draw(gameTime);
             itemNameText.Draw(gameTime);
+            itemChanceText.Draw(gameTime);
             slotImage.Draw(gameTime);
             amountText.Draw(gameTime);
             DrawItems(gameTime);
@@ -298,11 +324,13 @@ namespace Remizione
 
             base.OnLoadContent();
 
-            if (Owner.Session.OutcomeTarget is GameThing outcomeTarget)
+            target = Owner.Session.OutcomeTarget as Prop;
+
+            if (target != null)
             {
                 visualItems.Clear();
 
-                var friendlyItems = Owner.Session.GetFriendlyItems(outcomeTarget.StaticName);
+                var friendlyItems = Owner.Session.GetFriendlyItems(target.StaticName);
 
                 var container = Owner.Inventory.GetContainer(InventoryCategory.KeyItems);
                 for (var i = 0; i < friendlyItems.Length; i++)
@@ -340,8 +368,8 @@ namespace Remizione
         // Text
         public string? Text
         {
-            get => text.Text;
-            set => text.Text = value;
+            get => title.Text;
+            set => title.Text = value;
         }
 
         /// <summary>

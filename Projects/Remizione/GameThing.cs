@@ -25,7 +25,7 @@ namespace Remizione
         private readonly Polygon holePoly = new();
         private readonly Polygon hotspotPoly = new();
         private PlacementMode hotspotPlacement = PlacementMode.Relative;
-        private int hp;
+        private int health;
         private Vector2Tween? hurtShakeTween;
         private FloatTween? hurtTween;
         private float floatingForce;
@@ -36,7 +36,7 @@ namespace Remizione
         private bool isHotspotDirty = true;
         private Vector2 knockback;
         private readonly Vector2Tween knockbackTween = new();
-        private int maxHP;
+        private int maxHealth;
         private PathNode[]? pathNodes;
         private RenderLayer renderLayer;
         private int renderLayerDepth;
@@ -346,8 +346,8 @@ namespace Remizione
         {
         }
 
-        // OnHPChanged
-        protected virtual void OnHPChanged()
+        // OnHealthChanged
+        protected virtual void OnHealthChanged()
         {
         }
 
@@ -509,18 +509,18 @@ namespace Remizione
                 }
             }
 
-            if (MaxHP == 0)
+            if (MaxHealth == 0)
                 return;
 
             if (CumulativeDamage > 0 && !PreventBlink)
                 blinker.Start(20, 4);
 
-            if (CumulativeDamage > HP)
-                CumulativeDamage = HP;
+            if (CumulativeDamage > Health)
+                CumulativeDamage = Health;
 
-            HP -= (int)CumulativeDamage;
+            Health -= (int)CumulativeDamage;
 
-            if (knockback == Vector2.Zero && HP <= 0)
+            if (knockback == Vector2.Zero && Health <= 0)
             {
                 Die();
             }
@@ -567,7 +567,7 @@ namespace Remizione
         }
 
         // CanBeTargeted
-        public bool CanBeTargeted => !IsMoving && MaxHP > 0 && !IsDead;
+        public bool CanBeTargeted => !IsMoving && MaxHealth > 0 && !IsDead;
 
         // CanInteract
         public bool CanInteract(Actor requester)
@@ -789,7 +789,7 @@ namespace Remizione
         // GetFloatingTextPosition
         public Vector2 GetFloatingTextPosition(Vector2 knockback, int xOffset, int yOffset)
         {
-            var result = GetOverheadPosition(0, -3);
+            var result = GetOverheadPosition();
 
             if (Direction == FacingDirection.Right)
                 result.X -= Math.Abs(knockback.X);
@@ -863,6 +863,21 @@ namespace Remizione
         [ScriptProperty]
         public bool HasFriendlyItems => Session.HasFriendlyItems(StaticName);
 
+        // Health
+        [ScriptProperty]
+        public int Health
+        {
+            get => health;
+            set
+            {
+                if (value != health)
+                {
+                    health = Math.Min(value, MaxHealth);
+                    OnHealthChanged();
+                }
+            }
+        }
+
         // Highlight
         [ScriptProperty]
         public bool Highlight { get; set; } = true;
@@ -894,21 +909,6 @@ namespace Remizione
                 {
                     hotspotPlacement = value;
                     isHotspotDirty = true;
-                }
-            }
-        }
-
-        // HP
-        [ScriptProperty]
-        public int HP
-        {
-            get => hp;
-            set
-            {
-                if (value != hp)
-                {
-                    hp = Math.Min(value, MaxHP);
-                    OnHPChanged();
                 }
             }
         }
@@ -950,7 +950,7 @@ namespace Remizione
         public bool IsBlinkingDamage => blinker.IsRunning && blinker.CurrentValue;
 
         // IsDead
-        public bool IsDead => HP <= 0 && MaxHP > 0;
+        public bool IsDead => Health <= 0 && MaxHealth > 0;
 
         // IsEmittingLight
         public virtual bool IsEmittingLight => Light != null && Light.IsEmitting;
@@ -984,17 +984,17 @@ namespace Remizione
         [ScriptProperty]
         public string LootTableName { get; set; }
 
-        // MaxHP
+        // MaxHealth
         [ScriptProperty]
-        public int MaxHP
+        public int MaxHealth
         {
-            get => maxHP;
+            get => maxHealth;
             set
             {
-                if (value != maxHP)
+                if (value != maxHealth)
                 {
-                    maxHP = value;
-                    HP = value;
+                    maxHealth = value;
+                    Health = value;
                 }
             }
         }
@@ -1039,7 +1039,7 @@ namespace Remizione
 
         // Replenish
         [ScriptMethod]
-        public virtual void Replenish() => HP = MaxHP;
+        public virtual void Replenish() => Health = MaxHealth;
 
         // Room
         public new GameRoom? Room => Parent as GameRoom;

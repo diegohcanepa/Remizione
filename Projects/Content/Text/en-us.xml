@@ -9,15 +9,12 @@
   <String Key="ActorProperty.Grace.Name">Grace</String>
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Level.Name">State of Grace</String>
-  <String Key="DerivedStat.HP.Description">El Espíritu quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="DerivedStat.HP.Name">Health</String>
-  <String Key="DerivedStat.Tickets.Description">Grace quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
-  <String Key="DerivedStat.Tickets.Name">Grace</String>
   <String Key="DurabilityState.Broken">Broken</String>
   <String Key="DurabilityState.Cracked">Cracked</String>
   <String Key="DurabilityState.Sturdy">Sturdy</String>
   <String Key="DurabilityState.Used">Used</String>
   <String Key="DurabilityState.Worn">Worn</String>
+  <String Key="FriendlyItemAction.UnlockTrunk">Unlock trunk</String>
   <String Key="HitType.Critical">Critical!</String>
   <String Key="HUDMessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
   <String Key="HUDMessageKind.EnoughOfThat">You already have enough of that.</String>
@@ -63,9 +60,7 @@
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
-  <String Key="ItemProperty.Chance">Chances</String>
-  <String Key="ItemProperty.Damage">Damage</String>
-  <String Key="ItemProperty.Passive">Passive</String>
+  <String Key="ItemProperty.Chance">Chance</String>
   <String Key="Languages.Abbreviations">Miss | Mr. | DR.</String>
   <String Key="Languages.de-de">Deutsch</String>
   <String Key="Languages.en-us">English</String>
@@ -173,7 +168,6 @@
   <String Key="Misc.And">and</String>
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
-  <String Key="Misc.Corpse">Corpse</String>
   <String Key="Misc.Credits">Remizione
 
 Bla bla bla
@@ -196,20 +190,14 @@ Bla bla bla</String>
   <String Key="Misc.DisclaimerMessage">Some scenes and images may be disturbing. The following story is fictional and does not depict any real person or event.</String>
   <String Key="Misc.DisclaimerTitle">WARNING</String>
   <String Key="Misc.DollarSign">$</String>
-  <String Key="Misc.FP">Faith</String>
-  <String Key="Misc.GP">Grace points</String>
-  <String Key="Misc.HP">Vitality</String>
   <String Key="Misc.Level">Level</String>
-  <String Key="Misc.Money">Money</String>
   <String Key="Misc.Mute">Mute</String>
   <String Key="Misc.No">No</String>
   <String Key="Misc.Progress">Progress</String>
   <String Key="Misc.SelectSlot">Select slot</String>
-  <String Key="Misc.Sins">SINS</String>
   <String Key="Misc.Stamina">Stamina</String>
   <String Key="Misc.Threshold">Threshold</String>
   <String Key="Misc.Unknown">???</String>
-  <String Key="Misc.WanderingSpirit">Your wandering spirit</String>
   <String Key="Misc.Yes">Yes</String>
   <String Key="Misc.YouAreDead">YOU'RE DEAD.</String>
   <String Key="Platform.NintendoSwitch.Messages.ControllerDisconnected">Please reconnect your Joy-Con™ to continue.</String>

@@ -89,16 +89,11 @@ namespace Engendro
         public int FixedValue { get; }
 
         // GetValueRangeAsString
-        public string GetValueRangeAsString(int level = 0)
+        public string GetValueRangeAsString(int modifier = 0)
         {
-            var result = $"{MinimumValue + level}";
-            if (IsFixedValue)
-            {
-                if (FixedValue > 0)
-                    result = "+" + result;
-            }
-            else
-                result += $"-{MaximumValue + level}";
+            var result = $"{MinimumValue + modifier}";
+            if (!IsFixedValue)
+                result += $"-{MaximumValue + modifier}";
 
             return result;
         }

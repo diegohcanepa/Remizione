@@ -13,6 +13,7 @@ namespace Remizione
         private readonly FloatTween rotationTween = new();
         private readonly Vector2Tween scaleTween = new();
         private readonly GameSession session;
+        private static bool spawnLeft;
         private readonly FloatTween xTween = new();
         private readonly FloatTween yTween = new();
 
@@ -22,7 +23,7 @@ namespace Remizione
         {
             this.session = session;
 
-            this.image = new(Game, Atlases.UI.MiniHeartIcon)
+            this.image = new(Game)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Scale = ScaleInfo.UIElement.Medium
@@ -54,14 +55,16 @@ namespace Remizione
         // Show
         public void Show(Vector2 origin, bool half)
         {
-            var distance = new Vector2(Randomizer.Next(-13, 13), Randomizer.Next(-22, -10));
-            var duration = Randomizer.Next(1000, 3000);
+            var distance = new Vector2(Randomizer.Next(3, 13), Randomizer.Next(-10, -5));
 
-            image.Image = half ? Atlases.UI.MiniHeartHalfIcon : Atlases.UI.MiniHeartIcon;
+            if (spawnLeft)
+                distance.X *= -1;
+
+            var duration = Randomizer.Next(1000, 2500);
+
+            image.Image = half ? Atlases.UI.HeartHalfIcon : Atlases.UI.HeartIcon;
 
             yTween.Start(TweenStyle.CubicOut, origin.Y, origin.Y + distance.Y, duration * 2);
-
-            //if (distance.X != 0)
             xTween.Start(TweenStyle.CubicOut, origin.X, origin.X + distance.X, duration);
 
             opacityTween.StartDelay = (int)(duration * .9f);
@@ -77,6 +80,8 @@ namespace Remizione
             image.Tweens.YTween = yTween;
             image.Tweens.OpacityTween = opacityTween;
             image.Tweens.RotationTween = rotationTween;
+
+            spawnLeft = !spawnLeft;
         }
     }
 }

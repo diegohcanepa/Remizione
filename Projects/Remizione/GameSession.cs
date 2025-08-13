@@ -178,6 +178,7 @@ namespace Remizione
             scriptRegistry.RegisterStatement("set-light", typeof(SetLightCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("set-thing-light", typeof(SetThingLightCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
+            scriptRegistry.RegisterStatement("use-friendly-item", typeof(UseFriendlyItemCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("vibrate", typeof(VibrateCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("x-tween", typeof(XTweenCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("y-tween", typeof(YTweenCommand), CodingContext.Execution);

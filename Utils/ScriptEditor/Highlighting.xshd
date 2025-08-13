@@ -113,6 +113,8 @@
 			<Word>await-sync-scripts</Word>
 			<Word>await-this-routine</Word>
 			<Word>await-transition</Word>
+			<Word>await-x-tween</Word>
+			<Word>await-y-tween</Word>
 			<Word>await</Word>
 			<Word>const</Word>
 			<Word>ensure-session-scene</Word>
@@ -133,8 +135,7 @@
 			<Word>true</Word>
 			<Word>this</Word>
 			<Word>verbs</Word>
-			<Word>await-x-tween</Word>
-			<Word>await-y-tween</Word>
+			<Word>use-friendly-item</Word>
 		</Keywords>
 
 		<!-- Statements -->
@@ -148,7 +149,6 @@
 			<Word>if-entity-type</Word>
 			<Word>if-entity</Word>
 			<Word>if-flag</Word>
-			<Word>if-friendly-item</Word>
 			<Word>if-not-null</Word>
 			<Word>if-parent</Word>
 			<Word>if-random-number</Word>
@@ -340,6 +340,7 @@
 			<Word>target</Word>
 			<Word>terrain</Word>
 			<Word>text</Word>
+			<Word>title</Word>
 			<Word>to</Word>
 			<Word>type</Word>
 			<Word>value</Word>

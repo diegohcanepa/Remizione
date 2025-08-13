@@ -75,8 +75,8 @@ namespace Remizione
         // Find
         public static MetaItem? Find(string name) => items.TryGetValue(name, out var result) ? result : null;
 
-        // HP
-        public DiceExpression? HP { get; init; }
+        // Health
+        public DiceExpression? Health { get; init; }
 
         // Image
         public AtlasImage? Image { get; }

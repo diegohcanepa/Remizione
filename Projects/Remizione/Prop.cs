@@ -61,6 +61,10 @@ namespace Remizione
 
         #endregion
 
+        // Penalty
+        [ScriptProperty]
+        public int Penalty { get; set; }
+
         // PropState
         [ScriptProperty]
         public PropState PropState

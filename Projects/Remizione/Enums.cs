@@ -23,9 +23,6 @@ namespace Remizione
     // DamageKind
     public enum DamageKind { None, Physical, Fire, Cold, Lightning, Acid, Poison }
 
-    // DerivedStat
-    public enum DerivedStat { HP, Tickets }
-
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
 
@@ -57,7 +54,7 @@ namespace Remizione
     public enum ItemAction { None, Throw }
 
     // ItemProperty
-    public enum ItemProperty { Chance, Damage, Passive }
+    public enum ItemProperty { Chance }
 
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, Global, MuzzleFlash, Outdoor, Player }

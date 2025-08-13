@@ -154,35 +154,6 @@ namespace Remizione
                 return string.Empty;
         }
 
-        // GetLocalizedInfo
-        public string GetLocalizedInfo()
-        {
-            var values = new List<string>();
-
-            // Damage
-            if (MetaItem.Damage != null)
-            {
-                var value = $"{Localization.GetValue(ItemProperty.Damage)}: {MetaItem.Damage.GetValueRangeAsString(Level)}";
-                values.Add(value);
-            }
-
-            // Chance
-            if (MetaItem.Chance > 0)
-            {
-                var value = $"{Localization.GetValue(ItemProperty.Chance)}: {Chance}%";
-                values.Add(value);
-            }
-
-            // HP
-            if (MetaItem.HP != null)
-            {
-                var value = $"{TextRepository.GetValue($"DerivedStat.HP.Name")}: {MetaItem.HP.GetValueRangeAsString()}";
-                values.Add(value);
-            }
-
-            return string.Join(" / ", values);
-        }
-
         // Index
         public int Index => Container.IndexOf(this);
 
@@ -276,8 +247,8 @@ namespace Remizione
         // Use
         public bool Use()
         {
-            if (MetaItem.HP != null)
-                Owner.HP += MetaItem.HP.Roll();
+            if (MetaItem.Health != null)
+                Owner.Health += MetaItem.Health.Roll();
 
             if (MetaItem.Maximum > 1)
             {

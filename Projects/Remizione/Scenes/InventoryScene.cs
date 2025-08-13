@@ -31,12 +31,12 @@ namespace Remizione
         private readonly ImageSprite gridContainer;
         private readonly Dictionary<InventoryCategory, InventoryGrid> grids = [];
         private readonly UIHealthMeter healthMeter;
+        private readonly UIHealthBonus heartBonus;
         private readonly ImageSprite infoContainer;
         private readonly ImageSprite infoTitleContainer;
         private readonly TextSprite itemDescription;
         private readonly ImageSprite itemIcon;
         private readonly TextSprite itemName;
-        private readonly TextSprite itemStats;
         private InputMethod lastKnownInput;
         private readonly ImageSprite navigationBar;
         private readonly UITextButton nextCategoryButton;
@@ -144,10 +144,12 @@ namespace Remizione
                 ShadowOffset = new Vector2(0, .75f)
             };
 
+            // Heart bonus
+            this.heartBonus = new(Game);
+
             // Info container
             this.infoContainer = new(Game, Atlases.UI.InventoryInfoContainer)
             {
-                PivotOrigin = RectanglePoint.LeftTop,
                 Position = gridContainer.BoundingBox.GetPoint(RectanglePoint.RightTop, 3, 0)
             };
 
@@ -183,16 +185,6 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.LeftTop,
                 MaximumWidth = maxInfoTextWidth,
                 Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 6, 3),
-                Scale = ScaleInfo.Text.VeryLarge,
-                ShadowOffset = new Vector2(0, .75f)
-            };
-
-            // Item stats
-            this.itemStats = new TextSprite(Game, Fonts.Common)
-            {
-                Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.LeftTop,
-                MaximumWidth = maxInfoTextWidth,
                 Scale = ScaleInfo.Text.VeryLarge,
                 ShadowOffset = new Vector2(0, .75f)
             };
@@ -337,16 +329,16 @@ namespace Remizione
             {
                 itemName.Text = TextRepository.GetValue($"Item.{item.Name}.Name") + (item.Level == 0 ? string.Empty : $" +{item.Level}");
                 itemDescription.Text = $"@Item.{item.Name}.Description";
-                itemStats.Text = item.GetLocalizedInfo();
-                itemStats.Position = itemDescription.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
+                heartBonus.Position = itemDescription.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
+                heartBonus.Value = item.MetaItem.Health;
                 itemIcon.Image = item.MetaItem.Image;
             }
             else
             {
                 itemName.Clear();
                 itemDescription.Clear();
-                itemStats.Clear();
                 itemIcon.Image = null;
+                heartBonus.Value = null;
             }
         }
 
@@ -442,8 +434,10 @@ namespace Remizione
             categoryText.Draw(gameTime);
             itemName.Draw(gameTime);
             itemDescription.Draw(gameTime);
-            itemStats.Draw(gameTime);
             Game.SpriteBatch.End();
+
+            if (heartBonus.Value != null)
+                heartBonus.Draw(gameTime);
         }
 
         // OnHandleInput
@@ -618,7 +612,6 @@ namespace Remizione
             ticketsMeter.Update(gameTime);
             itemName.Update(gameTime);
             itemDescription.Update(gameTime);
-            itemStats.Update(gameTime);
             nextCategoryButton.Update(gameTime);
             previousCategoryButton.Update(gameTime);
 

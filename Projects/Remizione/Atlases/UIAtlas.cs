@@ -21,6 +21,7 @@ namespace Remizione
             HeartEmptyIcon = this[nameof(HeartEmptyIcon)];
             HeartHalfIcon = this[nameof(HeartHalfIcon)];
             HeartIcon = this[nameof(HeartIcon)];
+            HeartIconWithShadow = this[nameof(HeartIconWithShadow)];
             InventoryCategoryConsumables = this[nameof(InventoryCategoryConsumables)];
             InventoryCategoryJunk = this[nameof(InventoryCategoryJunk)];
             InventoryCategoryKeyItems = this[nameof(InventoryCategoryKeyItems)];
@@ -34,8 +35,6 @@ namespace Remizione
             InventorySlotQuestionIcon = this[nameof(InventorySlotQuestionIcon)];
             InventorySlotSelected = this[nameof(InventorySlotSelected)];
             MessageContainer = this[nameof(MessageContainer)];
-            MiniHeartHalfIcon = this[nameof(MiniHeartHalfIcon)];
-            MiniHeartIcon = this[nameof(MiniHeartIcon)];
             MouseCursorArrow = this[nameof(MouseCursorArrow)];
             MouseCursorCross = this[nameof(MouseCursorCross)];
             MouseCursorCrossOn = this[nameof(MouseCursorCrossOn)];
@@ -123,14 +122,11 @@ namespace Remizione
         // HeartIcon
         public AtlasImage HeartIcon { get; }
 
+        // HeartIconWithShadow
+        public AtlasImage HeartIconWithShadow { get; }
+
         // MessageContainer
         public AtlasImage MessageContainer { get; }
-
-        // MiniHeartHalfIcon
-        public AtlasImage MiniHeartHalfIcon { get; }
-
-        // MiniHeartIcon
-        public AtlasImage MiniHeartIcon { get; }
 
         // MouseCursorArrow
         public AtlasImage MouseCursorArrow { get; }

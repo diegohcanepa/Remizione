@@ -18,7 +18,6 @@ namespace Remizione
         #region Private fields
 
         private readonly FloatTween accelerationFactorTween = new();
-        private ChooseFriendlyItemScene? chooseFriendlyItemScene;
         private MetaItem? closeAttackMetaItem;
         private string closeAttackName = string.Empty;
         private readonly ActorCloseAttackState closeAttackState;
@@ -41,6 +40,7 @@ namespace Remizione
         private int suspendInteractionCooldown;
         private readonly ActorThrowItemState throwItemState;
         private float tinyMoveSpeedFactor = 1;
+        private UseFriendlyItemScene? useFriendlyItemScene;
 
         #endregion
 
@@ -641,14 +641,20 @@ namespace Remizione
         }
 
         // ChooseFrindlyItem
-        [ScriptMethod]
-        public void ChooseFriendlyItem()
+        public bool ChooseFriendlyItem(string text)
         {
             Stand();
-            chooseFriendlyItemScene ??= new ChooseFriendlyItemScene(this);
-            Session.FriendlyItemTarget = Session.OutcomeTarget as Prop;
-            chooseFriendlyItemScene.Text = "Abrir baúl";
-            chooseFriendlyItemScene.SceneController.Push();
+            useFriendlyItemScene ??= new UseFriendlyItemScene(this);
+
+            if (Session.OutcomeTarget is Prop prop)
+            {
+                Session.FriendlyItemTarget = prop;
+                useFriendlyItemScene.Text = text;
+                useFriendlyItemScene.SceneController.Push();
+                return true;
+            }
+
+            return false;
         }
 
         // CloseAttackName

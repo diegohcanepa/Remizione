@@ -42,7 +42,7 @@ namespace Adberration.Scripting
         protected static readonly string FollowArg = "#follow";
         protected static readonly string FrameArg = "#frame";
         protected static readonly string GotoArg = "#goto";
-        protected static readonly string HPArg = "#hp";
+        protected static readonly string HealthArg = "#health";
         protected static readonly string ImageArg = "#image";
         protected static readonly string ImmediateArg = "#immediate";
         protected static readonly string ImpactWordArg = "#impact-word";

@@ -98,20 +98,6 @@ namespace Remizione
             internal static Color Title { get; } = new Color(27, 31, 33) * .5f;
         }
 
-        // HPMeter
-        internal static class HPMeter
-        {
-            internal static Color Back { get; } = new(82, 51, 63);
-            internal static Color Fore { get; } = new(173, 47, 69);
-        }
-
-        // StatMeter
-        internal static class StatMeter
-        {
-            internal static Color CurrentValue { get; } = Text.Terra;
-            internal static Color MaximumValue { get; } = Text.TerraDark;
-        }
-
         // Text
         internal static class Text
         {
