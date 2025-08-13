@@ -13,7 +13,7 @@ namespace Remizione
         private const string NoneValue = "[None]";
 
         // Constructor
-        public ItemContainer(GameThing owner, InventoryCategory category)
+        public ItemContainer(Actor owner, InventoryCategory category)
         {
             this.Owner = owner;
             this.Category = category;
@@ -112,7 +112,7 @@ namespace Remizione
         public bool IsEmpty => items.Count == 0;
 
         // Owner
-        public GameThing Owner { get; }
+        public Actor Owner { get; }
 
         // Remove
         public bool Remove(string name)
@@ -261,7 +261,9 @@ namespace Remizione
                 else
                 {
                     var itemData = itemList[i].Split(':');
-                    Add(itemData[0], int.Parse(itemData[1]));
+
+                    if (MetaItem.Find(itemData[0]) != null)
+                        Add(itemData[0], int.Parse(itemData[1]));
                 }
             }
         }

@@ -47,17 +47,6 @@ namespace Remizione
             if (Level > 0)
                 text += $" +{Level}";
 
-            /*
-            // Count
-            if (MetaItem.Maximum > 1)
-            {
-                if (MetaItem.Maximum == 999)
-                    text += $" ({Count})";
-                else
-                    text += $" ({Count}/{MetaItem.Maximum})";
-            }
-            */
-
             // Durability state
             else if (MetaItem.Durability > 0)
             {
@@ -95,6 +84,9 @@ namespace Remizione
                     Durability -= 1;
             }
         }
+
+        // Chance
+        public int Chance => MetaItem.Chance + (Level * 5);
 
         // Container
         public ItemContainer Container { get; private set; }
@@ -167,12 +159,21 @@ namespace Remizione
         {
             var values = new List<string>();
 
-            if (MetaItem.BaseDamage != null)
+            // Damage
+            if (MetaItem.Damage != null)
             {
-                var value = $"{Localization.GetValue(ItemProperty.BaseDamage)}: {MetaItem.BaseDamage.GetValueRangeAsString(Level)}";
+                var value = $"{Localization.GetValue(ItemProperty.Damage)}: {MetaItem.Damage.GetValueRangeAsString(Level)}";
                 values.Add(value);
             }
 
+            // Chance
+            if (MetaItem.Chance > 0)
+            {
+                var value = $"{Localization.GetValue(ItemProperty.Chance)}: {Chance}%";
+                values.Add(value);
+            }
+
+            // HP
             if (MetaItem.HP != null)
             {
                 var value = $"{TextRepository.GetValue($"DerivedStat.HP.Name")}: {MetaItem.HP.GetValueRangeAsString()}";
@@ -215,7 +216,7 @@ namespace Remizione
         public string Name => MetaItem.Name;
 
         // Owner
-        public GameThing Owner => Container.Owner;
+        public Actor Owner => Container.Owner;
 
         // PassiveEffectCooldown
         public int PassiveEffectCooldown { get; set; }

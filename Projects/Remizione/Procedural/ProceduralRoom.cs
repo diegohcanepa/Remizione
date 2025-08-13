@@ -1,11 +1,10 @@
-﻿using Engendro;
-using Engendro.Audio;
-using Adberration;
+﻿using Adberration;
 using Adberration.Scripting;
+using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -265,7 +264,7 @@ namespace Remizione
         private void SetupGhostCars()
         {
             var childList = new List<Thing>(Children);
-            
+
             foreach (var thing in childList)
             {
                 if (thing is RoomConnector roomConnector)

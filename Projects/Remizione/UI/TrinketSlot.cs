@@ -50,7 +50,7 @@ namespace Remizione
             if (lastKnownItem != null)
                 itemImage.Image = lastKnownItem.MetaItem.Image;
             else
-                itemImage.Image = Atlases.UI.InventorySlotSadIcon;
+                itemImage.Image = Atlases.UI.InventorySlotQuestionIcon;
         }
 
         #endregion

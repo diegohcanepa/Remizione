@@ -190,7 +190,7 @@ namespace Remizione
             // Item stats
             this.itemStats = new TextSprite(Game, Fonts.Common)
             {
-                Color = ColorPalette.Text.Terra,
+                Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.LeftTop,
                 MaximumWidth = maxInfoTextWidth,
                 Scale = ScaleInfo.Text.VeryLarge,
@@ -624,6 +624,18 @@ namespace Remizione
 
             if (lastKnownInput != InputManager.DefaultPlayer.LastInputMethod)
                 lastKnownInput = InputManager.DefaultPlayer.LastInputMethod;
+
+            if (MouseCursor.Instance.State == MouseCursorState.Cross)
+            {
+                for (var i = 0; i < categoryIcons.Length; i++)
+                {
+                    if (categoryIcons[i].BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
+                    {
+                        MouseCursor.Instance.State = MouseCursorState.CrossOn;
+                        break;
+                    }
+                }
+            }
         }
 
         #endregion

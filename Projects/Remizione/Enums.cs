@@ -57,7 +57,7 @@ namespace Remizione
     public enum ItemAction { None, Throw }
 
     // ItemProperty
-    public enum ItemProperty { BaseDamage, Passive }
+    public enum ItemProperty { Chance, Damage, Passive }
 
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, Global, MuzzleFlash, Outdoor, Player }
@@ -98,6 +98,9 @@ namespace Remizione
 
     // ProceduralRoomTheme
     public enum ProceduralRoomTheme { Outdoor }
+
+    // PropState
+    public enum PropState { None, Closed, Open, Locked, Empty }
 
     // RainDropImpactKind
     public enum RainDropImpactKind { None, Ground, Water }

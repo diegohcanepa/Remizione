@@ -144,6 +144,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(ProceduralRoom));
             scriptRegistry.RegisterEntity(typeof(Prop));
             scriptRegistry.RegisterEntity(typeof(RoomConnector));
+            scriptRegistry.RegisterEntity(typeof(Trunk));
             scriptRegistry.RegisterEntity(typeof(Unredeemed));
             scriptRegistry.RegisterEntity(typeof(WaterPuddle));
             scriptRegistry.RegisterEntity(typeof(Zabul));
@@ -420,7 +421,7 @@ namespace Remizione
 
         // FriendlyItemTarget
         [ScriptProperty]
-        public GameThing? FriendlyItemTarget { get; set; }
+        public Prop? FriendlyItemTarget { get; set; }
 
         // Game
         public new RemizioneGame Game { get; }

@@ -24,7 +24,7 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (MetaItem?.BaseDamage == null)
+            if (MetaItem?.Damage == null)
                 return;
 
             if (!damageTaken && Owner.Room != null && Owner.GetFrameSubArea() != RectangleF.Empty)
@@ -47,10 +47,7 @@ namespace Remizione
                     {
                         damageTaken = true;
 
-                        var damageAmount = MetaItem.BaseDamage.Roll();
-
-                        damageAmount += MetaItem.Bonus;
-
+                        var damageAmount = MetaItem.Damage.Roll();
                         target.TakeDamage(Owner, damageAmount, MetaItem.Knockback, MetaItem.ImpactWord);
                         target.ApplyDamage(Owner);
                     }

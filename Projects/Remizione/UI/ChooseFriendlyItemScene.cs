@@ -92,7 +92,7 @@ namespace Remizione
             };
 
             // Use button
-            buttonUse = new UITextButton(owner.Game, InputBindings.UseItem)
+            buttonUse = new UITextButton(owner.Game, InputBindings.UseFriendlyItem)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -12),
@@ -177,6 +177,7 @@ namespace Remizione
 
             selectedIndex = index;
             itemNameText.Text = index < 0 ? null : visualItems[index].Item.DisplayText;
+            
             InvalidateSlot();
         }
 

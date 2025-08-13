@@ -88,7 +88,7 @@ namespace Remizione
             }
             else
             {
-                itemImage.Image = Atlases.UI.InventorySlotSadIcon;
+                itemImage.Image = Atlases.UI.InventorySlotQuestionIcon;
                 itemImageScaleTween.Stop();
             }
         }

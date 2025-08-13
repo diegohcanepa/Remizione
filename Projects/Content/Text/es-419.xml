@@ -34,6 +34,7 @@
   <String Key="InputBinding.Inspect">Examinar</String>
   <String Key="InputBinding.NextDialog">Siguiente</String>
   <String Key="InputBinding.Select">Seleccionar</String>
+  <String Key="InputBinding.UseFriendlyItem">Usar</String>
   <String Key="InputBinding.UseItem">Usar</String>
   <String Key="InventoryCategory.Consumables">Consumibles</String>
   <String Key="InventoryCategory.Junk">Cachivaches</String>
@@ -56,11 +57,14 @@
   <String Key="Item.Gold.Name">Polvo de oro</String>
   <String Key="Item.Lockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Lockpick.Name">Ganzúa</String>
+  <String Key="Item.Lockpicking.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
+  <String Key="Item.Lockpicking.Name">Forzar cerraduras</String>
   <String Key="Item.PieceOfWood.Description">Un pedazo de madera viejo. Si juntas los suficientes podrás pedirle un cofre al Señor.</String>
   <String Key="Item.PieceOfWood.Name">Trozo de madera</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Manzana putrefacta</String>
-  <String Key="ItemProperty.BaseDamage">Daño base</String>
+  <String Key="ItemProperty.Chance">Chances</String>
+  <String Key="ItemProperty.Damage">Daño</String>
   <String Key="ItemProperty.Passive">Pasivo</String>
   <String Key="Languages.Abbreviations">Srta.|Sr.|Dr.</String>
   <String Key="Languages.de-de">Deutsch</String>

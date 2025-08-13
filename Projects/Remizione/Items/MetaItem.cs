@@ -4,6 +4,7 @@ using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -45,25 +46,28 @@ namespace Remizione
         // ApplyDamage
         public bool ApplyDamage(GameThing attacker, GameThing target)
         {
-            if (BaseDamage == null)
+            if (Damage == null)
                 return false;
 
-            int damageAmount = BaseDamage.Roll();
+            int damageAmount = Damage.Roll();
 
-            target.TakeDamage(attacker, damageAmount + Bonus, Knockback, ImpactWord);
+            target.TakeDamage(attacker, damageAmount, Knockback, ImpactWord);
             target.ApplyDamage(attacker);
 
             return true;
         }
 
-        // BaseDamage
-        public DiceExpression? BaseDamage { get; init; }
+        // Damage
+        public DiceExpression? Damage { get; init; }
 
         // Bonus
         public int Bonus { get; init; }
 
         // Category
         public InventoryCategory Category { get; }
+
+        // Chance
+        public int Chance { get; init; }
 
         // Durability
         public int Durability { get; init; }

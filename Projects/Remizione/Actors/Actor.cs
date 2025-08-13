@@ -646,7 +646,7 @@ namespace Remizione
         {
             Stand();
             chooseFriendlyItemScene ??= new ChooseFriendlyItemScene(this);
-            Session.FriendlyItemTarget = Session.OutcomeTarget as GameThing;
+            Session.FriendlyItemTarget = Session.OutcomeTarget as Prop;
             chooseFriendlyItemScene.Text = "Abrir baúl";
             chooseFriendlyItemScene.SceneController.Push();
         }

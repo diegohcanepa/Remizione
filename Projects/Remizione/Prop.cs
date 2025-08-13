@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration.Scripting;
+using Engendro;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -8,6 +9,7 @@ namespace Remizione
     /// </summary>
     public class Prop : GameThing
     {
+        private PropState propState;
         private readonly ImageSprite shadow;
 
         #region Constructor
@@ -45,6 +47,11 @@ namespace Remizione
             InvalidateShadowImage();
         }
 
+        // OnPropStateChanged
+        protected virtual void OnPropStateChanged()
+        {
+        }
+
         // OnTransform
         protected override void OnTransform(TransformChange change)
         {
@@ -53,5 +60,20 @@ namespace Remizione
         }
 
         #endregion
+
+        // PropState
+        [ScriptProperty]
+        public PropState PropState
+        {
+            get => propState;
+            set
+            {
+                if (value != PropState)
+                {
+                    propState = value;
+                    OnPropStateChanged();
+                }
+            }
+        }
     }
 }

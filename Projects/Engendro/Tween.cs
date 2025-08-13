@@ -221,9 +221,9 @@ namespace Engendro
         }
 
         // Start
-        public void Start(TweenStyle style, T startValue, T endValue, int duration, Action? onStop)
+        public void Start(TweenStyle style, T startValue, T endValue, int duration, Action? onComplete)
         {
-            Start(style, startValue, endValue, duration, 0, onStop);
+            Start(style, startValue, endValue, duration, 0, onComplete);
         }
 
         // Start

@@ -128,18 +128,6 @@ namespace Remizione
 
         #region Private members
 
-        // CanInteractCore
-        private bool CanInteractCore(Actor requester)
-        {
-            if (requester == this || !AllowInteraction)
-                return false;
-
-            if (string.IsNullOrWhiteSpace(DisplayName))
-                return false;
-
-            return true;
-        }
-
         // CheckCollisions
         private void CheckCollisions()
         {
@@ -186,22 +174,6 @@ namespace Remizione
             }
 
             DropLootBag();
-        }
-
-        // DropLootBag
-        private void DropLootBag()
-        {
-            if (Session.Room is ProceduralRoom room)
-            {
-                if (LootTable.Find(LootTableName) is LootTable lootTable)
-                {
-                    if (room.CreateRuntimeClone(nameof(LootBag)) is LootBag lootBag)
-                    {
-                        if (lootTable.GetLoot() is MetaItem metaItem)
-                            lootBag.Drop(room, Position, metaItem);
-                    }
-                }
-            }
         }
 
         // GetImpactWordPosition
@@ -288,6 +260,33 @@ namespace Remizione
 
         // CanCheckCollisions
         protected virtual bool CanCheckCollisions() => CollisionDetection;
+
+        // CanInteractCore
+        protected virtual bool CanInteractCore(Actor requester)
+        {
+            if (requester == this || !AllowInteraction)
+                return false;
+
+            if (string.IsNullOrWhiteSpace(DisplayName))
+                return false;
+
+            return true;
+        }
+
+        // DropLootBag
+        protected bool DropLootBag()
+        {
+            if (Session.Room is ProceduralRoom room && GetLoot() is MetaItem metaItem)
+            {
+                if (room.CreateRuntimeClone(nameof(LootBag)) is LootBag lootBag)
+                {
+                    lootBag.Drop(room, Position, metaItem);
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         // GetPixelAreaForGrid
         protected virtual RectangleF GetPixelAreaForGrid()
@@ -812,6 +811,15 @@ namespace Remizione
                 return RectangleF.Empty;
         }
 
+        // GetLoot
+        public MetaItem? GetLoot()
+        {
+            if (LootTable.Find(LootTableName) is LootTable lootTable && lootTable.GetLoot() is MetaItem metaItem)
+                return metaItem;
+
+            return null;
+        }
+
         // GetOverheadPosition
         public Vector2 GetOverheadPosition() => GetOverheadPosition(0, 0);
 
@@ -974,7 +982,7 @@ namespace Remizione
 
         // LootTableName
         [ScriptProperty]
-        public string LootTableName { get; init; }
+        public string LootTableName { get; set; }
 
         // MaxHP
         [ScriptProperty]
