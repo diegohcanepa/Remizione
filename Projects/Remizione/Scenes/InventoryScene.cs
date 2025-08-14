@@ -328,6 +328,9 @@ namespace Remizione
             if (activeGrid.SelectedItem is Item item)
             {
                 itemName.Text = TextRepository.GetValue($"Item.{item.Name}.Name") + (item.Level == 0 ? string.Empty : $" +{item.Level}");
+                itemDescription.Opacity = 1;
+                itemDescription.PivotOrigin = RectanglePoint.LeftTop;
+                itemDescription.Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 6, 3);
                 itemDescription.Text = $"@Item.{item.Name}.Description";
                 heartBonus.Position = itemDescription.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
                 heartBonus.Value = item.MetaItem.Health;
@@ -335,8 +338,11 @@ namespace Remizione
             }
             else
             {
+                itemDescription.PivotOrigin = RectanglePoint.Center;
+                itemDescription.Opacity = .5f;
+                itemDescription.Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.Center, 0, -3);
+                itemDescription.Text = "@Misc.NoInventoryItem";
                 itemName.Clear();
-                itemDescription.Clear();
                 itemIcon.Image = null;
                 heartBonus.Value = null;
             }

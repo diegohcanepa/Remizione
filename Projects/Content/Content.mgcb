@@ -206,6 +206,18 @@
 /processorParam:Quality=Best
 /build:Audio/FX/BodyFallMedium1.wav
 
+#begin Audio/FX/ChanceRoll.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/ChanceRoll.wav;Audio/FX/ChanceRoll
+
+#begin Audio/FX/ChanceRollFail.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/ChanceRollFail.wav;Audio/FX/ChanceRollFail
+
 #begin Audio/FX/DoodleDoo.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

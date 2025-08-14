@@ -640,7 +640,7 @@ namespace Remizione
             return dot >= angleThreshold;
         }
 
-        // ChooseFrindlyItem
+        // ChooseFriendlyItem
         public bool ChooseFriendlyItem(string text)
         {
             Stand();
@@ -751,8 +751,7 @@ namespace Remizione
         // Interact
         public bool Interact(GameThing? target = null)
         {
-            if (target == null)
-                target = InteractiveTarget;
+            target ??= InteractiveTarget;
 
             if (target == null || !InCurrentRoom || suspendInteractionCooldown > 0)
                 return false;

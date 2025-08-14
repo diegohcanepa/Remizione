@@ -5,6 +5,8 @@
     /// </summary>
     internal static class SoundNames
     {
+        internal const string ChanceRoll = nameof(ChanceRoll);
+        internal const string ChanceRollFail = nameof(ChanceRollFail);
         internal const string Error = nameof(Error);
         internal const string ExitAlarm = nameof(ExitAlarm);
         internal const string FootstepA = nameof(FootstepA);

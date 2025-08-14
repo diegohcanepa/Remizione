@@ -1,8 +1,8 @@
-﻿using Engendro;
-using Engendro.Input;
-using Adberration;
+﻿using Adberration;
 using Adberration.Scripting;
 using Adberration.Scripting.Core;
+using Engendro;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Remizione.Creatures;
 using Remizione.Scripting;
@@ -48,6 +48,7 @@ namespace Remizione
             this.RandomSeed = System.Environment.TickCount;
             this.StaticThings = new ReadOnlyCollection<GameThing>(staticThings);
 
+            ChanceRoll = new(game);
             ObjectPools = new ObjectPools(this);
             ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(game), 100);
             OverlayTexts = new OverlayTextManager(game);
@@ -157,6 +158,7 @@ namespace Remizione
             scriptRegistry.RegisterStatement("add-trigger-area", typeof(AddTriggerAreaCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("add-walk-area", typeof(AddWalkAreaCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("animate-actor", typeof(AnimateActorCommand));
+            scriptRegistry.RegisterStatement("await-chance-roll", typeof(AwaitChanceRollCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-credits", typeof(AwaitCreditsCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-dialog-block", typeof(AwaitDialogBlockCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-pickup", typeof(AwaitPickUpCommand), CodingContext.Execution);
@@ -179,6 +181,7 @@ namespace Remizione
             scriptRegistry.RegisterStatement("set-thing-light", typeof(SetThingLightCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
             scriptRegistry.RegisterStatement("use-friendly-item", typeof(UseFriendlyItemCommand), CodingContext.Execution);
+            scriptRegistry.RegisterStatement("use-item", typeof(UseItemCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("vibrate", typeof(VibrateCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("x-tween", typeof(XTweenCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("y-tween", typeof(YTweenCommand), CodingContext.Execution);
@@ -199,6 +202,10 @@ namespace Remizione
                 Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade);
                 Game.SpriteBatch.End();
             }
+
+            Game.SpriteBatch.Begin(Camera);
+            ChanceRoll.Draw(gameTime);
+            Game.SpriteBatch.End();
 
             console?.Draw(gameTime);
             roomEditor?.Draw(gameTime);
@@ -364,6 +371,9 @@ namespace Remizione
             Environment.Update(gameTime);
             HUD.Update(gameTime);
 
+            if (ChanceRoll.IsVisible)
+                ChanceRoll.Update(gameTime);
+
             OverlayTexts.Update(gameTime);
 
             if (IsCurrentScene || (Game.SceneManager.CurrentScene != null && !Game.SceneManager.CurrentScene.HasMouseControl))
@@ -404,6 +414,13 @@ namespace Remizione
         }
 
         #endregion
+
+        // ChanceRoll
+        public UIChanceRoll ChanceRoll { get; }
+
+        // ChanceSuccess
+        [ScriptProperty]
+        public bool ChanceSuccess => ChanceRoll.Success;
 
         // Countdown
         [ScriptProperty]

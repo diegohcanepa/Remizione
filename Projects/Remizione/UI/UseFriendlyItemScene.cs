@@ -192,12 +192,7 @@ namespace Remizione
             if (target != null && item.Chance > 0)
             {
                 var chance = item.Chance - Math.Abs(target.Penalty);
-
-                if (chance == item.Chance)
-                    itemChanceText.Color = ColorPalette.Text.Green;
-                else
-                    itemChanceText.Color = ColorPalette.Text.Terra;
-
+                itemChanceText.Color = ColorPalette.Text.Green;
                 itemChanceText.Text = $"[{chance}%]";
 
                 itemChanceText.Position = itemNameText.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0);
@@ -265,7 +260,7 @@ namespace Remizione
                     var scriptName = $"{Owner.Session.FriendlyItemTarget.StaticName}-With-{itemName}";
                     if (Owner.Session.ScriptLibrary.GetRoutine(scriptName) is Script script)
                     {
-                        SelectedItem?.Item.Use();
+                        //SelectedItem?.Item.Use();
                         Owner.Session.AwaitScript(script);
                     }
                 }
@@ -335,7 +330,7 @@ namespace Remizione
                 var container = Owner.Inventory.GetContainer(InventoryCategory.KeyItems);
                 for (var i = 0; i < friendlyItems.Length; i++)
                 {
-                    if (container.GetItem(friendlyItems[i].Name) is Item item)
+                    if (container.Find(friendlyItems[i].Name) is Item item)
                         visualItems.Add(new(item));
                 }
 

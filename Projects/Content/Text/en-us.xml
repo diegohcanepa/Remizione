@@ -56,7 +56,7 @@
   <String Key="Item.Lockpick.Name">Lockpick</String>
   <String Key="Item.Lockpicking.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.Lockpicking.Name">Lockpicking</String>
-  <String Key="Item.PieceOfWood.Description"></String>
+  <String Key="Item.PieceOfWood.Description" />
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
@@ -153,10 +153,6 @@
   <String Key="Menu.Titles.Audio">Audio</String>
   <String Key="Menu.Titles.Controls">Controls</String>
   <String Key="Menu.Titles.Options">Options</String>
-  <String Key="Message.Critical">Critical</String>
-  <String Key="Message.Miss">Miss</String>
-  <String Key="Message.NoFaith">Void of Faith</String>
-  <String Key="Message.ThreatsNearby">Your spirit is under siege.</String>
   <String Key="MessageBox.DeleteSlotConfirmation">Are you sure you want to delete the slot?</String>
   <String Key="MessageBox.DeleteSlotConfirmation2">Do you confirm you want to delete the slot?</String>
   <String Key="MessageBox.DeleteSlotWarning">Once deleted, the slot cannot be recovered.</String>
@@ -193,6 +189,7 @@ Bla bla bla</String>
   <String Key="Misc.Level">Level</String>
   <String Key="Misc.Mute">Mute</String>
   <String Key="Misc.No">No</String>
+  <String Key="Misc.NoInventoryItem">Empty like the soul of a sinner.</String>
   <String Key="Misc.Progress">Progress</String>
   <String Key="Misc.SelectSlot">Select slot</String>
   <String Key="Misc.Stamina">Stamina</String>

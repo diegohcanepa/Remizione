@@ -35,7 +35,7 @@ namespace Remizione
             if (!metaItem.IsStackable)
                 amount = 1;
 
-            var item = GetItem(metaItem.Name);
+            var item = Find(metaItem.Name);
 
             if (item != null && metaItem.IsStackable)
             {
@@ -47,11 +47,6 @@ namespace Remizione
                 items.Add(item);
             }
 
-            /*
-            if (Category != InventoryCategory.Trinkets && SelectedItem == null)
-                SelectedItem = item;
-            */
-
             return item;
         }
 
@@ -59,10 +54,7 @@ namespace Remizione
         public InventoryCategory Category { get; }
 
         // ClearSelection
-        public void ClearSelection()
-        {
-            SelectedItem = null;
-        }
+        public void ClearSelection() => SelectedItem = null;
 
         // Contains
         public bool Contains(Item item) => items.Contains(item);
@@ -70,8 +62,8 @@ namespace Remizione
         // Count
         public int Count => items.Count;
 
-        // GetItem
-        public Item? GetItem(string name)
+        // Find
+        public Item? Find(string name)
         {
             for (var i = 0; i < items.Count; i++)
             {
@@ -117,7 +109,7 @@ namespace Remizione
         // Remove
         public bool Remove(string name)
         {
-            if (GetItem(name) is Item item)
+            if (Find(name) is Item item)
                 return Remove(item);
             else
                 return false;
@@ -147,7 +139,7 @@ namespace Remizione
         // Select
         public bool Select(string name)
         {
-            if (GetItem(name) is Item item)
+            if (Find(name) is Item item)
                 return Select(item);
             else
                 return false;
@@ -250,13 +242,13 @@ namespace Remizione
 
             for (var i = 0; i < itemList.Length; i++)
             {
-                if (i==0)
+                if (i == 0)
                 {
                     Size = int.Parse(itemList[i], CultureInfo.InvariantCulture);
                 }
                 else if (i == 1)
                 {
-                    SelectedItem = GetItem(itemList[i]);
+                    SelectedItem = Find(itemList[i]);
                 }
                 else
                 {

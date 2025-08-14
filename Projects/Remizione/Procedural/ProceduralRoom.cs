@@ -197,7 +197,7 @@ namespace Remizione
 
             var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
             var instance = CreateRuntimeCloneCore(thing.StaticName);
-            instance.Position = targetGrid.GetPosition(col, row);
+            instance.Position = ProceduralRoomGrid.GetPosition(col, row);
             instance.Y += instance.BoundingBox.Height;
             instance.X += instance.BoundingBox.Width / 2;
             Children.Add(instance);

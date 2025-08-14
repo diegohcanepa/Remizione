@@ -81,6 +81,7 @@
 			<Word>await-animation</Word>
 			<Word>await-answer</Word>
 			<Word>await-camera</Word>
+			<Word>await-chance-roll</Word>
 			<Word>await-closeup</Word>
 			<Word>await-closing-credits</Word>
 			<Word>await-color-tween</Word>
@@ -134,8 +135,9 @@
 			<Word>save-game</Word>			
 			<Word>true</Word>
 			<Word>this</Word>
-			<Word>verbs</Word>
 			<Word>use-friendly-item</Word>
+			<Word>use-item</Word>
+			<Word>verbs</Word>
 		</Keywords>
 
 		<!-- Statements -->

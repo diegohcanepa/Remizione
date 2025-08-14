@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Remizione
 {
@@ -8,6 +7,8 @@ namespace Remizione
     /// </summary>
     public sealed class Inventory
     {
+        #region Constructor
+
         // Constructor
         public Inventory(Actor owner)
         {
@@ -18,11 +19,29 @@ namespace Remizione
             {
                 Size = 24
             };
+     
             this.Trinkets = new ItemContainer(owner, InventoryCategory.Trinkets);
         }
 
+        #endregion
+
         // Consumables
         public ItemContainer Consumables { get; }
+
+        // Find
+        public Item? Find(string item)
+        {
+            if (MetaItem.Find(item) is MetaItem metaItem)
+                return Find(metaItem);
+            else
+                return null;
+        }
+
+        // Find
+        public Item? Find(MetaItem metaItem)
+        {
+            return GetContainer(metaItem.Category).Find(metaItem.Name);
+        }
 
         // GetContainer
         public ItemContainer GetContainer(InventoryCategory category)

@@ -153,10 +153,6 @@
   <String Key="Menu.Titles.Audio">Audio</String>
   <String Key="Menu.Titles.Controls">Controles</String>
   <String Key="Menu.Titles.Options">Ajustes</String>
-  <String Key="Message.Critical">Crítico</String>
-  <String Key="Message.Miss">Fallido</String>
-  <String Key="Message.NoFaith">Vacío de Fe</String>
-  <String Key="Message.ThreatsNearby">Tu espíritu está bajo asedio.</String>
   <String Key="MessageBox.DeleteSlotConfirmation">¿Estás seguro que quieres eliminar la ranura?</String>
   <String Key="MessageBox.DeleteSlotConfirmation2">¿Confirmas que quieres eliminar la ranura?</String>
   <String Key="MessageBox.DeleteSlotWarning">Una vez eliminada la ranura no se puede recuperar.</String>
@@ -193,6 +189,7 @@ Bla bla bla</String>
   <String Key="Misc.Level">Nivel</String>
   <String Key="Misc.Mute">Silencio</String>
   <String Key="Misc.No">No</String>
+  <String Key="Misc.NoInventoryItem">Vacío como el alma de un pecador.</String>
   <String Key="Misc.Progress">Progreso</String>
   <String Key="Misc.SelectSlot">Seleccionar ranura</String>
   <String Key="Misc.Stamina">Resistencia</String>

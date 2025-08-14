@@ -10,7 +10,7 @@ namespace Remizione
     public sealed class ProceduralRoomGrid
     {
         private readonly bool[,] occupied;
-        private const float usagePercent = .8f;
+        private const float usagePercent = .7f;
 
         #region Constructor
 
@@ -61,7 +61,7 @@ namespace Remizione
         public int ColCount { get; }
 
         // GetPosition
-        public Vector2 GetPosition(int col, int row)
+        public static Vector2 GetPosition(int col, int row)
         {
             int x = col * CellSize;
             int y = row * CellSize;
