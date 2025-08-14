@@ -12,7 +12,6 @@ namespace Remizione.UI
     public sealed class UIPrompt : GameObject
     {
         private readonly UITextButton button;
-        private readonly TextSprite label;
         private readonly GameSession session;
         private GameThing? target;
 
@@ -28,15 +27,6 @@ namespace Remizione.UI
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -4)
             };
-
-            // Label
-            this.label = new(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Highlight,
-                PivotOrigin = RectanglePoint.Center,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -7),
-                Scale = ScaleInfo.Text.Huge
-            };
         }
 
         #region Protected members
@@ -45,30 +35,18 @@ namespace Remizione.UI
         protected override void OnDraw(GameTime gameTime)
         {
             if (session.IsCurrentScene && target != null)
-            {
-                if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad)
-                {
-                    button.Draw(gameTime);
-                }
-                else
-                {
-                    Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-                    label.Draw(gameTime);
-                    Game.SpriteBatch.End();
-                }
-            }
+                button.Draw(gameTime);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (session.IsCurrentScene && MouseCursor.Instance.State != MouseCursorState.Wait && session.Player?.InteractiveTarget is GameThing currentTarget)
+            if (session.IsCurrentScene && session.Player?.InteractiveTarget is GameThing currentTarget)
             {
                 if (currentTarget != target)
                 {
                     target = currentTarget;
                     button.Text = currentTarget.LocalizedDisplayName;
-                    label.Text = currentTarget.LocalizedDisplayName;
 
                     if (InputManager.DefaultPlayer.LastInputMethod != InputMethod.Mouse)
                         Sound.Play(SoundNames.UIPrompt);
@@ -77,7 +55,6 @@ namespace Remizione.UI
             else
             {
                 button.Text = null;
-                label.Clear();
                 target = null;
             }
 

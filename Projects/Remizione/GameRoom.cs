@@ -1,7 +1,6 @@
-﻿using Engendro;
-using Engendro.Input;
-using Adberration;
+﻿using Adberration;
 using Adberration.Scripting;
+using Engendro;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -190,7 +189,7 @@ namespace Remizione
                             effect = RemizioneGame.Effects.ColorReduction;
                         }
                     }
-                    else if (interactiveTarget == thing && thing.Highlight && InputManager.DefaultPlayer.LastInputMethod != InputMethod.Mouse)
+                    else if (interactiveTarget == thing && thing.Highlight)
                     {
                         RemizioneGame.Effects.ColorSaturation.SetColor(.8f, .8f, .8f, 0);
                         effect = RemizioneGame.Effects.ColorSaturation;

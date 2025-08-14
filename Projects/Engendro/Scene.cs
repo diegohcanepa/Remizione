@@ -181,9 +181,6 @@ namespace Engendro
                 return HandleInputResult.Unhandled;
         }
 
-        // HasMouseControl
-        public virtual bool HasMouseControl => true;
-
         // Height
         public int Height
         {
@@ -206,6 +203,9 @@ namespace Engendro
 
         // IsCurrentScene
         public bool IsCurrentScene => Game.SceneManager.CurrentScene == this;
+
+        // IsMouseVisible
+        public bool IsMouseVisible { get; set; } = true;
 
         // IsPaused
         public bool IsPaused => pauseCount > 0;

@@ -47,6 +47,7 @@ namespace Remizione
             //this.RandomSeed = 10000;
             this.RandomSeed = System.Environment.TickCount;
             this.StaticThings = new ReadOnlyCollection<GameThing>(staticThings);
+            this.IsMouseVisible = false;
 
             ChanceRoll = new(game);
             ObjectPools = new ObjectPools(this);
@@ -73,35 +74,6 @@ namespace Remizione
             this.echoScene = new(Game);
 
             LocalizationSource = LocalizationSource.Script;
-        }
-
-        #endregion
-
-        #region Private members
-
-        // UpdateMouseCursor
-        private void UpdateMouseCursor()
-        {
-            if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad)
-            {
-                MouseCursor.Instance.State = MouseCursorState.None;
-                return;
-            }
-
-            // No active player
-            if (AwaitingScript?.CurrentStatement is SayCommand)
-            {
-                MouseCursor.Instance.State = MouseCursorState.Arrow;
-                return;
-            }
-
-            if (IsAwaiting)
-            {
-                MouseCursor.Instance.State = MouseCursorState.Wait;
-                return;
-            }
-
-            MouseCursor.Instance.State = Player?.InteractiveTarget == null ? MouseCursorState.Cross : MouseCursorState.CrossOn;
         }
 
         #endregion
@@ -375,9 +347,6 @@ namespace Remizione
                 ChanceRoll.Update(gameTime);
 
             OverlayTexts.Update(gameTime);
-
-            if (IsCurrentScene || (Game.SceneManager.CurrentScene != null && !Game.SceneManager.CurrentScene.HasMouseControl))
-                UpdateMouseCursor();
         }
 
         // OnWrite

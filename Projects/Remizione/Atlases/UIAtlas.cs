@@ -36,9 +36,6 @@ namespace Remizione
             InventorySlotSelected = this[nameof(InventorySlotSelected)];
             MessageContainer = this[nameof(MessageContainer)];
             MouseCursorArrow = this[nameof(MouseCursorArrow)];
-            MouseCursorCross = this[nameof(MouseCursorCross)];
-            MouseCursorCrossOn = this[nameof(MouseCursorCrossOn)];
-            MouseCursorWait = this[nameof(MouseCursorWait)];
             Pixel = this[nameof(Pixel)];
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
@@ -130,15 +127,6 @@ namespace Remizione
 
         // MouseCursorArrow
         public AtlasImage MouseCursorArrow { get; }
-
-        // MouseCursorCross
-        public AtlasImage MouseCursorCross { get; }
-
-        // MouseCursorCrossOn
-        public AtlasImage MouseCursorCrossOn { get; }
-
-        // MouseCursorWait
-        public AtlasImage MouseCursorWait { get; }
 
         // Pixel
         public AtlasImage Pixel { get; }

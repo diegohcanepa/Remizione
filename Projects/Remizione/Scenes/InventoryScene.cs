@@ -286,7 +286,7 @@ namespace Remizione
 
             foreach (var category in categories)
             {
-                categoryIcons[categories.IndexOf(category)].Opacity = currentCategory == category ? 1f : .4f;
+                categoryIcons[categories.IndexOf(category)].Opacity = currentCategory == category ? 1f : .5f;
             }
         }
 
@@ -412,20 +412,30 @@ namespace Remizione
             infoTitleContainer.Draw(gameTime);
             infoContainer.Draw(gameTime);
 
-            for (int i = 0; i < categoryIcons.Length; i++)
-            {
-                categoryIcons[i].Draw(gameTime);
-            }
-
             itemIcon.Draw(gameTime);
 
             Game.SpriteBatch.End();
+
+
+            for (int i = 0; i < categoryIcons.Length; i++)
+            {
+                Effect? shader = null;
+                if (currentCategory != categories[i] && categoryIcons[i].BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
+                {
+                    RemizioneGame.Effects.ColorSaturation.SetColor(.7f, .7f, .7f, 1);
+                    shader = RemizioneGame.Effects.ColorSaturation.Effect;
+                }
+
+                Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, shader);
+                categoryIcons[i].Draw(gameTime);
+                Game.SpriteBatch.End();
+            }
 
             DrawButtons(gameTime);
 
             activeGrid.Draw(gameTime);
 
-            if ( (equippedJunk != null && equippedJunk.MetaItem.Category == currentCategory) ||
+            if ((equippedJunk != null && equippedJunk.MetaItem.Category == currentCategory) ||
                  (equippedTrinket != null && equippedTrinket.MetaItem.Category == currentCategory))
             {
                 Game.SpriteBatch.Begin(Game.Camera);
@@ -473,7 +483,7 @@ namespace Remizione
                 {
                     Sound.Play(SoundNames.ItemDiscard);
                     activeGrid.DiscardSelectedItem();
-                    
+
                     if (selectedItem == equippedJunk)
                     {
                         equippedJunk = activeGrid.SelectedItem;
@@ -578,7 +588,7 @@ namespace Remizione
             }
 
             currentCategory = InventoryCategory.Junk;
-            
+
             equippedJunk = Owner.Inventory.Junk.SelectedItem;
             equippedTrinket = Owner.Inventory.Trinkets.SelectedItem;
             lastKnownInput = InputMethod.None;
@@ -623,18 +633,6 @@ namespace Remizione
 
             if (lastKnownInput != InputManager.DefaultPlayer.LastInputMethod)
                 lastKnownInput = InputManager.DefaultPlayer.LastInputMethod;
-
-            if (MouseCursor.Instance.State == MouseCursorState.Cross)
-            {
-                for (var i = 0; i < categoryIcons.Length; i++)
-                {
-                    if (categoryIcons[i].BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
-                    {
-                        MouseCursor.Instance.State = MouseCursorState.CrossOn;
-                        break;
-                    }
-                }
-            }
         }
 
         #endregion

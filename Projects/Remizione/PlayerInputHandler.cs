@@ -9,7 +9,6 @@ namespace Remizione
     /// </summary>
     public sealed class PlayerInputHandler<T> : InputHandler where T : Actor
     {
-
         // Constructor
         public PlayerInputHandler(T actor, PlayerIndex playerIndex)
             : base(playerIndex)
@@ -30,17 +29,17 @@ namespace Remizione
             }
 
             // Movement
-            if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad)
+            var direction = GetDirectionVectorFromLeftStick();
+            if (direction == Vector2.Zero && InputManager.AllowKeyboard)
+                direction = GetDirectionVectorFromKeyboard(InputBindings.KeyboardMoveLeft, InputBindings.KeyboardMoveUp, InputBindings.KeyboardMoveRight, InputBindings.KeyboardMoveDown);
+
+            if (direction != Vector2.Zero)
             {
-                var direction = GetDirectionVectorFromLeftStick();
-                if (direction != Vector2.Zero)
-                {
-                    Actor.Move(direction);
-                }
-                else if (Actor.IsMoving)
-                {
-                    Actor.Stand();
-                }
+                Actor.Move(direction);
+            }
+            else if (Actor.IsMoving)
+            {
+                Actor.Stand();
             }
 
             return HandleInputResult.Unhandled;
@@ -53,25 +52,9 @@ namespace Remizione
                 return HandleInputResult.Unhandled;
 
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
-            {
-                MouseCursor.Instance.AnimateClick();
-
-                if (Actor.InteractiveTarget != null)
-                {
-                    Actor.ApproachAndInteract(Actor.InteractiveTarget);
-                    return HandleInputResult.Handled;
-                }
-                else
-                {
-                    var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
-                    Actor.MoveTo(destination);
-                    return HandleInputResult.Handled;
-                }
-            }
-            else
-            {
                 Actor.UseSelectedItem();
-            }
+            else
+                Actor.ShowInventory();
 
             return HandleInputResult.Unhandled;
         }

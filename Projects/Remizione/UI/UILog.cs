@@ -35,7 +35,7 @@ namespace Remizione
 
             this.nounText = new(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Default * .7f,
+                Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.LeftTop,
                 Scale = ScaleInfo.Text.VeryLarge
             };
@@ -56,8 +56,8 @@ namespace Remizione
                 return;
             }
 
-            verbText.Color = isWarning ? ColorPalette.Text.Highlight : ColorPalette.Text.Default;
-            verbText.Position = new Vector2(5, 25);
+            verbText.Color = isWarning ? ColorPalette.Text.Red : ColorPalette.Text.Green;
+            verbText.Position = new Vector2(8, 25);
             verbText.Text = verb;
 
             nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
@@ -116,6 +116,10 @@ namespace Remizione
         public void Show(string message, bool isWarning, AtlasImage? image = null) => ShowCore(message, string.Empty, isWarning, image);
 
         // Show
-        public void Show(LogVerb verb, string noun, AtlasImage? image = null) => ShowCore(Localization.GetValue(verb), noun, false, image);
+        public void Show(LogVerb verb, string noun, AtlasImage? image = null)
+        {
+            var isWarning = verb == LogVerb.Lost || verb == LogVerb.Discarded;
+            ShowCore(Localization.GetValue(verb), noun, isWarning, image);
+        }
     }
 }

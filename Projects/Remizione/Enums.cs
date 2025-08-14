@@ -81,9 +81,6 @@ namespace Remizione
         Accept = 8
     }
 
-    // MouseCursorState
-    public enum MouseCursorState { None, Cross, CrossOn, Wait, Arrow }
-
     // PlacementDistributionStrategy
     public enum PlacementDistributionStrategy { Random, Clump, NoiseMap }
 

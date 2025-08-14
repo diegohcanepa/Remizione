@@ -318,7 +318,6 @@
                 <false/>
             </struct>
             <key type="filename">Items-assets/Apple.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorWait.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -459,8 +458,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MouseCursors-assets/MouseCursorCross.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorCrossOn.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorHand.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

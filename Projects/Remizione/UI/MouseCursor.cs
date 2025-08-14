@@ -12,12 +12,10 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly Vector2Tween attackTween = Vector2Tween.Create(TweenStyle.CubicInOut, ScaleInfo.UIElement.Medium, ScaleInfo.UIElement.Medium * .8f, 130, -1);
         private readonly ImageSprite cursorImage;
         private Vector2 position;
         private readonly Vector2Tween scaleTween = new();
         private readonly FloatTween shakeTween = new();
-        private MouseCursorState state;
 
         #endregion
 
@@ -32,30 +30,7 @@ namespace Remizione
             else
                 Instance = this;
 
-            this.cursorImage = new ImageSprite(game) { PivotOrigin = RectanglePoint.Center, Scale = ScaleInfo.UIElement.Medium };
-        }
-
-        #endregion
-
-        #region Private members
-
-        // Invalidate
-        private void Invalidate()
-        {
-            if (state == MouseCursorState.Arrow)
-                cursorImage.Image = Atlases.UI.MouseCursorArrow;
-
-            else if (state == MouseCursorState.Cross)
-                cursorImage.Image = Atlases.UI.MouseCursorCross;
-
-            else if (state == MouseCursorState.CrossOn)
-                cursorImage.Image = Atlases.UI.MouseCursorCrossOn;
-
-            else if (state == MouseCursorState.Wait)
-                cursorImage.Image = Atlases.UI.MouseCursorWait;
-
-            cursorImage.Scale = ScaleInfo.UIElement.Medium;
-            cursorImage.PivotOrigin = state == MouseCursorState.Arrow ? RectanglePoint.LeftTop : RectanglePoint.Center;
+            this.cursorImage = new ImageSprite(game) { Scale = ScaleInfo.UIElement.Medium };
         }
 
         #endregion
@@ -65,9 +40,6 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (state == MouseCursorState.None)
-                return;
-
             Game.SpriteBatch.Begin(Game.Camera);
             cursorImage.X += shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             cursorImage.Draw(gameTime);
@@ -78,15 +50,11 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            attackTween.Update(gameTime);
+            if (cursorImage.Image == null)
+                cursorImage.Image = Atlases.UI.MouseCursorArrow;
 
             this.Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
-
-            if (cursorImage.Image == null)
-                Invalidate();
-
             cursorImage.Update(gameTime);
-
             shakeTween.Update(gameTime);
         }
 
@@ -122,19 +90,5 @@ namespace Remizione
 
         // Shake
         public void Shake() => shakeTween.Start(TweenStyle.CubicInOut, 0, 1, 50, 4);
-
-        // State
-        public MouseCursorState State
-        {
-            get => state;
-            set
-            {
-                if (value != state)
-                {
-                    state = value;
-                    Invalidate();
-                }
-            }
-        }
     }
 }

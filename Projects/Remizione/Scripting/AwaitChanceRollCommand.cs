@@ -32,7 +32,7 @@ namespace Remizione.Scripting
 
             // Item
             if (actor.Inventory.Find(Body.Clauses[2]) is Item item)
-                session.ChanceRoll.Show(prop.GetOverheadPosition(), item.Chance - prop.Penalty);
+                session.ChanceRoll.Show(actor.GetOverheadPosition(), item.Chance - prop.ChancePenalty);
         }
 
         // OnExecutionCompleted

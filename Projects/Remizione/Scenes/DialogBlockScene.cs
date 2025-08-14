@@ -242,13 +242,10 @@ namespace Remizione
                 }
             }
 
-            MouseCursor.Instance.State = menu.HoveredOption == null ? MouseCursorState.Cross : MouseCursorState.CrossOn;
+            //MouseCursor.Instance.State = menu.HoveredOption == null ? MouseCursorState.Arrow : MouseCursorState.ArrowOn;
         }
 
         #endregion
-
-        // HasMouseControl
-        public override bool HasMouseControl => RunningOption == null;
 
         // RunningOption
         public DialogOption? RunningOption { get; private set; }

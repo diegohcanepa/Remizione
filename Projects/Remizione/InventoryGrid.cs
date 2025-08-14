@@ -134,11 +134,6 @@ namespace Remizione
             {
                 slots[i].Update(gameTime);
             }
-
-            if (GetSlotAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is InventorySlot slot && slot.Item != null)
-                MouseCursor.Instance.State = MouseCursorState.CrossOn;
-            else
-                MouseCursor.Instance.State = MouseCursorState.Cross;
         }
 
         #endregion

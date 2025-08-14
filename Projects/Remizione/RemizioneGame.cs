@@ -97,7 +97,7 @@ namespace Remizione
             SpriteBatch.Draw(RenderTargets.CurrentTarget, ViewportAdapter.DestinationRectangle, Color.White);
             SpriteBatch.End();
 
-            if (InputManager.AllowMouse)
+            if (InputManager.AllowMouse && SceneManager.CurrentScene?.IsMouseVisible == true)
                 MouseCursor.Draw(gameTime);
         }
 

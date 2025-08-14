@@ -112,8 +112,6 @@ namespace Remizione
         // OnLoadContent
         protected override void OnLoadContent()
         {
-            MouseCursor.Instance.State = MouseCursorState.Arrow;
-
             if (!textSprite.IsEmpty)
             {
                 opacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);

@@ -29,7 +29,6 @@ namespace Remizione
         private InventoryScene? inventoryScene;
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
-        private GameThing? pendingInteractiveTarget;
         private readonly List<Vector2> pendingPathNodes = [];
         private PlayerNumber playerNumber = PlayerNumber.None;
         private readonly GameSession session;
@@ -102,60 +101,19 @@ namespace Remizione
 
         #region Private members
 
-        // FindGamePadTarget
-        private GameThing? FindGamePadTarget()
-        {
-            if (Room != null)
-            {
-                for (int i = Room.CulledThings.Count - 1; i >= 0; i--)
-                {
-                    if (Room.CulledThings[i] is GameThing target && target.CanInteract(this))
-                        return target;
-                }
-            }
-
-            return null;
-        }
-
         // FindInteractiveTarget
         private GameThing? FindInteractiveTarget()
         {
-            if (session.IsAwaiting || SpeechBubble.ModalInstance != null || !session.IsCurrentScene)
+            if (session.IsAwaiting || SpeechBubble.ModalInstance != null || !session.IsCurrentScene || Room == null)
                 return null;
 
-            return InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad ? FindGamePadTarget() : FindMouseCursorTarget();
-        }
-
-        // FindMouseCursorTarget
-        private GameThing? FindMouseCursorTarget()
-        {
-            if (Room != null)
+            for (int i = Room.CulledThings.Count - 1; i >= 0; i--)
             {
-                var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera);
-
-                for (var i = Room.CulledThings.Count - 1; i >= 0; i--)
-                {
-                    if (Room.CulledThings[i] is GameThing thing && thing.CanInteract(this, mousePos))
-                        return thing;
-                }
+                if (Room.CulledThings[i] is GameThing target && target.CanInteract(this))
+                    return target;
             }
 
             return null;
-        }
-
-        // HandlePendingInteraction
-        private void HandlePendingInteraction()
-        {
-            if (!IsPlayer)
-                return;
-
-            if (pendingInteractiveTarget != null)
-            {
-                FaceTo(pendingInteractiveTarget);
-                Interact(pendingInteractiveTarget);
-            }
-
-            pendingInteractiveTarget = null;
         }
 
         // MoveToNextPathNode
@@ -414,7 +372,6 @@ namespace Remizione
             {
                 StopMoving();
                 IsFollowingPath = false;
-                HandlePendingInteraction();
             }
         }
 
@@ -489,20 +446,6 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (Session.GameplayMode == GameplayMode.Survival && IsPlayer && StateMachine.CurrentState is ActorStandState && Session.IsCurrentScene && !Session.IsAwaiting && InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
-            {
-                if (InputManager.DefaultPlayer.Mouse.WorldPosition(session.Camera).X >= X)
-                {
-                    if (Direction == FacingDirection.Left)
-                        Direction = FacingDirection.Right;
-                }
-                else
-                {
-                    if (Direction == FacingDirection.Right)
-                        Direction = FacingDirection.Left;
-                }
-            }
-
             AIStateMachine.Update(gameTime);
 
             StateMachine.Update(gameTime);
@@ -580,22 +523,6 @@ namespace Remizione
                 animateState.Preserve = preserve;
                 StateMachine.ChangeState(animateState.Name, true);
             }
-
-            return result;
-        }
-
-        // ApproachAndInteract
-        public bool ApproachAndInteract(GameThing target)
-        {
-            if (!IsPlayer)
-                return false;
-
-            var destination = target.GetApproachPosition(this, true);
-            var result = MoveTo(destination);
-            this.pendingInteractiveTarget = target;
-
-            if (!result)
-                HandlePendingInteraction();
 
             return result;
         }
@@ -808,9 +735,6 @@ namespace Remizione
         // MoveTo
         public override bool MoveTo(Vector2 destination)
         {
-            if (IsPlayer)
-                pendingInteractiveTarget = null;
-
             // No path needed
             if (WalkArea == null || IgnoreWalkArea)
                 return base.MoveTo(destination);

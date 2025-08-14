@@ -191,7 +191,7 @@ namespace Remizione
 
             if (target != null && item.Chance > 0)
             {
-                var chance = item.Chance - Math.Abs(target.Penalty);
+                var chance = item.Chance - Math.Abs(target.ChancePenalty);
                 itemChanceText.Color = ColorPalette.Text.Green;
                 itemChanceText.Text = $"[{chance}%]";
 
