@@ -74,7 +74,7 @@ namespace Remizione
                     angularVelocity = RandomBetween(-5f, 5f);
                     launched = true;
                 }
-                
+
                 return;
             }
 
@@ -109,7 +109,7 @@ namespace Remizione
             var bounds = owner.BoundingBox;
             float yOffset = RandomBetween(-4f, 2f);
 
-            image.Position = new(RandomBetween(bounds.Left + 5f, bounds.Right - 5f), 
+            image.Position = new(RandomBetween(bounds.Left + 5f, bounds.Right - 5f),
                                 RandomBetween(bounds.Top, bounds.Bottom) + yOffset);
 
             groundY = owner.Y + Randomizer.Next(-3, 3);

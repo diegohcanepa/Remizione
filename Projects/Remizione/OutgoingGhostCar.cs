@@ -1,5 +1,5 @@
-﻿using Engendro;
-using Adberration.Scripting;
+﻿using Adberration.Scripting;
+using Engendro;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -21,7 +21,7 @@ namespace Remizione
             this.frontLight = new Light(session.Game, "<rear>")
             {
                 Color = Color.Green,
-                Scale = new(2,1)
+                Scale = new(2, 1)
             };
 
             this.rearLight = new Light(session.Game, "<front>")
@@ -37,7 +37,7 @@ namespace Remizione
         protected override void OnDrawLights(GameTime gameTime)
         {
             base.OnDrawLights(gameTime);
-            
+
             frontLight.Position = this.GetAbsolutePoint(frontLightPosition);
             frontLight.Draw(gameTime);
 

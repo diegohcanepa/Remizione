@@ -18,7 +18,7 @@ namespace Remizione.Scripting
 
             var names = Parser.ParseNames(this, 0);
             var metaItems = new List<MetaItem>();
-            
+
             for (var i = 0; i < names.Length; i++)
             {
                 if (MetaItem.Find(names[i]) is MetaItem metaItem)

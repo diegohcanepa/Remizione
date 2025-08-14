@@ -1,7 +1,7 @@
-﻿using Engendro;
-using Engendro.Audio;
-using Adberration.Scripting;
+﻿using Adberration.Scripting;
 using Adberration.Scripting.Core;
+using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using System;
@@ -794,7 +794,7 @@ namespace Adberration
         public void CleanUpRuntimeEntities()
         {
             var runtimeEntities = new List<Entity>();
-            
+
             for (var i = 0; i < entityList.Count; i++)
             {
                 if (entityList[i].InstanceKind == InstanceKind.RuntimeClone)

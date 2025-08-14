@@ -94,6 +94,7 @@ namespace Adberration.Scripting
         protected static readonly string StartDelayArg = "#start-delay";
         protected static readonly string StyleArg = "#style";
         protected static readonly string SubAreaArg = "#sub-area";
+        protected static readonly string SuccessStateArg = "#success-state";
         protected static readonly string TargetArg = "#target";
         protected static readonly string TicketsArg = "#tickets";
         protected static readonly string TransientArg = "#transient";

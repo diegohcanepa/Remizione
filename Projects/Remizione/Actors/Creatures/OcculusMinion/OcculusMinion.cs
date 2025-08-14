@@ -21,7 +21,7 @@
         protected override void OnLoad()
         {
             base.OnLoad();
-            
+
             AIStateMachine.RegisterState(new BloodyEyePatrolState(AIStateMachine));
             AIStateMachine.ChangeState(AIStateName.Patrol);
         }

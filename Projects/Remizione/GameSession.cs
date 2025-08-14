@@ -2,7 +2,6 @@
 using Adberration.Scripting;
 using Adberration.Scripting.Core;
 using Engendro;
-using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Remizione.Creatures;
 using Remizione.Scripting;
@@ -49,7 +48,7 @@ namespace Remizione
             this.StaticThings = new ReadOnlyCollection<GameThing>(staticThings);
             this.IsMouseVisible = false;
 
-            ChanceRoll = new(game);
+            ChanceRoll = new(this);
             ObjectPools = new ObjectPools(this);
             ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(game), 100);
             OverlayTexts = new OverlayTextManager(game);

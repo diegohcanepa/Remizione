@@ -3,16 +3,17 @@
 namespace Remizione.Scripting
 {
     // AwaitChanceRollCommand
-    // Arguments: {Actor} {Prop} {Item}
+    // Arguments: {Actor} {Prop} {Item} [#success-state:PropState]
     [ForceAwait]
     internal sealed class AwaitChanceRollCommand : AwaitableCommand
     {
         // Constructor
         internal AwaitChanceRollCommand(Script script, string source, StatementBody args)
-            : base(script, source, args, 3)
+            : base(script, source, args, 3, SuccessStateArg)
         {
             AssertEntity<Actor>(0);
             AssertEntity<Prop>(1);
+            Parser.ParseEnumArgument<PropState>(this, SuccessStateArg);
         }
 
         // OnExecute
@@ -32,17 +33,9 @@ namespace Remizione.Scripting
 
             // Item
             if (actor.Inventory.Find(Body.Clauses[2]) is Item item)
-                session.ChanceRoll.Show(actor.GetOverheadPosition(), item.Chance - prop.ChancePenalty);
-        }
-
-        // OnExecutionCompleted
-        protected override void OnExecutionCompleted()
-        {
-            if (AssertEntity<Actor>(0)?.Inventory.Find(Body.Clauses[2]) is Item item)
             {
-                item.Use();
-                if (item.MetaItem.IsStackable && Session is GameSession session)
-                    session.HUD.Log.Show(LogVerb.Lost, item.DisplayText, item.MetaItem.Image);
+                var successState = Parser.ParseEnumArgument<PropState>(this, SuccessStateArg);
+                session.ChanceRoll.Show(actor.GetOverheadPosition(0, -3), item, prop, successState);
             }
         }
 

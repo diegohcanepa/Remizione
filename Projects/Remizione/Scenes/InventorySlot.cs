@@ -79,7 +79,7 @@ namespace Remizione
 
             if (Item == null)
             {
-                if (Index > grid.ItemContainer.Size-1 || grid.ItemContainer.Category == InventoryCategory.Traits)
+                if (Index > grid.ItemContainer.Size - 1 || grid.ItemContainer.Category == InventoryCategory.Traits)
                     stateIcon.Draw(gameTime);
             }
             else

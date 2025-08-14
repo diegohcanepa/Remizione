@@ -264,6 +264,11 @@ namespace Remizione
                     }
                 }
             }
+            else if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
+            {
+                SceneController.Pop();
+                return true;
+            }
 
             return false;
         }

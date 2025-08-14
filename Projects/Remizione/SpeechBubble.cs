@@ -313,7 +313,7 @@ namespace Remizione
             DrawBubble(gameTime);
 
             Game.SpriteBatch.Begin(Actor.Session.Camera, SamplerState.PointClamp);
-            
+
             title.Draw(gameTime);
 
             if (shakeTween.IsRunning)

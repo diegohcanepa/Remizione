@@ -53,12 +53,12 @@ namespace Remizione
         private void Layout()
         {
             if (actor == null)
-                return; 
+                return;
 
             var pos = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -4, 0);
 
             tickets[0].Position = pos;
-            
+
             pos.X -= 12;
             tickets[1].Position = pos;
 

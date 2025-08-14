@@ -24,6 +24,7 @@
         internal const string ShockZap = nameof(ShockZap);
         internal const string ThrowablePickup = nameof(ThrowablePickup);
         internal const string Thunder = nameof(Thunder);
+        internal const string TrunkOpen = nameof(TrunkOpen);
         internal const string UIHover = nameof(UIHover);
         internal const string UIInventoryOpen = nameof(UIInventoryOpen);
         internal const string UIPrompt = nameof(UIPrompt);

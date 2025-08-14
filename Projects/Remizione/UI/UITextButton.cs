@@ -198,7 +198,7 @@ namespace Remizione
             }
 
             Game.SpriteBatch.Begin(Camera, SamplerState.PointClamp, shader);
-            
+
             if (HasText)
             {
                 containerPattern.Draw(gameTime);

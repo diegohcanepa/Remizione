@@ -19,7 +19,7 @@ namespace Remizione
             {
                 Size = 24
             };
-     
+
             this.Trinkets = new ItemContainer(owner, InventoryCategory.Trinkets);
         }
 

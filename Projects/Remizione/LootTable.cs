@@ -61,7 +61,7 @@ namespace Remizione
             {
                 if (roll < items[i].weight)
                     return MetaItem.Find(items[i].itemName);
-                
+
                 roll -= items[i].weight;
             }
 

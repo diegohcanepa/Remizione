@@ -39,7 +39,7 @@ namespace Remizione
 
             Position = position;
             room.Children.Add(this);
-            
+
             return true;
         }
 
@@ -85,7 +85,7 @@ namespace Remizione
                 return;
 
             xTween.Start(TweenStyle.QuadraticIn, startPos.X, endPos.X, 400);
-            yTween.Start(TweenStyle.QuadraticIn, startPos.Y, startPos.Y-4, 200, () => Fall(endPos));
+            yTween.Start(TweenStyle.QuadraticIn, startPos.Y, startPos.Y - 4, 200, () => Fall(endPos));
 
             Tweens.XTween = xTween;
             Tweens.YTween = yTween;

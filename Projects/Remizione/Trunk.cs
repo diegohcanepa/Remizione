@@ -25,8 +25,14 @@ namespace Remizione
         protected override void OnPropStateChanged()
         {
             AnimationPlayer.Play(PropState == PropState.Open ? AnimationNames.Open : AnimationNames.Closed, false);
+            
+            if (LoadState != LoadState.Loaded)
+                return;
+
             if (PropState == PropState.Open)
             {
+                PlaySound(SoundNames.TrunkOpen);
+
                 if (Session.Room is ProceduralRoom room && GetLoot() is MetaItem metaItem)
                 {
                     if (room.CreateRuntimeClone(nameof(LootBag)) is LootBag lootBag)

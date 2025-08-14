@@ -40,7 +40,7 @@ namespace Remizione
 
         // Guts
         public ReadOnlyCollection<AtlasImage> Guts { get; }
-        
+
         // GutStains
         public ReadOnlyCollection<AtlasImage> GutStains { get; }
 

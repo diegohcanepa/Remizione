@@ -16,27 +16,33 @@ namespace Remizione
         private readonly float deceleration = .01f;
         private float elapsedSinceChange = 0;
         private int finalNumber = 1;
+        private GameSession session;
+        private Item? item;
         private readonly TextSprite labelText;
         private readonly float minInterval = .12f;
         private readonly FloatTween opacityTween = new() { StartDelay = 1000 };
+        private Prop? prop;
         private readonly Random rng = new();
         private float rollInterval = .04f;
         private readonly Vector2Tween scaleTween = new();
         private int successChance;
+        private PropState? successState;
 
         #endregion
 
         #region Constructor
 
         // Constructor
-        public UIChanceRoll(EngendroGame game)
-            : base(game)
+        public UIChanceRoll(GameSession session)
+            : base(session.Game)
         {
+            this.session = session;
+
             // Amount text
             this.amountText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Orange,
-                PivotOrigin = RectanglePoint.Bottom,
+                PivotOrigin = RectanglePoint.Center,
                 Scale = ScaleInfo.Text.Galactus
             };
 
@@ -44,7 +50,7 @@ namespace Remizione
             this.labelText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 PivotOrigin = RectanglePoint.Top,
-                Scale = ScaleInfo.Text.Huge
+                Scale = ScaleInfo.Text.VeryLarge
             };
         }
 
@@ -66,6 +72,8 @@ namespace Remizione
             amountText.Color = ColorPalette.Text.Default;
             amountText.Opacity = 1;
             labelText.Opacity = 1;
+            prop = null;
+            item = null;
         }
 
         #endregion
@@ -110,20 +118,31 @@ namespace Remizione
 
                     if (Success)
                     {
-                        labelText.Text = "Success!";
+                        labelText.Text = TextRepository.GetValue("Misc.Success");
                         labelText.Color = ColorPalette.Text.Green;
+
+                        if (prop != null && successState != null)
+                            prop.PropState = successState.Value;
                     }
                     else
                     {
-                        labelText.Text = "Failed!";
+                        labelText.Text = TextRepository.GetValue("Misc.Failed");
                         labelText.Color = ColorPalette.Text.Red;
                         Sound.Play(SoundNames.ChanceRollFail);
                     }
 
-                    labelText.Position = amountText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -3);
+                    labelText.Position = amountText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2);
+
+                    if (item != null)
+                    {
+                        item.Use();
+                        
+                        if (item.MetaItem.IsStackable)
+                            session.HUD.Log.Show(LogVerb.Lost, item.DisplayText, item.MetaItem.Image);
+                    }
                 }
             }
-            
+
             amountText.Update(gameTime);
 
             if (opacityTween.IsRunning)
@@ -146,15 +165,19 @@ namespace Remizione
         public bool IsVisible { get; private set; }
 
         // Show
-        public void Show(Vector2 position, int chance)
+        public void Show(Vector2 position, Item item, Prop prop, PropState? successState)
         {
             Reset();
 
+            this.item = item;
+            this.prop = prop;
+            this.successState = successState;
+
             amountText.Position = position;
-            successChance = chance;
+            successChance = item.Chance - prop.ChancePenalty;
             IsRolling = true;
             IsVisible = true;
-            
+
             scaleTween.Start(TweenStyle.CubicInOut, ScaleInfo.Text.Galactus, ScaleInfo.Text.Galactus * .8f, 50, 10);
             amountText.Tweens.ScaleTween = scaleTween;
 

@@ -66,7 +66,7 @@ namespace Remizione
             if (!IsVisible)
                 return;
 
-            var opacity = actor?.Session.IsAwaiting == true ? .3f : 1f;    
+            var opacity = actor?.Session.IsAwaiting == true ? .3f : 1f;
 
             button.ButtonOpacity = opacity;
             slotImage.Opacity = opacity;

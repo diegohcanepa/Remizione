@@ -1,9 +1,9 @@
-﻿using Engendro;
+﻿using Adberration;
+using Adberration.Scripting;
+using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Engendro.PathFinding;
-using Adberration;
-using Adberration.Scripting;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -220,7 +220,7 @@ namespace Remizione
 
             var offset = GetPivotBasedPolyOffset();
             Collider.GetVertices(vertices, offset);
-            
+
             holePoly.SetVertices(vertices);
             holePolyInflated.SetVertices(vertices, .05f);
 
@@ -536,7 +536,7 @@ namespace Remizione
                 var bottomDistance = Math.Abs(Y - attacker.Y);
                 var topDistance = Math.Abs(Y - attacker.BoundingBox.Top);
 
-                if (bottomDistance < topDistance) 
+                if (bottomDistance < topDistance)
                     destination.Y += knockback.Y;
                 else
                     destination.Y -= knockback.Y;

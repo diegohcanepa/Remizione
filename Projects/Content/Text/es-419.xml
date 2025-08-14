@@ -186,6 +186,7 @@ Bla bla bla</String>
   <String Key="Misc.DisclaimerMessage">Algunas escenas e imágenes pueden herir la sensibilidad. La siguiente historia es ficticia y no representa a ninguna persona o evento real.</String>
   <String Key="Misc.DisclaimerTitle">ADVERTENCIA</String>
   <String Key="Misc.DollarSign">$</String>
+  <String Key="Misc.Failed">¡Fallaste!</String>
   <String Key="Misc.Level">Nivel</String>
   <String Key="Misc.Mute">Silencio</String>
   <String Key="Misc.No">No</String>
@@ -193,6 +194,7 @@ Bla bla bla</String>
   <String Key="Misc.Progress">Progreso</String>
   <String Key="Misc.SelectSlot">Seleccionar ranura</String>
   <String Key="Misc.Stamina">Resistencia</String>
+  <String Key="Misc.Success">¡Éxito!</String>
   <String Key="Misc.Threshold">Umbral</String>
   <String Key="Misc.Unknown">???</String>
   <String Key="Misc.Yes">Sí</String>
