@@ -12,12 +12,13 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly GameSession session;
+        private readonly TextSprite amountText;
         private Item? item;
         private readonly TextSprite labelText;
         private readonly FloatTween opacityTween = new() { StartDelay = 1000 };
         private Prop? prop;
         private readonly Random random = new();
+        private readonly HUD hud;
         private int successChance;
         private PropState? successState;
         private int targetUnit;
@@ -26,13 +27,11 @@ namespace Remizione
         private const float tenDeceleration = .0015f;
         private float tenInterval = .02f;
         private bool tenStopped;
-        private readonly TextSprite tenText;
         private float tenTimer = 0;
         private int unit;
         private const float unitDeceleration = .0015f; // cuánto aumenta el intervalo por frame
         private float unitInterval = .02f; // tiempo entre cambios al inicio
         private bool unitStopped;
-        private readonly TextSprite unitText;
         private float unitTimer = 0;
 
         #endregion
@@ -40,32 +39,25 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public UIChanceRoll(GameSession session)
-            : base(session.Game)
+        public UIChanceRoll(HUD hud)
+            : base(hud.Game)
         {
-            this.session = session;
+            this.hud = hud;
 
-            // Ten text
-            this.tenText = new TextSprite(Game, Fonts.CommonOutline)
+            // Amount text
+            this.amountText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Orange,
-                PivotOrigin = RectanglePoint.Right,
-                Scale = ScaleInfo.Text.Galactus
-            };
-
-            // Unit text
-            this.unitText = new TextSprite(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Orange,
-                PivotOrigin = RectanglePoint.Left,
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -5),
                 Scale = ScaleInfo.Text.Galactus
             };
 
             // Label text
             this.labelText = new TextSprite(Game, Fonts.CommonOutline)
             {
-                PivotOrigin = RectanglePoint.Top,
-                Scale = ScaleInfo.Text.VeryLarge
+                PivotOrigin = RectanglePoint.Bottom,
+                Scale = ScaleInfo.Text.Huge
             };
         }
 
@@ -80,10 +72,8 @@ namespace Remizione
             Success = false;
             IsRolling = false;
             IsVisible = false;
-            tenText.Color = ColorPalette.Text.Default;
-            tenText.Opacity = 1;
-            unitText.Color = ColorPalette.Text.Default;
-            unitText.Opacity = 1;
+            amountText.Color = ColorPalette.Text.Default;
+            amountText.Opacity = 1;
             labelText.Opacity = 1;
             prop = null;
             item = null;
@@ -106,11 +96,13 @@ namespace Remizione
         {
             if (IsVisible)
             {
-                tenText.Draw(gameTime);
-                unitText.Draw(gameTime);
+                Game.SpriteBatch.Begin(Game.Camera);
+                amountText.Draw(gameTime);
 
                 if (!IsRolling)
                     labelText.Draw(gameTime);
+
+                Game.SpriteBatch.End();
             }
         }
 
@@ -119,7 +111,7 @@ namespace Remizione
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            // Unidad
+            // Unit
             if (!unitStopped)
             {
                 unitTimer += deltaTime;
@@ -140,7 +132,7 @@ namespace Remizione
                 }
             }
 
-            // Decena
+            // Ten
             if (!tenStopped)
             {
                 tenTimer += deltaTime;
@@ -161,17 +153,19 @@ namespace Remizione
                 }
             }
 
-            tenText.Text = ten.ToString();
-            unitText.Text = unit.ToString();
+            if (IsRolling)
+                amountText.Text = $"{ten}{unit}";
 
             if (IsRolling && tenStopped && unitStopped)
             {
+                if (ten == 0 && unit == 0)
+                    amountText.Text = "100";
+
                 IsRolling = false;
 
-                tenText.Color = Success ? ColorPalette.Text.Green : ColorPalette.Text.Red;
-                unitText.Color = tenText.Color;
+                amountText.Color = Success ? ColorPalette.Text.Green : ColorPalette.Text.Red;
 
-                opacityTween.Start(TweenStyle.CubicInOut, 1, 0, 400);
+                opacityTween.Start(TweenStyle.CubicInOut, 1, 0, 600);
 
                 if (Success)
                 {
@@ -188,22 +182,21 @@ namespace Remizione
                     Sound.Play(SoundNames.ChanceRollFail);
                 }
 
-                labelText.Position = tenText.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -2);
+                labelText.Position = amountText.BoundingBox.GetPoint(RectanglePoint.Top, 0, 2);
 
                 if (item != null)
                 {
                     item.Use();
                         
                     if (item.MetaItem.IsStackable)
-                        session.HUD.Log.Show(LogVerb.Lost, item.DisplayText, item.MetaItem.Image);
+                        hud.Log.Show(LogVerb.Lost, item.DisplayText, item.MetaItem.Image);
                 }
             }
 
             if (opacityTween.IsRunning)
             {
                 opacityTween.Update(gameTime);
-                tenText.Opacity = opacityTween.CurrentValue;
-                unitText.Opacity = opacityTween.CurrentValue;
+                amountText.Opacity = opacityTween.CurrentValue;
                 labelText.Opacity = opacityTween.CurrentValue;
 
                 if (!opacityTween.IsRunning)
@@ -220,7 +213,7 @@ namespace Remizione
         public bool IsVisible { get; private set; }
 
         // Show
-        public void Show(Vector2 position, Item item, Prop prop, PropState? successState)
+        public void Show(Item item, Prop prop, PropState? successState)
         {
             Reset();
 
@@ -230,8 +223,6 @@ namespace Remizione
             this.prop = prop;
             this.successState = successState;
 
-            tenText.Position = position;
-            unitText.Position = position;
             successChance = item.Chance - prop.ChancePenalty;
             Success = finalValue <= successChance;
 

@@ -34,10 +34,8 @@ namespace Remizione
             this.progressMeter = new(session);
             this.ticketsMeter = new(session.Game);
 
-            // Log
+            ChanceRoll = new(this);
             this.Log = new(Game);
-
-            // Message
             this.Message = new(Game);
 
             // Saving icon
@@ -95,7 +93,10 @@ namespace Remizione
                 Message.Draw(gameTime);
             }
 
-            prompt.Draw(gameTime);
+            if (session.IsAwaiting)
+                ChanceRoll.Draw(gameTime);
+            else
+                prompt.Draw(gameTime);
 
             if (savingIcon.Tweens.IsTweening)
             {
@@ -115,6 +116,7 @@ namespace Remizione
             healthMeter.Update(gameTime);
             progressMeter.Update(gameTime);
             ticketsMeter.Update(gameTime);
+            ChanceRoll.Update(gameTime);
 
             prompt.Update(gameTime);
 
@@ -128,6 +130,9 @@ namespace Remizione
 
         // BagSlot
         public SackSlot BagSlot { get; }
+
+        // ChanceRoll
+        public UIChanceRoll ChanceRoll { get; }
 
         // CountdownMeter
         public UICountdownMeter CountdownMeter { get; }

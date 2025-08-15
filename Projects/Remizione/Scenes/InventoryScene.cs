@@ -37,6 +37,7 @@ namespace Remizione
         private readonly TextSprite itemDescription;
         private readonly ImageSprite itemIcon;
         private readonly TextSprite itemName;
+        private readonly TextSprite[] itemStats;
         private InputMethod lastKnownInput;
         private readonly ImageSprite navigationBar;
         private readonly UITextButton nextCategoryButton;
@@ -189,6 +190,20 @@ namespace Remizione
                 ShadowOffset = new Vector2(0, .75f)
             };
 
+            // Item stats
+            itemStats = new TextSprite[3];
+            for (int i = 0; i < itemStats.Length; i++)
+            {
+                itemStats[i] = new TextSprite(Game, Fonts.Common)
+                {
+                    Color = ColorPalette.Text.Default,
+                    PivotOrigin = RectanglePoint.LeftTop,
+                    MaximumWidth = maxInfoTextWidth,
+                    Scale = ScaleInfo.Text.VeryLarge,
+                    ShadowOffset = new Vector2(0, .75f)
+                };
+            }
+
             // Close button
             buttonClose = new UITextButton(owner.Game, InputBindings.Close)
             {
@@ -330,6 +345,12 @@ namespace Remizione
         // InvalidateItemInfo
         private void InvalidateItemInfo()
         {
+            heartBonus.Value = null;
+            for (var i = 0; i < itemStats.Length; i++)
+            {
+                itemStats[i].Clear();
+            }
+
             if (activeGrid.SelectedItem is Item item)
             {
                 itemName.Text = TextRepository.GetValue($"Item.{item.Name}.Name") + (item.Level == 0 ? string.Empty : $" +{item.Level}");
@@ -337,9 +358,29 @@ namespace Remizione
                 itemDescription.PivotOrigin = RectanglePoint.LeftTop;
                 itemDescription.Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 6, 3);
                 itemDescription.Text = $"@Item.{item.Name}.Description";
-                heartBonus.Position = itemDescription.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
-                heartBonus.Value = item.MetaItem.Health;
                 itemIcon.Image = item.MetaItem.Image;
+
+                var pos = itemDescription.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
+
+                // Health
+                if (item.MetaItem.Health != null)
+                {
+                    heartBonus.Position = itemDescription.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
+                    heartBonus.Value = item.MetaItem.Health;
+                    pos.Y += heartBonus.BoundingBox.Height;
+                }
+
+                /*
+                int itemStatIndex = 0;
+                // Chance
+                if (item.Chance > 0)
+                {
+                    itemStats[0].Text = item.GetDisplayStat(ItemProperty.Chance);
+                    itemStats[0].Position = pos;
+                    pos.Y += itemStats[0].BoundingBox.Height;
+                    itemStatIndex++;
+                }
+                */
             }
             else
             {
@@ -349,7 +390,6 @@ namespace Remizione
                 itemDescription.Text = "@Misc.NoInventoryItem";
                 itemName.Clear();
                 itemIcon.Image = null;
-                heartBonus.Value = null;
             }
         }
 
@@ -421,7 +461,6 @@ namespace Remizione
 
             Game.SpriteBatch.End();
 
-
             for (int i = 0; i < categoryIcons.Length; i++)
             {
                 Effect? shader = null;
@@ -455,6 +494,15 @@ namespace Remizione
             categoryText.Draw(gameTime);
             itemName.Draw(gameTime);
             itemDescription.Draw(gameTime);
+
+            for (var i = 0; i < itemStats.Length; i++)
+            {
+                if (itemStats[i].IsEmpty)
+                    break;
+
+                itemStats[i].Draw(gameTime);
+            }
+
             Game.SpriteBatch.End();
 
             if (heartBonus.Value != null)

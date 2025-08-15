@@ -38,6 +38,7 @@ namespace Remizione
         private void Invalidate()
         {
             valueText.Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 1, .5f);
+            BoundingBox = RectangleF.Union(valueText.BoundingBox, icon.BoundingBox);
         }
 
         #endregion
@@ -54,6 +55,9 @@ namespace Remizione
         }
 
         #endregion
+
+        // BoundingBox
+        public RectangleF BoundingBox { get; private set; }
 
         // Position
         public Vector2 Position

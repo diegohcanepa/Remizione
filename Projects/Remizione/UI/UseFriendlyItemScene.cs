@@ -21,7 +21,7 @@ namespace Remizione
         private readonly ImageSprite bottomGradient;
         private readonly UITextButton buttonClose;
         private readonly UITextButton buttonUse;
-        private readonly TextSprite itemChanceText;
+        private readonly TextSprite chanceText;
         private readonly TextSprite itemNameText;
         private int selectedIndex;
         private readonly ImageSprite slotImage;
@@ -68,11 +68,13 @@ namespace Remizione
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
-            // Item chance
-            itemChanceText = new TextSprite(Game, Fonts.CommonOutline)
+            // Chance text
+            chanceText = new TextSprite(Game, Fonts.CommonOutline)
             {
-                PivotOrigin = RectanglePoint.Left,
-                Scale = ScaleInfo.Text.Large
+                Color = ColorPalette.Text.Default,
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 0, -3),
+                Scale = ScaleInfo.Text.Huge
             };
 
             // Amount text
@@ -187,15 +189,20 @@ namespace Remizione
             selectedIndex = index;
             var item = visualItems[index].Item;
             itemNameText.Text = index < 0 ? null : item.DisplayText;
-            itemChanceText.Clear();
 
-            if (target != null && item.Chance > 0)
+            if (target != null)
             {
-                var chance = item.Chance - Math.Abs(target.ChancePenalty);
-                itemChanceText.Color = ColorPalette.Text.Green;
-                itemChanceText.Text = $"[{chance}%]";
+                var chance = item.Chance <= 0 ? 100 : item.Chance - Math.Abs(target.ChancePenalty);
+                chanceText.Text = $"{Localization.GetValue(ItemProperty.Chance)}: {chance}%";
 
-                itemChanceText.Position = itemNameText.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0);
+                if (chance == 100)
+                    chanceText.Color = ColorPalette.Text.Green;
+
+                else if (chance <= 25)
+                    chanceText.Color = ColorPalette.Text.Orange;
+
+                else
+                    chanceText.Color = ColorPalette.Text.Default;
             }
 
             InvalidateSlot();
@@ -222,7 +229,7 @@ namespace Remizione
             Game.SpriteBatch.Begin(Game.Camera);
             title.Draw(gameTime);
             itemNameText.Draw(gameTime);
-            itemChanceText.Draw(gameTime);
+            chanceText.Draw(gameTime);
             slotImage.Draw(gameTime);
             amountText.Draw(gameTime);
             DrawItems(gameTime);

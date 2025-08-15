@@ -152,6 +152,22 @@ namespace Remizione
             else
                 return string.Empty;
         }
+     
+        // GetDisplayStat
+        public string GetDisplayStat(ItemProperty property)
+        {
+            string value = string.Empty;
+
+            // Chance
+            if (property == ItemProperty.Chance)
+                value = Chance.ToString(CultureInfo.InvariantCulture) + "%";
+
+            // Health
+            else if (property == ItemProperty.Health && MetaItem.Health is DiceExpression exp)
+                value = exp.GetValueRangeAsString();
+
+            return $"{Localization.GetValue(property)}: {value}";
+        }
 
         // Index
         public int Index => Container.IndexOf(this);

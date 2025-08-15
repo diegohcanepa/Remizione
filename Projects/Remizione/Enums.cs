@@ -54,7 +54,7 @@ namespace Remizione
     public enum ItemAction { None, Throw }
 
     // ItemProperty
-    public enum ItemProperty { Chance }
+    public enum ItemProperty { Chance, Durability, Health }
 
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, Global, MuzzleFlash, Outdoor, Player }

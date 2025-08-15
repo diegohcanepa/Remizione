@@ -35,11 +35,11 @@ namespace Remizione.Scripting
             if (actor.Inventory.Find(Body.Clauses[2]) is Item item)
             {
                 var successState = Parser.ParseEnumArgument<PropState>(this, SuccessStateArg);
-                session.ChanceRoll.Show(actor.GetOverheadPosition(0, -3), item, prop, successState);
+                session.HUD.ChanceRoll.Show(item, prop, successState);
             }
         }
 
         // IsAwaiting
-        public override bool IsAwaiting => Session is GameSession session && session.ChanceRoll.IsRolling;
+        public override bool IsAwaiting => Session is GameSession session && session.HUD.ChanceRoll.IsVisible;
     }
 }

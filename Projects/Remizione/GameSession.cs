@@ -48,7 +48,6 @@ namespace Remizione
             this.StaticThings = new ReadOnlyCollection<GameThing>(staticThings);
             this.IsMouseVisible = false;
 
-            ChanceRoll = new(this);
             ObjectPools = new ObjectPools(this);
             ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(game), 100);
             OverlayTexts = new OverlayTextManager(game);
@@ -173,10 +172,6 @@ namespace Remizione
                 Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade);
                 Game.SpriteBatch.End();
             }
-
-            Game.SpriteBatch.Begin(Camera);
-            ChanceRoll.Draw(gameTime);
-            Game.SpriteBatch.End();
 
             console?.Draw(gameTime);
             roomEditor?.Draw(gameTime);
@@ -341,10 +336,6 @@ namespace Remizione
 
             Environment.Update(gameTime);
             HUD.Update(gameTime);
-
-            if (ChanceRoll.IsVisible)
-                ChanceRoll.Update(gameTime);
-
             OverlayTexts.Update(gameTime);
         }
 
@@ -383,12 +374,9 @@ namespace Remizione
 
         #endregion
 
-        // ChanceRoll
-        public UIChanceRoll ChanceRoll { get; }
-
         // ChanceSuccess
         [ScriptProperty]
-        public bool ChanceSuccess => ChanceRoll.Success;
+        public bool ChanceSuccess => HUD.ChanceRoll.Success;
 
         // Countdown
         [ScriptProperty]
