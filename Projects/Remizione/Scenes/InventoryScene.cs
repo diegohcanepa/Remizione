@@ -505,8 +505,8 @@ namespace Remizione
 
             Game.SpriteBatch.End();
 
-            if (Owner.Session.CountdownVisible)
-                Owner.Session.HUD.CountdownMeter.Draw(gameTime);
+            if (Owner.Session.TimeVisible)
+                Owner.Session.HUD.Time.Draw(gameTime);
             else if (Owner.Session.Room is ProceduralRoom)
                 Owner.Session.HUD.ProgressMeter.Draw(gameTime);
 
@@ -692,7 +692,7 @@ namespace Remizione
             if (lastKnownInput != InputManager.DefaultPlayer.LastInputMethod)
                 lastKnownInput = InputManager.DefaultPlayer.LastInputMethod;
 
-            Owner.Session.HUD.CountdownMeter.Update(gameTime);
+            Owner.Session.HUD.Time.Update(gameTime);
             Owner.Session.HUD.ProgressMeter.Update(gameTime);
         }
 

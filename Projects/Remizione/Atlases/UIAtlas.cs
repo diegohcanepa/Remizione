@@ -11,13 +11,14 @@ namespace Remizione
         public UIAtlas(EngendroGame game)
             : base(game.Content, "UI", ContentHelper.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
-            SackSlot = this[nameof(SackSlot)];
             BottomGradient = this[nameof(BottomGradient)];
             CheckMark = this[nameof(CheckMark)];
+            ClockIcon = this[nameof(ClockIcon)];
             CloseWindowButton = this[nameof(CloseWindowButton)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
+            EquipmentSlot = this[nameof(EquipmentSlot)];
             HeartEmptyIcon = this[nameof(HeartEmptyIcon)];
             HeartHalfIcon = this[nameof(HeartHalfIcon)];
             HeartIcon = this[nameof(HeartIcon)];
@@ -41,7 +42,7 @@ namespace Remizione
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
             ProhibitionIcon = this[nameof(ProhibitionIcon)];
             ProhibitionMark = this[nameof(ProhibitionMark)];
-            EquipmentSlot = this[nameof(EquipmentSlot)];
+            SackSlot = this[nameof(SackSlot)];
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
@@ -58,6 +59,9 @@ namespace Remizione
 
         // CheckMark
         public AtlasImage CheckMark { get; }
+
+        // ClockIcon
+        public AtlasImage ClockIcon { get; }
 
         // CloseWindowButton
         public AtlasImage CloseWindowButton { get; }

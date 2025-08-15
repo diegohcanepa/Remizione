@@ -381,10 +381,6 @@ namespace Remizione
         [ScriptProperty]
         public int Countdown { get; set; } = -1;
 
-        // CountdownVisible
-        [ScriptProperty]
-        public bool CountdownVisible { get; set; }
-
         // ClearOverlayTexts
         [ScriptMethod(CodingContext.Any)]
         public void ClearOverlayTexts() => OverlayTexts.Clear();
@@ -453,8 +449,9 @@ namespace Remizione
         [ScriptMethod]
         public void NextLevel()
         {
+            TimeVisible = false;
             Countdown = Randomizer.Next(GameSettings.CountdownMinimum, GameSettings.CountdownMaximum);
-            HUD.CountdownMeter.StopAlarm();
+            HUD.Time.StopAlarm();
             Level++;
         }
 
@@ -531,6 +528,10 @@ namespace Remizione
 
         // StaticThings
         public ReadOnlyCollection<GameThing> StaticThings { get; }
+
+        // TimeVisible
+        [ScriptProperty]
+        public bool TimeVisible { get; set; }
 
         // WorldVersion
         public int WorldVersion { get; set; } = 1;

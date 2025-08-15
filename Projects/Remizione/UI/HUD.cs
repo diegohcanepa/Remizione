@@ -28,7 +28,7 @@ namespace Remizione
         {
             this.session = session;
 
-            this.CountdownMeter = new(session);
+            this.Time = new(session);
             this.healthMeter = new(session.Game);
             this.ProgressMeter = new(session);
             this.ticketsMeter = new(session.Game);
@@ -82,8 +82,8 @@ namespace Remizione
                         ticketsMeter.Draw(gameTime);
                     }
 
-                    if (session.CountdownVisible)
-                        CountdownMeter.Draw(gameTime);
+                    if (session.TimeVisible)
+                        Time.Draw(gameTime);
                     else if (session.Room is ProceduralRoom)
                         ProgressMeter.Draw(gameTime);
                 }
@@ -108,7 +108,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            CountdownMeter.Update(gameTime);
+            Time.Update(gameTime);
             BagSlot.Update(gameTime);
             EquipmentSlot.Update(gameTime);
             TrincketSlot.Update(gameTime);
@@ -132,9 +132,6 @@ namespace Remizione
 
         // ChanceRoll
         public UIChanceRoll ChanceRoll { get; }
-
-        // CountdownMeter
-        public UICountdownMeter CountdownMeter { get; }
 
         // EquipmentSlot
         public EquipmentSlot EquipmentSlot { get; }
@@ -181,6 +178,9 @@ namespace Remizione
         {
             savingIcon.Tweens.OpacityTween = FloatTween.Create(TweenStyle.QuadraticInOut, 1, .8f, 300, 10);
         }
+
+        // Time
+        public UITime Time { get; }
 
         // TrincketSlot
         public TrinketSlot TrincketSlot { get; }

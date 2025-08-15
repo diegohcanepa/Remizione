@@ -7,28 +7,37 @@ using System;
 namespace Remizione.UI
 {
     /// <summary>
-    /// UICountdownMeter
+    /// UITime
     /// </summary>
-    public class UICountdownMeter : GameObject
+    public class UITime : GameObject
     {
         private SoundInstance? alarmSound;
+        private readonly ImageSprite icon;
         private int lastKnownValue = -1;
         private readonly GameSession session;
         private readonly TextSprite text;
         private readonly Vector2Tween scaleTween = new();
 
         // Constructor
-        public UICountdownMeter(GameSession session)
+        public UITime(GameSession session)
             : base(session.Game)
         {
             this.session = session;
 
-            // Text
-            this.text = new TextSprite(Game, Fonts.CommonOutline)
+            // Icon
+            this.icon = new(Game, Atlases.UI.ClockIcon)
             {
                 PivotOrigin = RectanglePoint.Top,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, -1),
-                Scale = ScaleInfo.Text.Giant,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, -10, -1),
+                Scale = ScaleInfo.UIElement.Medium
+            };
+
+            // Text
+            this.text = new(Game, Fonts.CommonOutline)
+            {
+                PivotOrigin = RectanglePoint.Left,
+                Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 0, .5f),
+                Scale = ScaleInfo.Text.Giant
             };
         }
 
@@ -38,6 +47,7 @@ namespace Remizione.UI
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
+            icon.Draw(gameTime);
             text.Draw(gameTime);
             Game.SpriteBatch.End();
         }
