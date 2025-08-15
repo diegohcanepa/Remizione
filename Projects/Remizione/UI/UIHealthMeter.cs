@@ -21,7 +21,7 @@ namespace Remizione
             : base(game)
         {
             this.hearts = new ImageSprite[10];
-            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 19, 0);
+            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 16, 0);
 
             for (var i = 0; i < hearts.Length; i++)
             {
@@ -31,7 +31,7 @@ namespace Remizione
                     Position = pos
                 };
 
-                pos.X += hearts[i].BoundingBox.Width + .5f;
+                pos.X += hearts[i].BoundingBox.Width;
             }
         }
 

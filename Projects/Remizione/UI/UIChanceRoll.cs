@@ -12,21 +12,28 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly TextSprite amountText;
-        private readonly float deceleration = .01f;
-        private float elapsedSinceChange = 0;
-        private int finalNumber = 1;
-        private GameSession session;
+        private readonly GameSession session;
         private Item? item;
         private readonly TextSprite labelText;
-        private readonly float minInterval = .12f;
         private readonly FloatTween opacityTween = new() { StartDelay = 1000 };
         private Prop? prop;
-        private readonly Random rng = new();
-        private float rollInterval = .04f;
-        private readonly Vector2Tween scaleTween = new();
+        private readonly Random random = new();
         private int successChance;
         private PropState? successState;
+        private int targetUnit;
+        private int targetTen;
+        private int ten;
+        private const float tenDeceleration = .0015f;
+        private float tenInterval = .02f;
+        private bool tenStopped;
+        private readonly TextSprite tenText;
+        private float tenTimer = 0;
+        private int unit;
+        private const float unitDeceleration = .0015f; // cuánto aumenta el intervalo por frame
+        private float unitInterval = .02f; // tiempo entre cambios al inicio
+        private bool unitStopped;
+        private readonly TextSprite unitText;
+        private float unitTimer = 0;
 
         #endregion
 
@@ -38,11 +45,19 @@ namespace Remizione
         {
             this.session = session;
 
-            // Amount text
-            this.amountText = new TextSprite(Game, Fonts.CommonOutline)
+            // Ten text
+            this.tenText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Orange,
-                PivotOrigin = RectanglePoint.Center,
+                PivotOrigin = RectanglePoint.Right,
+                Scale = ScaleInfo.Text.Galactus
+            };
+
+            // Unit text
+            this.unitText = new TextSprite(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Orange,
+                PivotOrigin = RectanglePoint.Left,
                 Scale = ScaleInfo.Text.Galactus
             };
 
@@ -62,18 +77,24 @@ namespace Remizione
         private void Reset()
         {
             opacityTween.Stop();
-            amountText.Tweens.Reset();
             Success = false;
             IsRolling = false;
             IsVisible = false;
-            rollInterval = .02f;
-            finalNumber = rng.Next(1, 101);
-            elapsedSinceChange = 0;
-            amountText.Color = ColorPalette.Text.Default;
-            amountText.Opacity = 1;
+            tenText.Color = ColorPalette.Text.Default;
+            tenText.Opacity = 1;
+            unitText.Color = ColorPalette.Text.Default;
+            unitText.Opacity = 1;
             labelText.Opacity = 1;
             prop = null;
             item = null;
+            ten = 0;
+            tenInterval = 0.05f;
+            tenStopped = false;
+            tenTimer = 0;
+            unit = 0;
+            unitInterval = 0.05f;
+            unitStopped = false;
+            unitTimer = 0;
         }
 
         #endregion
@@ -85,7 +106,8 @@ namespace Remizione
         {
             if (IsVisible)
             {
-                amountText.Draw(gameTime);
+                tenText.Draw(gameTime);
+                unitText.Draw(gameTime);
 
                 if (!IsRolling)
                     labelText.Draw(gameTime);
@@ -95,65 +117,98 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (IsRolling)
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            // Unidad
+            if (!unitStopped)
             {
-                elapsedSinceChange += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                // Change display number
-                if (elapsedSinceChange >= rollInterval)
+                unitTimer += deltaTime;
+                if (unitTimer >= unitInterval)
                 {
-                    elapsedSinceChange = 0;
-                    amountText.Text = $"{rng.Next(1, 101)}";
-                    rollInterval += deceleration;
-                }
+                    unitTimer = 0f;
+                    unit = random.Next(0, 10);
 
-                // If it slow enough then show final result
-                if (rollInterval >= minInterval)
-                {
-                    amountText.Text = $"{finalNumber}";
-                    IsRolling = false;
-                    Success = finalNumber <= successChance;
-                    amountText.Color = Success ? ColorPalette.Text.Green : ColorPalette.Text.Red;
-                    opacityTween.Start(TweenStyle.CubicInOut, 1, 0, 400);
+                    // Incrementa el intervalo para desacelerar
+                    unitInterval += unitDeceleration;
 
-                    if (Success)
+                    // Condición para frenar unidad: probabilidad aleatoria
+                    if (random.NextDouble() < 0.1)
                     {
-                        labelText.Text = TextRepository.GetValue("Misc.Success");
-                        labelText.Color = ColorPalette.Text.Green;
-
-                        if (prop != null && successState != null)
-                            prop.PropState = successState.Value;
-                    }
-                    else
-                    {
-                        labelText.Text = TextRepository.GetValue("Misc.Failed");
-                        labelText.Color = ColorPalette.Text.Red;
-                        Sound.Play(SoundNames.ChanceRollFail);
-                    }
-
-                    labelText.Position = amountText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2);
-
-                    if (item != null)
-                    {
-                        item.Use();
-                        
-                        if (item.MetaItem.IsStackable)
-                            session.HUD.Log.Show(LogVerb.Lost, item.DisplayText, item.MetaItem.Image);
+                        unitStopped = true;
+                        unit = targetUnit; // fijar valor real
                     }
                 }
             }
 
-            amountText.Update(gameTime);
+            // Decena
+            if (!tenStopped)
+            {
+                tenTimer += deltaTime;
+                if (tenTimer >= tenInterval)
+                {
+                    tenTimer = 0f;
+                    ten = random.Next(0, 10);
+
+                    // Incrementa el intervalo para desacelerar
+                    tenInterval += tenDeceleration;
+
+                    // Solo empieza a frenar si unidad ya frenó
+                    if (unitStopped && random.NextDouble() < 0.1)
+                    {
+                        tenStopped = true;
+                        ten = targetTen; // fijar valor real
+                    }
+                }
+            }
+
+            tenText.Text = ten.ToString();
+            unitText.Text = unit.ToString();
+
+            if (IsRolling && tenStopped && unitStopped)
+            {
+                IsRolling = false;
+
+                tenText.Color = Success ? ColorPalette.Text.Green : ColorPalette.Text.Red;
+                unitText.Color = tenText.Color;
+
+                opacityTween.Start(TweenStyle.CubicInOut, 1, 0, 400);
+
+                if (Success)
+                {
+                    labelText.Text = TextRepository.GetValue("Misc.Success");
+                    labelText.Color = ColorPalette.Text.Green;
+
+                    if (prop != null && successState != null)
+                        prop.PropState = successState.Value;
+                }
+                else
+                {
+                    labelText.Text = TextRepository.GetValue("Misc.Failed");
+                    labelText.Color = ColorPalette.Text.Red;
+                    Sound.Play(SoundNames.ChanceRollFail);
+                }
+
+                labelText.Position = tenText.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -2);
+
+                if (item != null)
+                {
+                    item.Use();
+                        
+                    if (item.MetaItem.IsStackable)
+                        session.HUD.Log.Show(LogVerb.Lost, item.DisplayText, item.MetaItem.Image);
+                }
+            }
 
             if (opacityTween.IsRunning)
             {
                 opacityTween.Update(gameTime);
-                amountText.Opacity = opacityTween.CurrentValue;
+                tenText.Opacity = opacityTween.CurrentValue;
+                unitText.Opacity = opacityTween.CurrentValue;
                 labelText.Opacity = opacityTween.CurrentValue;
-            }
 
-            if (!IsRolling && IsVisible && !opacityTween.IsRunning)
-                IsVisible = false;
+                if (!opacityTween.IsRunning)
+                    IsVisible = false;
+            }
         }
 
         #endregion
@@ -169,19 +224,32 @@ namespace Remizione
         {
             Reset();
 
+            var finalValue = random.Next(0, 100);
+
             this.item = item;
             this.prop = prop;
             this.successState = successState;
 
-            amountText.Position = position;
+            tenText.Position = position;
+            unitText.Position = position;
             successChance = item.Chance - prop.ChancePenalty;
+            Success = finalValue <= successChance;
+
             IsRolling = true;
             IsVisible = true;
-
-            scaleTween.Start(TweenStyle.CubicInOut, ScaleInfo.Text.Galactus, ScaleInfo.Text.Galactus * .8f, 50, 10);
-            amountText.Tweens.ScaleTween = scaleTween;
-
             Sound.Play(SoundNames.ChanceRoll);
+
+            // Cifras reales
+            if (finalValue == 100)
+            {
+                targetTen = 0;
+                targetUnit = 0;
+            }
+            else
+            {
+                targetTen = finalValue / 10;
+                targetUnit = finalValue % 10;
+            }
         }
 
         // Success
