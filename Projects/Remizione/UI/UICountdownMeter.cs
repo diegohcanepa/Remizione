@@ -26,9 +26,8 @@ namespace Remizione.UI
             // Text
             this.text = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Red,
                 PivotOrigin = RectanglePoint.Top,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 0),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, -1),
                 Scale = ScaleInfo.Text.Giant,
             };
         }
@@ -38,10 +37,7 @@ namespace Remizione.UI
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (!session.IsCountdownActive)
-                return;
-
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.AlphaBlend, null);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             text.Draw(gameTime);
             Game.SpriteBatch.End();
         }
@@ -49,9 +45,6 @@ namespace Remizione.UI
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (!session.Countdown.IsBetween(0, GameSettings.CountdownWarning))
-                return;
-
             if (lastKnownValue != session.Countdown)
             {
                 if (alarmSound == null && session.Countdown < GameSettings.CountdownCritical)
@@ -64,6 +57,13 @@ namespace Remizione.UI
                 lastKnownValue = session.Countdown;
                 var t = TimeSpan.FromMilliseconds(session.Countdown);
                 text.Text = string.Format("{0:D2}:{1:D2}", (int)t.TotalMinutes, t.Seconds);
+
+                if (lastKnownValue <= GameSettings.CountdownCritical)
+                    text.Color = ColorPalette.Text.Red;
+                else if (lastKnownValue <= GameSettings.CountdownWarning)
+                    text.Color = ColorPalette.Text.Highlight;
+                else
+                    text.Color = ColorPalette.Text.Default;
             }
 
             text.Update(gameTime);
@@ -71,7 +71,7 @@ namespace Remizione.UI
 
         #endregion
 
-        // StopAlarm
+        // Reset
         public void StopAlarm()
         {
             text.Tweens.Reset();

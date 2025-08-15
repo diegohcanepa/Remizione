@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace Remizione
@@ -13,12 +14,13 @@ namespace Remizione
         #region Private fields
 
         private readonly TextSprite amountText;
+        private readonly ImageSprite bottomGradient;
+        private readonly HUD hud;
         private Item? item;
         private readonly TextSprite labelText;
         private readonly FloatTween opacityTween = new() { StartDelay = 1000 };
         private Prop? prop;
         private readonly Random random = new();
-        private readonly HUD hud;
         private int successChance;
         private PropState? successState;
         private int targetUnit;
@@ -43,6 +45,14 @@ namespace Remizione
             : base(hud.Game)
         {
             this.hud = hud;
+
+            // Bottom gradient
+            bottomGradient = new ImageSprite(hud.Game, Atlases.UI.BottomGradient)
+            {
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
+                Scale = new Vector2(1, 1.2f)
+            };
 
             // Amount text
             this.amountText = new TextSprite(Game, Fonts.CommonOutline)
@@ -96,6 +106,11 @@ namespace Remizione
         {
             if (IsVisible)
             {
+                // Gradient
+                Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+                bottomGradient.Draw(gameTime);
+                Game.SpriteBatch.End();
+
                 Game.SpriteBatch.Begin(Game.Camera);
                 amountText.Draw(gameTime);
 

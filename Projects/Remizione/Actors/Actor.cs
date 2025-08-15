@@ -626,10 +626,6 @@ namespace Remizione
         [ScriptProperty]
         public Sound? FootstepSound { get; set; }
 
-        // Gender
-        [ScriptProperty]
-        public Gender Gender { get; set; }
-
         // GetBloodSplashPosition
         public Vector2 GetBloodSplashPosition()
         {

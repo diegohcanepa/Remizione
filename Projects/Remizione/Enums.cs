@@ -14,9 +14,6 @@ namespace Remizione
     // AIStateName
     public enum AIStateName { Charge, CloseAttack, Decide, Move, Patrol, RangeAttack }
 
-    // AttackRollStat
-    public enum AttackRollStat { Strength, Dexterity }
-
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Videos, Voices, System, Text }
 
@@ -28,9 +25,6 @@ namespace Remizione
 
     // GameplayMode
     public enum GameplayMode { Adventure, Survival }
-
-    // Gender
-    public enum Gender { Male, Female }
 
     // HitTestSource
     public enum HitTestSource { Hotspot, Collider }
@@ -104,15 +98,6 @@ namespace Remizione
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }
-
-    // Stat
-    public enum Stat { Strength, Dexterity, Fortitude, Devotion, Mind, Charisma }
-
-    // StatModifier
-    public enum StatModifier { None, Strength, Dexterity, Fortitude, Devotion, Mind, Charisma }
-
-    // TerrainKind
-    public enum TerrainKind { None }
 
     // ThrowableBounceIntensity
     public enum ThrowableBounceIntensity { Low, Medium, High }

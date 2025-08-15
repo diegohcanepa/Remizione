@@ -80,7 +80,7 @@ namespace Remizione
             internal static Vector2 VeryLarge { get; } = new(.09f);
             internal static Vector2 ExtraLarge { get; } = new(.1f);
             internal static Vector2 Huge { get; } = new(.11f);
-            internal static Vector2 Giant { get; } = new(.13f);
+            internal static Vector2 Giant { get; } = new(.12f);
             internal static Vector2 Galactus { get; } = new(.18f);
         }
 

@@ -16,7 +16,6 @@ namespace Remizione
         private readonly UIPrompt prompt;
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
-        private readonly UIProgressMeter progressMeter;
         private readonly UITicketsMeter ticketsMeter;
 
         #endregion
@@ -31,7 +30,7 @@ namespace Remizione
 
             this.CountdownMeter = new(session);
             this.healthMeter = new(session.Game);
-            this.progressMeter = new(session);
+            this.ProgressMeter = new(session);
             this.ticketsMeter = new(session.Game);
 
             ChanceRoll = new(this);
@@ -83,10 +82,10 @@ namespace Remizione
                         ticketsMeter.Draw(gameTime);
                     }
 
-                    if (session.IsCountdownActive)
+                    if (session.CountdownVisible)
                         CountdownMeter.Draw(gameTime);
                     else if (session.Room is ProceduralRoom)
-                        progressMeter.Draw(gameTime);
+                        ProgressMeter.Draw(gameTime);
                 }
 
                 Log.Draw(gameTime);
@@ -114,7 +113,7 @@ namespace Remizione
             EquipmentSlot.Update(gameTime);
             TrincketSlot.Update(gameTime);
             healthMeter.Update(gameTime);
-            progressMeter.Update(gameTime);
+            ProgressMeter.Update(gameTime);
             ticketsMeter.Update(gameTime);
             ChanceRoll.Update(gameTime);
 
@@ -163,6 +162,9 @@ namespace Remizione
 
         // Message
         public HUDMessage Message { get; }
+
+        // ProgressMeter
+        public UIProgressMeter ProgressMeter { get; }
 
         // Reset
         public void Reset()

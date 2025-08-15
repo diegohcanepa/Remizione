@@ -101,9 +101,6 @@ namespace Remizione
         // Maximum
         public int Maximum { get; init; }
 
-        // Modifier
-        public StatModifier Modifier { get; init; }
-
         // Name
         public string Name { get; }
 

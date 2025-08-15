@@ -309,20 +309,19 @@ namespace Remizione
             }
         }
 
+        // OnContinuousUpdate
+        protected override void OnContinuousUpdate(GameTime gameTime)
+        {
+            base.OnContinuousUpdate(gameTime);
+            
+            if (GameplayMode == GameplayMode.Survival && Countdown >= 0)
+                Countdown -= gameTime.ElapsedGameTime.Milliseconds;
+        }
+
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-
-            if (GameplayMode == GameplayMode.Survival && Countdown >= 0)
-            {
-                Countdown -= gameTime.ElapsedGameTime.Milliseconds;
-
-                /*
-                if (Countdown <= 0)
-                    Game.SceneManager.Push(new GameOverScene(Game, GameOverReason.TimeOut));
-                */
-            }
 
             if (console != null)
             {
@@ -382,6 +381,10 @@ namespace Remizione
         [ScriptProperty]
         public int Countdown { get; set; } = -1;
 
+        // CountdownVisible
+        [ScriptProperty]
+        public bool CountdownVisible { get; set; }
+
         // ClearOverlayTexts
         [ScriptMethod(CodingContext.Any)]
         public void ClearOverlayTexts() => OverlayTexts.Clear();
@@ -431,8 +434,8 @@ namespace Remizione
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
 
-        // IsCountdownActive
-        public bool IsCountdownActive => Countdown.IsBetween(0, GameSettings.CountdownWarning) && GameplayMode == GameplayMode.Survival;
+        // IsCountdownCritical
+        public bool IsCountdownCritical => Countdown <= GameSettings.CountdownCritical;
 
         // IsHUDVisible
         [ScriptProperty]

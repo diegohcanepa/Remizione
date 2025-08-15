@@ -23,7 +23,7 @@ namespace Remizione.UI
             // Title
             this.title = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Orange,
+                Color = ColorPalette.Text.TerraDark,
                 PivotOrigin = RectanglePoint.Top,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Top),
                 Scale = ScaleInfo.Text.Large,
@@ -33,7 +33,7 @@ namespace Remizione.UI
             // Progress
             this.progress = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Orange,
+                Color = ColorPalette.Text.TerraDark,
                 PivotOrigin = RectanglePoint.Top,
                 Position = title.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2),
                 Scale = ScaleInfo.Text.VeryLarge,
