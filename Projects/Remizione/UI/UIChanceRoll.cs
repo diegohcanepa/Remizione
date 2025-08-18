@@ -202,7 +202,7 @@ namespace Remizione
                 if (item != null)
                 {
                     item.Use();
-                        
+
                     if (item.MetaItem.IsStackable)
                         hud.Log.Show(LogVerb.Lost, item.DisplayText, item.MetaItem.Image);
                 }

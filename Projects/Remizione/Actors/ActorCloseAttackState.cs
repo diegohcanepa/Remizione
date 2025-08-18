@@ -71,7 +71,7 @@ namespace Remizione
         {
             base.Enter();
             damageTaken = false;
-            Owner.FaceToTarget();
+            //Owner.FaceToTarget();
         }
 
         // MetaItem

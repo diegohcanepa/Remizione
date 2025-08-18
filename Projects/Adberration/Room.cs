@@ -115,11 +115,6 @@ namespace Adberration
             ResetAreas();
         }
 
-        // OnPrepare
-        protected virtual void OnPrepare()
-        {
-        }
-
         // OnUnload
         protected override void OnUnload()
         {
@@ -180,9 +175,6 @@ namespace Adberration
         #endregion
 
         #region Internal members
-
-        // Prepare
-        internal void Prepare() => OnPrepare();
 
         // RegisterRoutine
         internal void RegisterRoutine(Script routine)

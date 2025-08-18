@@ -75,7 +75,7 @@ namespace Remizione
         }
 
         // CollectPathNodes
-        void IHoleArea.CollectPathNodes(IList<PathNode> targetList)
+        void IHoleArea.CollectPathNodes(IList<PathNode> list)
         {
             InvalidateCollisionPolygons();
 
@@ -100,7 +100,7 @@ namespace Remizione
                 else
                     pathNodes[i].Position = holePolyInflated.Vertices[i];
 
-                targetList.Add(pathNodes[i]);
+                list.Add(pathNodes[i]);
             }
         }
 
@@ -302,11 +302,6 @@ namespace Remizione
         {
         }
 
-        // OnDamageReaction
-        protected virtual void OnDamageReaction(GameThing attacker)
-        {
-        }
-
         // OnDie
         protected virtual void OnDie()
         {
@@ -494,9 +489,7 @@ namespace Remizione
             if (HurtImpactSound != null)
                 PlaySound(HurtImpactSound);
 
-            OnDamageReaction(attacker);
-
-            if (HurtSound != null || HurtImpactSound != null)
+            if (DamageStyle == DamageStyle.Shake)
             {
                 hurtShakeTween ??= new();
                 hurtShakeTween.Start(TweenStyle.Linear, Vector2.Zero, HurtShake, 40, 4);
@@ -511,9 +504,6 @@ namespace Remizione
 
             if (MaxHealth == 0)
                 return;
-
-            if (CumulativeDamage > 0 && !PreventBlink)
-                blinker.Start(20, 4);
 
             if (CumulativeDamage > Health)
                 CumulativeDamage = Health;
@@ -546,6 +536,9 @@ namespace Remizione
                 hurtTween ??= new();
                 hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
 
+                if (DamageStyle == DamageStyle.Blink)
+                    blinker.Start(20, 4);
+
                 OnHurt(attacker, (int)CumulativeDamage, knockback);
             }
 
@@ -556,18 +549,12 @@ namespace Remizione
         [ScriptProperty]
         public Vector2 ApproachPosition { get; set; }
 
-        // AreHurtBoxesVisuallyOverlapping
-        public bool AreHurtBoxesVisuallyOverlapping(GameThing otherThing)
-        {
-            float diff = Math.Abs(Y - otherThing.Y);
-            if (diff > 3)
-                return false;
+        // AttackRange
+        [ScriptProperty]
+        public int AttackRange { get; set; } = -1;
 
-            return RuntimeHotspot.BoundingRectangleF.Intersects(otherThing.RuntimeHotspot.BoundingRectangleF);
-        }
-
-        // CanBeTargeted
-        public bool CanBeTargeted => !IsMoving && MaxHealth > 0 && !IsDead;
+        // BlinkingOn
+        public bool BlinkingOn => blinker.IsRunning && blinker.CurrentValue;
 
         // CanInteract
         public bool CanInteract(Actor requester)
@@ -669,6 +656,10 @@ namespace Remizione
         // ShowHotspots
         public static bool ShowHotspots { get; set; }
 #endif
+
+        // DamageStyle
+        [ScriptProperty]
+        public DamageStyle DamageStyle { get; set; }
 
         // DeathSound
         [ScriptProperty]
@@ -892,7 +883,8 @@ namespace Remizione
         }
 
         // HitTestSource
-        public HitTestSource HitTestSource { get; init; }
+        [ScriptProperty]
+        public HitTestSource HitTestSource { get; set; }
 
         // Hotspot
         [ScriptProperty]
@@ -946,8 +938,8 @@ namespace Remizione
                 return false;
         }
 
-        // IsBlinkingDamage
-        public bool IsBlinkingDamage => blinker.IsRunning && blinker.CurrentValue;
+        // IsBlinking
+        public bool IsBlinking => blinker.IsRunning;
 
         // IsDead
         public bool IsDead => Health <= 0 && MaxHealth > 0;
@@ -1006,10 +998,6 @@ namespace Remizione
         // PlacementPhase
         [ScriptProperty]
         public PlacementPhase PlacementPhase { get; set; }
-
-        // PreventBlink
-        [ScriptProperty]
-        public bool PreventBlink { get; set; }
 
         // PreventKnockback
         [ScriptProperty]
@@ -1113,6 +1101,7 @@ namespace Remizione
         public float ViewAngle { get; set; } = 90;
 
         // ViewDistance
+        [ScriptProperty]
         public float ViewDistance { get; set; }
 
         // WalkArea

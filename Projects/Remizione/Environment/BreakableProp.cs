@@ -16,6 +16,8 @@ namespace Remizione
         public BreakableProp(GameSession session, string name)
             : base(session, name)
         {
+            DamageStyle = DamageStyle.Shake;
+
             HurtShake = new(1.5f, 0);
 
             var index = 1;

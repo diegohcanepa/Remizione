@@ -866,7 +866,6 @@ namespace Adberration
                 ScriptProcessor.RunScript(script);
 
             nextRoom.Load();
-            nextRoom.Prepare();
 
             OnEnterRoom(nextRoom);
             OnEnterRoomCompleted(nextRoom);

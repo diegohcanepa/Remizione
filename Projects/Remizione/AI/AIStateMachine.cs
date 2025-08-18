@@ -11,13 +11,10 @@ namespace Remizione
         private readonly Dictionary<AIStateName, AIState> states = [];
 
         // Constructor
-        public AIStateMachine(Actor actor)
+        public AIStateMachine(Actor owner)
         {
-            this.Actor = actor;
+            this.Owner = owner;
         }
-
-        // Actor
-        public Actor Actor { get; }
 
         // ChangeState
         public void ChangeState(AIStateName newState)
@@ -30,8 +27,17 @@ namespace Remizione
         // CurrentState
         public AIState? CurrentState { get; private set; }
 
+        // Owner
+        public Actor Owner { get; }
+
         // RegisterState
-        public void RegisterState(AIState state) => states[state.Name] = state;
+        public void RegisterState(AIState state)
+        {
+            if (states.ContainsKey(state.Name))
+                throw new System.Exception($"State {state.Name} is already registered in the AIStateMachine.");
+
+            states[state.Name] = state;
+        }
 
         // Update
         public void Update(GameTime gameTime)

@@ -4,6 +4,7 @@
   <String Key="Actor.Dog">Dog</String>
   <String Key="Actor.Edmund">Edmund Idle</String>
   <String Key="Actor.Grandma">Sweet old lady</String>
+  <String Key="Actor.HellGoat">Hell goat</String>
   <String Key="Actor.Sister">Sister Ham</String>
   <String Key="ActorProperty.Grace.Description">The ashes quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Grace.Name">Grace</String>

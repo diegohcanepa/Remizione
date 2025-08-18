@@ -9,16 +9,19 @@ namespace Remizione
     public enum ActorSize { Small, Medium, Large }
 
     // Affinity
-    public enum Affinity { Good, Neutral, Evil }
+    public enum Affinity { Good, Evil }
 
     // AIStateName
-    public enum AIStateName { Charge, CloseAttack, Decide, Move, Patrol, RangeAttack }
+    public enum AIStateName { Attack, Charge, Chase, CloseAttack, Decide, Idle, Move, Patrol, RangeAttack }
 
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Videos, Voices, System, Text }
 
     // DamageKind
     public enum DamageKind { None, Physical, Fire, Cold, Lightning, Acid, Poison }
+
+    // DamageStyle
+    public enum DamageStyle { None, Shake, Blink, Animation }
 
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
@@ -63,7 +66,7 @@ namespace Remizione
     public enum MenuItemName { Options, Resume, Start, Exit, ExitToMainMenu, Yes, No, Cancel, Accept, Credits, WishlistNow, Memoirs }
 
     // Message
-    public enum Message { None, Critical, Miss, NoFaith, ThreatsNearby }
+    public enum Message { None }
 
     // MessageBoxOptions
     [Flags]

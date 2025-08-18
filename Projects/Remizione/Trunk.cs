@@ -11,6 +11,7 @@ namespace Remizione
         public Trunk(GameSession session, string name)
             : base(session, name)
         {
+            DamageStyle = DamageStyle.Shake;
         }
 
         #region Protected members
@@ -25,7 +26,7 @@ namespace Remizione
         protected override void OnPropStateChanged()
         {
             AnimationPlayer.Play(PropState == PropState.Open ? AnimationNames.Open : AnimationNames.Closed, false);
-            
+
             if (LoadState != LoadState.Loaded)
                 return;
 

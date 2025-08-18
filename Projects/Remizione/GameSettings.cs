@@ -16,12 +16,6 @@ namespace Remizione
         // ContentRootDirectory
         public const string ContentRootDirectory = "Content";
 
-        // CountdownCritical
-        public const int CountdownCritical = 10_000;
-
-        // CountdownWarning
-        public const int CountdownWarning = 30_000;
-
         // DefaultTransitionDuration
         public const int DefaultTransitionDuration = 500;
 
@@ -48,6 +42,12 @@ namespace Remizione
 
         // SteamAppID
         public const int SteamAppID = 480;
+
+        // TimeCritical
+        public const int TimeCritical = 10_000;
+
+        // TimeWarning
+        public const int TimeWarning = 30_000;
 
         // Title
         public const string Title = "Remizione";

@@ -152,7 +152,7 @@ namespace Remizione
             else
                 return string.Empty;
         }
-     
+
         // GetDisplayStat
         public string GetDisplayStat(ItemProperty property)
         {

@@ -18,6 +18,7 @@ namespace Adberration
         #region Private fields
 
         private string atlasFolder = string.Empty;
+        private bool firstUpdate;
         private bool isInitialized;
         private bool isUnloading;
         private readonly Script? loadScript;
@@ -273,6 +274,11 @@ namespace Adberration
         {
         }
 
+        // OnStart
+        protected virtual void OnStart()
+        {
+        }
+
         // OnTransform
         protected virtual void OnTransform(TransformChange change)
         {
@@ -286,6 +292,12 @@ namespace Adberration
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            if (firstUpdate)
+            {
+                firstUpdate = false;
+                OnStart();
+            }
+
             Sprite.Update(gameTime);
         }
 
@@ -549,6 +561,9 @@ namespace Adberration
         // Load
         public void Load()
         {
+            if (!IsReloading)
+                firstUpdate = true;
+
             if (LoadState == LoadState.Loaded)
                 return;
 

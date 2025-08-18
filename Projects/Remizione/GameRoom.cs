@@ -181,7 +181,7 @@ namespace Remizione
                 {
                     ShaderEffect? effect = null;
 
-                    if (thing.IsBlinkingDamage)
+                    if (thing.BlinkingOn)
                     {
                         if (thing != Session.Player)
                         {

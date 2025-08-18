@@ -12,10 +12,8 @@ namespace Remizione
         {
             this.StateMachine = stateMachine;
             this.Name = stateName;
+            stateMachine.RegisterState(this);
         }
-
-        // Actor
-        public Actor Actor => StateMachine.Actor;
 
         // Enter
         public virtual void Enter()
@@ -26,6 +24,9 @@ namespace Remizione
         public virtual void Exit()
         {
         }
+
+        // Owner
+        public Actor Owner => StateMachine.Owner;
 
         // StateMachine
         public AIStateMachine StateMachine { get; }

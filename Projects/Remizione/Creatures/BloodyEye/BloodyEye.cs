@@ -9,9 +9,7 @@
         public BloodyEye(GameSession session, string name)
             : base(session, name)
         {
-            AllowHeadAnimation = false;
-            AllowMoveTween = false;
-            AllowMoveBalancingTween = false;
+            AnimationSettings.SupressAll();
             CollisionDamage = DamageKind.Lightning;
             PreventKnockback = true;
         }
@@ -20,9 +18,6 @@
         protected override void OnLoad()
         {
             base.OnLoad();
-
-            AIStateMachine.RegisterState(new BloodyEyePatrolState(AIStateMachine));
-            AIStateMachine.ChangeState(AIStateName.Patrol);
         }
     }
 }

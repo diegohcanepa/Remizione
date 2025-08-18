@@ -18,8 +18,6 @@ namespace Remizione
         #region Private fields
 
         private readonly FloatTween accelerationFactorTween = new();
-        private MetaItem? closeAttackMetaItem;
-        private string closeAttackName = string.Empty;
         private readonly ActorCloseAttackState closeAttackState;
         private readonly ActorConsumeState consumeState;
         private FootstepEffect? footstepEffect;
@@ -267,13 +265,6 @@ namespace Remizione
                 PerformShockZap(thing);
         }
 
-        // OnDamageReaction
-        protected override void OnDamageReaction(GameThing attacker)
-        {
-            StopMoving();
-            FaceTo(attacker);
-        }
-
         // OnDie
         protected override void OnDie()
         {
@@ -307,7 +298,7 @@ namespace Remizione
 
             base.OnDraw(gameTime);
 
-            if (AllowHeadAnimation)
+            if (AnimationSettings.DetachedHead)
             {
                 if (StateMachine.CurrentState == standState && headSprite.Player.IsPlaying)
                 {
@@ -351,7 +342,10 @@ namespace Remizione
                     Session.ObjectPools.FloatingHearts.Get()?.Show(GetFloatingTextPosition(knockback), true);
             }
 
-            IsAlert = true;
+            LastKnownAttacker = attacker;
+            FaceTo(attacker);
+
+            Stand();
             StateMachine.ChangeState(ActorStateNames.Hurt);
         }
 
@@ -401,18 +395,15 @@ namespace Remizione
                 Inventory.Trinkets.SetSerializationData(trinketsData);
         }
 
-        // OnSelectTarget
-        protected virtual GameThing? OnSelectTarget() => session.Player;
-
         // OnStartMoving
         protected override void OnStartMoving()
         {
             StateMachine.ChangeState(ActorStateNames.Move);
 
-            if (AllowMoveTween)
+            if (AnimationSettings.MoveBounce)
                 moveVerticalTween.Start(TweenStyle.QuadraticInOut, 0, .8f, 100, -1);
 
-            if (AllowMoveBalancingTween)
+            if (AnimationSettings.MoveSway)
                 moveBalancingTween.Start(TweenStyle.QuadraticInOut, 0, .03f, FastMove ? 100 : 200, -1);
 
             accelerationFactorTween.Start(TweenStyle.Linear, .4f, 1, 150);
@@ -436,10 +427,8 @@ namespace Remizione
         // OnUnload
         protected override void OnUnload()
         {
-            IsAlert = false;
-
             InteractiveTarget = null;
-
+            LastKnownAttacker = null;
             base.OnUnload();
         }
 
@@ -462,7 +451,7 @@ namespace Remizione
             accelerationFactorTween.Update(gameTime);
             headTween.Update(gameTime);
 
-            if (AllowHeadAnimation)
+            if (AnimationSettings.DetachedHead)
                 headSprite.Update(gameTime);
 
             shadowSpot.Update(gameTime);
@@ -500,19 +489,13 @@ namespace Remizione
 
         // Affinity
         [ScriptProperty]
-        public Affinity Affinity { get; set; } = Affinity.Neutral;
+        public Affinity Affinity { get; set; }
 
-        // AllowHeadAnimation
-        [ScriptProperty]
-        public bool AllowHeadAnimation { get; set; } = true;
+        // AnimationSettings
+        public ActorAnimationSettings AnimationSettings { get; } = new();
 
-        // AllowMoveBalancingTween
-        [ScriptProperty]
-        public bool AllowMoveBalancingTween { get; set; } = true;
-
-        // AllowMoveTween
-        [ScriptProperty]
-        public bool AllowMoveTween { get; set; } = true;
+        // Animate
+        public SpriteAnimation? Animate(string animationName) => Animate(animationName, false, AnimationDirection.Forward, false);
 
         // Animate
         public SpriteAnimation? Animate(string animationName, bool loop, AnimationDirection direction, bool preserve)
@@ -526,10 +509,6 @@ namespace Remizione
 
             return result;
         }
-
-        // BloodSplashOrigin
-        [ScriptProperty]
-        public Vector2 BloodSplashOrigin { get; set; }
 
         // BodySize
         public ActorSize BodySize { get; set; } = ActorSize.Medium;
@@ -548,12 +527,9 @@ namespace Remizione
         }
 
         // CanSeeTarget
-        public bool CanSeeTarget()
+        public bool CanSeeTarget(GameThing target)
         {
-            if (Target == null)
-                return false;
-
-            Vector2 toTarget = Target.Position - Position;
+            Vector2 toTarget = target.Position - Position;
 
             if (ViewDistance > 0 && toTarget.Length() > ViewDistance)
                 return false;
@@ -584,29 +560,6 @@ namespace Remizione
             return false;
         }
 
-        // CloseAttackName
-        [ScriptProperty]
-        public string CloseAttackName
-        {
-            get => closeAttackName;
-            set
-            {
-                if (value != closeAttackName)
-                {
-                    closeAttackName = value;
-                    closeAttackMetaItem = MetaItem.Find(closeAttackName);
-                }
-            }
-        }
-
-        // FaceToTarget
-        [ScriptMethod]
-        public void FaceToTarget()
-        {
-            if (Target != null)
-                FaceTo(Target);
-        }
-
         // FastMove
         public bool FastMove { get; set; }
 
@@ -614,27 +567,12 @@ namespace Remizione
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public float FastMoveFactor { get; set; } = 1;
 
-        // Fatigue
-        public void Fatigue()
-        {
-            StopMoving();
-            IsAlert = false;
-            StateMachine.ChangeState(ActorStateNames.Fatigue);
-        }
+        // FindEnemy
+        public virtual GameThing? FindEnemy() => LastKnownAttacker;
 
         // FootstepSound
         [ScriptProperty]
         public Sound? FootstepSound { get; set; }
-
-        // GetBloodSplashPosition
-        public Vector2 GetBloodSplashPosition()
-        {
-            // Origin
-            if (BloodSplashOrigin == Vector2.Zero)
-                return Vector2.Zero;
-            else
-                return this.GetAbsolutePoint(BloodSplashOrigin);
-        }
 
         // Guts
         [ScriptProperty]
@@ -704,17 +642,11 @@ namespace Remizione
         // InventorySelectedItemName
         public string InventorySelectedItemName { get; set; } = string.Empty;
 
-        // IsAlert
-        public bool IsAlert { get; set; }
-
         // IsAttacking
         public bool IsAttacking => StateMachine.CurrentState is ActorCloseAttackState;
 
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }
-
-        // IsInteractiveTarget
-        public bool IsInteractiveTarget => session.Player?.InteractiveTarget == this;
 
         // IsPickingUp
         public bool IsPickingUp => StateMachine.CurrentState is ActorPickUpState;
@@ -727,6 +659,9 @@ namespace Remizione
 
         // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;
+
+        // LastKnownAttacker
+        public GameThing? LastKnownAttacker { get; set; }
 
         // MoveTo
         public override bool MoveTo(Vector2 destination)
@@ -778,20 +713,6 @@ namespace Remizione
             return true;
         }
 
-        // PerformCloseAttack
-        public bool PerformCloseAttack()
-        {
-            if (CanChangeState && closeAttackMetaItem != null)
-            {
-                Stand();
-                closeAttackState.MetaItem = closeAttackMetaItem;
-                StateMachine.ChangeState(ActorStateNames.CloseAttack);
-                return true;
-            }
-
-            return false;
-        }
-
         // PickUp
         public void PickUp(Pickup pickup, MetaItem? metaItem)
         {
@@ -825,13 +746,6 @@ namespace Remizione
         {
             speechBubble ??= new SpeechBubble(this);
             speechBubble.Show(DisplayName, text, awaitInput);
-        }
-
-        // SelectTarget
-        public void SelectTarget()
-        {
-            if (!IsPlayer)
-                Target = OnSelectTarget();
         }
 
         // ShadowOffset
@@ -872,7 +786,7 @@ namespace Remizione
         // StartTalking
         public void StartTalking()
         {
-            if (AllowHeadAnimation)
+            if (AnimationSettings.DetachedHead)
                 headSprite.Player.Play(ActorStateNames.Talk, true);
             else
                 Animate("Talk", true, AnimationDirection.Forward, false);
@@ -881,7 +795,7 @@ namespace Remizione
         // StopTalking
         public void StopTalking()
         {
-            if (AllowHeadAnimation)
+            if (AnimationSettings.DetachedHead)
                 headSprite.Player.Play(StateMachine.CurrentState.Name, true);
             else
                 Stand(true);
@@ -894,9 +808,6 @@ namespace Remizione
             suspendInteractionCooldown = duration;
             InteractiveTarget = null;
         }
-
-        // Target
-        public GameThing? Target { get; private set; }
 
         // UseSelectedItem
         public void UseSelectedItem()
@@ -927,6 +838,27 @@ namespace Remizione
             protected override void OnStateChanged()
             {
                 Owner.SyncHeadAnimation();
+            }
+        }
+
+        // ActorAnimationSettings
+        public sealed class ActorAnimationSettings
+        {
+            // DetachedHead
+            public bool DetachedHead { get; set; } = true;
+
+            // MoveBounce
+            public bool MoveBounce { get; set; } = true;
+
+            // MoveSway
+            public bool MoveSway { get; set; } = true;
+
+            // SupressAll
+            public void SupressAll()
+            {
+                DetachedHead = false;
+                MoveBounce = false;
+                MoveSway = false;
             }
         }
     }

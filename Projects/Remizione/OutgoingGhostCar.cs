@@ -18,6 +18,8 @@ namespace Remizione
         public OutgoingGhostCar(GameSession session, string name)
             : base(session, name)
         {
+            DamageStyle = DamageStyle.Shake;
+
             this.frontLight = new Light(session.Game, "<rear>")
             {
                 Color = Color.Green,

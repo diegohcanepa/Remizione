@@ -3,7 +3,6 @@ using Adberration.Scripting;
 using Adberration.Scripting.Core;
 using Engendro;
 using Microsoft.Xna.Framework;
-using Remizione.Creatures;
 using Remizione.Scripting;
 using System;
 using System.Collections.Generic;
@@ -105,6 +104,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(BreakableProp));
             scriptRegistry.RegisterEntity(typeof(CreditsRoom));
             scriptRegistry.RegisterEntity(typeof(GameRoom));
+            scriptRegistry.RegisterEntity(typeof(HellGoat));
             scriptRegistry.RegisterEntity(typeof(IsometricProp));
             scriptRegistry.RegisterEntity(typeof(LootBag));
             scriptRegistry.RegisterEntity(typeof(OcculusMinion));
@@ -116,9 +116,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(Prop));
             scriptRegistry.RegisterEntity(typeof(RoomConnector));
             scriptRegistry.RegisterEntity(typeof(Trunk));
-            scriptRegistry.RegisterEntity(typeof(Unredeemed));
             scriptRegistry.RegisterEntity(typeof(WaterPuddle));
-            scriptRegistry.RegisterEntity(typeof(Zabul));
 
             scriptRegistry.RegisterStatement("add-dialog-option", typeof(AddDialogOptionCommand));
             scriptRegistry.RegisterStatement("add-hole", typeof(AddHoleCommand), CodingContext.EntityDeclaration);
@@ -222,10 +220,6 @@ namespace Remizione
             if (sessionNode == null || sessionNode.Attributes == null)
                 throw new InvalidOperationException("Session node attributes not found");
 
-            // Countdown
-            if (sessionNode.Attributes[nameof(Countdown)]?.Value is string countdown)
-                this.Countdown = XmlConvert.ToInt32(countdown);
-
             // GameplayMode
             if (sessionNode.Attributes[nameof(GameplayMode)]?.Value is string gameplayMode)
                 GameplayMode = Enum.Parse<GameplayMode>(gameplayMode);
@@ -313,7 +307,7 @@ namespace Remizione
         protected override void OnContinuousUpdate(GameTime gameTime)
         {
             base.OnContinuousUpdate(gameTime);
-            
+
             if (GameplayMode == GameplayMode.Survival && Countdown >= 0)
                 Countdown -= gameTime.ElapsedGameTime.Milliseconds;
         }
@@ -341,9 +335,6 @@ namespace Remizione
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
-            // Countdown
-            output.WriteAttributeString(nameof(Countdown), XmlConvert.ToString(Countdown));
-
             // GameplayMode
             output.WriteAttributeString(nameof(GameplayMode), XmlConvert.ToString((int)GameplayMode));
 
@@ -379,7 +370,7 @@ namespace Remizione
 
         // Countdown
         [ScriptProperty]
-        public int Countdown { get; set; } = -1;
+        public int Countdown { get; set; } = int.MaxValue;
 
         // ClearOverlayTexts
         [ScriptMethod(CodingContext.Any)]
@@ -431,7 +422,7 @@ namespace Remizione
         public bool IsConsoleVisible => console?.IsActive ?? false;
 
         // IsCountdownCritical
-        public bool IsCountdownCritical => Countdown <= GameSettings.CountdownCritical;
+        public bool IsCountdownCritical => Countdown <= GameSettings.TimeCritical;
 
         // IsHUDVisible
         [ScriptProperty]

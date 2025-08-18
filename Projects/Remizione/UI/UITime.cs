@@ -57,7 +57,7 @@ namespace Remizione.UI
         {
             if (lastKnownValue != session.Countdown)
             {
-                if (alarmSound == null && session.Countdown < GameSettings.CountdownCritical)
+                if (alarmSound == null && session.Countdown < GameSettings.TimeCritical)
                 {
                     alarmSound = Sound.Play(SoundNames.ExitAlarm, true);
                     scaleTween.Start(TweenStyle.QuadraticInOut, ScaleInfo.Text.Giant, ScaleInfo.Text.Giant * 1.04f, 300, -1);
@@ -68,10 +68,13 @@ namespace Remizione.UI
                 var t = TimeSpan.FromMilliseconds(session.Countdown);
                 text.Text = string.Format("{0:D2}:{1:D2}", (int)t.TotalMinutes, t.Seconds);
 
-                if (lastKnownValue <= GameSettings.CountdownCritical)
+                if (lastKnownValue <= GameSettings.TimeCritical)
                     text.Color = ColorPalette.Text.Red;
-                else if (lastKnownValue <= GameSettings.CountdownWarning)
+                else if (lastKnownValue <= GameSettings.TimeWarning)
+                {
                     text.Color = ColorPalette.Text.Highlight;
+                    session.TimeVisible = true;
+                }
                 else
                     text.Color = ColorPalette.Text.Default;
             }

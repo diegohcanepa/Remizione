@@ -18,7 +18,6 @@ namespace Remizione
             HurtSound = Sound.Find(SoundNames.ImpactA);
             LootTableName = nameof(Pottery);
             MaxHealth = 6;
-            PreventBlink = true;
             PreventKnockback = true;
         }
     }
