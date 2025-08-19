@@ -261,7 +261,7 @@ namespace Remizione
         // OnCollision
         protected override void OnCollision(GameThing thing)
         {
-            if (thing.CollisionDamage == DamageKind.Lightning)
+            if (thing is Actor)
                 PerformShockZap(thing);
         }
 
@@ -560,6 +560,10 @@ namespace Remizione
             return false;
         }
 
+        // EnergyReward
+        [ScriptProperty]
+        public int EnergyReward { get; set; }
+
         // FastMove
         public bool FastMove { get; set; }
 
@@ -573,6 +577,10 @@ namespace Remizione
         // FootstepSound
         [ScriptProperty]
         public Sound? FootstepSound { get; set; }
+
+        // GoldenTickets
+        [ScriptProperty]
+        public int GoldenTickets { get; set; }
 
         // Guts
         [ScriptProperty]
@@ -741,6 +749,10 @@ namespace Remizione
             }
         }
 
+        // RedTickets
+        [ScriptProperty]
+        public int RedTickets { get; set; }
+
         // Say
         public void Say(string text, bool awaitInput)
         {
@@ -823,6 +835,10 @@ namespace Remizione
                     PerformConsumeAction();
             }
         }
+
+        // WhiteTickets
+        [ScriptProperty]
+        public int WhiteTickets { get; set; }
 
         // WhooshSound
         [ScriptProperty]

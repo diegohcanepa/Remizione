@@ -180,6 +180,7 @@ namespace Remizione
         {
             if (room is GameRoom gameRoom)
             {
+                RemainingTime = GameSettings.CountdownMaximum;
                 player?.Inventory.NotifyRoomChanged();
                 Environment.EnterRoom(gameRoom);
             }
@@ -224,9 +225,9 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(GameplayMode)]?.Value is string gameplayMode)
                 GameplayMode = Enum.Parse<GameplayMode>(gameplayMode);
 
-            // Level
-            if (sessionNode.Attributes[nameof(Level)]?.Value is string level)
-                this.Level = XmlConvert.ToInt32(level);
+            // Stage
+            if (sessionNode.Attributes[nameof(Stage)]?.Value is string stage)
+                this.Stage = XmlConvert.ToInt32(stage);
 
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
@@ -308,8 +309,8 @@ namespace Remizione
         {
             base.OnContinuousUpdate(gameTime);
 
-            if (GameplayMode == GameplayMode.Survival && Countdown >= 0)
-                Countdown -= gameTime.ElapsedGameTime.Milliseconds;
+            if (GameplayMode == GameplayMode.Survival && RemainingTime >= 0)
+                RemainingTime -= gameTime.ElapsedGameTime.Milliseconds;
         }
 
         // OnUpdate
@@ -338,8 +339,8 @@ namespace Remizione
             // GameplayMode
             output.WriteAttributeString(nameof(GameplayMode), XmlConvert.ToString((int)GameplayMode));
 
-            // Level
-            output.WriteAttributeString(nameof(Level), XmlConvert.ToString(Level));
+            // Stage
+            output.WriteAttributeString(nameof(Stage), XmlConvert.ToString(Stage));
 
             // NextRainCooldown
             output.WriteAttributeString(nameof(NextRainCooldown), XmlConvert.ToString(NextRainCooldown));
@@ -368,10 +369,6 @@ namespace Remizione
         [ScriptProperty]
         public bool ChanceSuccess => HUD.ChanceRoll.Success;
 
-        // Countdown
-        [ScriptProperty]
-        public int Countdown { get; set; } = int.MaxValue;
-
         // ClearOverlayTexts
         [ScriptMethod(CodingContext.Any)]
         public void ClearOverlayTexts() => OverlayTexts.Clear();
@@ -379,6 +376,10 @@ namespace Remizione
         // DialogOptionId
         [ScriptProperty]
         public int DialogOptionId { get; set; }
+
+        // Energy
+        [ScriptProperty]
+        public int Energy { get; set; }
 
         // Environment
         public Environment Environment { get; }
@@ -421,29 +422,22 @@ namespace Remizione
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
 
-        // IsCountdownCritical
-        public bool IsCountdownCritical => Countdown <= GameSettings.TimeCritical;
-
         // IsHUDVisible
         [ScriptProperty]
         public bool IsHUDVisible { get; set; } = true;
 
-        // Level
-        [ScriptProperty]
-        public int Level { get; private set; }
+        // IsTimeCritical
+        public bool IsTimeCritical => RemainingTime <= GameSettings.TimeCritical;
 
         // LightingSystem
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;
 
-        // NextLevel
+        // NextStage
         [ScriptMethod]
-        public void NextLevel()
+        public void NextStage()
         {
-            TimeVisible = false;
-            Countdown = Randomizer.Next(GameSettings.CountdownMinimum, GameSettings.CountdownMaximum);
-            HUD.Time.StopAlarm();
-            Level++;
+            Stage++;
         }
 
         // NextRainCooldown
@@ -492,6 +486,14 @@ namespace Remizione
             friendlyItems[staticName] = metaItems;
         }
 
+        // RemainingTime
+        [ScriptProperty]
+        public int RemainingTime { get; set; } = int.MaxValue;
+
+        // RequiredEnergy
+        [ScriptProperty]
+        public int RequiredEnergy { get; set; } = 50;
+
         // Room
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
@@ -517,12 +519,12 @@ namespace Remizione
             Game.SceneManager.Push(echoScene);
         }
 
+        // Stage
+        [ScriptProperty]
+        public int Stage { get; private set; }
+
         // StaticThings
         public ReadOnlyCollection<GameThing> StaticThings { get; }
-
-        // TimeVisible
-        [ScriptProperty]
-        public bool TimeVisible { get; set; }
 
         // WorldVersion
         public int WorldVersion { get; set; } = 1;

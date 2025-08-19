@@ -206,6 +206,12 @@ namespace Engendro
             return GetImageCore(imageName, null, string.Empty);
         }
 
+        // GetImageNoNull
+        public AtlasImage GetImageNotNull(string imageName)
+        {
+            return GetImageCore(imageName, null, string.Empty) ?? throw new KeyNotFoundException($"Image '{imageName}' not found in atlas '{Name}'.");
+        }
+
         // GetInstance
         public static Atlas? GetInstance(string name)
         {

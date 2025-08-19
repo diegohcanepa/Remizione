@@ -26,6 +26,9 @@ namespace Remizione
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
 
+    // GameMeterUnit
+    public enum GameMeterUnit { Time, Energy, Stage }
+
     // GameplayMode
     public enum GameplayMode { Adventure, Survival }
 

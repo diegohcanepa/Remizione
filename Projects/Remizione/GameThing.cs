@@ -165,14 +165,6 @@ namespace Remizione
                 PlaySound(DeathSound);
 
             OnDie();
-
-            if (Session.Player != null && Session.Player != this)
-            {
-                Session.Player.RedTickets += RedTickets;
-                Session.Player.GoldenTickets += GoldenTickets;
-                Session.Player.WhiteTickets += WhiteTickets;
-            }
-
             DropLootBag();
         }
 
@@ -489,10 +481,13 @@ namespace Remizione
             if (HurtImpactSound != null)
                 PlaySound(HurtImpactSound);
 
-            if (DamageStyle == DamageStyle.Shake)
+            if (DamageStyle != DamageStyle.None)
             {
-                hurtShakeTween ??= new();
-                hurtShakeTween.Start(TweenStyle.Linear, Vector2.Zero, HurtShake, 40, 4);
+                if (DamageStyle == DamageStyle.Shake)
+                {
+                    hurtShakeTween ??= new();
+                    hurtShakeTween.Start(TweenStyle.Linear, Vector2.Zero, HurtShake, 40, 4);
+                }
 
                 // Impact word
                 if (impactWordKind != ImpactWordKind.None && GetImpactWordPosition() is Vector2 wordPos)
@@ -617,10 +612,6 @@ namespace Remizione
             if (CanCheckCollisions())
                 CheckCollisions();
         }
-
-        // CollisionDamage
-        [ScriptProperty]
-        public DamageKind CollisionDamage { get; set; }
 
         // CollisionDetection
         [ScriptProperty]
@@ -846,10 +837,6 @@ namespace Remizione
         // GetThrowableSpawnPosition
         public Vector2 GetThrowableSpawnPosition() => this.GetAbsolutePoint(ThrowableSpawnPosition);
 
-        // GoldenTickets
-        [ScriptProperty]
-        public int GoldenTickets { get; set; }
-
         // HasFriendlyItems
         [ScriptProperty]
         public bool HasFriendlyItems => Session.HasFriendlyItems(StaticName);
@@ -1003,10 +990,6 @@ namespace Remizione
         [ScriptProperty]
         public bool PreventKnockback { get; set; }
 
-        // RedTickets
-        [ScriptProperty]
-        public int RedTickets { get; set; }
-
         // RenderLayer
         [ScriptProperty]
         public RenderLayer RenderLayer
@@ -1121,10 +1104,6 @@ namespace Remizione
                 }
             }
         }
-
-        // WhiteTickets
-        [ScriptProperty]
-        public int WhiteTickets { get; set; }
 
         // WorldVersion
         [ScriptProperty]

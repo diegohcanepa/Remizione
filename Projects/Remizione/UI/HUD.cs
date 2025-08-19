@@ -16,7 +16,6 @@ namespace Remizione
         private readonly UIPrompt prompt;
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
-        private readonly UITicketsMeter ticketsMeter;
 
         #endregion
 
@@ -28,12 +27,24 @@ namespace Remizione
         {
             this.session = session;
 
-            this.Time = new(session);
-            this.healthMeter = new(session.Game);
-            this.ProgressMeter = new(session);
-            this.ticketsMeter = new(session.Game);
+            this.StageMeter = new(session, GameMeterUnit.Stage)
+            {
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -2, -1),
+            };
 
-            ChanceRoll = new(this);
+            this.TimeMeter = new(session, GameMeterUnit.Time)
+            {
+                Position = StageMeter.BoundingBox.GetPoint(RectanglePoint.LeftTop, -2, 0),
+            };
+
+            this.EnergyMeter = new(session, GameMeterUnit.Energy)
+            {
+                Position = TimeMeter.BoundingBox.GetPoint(RectanglePoint.LeftTop, -2, 0),
+            };
+
+            this.healthMeter = new(session.Game);
+
+            this.ChanceRoll = new(this);
             this.Log = new(Game);
             this.Message = new(Game);
 
@@ -65,9 +76,9 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (session.IsHUDVisible && session.GameplayMode == GameplayMode.Survival)
+            if (session.IsHUDVisible)
             {
-                if (session.GameplayMode == GameplayMode.Survival)
+                //if (session.GameplayMode == GameplayMode.Survival)
                 {
                     if (!session.IsConsoleVisible)
                     {
@@ -75,17 +86,14 @@ namespace Remizione
                         EquipmentSlot.Draw(gameTime);
                     }
 
-                    if (session.Room is ProceduralRoom)
+                    //if (session.Room is ProceduralRoom)
                     {
                         TrincketSlot.Draw(gameTime);
                         healthMeter.Draw(gameTime);
-                        ticketsMeter.Draw(gameTime);
+                        StageMeter.Draw(gameTime);
+                        TimeMeter.Draw(gameTime);
+                        EnergyMeter.Draw(gameTime);
                     }
-
-                    if (session.TimeVisible)
-                        Time.Draw(gameTime);
-                    else if (session.Room is ProceduralRoom)
-                        ProgressMeter.Draw(gameTime);
                 }
 
                 Log.Draw(gameTime);
@@ -108,13 +116,13 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            Time.Update(gameTime);
+            EnergyMeter.Update(gameTime);
+            TimeMeter.Update(gameTime);
             BagSlot.Update(gameTime);
             EquipmentSlot.Update(gameTime);
             TrincketSlot.Update(gameTime);
             healthMeter.Update(gameTime);
-            ProgressMeter.Update(gameTime);
-            ticketsMeter.Update(gameTime);
+            StageMeter.Update(gameTime);
             ChanceRoll.Update(gameTime);
 
             prompt.Update(gameTime);
@@ -135,6 +143,9 @@ namespace Remizione
 
         // EquipmentSlot
         public EquipmentSlot EquipmentSlot { get; }
+
+        // EnergyMeter
+        public UIGameMeter EnergyMeter { get; }
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
@@ -160,9 +171,6 @@ namespace Remizione
         // Message
         public HUDMessage Message { get; }
 
-        // ProgressMeter
-        public UIProgressMeter ProgressMeter { get; }
-
         // Reset
         public void Reset()
         {
@@ -170,7 +178,6 @@ namespace Remizione
             BagSlot.Actor = session.Player;
             EquipmentSlot.Actor = session.Player;
             TrincketSlot.Actor = session.Player;
-            ticketsMeter.Actor = session.Player;
         }
 
         // ShowSavingIcon
@@ -179,8 +186,11 @@ namespace Remizione
             savingIcon.Tweens.OpacityTween = FloatTween.Create(TweenStyle.QuadraticInOut, 1, .8f, 300, 10);
         }
 
-        // Time
-        public UITime Time { get; }
+        // StageMeter
+        public UIGameMeter StageMeter { get; }
+
+        // TimeMeter
+        public UIGameMeter TimeMeter { get; }
 
         // TrincketSlot
         public TrinketSlot TrincketSlot { get; }

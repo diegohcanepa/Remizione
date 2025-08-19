@@ -35,7 +35,7 @@ namespace Remizione
         {
             LightingSystem = true;
 
-            this.randomSeed = GetSeed(Session.RandomSeed, Session.Level);
+            this.randomSeed = GetSeed(Session.RandomSeed, Session.Stage);
             this.random = new Random(randomSeed);
             this.terrainBlock = new ImageSprite(session.Game);
         }

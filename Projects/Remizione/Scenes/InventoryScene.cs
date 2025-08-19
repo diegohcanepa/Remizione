@@ -42,7 +42,6 @@ namespace Remizione
         private readonly ImageSprite navigationBar;
         private readonly UITextButton nextCategoryButton;
         private readonly UITextButton previousCategoryButton;
-        private readonly UITicketsMeter ticketsMeter;
         private readonly TrinketSlot trinketSlot;
 
         #endregion
@@ -65,12 +64,6 @@ namespace Remizione
 
             // Trinket slot
             this.trinketSlot = new(Game)
-            {
-                Actor = owner,
-            };
-
-            // Tickets meter
-            this.ticketsMeter = new(Game)
             {
                 Actor = owner,
             };
@@ -447,7 +440,6 @@ namespace Remizione
             {
                 trinketSlot.Draw(gameTime);
                 healthMeter.Draw(gameTime);
-                ticketsMeter.Draw(gameTime);
             }
 
             // Containers
@@ -505,10 +497,11 @@ namespace Remizione
 
             Game.SpriteBatch.End();
 
-            if (Owner.Session.TimeVisible)
-                Owner.Session.HUD.Time.Draw(gameTime);
-            else if (Owner.Session.Room is ProceduralRoom)
-                Owner.Session.HUD.ProgressMeter.Draw(gameTime);
+            if (Owner.Session.Room is ProceduralRoom)
+            {
+                Owner.Session.HUD.TimeMeter.Draw(gameTime);
+                Owner.Session.HUD.EnergyMeter.Draw(gameTime);
+            }
 
             if (heartBonus.Value != null)
                 heartBonus.Draw(gameTime);
@@ -683,7 +676,6 @@ namespace Remizione
             gridContainer.Update(gameTime);
             trinketSlot.Update(gameTime);
             healthMeter.Update(gameTime);
-            ticketsMeter.Update(gameTime);
             itemName.Update(gameTime);
             itemDescription.Update(gameTime);
             nextCategoryButton.Update(gameTime);
@@ -692,8 +684,8 @@ namespace Remizione
             if (lastKnownInput != InputManager.DefaultPlayer.LastInputMethod)
                 lastKnownInput = InputManager.DefaultPlayer.LastInputMethod;
 
-            Owner.Session.HUD.Time.Update(gameTime);
-            Owner.Session.HUD.ProgressMeter.Update(gameTime);
+            Owner.Session.HUD.TimeMeter.Update(gameTime);
+            Owner.Session.HUD.StageMeter.Update(gameTime);
         }
 
         #endregion

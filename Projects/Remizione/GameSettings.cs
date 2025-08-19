@@ -28,9 +28,6 @@ namespace Remizione
         // CountdownMaximum
         public const int CountdownMaximum = 120_000;
 
-        // CountdownMinimum
-        public const int CountdownMinimum = 60_000;
-
         // MaximumLevel
         public const int MaximumLevel = 100;
 

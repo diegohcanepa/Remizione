@@ -10,7 +10,6 @@
             : base(session, name)
         {
             AnimationSettings.SupressAll();
-            CollisionDamage = DamageKind.Lightning;
             PreventKnockback = true;
         }
 

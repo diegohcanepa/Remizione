@@ -34,7 +34,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-            if (Session.IsCountdownCritical && !isOpened)
+            if (Session.IsTimeCritical && !isOpened)
                 Open();
         }
 
@@ -50,7 +50,7 @@ namespace Remizione
 
         // IsOpen
         [ScriptProperty]
-        public bool IsOpen => Session.IsCountdownCritical || isOpened;
+        public bool IsOpen => Session.IsTimeCritical || isOpened;
 
         // Open
         [ScriptMethod]

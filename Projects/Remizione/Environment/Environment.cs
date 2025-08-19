@@ -41,7 +41,7 @@ namespace Remizione
         {
             if (session.GameplayMode == GameplayMode.Survival && session.Room is ProceduralRoom)
             {
-                if (session.Countdown <= GameSettings.TimeCritical && !alarmTween.IsRunning)
+                if (session.RemainingTime <= GameSettings.TimeCritical && !alarmTween.IsRunning)
                     alarmTween.Start(TweenStyle.QuadraticInOut, ColorPalette.GlobalLight.Default, ColorPalette.GlobalLight.Critical, 400, -1);
 
                 Lightning.Update(gameTime);

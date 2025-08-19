@@ -12,7 +12,6 @@ namespace Remizione
             : base(session, name)
         {
             AnimationSettings.SupressAll();
-            CollisionDamage = DamageKind.Lightning;
             DamageStyle = DamageStyle.Blink;
             FastMoveFactor = 3;
             ShadowSpotSize = 0;

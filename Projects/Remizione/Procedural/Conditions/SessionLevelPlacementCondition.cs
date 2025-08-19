@@ -17,7 +17,7 @@ namespace Remizione
         // IsAvailable
         public override bool IsAvailable(GameThing thing, Random random)
         {
-            return Range.Contains(thing.Session.Level);
+            return Range.Contains(thing.Session.Stage);
         }
 
         // Range

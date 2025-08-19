@@ -267,6 +267,7 @@
                 <false/>
             </struct>
             <key type="filename">Inventory-assets/InventorySlotLockIcon.png</key>
+            <key type="filename">UI-assets/EnergyIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -302,6 +303,7 @@
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryTraits.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryTrinkets.png</key>
             <key type="filename">UI-assets/ProhibitionMark.png</key>
+            <key type="filename">UI-assets/TimeIcon.png</key>
             <key type="filename">UIIcons-assets/HeartIconWithShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -336,11 +338,14 @@
             <key type="filename">Items-assets/Chili.png</key>
             <key type="filename">Items-assets/Cross.png</key>
             <key type="filename">Items-assets/Duck.png</key>
+            <key type="filename">Items-assets/GoldenTicket.png</key>
             <key type="filename">Items-assets/MasterLockpick.png</key>
             <key type="filename">Items-assets/MissingItem.png</key>
+            <key type="filename">Items-assets/RedTicket.png</key>
             <key type="filename">Items-assets/RottenApple.png</key>
             <key type="filename">Items-assets/RustyLockpick.png</key>
             <key type="filename">Items-assets/SteelLockpick.png</key>
+            <key type="filename">Items-assets/WhiteTicket.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -475,21 +480,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UI-assets/CloseWindowButton.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,5,6</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,5,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">UI-assets/ContextMenuOptionSelector.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -547,6 +537,21 @@
                 <rect>1,1,2,2</rect>
                 <key>scale9Paddings</key>
                 <rect>1,1,2,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UI-assets/GameMeterContainer.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,4,23,8</rect>
+                <key>scale9Paddings</key>
+                <rect>11,4,23,8</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -668,6 +673,21 @@
                 <rect>1,1,3,1</rect>
                 <key>scale9Paddings</key>
                 <rect>1,1,3,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UI-assets/StageIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,3,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,3,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
