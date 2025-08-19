@@ -164,6 +164,15 @@ namespace Remizione
             if (DeathSound != null)
                 PlaySound(DeathSound);
 
+            if (Room != null)
+            {
+                for (var i = 0; i < Energy; i++)
+                {
+                    var orb = Session.ObjectPools.EnergyOrbs.Get();
+                    orb.Launch(Room, Position, BoundingBox);
+                }
+            }
+
             OnDie();
             DropLootBag();
         }
@@ -695,6 +704,10 @@ namespace Remizione
             if (!IsDead)
                 OnDrawShadow(gameTime);
         }
+
+        // Energy
+        [ScriptProperty]
+        public int Energy { get; set; }
 
         // FaceTo
         public void FaceTo(GameThing thing)

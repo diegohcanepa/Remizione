@@ -267,7 +267,6 @@
                 <false/>
             </struct>
             <key type="filename">Inventory-assets/InventorySlotLockIcon.png</key>
-            <key type="filename">UI-assets/EnergyIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -303,7 +302,6 @@
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryTraits.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryTrinkets.png</key>
             <key type="filename">UI-assets/ProhibitionMark.png</key>
-            <key type="filename">UI-assets/TimeIcon.png</key>
             <key type="filename">UIIcons-assets/HeartIconWithShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -549,9 +547,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>11,4,23,8</rect>
+                <rect>15,5,31,9</rect>
                 <key>scale9Paddings</key>
-                <rect>11,4,23,8</rect>
+                <rect>15,5,31,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -676,21 +674,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UI-assets/StageIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,3,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,3,5,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">UI-assets/TipBalloon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -737,21 +720,6 @@
                 <rect>0,3,1,5</rect>
                 <key>scale9Paddings</key>
                 <rect>0,3,1,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UIIcons-assets/ClockIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,7,7</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,7,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

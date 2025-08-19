@@ -195,17 +195,20 @@ namespace Remizione
             if (mainGrid == null || decorationGrid == null)
                 return;
 
-            var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
             var instance = CreateRuntimeCloneCore(thing.StaticName);
             instance.Position = ProceduralRoomGrid.GetPosition(col, row);
             instance.Y += instance.BoundingBox.Height;
             instance.X += instance.BoundingBox.Width / 2;
             Children.Add(instance);
+
+            RequiredEnergy += thing.Energy; 
         }
 
         // Populate
         private void Populate()
         {
+            RequiredEnergy = 0;
+
             // Entrance rail
             if (Session.GetEntity<GameThing>("EntranceRail") is GameThing entranceRail)
             {
@@ -409,12 +412,15 @@ namespace Remizione
             return result;
         }
 
+        // RequiredEnergy
+        public int RequiredEnergy { get; private set; }
+
         // TerrainColRange
         [ScriptProperty(CodingContext.Declaration)]
-        public Int32Range TerrainColRange { get; set; } = new(2, 4);
+        public Int32Range TerrainColRange { get; set; } = new(2, 3);
 
         // TerrainRowRange
         [ScriptProperty(CodingContext.Declaration)]
-        public Int32Range TerrainRowRange { get; set; } = new(1, 3);
+        public Int32Range TerrainRowRange { get; set; } = new(1, 2);
     }
 }

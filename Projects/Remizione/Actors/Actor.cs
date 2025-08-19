@@ -20,7 +20,7 @@ namespace Remizione
         private readonly FloatTween accelerationFactorTween = new();
         private readonly ActorCloseAttackState closeAttackState;
         private readonly ActorConsumeState consumeState;
-        private FootstepEffect? footstepEffect;
+        private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
         private readonly FloatTween headTween = new();
@@ -559,10 +559,6 @@ namespace Remizione
 
             return false;
         }
-
-        // EnergyReward
-        [ScriptProperty]
-        public int EnergyReward { get; set; }
 
         // FastMove
         public bool FastMove { get; set; }

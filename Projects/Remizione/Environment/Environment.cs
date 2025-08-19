@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -8,6 +9,7 @@ namespace Remizione
     /// </summary>
     public sealed class Environment
     {
+        private SoundInstance? alarmSound;
         private readonly ColorTween alarmTween = new();
         private readonly GameSession session;
 
@@ -42,7 +44,10 @@ namespace Remizione
             if (session.GameplayMode == GameplayMode.Survival && session.Room is ProceduralRoom)
             {
                 if (session.RemainingTime <= GameSettings.TimeCritical && !alarmTween.IsRunning)
+                {
+                    alarmSound = Sound.Play(SoundNames.ExitAlarm, true);
                     alarmTween.Start(TweenStyle.QuadraticInOut, ColorPalette.GlobalLight.Default, ColorPalette.GlobalLight.Critical, 400, -1);
+                }
 
                 Lightning.Update(gameTime);
                 Rain.Update(gameTime);
@@ -57,11 +62,17 @@ namespace Remizione
         #endregion
 
         // EnterRoom
-        public void EnterRoom(GameRoom room)
+        public void EnterRoom()
         {
             Rain.EnterRoom();
             alarmTween.Stop();
             GlobalLight.Color = ColorPalette.GlobalLight.Default;
+        }
+
+        // ExitRoom
+        public void ExitRoom()
+        {
+            alarmSound?.Stop(3000);
         }
 
         // Lightning

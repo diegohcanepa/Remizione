@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.8.0</string>
+        <string>7.9.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -338,6 +338,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Environment-assets/EnergyOrb.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,5,7</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,5,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Environment-assets/GlobalLight.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -631,7 +646,6 @@
                 <false/>
             </struct>
             <key type="filename">FireflyParticles-assets/FireflyParticle2.png</key>
-            <key type="filename">Pickups-assets/Orb.png</key>
             <key type="filename">PotteryA-assets/PotteryAPiece5.png</key>
             <key type="filename">PotteryB-assets/PotteryBPiece3.png</key>
             <key type="filename">PotteryB-assets/PotteryBPiece6.png</key>

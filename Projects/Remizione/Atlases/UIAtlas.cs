@@ -13,11 +13,9 @@ namespace Remizione
         {
             BottomGradient = this[nameof(BottomGradient)];
             CheckMark = this[nameof(CheckMark)];
-            ClockIcon = this[nameof(ClockIcon)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
-            EnergyIcon = this[nameof(EnergyIcon)];
             EquipmentSlot = this[nameof(EquipmentSlot)];
             HeartEmptyIcon = this[nameof(HeartEmptyIcon)];
             HeartHalfIcon = this[nameof(HeartHalfIcon)];
@@ -60,9 +58,6 @@ namespace Remizione
         // CheckMark
         public AtlasImage CheckMark { get; }
 
-        // ClockIcon
-        public AtlasImage ClockIcon { get; }
-
         // ContextMenuOptionSelector
         public AtlasImage ContextMenuOptionSelector { get; }
 
@@ -71,9 +66,6 @@ namespace Remizione
 
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
-
-        // EnergyIcon
-        public AtlasImage EnergyIcon { get; }
 
         // EquipmentSlot
         public AtlasImage EquipmentSlot { get; }

@@ -13,6 +13,9 @@ namespace Remizione
         // Ducks
         public ObjectPool<DuckThrowable> Ducks { get; } = new ObjectPool<DuckThrowable>(() => new DuckThrowable(session), 50);
 
+        // EnergyOrbs
+        public ObjectPool<EnergyOrb> EnergyOrbs { get; } = new ObjectPool<EnergyOrb>(() => new EnergyOrb(session), 100);
+
         // FloatingHeart
         public ObjectPool<FloatingHeart> FloatingHearts { get; } = new ObjectPool<FloatingHeart>(() => new FloatingHeart(session), 30);
 

@@ -248,6 +248,24 @@
 /processorParam:Quality=Best
 /build:Audio/FX/ElectricZapStrong.wav;Audio/FX/ElectricZapStrong
 
+#begin Audio/FX/EnergyOrb1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/EnergyOrb1.wav;Audio/FX/EnergyOrb1
+
+#begin Audio/FX/EnergyOrb2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/EnergyOrb2.wav;Audio/FX/EnergyOrb2
+
+#begin Audio/FX/EnergyOrb3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/EnergyOrb3.wav;Audio/FX/EnergyOrb3
+
 #begin Audio/FX/Error1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

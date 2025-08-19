@@ -59,7 +59,7 @@
   <String Key="Item.Lockpicking.Name">Lockpicking</String>
   <String Key="Item.MasterLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.MasterLockpick.Name">Master lockpick</String>
-  <String Key="Item.PieceOfWood.Description"></String>
+  <String Key="Item.PieceOfWood.Description" />
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RedTicket.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RedTicket.Name">Red ticket</String>
@@ -197,6 +197,7 @@ Bla bla bla</String>
   <String Key="Misc.DisclaimerMessage">Some scenes and images may be disturbing. The following story is fictional and does not depict any real person or event.</String>
   <String Key="Misc.DisclaimerTitle">WARNING</String>
   <String Key="Misc.DollarSign">$</String>
+  <String Key="Misc.Energy">Energy</String>
   <String Key="Misc.Failed">Failed!</String>
   <String Key="Misc.Level">Level</String>
   <String Key="Misc.Mute">Mute</String>

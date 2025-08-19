@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace Remizione.UI
+namespace Remizione
 {
     /// <summary>
     /// UIGameMeter
@@ -11,39 +11,40 @@ namespace Remizione.UI
     public class UIGameMeter : GameObject
     {
         private readonly ImageSprite container;
-        private readonly ImageSprite icon;
-        private int lastKnownValue = -1;
+        private readonly ColorTween colorTween = new();
+        private static readonly Color energyTextColor = new(240, 181, 65);
+        private readonly int[] lastKnownValues = new int[3];
+        private readonly Vector2Tween scaleTween = new();
         private readonly GameSession session;
-        private readonly TextSprite valueText;
+        private static readonly Color textColor = ColorPalette.Text.Default;    
+        private static readonly Vector2 textSize = ScaleInfo.Text.VeryLarge;
+        private readonly TextSprite[] values;
 
         // Constructor
-        public UIGameMeter(GameSession session, GameMeterUnit unit)
+        public UIGameMeter(GameSession session)
             : base(session.Game)
         {
             this.session = session;
-            this.Unit = unit;
 
             // Container
             this.container = new(Game, Atlases.UI.GetImageNotNull("GameMeterContainer"))
             {
                 PivotOrigin = RectanglePoint.RightTop,
-                Scale = ScaleInfo.UIElement.Medium
-            };
-
-            // Icon
-            this.icon = new(Game, Atlases.UI.GetImageNotNull($"{unit}Icon"))
-            {
-                PivotOrigin = RectanglePoint.Center,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -2, -1),
                 Scale = ScaleInfo.UIElement.Medium
             };
 
             // Value text
-            this.valueText = new(Game, Fonts.CommonOutline)
+            values = new TextSprite[lastKnownValues.Length];
+            for (var i = 0; i < values.Length; i++)
             {
-                Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Center,
-                Scale = ScaleInfo.Text.Large
-            };
+                values[i] = new(Game, Fonts.CommonOutline)
+                {
+                    Color = textColor,
+                    PivotOrigin = RectanglePoint.Top,
+                    Scale = textSize
+                };
+            }
 
             Invalidate();
         }
@@ -53,21 +54,9 @@ namespace Remizione.UI
         // Invalidate
         private void Invalidate()
         {
-            icon.Position = container.BoundingBox.GetPoint(RectanglePoint.Right, -5, 0);
-
-            if (Unit == GameMeterUnit.Stage)
-            {
-                icon.X -= .6f;
-                icon.Y -= .2f;
-            }
-
-            else if (Unit == GameMeterUnit.Time)
-            {
-                icon.X -= .5f;
-                icon.Y -= .5f;
-            }
-
-            valueText.Position = container.BoundingBox.GetPoint(RectanglePoint.Right, -21, .2f);
+            values[0].Position = container.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 6, -1);
+            values[1].Position = container.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 23, -1);
+            values[2].Position = container.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 40, -1);
         }
 
         #endregion
@@ -79,8 +68,10 @@ namespace Remizione.UI
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             container.Draw(gameTime);
-            icon.Draw(gameTime);
-            valueText.Draw(gameTime);
+            for (var i = 0; i < values.Length; i++)
+            {
+                values[i].Draw(gameTime);
+            }
             Game.SpriteBatch.End();
         }
 
@@ -88,72 +79,67 @@ namespace Remizione.UI
         protected override void OnUpdate(GameTime gameTime)
         {
             // Energy
-            if (Unit == GameMeterUnit.Energy)
+            if (lastKnownValues[0] != session.Energy)
             {
-                if (lastKnownValue != session.Energy)
+                lastKnownValues[0] = session.Energy;
+                var requiredEnergy = session.Room is ProceduralRoom room ? room.RequiredEnergy : -1;
+                var full = lastKnownValues[0] == requiredEnergy;
+
+                values[0].Text = $"{session.Energy}/{requiredEnergy}";
+                values[0].Color = full ? ColorPalette.Text.Green : textColor;
+
+                if (full)
                 {
-                    lastKnownValue = session.Energy;
-                    valueText.Text = $"{session.Energy}/{session.RequiredEnergy}";
+                    scaleTween.Stop();
+                    colorTween.Stop();
+                }
+                else if (!scaleTween.IsRunning)
+                {
+                    scaleTween.Start(TweenStyle.CubicInOut, textSize, textSize * 1.2f, 150, 4);
+                    values[0].Tweens.ScaleTween = scaleTween;
+
+                    colorTween.Start(TweenStyle.CubicInOut, textColor, energyTextColor, 300, 2);
+                    values[0].Tweens.ColorTween = colorTween;
                 }
             }
 
-            // Level
-            else if (Unit == GameMeterUnit.Stage)
+            // RemainingTime
+            if (lastKnownValues[1] != session.RemainingTime)
             {
-                if (lastKnownValue != session.Stage)
-                {
-                    lastKnownValue = session.Stage;
-                    valueText.Text = $"{session.Stage}/{GameSettings.MaximumLevel}";
-                }
+                lastKnownValues[1] = session.RemainingTime;
+                var t = TimeSpan.FromMilliseconds(session.RemainingTime);
+                values[1].Text = string.Format("{0:D2}:{1:D2}", (int)t.TotalMinutes, t.Seconds);
+
+                if (lastKnownValues[1] <= GameSettings.TimeCritical)
+                    values[1].Color = ColorPalette.Text.Red;
+                else if (lastKnownValues[1] <= GameSettings.TimeWarning)
+                    values[1].Color = ColorPalette.Text.Highlight;
+                else
+                    values[1].Color = ColorPalette.Text.Default;
             }
 
-            // Time
-            else if (Unit == GameMeterUnit.Time)
+            // Stage
+            if (lastKnownValues[2] != session.Stage)
             {
-                if (lastKnownValue != session.RemainingTime)
-                {
-                    lastKnownValue = session.RemainingTime;
-                    var t = TimeSpan.FromMilliseconds(session.RemainingTime);
-                    valueText.Text = string.Format("{0:D2}:{1:D2}", (int)t.TotalMinutes, t.Seconds);
-
-                    if (lastKnownValue <= GameSettings.TimeCritical)
-                        valueText.Color = ColorPalette.Text.Red;
-                    else if (lastKnownValue <= GameSettings.TimeWarning)
-                        valueText.Color = ColorPalette.Text.Highlight;
-                    else
-                        valueText.Color = ColorPalette.Text.Default;
-                }
+                lastKnownValues[2] = session.Stage;
+                values[2].Text = $"{session.Stage}";
             }
+
+
+            values[0].Update(gameTime);
         }
 
         #endregion
 
-        // BoundingBox
-        public RectangleF BoundingBox => container.BoundingBox;
-
-        // PivotOrigin
-        public RectanglePoint PivotOrigin
+        // Reset
+        public void Reset()
         {
-            get => container.PivotOrigin;
-            set
+            for (var i = 0; i < lastKnownValues.Length; i++)
             {
-                container.PivotOrigin = value;
-                Invalidate();
-            }
-        }   
-
-        // Position
-        public Vector2 Position
-        {
-            get => container.Position;
-            set
-            {
-                container.Position = value;
-                Invalidate();
+                lastKnownValues[i] = -1;
+                values[i].Clear();
+                values[i].Color = ColorPalette.Text.Default;
             }
         }
-
-        // Unit
-        public GameMeterUnit Unit { get; }
     }
 }

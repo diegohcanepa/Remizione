@@ -7,27 +7,22 @@ using System.Collections.Generic;
 namespace Remizione
 {
     /// <summary>
-    /// FootstepEffect
+    /// ParticlePopEffect
     /// </summary>
-    public class FootstepEffect : GameObject
+    public class ParticlePopEffect : GameObject
     {
         #region Private fields
 
         private Color color;
-        private readonly float gravity = 150;
-        private readonly float horizontalSpeed = 30;
-        private readonly float particleLifetime = .25f;
         private readonly List<Particle> particles = [];
         private readonly Texture2D pixel;
-        private static readonly ObjectPool<Particle> pool = new ObjectPool<Particle>(() => new Particle(), 100, 50);
+        private static readonly ObjectPool<Particle> pool = new(() => new Particle(), 100, 50);
         private static readonly Random random = new();
-        private readonly float verticalSpeedMin = 25;
-        private readonly float verticalSpeedMax = 35;
 
         #endregion
 
         // Constructor
-        public FootstepEffect(EngendroGame game)
+        public ParticlePopEffect(EngendroGame game)
             : base(game)
         {
             pixel = new Texture2D(Game.GraphicsDevice, 1, 1);
@@ -57,7 +52,7 @@ namespace Remizione
             foreach (var p in particles)
             {
                 float alpha = MathHelper.Clamp(p.Life / p.MaxLife, 0f, 1f);
-                Game.SpriteBatch.Draw(pixel, p.Position, null, color * alpha, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                Game.SpriteBatch.Draw(pixel, p.Position, null, color * alpha, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
             }
         }
 
@@ -77,7 +72,7 @@ namespace Remizione
                 }
                 else
                 {
-                    p.Velocity.Y += gravity * dt;
+                    p.Velocity.Y += Gravity * dt;
                     p.Position += p.Velocity * dt;
                     particles[i] = p;
                 }
@@ -86,8 +81,23 @@ namespace Remizione
 
         #endregion
 
+        // BurstSize
+        public Int32Range BurstSize { get; init; } = new(3, 6);
+
+        // Gravity
+        public float Gravity { get; init; } = 150;
+
+        // HorizontalSpeed
+        public float HorizontalSpeed { get; init; } = 30;
+
         // IsActive
         public bool IsActive => particles.Count > 0;
+
+        // ParticleLifetime
+        public float ParticleLifetime { get; init; } = .25f;
+
+        // Scale
+        public float Scale { get; init; } = 1; 
 
         // Spawn
         public void Spawn(Vector2 position, Color splashColor)
@@ -95,24 +105,27 @@ namespace Remizione
             CleanUp();
 
             color = splashColor;
-            int count = random.Next(3, 6);
+            int count = BurstSize.Random();
 
             for (int i = 0; i < count; i++)
             {
                 if (pool.Get() is Particle particle)
                 {
-                    float vx = (float)(random.NextDouble() * 2 - 1) * horizontalSpeed;
-                    float vy = -(float)(random.NextDouble() * (verticalSpeedMax - verticalSpeedMin) + verticalSpeedMin);
+                    float vx = (float)(random.NextDouble() * 2 - 1) * HorizontalSpeed;
+                    float vy = -(float)(random.NextDouble() * (VerticalSpeed.Delta) + VerticalSpeed.Minimum);
 
                     particle.Position = position;
                     particle.Velocity = new Vector2(vx, vy);
-                    particle.Life = particleLifetime;
-                    particle.MaxLife = particleLifetime;
+                    particle.Life = ParticleLifetime;
+                    particle.MaxLife = ParticleLifetime;
 
                     particles.Add(particle);
                 }
             }
         }
+
+        // VerticalSpeed
+        public FloatRange VerticalSpeed { get; init; } = new(25, 35);
 
         /// <summary>
         /// Particle

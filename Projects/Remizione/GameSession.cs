@@ -23,6 +23,7 @@ namespace Remizione
         private enum AttributeName { RandomSeed, WorldVersion }
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
+        private int energy;
         private readonly Dictionary<string, MetaItem[]> friendlyItems = [];
         private Actor? player;
         private Vector2? playerPosition;
@@ -108,7 +109,6 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(IsometricProp));
             scriptRegistry.RegisterEntity(typeof(LootBag));
             scriptRegistry.RegisterEntity(typeof(OcculusMinion));
-            scriptRegistry.RegisterEntity(typeof(Orb));
             scriptRegistry.RegisterEntity(typeof(OutgoingGhostCar));
             scriptRegistry.RegisterEntity(typeof(Pickup));
             scriptRegistry.RegisterEntity(typeof(Pottery));
@@ -178,12 +178,16 @@ namespace Remizione
         // OnEnterRoom
         protected override void OnEnterRoom(Room room)
         {
-            if (room is GameRoom gameRoom)
-            {
-                RemainingTime = GameSettings.CountdownMaximum;
-                player?.Inventory.NotifyRoomChanged();
-                Environment.EnterRoom(gameRoom);
-            }
+            RemainingTime = GameSettings.CountdownMaximum;
+            player?.Inventory.NotifyRoomChanged();
+            Environment.EnterRoom();
+        }
+
+        // OnExitRoom
+        protected override void OnExitRoom(Room currentRoom, Room nextRoom)
+        {
+            Environment.ExitRoom();
+            HUD.Reset();
         }
 
         // OnHandleInput
@@ -379,7 +383,19 @@ namespace Remizione
 
         // Energy
         [ScriptProperty]
-        public int Energy { get; set; }
+        public int Energy
+        {
+            get => energy;
+            set
+            {
+                if (value != energy )
+                {
+                    energy = value;
+                    if (Room is ProceduralRoom room)
+                        energy = Math.Min(energy, room.RequiredEnergy);
+                }
+            }
+        }
 
         // Environment
         public Environment Environment { get; }
@@ -437,6 +453,7 @@ namespace Remizione
         [ScriptMethod]
         public void NextStage()
         {
+            Energy = 0;
             Stage++;
         }
 
@@ -489,10 +506,6 @@ namespace Remizione
         // RemainingTime
         [ScriptProperty]
         public int RemainingTime { get; set; } = int.MaxValue;
-
-        // RequiredEnergy
-        [ScriptProperty]
-        public int RequiredEnergy { get; set; } = 50;
 
         // Room
         [ScriptProperty]
