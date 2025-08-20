@@ -33,7 +33,7 @@ namespace Remizione
     public enum HitTestSource { Hotspot, Collider }
 
     // HUDMessageKind
-    public enum HUDMessageKind { CannotPlaceItem, EnoughOfThat, InventoryFull, NotEnoughFaith }
+    public enum HUDMessageKind { CannotPlaceItem, EnoughOfThat, InventoryFull, PowerRestored }
 
     // ImpactType
     public enum ImpactType { Low, Medium, High }
@@ -82,7 +82,7 @@ namespace Remizione
     public enum PlacementDistributionStrategy { Random, Clump, NoiseMap }
 
     // PlacementPhase
-    public enum PlacementPhase { None, Terrain, NonSolidDecoration, RoomConnector, NaturalObject, ArtificialObject, Actor }
+    public enum PlacementPhase { None, Terrain, NonSolidDecoration, RoomConnector, NaturalObject, ArtificialObject, Creature }
 
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }

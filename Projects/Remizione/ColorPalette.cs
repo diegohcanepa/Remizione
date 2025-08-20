@@ -39,6 +39,9 @@ namespace Remizione
         // DestinationMark
         internal static Color DestinationMark { get; } = new(143, 77, 87);
 
+        // EnergyBolt
+        internal static Color EnergyBolt { get; } = new(240, 181, 65);
+
         // FaithMeter
         internal static class FaithMeter
         {

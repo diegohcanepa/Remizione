@@ -25,7 +25,7 @@ namespace Remizione
             this.text = new TextSprite(session.Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
-                Scale = ScaleInfo.Text.Medium,
+                Scale = ScaleInfo.Text.Huge,
                 PivotOrigin = RectanglePoint.Bottom
             };
         }
@@ -81,7 +81,7 @@ namespace Remizione
         // Show
         public void Show(Vector2 origin, string value, Color color, int duration = 1000)
         {
-            ShowCore(origin, value, color, new Vector2(2, 0), duration);
+            ShowCore(origin, value, color, new Vector2(Randomizer.Next(-5, 5), Randomizer.Next(-12, -1)), duration);
         }
 
         // ShowAsDamage

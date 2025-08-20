@@ -17,13 +17,13 @@ namespace Remizione
         public HUDMessage(EngendroGame game)
             : base(game)
         {
+            // Message text
             this.messageText = new(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Highlight,
                 MaximumWidth = (int)(Screen.HUDArea.Width * .7f),
-                PivotOrigin = RectanglePoint.Top,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 10),
-                Scale = ScaleInfo.Text.VeryLarge
+                PivotOrigin = RectanglePoint.Center,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 22)
             };
         }
 
@@ -54,17 +54,21 @@ namespace Remizione
         public void Hide() => fadeTween.Stop();
 
         // Show
-        public void Show(HUDMessageKind message, bool isWarning)
+        public void Show(HUDMessageKind message)
         {
+            var isWarning = message != HUDMessageKind.PowerRestored;
+
             messageText.Text = Localization.GetValue(message);
-            fadeTween.Start(TweenStyle.CubicIn, 1, 0, 1000);
+            fadeTween.Start(TweenStyle.CubicIn, 1, 0, 200);
             if (isWarning)
             {
                 messageText.Color = ColorPalette.Text.Highlight;
                 Sound.Play(SoundNames.Error);
             }
             else
-                messageText.Color = ColorPalette.Text.Default;
+                messageText.Color = ColorPalette.Text.Green;
+
+            messageText.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, ScaleInfo.Text.Huge * .5f, ScaleInfo.Text.Huge, 200);
         }
     }
 }

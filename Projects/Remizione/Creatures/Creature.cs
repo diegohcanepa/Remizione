@@ -11,6 +11,8 @@
         {
             Affinity = Affinity.Evil;
             DamageStyle = DamageStyle.Blink;
+            PowerBonus = 1;
+            PlacementPhase = PlacementPhase.Creature;
         }
 
         // FindEnemy

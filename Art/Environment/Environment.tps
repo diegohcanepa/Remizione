@@ -338,7 +338,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Environment-assets/EnergyOrb.png</key>
+            <key type="filename">Environment-assets/EnergyBolt.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -347,9 +347,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>3,3,5,7</rect>
+                <rect>3,3,7,5</rect>
                 <key>scale9Paddings</key>
-                <rect>3,3,5,7</rect>
+                <rect>3,3,7,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

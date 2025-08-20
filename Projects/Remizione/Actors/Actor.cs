@@ -772,6 +772,13 @@ namespace Remizione
             set => shadowSpot.Size = value;
         }
 
+        // ShowFloatingText
+        public void ShowFloatingText(string text, Color color, int duration = 1000)
+        {
+            if (Session.ObjectPools.FloatingTexts.Get() is FloatingText floatingText)
+                floatingText.Show(GetOverheadPosition(), text, color, duration);
+        }
+
         // ShowInventory
         [ScriptMethod]
         public void ShowInventory()

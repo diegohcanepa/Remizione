@@ -39,7 +39,7 @@ namespace Remizione.Scripting
             {
                 if (item.IsStackFull)
                 {
-                    actor.Session.HUD.Message.Show(HUDMessageKind.EnoughOfThat, true);
+                    actor.Session.HUD.Message.Show(HUDMessageKind.EnoughOfThat);
                     return;
                 }
             }
@@ -47,7 +47,7 @@ namespace Remizione.Scripting
             // Inventory is full
             if (inventory.Count == inventory.Size)
             {
-                actor.Session.HUD.Message.Show(HUDMessageKind.InventoryFull, true);
+                actor.Session.HUD.Message.Show(HUDMessageKind.InventoryFull);
                 return;
             }
 

@@ -7,7 +7,7 @@
     {
         internal const string ChanceRoll = nameof(ChanceRoll);
         internal const string ChanceRollFail = nameof(ChanceRollFail);
-        internal const string EnergyOrb = nameof(EnergyOrb);
+        internal const string EnergyBolt = nameof(EnergyBolt);
         internal const string Error = nameof(Error);
         internal const string ExitAlarm = nameof(ExitAlarm);
         internal const string FootstepA = nameof(FootstepA);
@@ -21,6 +21,7 @@
         internal const string LootBagJump = nameof(LootBagJump);
         internal const string PickupBag = nameof(PickupBag);
         internal const string PotteryBreak = nameof(PotteryBreak);
+        internal const string PowerRestored = nameof(PowerRestored);
         internal const string Rain = nameof(Rain);
         internal const string ShockZap = nameof(ShockZap);
         internal const string ThrowablePickup = nameof(ThrowablePickup);

@@ -166,9 +166,9 @@ namespace Remizione
 
             if (Room != null)
             {
-                for (var i = 0; i < Energy; i++)
+                for (var i = 0; i < PowerBonus; i++)
                 {
-                    var orb = Session.ObjectPools.EnergyOrbs.Get();
+                    var orb = Session.ObjectPools.EnergyBolts.Get();
                     orb.Launch(Room, Position, BoundingBox);
                 }
             }
@@ -705,10 +705,6 @@ namespace Remizione
                 OnDrawShadow(gameTime);
         }
 
-        // Energy
-        [ScriptProperty]
-        public int Energy { get; set; }
-
         // FaceTo
         public void FaceTo(GameThing thing)
         {
@@ -998,6 +994,10 @@ namespace Remizione
         // PlacementPhase
         [ScriptProperty]
         public PlacementPhase PlacementPhase { get; set; }
+
+        // PowerBonus
+        [ScriptProperty]
+        public int PowerBonus { get; set; }
 
         // PreventKnockback
         [ScriptProperty]

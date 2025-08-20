@@ -1,19 +1,21 @@
 ﻿using Adberration;
 using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 
 namespace Remizione
 {
     /// <summary>
-    /// EnergyOrb
+    /// EnergyBolt
     /// </summary>
-    public sealed class EnergyOrb : GameThing
+    public sealed class EnergyBolt : Prop
     {
         #region Private fields
 
         private const float bounceFactor = .8f;
         private float delayTimer;
+        private static string? displayName;
         private const float gravity = 300;
         private float groundY;
         private bool isCollecting;
@@ -30,13 +32,14 @@ namespace Remizione
         #endregion
 
         // Constructor
-        public EnergyOrb(GameSession session)
+        public EnergyBolt(GameSession session)
             : base(session, string.Empty)
         {
             this.Atlas = Atlases.Environment;
             this.Color = new(240, 181, 65);
-            this.DefaultImageName = "EnergyOrb";
+            this.DefaultImageName = "EnergyBolt";
             this.DepthOffset = 5;
+
             this.particleEffect = new ParticlePopEffect(Game)
             {
                 BurstSize = new(10, 16),
@@ -44,6 +47,10 @@ namespace Remizione
                 ParticleLifetime = .3f,
                 Scale = .5f
             };
+
+            Tweens.AltitudeTween = FloatTween.Create(TweenStyle.CubicInOut, 0, 1, 300, -1);
+
+            displayName ??= $"+{TextRepository.GetValue("@Misc.EnergyBolt")}";
         }
 
         #region Private members
@@ -107,7 +114,7 @@ namespace Remizione
                 if (!scaleTween.IsRunning && !particleEffect.IsActive)
                 {
                     Unparent();
-                    Session.ObjectPools.EnergyOrbs.Return(this);
+                    Session.ObjectPools.EnergyBolts.Return(this);
                 }
             }
             else if (Session.Player?.DistanceTo(this) <= 5)
@@ -122,11 +129,14 @@ namespace Remizione
                 scaleTween.Start(TweenStyle.Linear, Scale, Vector2.Zero, 150);
                 Tweens.ScaleTween = scaleTween;
 
-                Session.Player.PlaySound(SoundNames.EnergyOrb);
-                
-                Session.Energy += 1;
+                Session.Player.PlaySound(SoundNames.EnergyBolt);
+
+                Session.Power += 1;
 
                 particleEffect.Spawn(BoundingBox.Center, particleColor);
+
+                if (displayName != null && !Session.IsPowerRestored)
+                    Session.Player.ShowFloatingText(displayName, ColorPalette.EnergyBolt, 1000);
             }
         }
 
@@ -136,7 +146,7 @@ namespace Remizione
         public void Launch(Room room, Vector2 origin, RectangleF bounds)
         {
             float yOffset = RandomBetween(-4f, 2f);
-            Position = new(RandomBetween(bounds.Left + 5f, bounds.Right - 5f),
+            Position = new(RandomBetween(bounds.Left - 10, bounds.Right + 10),
                            RandomBetween(bounds.Top, bounds.Bottom) + yOffset);
 
             yTween.Stop();

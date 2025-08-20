@@ -201,13 +201,13 @@ namespace Remizione
             instance.X += instance.BoundingBox.Width / 2;
             Children.Add(instance);
 
-            RequiredEnergy += thing.Energy; 
+            RequiredPower += thing.PowerBonus; 
         }
 
         // Populate
         private void Populate()
         {
-            RequiredEnergy = 0;
+            RequiredPower = 0;
 
             // Entrance rail
             if (Session.GetEntity<GameThing>("EntranceRail") is GameThing entranceRail)
@@ -260,8 +260,8 @@ namespace Remizione
                 }
             }
 
-            if (RequiredEnergy > 0)
-                RequiredEnergy /= 2;
+            if (RequiredPower > 0)
+                RequiredPower = Math.Max(RequiredPower, 1);
 
             SetupGhostCars();
         }
@@ -415,8 +415,8 @@ namespace Remizione
             return result;
         }
 
-        // RequiredEnergy
-        public int RequiredEnergy { get; private set; }
+        // RequiredPower
+        public int RequiredPower { get; private set; }
 
         // TerrainColRange
         [ScriptProperty(CodingContext.Declaration)]

@@ -248,23 +248,23 @@
 /processorParam:Quality=Best
 /build:Audio/FX/ElectricZapStrong.wav;Audio/FX/ElectricZapStrong
 
-#begin Audio/FX/EnergyOrb1.wav
+#begin Audio/FX/EnergyBolt1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/FX/EnergyOrb1.wav;Audio/FX/EnergyOrb1
+/build:Audio/FX/EnergyBolt1.wav;Audio/FX/EnergyBolt1
 
-#begin Audio/FX/EnergyOrb2.wav
+#begin Audio/FX/EnergyBolt2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/FX/EnergyOrb2.wav;Audio/FX/EnergyOrb2
+/build:Audio/FX/EnergyBolt2.wav;Audio/FX/EnergyBolt2
 
-#begin Audio/FX/EnergyOrb3.wav
+#begin Audio/FX/EnergyBolt3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/FX/EnergyOrb3.wav;Audio/FX/EnergyOrb3
+/build:Audio/FX/EnergyBolt3.wav;Audio/FX/EnergyBolt3
 
 #begin Audio/FX/Error1.wav
 /importer:WavImporter
@@ -511,6 +511,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/PotteryBreak2.wav;Audio/FX/PotteryBreak2
+
+#begin Audio/FX/PowerRestored.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/PowerRestored.wav;Audio/FX/PowerRestored
 
 #begin Audio/FX/Raven.wav
 /importer:WavImporter

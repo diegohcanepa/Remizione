@@ -12,8 +12,8 @@ namespace Remizione
     {
         private readonly ImageSprite container;
         private readonly ColorTween colorTween = new();
-        private static readonly Color energyTextColor = new(240, 181, 65);
         private readonly int[] lastKnownValues = new int[3];
+        private static readonly Color powerTextColor = new(240, 181, 65);
         private readonly Vector2Tween scaleTween = new();
         private readonly GameSession session;
         private static readonly Color textColor = ColorPalette.Text.Default;    
@@ -78,14 +78,14 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            // Energy
-            if (lastKnownValues[0] != session.Energy)
+            // Power
+            if (lastKnownValues[0] != session.Power)
             {
-                lastKnownValues[0] = session.Energy;
-                values[0].Text = $"{session.Energy}/{session.RequiredEnergy}";
-                values[0].Color = session.IsEnergyFull ? ColorPalette.Text.Green : textColor;
+                lastKnownValues[0] = session.Power;
+                values[0].Text = $"{session.Power}/{session.RequiredPower}";
+                values[0].Color = session.IsPowerRestored ? ColorPalette.Text.Green : textColor;
 
-                if (session.IsEnergyFull)
+                if (session.IsPowerRestored)
                 {
                     scaleTween.Stop();
                     colorTween.Stop();
@@ -95,7 +95,7 @@ namespace Remizione
                     scaleTween.Start(TweenStyle.CubicInOut, textSize, textSize * 1.2f, 150, 4);
                     values[0].Tweens.ScaleTween = scaleTween;
 
-                    colorTween.Start(TweenStyle.CubicInOut, textColor, energyTextColor, 300, 2);
+                    colorTween.Start(TweenStyle.CubicInOut, textColor, powerTextColor, 300, 2);
                     values[0].Tweens.ColorTween = colorTween;
                 }
             }

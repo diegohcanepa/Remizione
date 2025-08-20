@@ -10,6 +10,7 @@ namespace Remizione
     public sealed class LootBag : Pickup
     {
         private readonly FloatTween altitudeTween = new();
+        private readonly ImageSprite icon;
         private readonly FloatTween opacityTween = new();
         private readonly FloatTween xTween = new();
         private readonly FloatTween yTween = new();
@@ -24,9 +25,26 @@ namespace Remizione
             IgnoreThrowables = true;
             PickUpSound = Sound.Find(SoundNames.PickupBag);
             Scale = new(.75f);
+
+            icon = new ImageSprite(Game)
+            {
+                PivotOrigin = RectanglePoint.Bottom,
+                Scale = ScaleInfo.UIElement.Tiny
+            };
         }
 
         #endregion
+
+        protected override void OnDraw(GameTime gameTime)
+        {
+            if (icon.Image == null)
+            base.OnDraw(gameTime);
+            else
+            {
+                icon.Position = Position;
+                icon.Draw(gameTime);
+            }
+        }
 
         // DropCore
         private bool DropCore(GameRoom room, Vector2 position, MetaItem metaItem)
@@ -39,6 +57,8 @@ namespace Remizione
 
             Position = position;
             room.Children.Add(this);
+
+            icon.Image = metaItem.Image;
 
             return true;
         }

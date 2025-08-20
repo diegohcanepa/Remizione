@@ -2,6 +2,7 @@
 using Adberration.Scripting;
 using Adberration.Scripting.Core;
 using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using Remizione.Scripting;
 using System;
@@ -23,10 +24,10 @@ namespace Remizione
         private enum AttributeName { RandomSeed, WorldVersion }
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
-        private int energy;
         private readonly Dictionary<string, MetaItem[]> friendlyItems = [];
         private Actor? player;
         private Vector2? playerPosition;
+        private int power;
         private int rainRemainingTime;
         private readonly RoomEditor? roomEditor;
         private readonly List<GameThing> staticThings = [];
@@ -178,8 +179,9 @@ namespace Remizione
         // OnEnterRoom
         protected override void OnEnterRoom(Room room)
         {
+            IsPowerRestored = false;
             RemainingTime = GameSettings.CountdownMaximum;
-            RequiredEnergy = Room is ProceduralRoom proceduralRoom ? proceduralRoom.RequiredEnergy : 0;
+            RequiredPower = Room is ProceduralRoom proceduralRoom ? proceduralRoom.RequiredPower : 0;
             player?.Inventory.NotifyRoomChanged();
             Environment.EnterRoom();
         }
@@ -382,15 +384,24 @@ namespace Remizione
         [ScriptProperty]
         public int DialogOptionId { get; set; }
 
-        // Energy
+        // Power
         [ScriptProperty]
-        public int Energy
+        public int Power
         {
-            get => energy;
+            get => power;
             set
             {
-                if (value != energy)
-                    energy = Math.Min(value, RequiredEnergy);
+                if (value != power)
+                {
+                    power = Math.Min(value, RequiredPower);
+                    
+                    if (power == RequiredPower && !IsPowerRestored)
+                    {
+                        IsPowerRestored = true;
+                        Sound.Play(SoundNames.PowerRestored);
+                        HUD.Message.Show(HUDMessageKind.PowerRestored);
+                    }
+                }
             }
         }
 
@@ -435,12 +446,12 @@ namespace Remizione
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
 
-        // IsEnergyFull
-        public bool IsEnergyFull => Energy == RequiredEnergy;
-
         // IsHUDVisible
         [ScriptProperty]
         public bool IsHUDVisible { get; set; } = true;
+
+        // IsPowerRestored
+        public bool IsPowerRestored { get; private set; }
 
         // IsTimeCritical
         public bool IsTimeCritical => RemainingTime <= GameSettings.TimeCritical;
@@ -453,7 +464,7 @@ namespace Remizione
         [ScriptMethod]
         public void NextStage()
         {
-            Energy = 0;
+            Power = 0;
             Stage++;
         }
 
@@ -507,9 +518,9 @@ namespace Remizione
         [ScriptProperty]
         public int RemainingTime { get; set; } = int.MaxValue;
 
-        // RequiredEnergy
+        // RequiredPower
         [ScriptProperty]
-        public int RequiredEnergy { get; private set; }
+        public int RequiredPower { get; private set; }
 
         // Room
         [ScriptProperty]

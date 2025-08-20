@@ -13,10 +13,18 @@ namespace Remizione.Scripting
         internal PlacementDataCommand(Script script, string source, StatementBody body)
             : base(script, source, body, 1, ChanceArg, DistributionArg, InstancesArg, ProgressArg)
         {
-            var thing = AssertEntityNotNull<GameThing>(script.EntityName);
+        }
+
+        // OnExecute
+        protected override void OnExecute()
+        {
+            var thing = AssertEntityNotNull<GameThing>(Script.EntityName);
 
             if (thing.InstanceKind != InstanceKind.Static)
                 return;
+
+            if (thing.PlacementPhase == PlacementPhase.None)
+                throw new ScriptException(this, "PlacementPhase is not defined.");
 
             var room = AssertEntityNotNull<ProceduralRoom>(0);
             var distributionStrategy = Parser.ParseEnumArgument(this, DistributionArg, PlacementDistributionStrategy.Random);
