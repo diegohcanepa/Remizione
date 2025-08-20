@@ -179,6 +179,7 @@ namespace Remizione
         protected override void OnEnterRoom(Room room)
         {
             RemainingTime = GameSettings.CountdownMaximum;
+            RequiredEnergy = Room is ProceduralRoom proceduralRoom ? proceduralRoom.RequiredEnergy : 0;
             player?.Inventory.NotifyRoomChanged();
             Environment.EnterRoom();
         }
@@ -388,12 +389,8 @@ namespace Remizione
             get => energy;
             set
             {
-                if (value != energy )
-                {
-                    energy = value;
-                    if (Room is ProceduralRoom room)
-                        energy = Math.Min(energy, room.RequiredEnergy);
-                }
+                if (value != energy)
+                    energy = Math.Min(value, RequiredEnergy);
             }
         }
 
@@ -437,6 +434,9 @@ namespace Remizione
 
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
+
+        // IsEnergyFull
+        public bool IsEnergyFull => Energy == RequiredEnergy;
 
         // IsHUDVisible
         [ScriptProperty]
@@ -506,6 +506,10 @@ namespace Remizione
         // RemainingTime
         [ScriptProperty]
         public int RemainingTime { get; set; } = int.MaxValue;
+
+        // RequiredEnergy
+        [ScriptProperty]
+        public int RequiredEnergy { get; private set; }
 
         // Room
         [ScriptProperty]

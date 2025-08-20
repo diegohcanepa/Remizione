@@ -260,6 +260,9 @@ namespace Remizione
                 }
             }
 
+            if (RequiredEnergy > 0)
+                RequiredEnergy /= 2;
+
             SetupGhostCars();
         }
 

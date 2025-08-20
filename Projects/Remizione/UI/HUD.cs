@@ -126,7 +126,7 @@ namespace Remizione
         public EquipmentSlot EquipmentSlot { get; }
 
         // GameMeter
-        public UIGameMeter GameMeter { get; }
+        public UIStageMeter GameMeter { get; }
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)

@@ -34,7 +34,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-            if (Session.IsTimeCritical && !isOpened)
+            if (Session.IsEnergyFull && !isOpened)
                 Open();
         }
 

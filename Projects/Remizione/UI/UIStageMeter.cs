@@ -6,9 +6,9 @@ using System;
 namespace Remizione
 {
     /// <summary>
-    /// UIGameMeter
+    /// UIStageMeter
     /// </summary>
-    public class UIGameMeter : GameObject
+    public class UIStageMeter : GameObject
     {
         private readonly ImageSprite container;
         private readonly ColorTween colorTween = new();
@@ -21,7 +21,7 @@ namespace Remizione
         private readonly TextSprite[] values;
 
         // Constructor
-        public UIGameMeter(GameSession session)
+        public UIStageMeter(GameSession session)
             : base(session.Game)
         {
             this.session = session;
@@ -82,13 +82,10 @@ namespace Remizione
             if (lastKnownValues[0] != session.Energy)
             {
                 lastKnownValues[0] = session.Energy;
-                var requiredEnergy = session.Room is ProceduralRoom room ? room.RequiredEnergy : -1;
-                var full = lastKnownValues[0] == requiredEnergy;
+                values[0].Text = $"{session.Energy}/{session.RequiredEnergy}";
+                values[0].Color = session.IsEnergyFull ? ColorPalette.Text.Green : textColor;
 
-                values[0].Text = $"{session.Energy}/{requiredEnergy}";
-                values[0].Color = full ? ColorPalette.Text.Green : textColor;
-
-                if (full)
+                if (session.IsEnergyFull)
                 {
                     scaleTween.Stop();
                     colorTween.Stop();
