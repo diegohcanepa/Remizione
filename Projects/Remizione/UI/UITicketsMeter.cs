@@ -18,15 +18,15 @@ namespace Remizione
         {
             tickets = new UIScore[3];
 
-            tickets[0] = new UIScore(game, Atlases.UI.TicketRedIcon, ColorPalette.Text.Default)
+            tickets[0] = new UIScore(game, Atlases.UI.RedTicket, ColorPalette.Text.Default)
             {
             };
 
-            tickets[1] = new UIScore(game, Atlases.UI.TicketGoldenIcon, ColorPalette.Text.Default)
+            tickets[1] = new UIScore(game, Atlases.UI.GoldenTicket, ColorPalette.Text.Default)
             {
             };
 
-            tickets[2] = new UIScore(game, Atlases.UI.TicketWhiteIcon, ColorPalette.Text.Default)
+            tickets[2] = new UIScore(game, Atlases.UI.WhiteTicket, ColorPalette.Text.Default)
             {
             };
 

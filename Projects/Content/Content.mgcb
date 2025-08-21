@@ -422,11 +422,23 @@
 /processorParam:Quality=Best
 /build:Audio/FX/GhostCarStop.wav;Audio/FX/GhostCarStop
 
-#begin Audio/FX/Guts.wav
+#begin Audio/FX/GutsLarge.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/FX/Guts.wav;Audio/FX/Guts
+/build:Audio/FX/GutsLarge.wav;Audio/FX/GutsLarge
+
+#begin Audio/FX/GutsMedium.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/GutsMedium.wav;Audio/FX/GutsMedium
+
+#begin Audio/FX/GutsSmall.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/GutsSmall.wav;Audio/FX/GutsSmall
 
 #begin Audio/FX/ImpactA.wav
 /importer:WavImporter
@@ -476,29 +488,11 @@
 /processorParam:Quality=Best
 /build:Audio/FX/PickupBag.wav;Audio/FX/PickupBag
 
-#begin Audio/FX/PickupBottle.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/PickupBottle.wav;Audio/FX/PickupBottle
-
-#begin Audio/FX/PickupCoin.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/PickupCoin.wav;Audio/FX/PickupCoin
-
 #begin Audio/FX/PickupGeneric.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/PickupGeneric.wav;Audio/FX/PickupGeneric
-
-#begin Audio/FX/PickupKey.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/PickupKey.wav;Audio/FX/PickupKey
 
 #begin Audio/FX/PotteryBreak1.wav
 /importer:WavImporter

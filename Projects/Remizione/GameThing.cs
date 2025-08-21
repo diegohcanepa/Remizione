@@ -174,7 +174,7 @@ namespace Remizione
             }
 
             OnDie();
-            DropLootBag();
+            DropLoot();
         }
 
         // GetImpactWordPosition
@@ -274,14 +274,14 @@ namespace Remizione
             return true;
         }
 
-        // DropLootBag
-        protected bool DropLootBag()
+        // DropLoot
+        protected bool DropLoot()
         {
             if (Session.Room is ProceduralRoom room && GetLoot() is MetaItem metaItem)
             {
-                if (room.CreateRuntimeClone(nameof(LootBag)) is LootBag lootBag)
+                if (room.CreateRuntimeClone(nameof(Loot)) is Loot loot)
                 {
-                    lootBag.Drop(room, Position, metaItem);
+                    loot.Drop(room, Position, metaItem);
                     return true;
                 }
             }
@@ -530,12 +530,15 @@ namespace Remizione
                 var bottomDistance = Math.Abs(Y - attacker.Y);
                 var topDistance = Math.Abs(Y - attacker.BoundingBox.Top);
 
-                if (bottomDistance < topDistance)
-                    destination.Y += knockback.Y;
-                else
-                    destination.Y -= knockback.Y;
+                if (knockback != Vector2.Zero)
+                {
+                    if (bottomDistance < topDistance)
+                        destination.Y += knockback.Y;
+                    else
+                        destination.Y -= knockback.Y;
 
-                knockbackTween.Start(TweenStyle.CubicOut, Position, destination, 400, 0);
+                    knockbackTween.Start(TweenStyle.CubicOut, Position, destination, 400, 0);
+                }
 
                 hurtTween ??= new();
                 hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
@@ -966,7 +969,7 @@ namespace Remizione
         public Vector2 LightPosition { get; set; }
 
         // LocalizedDisplayName
-        public string LocalizedDisplayName { get; protected set; } = string.Empty;
+        public string LocalizedDisplayName { get; private set; } = string.Empty;
 
         // LootTableName
         [ScriptProperty]

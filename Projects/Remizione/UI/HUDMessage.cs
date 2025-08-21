@@ -23,7 +23,7 @@ namespace Remizione
                 Color = ColorPalette.Text.Highlight,
                 MaximumWidth = (int)(Screen.HUDArea.Width * .7f),
                 PivotOrigin = RectanglePoint.Center,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 22)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 8)
             };
         }
 

@@ -17,6 +17,7 @@ namespace Remizione
             CreditsBar = this[nameof(CreditsBar)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             EquipmentSlot = this[nameof(EquipmentSlot)];
+            GoldenTicket = this[nameof(GoldenTicket)];
             HeartEmptyIcon = this[nameof(HeartEmptyIcon)];
             HeartHalfIcon = this[nameof(HeartHalfIcon)];
             HeartIcon = this[nameof(HeartIcon)];
@@ -40,16 +41,15 @@ namespace Remizione
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
             ProhibitionIcon = this[nameof(ProhibitionIcon)];
             ProhibitionMark = this[nameof(ProhibitionMark)];
+            RedTicket = this[nameof(RedTicket)];
             SackSlot = this[nameof(SackSlot)];
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
-            TicketGoldenIcon = this[nameof(TicketGoldenIcon)];
-            TicketRedIcon = this[nameof(TicketRedIcon)];
-            TicketWhiteIcon = this[nameof(TicketWhiteIcon)];
             TrinketSlot = this[nameof(TrinketSlot)];
             UITextButtonContainerEdge = this[nameof(UITextButtonContainerEdge)];
             UITextButtonContainerPattern = this[nameof(UITextButtonContainerPattern)];
+            WhiteTicket = this[nameof(WhiteTicket)];
         }
 
         // BottomGradient
@@ -69,6 +69,9 @@ namespace Remizione
 
         // EquipmentSlot
         public AtlasImage EquipmentSlot { get; }
+
+        // GoldenTicket
+        public AtlasImage GoldenTicket { get; }
 
         // InventoryCategoryConsumables
         public AtlasImage InventoryCategoryConsumables { get; }
@@ -139,6 +142,9 @@ namespace Remizione
         // ProhibitionMark
         public AtlasImage ProhibitionMark { get; }
 
+        // RedTicket
+        public AtlasImage RedTicket { get; }
+
         // SackSlot
         public AtlasImage SackSlot { get; }
 
@@ -151,15 +157,6 @@ namespace Remizione
         // SpeechBubblePipe
         public AtlasImage SpeechBubblePipe { get; }
 
-        // TicketGoldenIcon
-        public AtlasImage TicketGoldenIcon { get; }
-
-        // TicketRedIcon
-        public AtlasImage TicketRedIcon { get; }
-
-        // TicketWhiteIcon
-        public AtlasImage TicketWhiteIcon { get; }
-
         // TrinketSlot
         public AtlasImage TrinketSlot { get; }
 
@@ -168,5 +165,8 @@ namespace Remizione
 
         // UITextButtonContainerPattern
         public AtlasImage UITextButtonContainerPattern { get; }
+
+        // WhiteTicket
+        public AtlasImage WhiteTicket { get; }
     }
 }

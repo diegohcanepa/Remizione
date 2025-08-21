@@ -36,12 +36,12 @@ namespace Remizione
 
                 if (Session.Room is ProceduralRoom room && GetLoot() is MetaItem metaItem)
                 {
-                    if (room.CreateRuntimeClone(nameof(LootBag)) is LootBag lootBag)
+                    if (room.CreateRuntimeClone(nameof(Loot)) is Loot loot)
                     {
                         var bbox = BoundingBox;
                         var start = bbox.GetPoint(RectanglePoint.LeftTop, 10, 10);
                         var end = bbox.GetPoint(RectanglePoint.LeftTop, 17, 25);
-                        lootBag.DropJumping(room, start, end, metaItem);
+                        loot.DropJumping(room, start, end, metaItem);
                     }
                 }
 

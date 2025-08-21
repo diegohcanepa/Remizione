@@ -5,12 +5,11 @@ using Microsoft.Xna.Framework;
 namespace Remizione
 {
     /// <summary>
-    /// LootBag
+    /// Loot
     /// </summary>
-    public sealed class LootBag : Pickup
+    public sealed class Loot : Pickup
     {
         private readonly FloatTween altitudeTween = new();
-        private readonly ImageSprite icon;
         private readonly FloatTween opacityTween = new();
         private readonly FloatTween xTween = new();
         private readonly FloatTween yTween = new();
@@ -18,33 +17,18 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public LootBag(GameSession session, string name)
+        public Loot(GameSession session, string name)
             : base(session, name)
         {
+            Atlas = Atlases.UI;
+            CollisionDetection = false;
             DepthOffset = -2;
             IgnoreThrowables = true;
-            PickUpSound = Sound.Find(SoundNames.PickupBag);
-            Scale = new(.75f);
-
-            icon = new ImageSprite(Game)
-            {
-                PivotOrigin = RectanglePoint.Bottom,
-                Scale = ScaleInfo.UIElement.Tiny
-            };
+            PickUpSound = Sound.Find(SoundNames.PickupGeneric);
+            Scale = ScaleInfo.UIElement.Tiny;
         }
 
         #endregion
-
-        protected override void OnDraw(GameTime gameTime)
-        {
-            if (icon.Image == null)
-            base.OnDraw(gameTime);
-            else
-            {
-                icon.Position = Position;
-                icon.Draw(gameTime);
-            }
-        }
 
         // DropCore
         private bool DropCore(GameRoom room, Vector2 position, MetaItem metaItem)
@@ -52,15 +36,23 @@ namespace Remizione
             if (Session.Room == null)
                 return false;
 
-            ItemName = metaItem.Name;
-            LocalizedDisplayName = $"{TextRepository.GetValue("Prop.Bag")} ({LocalizedDisplayName})";
+            this.Sprite.ClearAnimations();
+            var anim = this.Sprite.AddAnimation(metaItem.Name);
+            anim.AddFrame(metaItem.Name, 1000);
 
+            DisplayName = metaItem.LocalizedName;
+            ItemName = metaItem.Name;
             Position = position;
             room.Children.Add(this);
 
-            icon.Image = metaItem.Image;
-
             return true;
+        }
+
+        // Float
+        private void Float()
+        {
+            altitudeTween.Start(TweenStyle.QuadraticIn, 0, 1, 250, -1);
+            Tweens.AltitudeTween = altitudeTween;
         }
 
         // Drop
@@ -69,7 +61,7 @@ namespace Remizione
             if (!DropCore(room, position, metaItem))
                 return;
 
-            altitudeTween.Start(TweenStyle.QuadraticIn, 8, 0, 250);
+            altitudeTween.Start(TweenStyle.QuadraticIn, 8, 0, 250, Float);
             opacityTween.Start(TweenStyle.CubicIn, 0, 1, 100);
 
             Tweens.AltitudeTween = altitudeTween;
@@ -79,6 +71,7 @@ namespace Remizione
         // DropJumping
         public void DropJumping(GameRoom room, Vector2 startPos, Vector2 endPos, MetaItem metaItem)
         {
+            // Fall
             void Fall(Vector2 endPos)
             {
                 yTween.Start(TweenStyle.QuadraticIn, Y, endPos.Y, 200, Bounce);
@@ -96,6 +89,7 @@ namespace Remizione
             {
                 PlaySound(SoundNames.LootBagLand);
                 DepthOffset = -2;
+                Float();
             }
 
             DepthOffset = 12;

@@ -105,8 +105,25 @@ namespace Remizione
 
         #endregion
 
+        // Activate
+        public void Activate()
+        {
+            if (item != null)
+            {
+                icon.Scale = ScaleInfo.UIElement.Medium;
+            }
+        }
+
         // BoundingBox
         public RectangleF BoundingBox => slotImage.BoundingBox;
+
+        // Deactivate
+        public void Deactivate()
+        {
+            icon.Tweens.Reset();
+            icon.Rotation = 0;
+            icon.Scale = ScaleInfo.UIElement.Small;
+        }
 
         // Index
         public int Index => grid.IndexOf(this);

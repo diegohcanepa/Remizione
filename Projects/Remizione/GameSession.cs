@@ -108,7 +108,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(GameRoom));
             scriptRegistry.RegisterEntity(typeof(HellGoat));
             scriptRegistry.RegisterEntity(typeof(IsometricProp));
-            scriptRegistry.RegisterEntity(typeof(LootBag));
+            scriptRegistry.RegisterEntity(typeof(Loot));
             scriptRegistry.RegisterEntity(typeof(OcculusMinion));
             scriptRegistry.RegisterEntity(typeof(OutgoingGhostCar));
             scriptRegistry.RegisterEntity(typeof(Pickup));

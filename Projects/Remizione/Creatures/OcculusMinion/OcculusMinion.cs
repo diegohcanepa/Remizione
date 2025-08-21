@@ -14,6 +14,7 @@ namespace Remizione
             AnimationSettings.SupressAll();
             DamageStyle = DamageStyle.Blink;
             FastMoveFactor = 3;
+            Guts = 7;
             ShadowSpotSize = 0;
 
             _ = new OcculusMinionDecideState(AIStateMachine);

@@ -272,12 +272,27 @@ namespace Remizione
             {
                 if (Room != null)
                 {
-                    var guts = new Guts(Session, Guts)
+                    var gutScale = BodySize switch
                     {
-                        Position = Position
+                        ActorSize.Small => Vector2.One,
+                        ActorSize.Medium => Vector2.One * 1.25f,
+                        _ => Vector2.One * 1.5f
                     };
+
+                    var guts = new Guts(Session, Guts, gutScale)
+                    {
+                        Position = Position,
+                    };
+
                     Room.Children.Add(guts);
-                    guts.PlaySound(SoundNames.Guts);
+
+                    _ = BodySize switch
+                    {
+                        ActorSize.Small => guts.PlaySound(SoundNames.GutsSmall),
+                        ActorSize.Medium => guts.PlaySound(SoundNames.GutsMedium),
+                        _ => guts.PlaySound(SoundNames.GutsLarge)
+                    };
+
                     Unparent();
                 }
             }
@@ -345,7 +360,7 @@ namespace Remizione
             LastKnownAttacker = attacker;
             FaceTo(attacker);
 
-            Stand();
+            //Stand();
             StateMachine.ChangeState(ActorStateNames.Hurt);
         }
 

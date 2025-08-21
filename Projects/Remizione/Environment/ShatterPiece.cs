@@ -124,5 +124,12 @@ namespace Remizione
             get => image.Opacity;
             set => image.Opacity = value;
         }
+
+        // Scale
+        public Vector2 Scale
+        {
+            get => image.Scale;
+            set => image.Scale = value;
+        }
     }
 }

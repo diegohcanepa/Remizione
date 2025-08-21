@@ -12,7 +12,7 @@ namespace Remizione
         private readonly ShatterPiece[] pieces;
 
         // Constructor
-        public Guts(GameSession session, int amount)
+        public Guts(GameSession session, int amount, Vector2 scale)
             : base(session, string.Empty)
         {
             Atlas = Atlases.Environment;
@@ -27,7 +27,8 @@ namespace Remizione
                 {
                     pieces[i] = new(this, Atlases.Environment.Guts[i])
                     {
-                        Opacity = Randomizer.Next(.7f, 1)
+                        Opacity = Randomizer.Next(.7f, 1),
+                        Scale = scale
                     };
                 }
             }

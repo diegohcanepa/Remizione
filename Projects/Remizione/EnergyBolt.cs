@@ -1,6 +1,5 @@
 ﻿using Adberration;
 using Engendro;
-using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -45,7 +44,7 @@ namespace Remizione
                 BurstSize = new(10, 16),
                 HorizontalSpeed = 50,
                 ParticleLifetime = .3f,
-                Scale = .5f
+                Scale = .75f
             };
 
             Tweens.AltitudeTween = FloatTween.Create(TweenStyle.CubicInOut, 0, 1, 300, -1);

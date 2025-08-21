@@ -36,7 +36,9 @@
 	<FX Name="Gesture1" />
 	<FX Name="GhostCarLoop" />
 	<FX Name="GhostCarStop" />
-	<FX Name="Guts" />
+	<FX Name="GutsLarge" MaxInstances="6" />
+	<FX Name="GutsMedium" MaxInstances="6" />
+	<FX Name="GutsSmall" MaxInstances="6" />
 	<FX Name="ImpactA" MaxInstances="6" />
 	<FX Name="ImpactB" MaxInstances="6" />
 	<FX Name="ItemDiscard" MaxInstances="4" />
@@ -45,10 +47,7 @@
 	<FX Name="LootBagLand" MaxInstances="4" />
 	<FX Name="LootBagJump" MaxInstances="4" />
 	<FX Name="PickupBag" MaxInstances="2" />
-	<FX Name="PickupBottle" MaxInstances="2" />
-	<FX Name="PickupCoin" MaxInstances="2" />
 	<FX Name="PickupGeneric" MaxInstances="2" />
-	<FX Name="PickupKey" MaxInstances="2" />
 	<FX Name="PotteryBreak" MaxInstances="4" Sounds="1..2" />
 	<FX Name="PowerRestored" />
 	<FX Name="Raven" />

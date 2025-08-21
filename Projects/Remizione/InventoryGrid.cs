@@ -362,7 +362,12 @@ namespace Remizione
         public int SelectedSlotIndex
         {
             get => selectedSlotIndex;
-            set => selectedSlotIndex = value;
+            set
+            {
+                SelectedSlot?.Deactivate();
+                selectedSlotIndex = value;
+                SelectedSlot?.Activate();
+            }
         }
     }
 }

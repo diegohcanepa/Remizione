@@ -36,6 +36,34 @@ namespace Remizione
 
         #endregion
 
+        #region Private members
+
+        // CalculateKnockback
+        private Vector2 CalculateKnockback(ActorSize size)
+        {
+            var knockbackBase = Knockback;
+
+            switch (size)
+            {
+                // Small
+                case ActorSize.Small:
+                    return knockbackBase * 1.5f;
+
+                // Medium
+                case ActorSize.Medium:
+                    return knockbackBase * 1f;
+
+                // Large
+                case ActorSize.Large:
+                    return knockbackBase * .3f;
+
+                default:
+                    return knockbackBase;
+            }
+        }
+
+        #endregion
+
         // Action
         public ItemAction Action { get; init; }
 
@@ -50,7 +78,11 @@ namespace Remizione
 
             int damageAmount = Damage.Roll();
 
-            target.TakeDamage(attacker, damageAmount, Knockback, ImpactWord);
+            var finalKnockback = Knockback;
+            if (target is Actor actor)
+                finalKnockback = CalculateKnockback(actor.BodySize);
+
+            target.TakeDamage(attacker, damageAmount, finalKnockback, ImpactWord);
             target.ApplyDamage(attacker);
 
             return true;
