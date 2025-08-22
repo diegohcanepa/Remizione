@@ -20,6 +20,7 @@ namespace Remizione
         private readonly FloatTween accelerationFactorTween = new();
         private readonly ActorCloseAttackState closeAttackState;
         private readonly ActorConsumeState consumeState;
+        private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
@@ -93,6 +94,22 @@ namespace Remizione
             this.StateMachine.RegisterState(shockZapState);
 
             this.AIStateMachine = new(this);
+
+            if (Atlas?.GetImage(Sprite.ImagePath + "Gut0") != null)
+            {
+                var index = 0;
+                customGuts = new();
+                
+                while (true)
+                {
+                    if (Atlas.GetImage(Sprite.ImagePath + $"Gut{index}") is AtlasImage image)
+                        customGuts.Add(image);
+                    else
+                        break;
+
+                    index++;
+                }
+            }
         }
 
         #endregion
@@ -282,7 +299,7 @@ namespace Remizione
                         _ => Vector2.One * 1.5f
                     };
 
-                    var guts = new Guts(Session, Guts, gutScale)
+                    var guts = new Guts(Session, Guts, gutScale, customGuts)
                     {
                         Position = Position,
                     };
@@ -297,6 +314,9 @@ namespace Remizione
                     };
 
                     Unparent();
+
+                    if (IsPlayer)
+                        Session.AwaitRoutine(RoutineNames.GameOver);
                 }
             }
             else
@@ -342,6 +362,9 @@ namespace Remizione
         {
             shadowSpot.Draw(gameTime);
         }
+
+        // OnFindEnemy
+        protected virtual GameThing? OnFindEnemy() => null;
 
         // OnHurt
         protected override void OnHurt(GameThing attacker, int damage, Vector2 knockback)
@@ -586,7 +609,15 @@ namespace Remizione
         public float FastMoveFactor { get; set; } = 1;
 
         // FindEnemy
-        public virtual GameThing? FindEnemy() => LastKnownAttacker;
+        public GameThing? FindEnemy()
+        {
+            var result = OnFindEnemy();
+            
+            if (result?.IsDead == true)
+                result = null;  
+
+            return result;
+        }
 
         // FootstepSound
         [ScriptProperty]
@@ -663,9 +694,6 @@ namespace Remizione
 
         // InventorySelectedItemName
         public string InventorySelectedItemName { get; set; } = string.Empty;
-
-        // IsAttacking
-        public bool IsAttacking => StateMachine.CurrentState is ActorCloseAttackState;
 
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }

@@ -9,6 +9,7 @@
 	<!-- Music -->
 	<Music Name="Arrival" MaxInstances="2" />
 	<Music Name="FirstSteps" MaxInstances="2" />
+	<Music Name="GameOver" MaxInstances="2" />
 	<Music Name="PilgrimPath01" MaxInstances="2" Tags="PilgrimPath" />
 	<Music Name="ThemePark" MaxInstances="2" />
 	

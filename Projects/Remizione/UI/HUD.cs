@@ -63,7 +63,7 @@ namespace Remizione
         {
             if (session.IsHUDVisible)
             {
-                //if (session.GameplayMode == GameplayMode.Survival)
+                if (session.GameplayMode == GameplayMode.Survival)
                 {
                     if (!session.IsConsoleVisible)
                     {
@@ -71,7 +71,7 @@ namespace Remizione
                         EquipmentSlot.Draw(gameTime);
                     }
 
-                    //if (session.Room is ProceduralRoom)
+                    if (session.Room is ProceduralRoom)
                     {
                         TrincketSlot.Draw(gameTime);
                         healthMeter.Draw(gameTime);

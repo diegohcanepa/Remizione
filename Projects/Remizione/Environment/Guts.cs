@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 
 namespace Remizione
 {
@@ -9,10 +10,10 @@ namespace Remizione
     /// </summary>
     public class Guts : GameThing
     {
-        private readonly ShatterPiece[] pieces;
+        private readonly List<ShatterPiece> pieces = [];
 
         // Constructor
-        public Guts(GameSession session, int amount, Vector2 scale)
+        public Guts(GameSession session, int amount, Vector2 scale, IList<AtlasImage>? extraImages)
             : base(session, string.Empty)
         {
             Atlas = Atlases.Environment;
@@ -20,16 +21,27 @@ namespace Remizione
             PivotOrigin = RectanglePoint.Center;
             Opacity = .3f;
 
-            pieces = new ShatterPiece[Math.Min(amount, Atlases.Environment.Guts.Count)];
-            if (pieces.Length > 0)
+            // Guts pieces
+            var guts = Math.Min(amount, Atlases.Environment.Guts.Count);
+            if (guts > 0)
             {
-                for (var i = 0; i < pieces.Length; i++)
+                for (var i = 0; i < guts; i++)
                 {
-                    pieces[i] = new(this, Atlases.Environment.Guts[i])
+                    var piece = new ShatterPiece(this, Atlases.Environment.Guts[i])
                     {
-                        Opacity = Randomizer.Next(.7f, 1),
                         Scale = scale
                     };
+
+                    pieces.Add(piece);
+                }
+            }
+
+            // Extra pieces
+            if (extraImages != null)
+            {
+                for (var i = 0; i < extraImages.Count; i++)
+                {
+                    pieces.Add(new ShatterPiece(this, extraImages[i]));
                 }
             }
 
@@ -43,7 +55,7 @@ namespace Remizione
         {
             base.OnDraw(gameTime);
 
-            for (var i = 0; i < pieces.Length; i++)
+            for (var i = 0; i < pieces.Count; i++)
             {
                 pieces[i].Draw(gameTime);
             }
@@ -53,7 +65,7 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            for (var i = 0; i < pieces.Length; i++)
+            for (var i = 0; i < pieces.Count; i++)
             {
                 pieces[i].Launch();
                 RenderLayer = RenderLayer.Background;
@@ -67,7 +79,7 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-            for (var i = 0; i < pieces.Length; i++)
+            for (var i = 0; i < pieces.Count; i++)
             {
                 pieces[i].Update(gameTime);
             }

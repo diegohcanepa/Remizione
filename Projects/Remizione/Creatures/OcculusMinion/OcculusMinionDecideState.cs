@@ -16,8 +16,11 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (Owner.LastKnownAttacker == null)
+            var enemy = Owner.FindEnemy();
+
+            if (enemy == null)
                 StateMachine.ChangeState(AIStateName.Patrol);
+
             else
                 StateMachine.ChangeState(AIStateName.Charge);
         }

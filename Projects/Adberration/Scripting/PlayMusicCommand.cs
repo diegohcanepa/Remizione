@@ -41,9 +41,7 @@ namespace Adberration.Scripting
             AudioManager.Music.Play(name, isLooped, fade, volume, pitch);
 
             if (HasArg(ClearTagArg))
-            {
                 AudioManager.Music.CurrentTag = string.Empty;
-            }
         }
     }
 }

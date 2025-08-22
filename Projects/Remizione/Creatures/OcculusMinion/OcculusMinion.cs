@@ -23,6 +23,10 @@ namespace Remizione
 
         #region Protected members
 
+        // OnFindEnemy
+        protected override GameThing? OnFindEnemy() => LastKnownAttacker;
+
+        // OnHurt
         protected override void OnHurt(GameThing attacker, int damage, Vector2 knockback)
         {
             base.OnHurt(attacker, damage, knockback);

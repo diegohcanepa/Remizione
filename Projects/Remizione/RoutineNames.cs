@@ -5,5 +5,6 @@
     /// </summary>
     internal static class RoutineNames
     {
+        internal const string GameOver = "GameOver";
     }
 }

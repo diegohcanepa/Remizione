@@ -487,15 +487,6 @@ namespace Remizione
                 return holePolyInflated.BoundingRectangleF.Intersects(requester.GetAbsoluteBounds(requester.HotspotDetectorArea));
         }
 
-        // CanInteract
-        public bool CanInteract(Actor requester, Vector2 mousePos)
-        {
-            if (!CanInteractCore(requester))
-                return false;
-
-            return RuntimeHotspot.Contains(mousePos);
-        }
-
         // CellMargin
         [ScriptProperty]
         public int CellMargin { get; set; } = 1;
@@ -919,6 +910,10 @@ namespace Remizione
         [ScriptProperty]
         public bool PreventKnockback { get; set; }
 
+        // Reheal
+        [ScriptMethod]
+        public virtual void Reheal() => Health = MaxHealth;
+
         // RenderLayer
         [ScriptProperty]
         public RenderLayer RenderLayer
@@ -936,10 +931,6 @@ namespace Remizione
 
         // RenderLayerDepth
         public override int RenderLayerDepth => renderLayerDepth;
-
-        // Replenish
-        [ScriptMethod]
-        public virtual void Replenish() => Health = MaxHealth;
 
         // Room
         public new GameRoom? Room => Parent as GameRoom;

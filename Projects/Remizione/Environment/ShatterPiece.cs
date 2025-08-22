@@ -14,7 +14,7 @@ namespace Remizione
         private float angularVelocity;
         private const float bounceFactor = .8f;
         private float delayTimer;
-        private const float gravity = 300;
+        private const float gravity = 350;
         private float groundY;
         private readonly ImageSprite image;
         private float launchDelay;

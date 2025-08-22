@@ -14,8 +14,5 @@
             PowerBonus = 1;
             PlacementPhase = PlacementPhase.Creature;
         }
-
-        // FindEnemy
-        public override GameThing? FindEnemy() => Session.Player;
     }
 }

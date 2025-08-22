@@ -20,10 +20,10 @@ namespace Remizione
         {
             cooldown = 0;
 
-            if (Owner.LastKnownAttacker != null)
+            if (Owner.FindEnemy() is GameThing enemy)
             {
                 Owner.FastMove = true;
-                Owner.MoveTo(Owner.LastKnownAttacker.Position);
+                Owner.MoveTo(enemy.Position);
                 Owner.LastKnownAttacker = null;
             }
         }

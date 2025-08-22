@@ -712,6 +712,18 @@ namespace Adberration
         [ScriptProperty]
         public bool AllowSaving { get; set; } = true;
 
+        // AwaitRoutine
+        public bool AwaitRoutine(string name)
+        {
+            if (ScriptLibrary.GetRoutine(name) is Script script)
+            {
+                AwaitScript(script);
+                return true;
+            }
+
+            return false;
+        }
+
         // AwaitingScript
         public Script? AwaitingScript
         {
