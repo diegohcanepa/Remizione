@@ -7,11 +7,8 @@ namespace Remizione
     /// </summary>
     public sealed class ObjectPools(GameSession session)
     {
-        // Chilis
-        public ObjectPool<ChiliThrowable> Chilis { get; } = new ObjectPool<ChiliThrowable>(() => new ChiliThrowable(session), 50);
-
         // Ducks
-        public ObjectPool<DuckThrowable> Ducks { get; } = new ObjectPool<DuckThrowable>(() => new DuckThrowable(session), 50);
+        public ObjectPool<ThrownDuck> Ducks { get; } = new ObjectPool<ThrownDuck>(() => new ThrownDuck(session), 50);
 
         // EnergyBolts
         public ObjectPool<EnergyBolt> EnergyBolts { get; } = new ObjectPool<EnergyBolt>(() => new EnergyBolt(session), 100);
@@ -23,11 +20,8 @@ namespace Remizione
         public ObjectPool<FloatingText> FloatingTexts { get; } = new ObjectPool<FloatingText>(() => new FloatingText(session), 30);
 
         // GetThrowable
-        public Throwable? GetThrowable(string itemName)
+        public ThrownItem? GetThrowable(string itemName)
         {
-            if (itemName == "Chili")
-                return Chilis.Get();
-
             if (itemName == "Duck")
                 return Ducks.Get();
 
@@ -35,13 +29,10 @@ namespace Remizione
         }
 
         // ReturnThrowable
-        public void ReturnThrowable(Throwable throwable)
+        public void ReturnThrowable(ThrownItem item)
         {
-            if (throwable is DuckThrowable duck)
+            if (item is ThrownDuck duck)
                 Ducks.Return(duck);
-
-            if (throwable is ChiliThrowable chili)
-                Chilis.Return(chili);
         }
     }
 }

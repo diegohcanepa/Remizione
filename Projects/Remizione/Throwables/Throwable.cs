@@ -174,7 +174,7 @@ namespace Remizione
             if (HasParent && Item?.Owner is Actor player)
             {
                 Unparent();
-                Session.ObjectPools.ReturnThrowable(this);
+                //Session.ObjectPools.ReturnThrowable(this);
                 player.Inventory.Junk.Add(Item.Name, 1);
             }
         }

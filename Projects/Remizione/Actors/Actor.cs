@@ -206,9 +206,9 @@ namespace Remizione
         // UpdateDirection
         private void UpdateDirection()
         {
-            if (Velocity.X != 0)
+            if (Sprite.Velocity.X != 0)
             {
-                if (Velocity.X < 0)
+                if (Sprite.Velocity.X < 0)
                     Sprite.FlipLeft();
                 else
                     Sprite.FlipRight();

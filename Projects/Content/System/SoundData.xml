@@ -41,7 +41,7 @@
 	<FX Name="GutsSmall" MaxInstances="6" />
 	<FX Name="ImpactA" MaxInstances="6" />
 	<FX Name="ImpactB" MaxInstances="6" />
-	<FX Name="ItemDiscard" MaxInstances="4" />
+	<FX Name="ItemDiscard" MaxInstances="4" />	
 	<FX Name="ItemEquip" MaxInstances="4" />
 	<FX Name="Lightning" MaxInstances="4" />
 	<FX Name="LootBagLand" MaxInstances="4" />

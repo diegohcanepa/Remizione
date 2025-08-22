@@ -1,15 +1,16 @@
 ﻿using Engendro.Audio;
+using Microsoft.Xna.Framework;
 
 namespace Remizione
 {
     /// <summary>
-    /// DuckThrowable
+    /// ThrownDuck
     /// </summary>
-    public sealed class DuckThrowable : Throwable
+    public sealed class ThrownDuck : ThrownItem
     {
         // Constructor
-        public DuckThrowable(GameSession session)
-            : base(session, 40, 300, true)
+        public ThrownDuck(GameSession session)
+            : base(session, new Vector2(110, -50), .8f, .6f, 500, 10)
         {
             const string basePrefix = "ThrowableDuck";
 

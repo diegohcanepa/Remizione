@@ -49,7 +49,7 @@ namespace Remizione
             {
                 if (frame.IsEvent)
                 {
-                    if (Owner.Session.ObjectPools.GetThrowable(Item.Name) is Throwable throwable)
+                    if (Owner.Session.ObjectPools.GetThrowable(Item.Name) is ThrownItem throwable)
                     {
                         if (Owner.WhooshSound != null)
                             Owner.PlaySound(Owner.WhooshSound);

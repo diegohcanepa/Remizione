@@ -304,8 +304,5 @@ namespace Adberration
         {
             Parent?.Children.Remove(this);
         }
-
-        // Velocity
-        public Vector2 Velocity => Sprite.Velocity;
     }
 }

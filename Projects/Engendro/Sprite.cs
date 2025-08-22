@@ -109,17 +109,16 @@ namespace Engendro
         protected override void OnUpdate(GameTime gameTime)
         {
             // Applies current time scale value
-            var totalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds * TimeScale;
+            var dt = (float)gameTime.ElapsedGameTime.TotalSeconds * TimeScale;
 
             // Position
             Velocity *= Inertia;
-            Velocity += Acceleration * totalSeconds;
-
-            Position += Velocity * totalSeconds * GetSpeedFactor();
+            Velocity += Acceleration * dt;
+            Position += Velocity * dt * GetSpeedFactor();
 
             // Rotation
             Rotation *= RotationInertia;
-            Rotation += RotationSpeed * totalSeconds;
+            Rotation += RotationSpeed * dt;
 
             // Tweens
             Tweens.Update(gameTime);
