@@ -10,7 +10,7 @@
             : base(session, name)
         {
             Affinity = Affinity.Evil;
-            DamageStyle = DamageStyle.Blink;
+            HitEffect = HitEffect.Blink;
             PowerBonus = 1;
             PlacementPhase = PlacementPhase.Creature;
         }

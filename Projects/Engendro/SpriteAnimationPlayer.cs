@@ -251,6 +251,7 @@ namespace Engendro
             }
             else
             {
+                this.Animation = null;
                 return null;
             }
         }

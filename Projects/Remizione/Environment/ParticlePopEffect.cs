@@ -97,7 +97,7 @@ namespace Remizione
         public float ParticleLifetime { get; init; } = .25f;
 
         // Scale
-        public float Scale { get; init; } = 1; 
+        public float Scale { get; init; } = 1;
 
         // Spawn
         public void Spawn(Vector2 position, Color splashColor)

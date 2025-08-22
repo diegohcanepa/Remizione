@@ -10,15 +10,15 @@ namespace Remizione
     public sealed class OutgoingGhostCar : IsometricProp
     {
         private readonly Light frontLight;
-        private static readonly Vector2 frontLightPosition = new Vector2(8, 16);
+        private static readonly Vector2 frontLightPosition = new(8, 16);
         private readonly Light rearLight;
-        private static readonly Vector2 rearLightPosition = new Vector2(24, 20);
+        private static readonly Vector2 rearLightPosition = new(24, 20);
 
         // Constructor
         public OutgoingGhostCar(GameSession session, string name)
             : base(session, name)
         {
-            DamageStyle = DamageStyle.Shake;
+            HitEffect = HitEffect.Shake;
 
             this.frontLight = new Light(session.Game, "<rear>")
             {

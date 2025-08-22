@@ -20,14 +20,14 @@ namespace Remizione
     // DamageKind
     public enum DamageKind { None, Physical, Fire, Cold, Lightning, Acid, Poison }
 
-    // DamageStyle
-    public enum DamageStyle { None, Shake, Blink, Animation }
-
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
 
     // GameplayMode
     public enum GameplayMode { Adventure, Survival }
+
+    // HitEffect
+    public enum HitEffect { None, Shake, Blink }
 
     // HitTestSource
     public enum HitTestSource { Hotspot, Collider }

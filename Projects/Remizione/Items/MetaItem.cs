@@ -43,23 +43,16 @@ namespace Remizione
         {
             var knockbackBase = Knockback;
 
-            switch (size)
+            return size switch
             {
                 // Small
-                case ActorSize.Small:
-                    return knockbackBase * 1.5f;
-
+                ActorSize.Small => knockbackBase * 1.5f,
                 // Medium
-                case ActorSize.Medium:
-                    return knockbackBase * 1f;
-
+                ActorSize.Medium => knockbackBase * 1f,
                 // Large
-                case ActorSize.Large:
-                    return knockbackBase * .3f;
-
-                default:
-                    return knockbackBase;
-            }
+                ActorSize.Large => knockbackBase * .3f,
+                _ => knockbackBase,
+            };
         }
 
         #endregion
@@ -83,7 +76,6 @@ namespace Remizione
                 finalKnockback = CalculateKnockback(actor.BodySize);
 
             target.TakeDamage(attacker, damageAmount, finalKnockback, ImpactWord);
-            target.ApplyDamage(attacker);
 
             return true;
         }

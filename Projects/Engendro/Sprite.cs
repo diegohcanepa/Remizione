@@ -112,12 +112,9 @@ namespace Engendro
             var dt = (float)gameTime.ElapsedGameTime.TotalSeconds * TimeScale;
 
             // Position
-            Velocity *= Inertia;
-            Velocity += Acceleration * dt;
             Position += Velocity * dt * GetSpeedFactor();
 
             // Rotation
-            Rotation *= RotationInertia;
             Rotation += RotationSpeed * dt;
 
             // Tweens
@@ -127,9 +124,6 @@ namespace Engendro
         }
 
         #endregion
-
-        // Acceleration
-        public Vector2 Acceleration { get; set; }
 
         // Altitude
         public float Altitude
@@ -299,9 +293,6 @@ namespace Engendro
             }
         }
 
-        // Inertia
-        public float Inertia { get; set; } = 1;
-
         // IsEmpty
         public virtual bool IsEmpty => Width == 0 || Height == 0;
 
@@ -390,9 +381,6 @@ namespace Engendro
                 }
             }
         }
-
-        // RotationInertia
-        public float RotationInertia { get; set; } = 1;
 
         // RotationSpeed
         public float RotationSpeed { get; set; }

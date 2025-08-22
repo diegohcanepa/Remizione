@@ -19,6 +19,7 @@ namespace Remizione
             LootTableName = nameof(Pottery);
             MaxHealth = 6;
             PreventKnockback = true;
+            ShakeOnHit = true;
         }
     }
 }

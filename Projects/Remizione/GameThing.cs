@@ -17,7 +17,6 @@ namespace Remizione
     {
         #region Private fields
 
-        private bool applyDamagePending;
         private readonly Blinker<bool> blinker = new(false, true);
         private PlacementMode colliderPlacement = PlacementMode.Relative;
         private string displayName = string.Empty;
@@ -31,10 +30,8 @@ namespace Remizione
         private float floatingForce;
         private FloatTween? floatingTween;
         private ImpactWord? impactWord;
-        private ImpactWordKind impactWordKind;
         private bool isCollisionDirty;
         private bool isHotspotDirty = true;
-        private Vector2 knockback;
         private readonly Vector2Tween knockbackTween = new();
         private int maxHealth;
         private PathNode[]? pathNodes;
@@ -246,15 +243,6 @@ namespace Remizione
             isCollisionDirty = true;
         }
 
-        // ResetApplyDamageValues
-        private void ResetApplyDamageValues()
-        {
-            applyDamagePending = false;
-            CumulativeDamage = 0;
-            impactWordKind = ImpactWordKind.None;
-            knockback = Vector2.Zero;
-        }
-
         #endregion
 
         #region Protected members
@@ -297,6 +285,9 @@ namespace Remizione
             else
                 return Collider.BoundingRectangleF;
         }
+
+        // IsTakingDamage
+        protected virtual bool IsTakingDamage => IsBlinking;
 
         // OnCollision
         protected virtual void OnCollision(GameThing thing)
@@ -380,8 +371,6 @@ namespace Remizione
         protected override void OnUnload()
         {
             base.OnUnload();
-
-            ResetApplyDamageValues();
 
             if (impactWord != null)
             {
@@ -475,83 +464,6 @@ namespace Remizione
         [ScriptProperty]
         public bool AllowInteraction { get; set; } = true;
 
-        // ApplyDamage
-        public void ApplyDamage(GameThing attacker)
-        {
-            if (!applyDamagePending || IsDead || CumulativeDamage <= 0)
-            {
-                ResetApplyDamageValues();
-                return;
-            }
-
-            if (HurtSound != null)
-                PlaySound(HurtSound);
-
-            if (HurtImpactSound != null)
-                PlaySound(HurtImpactSound);
-
-            if (DamageStyle != DamageStyle.None)
-            {
-                if (DamageStyle == DamageStyle.Shake)
-                {
-                    hurtShakeTween ??= new();
-                    hurtShakeTween.Start(TweenStyle.Linear, Vector2.Zero, HurtShake, 40, 4);
-                }
-
-                // Impact word
-                if (impactWordKind != ImpactWordKind.None && GetImpactWordPosition() is Vector2 wordPos)
-                {
-                    impactWord ??= Session.ImpactWordPool.Get();
-                    impactWord.Show(impactWordKind, wordPos);
-                }
-            }
-
-            if (MaxHealth == 0)
-                return;
-
-            if (CumulativeDamage > Health)
-                CumulativeDamage = Health;
-
-            Health -= (int)CumulativeDamage;
-
-            if (knockback == Vector2.Zero && Health <= 0)
-            {
-                Die();
-            }
-            else
-            {
-                var destination = Position;
-
-                if (X > attacker.X)
-                    destination.X += knockback.X;
-                else
-                    destination.X -= knockback.X;
-
-                var bottomDistance = Math.Abs(Y - attacker.Y);
-                var topDistance = Math.Abs(Y - attacker.BoundingBox.Top);
-
-                if (knockback != Vector2.Zero)
-                {
-                    if (bottomDistance < topDistance)
-                        destination.Y += knockback.Y;
-                    else
-                        destination.Y -= knockback.Y;
-
-                    knockbackTween.Start(TweenStyle.CubicOut, Position, destination, 400, 0);
-                }
-
-                hurtTween ??= new();
-                hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
-
-                if (DamageStyle == DamageStyle.Blink)
-                    blinker.Start(20, 4);
-
-                OnHurt(attacker, (int)CumulativeDamage, knockback);
-            }
-
-            ResetApplyDamageValues();
-        }
-
         // ApproachPosition
         [ScriptProperty]
         public Vector2 ApproachPosition { get; set; }
@@ -633,9 +545,6 @@ namespace Remizione
         [ScriptProperty]
         public Polygon Collider { get; set; } = new();
 
-        // CumulativeDamage
-        public float CumulativeDamage { get; set; }
-
 #if DEBUG
         // DrawBox
         private static void DrawBox(EngendroGame game, RectangleF bounds, Color color)
@@ -653,16 +562,16 @@ namespace Remizione
                 DrawBox(Game, RuntimeHotspot.BoundingRectangleF, Color.Purple * .2f);
         }
 
+        // HitEffect
+        [ScriptProperty]
+        public HitEffect HitEffect { get; set; }
+
         // ShowColliders
         public static bool ShowColliders { get; set; }
 
         // ShowHotspots
         public static bool ShowHotspots { get; set; }
 #endif
-
-        // DamageStyle
-        [ScriptProperty]
-        public DamageStyle DamageStyle { get; set; }
 
         // DeathSound
         [ScriptProperty]
@@ -924,6 +833,10 @@ namespace Remizione
         [ScriptProperty]
         public bool IgnoreWalkArea { get; set; } = true;
 
+        // InvulnerabilityPeriod
+        [ScriptProperty]
+        public bool InvulnerabilityPeriod { get; set; }
+
         // IsBehind
         public bool IsBehind(GameThing thing)
         {
@@ -1072,16 +985,81 @@ namespace Remizione
         // Session
         public new GameSession Session { get; }
 
+        // ShakeOnHit
+        public bool ShakeOnHit { get; set; }
+
         // TakeDamage
         public void TakeDamage(GameThing attacker, int amount, Vector2 knockback, ImpactWordKind impactWordKind)
         {
-            if (IsDead)
+            if (IsDead || amount <= 0)
                 return;
 
-            this.knockback = PreventKnockback ? Vector2.Zero : knockback;
-            this.applyDamagePending = true;
-            this.CumulativeDamage += amount;
-            this.impactWordKind = impactWordKind;
+            if (InvulnerabilityPeriod && IsTakingDamage)
+                return;
+
+            knockback = PreventKnockback ? Vector2.Zero : knockback;
+
+            if (HurtSound != null)
+                PlaySound(HurtSound);
+
+            if (HurtImpactSound != null)
+                PlaySound(HurtImpactSound);
+
+            if (HitEffect == HitEffect.Shake)
+            {
+                hurtShakeTween ??= new();
+                hurtShakeTween.Start(TweenStyle.Linear, Vector2.Zero, HurtShake, 40, 4);
+            }
+
+            // Impact word
+            if (impactWordKind != ImpactWordKind.None && GetImpactWordPosition() is Vector2 wordPos)
+            {
+                impactWord ??= Session.ImpactWordPool.Get();
+                impactWord.Show(impactWordKind, wordPos);
+            }
+
+            if (MaxHealth == 0)
+                return;
+
+            if (amount > Health)
+                amount = Health;
+
+            Health -= amount;
+
+            if (knockback == Vector2.Zero && Health <= 0)
+            {
+                Die();
+            }
+            else
+            {
+                var destination = Position;
+
+                if (X > attacker.X)
+                    destination.X += knockback.X;
+                else
+                    destination.X -= knockback.X;
+
+                var bottomDistance = Math.Abs(Y - attacker.Y);
+                var topDistance = Math.Abs(Y - attacker.BoundingBox.Top);
+
+                if (knockback != Vector2.Zero)
+                {
+                    if (bottomDistance < topDistance)
+                        destination.Y += knockback.Y;
+                    else
+                        destination.Y -= knockback.Y;
+
+                    knockbackTween.Start(TweenStyle.CubicOut, Position, destination, 400, 0);
+                }
+
+                hurtTween ??= new();
+                hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
+
+                if (HitEffect == HitEffect.Blink)
+                    blinker.Start(20, 4);
+
+                OnHurt(attacker, amount, knockback);
+            }
         }
 
         // TerrainParticleColor
@@ -1120,9 +1098,5 @@ namespace Remizione
                 }
             }
         }
-
-        // WorldVersion
-        [ScriptProperty]
-        public int WorldVersion { get; set; } = 1;
     }
 }

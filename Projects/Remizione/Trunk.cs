@@ -11,7 +11,7 @@ namespace Remizione
         public Trunk(GameSession session, string name)
             : base(session, name)
         {
-            DamageStyle = DamageStyle.Shake;
+            HitEffect = HitEffect.Shake;
         }
 
         #region Protected members

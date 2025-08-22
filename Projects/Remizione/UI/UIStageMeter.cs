@@ -16,7 +16,7 @@ namespace Remizione
         private static readonly Color powerTextColor = new(240, 181, 65);
         private readonly Vector2Tween scaleTween = new();
         private readonly GameSession session;
-        private static readonly Color textColor = ColorPalette.Text.Default;    
+        private static readonly Color textColor = ColorPalette.Text.Default;
         private static readonly Vector2 textSize = ScaleInfo.Text.VeryLarge;
         private readonly TextSprite[] values;
 

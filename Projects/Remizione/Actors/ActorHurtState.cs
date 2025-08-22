@@ -11,20 +11,13 @@
         {
         }
 
-        // Enter
-        public override void Enter()
-        {
-            if (Owner.DamageStyle == DamageStyle.Animation)
-                base.Enter();
-        }
-
         // CheckTransitions
         public override string? CheckTransitions()
         {
-            if (Owner.DamageStyle == DamageStyle.Animation && !Owner.AnimationPlayer.IsPlaying)
+            if (Owner.AnimationPlayer.Animation != null && !Owner.AnimationPlayer.IsPlaying)
                 return ActorStateNames.Stand;
 
-            else if (Owner.DamageStyle == DamageStyle.Blink && !Owner.IsBlinking)
+            else if (!Owner.IsBlinking)
                 return ActorStateNames.Stand;
 
             else

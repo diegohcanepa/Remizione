@@ -37,7 +37,7 @@ namespace Remizione
                     if (target == null || target == Owner)
                         continue;
 
-                    if (target is IsometricProp prop && target == Owner.InteractiveTarget)
+                    if (target is IsometricProp && target == Owner.InteractiveTarget)
                     {
                         if (!Owner.Y.IsBetween(target.Position.Y - target.BoundingBox.Height / 2, target.Position.Y))
                             return;
@@ -49,7 +49,6 @@ namespace Remizione
 
                         var damageAmount = MetaItem.Damage.Roll();
                         target.TakeDamage(Owner, damageAmount, MetaItem.Knockback, MetaItem.ImpactWord);
-                        target.ApplyDamage(Owner);
                     }
                 }
             }

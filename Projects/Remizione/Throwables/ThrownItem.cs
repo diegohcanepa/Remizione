@@ -181,7 +181,7 @@ namespace Remizione
         protected override void OnUnload()
         {
             base.OnUnload();
-            
+
             if (scaleTween.IsRunning)
                 ReturnToOwner();
         }

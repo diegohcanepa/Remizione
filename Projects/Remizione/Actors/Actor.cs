@@ -258,6 +258,9 @@ namespace Remizione
         // InputHandler
         protected InputHandler? InputHandler { get; set; }
 
+        // IsTakingDamage
+        protected override bool IsTakingDamage => StateMachine.CurrentState is ActorHurtState || base.IsTakingDamage;
+
         // OnCollision
         protected override void OnCollision(GameThing thing)
         {

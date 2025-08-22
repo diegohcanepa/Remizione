@@ -37,7 +37,7 @@ namespace Remizione
 
                 if (cooldown <= 0)
                     StateMachine.ChangeState(AIStateName.Decide);
-                
+
                 return;
             }
 

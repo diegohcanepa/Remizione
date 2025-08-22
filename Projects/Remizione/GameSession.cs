@@ -21,7 +21,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private enum AttributeName { RandomSeed, WorldVersion }
+        private enum AttributeName { RandomSeed }
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
         private readonly Dictionary<string, MetaItem[]> friendlyItems = [];
@@ -255,10 +255,6 @@ namespace Remizione
             // RandomSeed
             if (sessionNode.Attributes[AttributeName.RandomSeed.ToString()]?.Value is string randomSeedValue)
                 RandomSeed = XmlConvert.ToInt32(randomSeedValue);
-
-            // WorldVersion
-            if (sessionNode.Attributes[AttributeName.WorldVersion.ToString()]?.Value is string worldVersionValue)
-                WorldVersion = XmlConvert.ToInt32(worldVersionValue);
         }
 
         // OnResume
@@ -365,9 +361,6 @@ namespace Remizione
 
             // RandomSeed
             output.WriteAttributeString(AttributeName.RandomSeed.ToString(), XmlConvert.ToString(RandomSeed));
-
-            // WorldVersion
-            output.WriteAttributeString(AttributeName.WorldVersion.ToString(), XmlConvert.ToString(WorldVersion));
         }
 
         #endregion
@@ -394,7 +387,7 @@ namespace Remizione
                 if (value != power)
                 {
                     power = Math.Min(value, RequiredPower);
-                    
+
                     if (power == RequiredPower && !IsPowerRestored)
                     {
                         IsPowerRestored = true;
@@ -553,8 +546,5 @@ namespace Remizione
 
         // StaticThings
         public ReadOnlyCollection<GameThing> StaticThings { get; }
-
-        // WorldVersion
-        public int WorldVersion { get; set; } = 1;
     }
 }

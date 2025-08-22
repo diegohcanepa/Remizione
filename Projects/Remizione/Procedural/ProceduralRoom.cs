@@ -201,7 +201,7 @@ namespace Remizione
             instance.X += instance.BoundingBox.Width / 2;
             Children.Add(instance);
 
-            RequiredPower += thing.PowerBonus; 
+            RequiredPower += thing.PowerBonus;
         }
 
         // Populate
@@ -226,9 +226,6 @@ namespace Remizione
 
                 foreach (var thing in list)
                 {
-                    if (thing.WorldVersion > Session.WorldVersion)
-                        continue;
-
                     if (!placementDataDictionary.TryGetValue(thing.StaticName, out var placementDataList))
                         continue;
 
