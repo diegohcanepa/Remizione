@@ -6,12 +6,12 @@ using System.Collections.Generic;
 namespace Remizione.Scripting
 {
     // PlacementDataCommand
-    // Arguments: {Room} [#chance:Ratio] [#distribution:DistributionStrategy] [#instances:Int32Range] [#progress:Int32Range]
+    // Arguments: {Room} [#chance:Ratio] [#distribution:DistributionStrategy] [#instances:Int32Range] [#stage:Int32Range]
     internal sealed class PlacementDataCommand : NonAwaitableCommand
     {
         // Constructor
         internal PlacementDataCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, ChanceArg, DistributionArg, InstancesArg, ProgressArg)
+            : base(script, source, body, 1, ChanceArg, DistributionArg, InstancesArg, StageArg)
         {
         }
 
@@ -38,11 +38,11 @@ namespace Remizione.Scripting
                 conditions.Add(new ChancePlacementCondition(chance));
             }
 
-            // Progress
-            if (HasArg(ProgressArg))
+            // Stage
+            if (HasArg(StageArg))
             {
-                var progress = Parser.ParseInt32RangeArgument(this, ProgressArg);
-                conditions.Add(new SessionLevelPlacementCondition(progress));
+                var progress = Parser.ParseInt32RangeArgument(this, StageArg);
+                conditions.Add(new StagePlacementCondition(progress));
             }
 
             // Placement data

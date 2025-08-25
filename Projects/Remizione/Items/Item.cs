@@ -84,9 +84,6 @@ namespace Remizione
             }
         }
 
-        // Chance
-        public int Chance => MetaItem.Chance + (Level * 5);
-
         // Container
         public ItemContainer Container { get; private set; }
 
@@ -158,13 +155,13 @@ namespace Remizione
         {
             string value = string.Empty;
 
-            // Chance
-            if (property == ItemProperty.Chance)
-                value = Chance.ToString(CultureInfo.InvariantCulture) + "%";
-
             // Health
-            else if (property == ItemProperty.Health && MetaItem.Health is DiceExpression exp)
+            if (property == ItemProperty.Health && MetaItem.Health is DiceExpression exp)
                 value = exp.GetValueRangeAsString();
+
+            // SkillChance
+            else if (property == ItemProperty.SkillChance)
+                value = SkillChance.ToString(CultureInfo.InvariantCulture) + "%";
 
             return $"{Localization.GetValue(property)}: {value}";
         }
@@ -239,6 +236,9 @@ namespace Remizione
             if (MetaItem.Maximum > 1)
                 Count = MetaItem.Maximum;
         }
+
+        // SkillChance
+        public int SkillChance => MetaItem.SkillChance + (Level * 5);
 
         // ToString
         public override string ToString() => DisplayText;

@@ -4,12 +4,12 @@ using System;
 namespace Remizione
 {
     /// <summary>
-    /// SessionLevelPlacementCondition
+    /// StagePlacementCondition
     /// </summary>
-    public sealed class SessionLevelPlacementCondition : PlacementCondition
+    public sealed class StagePlacementCondition : PlacementCondition
     {
         // Constructor
-        public SessionLevelPlacementCondition(Int32Range range)
+        public StagePlacementCondition(Int32Range range)
         {
             this.Range = range;
         }

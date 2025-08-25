@@ -51,7 +51,7 @@ namespace Remizione
     public enum ItemAction { None, Throw }
 
     // ItemProperty
-    public enum ItemProperty { Chance, Durability, Health }
+    public enum ItemProperty { Durability, Health, SkillChance }
 
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, Global, MuzzleFlash, Outdoor, Player }
@@ -82,13 +82,10 @@ namespace Remizione
     public enum PlacementDistributionStrategy { Random, Clump, NoiseMap }
 
     // PlacementPhase
-    public enum PlacementPhase { None, Terrain, NonSolidDecoration, RoomConnector, NaturalObject, ArtificialObject, Creature }
+    public enum PlacementPhase { None, Terrain, NonSolidDecoration, Tower, NaturalObject, ArtificialObject, Creature }
 
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
-
-    // ProceduralRoomTheme
-    public enum ProceduralRoomTheme { Outdoor }
 
     // PropState
     public enum PropState { None, Closed, Open, Locked, Empty }

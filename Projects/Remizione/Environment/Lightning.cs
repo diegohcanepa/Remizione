@@ -57,8 +57,6 @@ namespace Remizione
         {
             sprite.Position = position;
             sprite.Player.Play("Default", false);
-            //effect.Start(RectangleF.Inflate(target.HitBox, 10, 0));
-            //target.AddVisualEffect(effect);
             InputManager.DefaultPlayer.GamePad.Vibrate(200, .4f, .4f);
             session.Camera.Shake(TweenStyle.Linear, new Vector2(.5f), 66, 4);
             Sound.Play(SoundNames.Lightning);

@@ -41,16 +41,16 @@ namespace Remizione
         // Update
         internal void Update(GameTime gameTime)
         {
+            Lightning.Update(gameTime);
+            Rain.Update(gameTime);
+
             if (session.GameplayMode == GameplayMode.Survival && session.Room is ProceduralRoom)
             {
-                if (session.RemainingTime <= GameSettings.TimeCritical && !alarmTween.IsRunning)
+                if (session.RemainingTime.IsBetween(1, GameSettings.TimeCritical) && !alarmTween.IsRunning)
                 {
                     alarmSound = Sound.Play(SoundNames.ExitAlarm, true);
                     alarmTween.Start(TweenStyle.QuadraticInOut, ColorPalette.GlobalLight.Default, ColorPalette.GlobalLight.Critical, 400, -1);
                 }
-
-                Lightning.Update(gameTime);
-                Rain.Update(gameTime);
 
                 if (alarmTween.IsRunning)
                     alarmTween.Update(gameTime);

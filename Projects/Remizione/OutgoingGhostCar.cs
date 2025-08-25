@@ -88,10 +88,6 @@ namespace Remizione
             Tweens.PositionTween = Vector2Tween.Create(TweenStyle.CubicIn, Position, Position + DestinationOffset, 2000);
         }
 
-        // RoomTheme
-        [ScriptProperty]
-        public ProceduralRoomTheme RoomTheme { get; set; }
-
         // TurnOn
         [ScriptMethod]
         public void TurnOn()

@@ -192,8 +192,8 @@ namespace Remizione
 
             if (target != null)
             {
-                var chance = item.Chance <= 0 ? 100 : item.Chance - Math.Abs(target.ChancePenalty);
-                chanceText.Text = $"{Localization.GetValue(ItemProperty.Chance)}: {chance}%";
+                var chance = item.SkillChance <= 0 ? 100 : item.SkillChance - Math.Abs(target.SkillChancePenalty);
+                chanceText.Text = $"{Localization.GetValue(ItemProperty.SkillChance)}: {chance}%";
 
                 if (chance == 100)
                     chanceText.Color = ColorPalette.Text.Green;

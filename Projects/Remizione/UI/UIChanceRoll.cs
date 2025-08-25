@@ -238,7 +238,7 @@ namespace Remizione
             this.prop = prop;
             this.successState = successState;
 
-            successChance = item.Chance - prop.ChancePenalty;
+            successChance = item.SkillChance - prop.SkillChancePenalty;
             Success = finalValue <= successChance;
 
             IsRolling = true;

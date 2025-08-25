@@ -281,7 +281,7 @@ namespace Remizione
         // OnCollision
         protected override void OnCollision(GameThing thing)
         {
-            if (thing is Actor)
+            if (thing.ContactDamageKind == DamageKind.Lightning)
                 PerformShockZap(thing);
         }
 

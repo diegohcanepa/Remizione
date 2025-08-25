@@ -115,7 +115,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(Pottery));
             scriptRegistry.RegisterEntity(typeof(ProceduralRoom));
             scriptRegistry.RegisterEntity(typeof(Prop));
-            scriptRegistry.RegisterEntity(typeof(RoomConnector));
+            scriptRegistry.RegisterEntity(typeof(Tower));
             scriptRegistry.RegisterEntity(typeof(Trunk));
             scriptRegistry.RegisterEntity(typeof(WaterPuddle));
 
@@ -232,10 +232,6 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(GameplayMode)]?.Value is string gameplayMode)
                 GameplayMode = Enum.Parse<GameplayMode>(gameplayMode);
 
-            // Stage
-            if (sessionNode.Attributes[nameof(Stage)]?.Value is string stage)
-                this.Stage = XmlConvert.ToInt32(stage);
-
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
                 Player = GetEntity<Actor>(player);
@@ -255,6 +251,14 @@ namespace Remizione
             // RandomSeed
             if (sessionNode.Attributes[AttributeName.RandomSeed.ToString()]?.Value is string randomSeedValue)
                 RandomSeed = XmlConvert.ToInt32(randomSeedValue);
+
+            // Runs
+            if (sessionNode.Attributes[nameof(Runs)]?.Value is string runs)
+                this.Runs = XmlConvert.ToInt32(runs);
+
+            // Stage
+            if (sessionNode.Attributes[nameof(Stage)]?.Value is string stage)
+                this.Stage = XmlConvert.ToInt32(stage);
         }
 
         // OnResume
@@ -334,6 +338,9 @@ namespace Remizione
             Environment.Update(gameTime);
             HUD.Update(gameTime);
             OverlayTexts.Update(gameTime);
+
+            if (RemainingTime <= 0 && !IsAwaiting)
+                AwaitRoutine(RoutineNames.GameOver);
         }
 
         // OnWrite
@@ -341,9 +348,6 @@ namespace Remizione
         {
             // GameplayMode
             output.WriteAttributeString(nameof(GameplayMode), XmlConvert.ToString((int)GameplayMode));
-
-            // Stage
-            output.WriteAttributeString(nameof(Stage), XmlConvert.ToString(Stage));
 
             // NextRainCooldown
             output.WriteAttributeString(nameof(NextRainCooldown), XmlConvert.ToString(NextRainCooldown));
@@ -361,13 +365,15 @@ namespace Remizione
 
             // RandomSeed
             output.WriteAttributeString(AttributeName.RandomSeed.ToString(), XmlConvert.ToString(RandomSeed));
+
+            // Runs
+            output.WriteAttributeString(nameof(GameplayMode), XmlConvert.ToString(Runs));
+
+            // Stage
+            output.WriteAttributeString(nameof(Stage), XmlConvert.ToString(Stage));
         }
 
         #endregion
-
-        // ChanceSuccess
-        [ScriptProperty]
-        public bool ChanceSuccess => HUD.ChanceRoll.Success;
 
         // ClearOverlayTexts
         [ScriptMethod(CodingContext.Any)]
@@ -376,27 +382,6 @@ namespace Remizione
         // DialogOptionId
         [ScriptProperty]
         public int DialogOptionId { get; set; }
-
-        // Power
-        [ScriptProperty]
-        public int Power
-        {
-            get => power;
-            set
-            {
-                if (value != power)
-                {
-                    power = Math.Min(value, RequiredPower);
-
-                    if (power == RequiredPower && !IsPowerRestored)
-                    {
-                        IsPowerRestored = true;
-                        Sound.Play(SoundNames.PowerRestored);
-                        HUD.Message.Show(HUDMessageKind.PowerRestored);
-                    }
-                }
-            }
-        }
 
         // Environment
         public Environment Environment { get; }
@@ -494,6 +479,38 @@ namespace Remizione
             }
         }
 
+        // KillPlayer
+        [ScriptMethod]
+        public void KillPlayer()
+        {
+            if (Player != null && !Player.IsDead)
+            {
+                Environment.Lightning.Show(Player.Position);
+                Player.Die();
+            }
+        }
+
+        // Power
+        [ScriptProperty]
+        public int Power
+        {
+            get => power;
+            set
+            {
+                if (value != power)
+                {
+                    power = Math.Min(value, RequiredPower);
+
+                    if (power == RequiredPower && !IsPowerRestored)
+                    {
+                        IsPowerRestored = true;
+                        Sound.Play(SoundNames.PowerRestored);
+                        HUD.Message.Show(HUDMessageKind.PowerRestored);
+                    }
+                }
+            }
+        }
+
         // PreviousRoom
         [ScriptProperty]
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
@@ -518,6 +535,9 @@ namespace Remizione
         // Room
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
+
+        // Runs
+        public int Runs { get; set; }
 
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)

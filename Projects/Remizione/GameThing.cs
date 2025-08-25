@@ -155,25 +155,6 @@ namespace Remizione
             }
         }
 
-        // Die
-        private void Die()
-        {
-            if (DeathSound != null)
-                PlaySound(DeathSound);
-
-            if (Room != null)
-            {
-                for (var i = 0; i < PowerBonus; i++)
-                {
-                    var orb = Session.ObjectPools.EnergyBolts.Get();
-                    orb.Launch(Room, Position, BoundingBox);
-                }
-            }
-
-            OnDie();
-            DropLoot();
-        }
-
         // GetImpactWordPosition
         private Vector2? GetImpactWordPosition()
         {
@@ -535,6 +516,31 @@ namespace Remizione
         // Collider
         [ScriptProperty]
         public Polygon Collider { get; set; } = new();
+
+        // ContactDamageKind
+        public DamageKind ContactDamageKind { get; set; }
+
+        // Die
+        [ScriptMethod]
+        public void Die()
+        {
+            Health = 0;
+
+            if (DeathSound != null)
+                PlaySound(DeathSound);
+
+            if (Room != null)
+            {
+                for (var i = 0; i < PowerBonus; i++)
+                {
+                    var energyBolt = Session.ObjectPools.EnergyBolts.Get();
+                    energyBolt.Launch(Room, Position, BoundingBox);
+                }
+            }
+
+            OnDie();
+            DropLoot();
+        }
 
 #if DEBUG
         // DrawBox
@@ -972,6 +978,10 @@ namespace Remizione
                 return hotspotPoly;
             }
         }
+
+        // ScoreValue
+        [ScriptProperty]
+        public int ScoreValue { get; set; }
 
         // Session
         public new GameSession Session { get; }

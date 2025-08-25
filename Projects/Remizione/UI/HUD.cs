@@ -105,7 +105,6 @@ namespace Remizione
             TrincketSlot.Update(gameTime);
             healthMeter.Update(gameTime);
             ChanceRoll.Update(gameTime);
-
             prompt.Update(gameTime);
 
             Log.Update(gameTime);

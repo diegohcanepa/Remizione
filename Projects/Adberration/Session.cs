@@ -33,7 +33,6 @@ namespace Adberration
         private readonly Stack<Room> busyRooms = new();
         private readonly Stack<Script> busyRoomsScripts = new();
         private bool canRun;
-        private bool disableSaveOnComplete;
         private readonly Dictionary<string, Entity> entities = [];
         private readonly NamedObjectCollection<Entity> entityList = [];
         private string? musicTagRoomScope;
@@ -329,7 +328,7 @@ namespace Adberration
                     EndOutcome();
 
                 if (pendingSave)
-                    Save(disableSaveOnComplete);
+                    Save();
 
                 State = GameSessionState.Idle;
             }
@@ -1074,10 +1073,7 @@ namespace Adberration
         }
 
         // Save
-        public bool Save() => Save(false);
-
-        // Save
-        public bool Save(bool disable)
+        public bool Save()
         {
             AssertInitialized();
             CodeContract.NotDisposed(nameof(Session), IsDisposed);
@@ -1094,21 +1090,12 @@ namespace Adberration
             if (!CanSave)
             {
                 if (AllowSaving)
-                {
-                    disableSaveOnComplete = disable;
                     pendingSave = true;
-                }
 
                 return false;
             }
 
             IsSaving = true;
-
-            if (disableSaveOnComplete)
-            {
-                disableSaveOnComplete = false;
-                AllowSaving = false;
-            }
 
             OnSave();
             var sessionData = WriteSessionData();

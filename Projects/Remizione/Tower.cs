@@ -4,20 +4,20 @@ using Microsoft.Xna.Framework;
 namespace Remizione
 {
     /// <summary>
-    /// RoomConnector
+    /// Tower
     /// </summary>
-    public class RoomConnector : IsometricProp
+    public class Tower : IsometricProp
     {
         private bool isOpened;
         private const string ClosedState = "Closed";
         private const string OpenState = "Open";
 
         // Constructor
-        public RoomConnector(GameSession session, string name)
+        public Tower(GameSession session, string name)
             : base(session, name)
         {
             this.Atlas = Atlases.Environment;
-            this.PlacementPhase = PlacementPhase.RoomConnector;
+            this.PlacementPhase = PlacementPhase.Tower;
         }
 
         #region Protected members
@@ -62,10 +62,6 @@ namespace Remizione
                 GhostCar?.TurnOn();
             }
         }
-
-        // RoomTheme
-        [ScriptProperty]
-        public ProceduralRoomTheme RoomTheme { get; set; }
 
         // NW
         [ScriptProperty(CodingContext.EntityDeclaration)]

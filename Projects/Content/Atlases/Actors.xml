@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:d17d90b98a965a0adaf04a89ba978332:9c59ca1520d1ecdeb466780966f21e23:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:015cae6f6648035c0a2cb588ea3ea30d:fec20c5bccf6dd697ef22e9915f22ea8:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -54,8 +54,6 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Edmund-assets/Consume03.png" x="380" y="43" w="28" h="25"/>
     <sprite n="Edmund-assets/Consume04.png" x="410" y="43" w="28" h="25"/>
     <sprite n="Edmund-assets/Gut0.png" x="500" y="43" w="9" h="10"/>
-    <sprite n="Edmund-assets/Gut1.png" x="502" y="19" w="6" h="6"/>
-    <sprite n="Edmund-assets/Gut2.png" x="502" y="27" w="4" h="1"/>
     <sprite n="Edmund-assets/LookBehind01.png" x="440" y="43" w="28" h="25"/>
     <sprite n="Edmund-assets/Move01.png" x="470" y="43" w="28" h="25"/>
     <sprite n="Edmund-assets/Move02.png" x="320" y="70" w="28" h="25"/>

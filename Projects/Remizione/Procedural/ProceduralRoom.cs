@@ -270,7 +270,7 @@ namespace Remizione
 
             foreach (var thing in childList)
             {
-                if (thing is RoomConnector roomConnector)
+                if (thing is Tower roomConnector)
                 {
                     var staticName = roomConnector.NW ? "OutgoingGhostCarNW" : "OutgoingGhostCarNE";
 

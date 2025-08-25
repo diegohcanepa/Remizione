@@ -83,14 +83,8 @@ namespace Remizione
         // Damage
         public DiceExpression? Damage { get; init; }
 
-        // Bonus
-        public int Bonus { get; init; }
-
         // Category
         public InventoryCategory Category { get; }
-
-        // Chance
-        public int Chance { get; init; }
 
         // Durability
         public int Durability { get; init; }
@@ -139,6 +133,9 @@ namespace Remizione
 
         // ReplenishPerRoom
         public bool ReplenishPerRoom { get; init; }
+
+        // SkillChance
+        public int SkillChance { get; init; }
 
         // Sound
         public Sound? Sound { get; init; }

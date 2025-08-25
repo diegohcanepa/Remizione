@@ -282,8 +282,6 @@
             <key type="filename">Guts-assets/Gut5.png</key>
             <key type="filename">Guts-assets/Gut6.png</key>
             <key type="filename">Guts-assets/Gut8.png</key>
-            <key type="filename">Pickups-assets/Chili.png</key>
-            <key type="filename">Pickups-assets/ChiliShadow.png</key>
             <key type="filename">Pickups-assets/Duck.png</key>
             <key type="filename">Pickups-assets/DuckShadow.png</key>
             <key type="filename">Throwables-assets/ThrowableChili.png</key>
@@ -1162,27 +1160,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Pickups-assets/Apple.png</key>
-            <key type="filename">Pickups-assets/RottenApple.png</key>
-            <key type="filename">PotteryC-assets/PotteryCPiece2.png</key>
-            <key type="filename">PotteryC-assets/PotteryCPiece5.png</key>
-            <key type="filename">PotteryC-assets/PotteryCPiece6.png</key>
-            <key type="filename">PotteryE-assets/PotteryEPiece3.png</key>
-            <key type="filename">PotteryE-assets/PotteryEPiece5.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,1,3,3</rect>
-                <key>scale9Paddings</key>
-                <rect>2,1,3,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">PilgrimSack-assets/PilgrimSack.png</key>
             <key type="filename">PilgrimSack-assets/PilgrimSackShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -1317,6 +1294,25 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">PotteryC-assets/PotteryCPiece2.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece5.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece6.png</key>
+            <key type="filename">PotteryE-assets/PotteryEPiece3.png</key>
+            <key type="filename">PotteryE-assets/PotteryEPiece5.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,1,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>2,1,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">PotteryD-assets/PotteryD.png</key>
             <key type="filename">PotteryD-assets/PotteryDShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -1391,27 +1387,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">RoomConnectorOutdoor-assets/RoomConnectorOutdoor01.png</key>
-            <key type="filename">RoomConnectorOutdoor-assets/RoomConnectorOutdoor02.png</key>
-            <key type="filename">RoomConnectorOutdoor-assets/RoomConnectorOutdoor03.png</key>
-            <key type="filename">RoomConnectorOutdoor-assets/RoomConnectorOutdoor04.png</key>
-            <key type="filename">RoomConnectorOutdoor-assets/RoomConnectorOutdoor05.png</key>
-            <key type="filename">RoomConnectorOutdoor-assets/RoomConnectorOutdoorShadow.png</key>
-            <key type="filename">RoomConnectorOutdoor-assets/StartingTowerDoor01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,19,33,38</rect>
-                <key>scale9Paddings</key>
-                <rect>16,19,33,38</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">SinnerCross-assets/SinnerCross.png</key>
             <key type="filename">SinnerCross-assets/SinnerCrossShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -1457,6 +1432,26 @@
                 <rect>4,2,7,5</rect>
                 <key>scale9Paddings</key>
                 <rect>4,2,7,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Tower-assets/Tower01.png</key>
+            <key type="filename">Tower-assets/Tower02.png</key>
+            <key type="filename">Tower-assets/Tower03.png</key>
+            <key type="filename">Tower-assets/Tower04.png</key>
+            <key type="filename">Tower-assets/Tower05.png</key>
+            <key type="filename">Tower-assets/TowerShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,20,33,39</rect>
+                <key>scale9Paddings</key>
+                <rect>16,20,33,39</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1591,7 +1586,6 @@
                     <filename>FenceB-assets</filename>
                     <filename>FenceC-assets</filename>
                     <filename>FenceD-assets</filename>
-                    <filename>RoomConnectorOutdoor-assets</filename>
                     <filename>IncomingGhostCar-assets</filename>
                     <filename>EntranceRail-assets</filename>
                     <filename>OutgoingGhostCarNW-assets</filename>
@@ -1611,6 +1605,7 @@
                     <filename>PotteryE-assets</filename>
                     <filename>WaterPuddleA-assets</filename>
                     <filename>Guts-assets</filename>
+                    <filename>Tower-assets</filename>
                 </array>
             </struct>
         </map>

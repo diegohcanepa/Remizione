@@ -8,7 +8,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 2, ActionArg, AllowEmptyArg, ChanceArg, BonusArg, DamageArg, DurabilityArg, HealthArg, ImpactWordArg, KnockbackArg, MaximumArg, PassiveEffectCooldownArg, PreventDiscardArg, RangeArg, ReplenishPerRoomArg, SoundArg)
+            : base(script, source, body, 2, ActionArg, AllowEmptyArg, DamageArg, DurabilityArg, HealthArg, ImpactWordArg, KnockbackArg, MaximumArg, PassiveEffectCooldownArg, PreventDiscardArg, RangeArg, ReplenishPerRoomArg, SkillChanceArg, SoundArg)
         {
             var name = Parser.ParseName(this, 0);
             var category = Parser.ParseEnum<InventoryCategory>(this, 1);
@@ -18,8 +18,6 @@ namespace Remizione.Scripting
             {
                 Action = Parser.ParseEnumArgument(this, ActionArg, ItemAction.None),
                 AllowEmpty = HasArg(AllowEmptyArg),
-                Bonus = Parser.ParseInt32Argument(this, BonusArg),
-                Chance = Parser.ParseInt32Argument(this, ChanceArg),
                 Damage = Parser.ParseDiceExpressionArgument(this, DamageArg) ?? null,
                 Durability = Parser.ParseInt32Argument(this, DurabilityArg, -1),
                 Health = Parser.ParseDiceExpressionArgument(this, HealthArg),
@@ -29,6 +27,7 @@ namespace Remizione.Scripting
                 PreventDiscard = HasArg(PreventDiscardArg),
                 Range = Parser.ParseInt32Argument(this, RangeArg),
                 ReplenishPerRoom = HasArg(ReplenishPerRoomArg),
+                SkillChance = Parser.ParseInt32Argument(this, SkillChanceArg),
                 Sound = Parser.ParseSoundArgument(this, SoundArg),
             };
         }

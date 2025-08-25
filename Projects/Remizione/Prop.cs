@@ -61,10 +61,6 @@ namespace Remizione
 
         #endregion
 
-        // ChancePenalty
-        [ScriptProperty]
-        public int ChancePenalty { get; set; }
-
         // PropState
         [ScriptProperty]
         public PropState PropState
@@ -79,5 +75,9 @@ namespace Remizione
                 }
             }
         }
+
+        // SkillChancePenalty
+        [ScriptProperty]
+        public int SkillChancePenalty { get; set; }
     }
 }

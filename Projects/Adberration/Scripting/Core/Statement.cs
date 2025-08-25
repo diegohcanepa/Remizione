@@ -15,20 +15,16 @@ namespace Adberration.Scripting
         protected static readonly string AmountArg = "#amount";
         protected static readonly string AnimationArg = "#animation";
         protected static readonly string AtArg = "#at";
-        protected static readonly string BonusArg = "#bonus";
         protected static readonly string BounceDelayArg = "#bounce-delay";
         protected static readonly string BouncesArg = "#bounces";
-        protected static readonly string CategoryArg = "#category";
         protected static readonly string ChanceArg = "#chance";
         protected static readonly string ClearTagArg = "#clear-tag";
         protected static readonly string ColorArg = "#color";
         protected static readonly string ConditionArg = "#condition";
-        protected static readonly string CostArg = "#cost";
         protected static readonly string DamageArg = "#damage";
         protected static readonly string DecimalsArg = "#decimals";
         protected static readonly string DelayArg = "#delay";
         protected static readonly string DepthOffsetArg = "#depth-offset";
-        protected static readonly string DisableArg = "#disable";
         protected static readonly string DistributionArg = "#distribution";
         protected static readonly string DurabilityArg = "#durability";
         protected static readonly string DurationArg = "#duration";
@@ -40,7 +36,6 @@ namespace Adberration.Scripting
         protected static readonly string FlipArg = "#flip";
         protected static readonly string FocusArg = "#focus";
         protected static readonly string FollowArg = "#follow";
-        protected static readonly string FrameArg = "#frame";
         protected static readonly string GotoArg = "#goto";
         protected static readonly string HealthArg = "#health";
         protected static readonly string ImageArg = "#image";
@@ -57,7 +52,6 @@ namespace Adberration.Scripting
         protected static readonly string LocalizationIdArg = "#lid";
         protected static readonly string LoopedArg = "#looped";
         protected static readonly string MaximumArg = "#maximum";
-        protected static readonly string MaximumLevelArg = "#maximum-level";
         protected static readonly string NoAwaitArg = "#no-await";
         protected static readonly string NoCaptionArg = "#no-caption";
         protected static readonly string OffArg = "#off";
@@ -69,11 +63,9 @@ namespace Adberration.Scripting
         protected static readonly string PauseAwareArg = "#pause-aware";
         protected static readonly string PassesArg = "#passes";
         protected static readonly string PassiveEffectCooldownArg = "#passive-effect-cooldown";
-        protected static readonly string PercentageArg = "#percentage";
         protected static readonly string PersistentArg = "#persistent";
         protected static readonly string PitchArg = "#pitch";
         protected static readonly string PivotArg = "#pivot";
-        protected static readonly string ProgressArg = "#progress";
         protected static readonly string PrefixArg = "#prefix";
         protected static readonly string PreserveArg = "#preserve";
         protected static readonly string PreventDiscardArg = "#prevent-discard";
@@ -88,21 +80,21 @@ namespace Adberration.Scripting
         protected static readonly string RightTriggerArg = "#right-trigger";
         protected static readonly string ScaleArg = "#scale";
         protected static readonly string ScopeArg = "#scope";
+        protected static readonly string SkillChanceArg = "#skill-chance";
         protected static readonly string SoundArg = "#sound";
         protected static readonly string SpeedFactorArg = "#speed-factor";
+        protected static readonly string StageArg = "#stage";
         protected static readonly string StartDelayArg = "#start-delay";
         protected static readonly string StyleArg = "#style";
         protected static readonly string SubAreaArg = "#sub-area";
         protected static readonly string SuccessStateArg = "#success-state";
         protected static readonly string TargetArg = "#target";
-        protected static readonly string TicketsArg = "#tickets";
         protected static readonly string TransientArg = "#transient";
         protected static readonly string TransitionAwareArg = "#transition-aware";
         protected static readonly string TweenArg = "#tween";
         protected static readonly string UnparentArg = "#unparent";
         protected static readonly string VibrateArg = "#vibrate";
         protected static readonly string VolumeArg = "#volume";
-        protected static readonly string WalkAreaArg = "#walk-area";
         protected static readonly string ZeroPaddingArg = "#zero-padding";
 
         #endregion

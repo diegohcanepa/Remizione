@@ -344,6 +344,8 @@ namespace Remizione
             if (Session.Environment.Rain.IsRaining)
                 Session.Environment.Rain.Draw(gameTime);
 
+            Session.Environment.Lightning.Draw(gameTime);
+
             // Apply light map
             if (CanUseLightingSystem && Game.RenderTargets != null)
             {
