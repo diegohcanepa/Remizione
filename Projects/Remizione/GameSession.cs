@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework;
 using Remizione.Scripting;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 
@@ -21,7 +20,6 @@ namespace Remizione
     {
         #region Private fields
 
-        private enum AttributeName { RandomSeed }
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
         private readonly Dictionary<string, MetaItem[]> friendlyItems = [];
@@ -46,12 +44,11 @@ namespace Remizione
             this.HUD = new HUD(this);
             //this.RandomSeed = 10000;
             this.RandomSeed = System.Environment.TickCount;
-            this.StaticThings = new ReadOnlyCollection<GameThing>(staticThings);
+            this.StaticThings = new(staticThings);
             this.IsMouseVisible = false;
 
             ObjectPools = new ObjectPools(this);
             ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(game), 100);
-            OverlayTexts = new OverlayTextManager(game);
 
             BackgroundColor = ColorPalette.BackgroundColor;
             Camera.SmoothSpeed = GameSettings.CameraSmoothSpeed;
@@ -141,7 +138,6 @@ namespace Remizione
             scriptRegistry.RegisterStatement("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             scriptRegistry.RegisterStatement("exit-session", typeof(ExitSessionCommand));
             scriptRegistry.RegisterStatement("friendly-items", typeof(FriendlyItemsCommand));
-            scriptRegistry.RegisterStatement("hide-overlay-text", typeof(HideOverlayTextCommand));
             scriptRegistry.RegisterStatement("meta-item", typeof(MetaItemCommand), CodingContext.Declaration);
             scriptRegistry.RegisterStatement("placement-data", typeof(PlacementDataCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("say", typeof(SayCommand), CodingContext.Execution);
@@ -161,8 +157,6 @@ namespace Remizione
         {
             base.OnDraw(gameTime);
 
-            OverlayTexts.Draw(gameTime);
-
             HUD.Draw(gameTime);
 
             if (IsPaused)
@@ -180,8 +174,8 @@ namespace Remizione
         protected override void OnEnterRoom(Room room)
         {
             IsPowerRestored = false;
-            RemainingTime = GameSettings.CountdownMaximum;
-            RequiredPower = Room is ProceduralRoom proceduralRoom ? proceduralRoom.RequiredPower : 0;
+            RemainingRoomTime = GameSettings.CountdownMaximum;
+            RequiredRoomPower = Room is ProceduralRoom proceduralRoom ? proceduralRoom.RequiredPower : 0;
             player?.Inventory.NotifyRoomChanged();
             Environment.EnterRoom();
         }
@@ -249,7 +243,7 @@ namespace Remizione
                 this.rainRemainingTime = XmlConvert.ToInt32(rainRemainingTime);
 
             // RandomSeed
-            if (sessionNode.Attributes[AttributeName.RandomSeed.ToString()]?.Value is string randomSeedValue)
+            if (sessionNode.Attributes[nameof(RandomSeed)]?.Value is string randomSeedValue)
                 RandomSeed = XmlConvert.ToInt32(randomSeedValue);
 
             // Runs
@@ -316,8 +310,8 @@ namespace Remizione
         {
             base.OnContinuousUpdate(gameTime);
 
-            if (GameplayMode == GameplayMode.Survival && RemainingTime >= 0)
-                RemainingTime -= gameTime.ElapsedGameTime.Milliseconds;
+            if (GameplayMode == GameplayMode.Run && RemainingRoomTime >= 0)
+                RemainingRoomTime -= gameTime.ElapsedGameTime.Milliseconds;
         }
 
         // OnUpdate
@@ -337,9 +331,8 @@ namespace Remizione
 
             Environment.Update(gameTime);
             HUD.Update(gameTime);
-            OverlayTexts.Update(gameTime);
 
-            if (RemainingTime <= 0 && !IsAwaiting)
+            if (RemainingRoomTime <= 0 && !IsAwaiting)
                 AwaitRoutine(RoutineNames.GameOver);
         }
 
@@ -364,7 +357,7 @@ namespace Remizione
             output.WriteAttributeString(nameof(Environment.Rain.RemainingTime), XmlConvert.ToString(Environment.Rain.RemainingTime));
 
             // RandomSeed
-            output.WriteAttributeString(AttributeName.RandomSeed.ToString(), XmlConvert.ToString(RandomSeed));
+            output.WriteAttributeString(nameof(RandomSeed), XmlConvert.ToString(RandomSeed));
 
             // Runs
             output.WriteAttributeString(nameof(GameplayMode), XmlConvert.ToString(Runs));
@@ -374,10 +367,6 @@ namespace Remizione
         }
 
         #endregion
-
-        // ClearOverlayTexts
-        [ScriptMethod(CodingContext.Any)]
-        public void ClearOverlayTexts() => OverlayTexts.Clear();
 
         // DialogOptionId
         [ScriptProperty]
@@ -403,7 +392,7 @@ namespace Remizione
             if (friendlyItems.TryGetValue(staticName, out var items))
                 return items;
             else
-                return Array.Empty<MetaItem>();
+                return [];
         }
 
         // GetStaticThing
@@ -432,7 +421,7 @@ namespace Remizione
         public bool IsPowerRestored { get; private set; }
 
         // IsTimeCritical
-        public bool IsTimeCritical => RemainingTime <= GameSettings.TimeCritical;
+        public bool IsTimeCritical => RemainingRoomTime <= GameSettings.TimeCritical;
 
         // LightingSystem
         [ScriptProperty]
@@ -460,9 +449,6 @@ namespace Remizione
         // OutgoingGhostCar
         [ScriptProperty]
         public OutgoingGhostCar? OutgoingGhostCar => OutcomeTarget as OutgoingGhostCar;
-
-        // OverlayTexts
-        public OverlayTextManager OverlayTexts { get; }
 
         // Player
         [ScriptProperty]
@@ -499,9 +485,9 @@ namespace Remizione
             {
                 if (value != power)
                 {
-                    power = Math.Min(value, RequiredPower);
+                    power = Math.Min(value, RequiredRoomPower);
 
-                    if (power == RequiredPower && !IsPowerRestored)
+                    if (power == RequiredRoomPower && !IsPowerRestored)
                     {
                         IsPowerRestored = true;
                         Sound.Play(SoundNames.PowerRestored);
@@ -524,13 +510,13 @@ namespace Remizione
             friendlyItems[staticName] = metaItems;
         }
 
-        // RemainingTime
+        // RemainingRoomTime
         [ScriptProperty]
-        public int RemainingTime { get; set; } = int.MaxValue;
+        public int RemainingRoomTime { get; set; } = int.MaxValue;
 
-        // RequiredPower
+        // RequiredRoomPower
         [ScriptProperty]
-        public int RequiredPower { get; private set; }
+        public int RequiredRoomPower { get; private set; }
 
         // Room
         [ScriptProperty]
@@ -565,6 +551,6 @@ namespace Remizione
         public int Stage { get; private set; }
 
         // StaticThings
-        public ReadOnlyCollection<GameThing> StaticThings { get; }
+        public NamedObjectReadOnlyCollection<GameThing> StaticThings { get; }
     }
 }

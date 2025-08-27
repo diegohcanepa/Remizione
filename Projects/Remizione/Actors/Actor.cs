@@ -98,7 +98,7 @@ namespace Remizione
             if (Atlas?.GetImage(Sprite.ImagePath + "Gut0") != null)
             {
                 var index = 0;
-                customGuts = new();
+                customGuts = [];
                 
                 while (true)
                 {

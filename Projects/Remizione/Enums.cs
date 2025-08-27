@@ -24,7 +24,7 @@ namespace Remizione
     public enum DustParticleKind { None, Dust, Ash }
 
     // GameplayMode
-    public enum GameplayMode { Adventure, Survival }
+    public enum GameplayMode { Adventure, Run }
 
     // HitEffect
     public enum HitEffect { None, Shake, Blink }

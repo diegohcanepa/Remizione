@@ -63,7 +63,7 @@ namespace Remizione
         {
             if (session.IsHUDVisible)
             {
-                if (session.GameplayMode == GameplayMode.Survival)
+                if (session.GameplayMode == GameplayMode.Run)
                 {
                     if (!session.IsConsoleVisible)
                     {
