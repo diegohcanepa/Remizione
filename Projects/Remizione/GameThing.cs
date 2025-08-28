@@ -17,7 +17,6 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly Blinker<bool> blinker = new(false, true);
         private PlacementMode colliderPlacement = PlacementMode.Relative;
         private string displayName = string.Empty;
         private readonly Polygon holePolyInflated = new();
@@ -139,7 +138,7 @@ namespace Remizione
 
                 if (Room.CulledThings[i] is GameThing thing)
                 {
-                    if (thing.IsDead)
+                    if (thing.IsDead || !thing.CollisionDetection)
                         continue;
 
                     // If thing is an obstacle (walk area hole)
@@ -267,9 +266,6 @@ namespace Remizione
                 return Collider.BoundingRectangleF;
         }
 
-        // IsTakingDamage
-        protected virtual bool IsTakingDamage => IsBlinking;
-
         // OnCollision
         protected virtual void OnCollision(GameThing thing)
         {
@@ -320,7 +316,7 @@ namespace Remizione
         }
 
         // OnHurt
-        protected virtual void OnHurt(GameThing attacker, int damage, Vector2 knockback)
+        protected virtual void OnHurt(GameThing attacker, int damage, DamageKind damageKind, Vector2 knockback)
         {
         }
 
@@ -389,19 +385,8 @@ namespace Remizione
 
             Light?.Update(gameTime);
 
-            if (blinker.IsRunning)
-            {
-                blinker.Update(gameTime);
-
-                if (!blinker.IsRunning)
-                    OpacityFactor = 1;
-
-                else if (blinker.CurrentValue)
-                    OpacityFactor = .8f;
-
-                else
-                    OpacityFactor = .5f;
-            }
+            if (Blinker.IsRunning)
+                Blinker.Update(gameTime);
         }
 
         // OnUpdateEmittingSound
@@ -453,8 +438,8 @@ namespace Remizione
         [ScriptProperty]
         public int AttackRange { get; set; } = -1;
 
-        // BlinkingOn
-        public bool BlinkingOn => blinker.IsRunning && blinker.CurrentValue;
+        // Blinker
+        public Blinker<bool> Blinker { get; } = new(false, true);
 
         // CanInteract
         public bool CanInteract(Actor requester)
@@ -847,9 +832,6 @@ namespace Remizione
                 return false;
         }
 
-        // IsBlinking
-        public bool IsBlinking => blinker.IsRunning;
-
         // IsDead
         public bool IsDead => Health <= 0 && MaxHealth > 0;
 
@@ -990,12 +972,12 @@ namespace Remizione
         public bool ShakeOnHit { get; set; }
 
         // TakeDamage
-        public void TakeDamage(GameThing attacker, int amount, Vector2 knockback, ImpactWordKind impactWordKind)
+        public void TakeDamage(GameThing attacker, int amount, DamageKind damageKind, Vector2 knockback, ImpactWordKind impactWordKind)
         {
             if (IsDead || amount <= 0)
                 return;
 
-            if (InvulnerabilityPeriod && IsTakingDamage)
+            if (InvulnerabilityPeriod && Blinker.IsRunning)
                 return;
 
             knockback = PreventKnockback ? Vector2.Zero : knockback;
@@ -1056,10 +1038,9 @@ namespace Remizione
                 hurtTween ??= new();
                 hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
 
-                if (HitEffect == HitEffect.Blink)
-                    blinker.Start(20, 4);
+                Blinker.Start(20, 5);
 
-                OnHurt(attacker, amount, knockback);
+                OnHurt(attacker, amount, damageKind, knockback);
             }
         }
 

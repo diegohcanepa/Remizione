@@ -210,6 +210,8 @@
             <key type="filename">Edmund-assets/Consume02.png</key>
             <key type="filename">Edmund-assets/Consume03.png</key>
             <key type="filename">Edmund-assets/Consume04.png</key>
+            <key type="filename">Edmund-assets/Hurt01.png</key>
+            <key type="filename">Edmund-assets/Hurt02.png</key>
             <key type="filename">Edmund-assets/LookBehind01.png</key>
             <key type="filename">Edmund-assets/Move01.png</key>
             <key type="filename">Edmund-assets/Move02.png</key>

@@ -51,6 +51,7 @@ namespace Remizione
             this.session = session;
 
             this.Atlas = Atlases.Actors;
+            this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
             this.Inventory = new(this);
             this.shadowSpot = new ShadowSpot(this);
@@ -275,9 +276,6 @@ namespace Remizione
         // InputHandler
         protected InputHandler? InputHandler { get; set; }
 
-        // IsTakingDamage
-        protected override bool IsTakingDamage => StateMachine.CurrentState is ActorHurtState || base.IsTakingDamage;
-
         // OnCollision
         protected override void OnCollision(GameThing thing)
         {
@@ -367,7 +365,7 @@ namespace Remizione
         protected virtual GameThing? OnFindEnemy() => null;
 
         // OnHurt
-        protected override void OnHurt(GameThing attacker, int damage, Vector2 knockback)
+        protected override void OnHurt(GameThing attacker, int damage, DamageKind damageKind, Vector2 knockback)
         {
             if (IsPlayer)
             {
@@ -386,8 +384,12 @@ namespace Remizione
             LastKnownAttacker = attacker;
             FaceTo(attacker);
 
-            //Stand();
-            StateMachine.ChangeState(ActorStateNames.Hurt);
+            if (Sprite.Animations.Contains(ActorStateNames.Hurt))
+            {
+                Blinker.Stop();
+                Stand();
+                StateMachine.ChangeState(ActorStateNames.Hurt);
+            }
         }
 
         // OnLoad

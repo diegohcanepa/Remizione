@@ -75,13 +75,16 @@ namespace Remizione
             if (target is Actor actor)
                 finalKnockback = CalculateKnockback(actor.BodySize);
 
-            target.TakeDamage(attacker, damageAmount, finalKnockback, ImpactWord);
+            target.TakeDamage(attacker, damageAmount, DamageKind, finalKnockback, ImpactWord);
 
             return true;
         }
 
         // Damage
         public DiceExpression? Damage { get; init; }
+
+        // DamageKind
+        public DamageKind DamageKind { get; init; }
 
         // Category
         public InventoryCategory Category { get; }
@@ -91,6 +94,9 @@ namespace Remizione
 
         // Find
         public static MetaItem? Find(string name) => items.TryGetValue(name, out var result) ? result : null;
+
+        // FindNotNull
+        public static MetaItem FindNotNull(string name) => items.TryGetValue(name, out var result) ? result : throw new InvalidOperationException($"MetaItem '{name}' does not exist.");
 
         // Health
         public DiceExpression? Health { get; init; }

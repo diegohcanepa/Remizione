@@ -440,6 +440,8 @@ namespace Remizione
                 {
                     isActive = value;
 
+                    session.IsMouseVisible = IsActive;
+
                     if (isActive)
                     {
                         if (session.Player != null && session.Player.InCurrentRoom)

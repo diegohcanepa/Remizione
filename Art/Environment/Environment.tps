@@ -318,6 +318,7 @@
                 <false/>
             </struct>
             <key type="filename">Environment-assets/CraftingMark.png</key>
+            <key type="filename">PostClock-assets/PostClockPiece7.png</key>
             <key type="filename">PotteryA-assets/PotteryAPiece4.png</key>
             <key type="filename">PotteryC-assets/PotteryCPiece1.png</key>
             <key type="filename">PotteryC-assets/PotteryCPiece3.png</key>
@@ -893,6 +894,7 @@
             </struct>
             <key type="filename">Guts-assets/Gut11.png</key>
             <key type="filename">Guts-assets/Gut3.png</key>
+            <key type="filename">PostClock-assets/PostClockPiece6.png</key>
             <key type="filename">PotteryA-assets/PotteryAPiece2.png</key>
             <key type="filename">PotteryD-assets/PotteryDPiece2.png</key>
             <struct type="IndividualSpriteSettings">
@@ -1193,6 +1195,111 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">PostClock-assets/PostClock01.png</key>
+            <key type="filename">PostClock-assets/PostClock02.png</key>
+            <key type="filename">PostClock-assets/PostClock03.png</key>
+            <key type="filename">PostClock-assets/PostClock04.png</key>
+            <key type="filename">PostClock-assets/PostClock05.png</key>
+            <key type="filename">PostClock-assets/PostClock06.png</key>
+            <key type="filename">PostClock-assets/PostClock07.png</key>
+            <key type="filename">PostClock-assets/PostClock08.png</key>
+            <key type="filename">PostClock-assets/PostClockShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,12,11,23</rect>
+                <key>scale9Paddings</key>
+                <rect>6,12,11,23</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PostClock-assets/PostClockPiece1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,3,4,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,3,4,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PostClock-assets/PostClockPiece2.png</key>
+            <key type="filename">PotteryA-assets/PotteryAPiece6.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,2,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,2,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PostClock-assets/PostClockPiece3.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece2.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece5.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece6.png</key>
+            <key type="filename">PotteryE-assets/PotteryEPiece3.png</key>
+            <key type="filename">PotteryE-assets/PotteryEPiece5.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,1,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>2,1,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PostClock-assets/PostClockPiece4.png</key>
+            <key type="filename">PotteryE-assets/PotteryEPiece2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,1,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,1,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PostClock-assets/PostClockPiece5.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,2,1,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,2,1,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">PotteryA-assets/PotteryA.png</key>
             <key type="filename">PotteryA-assets/PotteryAPiece1.png</key>
             <key type="filename">PotteryA-assets/PotteryAPiece3.png</key>
@@ -1208,21 +1315,6 @@
                 <rect>3,5,6,9</rect>
                 <key>scale9Paddings</key>
                 <rect>3,5,6,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">PotteryA-assets/PotteryAPiece6.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,2,3,3</rect>
-                <key>scale9Paddings</key>
-                <rect>1,2,3,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1294,25 +1386,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PotteryC-assets/PotteryCPiece2.png</key>
-            <key type="filename">PotteryC-assets/PotteryCPiece5.png</key>
-            <key type="filename">PotteryC-assets/PotteryCPiece6.png</key>
-            <key type="filename">PotteryE-assets/PotteryEPiece3.png</key>
-            <key type="filename">PotteryE-assets/PotteryEPiece5.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,1,3,3</rect>
-                <key>scale9Paddings</key>
-                <rect>2,1,3,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">PotteryD-assets/PotteryD.png</key>
             <key type="filename">PotteryD-assets/PotteryDShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -1344,21 +1417,6 @@
                 <rect>4,4,7,8</rect>
                 <key>scale9Paddings</key>
                 <rect>4,4,7,8</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">PotteryE-assets/PotteryEPiece2.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,1,3</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,1,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1432,6 +1490,26 @@
                 <rect>4,2,7,5</rect>
                 <key>scale9Paddings</key>
                 <rect>4,2,7,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">SpearTrap-assets/SpearTrap01.png</key>
+            <key type="filename">SpearTrap-assets/SpearTrap02.png</key>
+            <key type="filename">SpearTrap-assets/SpearTrap03.png</key>
+            <key type="filename">SpearTrap-assets/SpearTrap04.png</key>
+            <key type="filename">SpearTrap-assets/SpearTrap05.png</key>
+            <key type="filename">SpearTrap-assets/SpearTrap06.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,6,5,13</rect>
+                <key>scale9Paddings</key>
+                <rect>3,6,5,13</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1606,6 +1684,8 @@
                     <filename>WaterPuddleA-assets</filename>
                     <filename>Guts-assets</filename>
                     <filename>Tower-assets</filename>
+                    <filename>SpearTrap-assets</filename>
+                    <filename>PostClock-assets</filename>
                 </array>
             </struct>
         </map>

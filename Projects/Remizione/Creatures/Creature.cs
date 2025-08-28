@@ -11,7 +11,6 @@
         {
             Affinity = Affinity.Evil;
             ContactDamageKind = DamageKind.Lightning;
-            HitEffect = HitEffect.Blink;
             PowerBonus = 1;
             PlacementPhase = PlacementPhase.Creature;
         }

@@ -181,13 +181,10 @@ namespace Remizione
                 {
                     ShaderEffect? effect = null;
 
-                    if (thing.BlinkingOn)
+                    if (thing.Blinker.CurrentValue)
                     {
-                        if (thing != Session.Player)
-                        {
-                            RemizioneGame.Effects.ColorReduction.SetColor(50, 50, 50, 1);
-                            effect = RemizioneGame.Effects.ColorReduction;
-                        }
+                        RemizioneGame.Effects.ColorReduction.SetColor(1, 0, 0, 1);
+                        effect = RemizioneGame.Effects.ColorReduction;
                     }
                     else if (interactiveTarget == thing && thing.Highlight)
                     {

@@ -109,9 +109,11 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(OcculusMinion));
             scriptRegistry.RegisterEntity(typeof(OutgoingGhostCar));
             scriptRegistry.RegisterEntity(typeof(Pickup));
+            scriptRegistry.RegisterEntity(typeof(PostClock));
             scriptRegistry.RegisterEntity(typeof(Pottery));
             scriptRegistry.RegisterEntity(typeof(ProceduralRoom));
             scriptRegistry.RegisterEntity(typeof(Prop));
+            scriptRegistry.RegisterEntity(typeof(SpearTrap));
             scriptRegistry.RegisterEntity(typeof(Tower));
             scriptRegistry.RegisterEntity(typeof(Trunk));
             scriptRegistry.RegisterEntity(typeof(WaterPuddle));
@@ -174,8 +176,8 @@ namespace Remizione
         protected override void OnEnterRoom(Room room)
         {
             IsPowerRestored = false;
-            RemainingRoomTime = GameSettings.CountdownMaximum;
-            RequiredRoomPower = Room is ProceduralRoom proceduralRoom ? proceduralRoom.RequiredPower : 0;
+            RemainingTime = GameSettings.CountdownMaximum;
+            RequiredPower = Room is ProceduralRoom proceduralRoom ? proceduralRoom.RequiredPower : 0;
             player?.Inventory.NotifyRoomChanged();
             Environment.EnterRoom();
         }
@@ -310,8 +312,8 @@ namespace Remizione
         {
             base.OnContinuousUpdate(gameTime);
 
-            if (GameplayMode == GameplayMode.Run && RemainingRoomTime >= 0)
-                RemainingRoomTime -= gameTime.ElapsedGameTime.Milliseconds;
+            if (GameplayMode == GameplayMode.Run && RemainingTime >= 0)
+                RemainingTime -= gameTime.ElapsedGameTime.Milliseconds;
         }
 
         // OnUpdate
@@ -332,7 +334,7 @@ namespace Remizione
             Environment.Update(gameTime);
             HUD.Update(gameTime);
 
-            if (RemainingRoomTime <= 0 && !IsAwaiting)
+            if (RemainingTime <= 0 && !IsAwaiting)
                 AwaitRoutine(RoutineNames.GameOver);
         }
 
@@ -421,7 +423,7 @@ namespace Remizione
         public bool IsPowerRestored { get; private set; }
 
         // IsTimeCritical
-        public bool IsTimeCritical => RemainingRoomTime <= GameSettings.TimeCritical;
+        public bool IsTimeCritical => RemainingTime <= GameSettings.TimeCritical;
 
         // LightingSystem
         [ScriptProperty]
@@ -485,9 +487,9 @@ namespace Remizione
             {
                 if (value != power)
                 {
-                    power = Math.Min(value, RequiredRoomPower);
+                    power = Math.Min(value, RequiredPower);
 
-                    if (power == RequiredRoomPower && !IsPowerRestored)
+                    if (power == RequiredPower && !IsPowerRestored)
                     {
                         IsPowerRestored = true;
                         Sound.Play(SoundNames.PowerRestored);
@@ -510,13 +512,13 @@ namespace Remizione
             friendlyItems[staticName] = metaItems;
         }
 
-        // RemainingRoomTime
+        // RemainingTime
         [ScriptProperty]
-        public int RemainingRoomTime { get; set; } = int.MaxValue;
+        public int RemainingTime { get; set; } = int.MaxValue;
 
-        // RequiredRoomPower
+        // RequiredPower
         [ScriptProperty]
-        public int RequiredRoomPower { get; private set; }
+        public int RequiredPower { get; private set; }
 
         // Room
         [ScriptProperty]

@@ -54,6 +54,7 @@
 	<FX Name="Raven" />
 	<FX Name="ShockZap" MaxInstances="6" Sounds="1..2" />
 	<FX Name="SmallWhooshA" MaxInstances="6" Sounds="1..4" />
+	<FX Name="SpearTrap" MaxInstances="4" />
 	<FX Name="SummonA" MaxInstances="4" />
 	<FX Name="TowerDoorClose" />
 	<FX Name="Thunder" MaxInstances="4" Sounds="1..4" />

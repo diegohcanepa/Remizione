@@ -89,6 +89,7 @@ namespace Engendro
         // Stop
         public void Stop()
         {
+            valueIndex = 0;
             IsRunning = false;
             delayCooldown = 0;
             Count = 0;

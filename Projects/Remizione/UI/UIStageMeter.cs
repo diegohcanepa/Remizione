@@ -82,7 +82,7 @@ namespace Remizione
             if (lastKnownValues[0] != session.Power)
             {
                 lastKnownValues[0] = session.Power;
-                values[0].Text = $"{session.Power}/{session.RequiredRoomPower}";
+                values[0].Text = $"{session.Power}/{session.RequiredPower}";
                 values[0].Color = session.IsPowerRestored ? ColorPalette.Text.Green : textColor;
 
                 if (session.IsPowerRestored)
@@ -101,10 +101,10 @@ namespace Remizione
             }
 
             // RemainingTime
-            if (lastKnownValues[1] != session.RemainingRoomTime)
+            if (lastKnownValues[1] != session.RemainingTime)
             {
-                lastKnownValues[1] = session.RemainingRoomTime;
-                var t = TimeSpan.FromMilliseconds(session.RemainingRoomTime);
+                lastKnownValues[1] = session.RemainingTime;
+                var t = TimeSpan.FromMilliseconds(session.RemainingTime);
                 values[1].Text = string.Format("{0:D2}:{1:D2}", (int)t.TotalMinutes, t.Seconds);
 
                 if (lastKnownValues[1] <= GameSettings.TimeCritical)

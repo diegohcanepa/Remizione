@@ -26,6 +26,7 @@
         internal const string PowerRestored = nameof(PowerRestored);
         internal const string Rain = nameof(Rain);
         internal const string ShockZap = nameof(ShockZap);
+        internal const string SpearTrap = nameof(SpearTrap);
         internal const string ThrowablePickup = nameof(ThrowablePickup);
         internal const string Thunder = nameof(Thunder);
         internal const string TrunkOpen = nameof(TrunkOpen);

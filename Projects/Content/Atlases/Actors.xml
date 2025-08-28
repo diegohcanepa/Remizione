@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:015cae6f6648035c0a2cb588ea3ea30d:fec20c5bccf6dd697ef22e9915f22ea8:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:b98447adce93f968d85a1c085c5794fc:ea2af6c9d3c033ba5130728b98844a09:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -54,23 +54,25 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Edmund-assets/Consume03.png" x="380" y="43" w="28" h="25"/>
     <sprite n="Edmund-assets/Consume04.png" x="410" y="43" w="28" h="25"/>
     <sprite n="Edmund-assets/Gut0.png" x="500" y="43" w="9" h="10"/>
-    <sprite n="Edmund-assets/LookBehind01.png" x="440" y="43" w="28" h="25"/>
-    <sprite n="Edmund-assets/Move01.png" x="470" y="43" w="28" h="25"/>
-    <sprite n="Edmund-assets/Move02.png" x="320" y="70" w="28" h="25"/>
-    <sprite n="Edmund-assets/Move03.png" x="146" y="84" w="28" h="25"/>
-    <sprite n="Edmund-assets/Move04.png" x="2" y="108" w="28" h="25"/>
+    <sprite n="Edmund-assets/Hurt01.png" x="440" y="43" w="28" h="25"/>
+    <sprite n="Edmund-assets/Hurt02.png" x="470" y="43" w="28" h="25"/>
+    <sprite n="Edmund-assets/LookBehind01.png" x="320" y="70" w="28" h="25"/>
+    <sprite n="Edmund-assets/Move01.png" x="146" y="84" w="28" h="25"/>
+    <sprite n="Edmund-assets/Move02.png" x="2" y="108" w="28" h="25"/>
+    <sprite n="Edmund-assets/Move03.png" x="32" y="108" w="28" h="25"/>
+    <sprite n="Edmund-assets/Move04.png" x="62" y="108" w="28" h="25"/>
     <sprite n="Edmund-assets/PickUp01.png" x="206" y="57" w="28" h="25"/>
     <sprite n="Edmund-assets/PickUp02.png" x="236" y="57" w="28" h="25"/>
-    <sprite n="Edmund-assets/PickUp03.png" x="32" y="108" w="28" h="25"/>
+    <sprite n="Edmund-assets/PickUp03.png" x="92" y="108" w="28" h="25"/>
     <sprite n="Edmund-assets/PickUp04.png" x="206" y="57" w="28" h="25"/>
     <sprite n="Edmund-assets/Pray01.png" x="206" y="57" w="28" h="25"/>
-    <sprite n="Edmund-assets/Pray02.png" x="62" y="108" w="28" h="25"/>
-    <sprite n="Edmund-assets/Pray03.png" x="92" y="108" w="28" h="25"/>
-    <sprite n="Edmund-assets/RaiseArm01.png" x="176" y="84" w="28" h="25"/>
-    <sprite n="Edmund-assets/RaiseArm02.png" x="206" y="84" w="28" h="25"/>
-    <sprite n="Edmund-assets/RaiseArm03.png" x="236" y="84" w="28" h="25"/>
-    <sprite n="Edmund-assets/ShockZap01.png" x="266" y="84" w="28" h="25"/>
-    <sprite n="Edmund-assets/ShockZap02.png" x="146" y="111" w="28" h="25"/>
+    <sprite n="Edmund-assets/Pray02.png" x="176" y="84" w="28" h="25"/>
+    <sprite n="Edmund-assets/Pray03.png" x="206" y="84" w="28" h="25"/>
+    <sprite n="Edmund-assets/RaiseArm01.png" x="236" y="84" w="28" h="25"/>
+    <sprite n="Edmund-assets/RaiseArm02.png" x="266" y="84" w="28" h="25"/>
+    <sprite n="Edmund-assets/RaiseArm03.png" x="146" y="111" w="28" h="25"/>
+    <sprite n="Edmund-assets/ShockZap01.png" x="440" y="43" w="28" h="25"/>
+    <sprite n="Edmund-assets/ShockZap02.png" x="470" y="43" w="28" h="25"/>
     <sprite n="Edmund-assets/Stand01.png" x="2" y="135" w="28" h="25"/>
     <sprite n="Edmund-assets/Stand02.png" x="32" y="135" w="28" h="25"/>
     <sprite n="Edmund-assets/Stand03.png" x="62" y="135" w="28" h="25"/>

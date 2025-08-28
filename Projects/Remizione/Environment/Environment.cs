@@ -46,7 +46,7 @@ namespace Remizione
 
             if (session.GameplayMode == GameplayMode.Run && session.Room is ProceduralRoom)
             {
-                if (session.RemainingRoomTime.IsBetween(1, GameSettings.TimeCritical) && !alarmTween.IsRunning)
+                if (session.RemainingTime.IsBetween(1, GameSettings.TimeCritical) && !alarmTween.IsRunning)
                 {
                     alarmSound = Sound.Play(SoundNames.ExitAlarm, true);
                     alarmTween.Start(TweenStyle.QuadraticInOut, ColorPalette.GlobalLight.Default, ColorPalette.GlobalLight.Critical, 400, -1);
