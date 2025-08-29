@@ -59,6 +59,21 @@
 #begin Atlases/Menu.xml
 /copy:Atlases/Menu.xml
 
+#begin Atlases/RideRoom.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Atlases/RideRoom.png
+
+#begin Atlases/RideRoom.xml
+/copy:Atlases/RideRoom.xml
+
 #begin Atlases/StartingRoom.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -103,21 +118,6 @@
 
 #begin Atlases/ThemeParkEntrance.xml
 /copy:Atlases/ThemeParkEntrance.xml
-
-#begin Atlases/TowerRoom.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Atlases/TowerRoom.png
-
-#begin Atlases/TowerRoom.xml
-/copy:Atlases/TowerRoom.xml
 
 #begin Atlases/UI.png
 /importer:TextureImporter
