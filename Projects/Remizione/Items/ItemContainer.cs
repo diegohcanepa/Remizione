@@ -74,6 +74,9 @@ namespace Remizione
             return null;
         }
 
+        // FindNotNull
+        public Item FindNotNull(string name) => Find(name) ?? throw new InvalidOperationException($"Item '{name}' not found.");
+
         // GetItems
         public Item[] GetItems() => items.ToArray();
 

@@ -101,6 +101,9 @@ namespace Remizione
             }
         }
 
+        // CriticalChance
+        public int CriticalChance => MetaItem.CriticalChance + (Level * 5);
+
         // DisplayText
         public string DisplayText
         {

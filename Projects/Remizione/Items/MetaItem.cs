@@ -99,7 +99,7 @@ namespace Remizione
         public static MetaItem? Find(string name) => items.TryGetValue(name, out var result) ? result : null;
 
         // FindNotNull
-        public static MetaItem FindNotNull(string name) => items.TryGetValue(name, out var result) ? result : throw new InvalidOperationException($"MetaItem '{name}' does not exist.");
+        public static MetaItem FindNotNull(string name) => Find(name) ?? throw new InvalidOperationException($"MetaItem '{name}' not found.");
 
         // Health
         public DiceExpression? Health { get; init; }

@@ -14,6 +14,7 @@ namespace Remizione
 
         private int bounceCount;
         private readonly float bounciness;  // Cuánto rebota (0=sin rebote, 1=rebotar igual de fuerte)
+        private bool checkWalkArea;
         private int collectCooldown = -1;
         private float floorY;               // Cuánto se frena en horizontal al chocar
         private readonly float gravity;     // gravedad base
@@ -87,6 +88,21 @@ namespace Remizione
             }
 
             return null;
+        }
+
+        // CheckWalkAreaCollision
+        private bool CheckWalkAreaCollision()
+        {
+            if (item?.Owner.Room?.WalkArea is WalkArea walkArea)
+            {
+                if (Y >= walkArea.Polygon.BoundingRectangleF.Top && !walkArea.Contains(Position))
+                {
+                    velocity = new Vector2(-velocity.X, velocity.Y) * Randomizer.Next(.2f, .5f);
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         // ReturnToOwner
@@ -217,7 +233,11 @@ namespace Remizione
             UpdateFloorCollision();
 
             // Object collision
-            CheckCollision(true);
+            if (CheckCollision(true) == null)
+            {
+                if (checkWalkArea && CheckWalkAreaCollision())
+                    checkWalkArea = false;
+            }
         }
 
         // Shadow
@@ -229,6 +249,7 @@ namespace Remizione
         public void Launch(Item item)
         {
             this.bounceCount = 0;
+            this.checkWalkArea = true;
             this.collectCooldown = -1;
             this.ignoreThing = null;
             this.isGrounded = false;
