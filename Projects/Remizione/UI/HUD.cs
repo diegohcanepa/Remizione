@@ -32,6 +32,7 @@ namespace Remizione
             this.ChanceRoll = new(this);
             this.Log = new(Game);
             this.Message = new(Game);
+            this.TargetMeter = new(Game);
 
             // Saving icon
             this.savingIcon = new ImageSprite(Game, Atlases.UI.SavingIcon)
@@ -76,6 +77,7 @@ namespace Remizione
                         TrincketSlot.Draw(gameTime);
                         healthMeter.Draw(gameTime);
                         GameMeter.Draw(gameTime);
+                        TargetMeter.Draw(gameTime);
                     }
                 }
 
@@ -102,6 +104,7 @@ namespace Remizione
             GameMeter.Update(gameTime);
             BagSlot.Update(gameTime);
             EquipmentSlot.Update(gameTime);
+            TargetMeter.Update(gameTime);
             TrincketSlot.Update(gameTime);
             healthMeter.Update(gameTime);
             ChanceRoll.Update(gameTime);
@@ -166,6 +169,9 @@ namespace Remizione
         {
             savingIcon.Tweens.OpacityTween = FloatTween.Create(TweenStyle.QuadraticInOut, 1, .8f, 300, 10);
         }
+
+        // TargetMeter
+        public UITargetMeter TargetMeter { get; }
 
         // TrincketSlot
         public TrinketSlot TrincketSlot { get; }

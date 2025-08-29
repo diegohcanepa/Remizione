@@ -51,6 +51,7 @@ namespace Remizione
             this.session = session;
 
             this.Atlas = Atlases.Actors;
+            this.DisplayName = TextRepository.GetValue($"Actor.{StaticName}");
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
             this.Inventory = new(this);

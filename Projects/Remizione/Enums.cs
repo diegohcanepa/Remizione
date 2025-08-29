@@ -17,6 +17,9 @@ namespace Remizione
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Videos, Voices, System, Text }
 
+    // DamageIntensity
+    public enum DamageIntensity { Base, Critical }
+
     // DamageKind
     public enum DamageKind { None, Physical, Fire, Cold, Lightning, Acid, Poison }
 

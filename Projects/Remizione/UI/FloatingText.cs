@@ -8,7 +8,7 @@ namespace Remizione
     /// </summary>
     public sealed class FloatingText : GameObject
     {
-        private const int fadeDuration = 300;
+        private const int fadeDuration = 250;
 
         private readonly FloatTween opacityTween = new();
         private readonly GameSession session;
@@ -41,17 +41,22 @@ namespace Remizione
             text.Color = color;
             text.Text = value;
             text.Position = origin;
-            yTween.Start(TweenStyle.CubicOut, origin.Y, origin.Y + distance.Y, duration);
+
+            if (distance.Y != 0)
+            {
+                yTween.Start(TweenStyle.CubicOut, origin.Y, origin.Y + distance.Y, duration);
+                text.Tweens.YTween = yTween;
+            }
 
             if (distance.X != 0)
+            {
                 xTween.Start(TweenStyle.CubicOut, origin.X, origin.X + distance.X, duration);
+                text.Tweens.XTween = xTween;
+            }
 
             opacityTween.StartDelay = duration - fadeDuration;
             opacityTween.Start(TweenStyle.CubicIn, 1, 0, fadeDuration);
-
-            text.Tweens.OpacityTween = opacityTween;
-            text.Tweens.XTween = xTween;
-            text.Tweens.YTween = yTween;
+            text.Tweens.OpacityTween = opacityTween;        
         }
 
         #endregion
@@ -84,10 +89,16 @@ namespace Remizione
             ShowCore(origin, value, color, new Vector2(Randomizer.Next(-5, 5), Randomizer.Next(-12, -1)), duration);
         }
 
-        // ShowAsDamage
-        public void ShowAsDamage(Vector2 origin, string value, Color color)
+        // Show
+        public void Show(Vector2 origin, string value, DamageIntensity damageIntensity)
         {
-            ShowCore(origin, value, color, new Vector2(Randomizer.Next(-5, 5), Randomizer.Next(-12, -1)), 1000);
+            var color = damageIntensity switch
+            {
+                DamageIntensity.Critical => ColorPalette.Text.Highlight,
+                _ => ColorPalette.Text.Default,
+            };
+
+            ShowCore(origin, value, color, new(0, -6), 700);
         }
     }
 }

@@ -21,5 +21,17 @@ namespace Remizione
             PreventKnockback = true;
             ShakeOnHit = true;
         }
+
+        #region Protected members
+
+        // OnDie
+        protected override void OnDie()
+        {
+            base.OnDie();
+            Session.ObjectPools.FloatingTexts.Get()?.Show(BoundingBox.Center, "¡Tiempo Extra!", ColorPalette.Text.Orange);
+            Session.RemainingTime += 10000;
+        }
+
+        #endregion
     }
 }

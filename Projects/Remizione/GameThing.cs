@@ -972,7 +972,7 @@ namespace Remizione
         public bool ShakeOnHit { get; set; }
 
         // TakeDamage
-        public void TakeDamage(GameThing attacker, int amount, DamageKind damageKind, Vector2 knockback, ImpactWordKind impactWordKind)
+        public void TakeDamage(GameThing attacker, int amount, DamageKind damageKind, DamageIntensity damageIntensity, Vector2 knockback, ImpactWordKind impactWordKind)
         {
             if (IsDead || amount <= 0)
                 return;
@@ -1039,6 +1039,14 @@ namespace Remizione
                 hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
 
                 Blinker.Start(20, 5);
+
+                Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), amount.ToString(), damageIntensity);
+
+                if (Session.Player == attacker)
+                    Session.HUD.TargetMeter.Target = this;
+                
+                else if (Session.Player == this)
+                    Session.HUD.TargetMeter.Target = attacker;
 
                 OnHurt(attacker, amount, damageKind, knockback);
             }

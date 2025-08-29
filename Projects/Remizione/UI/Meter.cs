@@ -21,29 +21,33 @@ namespace Remizione
         private static readonly Color previousValue = new(171, 81, 48);
         private readonly ImageSprite previousValue1;
         private readonly FloatTween tween = new() { StartDelay = 200 };
-        private float value;
+        private int value;
+        private float width;
 
         #endregion
 
         // Constructor
-        public Meter(EngendroGame game, Color backColor, Color foreColor, float verticalSize = 2.6f)
+        public Meter(EngendroGame game, Color backColor, Color foreColor, Vector2 size)
             : base(game)
         {
             this.BackColor = backColor;
             this.ForeColor = foreColor;
+            this.width = size.X;
 
             // Container
             this.container = new ImageSprite(game, Atlases.UI.Pixel)
             {
                 Color = new(41, 29, 43),
-                ScaleY = verticalSize
+                ScaleY = size.Y,
+                ScaleX = size.X + (padding.X * 2) // ancho fijo para el container
             };
 
             // Back
             this.back = new ImageSprite(game, Atlases.UI.Pixel)
             {
                 Color = backColor,
-                ScaleY = container.ScaleY - (padding.Y * 2)
+                ScaleY = container.ScaleY - (padding.Y * 2),
+                ScaleX = size.X
             };
 
             // Fore
@@ -88,6 +92,15 @@ namespace Remizione
                 fore.X += xOffset;
                 previousValue1.X += xOffset;
             }
+        }
+
+        // Convierte un valor lógico (0..MaximumValue) a ancho proporcional (0..fixedWidth)
+        private float GetScaledWidth(float val)
+        {
+            if (maximumValue <= 0) 
+                return 0;
+            else
+                return (val / maximumValue) * width;
         }
 
         #endregion
@@ -148,9 +161,9 @@ namespace Remizione
                 if (value != maximumValue)
                 {
                     this.maximumValue = value;
-                    this.Value = maximumValue;
-                    back.ScaleX = value;
-                    container.ScaleX = value + (padding.X * 2);
+                    this.Value = maximumValue; // setea al maximo
+                    back.ScaleX = width;  // back siempre ancho fijo
+                    container.ScaleX = width + (padding.X * 2);
                     Invalidate();
                 }
             }
@@ -171,18 +184,21 @@ namespace Remizione
         }
 
         // Value
-        public float Value
+        public int Value
         {
             get => value;
             set
             {
                 if (value != this.value)
                 {
+                    float newWidth = GetScaledWidth(value);
+
                     if (value < this.value)
                     {
-                        var diff = Math.Abs(fore.ScaleX - value);
-                        previousValue1.ScaleX = tween.IsRunning ? tween.CurrentValue : fore.ScaleX;
-                        tween.Start(TweenStyle.CubicIn, previousValue1.ScaleX, fore.ScaleX - diff, 1000);
+                        float prevWidth = fore.ScaleX;
+                        float diff = Math.Abs(prevWidth - newWidth);
+                        previousValue1.ScaleX = tween.IsRunning ? tween.CurrentValue : prevWidth;
+                        tween.Start(TweenStyle.CubicIn, previousValue1.ScaleX, newWidth, 1000);
                     }
                     else
                     {
@@ -191,7 +207,25 @@ namespace Remizione
                     }
 
                     this.value = value;
-                    fore.ScaleX = value;
+                    fore.ScaleX = newWidth;
+                }
+            }
+        }
+
+        // Width
+        public float Width
+        {
+            get => width;
+            set
+            {
+                if (Math.Abs(width - value) > float.Epsilon)
+                {
+                    width = value;
+                    back.ScaleX = width;
+                    container.ScaleX = width + (padding.X * 2);
+                    fore.ScaleX = GetScaledWidth(this.value);
+                    previousValue1.ScaleX = GetScaledWidth(this.value);
+                    Invalidate();
                 }
             }
         }
