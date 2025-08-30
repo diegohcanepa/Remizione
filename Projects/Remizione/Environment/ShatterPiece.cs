@@ -21,6 +21,8 @@ namespace Remizione
         private bool launched;
         private float life = 2;
         private readonly GameThing owner;
+        private static readonly Color shadowColor = Color.Black * .3f;
+        private static readonly Vector2 shadowOffset = new Vector2(.5f);
         private Vector2 velocity;
 
         #endregion
@@ -57,7 +59,17 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             if (launched)
+            {
+                var c = image.Color;
+
+                image.Position += shadowOffset;
+                image.Color = shadowColor;
                 image.Draw(gameTime);
+                image.Color = c;
+                image.Position -= shadowOffset;
+
+                image.Draw(gameTime);
+            }
         }
 
         // OnUpdate

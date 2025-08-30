@@ -11,13 +11,13 @@ namespace Remizione
         public PostClock(GameSession session, string name)
             : base(session, name)
         {
-            DeathSound = Sound.Find(SoundNames.PotteryBreak);
+            DeathSound = Sound.Find(SoundNames.MetalPropBreak);
             DepthOffset = -8;
             HitTestSource = HitTestSource.Hotspot;
             HurtShake = new(1.5f, 0);
             HurtSound = Sound.Find(SoundNames.ImpactA);
             LootTableName = nameof(Pottery);
-            MaxHealth = 26;
+            MaxHealth = 6;
             PreventKnockback = true;
             ShakeOnHit = true;
         }

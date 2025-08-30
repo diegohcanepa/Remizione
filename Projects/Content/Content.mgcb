@@ -482,6 +482,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/LootBagLand.wav;Audio/FX/LootBagLand
 
+#begin Audio/FX/MetalPropBreak.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/MetalPropBreak.wav;Audio/FX/MetalPropBreak
+
 #begin Audio/FX/PickupBag.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

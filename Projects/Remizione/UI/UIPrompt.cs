@@ -40,15 +40,13 @@ namespace Remizione.UI
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (session.IsCurrentScene && session.Player?.InteractiveTarget is GameThing currentTarget)
+            if (session.IsCurrentScene && session.Player?.InteractiveTarget is GameThing currentTarget && currentTarget.PromptAware)
             {
                 if (currentTarget != target)
                 {
                     target = currentTarget;
                     button.Text = currentTarget.LocalizedDisplayName;
-
-                    if (InputManager.DefaultPlayer.LastInputMethod != InputMethod.Mouse)
-                        Sound.Play(SoundNames.UIPrompt);
+                    Sound.Play(SoundNames.UIPrompt);
                 }
             }
             else

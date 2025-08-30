@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace Engendro
@@ -13,6 +14,7 @@ namespace Engendro
         private int counter;
         private int delayCooldown;
         private int elapsedInterval;
+        private int startDelay;
         private int valueIndex;
         private readonly List<T> values;
 
@@ -21,6 +23,9 @@ namespace Engendro
         // Constructor
         public Blinker(params T[] values)
         {
+            if (values.Length < 2)
+                throw new InvalidOperationException("You must specify at least two values.");
+
             this.values = new(values);
         }
 
@@ -39,6 +44,15 @@ namespace Engendro
         // IsRunning
         public bool IsRunning { get; private set; }
 
+        // Reset
+        public void Reset()
+        {
+            valueIndex = 0;
+            IsRunning = false;
+            delayCooldown = 0;
+            Count = 0;
+        }
+
         // Restart
         public void Restart()
         {
@@ -53,19 +67,19 @@ namespace Engendro
         }
 
         // Start
-        public void Start(int interval, int count)
+        public void Start(int interval, int count, int startDelay = 0)
         {
-            Start(new Int32Range(interval), count);
+            Start(new Int32Range(interval), count, startDelay);
         }
 
         // Start
-        public void Start(Int32Range interval)
+        public void Start(Int32Range interval, int startDelay = 0)
         {
-            Start(interval, -1);
+            Start(interval, -1, startDelay);
         }
 
         // Start
-        public void Start(Int32Range interval, int count)
+        public void Start(Int32Range interval, int count, int startDelay = 0)
         {
             if (interval.Maximum < 1)
             {
@@ -77,23 +91,14 @@ namespace Engendro
             this.Interval = interval;
             this.Count = count;
             this.counter = 0;
-            this.delayCooldown = StartDelay;
+            this.delayCooldown = startDelay;
             this.elapsedInterval = interval.Random();
 
             IsRunning = true;
         }
 
-        // StartDelay
-        public int StartDelay { get; set; }
-
         // Stop
-        public void Stop()
-        {
-            valueIndex = 0;
-            IsRunning = false;
-            delayCooldown = 0;
-            Count = 0;
-        }
+        public void Stop() => Reset();
 
         // Update
         public void Update(GameTime gameTime)

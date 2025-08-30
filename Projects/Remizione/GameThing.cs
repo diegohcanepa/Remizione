@@ -759,10 +759,6 @@ namespace Remizione
             }
         }
 
-        // Highlight
-        [ScriptProperty]
-        public bool Highlight { get; set; } = true;
-
         // HitTest
         public bool HitTest(Vector2 value)
         {
@@ -897,6 +893,9 @@ namespace Remizione
         // PreventKnockback
         [ScriptProperty]
         public bool PreventKnockback { get; set; }
+
+        // PromptAware
+        public bool PromptAware => !IsDead && !string.IsNullOrWhiteSpace(LocalizedDisplayName);
 
         // Reheal
         [ScriptMethod]
