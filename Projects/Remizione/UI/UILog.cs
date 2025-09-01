@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -118,8 +119,11 @@ namespace Remizione
         // Show
         public void Show(LogVerb verb, string noun, AtlasImage? image = null)
         {
-            var isWarning = verb == LogVerb.Lost || verb == LogVerb.Discarded;
+            var isWarning = verb == LogVerb.Lost;
             ShowCore(Localization.GetValue(verb), noun, isWarning, image);
+
+            if (verb == LogVerb.PickedUp)
+                Sound.Play(SoundNames.UILogPickup);
         }
     }
 }

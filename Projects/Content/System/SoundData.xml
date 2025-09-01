@@ -64,6 +64,7 @@
 	<FX Name="TrunkOpen" />
 	<FX Name="UIHover" MaxInstances="4" />
 	<FX Name="UIInventoryOpen" MaxInstances="2" />
+	<FX Name="UILogPickup" MaxInstances="4" />
 	<FX Name="UIPrompt" MaxInstances="4" Volume=".1" />
 	<FX Name="UISelectA" MaxInstances="4" />
 	<FX Name="UISelectB" MaxInstances="4" />

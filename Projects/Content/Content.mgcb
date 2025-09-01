@@ -644,6 +644,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/UIInventoryOpen.wav;Audio/FX/UIInventoryOpen
 
+#begin Audio/FX/UILogPickup.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/UILogPickup.wav;Audio/FX/UILogPickup
+
 #begin Audio/FX/UIPrompt.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
