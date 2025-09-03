@@ -18,8 +18,6 @@ namespace Remizione
         public Prop(GameSession session, string name)
             : base(session, name)
         {
-            this.DisplayName = $"@Prop.{StaticName}";
-
             // Shadow
             this.shadow = new ImageSprite(session.Game)
             {

@@ -362,7 +362,7 @@ namespace Remizione
             output.WriteAttributeString(nameof(RandomSeed), XmlConvert.ToString(RandomSeed));
 
             // Runs
-            output.WriteAttributeString(nameof(GameplayMode), XmlConvert.ToString(Runs));
+            output.WriteAttributeString(nameof(Runs), XmlConvert.ToString(Runs));
 
             // Stage
             output.WriteAttributeString(nameof(Stage), XmlConvert.ToString(Stage));
