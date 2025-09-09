@@ -111,8 +111,8 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(Pickup));
             scriptRegistry.RegisterEntity(typeof(PostClock));
             scriptRegistry.RegisterEntity(typeof(Pottery));
-            scriptRegistry.RegisterEntity(typeof(ProceduralRoom));
             scriptRegistry.RegisterEntity(typeof(Prop));
+            scriptRegistry.RegisterEntity(typeof(RideRoom));
             scriptRegistry.RegisterEntity(typeof(SpearTrap));
             scriptRegistry.RegisterEntity(typeof(Tower));
             scriptRegistry.RegisterEntity(typeof(Trunk));

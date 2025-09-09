@@ -11,7 +11,7 @@ namespace Remizione
     /// <summary>
     /// ProceduralRoom
     /// </summary>
-    public sealed class ProceduralRoom : GameRoom
+    public abstract class ProceduralRoom : GameRoom
     {
         #region Private fields
 
@@ -30,7 +30,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public ProceduralRoom(GameSession session, string name)
+        protected ProceduralRoom(GameSession session, string name)
             : base(session, name)
         {
             LightingSystem = true;
@@ -338,14 +338,6 @@ namespace Remizione
             terrainBlock.Image = Atlas?.GetImage("TerrainBlock");
 
             Populate();
-        }
-
-        // OnUnload
-        protected override void OnUnload()
-        {
-            base.OnUnload();
-            Children.Clear();
-            Session.CleanUpRuntimeEntities();
         }
 
         #endregion
