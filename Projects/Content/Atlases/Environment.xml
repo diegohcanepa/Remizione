@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:45ab36337f0b04226f1f431ff5c605e4:657bcf1feb5784f360383a46f5999435:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:1eecddb21d829789ce07d01483a07651:657bcf1feb5784f360383a46f5999435:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -77,10 +77,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Gut12.png" x="306" y="314" w="4" h="2"/>
     <sprite n="GutStain1.png" x="470" y="250" w="18" h="11"/>
     <sprite n="GutStain2.png" x="531" y="247" w="17" h="10"/>
-    <sprite n="IncomingGhostCar01.png" x="968" y="162" w="29" h="29"/>
-    <sprite n="IncomingGhostCar02.png" x="275" y="297" w="29" h="29"/>
-    <sprite n="IncomingGhostCar03.png" x="275" y="328" w="29" h="29"/>
-    <sprite n="IncomingGhostCar04.png" x="198" y="307" w="29" h="29"/>
+    <sprite n="IncomingRideCar01.png" x="968" y="162" w="29" h="29"/>
+    <sprite n="IncomingRideCar02.png" x="275" y="297" w="29" h="29"/>
+    <sprite n="IncomingRideCar03.png" x="275" y="328" w="29" h="29"/>
+    <sprite n="IncomingRideCar04.png" x="198" y="307" w="29" h="29"/>
     <sprite n="Kapow.png" x="167" y="248" w="31" h="14"/>
     <sprite n="LargeRockA.png" x="968" y="194" w="54" h="42"/>
     <sprite n="LargeRockAShadow.png" x="968" y="238" w="54" h="42"/>
@@ -96,10 +96,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="LightningLight.png" x="731" y="2" w="266" h="158"/>
     <sprite n="LootBag.png" x="718" y="180" w="8" h="8"/>
     <sprite n="LootBagShadow.png" x="718" y="190" w="8" h="8"/>
-    <sprite n="OutgoingGhostCarNW01.png" x="69" y="300" w="40" h="30"/>
-    <sprite n="OutgoingGhostCarNW02.png" x="436" y="173" w="40" h="30"/>
-    <sprite n="OutgoingGhostCarNW03.png" x="478" y="173" w="40" h="30"/>
-    <sprite n="OutgoingGhostCarNWShadow.png" x="520" y="173" w="40" h="30"/>
+    <sprite n="OutgoingRideCarNW01.png" x="69" y="300" w="40" h="30"/>
+    <sprite n="OutgoingRideCarNW02.png" x="436" y="173" w="40" h="30"/>
+    <sprite n="OutgoingRideCarNW03.png" x="478" y="173" w="40" h="30"/>
+    <sprite n="OutgoingRideCarNWShadow.png" x="520" y="173" w="40" h="30"/>
     <sprite n="PieceOfWood.png" x="358" y="273" w="7" h="3"/>
     <sprite n="PieceOfWoodShadow.png" x="358" y="278" w="7" h="3"/>
     <sprite n="PilgrimSack.png" x="718" y="180" w="8" h="8"/>

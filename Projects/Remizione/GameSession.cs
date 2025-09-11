@@ -107,7 +107,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(IsometricProp));
             scriptRegistry.RegisterEntity(typeof(Loot));
             scriptRegistry.RegisterEntity(typeof(OcculusMinion));
-            scriptRegistry.RegisterEntity(typeof(OutgoingGhostCar));
+            scriptRegistry.RegisterEntity(typeof(OutgoingRideCar));
             scriptRegistry.RegisterEntity(typeof(Pickup));
             scriptRegistry.RegisterEntity(typeof(PostClock));
             scriptRegistry.RegisterEntity(typeof(Pottery));
@@ -307,19 +307,13 @@ namespace Remizione
             }
         }
 
-        // OnContinuousUpdate
-        protected override void OnContinuousUpdate(GameTime gameTime)
-        {
-            base.OnContinuousUpdate(gameTime);
-
-            if (GameplayMode == GameplayMode.Run && RemainingTime >= 0)
-                RemainingTime -= gameTime.ElapsedGameTime.Milliseconds;
-        }
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+
+            if (IsCurrentScene && GameplayMode == GameplayMode.Run && RemainingTime >= 0)
+                RemainingTime -= gameTime.ElapsedGameTime.Milliseconds;
 
             if (console != null)
             {
@@ -448,9 +442,9 @@ namespace Remizione
         // ObjectPools
         public ObjectPools ObjectPools { get; }
 
-        // OutgoingGhostCar
+        // OutgoingRideCar
         [ScriptProperty]
-        public OutgoingGhostCar? OutgoingGhostCar => OutcomeTarget as OutgoingGhostCar;
+        public OutgoingRideCar? OutgoingRideCar => OutcomeTarget as OutgoingRideCar;
 
         // Player
         [ScriptProperty]

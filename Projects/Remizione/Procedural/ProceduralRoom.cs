@@ -260,11 +260,11 @@ namespace Remizione
             if (RequiredPower > 0)
                 RequiredPower = Math.Max(RequiredPower, 1);
 
-            SetupGhostCars();
+            SetupRideCars();
         }
 
-        // SetupGhostCars
-        private void SetupGhostCars()
+        // SetupRideCars
+        private void SetupRideCars()
         {
             var childList = new List<Thing>(Children);
 
@@ -272,14 +272,14 @@ namespace Remizione
             {
                 if (thing is Tower roomConnector)
                 {
-                    var staticName = roomConnector.NW ? "OutgoingGhostCarNW" : "OutgoingGhostCarNE";
+                    var staticName = roomConnector.NW ? "OutgoingRideCarNW" : "OutgoingRideCarNE";
 
-                    if (CreateRuntimeCloneCore(staticName) is not OutgoingGhostCar car)
-                        throw new InvalidOperationException("Failed to create GhostCar instance.");
+                    if (CreateRuntimeCloneCore(staticName) is not OutgoingRideCar car)
+                        throw new InvalidOperationException("Failed to create RideCar instance.");
 
                     Children.Add(car);
-                    roomConnector.GhostCar = car;
-                    car.Position = roomConnector.BoundingBox.GetPoint(RectanglePoint.RightBottom) + roomConnector.GhostCarOffset;
+                    roomConnector.RideCar = car;
+                    car.Position = roomConnector.BoundingBox.GetPoint(RectanglePoint.RightBottom) + roomConnector.RideCarOffset;
                 }
             }
         }

@@ -987,10 +987,10 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">IncomingGhostCar-assets/IncomingGhostCar01.png</key>
-            <key type="filename">IncomingGhostCar-assets/IncomingGhostCar02.png</key>
-            <key type="filename">IncomingGhostCar-assets/IncomingGhostCar03.png</key>
-            <key type="filename">IncomingGhostCar-assets/IncomingGhostCar04.png</key>
+            <key type="filename">IncomingRideCar-assets/IncomingRideCar01.png</key>
+            <key type="filename">IncomingRideCar-assets/IncomingRideCar02.png</key>
+            <key type="filename">IncomingRideCar-assets/IncomingRideCar03.png</key>
+            <key type="filename">IncomingRideCar-assets/IncomingRideCar04.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1144,10 +1144,10 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">OutgoingGhostCarNW-assets/OutgoingGhostCarNW01.png</key>
-            <key type="filename">OutgoingGhostCarNW-assets/OutgoingGhostCarNW02.png</key>
-            <key type="filename">OutgoingGhostCarNW-assets/OutgoingGhostCarNW03.png</key>
-            <key type="filename">OutgoingGhostCarNW-assets/OutgoingGhostCarNWShadow.png</key>
+            <key type="filename">OutgoingRideCarNW-assets/OutgoingRideCarNW01.png</key>
+            <key type="filename">OutgoingRideCarNW-assets/OutgoingRideCarNW02.png</key>
+            <key type="filename">OutgoingRideCarNW-assets/OutgoingRideCarNW03.png</key>
+            <key type="filename">OutgoingRideCarNW-assets/OutgoingRideCarNWShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1664,9 +1664,7 @@
                     <filename>FenceB-assets</filename>
                     <filename>FenceC-assets</filename>
                     <filename>FenceD-assets</filename>
-                    <filename>IncomingGhostCar-assets</filename>
                     <filename>EntranceRail-assets</filename>
-                    <filename>OutgoingGhostCarNW-assets</filename>
                     <filename>BigSign-assets</filename>
                     <filename>PilgrimSack-assets</filename>
                     <filename>TombstoneA-assets</filename>
@@ -1686,6 +1684,8 @@
                     <filename>Tower-assets</filename>
                     <filename>SpearTrap-assets</filename>
                     <filename>PostClock-assets</filename>
+                    <filename>IncomingRideCar-assets</filename>
+                    <filename>OutgoingRideCarNW-assets</filename>
                 </array>
             </struct>
         </map>

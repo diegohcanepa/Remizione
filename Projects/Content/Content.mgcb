@@ -410,18 +410,6 @@
 /processorParam:Quality=Best
 /build:Audio/FX/Gesture1.wav;Audio/FX/Gesture1
 
-#begin Audio/FX/GhostCarLoop.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/GhostCarLoop.wav;Audio/FX/GhostCarLoop
-
-#begin Audio/FX/GhostCarStop.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/GhostCarStop.wav;Audio/FX/GhostCarStop
-
 #begin Audio/FX/GutsLarge.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -523,6 +511,18 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/Raven.wav;Audio/FX/Raven
+
+#begin Audio/FX/RideCarLoop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/RideCarLoop.wav;Audio/FX/RideCarLoop
+
+#begin Audio/FX/RideCarStop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/RideCarStop.wav;Audio/FX/RideCarStop
 
 #begin Audio/FX/ShockZap1.wav
 /importer:WavImporter

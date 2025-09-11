@@ -821,7 +821,10 @@ namespace Adberration
         }
 
         // CreateRuntimeClone
-        public Thing CreateRuntimeClone(string staticName, string instanceName) => ScriptEnvironment.CreateRuntimeClone(staticName, instanceName, false);
+        public Thing CreateRuntimeClone(string staticName, string instanceName)
+        {
+            return ScriptEnvironment.CreateRuntimeClone(staticName, instanceName, false);
+        }
 
         // CreateFlagCondition
         public FlagCondition CreateFlagCondition(IList<string> flags)

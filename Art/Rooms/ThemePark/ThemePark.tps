@@ -173,8 +173,8 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">GhostCar-assets/GhostCar01.png</key>
-            <key type="filename">GhostCar-assets/GhostCar02.png</key>
+            <key type="filename">RideCar-assets/RideCar01.png</key>
+            <key type="filename">RideCar-assets/RideCar02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -183,9 +183,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>6,5,13,10</rect>
+                <rect>6,5,13,11</rect>
                 <key>scale9Paddings</key>
-                <rect>6,5,13,10</rect>
+                <rect>6,5,13,11</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -308,7 +308,7 @@
                 <key>files</key>
                 <array>
                     <filename>ThemePark-assets</filename>
-                    <filename>GhostCar-assets</filename>
+                    <filename>RideCar-assets</filename>
                 </array>
             </struct>
         </map>

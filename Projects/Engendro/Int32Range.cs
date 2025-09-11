@@ -21,9 +21,7 @@ namespace Engendro
         public Int32Range(int minimum, int maximum)
         {
             if (minimum > maximum)
-            {
                 throw new ArgumentOutOfRangeException(nameof(minimum), "The minimum value cannot be greater than the maximum value.");
-            }
 
             Minimum = minimum;
             Maximum = maximum;

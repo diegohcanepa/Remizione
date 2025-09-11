@@ -248,10 +248,10 @@ Bla bla bla</String>
   <String Key="Prop.Bag">Bolsa</String>
   <String Key="Prop.Cross">Cruz</String>
   <String Key="Prop.CrucifiedMan">Hombre crucificado</String>
-  <String Key="Prop.GhostCar">Carrito</String>
   <String Key="Prop.PilgrimSack">Saco del Peregrino</String>
   <String Key="Prop.PortableToilet">Pequeño purgatorio</String>
   <String Key="Prop.PostClock">Tiempo tirano</String>
+  <String Key="Prop.RideCart">Carrito</String>
   <String Key="Prop.Sack">Bolsa</String>
   <String Key="Prop.Sign">Cartel</String>
   <String Key="Prop.Trunk">Baúl</String>

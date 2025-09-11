@@ -40,13 +40,13 @@ namespace Remizione
 
         #endregion
 
-        // GhostCar
+        // RideCar
         [ScriptProperty]
-        public OutgoingGhostCar? GhostCar { get; set; }
+        public OutgoingRideCar? RideCar { get; set; }
 
-        // GhostCarOffset
+        // RideCarOffset
         [ScriptProperty]
-        public Vector2 GhostCarOffset { get; set; }
+        public Vector2 RideCarOffset { get; set; }
 
         // IsOpen
         [ScriptProperty]
@@ -59,7 +59,7 @@ namespace Remizione
             if (!isOpened && AnimationPlayer.Animation?.Name != OpenState)
             {
                 AnimationPlayer.Play(OpenState, false);
-                GhostCar?.TurnOn();
+                RideCar?.TurnOn();
             }
         }
 

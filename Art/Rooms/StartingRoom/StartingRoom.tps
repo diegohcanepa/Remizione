@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.8.0</string>
+        <string>7.9.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -173,10 +173,10 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">GhostCar-assets/GhostCar01.png</key>
-            <key type="filename">GhostCar-assets/GhostCar02.png</key>
-            <key type="filename">GhostCar-assets/GhostCar03.png</key>
-            <key type="filename">GhostCar-assets/GhostCar04.png</key>
+            <key type="filename">RideCar-assets/RideCar01.png</key>
+            <key type="filename">RideCar-assets/RideCar02.png</key>
+            <key type="filename">RideCar-assets/RideCar03.png</key>
+            <key type="filename">RideCar-assets/RideCar04.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -279,8 +279,8 @@
                 <array>
                     <filename>StartingTower-assets</filename>
                     <filename>StartingTowerDoor-assets</filename>
-                    <filename>GhostCar-assets</filename>
                     <filename>StartingRoom-assets</filename>
+                    <filename>RideCar-assets</filename>
                 </array>
             </struct>
         </map>

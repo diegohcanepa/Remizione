@@ -180,7 +180,7 @@ namespace Adberration.Scripting
                 throw new InvalidOperationException("Game session not initialized.");
 
             if (session.State != GameSessionState.Idle && session.State != GameSessionState.AwaitingScripts && session.ScriptLibrary.CompilationPhase != CompilationPhase.Cloning)
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("Invalid session state.");
 
             if (string.IsNullOrWhiteSpace(instanceName))
                 instanceName = CreateRuntimeCloneName(staticName);
