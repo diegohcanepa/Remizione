@@ -64,7 +64,7 @@ namespace Remizione
         public bool IsActive { get; private set; }
 
         // Show
-        public void Show(ImpactWordKind kind, Vector2 position)
+        public void Show(ImpactWordName kind, Vector2 position)
         {
             sprite.Tweens.Reset();
             endingPhaseCooldown = 200;

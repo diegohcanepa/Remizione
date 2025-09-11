@@ -14,7 +14,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private const int maxInfoTextWidth = 80;
+        private const int maxInfoTextWidth = 100;
 
         private InventoryGrid activeGrid;
         private readonly UITextButton buttonClose;
@@ -42,6 +42,7 @@ namespace Remizione
         private readonly ImageSprite navigationBar;
         private readonly UITextButton nextCategoryButton;
         private readonly UITextButton previousCategoryButton;
+        private readonly TextSprite titleText;
         private readonly TrinketSlot trinketSlot;
 
         #endregion
@@ -50,11 +51,22 @@ namespace Remizione
 
         // Constructor
         public InventoryScene(Actor owner)
-            : base(owner.Game, SceneSettings.PausePreviousScenes | SceneSettings.ExclusiveDraw)
+            : base(owner.Game, SceneSettings.PausePreviousScenes)
         {
+            owner.Session.LightingSystem = false;
+
             this.Owner = owner;
 
-            BackgroundColor = Color.Black;
+            // Title
+            this.titleText = new(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Terra,
+                PivotOrigin = RectanglePoint.Top,
+                Scale = ScaleInfo.Text.ExtraGiant,
+                Text = "@Prop.PilgrimSack",
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 4),
+                ShadowOffset = new Vector2(0, .75f)
+            };
 
             // Health meter
             this.healthMeter = new(Game)
@@ -79,14 +91,14 @@ namespace Remizione
             this.gridContainer = new(Game, Atlases.UI.InventoryGridContainer)
             {
                 PivotOrigin = RectanglePoint.LeftTop,
-                Position = new(10, 30),
+                Position = new(20, 44),
             };
 
             // Create grids for each category
             var gridPos = gridContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 3, 3);
             foreach (var category in categories)
             {
-                grids[category] = new InventoryGrid(owner.Inventory.GetContainer(category), 6, 4)
+                grids[category] = new InventoryGrid(owner.Inventory.GetContainer(category), 4, 3)
                 {
                     Position = gridPos
                 };
@@ -117,7 +129,7 @@ namespace Remizione
             {
                 ImageName = nameof(InputBindings.PreviousTab),
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Position = gridContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 6, 0),
+                Position = gridContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop),
             };
 
             // Next tab button
@@ -125,7 +137,7 @@ namespace Remizione
             {
                 ImageName = nameof(InputBindings.NextTab),
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = gridContainer.BoundingBox.GetPoint(RectanglePoint.RightTop, -6, 0)
+                Position = gridContainer.BoundingBox.GetPoint(RectanglePoint.RightTop)
             };
 
             // Category
@@ -201,8 +213,8 @@ namespace Remizione
             buttonClose = new UITextButton(owner.Game, InputBindings.Close)
             {
                 AllowPressEffect = false,
-                PivotOrigin = RectanglePoint.RightTop,
-                Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, 4),
+                PivotOrigin = RectanglePoint.RightBottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -2),
             };
 
             // Consume button
@@ -216,8 +228,8 @@ namespace Remizione
             // Discard button
             buttonDiscard = new UITextButton(owner.Game, InputBindings.Discard)
             {
-                PivotOrigin = RectanglePoint.LeftTop,
-                Position = gridContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 4)
+                PivotOrigin = RectanglePoint.RightBottom,
+                Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.RightBottom, -4, -3)
             };
 
             // Equip button
@@ -436,6 +448,10 @@ namespace Remizione
         {
             base.OnDraw(gameTime);
 
+            Game.SpriteBatch.Begin(Game.Camera);
+            Game.Shapes.DrawRectangle(Screen.Area, Color.Black * .6f);
+            Game.SpriteBatch.End();
+
             if (Owner.Session.Room is ProceduralRoom)
             {
                 trinketSlot.Draw(gameTime);
@@ -444,6 +460,7 @@ namespace Remizione
 
             // Containers
             Game.SpriteBatch.Begin(Game.Camera);
+            titleText.Draw(gameTime);
             navigationBar.Draw(gameTime);
             gridContainer.Draw(gameTime);
             infoTitleContainer.Draw(gameTime);

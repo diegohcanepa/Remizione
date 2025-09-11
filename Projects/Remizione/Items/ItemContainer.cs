@@ -264,6 +264,6 @@ namespace Remizione
         }
 
         // Size
-        public int Size { get; set; } = 6;
+        public int Size { get; set; } = 5;
     }
 }

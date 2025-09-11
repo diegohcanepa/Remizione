@@ -23,7 +23,7 @@ namespace Remizione.Scripting
                 DamageKind = Parser.ParseEnumArgument(this, DamageKindArg, DamageKind.None),
                 Durability = Parser.ParseInt32Argument(this, DurabilityArg, -1),
                 Health = Parser.ParseDiceExpressionArgument(this, HealthArg),
-                ImpactWord = Parser.ParseEnumArgument(this, ImpactWordArg, ImpactWordKind.None),
+                ImpactWord = Parser.ParseEnumArgument(this, ImpactWordArg, ImpactWordName.None),
                 Knockback = Parser.ParseVector2Argument(this, KnockbackArg),
                 PassiveEffectCooldown = Parser.ParseInt32Argument(this, PassiveEffectCooldownArg),
                 PreventDiscard = HasArg(PreventDiscardArg),

@@ -108,7 +108,7 @@ namespace Remizione
         public AtlasImage? Image { get; }
 
         // ImpactWord
-        public ImpactWordKind ImpactWord { get; init; }
+        public ImpactWordName ImpactWord { get; init; }
 
         // IsPassive
         public bool IsPassive => PassiveEffectCooldown > 0;

@@ -41,8 +41,8 @@ namespace Remizione
     // ImpactType
     public enum ImpactType { Low, Medium, High }
 
-    // ImpactWordKind
-    public enum ImpactWordKind { None, Kapow, Zap }
+    // ImpactWordName
+    public enum ImpactWordName { None, AghGreen, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
 
     // InventoryCategory
     public enum InventoryCategory { None, Consumables, Junk, KeyItems, Traits, Trinkets }

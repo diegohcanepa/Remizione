@@ -957,6 +957,40 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">ImpactWords-assets/AghGreen.png</key>
+            <key type="filename">ImpactWords-assets/AghRed.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,4,13,8</rect>
+                <key>scale9Paddings</key>
+                <rect>7,4,13,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ImpactWords-assets/BangBlue.png</key>
+            <key type="filename">ImpactWords-assets/BangRed.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,3,15,7</rect>
+                <key>scale9Paddings</key>
+                <rect>8,3,15,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ImpactWords-assets/BoomPurple.png</key>
+            <key type="filename">ImpactWords-assets/BoomRed.png</key>
             <key type="filename">ImpactWords-assets/Kapow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -969,6 +1003,101 @@
                 <rect>8,4,15,7</rect>
                 <key>scale9Paddings</key>
                 <rect>8,4,15,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ImpactWords-assets/CrackBlue.png</key>
+            <key type="filename">ImpactWords-assets/CrackYellow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,3,17,7</rect>
+                <key>scale9Paddings</key>
+                <rect>8,3,17,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ImpactWords-assets/CuackPurple.png</key>
+            <key type="filename">ImpactWords-assets/CuackYellow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,4,17,7</rect>
+                <key>scale9Paddings</key>
+                <rect>8,4,17,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ImpactWords-assets/KapowStrong.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,3,19,7</rect>
+                <key>scale9Paddings</key>
+                <rect>10,3,19,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ImpactWords-assets/OuchBlue.png</key>
+            <key type="filename">ImpactWords-assets/OuchGreen.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,3,14,6</rect>
+                <key>scale9Paddings</key>
+                <rect>7,3,14,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ImpactWords-assets/PlopRed.png</key>
+            <key type="filename">ImpactWords-assets/PlopYellow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,3,13,5</rect>
+                <key>scale9Paddings</key>
+                <rect>7,3,13,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ImpactWords-assets/SlapBlue.png</key>
+            <key type="filename">ImpactWords-assets/SlapRed.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,3,13,6</rect>
+                <key>scale9Paddings</key>
+                <rect>6,3,13,6</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

@@ -971,7 +971,7 @@ namespace Remizione
         public bool ShakeOnHit { get; set; }
 
         // TakeDamage
-        public void TakeDamage(GameThing attacker, int amount, DamageKind damageKind, DamageIntensity damageIntensity, Vector2 knockback, ImpactWordKind impactWordKind)
+        public void TakeDamage(GameThing attacker, int amount, DamageKind damageKind, DamageIntensity damageIntensity, Vector2 knockback, ImpactWordName impactWord)
         {
             if (IsDead || amount <= 0)
                 return;
@@ -994,10 +994,10 @@ namespace Remizione
             }
 
             // Impact word
-            if (impactWordKind != ImpactWordKind.None && GetImpactWordPosition() is Vector2 wordPos)
+            if (impactWord != ImpactWordName.None && GetImpactWordPosition() is Vector2 wordPos)
             {
-                impactWord ??= Session.ImpactWordPool.Get();
-                impactWord.Show(impactWordKind, wordPos);
+                this.impactWord ??= Session.ImpactWordPool.Get();
+                this.impactWord.Show(impactWord, wordPos);
             }
 
             if (MaxHealth == 0)
