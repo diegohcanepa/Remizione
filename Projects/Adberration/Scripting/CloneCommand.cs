@@ -41,7 +41,7 @@
         {
             var staticName = ScriptSyntax.GetStaticName(name);
             var instanceName = name == staticName ? string.Empty : name;
-            var thing = Session.ScriptEnvironment.CreateRuntimeClone(staticName, instanceName, HasArg(PersistentArg));
+            var thing = Session.ScriptEnvironment.CreateRuntimeThingClone(staticName, instanceName, HasArg(PersistentArg));
 
             // Parent (assign parent at last place to ensure correct values before the controller starts)
             var flag = Body.Args.GetArg(ParentArg);

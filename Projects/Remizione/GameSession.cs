@@ -26,7 +26,6 @@ namespace Remizione
         private Actor? player;
         private Vector2? playerPosition;
         private int power;
-        private int rainRemainingTime;
         private readonly List<RideRoom> rideRooms = [];
         private readonly RoomEditor? roomEditor;
         private readonly List<GameThing> staticThings = [];
@@ -235,14 +234,6 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
                 playerPosition = XmlConverterExtension.ToVector2(playerPositionValue);
 
-            // NextRainCooldown
-            if (sessionNode.Attributes[nameof(NextRainCooldown)]?.Value is string nextRainCooldown)
-                this.NextRainCooldown = XmlConvert.ToInt32(nextRainCooldown);
-
-            // RainRemainingTime
-            if (sessionNode.Attributes[nameof(Environment.Rain.RemainingTime)]?.Value is string rainRemainingTime)
-                this.rainRemainingTime = XmlConvert.ToInt32(rainRemainingTime);
-
             // Runs
             if (sessionNode.Attributes[nameof(Runs)]?.Value is string runs)
                 this.Runs = XmlConvert.ToInt32(runs);
@@ -264,15 +255,6 @@ namespace Remizione
                     Room.Children[i].Resume();
                 }
             }
-        }
-
-        // OnRun
-        protected override void OnRun()
-        {
-            base.OnRun();
-
-            if (rainRemainingTime > 0)
-                Environment.Rain.Begin(rainRemainingTime, true);
         }
 
         // OnSave
@@ -333,9 +315,6 @@ namespace Remizione
             // GameplayMode
             output.WriteAttributeString(nameof(GameplayMode), XmlConvert.ToString((int)GameplayMode));
 
-            // NextRainCooldown
-            output.WriteAttributeString(nameof(NextRainCooldown), XmlConvert.ToString(NextRainCooldown));
-
             // Player
             if (Player != null)
                 output.WriteAttributeString(nameof(Player), Player.Name);
@@ -343,9 +322,6 @@ namespace Remizione
             // PlayerPosition
             if (playerPosition.HasValue)
                 output.WriteAttributeString(nameof(playerPosition), XmlConverterExtension.ToString(playerPosition.Value));
-
-            // RainRemainingTime
-            output.WriteAttributeString(nameof(Environment.Rain.RemainingTime), XmlConvert.ToString(Environment.Rain.RemainingTime));
 
             // Runs
             output.WriteAttributeString(nameof(Runs), XmlConvert.ToString(Runs));
@@ -367,9 +343,13 @@ namespace Remizione
 
             this.RandomSeed = System.Environment.TickCount;
 
-            for (var i = 0; i < 7; i++)
+            for (var i = 0; i < GameSettings.RunLength; i++)
             {
-                rideRooms.Add(new RideRoom(this, $"RideRoom{i}"));
+                var room = CreateRuntimeRoomClone("RideRoom", string.Empty) as RideRoom;
+                if (room == null)
+                    throw new InvalidOperationException($"Failed to create runtime clone from RideRoom.");
+
+                rideRooms.Add(room);
             }
 
             NextRunRoom();
@@ -441,6 +421,7 @@ namespace Remizione
         public bool IsPowerRestored { get; private set; }
 
         // IsRunInProgress
+        [ScriptProperty]
         public bool IsRunInProgress { get; private set; }
 
         // IsTimeCritical
@@ -458,15 +439,12 @@ namespace Remizione
             Stage++;
         }
 
-        // NextRainCooldown
-        [ScriptProperty(CodingContext.Any)]
-        public int NextRainCooldown { get; private set; }
-
         // NextRoom
         [ScriptProperty]
         public new GameRoom? NextRoom => (GameRoom?)base.NextRoom;
 
         // NextRunRoom
+        [ScriptMethod]
         public void NextRunRoom()
         {
             if (!IsRunInProgress)

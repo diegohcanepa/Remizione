@@ -37,6 +37,9 @@ namespace Remizione
         // RainDurationRange
         public static readonly Int32Range RainDurationRange = new(180000, 300000);
 
+        // RunLength
+        public const int RunLength = 7;
+
         // SteamAppID
         public const int SteamAppID = 480;
 

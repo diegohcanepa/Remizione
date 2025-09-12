@@ -197,7 +197,7 @@ namespace Remizione
             if (item.MetaItem.Action != ItemAction.Throw || item.Count <= 0)
                 return false;
 
-            Stand();
+            //Stand();
             item.Use();
             throwItemState.Item = item;
             StateMachine.ChangeState(throwItemState.Name);

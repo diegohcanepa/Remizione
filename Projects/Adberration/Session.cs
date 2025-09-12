@@ -820,10 +820,16 @@ namespace Adberration
             }
         }
 
-        // CreateRuntimeClone
-        public Thing CreateRuntimeClone(string staticName, string instanceName)
+        // CreateRuntimeRoomClone
+        public Room CreateRuntimeRoomClone(string staticName, string instanceName)
         {
-            return ScriptEnvironment.CreateRuntimeClone(staticName, instanceName, false);
+            return ScriptEnvironment.CreateRuntimeRoomClone(staticName, instanceName, false);
+        }
+
+        // CreateRuntimeThingClone
+        public Thing CreateRuntimeThingClone(string staticName, string instanceName)
+        {
+            return ScriptEnvironment.CreateRuntimeThingClone(staticName, instanceName, false);
         }
 
         // CreateFlagCondition

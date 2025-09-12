@@ -1,4 +1,9 @@
-﻿namespace Remizione
+﻿using Adberration;
+using Engendro;
+using System;
+using System.Collections.Generic;
+
+namespace Remizione
 {
     /// <summary>
     /// RideRoom
@@ -11,6 +16,33 @@
         {
         }
 
+        #region Private members
+
+        // SetupRideCars
+        private void SetupRideCars()
+        {
+            var childList = new List<Thing>(Children);
+
+            foreach (var thing in childList)
+            {
+                if (thing is Tower roomConnector)
+                {
+                    var staticName = roomConnector.NW ? "OutgoingRideCarNW" : "OutgoingRideCarNE";
+
+                    if (CreateRuntimeClone(staticName) is not OutgoingRideCar car)
+                        throw new InvalidOperationException("Failed to create RideCar instance.");
+
+                    Children.Add(car);
+                    roomConnector.RideCar = car;
+                    car.Position = roomConnector.BoundingBox.GetPoint(RectanglePoint.RightBottom) + roomConnector.RideCarOffset;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Protected members
+
         // RequiresPersistence
         protected override bool RequiresPersistence => false;
 
@@ -18,7 +50,7 @@
         protected override void OnLoad()
         {
             base.OnLoad();
-            Session.AwaitRoutine("IncomingRideCar-Intro");
+            Session.AwaitRoutine(RoutineNames.IncomingRideCarIntro);
         }
 
         // OnUnload
@@ -28,5 +60,23 @@
             Children.Clear();
             Session.CleanUpRuntimeEntities();
         }
+
+        // Populate
+        protected override void Populate()
+        {
+            // Entrance rail
+            if (Session.GetEntity<GameThing>("EntranceRail") is GameThing entranceRail)
+            {
+                var sizeInCells = entranceRail.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
+                if (MainGrid != null && MainGrid.TryReserveSpace(sizeInCells, out int col, out int row))
+                    Children.Add(entranceRail);
+            }
+
+            base.Populate();
+
+            SetupRideCars();
+        }
+
+        #endregion
     }
 }

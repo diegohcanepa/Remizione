@@ -1,5 +1,4 @@
-﻿using Adberration;
-using Adberration.Scripting;
+﻿using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
@@ -15,9 +14,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private ProceduralRoomGrid? decorationGrid;
         private int instanceCount;
-        private ProceduralRoomGrid? mainGrid;
         private readonly Dictionary<string, List<PlacementData>> placementDataDictionary = [];
         private readonly Random random;
         private readonly int randomSeed;
@@ -38,16 +35,21 @@ namespace Remizione
             this.randomSeed = GetSeed(Session.RandomSeed, Session.Stage);
             this.random = new Random(randomSeed);
             this.terrainBlock = new ImageSprite(session.Game);
+
+            Prepare();
+
+            this.DecorationGrid = new ProceduralRoomGrid("Decoration", CustomWidth, CustomHeight);
+            this.MainGrid = new ProceduralRoomGrid("Main", CustomWidth, CustomHeight);
         }
 
         #endregion
 
         #region Private members
 
-        // CreateRuntimeCloneCore
-        private GameThing CreateRuntimeCloneCore(string staticName)
+        // CreateRuntimeThingCloneCore
+        private GameThing CreateRuntimeThingCloneCore(string staticName)
         {
-            if (Session.CreateRuntimeClone(staticName, $"{staticName}*{Name}_{instanceCount}") is not GameThing result)
+            if (Session.CreateRuntimeThingClone(staticName, $"{staticName}*{Name}_{instanceCount}") is not GameThing result)
                 throw new InvalidOperationException($"Failed to create runtime clone from'{staticName}'.");
 
             instanceCount++;
@@ -58,10 +60,7 @@ namespace Remizione
         // DistributeClumped
         private void DistributeClumped(GameThing thing, PlacementData placementData)
         {
-            if (mainGrid == null || decorationGrid == null)
-                return;
-
-            var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
+            var targetGrid = thing.IsWalkAreaHole ? MainGrid : DecorationGrid;
             int totalCount = random.Next(placementData.Instances.Minimum, placementData.Instances.Maximum + 1);
             int clumpSize = 3 + random.Next(3);
             int clumpCount = (totalCount + clumpSize - 1) / clumpSize;
@@ -89,10 +88,7 @@ namespace Remizione
         // DistributeRandomly
         private void DistributeRandomly(GameThing thing, PlacementData placementData)
         {
-            if (mainGrid == null || decorationGrid == null)
-                return;
-
-            var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
+            var targetGrid = thing.IsWalkAreaHole ? MainGrid : DecorationGrid;
             Size sizeInCells = thing.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
             var count = random.Next(placementData.Instances.Minimum, placementData.Instances.Maximum + 1);
 
@@ -119,10 +115,7 @@ namespace Remizione
         // DistributeWithNoiseMap
         private void DistributeWithNoiseMap(GameThing thing, PlacementData placementData, int seed)
         {
-            if (mainGrid == null || decorationGrid == null)
-                return;
-
-            var targetGrid = thing.IsWalkAreaHole ? mainGrid : decorationGrid;
+            var targetGrid = thing.IsWalkAreaHole ? MainGrid : DecorationGrid;
             Size sizeInCells = thing.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
             float noiseThreshold = 0.2f;
             int attempts = 100;
@@ -192,10 +185,7 @@ namespace Remizione
         // PlaceRuntimeThing
         private void PlaceRuntimeThing(GameThing thing, int col, int row)
         {
-            if (mainGrid == null || decorationGrid == null)
-                return;
-
-            var instance = CreateRuntimeCloneCore(thing.StaticName);
+            var instance = CreateRuntimeThingCloneCore(thing.StaticName);
             instance.Position = ProceduralRoomGrid.GetPosition(col, row);
             instance.Y += instance.BoundingBox.Height;
             instance.X += instance.BoundingBox.Width / 2;
@@ -204,18 +194,77 @@ namespace Remizione
             RequiredPower += thing.PowerBonus;
         }
 
+        // Prepare
+        private void Prepare()
+        {
+            const int walkAreaMargin = 15;
+
+            terrainCols = random.Next(TerrainColRange.Minimum, TerrainColRange.Maximum + 1);
+            terrainRows = terrainCols == 1 ? 1 : random.Next(TerrainRowRange.Minimum, TerrainRowRange.Maximum + 1);
+
+            CustomWidth = Screen.NativeWidth * (terrainCols <= 0 ? 1 : terrainCols);
+            CustomHeight = Screen.NativeHeight * (terrainRows <= 0 ? 1 : terrainRows);
+
+            ClearWalkAreas();
+
+            Vector2[] vertices = [new(walkAreaMargin, walkAreaMargin),
+                                  new(CustomWidth - walkAreaMargin, walkAreaMargin),
+                                  new(CustomWidth - walkAreaMargin, CustomHeight - walkAreaMargin),
+                                  new(walkAreaMargin, CustomHeight - walkAreaMargin)
+                                 ];
+
+            AddWalkArea("<Default>", vertices);
+        }
+
+        #endregion
+
+        #region Protected members
+
+        // DecorationGrid
+        protected ProceduralRoomGrid DecorationGrid { get; }
+
+        // MainGrid
+        protected ProceduralRoomGrid MainGrid { get; }
+
+        // OnDrawCustomBackground
+        protected override void OnDrawCustomBackground(GameTime gameTime)
+        {
+            terrainBlock.Position = Vector2.Zero;
+
+            for (var i = 0; i < terrainRows; i++)
+            {
+                for (var j = 0; j < terrainCols; j++)
+                {
+                    terrainBlock.Draw(gameTime);
+                    terrainBlock.X += terrainBlock.BoundingBox.Width;
+                }
+
+                terrainBlock.X = 0;
+                terrainBlock.Y += terrainBlock.BoundingBox.Height;
+            }
+        }
+
+        // OnLoad
+        protected override void OnLoad()
+        {
+            AudioManager.Music.PlayTag("PilgrimPath");
+            Session.Environment.GlobalLight.Scale = new(2, 1.4f);
+
+            base.OnLoad();
+
+            terrainBlock.Image = Atlas?.GetImage("TerrainBlock");
+
+            Populate();
+        }
+
         // Populate
-        private void Populate()
+        protected virtual void Populate()
         {
             RequiredPower = 0;
 
-            // Entrance rail
-            if (Session.GetEntity<GameThing>("EntranceRail") is GameThing entranceRail)
-            {
-                var sizeInCells = entranceRail.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
-                if (mainGrid != null && mainGrid.TryReserveSpace(sizeInCells, out int col, out int row))
-                    Children.Add(entranceRail);
-            }
+            var data = (Session.GetEntity<ProceduralRoom>(StaticName))?.placementDataDictionary;
+            if (data == null || data.Count == 0)
+                return;
 
             foreach (var phase in Enum.GetValues<PlacementPhase>())
             {
@@ -226,7 +275,7 @@ namespace Remizione
 
                 foreach (var thing in list)
                 {
-                    if (!placementDataDictionary.TryGetValue(thing.StaticName, out var placementDataList))
+                    if (!data.TryGetValue(thing.StaticName, out var placementDataList))
                         continue;
 
                     for (var i = 0; i < placementDataList.Count; i++)
@@ -258,86 +307,7 @@ namespace Remizione
             }
 
             if (RequiredPower > 0)
-                RequiredPower = Math.Max(RequiredPower, 1);
-
-            SetupRideCars();
-        }
-
-        // SetupRideCars
-        private void SetupRideCars()
-        {
-            var childList = new List<Thing>(Children);
-
-            foreach (var thing in childList)
-            {
-                if (thing is Tower roomConnector)
-                {
-                    var staticName = roomConnector.NW ? "OutgoingRideCarNW" : "OutgoingRideCarNE";
-
-                    if (CreateRuntimeCloneCore(staticName) is not OutgoingRideCar car)
-                        throw new InvalidOperationException("Failed to create RideCar instance.");
-
-                    Children.Add(car);
-                    roomConnector.RideCar = car;
-                    car.Position = roomConnector.BoundingBox.GetPoint(RectanglePoint.RightBottom) + roomConnector.RideCarOffset;
-                }
-            }
-        }
-
-        #endregion
-
-        #region Protected members
-
-        // OnDrawCustomBackground
-        protected override void OnDrawCustomBackground(GameTime gameTime)
-        {
-            terrainBlock.Position = Vector2.Zero;
-
-            for (var i = 0; i < terrainRows; i++)
-            {
-                for (var j = 0; j < terrainCols; j++)
-                {
-                    terrainBlock.Draw(gameTime);
-                    terrainBlock.X += terrainBlock.BoundingBox.Width;
-                }
-
-                terrainBlock.X = 0;
-                terrainBlock.Y += terrainBlock.BoundingBox.Height;
-            }
-        }
-
-        // OnLoad
-        protected override void OnLoad()
-        {
-            AudioManager.Music.PlayTag("PilgrimPath");
-            Session.Environment.GlobalLight.Scale = new(2, 1.4f);
-
-            const int walkAreaMargin = 15;
-
-            terrainCols = random.Next(TerrainColRange.Minimum, TerrainColRange.Maximum + 1);
-            terrainRows = terrainCols == 1 ? 1 : random.Next(TerrainRowRange.Minimum, TerrainRowRange.Maximum + 1);
-
-            CustomWidth = Screen.NativeWidth * (terrainCols <= 0 ? 1 : terrainCols);
-            CustomHeight = Screen.NativeHeight * (terrainRows <= 0 ? 1 : terrainRows);
-
-            this.decorationGrid = new ProceduralRoomGrid("Decoration", CustomWidth, CustomHeight);
-            this.mainGrid = new ProceduralRoomGrid("Main", CustomWidth, CustomHeight);
-
-            ClearWalkAreas();
-
-            Vector2[] vertices = [new(walkAreaMargin, walkAreaMargin),
-                                  new(CustomWidth - walkAreaMargin, walkAreaMargin),
-                                  new(CustomWidth - walkAreaMargin, CustomHeight - walkAreaMargin),
-                                  new(walkAreaMargin, CustomHeight - walkAreaMargin)
-                                 ];
-
-            AddWalkArea("<Default>", vertices);
-
-            base.OnLoad();
-
-            terrainBlock.Image = Atlas?.GetImage("TerrainBlock");
-
-            Populate();
+                RequiredPower = RequiredPower / 2;
         }
 
         #endregion
@@ -381,7 +351,7 @@ namespace Remizione
         // CreateRuntimeClone
         public GameThing? CreateRuntimeClone(string staticName)
         {
-            return CreateRuntimeCloneCore(staticName);
+            return CreateRuntimeThingCloneCore(staticName);
         }
 
         // PlaceRuntimeCloneAt
@@ -391,7 +361,7 @@ namespace Remizione
 
             if (CanPlaceThingAt(thing, position))
             {
-                result = Session.CreateRuntimeClone(thing.StaticName, string.Empty) as GameThing;
+                result = Session.CreateRuntimeThingClone(thing.StaticName, string.Empty) as GameThing;
                 if (result != null)
                 {
                     result.Position = position;

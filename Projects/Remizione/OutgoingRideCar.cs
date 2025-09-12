@@ -85,7 +85,7 @@ namespace Remizione
         [ScriptMethod]
         public void Launch()
         {
-            Tweens.PositionTween = Vector2Tween.Create(TweenStyle.CubicIn, Position, Position + DestinationOffset, 1000);
+            Tweens.PositionTween = Vector2Tween.Create(TweenStyle.CubicIn, Position, Position + DestinationOffset, 2000);
         }
 
         // TurnOn

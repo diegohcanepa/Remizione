@@ -53,8 +53,6 @@ namespace Remizione
         public InventoryScene(Actor owner)
             : base(owner.Game, SceneSettings.PausePreviousScenes)
         {
-            owner.Session.LightingSystem = false;
-
             this.Owner = owner;
 
             // Title
@@ -91,7 +89,7 @@ namespace Remizione
             this.gridContainer = new(Game, Atlases.UI.InventoryGridContainer)
             {
                 PivotOrigin = RectanglePoint.LeftTop,
-                Position = new(20, 44),
+                Position = new(20, 40),
             };
 
             // Create grids for each category
