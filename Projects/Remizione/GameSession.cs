@@ -27,6 +27,7 @@ namespace Remizione
         private Vector2? playerPosition;
         private int power;
         private int rainRemainingTime;
+        private readonly List<RideRoom> rideRooms = [];
         private readonly RoomEditor? roomEditor;
         private readonly List<GameThing> staticThings = [];
         private readonly Dictionary<string, GameThing> staticThingsDict = [];
@@ -42,8 +43,6 @@ namespace Remizione
             this.Game = game;
             this.Environment = new Environment(this);
             this.HUD = new HUD(this);
-            //this.RandomSeed = 10000;
-            this.RandomSeed = System.Environment.TickCount;
             this.StaticThings = new(staticThings);
             this.IsMouseVisible = false;
 
@@ -244,10 +243,6 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(Environment.Rain.RemainingTime)]?.Value is string rainRemainingTime)
                 this.rainRemainingTime = XmlConvert.ToInt32(rainRemainingTime);
 
-            // RandomSeed
-            if (sessionNode.Attributes[nameof(RandomSeed)]?.Value is string randomSeedValue)
-                RandomSeed = XmlConvert.ToInt32(randomSeedValue);
-
             // Runs
             if (sessionNode.Attributes[nameof(Runs)]?.Value is string runs)
                 this.Runs = XmlConvert.ToInt32(runs);
@@ -352,9 +347,6 @@ namespace Remizione
             // RainRemainingTime
             output.WriteAttributeString(nameof(Environment.Rain.RemainingTime), XmlConvert.ToString(Environment.Rain.RemainingTime));
 
-            // RandomSeed
-            output.WriteAttributeString(nameof(RandomSeed), XmlConvert.ToString(RandomSeed));
-
             // Runs
             output.WriteAttributeString(nameof(Runs), XmlConvert.ToString(Runs));
 
@@ -364,9 +356,41 @@ namespace Remizione
 
         #endregion
 
+        // BeginRun
+        [ScriptMethod]
+        public void BeginRun()
+        {
+            if (IsRunInProgress)
+                throw new InvalidOperationException("A run is already in progress.");
+
+            IsRunInProgress = true;
+
+            this.RandomSeed = System.Environment.TickCount;
+
+            for (var i = 0; i < 7; i++)
+            {
+                rideRooms.Add(new RideRoom(this, $"RideRoom{i}"));
+            }
+
+            NextRunRoom();
+        }
+
         // DialogOptionId
         [ScriptProperty]
         public int DialogOptionId { get; set; }
+
+        // EndRun
+        [ScriptMethod]
+        public void EndRun()
+        {
+            if (!IsRunInProgress)
+                return;
+
+            CleanUpRuntimeEntities();
+            rideRooms.Clear();
+            IsRunInProgress = false;
+            RunRoomIndex = -1;
+        }
 
         // Environment
         public Environment Environment { get; }
@@ -416,6 +440,9 @@ namespace Remizione
         // IsPowerRestored
         public bool IsPowerRestored { get; private set; }
 
+        // IsRunInProgress
+        public bool IsRunInProgress { get; private set; }
+
         // IsTimeCritical
         public bool IsTimeCritical => RemainingTime <= GameSettings.TimeCritical;
 
@@ -438,6 +465,20 @@ namespace Remizione
         // NextRoom
         [ScriptProperty]
         public new GameRoom? NextRoom => (GameRoom?)base.NextRoom;
+
+        // NextRunRoom
+        public void NextRunRoom()
+        {
+            if (!IsRunInProgress)
+                throw new InvalidOperationException("No run in progress.");
+
+            RunRoomIndex++;
+
+            if (RunRoomIndex == rideRooms.Count)
+                EndRun();
+            else
+                EnterRoom(rideRooms[RunRoomIndex]);
+        }
 
         // ObjectPools
         public ObjectPools ObjectPools { get; }
@@ -517,6 +558,9 @@ namespace Remizione
         // Room
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
+
+        // RunRoomIndex
+        public int RunRoomIndex { get; private set; } = -1;
 
         // Runs
         public int Runs { get; set; }

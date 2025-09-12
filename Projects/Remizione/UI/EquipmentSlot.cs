@@ -28,7 +28,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public EquipmentSlot(GameSession session)
+        public EquipmentSlot(GameSession session, InputBinding inputBinding)
             : base(session.Game)
         {
             this.session = session;
@@ -59,7 +59,7 @@ namespace Remizione
             };
 
             // Button
-            this.button = new(Game, InputBindings.UseItem)
+            this.button = new(Game, inputBinding)
             {
                 ImageName = "EquipmentSlot",
                 PivotOrigin = RectanglePoint.LeftBottom,

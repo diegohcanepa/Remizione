@@ -49,7 +49,7 @@ namespace Remizione
             this.BagSlot = new(session);
 
             // Equipment slot
-            this.EquipmentSlot = new(session);
+            this.EquipmentSlot = new(session, InputBindings.UseItem);
 
             // Trincket slot
             this.TrincketSlot = new(Game);

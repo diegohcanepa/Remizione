@@ -11,6 +11,16 @@
         {
         }
 
+        // RequiresPersistence
+        protected override bool RequiresPersistence => false;
+
+        // OnLoad
+        protected override void OnLoad()
+        {
+            base.OnLoad();
+            Session.AwaitRoutine("IncomingRideCar-Intro");
+        }
+
         // OnUnload
         protected override void OnUnload()
         {
