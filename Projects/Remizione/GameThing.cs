@@ -18,7 +18,7 @@ namespace Remizione
         #region Private fields
 
         private PlacementMode colliderPlacement = PlacementMode.Relative;
-        private string displayName = string.Empty;
+        private string displayNameKey = string.Empty;
         private readonly Polygon holePolyInflated = new();
         private readonly Polygon holePoly = new();
         private readonly Polygon hotspotPoly = new();
@@ -236,7 +236,7 @@ namespace Remizione
             if (requester == this || !AllowInteraction)
                 return false;
 
-            if (string.IsNullOrWhiteSpace(DisplayName))
+            if (IsDead || string.IsNullOrWhiteSpace(LocalizedDisplayName))
                 return false;
 
             return true;
@@ -559,17 +559,17 @@ namespace Remizione
         [ScriptProperty]
         public Sound? DeathSound { get; set; }
 
-        // DisplayName
+        // DisplayNameKey
         [ScriptProperty]
-        public string DisplayName
+        public string DisplayNameKey
         {
-            get => displayName;
+            get => displayNameKey;
             set
             {
-                if (value != displayName)
+                if (value != displayNameKey)
                 {
-                    displayName = value;
-                    LocalizedDisplayName = TextRepository.GetValue(DisplayName);
+                    displayNameKey = value;
+                    LocalizedDisplayName = TextRepository.GetValue(DisplayNameKey);
                 }
             }
         }
@@ -893,9 +893,6 @@ namespace Remizione
         // PreventKnockback
         [ScriptProperty]
         public bool PreventKnockback { get; set; }
-
-        // PromptAware
-        public bool PromptAware => !IsDead && !string.IsNullOrWhiteSpace(LocalizedDisplayName);
 
         // Reheal
         [ScriptMethod]

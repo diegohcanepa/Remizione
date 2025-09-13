@@ -103,7 +103,7 @@ namespace Remizione.UI
                     if (target != null)
                     {
                         meter.MaximumValue = target.MaxHealth;
-                        labelText.Text = target.DisplayName;
+                        labelText.Text = target.LocalizedDisplayName;
                         ResetCooldown();
                     }
                 }

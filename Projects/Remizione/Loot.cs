@@ -40,7 +40,7 @@ namespace Remizione
             var anim = this.Sprite.AddAnimation(metaItem.Name);
             anim.AddFrame(metaItem.Name, 1000);
 
-            DisplayName = metaItem.LocalizedName;
+            DisplayNameKey = metaItem.LocalizedDisplayName;
             ItemName = metaItem.Name;
             Position = position;
             room.Children.Add(this);

@@ -30,7 +30,7 @@ namespace Remizione
             this.Category = category;
             this.Maximum = Math.Max(1, maximum);
             this.LocalizedDescription = Localization.GetItemDescription(this);
-            this.LocalizedName = Localization.GetItemName(this);
+            this.LocalizedDisplayName = Localization.GetItemName(this);
             this.Image = Atlases.UI.GetImage(Name);
         }
 
@@ -122,8 +122,8 @@ namespace Remizione
         // LocalizedDescription
         public string LocalizedDescription { get; }
 
-        // LocalizedName
-        public string LocalizedName { get; }
+        // LocalizedDisplayName
+        public string LocalizedDisplayName { get; }
 
         // Maximum
         public int Maximum { get; init; }

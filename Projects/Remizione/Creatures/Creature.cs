@@ -10,6 +10,7 @@
             : base(session, name)
         {
             Affinity = Affinity.Evil;
+            AllowInteraction = false;
             ContactDamageKind = DamageKind.Lightning;
             PowerBonus = 1;
             PlacementPhase = PlacementPhase.Creature;

@@ -61,8 +61,8 @@ namespace Remizione
             Session.CleanUpRuntimeEntities();
         }
 
-        // Populate
-        protected override void Populate()
+        // OnPopulate
+        protected override void OnPopulate()
         {
             // Entrance rail
             if (Session.GetEntity<GameThing>("EntranceRail") is GameThing entranceRail)
@@ -71,9 +71,11 @@ namespace Remizione
                 if (MainGrid != null && MainGrid.TryReserveSpace(sizeInCells, out int col, out int row))
                     Children.Add(entranceRail);
             }
+        }
 
-            base.Populate();
-
+        // OnPopulateCompleted
+        protected override void OnPopulateCompleted()
+        {
             SetupRideCars();
         }
 

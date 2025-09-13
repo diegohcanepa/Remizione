@@ -40,7 +40,7 @@ namespace Remizione
             if (!isDisplayTextDiry)
                 return;
 
-            var text = MetaItem.LocalizedName;
+            var text = MetaItem.LocalizedDisplayName;
 
             // Add level
             if (Level > 0)

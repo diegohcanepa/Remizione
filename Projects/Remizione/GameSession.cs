@@ -332,6 +332,21 @@ namespace Remizione
 
         #endregion
 
+        // AdvanceRun
+        [ScriptMethod]
+        public void AdvanceRun()
+        {
+            if (!IsRunInProgress)
+                throw new InvalidOperationException("No run in progress.");
+
+            Stage++;
+
+            if (Stage == rideRooms.Count)
+                EndRun();
+            else
+                EnterRoom(rideRooms[Stage]);
+        }
+
         // BeginRun
         [ScriptMethod]
         public void BeginRun()
@@ -345,14 +360,11 @@ namespace Remizione
 
             for (var i = 0; i < GameSettings.RunLength; i++)
             {
-                var room = CreateRuntimeRoomClone("RideRoom", string.Empty) as RideRoom;
-                if (room == null)
-                    throw new InvalidOperationException($"Failed to create runtime clone from RideRoom.");
-
+                var room = CreateRuntimeRoomClone("RideRoom", $"RideRoom*{i}") as RideRoom ?? throw new InvalidOperationException($"Failed to create runtime clone from RideRoom.");
                 rideRooms.Add(room);
             }
 
-            NextRunRoom();
+            AdvanceRun();
         }
 
         // DialogOptionId
@@ -369,7 +381,7 @@ namespace Remizione
             CleanUpRuntimeEntities();
             rideRooms.Clear();
             IsRunInProgress = false;
-            RunRoomIndex = -1;
+            Stage = -1;
         }
 
         // Environment
@@ -442,21 +454,6 @@ namespace Remizione
         // NextRoom
         [ScriptProperty]
         public new GameRoom? NextRoom => (GameRoom?)base.NextRoom;
-
-        // NextRunRoom
-        [ScriptMethod]
-        public void NextRunRoom()
-        {
-            if (!IsRunInProgress)
-                throw new InvalidOperationException("No run in progress.");
-
-            RunRoomIndex++;
-
-            if (RunRoomIndex == rideRooms.Count)
-                EndRun();
-            else
-                EnterRoom(rideRooms[RunRoomIndex]);
-        }
 
         // ObjectPools
         public ObjectPools ObjectPools { get; }
@@ -537,9 +534,6 @@ namespace Remizione
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
 
-        // RunRoomIndex
-        public int RunRoomIndex { get; private set; } = -1;
-
         // Runs
         public int Runs { get; set; }
 
@@ -566,7 +560,7 @@ namespace Remizione
 
         // Stage
         [ScriptProperty]
-        public int Stage { get; private set; }
+        public int Stage { get; private set; } = -1;
 
         // StaticThings
         public NamedObjectReadOnlyCollection<GameThing> StaticThings { get; }

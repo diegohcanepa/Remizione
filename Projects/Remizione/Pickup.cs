@@ -30,7 +30,7 @@ namespace Remizione
                 if (itemName != value)
                 {
                     itemName = value;
-                    DisplayName = $"Item.{itemName}.Name";
+                    DisplayNameKey = $"Item.{itemName}.Name";
                 }
             }
         }

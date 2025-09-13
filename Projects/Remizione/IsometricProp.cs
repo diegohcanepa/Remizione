@@ -24,6 +24,7 @@ namespace Remizione
             : base(session, name)
         {
             this.Atlas = Atlases.Environment;
+            this.DisplayNameKey = $"Prop.{StaticName}";
             this.HitTestSource = HitTestSource.Collider;
         }
 

@@ -51,7 +51,7 @@ namespace Remizione
             this.session = session;
 
             this.Atlas = Atlases.Actors;
-            this.DisplayName = TextRepository.GetValue($"Actor.{StaticName}");
+            this.DisplayNameKey = $"Actor.{StaticName}";
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
             this.Inventory = new(this);
@@ -802,7 +802,7 @@ namespace Remizione
         public void Say(string text, bool awaitInput)
         {
             speechBubble ??= new SpeechBubble(this);
-            speechBubble.Show(DisplayName, text, awaitInput);
+            speechBubble.Show(LocalizedDisplayName, text, awaitInput);
         }
 
         // ShadowOffset

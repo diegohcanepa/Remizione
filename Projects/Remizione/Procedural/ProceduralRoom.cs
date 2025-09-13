@@ -16,6 +16,7 @@ namespace Remizione
 
         private int instanceCount;
         private readonly Dictionary<string, List<PlacementData>> placementDataDictionary = [];
+        private bool populated;
         private readonly Random random;
         private readonly int randomSeed;
         private readonly ImageSprite terrainBlock;
@@ -32,7 +33,9 @@ namespace Remizione
         {
             LightingSystem = true;
 
-            this.randomSeed = GetSeed(Session.RandomSeed, Session.Stage);
+            int pos = name.LastIndexOf(ScriptSyntax.CloneSuffix);
+            int salt = pos == -1 ? 0 : int.Parse(name.Substring(pos + 1));
+            this.randomSeed = GetSeed(Session.RandomSeed, salt);
             this.random = new Random(randomSeed);
             this.terrainBlock = new ImageSprite(session.Game);
 
@@ -254,15 +257,31 @@ namespace Remizione
 
             terrainBlock.Image = Atlas?.GetImage("TerrainBlock");
 
-            Populate();
+            if (!populated)
+            {
+                populated = true;
+                OnPopulate();
+                Populate();
+                OnPopulateCompleted();
+            }
+        }
+
+        // OnPopulate
+        protected virtual void OnPopulate()
+        {
+        }
+
+        // OnPopulateCompleted
+        protected virtual void OnPopulateCompleted()
+        {
         }
 
         // Populate
-        protected virtual void Populate()
+        private void Populate()
         {
             RequiredPower = 0;
 
-            var data = (Session.GetEntity<ProceduralRoom>(StaticName))?.placementDataDictionary;
+            var data = Session.GetEntity<ProceduralRoom>(StaticName)?.placementDataDictionary;
             if (data == null || data.Count == 0)
                 return;
 

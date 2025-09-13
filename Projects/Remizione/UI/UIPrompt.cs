@@ -40,7 +40,7 @@ namespace Remizione.UI
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (session.IsCurrentScene && session.Player?.InteractiveTarget is GameThing currentTarget && currentTarget.PromptAware)
+            if (session.IsCurrentScene && session.Player?.InteractiveTarget is GameThing currentTarget)
             {
                 if (currentTarget != target)
                 {
