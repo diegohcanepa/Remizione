@@ -234,13 +234,17 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
                 playerPosition = XmlConverterExtension.ToVector2(playerPositionValue);
 
-            // Runs
-            if (sessionNode.Attributes[nameof(Runs)]?.Value is string runs)
-                this.Runs = XmlConvert.ToInt32(runs);
+            ////////////////
+            // Stats
+            ////////////////
 
-            // Stage
-            if (sessionNode.Attributes[nameof(Stage)]?.Value is string stage)
-                this.Stage = XmlConvert.ToInt32(stage);
+            // Deaths
+            if (sessionNode.Attributes[nameof(Stats.Deaths)]?.Value is string deaths)
+                this.Stats.Deaths = XmlConvert.ToInt32(deaths);
+
+            // Runs
+            if (sessionNode.Attributes[nameof(Stats.Runs)]?.Value is string runs)
+                this.Stats.Runs = XmlConvert.ToInt32(runs);
         }
 
         // OnResume
@@ -305,8 +309,15 @@ namespace Remizione
             Environment.Update(gameTime);
             HUD.Update(gameTime);
 
-            if (RemainingTime <= 0 && !IsAwaiting)
-                AwaitRoutine(RoutineNames.GameOver);
+            // Check game over condition
+            if (!IsAwaiting)
+            {
+                if (RemainingTime <= 0 || Player?.IsDead == true)
+                {
+                    Stats.Deaths++;
+                    AwaitRoutine(RoutineNames.GameOver);
+                }
+            }
         }
 
         // OnWrite
@@ -323,11 +334,15 @@ namespace Remizione
             if (playerPosition.HasValue)
                 output.WriteAttributeString(nameof(playerPosition), XmlConverterExtension.ToString(playerPosition.Value));
 
-            // Runs
-            output.WriteAttributeString(nameof(Runs), XmlConvert.ToString(Runs));
+            ////////////////
+            // Stats
+            ////////////////
 
-            // Stage
-            output.WriteAttributeString(nameof(Stage), XmlConvert.ToString(Stage));
+            // Deaths
+            output.WriteAttributeString(nameof(SessionStats.Deaths), XmlConvert.ToString(Stats.Deaths));
+
+            // Runs
+            output.WriteAttributeString(nameof(SessionStats.Runs), XmlConvert.ToString(Stats.Runs));
         }
 
         #endregion
@@ -342,9 +357,14 @@ namespace Remizione
             Stage++;
 
             if (Stage == rideRooms.Count)
+            {
+                Stats.Runs++;
                 EndRun();
+            }
             else
+            {
                 EnterRoom(rideRooms[Stage]);
+            }
         }
 
         // BeginRun
@@ -534,9 +554,6 @@ namespace Remizione
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
 
-        // Runs
-        public int Runs { get; set; }
-
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)
         {
@@ -564,5 +581,8 @@ namespace Remizione
 
         // StaticThings
         public NamedObjectReadOnlyCollection<GameThing> StaticThings { get; }
+
+        // Stats
+        public SessionStats Stats { get; } = new();
     }
 }

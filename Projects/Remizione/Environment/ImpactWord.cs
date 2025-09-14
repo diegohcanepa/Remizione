@@ -13,6 +13,7 @@ namespace Remizione
         private readonly Vector2 maxScale = new(.75f);
         private readonly Vector2Tween scaleTween = new();
         private readonly ImageSprite sprite;
+        private readonly FloatTween xTween = new();
         private readonly FloatTween yTween = new();
 
         // Constructor
@@ -47,10 +48,12 @@ namespace Remizione
                 endingPhaseCooldown -= gameTime.ElapsedGameTime.Milliseconds;
                 if (endingPhaseCooldown <= 0)
                 {
-                    opacityTween.Start(TweenStyle.CubicOut, 1, 0, 1000);
+                    opacityTween.Start(TweenStyle.CubicOut, 1, 0, 600);
+                    xTween.Start(TweenStyle.Linear, sprite.X, sprite.X + 1, 30, -1);
                     yTween.Start(TweenStyle.Linear, sprite.Y, sprite.Y + 1, 300);
 
                     sprite.Tweens.OpacityTween = opacityTween;
+                    sprite.Tweens.XTween = xTween;
                     sprite.Tweens.YTween = yTween;
                 }
             }
@@ -72,7 +75,7 @@ namespace Remizione
             sprite.Opacity = 1;
             sprite.Position = position;
             sprite.Rotation = Randomizer.Next(-.5f, .5f);
-            scaleTween.Start(TweenStyle.Linear, maxScale / 2, maxScale, 150);
+            scaleTween.Start(TweenStyle.Linear, maxScale / 2, maxScale, 100);
             sprite.Tweens.ScaleTween = scaleTween;
 
             IsActive = true;

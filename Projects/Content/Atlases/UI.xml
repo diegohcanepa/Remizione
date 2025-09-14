@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:6b5baaeeface57a5988966945814af57:99429ca66cae44ffdc36839c0c2ddcbe:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:64ca021fbc242a7a3b1ec936cde86cb4:1421b502a20fbd7125285fa0b04aa833:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -49,10 +49,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="InventoryInfoContainer.png" x="2" y="403" w="112" h="65"/>
     <sprite n="InventoryInfoTitleContainer.png" x="172" y="499" w="100" h="8"/>
     <sprite n="InventoryNavigationBar.png" x="398" y="78" w="84" h="9"/>
-    <sprite n="InventorySlot.png" x="268" y="167" w="18" h="19"/>
+    <sprite n="InventorySlot.png" x="360" y="165" w="18" h="19"/>
     <sprite n="InventorySlotLockIcon.png" x="163" y="499" w="7" h="9"/>
     <sprite n="InventorySlotQuestionIcon.png" x="80" y="499" w="7" h="11"/>
-    <sprite n="InventorySlotSelected.png" x="318" y="166" w="19" h="19"/>
+    <sprite n="InventorySlotSelected.png" x="339" y="165" w="19" h="19"/>
     <sprite n="KeyboardBagSlot.png" x="343" y="71" w="12" h="12"/>
     <sprite n="KeyboardD.png" x="156" y="71" w="14" h="14"/>
     <sprite n="KeyboardDelete.png" x="38" y="71" w="19" h="14"/>
@@ -76,12 +76,12 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="ProhibitionMark.png" x="67" y="499" w="11" h="11"/>
     <sprite n="RedTicket.png" x="268" y="145" w="20" h="20"/>
     <sprite n="RottenApple.png" x="290" y="145" w="20" h="20"/>
-    <sprite n="RustyLockpick.png" x="406" y="145" w="20" h="20"/>
-    <sprite n="SackSlot.png" x="383" y="165" w="19" h="18"/>
+    <sprite n="RustyLockpick.png" x="299" y="465" w="20" h="20"/>
+    <sprite n="SackSlot.png" x="318" y="166" w="19" h="18"/>
     <sprite n="SavingIcon.png" x="316" y="71" w="11" h="14"/>
     <sprite n="SpeechBubbleCloseArrow.png" x="506" y="15" w="3" h="2"/>
     <sprite n="SpeechBubblePipe.png" x="343" y="85" w="5" h="3"/>
-    <sprite n="SteelLockpick.png" x="339" y="165" w="20" h="20"/>
+    <sprite n="SteelLockpick.png" x="299" y="465" w="20" h="20"/>
     <sprite n="TipBalloon.png" x="329" y="71" w="12" h="13"/>
     <sprite n="TrinketSlot.png" x="21" y="71" w="15" h="15"/>
     <sprite n="UIControlContainerEdgeLeftLarge.png" x="89" y="499" w="5" h="11"/>
@@ -90,7 +90,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="UIControlContainerEdgeRightSmall.png" x="117" y="499" w="5" h="10"/>
     <sprite n="UITextButtonContainerEdge.png" x="103" y="499" w="5" h="11"/>
     <sprite n="UITextButtonContainerPattern.png" x="506" y="19" w="1" h="11"/>
-    <sprite n="WhiteTicket.png" x="361" y="165" w="20" h="20"/>
+    <sprite n="WhiteTicket.png" x="406" y="145" w="20" h="20"/>
     <sprite n="XboxA.png" x="252" y="71" w="14" h="14"/>
     <sprite n="XboxB.png" x="268" y="71" w="14" h="14"/>
     <sprite n="XboxBagSlot.png" x="371" y="71" w="12" h="12"/>

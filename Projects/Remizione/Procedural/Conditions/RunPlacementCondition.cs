@@ -16,7 +16,7 @@ namespace Remizione
         // IsAvailable
         public override bool IsAvailable(GameThing thing, Random random)
         {
-            return thing.Session.Runs >= MinimumRuns;
+            return thing.Session.Stats.Runs >= MinimumRuns;
         }
 
         // MinimumRuns

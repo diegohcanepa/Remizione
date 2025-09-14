@@ -313,9 +313,6 @@ namespace Remizione
                     };
 
                     Unparent();
-
-                    if (IsPlayer)
-                        Session.AwaitRoutine(RoutineNames.GameOver);
                 }
             }
             else
