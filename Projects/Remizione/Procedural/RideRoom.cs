@@ -1,5 +1,6 @@
 ﻿using Adberration;
 using Engendro;
+using Engendro.Audio;
 using System;
 using System.Collections.Generic;
 
@@ -50,6 +51,7 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
+            AudioManager.Music.PlayTag("Ride");
             Session.AwaitRoutine(RoutineNames.IncomingRideCarIntro);
         }
 

@@ -202,8 +202,8 @@ namespace Remizione
         {
             const int walkAreaMargin = 15;
 
-            terrainCols = random.Next(TerrainColRange.Minimum, TerrainColRange.Maximum + 1);
-            terrainRows = terrainCols == 1 ? 1 : random.Next(TerrainRowRange.Minimum, TerrainRowRange.Maximum + 1);
+            terrainCols = random.Next(TerrainColRange.Minimum, TerrainColRange.Maximum + 2);
+            terrainRows = terrainCols == 1 ? 1 : random.Next(TerrainRowRange.Minimum, TerrainRowRange.Maximum + 2);
 
             CustomWidth = Screen.NativeWidth * (terrainCols <= 0 ? 1 : terrainCols);
             CustomHeight = Screen.NativeHeight * (terrainRows <= 0 ? 1 : terrainRows);
@@ -213,7 +213,7 @@ namespace Remizione
             Vector2[] vertices = [new(walkAreaMargin, walkAreaMargin),
                                   new(CustomWidth - walkAreaMargin, walkAreaMargin),
                                   new(CustomWidth - walkAreaMargin, CustomHeight - walkAreaMargin),
-                                  new(walkAreaMargin, CustomHeight - walkAreaMargin)
+                                  new(walkAreaMargin, CustomHeight - 5)
                                  ];
 
             AddWalkArea("<Default>", vertices);
@@ -250,9 +250,6 @@ namespace Remizione
         // OnLoad
         protected override void OnLoad()
         {
-            AudioManager.Music.PlayTag("PilgrimPath");
-            Session.Environment.GlobalLight.Scale = new(2, 1.4f);
-
             base.OnLoad();
 
             terrainBlock.Image = Atlas?.GetImage("TerrainBlock");
@@ -291,6 +288,7 @@ namespace Remizione
                     continue;
 
                 var list = GetStaticThings(phase);
+                list.Shuffle(random);
 
                 foreach (var thing in list)
                 {
@@ -306,7 +304,7 @@ namespace Remizione
 
                         switch (placementData.DistributionStrategy)
                         {
-                            // RandomCell
+                            // Random
                             case PlacementDistributionStrategy.Random:
                                 DistributeRandomly(thing, placementData);
                                 break;
@@ -398,10 +396,10 @@ namespace Remizione
 
         // TerrainColRange
         [ScriptProperty(CodingContext.Declaration)]
-        public Int32Range TerrainColRange { get; set; } = new(2, 3);
+        public Int32Range TerrainColRange { get; set; } = new(1, 2);
 
         // TerrainRowRange
         [ScriptProperty(CodingContext.Declaration)]
-        public Int32Range TerrainRowRange { get; set; } = new(1, 2);
+        public Int32Range TerrainRowRange { get; set; } = new(1);
     }
 }

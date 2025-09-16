@@ -190,7 +190,11 @@ namespace Remizione
 
                 if (item.MetaItem.Maximum > 1)
                 {
-                    amountText.Text = $"{item.Count}/{item.MetaItem.Maximum}";
+                    if (item.MetaItem.Maximum == 999)
+                        amountText.Text = $"{item.Count}";
+                    else
+                        amountText.Text = $"{item.Count}/{item.MetaItem.Maximum}";
+                    
                     if (item.IsStackFull)
                         amountText.Color = ColorPalette.Text.Terra;
                 }

@@ -30,7 +30,7 @@ namespace Adberration
         #region Constructor
 
         // Constructor
-        public ScriptConsole(Session session, InputBinding inputBinding, TextSprite textSprite, RectangleF backgroundArea)
+        public ScriptConsole(Session session, InputBinding inputBinding, TextSprite textSprite, RectangleF backgroundArea, params string[] commands)
             : base(session.Game)
         {
             this.session = session;
@@ -39,6 +39,9 @@ namespace Adberration
             this.InputBinding = inputBinding;
             this.TextDefaultColor = textSprite.Color;
             this.TextErrorColor = textSprite.Color;
+
+            if (commands.Length > 0)
+                commandList.AddRange(commands);
 
             Game.Window.KeyDown += Window_KeyDown;
             Game.Window.TextInput += HandleTextInput;

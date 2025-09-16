@@ -20,6 +20,7 @@
   <String Key="HitType.Critical">¡Crítico!</String>
   <String Key="HUDMessageKind.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
   <String Key="HUDMessageKind.EnoughOfThat">Ya tienes suficiente.</String>
+  <String Key="HUDMessageKind.ExtraTime">¡Tiempo extra!</String>
   <String Key="HUDMessageKind.InventoryFull">No puedes llevar más objetos.</String>
   <String Key="HUDMessageKind.NotEnoughFaith">Estás falto de Fé.</String>
   <String Key="HUDMessageKind.PowerRestored">¡Energía restablecida!</String>
@@ -199,7 +200,6 @@ Bla bla bla</String>
   <String Key="Misc.DisclaimerMessage">Algunas escenas e imágenes pueden herir la sensibilidad. La siguiente historia es ficticia y no representa a ninguna persona o evento real.</String>
   <String Key="Misc.DisclaimerTitle">ADVERTENCIA</String>
   <String Key="Misc.DollarSign">$</String>
-  <String Key="Misc.EnergyBolt">Chispa</String>
   <String Key="Misc.Failed">¡Fallaste!</String>
   <String Key="Misc.Level">Nivel</String>
   <String Key="Misc.Mute">Silencio</String>
@@ -248,6 +248,7 @@ Bla bla bla</String>
   <String Key="Prop.Bag">Bolsa</String>
   <String Key="Prop.Cross">Cruz</String>
   <String Key="Prop.CrucifiedMan">Hombre crucificado</String>
+  <String Key="Prop.EnergyBolt">Chispa</String>
   <String Key="Prop.PilgrimSack">Saco del Peregrino</String>
   <String Key="Prop.PortableToilet">Pequeño purgatorio</String>
   <String Key="Prop.PostClock">Tiempo tirano</String>

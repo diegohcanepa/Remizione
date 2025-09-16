@@ -20,6 +20,7 @@
   <String Key="HitType.Critical">Critical!</String>
   <String Key="HUDMessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
   <String Key="HUDMessageKind.EnoughOfThat">You already have enough of that.</String>
+  <String Key="HUDMessageKind.ExtraTime">Extra time!</String>
   <String Key="HUDMessageKind.InventoryFull">You cannot carry more items.</String>
   <String Key="HUDMessageKind.NotEnoughFaith">Not enough Faith.</String>
   <String Key="HUDMessageKind.PowerRestored">Power Restored!</String>
@@ -199,7 +200,6 @@ Bla bla bla</String>
   <String Key="Misc.DisclaimerMessage">Some scenes and images may be disturbing. The following story is fictional and does not depict any real person or event.</String>
   <String Key="Misc.DisclaimerTitle">WARNING</String>
   <String Key="Misc.DollarSign">$</String>
-  <String Key="Misc.EnergyBolt">Energy bolt</String>
   <String Key="Misc.Failed">Failed!</String>
   <String Key="Misc.Level">Level</String>
   <String Key="Misc.Mute">Mute</String>
@@ -248,6 +248,7 @@ Bla bla bla</String>
   <String Key="Prop.Bag">Bag</String>
   <String Key="Prop.Cross">Cross</String>
   <String Key="Prop.CrucifiedMan">Crucified man</String>
+  <String Key="Prop.EnergyBolt">Energy bolt</String>
   <String Key="Prop.PilgrimSack">Pilgrim's Sack</String>
   <String Key="Prop.PortableToilet">Little purgatory</String>
   <String Key="Prop.PostClock">Tyrant time</String>

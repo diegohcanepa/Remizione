@@ -704,6 +704,12 @@
 /processorParam:Quality=Best
 /build:Audio/Music/PilgrimPath01.wav;Audio/Music/PilgrimPath01
 
+#begin Audio/Music/Ride01.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Ride01.wav;Audio/Music/Ride01
+
 #begin Audio/Music/ThemePark.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

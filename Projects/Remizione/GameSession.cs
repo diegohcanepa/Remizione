@@ -61,7 +61,11 @@ namespace Remizione
                     Scale = ScaleInfo.Text.VeryLarge,
                 };
 
-                console = new ScriptConsole(this, InputBindings.Console, consoleText, new RectangleF(0, 240, 480, 30)) { TextErrorColor = ColorPalette.Text.Terra };
+                console = new ScriptConsole(this, InputBindings.Console, consoleText, new RectangleF(0, 240, 480, 30), "=>> $BeginRun()", "=>> $AdvanceRun()")
+                {
+                    TextErrorColor = ColorPalette.Text.Terra
+                };
+
                 roomEditor = new RoomEditor(this);
             }
 
@@ -103,10 +107,8 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(GameRoom));
             scriptRegistry.RegisterEntity(typeof(HellGoat));
             scriptRegistry.RegisterEntity(typeof(IsometricProp));
-            scriptRegistry.RegisterEntity(typeof(Loot));
             scriptRegistry.RegisterEntity(typeof(OcculusMinion));
             scriptRegistry.RegisterEntity(typeof(OutgoingRideCar));
-            scriptRegistry.RegisterEntity(typeof(Pickup));
             scriptRegistry.RegisterEntity(typeof(PostClock));
             scriptRegistry.RegisterEntity(typeof(Pottery));
             scriptRegistry.RegisterEntity(typeof(Prop));
@@ -127,7 +129,6 @@ namespace Remizione
             scriptRegistry.RegisterStatement("await-chance-roll", typeof(AwaitChanceRollCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-credits", typeof(AwaitCreditsCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-dialog-block", typeof(AwaitDialogBlockCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("await-pickup", typeof(AwaitPickUpCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-player-approach", typeof(AwaitPlayerApproachCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-popup", typeof(AwaitPopupCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("begin-loot-table", typeof(BeginLootTableCommand), CodingContext.Initialization);
@@ -354,16 +355,16 @@ namespace Remizione
             if (!IsRunInProgress)
                 throw new InvalidOperationException("No run in progress.");
 
-            Stage++;
+            RunProgress++;
 
-            if (Stage == rideRooms.Count)
+            if (RunProgress == rideRooms.Count)
             {
                 Stats.Runs++;
                 EndRun();
             }
             else
             {
-                EnterRoom(rideRooms[Stage]);
+                EnterRoom(rideRooms[RunProgress]);
             }
         }
 
@@ -378,7 +379,7 @@ namespace Remizione
 
             this.RandomSeed = System.Environment.TickCount;
 
-            for (var i = 0; i < GameSettings.RunLength; i++)
+            for (var i = 0; i < RunLength; i++)
             {
                 var room = CreateRuntimeRoomClone("RideRoom", $"RideRoom*{i}") as RideRoom ?? throw new InvalidOperationException($"Failed to create runtime clone from RideRoom.");
                 rideRooms.Add(room);
@@ -401,7 +402,7 @@ namespace Remizione
             CleanUpRuntimeEntities();
             rideRooms.Clear();
             IsRunInProgress = false;
-            Stage = -1;
+            RunProgress = -1;
         }
 
         // Environment
@@ -462,14 +463,6 @@ namespace Remizione
         // LightingSystem
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;
-
-        // NextStage
-        [ScriptMethod]
-        public void NextStage()
-        {
-            Power = 0;
-            Stage++;
-        }
 
         // NextRoom
         [ScriptProperty]
@@ -554,6 +547,13 @@ namespace Remizione
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
 
+        // RunLength
+        public int RunLength { get; set; } = 3;
+
+        // RunProgress
+        [ScriptProperty]
+        public int RunProgress { get; private set; } = -1;
+
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)
         {
@@ -574,10 +574,6 @@ namespace Remizione
             echoScene.Text = text;
             Game.SceneManager.Push(echoScene);
         }
-
-        // Stage
-        [ScriptProperty]
-        public int Stage { get; private set; } = -1;
 
         // StaticThings
         public NamedObjectReadOnlyCollection<GameThing> StaticThings { get; }

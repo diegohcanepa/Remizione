@@ -50,7 +50,9 @@ namespace Remizione
         {
             state = SpearState.Attacking;
             AnimationPlayer.Play(AttackAnimationName, false);
-            PlaySound(SoundNames.SpearTrap);
+
+            if (IsInViewport)
+                PlaySound(SoundNames.SpearTrap);
         }
 
         // Prepare
@@ -79,7 +81,7 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            cooldownInterval = Randomizer.Next(1500, 5000);
+            cooldownInterval = Randomizer.Next(3500, 7000);
             Prepare();
         }
 

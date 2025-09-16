@@ -83,7 +83,6 @@ namespace Remizione
             this.StateMachine.RegisterState(new ActorDeathState(this));
             this.StateMachine.RegisterState(new ActorHurtState(this));
             this.StateMachine.RegisterState(new ActorMoveState(this));
-            this.StateMachine.RegisterState(new ActorPickUpState(this));
             this.StateMachine.RegisterState(closeAttackState);
 
             throwItemState = new ActorThrowItemState(this);
@@ -698,9 +697,6 @@ namespace Remizione
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }
 
-        // IsPickingUp
-        public bool IsPickingUp => StateMachine.CurrentState is ActorPickUpState;
-
         // IsPlayer
         public bool IsPlayer => Session.Player == this;
 
@@ -761,16 +757,6 @@ namespace Remizione
             StateMachine.ChangeState(ActorStateNames.Move);
 
             return true;
-        }
-
-        // PickUp
-        public void PickUp(Pickup pickup, MetaItem? metaItem)
-        {
-            if (StateMachine.GetState(ActorStateNames.PickUp) is ActorPickUpState state)
-            {
-                state.Prepare(pickup, metaItem);
-                StateMachine.ChangeState(state.Name);
-            }
         }
 
         // PlayerNumber

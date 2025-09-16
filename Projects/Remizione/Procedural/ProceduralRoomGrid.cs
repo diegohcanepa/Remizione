@@ -10,7 +10,7 @@ namespace Remizione
     public sealed class ProceduralRoomGrid
     {
         private readonly bool[,] occupied;
-        private const float usagePercent = .7f;
+        private const float usagePercent = .8f;
 
         #region Constructor
 

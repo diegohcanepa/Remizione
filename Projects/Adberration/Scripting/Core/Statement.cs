@@ -68,6 +68,7 @@ namespace Adberration.Scripting
         protected static readonly string PersistentArg = "#persistent";
         protected static readonly string PitchArg = "#pitch";
         protected static readonly string PivotArg = "#pivot";
+        protected static readonly string PowerArg = "#power";
         protected static readonly string PrefixArg = "#prefix";
         protected static readonly string PreserveArg = "#preserve";
         protected static readonly string PreventDiscardArg = "#prevent-discard";

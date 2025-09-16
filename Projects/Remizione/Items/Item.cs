@@ -144,7 +144,7 @@ namespace Remizione
         {
             if (MetaItem.Maximum > 1)
             {
-                if (MetaItem.Maximum == 999)
+                if (MetaItem.Unlimited)
                     return count.ToString(CultureInfo.InvariantCulture);
                 else
                     return $"{Count}/{MetaItem.Maximum}";
@@ -268,7 +268,9 @@ namespace Remizione
             if (MetaItem.Health != null)
                 Owner.Health += MetaItem.Health.Roll();
 
-            if (MetaItem.Maximum > 1)
+            Owner.Session.Power += MetaItem.Power;
+
+            if (MetaItem.Maximum >= 1)
             {
                 if (Count == 1 && !MetaItem.AllowEmpty)
                     Container.Remove(this);

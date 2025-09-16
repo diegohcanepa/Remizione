@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using System.Numerics;
 
 namespace Remizione
 {
@@ -15,6 +16,9 @@ namespace Remizione
 
         // ContentRootDirectory
         public const string ContentRootDirectory = "Content";
+
+        // DefaultGlobalLightSize
+        public static readonly Vector2 DefaultGlobalLightSize = new(2.6f, 2.2f);
 
         // DefaultTransitionDuration
         public const int DefaultTransitionDuration = 500;
@@ -36,9 +40,6 @@ namespace Remizione
 
         // RainDurationRange
         public static readonly Int32Range RainDurationRange = new(180000, 300000);
-
-        // RunLength
-        public const int RunLength = 7;
 
         // SteamAppID
         public const int SteamAppID = 480;

@@ -34,6 +34,7 @@ namespace Remizione
             {
                 PlaySound(SoundNames.TrunkOpen);
 
+                /*
                 if (Session.Room is ProceduralRoom room && GetLoot() is MetaItem metaItem)
                 {
                     if (room.CreateRuntimeClone(nameof(Loot)) is Loot loot)
@@ -44,7 +45,7 @@ namespace Remizione
                         loot.DropJumping(room, start, end, metaItem);
                     }
                 }
-
+                */
             }
         }
 

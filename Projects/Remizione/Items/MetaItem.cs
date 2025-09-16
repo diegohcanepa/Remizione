@@ -95,6 +95,9 @@ namespace Remizione
         // Durability
         public int Durability { get; init; }
 
+        // EnergyBoltName
+        public static string EnergyBoltName = "EnergyBolt";
+
         // Find
         public static MetaItem? Find(string name) => items.TryGetValue(name, out var result) ? result : null;
 
@@ -134,6 +137,9 @@ namespace Remizione
         // PassiveEffectCooldown
         public int PassiveEffectCooldown { get; init; }
 
+        // Power
+        public int Power { get; init; }
+
         // PreventDiscard
         public bool PreventDiscard { get; init; }
 
@@ -151,5 +157,8 @@ namespace Remizione
 
         // ToString
         public override string ToString() => Name;
+
+        // Unlimited
+        public bool Unlimited => Maximum == 999;
     }
 }

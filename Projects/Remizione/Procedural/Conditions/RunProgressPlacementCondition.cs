@@ -4,12 +4,12 @@ using System;
 namespace Remizione
 {
     /// <summary>
-    /// StagePlacementCondition
+    /// RunProgressPlacementCondition   
     /// </summary>
-    public sealed class StagePlacementCondition : PlacementCondition
+    public sealed class RunProgressPlacementCondition : PlacementCondition
     {
         // Constructor
-        public StagePlacementCondition(Int32Range range)
+        public RunProgressPlacementCondition(Int32Range range)
         {
             this.Range = range;
         }
@@ -17,7 +17,7 @@ namespace Remizione
         // IsAvailable
         public override bool IsAvailable(GameThing thing, Random random)
         {
-            return Range.Contains(thing.Session.Stage);
+            return Range.Contains(thing.Session.RunProgress);
         }
 
         // Range

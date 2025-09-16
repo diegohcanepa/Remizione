@@ -37,6 +37,7 @@ namespace Remizione
         {
             this.Session = session;
 
+            this.GlobalLightSize = GameSettings.DefaultGlobalLightSize;
             this.Lights = new NamedObjectReadOnlyCollection<Light>(lights);
             this.TriggerAreas = new RoomAreaReadOnlyCollection<TriggerArea>(triggerAreas);
             this.WalkAreas = new RoomAreaReadOnlyCollection<WalkArea>(walkAreas);

@@ -243,18 +243,10 @@ namespace Remizione
         }
 
         // DropLoot
-        protected bool DropLoot()
+        protected void DropLoot()
         {
             if (Session.Room is ProceduralRoom room && GetLoot() is MetaItem metaItem)
-            {
-                if (room.CreateRuntimeClone(nameof(Loot)) is Loot loot)
-                {
-                    loot.Drop(room, Position, metaItem);
-                    return true;
-                }
-            }
-
-            return false;
+                Session.ObjectPools.Pickables.Get()?.Drop(room, metaItem, Position);
         }
 
         // GetPixelAreaForGrid
@@ -519,7 +511,7 @@ namespace Remizione
                 for (var i = 0; i < PowerBonus; i++)
                 {
                     var energyBolt = Session.ObjectPools.EnergyBolts.Get();
-                    energyBolt.Launch(Room, Position, BoundingBox);
+                    energyBolt.Drop(Room, Position, BoundingBox);
                 }
             }
 

@@ -10,6 +10,19 @@ namespace Engendro
     {
         private static readonly Random random = new();
 
+        // ShuffleCore
+        private static void ShuffleCore<T>(this IList<T> list, Random? randomObj)
+        {
+            randomObj ??= random;
+
+            for (int i = list.Count - 1; i > 0; i--)
+            {
+                int j = randomObj.Next(i + 1);
+                (list[i], list[j]) = (list[j], list[i]);
+            }
+        }
+
+
         // GetRandomElement
         public static T? GetRandomElement<T>(this IList<T> list) where T : class
         {
@@ -24,18 +37,10 @@ namespace Engendro
         }
 
         // Shuffle
-        public static void Shuffle<T>(this IList<T> list)
-        {
-            var count = list.Count;
-            while (count > 1)
-            {
-                count--;
-                var k = random.Next(count + 1);
-                var value = list[k];
-                list[k] = list[count];
-                list[count] = value;
-            }
-        }
+        public static void Shuffle<T>(this IList<T> list) => ShuffleCore(list, null);
+
+        // Shuffle
+        public static void Shuffle<T>(this IList<T> list, Random random) => ShuffleCore(list, random);
 
         // Swap
         public static void Swap<T>(this IList<T> list, T item1, T item2)

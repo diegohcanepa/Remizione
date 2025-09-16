@@ -6,9 +6,9 @@ using System;
 namespace Remizione
 {
     /// <summary>
-    /// UIStageMeter
+    /// UIRunMeter
     /// </summary>
-    public class UIStageMeter : GameObject
+    public sealed class UIRunMeter : GameObject
     {
         private readonly ImageSprite container;
         private readonly ColorTween colorTween = new();
@@ -21,7 +21,7 @@ namespace Remizione
         private readonly TextSprite[] values;
 
         // Constructor
-        public UIStageMeter(GameSession session)
+        public UIRunMeter(GameSession session)
             : base(session.Game)
         {
             this.session = session;
@@ -115,11 +115,11 @@ namespace Remizione
                     values[1].Color = ColorPalette.Text.Default;
             }
 
-            // Stage
-            if (lastKnownValues[2] != session.Stage)
+            // Run progress
+            if (lastKnownValues[2] != session.RunProgress)
             {
-                lastKnownValues[2] = session.Stage;
-                values[2].Text = $"{session.Stage}";
+                lastKnownValues[2] = session.RunProgress;
+                values[2].Text = $"{session.RunProgress+1}/{session.RunLength}";
             }
 
 

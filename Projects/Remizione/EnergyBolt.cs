@@ -12,8 +12,8 @@ namespace Remizione
     {
         #region Private fields
 
+        private readonly FloatTween altitudeTween = new();
         private const float bounceFactor = .8f;
-        private float delayTimer;
         private static string? displayName;
         private const float gravity = 300;
         private float groundY;
@@ -21,7 +21,6 @@ namespace Remizione
         private float launchDelay;
         private bool launched;
         private float life = 2;
-        private readonly FloatTween opacityTween = new();
         private static readonly Color particleColor = new Color(207, 117, 43) * .8f;
         private readonly ParticlePopEffect particleEffect;
         private readonly Vector2Tween scaleTween = new();
@@ -34,22 +33,21 @@ namespace Remizione
         public EnergyBolt(GameSession session)
             : base(session, string.Empty)
         {
-            this.Atlas = Atlases.Environment;
+            this.Atlas = Atlases.UI;
             this.Color = new(240, 181, 65);
-            this.DefaultImageName = "EnergyBolt";
+            this.DefaultImageName = MetaItem.EnergyBoltName;
             this.DepthOffset = 5;
 
             this.particleEffect = new ParticlePopEffect(Game)
             {
-                BurstSize = new(10, 16),
+                BurstSize = new(16, 26),
                 HorizontalSpeed = 50,
                 ParticleLifetime = .3f,
                 Scale = .75f
             };
 
             Tweens.AltitudeTween = FloatTween.Create(TweenStyle.CubicInOut, 0, 1, 300, -1);
-
-            displayName ??= $"+{TextRepository.GetValue("@Misc.EnergyBolt")}";
+            displayName ??= $"+{TextRepository.GetValue("@Prop.EnergyBolt")}";
         }
 
         #region Private members
@@ -79,34 +77,32 @@ namespace Remizione
 
             particleEffect.Update(gameTime);
 
-            float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (!launched)
+            if (life > 0)
             {
-                delayTimer += dt;
-                if (delayTimer >= launchDelay)
+                float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                life -= dt;
+
+                if (!launched)
                 {
-                    velocity = new(RandomBetween(-30f, 30f), RandomBetween(-20f, 10f));
+                    velocity = new(-50, RandomBetween(-20f, 10f));
                     launched = true;
+                    return;
                 }
-                return;
+
+                velocity.Y += gravity * dt;
+                X += velocity.X * dt;
+                Y += velocity.Y * dt;
+
+                if (Y >= groundY)
+                {
+                    Y = groundY;
+                    velocity.Y *= -bounceFactor;
+                    velocity.X *= .7f;
+
+                    if (Math.Abs(velocity.Y) < 6)
+                        velocity.Y = 0;
+                }
             }
-
-            velocity.Y += gravity * dt;
-            X += velocity.X * dt;
-            Y += velocity.Y * dt;
-
-            if (Y >= groundY)
-            {
-                Y = groundY;
-                velocity.Y *= -bounceFactor;
-                velocity.X *= .7f;
-
-                if (Math.Abs(velocity.Y) < 6f)
-                    velocity.Y = 0;
-            }
-
-            life -= dt;
 
             if (isCollecting)
             {
@@ -141,8 +137,8 @@ namespace Remizione
 
         #endregion
 
-        // Launch
-        public void Launch(Room room, Vector2 origin, RectangleF bounds)
+        // Drop
+        public void Drop(Room room, Vector2 origin, RectangleF bounds)
         {
             float yOffset = RandomBetween(-4f, 2f);
             Position = new(RandomBetween(bounds.Left - 10, bounds.Right + 10),
@@ -154,12 +150,8 @@ namespace Remizione
             life = 2;
             groundY = origin.Y + Randomizer.Next(-3, 3);
             launchDelay = RandomBetween(0, .1f);
-            delayTimer = 0;
-            Scale = ScaleInfo.UIElement.Small;
+            Scale = ScaleInfo.UIElement.Tiny;
             launched = false;
-
-            opacityTween.Start(TweenStyle.Linear, 1, .7f, 40, -1);
-            Tweens.OpacityTween = opacityTween;
 
             room.Children.Add(this);
         }

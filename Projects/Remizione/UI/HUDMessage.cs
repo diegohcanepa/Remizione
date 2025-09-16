@@ -56,19 +56,24 @@ namespace Remizione
         // Show
         public void Show(HUDMessageKind message)
         {
-            var isWarning = message != HUDMessageKind.PowerRestored;
-
             messageText.Text = Localization.GetValue(message);
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 200);
-            if (isWarning)
+            
+            if (message == HUDMessageKind.PowerRestored)
+            {
+                messageText.Color = ColorPalette.Text.Green;
+            }
+            else if (message == HUDMessageKind.ExtraTime)
+            {
+                messageText.Color = ColorPalette.Text.Orange;
+            }
+            else
             {
                 messageText.Color = ColorPalette.Text.Highlight;
                 Sound.Play(SoundNames.Error);
             }
-            else
-                messageText.Color = ColorPalette.Text.Green;
 
-            messageText.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, ScaleInfo.Text.Huge * .5f, ScaleInfo.Text.Huge, 200);
+            messageText.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, ScaleInfo.Text.ExtraLarge * .8f, ScaleInfo.Text.ExtraLarge, 200);
         }
     }
 }

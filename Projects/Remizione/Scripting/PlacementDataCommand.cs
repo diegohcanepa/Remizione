@@ -28,7 +28,7 @@ namespace Remizione.Scripting
 
             var room = AssertEntityNotNull<ProceduralRoom>(0);
             var distributionStrategy = Parser.ParseEnumArgument(this, DistributionArg, PlacementDistributionStrategy.Random);
-            var maxInstances = HasArg(InstancesArg) ? Parser.ParseInt32RangeArgument(this, InstancesArg) : new Int32Range(1);
+            var instances = HasArg(InstancesArg) ? Parser.ParseInt32RangeArgument(this, InstancesArg) : new Int32Range(1);
             var conditions = new List<PlacementCondition>();
 
             // Chance
@@ -42,11 +42,11 @@ namespace Remizione.Scripting
             if (HasArg(StageArg))
             {
                 var progress = Parser.ParseInt32RangeArgument(this, StageArg);
-                conditions.Add(new StagePlacementCondition(progress));
+                conditions.Add(new RunProgressPlacementCondition(progress));
             }
 
             // Placement data
-            var placementData = new PlacementData(distributionStrategy, conditions.ToArray(), maxInstances);
+            var placementData = new PlacementData(distributionStrategy, conditions.ToArray(), instances);
             room.AddPlacementData(thing.StaticName, placementData);
         }
     }

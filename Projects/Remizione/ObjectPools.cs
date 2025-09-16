@@ -11,7 +11,7 @@ namespace Remizione
         public ObjectPool<ThrownDuck> Ducks { get; } = new ObjectPool<ThrownDuck>(() => new ThrownDuck(session), 50);
 
         // EnergyBolts
-        public ObjectPool<EnergyBolt> EnergyBolts { get; } = new ObjectPool<EnergyBolt>(() => new EnergyBolt(session), 100);
+        public ObjectPool<EnergyBolt> EnergyBolts { get; } = new ObjectPool<EnergyBolt>(() => new EnergyBolt(session), 30);
 
         // FloatingHeart
         public ObjectPool<FloatingHeart> FloatingHearts { get; } = new ObjectPool<FloatingHeart>(() => new FloatingHeart(session), 30);
@@ -27,6 +27,9 @@ namespace Remizione
 
             return null;
         }
+
+        // Pickables
+        public ObjectPool<Pickable> Pickables { get; } = new ObjectPool<Pickable>(() => new Pickable(session), 30);
 
         // ReturnThrowable
         public void ReturnThrowable(ThrownItem item)

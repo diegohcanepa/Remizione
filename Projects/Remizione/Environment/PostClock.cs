@@ -1,4 +1,5 @@
-﻿using Engendro.Audio;
+﻿using Engendro;
+using Engendro.Audio;
 
 namespace Remizione
 {
@@ -28,7 +29,7 @@ namespace Remizione
         protected override void OnDie()
         {
             base.OnDie();
-            Session.ObjectPools.FloatingTexts.Get()?.Show(BoundingBox.Center, "¡Tiempo Extra!", ColorPalette.Text.Orange);
+            Session.ObjectPools.FloatingTexts.Get()?.Show(BoundingBox.Center, Localization.GetValue(HUDMessageKind.ExtraTime), ColorPalette.Text.Orange);
             Session.RemainingTime += 10000;
         }
 
