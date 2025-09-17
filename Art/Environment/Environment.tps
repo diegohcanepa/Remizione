@@ -173,6 +173,22 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">BackTower-assets/BackTower.png</key>
+            <key type="filename">BackTower-assets/BackTowerShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,16,33,33</rect>
+                <key>scale9Paddings</key>
+                <rect>16,16,33,33</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">BigSign-assets/BigSign.png</key>
             <key type="filename">BigSign-assets/BigSignShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -578,6 +594,44 @@
                 <rect>4,1,7,1</rect>
                 <key>scale9Paddings</key>
                 <rect>4,1,7,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ExitRideCar-assets/ExitRideCar01.png</key>
+            <key type="filename">ExitRideCar-assets/ExitRideCar02.png</key>
+            <key type="filename">ExitRideCar-assets/ExitRideCar03.png</key>
+            <key type="filename">ExitRideCar-assets/ExitRideCarShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,8,20,15</rect>
+                <key>scale9Paddings</key>
+                <rect>10,8,20,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ExitTower-assets/ExitTower01.png</key>
+            <key type="filename">ExitTower-assets/ExitTower02.png</key>
+            <key type="filename">ExitTower-assets/ExitTower03.png</key>
+            <key type="filename">ExitTower-assets/ExitTower04.png</key>
+            <key type="filename">ExitTower-assets/ExitTower05.png</key>
+            <key type="filename">ExitTower-assets/ExitTowerShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,20,33,39</rect>
+                <key>scale9Paddings</key>
+                <rect>16,20,33,39</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1273,24 +1327,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">OutgoingRideCarNW-assets/OutgoingRideCarNW01.png</key>
-            <key type="filename">OutgoingRideCarNW-assets/OutgoingRideCarNW02.png</key>
-            <key type="filename">OutgoingRideCarNW-assets/OutgoingRideCarNW03.png</key>
-            <key type="filename">OutgoingRideCarNW-assets/OutgoingRideCarNWShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>10,8,20,15</rect>
-                <key>scale9Paddings</key>
-                <rect>10,8,20,15</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">PilgrimSack-assets/PilgrimSack.png</key>
             <key type="filename">PilgrimSack-assets/PilgrimSackShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -1499,7 +1535,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PotteryC-assets/PotteryC.png</key>
             <key type="filename">PotteryC-assets/PotteryCShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1656,9 +1691,24 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>16,20,33,39</rect>
+                <rect>16,19,33,38</rect>
                 <key>scale9Paddings</key>
-                <rect>16,20,33,39</rect>
+                <rect>16,19,33,38</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Tower-assets/Tower06.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,13,21,27</rect>
+                <key>scale9Paddings</key>
+                <rect>10,13,21,27</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1810,11 +1860,13 @@
                     <filename>PotteryE-assets</filename>
                     <filename>WaterPuddleA-assets</filename>
                     <filename>Guts-assets</filename>
-                    <filename>Tower-assets</filename>
                     <filename>SpearTrap-assets</filename>
                     <filename>PostClock-assets</filename>
                     <filename>IncomingRideCar-assets</filename>
-                    <filename>OutgoingRideCarNW-assets</filename>
+                    <filename>ExitTower-assets</filename>
+                    <filename>Tower-assets</filename>
+                    <filename>ExitRideCar-assets</filename>
+                    <filename>BackTower-assets</filename>
                 </array>
             </struct>
         </map>

@@ -17,7 +17,7 @@ namespace Remizione
             : base(session, name)
         {
             this.Atlas = Atlases.Environment;
-            this.PlacementPhase = PlacementPhase.Tower;
+            this.PlacementPhase = PlacementPhase.Connections;
         }
 
         #region Protected members
@@ -30,27 +30,24 @@ namespace Remizione
             AnimationPlayer.Play(ClosedState);
         }
 
+        // OnOpen
+        protected virtual void OnOpen()
+        {
+        }
+
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-            if (Session.IsPowerRestored && !isOpened)
+            if (Session.PowerRestored && !isOpened)
                 Open();
         }
 
         #endregion
 
-        // RideCar
-        [ScriptProperty]
-        public OutgoingRideCar? RideCar { get; set; }
-
-        // RideCarOffset
-        [ScriptProperty]
-        public Vector2 RideCarOffset { get; set; }
-
         // IsOpen
         [ScriptProperty]
-        public bool IsOpen => Session.IsTimeCritical || isOpened;
+        public virtual bool IsOpen => Session.PowerRestored || isOpened;
 
         // Open
         [ScriptMethod]
@@ -59,12 +56,8 @@ namespace Remizione
             if (!isOpened && AnimationPlayer.Animation?.Name != OpenState)
             {
                 AnimationPlayer.Play(OpenState, false);
-                RideCar?.TurnOn();
+                OnOpen();
             }
         }
-
-        // NW
-        [ScriptProperty(CodingContext.EntityDeclaration)]
-        public bool NW { get; set; } = true;
     }
 }

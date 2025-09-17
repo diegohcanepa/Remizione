@@ -5,9 +5,9 @@ using Microsoft.Xna.Framework;
 namespace Remizione
 {
     /// <summary>
-    /// OutgoingRideCar
+    /// ExitRideCar
     /// </summary>
-    public sealed class OutgoingRideCar : IsometricProp
+    public sealed class ExitRideCar : IsometricProp
     {
         private readonly Light frontLight;
         private static readonly Vector2 frontLightPosition = new(8, 16);
@@ -15,7 +15,7 @@ namespace Remizione
         private static readonly Vector2 rearLightPosition = new(24, 20);
 
         // Constructor
-        public OutgoingRideCar(GameSession session, string name)
+        public ExitRideCar(GameSession session, string name)
             : base(session, name)
         {
             HitEffect = HitEffect.Shake;

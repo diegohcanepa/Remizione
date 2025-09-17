@@ -85,7 +85,7 @@ namespace Remizione
     public enum PlacementDistributionStrategy { Random, Clump, NoiseMap }
 
     // PlacementPhase
-    public enum PlacementPhase { None, Terrain, NonSolidDecoration, Tower, NaturalObject, ArtificialObject, Creature }
+    public enum PlacementPhase { None, Terrain, NonSolidDecoration, Connections, NaturalObject, ArtificialObject, Creature }
 
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }

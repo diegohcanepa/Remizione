@@ -19,23 +19,22 @@ namespace Remizione
 
         #region Private members
 
-        // SetupRideCars
-        private void SetupRideCars()
+        // SetupExitRideCar
+        private void SetupExitRideCar()
         {
+            if (Session.GetEntity<ExitRideCar>(nameof(ExitRideCar)) is not ExitRideCar exitRideCar)
+                throw new InvalidOperationException("Exit ride car not found.");
+
             var childList = new List<Thing>(Children);
 
             foreach (var thing in childList)
             {
-                if (thing is Tower roomConnector)
+                if (thing is ExitTower exitTower)
                 {
-                    var staticName = roomConnector.NW ? "OutgoingRideCarNW" : "OutgoingRideCarNE";
-
-                    if (CreateRuntimeClone(staticName) is not OutgoingRideCar car)
-                        throw new InvalidOperationException("Failed to create RideCar instance.");
-
-                    Children.Add(car);
-                    roomConnector.RideCar = car;
-                    car.Position = roomConnector.BoundingBox.GetPoint(RectanglePoint.RightBottom) + roomConnector.RideCarOffset;
+                    Children.Add(exitRideCar);
+                    exitTower.RideCar = exitRideCar;
+                    exitRideCar.Position = exitTower.BoundingBox.GetPoint(RectanglePoint.RightBottom) + exitTower.RideCarOffset;
+                    break;
                 }
             }
         }
@@ -52,7 +51,9 @@ namespace Remizione
         {
             base.OnLoad();
             AudioManager.Music.PlayTag("Ride");
-            Session.AwaitRoutine(RoutineNames.IncomingRideCarIntro);
+
+            if (RoomPosition == RoomPosition.First)
+                Session.AwaitRoutine(RoutineNames.IncomingRideCarIntro);
         }
 
         // OnUnload
@@ -76,12 +77,22 @@ namespace Remizione
                         Children.Add(entranceRail);
                 }
             }
+            else
+            {
+                // Back tower
+                if (Session.GetEntity<GameThing>("BackTower") is GameThing backTower)
+                {
+                    var sizeInCells = backTower.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
+                    if (MainGrid != null && MainGrid.TryReserveSpace(sizeInCells, out _, out _))
+                        Children.Add(backTower);
+                }
+            }
         }
 
         // OnPopulateCompleted
         protected override void OnPopulateCompleted()
         {
-            SetupRideCars();
+            SetupExitRideCar();
         }
 
         #endregion

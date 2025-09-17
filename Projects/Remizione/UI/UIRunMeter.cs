@@ -83,9 +83,9 @@ namespace Remizione
             {
                 lastKnownValues[0] = session.Power;
                 values[0].Text = $"{session.Power}/{session.RequiredPower}";
-                values[0].Color = session.IsPowerRestored ? ColorPalette.Text.Green : textColor;
+                values[0].Color = session.PowerRestored ? ColorPalette.Text.Green : textColor;
 
-                if (session.IsPowerRestored)
+                if (session.PowerRestored)
                 {
                     scaleTween.Stop();
                     colorTween.Stop();

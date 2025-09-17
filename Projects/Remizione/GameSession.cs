@@ -63,7 +63,7 @@ namespace Remizione
                     Scale = ScaleInfo.Text.VeryLarge,
                 };
 
-                console = new ScriptConsole(this, InputBindings.Console, consoleText, new RectangleF(0, 240, 480, 30), "=>> $BeginRun()", "=>> $AdvanceRun()")
+                console = new ScriptConsole(this, InputBindings.Console, consoleText, new RectangleF(0, 240, 480, 30), "=>> $BeginRun()", "=>> $NextRunRoom()", "=> $PowerRestored = true")
                 {
                     TextErrorColor = ColorPalette.Text.Terra
                 };
@@ -106,11 +106,12 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(BloodyEye));
             scriptRegistry.RegisterEntity(typeof(BreakableProp));
             scriptRegistry.RegisterEntity(typeof(CreditsRoom));
+            scriptRegistry.RegisterEntity(typeof(ExitRideCar));
+            scriptRegistry.RegisterEntity(typeof(ExitTower));
             scriptRegistry.RegisterEntity(typeof(GameRoom));
             scriptRegistry.RegisterEntity(typeof(HellGoat));
             scriptRegistry.RegisterEntity(typeof(IsometricProp));
             scriptRegistry.RegisterEntity(typeof(OcculusMinion));
-            scriptRegistry.RegisterEntity(typeof(OutgoingRideCar));
             scriptRegistry.RegisterEntity(typeof(PostClock));
             scriptRegistry.RegisterEntity(typeof(Pottery));
             scriptRegistry.RegisterEntity(typeof(Prop));
@@ -176,7 +177,7 @@ namespace Remizione
         // OnEnterRoom
         protected override void OnEnterRoom(Room room)
         {
-            IsPowerRestored = false;
+            PowerRestored = false;
             RemainingTime = GameSettings.CountdownMaximum;
             RequiredPower = Room is ProceduralRoom proceduralRoom ? proceduralRoom.RequiredPower : 0;
             player?.Inventory.NotifyRoomChanged();
@@ -350,26 +351,6 @@ namespace Remizione
 
         #endregion
 
-        // AdvanceRun
-        [ScriptMethod]
-        public void AdvanceRun()
-        {
-            if (!IsRunInProgress)
-                throw new InvalidOperationException("No run in progress.");
-
-            RunProgress++;
-
-            if (RunProgress == rideRooms.Count)
-            {
-                Stats.Runs++;
-                EndRun();
-            }
-            else
-            {
-                EnterRoom(rideRooms[RunProgress]);
-            }
-        }
-
         // BeginRun
         [ScriptMethod]
         public void BeginRun()
@@ -387,7 +368,7 @@ namespace Remizione
                 rideRooms.Add(room);
             }
 
-            AdvanceRun();
+            NextRunRoom();
         }
 
         // DialogOptionId
@@ -452,15 +433,23 @@ namespace Remizione
         [ScriptProperty]
         public bool IsHUDVisible { get; set; } = true;
 
-        // IsPowerRestored
-        public bool IsPowerRestored { get; private set; }
-
         // IsRunInProgress
         [ScriptProperty]
         public bool IsRunInProgress { get; private set; }
 
         // IsTimeCritical
         public bool IsTimeCritical => RemainingTime <= GameSettings.TimeCritical;
+
+        // KillPlayer
+        [ScriptMethod]
+        public void KillPlayer()
+        {
+            if (Player != null && !Player.IsDead)
+            {
+                Environment.Lightning.Show(Player.Position);
+                Player.Die();
+            }
+        }
 
         // LightingSystem
         [ScriptProperty]
@@ -470,12 +459,28 @@ namespace Remizione
         [ScriptProperty]
         public new GameRoom? NextRoom => (GameRoom?)base.NextRoom;
 
+        // NextRunRoom
+        [ScriptMethod]
+        public void NextRunRoom()
+        {
+            if (!IsRunInProgress)
+                throw new InvalidOperationException("No run in progress.");
+
+            RunProgress++;
+
+            if (RunProgress == rideRooms.Count)
+            {
+                Stats.Runs++;
+                EndRun();
+            }
+            else
+            {
+                EnterRoom(rideRooms[RunProgress]);
+            }
+        }
+
         // ObjectPools
         public ObjectPools ObjectPools { get; }
-
-        // OutgoingRideCar
-        [ScriptProperty]
-        public OutgoingRideCar? OutgoingRideCar => OutcomeTarget as OutgoingRideCar;
 
         // Player
         [ScriptProperty]
@@ -489,17 +494,6 @@ namespace Remizione
                     this.player = value;
                     HUD.Reset();
                 }
-            }
-        }
-
-        // KillPlayer
-        [ScriptMethod]
-        public void KillPlayer()
-        {
-            if (Player != null && !Player.IsDead)
-            {
-                Environment.Lightning.Show(Player.Position);
-                Player.Die();
             }
         }
 
@@ -517,9 +511,9 @@ namespace Remizione
                 {
                     power = Math.Min(value, RequiredPower);
 
-                    if (power == RequiredPower && !IsPowerRestored)
+                    if (power == RequiredPower && !PowerRestored)
                     {
-                        IsPowerRestored = true;
+                        PowerRestored = true;
                         Sound.Play(SoundNames.PowerRestored);
                         HUD.Message.Show(HUDMessageKind.PowerRestored);
                     }
@@ -527,9 +521,30 @@ namespace Remizione
             }
         }
 
+        // PowerRestored
+        [ScriptProperty]
+        public bool PowerRestored { get; set; }
+
         // PreviousRoom
         [ScriptProperty]
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
+
+        // PreviousRunRoom
+        [ScriptMethod]
+        public void PreviousRunRoom()
+        {
+            if (!IsRunInProgress)
+                throw new InvalidOperationException("No run in progress.");
+
+            if (RunProgress <= 0)
+                return;
+
+            RunProgress--;
+
+            EnterRoom(rideRooms[RunProgress]);
+
+            return;
+        }
 
         // RandomSeed
         public int RandomSeed { get; private set; }

@@ -130,7 +130,7 @@ namespace Remizione
 
                 particleEffect.Spawn(BoundingBox.Center, particleColor);
 
-                if (displayName != null && !Session.IsPowerRestored)
+                if (displayName != null && !Session.PowerRestored)
                     Session.Player.ShowFloatingText(displayName, ColorPalette.EnergyBolt, 1000);
             }
         }

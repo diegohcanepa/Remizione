@@ -11,7 +11,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal PlacementDataCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, ChanceArg, DistributionArg, InstancesArg, StageArg)
+            : base(script, source, body, 1, ChanceArg, DistributionArg, InstancesArg, RoomPositionArg, StageArg)
         {
         }
 
@@ -39,6 +39,13 @@ namespace Remizione.Scripting
             {
                 var chance = Parser.ParseRatioArgument(this, ChanceArg);
                 conditions.Add(new ChancePlacementCondition(chance));
+            }
+
+            // Room position
+            if (HasArg(RoomPositionArg))
+            {
+                var roomPosition = Parser.ParseEnumArgument<RoomPosition>(this, RoomPositionArg);
+                conditions.Add(new RoomPositionPlacementCondition(roomPosition));
             }
 
             // Stage
