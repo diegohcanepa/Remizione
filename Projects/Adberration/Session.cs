@@ -80,11 +80,14 @@ namespace Adberration
             if (Room == null || busyRooms.Contains(Room))
                 return;
 
-            if (ScriptLibrary.GetScript(ScriptType.Enter, Room.Name) is Script script)
+            if (!string.IsNullOrEmpty(Room.Name))
             {
-                AwaitScript(script);
-                busyRooms.Push(Room);
-                busyRoomsScripts.Push(script);
+                if (ScriptLibrary.GetScript(ScriptType.Enter, Room.Name) is Script script)
+                {
+                    AwaitScript(script);
+                    busyRooms.Push(Room);
+                    busyRoomsScripts.Push(script);
+                }
             }
         }
 

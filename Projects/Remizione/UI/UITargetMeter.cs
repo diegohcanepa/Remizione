@@ -43,7 +43,7 @@ namespace Remizione.UI
         #region Private members
 
         // ResetCooldown
-        private void ResetCooldown() => cooldown = 5000;
+        private void ResetCooldown() => cooldown = 3000;
 
         #endregion
 

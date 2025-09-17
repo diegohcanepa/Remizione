@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Remizione.Scripting;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 
@@ -44,6 +45,7 @@ namespace Remizione
             this.HUD = new HUD(this);
             this.StaticThings = new(staticThings);
             this.IsMouseVisible = false;
+            this.RideRooms = new(rideRooms);
 
             ObjectPools = new ObjectPools(this);
             ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(game), 100);
@@ -381,7 +383,7 @@ namespace Remizione
 
             for (var i = 0; i < RunLength; i++)
             {
-                var room = CreateRuntimeRoomClone("RideRoom", $"RideRoom*{i}") as RideRoom ?? throw new InvalidOperationException($"Failed to create runtime clone from RideRoom.");
+                var room = new RideRoom(this, string.Empty, i, i == RunLength - 1);
                 rideRooms.Add(room);
             }
 
@@ -501,6 +503,9 @@ namespace Remizione
             }
         }
 
+        // PlacementDataPool
+        public PlacementDataPool PlacementDataPool { get; } = new();
+
         // Power
         [ScriptProperty]
         public int Power
@@ -542,6 +547,9 @@ namespace Remizione
         // RequiredPower
         [ScriptProperty]
         public int RequiredPower { get; private set; }
+
+        // RideRooms
+        public ReadOnlyCollection<RideRoom> RideRooms { get; }
 
         // Room
         [ScriptProperty]

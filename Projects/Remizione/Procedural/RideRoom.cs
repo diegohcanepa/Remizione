@@ -12,8 +12,8 @@ namespace Remizione
     public sealed class RideRoom : ProceduralRoom
     {
         // Constructor
-        public RideRoom(GameSession session, string name)
-            : base(session, name)
+        public RideRoom(GameSession session, string name, int roomIndex, bool isLastRoom)
+            : base(session, name, RoomKind.RideRoom, roomIndex, isLastRoom)
         {
         }
 
@@ -66,12 +66,15 @@ namespace Remizione
         // OnPopulate
         protected override void OnPopulate()
         {
-            // Entrance rail
-            if (Session.GetEntity<GameThing>("EntranceRail") is GameThing entranceRail)
+            if (RoomPosition == RoomPosition.First)
             {
-                var sizeInCells = entranceRail.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
-                if (MainGrid != null && MainGrid.TryReserveSpace(sizeInCells, out int col, out int row))
-                    Children.Add(entranceRail);
+                // Entrance rail
+                if (Session.GetEntity<GameThing>("EntranceRail") is GameThing entranceRail)
+                {
+                    var sizeInCells = entranceRail.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
+                    if (MainGrid != null && MainGrid.TryReserveSpace(sizeInCells, out int col, out int row))
+                        Children.Add(entranceRail);
+                }
             }
         }
 

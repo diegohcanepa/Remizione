@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Remizione.Scripting
 {
     // PlacementDataCommand
-    // Arguments: {Room} [#chance:Ratio] [#distribution:DistributionStrategy] [#instances:Int32Range] [#stage:Int32Range]
+    // Arguments: {RoomKind} [#chance:Ratio] [#distribution:DistributionStrategy] [#instances:Int32Range] [#stage:Int32Range]
     internal sealed class PlacementDataCommand : NonAwaitableCommand
     {
         // Constructor
@@ -18,6 +18,9 @@ namespace Remizione.Scripting
         // OnExecute
         protected override void OnExecute()
         {
+            if (Session is not GameSession gameSession)
+                return;
+
             var thing = AssertEntityNotNull<GameThing>(Script.EntityName);
 
             if (thing.InstanceKind != InstanceKind.Static)
@@ -26,7 +29,7 @@ namespace Remizione.Scripting
             if (thing.PlacementPhase == PlacementPhase.None)
                 throw new ScriptException(this, "PlacementPhase is not defined.");
 
-            var room = AssertEntityNotNull<ProceduralRoom>(0);
+            var roomKind = Parser.ParseEnum<RoomKind>(this, 0);
             var distributionStrategy = Parser.ParseEnumArgument(this, DistributionArg, PlacementDistributionStrategy.Random);
             var instances = HasArg(InstancesArg) ? Parser.ParseInt32RangeArgument(this, InstancesArg) : new Int32Range(1);
             var conditions = new List<PlacementCondition>();
@@ -47,7 +50,7 @@ namespace Remizione.Scripting
 
             // Placement data
             var placementData = new PlacementData(distributionStrategy, conditions.ToArray(), instances);
-            room.AddPlacementData(thing.StaticName, placementData);
+            gameSession.PlacementDataPool.Add(roomKind, thing.StaticName, placementData);
         }
     }
 }

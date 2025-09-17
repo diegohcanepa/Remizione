@@ -29,7 +29,7 @@ namespace Remizione
         }
 
         // Pickables
-        public ObjectPool<Pickable> Pickables { get; } = new ObjectPool<Pickable>(() => new Pickable(session), 30);
+        public ObjectPool<Pickup> Pickables { get; } = new ObjectPool<Pickup>(() => new Pickup(session), 30);
 
         // ReturnThrowable
         public void ReturnThrowable(ThrownItem item)

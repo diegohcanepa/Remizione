@@ -15,7 +15,6 @@ namespace Remizione
         #region Private fields
 
         private int instanceCount;
-        private readonly Dictionary<string, List<PlacementData>> placementDataDictionary = [];
         private bool populated;
         private readonly Random random;
         private readonly int randomSeed;
@@ -28,13 +27,22 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        protected ProceduralRoom(GameSession session, string name)
+        protected ProceduralRoom(GameSession session, string name, RoomKind roomKind, int roomIndex, bool isLastRoom)
             : base(session, name)
         {
+            this.RoomKind = roomKind;
+            this.RoomIndex = roomIndex;
+
             LightingSystem = true;
 
-            int pos = name.LastIndexOf(ScriptSyntax.CloneSuffix);
-            int salt = pos == -1 ? 0 : int.Parse(name.Substring(pos + 1));
+            if (roomIndex == 0)
+                RoomPosition = RoomPosition.First;
+            else if (isLastRoom)
+                RoomPosition = RoomPosition.Last;
+            else 
+                RoomPosition = RoomPosition.Middle;
+
+            int salt = roomIndex;
             this.randomSeed = GetSeed(Session.RandomSeed, salt);
             this.random = new Random(randomSeed);
             this.terrainBlock = new ImageSprite(session.Game);
@@ -278,8 +286,8 @@ namespace Remizione
         {
             RequiredPower = 0;
 
-            var data = Session.GetEntity<ProceduralRoom>(StaticName)?.placementDataDictionary;
-            if (data == null || data.Count == 0)
+            var data = Session.PlacementDataPool.GetRoomPlacementData(RoomKind);
+            if (data.Count == 0)
                 return;
 
             foreach (var phase in Enum.GetValues<PlacementPhase>())
@@ -287,12 +295,13 @@ namespace Remizione
                 if (phase == PlacementPhase.None)
                     continue;
 
-                var list = GetStaticThings(phase);
-                list.Shuffle(random);
+                var staticThings = GetStaticThings(phase);
+                staticThings.Shuffle(random);
 
-                foreach (var thing in list)
+                foreach (var thing in staticThings)
                 {
-                    if (!data.TryGetValue(thing.StaticName, out var placementDataList))
+                    var placementDataList = data.GetList(thing.StaticName);
+                    if (placementDataList == null)
                         continue;
 
                     for (var i = 0; i < placementDataList.Count; i++)
@@ -325,19 +334,6 @@ namespace Remizione
 
             if (RequiredPower > 0)
                 RequiredPower = RequiredPower / 2;
-        }
-
-        #endregion
-
-        #region Internal members
-
-        // AddPlacementData
-        internal void AddPlacementData(string staticName, PlacementData placementData)
-        {
-            if (placementDataDictionary.TryGetValue(staticName, out var existingList))
-                existingList.Add(placementData);
-            else
-                placementDataDictionary.Add(staticName, [placementData]);
         }
 
         #endregion
@@ -393,6 +389,15 @@ namespace Remizione
 
         // RequiredPower
         public int RequiredPower { get; private set; }
+
+        // RoomIndex
+        public int RoomIndex { get; }
+
+        // RoomKind
+        public RoomKind RoomKind { get; }
+
+        // RoomPosition
+        public RoomPosition RoomPosition { get; }
 
         // TerrainColRange
         [ScriptProperty(CodingContext.Declaration)]

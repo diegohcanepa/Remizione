@@ -6,9 +6,9 @@ using System;
 namespace Remizione
 {
     /// <summary>
-    /// Pickable
+    /// Pickup
     /// </summary>
-    public sealed class Pickable : Prop
+    public sealed class Pickup : Prop
     {
         #region Private fields
 
@@ -25,7 +25,7 @@ namespace Remizione
         #endregion
 
         // Constructor
-        public Pickable(GameSession session)
+        public Pickup(GameSession session)
             : base(session, string.Empty)
         {
             this.Atlas = Atlases.UI;

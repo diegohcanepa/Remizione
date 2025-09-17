@@ -99,6 +99,12 @@ namespace Remizione
     // RenderLayer
     public enum RenderLayer { BehindBackground, Background, Doors, Default, Foreground, ForegroundNoLight }
 
+    // RoomKind
+    public enum RoomKind { RideRoom }
+
+    // RoomPosition
+    public enum RoomPosition { None, First, Middle, Last }
+
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }
 
