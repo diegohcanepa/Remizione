@@ -207,10 +207,14 @@ namespace Engendro
         // FocusTarget
         public void FocusTarget()
         {
-            if (Target != null && (CanScrollHorizontally || CanScrollVertically))
+            if (Target != null)
             {
                 StopMoving();
-                Position = Target.Position;
+
+                if (CanScrollHorizontally || CanScrollVertically)
+                    Position = Target.Position;
+                else
+                    FocusCenter();
             }
         }
 
@@ -363,7 +367,6 @@ namespace Engendro
             Position = Vector2.Zero;
             Zoom = 1;
             Rotation = 0;
-            ZoomRange = new FloatRange(minZoom, maxZoom);
         }
 
         // Rotate
@@ -577,25 +580,6 @@ namespace Engendro
                 return;
 
             zoomTween.Start(tweenStyle, Zoom, zoomValue, duration, bounceCount);
-        }
-
-        // ZoomRange
-        public FloatRange ZoomRange
-        {
-            get => zoomRange;
-            set
-            {
-                if (value != zoomRange)
-                {
-                    zoomRange = value;
-
-                    if (Zoom < zoomRange.Minimum)
-                        Zoom = zoomRange.Minimum;
-
-                    else if (Zoom > zoomRange.Maximum)
-                        Zoom = zoomRange.Maximum;
-                }
-            }
         }
 
         // ZoomState

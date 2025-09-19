@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Engendro;
 using Engendro.Audio;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
@@ -56,14 +57,6 @@ namespace Remizione
                 Session.AwaitRoutine(RoutineNames.IncomingRideCarIntro);
         }
 
-        // OnUnload
-        protected override void OnUnload()
-        {
-            base.OnUnload();
-            Children.Clear();
-            Session.CleanUpRuntimeEntities();
-        }
-
         // OnPopulate
         protected override void OnPopulate()
         {
@@ -73,18 +66,39 @@ namespace Remizione
                 if (Session.GetEntity<GameThing>("EntranceRail") is GameThing entranceRail)
                 {
                     var sizeInCells = entranceRail.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
-                    if (MainGrid != null && MainGrid.TryReserveSpace(sizeInCells, out int col, out int row))
+                    if (MainGrid.TryReserveSpace(sizeInCells, out int col, out int row))
                         Children.Add(entranceRail);
                 }
             }
             else
             {
-                // Back tower
-                if (Session.GetEntity<GameThing>("BackTower") is GameThing backTower)
+                // Left tower
+                if (Session.GetEntity<IsometricProp>("LeftTower") is IsometricProp leftTower)
                 {
-                    var sizeInCells = backTower.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
-                    if (MainGrid != null && MainGrid.TryReserveSpace(sizeInCells, out _, out _))
-                        Children.Add(backTower);
+                    var sizeInCells = leftTower.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
+                    if (MainGrid.TryReserveSpace(sizeInCells, out _, out _))
+                    {
+                        this.LeftTower = CreateRuntimeClone(leftTower.StaticName) as IsometricProp;
+                        Children.Add(leftTower);
+                    }
+                }
+            }
+
+            // Right tower
+            if (RoomPosition != RoomPosition.Last)
+            {
+                if (Session.GetEntity<IsometricProp>("RightTower") is IsometricProp rightTower)
+                {
+                    var sizeInCells = rightTower.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
+                    if (MainGrid.TryReserveSpace(sizeInCells, out _, out _))
+                    {
+                        this.RightTower = CreateRuntimeClone(rightTower.StaticName) as IsometricProp;
+                        if (this.RightTower != null)
+                        {
+                            this.RightTower.Position = new Vector2(CustomWidth, rightTower.BoundingBox.Height + 20);
+                            Children.Add(this.RightTower);
+                        }
+                    }
                 }
             }
         }
@@ -96,5 +110,11 @@ namespace Remizione
         }
 
         #endregion
+
+        // LeftTower
+        public IsometricProp? LeftTower { get; private set; }
+
+        // RightTower
+        public IsometricProp? RightTower { get; private set; }
     }
 }

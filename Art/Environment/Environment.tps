@@ -173,22 +173,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">BackTower-assets/BackTower.png</key>
-            <key type="filename">BackTower-assets/BackTowerShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,16,33,33</rect>
-                <key>scale9Paddings</key>
-                <rect>16,16,33,33</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">BigSign-assets/BigSign.png</key>
             <key type="filename">BigSign-assets/BigSignShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -1266,6 +1250,33 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">LeftTower-assets/LeftTower.png</key>
+            <key type="filename">LeftTower-assets/LeftTower01.png</key>
+            <key type="filename">LeftTower-assets/LeftTower02.png</key>
+            <key type="filename">LeftTower-assets/LeftTower03.png</key>
+            <key type="filename">LeftTower-assets/LeftTower04.png</key>
+            <key type="filename">LeftTower-assets/LeftTower05.png</key>
+            <key type="filename">LeftTower-assets/LeftTowerShadow.png</key>
+            <key type="filename">RightTower-assets/RightTower01.png</key>
+            <key type="filename">RightTower-assets/RightTower02.png</key>
+            <key type="filename">RightTower-assets/RightTower03.png</key>
+            <key type="filename">RightTower-assets/RightTower04.png</key>
+            <key type="filename">RightTower-assets/RightTower05.png</key>
+            <key type="filename">RightTower-assets/RightTowerShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,16,33,33</rect>
+                <key>scale9Paddings</key>
+                <rect>16,16,33,33</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Lightning-assets/Lightning01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1677,41 +1688,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Tower-assets/Tower01.png</key>
-            <key type="filename">Tower-assets/Tower02.png</key>
-            <key type="filename">Tower-assets/Tower03.png</key>
-            <key type="filename">Tower-assets/Tower04.png</key>
-            <key type="filename">Tower-assets/Tower05.png</key>
-            <key type="filename">Tower-assets/TowerShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,19,33,38</rect>
-                <key>scale9Paddings</key>
-                <rect>16,19,33,38</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Tower-assets/Tower06.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>10,13,21,27</rect>
-                <key>scale9Paddings</key>
-                <rect>10,13,21,27</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">TreeA-assets/TreeA.png</key>
             <key type="filename">TreeA-assets/TreeAShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -1864,9 +1840,9 @@
                     <filename>PostClock-assets</filename>
                     <filename>IncomingRideCar-assets</filename>
                     <filename>ExitTower-assets</filename>
-                    <filename>Tower-assets</filename>
                     <filename>ExitRideCar-assets</filename>
-                    <filename>BackTower-assets</filename>
+                    <filename>LeftTower-assets</filename>
+                    <filename>RightTower-assets</filename>
                 </array>
             </struct>
         </map>

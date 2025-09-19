@@ -8,7 +8,7 @@ namespace Remizione
     /// </summary>
     public class Tower : IsometricProp
     {
-        private bool isOpened;
+        private bool isOpen;
         private const string ClosedState = "Closed";
         private const string OpenState = "Open";
 
@@ -17,7 +17,6 @@ namespace Remizione
             : base(session, name)
         {
             this.Atlas = Atlases.Environment;
-            this.PlacementPhase = PlacementPhase.Connections;
         }
 
         #region Protected members
@@ -26,7 +25,7 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            isOpened = false;
+            isOpen = false;
             AnimationPlayer.Play(ClosedState);
         }
 
@@ -39,7 +38,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-            if (Session.PowerRestored && !isOpened)
+            if (Session.PowerRestored && !isOpen)
                 Open();
         }
 
@@ -47,15 +46,16 @@ namespace Remizione
 
         // IsOpen
         [ScriptProperty]
-        public virtual bool IsOpen => Session.PowerRestored || isOpened;
+        public virtual bool IsOpen => Session.PowerRestored || isOpen;
 
         // Open
         [ScriptMethod]
         public void Open()
         {
-            if (!isOpened && AnimationPlayer.Animation?.Name != OpenState)
+            if (!isOpen && AnimationPlayer.Animation?.Name != OpenState)
             {
                 AnimationPlayer.Play(OpenState, false);
+                isOpen = true;
                 OnOpen();
             }
         }

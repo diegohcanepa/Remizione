@@ -4,6 +4,8 @@ using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using SharpDX.Direct2D1.Effects;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -96,21 +98,15 @@ namespace Adberration
         // OnLoad
         protected override void OnLoad()
         {
-            Session.Camera.Reset();
-            Session.Camera.ZoomRange = ZoomRange;
-
             Content = Session.Game.GetNewContentManager();
 
             // Load atlas
             if (Atlas == null && !string.IsNullOrWhiteSpace(AtlasName))
             {
-                Atlas = new Atlas(Content, ScriptSyntax.RuntimeRoomNamePrefix + AtlasName, GetAtlasPath(), false);
+                var atlasEncodedName = ScriptSyntax.RuntimeRoomNamePrefix + AtlasName;
+                this.Atlas = Engendro.Atlas.GetInstance(atlasEncodedName);
+                this.Atlas ??= new Engendro.Atlas(Content, atlasEncodedName, GetAtlasPath(), false);
             }
-
-            var width = Width == 0 ? CustomWidth : Width;
-            var height = Height == 0 ? CustomHeight : Height;
-
-            Session.Camera.Setup(width, height, ScrollLock, Zoom);
 
             ResetAreas();
         }
@@ -120,7 +116,7 @@ namespace Adberration
         {
             if (Content != null)
             {
-                Atlas.DisposeFromContent(Content);
+                Engendro.Atlas.DisposeFromContent(Content);
                 Content.Dispose();
                 Content = null;
             }
@@ -196,6 +192,10 @@ namespace Adberration
         [ScriptProperty]
         public bool AllowSaving { get; set; } = true;
 
+        // AtlasName
+        [ScriptProperty]
+        public string AtlasName { get; set; } = string.Empty;
+
         // CanParent
         public override bool CanParent(Entity child)
         {
@@ -264,24 +264,6 @@ namespace Adberration
                     if (IsCurrentRoom)
                     {
                         Session.Camera.Zoom = zoom;
-                    }
-                }
-            }
-        }
-
-        // ZoomRange
-        [ScriptProperty]
-        public FloatRange ZoomRange
-        {
-            get => zoomRange;
-            set
-            {
-                if (value != zoomRange)
-                {
-                    zoomRange = value;
-                    if (IsCurrentRoom)
-                    {
-                        Session.Camera.ZoomRange = zoomRange;
                     }
                 }
             }

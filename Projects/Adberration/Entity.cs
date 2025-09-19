@@ -249,11 +249,6 @@ namespace Adberration
         {
         }
 
-        // OnLoadCompleted
-        protected virtual void OnLoadCompleted()
-        {
-        }
-
         // OnParentChanged
         protected virtual void OnParentChanged(Entity? previousParent)
         {
@@ -415,10 +410,6 @@ namespace Adberration
             }
         }
 
-        // AtlasName
-        [ScriptProperty]
-        public string AtlasName { get; set; } = string.Empty;
-
         // AutoPlayAnimation
         [ScriptProperty]
         public bool AutoPlayAnimation { get; set; } = true;
@@ -555,14 +546,10 @@ namespace Adberration
         // IsPaused
         public bool IsPaused => pauseCount > 0;
 
-        // IsReloading
-        public bool IsReloading { get; private set; }
-
         // Load
         public void Load()
         {
-            if (!IsReloading)
-                firstUpdate = true;
+            firstUpdate = true;
 
             if (LoadState == LoadState.Loaded)
                 return;
@@ -584,8 +571,6 @@ namespace Adberration
 
             if (AutoPlayAnimation && !AnimationPlayer.IsPlaying)
                 Sprite.Player.Play(true, AnimationDirection.Forward, false);
-
-            OnLoadCompleted();
         }
 
         // LoadState
@@ -721,18 +706,6 @@ namespace Adberration
             }
         }
 
-        // Reload
-        public void Reload()
-        {
-            if (LoadState == LoadState.Loaded)
-            {
-                IsReloading = true;
-                Unload();
-                Load();
-                IsReloading = false;
-            }
-        }
-
         // RenderLayerDepth
         public virtual int RenderLayerDepth => 0;
 
@@ -821,7 +794,7 @@ namespace Adberration
         public TweenManager Tweens => Sprite.Tweens;
 
         // Unload
-        public virtual void Unload()
+        public void Unload()
         {
             if (LoadState == LoadState.Unloaded || isUnloading)
                 return;

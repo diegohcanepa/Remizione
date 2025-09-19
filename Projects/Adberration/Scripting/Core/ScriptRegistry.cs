@@ -88,7 +88,6 @@ namespace Adberration.Scripting.Core
             RegisterStatement("position-y-tween", typeof(YTweenCommand));
             RegisterStatement("put", typeof(PutCommand));
             RegisterStatement("random-position", typeof(RandomPositionCommand));
-            RegisterStatement("reload", typeof(ReloadCommand), CodingContext.Execution);
             RegisterStatement("reset-camera", typeof(ResetCameraCommand), CodingContext.Execution);
             RegisterStatement("reset-tweens", typeof(ResetTweensCommand));
             RegisterStatement("resume-routine", typeof(ResumeRoutineCommand), CodingContext.Execution);

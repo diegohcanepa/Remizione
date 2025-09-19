@@ -411,10 +411,6 @@ namespace Remizione
                     Lights[i].Prepare(Atlas);
                 }
             }
-
-            // Follow player
-            if (Session.Player != null && Session.Player.InCurrentRoom)
-                Session.Camera.FollowTarget(Session.Player, true);
         }
 
         // OnUnload

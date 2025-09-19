@@ -63,7 +63,7 @@ namespace Remizione
                     Scale = ScaleInfo.Text.VeryLarge,
                 };
 
-                console = new ScriptConsole(this, InputBindings.Console, consoleText, new RectangleF(0, 240, 480, 30), "=>> $BeginRun()", "=>> $NextRunRoom()", "=> $PowerRestored = true")
+                console = new ScriptConsole(this, InputBindings.Console, consoleText, new RectangleF(0, 240, 480, 30), "=>> $BeginRun()", "=>> $NextRunRoom()", "$PreviousRunRoom()", "=> $PowerRestored = true")
                 {
                     TextErrorColor = ColorPalette.Text.Terra
                 };
@@ -96,6 +96,12 @@ namespace Remizione
 
                 return true;
             }
+        }
+
+        // CanUnloadRoom
+        protected override bool CanUnloadRoom(Room room)
+        {
+            return !IsRunInProgress;
         }
 
         // ExtendScriptRegistry
@@ -182,6 +188,14 @@ namespace Remizione
             RequiredPower = Room is ProceduralRoom proceduralRoom ? proceduralRoom.RequiredPower : 0;
             player?.Inventory.NotifyRoomChanged();
             Environment.EnterRoom();
+
+            var width = room.Width == 0 ? room.CustomWidth : room.Width;
+            var height = room.Height == 0 ? room.CustomHeight : room.Height;
+            Camera.Setup(width, height, room.ScrollLock, room.Zoom);
+
+            // Follow player
+            if (Player != null && Player.InCurrentRoom)
+                Camera.FollowTarget(Player, true);
         }
 
         // OnExitRoom
@@ -360,7 +374,8 @@ namespace Remizione
 
             IsRunInProgress = true;
 
-            this.RandomSeed = System.Environment.TickCount;
+            if (RandomSeed == 0)
+                this.RandomSeed = System.Environment.TickCount;
 
             for (var i = 0; i < RunLength; i++)
             {
@@ -382,10 +397,16 @@ namespace Remizione
             if (!IsRunInProgress)
                 return;
 
+            foreach (var room in rideRooms)
+            {
+                room.Children.Clear();
+            }
+
             CleanUpRuntimeEntities();
             rideRooms.Clear();
             IsRunInProgress = false;
             RunProgress = -1;
+            RandomSeed = 0;
         }
 
         // Environment
@@ -475,7 +496,21 @@ namespace Remizione
             }
             else
             {
+                var nextRoom = rideRooms[RunProgress];
+                
                 EnterRoom(rideRooms[RunProgress]);
+
+                if (RunProgress > 0 && Player != null)
+                {
+                    nextRoom.Children.Add(Player);
+
+                    if (nextRoom.LeftTower != null)
+                    {
+                        Player.Position = nextRoom.LeftTower.GetApproachPosition(Player, true);
+                        Camera.FollowTarget(Player);
+                        Camera.FocusTarget();
+                    }
+                }
             }
         }
 
@@ -541,13 +576,27 @@ namespace Remizione
 
             RunProgress--;
 
-            EnterRoom(rideRooms[RunProgress]);
+            var previousRoom = rideRooms[RunProgress];
+
+            EnterRoom(previousRoom);
+
+            if (RunProgress >= 0 && Player != null)
+            {
+                previousRoom.Children.Add(Player);
+
+                if (previousRoom.RightTower != null)
+                {
+                    Player.Position = previousRoom.RightTower.GetApproachPosition(Player, true);
+                    Camera.FollowTarget(Player);
+                    Camera.FocusTarget();
+                }
+            }
 
             return;
         }
 
         // RandomSeed
-        public int RandomSeed { get; private set; }
+        public int RandomSeed { get; set; }
 
         // RegisterFriendlyItems
         public void RegisterFriendlyItems(string staticName, params MetaItem[] metaItems)

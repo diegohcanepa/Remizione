@@ -60,7 +60,7 @@ namespace Remizione
         // CreateRuntimeThingCloneCore
         private GameThing CreateRuntimeThingCloneCore(string staticName)
         {
-            if (Session.CreateRuntimeThingClone(staticName, $"{staticName}*{Name}_{instanceCount}") is not GameThing result)
+            if (Session.CreateRuntimeThingClone(staticName, $"{staticName}*{RoomIndex}_{Name}_{instanceCount}") is not GameThing result)
                 throw new InvalidOperationException($"Failed to create runtime clone from'{staticName}'.");
 
             instanceCount++;

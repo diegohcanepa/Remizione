@@ -115,6 +115,7 @@ namespace Remizione
             else
                 awaitingScript = "(None)";
 
+            DrawText(gameTime, text, $"Seed: {session.RandomSeed}");
             DrawText(gameTime, text, $"Awaiting script: {awaitingScript}");
             DrawText(gameTime, text, $"Registered entities: {session.Entities.Count}");
         }

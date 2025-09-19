@@ -115,7 +115,9 @@ namespace Adberration
             }
 
             OnExitRoom(currentRoom, nextRoom);
-            currentRoom.Unload();
+
+            if (CanUnloadRoom(currentRoom))
+                currentRoom.Unload();
 
             OnExitRoomCompleted(currentRoom, nextRoom);
 
@@ -492,6 +494,9 @@ namespace Adberration
         // CanHandleRoomInput
         protected virtual bool CanHandleRoomInput => true;
 
+        // CanUnloadRoom
+        protected virtual bool CanUnloadRoom(Room room) => true;
+
         // DeserializeEntities
         protected IEnumerable<Entity> DeserializeEntities(string value)
         {
@@ -511,7 +516,13 @@ namespace Adberration
 
             if (disposing)
             {
-                Room?.Unload();
+                foreach (var entity in Entities)
+                {
+                    if (entity is Room room)
+                        room.Unload();
+                }
+
+                CleanUpRuntimeEntities();
                 IsRunning = false;
             }
 
