@@ -38,7 +38,7 @@ namespace Remizione
         private int suspendInteractionCooldown;
         private readonly ActorThrowItemState throwItemState;
         private float tinyMoveSpeedFactor = 1;
-        private UseFriendlyItemScene? useFriendlyItemScene;
+        private UseKeyItemScene? useKeyItemScene;
 
         #endregion
 
@@ -583,17 +583,17 @@ namespace Remizione
             return dot >= angleThreshold;
         }
 
-        // ChooseFriendlyItem
-        public bool ChooseFriendlyItem(string text)
+        // ChooseKeyItem
+        public bool ChooseKeyItem(string text)
         {
             Stand();
-            useFriendlyItemScene ??= new UseFriendlyItemScene(this);
+            useKeyItemScene ??= new UseKeyItemScene(this);
 
             if (Session.OutcomeTarget is Prop prop)
             {
-                Session.FriendlyItemTarget = prop;
-                useFriendlyItemScene.Text = text;
-                useFriendlyItemScene.SceneController.Push();
+                Session.KeyItemTarget = prop;
+                useKeyItemScene.Text = text;
+                useKeyItemScene.SceneController.Push();
                 return true;
             }
 

@@ -153,7 +153,7 @@ namespace Remizione
             scriptRegistry.RegisterStatement("set-light", typeof(SetLightCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("set-thing-light", typeof(SetThingLightCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
-            scriptRegistry.RegisterStatement("use-friendly-item", typeof(UseFriendlyItemCommand), CodingContext.Execution);
+            scriptRegistry.RegisterStatement("use-key-item", typeof(UseKeyItemCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("use-item", typeof(UseItemCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("vibrate", typeof(VibrateCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("x-tween", typeof(XTweenCommand), CodingContext.Execution);
@@ -181,8 +181,6 @@ namespace Remizione
         // OnEnterRoom
         protected override void OnEnterRoom(Room room)
         {
-            RemainingTime = GameSettings.CountdownMaximum;
-            RequiredPower = Room is ProceduralRoom proceduralRoom ? proceduralRoom.RequiredPower : 0;
             player?.Inventory.NotifyRoomChanged();
             Environment.EnterRoom();
 
@@ -308,9 +306,6 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-            if (IsCurrentScene && GameplayMode == GameplayMode.Run && RemainingTime >= 0)
-                RemainingTime -= gameTime.ElapsedGameTime.Milliseconds;
-
             if (console != null)
             {
                 if (console.IsActive && roomEditor != null)
@@ -327,7 +322,7 @@ namespace Remizione
             // Check game over condition
             if (!IsAwaiting)
             {
-                if (RemainingTime <= 0 || Player?.IsDead == true)
+                if (Player?.IsDead == true)
                 {
                     Stats.Deaths++;
                     AwaitRoutine(RoutineNames.GameOver);
@@ -409,10 +404,6 @@ namespace Remizione
         // Environment
         public Environment Environment { get; }
 
-        // FriendlyItemTarget
-        [ScriptProperty]
-        public Prop? FriendlyItemTarget { get; set; }
-
         // Game
         public new RemizioneGame Game { get; }
 
@@ -455,8 +446,9 @@ namespace Remizione
         [ScriptProperty]
         public bool IsRunInProgress { get; private set; }
 
-        // IsTimeCritical
-        public bool IsTimeCritical => RemainingTime <= GameSettings.TimeCritical;
+        // KeyItemTarget
+        [ScriptProperty]
+        public Prop? KeyItemTarget { get; set; }
 
         // KillPlayer
         [ScriptMethod]
@@ -575,14 +567,6 @@ namespace Remizione
         {
             friendlyItems[staticName] = metaItems;
         }
-
-        // RemainingTime
-        [ScriptProperty]
-        public int RemainingTime { get; set; } = int.MaxValue;
-
-        // RequiredPower
-        [ScriptProperty]
-        public int RequiredPower { get; private set; }
 
         // RideRooms
         public ReadOnlyCollection<RideRoom> RideRooms { get; }

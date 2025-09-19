@@ -135,7 +135,7 @@
 			<Word>save-game</Word>			
 			<Word>true</Word>
 			<Word>this</Word>
-			<Word>use-friendly-item</Word>
+			<Word>use-key-item</Word>
 			<Word>use-item</Word>
 			<Word>verbs</Word>
 		</Keywords>

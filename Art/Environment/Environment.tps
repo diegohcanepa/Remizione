@@ -1250,7 +1250,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">LeftTower-assets/LeftTower.png</key>
             <key type="filename">LeftTower-assets/LeftTower01.png</key>
             <key type="filename">LeftTower-assets/LeftTower02.png</key>
             <key type="filename">LeftTower-assets/LeftTower03.png</key>

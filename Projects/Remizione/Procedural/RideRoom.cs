@@ -97,7 +97,7 @@ namespace Remizione
                         this.RightTower = CreateRuntimeClone(rightTower.StaticName) as IsometricProp;
                         if (this.RightTower != null)
                         {
-                            this.RightTower.Position = new Vector2(CustomWidth, rightTower.BoundingBox.Height - 6);
+                            this.RightTower.Position = new Vector2(CustomWidth-14, rightTower.BoundingBox.Height + 6);
                             Children.Add(this.RightTower);
                         }
                     }

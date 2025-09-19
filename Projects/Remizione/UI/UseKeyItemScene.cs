@@ -10,9 +10,9 @@ using System.Collections.Generic;
 namespace Remizione
 {
     /// <summary>
-    /// UseFriendlyItemScene
+    /// UseKeyItemScene
     /// </summary>
-    public sealed class UseFriendlyItemScene : Scene
+    public sealed class UseKeyItemScene : Scene
     {
         #region Private fields
 
@@ -39,7 +39,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public UseFriendlyItemScene(Actor owner)
+        public UseKeyItemScene(Actor owner)
             : base(owner.Game)
         {
             this.Owner = owner;
@@ -262,14 +262,11 @@ namespace Remizione
                 var itemName = SelectedItem?.Item.Name;
                 SceneController.Pop();
 
-                if (itemName != null && Owner.Session.FriendlyItemTarget != null)
+                if (itemName != null && Owner.Session.KeyItemTarget != null)
                 {
-                    var scriptName = $"{Owner.Session.FriendlyItemTarget.StaticName}-With-{itemName}";
+                    var scriptName = $"{Owner.Session.KeyItemTarget.StaticName}-With-{itemName}";
                     if (Owner.Session.ScriptLibrary.GetRoutine(scriptName) is Script script)
-                    {
-                        //SelectedItem?.Item.Use();
                         Owner.Session.AwaitScript(script);
-                    }
                 }
 
                 return HandleInputResult.Handled;

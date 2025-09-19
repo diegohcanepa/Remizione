@@ -445,9 +445,9 @@ namespace Remizione
                 return RuntimeHotspot.BoundingRectangleF.Intersects(requester.GetAbsoluteBounds(requester.HotspotDetectorArea));
         }
 
-        // CanInteractWithPlayerItems
+        // CanInteractWithKeyItem
         [ScriptProperty]
-        public bool CanInteractWithPlayerItems
+        public bool CanInteractWithKeyItem
         {
             get
             {

@@ -30,7 +30,6 @@ namespace Remizione
         {
             base.OnDie();
             Session.ObjectPools.FloatingTexts.Get()?.Show(BoundingBox.Center, Localization.GetValue(HUDMessageKind.ExtraTime), ColorPalette.Text.Orange);
-            Session.RemainingTime += 10000;
         }
 
         #endregion

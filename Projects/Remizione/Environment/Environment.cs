@@ -9,8 +9,6 @@ namespace Remizione
     /// </summary>
     public sealed class Environment
     {
-        private SoundInstance? alarmSound;
-        private readonly ColorTween alarmTween = new();
         private readonly GameSession session;
 
         // Constructor
@@ -43,20 +41,6 @@ namespace Remizione
         {
             Lightning.Update(gameTime);
             Rain.Update(gameTime);
-
-            if (session.GameplayMode == GameplayMode.Run && session.Room is ProceduralRoom)
-            {
-                if (session.RemainingTime.IsBetween(1, GameSettings.TimeCritical) && !alarmTween.IsRunning)
-                {
-                    alarmSound = Sound.Play(SoundNames.ExitAlarm, true);
-                    alarmTween.Start(TweenStyle.QuadraticInOut, ColorPalette.GlobalLight.Default, ColorPalette.GlobalLight.Critical, 400, -1);
-                }
-
-                if (alarmTween.IsRunning)
-                    alarmTween.Update(gameTime);
-
-                GlobalLight.Color = alarmTween.IsRunning ? alarmTween.CurrentValue : ColorPalette.GlobalLight.Default;
-            }
         }
 
         #endregion
@@ -65,14 +49,11 @@ namespace Remizione
         public void EnterRoom()
         {
             Rain.EnterRoom();
-            alarmTween.Stop();
-            GlobalLight.Color = ColorPalette.GlobalLight.Default;
         }
 
         // ExitRoom
         public void ExitRoom()
         {
-            alarmSound?.Stop(3000);
         }
 
         // Lightning

@@ -3,16 +3,19 @@
 namespace Remizione.Scripting
 {
     // AwaitChanceRollCommand
-    // Arguments: {Actor} {Prop} {Item} [#success-state:PropState]
+    // Arguments: {Prop} {MetaItem} [#success-state:PropState]
     [ForceAwait]
     internal sealed class AwaitChanceRollCommand : AwaitableCommand
     {
         // Constructor
         internal AwaitChanceRollCommand(Script script, string source, StatementBody args)
-            : base(script, source, args, 3, SuccessStateArg)
+            : base(script, source, args, 2, SuccessStateArg)
         {
-            AssertEntity<Actor>(0);
-            AssertEntity<Prop>(1);
+            AssertEntity<Prop>(0);
+
+            if (MetaItem.Find(Body.Clauses[1]) == null)
+                throw new ScriptException(this, $"MetaItem '{Body.Clauses[1]}' does not exist.");
+
             Parser.ParseEnumArgument<PropState>(this, SuccessStateArg);
         }
 
@@ -23,16 +26,16 @@ namespace Remizione.Scripting
             if (Session is not GameSession session)
                 return;
 
-            // Actor
-            if (AssertEntity<Actor>(0) is not Actor actor)
+            // Player
+            if (session.Player == null)
                 return;
 
             // Prop
-            if (AssertEntity<Prop>(1) is not Prop prop)
+            if (AssertEntity<Prop>(0) is not Prop prop)
                 return;
 
             // Item
-            if (actor.Inventory.Find(Body.Clauses[2]) is Item item)
+            if (session.Player.Inventory.Find(Body.Clauses[1]) is Item item)
             {
                 var successState = Parser.ParseEnumArgument<PropState>(this, SuccessStateArg);
                 session.HUD.ChanceRoll.Show(item, prop, successState);
