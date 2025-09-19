@@ -15,7 +15,7 @@ namespace Remizione
             DeathSound = Sound.Find(SoundNames.PotteryBreak);
             DepthOffset = -4;
             DisplayNameKey = "@Prop.Pottery";
-            HitTestSource = HitTestSource.Hotspot;
+            HitTestSource = TestPolygon.Hotspot;
             HurtShake = new(1.5f, 0);
             HurtSound = Sound.Find(SoundNames.ImpactA);
             LootTableName = nameof(Pottery);

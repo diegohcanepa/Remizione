@@ -162,8 +162,8 @@ namespace Remizione
             if (property == ItemProperty.Health && MetaItem.Health is DiceExpression exp)
                 value = exp.GetValueRangeAsString();
 
-            // SkillChance
-            else if (property == ItemProperty.SkillChance)
+            // Chance
+            else if (property == ItemProperty.Chance)
                 value = SkillChance.ToString(CultureInfo.InvariantCulture) + "%";
 
             return $"{Localization.GetValue(property)}: {value}";
@@ -267,8 +267,6 @@ namespace Remizione
         {
             if (MetaItem.Health != null)
                 Owner.Health += MetaItem.Health.Roll();
-
-            Owner.Session.Power += MetaItem.Power;
 
             if (MetaItem.Maximum >= 1)
             {

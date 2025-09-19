@@ -27,7 +27,6 @@ namespace Remizione
         {
             this.session = session;
 
-            this.RunMeter = new(session);
             this.healthMeter = new(session.Game);
             this.ChanceRoll = new(this);
             this.Log = new(Game);
@@ -76,7 +75,6 @@ namespace Remizione
                     {
                         TrincketSlot.Draw(gameTime);
                         healthMeter.Draw(gameTime);
-                        RunMeter.Draw(gameTime);
                         TargetMeter.Draw(gameTime);
                     }
                 }
@@ -101,7 +99,6 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            RunMeter.Update(gameTime);
             BagSlot.Update(gameTime);
             EquipmentSlot.Update(gameTime);
             TargetMeter.Update(gameTime);
@@ -158,11 +155,7 @@ namespace Remizione
             BagSlot.Actor = session.Player;
             EquipmentSlot.Actor = session.Player;
             TrincketSlot.Actor = session.Player;
-            RunMeter.Reset();
         }
-
-        // RunMeter
-        public UIRunMeter RunMeter { get; }
 
         // ShowSavingIcon
         public void ShowSavingIcon()

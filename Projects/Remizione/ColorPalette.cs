@@ -87,7 +87,7 @@ namespace Remizione
         internal static Color SceneShade { get; } = Color.Black * .5f;
 
         // ShadowOpacity
-        public const float ShadowOpacity = .4f;
+        public const float ShadowOpacity = .3f;
 
         // ShadowSpot
         internal static Color ShadowSpot { get; } = Color.Black * .7f;

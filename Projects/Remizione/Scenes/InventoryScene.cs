@@ -512,9 +512,6 @@ namespace Remizione
 
             Game.SpriteBatch.End();
 
-            if (Owner.Session.Room is ProceduralRoom)
-                Owner.Session.HUD.RunMeter.Draw(gameTime);
-
             if (heartBonus.Value != null)
                 heartBonus.Draw(gameTime);
         }
@@ -695,8 +692,6 @@ namespace Remizione
 
             if (lastKnownInput != InputManager.DefaultPlayer.LastInputMethod)
                 lastKnownInput = InputManager.DefaultPlayer.LastInputMethod;
-
-            Owner.Session.HUD.RunMeter.Update(gameTime);
         }
 
         #endregion

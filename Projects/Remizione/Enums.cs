@@ -32,9 +32,6 @@ namespace Remizione
     // HitEffect
     public enum HitEffect { None, Shake, Blink }
 
-    // HitTestSource
-    public enum HitTestSource { Hotspot, Collider }
-
     // HUDMessageKind
     public enum HUDMessageKind { CannotPlaceItem, EnoughOfThat, ExtraTime, InventoryFull, PowerRestored }
 
@@ -54,7 +51,7 @@ namespace Remizione
     public enum ItemAction { None, Throw }
 
     // ItemProperty
-    public enum ItemProperty { Durability, Health, SkillChance }
+    public enum ItemProperty { Chance, Durability, Health }
 
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, Global, MuzzleFlash, Outdoor, Player }
@@ -107,6 +104,9 @@ namespace Remizione
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }
+
+    // TestPolygon
+    public enum TestPolygon { Hotspot, Collider }
 
     // ThrowableBounceIntensity
     public enum ThrowableBounceIntensity { Low, Medium, High }

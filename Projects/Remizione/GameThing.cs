@@ -157,11 +157,11 @@ namespace Remizione
         // GetImpactWordPosition
         private Vector2? GetImpactWordPosition()
         {
-            if (HitTestSource == HitTestSource.Collider && !Collider.IsEmpty)
+            if (HitTestSource == TestPolygon.Collider && !Collider.IsEmpty)
             {
                 return this.GetAbsolutePoint(Collider.BoundingRectangleF.GetPoint(RectanglePoint.Top));
             }
-            else if (HitTestSource == HitTestSource.Hotspot && RuntimeHotspot != null)
+            else if (HitTestSource == TestPolygon.Hotspot && RuntimeHotspot != null)
             {
                 return RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top);
             }
@@ -439,10 +439,31 @@ namespace Remizione
             if (!CanInteractCore(requester))
                 return false;
 
-            if (holePolyInflated.IsEmpty)
-                return BoundingBox.Intersects(requester.GetAbsoluteBounds(requester.HotspotDetectorArea));
-            else
+            if (InteractionPolygon == TestPolygon.Collider)
                 return holePolyInflated.BoundingRectangleF.Intersects(requester.GetAbsoluteBounds(requester.HotspotDetectorArea));
+            else
+                return RuntimeHotspot.BoundingRectangleF.Intersects(requester.GetAbsoluteBounds(requester.HotspotDetectorArea));
+        }
+
+        // CanInteractWithPlayerItems
+        [ScriptProperty]
+        public bool CanInteractWithPlayerItems
+        {
+            get
+            {
+                if (Session.Player == null)
+                    return false;
+
+                var friendlyItems = Session.GetFriendlyItems(StaticName);
+                var container = Session.Player.Inventory.GetContainer(InventoryCategory.KeyItems);
+                for (var i = 0; i < friendlyItems.Length; i++)
+                {
+                    if (container.Find(friendlyItems[i].Name) != null)
+                        return true;
+                }
+
+                return false;
+            }
         }
 
         // CellMargin
@@ -505,15 +526,6 @@ namespace Remizione
 
             if (DeathSound != null)
                 PlaySound(DeathSound);
-
-            if (Room != null)
-            {
-                for (var i = 0; i < PowerBonus; i++)
-                {
-                    var energyBolt = Session.ObjectPools.EnergyBolts.Get();
-                    energyBolt.Drop(Room, Position, BoundingBox);
-                }
-            }
 
             OnDie();
             DropLoot();
@@ -732,10 +744,6 @@ namespace Remizione
         // GetThrowableSpawnPosition
         public Vector2 GetThrowableSpawnPosition() => this.GetAbsolutePoint(ThrowableSpawnPosition);
 
-        // HasFriendlyItems
-        [ScriptProperty]
-        public bool HasFriendlyItems => Session.HasFriendlyItems(StaticName);
-
         // Health
         [ScriptProperty]
         public int Health
@@ -754,7 +762,7 @@ namespace Remizione
         // HitTest
         public bool HitTest(Vector2 value)
         {
-            if (HitTestSource == HitTestSource.Hotspot)
+            if (HitTestSource == TestPolygon.Hotspot)
                 return RuntimeHotspot.Contains(value);
             else
                 return (this as IHoleArea).Contains(value);
@@ -762,7 +770,7 @@ namespace Remizione
 
         // HitTestSource
         [ScriptProperty]
-        public HitTestSource HitTestSource { get; set; }
+        public TestPolygon HitTestSource { get; set; }
 
         // Hotspot
         [ScriptProperty]
@@ -802,6 +810,10 @@ namespace Remizione
         // IgnoreWalkArea
         [ScriptProperty]
         public bool IgnoreWalkArea { get; set; } = true;
+
+        // InteractionPolygon
+        [ScriptProperty]
+        public TestPolygon InteractionPolygon { get; set; } = TestPolygon.Collider;
 
         // InvulnerabilityPeriod
         [ScriptProperty]

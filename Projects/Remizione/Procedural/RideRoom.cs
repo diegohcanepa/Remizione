@@ -23,6 +23,7 @@ namespace Remizione
         // SetupExitRideCar
         private void SetupExitRideCar()
         {
+            /*
             if (Session.GetEntity<ExitRideCar>(nameof(ExitRideCar)) is not ExitRideCar exitRideCar)
                 throw new InvalidOperationException("Exit ride car not found.");
 
@@ -38,6 +39,7 @@ namespace Remizione
                     break;
                 }
             }
+            */
         }
 
         #endregion
@@ -95,7 +97,7 @@ namespace Remizione
                         this.RightTower = CreateRuntimeClone(rightTower.StaticName) as IsometricProp;
                         if (this.RightTower != null)
                         {
-                            this.RightTower.Position = new Vector2(CustomWidth, rightTower.BoundingBox.Height + 20);
+                            this.RightTower.Position = new Vector2(CustomWidth, rightTower.BoundingBox.Height - 6);
                             Children.Add(this.RightTower);
                         }
                     }

@@ -63,7 +63,7 @@ namespace Remizione
                     Scale = ScaleInfo.Text.VeryLarge,
                 };
 
-                console = new ScriptConsole(this, InputBindings.Console, consoleText, new RectangleF(0, 240, 480, 30), "=>> $BeginRun()", "=>> $NextRunRoom()", "$PreviousRunRoom()", "=> $PowerRestored = true")
+                console = new ScriptConsole(this, InputBindings.Console, consoleText, new RectangleF(0, 240, 480, 30), "=>> $BeginRun()", "=>> $NextRunRoom()", "$PreviousRunRoom()")
                 {
                     TextErrorColor = ColorPalette.Text.Terra
                 };
@@ -113,7 +113,6 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(BreakableProp));
             scriptRegistry.RegisterEntity(typeof(CreditsRoom));
             scriptRegistry.RegisterEntity(typeof(ExitRideCar));
-            scriptRegistry.RegisterEntity(typeof(ExitTower));
             scriptRegistry.RegisterEntity(typeof(GameRoom));
             scriptRegistry.RegisterEntity(typeof(HellGoat));
             scriptRegistry.RegisterEntity(typeof(IsometricProp));
@@ -123,7 +122,6 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(Prop));
             scriptRegistry.RegisterEntity(typeof(RideRoom));
             scriptRegistry.RegisterEntity(typeof(SpearTrap));
-            scriptRegistry.RegisterEntity(typeof(Tower));
             scriptRegistry.RegisterEntity(typeof(Trunk));
             scriptRegistry.RegisterEntity(typeof(WaterPuddle));
 
@@ -183,7 +181,6 @@ namespace Remizione
         // OnEnterRoom
         protected override void OnEnterRoom(Room room)
         {
-            PowerRestored = false;
             RemainingTime = GameSettings.CountdownMaximum;
             RequiredPower = Room is ProceduralRoom proceduralRoom ? proceduralRoom.RequiredPower : 0;
             player?.Inventory.NotifyRoomChanged();
@@ -534,31 +531,6 @@ namespace Remizione
 
         // PlacementDataPool
         public PlacementDataPool PlacementDataPool { get; } = new();
-
-        // Power
-        [ScriptProperty]
-        public int Power
-        {
-            get => power;
-            set
-            {
-                if (value != power)
-                {
-                    power = Math.Min(value, RequiredPower);
-
-                    if (power == RequiredPower && !PowerRestored)
-                    {
-                        PowerRestored = true;
-                        Sound.Play(SoundNames.PowerRestored);
-                        HUD.Message.Show(HUDMessageKind.PowerRestored);
-                    }
-                }
-            }
-        }
-
-        // PowerRestored
-        [ScriptProperty]
-        public bool PowerRestored { get; set; }
 
         // PreviousRoom
         [ScriptProperty]

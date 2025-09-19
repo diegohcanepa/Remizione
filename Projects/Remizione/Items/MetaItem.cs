@@ -137,9 +137,6 @@ namespace Remizione
         // PassiveEffectCooldown
         public int PassiveEffectCooldown { get; init; }
 
-        // Power
-        public int Power { get; init; }
-
         // PreventDiscard
         public bool PreventDiscard { get; init; }
 

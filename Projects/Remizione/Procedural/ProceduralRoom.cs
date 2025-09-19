@@ -1,6 +1,5 @@
 ﻿using Adberration.Scripting;
 using Engendro;
-using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -39,7 +38,7 @@ namespace Remizione
                 RoomPosition = RoomPosition.First;
             else if (isLastRoom)
                 RoomPosition = RoomPosition.Last;
-            else 
+            else
                 RoomPosition = RoomPosition.Middle;
 
             int salt = roomIndex;

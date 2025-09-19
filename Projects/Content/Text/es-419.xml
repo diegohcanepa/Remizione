@@ -16,6 +16,7 @@
   <String Key="DurabilityState.Sturdy">Integro</String>
   <String Key="DurabilityState.Used">Usado</String>
   <String Key="DurabilityState.Worn">Gastado</String>
+  <String Key="FriendlyItemAction.UnlockDoor">Abrir puerta</String>
   <String Key="FriendlyItemAction.UnlockTrunk">Abrir baúl</String>
   <String Key="HitType.Critical">¡Crítico!</String>
   <String Key="HUDMessageKind.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
@@ -72,6 +73,8 @@
   <String Key="Item.RustyLockpick.Name">Ganzúa herrumbrosa</String>
   <String Key="Item.SteelLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.SteelLockpick.Name">Ganzúa de acero</String>
+  <String Key="Item.TowerKey.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
+  <String Key="Item.TowerKey.Name">Llave de torre</String>
   <String Key="Item.WhiteTicket.Description">Una apetitoza manzana en su punto justo.</String>
   <String Key="Item.WhiteTicket.Name">Ticket blanco</String>
   <String Key="ItemProperty.Chance">Chance</String>
@@ -249,13 +252,15 @@ Bla bla bla</String>
   <String Key="Prop.Cross">Cruz</String>
   <String Key="Prop.CrucifiedMan">Hombre crucificado</String>
   <String Key="Prop.EnergyBolt">Chispa</String>
+  <String Key="Prop.ExitTower">Torre de salida</String>
   <String Key="Prop.PilgrimSack">Saco del Peregrino</String>
   <String Key="Prop.PortableToilet">Pequeño purgatorio</String>
   <String Key="Prop.PostClock">Tiempo tirano</String>
   <String Key="Prop.Pottery">Vasija</String>
-  <String Key="Prop.RideCart">Carrito</String>
+  <String Key="Prop.RideCar">Carrito</String>
   <String Key="Prop.Sack">Bolsa</String>
   <String Key="Prop.Sign">Cartel</String>
+  <String Key="Prop.Tower">Torre</String>
   <String Key="Prop.Trunk">Baúl</String>
   <String Key="Verb.Enter">Entrar</String>
 </Strings>
