@@ -29,7 +29,6 @@ namespace Remizione
             : base(session, string.Empty)
         {
             this.Atlas = Atlases.UI;
-            this.DefaultImageName = MetaItem.EnergyBoltName;
             this.DepthOffset = 5;
         }
 
@@ -75,7 +74,7 @@ namespace Remizione
                 if (!scaleTween.IsRunning)
                 {
                     Unparent();
-                    Session.ObjectPools.Pickables.Return(this);
+                    Session.ObjectPools.Pickups.Return(this);
                 }
             }
             else if (Session.Player?.DistanceTo(this) <= 5)

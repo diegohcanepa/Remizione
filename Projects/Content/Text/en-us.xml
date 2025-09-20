@@ -16,8 +16,6 @@
   <String Key="DurabilityState.Sturdy">Sturdy</String>
   <String Key="DurabilityState.Used">Used</String>
   <String Key="DurabilityState.Worn">Worn</String>
-  <String Key="FriendlyItemAction.UnlockDoor">Unlock door</String>
-  <String Key="FriendlyItemAction.UnlockTrunk">Unlock trunk</String>
   <String Key="HitType.Critical">Critical!</String>
   <String Key="HUDMessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
   <String Key="HUDMessageKind.EnoughOfThat">You already have enough of that.</String>
@@ -63,7 +61,7 @@
   <String Key="Item.Lockpicking.Name">Lockpicking</String>
   <String Key="Item.MasterLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.MasterLockpick.Name">Master lockpick</String>
-  <String Key="Item.PieceOfWood.Description"></String>
+  <String Key="Item.PieceOfWood.Description" />
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RedTicket.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RedTicket.Name">Red ticket</String>
@@ -78,6 +76,8 @@
   <String Key="Item.WhiteTicket.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.WhiteTicket.Name">White ticket</String>
   <String Key="ItemProperty.Chance">Chance</String>
+  <String Key="KeyItemAction.UnlockDoor">Unlock door</String>
+  <String Key="KeyItemAction.UnlockTrunk">Unlock trunk</String>
   <String Key="Languages.Abbreviations">Miss | Mr. | DR.</String>
   <String Key="Languages.de-de">Deutsch</String>
   <String Key="Languages.en-us">English</String>

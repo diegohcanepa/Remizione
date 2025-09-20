@@ -246,7 +246,7 @@ namespace Remizione
         protected void DropLoot()
         {
             if (Session.Room is ProceduralRoom room && GetLoot() is MetaItem metaItem)
-                Session.ObjectPools.Pickables.Get()?.Drop(room, metaItem, Position);
+                Session.ObjectPools.Pickups.Get()?.Drop(room, metaItem, Position);
         }
 
         // GetPixelAreaForGrid

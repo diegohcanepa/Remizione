@@ -2,7 +2,6 @@
 using Adberration.Scripting;
 using Adberration.Scripting.Core;
 using Engendro;
-using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using Remizione.Scripting;
 using System;
@@ -26,7 +25,6 @@ namespace Remizione
         private readonly Dictionary<string, MetaItem[]> friendlyItems = [];
         private Actor? player;
         private Vector2? playerPosition;
-        private int power;
         private readonly List<RideRoom> rideRooms = [];
         private readonly RoomEditor? roomEditor;
         private readonly List<GameThing> staticThings = [];
@@ -145,7 +143,6 @@ namespace Remizione
             scriptRegistry.RegisterStatement("end-loot-table", typeof(EndLootTableCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             scriptRegistry.RegisterStatement("exit-session", typeof(ExitSessionCommand));
-            scriptRegistry.RegisterStatement("friendly-items", typeof(FriendlyItemsCommand));
             scriptRegistry.RegisterStatement("meta-item", typeof(MetaItemCommand), CodingContext.Declaration);
             scriptRegistry.RegisterStatement("placement-data", typeof(PlacementDataCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("say", typeof(SayCommand), CodingContext.Execution);
@@ -288,6 +285,9 @@ namespace Remizione
         {
             base.OnStart();
 
+            var keyItems = MetaItem.GetItems(InventoryCategory.KeyItems);
+
+            var metaItems = new List<MetaItem>();
             foreach (var entity in Entities)
             {
                 if (entity is not GameThing thing)
@@ -297,6 +297,18 @@ namespace Remizione
                 {
                     staticThings.Add(thing);
                     staticThingsDict.Add(thing.StaticName, thing);
+
+                    // Collect friendly items
+                    metaItems.Clear();
+                    for (var i = 0; i < keyItems.Count; i++)
+                    {
+                        var routineName = $"{thing.StaticName}-With-{keyItems[i].Name}";
+                        if (ScriptLibrary.GetRoutine(routineName) != null)
+                            metaItems.Add(keyItems[i]);
+                    }
+
+                    if (metaItems.Count > 0)
+                        this.friendlyItems[thing.StaticName] = metaItems.ToArray();
                 }
             }
         }
@@ -486,7 +498,7 @@ namespace Remizione
             else
             {
                 var nextRoom = rideRooms[RunProgress];
-                
+
                 EnterRoom(rideRooms[RunProgress]);
 
                 if (RunProgress > 0 && Player != null)
@@ -561,12 +573,6 @@ namespace Remizione
 
         // RandomSeed
         public int RandomSeed { get; set; }
-
-        // RegisterFriendlyItems
-        public void RegisterFriendlyItems(string staticName, params MetaItem[] metaItems)
-        {
-            friendlyItems[staticName] = metaItems;
-        }
 
         // RideRooms
         public ReadOnlyCollection<RideRoom> RideRooms { get; }

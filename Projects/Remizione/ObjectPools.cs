@@ -25,8 +25,8 @@ namespace Remizione
             return null;
         }
 
-        // Pickables
-        public ObjectPool<Pickup> Pickables { get; } = new ObjectPool<Pickup>(() => new Pickup(session), 30);
+        // Pickups
+        public ObjectPool<Pickup> Pickups { get; } = new ObjectPool<Pickup>(() => new Pickup(session), 30);
 
         // ReturnThrowable
         public void ReturnThrowable(ThrownItem item)

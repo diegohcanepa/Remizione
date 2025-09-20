@@ -16,8 +16,6 @@
   <String Key="DurabilityState.Sturdy">Integro</String>
   <String Key="DurabilityState.Used">Usado</String>
   <String Key="DurabilityState.Worn">Gastado</String>
-  <String Key="FriendlyItemAction.UnlockDoor">Abrir puerta</String>
-  <String Key="FriendlyItemAction.UnlockTrunk">Abrir baúl</String>
   <String Key="HitType.Critical">¡Crítico!</String>
   <String Key="HUDMessageKind.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
   <String Key="HUDMessageKind.EnoughOfThat">Ya tienes suficiente.</String>
@@ -78,6 +76,8 @@
   <String Key="Item.WhiteTicket.Description">Una apetitoza manzana en su punto justo.</String>
   <String Key="Item.WhiteTicket.Name">Ticket blanco</String>
   <String Key="ItemProperty.Chance">Chance</String>
+  <String Key="KeyItemAction.UnlockDoor">Abrir puerta</String>
+  <String Key="KeyItemAction.UnlockTrunk">Abrir baúl</String>
   <String Key="Languages.Abbreviations">Srta.|Sr.|Dr.</String>
   <String Key="Languages.de-de">Deutsch</String>
   <String Key="Languages.en-us">English</String>

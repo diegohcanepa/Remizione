@@ -60,6 +60,9 @@ namespace Remizione
         // Action
         public ItemAction Action { get; init; }
 
+        // AllItems
+        public static IEnumerable<MetaItem> AllItems => items.Values;
+
         // AllowEmpty
         public bool AllowEmpty { get; init; }
 
@@ -95,14 +98,25 @@ namespace Remizione
         // Durability
         public int Durability { get; init; }
 
-        // EnergyBoltName
-        public static string EnergyBoltName = "EnergyBolt";
-
         // Find
         public static MetaItem? Find(string name) => items.TryGetValue(name, out var result) ? result : null;
 
         // FindNotNull
         public static MetaItem FindNotNull(string name) => Find(name) ?? throw new InvalidOperationException($"MetaItem '{name}' not found.");
+
+        // GetItems
+        public static List<MetaItem> GetItems(InventoryCategory category)
+        {
+            var result = new List<MetaItem>();
+
+            foreach (var item in items.Values)
+            {
+                if (item.Category == category)
+                    result.Add(item);
+            }
+
+            return result;
+        }
 
         // Health
         public DiceExpression? Health { get; init; }
