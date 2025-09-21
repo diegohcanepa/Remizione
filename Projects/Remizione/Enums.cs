@@ -88,13 +88,13 @@ namespace Remizione
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
 
     // PropState
-    public enum PropState { None, Closed, Open, Locked, Empty }
+    public enum PropState { None, Closed, Empty, Open, Locked, Unlocked}
 
     // RainDropImpactKind
     public enum RainDropImpactKind { None, Ground, Water }
 
     // RenderLayer
-    public enum RenderLayer { BehindBackground, Background, Doors, Default, Foreground, ForegroundNoLight }
+    public enum RenderLayer { BehindBackground, Background, Default, Foreground, ForegroundNoLight }
 
     // RoomKind
     public enum RoomKind { RideRoom }

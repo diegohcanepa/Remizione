@@ -189,6 +189,24 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">CardReader-assets/CardReader.png</key>
+            <key type="filename">CardReader-assets/CardReaderLightGreen.png</key>
+            <key type="filename">CardReader-assets/CardReaderLightRed.png</key>
+            <key type="filename">CardReader-assets/CardReaderShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,9,13,18</rect>
+                <key>scale9Paddings</key>
+                <rect>6,9,13,18</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">CrossA-assets/CrossA.png</key>
             <key type="filename">CrossA-assets/CrossAShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -1545,6 +1563,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">PotteryC-assets/PotteryC.png</key>
             <key type="filename">PotteryC-assets/PotteryCShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1842,6 +1861,7 @@
                     <filename>ExitRideCar-assets</filename>
                     <filename>LeftTower-assets</filename>
                     <filename>RightTower-assets</filename>
+                    <filename>CardReader-assets</filename>
                 </array>
             </struct>
         </map>

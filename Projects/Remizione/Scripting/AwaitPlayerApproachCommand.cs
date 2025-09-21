@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 namespace Remizione.Scripting
 {
     // AwaitPlayerApproachCommand
-    // Syntax: [#target:CommonThing]
+    // Syntax: [#fast] [#target:CommonThing]
     [ForceAwait]
     internal sealed class AwaitPlayerApproachCommand : AwaitableCommand
     {
@@ -14,7 +14,7 @@ namespace Remizione.Scripting
 
         // Constructor
         internal AwaitPlayerApproachCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 0, TargetArg)
+            : base(script, source, body, 0, FastArg, TargetArg)
         {
             Parser.ParseEntityArgument<GameThing>(this, TargetArg, null);
         }
@@ -37,6 +37,9 @@ namespace Remizione.Scripting
                 target = session.OutcomeTarget as GameThing;
 
             if (target == null)
+                return;
+
+            if (HasArg(FastArg))
                 return;
 
             var destination = target.GetApproachPosition(player, true);

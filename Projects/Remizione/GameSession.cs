@@ -109,6 +109,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(Baal));
             scriptRegistry.RegisterEntity(typeof(BloodyEye));
             scriptRegistry.RegisterEntity(typeof(BreakableProp));
+            scriptRegistry.RegisterEntity(typeof(CardReader));
             scriptRegistry.RegisterEntity(typeof(CreditsRoom));
             scriptRegistry.RegisterEntity(typeof(ExitRideCar));
             scriptRegistry.RegisterEntity(typeof(GameRoom));

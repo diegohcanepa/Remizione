@@ -187,7 +187,7 @@ namespace Remizione
                         RemizioneGame.Effects.ColorReduction.SetColor(1, 0, 0, 1);
                         effect = RemizioneGame.Effects.ColorReduction;
                     }
-                    else if (interactiveTarget == thing)
+                    else if (interactiveTarget == thing && thing.HighlightInteraction)
                     {
                         RemizioneGame.Effects.ColorSaturation.SetColor(.8f, .8f, .8f, 0);
                         effect = RemizioneGame.Effects.ColorSaturation;
@@ -325,9 +325,6 @@ namespace Remizione
 
             // Rain drop impacts
             Session.Environment.Rain.DrawImpacts(gameTime);
-
-            // Doors (layer)
-            DrawThings(gameTime, RenderLayer.Doors, interactiveTarget);
 
             // Default (layer)
             DrawThings(gameTime, RenderLayer.Default, interactiveTarget);

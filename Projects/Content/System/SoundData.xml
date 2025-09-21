@@ -20,6 +20,7 @@
 	<FX Name="BlipB" MaxInstances="4" Sounds="1..2" Volume=".5" />
 	<FX Name="BlipC" MaxInstances="4" Volume=".5" />
 	<FX Name="BodyFallMedium" MaxInstances="8" Sounds="1..1" />
+	<FX Name="CardReaderUnlocked" />
 	<FX Name="ChanceRoll" />
 	<FX Name="ChanceRollFail" />
 	<FX Name="DoodleDoo" />

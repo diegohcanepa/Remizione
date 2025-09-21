@@ -70,23 +70,12 @@ namespace Remizione
 
         #endregion
 
-        // DestinationOffset
-        [ScriptProperty(CodingContext.EntityDeclaration)]
-        public Vector2 DestinationOffset { get; set; }
-
         // IsEmittingLight
         public override bool IsEmittingLight => IsTurnedOn;
 
         // IsTurnedOn
         [ScriptProperty]
         public bool IsTurnedOn { get; private set; }
-
-        // Launch
-        [ScriptMethod]
-        public void Launch()
-        {
-            Tweens.PositionTween = Vector2Tween.Create(TweenStyle.Linear, Position, Position + DestinationOffset, 1500);
-        }
 
         // TurnOn
         [ScriptMethod]

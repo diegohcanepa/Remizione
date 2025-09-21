@@ -200,8 +200,6 @@ namespace Remizione
             instance.Y += instance.BoundingBox.Height;
             instance.X += instance.BoundingBox.Width / 2;
             Children.Add(instance);
-
-            RequiredPower += thing.PowerBonus;
         }
 
         // Prepare
@@ -283,8 +281,6 @@ namespace Remizione
         // Populate
         private void Populate()
         {
-            RequiredPower = 0;
-
             var data = Session.PlacementDataPool.GetRoomPlacementData(RoomKind);
             if (data.Count == 0)
                 return;
@@ -330,9 +326,6 @@ namespace Remizione
                     }
                 }
             }
-
-            if (RequiredPower > 0)
-                RequiredPower = RequiredPower / 2;
         }
 
         #endregion
@@ -385,9 +378,6 @@ namespace Remizione
 
             return result;
         }
-
-        // RequiredPower
-        public int RequiredPower { get; private set; }
 
         // RoomIndex
         public int RoomIndex { get; }

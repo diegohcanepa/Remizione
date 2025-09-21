@@ -206,6 +206,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/BodyFallMedium1.wav
 
+#begin Audio/FX/CardReaderUnlocked.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/CardReaderUnlocked.wav;Audio/FX/CardReaderUnlocked
+
 #begin Audio/FX/ChanceRoll.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

@@ -245,12 +245,17 @@ namespace Remizione
         // DropLoot
         protected void DropLoot()
         {
-            if (Session.Room is ProceduralRoom room && GetLoot() is MetaItem metaItem)
-                Session.ObjectPools.Pickups.Get()?.Drop(room, metaItem, Position);
+            if (Session.Room is ProceduralRoom room)
+            {
+                var metaItem = HasMagneticCard ? MetaItem.Find("MagneticCard") : GetLoot();
+                if (metaItem != null)
+                    Session.ObjectPools.Pickups.Get()?.Drop(room, metaItem, Position);
+                HasMagneticCard = false;
+            }
         }
 
-        // GetPixelAreaForGrid
-        protected virtual RectangleF GetPixelAreaForGrid()
+        // GetGridArea
+        protected virtual RectangleF GetGridArea()
         {
             if (Collider.IsEmpty)
                 return BoundingBox;
@@ -589,7 +594,8 @@ namespace Remizione
 
             if (Light != null)
             {
-                Light.Position = this.GetAbsolutePoint(LightPosition);
+                if (LightPosition != Vector2.Zero)
+                    Light.Position = this.GetAbsolutePoint(LightPosition);
                 Light.Draw(gameTime);
             }
 
@@ -725,7 +731,7 @@ namespace Remizione
         // GetRequiredGridSpace
         public Size GetRequiredGridSpace(int cellSize)
         {
-            var bbox = GetPixelAreaForGrid();
+            var bbox = GetGridArea();
             int width = (int)Math.Ceiling(bbox.Width / cellSize) + CellMargin * 2;
             int height = (int)Math.Ceiling(bbox.Height / cellSize) + CellMargin * 2;
 
@@ -744,6 +750,9 @@ namespace Remizione
         // GetThrowableSpawnPosition
         public Vector2 GetThrowableSpawnPosition() => this.GetAbsolutePoint(ThrowableSpawnPosition);
 
+        // HasMagneticCard
+        public bool HasMagneticCard { get;set; }
+
         // Health
         [ScriptProperty]
         public int Health
@@ -758,6 +767,10 @@ namespace Remizione
                 }
             }
         }
+
+        // HighlightInteraction
+        [ScriptProperty]
+        public bool HighlightInteraction { get; set; } = true;
 
         // HitTest
         public bool HitTest(Vector2 value)

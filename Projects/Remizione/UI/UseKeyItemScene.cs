@@ -192,17 +192,22 @@ namespace Remizione
 
             if (target != null)
             {
-                var chance = item.SkillChance <= 0 ? 100 : item.SkillChance - Math.Abs(target.SkillChancePenalty);
-                chanceText.Text = $"{Localization.GetValue(ItemProperty.Chance)}: {chance}%";
-
-                if (chance == 100)
-                    chanceText.Color = ColorPalette.Text.Green;
-
-                else if (chance <= 25)
-                    chanceText.Color = ColorPalette.Text.Orange;
-
+                if (item.SkillChance == 0)
+                {
+                    chanceText.Clear();
+                }
                 else
-                    chanceText.Color = ColorPalette.Text.Default;
+                {
+                    var chance = item.SkillChance == 100 ? 100 : item.SkillChance - Math.Abs(target.SkillChancePenalty);
+                    chanceText.Text = $"{Localization.GetValue(ItemProperty.Chance)}: {chance}%";
+
+                    if (chance == 100)
+                        chanceText.Color = ColorPalette.Text.Green;
+                    else if (chance <= 25)
+                        chanceText.Color = ColorPalette.Text.Orange;
+                    else
+                        chanceText.Color = ColorPalette.Text.Default;
+                }
             }
 
             InvalidateSlot();

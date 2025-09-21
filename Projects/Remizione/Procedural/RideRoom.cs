@@ -1,4 +1,4 @@
-﻿using Adberration;
+﻿using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
@@ -12,6 +12,8 @@ namespace Remizione
     /// </summary>
     public sealed class RideRoom : ProceduralRoom
     {
+        private const string MagneticCardName = "MagneticCard";
+
         // Constructor
         public RideRoom(GameSession session, string name, int roomIndex, bool isLastRoom)
             : base(session, name, RoomKind.RideRoom, roomIndex, isLastRoom)
@@ -20,26 +22,28 @@ namespace Remizione
 
         #region Private members
 
-        // SetupExitRideCar
-        private void SetupExitRideCar()
+        // DeployMagneticCard
+        private void DeployMagneticCard()
         {
-            /*
-            if (Session.GetEntity<ExitRideCar>(nameof(ExitRideCar)) is not ExitRideCar exitRideCar)
-                throw new InvalidOperationException("Exit ride car not found.");
-
-            var childList = new List<Thing>(Children);
-
-            foreach (var thing in childList)
+            var creatures = new List<Creature>();
+            foreach (var thing in Children)
             {
-                if (thing is ExitTower exitTower)
-                {
-                    Children.Add(exitRideCar);
-                    exitTower.RideCar = exitRideCar;
-                    exitRideCar.Position = exitTower.BoundingBox.GetPoint(RectanglePoint.RightBottom) + exitTower.RideCarOffset;
-                    break;
-                }
+                if (thing is Creature creature)
+                    creatures.Add(creature);
             }
-            */
+
+            var index = creatures.RandomIndex();
+
+            if (index >= 0)
+            {
+                creatures[index].HasMagneticCard = true;
+            }
+            else if (WalkArea != null)
+            {
+                var metaItem = MetaItem.FindNotNull(MagneticCardName);
+                var position = WalkArea != null ? WalkArea.RandomWalkablePoint() : BoundingBox.GetRandomPoint();
+                Session.ObjectPools.Pickups.Get()?.Drop(this, metaItem, position);
+            }
         }
 
         #endregion
@@ -97,10 +101,47 @@ namespace Remizione
                         this.RightTower = CreateRuntimeClone(rightTower.StaticName) as IsometricProp;
                         if (this.RightTower != null)
                         {
-                            this.RightTower.Position = new Vector2(CustomWidth-14, rightTower.BoundingBox.Height + 6);
+                            this.RightTower.Position = new Vector2(CustomWidth - 19, rightTower.BoundingBox.Height + 6);
                             Children.Add(this.RightTower);
                         }
                     }
+                }
+            }
+
+            // Exit tower
+            else
+            {
+                if (Session.GetEntity<IsometricProp>("ExitTower") is IsometricProp exitTower)
+                {
+                    var sizeInCells = exitTower.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
+                    if (MainGrid.TryReserveSpace(sizeInCells, out _, out _))
+                    {
+                        this.RightTower = CreateRuntimeClone(exitTower.StaticName) as IsometricProp;
+                        if (this.RightTower != null)
+                        {
+                            this.RightTower.Position = new Vector2(CustomWidth - 22, exitTower.BoundingBox.Height + 6);
+                            Children.Add(this.RightTower);
+
+                            if (Session.GetEntity<ExitRideCar>(nameof(ExitRideCar)) is ExitRideCar exitRideCar)
+                            {
+                                Children.Add(exitRideCar);
+                                exitRideCar.Position = RightTower.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 9);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (RightTower != null)
+            {
+                if (CreateRuntimeClone(nameof(CardReader)) is CardReader cardReader)
+                {
+                    cardReader.Position = this.RightTower.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -20);
+
+                    if (RoomPosition == RoomPosition.Last)
+                        cardReader.Position += new Vector2(20, -5);
+
+                    Children.Add(cardReader);
                 }
             }
         }
@@ -108,13 +149,20 @@ namespace Remizione
         // OnPopulateCompleted
         protected override void OnPopulateCompleted()
         {
-            SetupExitRideCar();
+            DeployMagneticCard();
         }
 
         #endregion
 
         // LeftTower
         public IsometricProp? LeftTower { get; private set; }
+
+        // OpenRightTower
+        [ScriptMethod]
+        public void OpenRightTower()
+        {
+            AnimationPlayer.Play("Open", false);
+        }
 
         // RightTower
         public IsometricProp? RightTower { get; private set; }

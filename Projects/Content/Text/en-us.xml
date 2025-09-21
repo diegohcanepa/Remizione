@@ -59,9 +59,11 @@
   <String Key="Item.GoldenTicket.Name">Golden ticket</String>
   <String Key="Item.Lockpicking.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.Lockpicking.Name">Lockpicking</String>
+  <String Key="Item.MagneticCard.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
+  <String Key="Item.MagneticCard.Name">Magnetic card</String>
   <String Key="Item.MasterLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.MasterLockpick.Name">Master lockpick</String>
-  <String Key="Item.PieceOfWood.Description" />
+  <String Key="Item.PieceOfWood.Description"></String>
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RedTicket.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RedTicket.Name">Red ticket</String>
@@ -249,6 +251,7 @@ Bla bla bla</String>
   <String Key="Playtime.Minute">minute</String>
   <String Key="Playtime.Minutes">minutes</String>
   <String Key="Prop.Bag">Bag</String>
+  <String Key="Prop.CardReader">Card reader</String>
   <String Key="Prop.Cross">Cross</String>
   <String Key="Prop.CrucifiedMan">Crucified man</String>
   <String Key="Prop.EnergyBolt">Energy bolt</String>
