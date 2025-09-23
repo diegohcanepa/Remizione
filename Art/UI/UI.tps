@@ -337,9 +337,9 @@
             <key type="filename">Items-assets/Cross.png</key>
             <key type="filename">Items-assets/Duck.png</key>
             <key type="filename">Items-assets/GoldenTicket.png</key>
-            <key type="filename">Items-assets/MagneticCard.png</key>
             <key type="filename">Items-assets/MasterLockpick.png</key>
             <key type="filename">Items-assets/MissingItem.png</key>
+            <key type="filename">Items-assets/PainCard.png</key>
             <key type="filename">Items-assets/RedTicket.png</key>
             <key type="filename">Items-assets/RottenApple.png</key>
             <key type="filename">Items-assets/RustyLockpick.png</key>
@@ -356,6 +356,21 @@
                 <rect>5,5,10,10</rect>
                 <key>scale9Paddings</key>
                 <rect>5,5,10,10</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Items-assets/PickupShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,1,6,1</rect>
+                <key>scale9Paddings</key>
+                <rect>3,1,6,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

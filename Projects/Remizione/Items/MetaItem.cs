@@ -142,6 +142,9 @@ namespace Remizione
         // LocalizedDisplayName
         public string LocalizedDisplayName { get; }
 
+        // MagneticCardName
+        public const string MagneticCardName = "MagneticCard";
+
         // Maximum
         public int Maximum { get; init; }
 

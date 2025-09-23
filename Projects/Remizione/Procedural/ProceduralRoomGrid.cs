@@ -9,25 +9,22 @@ namespace Remizione
     /// </summary>
     public sealed class ProceduralRoomGrid
     {
-        private readonly bool[,] occupied;
+        private bool[,] occupied = new bool[0, 0];
         private const float usagePercent = .8f;
 
         #region Constructor
 
         // Constructor
+        public ProceduralRoomGrid(string name)
+            : this(name, 0, 0)
+        {
+        }
+
+        // Constructor
         public ProceduralRoomGrid(string name, int width, int height)
         {
             this.Name = name;
-
-            // Maximum cells (without margin)
-            int totalColumns = (width + CellSize - 1) / CellSize;
-            int totalRows = (height + CellSize - 1) / CellSize;
-
-            // Maximum cells (with margin)
-            ColCount = (int)(totalColumns * usagePercent);
-            RowCount = (int)(totalRows * usagePercent);
-
-            occupied = new bool[ColCount, RowCount];
+            Resize(width, height);
         }
 
         #endregion
@@ -55,13 +52,13 @@ namespace Remizione
         #endregion
 
         // CellSize
-        public const int CellSize = 18;
+        public int CellSize { get; private set; } = 14;
 
         // ColCount
-        public int ColCount { get; }
+        public int ColCount { get; private set; }
 
         // GetPosition
-        public static Vector2 GetPosition(int col, int row)
+        public Vector2 GetPosition(int col, int row)
         {
             int x = col * CellSize;
             int y = row * CellSize;
@@ -110,8 +107,22 @@ namespace Remizione
             return false;
         }
 
+        // Resize
+        public void Resize(int width, int height)
+        {
+            // Maximum cells (without margin)
+            int totalColumns = (width + CellSize - 1) / CellSize;
+            int totalRows = (height + CellSize - 1) / CellSize;
+
+            // Maximum cells (with margin)
+            ColCount = (int)(totalColumns * usagePercent);
+            RowCount = (int)(totalRows * usagePercent);
+
+            occupied = new bool[ColCount, RowCount];
+        }
+
         // RowCount
-        public int RowCount { get; }
+        public int RowCount { get; private set; }
 
         // ToString
         public override string ToString() => Name;

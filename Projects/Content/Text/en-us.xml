@@ -21,8 +21,8 @@
   <String Key="HUDMessageKind.EnoughOfThat">You already have enough of that.</String>
   <String Key="HUDMessageKind.ExtraTime">Extra time!</String>
   <String Key="HUDMessageKind.InventoryFull">You cannot carry more items.</String>
+  <String Key="HUDMessageKind.MagneticCardRequired">You need the magnetic card.</String>
   <String Key="HUDMessageKind.NotEnoughFaith">Not enough Faith.</String>
-  <String Key="HUDMessageKind.PowerRestored">Power Restored!</String>
   <String Key="InputBinding.Back">Back</String>
   <String Key="InputBinding.Close">Close</String>
   <String Key="InputBinding.ConsumeItem">Consume</String>
@@ -266,4 +266,5 @@ Bla bla bla</String>
   <String Key="Prop.Tower">Tower</String>
   <String Key="Prop.Trunk">Trunk</String>
   <String Key="Verb.Enter">Enter</String>
+  <String Key="Verb.Exit">Exit</String>
 </Strings>

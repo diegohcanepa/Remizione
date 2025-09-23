@@ -12,6 +12,7 @@ namespace Remizione
     {
         #region Private fields
 
+        private readonly FloatTween altitudeTween = new();
         private const float bounceFactor = .8f;
         private static bool dropLeft;
         private const float gravity = 300;
@@ -20,6 +21,7 @@ namespace Remizione
         private float life = 2;
         private MetaItem? metaItem;
         private readonly Vector2Tween scaleTween = new();
+        private readonly ImageSprite shadow;
         private Vector2 velocity;
 
         #endregion
@@ -30,15 +32,34 @@ namespace Remizione
         {
             this.Atlas = Atlases.UI;
             this.DepthOffset = 5;
+            IgnoreWalkArea = false;
+
+            // Shadow
+            this.shadow = new ImageSprite(session.Game, Atlases.UI.GetImage(nameof(Pickup) + "Shadow"))
+            {
+                Opacity = ColorPalette.ShadowOpacity,
+                PivotOrigin = RectanglePoint.Bottom,
+            };
         }
 
         #region Protected members
+
+        // OnDrawShadow
+        protected override void OnDrawShadow(GameTime gameTime)
+        {
+            shadow.Position = BoundingBox.GetPoint(RectanglePoint.Bottom);
+            if (altitudeTween.IsRunning)
+                shadow.Y += altitudeTween.CurrentValue;
+
+            shadow.Draw(gameTime);
+        }
 
         // OnUnload
         protected override void OnUnload()
         {
             base.OnUnload();
             this.metaItem = null;
+            altitudeTween.Stop();
         }
 
         // OnUpdate
@@ -67,6 +88,11 @@ namespace Remizione
                     if (Math.Abs(velocity.Y) < 6)
                         velocity.Y = 0;
                 }
+            }
+            else if (!altitudeTween.IsRunning)
+            {
+                altitudeTween.Start(TweenStyle.QuadraticInOut, 0, 1, 200, -1);
+                Tweens.AltitudeTween = altitudeTween;
             }
 
             if (isCollecting)

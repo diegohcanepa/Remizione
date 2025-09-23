@@ -115,7 +115,7 @@ namespace Remizione
             UserSettingsData.Apply(this, userSettings);
 
             // TODO: UNCOMMENT DURING DEV ONLY
-            if (LanguagePackage.GetPackage(LocalizationManager.English) is LanguagePackage languagePackage)
+            if (LanguagePackage.GetPackage(LocalizationManager.SpanishLatinAmerica) is LanguagePackage languagePackage)
                 TextRepository.Load(languagePackage);
 
 

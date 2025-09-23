@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:5617be67f8ddfcdb8b67da4c521b86a9:252140010437f1b90ba41a693477ac69:727a0b1ceb97000f7b752481a192984d$ -->
+<!-- $TexturePacker:SmartUpdate:3ebb4c0d917af65bb5f434ec397b455f:7280b09502e35b5d31de6d57f5830499:727a0b1ceb97000f7b752481a192984d$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,6 +19,9 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="RideRoom.png" width="256" height="256">
-    <sprite n="TerrainBlock.png" x="2" y="2" w="240" h="135"/>
+<TextureAtlas imagePath="RideRoom.png" width="1024" height="1024">
+    <sprite n="TerrainExtraLarge.png" x="2" y="2" w="350" h="185"/>
+    <sprite n="TerrainLarge.png" x="354" y="2" w="350" h="135"/>
+    <sprite n="TerrainMedium.png" x="706" y="2" w="300" h="135"/>
+    <sprite n="TerrainSmall.png" x="354" y="139" w="240" h="135"/>
 </TextureAtlas>

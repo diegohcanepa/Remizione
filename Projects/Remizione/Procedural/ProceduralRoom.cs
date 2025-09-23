@@ -1,5 +1,4 @@
-﻿using Adberration.Scripting;
-using Engendro;
+﻿using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -15,11 +14,7 @@ namespace Remizione
 
         private int instanceCount;
         private bool populated;
-        private readonly Random random;
         private readonly int randomSeed;
-        private readonly ImageSprite terrainBlock;
-        private int terrainCols;
-        private int terrainRows;
 
         #endregion
 
@@ -43,13 +38,7 @@ namespace Remizione
 
             int salt = roomIndex;
             this.randomSeed = GetSeed(Session.RandomSeed, salt);
-            this.random = new Random(randomSeed);
-            this.terrainBlock = new ImageSprite(session.Game);
-
-            Prepare();
-
-            this.DecorationGrid = new ProceduralRoomGrid("Decoration", CustomWidth, CustomHeight);
-            this.MainGrid = new ProceduralRoomGrid("Main", CustomWidth, CustomHeight);
+            this.Random = new Random(randomSeed);
         }
 
         #endregion
@@ -71,26 +60,26 @@ namespace Remizione
         private void DistributeClumped(GameThing thing, PlacementData placementData)
         {
             var targetGrid = thing.IsWalkAreaHole ? MainGrid : DecorationGrid;
-            int totalCount = random.Next(placementData.Instances.Minimum, placementData.Instances.Maximum + 1);
-            int clumpSize = 3 + random.Next(3);
+            int totalCount = Random.Next(placementData.Instances.Minimum, placementData.Instances.Maximum + 1);
+            int clumpSize = 3 + Random.Next(3);
             int clumpCount = (totalCount + clumpSize - 1) / clumpSize;
 
-            Size sizeInCells = thing.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
+            Size sizeInCells = thing.GetRequiredGridSpace(targetGrid.CellSize);
 
             for (int i = 0; i < clumpCount; i++)
             {
                 if (!targetGrid.TryReserveSpace(sizeInCells, out int baseCol, out int baseRow))
                     break;
 
-                PlaceRuntimeThing(thing, baseCol, baseRow);
+                PlaceRuntimeThing(targetGrid, thing, baseCol, baseRow);
 
                 for (int j = 0; j < clumpSize - 1; j++)
                 {
-                    int offsetCol = baseCol + random.Next(-1, 2);
-                    int offsetRow = baseRow + random.Next(-1, 2);
+                    int offsetCol = baseCol + Random.Next(-1, 2);
+                    int offsetRow = baseRow + Random.Next(-1, 2);
 
                     if (targetGrid.TryReserveSpace(sizeInCells, out int col, out int row, offsetCol, offsetRow))
-                        PlaceRuntimeThing(thing, col, row);
+                        PlaceRuntimeThing(targetGrid, thing, col, row);
                 }
             }
         }
@@ -99,8 +88,8 @@ namespace Remizione
         private void DistributeRandomly(GameThing thing, PlacementData placementData)
         {
             var targetGrid = thing.IsWalkAreaHole ? MainGrid : DecorationGrid;
-            Size sizeInCells = thing.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
-            var count = random.Next(placementData.Instances.Minimum, placementData.Instances.Maximum + 1);
+            Size sizeInCells = thing.GetRequiredGridSpace(targetGrid.CellSize);
+            var count = Random.Next(placementData.Instances.Minimum, placementData.Instances.Maximum + 1);
 
             for (int i = 0; i < count; i++)
             {
@@ -110,12 +99,12 @@ namespace Remizione
 
                 for (int attempt = 0; attempt < maxAttempts && !placed; attempt++)
                 {
-                    int col = random.Next(targetGrid.ColCount - sizeInCells.Width + 1);
-                    int row = random.Next(targetGrid.RowCount - sizeInCells.Height + 1);
+                    int col = Random.Next(targetGrid.ColCount - sizeInCells.Width + 1);
+                    int row = Random.Next(targetGrid.RowCount - sizeInCells.Height + 1);
 
                     if (targetGrid.TryReserveSpace(sizeInCells, out int finalCol, out int finalRow, col, row))
                     {
-                        PlaceRuntimeThing(thing, finalCol, finalRow);
+                        PlaceRuntimeThing(targetGrid, thing, finalCol, finalRow);
                         placed = true;
                     }
                 }
@@ -126,7 +115,7 @@ namespace Remizione
         private void DistributeWithNoiseMap(GameThing thing, PlacementData placementData, int seed)
         {
             var targetGrid = thing.IsWalkAreaHole ? MainGrid : DecorationGrid;
-            Size sizeInCells = thing.GetRequiredGridSpace(ProceduralRoomGrid.CellSize);
+            Size sizeInCells = thing.GetRequiredGridSpace(targetGrid.CellSize);
             float noiseThreshold = 0.2f;
             int attempts = 100;
 
@@ -139,7 +128,7 @@ namespace Remizione
                 if (noise > noiseThreshold)
                     continue;
 
-                PlaceRuntimeThing(thing, col, row);
+                PlaceRuntimeThing(targetGrid, thing, col, row);
             }
         }
 
@@ -193,10 +182,10 @@ namespace Remizione
         }
 
         // PlaceRuntimeThing
-        private void PlaceRuntimeThing(GameThing thing, int col, int row)
+        private void PlaceRuntimeThing(ProceduralRoomGrid grid, GameThing thing, int col, int row)
         {
             var instance = CreateRuntimeThingCloneCore(thing.StaticName);
-            instance.Position = ProceduralRoomGrid.GetPosition(col, row);
+            instance.Position = grid.GetPosition(col, row);
             instance.Y += instance.BoundingBox.Height;
             instance.X += instance.BoundingBox.Width / 2;
             Children.Add(instance);
@@ -207,11 +196,11 @@ namespace Remizione
         {
             const int walkAreaMargin = 15;
 
-            terrainCols = random.Next(TerrainColRange.Minimum, TerrainColRange.Maximum + 2);
-            terrainRows = terrainCols == 1 ? 1 : random.Next(TerrainRowRange.Minimum, TerrainRowRange.Maximum + 2);
+            CustomWidth = (int)BoundingBox.Width;
+            CustomHeight = (int)BoundingBox.Height;
 
-            CustomWidth = Screen.NativeWidth * (terrainCols <= 0 ? 1 : terrainCols);
-            CustomHeight = Screen.NativeHeight * (terrainRows <= 0 ? 1 : terrainRows);
+            DecorationGrid.Resize(CustomWidth, CustomHeight);
+            MainGrid.Resize(CustomWidth, CustomHeight);
 
             ClearWalkAreas();
 
@@ -229,39 +218,27 @@ namespace Remizione
         #region Protected members
 
         // DecorationGrid
-        protected ProceduralRoomGrid DecorationGrid { get; }
+        protected ProceduralRoomGrid DecorationGrid { get; } = new ProceduralRoomGrid("Decoration");
+
+        // GetTerrainImageName
+        protected abstract string GetTerrainImageName();
 
         // MainGrid
-        protected ProceduralRoomGrid MainGrid { get; }
-
-        // OnDrawCustomBackground
-        protected override void OnDrawCustomBackground(GameTime gameTime)
-        {
-            terrainBlock.Position = Vector2.Zero;
-
-            for (var i = 0; i < terrainRows; i++)
-            {
-                for (var j = 0; j < terrainCols; j++)
-                {
-                    terrainBlock.Draw(gameTime);
-                    terrainBlock.X += terrainBlock.BoundingBox.Width;
-                }
-
-                terrainBlock.X = 0;
-                terrainBlock.Y += terrainBlock.BoundingBox.Height;
-            }
-        }
+        protected ProceduralRoomGrid MainGrid { get; } = new ProceduralRoomGrid("Main");
 
         // OnLoad
         protected override void OnLoad()
         {
             base.OnLoad();
 
-            terrainBlock.Image = Atlas?.GetImage("TerrainBlock");
-
             if (!populated)
             {
+                Sprite.ClearAnimations();
+                var aniamtion = AddAnimation("Terrain");
+                aniamtion.AddFrame(GetTerrainImageName(), 1000);
+
                 populated = true;
+                Prepare();
                 OnPopulate();
                 Populate();
                 OnPopulateCompleted();
@@ -291,7 +268,7 @@ namespace Remizione
                     continue;
 
                 var staticThings = GetStaticThings(phase);
-                staticThings.Shuffle(random);
+                staticThings.Shuffle(Random);
 
                 foreach (var thing in staticThings)
                 {
@@ -303,7 +280,7 @@ namespace Remizione
                     {
                         var placementData = placementDataList[i];
 
-                        if (!placementData.IsAvailable(thing, random))
+                        if (!placementData.IsAvailable(thing, Random))
                             continue;
 
                         switch (placementData.DistributionStrategy)
@@ -327,6 +304,9 @@ namespace Remizione
                 }
             }
         }
+
+        // Random
+        protected Random Random { get; }
 
         #endregion
 
@@ -387,13 +367,5 @@ namespace Remizione
 
         // RoomPosition
         public RoomPosition RoomPosition { get; }
-
-        // TerrainColRange
-        [ScriptProperty(CodingContext.Declaration)]
-        public Int32Range TerrainColRange { get; set; } = new(1, 2);
-
-        // TerrainRowRange
-        [ScriptProperty(CodingContext.Declaration)]
-        public Int32Range TerrainRowRange { get; set; } = new(1);
     }
 }

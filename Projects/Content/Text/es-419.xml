@@ -21,8 +21,8 @@
   <String Key="HUDMessageKind.EnoughOfThat">Ya tienes suficiente.</String>
   <String Key="HUDMessageKind.ExtraTime">¡Tiempo extra!</String>
   <String Key="HUDMessageKind.InventoryFull">No puedes llevar más objetos.</String>
+  <String Key="HUDMessageKind.MagneticCardRequired">Necesitas la tarjeta magnética.</String>
   <String Key="HUDMessageKind.NotEnoughFaith">Estás falto de Fé.</String>
-  <String Key="HUDMessageKind.PowerRestored">¡Energía restablecida!</String>
   <String Key="InputBinding.Back">Atrás</String>
   <String Key="InputBinding.Close">Cerrar</String>
   <String Key="InputBinding.ConsumeItem">Consumir</String>
@@ -59,7 +59,7 @@
   <String Key="Item.GoldenTicket.Name">Ticket dorado</String>
   <String Key="Item.Lockpicking.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.Lockpicking.Name">Forzar cerraduras</String>
-  <String Key="Item.MagneticCard.Description">Una apetitoza manzana en su punto justo.</String>
+  <String Key="Item.MagneticCard.Description">Utiliza esta tarjeta con la máquina lectora de la torre para abrirte camino.</String>
   <String Key="Item.MagneticCard.Name">Tarjeta magnética</String>
   <String Key="Item.MasterLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.MasterLockpick.Name">Ganzúa maestra</String>
@@ -266,4 +266,5 @@ Bla bla bla</String>
   <String Key="Prop.Tower">Torre</String>
   <String Key="Prop.Trunk">Baúl</String>
   <String Key="Verb.Enter">Entrar</String>
+  <String Key="Verb.Exit">Salir</String>
 </Strings>

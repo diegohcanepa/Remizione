@@ -10,9 +10,9 @@ namespace Remizione
     public sealed class ExitRideCar : IsometricProp
     {
         private readonly Light frontLight;
-        private static readonly Vector2 frontLightPosition = new(8, 16);
+        private static readonly Vector2 frontLightPosition = new(25, 13);
         private readonly Light rearLight;
-        private static readonly Vector2 rearLightPosition = new(24, 20);
+        private static readonly Vector2 rearLightPosition = new(11, 20);
 
         // Constructor
         public ExitRideCar(GameSession session, string name)

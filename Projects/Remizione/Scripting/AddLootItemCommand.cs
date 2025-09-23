@@ -17,8 +17,8 @@ namespace Remizione.Scripting
             AssertKeyword(1, "weight");
             var weight = Parser.ParseFloat(this, 2);
 
-            var lootTable = LootTable.Find(BeginLootTableCommand.ActiveName);
-            lootTable ??= LootTable.Register(BeginLootTableCommand.ActiveName);
+            var lootTable = ChanceTable.Find(BeginLootTableCommand.ActiveName);
+            lootTable ??= ChanceTable.Register(BeginLootTableCommand.ActiveName);
 
             lootTable.Add(itemName, weight);
         }

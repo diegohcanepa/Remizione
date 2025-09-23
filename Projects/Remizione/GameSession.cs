@@ -61,10 +61,15 @@ namespace Remizione
                     Scale = ScaleInfo.Text.VeryLarge,
                 };
 
-                console = new ScriptConsole(this, InputBindings.Console, consoleText, new RectangleF(0, 240, 480, 30), "=>> $BeginRun()", "=>> $NextRunRoom()", "$PreviousRunRoom()")
+                console = new ScriptConsole(this, InputBindings.Console, consoleText, new RectangleF(0, 240, 480, 30))
                 {
                     TextErrorColor = ColorPalette.Text.Terra
                 };
+                
+                console.CommandList.Add("add-item MagneticCard to $Player");
+                console.CommandList.Add("=>> $BeginRun()");
+                console.CommandList.Add("=>> $NextRunRoom()");
+                console.CommandList.Add("=>> $PreviousRunRoom()");
 
                 roomEditor = new RoomEditor(this);
             }
@@ -150,6 +155,7 @@ namespace Remizione
             scriptRegistry.RegisterStatement("select-walk-area", typeof(SelectWalkAreaCommand));
             scriptRegistry.RegisterStatement("set-light", typeof(SetLightCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("set-thing-light", typeof(SetThingLightCommand), CodingContext.EntityDeclaration);
+            scriptRegistry.RegisterStatement("show-message", typeof(ShowMessageCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
             scriptRegistry.RegisterStatement("use-key-item", typeof(UseKeyItemCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("use-item", typeof(UseItemCommand), CodingContext.Execution);

@@ -247,10 +247,10 @@ namespace Remizione
         {
             if (Session.Room is ProceduralRoom room)
             {
-                var metaItem = HasMagneticCard ? MetaItem.Find("MagneticCard") : GetLoot();
+                var metaItem = HasPainCard ? MetaItem.Find(MetaItem.MagneticCardName) : GetLoot();
                 if (metaItem != null)
                     Session.ObjectPools.Pickups.Get()?.Drop(room, metaItem, Position);
-                HasMagneticCard = false;
+                HasPainCard = false;
             }
         }
 
@@ -709,8 +709,8 @@ namespace Remizione
         // GetLoot
         public MetaItem? GetLoot()
         {
-            if (LootTable.Find(LootTableName) is LootTable lootTable && lootTable.GetLoot() is MetaItem metaItem)
-                return metaItem;
+            if (ChanceTable.Find(LootTableName) is ChanceTable lootTable && lootTable.GetValue() is string value)
+                return MetaItem.Find(value);
 
             return null;
         }
@@ -750,8 +750,8 @@ namespace Remizione
         // GetThrowableSpawnPosition
         public Vector2 GetThrowableSpawnPosition() => this.GetAbsolutePoint(ThrowableSpawnPosition);
 
-        // HasMagneticCard
-        public bool HasMagneticCard { get;set; }
+        // HasPainCard
+        public bool HasPainCard { get; set; }
 
         // Health
         [ScriptProperty]

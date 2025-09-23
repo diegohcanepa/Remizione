@@ -58,6 +58,9 @@ namespace Remizione
 
             if (PropState == PropState.Unlocked && Room is RideRoom rideRoom && rideRoom.RightTower != null)
             {
+                if (rideRoom.RoomPosition != RoomPosition.Last)
+                    rideRoom.RightTower.AllowInteraction = true;
+
                 rideRoom.RightTower.PropState = PropState.Open;
                 rideRoom.RightTower.AnimationPlayer.Play(AnimationNames.Open, false);
                 PlaySound(SoundNames.TowerDoorClose);

@@ -12,7 +12,7 @@
 	<Music Name="GameOver" MaxInstances="2" />
 	<Music Name="PilgrimPath01" MaxInstances="2" Tags="PilgrimPath" />
 	<Music Name="Ride01" MaxInstances="2" Tags="Ride" />
-	<Music Name="ThemePark" MaxInstances="2" />
+	<Music Name="ThemePark" MaxInstances="2" Tags="ThemePark" />
 	
 	<!-- FX -->
 	<FX Name="AppleBite" MaxInstances="2" />

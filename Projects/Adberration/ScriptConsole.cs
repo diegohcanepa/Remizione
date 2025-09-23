@@ -23,14 +23,13 @@ namespace Adberration
         private bool isActive;
         private readonly Session session;
         private readonly TextSprite textSprite;
-        private readonly List<string> commandList = [];
 
         #endregion
 
         #region Constructor
 
         // Constructor
-        public ScriptConsole(Session session, InputBinding inputBinding, TextSprite textSprite, RectangleF backgroundArea, params string[] commands)
+        public ScriptConsole(Session session, InputBinding inputBinding, TextSprite textSprite, RectangleF backgroundArea)
             : base(session.Game)
         {
             this.session = session;
@@ -39,9 +38,6 @@ namespace Adberration
             this.InputBinding = inputBinding;
             this.TextDefaultColor = textSprite.Color;
             this.TextErrorColor = textSprite.Color;
-
-            if (commands.Length > 0)
-                commandList.AddRange(commands);
 
             Game.Window.KeyDown += Window_KeyDown;
             Game.Window.TextInput += HandleTextInput;
@@ -60,10 +56,8 @@ namespace Adberration
 
         private void Window_KeyDown(object? sender, InputKeyEventArgs e)
         {
-            if (commandList.Count == 0)
-            {
+            if (CommandList.Count == 0)
                 return;
-            }
 
             if (e.Key == Keys.Down || e.Key == Keys.Up)
             {
@@ -80,7 +74,7 @@ namespace Adberration
             if (e.Key == Keys.Down)
             {
                 commandIndex++;
-                if (commandIndex == commandList.Count)
+                if (commandIndex == CommandList.Count)
                 {
                     commandIndex = 0;
                 }
@@ -94,7 +88,7 @@ namespace Adberration
                 }
             }
 
-            inputText = commandList[commandIndex];
+            inputText = CommandList[commandIndex];
             textSprite.Text = inputText;
         }
 
@@ -108,8 +102,8 @@ namespace Adberration
             try
             {
                 session.ScriptProcessor.ExecuteCommand(command);
-                commandList.Remove(command);
-                commandList.Insert(0, command);
+                CommandList.Remove(command);
+                CommandList.Insert(0, command);
             }
             catch (Exception e)
             {
@@ -144,15 +138,15 @@ namespace Adberration
                 if (commandIndex > 0)
                     commandIndex--;
 
-                inputText = commandList[commandIndex];
+                inputText = CommandList[commandIndex];
             }
 
             else if (e.Key == Keys.Down)
             {
-                if (commandIndex < commandList.Count - 1)
+                if (commandIndex < CommandList.Count - 1)
                     commandIndex++;
 
-                inputText = commandList[commandIndex];
+                inputText = CommandList[commandIndex];
             }
 
             else if (e.Key == Keys.Tab)
@@ -232,6 +226,9 @@ namespace Adberration
 
         // BackgroundColor
         public Color BackgroundColor { get; set; } = Color.Black;
+
+        // CommandList
+        public List<string> CommandList { get; } = [];
 
         // HasError
         public bool HasError

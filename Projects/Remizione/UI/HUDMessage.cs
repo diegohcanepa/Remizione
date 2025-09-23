@@ -12,6 +12,7 @@ namespace Remizione
     {
         private readonly FloatTween fadeTween = new() { StartDelay = 1500 };
         private readonly TextSprite messageText;
+        private readonly Vector2Tween scaleTween = new();
 
         // Constructor
         public HUDMessage(EngendroGame game)
@@ -59,9 +60,10 @@ namespace Remizione
             messageText.Text = Localization.GetValue(message);
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 200);
             
-            if (message == HUDMessageKind.PowerRestored)
+            if (message == HUDMessageKind.MagneticCardRequired)
             {
-                messageText.Color = ColorPalette.Text.Green;
+                messageText.Color = ColorPalette.Text.Orange;
+                Sound.Play(SoundNames.Error);
             }
             else if (message == HUDMessageKind.ExtraTime)
             {
@@ -73,7 +75,8 @@ namespace Remizione
                 Sound.Play(SoundNames.Error);
             }
 
-            messageText.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, ScaleInfo.Text.ExtraLarge * .8f, ScaleInfo.Text.ExtraLarge, 200);
+            scaleTween.Start(TweenStyle.CubicIn, ScaleInfo.Text.ExtraLarge * .8f, ScaleInfo.Text.ExtraLarge, 50);
+            messageText.Tweens.ScaleTween = scaleTween;
         }
     }
 }

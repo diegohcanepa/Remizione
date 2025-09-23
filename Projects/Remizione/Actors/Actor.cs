@@ -17,7 +17,6 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly FloatTween accelerationFactorTween = new();
         private readonly ActorCloseAttackState closeAttackState;
         private readonly ActorConsumeState consumeState;
         private readonly List<AtlasImage>? customGuts;
@@ -37,7 +36,6 @@ namespace Remizione
         private readonly ActorStandState standState;
         private int suspendInteractionCooldown;
         private readonly ActorThrowItemState throwItemState;
-        private float tinyMoveSpeedFactor = 1;
         private UseKeyItemScene? useKeyItemScene;
 
         #endregion
@@ -268,7 +266,7 @@ namespace Remizione
         protected AIStateMachine AIStateMachine { get; }
 
         // CalculateSpeed
-        protected override float CalculateSpeed() => base.CalculateSpeed() * (FastMove ? FastMoveFactor : 1) * tinyMoveSpeedFactor * (accelerationFactorTween.IsRunning ? accelerationFactorTween.CurrentValue : 1);
+        protected override float CalculateSpeed() => base.CalculateSpeed() * (FastMove ? FastMoveFactor : 1);
 
         // CanCheckCollisions
         protected override bool CanCheckCollisions() => !IsFollowingPath && base.CanCheckCollisions();
@@ -445,8 +443,6 @@ namespace Remizione
 
             if (AnimationSettings.MoveSway)
                 moveBalancingTween.Start(TweenStyle.QuadraticInOut, 0, .03f, FastMove ? 100 : 200, -1);
-
-            accelerationFactorTween.Start(TweenStyle.Linear, .4f, 1, 150);
         }
 
         // OnStopMoving
@@ -455,10 +451,8 @@ namespace Remizione
             base.OnStopMoving();
 
             FastMove = false;
-            accelerationFactorTween.Stop();
             moveVerticalTween.Stop();
             moveBalancingTween.Stop();
-            tinyMoveSpeedFactor = 1;
 
             if (!IsDead)
                 Stand();
@@ -488,7 +482,6 @@ namespace Remizione
             if (IsPlayer && suspendInteractionCooldown <= 0 && !session.IsAwaiting)
                 this.InteractiveTarget = FindInteractiveTarget();
 
-            accelerationFactorTween.Update(gameTime);
             headTween.Update(gameTime);
 
             if (AnimationSettings.DetachedHead)
@@ -722,15 +715,6 @@ namespace Remizione
             var distance = DistanceTo(destination);
             if (distance <= 1)
                 return false;
-
-            tinyMoveSpeedFactor = 1;
-            if (distance <= 15)
-            {
-                if (distance <= 3)
-                    tinyMoveSpeedFactor = .25f;
-                else
-                    tinyMoveSpeedFactor = .5f;
-            }
 
             var path = WalkArea.FindPath(this, destination);
 
