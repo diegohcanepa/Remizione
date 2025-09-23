@@ -15,6 +15,12 @@ namespace Engendro
         }
 
         // Constructor
+        public Polygon(string value, float inflate = 0)
+            : base(value, inflate)
+        {
+        }
+
+        // Constructor
         public Polygon(IList<Vector2> points, float inflate = 0)
             : base(points, inflate)
         {
@@ -58,6 +64,12 @@ namespace Engendro
 
         // Offset
         public void Offset(float x, float y) => OffsetCore(x, y);
+
+        // SetVertices
+        public void SetVertices(string value) => SetVerticesCore(value, 0);
+
+        // SetVertices
+        public void SetVertices(string value, float inflate) => SetVerticesCore(value, 0);
 
         // SetVertices
         public void SetVertices(IList<Vector2> vertices) => SetVerticesCore(vertices, 0);

@@ -64,7 +64,7 @@ namespace Remizione
             int clumpSize = 3 + Random.Next(3);
             int clumpCount = (totalCount + clumpSize - 1) / clumpSize;
 
-            Size sizeInCells = thing.GetRequiredGridSpace(targetGrid.CellSize);
+            Size sizeInCells = targetGrid.GetRequiredGridSpace(thing);
 
             for (int i = 0; i < clumpCount; i++)
             {
@@ -88,7 +88,7 @@ namespace Remizione
         private void DistributeRandomly(GameThing thing, PlacementData placementData)
         {
             var targetGrid = thing.IsWalkAreaHole ? MainGrid : DecorationGrid;
-            Size sizeInCells = thing.GetRequiredGridSpace(targetGrid.CellSize);
+            Size sizeInCells = targetGrid.GetRequiredGridSpace(thing);
             var count = Random.Next(placementData.Instances.Minimum, placementData.Instances.Maximum + 1);
 
             for (int i = 0; i < count; i++)
@@ -115,7 +115,7 @@ namespace Remizione
         private void DistributeWithNoiseMap(GameThing thing, PlacementData placementData, int seed)
         {
             var targetGrid = thing.IsWalkAreaHole ? MainGrid : DecorationGrid;
-            Size sizeInCells = thing.GetRequiredGridSpace(targetGrid.CellSize);
+            Size sizeInCells = targetGrid.GetRequiredGridSpace(thing);
             float noiseThreshold = 0.2f;
             int attempts = 100;
 

@@ -17,6 +17,7 @@ namespace Remizione
     {
         #region Private fields
 
+        private Polygon collider = new();
         private PlacementMode colliderPlacement = PlacementMode.Relative;
         private string displayNameKey = string.Empty;
         private readonly Polygon holePolyInflated = new();
@@ -254,15 +255,6 @@ namespace Remizione
             }
         }
 
-        // GetGridArea
-        protected virtual RectangleF GetGridArea()
-        {
-            if (Collider.IsEmpty)
-                return BoundingBox;
-            else
-                return Collider.BoundingRectangleF;
-        }
-
         // OnCollision
         protected virtual void OnCollision(GameThing thing)
         {
@@ -475,6 +467,19 @@ namespace Remizione
         [ScriptProperty]
         public int CellMargin { get; set; } = 1;
 
+        // Collider
+        [ScriptProperty]
+        public Polygon Collider
+        {
+            get => collider;
+            set
+            {
+                collider = value;
+                isCollisionDirty = true;
+                InvalidateCollisionPolygons();
+            }
+        }
+
         // ColliderPlacement
         [ScriptProperty]
         public PlacementMode ColliderPlacement
@@ -515,10 +520,6 @@ namespace Remizione
         // CollisionDetection
         [ScriptProperty]
         public bool CollisionDetection { get; set; } = true;
-
-        // Collider
-        [ScriptProperty]
-        public Polygon Collider { get; set; } = new();
 
         // ContactDamageKind
         public DamageKind ContactDamageKind { get; set; }
@@ -726,16 +727,6 @@ namespace Remizione
                 return BoundingBox.GetPoint(RectanglePoint.Top, xOffset, yOffset);
             else
                 return this.GetAbsolutePoint(OverheadOrigin, xOffset, yOffset);
-        }
-
-        // GetRequiredGridSpace
-        public Size GetRequiredGridSpace(int cellSize)
-        {
-            var bbox = GetGridArea();
-            int width = (int)Math.Ceiling(bbox.Width / cellSize) + CellMargin * 2;
-            int height = (int)Math.Ceiling(bbox.Height / cellSize) + CellMargin * 2;
-
-            return new Size(width, height);
         }
 
         // GetFootstepSound

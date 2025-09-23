@@ -57,6 +57,15 @@ namespace Remizione
         // ColCount
         public int ColCount { get; private set; }
 
+        // GetPixelArea
+        public RectangleF GetPixelArea(GameThing thing)
+        {
+            if (thing.Collider.IsEmpty)
+                return thing.BoundingBox;
+            else
+                return thing.Collider.BoundingRectangleF;
+        }
+
         // GetPosition
         public Vector2 GetPosition(int col, int row)
         {
@@ -64,6 +73,16 @@ namespace Remizione
             int y = row * CellSize;
 
             return new(x, y);
+        }
+
+        // GetRequiredGridSpace
+        public Size GetRequiredGridSpace(GameThing thing)
+        {
+            var bbox = GetPixelArea(thing);
+            int width = (int)Math.Ceiling(bbox.Width / CellSize) + thing.CellMargin * 2;
+            int height = (int)Math.Ceiling(bbox.Height / CellSize) + thing.CellMargin * 2;
+
+            return new Size(width, height);
         }
 
         // IsCellFree
@@ -87,6 +106,12 @@ namespace Remizione
 
         // Name
         public string Name { get; }
+
+        // ReserveSpace
+        public bool ReserveSpace(GameThing thing)
+        {
+            return ReserveSpace(GetPixelArea(thing).ToRectangle());
+        }
 
         // ReserveSpace
         public bool ReserveSpace(Rectangle pixelArea)

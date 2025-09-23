@@ -1294,6 +1294,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">LeftTower-assets/LeftTowerPatch.png</key>
+            <key type="filename">RightTower-assets/RightTowerPatch.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,8,10,15</rect>
+                <key>scale9Paddings</key>
+                <rect>5,8,10,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Lightning-assets/Lightning01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

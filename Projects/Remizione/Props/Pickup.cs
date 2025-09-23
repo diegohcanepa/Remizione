@@ -31,7 +31,7 @@ namespace Remizione
             : base(session, string.Empty)
         {
             this.Atlas = Atlases.UI;
-            this.DepthOffset = 5;
+            this.DepthOffset = -5;
             IgnoreWalkArea = false;
 
             // Shadow
@@ -91,7 +91,7 @@ namespace Remizione
             }
             else if (!altitudeTween.IsRunning)
             {
-                altitudeTween.Start(TweenStyle.QuadraticInOut, 0, 1, 200, -1);
+                altitudeTween.Start(TweenStyle.QuadraticInOut, 0, .5f, 200, -1);
                 Tweens.AltitudeTween = altitudeTween;
             }
 

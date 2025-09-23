@@ -22,6 +22,13 @@ namespace Engendro
         #region Constructors
 
         // Constructor
+        public ReadOnlyPolygon(string value, float inflate = 0)
+        {
+            SetVerticesCore(value, inflate);
+            this.Vertices = new ReadOnlyCollection<Vector2>(this.vertices);
+        }
+
+        // Constructor
         public ReadOnlyPolygon(IList<Vector2> points, float inflate = 0)
         {
             this.Vertices = new ReadOnlyCollection<Vector2>(this.vertices);
@@ -148,6 +155,20 @@ namespace Engendro
             {
                 vertices[i] += new Vector2(x, y);
             }
+        }
+
+        // SetVerticesCore
+        protected void SetVerticesCore(string value, float inflate)
+        {
+            var values = value.Split(';');
+            var vertices = new Vector2[values.Length];
+
+            for (var i = 0; i < vertices.Length; i++)
+            {
+                vertices[i] = XmlConverterExtension.ToVector2(values[i].Trim());
+            }
+
+            SetVerticesCore(vertices, 0);
         }
 
         // SetVerticesCore

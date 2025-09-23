@@ -30,8 +30,8 @@ namespace Remizione
 
         #region Private members
 
-        // DeployPainCard
-        private void DeployPainCard()
+        // DeployMagneticCard
+        private void DeployMagneticCard()
         {
             var creatures = new List<Creature>();
             foreach (var thing in Children)
@@ -79,21 +79,29 @@ namespace Remizione
                 // Entrance rail
                 if (Session.GetEntity<GameThing>("EntranceRail") is GameThing entranceRail)
                 {
-                    var sizeInCells = entranceRail.GetRequiredGridSpace(MainGrid.CellSize);
-                    if (MainGrid.TryReserveSpace(sizeInCells, out int col, out int row))
-                        Children.Add(entranceRail);
+                    MainGrid.ReserveSpace(entranceRail);
+                    Children.Add(entranceRail);
                 }
             }
             else
             {
                 // Left tower
-                if (Session.GetEntity<IsometricProp>("LeftTower") is IsometricProp leftTower)
+                LeftTower = CreateRuntimeClone("LeftTower") as IsometricProp;
+                if (LeftTower != null)
                 {
-                    var sizeInCells = leftTower.GetRequiredGridSpace(MainGrid.CellSize);
-                    if (MainGrid.TryReserveSpace(sizeInCells, out _, out _))
+                    MainGrid.ReserveSpace(LeftTower);
+                    Children.Add(this.LeftTower);
+
+                    if (CreateRuntimeClone("LeftTowerPatch") is IsometricProp leftTowerPatch)
                     {
-                        this.LeftTower = CreateRuntimeClone(leftTower.StaticName) as IsometricProp;
-                        Children.Add(leftTower);
+                        leftTowerPatch.Position = LeftTower.Position;
+                        Children.Add(leftTowerPatch);
+                    }
+
+                    if (Session.ScriptLibrary.GetRoutine(RoutineNames.GotoPreviousRunRoom) is Script script)
+                    {
+                        Vector2[] vertices = [new(11, 39), new(22, 39), new(22, 48), new(11, 48)];
+                        AddTriggerArea("PreviousRoom", script, null, true, true, false, null, vertices);
                     }
                 }
             }
@@ -105,31 +113,43 @@ namespace Remizione
                 if (RightTower != null)
                 {
                     RightTower.Position = new Vector2(CustomWidth - 9, RightTower.BoundingBox.Height - 4);
-                    MainGrid.ReserveSpace(RightTower.BoundingBox.ToRectangle());
-                    Children.Add(this.RightTower);
+                    MainGrid.ReserveSpace(RightTower);
+                    Children.Add(RightTower);
+
+                    if (CreateRuntimeClone("RightTowerPatch") is IsometricProp rightTowerPatch)
+                    {
+                        rightTowerPatch.Position = RightTower.Position;
+                        Children.Add(rightTowerPatch);
+                    }
+
+                    if (Session.ScriptLibrary.GetRoutine(RoutineNames.GotoNextRunRoom) is Script script)
+                    {
+                        var lt = RightTower.BoundingBox.GetPoint(RectanglePoint.LeftTop);
+                        Vector2[] vertices = [new(25, 39), new(36, 39), new(36, 48), new(25, 48)];
+
+                        for (var i = 0; i < vertices.Length; i++)
+                        {
+                            vertices[i] += lt;
+                        }
+
+                        AddTriggerArea("NextRoom", script, null, true, true, false, null, vertices);
+                    }
                 }
             }
 
             // Exit tower
             else
             {
-                if (Session.GetEntity<IsometricProp>("ExitTower") is IsometricProp exitTower)
+                this.RightTower = CreateRuntimeClone("ExitTower") as IsometricProp;
+                if (this.RightTower != null)
                 {
-                    var sizeInCells = exitTower.GetRequiredGridSpace(MainGrid.CellSize);
-                    if (MainGrid.TryReserveSpace(sizeInCells, out _, out _))
-                    {
-                        this.RightTower = CreateRuntimeClone(exitTower.StaticName) as IsometricProp;
-                        if (this.RightTower != null)
-                        {
-                            this.RightTower.Position = new Vector2(CustomWidth - 22, exitTower.BoundingBox.Height - 12);
-                            Children.Add(this.RightTower);
+                    this.RightTower.Position = new Vector2(CustomWidth - 22, RightTower.BoundingBox.Height - 12);
+                    Children.Add(this.RightTower);
 
-                            if (Session.GetEntity<ExitRideCar>(nameof(ExitRideCar)) is ExitRideCar exitRideCar)
-                            {
-                                Children.Add(exitRideCar);
-                                exitRideCar.Position = RightTower.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 9);
-                            }
-                        }
+                    if (Session.GetEntity<ExitRideCar>(nameof(ExitRideCar)) is ExitRideCar exitRideCar)
+                    {
+                        Children.Add(exitRideCar);
+                        exitRideCar.Position = RightTower.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 9);
                     }
                 }
             }
@@ -151,7 +171,7 @@ namespace Remizione
         // OnPopulateCompleted
         protected override void OnPopulateCompleted()
         {
-            DeployPainCard();
+            DeployMagneticCard();
         }
 
         // RequiresPersistence
