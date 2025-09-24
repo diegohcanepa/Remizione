@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:31f23cdd136a14862fa6f8ebfe307112:4620fc78f4bd88cef1d2f539c232d029:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:57a1a16cfd1ddb1480372fa9c1b6a31b:52240f6a0e1fba1bcaa8943fc4d7624b:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -53,6 +53,8 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Edmund-assets/Consume02.png" x="350" y="43" w="28" h="25"/>
     <sprite n="Edmund-assets/Consume03.png" x="380" y="43" w="28" h="25"/>
     <sprite n="Edmund-assets/Consume04.png" x="410" y="43" w="28" h="25"/>
+    <sprite n="Edmund-assets/ContactDamage01.png" x="440" y="43" w="28" h="25"/>
+    <sprite n="Edmund-assets/ContactDamage02.png" x="470" y="43" w="28" h="25"/>
     <sprite n="Edmund-assets/Gut0.png" x="500" y="43" w="9" h="10"/>
     <sprite n="Edmund-assets/Hurt01.png" x="440" y="43" w="28" h="25"/>
     <sprite n="Edmund-assets/Hurt02.png" x="470" y="43" w="28" h="25"/>
@@ -71,8 +73,6 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Edmund-assets/RaiseArm01.png" x="236" y="84" w="28" h="25"/>
     <sprite n="Edmund-assets/RaiseArm02.png" x="266" y="84" w="28" h="25"/>
     <sprite n="Edmund-assets/RaiseArm03.png" x="146" y="111" w="28" h="25"/>
-    <sprite n="Edmund-assets/ShockZap01.png" x="440" y="43" w="28" h="25"/>
-    <sprite n="Edmund-assets/ShockZap02.png" x="470" y="43" w="28" h="25"/>
     <sprite n="Edmund-assets/Stand01.png" x="2" y="135" w="28" h="25"/>
     <sprite n="Edmund-assets/Stand02.png" x="32" y="135" w="28" h="25"/>
     <sprite n="Edmund-assets/Stand03.png" x="62" y="135" w="28" h="25"/>

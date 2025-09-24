@@ -3,15 +3,15 @@
 namespace Remizione
 {
     /// <summary>
-    /// ActorShockZapState
+    /// ActorContactDamageState
     /// </summary>
-    public sealed class ActorShockZapState : ActorAnimatedState
+    public sealed class ActorContactDamageState : ActorAnimatedState
     {
         private int cooldown;
 
         // Constructor
-        public ActorShockZapState(Actor owner)
-            : base(owner, ActorStateNames.ShockZap, true)
+        public ActorContactDamageState(Actor owner)
+            : base(owner, ActorStateNames.ContactDamage, true)
         {
         }
 
@@ -29,7 +29,6 @@ namespace Remizione
         {
             base.Enter();
             cooldown = 300;
-            Owner.PlaySound(SoundNames.ShockZap);
         }
 
         // Update

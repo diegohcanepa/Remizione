@@ -87,10 +87,9 @@
   <String Key="Languages.es-es">Español (España)</String>
   <String Key="Languages.fr-fr">Français</String>
   <String Key="Languages.ru-ru">Русский</String>
-  <String Key="LogVerb.Discarded">Descartaste</String>
+  <String Key="LogVerb.ItemRequired">Se necesita</String>
   <String Key="LogVerb.Lost">Perdiste</String>
   <String Key="LogVerb.PickedUp">Recogiste</String>
-  <String Key="LogVerb.Restored">Recuperaste</String>
   <String Key="Menu.Controls.Keyboard.Interact">Interactuar</String>
   <String Key="Menu.Controls.Keyboard.Inventory">Inventario</String>
   <String Key="Menu.Controls.Keyboard.Kick">Patear (cuando esté disponible)</String>

@@ -57,7 +57,7 @@ namespace Remizione
                 return;
             }
 
-            verbText.Color = isWarning ? ColorPalette.Text.Red : ColorPalette.Text.Green;
+            verbText.Color = isWarning ? ColorPalette.Text.Orange : ColorPalette.Text.Green;
             verbText.Position = new Vector2(8, 25);
             verbText.Text = verb;
 
@@ -119,11 +119,15 @@ namespace Remizione
         // Show
         public void Show(LogVerb verb, string noun, AtlasImage? image = null)
         {
-            var isWarning = verb == LogVerb.Lost;
+            var isWarning = verb == LogVerb.Lost || verb == LogVerb.ItemRequired;
+            
             ShowCore(Localization.GetValue(verb), noun, isWarning, image);
 
             if (verb == LogVerb.PickedUp)
                 Sound.Play(SoundNames.UILogPickup);
+
+            else if (verb == LogVerb.ItemRequired)
+                Sound.Play(SoundNames.Error);
         }
     }
 }

@@ -210,6 +210,8 @@
             <key type="filename">Edmund-assets/Consume02.png</key>
             <key type="filename">Edmund-assets/Consume03.png</key>
             <key type="filename">Edmund-assets/Consume04.png</key>
+            <key type="filename">Edmund-assets/ContactDamage01.png</key>
+            <key type="filename">Edmund-assets/ContactDamage02.png</key>
             <key type="filename">Edmund-assets/Hurt01.png</key>
             <key type="filename">Edmund-assets/Hurt02.png</key>
             <key type="filename">Edmund-assets/LookBehind01.png</key>
@@ -227,8 +229,6 @@
             <key type="filename">Edmund-assets/RaiseArm01.png</key>
             <key type="filename">Edmund-assets/RaiseArm02.png</key>
             <key type="filename">Edmund-assets/RaiseArm03.png</key>
-            <key type="filename">Edmund-assets/ShockZap01.png</key>
-            <key type="filename">Edmund-assets/ShockZap02.png</key>
             <key type="filename">Edmund-assets/Stand01.png</key>
             <key type="filename">Edmund-assets/Stand02.png</key>
             <key type="filename">Edmund-assets/Stand03.png</key>

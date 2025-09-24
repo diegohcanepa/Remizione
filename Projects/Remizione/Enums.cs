@@ -60,7 +60,7 @@ namespace Remizione
     public enum LightState { Off, On, TurningOn, TurningOff }
 
     // LogVerb
-    public enum LogVerb { Lost, PickedUp }
+    public enum LogVerb { Lost, PickedUp, ItemRequired }
 
     // MenuItemName
     public enum MenuItemName { Options, Resume, Start, Exit, ExitToMainMenu, Yes, No, Cancel, Accept, Credits, WishlistNow, Memoirs }

@@ -11,7 +11,7 @@
         {
             Affinity = Affinity.Evil;
             AllowInteraction = false;
-            ContactDamageKind = DamageKind.Lightning;
+            ContactDamageKind = DamageKind.Physical;
             PowerBonus = 1;
             PlacementPhase = PlacementPhase.Creature;
         }

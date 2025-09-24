@@ -19,6 +19,7 @@ namespace Remizione
 
         private readonly ActorCloseAttackState closeAttackState;
         private readonly ActorConsumeState consumeState;
+        private readonly ActorContactDamageState contactDamageState;
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -31,7 +32,6 @@ namespace Remizione
         private PlayerNumber playerNumber = PlayerNumber.None;
         private readonly GameSession session;
         private readonly ShadowSpot shadowSpot;
-        private readonly ActorShockZapState shockZapState;
         private SpeechBubble? speechBubble;
         private readonly ActorStandState standState;
         private int suspendInteractionCooldown;
@@ -89,8 +89,8 @@ namespace Remizione
             consumeState = new ActorConsumeState(this);
             this.StateMachine.RegisterState(consumeState);
 
-            shockZapState = new ActorShockZapState(this);
-            this.StateMachine.RegisterState(shockZapState);
+            contactDamageState = new ActorContactDamageState(this);
+            this.StateMachine.RegisterState(contactDamageState);
 
             this.AIStateMachine = new(this);
 
@@ -166,8 +166,8 @@ namespace Remizione
             return true;
         }
 
-        // PerformShockZap
-        private void PerformShockZap(GameThing attacker)
+        // PerformContactDamage
+        private void PerformContactDamage(GameThing attacker)
         {
             if (session.IsAwaiting || !CanChangeState)
                 return;
@@ -176,10 +176,10 @@ namespace Remizione
 
             InputManager.DefaultPlayer.GamePad.Vibrate(200, 1, 1);
 
-            if (MetaItem.Find("ShockZap") is MetaItem metaItem)
+            if (MetaItem.Find(attacker.ContactDamageKind.ToString() + "Damage") is MetaItem metaItem)
                 metaItem.ApplyDamage(attacker, this);
 
-            StateMachine.ChangeState(shockZapState.Name);
+            StateMachine.ChangeState(contactDamageState.Name);
         }
 
         // PerformThrowAction
@@ -277,8 +277,8 @@ namespace Remizione
         // OnCollision
         protected override void OnCollision(GameThing thing)
         {
-            if (thing.ContactDamageKind == DamageKind.Lightning)
-                PerformShockZap(thing);
+            if (thing.ContactDamageKind != DamageKind.None)
+                PerformContactDamage(thing);
         }
 
         // OnDie
