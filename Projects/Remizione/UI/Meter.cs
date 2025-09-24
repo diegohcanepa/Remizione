@@ -97,7 +97,7 @@ namespace Remizione
         // Convierte un valor lógico (0..MaximumValue) a ancho proporcional (0..fixedWidth)
         private float GetScaledWidth(float val)
         {
-            if (maximumValue <= 0) 
+            if (maximumValue <= 0)
                 return 0;
             else
                 return (val / maximumValue) * width;

@@ -372,7 +372,7 @@ namespace Remizione
                 shouldClampToWalkablePosition = false;
             }
 
-            Light?.Update(gameTime);
+            AttachedLight?.Update(gameTime);
 
             if (Blinker.IsRunning)
                 Blinker.Update(gameTime);
@@ -422,6 +422,12 @@ namespace Remizione
         // ApproachPosition
         [ScriptProperty]
         public Vector2 ApproachPosition { get; set; }
+
+        // AttachedLight
+        public Light? AttachedLight { get; set; }
+
+        // AttachedLightPosition
+        public Vector2 AttachedLightPosition { get; set; }
 
         // AttackRange
         [ScriptProperty]
@@ -593,11 +599,11 @@ namespace Remizione
             if (!IsEmittingLight)
                 return;
 
-            if (Light != null)
+            if (AttachedLight != null)
             {
-                if (LightPosition != Vector2.Zero)
-                    Light.Position = this.GetAbsolutePoint(LightPosition);
-                Light.Draw(gameTime);
+                if (AttachedLightPosition != Vector2.Zero)
+                    AttachedLight.Position = this.GetAbsolutePoint(AttachedLightPosition);
+                AttachedLight.Draw(gameTime);
             }
 
             OnDrawLights(gameTime);
@@ -807,6 +813,10 @@ namespace Remizione
         [ScriptProperty]
         public Sound? HurtSound { get; set; }
 
+        // IgnoreAttachedLight
+        [ScriptProperty]
+        public bool IgnoreAttachedLight { get; set; }
+
         // IgnoreThrowables
         [ScriptProperty]
         public bool IgnoreThrowables { get; set; }
@@ -817,7 +827,7 @@ namespace Remizione
 
         // InteractionPolygon
         [ScriptProperty]
-        public TestPolygon InteractionPolygon { get; set; } = TestPolygon.Collider;
+        public TestPolygon InteractionPolygon { get; set; } = TestPolygon.Hotspot;
 
         // InvulnerabilityPeriod
         [ScriptProperty]
@@ -840,7 +850,7 @@ namespace Remizione
         public bool IsDead => Health <= 0 && MaxHealth > 0;
 
         // IsEmittingLight
-        public virtual bool IsEmittingLight => Light != null && Light.IsEmitting;
+        public virtual bool IsEmittingLight => AttachedLight != null && AttachedLight.IsEmitting;
 
         // IsMouseOver
         public bool IsMouseOver()
@@ -857,12 +867,6 @@ namespace Remizione
         // IsWalkAreaHole
         [ScriptProperty]
         public virtual bool IsWalkAreaHole => !Collider.IsEmpty;
-
-        // Light
-        public Light? Light { get; set; }
-
-        // LightPosition
-        public Vector2 LightPosition { get; set; }
 
         // LocalizedDisplayName
         public string LocalizedDisplayName { get; private set; } = string.Empty;
@@ -976,7 +980,7 @@ namespace Remizione
         public bool ShakeOnHit { get; set; }
 
         // TakeDamage
-        public void TakeDamage(GameThing attacker, int amount, DamageKind damageKind, DamageIntensity damageIntensity, Vector2 knockback, ImpactWordName impactWord)
+        public void TakeDamage(GameThing attacker, int amount, DamageKind damageKind, DamageIntensity damageIntensity, bool critical, Vector2 knockback, ImpactWordName impactWord)
         {
             if (IsDead || amount <= 0)
                 return;
@@ -1044,11 +1048,11 @@ namespace Remizione
 
                 Blinker.Start(20, 5);
 
-                Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), amount.ToString(), damageIntensity);
+                Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), amount.ToString(), critical);
 
                 if (Session.Player == attacker)
                     Session.HUD.TargetMeter.Target = this;
-                
+
                 else if (Session.Player == this)
                     Session.HUD.TargetMeter.Target = attacker;
 

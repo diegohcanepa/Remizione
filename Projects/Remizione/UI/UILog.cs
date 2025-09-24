@@ -31,7 +31,7 @@ namespace Remizione
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Left,
-                Scale = ScaleInfo.Text.VeryLarge
+                Scale = ScaleInfo.Text.Giant
             };
 
             this.nounText = new(Game, Fonts.CommonOutline)
@@ -61,7 +61,7 @@ namespace Remizione
             verbText.Position = new Vector2(8, 25);
             verbText.Text = verb;
 
-            nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
+            nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -2);
             nounText.Text = noun;
             icon.Image = image;
             icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
@@ -120,7 +120,7 @@ namespace Remizione
         public void Show(LogVerb verb, string noun, AtlasImage? image = null)
         {
             var isWarning = verb == LogVerb.Lost || verb == LogVerb.ItemRequired;
-            
+
             ShowCore(Localization.GetValue(verb), noun, isWarning, image);
 
             if (verb == LogVerb.PickedUp)

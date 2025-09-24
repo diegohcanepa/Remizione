@@ -4,8 +4,6 @@ using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using SharpDX.Direct2D1.Effects;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -23,7 +21,6 @@ namespace Adberration
         private readonly List<Script> routines = [];
         private readonly List<SoundInstance> sounds = [];
         private float zoom = 1;
-        private FloatRange zoomRange = new(1, 9);
 
         #endregion
 
@@ -111,6 +108,34 @@ namespace Adberration
             ResetAreas();
         }
 
+        // OnPause
+        protected override void OnPause()
+        {
+            for (var i = 0; i < routines.Count; i++)
+            {
+                Session.ScriptProcessor.PauseScript(routines[i]);
+            }
+
+            for (var i = 0; i < sounds.Count; i++)
+            {
+                sounds[i].Pause();
+            }
+        }
+
+        // OnResume
+        protected override void OnResume()
+        {
+            for (var i = 0; i < routines.Count; i++)
+            {
+                Session.ScriptProcessor.ResumeScript(routines[i]);
+            }
+
+            for (var i = 0; i < sounds.Count; i++)
+            {
+                sounds[i].Resume();
+            }
+        }
+
         // OnUnload
         protected override void OnUnload()
         {
@@ -179,7 +204,7 @@ namespace Adberration
                 routines.Add(routine);
         }
 
-        // RegisterSound
+        // RegisterLocalSound
         internal void RegisterSound(SoundInstance soundInstance)
         {
             if (!sounds.Contains(soundInstance))

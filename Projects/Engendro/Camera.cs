@@ -36,7 +36,7 @@ namespace Engendro
         private readonly int viewportHeight;
         private readonly int viewportWidth;
         private float zoom = 1;
-        private FloatRange zoomRange = new(minZoom, maxZoom);
+        private readonly FloatRange zoomRange = new(minZoom, maxZoom);
         private readonly FloatTween zoomTween = new();
 
         #endregion

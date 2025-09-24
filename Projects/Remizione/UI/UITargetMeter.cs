@@ -96,7 +96,7 @@ namespace Remizione.UI
                 if (value != target)
                 {
                     target = value;
-                 
+
                     if (target != null && target.MaxHealth == 0)
                         target = null;
 

@@ -18,7 +18,7 @@ namespace Remizione
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Videos, Voices, System, Text }
 
     // DamageIntensity
-    public enum DamageIntensity { Base, Critical }
+    public enum DamageIntensity { Light, Heavy }
 
     // DamageKind
     public enum DamageKind { None, Physical, Fire, Cold, Lightning, Acid, Poison }
@@ -88,7 +88,7 @@ namespace Remizione
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
 
     // PropState
-    public enum PropState { None, Closed, Empty, Open, Locked, Unlocked}
+    public enum PropState { None, Closed, Empty, Open, Locked, Unlocked }
 
     // RainDropImpactKind
     public enum RainDropImpactKind { None, Ground, Water }

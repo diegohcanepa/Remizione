@@ -31,8 +31,9 @@ namespace Remizione
             : base(session, string.Empty)
         {
             this.Atlas = Atlases.UI;
+            this.Collider = new("20,12;20,22;0,22;0,12");
             this.DepthOffset = -5;
-            IgnoreWalkArea = false;
+            this.IgnoreWalkArea = false;
 
             // Shadow
             this.shadow = new ImageSprite(session.Game, Atlases.UI.GetImage(nameof(Pickup) + "Shadow"))

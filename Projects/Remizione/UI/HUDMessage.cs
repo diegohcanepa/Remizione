@@ -59,7 +59,7 @@ namespace Remizione
         {
             messageText.Text = Localization.GetValue(message);
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 200);
-            
+
             if (message == HUDMessageKind.MagneticCardRequired)
             {
                 messageText.Color = ColorPalette.Text.Orange;

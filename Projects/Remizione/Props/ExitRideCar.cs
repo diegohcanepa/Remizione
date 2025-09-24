@@ -52,7 +52,7 @@ namespace Remizione
         {
             base.OnLoad();
             IsTurnedOn = false;
-            Light?.TurnOff(true);
+            AttachedLight?.TurnOff(true);
             this.AnimationPlayer.Play("Off");
         }
 
@@ -82,7 +82,7 @@ namespace Remizione
         public void TurnOn()
         {
             AnimationPlayer.Play("On", false);
-            Light?.TurnOn();
+            AttachedLight?.TurnOn();
             IsTurnedOn = true;
         }
     }

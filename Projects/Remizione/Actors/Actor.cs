@@ -98,7 +98,7 @@ namespace Remizione
             {
                 var index = 0;
                 customGuts = [];
-                
+
                 while (true)
                 {
                     if (Atlas.GetImage(Sprite.ImagePath + $"Gut{index}") is AtlasImage image)
@@ -114,6 +114,24 @@ namespace Remizione
         #endregion
 
         #region Private members
+
+        // ApplyContactDamage
+        private void ApplyContactDamage(GameThing attacker)
+        {
+            if (session.IsAwaiting || !CanChangeState)
+                return;
+
+            if (MetaItem.Find(attacker.ContactDamageKind.ToString() + "Damage") is not MetaItem metaItem)
+                return;
+
+            Stand();
+
+            InputManager.DefaultPlayer.GamePad.Vibrate(200, 1, 1);
+
+            metaItem.ApplyDamage(attacker, this);
+
+            StateMachine.ChangeState(contactDamageState.Name);
+        }
 
         // FindInteractiveTarget
         private GameThing? FindInteractiveTarget()
@@ -164,22 +182,6 @@ namespace Remizione
             */
 
             return true;
-        }
-
-        // PerformContactDamage
-        private void PerformContactDamage(GameThing attacker)
-        {
-            if (session.IsAwaiting || !CanChangeState)
-                return;
-
-            Stand();
-
-            InputManager.DefaultPlayer.GamePad.Vibrate(200, 1, 1);
-
-            if (MetaItem.Find(attacker.ContactDamageKind.ToString() + "Damage") is MetaItem metaItem)
-                metaItem.ApplyDamage(attacker, this);
-
-            StateMachine.ChangeState(contactDamageState.Name);
         }
 
         // PerformThrowAction
@@ -278,7 +280,7 @@ namespace Remizione
         protected override void OnCollision(GameThing thing)
         {
             if (thing.ContactDamageKind != DamageKind.None)
-                PerformContactDamage(thing);
+                ApplyContactDamage(thing);
         }
 
         // OnDie
@@ -604,9 +606,9 @@ namespace Remizione
         public GameThing? FindEnemy()
         {
             var result = OnFindEnemy();
-            
+
             if (result?.IsDead == true)
-                result = null;  
+                result = null;
 
             return result;
         }

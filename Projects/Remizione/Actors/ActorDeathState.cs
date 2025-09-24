@@ -21,7 +21,7 @@
                 else
                     return ActorStateNames.Stand;
             }
-            
+
             return base.CheckTransitions();
         }
     }

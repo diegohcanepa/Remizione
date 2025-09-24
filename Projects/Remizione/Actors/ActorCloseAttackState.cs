@@ -46,9 +46,8 @@ namespace Remizione
                     if (target.RuntimeHotspot.BoundingRectangleF.Intersects(Owner.GetFrameSubArea()))
                     {
                         damageTaken = true;
-
                         var damageAmount = MetaItem.Damage.Roll();
-                        target.TakeDamage(Owner, damageAmount, MetaItem.DamageKind, DamageIntensity.Base, MetaItem.Knockback, MetaItem.ImpactWord);
+                        target.TakeDamage(Owner, damageAmount, MetaItem.DamageKind, MetaItem.DamageIntensity, false, MetaItem.Knockback, MetaItem.ImpactWord);
                     }
                 }
             }

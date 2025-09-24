@@ -14,7 +14,7 @@ namespace Engendro
         private int counter;
         private int delayCooldown;
         private int elapsedInterval;
-        private int startDelay;
+        private readonly int startDelay;
         private int valueIndex;
         private readonly List<T> values;
 

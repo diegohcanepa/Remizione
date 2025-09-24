@@ -41,7 +41,7 @@ namespace Remizione
             {
                 for (var i = 0; i < extraImages.Count; i++)
                 {
-                    pieces.Add(new ShatterPiece(this, extraImages[i]) { } );
+                    pieces.Add(new ShatterPiece(this, extraImages[i]) { });
                 }
             }
 

@@ -56,7 +56,7 @@ namespace Remizione
 
             opacityTween.StartDelay = duration - fadeDuration;
             opacityTween.Start(TweenStyle.CubicIn, 1, 0, fadeDuration);
-            text.Tweens.OpacityTween = opacityTween;        
+            text.Tweens.OpacityTween = opacityTween;
         }
 
         #endregion
@@ -90,14 +90,9 @@ namespace Remizione
         }
 
         // Show
-        public void Show(Vector2 origin, string value, DamageIntensity damageIntensity)
+        public void Show(Vector2 origin, string value, bool critical)
         {
-            var color = damageIntensity switch
-            {
-                DamageIntensity.Critical => ColorPalette.Text.Highlight,
-                _ => ColorPalette.Text.Default,
-            };
-
+            var color = critical ? ColorPalette.Text.Highlight : ColorPalette.Text.Default;
             ShowCore(origin, value, color, new(0, -6), 700);
         }
     }

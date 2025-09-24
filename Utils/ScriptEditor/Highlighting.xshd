@@ -211,6 +211,7 @@
 			<Word>add-trigger-area</Word>
 			<Word>add-walk-area</Word>
 			<Word>atlas</Word>
+			<Word>attach-light</Word>
 			<Word>begin-rain</Word>
 			<Word>dizziness-effect</Word>
 			<Word>end-rain</Word>
@@ -238,14 +239,13 @@
 			<Word>set-rain-impact-area</Word>
 			<Word>set-rain</Word>
 			<Word>set-sparkle</Word>
-			<Word>set-thing-light</Word>
 			<Word>shake-horizontally</Word>
 			<Word>shake-vertically</Word>
 			<Word>shake</Word>
 			<Word>show-command-tip</Word>
 			<Word>show-inventory</Word>
+			<Word>show-log-message</Word>
 			<Word>show-message</Word>
-			<Word>show-pickup-message</Word>
 			<Word>stand</Word>
 			<Word>stop-following</Word>
 			<Word>stop-shaking</Word>

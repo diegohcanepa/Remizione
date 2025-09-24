@@ -83,7 +83,7 @@ namespace Adberration.Scripting
             declarationScript.SetTargetEntity(instanceName);
 
             // Declaration
-            Entity? result = declarationScript.CreateEntity() as Entity;
+            Entity? result = declarationScript.CreateEntity();
             declarationScript.Compile();
             session.ScriptProcessor.RunScript(declarationScript);
 

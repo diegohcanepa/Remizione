@@ -26,6 +26,7 @@ namespace Remizione
             this.Atlas = Atlases.Environment;
             this.DisplayNameKey = $"Prop.{StaticName}";
             this.HitTestSource = TestPolygon.Collider;
+            this.InteractionPolygon = TestPolygon.Collider;
         }
 
         #endregion

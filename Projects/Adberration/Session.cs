@@ -118,6 +118,8 @@ namespace Adberration
 
             if (CanUnloadRoom(currentRoom))
                 currentRoom.Unload();
+            else
+                currentRoom.Pause();
 
             OnExitRoomCompleted(currentRoom, nextRoom);
 
@@ -891,6 +893,9 @@ namespace Adberration
             // Exit room
             if (Room != null)
                 ExitRoom(this.Room, nextRoom);
+
+            if (nextRoom.IsPaused)
+                nextRoom.Resume();
 
             // New room
             this.Room = nextRoom;

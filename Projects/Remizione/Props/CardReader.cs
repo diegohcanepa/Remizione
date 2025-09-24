@@ -15,8 +15,9 @@ namespace Remizione
             : base(session, name)
         {
             this.lightLayer = new(Game);
+            this.lightLayer.Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, 1, .85f, 80, -1);
 
-            this.Light = new Light(Game, "")
+            this.AttachedLight = new Light(Game, "")
             {
                 PivotOrigin = RectanglePoint.Center
             };
@@ -43,14 +44,14 @@ namespace Remizione
             if (PropState == PropState.Locked)
             {
                 lightLayer.Image = Atlas?.GetImage($"{StaticName}LightRed");
-                if (Light != null)
-                    Light.Color = Color.Red;
+                if (AttachedLight != null)
+                    AttachedLight.Color = Color.Red;
             }
             else
             {
                 lightLayer.Image = Atlas?.GetImage($"{StaticName}LightGreen");
-                if (Light != null)
-                    Light.Color = Color.Green;
+                if (AttachedLight != null)
+                    AttachedLight.Color = Color.Green;
             }
 
             if (LoadState != LoadState.Loaded)
@@ -72,8 +73,15 @@ namespace Remizione
         {
             base.OnTransform(change);
             lightLayer?.MatchTransform(Sprite);
-            if (Light != null)
-                Light.Position = BoundingBox.GetPoint(RectanglePoint.LeftTop, 6, 23);
+            if (AttachedLight != null)
+                AttachedLight.Position = BoundingBox.GetPoint(RectanglePoint.LeftTop, 6, 23);
+        }
+
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            base.OnUpdate(gameTime);
+            lightLayer.Update(gameTime);
         }
 
         #endregion

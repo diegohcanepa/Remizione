@@ -100,7 +100,7 @@ namespace Remizione
 
                     if (Session.ScriptLibrary.GetRoutine(RoutineNames.GotoPreviousRunRoom) is Script script)
                     {
-                        Vector2[] vertices = [new(11, 39), new(22, 39), new(22, 48), new(11, 48)];
+                        Vector2[] vertices = [new(11, 41), new(22, 41), new(22, 52), new(11, 52)];
                         AddTriggerArea("PreviousRoom", script, null, true, true, false, null, vertices);
                     }
                 }
@@ -125,7 +125,7 @@ namespace Remizione
                     if (Session.ScriptLibrary.GetRoutine(RoutineNames.GotoNextRunRoom) is Script script)
                     {
                         var lt = RightTower.BoundingBox.GetPoint(RectanglePoint.LeftTop);
-                        Vector2[] vertices = [new(25, 39), new(36, 39), new(36, 48), new(25, 48)];
+                        Vector2[] vertices = [new(25, 41), new(36, 41), new(36, 52), new(25, 52)];
 
                         for (var i = 0; i < vertices.Length; i++)
                         {

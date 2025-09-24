@@ -22,7 +22,7 @@ namespace Remizione
         private float life = 2;
         private readonly GameThing owner;
         private static readonly Color shadowColor = Color.Black * .3f;
-        private static readonly Vector2 shadowOffset = new Vector2(.5f);
+        private static readonly Vector2 shadowOffset = new(.5f);
         private Vector2 velocity;
 
         #endregion

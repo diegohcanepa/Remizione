@@ -1,5 +1,4 @@
-﻿using Engendro;
-using Engendro.Audio;
+﻿using Engendro.Audio;
 
 namespace Remizione
 {
@@ -29,7 +28,7 @@ namespace Remizione
         protected override void OnDie()
         {
             base.OnDie();
-            Session.ObjectPools.FloatingTexts.Get()?.Show(BoundingBox.Center, Localization.GetValue(HUDMessageKind.ExtraTime), ColorPalette.Text.Orange);
+            // TODO: Trigger countdown
         }
 
         #endregion

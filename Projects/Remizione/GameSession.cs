@@ -65,7 +65,7 @@ namespace Remizione
                 {
                     TextErrorColor = ColorPalette.Text.Terra
                 };
-                
+
                 console.CommandList.Add("add-item MagneticCard to $Player");
                 console.CommandList.Add("=>> $BeginRun()");
                 console.CommandList.Add("=>> $NextRunRoom()");
@@ -77,6 +77,32 @@ namespace Remizione
             this.echoScene = new(Game);
 
             LocalizationSource = LocalizationSource.Script;
+        }
+
+        #endregion
+
+        #region Private members
+
+        // EndRun
+        private void EndRun()
+        {
+            if (!IsRunInProgress)
+                return;
+
+            IsHUDVisible = false;
+            GameplayMode = GameplayMode.Adventure;
+            Player?.Reheal();
+
+            foreach (var room in rideRooms)
+            {
+                room.Children.Clear();
+            }
+
+            CleanUpRuntimeEntities();
+            rideRooms.Clear();
+            IsRunInProgress = false;
+            RunProgress = -1;
+            RandomSeed = 0;
         }
 
         #endregion
@@ -102,10 +128,7 @@ namespace Remizione
         }
 
         // CanUnloadRoom
-        protected override bool CanUnloadRoom(Room room)
-        {
-            return !IsRunInProgress;
-        }
+        protected override bool CanUnloadRoom(Room room) => !IsRunInProgress;
 
         // ExtendScriptRegistry
         protected override void ExtendScriptRegistry(ScriptRegistry scriptRegistry)
@@ -137,6 +160,7 @@ namespace Remizione
             scriptRegistry.RegisterStatement("add-trigger-area", typeof(AddTriggerAreaCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("add-walk-area", typeof(AddWalkAreaCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("animate-actor", typeof(AnimateActorCommand));
+            scriptRegistry.RegisterStatement("attach-light", typeof(AttachLightCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("await-chance-roll", typeof(AwaitChanceRollCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-credits", typeof(AwaitCreditsCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-dialog-block", typeof(AwaitDialogBlockCommand), CodingContext.Execution);
@@ -154,7 +178,6 @@ namespace Remizione
             scriptRegistry.RegisterStatement("say", typeof(SayCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("select-walk-area", typeof(SelectWalkAreaCommand));
             scriptRegistry.RegisterStatement("set-light", typeof(SetLightCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("set-thing-light", typeof(SetThingLightCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("show-log-message", typeof(ShowLogMessageCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("show-message", typeof(ShowMessageCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
@@ -256,13 +279,13 @@ namespace Remizione
             // Stats
             ////////////////
 
-            // Deaths
-            if (sessionNode.Attributes[nameof(Stats.Deaths)]?.Value is string deaths)
-                this.Stats.Deaths = XmlConvert.ToInt32(deaths);
+            // CompletedRuns
+            if (sessionNode.Attributes[nameof(CompletedRuns)]?.Value is string completedRuns)
+                this.CompletedRuns = XmlConvert.ToInt32(completedRuns);
 
-            // Runs
-            if (sessionNode.Attributes[nameof(Stats.Runs)]?.Value is string runs)
-                this.Stats.Runs = XmlConvert.ToInt32(runs);
+            // Deaths
+            if (sessionNode.Attributes[nameof(Deaths)]?.Value is string deaths)
+                this.Deaths = XmlConvert.ToInt32(deaths);
         }
 
         // OnResume
@@ -344,7 +367,7 @@ namespace Remizione
             {
                 if (Player?.IsDead == true)
                 {
-                    Stats.Deaths++;
+                    Deaths++;
                     AwaitRoutine(RoutineNames.GameOver);
                 }
             }
@@ -368,11 +391,11 @@ namespace Remizione
             // Stats
             ////////////////
 
-            // Deaths
-            output.WriteAttributeString(nameof(SessionStats.Deaths), XmlConvert.ToString(Stats.Deaths));
+            // CompletedRuns
+            output.WriteAttributeString(nameof(CompletedRuns), XmlConvert.ToString(CompletedRuns));
 
-            // Runs
-            output.WriteAttributeString(nameof(SessionStats.Runs), XmlConvert.ToString(Stats.Runs));
+            // Deaths
+            output.WriteAttributeString(nameof(Deaths), XmlConvert.ToString(Deaths));
         }
 
         #endregion
@@ -398,28 +421,33 @@ namespace Remizione
             NextRunRoom();
         }
 
+        // CancelRun
+        [ScriptMethod]
+        public void CancelRun()
+        {
+            Deaths++;
+            EndRun();
+        }
+
+        // CompleteRun
+        [ScriptMethod]
+        public void CompleteRun()
+        {
+            CompletedRuns++;
+            EndRun();
+        }
+
+        // CompletedRuns
+        [ScriptProperty]
+        public int CompletedRuns { get; set; }
+
+        // Deaths
+        [ScriptProperty]
+        public int Deaths { get; set; }
+
         // DialogOptionId
         [ScriptProperty]
         public int DialogOptionId { get; set; }
-
-        // EndRun
-        [ScriptMethod]
-        public void EndRun()
-        {
-            if (!IsRunInProgress)
-                return;
-
-            foreach (var room in rideRooms)
-            {
-                room.Children.Clear();
-            }
-
-            CleanUpRuntimeEntities();
-            rideRooms.Clear();
-            IsRunInProgress = false;
-            RunProgress = -1;
-            RandomSeed = 0;
-        }
 
         // Environment
         public Environment Environment { get; }
@@ -500,7 +528,7 @@ namespace Remizione
 
             if (RunProgress == rideRooms.Count)
             {
-                Stats.Runs++;
+                CompletedRuns++;
                 EndRun();
             }
             else
@@ -619,8 +647,5 @@ namespace Remizione
 
         // StaticThings
         public NamedObjectReadOnlyCollection<GameThing> StaticThings { get; }
-
-        // Stats
-        public SessionStats Stats { get; } = new();
     }
 }
