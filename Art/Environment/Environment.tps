@@ -173,22 +173,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">BigSign-assets/BigSign.png</key>
-            <key type="filename">BigSign-assets/BigSignShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>8,14,16,27</rect>
-                <key>scale9Paddings</key>
-                <rect>8,14,16,27</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">CardReader-assets/CardReader.png</key>
             <key type="filename">CardReader-assets/CardReaderLightGreen.png</key>
             <key type="filename">CardReader-assets/CardReaderLightRed.png</key>
@@ -1854,7 +1838,6 @@
                     <filename>FenceC-assets</filename>
                     <filename>FenceD-assets</filename>
                     <filename>EntranceRail-assets</filename>
-                    <filename>BigSign-assets</filename>
                     <filename>PilgrimSack-assets</filename>
                     <filename>TombstoneA-assets</filename>
                     <filename>TombstoneB-assets</filename>

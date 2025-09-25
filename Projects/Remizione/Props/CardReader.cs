@@ -54,6 +54,8 @@ namespace Remizione
                     AttachedLight.Color = Color.Green;
             }
 
+            AllowInteraction = PropState == PropState.Locked;
+
             if (LoadState != LoadState.Loaded)
                 return;
 

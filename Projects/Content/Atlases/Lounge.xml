@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:276e11b9c36a4df3d467c7f27768dc9e:f344b6feb34e4fde33a9c9d8bcd63ffc:69596068f718a35a2e92122423ac8b5c$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Lounge.png" width="1024" height="1024">
+    <sprite n="Lounge.png" x="2" y="2" w="647" h="270"/>
+    <sprite n="RideCar01.png" x="990" y="2" w="29" h="29"/>
+    <sprite n="RideCar02.png" x="990" y="33" w="29" h="29"/>
+    <sprite n="RideCar03.png" x="905" y="44" w="29" h="29"/>
+    <sprite n="RideCar04.png" x="936" y="58" w="29" h="29"/>
+    <sprite n="Tower.png" x="651" y="2" w="108" h="92"/>
+    <sprite n="TowerDoor01.png" x="967" y="58" w="20" h="30"/>
+    <sprite n="TowerDoor02.png" x="905" y="75" w="20" h="30"/>
+    <sprite n="TowerDoor03.png" x="871" y="87" w="20" h="30"/>
+    <sprite n="TowerDoor04.png" x="989" y="64" w="20" h="30"/>
+    <sprite n="TowerPatch.png" x="919" y="2" w="35" h="40"/>
+    <sprite n="TowerShadow.png" x="761" y="2" w="108" h="92"/>
+    <sprite n="TowerTrack.png" x="871" y="2" w="46" h="27"/>
+    <sprite n="WelcomeSign.png" x="871" y="31" w="32" h="54"/>
+    <sprite n="WelcomeSignShadow.png" x="956" y="2" w="32" h="54"/>
+</TextureAtlas>

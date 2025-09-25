@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:f2b6a7052b0432904ab6ef7977cd621e:1ceb2d99c9b494683691dbb2f3d25331:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:bb21c0b237020c6730cc6a5e3911c9f9:45897ed23a496adbc0ddec2ab7b46619:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -22,12 +22,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 <TextureAtlas imagePath="Environment.png" width="1024" height="1024">
     <sprite n="AghGreen.png" x="703" y="61" w="26" h="16"/>
     <sprite n="AghRed.png" x="703" y="79" w="26" h="16"/>
-    <sprite n="BangBlue.png" x="35" y="531" w="30" h="13"/>
-    <sprite n="BangRed.png" x="2" y="534" w="30" h="13"/>
-    <sprite n="BigSign.png" x="406" y="352" w="32" h="54"/>
-    <sprite n="BigSignShadow.png" x="406" y="408" w="32" h="54"/>
-    <sprite n="BoomPurple.png" x="37" y="499" w="30" h="14"/>
-    <sprite n="BoomRed.png" x="37" y="515" w="30" h="14"/>
+    <sprite n="BangBlue.png" x="406" y="400" w="30" h="13"/>
+    <sprite n="BangRed.png" x="37" y="499" w="30" h="13"/>
+    <sprite n="BoomPurple.png" x="406" y="368" w="30" h="14"/>
+    <sprite n="BoomRed.png" x="406" y="384" w="30" h="14"/>
     <sprite n="CardReader.png" x="969" y="190" w="25" h="36"/>
     <sprite n="CardReaderLightGreen.png" x="996" y="194" w="25" h="36"/>
     <sprite n="CardReaderLightRed.png" x="969" y="228" w="25" h="36"/>
@@ -38,11 +36,11 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="CrossA.png" x="681" y="122" w="19" h="22"/>
     <sprite n="CrossAShadow.png" x="69" y="344" w="19" h="22"/>
     <sprite n="CrossB.png" x="69" y="497" w="18" h="18"/>
-    <sprite n="CrossBShadow.png" x="69" y="517" w="18" h="18"/>
+    <sprite n="CrossBShadow.png" x="68" y="517" w="18" h="18"/>
     <sprite n="CrossC.png" x="69" y="389" w="18" h="22"/>
     <sprite n="CrossCShadow.png" x="164" y="369" w="18" h="22"/>
-    <sprite n="CrossLargeA.png" x="145" y="531" w="23" h="39"/>
-    <sprite n="CrossLargeAShadow.png" x="88" y="562" w="23" h="39"/>
+    <sprite n="CrossLargeA.png" x="144" y="531" w="23" h="39"/>
+    <sprite n="CrossLargeAShadow.png" x="144" y="572" w="23" h="39"/>
     <sprite n="CrucifiedA.png" x="46" y="411" w="21" h="38"/>
     <sprite n="CrucifiedAShadow.png" x="209" y="474" w="21" h="38"/>
     <sprite n="CuackPurple.png" x="114" y="474" w="33" h="15"/>
@@ -64,12 +62,12 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="ExitTower04.png" x="118" y="203" w="87" h="79"/>
     <sprite n="ExitTower05.png" x="2" y="263" w="87" h="79"/>
     <sprite n="ExitTowerShadow.png" x="207" y="203" w="87" h="79"/>
-    <sprite n="FenceA.png" x="64" y="607" w="21" h="19"/>
-    <sprite n="FenceAShadow.png" x="64" y="628" w="21" h="19"/>
+    <sprite n="FenceA.png" x="112" y="591" w="21" h="19"/>
+    <sprite n="FenceAShadow.png" x="89" y="595" w="21" h="19"/>
     <sprite n="FenceB.png" x="116" y="420" w="35" h="25"/>
     <sprite n="FenceBShadow.png" x="114" y="447" w="35" h="25"/>
-    <sprite n="FenceC.png" x="113" y="591" w="29" h="23"/>
-    <sprite n="FenceCShadow.png" x="33" y="615" w="29" h="23"/>
+    <sprite n="FenceC.png" x="200" y="558" w="29" h="23"/>
+    <sprite n="FenceCShadow.png" x="169" y="577" w="29" h="23"/>
     <sprite n="FenceD.png" x="681" y="169" w="46" h="33"/>
     <sprite n="FenceDShadow.png" x="236" y="318" w="46" h="33"/>
     <sprite n="FireflyParticle1.png" x="435" y="330" w="3" h="3"/>
@@ -79,13 +77,13 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="FlatStonesC.png" x="665" y="252" w="59" h="19"/>
     <sprite n="FlatStonesD.png" x="164" y="351" w="19" h="16"/>
     <sprite n="FlatStonesE.png" x="116" y="389" w="44" h="29"/>
-    <sprite n="FlatStonesF.png" x="2" y="618" w="21" h="10"/>
+    <sprite n="FlatStonesF.png" x="58" y="600" w="21" h="10"/>
     <sprite n="GlobalLight.png" x="730" y="162" w="237" h="129"/>
     <sprite n="GrassA.png" x="449" y="173" w="71" h="35"/>
     <sprite n="GrassB.png" x="593" y="240" w="70" h="33"/>
     <sprite n="GrassC.png" x="368" y="173" w="79" h="43"/>
     <sprite n="GrassD.png" x="2" y="122" w="116" h="58"/>
-    <sprite n="GrassE.png" x="170" y="562" w="29" h="25"/>
+    <sprite n="GrassE.png" x="169" y="550" w="29" h="25"/>
     <sprite n="GrassF.png" x="681" y="146" w="47" h="21"/>
     <sprite n="Gut1.png" x="284" y="338" w="6" h="4"/>
     <sprite n="Gut2.png" x="660" y="284" w="3" h="2"/>
@@ -99,13 +97,13 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Gut10.png" x="225" y="446" w="4" h="3"/>
     <sprite n="Gut11.png" x="221" y="400" w="4" h="5"/>
     <sprite n="Gut12.png" x="360" y="206" w="4" h="2"/>
-    <sprite n="GutStain1.png" x="67" y="537" w="18" h="11"/>
-    <sprite n="GutStain2.png" x="2" y="630" w="17" h="10"/>
-    <sprite n="IncomingRideCar01.png" x="114" y="529" w="29" h="29"/>
-    <sprite n="IncomingRideCar02.png" x="114" y="560" w="29" h="29"/>
-    <sprite n="IncomingRideCar03.png" x="33" y="584" w="29" h="29"/>
-    <sprite n="IncomingRideCar04.png" x="2" y="587" w="29" h="29"/>
-    <sprite n="Kapow.png" x="2" y="518" w="31" h="14"/>
+    <sprite n="GutStain1.png" x="68" y="537" w="18" h="11"/>
+    <sprite n="GutStain2.png" x="68" y="550" w="17" h="10"/>
+    <sprite n="IncomingRideCar01.png" x="33" y="558" w="29" h="29"/>
+    <sprite n="IncomingRideCar02.png" x="2" y="562" w="29" h="29"/>
+    <sprite n="IncomingRideCar03.png" x="113" y="529" w="29" h="29"/>
+    <sprite n="IncomingRideCar04.png" x="113" y="560" w="29" h="29"/>
+    <sprite n="Kapow.png" x="406" y="352" w="31" h="14"/>
     <sprite n="KapowStrong.png" x="184" y="375" w="39" h="13"/>
     <sprite n="LargeRockA.png" x="298" y="122" w="54" h="42"/>
     <sprite n="LargeRockAShadow.png" x="298" y="166" w="54" h="42"/>
@@ -136,9 +134,9 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PilgrimSackShadow.png" x="507" y="366" w="8" h="8"/>
     <sprite n="PlopRed.png" x="703" y="97" w="26" h="11"/>
     <sprite n="PlopYellow.png" x="703" y="110" w="26" h="11"/>
-    <sprite n="PortableToilet01.png" x="114" y="491" w="29" h="36"/>
-    <sprite n="PortableToilet02.png" x="34" y="546" w="29" h="36"/>
-    <sprite n="PortableToiletShadow.png" x="2" y="549" w="29" h="36"/>
+    <sprite n="PortableToilet01.png" x="178" y="474" w="29" h="36"/>
+    <sprite n="PortableToilet02.png" x="174" y="512" w="29" h="36"/>
+    <sprite n="PortableToiletShadow.png" x="114" y="491" w="29" h="36"/>
     <sprite n="PostClock01.png" x="999" y="2" w="23" h="46"/>
     <sprite n="PostClock02.png" x="999" y="50" w="23" h="46"/>
     <sprite n="PostClock03.png" x="999" y="98" w="23" h="46"/>
@@ -171,14 +169,14 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PotteryBPiece5.png" x="274" y="353" w="6" h="4"/>
     <sprite n="PotteryBPiece6.png" x="586" y="328" w="5" h="5"/>
     <sprite n="PotteryBShadow.png" x="354" y="135" w="13" h="21"/>
-    <sprite n="PotteryC.png" x="21" y="640" w="15" h="19"/>
+    <sprite n="PotteryC.png" x="58" y="612" w="15" h="19"/>
     <sprite n="PotteryCPiece1.png" x="440" y="243" w="7" h="6"/>
     <sprite n="PotteryCPiece2.png" x="440" y="258" w="7" h="5"/>
     <sprite n="PotteryCPiece3.png" x="440" y="218" w="7" h="7"/>
     <sprite n="PotteryCPiece4.png" x="225" y="434" w="4" h="4"/>
     <sprite n="PotteryCPiece5.png" x="287" y="312" w="6" h="5"/>
     <sprite n="PotteryCPiece6.png" x="440" y="265" w="7" h="5"/>
-    <sprite n="PotteryCShadow.png" x="2" y="642" w="15" h="19"/>
+    <sprite n="PotteryCShadow.png" x="112" y="612" w="15" h="19"/>
     <sprite n="PotteryD.png" x="354" y="189" w="11" h="15"/>
     <sprite n="PotteryDPiece1.png" x="225" y="381" w="5" h="4"/>
     <sprite n="PotteryDPiece2.png" x="221" y="421" w="4" h="5"/>
@@ -186,14 +184,14 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PotteryDPiece4.png" x="219" y="440" w="4" h="4"/>
     <sprite n="PotteryDPiece5.png" x="225" y="440" w="4" h="4"/>
     <sprite n="PotteryDShadow.png" x="666" y="173" w="11" h="15"/>
-    <sprite n="PotteryE.png" x="328" y="389" w="14" h="16"/>
+    <sprite n="PotteryE.png" x="42" y="627" w="14" h="16"/>
     <sprite n="PotteryEPiece1.png" x="435" y="319" w="3" h="4"/>
     <sprite n="PotteryEPiece2.png" x="435" y="306" w="3" h="5"/>
     <sprite n="PotteryEPiece3.png" x="284" y="324" w="6" h="5"/>
     <sprite n="PotteryEPiece4.png" x="666" y="195" w="6" h="6"/>
     <sprite n="PotteryEPiece5.png" x="284" y="331" w="6" h="5"/>
     <sprite n="PotteryEPiece6.png" x="586" y="335" w="5" h="5"/>
-    <sprite n="PotteryEShadow.png" x="311" y="394" w="14" h="16"/>
+    <sprite n="PotteryEShadow.png" x="75" y="629" w="14" h="16"/>
     <sprite n="RainDropImpactA01.png" x="969" y="266" w="25" h="16"/>
     <sprite n="RainDropImpactA02.png" x="996" y="270" w="25" h="16"/>
     <sprite n="RainDropImpactA03.png" x="969" y="284" w="25" h="16"/>
@@ -225,15 +223,15 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="ShadowSpot11.png" x="666" y="190" w="11" h="3"/>
     <sprite n="ShadowSpotW12.png" x="354" y="184" w="12" h="3"/>
     <sprite n="ShadowSpotW13.png" x="354" y="158" w="13" h="3"/>
-    <sprite n="ShadowSpotW14.png" x="327" y="407" w="14" h="3"/>
-    <sprite n="SinnerCross.png" x="145" y="572" w="23" h="36"/>
-    <sprite n="SinnerCrossShadow.png" x="88" y="603" w="23" h="36"/>
+    <sprite n="ShadowSpotW14.png" x="91" y="629" w="14" h="3"/>
+    <sprite n="SinnerCross.png" x="64" y="562" w="23" h="36"/>
+    <sprite n="SinnerCrossShadow.png" x="33" y="589" w="23" h="36"/>
     <sprite n="SlapBlue.png" x="91" y="308" w="25" h="12"/>
     <sprite n="SlapRed.png" x="91" y="322" w="25" h="12"/>
-    <sprite n="SmallRockA.png" x="328" y="376" w="15" h="11"/>
-    <sprite n="SmallRockAShadow.png" x="345" y="376" w="15" h="11"/>
-    <sprite n="SmallRockB.png" x="344" y="389" w="14" h="9"/>
-    <sprite n="SmallRockBShadow.png" x="344" y="400" w="14" h="9"/>
+    <sprite n="SmallRockA.png" x="75" y="616" w="15" h="11"/>
+    <sprite n="SmallRockAShadow.png" x="92" y="616" w="15" h="11"/>
+    <sprite n="SmallRockB.png" x="58" y="633" w="14" h="9"/>
+    <sprite n="SmallRockBShadow.png" x="58" y="644" w="14" h="9"/>
     <sprite n="SpearTrap01.png" x="357" y="54" w="10" h="25"/>
     <sprite n="SpearTrap02.png" x="357" y="81" w="10" h="25"/>
     <sprite n="SpearTrap03.png" x="357" y="108" w="10" h="25"/>
@@ -246,21 +244,21 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="ThrowableDuckShadow.png" x="660" y="288" w="3" h="2"/>
     <sprite n="TombstoneA.png" x="69" y="413" w="18" h="19"/>
     <sprite n="TombstoneAShadow.png" x="162" y="393" w="18" h="19"/>
-    <sprite n="TombstoneB.png" x="38" y="640" w="15" h="16"/>
-    <sprite n="TombstoneBShadow.png" x="311" y="376" w="15" h="16"/>
+    <sprite n="TombstoneB.png" x="25" y="627" w="15" h="16"/>
+    <sprite n="TombstoneBShadow.png" x="2" y="641" w="15" h="16"/>
     <sprite n="TombstoneC.png" x="162" y="414" w="18" h="19"/>
     <sprite n="TombstoneCShadow.png" x="69" y="434" w="18" h="19"/>
     <sprite n="TombstoneD.png" x="69" y="455" w="18" h="19"/>
     <sprite n="TombstoneDShadow.png" x="69" y="476" w="18" h="19"/>
     <sprite n="TreeA.png" x="91" y="336" w="24" h="41"/>
     <sprite n="TreeAShadow.png" x="90" y="379" w="24" h="41"/>
-    <sprite n="TreeB.png" x="178" y="474" w="29" h="42"/>
-    <sprite n="TreeBShadow.png" x="174" y="518" w="29" h="42"/>
-    <sprite n="TreeC.png" x="205" y="538" w="23" h="42"/>
-    <sprite n="TreeCShadow.png" x="89" y="518" w="23" h="42"/>
-    <sprite n="Trunk01.png" x="209" y="514" w="21" h="22"/>
-    <sprite n="Trunk02.png" x="65" y="559" w="21" h="22"/>
-    <sprite n="TrunkShadow.png" x="65" y="583" w="21" h="22"/>
-    <sprite n="WaterPuddleA.png" x="65" y="550" w="22" h="7"/>
+    <sprite n="TreeB.png" x="37" y="514" w="29" h="42"/>
+    <sprite n="TreeBShadow.png" x="2" y="518" w="29" h="42"/>
+    <sprite n="TreeC.png" x="205" y="514" w="23" h="42"/>
+    <sprite n="TreeCShadow.png" x="88" y="518" w="23" h="42"/>
+    <sprite n="Trunk01.png" x="89" y="571" w="21" h="22"/>
+    <sprite n="Trunk02.png" x="2" y="593" w="21" h="22"/>
+    <sprite n="TrunkShadow.png" x="2" y="617" w="21" h="22"/>
+    <sprite n="WaterPuddleA.png" x="89" y="562" w="22" h="7"/>
     <sprite n="Zap.png" x="681" y="107" w="20" h="13"/>
 </TextureAtlas>

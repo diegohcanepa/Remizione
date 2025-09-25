@@ -124,7 +124,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../Projects/Content/Atlases/StartingRoom.xml</filename>
+                <filename>../../../Projects/Content/Atlases/Lounge.xml</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -173,6 +173,21 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Lounge-assets/Lounge.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>162,68,323,135</rect>
+                <key>scale9Paddings</key>
+                <rect>162,68,323,135</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">RideCar-assets/RideCar01.png</key>
             <key type="filename">RideCar-assets/RideCar02.png</key>
             <key type="filename">RideCar-assets/RideCar03.png</key>
@@ -191,23 +206,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">StartingRoom-assets/StartingRoom.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>120,68,240,135</rect>
-                <key>scale9Paddings</key>
-                <rect>120,68,240,135</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">StartingTower-assets/StartingTower.png</key>
-            <key type="filename">StartingTower-assets/StartingTowerShadow.png</key>
+            <key type="filename">Tower-assets/Tower.png</key>
+            <key type="filename">Tower-assets/TowerShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -222,7 +222,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">StartingTower-assets/StartingTowerPatch.png</key>
+            <key type="filename">Tower-assets/TowerPatch.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -231,13 +231,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>9,10,18,20</rect>
+                <rect>9,10,17,20</rect>
                 <key>scale9Paddings</key>
-                <rect>9,10,18,20</rect>
+                <rect>9,10,17,20</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">StartingTower-assets/StartingTowerTrack.png</key>
+            <key type="filename">Tower-assets/TowerTrack.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -252,10 +252,10 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">StartingTowerDoor-assets/StartingTowerDoor01.png</key>
-            <key type="filename">StartingTowerDoor-assets/StartingTowerDoor02.png</key>
-            <key type="filename">StartingTowerDoor-assets/StartingTowerDoor03.png</key>
-            <key type="filename">StartingTowerDoor-assets/StartingTowerDoor04.png</key>
+            <key type="filename">TowerDoor-assets/TowerDoor01.png</key>
+            <key type="filename">TowerDoor-assets/TowerDoor02.png</key>
+            <key type="filename">TowerDoor-assets/TowerDoor03.png</key>
+            <key type="filename">TowerDoor-assets/TowerDoor04.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -267,6 +267,22 @@
                 <rect>5,8,10,15</rect>
                 <key>scale9Paddings</key>
                 <rect>5,8,10,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">WelcomeSign-assets/WelcomeSign.png</key>
+            <key type="filename">WelcomeSign-assets/WelcomeSignShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,14,16,27</rect>
+                <key>scale9Paddings</key>
+                <rect>8,14,16,27</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -277,10 +293,11 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>StartingTower-assets</filename>
-                    <filename>StartingTowerDoor-assets</filename>
-                    <filename>StartingRoom-assets</filename>
                     <filename>RideCar-assets</filename>
+                    <filename>WelcomeSign-assets</filename>
+                    <filename>Lounge-assets</filename>
+                    <filename>Tower-assets</filename>
+                    <filename>TowerDoor-assets</filename>
                 </array>
             </struct>
         </map>

@@ -56,6 +56,7 @@ namespace Remizione
                 TextSprite consoleText = new(game, Fonts.CommonOutline)
                 {
                     Color = ColorPalette.HighlightedText,
+                    MaximumWidth = Screen.NativeWidth - 20,
                     PivotOrigin = RectanglePoint.LeftBottom,
                     Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom),
                     Scale = ScaleInfo.Text.VeryLarge,

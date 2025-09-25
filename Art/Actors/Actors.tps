@@ -437,6 +437,9 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Sister-assets/Bend01.png</key>
+            <key type="filename">Sister-assets/Bend02.png</key>
+            <key type="filename">Sister-assets/Bend03.png</key>
             <key type="filename">Sister-assets/Move01.png</key>
             <key type="filename">Sister-assets/Move02.png</key>
             <key type="filename">Sister-assets/Move03.png</key>
