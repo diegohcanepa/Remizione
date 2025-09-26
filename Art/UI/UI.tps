@@ -336,6 +336,7 @@
             <key type="filename">Items-assets/Chili.png</key>
             <key type="filename">Items-assets/Cross.png</key>
             <key type="filename">Items-assets/Duck.png</key>
+            <key type="filename">Items-assets/Firecracker.png</key>
             <key type="filename">Items-assets/GoldenTicket.png</key>
             <key type="filename">Items-assets/MagneticCard.png</key>
             <key type="filename">Items-assets/MasterLockpick.png</key>

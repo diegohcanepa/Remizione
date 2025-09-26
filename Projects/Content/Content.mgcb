@@ -362,6 +362,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/FenceOpen.wav;Audio/FX/FenceOpen
 
+#begin Audio/FX/Firecracker.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Firecracker.wav;Audio/FX/Firecracker
+
 #begin Audio/FX/FootstepA1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -409,6 +415,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/FootstepWater6.wav
+
+#begin Audio/FX/FuseHissing.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/FuseHissing.wav;Audio/FX/FuseHissing
 
 #begin Audio/FX/Gesture1.wav
 /importer:WavImporter

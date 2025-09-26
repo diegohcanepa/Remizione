@@ -184,6 +184,19 @@ namespace Remizione
             return true;
         }
 
+        // PerformDropAction
+        private bool PerformDropAction()
+        {
+            if (!CanChangeState)
+                return false;
+
+            var f = Session.ObjectPools.Firecrackers.Get();
+
+            f.Drop(Position);
+
+            return true;
+        }
+
         // PerformThrowAction
         private bool PerformThrowAction()
         {
@@ -850,6 +863,10 @@ namespace Remizione
                 // Throwable
                 if (item.MetaItem.Action == ItemAction.Throw)
                     PerformThrowAction();
+
+                // Drop
+                else if (item.MetaItem.Action == ItemAction.Drop)
+                    PerformDropAction();
 
                 // Consume
                 else if (item.MetaItem.Category == InventoryCategory.Consumables)

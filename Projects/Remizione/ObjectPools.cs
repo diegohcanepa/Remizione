@@ -10,10 +10,13 @@ namespace Remizione
         // Ducks
         public ObjectPool<ThrownDuck> Ducks { get; } = new ObjectPool<ThrownDuck>(() => new ThrownDuck(session), 50);
 
-        // FloatingHeart
+        // Firecrackers
+        public ObjectPool<Firecracker> Firecrackers { get; } = new ObjectPool<Firecracker>(() => new Firecracker(session), 20);
+
+        // FloatingHearts
         public ObjectPool<FloatingHeart> FloatingHearts { get; } = new ObjectPool<FloatingHeart>(() => new FloatingHeart(session), 30);
 
-        // FloatingText
+        // FloatingTexts
         public ObjectPool<FloatingText> FloatingTexts { get; } = new ObjectPool<FloatingText>(() => new FloatingText(session), 30);
 
         // GetThrowable

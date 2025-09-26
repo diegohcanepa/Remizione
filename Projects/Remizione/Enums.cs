@@ -48,7 +48,7 @@ namespace Remizione
     public enum InventoryVerb { Equip, Unequip }
 
     // ItemAction
-    public enum ItemAction { None, Throw }
+    public enum ItemAction { None, Drop, Throw }
 
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }

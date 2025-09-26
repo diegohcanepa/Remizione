@@ -53,6 +53,8 @@
   <String Key="Item.Cross.Name">Cruz de Zumbito</String>
   <String Key="Item.Duck.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Duck.Name">Patito de hule</String>
+  <String Key="Item.Firecracker.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
+  <String Key="Item.Firecracker.Name">Petardo</String>
   <String Key="Item.Gold.Description">Un puñado de polvo de oro.</String>
   <String Key="Item.Gold.Name">Polvo de oro</String>
   <String Key="Item.GoldenTicket.Description">Una apetitoza manzana en su punto justo.</String>
