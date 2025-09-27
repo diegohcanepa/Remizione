@@ -203,7 +203,7 @@ namespace Remizione
                 {
                     item.Use();
 
-                    if (item.MetaItem.IsStackable)
+                    if (!item.MetaItem.Unique)
                         hud.Log.Show(LogVerb.Lost, item.DisplayText, item.MetaItem.Image);
                 }
             }

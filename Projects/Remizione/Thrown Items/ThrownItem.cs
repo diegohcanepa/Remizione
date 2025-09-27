@@ -36,7 +36,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public ThrownItem(GameSession session, Vector2 initialVelocity, float weight, float bounciness, float gravity, float radius)
+        protected ThrownItem(GameSession session, Vector2 initialVelocity, float weight, float bounciness, float gravity, float radius)
             : base(session, string.Empty)
         {
             this.Atlas = Atlases.Environment;
@@ -111,7 +111,7 @@ namespace Remizione
             if (HasParent && item?.Owner is Actor actor)
             {
                 Unparent();
-                Session.ObjectPools.ReturnThrowable(this);
+                Session.ObjectPools.ReturnThrownItem(this);
                 actor.Inventory.Junk.Add(item.Name, 1);
             }
         }
@@ -264,6 +264,8 @@ namespace Remizione
                 ReturnToOwner();
                 return;
             }
+            
+            item.Use();
 
             this.item = item;
             this.Position = item.Owner.GetThrowableSpawnPosition();

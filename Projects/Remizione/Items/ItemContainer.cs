@@ -32,19 +32,22 @@ namespace Remizione
             if (metaItem.Category != Category)
                 throw new InvalidOperationException($"Meta item '{metaItem.Name}' does not belong to the category '{Category}'.");
 
-            if (!metaItem.IsStackable)
+            if (metaItem.Unique)
                 amount = 1;
 
             var item = Find(metaItem.Name);
 
-            if (item != null && metaItem.IsStackable)
-            {
-                item.Count += amount;
-            }
-            else
+            if (item == null)
             {
                 item = new Item(this, metaItem) { Count = amount };
                 items.Add(item);
+            }
+            else
+            {
+                if (metaItem.Unique)
+                    item.Count = 1;
+                else
+                    item.Count += amount;
             }
 
             return item;
@@ -190,7 +193,7 @@ namespace Remizione
         // SelectNext
         public Item? SelectNext()
         {
-            if (items.Count <= 1)
+            if (items.Count == 0)
                 return null;
 
             if (SelectedItem == null)
@@ -213,7 +216,7 @@ namespace Remizione
         // SelectPrevious
         public Item? SelectPrevious()
         {
-            if (items.Count <= 1)
+            if (items.Count == 0)
                 return null;
 
             if (SelectedItem == null)

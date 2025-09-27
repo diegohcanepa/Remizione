@@ -95,7 +95,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (item != null && item.MetaItem.IsStackable && item.Count == 0)
+            if (item != null && item.Count == 0)
                 icon.Opacity = .5f;
             else
                 icon.Opacity = 1;
@@ -155,7 +155,7 @@ namespace Remizione
             if (Item == null)
                 return;
 
-            if (Item.MetaItem.Category == InventoryCategory.Consumables)
+            if (Item.MetaItem.Category == InventoryCategory.Thingies)
             {
                 Item.MetaItem.Sound?.Play();
                 Item.Use();
@@ -188,20 +188,10 @@ namespace Remizione
             {
                 amountText.Color = ColorPalette.Text.Default;
 
-                if (item.MetaItem.Maximum > 1)
-                {
-                    if (item.MetaItem.Maximum == 999)
-                        amountText.Text = $"{item.Count}";
-                    else
-                        amountText.Text = $"{item.Count}/{item.MetaItem.Maximum}";
-
-                    if (item.IsStackFull)
-                        amountText.Color = ColorPalette.Text.Terra;
-                }
-                else
-                {
+                if (item.MetaItem.Unique)
                     amountText.Text = string.Empty;
-                }
+                else
+                    amountText.Text = $"{item.Count}";
 
                 icon.Opacity = item.Count == 0 ? .3f : 1;
             }

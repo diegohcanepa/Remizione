@@ -78,7 +78,7 @@ namespace Adberration.Scripting
         protected static readonly string RangeArg = "#range";
         protected static readonly string RelativeArg = "#relative";
         protected static readonly string RepeatArg = "#repeat";
-        protected static readonly string ReplenishPerRoomArg = "#replenish-per-room";
+        protected static readonly string ReplenishAmountArg = "#replenish-amount";
         protected static readonly string ReverseArg = "#reverse";
         protected static readonly string RightArg = "#right";
         protected static readonly string RightTriggerArg = "#right-trigger";
@@ -97,6 +97,7 @@ namespace Adberration.Scripting
         protected static readonly string TransientArg = "#transient";
         protected static readonly string TransitionAwareArg = "#transition-aware";
         protected static readonly string TweenArg = "#tween";
+        protected static readonly string UniqueArg = "#unique";
         protected static readonly string UnparentArg = "#unparent";
         protected static readonly string VibrateArg = "#vibrate";
         protected static readonly string VolumeArg = "#volume";

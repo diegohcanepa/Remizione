@@ -362,11 +362,17 @@
 /processorParam:Quality=Best
 /build:Audio/FX/FenceOpen.wav;Audio/FX/FenceOpen
 
-#begin Audio/FX/Firecracker.wav
+#begin Audio/FX/Firecracker1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/FX/Firecracker.wav;Audio/FX/Firecracker
+/build:Audio/FX/Firecracker1.wav;Audio/FX/Firecracker1
+
+#begin Audio/FX/Firecracker2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Firecracker2.wav;Audio/FX/Firecracker2
 
 #begin Audio/FX/FootstepA1.wav
 /importer:WavImporter

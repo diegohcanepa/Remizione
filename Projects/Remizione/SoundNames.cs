@@ -10,7 +10,6 @@
         internal const string EnergyBolt = nameof(EnergyBolt);
         internal const string Error = nameof(Error);
         internal const string ExitAlarm = nameof(ExitAlarm);
-        internal const string Firecracker = nameof(Firecracker);
         internal const string FootstepA = nameof(FootstepA);
         internal const string FootstepWater = nameof(FootstepWater);
         internal const string FuseHissing = nameof(FuseHissing);

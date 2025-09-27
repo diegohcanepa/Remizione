@@ -184,36 +184,11 @@ namespace Remizione
             return true;
         }
 
-        // PerformDropAction
-        private bool PerformDropAction()
+        // PlaceItem
+        private void PlaceItem(Item item)
         {
-            if (!CanChangeState)
-                return false;
-
-            var f = Session.ObjectPools.Firecrackers.Get();
-
-            f.Drop(Position);
-
-            return true;
-        }
-
-        // PerformThrowAction
-        private bool PerformThrowAction()
-        {
-            if (!CanChangeState)
-                return false;
-
-            if (Inventory.Junk.SelectedItem is not Item item)
-                return false;
-
-            if (item.MetaItem.Action != ItemAction.Throw || item.Count <= 0)
-                return false;
-
-            //Stand();
-            item.Use();
-            throwItemState.Item = item;
-            StateMachine.ChangeState(throwItemState.Name);
-            return true;
+            var f = Session.ObjectPools.GetPlacedItem(item.Name);
+            f.Place(item, Position);
         }
 
         // ResetHeadTween
@@ -232,6 +207,14 @@ namespace Remizione
                 if (headSprite.Animations.Find(StateMachine.CurrentState.Name) != null)
                     headSprite.Player.Play(StateMachine.CurrentState.Name);
             }
+        }
+
+        // ThrowItem
+        private void ThrowItem(Item item)
+        {
+            //Stand();
+            throwItemState.Item = item;
+            StateMachine.ChangeState(throwItemState.Name);
         }
 
         // UpdateDirection
@@ -427,10 +410,6 @@ namespace Remizione
         {
             base.OnRead(attributes);
 
-            // Consumables
-            if (attributes[nameof(Inventory.Consumables)]?.Value is string consumablesData)
-                Inventory.Consumables.SetSerializationData(consumablesData);
-
             // Junk
             if (attributes[nameof(Inventory.Junk)]?.Value is string junkData)
                 Inventory.Junk.SetSerializationData(junkData);
@@ -438,6 +417,10 @@ namespace Remizione
             // KeyItems
             if (attributes[nameof(Inventory.KeyItems)]?.Value is string keyItemsData)
                 Inventory.KeyItems.SetSerializationData(keyItemsData);
+
+            // Thingies
+            if (attributes[nameof(Inventory.Thingies)]?.Value is string thingiesData)
+                Inventory.Thingies.SetSerializationData(thingiesData);
 
             // Traits
             if (attributes[nameof(Inventory.Traits)]?.Value is string traitsData)
@@ -523,7 +506,7 @@ namespace Remizione
         {
             base.OnWrite(output);
 
-            output.WriteAttributeString(nameof(Inventory.Consumables), Inventory.Consumables.GetSerializationData());
+            output.WriteAttributeString(nameof(Inventory.Thingies), Inventory.Thingies.GetSerializationData());
             output.WriteAttributeString(nameof(Inventory.Junk), Inventory.Junk.GetSerializationData());
             output.WriteAttributeString(nameof(Inventory.KeyItems), Inventory.KeyItems.GetSerializationData());
             output.WriteAttributeString(nameof(Inventory.Traits), Inventory.Traits.GetSerializationData());
@@ -860,16 +843,22 @@ namespace Remizione
         {
             if (Inventory.Junk.SelectedItem is Item item)
             {
-                // Throwable
-                if (item.MetaItem.Action == ItemAction.Throw)
-                    PerformThrowAction();
+                if (item.Count <= 0)
+                    return;
 
-                // Drop
-                else if (item.MetaItem.Action == ItemAction.Drop)
-                    PerformDropAction();
+                if (!CanChangeState)
+                    return;
+
+                // Place
+                if (item.MetaItem.Action == ItemAction.Place)
+                    PlaceItem(item);
+
+                // Throwable
+                else if (item.MetaItem.Action == ItemAction.Throw)
+                    ThrowItem(item);
 
                 // Consume
-                else if (item.MetaItem.Category == InventoryCategory.Consumables)
+                else if (item.MetaItem.Category == InventoryCategory.Thingies)
                     PerformConsumeAction();
             }
         }

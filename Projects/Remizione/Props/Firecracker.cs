@@ -7,7 +7,7 @@ namespace Remizione
     /// <summary>
     /// Firecracker
     /// </summary>
-    public sealed class Firecracker : IsometricProp
+    public sealed class Firecracker : PlacedItem
     {
         private int cooldown;
         private SoundInstance? explosionSound;
@@ -18,7 +18,7 @@ namespace Remizione
 
         // Constructor
         public Firecracker(GameSession session)
-            : base(session, string.Empty)
+            : base(session)
         {
             RenderLayer = RenderLayer.Background;
             var animation = AddAnimation("Default");
@@ -27,9 +27,30 @@ namespace Remizione
 
         #region Protected members
 
+        // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            if (isExploding)
+                return;
+
             base.OnDraw(gameTime);
+        }
+
+        // OnPlaced
+        protected override void OnPlaced()
+        {
+            cooldown = 1500;
+            explosionSound = null;
+            isExploding = false;
+            fuseHissingSound = PlaySound(SoundNames.FuseHissing);
+
+            xTween.Start(TweenStyle.Linear, X, X + .5f, 40, -1);
+            yTween.Start(TweenStyle.Linear, Y, Y + .9f, 30, -1);
+
+            Tweens.XTween = xTween;
+            Tweens.YTween = yTween;
+
+            Session.Room?.Children.Add(this);
         }
 
         // OnUpdate
@@ -45,7 +66,22 @@ namespace Remizione
             {
                 isExploding = true;
                 fuseHissingSound?.Stop();
-                PlaySound(SoundNames.Firecracker);
+
+                if (Item != null && Session.Room != null)
+                {
+                    if (Item.MetaItem.Sound != null)
+                        explosionSound = PlaySound(Item.MetaItem.Sound);
+
+                    for (var i = 0; i < Session.Room.CulledThings.Count; i++)
+                    {
+                        if (Session.Room.CulledThings[i] is GameThing target)
+                        {
+                            if (target.DistanceTo(this) <= Item.Range)
+                                Item.MetaItem.ApplyDamage(Item.Owner, target);
+                        }
+                    }
+                }
+
                 if (Session.Camera.ShakeState == CameraShakeState.None)
                     Session.Camera.Shake(TweenStyle.Linear, new(1, 1), 50, 4);
             }
@@ -57,24 +93,5 @@ namespace Remizione
         }
 
         #endregion
-
-        // Drop
-        public void Drop(Vector2 position)
-        {
-            this.Position = position;
-
-            cooldown = 1500;
-            explosionSound = null;
-            isExploding = false;
-            fuseHissingSound = PlaySound(SoundNames.FuseHissing);
-
-            xTween.Start(TweenStyle.Linear, X, X + .5f, 40, -1);
-            yTween.Start(TweenStyle.Linear, Y, Y + .9f, 30, -1);
-
-            Tweens.XTween = xTween;
-            Tweens.YTween = yTween;
-
-            Session.Room?.Children.Add(this);
-        }
     }
 }

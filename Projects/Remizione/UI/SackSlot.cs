@@ -37,7 +37,7 @@ namespace Remizione
             this.button = new(Game, InputBindings.Inventory)
             {
                 AllowPressEffect = false,
-                ImageName = "BagSlot",
+                ImageName = nameof(SackSlot),
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = slotImage.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 3, -2),
             };

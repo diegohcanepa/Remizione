@@ -42,13 +42,13 @@ namespace Remizione
     public enum ImpactWordName { None, AghGreen, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
 
     // InventoryCategory
-    public enum InventoryCategory { None, Consumables, Junk, KeyItems, Traits, Trinkets }
+    public enum InventoryCategory { None, Junk, KeyItems, Thingies, Traits, Trinkets }
 
     // InventoryVerb
     public enum InventoryVerb { Equip, Unequip }
 
     // ItemAction
-    public enum ItemAction { None, Drop, Throw }
+    public enum ItemAction { None, Place, Throw }
 
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }

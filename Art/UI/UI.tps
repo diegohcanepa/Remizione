@@ -296,9 +296,9 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryConsumables.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryJunk.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryKeyItems.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryThingies.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryTraits.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryTrinkets.png</key>
             <key type="filename">UI-assets/ProhibitionMark.png</key>
@@ -390,15 +390,17 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">KeyboardControls-assets/KeyboardBagSlot.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardD.png</key>
-            <key type="filename">KeyboardControls-assets/KeyboardEquipmentSlot.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardI.png</key>
+            <key type="filename">KeyboardControls-assets/KeyboardJunkSlot.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardS.png</key>
+            <key type="filename">KeyboardControls-assets/KeyboardSackSlot.png</key>
+            <key type="filename">KeyboardControls-assets/KeyboardThingiesSlot.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardX.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardZ.png</key>
-            <key type="filename">XboxControls-assets/XboxBagSlot.png</key>
-            <key type="filename">XboxControls-assets/XboxEquipmentSlot.png</key>
+            <key type="filename">XboxControls-assets/XboxJunkSlot.png</key>
+            <key type="filename">XboxControls-assets/XboxSackSlot.png</key>
+            <key type="filename">XboxControls-assets/XboxThingiesSlot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

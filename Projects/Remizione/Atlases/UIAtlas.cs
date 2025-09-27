@@ -22,7 +22,7 @@ namespace Remizione
             HeartHalfIcon = this[nameof(HeartHalfIcon)];
             HeartIcon = this[nameof(HeartIcon)];
             HeartIconWithShadow = this[nameof(HeartIconWithShadow)];
-            InventoryCategoryConsumables = this[nameof(InventoryCategoryConsumables)];
+            InventoryCategoryThingies = this[nameof(InventoryCategoryThingies)];
             InventoryCategoryJunk = this[nameof(InventoryCategoryJunk)];
             InventoryCategoryKeyItems = this[nameof(InventoryCategoryKeyItems)];
             InventoryCategoryTraits = this[nameof(InventoryCategoryTraits)];
@@ -73,14 +73,14 @@ namespace Remizione
         // GoldenTicket
         public AtlasImage GoldenTicket { get; }
 
-        // InventoryCategoryConsumables
-        public AtlasImage InventoryCategoryConsumables { get; }
-
         // InventoryCategoryJunk
         public AtlasImage InventoryCategoryJunk { get; }
 
         // InventoryCategoryKeyItems
         public AtlasImage InventoryCategoryKeyItems { get; }
+
+        // InventoryCategoryThingies
+        public AtlasImage InventoryCategoryThingies { get; }
 
         // InventoryCategoryTraits
         public AtlasImage InventoryCategoryTraits { get; }

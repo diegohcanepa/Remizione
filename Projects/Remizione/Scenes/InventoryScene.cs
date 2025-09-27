@@ -18,15 +18,16 @@ namespace Remizione
 
         private InventoryGrid activeGrid;
         private readonly UITextButton buttonClose;
-        private readonly UITextButton buttonConsume;
+        //private readonly UITextButton buttonConsume;
         private readonly UITextButton buttonDiscard;
         private readonly UITextButton buttonEquip;
-        private readonly List<InventoryCategory> categories = [InventoryCategory.Junk, InventoryCategory.Consumables, InventoryCategory.KeyItems, InventoryCategory.Trinkets, InventoryCategory.Traits];
+        private readonly List<InventoryCategory> categories = [InventoryCategory.Junk, InventoryCategory.Thingies, InventoryCategory.KeyItems, InventoryCategory.Trinkets, InventoryCategory.Traits];
         private readonly ImageSprite[] categoryIcons;
         private readonly TextSprite categoryText;
         private readonly ImageSprite checkMark;
         private InventoryCategory currentCategory;
         private Item? equippedJunk;
+        private Item? equippedThingie;
         private Item? equippedTrinket;
         private readonly ImageSprite gridContainer;
         private readonly Dictionary<InventoryCategory, InventoryGrid> grids = [];
@@ -102,7 +103,7 @@ namespace Remizione
                 };
             }
 
-            activeGrid = grids[InventoryCategory.Consumables];
+            activeGrid = grids[InventoryCategory.Thingies];
 
             // Navigation bar
             this.navigationBar = new(Game, Atlases.UI.InventoryNavigationBar)
@@ -215,6 +216,7 @@ namespace Remizione
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -2),
             };
 
+            /*
             // Consume button
             buttonConsume = new UITextButton(owner.Game, InputBindings.ConsumeItem)
             {
@@ -222,6 +224,7 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 5, -3)
             };
+            */
 
             // Discard button
             buttonDiscard = new UITextButton(owner.Game, InputBindings.Discard)
@@ -256,14 +259,19 @@ namespace Remizione
             if (!item.MetaItem.PreventDiscard)
                 buttonDiscard.Draw(gameTime);
 
-            if (item.MetaItem.Category == InventoryCategory.Junk || item.MetaItem.Category == InventoryCategory.Trinkets)
+            if (item.MetaItem.Category == InventoryCategory.Junk || 
+                item.MetaItem.Category == InventoryCategory.Thingies ||
+                item.MetaItem.Category == InventoryCategory.Trinkets)
             {
                 buttonEquip.Draw(gameTime);
             }
-            else if (item.MetaItem.Category == InventoryCategory.Consumables)
+
+            /*
+            else if (item.MetaItem.Category == InventoryCategory.Thingies)
             {
                 buttonConsume.Draw(gameTime);
             }
+            */
         }
 
         // HandleMouseInput
@@ -302,6 +310,12 @@ namespace Remizione
             {
                 InvalidateEquippedJunk();
             }
+
+            else if (activeGrid.ItemContainer.Category == InventoryCategory.Thingies)
+            {
+                InvalidateEquippedThingie();
+            }
+
             else if (activeGrid.ItemContainer.Category == InventoryCategory.Trinkets)
             {
                 InvalidateEquippedTrinket();
@@ -317,6 +331,22 @@ namespace Remizione
         private void InvalidateEquippedJunk()
         {
             if (equippedJunk != null && grids[InventoryCategory.Junk].GetSlot(equippedJunk) is InventorySlot slot)
+            {
+                buttonEquip.Text = Localization.GetValue(InventoryVerb.Unequip);
+                checkMark.Image = Atlases.UI.CheckMark;
+                checkMark.Position = slot.BoundingBox.GetPoint(RectanglePoint.RightBottom, -1, -8);
+            }
+            else
+            {
+                buttonEquip.Text = Localization.GetValue(InventoryVerb.Equip);
+                checkMark.Image = null;
+            }
+        }
+
+        // InvalidateEquippedThingie
+        private void InvalidateEquippedThingie()
+        {
+            if (equippedThingie != null && grids[InventoryCategory.Thingies].GetSlot(equippedThingie) is InventorySlot slot)
             {
                 buttonEquip.Text = Localization.GetValue(InventoryVerb.Unequip);
                 checkMark.Image = Atlases.UI.CheckMark;
@@ -487,6 +517,7 @@ namespace Remizione
             activeGrid.Draw(gameTime);
 
             if ((equippedJunk != null && equippedJunk.MetaItem.Category == currentCategory) ||
+                (equippedThingie != null && equippedThingie.MetaItem.Category == currentCategory) ||
                  (equippedTrinket != null && equippedTrinket.MetaItem.Category == currentCategory))
             {
                 Game.SpriteBatch.Begin(Game.Camera);
@@ -549,6 +580,13 @@ namespace Remizione
                         equippedJunk = activeGrid.SelectedItem;
                         InvalidateEquippedJunk();
                     }
+
+                    else if (selectedItem == equippedThingie)
+                    {
+                        equippedThingie = activeGrid.SelectedItem;
+                        InvalidateEquippedThingie();
+                    }
+
                     else if (selectedItem == equippedTrinket)
                     {
                         equippedTrinket = activeGrid.SelectedItem;
@@ -559,8 +597,9 @@ namespace Remizione
                     return HandleInputResult.Handled;
                 }
 
+                /*
                 // Consume
-                if (activeGrid.ItemContainer.Category == InventoryCategory.Consumables)
+                if (activeGrid.ItemContainer.Category == InventoryCategory.Thingies)
                 {
                     if (buttonConsume.TestPressed(PlayerIndex.One))
                     {
@@ -569,6 +608,7 @@ namespace Remizione
                         return HandleInputResult.Handled;
                     }
                 }
+                */
 
                 // Equip junk
                 if (activeGrid.ItemContainer.Category == InventoryCategory.Junk)
@@ -589,6 +629,29 @@ namespace Remizione
                         }
 
                         InvalidateEquippedJunk();
+                        return HandleInputResult.Handled;
+                    }
+                }
+
+                // Equip thingie
+                else if (activeGrid.ItemContainer.Category == InventoryCategory.Thingies)
+                {
+                    if (buttonEquip.TestPressed(PlayerIndex.One))
+                    {
+                        Sound.Play(SoundNames.ItemEquip);
+
+                        if (equippedThingie == null)
+                        {
+                            equippedThingie = selectedItem;
+                            Owner.Inventory.Thingies.Select(equippedThingie);
+                        }
+                        else
+                        {
+                            equippedThingie = null;
+                            Owner.Inventory.Thingies.ClearSelection();
+                        }
+
+                        InvalidateEquippedThingie();
                         return HandleInputResult.Handled;
                     }
                 }
@@ -650,6 +713,7 @@ namespace Remizione
             currentCategory = InventoryCategory.Junk;
 
             equippedJunk = Owner.Inventory.Junk.SelectedItem;
+            equippedThingie = Owner.Inventory.Thingies.SelectedItem;
             equippedTrinket = Owner.Inventory.Trinkets.SelectedItem;
             lastKnownInput = InputMethod.None;
 
@@ -666,6 +730,11 @@ namespace Remizione
             else
                 Owner.Inventory.Junk.ClearSelection();
 
+            if (equippedThingie != null)
+                Owner.Inventory.Thingies.Select(equippedThingie);
+            else
+                Owner.Inventory.Thingies.ClearSelection();
+
             if (equippedTrinket != null)
                 Owner.Inventory.Trinkets.Select(equippedTrinket);
             else
@@ -677,7 +746,7 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
             buttonClose.Update(gameTime);
-            buttonConsume.Update(gameTime);
+            //buttonConsume.Update(gameTime);
             buttonDiscard.Update(gameTime);
             buttonEquip.Update(gameTime);
             categoryText.Update(gameTime);

@@ -9,7 +9,7 @@ namespace Remizione
     /// <summary>
     /// EquipmentSlot
     /// </summary>
-    public sealed class EquipmentSlot : GameObject, IInputHandler
+    public abstract class EquipmentSlot : GameObject, IInputHandler
     {
         #region Private fields
 
@@ -20,6 +20,8 @@ namespace Remizione
         private readonly Vector2Tween itemImageScaleTween = new();
         private int lastKnownCount;
         private Item? lastKnownItem;
+        private readonly InputBinding nextInputBinding;
+        private readonly InputBinding previousInputBinding;
         private readonly GameSession session;
         private readonly ImageSprite slotImage;
 
@@ -28,16 +30,29 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public EquipmentSlot(GameSession session, InputBinding inputBinding)
+        protected EquipmentSlot(GameSession session, Vector2 position, InventoryCategory inventoryCategory, InputBinding inputBinding, bool horizontalCycle)
             : base(session.Game)
         {
             this.session = session;
+            this.InventoryCategory = inventoryCategory;
+            this.HorizontalCycle = horizontalCycle;
+
+            if (horizontalCycle)
+            {
+                previousInputBinding = InputBindings.SelectLeft;
+                nextInputBinding = InputBindings.SelectRight;
+            }
+            else
+            {
+                previousInputBinding = InputBindings.SelectUp;
+                nextInputBinding = InputBindings.SelectDown;
+            }
 
             // Slot image
             this.slotImage = new ImageSprite(Game, Atlases.UI.EquipmentSlot)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -2),
+                Position = position
             };
 
             // Item image
@@ -45,7 +60,7 @@ namespace Remizione
             {
                 PivotOrigin = RectanglePoint.Center,
                 Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Center),
-                Scale = ScaleInfo.UIElement.Medium
+                Scale = ScaleInfo.UIElement.Small
             };
 
             // Amount
@@ -54,17 +69,22 @@ namespace Remizione
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Top,
                 Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -3),
-                Scale = ScaleInfo.Text.Large,
+                Scale = ScaleInfo.Text.Medium,
                 Spacing = -5
             };
 
             // Button
             this.button = new(Game, inputBinding)
             {
-                ImageName = "EquipmentSlot",
+                AllowPressEffect = false,
+                ImageName = $"{inventoryCategory}Slot",
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3, -2),
             };
+
+            if (horizontalCycle)
+                button.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -4, -2);
+            else
+                button.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -4, -2);
 
             InvalidateItem();
         }
@@ -76,14 +96,13 @@ namespace Remizione
         // InvalidateItem
         private void InvalidateItem()
         {
-            lastKnownItem = actor?.Inventory.Junk.SelectedItem;
+            lastKnownItem = actor?.Inventory.GetContainer(InventoryCategory).SelectedItem;
 
             if (lastKnownItem != null)
             {
                 itemImage.Image = lastKnownItem.MetaItem.Image;
-                itemImageScaleTween.Start(TweenStyle.Linear, new Vector2(.3f), ScaleInfo.UIElement.Medium, 70);
+                itemImageScaleTween.Start(TweenStyle.Linear, new Vector2(.3f), ScaleInfo.UIElement.Small, 70);
                 itemImage.Tweens.ScaleTween = itemImageScaleTween;
-                button.Text = null;
                 InvalidateItemAmount(true);
             }
             else
@@ -101,33 +120,15 @@ namespace Remizione
                 lastKnownCount = lastKnownItem.Count;
                 itemImage.Opacity = lastKnownCount == 0 ? .3f : 1;
                 amountText.Text = lastKnownItem.GetDisplayAmount();
-                button.IsEnabled = true;
+                //button.IsEnabled = true;
             }
-        }
-
-        // SelectFirst
-        private bool SelectFirst()
-        {
-            if (actor != null)
-                return actor.Inventory.Junk.SelectFirst() != null;
-            else
-                return false;
-        }
-
-        // SelectLast
-        private bool SelectLast()
-        {
-            if (actor != null)
-                return actor.Inventory.Junk.SelectLast() != null;
-            else
-                return false;
         }
 
         // SelectNext
         private bool SelectNext()
         {
             if (actor != null)
-                return actor.Inventory.Junk.SelectNext() != null;
+                return actor.Inventory.GetContainer(InventoryCategory).SelectNext() != null;
             else
                 return false;
         }
@@ -136,7 +137,7 @@ namespace Remizione
         private bool SelectPrevious()
         {
             if (actor != null)
-                return actor.Inventory.Junk.SelectPrevious() != null;
+                return actor.Inventory.GetContainer(InventoryCategory).SelectPrevious() != null;
             else
                 return false;
         }
@@ -156,16 +157,13 @@ namespace Remizione
             itemImage.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            if (lastKnownItem != null)
-            {
-                button.Draw(gameTime);
+            button.Draw(gameTime);
 
-                if (lastKnownItem.MetaItem.IsStackable)
-                {
-                    Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
-                    amountText.Draw(gameTime);
-                    Game.SpriteBatch.End();
-                }
+            if (lastKnownItem?.MetaItem.Unique == false)
+            {
+                Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
+                amountText.Draw(gameTime);
+                Game.SpriteBatch.End();
             }
         }
 
@@ -175,7 +173,7 @@ namespace Remizione
             if (!IsVisible)
                 return;
 
-            if (lastKnownItem != actor?.Inventory.Junk.SelectedItem)
+            if (lastKnownItem != actor?.Inventory.GetContainer(InventoryCategory).SelectedItem)
                 InvalidateItem();
             else
                 InvalidateItemAmount(false);
@@ -218,32 +216,14 @@ namespace Remizione
                 return HandleInputResult.Unhandled;
 
             // Use item
-            if (InputBindings.UseItem.IsPressed(PlayerIndex.One))
+            if (button.TestPressed(PlayerIndex.One))
             {
                 actor.UseSelectedItem();
                 return HandleInputResult.Handled;
             }
 
-            // First item
-            if (InputBindings.SelectUp.IsPressed(PlayerIndex.One))
-            {
-                if (SelectFirst())
-                    Sound.Play(SoundNames.UIHover);
-
-                return HandleInputResult.Handled;
-            }
-
-            // Last item
-            else if (InputBindings.SelectDown.IsPressed(PlayerIndex.One))
-            {
-                if (SelectLast())
-                    Sound.Play(SoundNames.UIHover);
-
-                return HandleInputResult.Handled;
-            }
-
             // Previous item
-            else if (InputBindings.SelectLeft.IsPressed(PlayerIndex.One))
+            if (previousInputBinding.IsPressed(PlayerIndex.One))
             {
                 if (SelectPrevious())
                     Sound.Play(SoundNames.UIHover);
@@ -251,8 +231,8 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
-            // Last item
-            else if (InputBindings.SelectRight.IsPressed(PlayerIndex.One))
+            // Next item
+            else if (nextInputBinding.IsPressed(PlayerIndex.One))
             {
                 if (SelectNext())
                     Sound.Play(SoundNames.UIHover);
@@ -263,7 +243,13 @@ namespace Remizione
             return HandleInputResult.Unhandled;
         }
 
+        // HorizontalCycle
+        public bool HorizontalCycle { get; }
+
+        // InventoryCategory
+        public InventoryCategory InventoryCategory { get; }
+
         // IsVisible
-        public bool IsVisible => actor != null && actor.Session.IsCurrentScene;
+        public bool IsVisible => actor?.Session.IsCurrentScene == true;
     }
 }

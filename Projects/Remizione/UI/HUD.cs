@@ -47,8 +47,11 @@ namespace Remizione
             // Bag slot
             this.BagSlot = new(session);
 
-            // Equipment slot
-            this.EquipmentSlot = new(session, InputBindings.UseItem);
+            // Junk slot
+            this.JunkSlot = new(session);
+
+            // Thingie slot
+            this.ThingieSlot = new(session);
 
             // Trincket slot
             this.TrincketSlot = new(Game);
@@ -68,7 +71,8 @@ namespace Remizione
                     if (!session.IsConsoleVisible)
                     {
                         BagSlot.Draw(gameTime);
-                        EquipmentSlot.Draw(gameTime);
+                        JunkSlot.Draw(gameTime);
+                        ThingieSlot.Draw(gameTime);
                     }
 
                     if (session.Room is ProceduralRoom)
@@ -99,9 +103,10 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            BagSlot.Update(gameTime);
-            EquipmentSlot.Update(gameTime);
             TargetMeter.Update(gameTime);
+            BagSlot.Update(gameTime);
+            JunkSlot.Update(gameTime);
+            ThingieSlot.Update(gameTime);
             TrincketSlot.Update(gameTime);
             healthMeter.Update(gameTime);
             ChanceRoll.Update(gameTime);
@@ -121,9 +126,6 @@ namespace Remizione
         // ChanceRoll
         public UIChanceRoll ChanceRoll { get; }
 
-        // EquipmentSlot
-        public EquipmentSlot EquipmentSlot { get; }
-
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
@@ -133,7 +135,10 @@ namespace Remizione
             if (session.IsConsoleVisible || session.GameplayMode == GameplayMode.Adventure)
                 return HandleInputResult.Unhandled;
 
-            if (EquipmentSlot.HandleInput(gameTime) == HandleInputResult.Handled)
+            if (JunkSlot.HandleInput(gameTime) == HandleInputResult.Handled)
+                return HandleInputResult.Handled;
+
+            if (ThingieSlot.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
             if (BagSlot.HandleInput(gameTime) == HandleInputResult.Handled)
@@ -141,6 +146,9 @@ namespace Remizione
 
             return HandleInputResult.Unhandled;
         }
+
+        // JunkSlot
+        public JunkSlot JunkSlot { get; }
 
         // Log
         public UILog Log { get; }
@@ -153,7 +161,8 @@ namespace Remizione
         {
             healthMeter.Actor = session.Player;
             BagSlot.Actor = session.Player;
-            EquipmentSlot.Actor = session.Player;
+            JunkSlot.Actor = session.Player;
+            ThingieSlot.Actor = session.Player;
             TrincketSlot.Actor = session.Player;
         }
 
@@ -165,6 +174,9 @@ namespace Remizione
 
         // TargetMeter
         public UITargetMeter TargetMeter { get; }
+
+        // ThingieSlot
+        public ThingieSlot ThingieSlot { get; }
 
         // TrincketSlot
         public TrinketSlot TrincketSlot { get; }

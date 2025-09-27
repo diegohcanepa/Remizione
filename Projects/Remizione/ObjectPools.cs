@@ -19,8 +19,17 @@ namespace Remizione
         // FloatingTexts
         public ObjectPool<FloatingText> FloatingTexts { get; } = new ObjectPool<FloatingText>(() => new FloatingText(session), 30);
 
-        // GetThrowable
-        public ThrownItem? GetThrowable(string itemName)
+        // GetPlacedItem
+        public PlacedItem? GetPlacedItem(string itemName)
+        {
+            if (itemName == "Firecracker")
+                return Firecrackers.Get();
+
+            return null;
+        }
+
+        // GetThrownItem
+        public ThrownItem? GetThrownItem(string itemName)
         {
             if (itemName == "Duck")
                 return Ducks.Get();
@@ -31,8 +40,15 @@ namespace Remizione
         // Pickups
         public ObjectPool<Pickup> Pickups { get; } = new ObjectPool<Pickup>(() => new Pickup(session), 30);
 
-        // ReturnThrowable
-        public void ReturnThrowable(ThrownItem item)
+        // ReturnPlacedItem
+        public void ReturnPlacedItem(PlacedItem item)
+        {
+            if (item is Firecracker firecracker)
+                Firecrackers.Return(firecracker);
+        }
+
+        // ReturnThrownItem
+        public void ReturnThrownItem(ThrownItem item)
         {
             if (item is ThrownDuck duck)
                 Ducks.Return(duck);

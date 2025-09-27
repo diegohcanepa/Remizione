@@ -95,7 +95,7 @@ namespace Remizione
             {
                 if (value != count)
                 {
-                    count = Math.Clamp(value, MetaItem.AllowEmpty ? 0 : 1, MetaItem.Maximum);
+                    count = Math.Clamp(value, MetaItem.AllowEmpty ? 0 : 1, 999);
                     isDisplayTextDiry = true;
                 }
             }
@@ -142,15 +142,10 @@ namespace Remizione
         // GetDisplayAmount
         public string GetDisplayAmount()
         {
-            if (MetaItem.Maximum > 1)
-            {
-                if (MetaItem.Unlimited)
-                    return count.ToString(CultureInfo.InvariantCulture);
-                else
-                    return $"{Count}/{MetaItem.Maximum}";
-            }
-            else
+            if (MetaItem.Unique)
                 return string.Empty;
+            else
+                return count.ToString(CultureInfo.InvariantCulture);
         }
 
         // GetDisplayStat
@@ -174,9 +169,6 @@ namespace Remizione
 
         // IsSelected
         public bool IsSelected => Container.SelectedItem == this;
-
-        // IsStackFull
-        public bool IsStackFull => MetaItem.Maximum == 1 || Count >= MetaItem.Maximum;
 
         // Knockback
         public Vector2 Knockback => MetaItem.Knockback;
@@ -236,8 +228,8 @@ namespace Remizione
         // Replenish
         public void Replenish()
         {
-            if (MetaItem.Maximum > 1)
-                Count = MetaItem.Maximum;
+            if (MetaItem.ReplenishAmount > 0)
+                Count = MetaItem.ReplenishAmount;
         }
 
         // SkillChance
@@ -268,12 +260,15 @@ namespace Remizione
             if (MetaItem.Health != null)
                 Owner.Health += MetaItem.Health.Roll();
 
-            if (MetaItem.Maximum >= 1)
+            if (!MetaItem.Unique)
             {
-                if (Count == 1 && !MetaItem.AllowEmpty)
-                    Container.Remove(this);
-                else
-                    Count--;
+                if (Count > 0)
+                {
+                    if (Count == 1 && !MetaItem.AllowEmpty)
+                        Container.Remove(this);
+                    else
+                        Count--;
+                }
             }
 
             InvalidateDisplayText();

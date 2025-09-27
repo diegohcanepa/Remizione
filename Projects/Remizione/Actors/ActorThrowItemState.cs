@@ -47,9 +47,9 @@ namespace Remizione
         {
             if (!itemUsed && Item != null && Owner.AnimationPlayer.Frame is SpriteFrame frame)
             {
-                if (frame.IsEvent)
+                if (frame.IsEvent && Item.Count > 0)
                 {
-                    if (Owner.Session.ObjectPools.GetThrowable(Item.Name) is ThrownItem throwable)
+                    if (Owner.Session.ObjectPools.GetThrownItem(Item.Name) is ThrownItem throwable)
                     {
                         if (Owner.WhooshSound != null)
                             Owner.PlaySound(Owner.WhooshSound);

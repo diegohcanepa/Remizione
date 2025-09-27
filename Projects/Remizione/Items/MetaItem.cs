@@ -17,7 +17,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(string name, InventoryCategory category, int maximum)
+        public MetaItem(string name, InventoryCategory category)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -28,7 +28,6 @@ namespace Remizione
 
             this.Name = name;
             this.Category = category;
-            this.Maximum = Math.Max(1, maximum);
             this.LocalizedDescription = Localization.GetItemDescription(this);
             this.LocalizedDisplayName = Localization.GetItemName(this);
             this.Image = Atlases.UI.GetImage(Name);
@@ -133,9 +132,6 @@ namespace Remizione
         // IsPassive
         public bool IsPassive => PassiveEffectCooldown > 0;
 
-        // IsStackable
-        public bool IsStackable => Maximum > 1;
-
         // Knockback
         public Vector2 Knockback { get; init; }
 
@@ -147,9 +143,6 @@ namespace Remizione
 
         // MagneticCardName
         public const string MagneticCardName = "MagneticCard";
-
-        // Maximum
-        public int Maximum { get; init; }
 
         // Name
         public string Name { get; }
@@ -163,8 +156,8 @@ namespace Remizione
         // Range
         public int Range { get; init; }
 
-        // ReplenishPerRoom
-        public bool ReplenishPerRoom { get; init; }
+        // ReplenishAmount
+        public int ReplenishAmount { get; init; }
 
         // SkillChance
         public int SkillChance { get; init; }
@@ -175,7 +168,7 @@ namespace Remizione
         // ToString
         public override string ToString() => Name;
 
-        // Unlimited
-        public bool Unlimited => Maximum == 999;
+        // Unique
+        public bool Unique { get; init; }
     }
 }

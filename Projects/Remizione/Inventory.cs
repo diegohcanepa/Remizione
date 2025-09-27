@@ -12,7 +12,7 @@ namespace Remizione
         // Constructor
         public Inventory(Actor owner)
         {
-            this.Consumables = new ItemContainer(owner, InventoryCategory.Consumables);
+            this.Thingies = new ItemContainer(owner, InventoryCategory.Thingies);
             this.Junk = new ItemContainer(owner, InventoryCategory.Junk);
             this.KeyItems = new ItemContainer(owner, InventoryCategory.KeyItems);
             this.Traits = new ItemContainer(owner, InventoryCategory.Traits)
@@ -24,9 +24,6 @@ namespace Remizione
         }
 
         #endregion
-
-        // Consumables
-        public ItemContainer Consumables { get; }
 
         // Find
         public Item? Find(string item)
@@ -48,7 +45,7 @@ namespace Remizione
         {
             return category switch
             {
-                InventoryCategory.Consumables => Consumables,
+                InventoryCategory.Thingies => Thingies,
                 InventoryCategory.Junk => Junk,
                 InventoryCategory.KeyItems => KeyItems,
                 InventoryCategory.Traits => Traits,
@@ -74,12 +71,14 @@ namespace Remizione
 
                     for (var i = 0; i < items.Length; i++)
                     {
-                        if (items[i].MetaItem.ReplenishPerRoom)
-                            items[i].Replenish();
+                        items[i].Replenish();
                     }
                 }
             }
         }
+
+        // Thingies
+        public ItemContainer Thingies { get; }
 
         // Traits
         public ItemContainer Traits { get; }
