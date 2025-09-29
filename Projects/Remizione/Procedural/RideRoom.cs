@@ -44,7 +44,7 @@ namespace Remizione
 
             if (index >= 0)
             {
-                creatures[index].HasPainCard = true;
+                creatures[index].HasMagneticCard = true;
             }
             else if (WalkArea != null)
             {

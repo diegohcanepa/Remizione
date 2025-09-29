@@ -50,7 +50,7 @@ namespace Remizione
                 Opacity = .4f,
             };
 
-            if (grid.ItemContainer.Category == InventoryCategory.Traits)
+            if (grid.ItemContainer.Category == InventoryCategory.Quirks)
                 stateIcon.Image = Atlases.UI.InventorySlotQuestionIcon;
             else
                 stateIcon.Image = Atlases.UI.InventorySlotLockIcon;
@@ -79,7 +79,7 @@ namespace Remizione
 
             if (Item == null)
             {
-                if (Index > grid.ItemContainer.Size - 1 || grid.ItemContainer.Category == InventoryCategory.Traits)
+                if (Index > grid.ItemContainer.Size - 1 || grid.ItemContainer.Category == InventoryCategory.Quirks)
                     stateIcon.Draw(gameTime);
             }
             else
@@ -155,7 +155,7 @@ namespace Remizione
             if (Item == null)
                 return;
 
-            if (Item.MetaItem.Category == InventoryCategory.Thingies)
+            if (Item.MetaItem.Category == InventoryCategory.Consumables)
             {
                 Item.MetaItem.Sound?.Play();
                 Item.Use();

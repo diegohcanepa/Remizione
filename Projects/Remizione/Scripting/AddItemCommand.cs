@@ -32,7 +32,11 @@ namespace Remizione.Scripting
             var amount = Parser.ParseInt32Argument(this, AmountArg, 1);
             var container = actor.Inventory.GetContainer(metaItem.Category);
             if (container.Add(metaItem.Name, amount) is Item item && HasArg(EquipArg))
-                item.Equip();
+            {
+                if (metaItem.IsEquipment)
+                    container.Select(metaItem.Name);
+
+            }
         }
     }
 }

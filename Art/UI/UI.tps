@@ -296,10 +296,11 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryConsumables.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryJunk.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryKeyItems.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryQuirks.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryThingies.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryTraits.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryTrinkets.png</key>
             <key type="filename">UI-assets/ProhibitionMark.png</key>
             <key type="filename">UIIcons-assets/HeartIconWithShadow.png</key>

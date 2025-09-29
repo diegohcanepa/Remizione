@@ -109,6 +109,9 @@ namespace Remizione
         // IsEmpty
         public bool IsEmpty => items.Count == 0;
 
+        // IsEquipment
+        public bool IsEquipment => Category == InventoryCategory.Junk || Category == InventoryCategory.Thingies || Category == InventoryCategory.Trinkets;
+
         // Owner
         public Actor Owner { get; }
 
@@ -267,6 +270,6 @@ namespace Remizione
         }
 
         // Size
-        public int Size { get; set; } = 5;
+        public int Size { get; set; } = 4;
     }
 }

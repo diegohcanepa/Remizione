@@ -22,10 +22,6 @@ namespace Remizione
             HeartHalfIcon = this[nameof(HeartHalfIcon)];
             HeartIcon = this[nameof(HeartIcon)];
             HeartIconWithShadow = this[nameof(HeartIconWithShadow)];
-            InventoryCategoryThingies = this[nameof(InventoryCategoryThingies)];
-            InventoryCategoryJunk = this[nameof(InventoryCategoryJunk)];
-            InventoryCategoryKeyItems = this[nameof(InventoryCategoryKeyItems)];
-            InventoryCategoryTraits = this[nameof(InventoryCategoryTraits)];
             InventoryGridContainer = this[nameof(InventoryGridContainer)];
             InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
             InventoryInfoTitleContainer = this[nameof(InventoryInfoTitleContainer)];
@@ -72,18 +68,6 @@ namespace Remizione
 
         // GoldenTicket
         public AtlasImage GoldenTicket { get; }
-
-        // InventoryCategoryJunk
-        public AtlasImage InventoryCategoryJunk { get; }
-
-        // InventoryCategoryKeyItems
-        public AtlasImage InventoryCategoryKeyItems { get; }
-
-        // InventoryCategoryThingies
-        public AtlasImage InventoryCategoryThingies { get; }
-
-        // InventoryCategoryTraits
-        public AtlasImage InventoryCategoryTraits { get; }
 
         // InventoryGridContainer
         public AtlasImage InventoryGridContainer { get; }

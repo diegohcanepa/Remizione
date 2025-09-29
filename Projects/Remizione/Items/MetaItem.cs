@@ -129,6 +129,9 @@ namespace Remizione
         // ImpactWord
         public ImpactWordName ImpactWord { get; init; }
 
+        // IsEquipment
+        public bool IsEquipment => Category == InventoryCategory.Junk || Category == InventoryCategory.Thingies || Category == InventoryCategory.Trinkets;
+
         // IsPassive
         public bool IsPassive => PassiveEffectCooldown > 0;
 

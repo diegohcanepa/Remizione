@@ -36,10 +36,11 @@
   <String Key="InputBinding.Select">Select</String>
   <String Key="InputBinding.UseFriendlyItem">Use</String>
   <String Key="InputBinding.UseItem">Use</String>
+  <String Key="InventoryCategory.Consumables">Consumables</String>
   <String Key="InventoryCategory.Junk">Junk</String>
   <String Key="InventoryCategory.KeyItems">Key items</String>
+  <String Key="InventoryCategory.Quirks">Quirks</String>
   <String Key="InventoryCategory.Thingies">Thingies</String>
-  <String Key="InventoryCategory.Traits">Perks &amp; flaws</String>
   <String Key="InventoryCategory.Trinkets">Trinkets</String>
   <String Key="InventoryVerb.Equip">Equip</String>
   <String Key="InventoryVerb.Unequip">Unequip</String>

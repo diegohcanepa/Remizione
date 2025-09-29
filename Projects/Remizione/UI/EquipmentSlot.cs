@@ -69,7 +69,7 @@ namespace Remizione
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Top,
                 Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -3),
-                Scale = ScaleInfo.Text.Medium,
+                Scale = ScaleInfo.Text.Large,
                 Spacing = -5
             };
 
@@ -82,9 +82,9 @@ namespace Remizione
             };
 
             if (horizontalCycle)
-                button.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -4, -2);
+                button.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -4, 0);
             else
-                button.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -4, -2);
+                button.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -4, 0);
 
             InvalidateItem();
         }
@@ -118,9 +118,9 @@ namespace Remizione
             if (lastKnownItem != null && (lastKnownItem.Count != lastKnownCount || enforce))
             {
                 lastKnownCount = lastKnownItem.Count;
-                itemImage.Opacity = lastKnownCount == 0 ? .3f : 1;
+                itemImage.OpacityFactor = lastKnownCount == 0 ? .3f : 1;
                 amountText.Text = lastKnownItem.GetDisplayAmount();
-                //button.IsEnabled = true;
+                button.IsEnabled = true;
             }
         }
 
@@ -218,7 +218,7 @@ namespace Remizione
             // Use item
             if (button.TestPressed(PlayerIndex.One))
             {
-                actor.UseSelectedItem();
+                actor.UseSelectedItem(InventoryCategory);
                 return HandleInputResult.Handled;
             }
 

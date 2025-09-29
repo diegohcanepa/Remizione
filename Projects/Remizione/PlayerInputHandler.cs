@@ -52,9 +52,9 @@ namespace Remizione
                 return HandleInputResult.Unhandled;
 
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
-                Actor.UseSelectedItem();
+                Actor.UseSelectedItem(InventoryCategory.Junk);
             else
-                Actor.ShowInventory();
+                Actor.UseSelectedItem(InventoryCategory.Thingies);
 
             return HandleInputResult.Unhandled;
         }

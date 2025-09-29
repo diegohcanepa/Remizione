@@ -20,6 +20,7 @@ namespace Remizione
         private readonly ImageSprite image;
         private string? imageName;
         private InputBinding? inputBinding;
+        private bool isBeating;
         private bool isEnabled = true;
         private readonly TextSprite label;
         private InputMethod lastKnownInputMethod;
@@ -300,6 +301,32 @@ namespace Remizione
                     inputBinding = value;
                     Invalidate();
                 }
+            }
+        }
+
+        // IsBeating
+        public bool IsBeating
+        {
+            get => isBeating;
+            set
+            {
+               if (value != isBeating)
+               {
+                    isBeating = value;
+
+                    image.Scale = ScaleInfo.UIElement.Medium;
+
+                    if (isBeating)
+                    {
+                        scaleTween.Start(TweenStyle.Linear, image.Scale, image.Scale * 1.1f, 100, -1);
+                        image.Tweens.ScaleTween = scaleTween;
+                    }
+                    else
+                    {
+                        scaleTween.Stop();
+                        image.Tweens.ScaleTween = null;
+                    }
+               }
             }
         }
 

@@ -130,15 +130,6 @@ namespace Remizione
             }
         }
 
-        // Equip
-        public bool Equip()
-        {
-            if (MetaItem.Category == InventoryCategory.Junk || MetaItem.Category == InventoryCategory.Trinkets)
-                return Container.Select(MetaItem.Name);
-            else
-                return false;
-        }
-
         // GetDisplayAmount
         public string GetDisplayAmount()
         {
@@ -231,6 +222,9 @@ namespace Remizione
             if (MetaItem.ReplenishAmount > 0)
                 Count = MetaItem.ReplenishAmount;
         }
+
+        // Select
+        public void Select() => Container.Select(this);
 
         // SkillChance
         public int SkillChance => MetaItem.SkillChance + (Level * 5);
