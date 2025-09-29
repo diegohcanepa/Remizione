@@ -10,7 +10,6 @@ namespace Remizione
     public sealed class ProceduralRoomGrid
     {
         private bool[,] occupied = new bool[0, 0];
-        private const float usagePercent = .8f;
 
         #region Constructor
 
@@ -52,7 +51,7 @@ namespace Remizione
         #endregion
 
         // CellSize
-        public int CellSize { get; private set; } = 14;
+        public int CellSize { get; private set; } = 12;
 
         // ColCount
         public int ColCount { get; private set; }
@@ -94,14 +93,40 @@ namespace Remizione
         // MarkOccupied
         public void MarkOccupied(int startCol, int startRow, Size size)
         {
-            for (int x = startCol; x < startCol + size.Width; x++)
+            MarkOccupied(startCol, startRow, size.Width, size.Height);
+        }
+
+        // MarkOccupied
+        public void MarkOccupied(int startCol, int startRow, int colCount, int rowCount)
+        {
+            for (int x = startCol; x < startCol + colCount; x++)
             {
-                for (int y = startRow; y < startRow + size.Height; y++)
+                for (int y = startRow; y < startRow + rowCount; y++)
                 {
                     if (x >= 0 && x < ColCount && y >= 0 && y < RowCount)
                         occupied[x, y] = true;
                 }
             }
+        }
+
+        // MarkOccupiedMargin
+        public void MarkOccupiedMargin(int marginLeft, int marginTop, int marginRight, int marginBottom)
+        {
+            // Top
+            if (marginTop > 0)
+                MarkOccupied(0, 0, ColCount, marginTop);
+
+            // Bottom
+            if (marginBottom > 0)
+                MarkOccupied(0, RowCount - marginBottom, ColCount, marginBottom);
+
+            // Left
+            if (marginLeft > 0)
+                MarkOccupied(0, marginTop, marginLeft, RowCount - marginTop - marginBottom);
+
+            // Right
+            if (marginRight > 0)
+                MarkOccupied(ColCount - marginRight, marginTop, marginRight, RowCount - marginTop - marginBottom);
         }
 
         // Name
@@ -135,14 +160,8 @@ namespace Remizione
         // Resize
         public void Resize(int width, int height)
         {
-            // Maximum cells (without margin)
-            int totalColumns = (width + CellSize - 1) / CellSize;
-            int totalRows = (height + CellSize - 1) / CellSize;
-
-            // Maximum cells (with margin)
-            ColCount = (int)(totalColumns * usagePercent);
-            RowCount = (int)(totalRows * usagePercent);
-
+            ColCount = (width + CellSize - 1) / CellSize;
+            RowCount = (height + CellSize - 1) / CellSize;
             occupied = new bool[ColCount, RowCount];
         }
 

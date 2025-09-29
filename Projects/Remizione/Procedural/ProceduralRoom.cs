@@ -194,8 +194,6 @@ namespace Remizione
         // Prepare
         private void Prepare()
         {
-            const int walkAreaMargin = 15;
-
             CustomWidth = (int)BoundingBox.Width;
             CustomHeight = (int)BoundingBox.Height;
 
@@ -203,13 +201,7 @@ namespace Remizione
             MainGrid.Resize(CustomWidth, CustomHeight);
 
             ClearWalkAreas();
-
-            Vector2[] vertices = [new(walkAreaMargin, walkAreaMargin),
-                                  new(CustomWidth - walkAreaMargin, walkAreaMargin),
-                                  new(CustomWidth - walkAreaMargin, CustomHeight - walkAreaMargin),
-                                  new(walkAreaMargin, CustomHeight - 5)
-                                 ];
-
+            Vector2[] vertices = GetWalkAreaVertices();
             AddWalkArea("<Default>", vertices);
         }
 
@@ -222,6 +214,16 @@ namespace Remizione
 
         // GetTerrainImageName
         protected abstract string GetTerrainImageName();
+
+        // GetWalkAreaVertices
+        protected virtual Vector2[] GetWalkAreaVertices()
+        {
+            return [Vector2.Zero,
+                    new(CustomWidth, 0),
+                    new(CustomWidth, CustomHeight),
+                    new(0, CustomHeight)
+                   ];
+        }
 
         // MainGrid
         protected ProceduralRoomGrid MainGrid { get; } = new ProceduralRoomGrid("Main");

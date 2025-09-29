@@ -61,6 +61,19 @@ namespace Remizione
         // GetTerrainImageName
         protected override string GetTerrainImageName() => terrainTable.GetValue(Random);
 
+        // GetWalkAreaVertices
+        protected override Vector2[] GetWalkAreaVertices()
+        {
+            const int margin = 3;
+            const int topMargin = 21;
+
+            return [new(margin, topMargin),
+                    new(CustomWidth - margin, topMargin),
+                    new(CustomWidth - margin, CustomHeight - margin),
+                    new(margin, CustomHeight - margin)
+                   ];
+        }
+
         // OnLoad
         protected override void OnLoad()
         {
@@ -166,6 +179,9 @@ namespace Remizione
                     Children.Add(cardReader);
                 }
             }
+
+            DecorationGrid.MarkOccupiedMargin(1, 2, 1, 1);
+            MainGrid.MarkOccupiedMargin(1, 2, 1, 1);
         }
 
         // OnPopulateCompleted
