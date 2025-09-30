@@ -129,7 +129,7 @@ namespace Remizione
         }
 
         // CanUnloadRoom
-        protected override bool CanUnloadRoom(Room room) => !IsRunInProgress;
+        protected override bool CanUnloadRoom(Room room) => !IsRunInProgress || room.InstanceKind == InstanceKind.Static;
 
         // ExtendScriptRegistry
         protected override void ExtendScriptRegistry(ScriptRegistry scriptRegistry)

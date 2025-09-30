@@ -204,7 +204,7 @@ namespace Adberration
                 routines.Add(routine);
         }
 
-        // RegisterLocalSound
+        // RegisterSound
         internal void RegisterSound(SoundInstance soundInstance)
         {
             if (!sounds.Contains(soundInstance))

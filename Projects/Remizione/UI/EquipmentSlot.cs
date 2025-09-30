@@ -76,7 +76,7 @@ namespace Remizione
             // Button
             this.button = new(Game, inputBinding)
             {
-                AllowPressEffect = false,
+                AllowSound = false,
                 ImageName = $"{inventoryCategory}Slot",
                 PivotOrigin = RectanglePoint.LeftBottom,
             };
@@ -218,7 +218,11 @@ namespace Remizione
             // Use item
             if (button.TestPressed(PlayerIndex.One))
             {
-                actor.UseSelectedItem(InventoryCategory);
+                if (lastKnownItem == null)
+                    Sound.Play(SoundNames.Error);
+                else
+                    actor.UseSelectedItem(InventoryCategory);
+
                 return HandleInputResult.Handled;
             }
 

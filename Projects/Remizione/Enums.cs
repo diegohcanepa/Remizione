@@ -15,7 +15,7 @@ namespace Remizione
     public enum AIStateName { Attack, Charge, Chase, CloseAttack, Decide, Idle, Move, Patrol, RangeAttack }
 
     // ContentFolder
-    public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Videos, Voices, System, Text }
+    public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }
 
     // DamageIntensity
     public enum DamageIntensity { Light, Heavy }
