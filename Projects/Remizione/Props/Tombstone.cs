@@ -3,20 +3,20 @@
 namespace Remizione
 {
     /// <summary>
-    /// Pottery
+    /// Tombstone
     /// </summary>
-    public class Pottery : BreakableProp
+    public class Tombstone : BreakableProp
     {
         // Constructor
-        public Pottery(GameSession session, string name)
+        public Tombstone(GameSession session, string name)
             : base(session, name)
         {
             DeathSound = Sound.Find(SoundNames.PotteryBreak);
-            DepthOffset = -4;
             HitTestSource = TestPolygon.Hotspot;
             HurtSound = Sound.Find(SoundNames.ImpactA);
-            LootTableName = nameof(Pottery);
-            MaxHP = 6;
+            MaxHP = 8;
+            PlacementPhase = PlacementPhase.ArtificialObject;
+            ResistanceTableName = "ExplosiveOnly";
             PreventKnockback = true;
             ShakeOnHit = true;
         }

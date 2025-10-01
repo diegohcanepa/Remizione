@@ -11,7 +11,7 @@ namespace Remizione.Scripting
             : base(script, source, body, 1)
         {
             if (!string.IsNullOrWhiteSpace(ActiveName))
-                throw new ScriptException(script, "Another loot table is being defined.");
+                throw new ScriptException(script, "Another table is being defined.");
 
             ActiveName = Parser.ParseName(this, 0);
         }

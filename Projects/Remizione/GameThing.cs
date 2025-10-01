@@ -24,7 +24,7 @@ namespace Remizione
         private readonly Polygon holePoly = new();
         private readonly Polygon hotspotPoly = new();
         private PlacementMode hotspotPlacement = PlacementMode.Relative;
-        private int health;
+        private int hp;
         private Vector2Tween? hurtShakeTween;
         private FloatTween? hurtTween;
         private float floatingForce;
@@ -33,7 +33,7 @@ namespace Remizione
         private bool isCollisionDirty;
         private bool isHotspotDirty = true;
         private readonly Vector2Tween knockbackTween = new();
-        private int maxHealth;
+        private int maxHP;
         private PathNode[]? pathNodes;
         private RenderLayer renderLayer;
         private int renderLayerDepth;
@@ -52,6 +52,7 @@ namespace Remizione
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
             this.LootTableName = StaticName;
+            this.ResistanceTableName = StaticName;
         }
 
         #endregion
@@ -280,7 +281,7 @@ namespace Remizione
             if (floatingTween != null && floatingTween.IsRunning)
                 Altitude += floatingTween.CurrentValue;
 
-            if (hurtTween != null && hurtTween.IsRunning)
+            if (HitEffect == HitEffect.Blink && hurtTween != null && hurtTween.IsRunning)
                 Altitude += hurtTween.CurrentValue;
 
             if (hurtShakeTween != null && hurtShakeTween.IsRunning)
@@ -291,7 +292,7 @@ namespace Remizione
             if (floatingTween != null && floatingTween.IsRunning)
                 Altitude -= floatingTween.CurrentValue;
 
-            if (hurtTween != null && hurtTween.IsRunning)
+            if (HitEffect == HitEffect.Blink && hurtTween != null && hurtTween.IsRunning)
                 Altitude -= hurtTween.CurrentValue;
 
             if (hurtShakeTween != null && hurtShakeTween.IsRunning)
@@ -308,13 +309,13 @@ namespace Remizione
         {
         }
 
-        // OnHealthChanged
-        protected virtual void OnHealthChanged()
+        // OnHPChanged
+        protected virtual void OnHPChanged()
         {
         }
 
         // OnHurt
-        protected virtual void OnHurt(GameThing attacker, int damage, DamageKind damageKind, Vector2 knockback)
+        protected virtual void OnHurt(GameThing attacker, int damage, DamageType damageType, Vector2 knockback)
         {
         }
 
@@ -536,14 +537,17 @@ namespace Remizione
         [ScriptProperty]
         public bool CollisionDetection { get; set; } = true;
 
-        // ContactDamageKind
-        public DamageKind ContactDamageKind { get; set; }
+        // ContactDamage
+        public bool ContactDamage { get; set; }
+
+        // ContactDamageType
+        public DamageType ContactDamageType { get; set; }
 
         // Die
         [ScriptMethod]
         public void Die()
         {
-            Health = 0;
+            HP = 0;
 
             if (DeathSound != null)
                 PlaySound(DeathSound);
@@ -713,6 +717,15 @@ namespace Remizione
             return result;
         }
 
+        // GetFootstepSound
+        public Sound? GetFootstepSound(Vector2 position)
+        {
+            if (RuntimeHotspot?.Contains(position) == true)
+                return TerrainSound;
+
+            return null;
+        }
+
         // GetFrameSubArea
         public RectangleF GetFrameSubArea()
         {
@@ -725,7 +738,7 @@ namespace Remizione
         // GetLoot
         public MetaItem? GetLoot()
         {
-            if (ChanceTable.Find(LootTableName) is ChanceTable lootTable && lootTable.GetValue() is string value)
+            if (ChanceTable.Find(LootTableName) is ChanceTable table && table.GetValue() is string value)
                 return MetaItem.Find(value);
 
             return null;
@@ -744,13 +757,13 @@ namespace Remizione
                 return this.GetAbsolutePoint(OverheadOrigin, xOffset, yOffset);
         }
 
-        // GetFootstepSound
-        public Sound? GetFootstepSound(Vector2 position)
+        // GetResistanceModifier
+        public float GetResistanceModifier(DamageType damageType)
         {
-            if (RuntimeHotspot?.Contains(position) == true)
-                return TerrainSound;
+            if (ResistanceTable.Find(ResistanceTableName) is ResistanceTable table)
+                return table.GetModifier(damageType);
 
-            return null;
+            return 1;
         }
 
         // GetThrowableSpawnPosition
@@ -758,21 +771,6 @@ namespace Remizione
 
         // HasMagneticCard
         public bool HasMagneticCard { get; set; }
-
-        // Health
-        [ScriptProperty]
-        public int Health
-        {
-            get => health;
-            set
-            {
-                if (value != health)
-                {
-                    health = Math.Min(value, MaxHealth);
-                    OnHealthChanged();
-                }
-            }
-        }
 
         // HighlightInteraction
         [ScriptProperty]
@@ -806,6 +804,21 @@ namespace Remizione
                 {
                     hotspotPlacement = value;
                     isHotspotDirty = true;
+                }
+            }
+        }
+
+        // HP
+        [ScriptProperty]
+        public int HP
+        {
+            get => hp;
+            set
+            {
+                if (value != hp)
+                {
+                    hp = Math.Min(value, MaxHP);
+                    OnHPChanged();
                 }
             }
         }
@@ -856,7 +869,7 @@ namespace Remizione
         }
 
         // IsDead
-        public bool IsDead => Health <= 0 && MaxHealth > 0;
+        public bool IsDead => HP <= 0 && MaxHP > 0;
 
         // IsEmittingLight
         public virtual bool IsEmittingLight => AttachedLight != null && AttachedLight.IsEmitting;
@@ -877,6 +890,10 @@ namespace Remizione
         [ScriptProperty]
         public virtual bool IsWalkAreaHole => !Collider.IsEmpty;
 
+        // LightDamageResistance
+        [ScriptProperty]
+        public bool LightDamageResistance { get; set; }
+
         // LocalizedDisplayName
         public string LocalizedDisplayName { get; private set; } = string.Empty;
 
@@ -884,17 +901,17 @@ namespace Remizione
         [ScriptProperty]
         public string LootTableName { get; set; }
 
-        // MaxHealth
+        // MaxHP
         [ScriptProperty]
-        public int MaxHealth
+        public int MaxHP
         {
-            get => maxHealth;
+            get => maxHP;
             set
             {
-                if (value != maxHealth)
+                if (value != maxHP)
                 {
-                    maxHealth = value;
-                    Health = value;
+                    maxHP = value;
+                    HP = value;
                 }
             }
         }
@@ -917,7 +934,7 @@ namespace Remizione
 
         // Reheal
         [ScriptMethod]
-        public virtual void Reheal() => Health = MaxHealth;
+        public virtual void Reheal() => HP = MaxHP;
 
         // RenderLayer
         [ScriptProperty]
@@ -936,6 +953,10 @@ namespace Remizione
 
         // RenderLayerDepth
         public override int RenderLayerDepth => renderLayerDepth;
+
+        // ResistanceTableName
+        [ScriptProperty]
+        public string ResistanceTableName { get; set; }
 
         // Room
         public new GameRoom? Room => Parent as GameRoom;
@@ -989,7 +1010,7 @@ namespace Remizione
         public bool ShakeOnHit { get; set; }
 
         // TakeDamage
-        public void TakeDamage(GameThing attacker, int amount, DamageKind damageKind, DamageIntensity damageIntensity, bool critical, Vector2 knockback, ImpactWordName impactWord)
+        public void TakeDamage(GameThing attacker, int amount, DamageType damageType, bool critical, Vector2 knockback, ImpactWordName impactWord)
         {
             if (IsDead || amount <= 0)
                 return;
@@ -1018,15 +1039,17 @@ namespace Remizione
                 this.impactWord.Show(impactWord, wordPos);
             }
 
-            if (MaxHealth == 0)
+            if (MaxHP == 0)
                 return;
 
-            if (amount > Health)
-                amount = Health;
+            amount = (int)(amount * GetResistanceModifier(damageType));
 
-            Health -= amount;
+            if (amount > HP)
+                amount = HP;
 
-            if (knockback == Vector2.Zero && Health <= 0)
+            HP -= amount;
+
+            if (knockback == Vector2.Zero && HP <= 0)
             {
                 Die();
             }
@@ -1055,9 +1078,11 @@ namespace Remizione
                 hurtTween ??= new();
                 hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
 
-                Blinker.Start(20, 5);
+                if (HitEffect == HitEffect.Blink)
+                    Blinker.Start(20, 5);
 
-                Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), amount.ToString(), critical);
+                if (amount > 0)
+                    Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), amount.ToString(), critical);
 
                 if (Session.Player == attacker)
                     Session.HUD.TargetMeter.Target = this;
@@ -1065,7 +1090,8 @@ namespace Remizione
                 else if (Session.Player == this)
                     Session.HUD.TargetMeter.Target = attacker;
 
-                OnHurt(attacker, amount, damageKind, knockback);
+                if (amount > 0)
+                    OnHurt(attacker, amount, damageType, knockback);
             }
         }
 

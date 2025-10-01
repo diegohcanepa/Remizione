@@ -74,9 +74,9 @@ namespace Remizione.UI
                 }
                 else
                 {
-                    if (meter.Value != target.Health)
+                    if (meter.Value != target.HP)
                     {
-                        meter.Value = target.Health;
+                        meter.Value = target.HP;
                         ResetCooldown();
                     }
 
@@ -97,12 +97,12 @@ namespace Remizione.UI
                 {
                     target = value;
 
-                    if (target != null && target.MaxHealth == 0)
+                    if (target != null && target.MaxHP == 0)
                         target = null;
 
                     if (target != null)
                     {
-                        meter.MaximumValue = target.MaxHealth;
+                        meter.MaximumValue = target.MaxHP;
                         labelText.Text = target.LocalizedDisplayName;
                         ResetCooldown();
                     }

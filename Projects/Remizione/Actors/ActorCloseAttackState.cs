@@ -47,7 +47,7 @@ namespace Remizione
                     {
                         damageTaken = true;
                         var damageAmount = MetaItem.Damage.Roll();
-                        target.TakeDamage(Owner, damageAmount, MetaItem.DamageKind, MetaItem.DamageIntensity, false, MetaItem.Knockback, MetaItem.ImpactWord);
+                        target.TakeDamage(Owner, damageAmount, MetaItem.DamageType, false, MetaItem.Knockback, MetaItem.ImpactWord);
                     }
                 }
             }

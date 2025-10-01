@@ -24,7 +24,7 @@ namespace Adberration.Scripting
         protected static readonly string CriticalChanceArg = "#critical-chance";
         protected static readonly string DamageArg = "#damage";
         protected static readonly string DamageIntensityArg = "#damage-intensity";
-        protected static readonly string DamageKindArg = "#damage-kind";
+        protected static readonly string DamageTypeArg = "#damage-type";
         protected static readonly string DecimalsArg = "#decimals";
         protected static readonly string DelayArg = "#delay";
         protected static readonly string DepthOffsetArg = "#depth-offset";
@@ -41,7 +41,7 @@ namespace Adberration.Scripting
         protected static readonly string FocusArg = "#focus";
         protected static readonly string FollowArg = "#follow";
         protected static readonly string GotoArg = "#goto";
-        protected static readonly string HealthArg = "#health";
+        protected static readonly string HPArg = "#hp";
         protected static readonly string ImageArg = "#image";
         protected static readonly string ImmediateArg = "#immediate";
         protected static readonly string ImpactWordArg = "#impact-word";
@@ -56,6 +56,7 @@ namespace Adberration.Scripting
         protected static readonly string LocalizationIdArg = "#lid";
         protected static readonly string LoopedArg = "#looped";
         protected static readonly string MaximumArg = "#maximum";
+        protected static readonly string ModifierArg = "#modifier";
         protected static readonly string NoAwaitArg = "#no-await";
         protected static readonly string NoCaptionArg = "#no-caption";
         protected static readonly string OffArg = "#off";

@@ -15,6 +15,7 @@ namespace Remizione
         private int instanceCount;
         private bool populated;
         private readonly int randomSeed;
+        private readonly TextSprite cellLabel;
 
         #endregion
 
@@ -37,8 +38,13 @@ namespace Remizione
                 RoomPosition = RoomPosition.Middle;
 
             int salt = roomIndex;
-            this.randomSeed = GetSeed(Session.RandomSeed, salt);
+            this.randomSeed = GetSeed(Session.Seed, salt);
             this.Random = new Random(randomSeed);
+
+            this.cellLabel = new(Game, Fonts.Common)
+            {
+                Scale = new(.04f)
+            };
         }
 
         #endregion
@@ -68,7 +74,7 @@ namespace Remizione
 
             for (int i = 0; i < clumpCount; i++)
             {
-                if (!targetGrid.TryReserveSpace(sizeInCells, out int baseCol, out int baseRow))
+                if (!targetGrid.TryReserveSpace(thing.StaticName, sizeInCells, out int baseCol, out int baseRow))
                     break;
 
                 PlaceRuntimeThing(targetGrid, thing, baseCol, baseRow);
@@ -78,7 +84,7 @@ namespace Remizione
                     int offsetCol = baseCol + Random.Next(-1, 2);
                     int offsetRow = baseRow + Random.Next(-1, 2);
 
-                    if (targetGrid.TryReserveSpace(sizeInCells, out int col, out int row, offsetCol, offsetRow))
+                    if (targetGrid.TryReserveSpace(thing.StaticName, sizeInCells, out int col, out int row, offsetCol, offsetRow))
                         PlaceRuntimeThing(targetGrid, thing, col, row);
                 }
             }
@@ -102,7 +108,7 @@ namespace Remizione
                     int col = Random.Next(targetGrid.ColCount - sizeInCells.Width + 1);
                     int row = Random.Next(targetGrid.RowCount - sizeInCells.Height + 1);
 
-                    if (targetGrid.TryReserveSpace(sizeInCells, out int finalCol, out int finalRow, col, row))
+                    if (targetGrid.TryReserveSpace(thing.StaticName, sizeInCells, out int finalCol, out int finalRow, col, row))
                     {
                         PlaceRuntimeThing(targetGrid, thing, finalCol, finalRow);
                         placed = true;
@@ -121,7 +127,7 @@ namespace Remizione
 
             for (int i = 0; i < attempts; i++)
             {
-                if (!targetGrid.TryReserveSpace(sizeInCells, out int col, out int row))
+                if (!targetGrid.TryReserveSpace(thing.StaticName, sizeInCells, out int col, out int row))
                     break;
 
                 float noise = GetNoise(col, row, seed);
@@ -129,6 +135,27 @@ namespace Remizione
                     continue;
 
                 PlaceRuntimeThing(targetGrid, thing, col, row);
+            }
+        }
+
+        // DrawGrid
+        private void DrawGrid(ProceduralRoomGrid grid, GameTime gameTime)
+        {
+            for (var col = 0; col < grid.ColCount; col++)
+            {
+                for (var row = 0; row < grid.RowCount; row++)
+                {
+                    var pos = grid.GetPosition(col, row);
+                    var rect = new RectangleF(pos.X + 1, pos.Y + 1, grid.CellSize, grid.CellSize);
+                    rect.Inflate(-1, -1);
+                    var color = (grid.IsCellFree(col, row) ? Color.Green : Color.Red) * .1f;
+
+                    Game.Shapes.DrawRectangle(rect, color);
+
+                    cellLabel.Text = grid.GetCellLabel(col, row);
+                    cellLabel.Position = pos;
+                    cellLabel.Draw(gameTime);
+                }
             }
         }
 
@@ -186,8 +213,8 @@ namespace Remizione
         {
             var instance = CreateRuntimeThingCloneCore(thing.StaticName);
             instance.Position = grid.GetPosition(col, row);
-            instance.Y += instance.BoundingBox.Height;
-            instance.X += instance.BoundingBox.Width / 2;
+            instance.Y += (instance.BoundingBox.Bottom - instance.RuntimeCollider.BoundingRectangle.Bottom) + grid.CellSize / 2;
+            instance.X += Math.Abs(instance.BoundingBox.Center.X - instance.RuntimeCollider.BoundingRectangle.Center.X) + grid.CellSize / 2;
             Children.Add(instance);
         }
 
@@ -227,6 +254,18 @@ namespace Remizione
 
         // MainGrid
         protected ProceduralRoomGrid MainGrid { get; } = new ProceduralRoomGrid("Main");
+
+        // OnDraw
+        protected override void OnDraw(GameTime gameTime)
+        {
+            base.OnDraw(gameTime);
+            Game.SpriteBatch.Begin(Session.Camera);
+
+            if (ShowGrid)
+                DrawGrid(MainGrid, gameTime);
+
+            Game.SpriteBatch.End();
+        }
 
         // OnLoad
         protected override void OnLoad()
@@ -369,5 +408,8 @@ namespace Remizione
 
         // RoomPosition
         public RoomPosition RoomPosition { get; }
+
+        // ShowGrid
+        public static bool ShowGrid { get; set; }
     }
 }

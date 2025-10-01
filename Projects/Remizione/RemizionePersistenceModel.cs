@@ -16,7 +16,7 @@ namespace Remizione
 
             persistentType = MapType(typeof(Actor));
             persistentType.Map(nameof(Actor.Effects));
-            persistentType.Map(nameof(Actor.Health));
+            persistentType.Map(nameof(Actor.HP));
             persistentType.Map(nameof(Actor.Position));
             persistentType.Map(nameof(Actor.InventorySelectedItemName));
         }

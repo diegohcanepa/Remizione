@@ -121,7 +121,7 @@ namespace Remizione
             if (session.IsAwaiting || !CanChangeState)
                 return;
 
-            if (MetaItem.Find(attacker.ContactDamageKind.ToString() + "Damage") is not MetaItem metaItem)
+            if (MetaItem.Find(attacker.ContactDamageType.ToString() + "Damage") is not MetaItem metaItem)
                 return;
 
             Stand();
@@ -256,7 +256,7 @@ namespace Remizione
         // OnCollision
         protected override void OnCollision(GameThing thing)
         {
-            if (thing.ContactDamageKind != DamageKind.None)
+            if (thing.ContactDamage)
                 ApplyContactDamage(thing);
         }
 
@@ -339,7 +339,7 @@ namespace Remizione
         protected virtual GameThing? OnFindEnemy() => null;
 
         // OnHurt
-        protected override void OnHurt(GameThing attacker, int damage, DamageKind damageKind, Vector2 knockback)
+        protected override void OnHurt(GameThing attacker, int damage, DamageType damageType, Vector2 knockback)
         {
             if (IsPlayer)
             {

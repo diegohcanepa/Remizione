@@ -172,16 +172,16 @@ namespace Remizione
                 if (CreateRuntimeClone(nameof(CardReader)) is CardReader cardReader)
                 {
                     cardReader.Position = this.RightTower.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -20);
-
                     if (RoomPosition == RoomPosition.Last)
                         cardReader.Position += new Vector2(20, -5);
 
+                    MainGrid.ReserveSpace(cardReader);
                     Children.Add(cardReader);
                 }
             }
 
-            DecorationGrid.MarkOccupiedMargin(1, 2, 1, 1);
-            MainGrid.MarkOccupiedMargin(1, 2, 1, 1);
+            DecorationGrid.MarkOccupiedMargin("Margin", 0, 2, 0, 0);
+            MainGrid.MarkOccupiedMargin("Margin", 1, 2, 1, 1);
         }
 
         // OnPopulateCompleted

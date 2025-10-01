@@ -27,9 +27,9 @@ namespace Remizione
         protected override GameThing? OnFindEnemy() => LastKnownAttacker;
 
         // OnHurt
-        protected override void OnHurt(GameThing attacker, int damage, DamageKind damageKind, Vector2 knockback)
+        protected override void OnHurt(GameThing attacker, int damage, DamageType damageType, Vector2 knockback)
         {
-            base.OnHurt(attacker, damage, damageKind, knockback);
+            base.OnHurt(attacker, damage, damageType, knockback);
             AIStateMachine.ChangeState(AIStateName.Decide);
         }
 

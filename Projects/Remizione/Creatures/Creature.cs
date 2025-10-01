@@ -11,7 +11,7 @@
         {
             Affinity = Affinity.Evil;
             AllowInteraction = false;
-            ContactDamageKind = DamageKind.Physical;
+            ContactDamage = true;
             PowerBonus = 1;
             PlacementPhase = PlacementPhase.Creature;
         }

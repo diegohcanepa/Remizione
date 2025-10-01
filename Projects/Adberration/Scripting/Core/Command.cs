@@ -17,9 +17,7 @@ namespace Adberration.Scripting
             for (var i = 0; i < Body.Args.Count; i++)
             {
                 if (!argList.Contains(Body.Args[i].Name))
-                {
                     throw new ScriptException(this, $"'{Body.Args[i].Name}' is not a valid argument.");
-                }
             }
         }
 

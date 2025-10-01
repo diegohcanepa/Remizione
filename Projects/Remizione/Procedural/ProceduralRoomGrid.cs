@@ -10,6 +10,7 @@ namespace Remizione
     public sealed class ProceduralRoomGrid
     {
         private bool[,] occupied = new bool[0, 0];
+        private string[,] occupiedName = new string[0, 0];
 
         #region Constructor
 
@@ -51,10 +52,13 @@ namespace Remizione
         #endregion
 
         // CellSize
-        public int CellSize { get; private set; } = 12;
+        public int CellSize { get; private set; } = 14;
 
         // ColCount
         public int ColCount { get; private set; }
+
+        // GetCellLabel
+        public string GetCellLabel(int col, int row) => occupiedName[col, row];
 
         // GetPixelArea
         public RectangleF GetPixelArea(GameThing thing)
@@ -62,7 +66,7 @@ namespace Remizione
             if (thing.Collider.IsEmpty)
                 return thing.BoundingBox;
             else
-                return thing.Collider.BoundingRectangleF;
+                return thing.RuntimeCollider.BoundingRectangleF;
         }
 
         // GetPosition
@@ -78,8 +82,8 @@ namespace Remizione
         public Size GetRequiredGridSpace(GameThing thing)
         {
             var bbox = GetPixelArea(thing);
-            int width = (int)Math.Ceiling(bbox.Width / CellSize) + thing.CellMargin * 2;
-            int height = (int)Math.Ceiling(bbox.Height / CellSize) + thing.CellMargin * 2;
+            int width = (int)Math.Ceiling(bbox.Width / CellSize);// + thing.CellMargin * 2;
+            int height = (int)Math.Ceiling(bbox.Height / CellSize);// + thing.CellMargin * 2;
 
             return new Size(width, height);
         }
@@ -91,42 +95,45 @@ namespace Remizione
         }
 
         // MarkOccupied
-        public void MarkOccupied(int startCol, int startRow, Size size)
+        public void MarkOccupied(string label, int startCol, int startRow, Size size)
         {
-            MarkOccupied(startCol, startRow, size.Width, size.Height);
+            MarkOccupied(label, startCol, startRow, size.Width, size.Height);
         }
 
         // MarkOccupied
-        public void MarkOccupied(int startCol, int startRow, int colCount, int rowCount)
+        public void MarkOccupied(string label, int startCol, int startRow, int colCount, int rowCount)
         {
-            for (int x = startCol; x < startCol + colCount; x++)
+            for (int col = startCol; col < startCol + colCount; col++)
             {
-                for (int y = startRow; y < startRow + rowCount; y++)
+                for (int row = startRow; row < startRow + rowCount; row++)
                 {
-                    if (x >= 0 && x < ColCount && y >= 0 && y < RowCount)
-                        occupied[x, y] = true;
+                    if (col >= 0 && col < ColCount && row >= 0 && row < RowCount)
+                    {
+                        occupied[col, row] = true;
+                        occupiedName[col, row] = label;
+                    }
                 }
             }
         }
 
         // MarkOccupiedMargin
-        public void MarkOccupiedMargin(int marginLeft, int marginTop, int marginRight, int marginBottom)
+        public void MarkOccupiedMargin(string label, int marginLeft, int marginTop, int marginRight, int marginBottom)
         {
             // Top
             if (marginTop > 0)
-                MarkOccupied(0, 0, ColCount, marginTop);
+                MarkOccupied(label, 0, 0, ColCount, marginTop);
 
             // Bottom
             if (marginBottom > 0)
-                MarkOccupied(0, RowCount - marginBottom, ColCount, marginBottom);
+                MarkOccupied(label, 0, RowCount - marginBottom, ColCount, marginBottom);
 
             // Left
             if (marginLeft > 0)
-                MarkOccupied(0, marginTop, marginLeft, RowCount - marginTop - marginBottom);
+                MarkOccupied(label, 0, marginTop, marginLeft, RowCount - marginTop - marginBottom);
 
             // Right
             if (marginRight > 0)
-                MarkOccupied(ColCount - marginRight, marginTop, marginRight, RowCount - marginTop - marginBottom);
+                MarkOccupied(label, ColCount - marginRight, marginTop, marginRight, RowCount - marginTop - marginBottom);
         }
 
         // Name
@@ -135,11 +142,11 @@ namespace Remizione
         // ReserveSpace
         public bool ReserveSpace(GameThing thing)
         {
-            return ReserveSpace(GetPixelArea(thing).ToRectangle());
+            return ReserveSpace(thing.StaticName, GetPixelArea(thing).ToRectangle());
         }
 
         // ReserveSpace
-        public bool ReserveSpace(Rectangle pixelArea)
+        public bool ReserveSpace(string label, Rectangle pixelArea)
         {
             int startCol = (pixelArea.X / CellSize);
             int startRow = (pixelArea.Y / CellSize);
@@ -150,7 +157,7 @@ namespace Remizione
 
             if (CanFitAt(startCol, startRow, size))
             {
-                MarkOccupied(startCol, startRow, size);
+                MarkOccupied(label, startCol, startRow, size);
                 return true;
             }
 
@@ -160,9 +167,10 @@ namespace Remizione
         // Resize
         public void Resize(int width, int height)
         {
-            ColCount = (width + CellSize - 1) / CellSize;
-            RowCount = (height + CellSize - 1) / CellSize;
+            ColCount = width / CellSize;
+            RowCount = height / CellSize;
             occupied = new bool[ColCount, RowCount];
+            occupiedName = new string[ColCount, RowCount];
         }
 
         // RowCount
@@ -172,7 +180,7 @@ namespace Remizione
         public override string ToString() => Name;
 
         // TryReserveSpace
-        public bool TryReserveSpace(Size required, out int col, out int row)
+        public bool TryReserveSpace(string label, Size required, out int col, out int row)
         {
             for (int x = 0; x <= ColCount - required.Width; x++)
             {
@@ -195,7 +203,7 @@ namespace Remizione
                     if (fits)
                     {
                         // Reservar el espacio
-                        MarkOccupied(x, y, required);
+                        MarkOccupied(label, x, y, required);
                         col = x;
                         row = y;
                         return true;
@@ -210,12 +218,12 @@ namespace Remizione
         }
 
         // TryReserveSpace
-        public bool TryReserveSpace(Size required, out int col, out int row, int suggestedCol, int suggestedRow)
+        public bool TryReserveSpace(string label, Size required, out int col, out int row, int suggestedCol, int suggestedRow)
         {
             // Try suggested cell
             if (CanFitAt(suggestedCol, suggestedRow, required))
             {
-                MarkOccupied(suggestedCol, suggestedRow, required);
+                MarkOccupied(label, suggestedCol, suggestedRow, required);
                 col = suggestedCol;
                 row = suggestedRow;
                 return true;

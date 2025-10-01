@@ -103,7 +103,7 @@ namespace Remizione
             rideRooms.Clear();
             IsRunInProgress = false;
             RunProgress = -1;
-            RandomSeed = 0;
+            Seed = 0;
         }
 
         #endregion
@@ -150,6 +150,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(Prop));
             scriptRegistry.RegisterEntity(typeof(RideRoom));
             scriptRegistry.RegisterEntity(typeof(SpearTrap));
+            scriptRegistry.RegisterEntity(typeof(Tombstone));
             scriptRegistry.RegisterEntity(typeof(Trunk));
             scriptRegistry.RegisterEntity(typeof(WaterPuddle));
 
@@ -157,6 +158,7 @@ namespace Remizione
             scriptRegistry.RegisterStatement("add-hole", typeof(AddHoleCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("add-item", typeof(AddItemCommand), CodingContext.Any);
             scriptRegistry.RegisterStatement("add-light", typeof(AddLightCommand), CodingContext.EntityDeclaration);
+            scriptRegistry.RegisterStatement("add-resistance", typeof(AddResistanceCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("add-loot-item", typeof(AddLootItemCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("add-trigger-area", typeof(AddTriggerAreaCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("add-walk-area", typeof(AddWalkAreaCommand), CodingContext.EntityDeclaration);
@@ -167,10 +169,12 @@ namespace Remizione
             scriptRegistry.RegisterStatement("await-dialog-block", typeof(AwaitDialogBlockCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-player-approach", typeof(AwaitPlayerApproachCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-popup", typeof(AwaitPopupCommand), CodingContext.Execution);
+            scriptRegistry.RegisterStatement("begin-resistance-table", typeof(BeginResistanceTableCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("begin-loot-table", typeof(BeginLootTableCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("begin-rain", typeof(BeginRainCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("create-dialog-block", typeof(CreateDialogBlockCommand));
             scriptRegistry.RegisterStatement("echo", typeof(EchoCommand), CodingContext.Execution);
+            scriptRegistry.RegisterStatement("end-resistance-table", typeof(EndResistanceTableCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("end-loot-table", typeof(EndLootTableCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             scriptRegistry.RegisterStatement("exit-session", typeof(ExitSessionCommand));
@@ -410,8 +414,8 @@ namespace Remizione
 
             IsRunInProgress = true;
 
-            if (RandomSeed == 0)
-                this.RandomSeed = System.Environment.TickCount;
+            if (Seed == 0)
+                this.Seed = System.Environment.TickCount;
 
             for (var i = 0; i < RunLength; i++)
             {
@@ -608,9 +612,6 @@ namespace Remizione
             return;
         }
 
-        // RandomSeed
-        public int RandomSeed { get; set; }
-
         // RideRooms
         public ReadOnlyCollection<RideRoom> RideRooms { get; }
 
@@ -624,6 +625,10 @@ namespace Remizione
         // RunProgress
         [ScriptProperty]
         public int RunProgress { get; private set; } = -1;
+
+        // Seed
+        [ScriptProperty]
+        public int Seed { get; set; }
 
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)

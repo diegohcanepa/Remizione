@@ -494,6 +494,8 @@
             <key type="filename">Environment-assets/ShadowSpot7.png</key>
             <key type="filename">PieceOfWood-assets/PieceOfWood.png</key>
             <key type="filename">PieceOfWood-assets/PieceOfWoodShadow.png</key>
+            <key type="filename">TombstoneB-assets/TombstoneBPiece3.png</key>
+            <key type="filename">TombstoneD-assets/TombstoneDPiece3.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -723,6 +725,8 @@
             <key type="filename">PotteryB-assets/PotteryBPiece3.png</key>
             <key type="filename">PotteryB-assets/PotteryBPiece6.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece6.png</key>
+            <key type="filename">TombstoneA-assets/TombstoneAPiece2.png</key>
+            <key type="filename">TombstoneC-assets/TombstoneCPiece2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -919,6 +923,8 @@
             </struct>
             <key type="filename">Guts-assets/Gut1.png</key>
             <key type="filename">PotteryB-assets/PotteryBPiece5.png</key>
+            <key type="filename">TombstoneA-assets/TombstoneAPiece3.png</key>
+            <key type="filename">TombstoneC-assets/TombstoneCPiece3.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -972,6 +978,7 @@
             </struct>
             <key type="filename">Guts-assets/Gut7.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece1.png</key>
+            <key type="filename">TombstoneD-assets/TombstoneDPiece4.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1467,6 +1474,11 @@
             </struct>
             <key type="filename">PostClock-assets/PostClockPiece4.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece2.png</key>
+            <key type="filename">TombstoneA-assets/TombstoneAPiece1.png</key>
+            <key type="filename">TombstoneA-assets/TombstoneAPiece4.png</key>
+            <key type="filename">TombstoneB-assets/TombstoneBPiece1.png</key>
+            <key type="filename">TombstoneC-assets/TombstoneCPiece1.png</key>
+            <key type="filename">TombstoneD-assets/TombstoneDPiece1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1706,6 +1718,66 @@
                 <rect>3,6,5,13</rect>
                 <key>scale9Paddings</key>
                 <rect>3,6,5,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">TombstoneB-assets/TombstoneBPiece2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,0,3,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,0,3,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">TombstoneB-assets/TombstoneBPiece4.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>0,1,1,1</rect>
+                <key>scale9Paddings</key>
+                <rect>0,1,1,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">TombstoneC-assets/TombstoneCPiece4.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,0,1,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,0,1,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">TombstoneD-assets/TombstoneDPiece2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,3,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,3,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

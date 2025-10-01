@@ -333,10 +333,10 @@ namespace Remizione
                 var pos = itemDescription.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
 
                 // Health
-                if (item.MetaItem.Health != null)
+                if (item.MetaItem.HP != null)
                 {
                     heartBonus.Position = itemDescription.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
-                    heartBonus.Value = item.MetaItem.Health;
+                    heartBonus.Value = item.MetaItem.HP;
                     pos.Y += heartBonus.BoundingBox.Height;
                 }
             }

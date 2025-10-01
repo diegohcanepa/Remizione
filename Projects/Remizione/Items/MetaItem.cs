@@ -77,7 +77,7 @@ namespace Remizione
             if (target is Actor actor)
                 finalKnockback = CalculateKnockback(actor.BodySize);
 
-            target.TakeDamage(attacker, damageAmount, DamageKind, DamageIntensity, DiceExpression.Dice100.Roll() <= CriticalChance, finalKnockback, ImpactWord);
+            target.TakeDamage(attacker, damageAmount, DamageType, DiceExpression.Dice100.Roll() <= CriticalChance, finalKnockback, ImpactWord);
 
             return true;
         }
@@ -91,11 +91,8 @@ namespace Remizione
         // Damage
         public DiceExpression? Damage { get; init; }
 
-        // DamageIntensity
-        public DamageIntensity DamageIntensity { get; init; }
-
-        // DamageKind
-        public DamageKind DamageKind { get; init; }
+        // DamageType
+        public DamageType DamageType { get; init; }
 
         // Durability
         public int Durability { get; init; }
@@ -120,8 +117,8 @@ namespace Remizione
             return result;
         }
 
-        // Health
-        public DiceExpression? Health { get; init; }
+        // HP
+        public DiceExpression? HP { get; init; }
 
         // Image
         public AtlasImage? Image { get; }

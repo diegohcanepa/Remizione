@@ -115,7 +115,7 @@ namespace Remizione
             else
                 awaitingScript = "(None)";
 
-            DrawText(gameTime, text, $"Seed: {session.RandomSeed}");
+            DrawText(gameTime, text, $"Seed: {session.Seed}");
             DrawText(gameTime, text, $"Awaiting script: {awaitingScript}");
             DrawText(gameTime, text, $"Registered entities: {session.Entities.Count}");
         }
@@ -388,6 +388,12 @@ namespace Remizione
             if (InputManager.DefaultPlayer.Keyboard.IsKeyPressed(Keys.F2))
             {
                 IsActive = !IsActive;
+                return HandleInputResult.Handled;
+            }
+
+            if (InputManager.DefaultPlayer.Keyboard.IsKeyPressed(Keys.G))
+            {
+                ProceduralRoom.ShowGrid = !ProceduralRoom.ShowGrid;
                 return HandleInputResult.Handled;
             }
 

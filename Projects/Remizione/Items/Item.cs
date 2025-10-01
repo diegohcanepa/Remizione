@@ -145,7 +145,7 @@ namespace Remizione
             string value = string.Empty;
 
             // Health
-            if (property == ItemProperty.Health && MetaItem.Health is DiceExpression exp)
+            if (property == ItemProperty.Health && MetaItem.HP is DiceExpression exp)
                 value = exp.GetValueRangeAsString();
 
             // Chance
@@ -251,8 +251,8 @@ namespace Remizione
         // Use
         public bool Use()
         {
-            if (MetaItem.Health != null)
-                Owner.Health += MetaItem.Health.Roll();
+            if (MetaItem.HP != null)
+                Owner.HP += MetaItem.HP.Roll();
 
             if (!MetaItem.Unique)
             {

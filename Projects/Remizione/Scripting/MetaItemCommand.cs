@@ -8,7 +8,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 2, ActionArg, AllowEmptyArg, CriticalChanceArg, DamageArg, DamageIntensityArg, DamageKindArg, DurabilityArg, HealthArg, ImpactWordArg, KnockbackArg, PassiveEffectCooldownArg, PreventDiscardArg, RangeArg, ReplenishAmountArg, SkillChanceArg, SoundArg, UniqueArg)
+            : base(script, source, body, 2, ActionArg, AllowEmptyArg, CriticalChanceArg, DamageArg, DamageIntensityArg, DamageTypeArg, DurabilityArg, HPArg, ImpactWordArg, KnockbackArg, PassiveEffectCooldownArg, PreventDiscardArg, RangeArg, ReplenishAmountArg, SkillChanceArg, SoundArg, UniqueArg)
         {
             var name = Parser.ParseName(this, 0);
             var category = Parser.ParseEnum<InventoryCategory>(this, 1);
@@ -19,10 +19,9 @@ namespace Remizione.Scripting
                 AllowEmpty = HasArg(AllowEmptyArg),
                 CriticalChance = Parser.ParseInt32Argument(this, CriticalChanceArg),
                 Damage = Parser.ParseDiceExpressionArgument(this, DamageArg) ?? null,
-                DamageIntensity = Parser.ParseEnumArgument(this, DamageIntensityArg, DamageIntensity.Light),
-                DamageKind = Parser.ParseEnumArgument(this, DamageKindArg, DamageKind.None),
+                DamageType = Parser.ParseEnumArgument(this, DamageTypeArg, DamageType.Physical),
                 Durability = Parser.ParseInt32Argument(this, DurabilityArg, -1),
-                Health = Parser.ParseDiceExpressionArgument(this, HealthArg),
+                HP = Parser.ParseDiceExpressionArgument(this, HPArg),
                 ImpactWord = Parser.ParseEnumArgument(this, ImpactWordArg, ImpactWordName.None),
                 Knockback = Parser.ParseVector2Argument(this, KnockbackArg),
                 PassiveEffectCooldown = Parser.ParseInt32Argument(this, PassiveEffectCooldownArg),

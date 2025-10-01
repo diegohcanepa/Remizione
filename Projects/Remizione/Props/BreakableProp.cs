@@ -16,7 +16,7 @@ namespace Remizione
         public BreakableProp(GameSession session, string name)
             : base(session, name)
         {
-            //HitEffect = HitEffect.Shake;
+            HitEffect = HitEffect.Shake;
             HurtShake = new(1.5f, 0);
 
             var index = 1;
