@@ -481,7 +481,7 @@ namespace Remizione
 
         // CellMargin
         [ScriptProperty]
-        public int CellMargin { get; set; } = 1;
+        public int CellMargin { get; set; }
 
         // Collider
         [ScriptProperty]
@@ -576,7 +576,7 @@ namespace Remizione
         // HitEffect
         [ScriptProperty]
         public HitEffect HitEffect { get; set; }
-
+        
         // ShowColliders
         public static bool ShowColliders { get; set; }
 

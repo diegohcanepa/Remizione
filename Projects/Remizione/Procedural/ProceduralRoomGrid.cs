@@ -61,13 +61,7 @@ namespace Remizione
         public string GetCellLabel(int col, int row) => occupiedName[col, row];
 
         // GetPixelArea
-        public RectangleF GetPixelArea(GameThing thing)
-        {
-            if (thing.Collider.IsEmpty)
-                return thing.BoundingBox;
-            else
-                return thing.RuntimeCollider.BoundingRectangleF;
-        }
+        public RectangleF GetPixelArea(GameThing thing) => thing.BoundingBox;
 
         // GetPosition
         public Vector2 GetPosition(int col, int row)
@@ -82,8 +76,8 @@ namespace Remizione
         public Size GetRequiredGridSpace(GameThing thing)
         {
             var bbox = GetPixelArea(thing);
-            int width = (int)Math.Ceiling(bbox.Width / CellSize);// + thing.CellMargin * 2;
-            int height = (int)Math.Ceiling(bbox.Height / CellSize);// + thing.CellMargin * 2;
+            int width = (int)Math.Ceiling(bbox.Width / CellSize) + thing.CellMargin * 2;
+            int height = (int)Math.Ceiling(bbox.Height / CellSize) + thing.CellMargin * 2;
 
             return new Size(width, height);
         }

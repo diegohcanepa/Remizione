@@ -30,6 +30,7 @@ namespace Remizione
         public Pickup(GameSession session)
             : base(session, string.Empty)
         {
+            this.CollisionDetection = false;
             this.Atlas = Atlases.UI;
             this.Collider = new("20,12;20,22;0,22;0,12");
             this.DepthOffset = -5;

@@ -77,7 +77,7 @@ namespace Remizione
                 if (!targetGrid.TryReserveSpace(thing.StaticName, sizeInCells, out int baseCol, out int baseRow))
                     break;
 
-                PlaceRuntimeThing(targetGrid, thing, baseCol, baseRow);
+                SpawnThing(targetGrid, thing, baseCol, baseRow);
 
                 for (int j = 0; j < clumpSize - 1; j++)
                 {
@@ -85,7 +85,7 @@ namespace Remizione
                     int offsetRow = baseRow + Random.Next(-1, 2);
 
                     if (targetGrid.TryReserveSpace(thing.StaticName, sizeInCells, out int col, out int row, offsetCol, offsetRow))
-                        PlaceRuntimeThing(targetGrid, thing, col, row);
+                        SpawnThing(targetGrid, thing, col, row);
                 }
             }
         }
@@ -110,7 +110,7 @@ namespace Remizione
 
                     if (targetGrid.TryReserveSpace(thing.StaticName, sizeInCells, out int finalCol, out int finalRow, col, row))
                     {
-                        PlaceRuntimeThing(targetGrid, thing, finalCol, finalRow);
+                        SpawnThing(targetGrid, thing, finalCol, finalRow);
                         placed = true;
                     }
                 }
@@ -134,7 +134,7 @@ namespace Remizione
                 if (noise > noiseThreshold)
                     continue;
 
-                PlaceRuntimeThing(targetGrid, thing, col, row);
+                SpawnThing(targetGrid, thing, col, row);
             }
         }
 
@@ -153,7 +153,7 @@ namespace Remizione
                     Game.Shapes.DrawRectangle(rect, color);
 
                     cellLabel.Text = grid.GetCellLabel(col, row);
-                    cellLabel.Position = pos;
+                    cellLabel.Position = pos + new Vector2(2);
                     cellLabel.Draw(gameTime);
                 }
             }
@@ -208,16 +208,6 @@ namespace Remizione
             return result;
         }
 
-        // PlaceRuntimeThing
-        private void PlaceRuntimeThing(ProceduralRoomGrid grid, GameThing thing, int col, int row)
-        {
-            var instance = CreateRuntimeThingCloneCore(thing.StaticName);
-            instance.Position = grid.GetPosition(col, row);
-            instance.Y += (instance.BoundingBox.Bottom - instance.RuntimeCollider.BoundingRectangle.Bottom) + grid.CellSize / 2;
-            instance.X += Math.Abs(instance.BoundingBox.Center.X - instance.RuntimeCollider.BoundingRectangle.Center.X) + grid.CellSize / 2;
-            Children.Add(instance);
-        }
-
         // Prepare
         private void Prepare()
         {
@@ -230,6 +220,17 @@ namespace Remizione
             ClearWalkAreas();
             Vector2[] vertices = GetWalkAreaVertices();
             AddWalkArea("<Default>", vertices);
+        }
+
+        // SpawnThing
+        private void SpawnThing(ProceduralRoomGrid grid, GameThing thing, int col, int row)
+        {
+            var sizeInCells = grid.GetRequiredGridSpace(thing);
+            var ltPos = grid.GetPosition(col, row) + new Vector2(.5f);
+            var rect = new RectangleF(ltPos.X, ltPos.Y, sizeInCells.Width * grid.CellSize, sizeInCells.Height * grid.CellSize);
+            var instance = CreateRuntimeThingCloneCore(thing.StaticName);
+            instance.Position = rect.GetPoint(RectanglePoint.Bottom);
+            Children.Add(instance);
         }
 
         #endregion

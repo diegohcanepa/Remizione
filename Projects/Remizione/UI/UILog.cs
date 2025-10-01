@@ -13,7 +13,6 @@ namespace Remizione
     {
         private readonly FloatTween fadeTween = new() { StartDelay = 1500 };
         private readonly ImageSprite icon;
-        private readonly Queue<(string verb, string noun, bool isWarning, AtlasImage? image)> queue = [];
         private readonly TextSprite nounText;
         private readonly TextSprite verbText;
 
@@ -47,16 +46,6 @@ namespace Remizione
         // ShowCore
         private void ShowCore(string verb, string noun, bool isWarning, AtlasImage? image)
         {
-            if (isWarning)
-            {
-                queue.Clear();
-            }
-            else if (fadeTween.IsRunning)
-            {
-                queue.Enqueue(new(verb, noun, isWarning, image));
-                return;
-            }
-
             verbText.Color = isWarning ? ColorPalette.Text.Orange : ColorPalette.Text.Green;
             verbText.Position = new Vector2(8, 25);
             verbText.Text = verb;
@@ -100,12 +89,6 @@ namespace Remizione
             verbText.Opacity = fadeTween.IsRunning ? fadeTween.CurrentValue : 1;
             nounText.Opacity = verbText.Opacity;
             icon.Opacity = verbText.Opacity;
-
-            if (!fadeTween.IsRunning && queue.Count > 0)
-            {
-                var (verb, noun, isWarning, image) = queue.Dequeue();
-                ShowCore(verb, noun, isWarning, image);
-            }
         }
 
         #endregion
