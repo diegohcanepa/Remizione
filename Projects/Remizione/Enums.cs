@@ -26,6 +26,9 @@ namespace Remizione
     // GameplayMode
     public enum GameplayMode { Adventure, Run }
 
+    // GridMeasureType
+    public enum GridMeasureType { BoundingBox, Collider, Hotspot }
+
     // HitEffect
     public enum HitEffect { None, Shake, Blink }
 

@@ -816,10 +816,6 @@ namespace Remizione
             InteractiveTarget = null;
         }
 
-        // Tickets
-        [ScriptProperty]
-        public int Tickets { get; set; }
-
         // UseSelectedItem
         public void UseSelectedItem(InventoryCategory category)
         {

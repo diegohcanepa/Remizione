@@ -74,7 +74,7 @@ namespace Remizione
             for (var i = 0; i < pieces.Count; i++)
             {
                 pieces[i].Launch();
-                RenderLayer = RenderLayer.Background;
+                DepthOffset = -10000;
             }
         }
     }

@@ -653,5 +653,9 @@ namespace Remizione
 
         // StaticThings
         public NamedObjectReadOnlyCollection<GameThing> StaticThings { get; }
+
+        // TotalRuns
+        [ScriptProperty]
+        public int TotalRuns => CompletedRuns + Deaths;
     }
 }

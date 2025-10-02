@@ -20,6 +20,8 @@ namespace Remizione
         public Firecracker(GameSession session)
             : base(session)
         {
+            DepthOffset = -3;
+
             var animation = AddAnimation("Default");
             animation.AddFrameSequence(nameof(Firecracker), 30, 1, 3);
         }

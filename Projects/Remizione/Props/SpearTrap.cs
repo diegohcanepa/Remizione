@@ -26,7 +26,8 @@ namespace Remizione
             : base(session, name)
         {
             CollisionDetection = false;
-            DepthOffset = -3;
+            DepthOffset = DepthOffset = -11000;
+            GridMeasureType = GridMeasureType.Collider;
 
             var animation = AddAnimation(PreparedAnimationName);
             animation.AddFrame("SpearTrap01", 1000);

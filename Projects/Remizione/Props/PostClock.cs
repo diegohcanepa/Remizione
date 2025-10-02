@@ -16,6 +16,7 @@ namespace Remizione
             HitTestPolygon = TestPolygon.Hotspot;
             HurtSound = Sound.Find(SoundNames.ImpactA);
             LootTableName = nameof(Pottery);
+            CellMargin = 1;
             MaxHP = 6;
             PreventKnockback = true;
             ShakeOnHit = true;

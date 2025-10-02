@@ -614,6 +614,8 @@ namespace Remizione
         {
             base.OnLoadContent();
 
+            buttonDiscard.IsBeating = false;
+
             Sound.Play(SoundNames.UIInventoryOpen);
 
             // Populate grids

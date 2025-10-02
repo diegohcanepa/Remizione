@@ -42,6 +42,9 @@ namespace Remizione
             items.Add((value, weight));
         }
 
+        // Count
+        public int Count => items.Count;
+
         // GetValue
         public string GetValue() => GetValue(this.random);
 

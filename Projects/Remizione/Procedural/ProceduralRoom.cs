@@ -208,20 +208,6 @@ namespace Remizione
             return result;
         }
 
-        // Prepare
-        private void Prepare()
-        {
-            CustomWidth = (int)BoundingBox.Width;
-            CustomHeight = (int)BoundingBox.Height;
-
-            DecorationGrid.Resize(CustomWidth, CustomHeight);
-            MainGrid.Resize(CustomWidth, CustomHeight);
-
-            ClearWalkAreas();
-            Vector2[] vertices = GetWalkAreaVertices();
-            AddWalkArea("<Default>", vertices);
-        }
-
         // SpawnThing
         private void SpawnThing(ProceduralRoomGrid grid, GameThing thing, int col, int row)
         {
@@ -240,18 +226,8 @@ namespace Remizione
         // DecorationGrid
         protected ProceduralRoomGrid DecorationGrid { get; } = new ProceduralRoomGrid("Decoration");
 
-        // GetTerrainImageName
-        protected abstract string GetTerrainImageName();
-
-        // GetWalkAreaVertices
-        protected virtual Vector2[] GetWalkAreaVertices()
-        {
-            return [Vector2.Zero,
-                    new(CustomWidth, 0),
-                    new(CustomWidth, CustomHeight),
-                    new(0, CustomHeight)
-                   ];
-        }
+        // GetTerrainData
+        protected abstract string GetTerrainData(out Vector2[] walkAreaVertices);
 
         // MainGrid
         protected ProceduralRoomGrid MainGrid { get; } = new ProceduralRoomGrid("Main");
@@ -276,11 +252,22 @@ namespace Remizione
             if (!populated)
             {
                 Sprite.ClearAnimations();
-                var aniamtion = AddAnimation("Terrain");
-                aniamtion.AddFrame(GetTerrainImageName(), 1000);
+                
+                var terrainImageName = GetTerrainData(out var walkAreaVertices);
+                var animation = AddAnimation(terrainImageName);
+                animation.AddFrame(terrainImageName, 1000);
 
                 populated = true;
-                Prepare();
+
+                CustomWidth = (int)BoundingBox.Width;
+                CustomHeight = (int)BoundingBox.Height;
+
+                DecorationGrid.Resize(CustomWidth, CustomHeight);
+                MainGrid.Resize(CustomWidth, CustomHeight);
+
+                ClearWalkAreas();
+                AddWalkArea("<Default>", walkAreaVertices);
+
                 OnPopulate();
                 Populate();
                 OnPopulateCompleted();

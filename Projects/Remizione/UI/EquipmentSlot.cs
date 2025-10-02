@@ -34,6 +34,7 @@ namespace Remizione
             : base(session.Game)
         {
             this.session = session;
+
             this.InventoryCategory = inventoryCategory;
             this.HorizontalCycle = horizontalCycle;
 
@@ -221,7 +222,12 @@ namespace Remizione
             if (button.TestPressed(PlayerIndex.One))
             {
                 if (lastKnownItem == null)
-                    Sound.Play(SoundNames.Error);
+                {
+                    if (actor.Inventory.GetContainer(InventoryCategory).SelectPrevious() == null)
+                        Sound.Play(SoundNames.Error);
+                    else
+                        Sound.Play(SoundNames.UIHover);
+                }
                 else
                     actor.UseSelectedItem(InventoryCategory);
 

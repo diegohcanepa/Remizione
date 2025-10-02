@@ -573,6 +573,23 @@ namespace Remizione
                 DrawBox(Game, RuntimeHotspot.BoundingRectangleF, Color.Purple * .2f);
         }
 
+        // GridMeasureType
+        [ScriptProperty]
+        public GridMeasureType GridMeasureType { get;set; }
+
+        // GetGridPixelArea
+        public RectangleF GetGridPixelArea()
+        {
+            if (GridMeasureType == GridMeasureType.BoundingBox)
+                return BoundingBox;
+
+            else if (GridMeasureType == GridMeasureType.Collider)
+                return Collider.BoundingRectangleF;
+
+            else
+                return Hotspot.BoundingRectangleF;
+        }
+
         // HitEffect
         [ScriptProperty]
         public HitEffect HitEffect { get; set; }
@@ -1033,7 +1050,7 @@ namespace Remizione
             }
 
             // Impact word
-            if (impactWord != ImpactWordName.None && GetImpactWordPosition() is Vector2 wordPos)
+            if (maxHP > 0 && impactWord != ImpactWordName.None && GetImpactWordPosition() is Vector2 wordPos)
             {
                 this.impactWord ??= Session.ImpactWordPool.Get();
                 this.impactWord.Show(impactWord, wordPos);

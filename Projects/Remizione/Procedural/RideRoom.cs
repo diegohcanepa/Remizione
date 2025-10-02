@@ -11,15 +11,23 @@ namespace Remizione
     /// </summary>
     public sealed class RideRoom : ProceduralRoom
     {
+        private enum TerrainSize { TerrainSmall, TerrainMedium, TerrainLarge, TerrainExtraLarge }
+
         private static readonly ChanceTable terrainTable = new();
+        private static readonly Dictionary<string, ReadOnlyPolygon> terrainVertices = [];
 
         // Static constructor
         static RideRoom()
         {
-            terrainTable.Add("TerrainSmall", 200);
-            terrainTable.Add("TerrainMedium", 50);
-            terrainTable.Add("TerrainLarge", 25);
-            terrainTable.Add("TerrainExtraLarge", 10);
+            terrainTable.Add(TerrainSize.TerrainSmall.ToString(), 2000);
+            terrainTable.Add(TerrainSize.TerrainMedium.ToString(), 50);
+            terrainTable.Add(TerrainSize.TerrainLarge.ToString(), 25);
+            terrainTable.Add(TerrainSize.TerrainExtraLarge.ToString(), 10);
+
+            terrainVertices[TerrainSize.TerrainSmall.ToString()] = new ReadOnlyPolygon("238,14;238,127;2,127;2,14");
+            terrainVertices[TerrainSize.TerrainMedium.ToString()] = new ReadOnlyPolygon("238,22;238,125;2,125;2,22");
+            terrainVertices[TerrainSize.TerrainLarge.ToString()] = new ReadOnlyPolygon("238,22;238,125;2,125;2,22");
+            terrainVertices[TerrainSize.TerrainExtraLarge.ToString()] = new ReadOnlyPolygon("238,22;238,125;2,125;2,22");
         }
 
         // Constructor
@@ -58,20 +66,12 @@ namespace Remizione
 
         #region Protected members
 
-        // GetTerrainImageName
-        protected override string GetTerrainImageName() => terrainTable.GetValue(Random);
-
-        // GetWalkAreaVertices
-        protected override Vector2[] GetWalkAreaVertices()
+        // GetTerrainData
+        protected override string GetTerrainData(out Vector2[] walkAreaVertices)
         {
-            const int margin = 3;
-            const int topMargin = 21;
-
-            return [new(margin, topMargin),
-                    new(CustomWidth - margin, topMargin),
-                    new(CustomWidth - margin, CustomHeight - margin),
-                    new(margin, CustomHeight - margin)
-                   ];
+            var result = terrainTable.GetValue(Random);
+            walkAreaVertices = terrainVertices[result].GetVertices();
+            return result;
         }
 
         // OnLoad
@@ -180,8 +180,8 @@ namespace Remizione
                 }
             }
 
-            DecorationGrid.MarkOccupiedMargin("Margin", 0, 2, 0, 0);
-            MainGrid.MarkOccupiedMargin("Margin", 1, 2, 1, 1);
+            DecorationGrid.MarkOccupiedMargin("Margin", 0, 1, 0, 2);
+            MainGrid.MarkOccupiedMargin("Margin", 0, 1, 0, 2);
         }
 
         // OnPopulateCompleted
