@@ -25,7 +25,7 @@ namespace Remizione
         {
             this.Atlas = Atlases.Environment;
             this.DisplayNameKey = $"Prop.{StaticName}";
-            this.HitTestSource = TestPolygon.Collider;
+            this.HitTestPolygon = TestPolygon.Collider;
             this.InteractionPolygon = TestPolygon.Collider;
         }
 

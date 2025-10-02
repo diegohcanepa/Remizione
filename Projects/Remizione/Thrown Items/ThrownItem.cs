@@ -16,6 +16,7 @@ namespace Remizione
         private readonly float bounciness;  // Cuánto rebota (0=sin rebote, 1=rebotar igual de fuerte)
         private bool checkWalkArea;
         private int collectCooldown = -1;
+        private float depth;
         private float floorY;               // Cuánto se frena en horizontal al chocar
         private readonly float gravity;     // gravedad base
         private readonly float horizontalDamping = 0.7f; // cuánto se reduce X en cada golpe
@@ -245,6 +246,9 @@ namespace Remizione
 
         #endregion
 
+        // Depth
+        public override float Depth => depth;
+
         // Launch
         public void Launch(Item item)
         {
@@ -267,6 +271,8 @@ namespace Remizione
             
             item.Use();
 
+            depth = item.Owner.Depth + .01f;
+
             this.item = item;
             this.Position = item.Owner.GetThrowableSpawnPosition();
             this.floorY = item.Owner.Y;
@@ -274,7 +280,7 @@ namespace Remizione
             if (item.Owner.IsFlippedHorizontally)
                 velocity.X *= -1;
 
-            item.Owner.Room?.Children.Add(this);
+            item.Owner.Room.Children.Add(this);
 
             ignoreThing = CheckCollision(false);
             var y = float.MinValue;

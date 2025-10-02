@@ -59,7 +59,7 @@ namespace Remizione
             this.itemImage = new ImageSprite(Game)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Center),
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Center, 0, -1),
                 Scale = ScaleInfo.UIElement.Small
             };
 
@@ -107,7 +107,8 @@ namespace Remizione
             }
             else
             {
-                itemImage.Image = Atlases.UI.InventorySlotQuestionIcon;
+                itemImage.Image = Atlases.UI.GetImage($"InventorySlot{InventoryCategory}Icon");
+                itemImage.Scale = ScaleInfo.UIElement.Medium;
                 itemImageScaleTween.Stop();
             }
         }
@@ -157,7 +158,8 @@ namespace Remizione
             itemImage.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            button.Draw(gameTime);
+            if (!HideButton)
+                button.Draw(gameTime);
 
             if (lastKnownItem?.MetaItem.Unique == false)
             {
@@ -247,6 +249,9 @@ namespace Remizione
             return HandleInputResult.Unhandled;
         }
 
+        // HideButton
+        public bool HideButton { get; set; }
+
         // HorizontalCycle
         public bool HorizontalCycle { get; }
 
@@ -254,6 +259,9 @@ namespace Remizione
         public InventoryCategory InventoryCategory { get; }
 
         // IsVisible
-        public bool IsVisible => actor?.Session.IsCurrentScene == true;
+        public bool IsVisible => SceneScope == null || Game.SceneManager.CurrentScene == SceneScope;
+
+        // SceneScope
+        public Scene? SceneScope { get; set; }
     }
 }

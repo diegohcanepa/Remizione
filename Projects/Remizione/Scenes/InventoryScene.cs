@@ -21,11 +21,12 @@ namespace Remizione
         private readonly UITextButton buttonConsume;
         private readonly UITextButton buttonDiscard;
         private readonly UITextButton buttonEquip;
-        private readonly List<InventoryCategory> categories = [InventoryCategory.Consumables, InventoryCategory.Junk, InventoryCategory.Thingies, InventoryCategory.KeyItems, InventoryCategory.Trinkets, InventoryCategory.Quirks];
+        private readonly List<InventoryCategory> categories = [InventoryCategory.Junk, InventoryCategory.Thingies, InventoryCategory.Consumables, InventoryCategory.Trinkets, InventoryCategory.KeyItems, InventoryCategory.Quirks];
         private readonly ImageSprite[] categoryIcons;
         private readonly TextSprite categoryText;
         private readonly ImageSprite checkMark;
         private InventoryCategory currentCategory;
+        private readonly JunkSlot junkSlot;
         private readonly Dictionary<InventoryCategory, Item?> equippedItems = [];
         private readonly ImageSprite gridContainer;
         private readonly Dictionary<InventoryCategory, InventoryGrid> grids = [];
@@ -40,7 +41,7 @@ namespace Remizione
         private readonly ImageSprite navigationBar;
         private readonly UITextButton nextCategoryButton;
         private readonly UITextButton previousCategoryButton;
-        private readonly TextSprite titleText;
+        private readonly ThingieSlot thingiesSlot;
         private readonly TrinketSlot trinketSlot;
 
         #endregion
@@ -57,21 +58,26 @@ namespace Remizione
             equippedItems[InventoryCategory.Thingies] = null;
             equippedItems[InventoryCategory.Trinkets] = null;
 
-            // Title
-            this.titleText = new(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Terra,
-                PivotOrigin = RectanglePoint.Top,
-                Scale = ScaleInfo.Text.ExtraGiant,
-                Text = "@Prop.PilgrimSack",
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 4),
-                ShadowOffset = new Vector2(0, .75f)
-            };
-
             // Health meter
             this.healthMeter = new(Game)
             {
                 Actor = owner,
+            };
+
+            // Junk slot
+            this.junkSlot = new(Owner.Session)
+            {
+                Actor = owner,
+                HideButton = true,
+                SceneScope = this
+            };
+
+            // Thingies slot
+            this.thingiesSlot = new(Owner.Session)
+            {
+                Actor = owner,
+                HideButton = true,
+                SceneScope = this
             };
 
             // Trinket slot
@@ -91,7 +97,7 @@ namespace Remizione
             this.gridContainer = new(Game, Atlases.UI.InventoryGridContainer)
             {
                 PivotOrigin = RectanglePoint.LeftTop,
-                Position = new(20, 43),
+                Position = new(22, 36),
             };
 
             // Create grids for each category
@@ -490,9 +496,11 @@ namespace Remizione
                 healthMeter.Draw(gameTime);
             }
 
+            junkSlot.Draw(gameTime);
+            thingiesSlot.Draw(gameTime);
+
             // Containers
             Game.SpriteBatch.Begin(Game.Camera);
-            titleText.Draw(gameTime);
             navigationBar.Draw(gameTime);
             gridContainer.Draw(gameTime);
             infoTitleContainer.Draw(gameTime);
@@ -614,7 +622,7 @@ namespace Remizione
                 grid.Populate();
             }
 
-            currentCategory = InventoryCategory.Consumables;
+            currentCategory = Owner.HP < Owner.MaxHP ? InventoryCategory.Consumables : InventoryCategory.Junk;
 
             equippedItems[InventoryCategory.Junk] = Owner.Inventory.Junk.SelectedItem;
             equippedItems[InventoryCategory.Thingies] = Owner.Inventory.Thingies.SelectedItem;
@@ -650,6 +658,8 @@ namespace Remizione
             categoryText.Update(gameTime);
             activeGrid.Update(gameTime);
             gridContainer.Update(gameTime);
+            junkSlot.Update(gameTime);
+            thingiesSlot.Update(gameTime);
             trinketSlot.Update(gameTime);
             healthMeter.Update(gameTime);
             itemName.Update(gameTime);

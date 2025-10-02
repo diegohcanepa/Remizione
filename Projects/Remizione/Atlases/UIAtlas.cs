@@ -17,7 +17,6 @@ namespace Remizione
             CreditsBar = this[nameof(CreditsBar)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             EquipmentSlot = this[nameof(EquipmentSlot)];
-            GoldenTicket = this[nameof(GoldenTicket)];
             HeartEmptyIcon = this[nameof(HeartEmptyIcon)];
             HeartHalfIcon = this[nameof(HeartHalfIcon)];
             HeartIcon = this[nameof(HeartIcon)];
@@ -30,6 +29,7 @@ namespace Remizione
             InventorySlotLockIcon = this[nameof(InventorySlotLockIcon)];
             InventorySlotQuestionIcon = this[nameof(InventorySlotQuestionIcon)];
             InventorySlotSelected = this[nameof(InventorySlotSelected)];
+            InventorySlotTrinketsIcon = this[nameof(InventorySlotTrinketsIcon)];
             MessageContainer = this[nameof(MessageContainer)];
             MouseCursorArrow = this[nameof(MouseCursorArrow)];
             Pixel = this[nameof(Pixel)];
@@ -37,7 +37,6 @@ namespace Remizione
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
             ProhibitionIcon = this[nameof(ProhibitionIcon)];
             ProhibitionMark = this[nameof(ProhibitionMark)];
-            RedTicket = this[nameof(RedTicket)];
             SackSlot = this[nameof(SackSlot)];
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
@@ -45,7 +44,6 @@ namespace Remizione
             TrinketSlot = this[nameof(TrinketSlot)];
             UITextButtonContainerEdge = this[nameof(UITextButtonContainerEdge)];
             UITextButtonContainerPattern = this[nameof(UITextButtonContainerPattern)];
-            WhiteTicket = this[nameof(WhiteTicket)];
         }
 
         // BottomGradient
@@ -65,9 +63,6 @@ namespace Remizione
 
         // EquipmentSlot
         public AtlasImage EquipmentSlot { get; }
-
-        // GoldenTicket
-        public AtlasImage GoldenTicket { get; }
 
         // InventoryGridContainer
         public AtlasImage InventoryGridContainer { get; }
@@ -92,6 +87,9 @@ namespace Remizione
 
         // InventorySlotSelected
         public AtlasImage InventorySlotSelected { get; }
+
+        // InventorySlotTrinketsIcon
+        public AtlasImage InventorySlotTrinketsIcon { get; }
 
         // HeartEmptyIcon
         public AtlasImage HeartEmptyIcon { get; }
@@ -126,9 +124,6 @@ namespace Remizione
         // ProhibitionMark
         public AtlasImage ProhibitionMark { get; }
 
-        // RedTicket
-        public AtlasImage RedTicket { get; }
-
         // SackSlot
         public AtlasImage SackSlot { get; }
 
@@ -149,8 +144,5 @@ namespace Remizione
 
         // UITextButtonContainerPattern
         public AtlasImage UITextButtonContainerPattern { get; }
-
-        // WhiteTicket
-        public AtlasImage WhiteTicket { get; }
     }
 }

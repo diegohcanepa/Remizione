@@ -599,10 +599,6 @@ namespace Remizione
         [ScriptProperty]
         public Sound? FootstepSound { get; set; }
 
-        // GoldenTickets
-        [ScriptProperty]
-        public int GoldenTickets { get; set; }
-
         // Guts
         [ScriptProperty]
         public int Guts { get; set; }
@@ -745,10 +741,6 @@ namespace Remizione
             }
         }
 
-        // RedTickets
-        [ScriptProperty]
-        public int RedTickets { get; set; }
-
         // Say
         public void Say(string text, bool awaitInput)
         {
@@ -824,6 +816,10 @@ namespace Remizione
             InteractiveTarget = null;
         }
 
+        // Tickets
+        [ScriptProperty]
+        public int Tickets { get; set; }
+
         // UseSelectedItem
         public void UseSelectedItem(InventoryCategory category)
         {
@@ -844,10 +840,6 @@ namespace Remizione
             else if (item.MetaItem.Action == ItemAction.Throw)
                 ThrowItem(item);
         }
-
-        // WhiteTickets
-        [ScriptProperty]
-        public int WhiteTickets { get; set; }
 
         // WhooshSound
         [ScriptProperty]

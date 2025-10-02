@@ -12,6 +12,7 @@ namespace Remizione
 
         private Actor? actor;
         private readonly ImageSprite itemImage;
+        private readonly Vector2Tween itemImageScaleTween = new();
         private Item? lastKnownItem;
         private readonly ImageSprite slotImage;
 
@@ -34,7 +35,7 @@ namespace Remizione
             this.itemImage = new ImageSprite(Game)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Center),
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Center, -.5f, -.5f),
                 Scale = ScaleInfo.UIElement.Medium
             };
         }
@@ -48,9 +49,17 @@ namespace Remizione
         {
             lastKnownItem = actor?.Inventory.Trinkets.SelectedItem;
             if (lastKnownItem != null)
+            {
                 itemImage.Image = lastKnownItem.MetaItem.Image;
+                itemImageScaleTween.Start(TweenStyle.Linear, new Vector2(.3f), ScaleInfo.UIElement.Small, 70);
+                itemImage.Tweens.ScaleTween = itemImageScaleTween;
+            }
             else
-                itemImage.Image = Atlases.UI.InventorySlotQuestionIcon;
+            {
+                itemImage.Image = Atlases.UI.InventorySlotTrinketsIcon;
+                itemImage.Scale = ScaleInfo.UIElement.Medium;
+                itemImageScaleTween.Stop();
+            }
         }
 
         #endregion
@@ -71,6 +80,8 @@ namespace Remizione
         {
             if (lastKnownItem != actor?.Inventory.Trinkets.SelectedItem)
                 InvalidateItem();
+
+            itemImage.Update(gameTime);
         }
 
         #endregion

@@ -159,11 +159,11 @@ namespace Remizione
         // GetImpactWordPosition
         private Vector2? GetImpactWordPosition()
         {
-            if (HitTestSource == TestPolygon.Collider && !Collider.IsEmpty)
+            if (HitTestPolygon == TestPolygon.Collider && !Collider.IsEmpty)
             {
                 return this.GetAbsolutePoint(Collider.BoundingRectangleF.GetPoint(RectanglePoint.Top));
             }
-            else if (HitTestSource == TestPolygon.Hotspot && RuntimeHotspot != null)
+            else if (HitTestPolygon == TestPolygon.Hotspot && RuntimeHotspot != null)
             {
                 return RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top);
             }
@@ -779,15 +779,15 @@ namespace Remizione
         // HitTest
         public bool HitTest(Vector2 value)
         {
-            if (HitTestSource == TestPolygon.Hotspot)
+            if (HitTestPolygon == TestPolygon.Hotspot)
                 return RuntimeHotspot.Contains(value);
             else
                 return (this as IHoleArea).Contains(value);
         }
 
-        // HitTestSource
+        // HitTestPolygon
         [ScriptProperty]
-        public TestPolygon HitTestSource { get; set; }
+        public TestPolygon HitTestPolygon { get; set; }
 
         // Hotspot
         [ScriptProperty]

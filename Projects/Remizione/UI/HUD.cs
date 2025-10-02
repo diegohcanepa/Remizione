@@ -48,10 +48,16 @@ namespace Remizione
             this.BagSlot = new(session);
 
             // Junk slot
-            this.JunkSlot = new(session);
+            this.JunkSlot = new(session)
+            {
+                SceneScope = session
+            };
 
             // Thingie slot
-            this.ThingieSlot = new(session);
+            this.ThingieSlot = new(session)
+            {
+                SceneScope = session
+            };
 
             // Trincket slot
             this.TrincketSlot = new(Game);

@@ -12,7 +12,7 @@ namespace Remizione
             : base(session, name)
         {
             DeathSound = Sound.Find(SoundNames.PotteryBreak);
-            HitTestSource = TestPolygon.Hotspot;
+            HitTestPolygon = TestPolygon.Hotspot;
             HurtSound = Sound.Find(SoundNames.ImpactA);
             MaxHP = 8;
             PlacementPhase = PlacementPhase.ArtificialObject;
