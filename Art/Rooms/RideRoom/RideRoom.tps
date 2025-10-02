@@ -173,7 +173,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">RideRoom-assets/TerrainExtraLarge.png</key>
+            <key type="filename">TerrainMedium-assets/TerrainMedium.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -182,39 +182,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>88,46,175,93</rect>
+                <rect>83,38,165,75</rect>
                 <key>scale9Paddings</key>
-                <rect>88,46,175,93</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">RideRoom-assets/TerrainLarge.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>88,34,175,67</rect>
-                <key>scale9Paddings</key>
-                <rect>88,34,175,67</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">RideRoom-assets/TerrainMedium.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>75,34,150,67</rect>
-                <key>scale9Paddings</key>
-                <rect>75,34,150,67</rect>
+                <rect>83,38,165,75</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -240,8 +210,8 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>RideRoom-assets</filename>
                     <filename>TerrainSmall-assets</filename>
+                    <filename>TerrainMedium-assets</filename>
                 </array>
             </struct>
         </map>

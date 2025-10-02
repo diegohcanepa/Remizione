@@ -11,7 +11,7 @@ namespace Remizione
     /// </summary>
     public sealed class RideRoom : ProceduralRoom
     {
-        private enum TerrainSize { TerrainSmall, TerrainMedium, TerrainLarge, TerrainExtraLarge }
+        private enum TerrainSize { TerrainSmall, TerrainMedium }
 
         private static readonly ChanceTable terrainTable = new();
         private static readonly Dictionary<string, ReadOnlyPolygon> terrainVertices = [];
@@ -21,13 +21,9 @@ namespace Remizione
         {
             terrainTable.Add(TerrainSize.TerrainSmall.ToString(), 2000);
             terrainTable.Add(TerrainSize.TerrainMedium.ToString(), 50);
-            terrainTable.Add(TerrainSize.TerrainLarge.ToString(), 25);
-            terrainTable.Add(TerrainSize.TerrainExtraLarge.ToString(), 10);
 
-            terrainVertices[TerrainSize.TerrainSmall.ToString()] = new ReadOnlyPolygon("238,14;238,127;2,127;2,14");
-            terrainVertices[TerrainSize.TerrainMedium.ToString()] = new ReadOnlyPolygon("238,22;238,125;2,125;2,22");
-            terrainVertices[TerrainSize.TerrainLarge.ToString()] = new ReadOnlyPolygon("238,22;238,125;2,125;2,22");
-            terrainVertices[TerrainSize.TerrainExtraLarge.ToString()] = new ReadOnlyPolygon("238,22;238,125;2,125;2,22");
+            terrainVertices[TerrainSize.TerrainSmall.ToString()] = new ReadOnlyPolygon("234,17;234,122;5,122;5,17");
+            terrainVertices[TerrainSize.TerrainMedium.ToString()] = new ReadOnlyPolygon("324,18;324,120;7,120;7,18");
         }
 
         // Constructor

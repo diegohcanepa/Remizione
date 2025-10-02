@@ -369,15 +369,13 @@
             <key type="filename">Items-assets/Cross.png</key>
             <key type="filename">Items-assets/Duck.png</key>
             <key type="filename">Items-assets/Firecracker.png</key>
-            <key type="filename">Items-assets/GoldenTicket.png</key>
             <key type="filename">Items-assets/MagneticCard.png</key>
             <key type="filename">Items-assets/MasterLockpick.png</key>
             <key type="filename">Items-assets/MissingItem.png</key>
-            <key type="filename">Items-assets/RedTicket.png</key>
             <key type="filename">Items-assets/RottenApple.png</key>
             <key type="filename">Items-assets/RustyLockpick.png</key>
             <key type="filename">Items-assets/SteelLockpick.png</key>
-            <key type="filename">Items-assets/WhiteTicket.png</key>
+            <key type="filename">Items-assets/Ticket.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

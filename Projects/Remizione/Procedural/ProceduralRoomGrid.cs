@@ -74,8 +74,8 @@ namespace Remizione
         {
             var bbox = thing.GetGridPixelArea();
             
-            int width = (int)Math.Ceiling(bbox.Width / CellSize) + thing.CellMargin * 2;
-            int height = (int)Math.Ceiling(bbox.Height / CellSize) + thing.CellMargin * 2;
+            int width = (int)Math.Ceiling(bbox.Width / CellSize);
+            int height = (int)Math.Ceiling(bbox.Height / CellSize);
 
             return new Size(width, height);
         }

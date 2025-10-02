@@ -479,10 +479,6 @@ namespace Remizione
             }
         }
 
-        // CellMargin
-        [ScriptProperty]
-        public int CellMargin { get; set; }
-
         // Collider
         [ScriptProperty]
         public Polygon Collider
