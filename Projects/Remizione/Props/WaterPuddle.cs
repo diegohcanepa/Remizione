@@ -1,7 +1,4 @@
-﻿using Engendro.Audio;
-using Microsoft.Xna.Framework;
-
-namespace Remizione
+﻿namespace Remizione
 {
     /// <summary>
     /// WaterPuddle
@@ -12,9 +9,11 @@ namespace Remizione
         public WaterPuddle(GameSession session, string name)
             : base(session, name)
         {
+            CollisionDetection = false;
+            PlacementPhase = PlacementPhase.NaturalObject;
             RenderLayer = RenderLayer.Background;
-            TerrainParticleColor = new Color(37, 63, 75);
-            TerrainSound = Sound.Find(SoundNames.FootstepWater);
+            //TerrainParticleColor = new Color(75, 133, 150);
+            //TerrainSound = Sound.Find(SoundNames.FootstepWater);
         }
     }
 }

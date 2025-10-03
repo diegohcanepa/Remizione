@@ -254,15 +254,12 @@ namespace Remizione
             if (MetaItem.HP != null)
                 Owner.HP += MetaItem.HP.Roll();
 
-            if (!MetaItem.Unique)
+            if (!MetaItem.IsPassive && Count > 0)
             {
-                if (Count > 0)
-                {
-                    if (Count == 1 && !MetaItem.AllowEmpty)
-                        Container.Remove(this);
-                    else
-                        Count--;
-                }
+                if (Count == 1 && !MetaItem.AllowEmpty)
+                    Container.Remove(this);
+                else
+                    Count--;
             }
 
             InvalidateDisplayText();

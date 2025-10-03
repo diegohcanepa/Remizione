@@ -32,9 +32,14 @@ namespace Remizione.Scripting
             animation = actor.Animate(animationName, HasArg(LoopedArg), direction, HasArg(PreserveArg));
         }
 
+        // OnExecutionCompleteds
+        protected override void OnExecutionCompleted()
+        {
+            animation = null;
+        }
+
         // IsAwaiting
-        public override bool IsAwaiting => actor != null &&
-                                           animation != null &&
+        public override bool IsAwaiting => actor != null && animation != null &&
                                            actor.AnimationPlayer.IsPlaying &&
                                            actor.AnimationPlayer.Animation == animation;
     }

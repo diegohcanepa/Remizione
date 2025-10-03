@@ -452,10 +452,6 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            AIStateMachine.Update(gameTime);
-
-            StateMachine.Update(gameTime);
-
             base.OnUpdate(gameTime);
 
             if (suspendInteractionCooldown > 0 && !session.IsAwaiting)
@@ -479,6 +475,9 @@ namespace Remizione
             footstepEffect?.Update(gameTime);
 
             Inventory.Trinkets.SelectedItem?.Update(gameTime);
+
+            AIStateMachine.Update(gameTime);
+            StateMachine.Update(gameTime);
         }
 
         // OnWillpowerChanged

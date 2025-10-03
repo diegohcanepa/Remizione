@@ -5,14 +5,14 @@ using Microsoft.Xna.Framework;
 namespace Remizione
 {
     /// <summary>
-    /// OcculusMinionPatrolState
+    /// NosyHemorrhoidPatrolState
     /// </summary>
-    internal class OcculusMinionPatrolState : AIState
+    internal class NosyHemorrhoidPatrolState : AIState
     {
         private int cooldown;
 
         // Constructor
-        public OcculusMinionPatrolState(AIStateMachine stateMachine)
+        public NosyHemorrhoidPatrolState(AIStateMachine stateMachine)
             : base(stateMachine, AIStateName.Patrol)
         {
         }

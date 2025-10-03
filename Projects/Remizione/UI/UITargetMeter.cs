@@ -23,18 +23,18 @@ namespace Remizione.UI
         public UITargetMeter(EngendroGame game)
             : base(game)
         {
-            this.meter = new Meter(game, ColorPalette.Text.TerraDarker, ColorPalette.Text.Red, new(30, 3))
+            this.meter = new Meter(game, ColorPalette.Text.TerraDarker, ColorPalette.Text.Red, new(30, 5))
             {
                 Alignment = HorizontalAlignment.Center,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 4)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 8)
             };
 
             this.labelText = new(game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = meter.BoundingBox.GetPoint(RectanglePoint.Top, 0, 1),
-                Scale = ScaleInfo.Text.Medium
+                Position = meter.BoundingBox.GetPoint(RectanglePoint.Top),
+                Scale = ScaleInfo.Text.Large
             };
         }
 

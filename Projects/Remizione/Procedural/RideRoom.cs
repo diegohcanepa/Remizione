@@ -80,8 +80,8 @@ namespace Remizione
                 Session.AwaitRoutine(RoutineNames.IncomingRideCarIntro);
         }
 
-        // OnPopulate
-        protected override void OnPopulate()
+        // OnPopulating
+        protected override void OnPopulating()
         {
             if (RoomPosition == RoomPosition.First)
             {
@@ -98,7 +98,7 @@ namespace Remizione
                 LeftTower = CreateRuntimeClone("LeftTower") as IsometricProp;
                 if (LeftTower != null)
                 {
-                    MainGrid.ReserveSpace(LeftTower);
+                    MainGrid.ReserveSpace(LeftTower, false);
                     Children.Add(this.LeftTower);
 
                     if (CreateRuntimeClone("LeftTowerPatch") is IsometricProp leftTowerPatch)
@@ -122,7 +122,7 @@ namespace Remizione
                 if (RightTower != null)
                 {
                     RightTower.Position = new Vector2(CustomWidth - 9, RightTower.BoundingBox.Height - 4);
-                    MainGrid.ReserveSpace(RightTower);
+                    MainGrid.ReserveSpace(RightTower, false);
                     Children.Add(RightTower);
 
                     if (CreateRuntimeClone("RightTowerPatch") is IsometricProp rightTowerPatch)
@@ -153,12 +153,14 @@ namespace Remizione
                 if (this.RightTower != null)
                 {
                     this.RightTower.Position = new Vector2(CustomWidth - 22, RightTower.BoundingBox.Height - 12);
+                    MainGrid.ReserveSpace(RightTower, false);
                     Children.Add(this.RightTower);
 
                     if (Session.GetEntity<ExitRideCar>(nameof(ExitRideCar)) is ExitRideCar exitRideCar)
                     {
-                        Children.Add(exitRideCar);
                         exitRideCar.Position = RightTower.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 9);
+                        MainGrid.ReserveSpace(exitRideCar, false);
+                        Children.Add(exitRideCar);
                     }
                 }
             }
@@ -171,7 +173,7 @@ namespace Remizione
                     if (RoomPosition == RoomPosition.Last)
                         cardReader.Position += new Vector2(20, -5);
 
-                    MainGrid.ReserveSpace(cardReader);
+                    MainGrid.ReserveSpace(cardReader, false);
                     Children.Add(cardReader);
                 }
             }

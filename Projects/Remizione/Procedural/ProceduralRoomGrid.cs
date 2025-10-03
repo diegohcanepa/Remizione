@@ -32,16 +32,19 @@ namespace Remizione
         #region Private fields
 
         // CanFitAt
-        private bool CanFitAt(int startCol, int startRow, Size required)
+        private bool CanFitAt(int startCol, int startRow, Size requiredSize)
         {
-            if (startCol < 0 || startRow < 0 || startCol + required.Width > ColCount || startRow + required.Height > RowCount)
+            if (startCol < 0 || startRow < 0 || startCol + requiredSize.Width > ColCount || startRow + requiredSize.Height > RowCount)
                 return false;
 
-            for (int dx = 0; dx < required.Width; dx++)
+            for (int dx = 0; dx < requiredSize.Width; dx++)
             {
-                for (int dy = 0; dy < required.Height; dy++)
+                for (int dy = 0; dy < requiredSize.Height; dy++)
                 {
-                    if (occupied[startCol + dx, startRow + dy])
+                    var col = startCol + dx;
+                    var row = startRow + dy;
+
+                    if (occupied[col, row])
                         return false;
                 }
             }
@@ -132,13 +135,13 @@ namespace Remizione
         public string Name { get; }
 
         // ReserveSpace
-        public bool ReserveSpace(GameThing thing)
+        public bool ReserveSpace(GameThing thing, bool fitsCompletely = true)
         {
-            return ReserveSpace(thing.StaticName, thing.GetGridPixelArea().ToRectangle());
+            return ReserveSpace(thing.StaticName, thing.GetGridPixelArea().ToRectangle(), fitsCompletely);
         }
 
         // ReserveSpace
-        public bool ReserveSpace(string label, Rectangle pixelArea)
+        public bool ReserveSpace(string label, Rectangle pixelArea, bool fitsCompletely = true)
         {
             int startCol = (pixelArea.X / CellSize);
             int startRow = (pixelArea.Y / CellSize);
@@ -147,7 +150,7 @@ namespace Remizione
 
             Size size = new(cellWidth, cellHeight);
 
-            if (CanFitAt(startCol, startRow, size))
+            if (!fitsCompletely || CanFitAt(startCol, startRow, size))
             {
                 MarkOccupied(label, startCol, startRow, size);
                 return true;

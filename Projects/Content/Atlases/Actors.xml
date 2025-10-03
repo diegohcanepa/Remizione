@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:0a638334f8db27b9f0ea38f271cff6a6:6525a8d8c1e8b4d8efe3c3ff154065ca:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:9a725ddfcef40f87897f399d2f6bb0b6:1ad471000fbe819c3ddca14222db20bc:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -84,10 +84,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Edmund-assets/ThrowItem01.png" x="122" y="108" w="28" h="25"/>
     <sprite n="Edmund-assets/ThrowItem02.png" x="152" y="108" w="28" h="25"/>
     <sprite n="Grandma-assets/Stand01.png" x="290" y="108" w="21" h="20"/>
-    <sprite n="Grandma-assets/StandHead01.png" x="206" y="121" w="21" h="20"/>
-    <sprite n="Grandma-assets/StandHead02.png" x="229" y="121" w="21" h="20"/>
-    <sprite n="Grandma-assets/TalkHead01.png" x="252" y="121" w="21" h="20"/>
-    <sprite n="Grandma-assets/TalkHead02.png" x="275" y="130" w="21" h="20"/>
+    <sprite n="Grandma-assets/StandHead01.png" x="433" y="136" w="21" h="20"/>
+    <sprite n="Grandma-assets/StandHead02.png" x="456" y="137" w="21" h="20"/>
+    <sprite n="Grandma-assets/TalkHead01.png" x="479" y="137" w="21" h="20"/>
+    <sprite n="Grandma-assets/TalkHead02.png" x="182" y="121" w="21" h="20"/>
     <sprite n="HellGoat-assets/Headbutt01.png" x="116" y="30" w="34" h="22"/>
     <sprite n="HellGoat-assets/Headbutt02.png" x="2" y="47" w="34" h="22"/>
     <sprite n="HellGoat-assets/Move01.png" x="38" y="47" w="34" h="22"/>
@@ -97,25 +97,22 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="HellGoat-assets/Stand01.png" x="224" y="30" w="34" h="22"/>
     <sprite n="HellGoat-assets/StandHead01.png" x="260" y="30" w="34" h="22"/>
     <sprite n="HellGoat-assets/StandHead02.png" x="296" y="30" w="34" h="22"/>
-    <sprite n="Monk-assets/Move01.png" x="421" y="117" w="22" h="20"/>
-    <sprite n="Monk-assets/Move02.png" x="445" y="137" w="22" h="20"/>
-    <sprite n="Monk-assets/Stand01.png" x="469" y="137" w="22" h="20"/>
-    <sprite n="OcculusMinion-assets/Move01.png" x="182" y="108" w="25" h="11"/>
-    <sprite n="OcculusMinion-assets/Move02.png" x="209" y="108" w="25" h="11"/>
-    <sprite n="OcculusMinion-assets/Move03.png" x="236" y="108" w="25" h="11"/>
-    <sprite n="OcculusMinion-assets/Move04.png" x="263" y="108" w="25" h="11"/>
-    <sprite n="OcculusMinion-assets/Stand01.png" x="182" y="108" w="25" h="11"/>
-    <sprite n="OcculusMinion-assets/Stand02.png" x="313" y="111" w="25" h="11"/>
-    <sprite n="OcculusMinion-assets/Stand03.png" x="340" y="111" w="25" h="11"/>
-    <sprite n="OcculusMinion-assets/Stand04.png" x="367" y="111" w="25" h="11"/>
-    <sprite n="OcculusMinion-assets/Stand05.png" x="394" y="116" w="25" h="11"/>
-    <sprite n="Reaper-assets/Move01.png" x="313" y="124" w="22" h="17"/>
-    <sprite n="Reaper-assets/Move02.png" x="337" y="124" w="22" h="17"/>
-    <sprite n="Reaper-assets/Move03.png" x="361" y="124" w="22" h="17"/>
-    <sprite n="Reaper-assets/Move04.png" x="385" y="129" w="22" h="17"/>
-    <sprite n="Reaper-assets/Stand01.png" x="385" y="129" w="22" h="17"/>
-    <sprite n="Reaper-assets/Talk01.png" x="409" y="139" w="22" h="17"/>
-    <sprite n="Reaper-assets/Talk02.png" x="182" y="121" w="22" h="17"/>
+    <sprite n="NosyHemorrhoid-assets/Move01.png" x="182" y="108" w="25" h="11"/>
+    <sprite n="NosyHemorrhoid-assets/Move02.png" x="209" y="108" w="25" h="11"/>
+    <sprite n="NosyHemorrhoid-assets/Move03.png" x="236" y="108" w="25" h="11"/>
+    <sprite n="NosyHemorrhoid-assets/Move04.png" x="263" y="108" w="25" h="11"/>
+    <sprite n="NosyHemorrhoid-assets/Stand01.png" x="182" y="108" w="25" h="11"/>
+    <sprite n="NosyHemorrhoid-assets/Stand02.png" x="313" y="111" w="25" h="11"/>
+    <sprite n="NosyHemorrhoid-assets/Stand03.png" x="340" y="111" w="25" h="11"/>
+    <sprite n="NosyHemorrhoid-assets/Stand04.png" x="367" y="111" w="25" h="11"/>
+    <sprite n="NosyHemorrhoid-assets/Stand05.png" x="394" y="116" w="25" h="11"/>
+    <sprite n="Reaper-assets/Move01.png" x="421" y="117" w="22" h="17"/>
+    <sprite n="Reaper-assets/Move02.png" x="313" y="124" w="22" h="17"/>
+    <sprite n="Reaper-assets/Move03.png" x="337" y="124" w="22" h="17"/>
+    <sprite n="Reaper-assets/Move04.png" x="361" y="124" w="22" h="17"/>
+    <sprite n="Reaper-assets/Stand01.png" x="361" y="124" w="22" h="17"/>
+    <sprite n="Reaper-assets/Talk01.png" x="385" y="129" w="22" h="17"/>
+    <sprite n="Reaper-assets/Talk02.png" x="409" y="136" w="22" h="17"/>
     <sprite n="Sister-assets/Bend01.png" x="2" y="2" w="38" h="26"/>
     <sprite n="Sister-assets/Bend02.png" x="42" y="2" w="38" h="26"/>
     <sprite n="Sister-assets/Bend03.png" x="82" y="2" w="38" h="26"/>

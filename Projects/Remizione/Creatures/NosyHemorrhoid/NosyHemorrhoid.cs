@@ -3,12 +3,12 @@
 namespace Remizione
 {
     /// <summary>
-    /// OcculusMinion
+    /// Nosy Hemorrhoid
     /// </summary>
-    public sealed class OcculusMinion : Creature
+    public sealed class NosyHemorrhoid : Creature
     {
         // Constructor
-        public OcculusMinion(GameSession session, string name)
+        public NosyHemorrhoid(GameSession session, string name)
             : base(session, name)
         {
             AnimationSettings.SupressAll();
@@ -16,9 +16,9 @@ namespace Remizione
             Guts = 7;
             ShadowSpotSize = 0;
 
-            _ = new OcculusMinionDecideState(AIStateMachine);
-            _ = new OcculusMinionPatrolState(AIStateMachine);
-            _ = new OcculusMinionChargeState(AIStateMachine);
+            _ = new NosyHemorrhoidDecideState(AIStateMachine);
+            _ = new NosyHemorrhoidPatrolState(AIStateMachine);
+            _ = new NosyHemorrhoidChargeState(AIStateMachine);
         }
 
         #region Protected members
@@ -42,7 +42,7 @@ namespace Remizione
         // OnStart
         protected override void OnStart()
         {
-            //AIStateMachine.ChangeState(AIStateName.Decide);
+            AIStateMachine.ChangeState(AIStateName.Decide);
         }
 
         // OnUpdate

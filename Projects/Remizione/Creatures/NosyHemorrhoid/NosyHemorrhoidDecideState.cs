@@ -3,12 +3,12 @@
 namespace Remizione
 {
     /// <summary>
-    /// OcculusMinionDecideState
+    /// NosyHemorrhoidDecideState
     /// </summary>
-    internal class OcculusMinionDecideState : AIState
+    internal class NosyHemorrhoidDecideState : AIState
     {
         // Constructor
-        public OcculusMinionDecideState(AIStateMachine stateMachine)
+        public NosyHemorrhoidDecideState(AIStateMachine stateMachine)
             : base(stateMachine, AIStateName.Decide)
         {
         }
@@ -20,7 +20,6 @@ namespace Remizione
 
             if (enemy == null)
                 StateMachine.ChangeState(AIStateName.Patrol);
-
             else
                 StateMachine.ChangeState(AIStateName.Charge);
         }

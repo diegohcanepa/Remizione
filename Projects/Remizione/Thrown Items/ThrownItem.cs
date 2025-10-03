@@ -70,7 +70,7 @@ namespace Remizione
                 if (Room.CulledThings[i] == this || Room.CulledThings[i] == item.Owner || Room.CulledThings[i] == ignoreThing)
                     continue;
 
-                if (Room.CulledThings[i] is GameThing target && !target.IgnoreThrowables && target != lastThingCollisioned && !target.IsDead)
+                if (Room.CulledThings[i] is GameThing target && !target.IgnoreThrowables && target.CollisionDetection && target != lastThingCollisioned && !target.IsDead)
                 {
                     if (target.HitTest(Position))
                     {

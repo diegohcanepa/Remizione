@@ -111,7 +111,7 @@ namespace Remizione
 
                 DepthOffset = 10;
 
-                scaleTween.Start(TweenStyle.Linear, Scale, Vector2.Zero, 150);
+                scaleTween.Start(TweenStyle.Linear, Scale, Vector2.Zero, 50);
                 Tweens.ScaleTween = scaleTween;
 
                 Session.Player?.Inventory.GetContainer(metaItem.Category).Add(metaItem, 1);

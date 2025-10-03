@@ -63,38 +63,36 @@ namespace Remizione
         }
 
         // DistributeClumped
-        private void DistributeClumped(GameThing thing, PlacementData placementData)
+        private void DistributeClumped(ProceduralRoomGrid grid, GameThing thing, PlacementData placementData)
         {
-            var targetGrid = thing.IsWalkAreaHole ? MainGrid : DecorationGrid;
             int totalCount = Random.Next(placementData.Instances.Minimum, placementData.Instances.Maximum + 1);
             int clumpSize = 3 + Random.Next(3);
             int clumpCount = (totalCount + clumpSize - 1) / clumpSize;
 
-            Size sizeInCells = targetGrid.GetRequiredGridSpace(thing);
+            Size sizeInCells = grid.GetRequiredGridSpace(thing);
 
             for (int i = 0; i < clumpCount; i++)
             {
-                if (!targetGrid.TryReserveSpace(thing.StaticName, sizeInCells, out int baseCol, out int baseRow))
+                if (!grid.TryReserveSpace(thing.StaticName, sizeInCells, out int baseCol, out int baseRow))
                     break;
 
-                SpawnThing(targetGrid, thing, baseCol, baseRow);
+                SpawnThing(grid, thing, baseCol, baseRow);
 
                 for (int j = 0; j < clumpSize - 1; j++)
                 {
                     int offsetCol = baseCol + Random.Next(-1, 2);
                     int offsetRow = baseRow + Random.Next(-1, 2);
 
-                    if (targetGrid.TryReserveSpace(thing.StaticName, sizeInCells, out int col, out int row, offsetCol, offsetRow))
-                        SpawnThing(targetGrid, thing, col, row);
+                    if (grid.TryReserveSpace(thing.StaticName, sizeInCells, out int col, out int row, offsetCol, offsetRow))
+                        SpawnThing(grid, thing, col, row);
                 }
             }
         }
 
         // DistributeRandomly
-        private void DistributeRandomly(GameThing thing, PlacementData placementData)
+        private void DistributeRandomly(ProceduralRoomGrid grid, GameThing thing, PlacementData placementData)
         {
-            var targetGrid = thing.IsWalkAreaHole ? MainGrid : DecorationGrid;
-            Size sizeInCells = targetGrid.GetRequiredGridSpace(thing);
+            Size sizeInCells = grid.GetRequiredGridSpace(thing);
             var count = Random.Next(placementData.Instances.Minimum, placementData.Instances.Maximum + 1);
 
             for (int i = 0; i < count; i++)
@@ -105,12 +103,12 @@ namespace Remizione
 
                 for (int attempt = 0; attempt < maxAttempts && !placed; attempt++)
                 {
-                    int col = Random.Next(targetGrid.ColCount - sizeInCells.Width + 1);
-                    int row = Random.Next(targetGrid.RowCount - sizeInCells.Height + 1);
+                    int col = Random.Next(grid.ColCount - sizeInCells.Width + 1);
+                    int row = Random.Next(grid.RowCount - sizeInCells.Height + 1);
 
-                    if (targetGrid.TryReserveSpace(thing.StaticName, sizeInCells, out int finalCol, out int finalRow, col, row))
+                    if (grid.TryReserveSpace(thing.StaticName, sizeInCells, out int finalCol, out int finalRow, col, row))
                     {
-                        SpawnThing(targetGrid, thing, finalCol, finalRow);
+                        SpawnThing(grid, thing, finalCol, finalRow);
                         placed = true;
                     }
                 }
@@ -118,23 +116,22 @@ namespace Remizione
         }
 
         // DistributeWithNoiseMap
-        private void DistributeWithNoiseMap(GameThing thing, PlacementData placementData, int seed)
+        private void DistributeWithNoiseMap(ProceduralRoomGrid grid, GameThing thing, PlacementData placementData, int seed)
         {
-            var targetGrid = thing.IsWalkAreaHole ? MainGrid : DecorationGrid;
-            Size sizeInCells = targetGrid.GetRequiredGridSpace(thing);
+            Size sizeInCells = grid.GetRequiredGridSpace(thing);
             float noiseThreshold = 0.2f;
             int attempts = 100;
 
             for (int i = 0; i < attempts; i++)
             {
-                if (!targetGrid.TryReserveSpace(thing.StaticName, sizeInCells, out int col, out int row))
+                if (!grid.TryReserveSpace(thing.StaticName, sizeInCells, out int col, out int row))
                     break;
 
                 float noise = GetNoise(col, row, seed);
                 if (noise > noiseThreshold)
                     continue;
 
-                SpawnThing(targetGrid, thing, col, row);
+                SpawnThing(grid, thing, col, row);
             }
         }
 
@@ -208,6 +205,15 @@ namespace Remizione
             return result;
         }
 
+        // GetTargetGrid
+        private ProceduralRoomGrid GetTargetGrid(PlacementPhase phase)
+        {
+            if (phase == PlacementPhase.Terrain)
+                return DecorationGrid;
+            else
+                return MainGrid;
+        }
+
         // SpawnThing
         private void SpawnThing(ProceduralRoomGrid grid, GameThing thing, int col, int row)
         {
@@ -268,14 +274,14 @@ namespace Remizione
                 ClearWalkAreas();
                 AddWalkArea("<Default>", walkAreaVertices);
 
-                OnPopulate();
+                OnPopulating();
                 Populate();
                 OnPopulateCompleted();
             }
         }
 
-        // OnPopulate
-        protected virtual void OnPopulate()
+        // OnPopulating
+        protected virtual void OnPopulating()
         {
         }
 
@@ -295,6 +301,8 @@ namespace Remizione
             {
                 if (phase == PlacementPhase.None)
                     continue;
+
+                var grid = GetTargetGrid(phase);
 
                 var staticThings = GetStaticThings(phase);
                 staticThings.Shuffle(Random);
@@ -316,17 +324,17 @@ namespace Remizione
                         {
                             // Random
                             case PlacementDistributionStrategy.Random:
-                                DistributeRandomly(thing, placementData);
+                                DistributeRandomly(grid, thing, placementData);
                                 break;
 
                             // Clump
                             case PlacementDistributionStrategy.Clump:
-                                DistributeClumped(thing, placementData);
+                                DistributeClumped(grid, thing, placementData);
                                 break;
 
                             // NoiseMap 
                             case PlacementDistributionStrategy.NoiseMap:
-                                DistributeWithNoiseMap(thing, placementData, randomSeed);
+                                DistributeWithNoiseMap(grid, thing, placementData, randomSeed);
                                 break;
                         }
                     }

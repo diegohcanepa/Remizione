@@ -40,7 +40,6 @@ namespace Remizione.Scripting
         // OnExecutionCompleted
         protected override void OnExecutionCompleted()
         {
-            base.OnExecutionCompleted();
             actor = null;
         }
 
