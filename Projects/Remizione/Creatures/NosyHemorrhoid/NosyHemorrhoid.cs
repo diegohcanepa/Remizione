@@ -26,13 +26,6 @@ namespace Remizione
         // OnFindEnemy
         protected override GameThing? OnFindEnemy() => LastKnownAttacker;
 
-        // OnHurt
-        protected override void OnHurt(GameThing attacker, int damage, DamageType damageType, Vector2 knockback)
-        {
-            base.OnHurt(attacker, damage, damageType, knockback);
-            AIStateMachine.ChangeState(AIStateName.Decide);
-        }
-
         // OnLoad
         protected override void OnLoad()
         {
@@ -42,6 +35,13 @@ namespace Remizione
         // OnStart
         protected override void OnStart()
         {
+            AIStateMachine.ChangeState(AIStateName.Decide);
+        }
+
+        // OnTakeDamage
+        protected override void OnTakeDamage(GameThing attacker, int damage, DamageType damageType, Vector2 knockback)
+        {
+            base.OnTakeDamage(attacker, damage, damageType, knockback);
             AIStateMachine.ChangeState(AIStateName.Decide);
         }
 

@@ -68,6 +68,7 @@ namespace Remizione
                 };
 
                 console.CommandList.Add("add-item MagneticCard to $Player");
+                console.CommandList.Add("add-item MasterLockpick to $Player");
                 console.CommandList.Add("=>> $BeginRun()");
                 console.CommandList.Add("=>> $NextRunRoom()");
                 console.CommandList.Add("=>> $PreviousRunRoom()");

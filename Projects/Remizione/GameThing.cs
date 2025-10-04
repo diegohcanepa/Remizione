@@ -251,16 +251,16 @@ namespace Remizione
             {
                 if (HasMagneticCard && MetaItem.Find(MetaItem.MagneticCardName) is MetaItem magneticCard)
                 {
-                    Session.ObjectPools.Pickups.Get()?.Drop(room, magneticCard, Position);
+                    Session.ObjectPools.Pickups.Get()?.Drop(room, Position, magneticCard, 1);
                     HasMagneticCard = false;
                 }
-                else if (GetLoot() is MetaItem loot)
+                else if (GetLoot() is ChanceTableItem loot && MetaItem.Find(loot.Name) is MetaItem metaItem)
                 {
                     // Avoid looting unique things already in inventory
-                    if (loot.Unique && Session.Player?.Inventory.Find(loot) != null)
+                    if (metaItem.Unique && Session.Player?.Inventory.Find(metaItem) != null)
                         return;
 
-                    Session.ObjectPools.Pickups.Get()?.Drop(room, loot, Position);
+                    Session.ObjectPools.Pickups.Get()?.Drop(room, Position, metaItem, loot.Amount);
                 }
             }
         }
@@ -323,11 +323,6 @@ namespace Remizione
         {
         }
 
-        // OnHurt
-        protected virtual void OnHurt(GameThing attacker, int damage, DamageType damageType, Vector2 knockback)
-        {
-        }
-
         // OnLoad
         protected override void OnLoad()
         {
@@ -335,6 +330,11 @@ namespace Remizione
             isCollisionDirty = true;
             InvalidateCollisionPolygons();
             InvalidateWalkArea();
+        }
+
+        // OnTakeDamage
+        protected virtual void OnTakeDamage(GameThing attacker, int damage, DamageType damageType, Vector2 knockback)
+        {
         }
 
         // OnTransform
@@ -765,12 +765,12 @@ namespace Remizione
         }
 
         // GetLoot
-        public MetaItem? GetLoot()
+        public ChanceTableItem? GetLoot()
         {
-            if (ChanceTable.Find(LootTableName) is ChanceTable table && table.GetValue() is string value)
-                return MetaItem.Find(value);
-
-            return null;
+            if (ChanceTable.Find(LootTableName) is ChanceTable table && table.GetValue() is ChanceTableItem value)
+                return value;
+            else
+                return null;
         }
 
         // GetOverheadPosition
@@ -1117,7 +1117,7 @@ namespace Remizione
                     Session.HUD.TargetMeter.Target = attacker;
 
                 if (amount > 0)
-                    OnHurt(attacker, amount, damageType, knockback);
+                    OnTakeDamage(attacker, amount, damageType, knockback);
             }
         }
 

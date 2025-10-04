@@ -338,34 +338,6 @@ namespace Remizione
         // OnFindEnemy
         protected virtual GameThing? OnFindEnemy() => null;
 
-        // OnHurt
-        protected override void OnHurt(GameThing attacker, int damage, DamageType damageType, Vector2 knockback)
-        {
-            if (IsPlayer)
-            {
-                var fullHearts = damage / 2;
-                var hasHalfHeart = damage % 2 == 1;
-
-                for (var i = 0; i < fullHearts; i++)
-                {
-                    Session.ObjectPools.FloatingHearts.Get()?.Show(GetFloatingTextPosition(knockback), false);
-                }
-
-                if (hasHalfHeart)
-                    Session.ObjectPools.FloatingHearts.Get()?.Show(GetFloatingTextPosition(knockback), true);
-            }
-
-            LastKnownAttacker = attacker;
-            FaceTo(attacker);
-
-            if (Sprite.Animations.Contains(ActorStateNames.Hurt))
-            {
-                Blinker.Stop();
-                Stand();
-                StateMachine.ChangeState(ActorStateNames.Hurt);
-            }
-        }
-
         // OnLoad
         protected override void OnLoad()
         {
@@ -439,6 +411,36 @@ namespace Remizione
 
             if (!IsDead)
                 Stand();
+        }
+
+        // OnTakeDamage
+        protected override void OnTakeDamage(GameThing attacker, int damage, DamageType damageType, Vector2 knockback)
+        {
+            if (IsPlayer)
+            {
+                Game.SceneManager.PopUntil(Session);
+
+                var fullHearts = damage / 2;
+                var hasHalfHeart = damage % 2 == 1;
+
+                for (var i = 0; i < fullHearts; i++)
+                {
+                    Session.ObjectPools.FloatingHearts.Get()?.Show(GetFloatingTextPosition(knockback), false);
+                }
+
+                if (hasHalfHeart)
+                    Session.ObjectPools.FloatingHearts.Get()?.Show(GetFloatingTextPosition(knockback), true);
+            }
+
+            LastKnownAttacker = attacker;
+            FaceTo(attacker);
+
+            if (Sprite.Animations.Contains(ActorStateNames.Hurt))
+            {
+                Blinker.Stop();
+                Stand();
+                StateMachine.ChangeState(ActorStateNames.Hurt);
+            }
         }
 
         // OnUnload
@@ -574,6 +576,13 @@ namespace Remizione
             }
 
             return false;
+        }
+
+        // DummyDamage
+        [ScriptMethod]
+        public void DummyDamage()
+        {
+            TakeDamage(this, 1, DamageType.Physical, false, Vector2.Zero, ImpactWordName.None);
         }
 
         // FastMove

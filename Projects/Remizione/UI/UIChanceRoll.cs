@@ -18,7 +18,7 @@ namespace Remizione
         private readonly HUD hud;
         private Item? item;
         private readonly TextSprite labelText;
-        private readonly FloatTween opacityTween = new() { StartDelay = 1000 };
+        private readonly FloatTween opacityTween = new() { StartDelay = 100 };
         private Prop? prop;
         private readonly Random random = new();
         private int successChance;

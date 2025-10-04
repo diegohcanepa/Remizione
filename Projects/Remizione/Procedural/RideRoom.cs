@@ -2,6 +2,7 @@
 using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace Remizione
@@ -19,8 +20,8 @@ namespace Remizione
         // Static constructor
         static RideRoom()
         {
-            terrainTable.Add(TerrainSize.TerrainSmall.ToString(), 2000);
-            terrainTable.Add(TerrainSize.TerrainMedium.ToString(), 50);
+            terrainTable.Add(TerrainSize.TerrainSmall.ToString(), 1, 2000);
+            terrainTable.Add(TerrainSize.TerrainMedium.ToString(), 1, 50);
 
             terrainVertices[TerrainSize.TerrainSmall.ToString()] = ReadOnlyPolygon.GetVertices("234,17;234,122;5,122;5,17");
             terrainVertices[TerrainSize.TerrainMedium.ToString()] = ReadOnlyPolygon.GetVertices("324,18;324,120;7,120;7,18");
@@ -54,7 +55,7 @@ namespace Remizione
             {
                 var metaItem = MetaItem.FindNotNull(MetaItem.MagneticCardName);
                 var position = WalkArea != null ? WalkArea.RandomWalkablePoint() : BoundingBox.GetRandomPoint();
-                Session.ObjectPools.Pickups.Get()?.Drop(this, metaItem, position);
+                Session.ObjectPools.Pickups.Get()?.Drop(this, position, metaItem, 1);
             }
         }
 
@@ -65,9 +66,16 @@ namespace Remizione
         // GetTerrainData
         protected override string GetTerrainData(out Vector2[] walkAreaVertices)
         {
-            var result = terrainTable.GetValue(Random);
-            walkAreaVertices = terrainVertices[result];
-            return result;
+            if (terrainTable.GetValue(Random) is ChanceTableItem item)
+            {
+                walkAreaVertices = terrainVertices[item.Name];
+                return item.Name;
+            }
+            else
+            {
+                walkAreaVertices = Array.Empty<Vector2>();
+                return string.Empty;
+            }
         }
 
         // OnLoad

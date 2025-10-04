@@ -9,7 +9,7 @@ namespace Remizione
     /// </summary>
     public sealed class ChanceTable
     {
-        private readonly List<(string itemName, float weight)> items = [];
+        private readonly List<ChanceTableItem> items = [];
         private readonly Random random = new();
         private static readonly Dictionary<string, ChanceTable> tables = [];
 
@@ -33,45 +33,45 @@ namespace Remizione
         #endregion
 
         // Add
-        public void Add(string value, float weight)
+        public void Add(string value, int amount, float weight)
         {
             if (string.IsNullOrEmpty(value))
                 return;
 
             CodeContract.GreaterThanZero(weight, nameof(weight));
-            items.Add((value, weight));
+            items.Add(new(value, amount, weight));
         }
 
         // Count
         public int Count => items.Count;
 
         // GetValue
-        public string GetValue() => GetValue(this.random);
+        public ChanceTableItem? GetValue() => GetValue(random);
 
         // GetValue
-        public string GetValue(Random random)
+        public ChanceTableItem? GetValue(Random random)
         {
             if (items.Count == 0)
-                return string.Empty;
+                return null;
 
             float totalWeight = 0f;
 
             for (var i = 0; i < items.Count; i++)
             {
-                totalWeight += items[i].weight;
+                totalWeight += items[i].Weight;
             }
 
             float roll = (float)random.NextDouble() * totalWeight;
 
             for (var i = 0; i < items.Count; i++)
             {
-                if (roll < items[i].weight)
-                    return items[i].itemName;
+                if (roll < items[i].Weight)
+                    return items[i];
 
-                roll -= items[i].weight;
+                roll -= items[i].Weight;
             }
 
-            return string.Empty;
+            return null;
         }
 
         // Nothing

@@ -181,14 +181,6 @@ namespace Remizione
             else
                 InvalidateItemAmount(false);
 
-            var opacity = actor?.Session.IsAwaiting == true ? .3f : 1f;
-
-            amountText.Opacity = opacity;
-            button.ButtonOpacity = opacity;
-            button.IsEnabled = opacity == 1;
-            itemImage.Opacity = opacity;
-            slotImage.Opacity = opacity;
-
             button.Update(gameTime);
             slotImage.Update(gameTime);
             itemImage.Update(gameTime);

@@ -66,12 +66,6 @@ namespace Remizione
             if (!IsVisible)
                 return;
 
-            var opacity = actor?.Session.IsAwaiting == true ? .3f : 1f;
-
-            button.ButtonOpacity = opacity;
-            slotImage.Opacity = opacity;
-            button.IsEnabled = opacity == 1;
-
             button.Update(gameTime);
             slotImage.Update(gameTime);
         }
