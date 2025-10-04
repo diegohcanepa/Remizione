@@ -11,7 +11,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal PlacementDataCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, ChanceArg, DistributionArg, InstancesArg, RoomPositionArg, StageArg)
+            : base(script, source, body, 1, ChanceArg, DistributionArg, RoomPositionArg, StageArg, TriesArg)
         {
         }
 
@@ -31,7 +31,7 @@ namespace Remizione.Scripting
 
             var roomKind = Parser.ParseEnum<RoomKind>(this, 0);
             var distributionStrategy = Parser.ParseEnumArgument(this, DistributionArg, PlacementDistributionStrategy.Random);
-            var instances = HasArg(InstancesArg) ? Parser.ParseInt32RangeArgument(this, InstancesArg) : new Int32Range(1);
+            var tries = HasArg(TriesArg) ? Parser.ParseInt32RangeArgument(this, TriesArg) : new Int32Range(1);
             var conditions = new List<PlacementCondition>();
 
             // Chance
@@ -56,7 +56,7 @@ namespace Remizione.Scripting
             }
 
             // Placement data
-            var placementData = new PlacementData(distributionStrategy, conditions.ToArray(), instances);
+            var placementData = new PlacementData(distributionStrategy, conditions.ToArray(), tries);
             gameSession.PlacementDataPool.Add(roomKind, thing.StaticName, placementData);
         }
     }

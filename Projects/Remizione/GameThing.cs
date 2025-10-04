@@ -265,6 +265,15 @@ namespace Remizione
             }
         }
 
+        // GetShakeOffset
+        protected Vector2 GetShakeOffset()
+        {
+            if (hurtShakeTween?.IsRunning == true)
+                return hurtShakeTween.CurrentValue;
+            else
+                return Vector2.Zero;
+        }
+
         // OnCollision
         protected virtual void OnCollision(GameThing thing)
         {
@@ -543,7 +552,7 @@ namespace Remizione
         [ScriptMethod]
         public void Die()
         {
-            HP = 0;
+            HP = int.MinValue;
 
             if (DeathSound != null)
                 PlaySound(DeathSound);
@@ -569,6 +578,10 @@ namespace Remizione
                 DrawBox(Game, RuntimeHotspot.BoundingRectangleF, Color.Purple * .2f);
         }
 
+        // GridMargin
+        [ScriptProperty]
+        public Vector2 GridMargin { get; set; }
+
         // GridMeasureType
         [ScriptProperty]
         public GridMeasureType GridMeasureType { get;set; }
@@ -576,14 +589,17 @@ namespace Remizione
         // GetGridPixelArea
         public RectangleF GetGridPixelArea()
         {
-            if (GridMeasureType == GridMeasureType.BoundingBox)
-                return BoundingBox;
+            var result = GridMeasureType switch
+            {
+                GridMeasureType.BoundingBox => BoundingBox,
+                GridMeasureType.Collider => Collider.BoundingRectangleF,
+                GridMeasureType.Hotspot => Hotspot.BoundingRectangleF,
+                _ => RectangleF.Empty,
+            };
 
-            else if (GridMeasureType == GridMeasureType.Collider)
-                return Collider.BoundingRectangleF;
+            result.Inflate(GridMargin);
 
-            else
-                return Hotspot.BoundingRectangleF;
+            return result;
         }
 
         // HitEffect
@@ -882,7 +898,7 @@ namespace Remizione
         }
 
         // IsDead
-        public bool IsDead => HP <= 0 && MaxHP > 0;
+        public bool IsDead => (HP <= 0 && MaxHP > 0) || (HP == int.MinValue);
 
         // IsEmittingLight
         public virtual bool IsEmittingLight => AttachedLight != null && AttachedLight.IsEmitting;
@@ -1018,9 +1034,6 @@ namespace Remizione
 
         // Session
         public new GameSession Session { get; }
-
-        // ShakeOnHit
-        public bool ShakeOnHit { get; set; }
 
         // TakeDamage
         public void TakeDamage(GameThing attacker, int amount, DamageType damageType, bool critical, Vector2 knockback, ImpactWordName impactWord)

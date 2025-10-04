@@ -14,12 +14,11 @@ namespace Remizione
             DeathSound = Sound.Find(SoundNames.PotteryBreak);
             DepthOffset = -4;
             DisplayNameKey = "Prop.Pottery";
+            HitEffect = HitEffect.Shake;
             HitTestPolygon = TestPolygon.Hotspot;
             HurtSound = Sound.Find(SoundNames.ImpactA);
-            LootTableName = nameof(Pottery);
             MaxHP = 6;
             PreventKnockback = true;
-            ShakeOnHit = true;
         }
     }
 }

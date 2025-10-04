@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:af89c4bb9af433a69260ceb686738179:4910425cde7a88db6c9d4cde36020d19:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:cc471909cacdc2ba99fea631b6a89cf3:2c675098ad6f62c3506619eae65e37b9:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -34,7 +34,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="EnergyBolt.png" x="354" y="71" w="11" h="14"/>
     <sprite n="EquipmentSlot.png" x="2" y="71" w="17" h="17"/>
     <sprite n="Firecracker.png" x="277" y="465" w="20" h="20"/>
-    <sprite n="GameMeterContainer.png" x="384" y="145" w="17" h="18"/>
+    <sprite n="GameMeterContainer.png" x="268" y="167" w="17" h="18"/>
     <sprite n="GoalOrnament.png" x="314" y="487" w="94" h="5"/>
     <sprite n="HeartEmptyIcon.png" x="255" y="487" w="11" h="9"/>
     <sprite n="HeartHalfIcon.png" x="268" y="487" w="11" h="9"/>
@@ -51,11 +51,11 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="InventoryInfoContainer.png" x="2" y="403" w="112" h="65"/>
     <sprite n="InventoryInfoTitleContainer.png" x="380" y="71" w="100" h="8"/>
     <sprite n="InventoryNavigationBar.png" x="171" y="499" w="84" h="9"/>
-    <sprite n="InventorySlot.png" x="364" y="145" w="18" h="19"/>
+    <sprite n="InventorySlot.png" x="290" y="166" w="18" h="19"/>
     <sprite n="InventorySlotJunkIcon.png" x="294" y="487" w="9" h="9"/>
     <sprite n="InventorySlotLockIcon.png" x="305" y="487" w="7" h="9"/>
     <sprite n="InventorySlotQuestionIcon.png" x="93" y="499" w="7" h="11"/>
-    <sprite n="InventorySlotSelected.png" x="343" y="145" w="19" h="19"/>
+    <sprite n="InventorySlotSelected.png" x="290" y="145" w="19" h="19"/>
     <sprite n="InventorySlotThingiesIcon.png" x="145" y="499" w="10" h="10"/>
     <sprite n="InventorySlotTrinketsIcon.png" x="102" y="499" w="7" h="11"/>
     <sprite n="KeyboardD.png" x="194" y="71" w="14" h="14"/>
@@ -91,7 +91,6 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="SteelLockpick.png" x="321" y="145" w="20" h="20"/>
     <sprite n="Ticket.png" x="268" y="145" w="20" h="20"/>
     <sprite n="TipBalloon.png" x="327" y="494" w="12" h="13"/>
-    <sprite n="TowerKey.png" x="290" y="145" w="20" h="20"/>
     <sprite n="TrinketSlot.png" x="59" y="71" w="15" h="15"/>
     <sprite n="UIControlContainerEdgeLeftLarge.png" x="111" y="499" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeLeftSmall.png" x="157" y="499" w="5" h="10"/>

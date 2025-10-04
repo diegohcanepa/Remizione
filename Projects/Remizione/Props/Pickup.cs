@@ -49,11 +49,13 @@ namespace Remizione
         // OnDrawShadow
         protected override void OnDrawShadow(GameTime gameTime)
         {
+            /*
             shadow.Position = BoundingBox.GetPoint(RectanglePoint.Bottom);
             if (altitudeTween.IsRunning)
                 shadow.Y += altitudeTween.CurrentValue;
 
             shadow.Draw(gameTime);
+            */
         }
 
         // OnUnload
@@ -105,13 +107,13 @@ namespace Remizione
                     Session.ObjectPools.Pickups.Return(this);
                 }
             }
-            else if (Session.Player?.DistanceTo(this) <= 5)
+            else if (life <= 0 && Session.Player?.RuntimeHotspot.BoundingRectangleF.Intersects(BoundingBox) == true)
             {
                 isCollecting = true;
 
                 DepthOffset = 10;
 
-                scaleTween.Start(TweenStyle.Linear, Scale, Vector2.Zero, 50);
+                scaleTween.Start(TweenStyle.Linear, Scale, Vector2.Zero, 250);
                 Tweens.ScaleTween = scaleTween;
 
                 Session.Player?.Inventory.GetContainer(metaItem.Category).Add(metaItem, 1);

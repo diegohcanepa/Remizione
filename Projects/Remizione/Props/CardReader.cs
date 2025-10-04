@@ -14,6 +14,8 @@ namespace Remizione
         public CardReader(GameSession session, string name)
             : base(session, name)
         {
+            this.HitEffect = HitEffect.Shake;
+            this.HitTestPolygon = TestPolygon.Hotspot;
             this.lightLayer = new(Game);
             this.lightLayer.Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, 1, .85f, 80, -1);
 
@@ -23,7 +25,6 @@ namespace Remizione
             };
 
             HighlightInteraction = false;
-            HitEffect = HitEffect.Shake;
             PropState = PropState.Locked;
         }
 
@@ -33,7 +34,10 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             base.OnDraw(gameTime);
+
+            lightLayer.Position += GetShakeOffset();
             lightLayer.Draw(gameTime);
+            lightLayer.Position -= GetShakeOffset();
         }
 
         // OnPropStateChanged
@@ -62,7 +66,7 @@ namespace Remizione
             if (PropState == PropState.Unlocked && Room is RideRoom rideRoom && rideRoom.RightTower != null)
             {
                 if (rideRoom.RoomPosition != RoomPosition.Last)
-                    rideRoom.RightTower.Collider = new Polygon("0,0;0,46;10,51;33,43;38,44;18,54;29,56;44,49;45,0");
+                    rideRoom.RightTower.Collider = new Polygon("0,0;0,46;11,49;24,42;29,43;15,51;28,56;43,54;51,46;45,0");
 
                 rideRoom.RightTower.PropState = PropState.Open;
                 rideRoom.RightTower.AnimationPlayer.Play(AnimationNames.Opening, false);

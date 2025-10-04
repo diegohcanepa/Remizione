@@ -12,13 +12,13 @@ namespace Remizione
             : base(session, name)
         {
             DeathSound = Sound.Find(SoundNames.PotteryBreak);
+            HitEffect = HitEffect.Shake;
             HitTestPolygon = TestPolygon.Collider;
             HurtSound = Sound.Find(SoundNames.ImpactA);
             MaxHP = 8;
             PlacementPhase = PlacementPhase.ArtificialObject;
             ResistanceTableName = "ExplosiveOnly";
             PreventKnockback = true;
-            ShakeOnHit = true;
         }
     }
 }

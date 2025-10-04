@@ -13,12 +13,12 @@ namespace Remizione
         private readonly List<PlacementCondition> conditions = [];
 
         // Constructor
-        public PlacementData(PlacementDistributionStrategy distributionStrategy, PlacementCondition[] conditions, Int32Range instances)
+        public PlacementData(PlacementDistributionStrategy distributionStrategy, PlacementCondition[] conditions, Int32Range tries)
         {
             this.DistributionStrategy = distributionStrategy;
             this.conditions.AddRange(conditions);
             this.Conditions = new(conditions);
-            this.Instances = instances;
+            this.Tries = tries;
         }
 
         // Conditions
@@ -27,13 +27,10 @@ namespace Remizione
         // DistributionStrategy
         public PlacementDistributionStrategy DistributionStrategy { get; }
 
-        // Instances
-        public Int32Range Instances { get; }
-
         // IsAvailable
         public bool IsAvailable(GameThing thing, Random random)
         {
-            if (Instances.IsEmpty)
+            if (Tries.IsEmpty)
                 return false;
 
             for (int i = 0; i < conditions.Count; i++)
@@ -44,5 +41,8 @@ namespace Remizione
 
             return true;
         }
+
+        // Tries
+        public Int32Range Tries { get; }
     }
 }

@@ -325,6 +325,7 @@
             <key type="filename">PotteryC-assets/PotteryCPiece1.png</key>
             <key type="filename">PotteryC-assets/PotteryCPiece3.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece4.png</key>
+            <key type="filename">Trunk-assets/TrunkPiece2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -724,6 +725,7 @@
             <key type="filename">PotteryA-assets/PotteryAPiece5.png</key>
             <key type="filename">PotteryB-assets/PotteryBPiece3.png</key>
             <key type="filename">PotteryB-assets/PotteryBPiece6.png</key>
+            <key type="filename">PotteryD-assets/PotteryDPiece6.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece6.png</key>
             <key type="filename">TombstoneA-assets/TombstoneAPiece2.png</key>
             <key type="filename">TombstoneC-assets/TombstoneCPiece2.png</key>
@@ -925,6 +927,7 @@
             <key type="filename">PotteryB-assets/PotteryBPiece5.png</key>
             <key type="filename">TombstoneA-assets/TombstoneAPiece3.png</key>
             <key type="filename">TombstoneC-assets/TombstoneCPiece3.png</key>
+            <key type="filename">Trunk-assets/TrunkPiece4.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1437,7 +1440,6 @@
                 <false/>
             </struct>
             <key type="filename">PostClock-assets/PostClockPiece2.png</key>
-            <key type="filename">PotteryA-assets/PotteryAPiece6.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1767,6 +1769,8 @@
                 <false/>
             </struct>
             <key type="filename">TombstoneD-assets/TombstoneDPiece2.png</key>
+            <key type="filename">Trunk-assets/TrunkPiece3.png</key>
+            <key type="filename">Trunk-assets/TrunkPiece5.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1842,6 +1846,21 @@
                 <rect>5,6,11,11</rect>
                 <key>scale9Paddings</key>
                 <rect>5,6,11,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Trunk-assets/TrunkPiece1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,2,2,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,2,2,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

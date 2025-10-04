@@ -156,7 +156,7 @@ namespace Remizione
             if (SelectedItem is Item item)
             {
                 SelectedSlot.Item = null;
-                ItemContainer.Remove(item);
+                item.Discard();
                 if (ItemContainer.SelectedItem != null)
                     SelectSlot(ItemContainer.SelectedItem.Name);
             }

@@ -56,6 +56,13 @@ namespace Remizione
         // Category
         public InventoryCategory Category { get; }
 
+        // Clear
+        public void Clear()
+        {
+            SelectedItem = null;
+            items.Clear();
+        }
+
         // ClearSelection
         public void ClearSelection() => SelectedItem = null;
 

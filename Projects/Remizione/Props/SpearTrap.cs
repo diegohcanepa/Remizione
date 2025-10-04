@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 namespace Remizione
 {
     /// <summary>
-    /// Pottery
+    /// SpearTrap
     /// </summary>
     public class SpearTrap : IsometricProp
     {

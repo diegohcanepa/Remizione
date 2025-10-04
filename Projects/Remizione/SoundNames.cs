@@ -39,5 +39,6 @@
         internal const string UIPrompt = nameof(UIPrompt);
         internal const string UISelectA = nameof(UISelectA);
         internal const string UISelectB = nameof(UISelectB);
+        internal const string WoodDebris = nameof(WoodDebris);
     }
 }

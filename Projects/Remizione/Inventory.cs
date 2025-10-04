@@ -26,6 +26,16 @@ namespace Remizione
 
         #endregion
 
+        // Clear
+        public void Clear()
+        {
+            foreach (var category in Enum.GetValues<InventoryCategory>())
+            {
+                if (category != InventoryCategory.None)
+                    GetContainer(category).Clear();
+            }
+        }
+
         // Consumables
         public ItemContainer Consumables { get; }
 

@@ -65,7 +65,7 @@ namespace Remizione
         // DistributeClumped
         private void DistributeClumped(ProceduralRoomGrid grid, GameThing thing, PlacementData placementData)
         {
-            int totalCount = Random.Next(placementData.Instances.Minimum, placementData.Instances.Maximum + 1);
+            int totalCount = Random.Next(placementData.Tries.Minimum, placementData.Tries.Maximum + 1);
             int clumpSize = 3 + Random.Next(3);
             int clumpCount = (totalCount + clumpSize - 1) / clumpSize;
 
@@ -93,7 +93,7 @@ namespace Remizione
         private void DistributeRandomly(ProceduralRoomGrid grid, GameThing thing, PlacementData placementData)
         {
             Size sizeInCells = grid.GetRequiredGridSpace(thing);
-            var count = Random.Next(placementData.Instances.Minimum, placementData.Instances.Maximum + 1);
+            var count = Random.Next(placementData.Tries.Minimum, placementData.Tries.Maximum + 1);
 
             for (int i = 0; i < count; i++)
             {

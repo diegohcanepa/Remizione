@@ -1,17 +1,26 @@
 ﻿using Engendro;
+using Engendro.Audio;
+using Microsoft.Xna.Framework;
 
 namespace Remizione
 {
     /// <summary>
     /// Trunk
     /// </summary>
-    public class Trunk : IsometricProp
+    public class Trunk : BreakableProp
     {
+        private int breakCooldoown;
+
         // Constructor
         public Trunk(GameSession session, string name)
             : base(session, name)
         {
+            DeathSound = Sound.Find(SoundNames.WoodDebris);
+            DisplayNameKey = "Prop.Trunk";
+            GridMargin = new(10, 20);
             HitEffect = HitEffect.Shake;
+            HurtSound = Sound.Find(SoundNames.ImpactA);
+            PropState = PropState.Closed;
         }
 
         #region Protected members
@@ -22,30 +31,46 @@ namespace Remizione
             return PropState != PropState.Open && base.CanInteractCore(requester);
         }
 
+        // OnLoad
+        protected override void OnLoad()
+        {
+            base.OnLoad();
+            breakCooldoown = 1000;
+        }
+
         // OnPropStateChanged
         protected override void OnPropStateChanged()
         {
             AnimationPlayer.Play(PropState == PropState.Open ? AnimationNames.Open : AnimationNames.Closed, false);
 
+            //AllowInteraction = PropState == PropState.Closed;
+
             if (LoadState != LoadState.Loaded)
                 return;
 
             if (PropState == PropState.Open)
-            {
                 PlaySound(SoundNames.TrunkOpen);
+        }
 
-                /*
-                if (Session.Room is ProceduralRoom room && GetLoot() is MetaItem metaItem)
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            base.OnUpdate(gameTime);
+
+            if (IsBroken)
+                return;
+
+            if (PropState == PropState.Open)
+            {
+                if (breakCooldoown > 0)
                 {
-                    if (room.CreateRuntimeClone(nameof(Loot)) is Loot loot)
-                    {
-                        var bbox = BoundingBox;
-                        var start = bbox.GetPoint(RectanglePoint.LeftTop, 10, 10);
-                        var end = bbox.GetPoint(RectanglePoint.LeftTop, 17, 25);
-                        loot.DropJumping(room, start, end, metaItem);
-                    }
+                    breakCooldoown -= gameTime.ElapsedGameTime.Milliseconds;
                 }
-                */
+                else if (breakCooldoown <= 0)
+                {
+                    HP = int.MinValue;
+                    Die();
+                }
             }
         }
 

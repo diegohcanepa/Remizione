@@ -55,8 +55,8 @@
 	<FX Name="PotteryBreak" MaxInstances="4" Sounds="1..2" />
 	<FX Name="PowerRestored" />
 	<FX Name="Raven" />
-	<FX Name="RideCarLoop" />
-	<FX Name="RideCarStop" />
+	<FX Name="RideCarLoop" MaxInstances="4" />
+	<FX Name="RideCarStop" MaxInstances="4" />
 	<FX Name="ShockZap" MaxInstances="6" Sounds="1..2" />
 	<FX Name="SmallWhooshA" MaxInstances="6" Sounds="1..4" />
 	<FX Name="SpearTrap" MaxInstances="4" />
@@ -72,6 +72,7 @@
 	<FX Name="UIPrompt" MaxInstances="4" Volume=".1" />
 	<FX Name="UISelectA" MaxInstances="4" />
 	<FX Name="UISelectB" MaxInstances="4" />
+	<FX Name="WoodDebris" MaxInstances="4" Sounds="1..2" />
 	<FX Name="WhooshA" MaxInstances="6" />
 	<FX Name="ZapLoop" />
 </SoundData>

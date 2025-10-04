@@ -93,6 +93,7 @@ namespace Remizione
             IsHUDVisible = false;
             GameplayMode = GameplayMode.Adventure;
             Player?.Reheal();
+            Player?.Inventory.Clear();
 
             foreach (var room in rideRooms)
             {
@@ -174,6 +175,7 @@ namespace Remizione
             scriptRegistry.RegisterStatement("begin-rain", typeof(BeginRainCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("create-dialog-block", typeof(CreateDialogBlockCommand));
             scriptRegistry.RegisterStatement("echo", typeof(EchoCommand), CodingContext.Execution);
+            scriptRegistry.RegisterStatement("empty-inventory", typeof(EmptyInventoryCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("end-resistance-table", typeof(EndResistanceTableCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("end-loot-table", typeof(EndLootTableCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("ensure-session-scene", typeof(EnsureSessionSceneCommand));

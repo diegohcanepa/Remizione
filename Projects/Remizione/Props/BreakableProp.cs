@@ -9,7 +9,6 @@ namespace Remizione
     /// </summary>
     public class BreakableProp : IsometricProp
     {
-        private bool broken;
         private readonly List<ShatterPiece> pieces = [];
 
         // Constructor
@@ -40,7 +39,7 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (broken)
+            if (IsBroken)
             {
                 for (var i = 0; i < pieces.Count; i++)
                 {
@@ -56,7 +55,7 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-            if (broken)
+            if (IsBroken)
             {
                 for (var i = 0; i < pieces.Count; i++)
                 {
@@ -70,12 +69,18 @@ namespace Remizione
         // Break
         public void Break()
         {
-            broken = true;
+            if (IsBroken)
+                return;
+
+            IsBroken = true;
             for (var i = 0; i < pieces.Count; i++)
             {
                 pieces[i].Launch();
-                DepthOffset = -10000;
+                //DepthOffset = -10000;
             }
         }
+
+        // IsBroken
+        public bool IsBroken { get; private set; }
     }
 }

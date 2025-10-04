@@ -104,6 +104,18 @@ namespace Remizione
         // CriticalChance
         public int CriticalChance => MetaItem.CriticalChance + (Level * 5);
 
+        // Discard
+        public bool Discard()
+        {
+            if (MetaItem.PreventDiscard)
+                return false;
+            else
+            {
+                Remove();
+                return true;
+            }
+        }
+
         // DisplayText
         public string DisplayText
         {

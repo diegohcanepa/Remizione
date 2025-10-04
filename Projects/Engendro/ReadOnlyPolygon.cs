@@ -160,14 +160,7 @@ namespace Engendro
         // SetVerticesCore
         protected void SetVerticesCore(string value, float inflate)
         {
-            var values = value.Split(';');
-            var vertices = new Vector2[values.Length];
-
-            for (var i = 0; i < vertices.Length; i++)
-            {
-                vertices[i] = XmlConverterExtension.ToVector2(values[i].Trim());
-            }
-
+            var vertices = GetVertices(value);
             SetVerticesCore(vertices, 0);
         }
 
@@ -348,6 +341,20 @@ namespace Engendro
             {
                 destination[i] = vertices[i] + offset;
             }
+        }
+
+        // GetVertices
+        public static Vector2[] GetVertices(string value)
+        {
+            var values = value.Split(';');
+            var vertices = new Vector2[values.Length];
+
+            for (var i = 0; i < vertices.Length; i++)
+            {
+                vertices[i] = XmlConverterExtension.ToVector2(values[i].Trim());
+            }
+
+            return vertices;
         }
 
         // InLineOfSight

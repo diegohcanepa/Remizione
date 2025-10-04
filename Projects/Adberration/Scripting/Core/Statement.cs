@@ -46,7 +46,6 @@ namespace Adberration.Scripting
         protected static readonly string ImmediateArg = "#immediate";
         protected static readonly string ImpactWordArg = "#impact-word";
         protected static readonly string IndexArg = "#index";
-        protected static readonly string InstancesArg = "#instances";
         protected static readonly string KindArg = "#kind";
         protected static readonly string KnockbackArg = "#knockback";
         protected static readonly string LabelArg = "#label";
@@ -97,6 +96,7 @@ namespace Adberration.Scripting
         protected static readonly string TargetArg = "#target";
         protected static readonly string TransientArg = "#transient";
         protected static readonly string TransitionAwareArg = "#transition-aware";
+        protected static readonly string TriesArg = "#tries";
         protected static readonly string TweenArg = "#tween";
         protected static readonly string UniqueArg = "#unique";
         protected static readonly string UnparentArg = "#unparent";

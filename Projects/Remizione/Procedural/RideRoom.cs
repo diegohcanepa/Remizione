@@ -14,7 +14,7 @@ namespace Remizione
         private enum TerrainSize { TerrainSmall, TerrainMedium }
 
         private static readonly ChanceTable terrainTable = new();
-        private static readonly Dictionary<string, ReadOnlyPolygon> terrainVertices = [];
+        private static readonly Dictionary<string, Vector2[]> terrainVertices = [];
 
         // Static constructor
         static RideRoom()
@@ -22,8 +22,8 @@ namespace Remizione
             terrainTable.Add(TerrainSize.TerrainSmall.ToString(), 2000);
             terrainTable.Add(TerrainSize.TerrainMedium.ToString(), 50);
 
-            terrainVertices[TerrainSize.TerrainSmall.ToString()] = new ReadOnlyPolygon("234,17;234,122;5,122;5,17");
-            terrainVertices[TerrainSize.TerrainMedium.ToString()] = new ReadOnlyPolygon("324,18;324,120;7,120;7,18");
+            terrainVertices[TerrainSize.TerrainSmall.ToString()] = ReadOnlyPolygon.GetVertices("234,17;234,122;5,122;5,17");
+            terrainVertices[TerrainSize.TerrainMedium.ToString()] = ReadOnlyPolygon.GetVertices("324,18;324,120;7,120;7,18");
         }
 
         // Constructor
@@ -66,7 +66,7 @@ namespace Remizione
         protected override string GetTerrainData(out Vector2[] walkAreaVertices)
         {
             var result = terrainTable.GetValue(Random);
-            walkAreaVertices = terrainVertices[result].GetVertices();
+            walkAreaVertices = terrainVertices[result];
             return result;
         }
 
@@ -109,7 +109,7 @@ namespace Remizione
 
                     if (Session.ScriptLibrary.GetRoutine(RoutineNames.GotoPreviousRunRoom) is Script script)
                     {
-                        Vector2[] vertices = [new(11, 41), new(22, 41), new(22, 52), new(11, 52)];
+                        Vector2[] vertices = ReadOnlyPolygon.GetVertices("18,39;15,49;5,45;6,39");
                         AddTriggerArea("PreviousRoom", script, null, true, true, false, null, vertices);
                     }
                 }
@@ -134,7 +134,7 @@ namespace Remizione
                     if (Session.ScriptLibrary.GetRoutine(RoutineNames.GotoNextRunRoom) is Script script)
                     {
                         var lt = RightTower.BoundingBox.GetPoint(RectanglePoint.LeftTop);
-                        Vector2[] vertices = [new(25, 41), new(36, 41), new(36, 52), new(25, 52)];
+                        Vector2[] vertices = ReadOnlyPolygon.GetVertices("35,44;27,50;19,44;23,41");
 
                         for (var i = 0; i < vertices.Length; i++)
                         {
