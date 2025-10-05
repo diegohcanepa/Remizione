@@ -212,18 +212,6 @@
 /processorParam:Quality=Best
 /build:Audio/FX/CardReaderUnlocked.wav;Audio/FX/CardReaderUnlocked
 
-#begin Audio/FX/ChanceRoll.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/ChanceRoll.wav;Audio/FX/ChanceRoll
-
-#begin Audio/FX/ChanceRollFail.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/ChanceRollFail.wav;Audio/FX/ChanceRollFail
-
 #begin Audio/FX/DoodleDoo.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -595,6 +583,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/SummonA.wav;Audio/FX/SummonA
+
+#begin Audio/FX/TestSkillFail.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/TestSkillFail.wav;Audio/FX/TestSkillFail
 
 #begin Audio/FX/ThrowableDuck1.wav
 /importer:WavImporter

@@ -1,5 +1,6 @@
 ﻿using Adberration.Scripting;
 using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -96,8 +97,13 @@ namespace Remizione
 
             actor.ShowFloatingText(text, success ? ColorPalette.Text.Green : ColorPalette.Text.Red);
 
-            if (success && successState != PropState.None)
-                PropState = successState;
+            if (success)
+            {
+                if (successState != PropState.None)
+                    PropState = successState;
+            }
+            else
+                Sound.Play(SoundNames.TestSkillFail);
 
             return success;
         }

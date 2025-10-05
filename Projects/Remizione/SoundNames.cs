@@ -5,8 +5,6 @@
     /// </summary>
     internal static class SoundNames
     {
-        internal const string ChanceRoll = nameof(ChanceRoll);
-        internal const string ChanceRollFail = nameof(ChanceRollFail);
         internal const string EnergyBolt = nameof(EnergyBolt);
         internal const string Error = nameof(Error);
         internal const string ExitAlarm = nameof(ExitAlarm);
@@ -29,6 +27,7 @@
         internal const string Rain = nameof(Rain);
         internal const string ShockZap = nameof(ShockZap);
         internal const string SpearTrap = nameof(SpearTrap);
+        internal const string TestSkillFail = nameof(TestSkillFail);
         internal const string TowerDoorClose = nameof(TowerDoorClose);
         internal const string ThrowablePickup = nameof(ThrowablePickup);
         internal const string Thunder = nameof(Thunder);

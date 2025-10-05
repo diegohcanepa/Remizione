@@ -14,6 +14,7 @@ namespace Remizione
 
         private readonly FloatTween altitudeTween = new();
         private int amount;
+        private TextSprite amountText;
         private bool isCollecting;
         private MetaItem? metaItem;
         private readonly Vector2Tween scaleTween = new();
@@ -31,6 +32,14 @@ namespace Remizione
             this.DepthOffset = -5;
             this.IgnoreWalkArea = false;
 
+            // Amount text
+            this.amountText = new TextSprite(session.Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Default,
+                PivotOrigin = RectanglePoint.RightBottom,
+                Scale = ScaleInfo.Text.Medium,
+            };
+
             // Shadow
             this.shadow = new ImageSprite(session.Game, Atlases.UI.GetImage(nameof(Pickup) + "Shadow"))
             {
@@ -40,6 +49,13 @@ namespace Remizione
         }
 
         #region Protected members
+
+        // OnDraw
+        protected override void OnDraw(GameTime gameTime)
+        {
+            base.OnDraw(gameTime);
+            amountText.Draw(gameTime);
+        }
 
         // OnDrawShadow
         protected override void OnDrawShadow(GameTime gameTime)
@@ -76,6 +92,8 @@ namespace Remizione
                 return;
             }
 
+            amountText.Position = BoundingBox.GetPoint(RectanglePoint.RightBottom, 1, 1);
+
             if (isCollecting)
             {
                 if (!scaleTween.IsRunning)
@@ -111,6 +129,8 @@ namespace Remizione
 
             scaleTween.Start(TweenStyle.Linear, Vector2.Zero, ScaleInfo.UIElement.Tiny, 250);
             Tweens.ScaleTween = scaleTween;
+
+            amountText.Text = amount <= 1 ? null : $"x{amount}";
         }
     }
 }

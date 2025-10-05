@@ -217,7 +217,6 @@ namespace Remizione
         // OnEnterRoom
         protected override void OnEnterRoom(Room room)
         {
-            player?.Inventory.NotifyRoomChanged();
             Environment.EnterRoom();
 
             var width = room.Width == 0 ? room.CustomWidth : room.Width;

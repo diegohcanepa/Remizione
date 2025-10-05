@@ -75,23 +75,6 @@ namespace Remizione
         // KeyItems
         public ItemContainer KeyItems { get; }
 
-        // NotifyRoomChanged
-        public void NotifyRoomChanged()
-        {
-            foreach (var category in Enum.GetValues<InventoryCategory>())
-            {
-                if (category != InventoryCategory.None)
-                {
-                    var items = GetContainer(category).GetItems();
-
-                    for (var i = 0; i < items.Length; i++)
-                    {
-                        items[i].Replenish();
-                    }
-                }
-            }
-        }
-
         // Quirks
         public ItemContainer Quirks { get; }
 
