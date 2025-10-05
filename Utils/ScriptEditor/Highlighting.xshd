@@ -81,7 +81,6 @@
 			<Word>await-animation</Word>
 			<Word>await-answer</Word>
 			<Word>await-camera</Word>
-			<Word>await-chance-roll</Word>
 			<Word>await-closeup</Word>
 			<Word>await-closing-credits</Word>
 			<Word>await-color-tween</Word>
@@ -254,6 +253,7 @@
 			<Word>stop-shaking</Word>
 			<Word>stop-vibration</Word>
 			<Word>suspend-vibration</Word>
+			<Word>test-skill-chance</Word>
 			<Word>unparent</Word>
 			<Word>vibrate</Word>
 			<Word>zoom</Word>

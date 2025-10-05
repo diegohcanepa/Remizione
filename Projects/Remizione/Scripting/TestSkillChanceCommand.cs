@@ -2,13 +2,12 @@
 
 namespace Remizione.Scripting
 {
-    // AwaitChanceRollCommand
+    // TestSkillChanceCommand
     // Arguments: {Prop} {MetaItem} [#success-state:PropState]
-    [ForceAwait]
-    internal sealed class AwaitChanceRollCommand : AwaitableCommand
+    internal sealed class TestSkillChanceCommand : NonAwaitableCommand
     {
         // Constructor
-        internal AwaitChanceRollCommand(Script script, string source, StatementBody args)
+        internal TestSkillChanceCommand(Script script, string source, StatementBody args)
             : base(script, source, args, 2, SuccessStateArg)
         {
             AssertEntity<Prop>(0);
@@ -34,15 +33,11 @@ namespace Remizione.Scripting
             if (AssertEntity<Prop>(0) is not Prop prop)
                 return;
 
+            var propState = Parser.ParseEnumArgument<PropState>(this, SuccessStateArg);
+
             // Item
             if (session.Player.Inventory.Find(Body.Clauses[1]) is Item item)
-            {
-                var successState = Parser.ParseEnumArgument<PropState>(this, SuccessStateArg);
-                session.HUD.ChanceRoll.Show(item, prop, successState);
-            }
+                prop.TestSkillChance(session.Player, item, propState);
         }
-
-        // IsAwaiting
-        public override bool IsAwaiting => Session is GameSession session && session.HUD.ChanceRoll.IsVisible;
     }
 }

@@ -28,7 +28,6 @@ namespace Remizione
             this.session = session;
 
             this.healthMeter = new(session.Game);
-            this.ChanceRoll = new(this);
             this.Log = new(Game);
             this.Message = new(Game);
             this.TargetMeter = new(Game);
@@ -93,9 +92,7 @@ namespace Remizione
                 Message.Draw(gameTime);
             }
 
-            if (session.IsAwaiting)
-                ChanceRoll.Draw(gameTime);
-            else
+            if (!session.IsAwaiting)
                 prompt.Draw(gameTime);
 
             if (savingIcon.Tweens.IsTweening)
@@ -115,7 +112,6 @@ namespace Remizione
             ThingieSlot.Update(gameTime);
             TrincketSlot.Update(gameTime);
             healthMeter.Update(gameTime);
-            ChanceRoll.Update(gameTime);
             prompt.Update(gameTime);
 
             Log.Update(gameTime);
@@ -128,9 +124,6 @@ namespace Remizione
 
         // BagSlot
         public SackSlot BagSlot { get; }
-
-        // ChanceRoll
-        public UIChanceRoll ChanceRoll { get; }
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
