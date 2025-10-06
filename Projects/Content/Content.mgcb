@@ -119,6 +119,21 @@
 #begin Atlases/ThemeParkEntrance.xml
 /copy:Atlases/ThemeParkEntrance.xml
 
+#begin Atlases/ToiletRoom.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Atlases/ToiletRoom.png
+
+#begin Atlases/ToiletRoom.xml
+/copy:Atlases/ToiletRoom.xml
+
 #begin Atlases/UI.png
 /importer:TextureImporter
 /processor:TextureProcessor

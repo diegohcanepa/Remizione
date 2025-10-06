@@ -4,12 +4,12 @@ using System;
 namespace Remizione
 {
     /// <summary>
-    /// RunProgressPlacementCondition   
+    /// CompletedRunsPlacementCondition   
     /// </summary>
-    public sealed class RunProgressPlacementCondition : PlacementCondition
+    public sealed class CompletedRunsPlacementCondition : PlacementCondition
     {
         // Constructor
-        public RunProgressPlacementCondition(Int32Range range)
+        public CompletedRunsPlacementCondition(Int32Range range)
         {
             this.Range = range;
         }

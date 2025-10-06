@@ -84,14 +84,14 @@ namespace Remizione
             base.OnLoad();
             AudioManager.Music.PlayTag("Ride");
 
-            if (RoomPosition == RoomPosition.First)
+            if (RoomPhase == RunPhase.Start)
                 Session.AwaitRoutine(RoutineNames.IncomingRideCarIntro);
         }
 
         // OnPopulating
         protected override void OnPopulating()
         {
-            if (RoomPosition == RoomPosition.First)
+            if (RoomPhase == RunPhase.Start)
             {
                 // Entrance rail
                 if (Session.GetEntity<GameThing>("EntranceRail") is GameThing entranceRail)
@@ -124,7 +124,7 @@ namespace Remizione
             }
 
             // Right tower
-            if (RoomPosition != RoomPosition.Last)
+            if (RoomPhase != RunPhase.End)
             {
                 RightTower = CreateRuntimeClone("RightTower") as IsometricProp;
                 if (RightTower != null)
@@ -178,7 +178,7 @@ namespace Remizione
                 if (CreateRuntimeClone(nameof(CardReader)) is CardReader cardReader)
                 {
                     cardReader.Position = this.RightTower.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -20);
-                    if (RoomPosition == RoomPosition.Last)
+                    if (RoomPhase == RunPhase.End)
                         cardReader.Position += new Vector2(20, -5);
 
                     MainGrid.ReserveSpace(cardReader, false);

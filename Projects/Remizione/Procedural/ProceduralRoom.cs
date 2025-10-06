@@ -31,11 +31,11 @@ namespace Remizione
             LightingSystem = true;
 
             if (roomIndex == 0)
-                RoomPosition = RoomPosition.First;
+                RoomPhase = RunPhase.Start;
             else if (isLastRoom)
-                RoomPosition = RoomPosition.Last;
+                RoomPhase = RunPhase.End;
             else
-                RoomPosition = RoomPosition.Middle;
+                RoomPhase = RunPhase.Mid;
 
             int salt = roomIndex;
             this.randomSeed = GetSeed(Session.Seed, salt);
@@ -402,8 +402,8 @@ namespace Remizione
         // RoomKind
         public RoomKind RoomKind { get; }
 
-        // RoomPosition
-        public RoomPosition RoomPosition { get; }
+        // RoomPhase
+        public RunPhase RoomPhase { get; }
 
         // ShowGrid
         public static bool ShowGrid { get; set; }

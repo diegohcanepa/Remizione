@@ -27,6 +27,7 @@ namespace Remizione
         private Vector2? playerPosition;
         private readonly List<RideRoom> rideRooms = [];
         private readonly RoomEditor? roomEditor;
+        private RunInfo? runInfo;
         private readonly List<GameThing> staticThings = [];
         private readonly Dictionary<string, GameThing> staticThingsDict = [];
 
@@ -103,7 +104,7 @@ namespace Remizione
 
             CleanUpRuntimeEntities();
             rideRooms.Clear();
-            IsRunInProgress = false;
+            runInfo = null;
             RunProgress = -1;
             Seed = 0;
         }
@@ -414,10 +415,10 @@ namespace Remizione
             if (IsRunInProgress)
                 throw new InvalidOperationException("A run is already in progress.");
 
-            IsRunInProgress = true;
-
             if (Seed == 0)
                 this.Seed = System.Environment.TickCount;
+
+            runInfo = new RunInfo(this, RunLength);
 
             for (var i = 0; i < RunLength; i++)
             {
@@ -499,7 +500,7 @@ namespace Remizione
 
         // IsRunInProgress
         [ScriptProperty]
-        public bool IsRunInProgress { get; private set; }
+        public bool IsRunInProgress => runInfo != null; 
 
         // KeyItemTarget
         [ScriptProperty]

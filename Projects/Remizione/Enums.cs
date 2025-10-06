@@ -99,8 +99,8 @@ namespace Remizione
     // RoomKind
     public enum RoomKind { RideRoom }
 
-    // RoomPosition
-    public enum RoomPosition { None, First, Middle, Last }
+    // RunPhase
+    public enum RunPhase { None, Start, Mid, End }
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }

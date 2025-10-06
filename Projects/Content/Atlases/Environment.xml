@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:dbbf294059c2f15647eb5c4dd9702f36:e47dbac157e49be62673e6ea01fdbe88:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:1e41da54c6fd7e17a8eb0e5b8544635d:7c04b552b2000726adeefaace71027c2:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -137,9 +137,6 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PilgrimSackShadow.png" x="53" y="405" w="8" h="8"/>
     <sprite n="PlopRed.png" x="703" y="97" w="26" h="11"/>
     <sprite n="PlopYellow.png" x="703" y="110" w="26" h="11"/>
-    <sprite n="PortableToilet01.png" x="232" y="385" w="29" h="36"/>
-    <sprite n="PortableToilet02.png" x="201" y="419" w="29" h="36"/>
-    <sprite n="PortableToiletShadow.png" x="263" y="385" w="29" h="36"/>
     <sprite n="PostClock01.png" x="999" y="2" w="23" h="46"/>
     <sprite n="PostClock02.png" x="999" y="50" w="23" h="46"/>
     <sprite n="PostClock03.png" x="999" y="98" w="23" h="46"/>
@@ -245,6 +242,9 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="ThrowableChiliShadow.png" x="363" y="368" w="3" h="2"/>
     <sprite n="ThrowableDuck.png" x="363" y="359" w="3" h="3"/>
     <sprite n="ThrowableDuckShadow.png" x="363" y="368" w="3" h="2"/>
+    <sprite n="Toilet01.png" x="232" y="385" w="29" h="36"/>
+    <sprite n="Toilet02.png" x="201" y="419" w="29" h="36"/>
+    <sprite n="ToiletShadow.png" x="263" y="385" w="29" h="36"/>
     <sprite n="TombstoneA.png" x="201" y="481" w="18" h="19"/>
     <sprite n="TombstoneAPiece1.png" x="435" y="313" w="3" h="5"/>
     <sprite n="TombstoneAPiece2.png" x="399" y="432" w="5" h="5"/>

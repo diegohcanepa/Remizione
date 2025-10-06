@@ -65,7 +65,7 @@ namespace Remizione
 
             if (PropState == PropState.Unlocked && Room is RideRoom rideRoom && rideRoom.RightTower != null)
             {
-                if (rideRoom.RoomPosition != RoomPosition.Last)
+                if (rideRoom.RoomPhase != RunPhase.End)
                     rideRoom.RightTower.Collider = new Polygon("0,0;0,46;11,49;24,42;29,43;15,51;28,56;43,54;51,46;45,0");
 
                 rideRoom.RightTower.PropState = PropState.Open;

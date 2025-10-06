@@ -1384,23 +1384,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PortableToilet-assets/PortableToilet01.png</key>
-            <key type="filename">PortableToilet-assets/PortableToilet02.png</key>
-            <key type="filename">PortableToilet-assets/PortableToiletShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,9,15,18</rect>
-                <key>scale9Paddings</key>
-                <rect>7,9,15,18</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">PostClock-assets/PostClock01.png</key>
             <key type="filename">PostClock-assets/PostClock02.png</key>
             <key type="filename">PostClock-assets/PostClock03.png</key>
@@ -1723,6 +1706,23 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Toilet-assets/Toilet01.png</key>
+            <key type="filename">Toilet-assets/Toilet02.png</key>
+            <key type="filename">Toilet-assets/ToiletShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,9,15,18</rect>
+                <key>scale9Paddings</key>
+                <rect>7,9,15,18</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">TombstoneB-assets/TombstoneBPiece2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1954,7 +1954,6 @@
                     <filename>Lightning-assets</filename>
                     <filename>PieceOfWood-assets</filename>
                     <filename>Trunk-assets</filename>
-                    <filename>PortableToilet-assets</filename>
                     <filename>Grass-assets</filename>
                     <filename>FlatStones-assets</filename>
                     <filename>FenceA-assets</filename>
@@ -1988,6 +1987,7 @@
                     <filename>Firecracker-assets</filename>
                     <filename>WaterPuddleB-assets</filename>
                     <filename>WaterPuddleC-assets</filename>
+                    <filename>Toilet-assets</filename>
                 </array>
             </struct>
         </map>

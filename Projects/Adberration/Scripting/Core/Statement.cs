@@ -20,6 +20,7 @@ namespace Adberration.Scripting
         protected static readonly string ChanceArg = "#chance";
         protected static readonly string ClearTagArg = "#clear-tag";
         protected static readonly string ColorArg = "#color";
+        protected static readonly string CompletedRunsArg = "#completed-runs";
         protected static readonly string ConditionArg = "#condition";
         protected static readonly string CriticalChanceArg = "#critical-chance";
         protected static readonly string DamageArg = "#damage";
@@ -82,7 +83,7 @@ namespace Adberration.Scripting
         protected static readonly string ReverseArg = "#reverse";
         protected static readonly string RightArg = "#right";
         protected static readonly string RightTriggerArg = "#right-trigger";
-        protected static readonly string RoomPositionArg = "#room-position";
+        protected static readonly string RoomPhaseArg = "#room-phase";
         protected static readonly string ScaleArg = "#scale";
         protected static readonly string ScopeArg = "#scope";
         protected static readonly string SkillChanceArg = "#skill-chance";

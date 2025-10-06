@@ -23,6 +23,7 @@ namespace Remizione
         private readonly UITextButton buttonEquip;
         private readonly List<InventoryCategory> categories = [InventoryCategory.Junk, InventoryCategory.Thingies, InventoryCategory.Consumables, InventoryCategory.Trinkets, InventoryCategory.KeyItems, InventoryCategory.Quirks];
         private readonly ImageSprite[] categoryIcons;
+        private readonly ImageSprite[] categoryMarkers;
         private readonly TextSprite categoryText;
         private readonly ImageSprite checkMark;
         private InventoryCategory currentCategory;
@@ -126,6 +127,17 @@ namespace Remizione
                 categoryIcons[i] = new(Game, Atlases.UI.GetImage($"InventoryCategory{categories[i]}"))
                 {
                     PivotOrigin = RectanglePoint.Center,
+                    Scale = ScaleInfo.UIElement.Medium
+                };
+            }
+
+            // Category markers
+            categoryMarkers = new ImageSprite[categories.Count];
+            for (int i = 0; i < categoryMarkers.Length; i++)
+            {
+                categoryMarkers[i] = new(Game)
+                {
+                    PivotOrigin = RectanglePoint.RightBottom,
                     Scale = ScaleInfo.UIElement.Medium
                 };
             }
@@ -365,12 +377,14 @@ namespace Remizione
             var iconWidth = categoryIcons[0].BoundingBox.Width;
             var totalWidth = categoryIcons.Length * iconWidth + (categoryIcons.Length - 1) * spacing;
             float x = (navigationBar.BoundingBox.GetPoint(RectanglePoint.Top).X - totalWidth / 2) + (iconWidth / 2);
-            float y = navigationBar.BoundingBox.GetPoint(RectanglePoint.Top, 0, -6).Y;
+            float y = navigationBar.BoundingBox.GetPoint(RectanglePoint.Top, 0, -7).Y;
 
             for (var i = 0; i < categoryIcons.Length; i++)
             {
                 categoryIcons[i].X = x + i * (iconWidth + spacing);
                 categoryIcons[i].Y = y;
+                categoryMarkers[i].Image = Owner.Inventory.GetContainer(categories[i]).Count == 0 ? null : Atlases.UI.InventoryCategoryNotEmpty;
+                categoryMarkers[i].Position = categoryIcons[i].BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, 1.5f);
             }
         }
 
@@ -421,6 +435,7 @@ namespace Remizione
                         }
                     }
 
+                    LayoutCategoryIcons();
                     InvalidateItemInfo();
                 }
                 else
@@ -441,6 +456,7 @@ namespace Remizione
                 {
                     activeGrid.SelectedSlot.PerformDefaultAction();
                     InvalidateItemInfo();
+                    LayoutCategoryIcons();
                     return true;
                 }
             }
@@ -521,6 +537,8 @@ namespace Remizione
 
                 Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, shader);
                 categoryIcons[i].Draw(gameTime);
+                categoryMarkers[i].Opacity = shader == null ? categoryIcons[i].Opacity : 1;
+                categoryMarkers[i].Draw(gameTime);
                 Game.SpriteBatch.End();
             }
 
@@ -613,6 +631,8 @@ namespace Remizione
         protected override void OnLoadContent()
         {
             base.OnLoadContent();
+
+            LayoutCategoryIcons();
 
             buttonDiscard.IsBeating = false;
 

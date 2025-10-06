@@ -24,6 +24,7 @@ namespace Remizione
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
         private static Light playerLight = null!;
+        private Vector2? lastKnownPlayerPosition;
         private readonly List<TriggerArea> triggerAreas = [];
         private readonly List<WalkArea> walkAreas = [];
 
@@ -555,6 +556,14 @@ namespace Remizione
         // Lights
         public NamedObjectReadOnlyCollection<Light> Lights { get; }
 
+        // PreservePlayerPosition
+        [ScriptMethod]
+        public void PreservePlayerPosition()
+        {
+            if (Session.Player != null)
+                lastKnownPlayerPosition = Session.Player.Position;
+        }
+
         // RemoveWalkArea
         public bool RemoveWalkArea(string name)
         {
@@ -569,6 +578,14 @@ namespace Remizione
             }
 
             return false;
+        }
+
+        // RestorePlayerPosition
+        [ScriptMethod]
+        public void RestorePlayerPosition()
+        {
+            if (lastKnownPlayerPosition.HasValue && Session.Player != null)
+                Session.Player.Position = lastKnownPlayerPosition.Value;
         }
 
         // SelectWalkArea

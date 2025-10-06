@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:cc471909cacdc2ba99fea631b6a89cf3:2c675098ad6f62c3506619eae65e37b9:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:247f7d1507e037b62849eb33c99a4918:51bc16f17d87868404124f877872da2e:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -44,6 +44,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="InventoryCategoryContainer.png" x="380" y="81" w="60" h="7"/>
     <sprite n="InventoryCategoryJunk.png" x="15" y="499" w="11" h="11"/>
     <sprite n="InventoryCategoryKeyItems.png" x="28" y="499" w="11" h="11"/>
+    <sprite n="InventoryCategoryNotEmpty.png" x="506" y="15" w="3" h="3"/>
     <sprite n="InventoryCategoryQuirks.png" x="41" y="499" w="11" h="11"/>
     <sprite n="InventoryCategoryThingies.png" x="54" y="499" w="11" h="11"/>
     <sprite n="InventoryCategoryTrinkets.png" x="67" y="499" w="11" h="11"/>
@@ -77,7 +78,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MissingItem.png" x="432" y="145" w="20" h="20"/>
     <sprite n="MouseCursorArrow.png" x="442" y="81" w="7" h="7"/>
     <sprite n="PickupShadow.png" x="469" y="81" w="7" h="3"/>
-    <sprite n="Pixel.png" x="509" y="19" w="1" h="1"/>
+    <sprite n="Pixel.png" x="509" y="24" w="1" h="1"/>
     <sprite n="PopupContainer.png" x="2" y="90" w="264" h="311"/>
     <sprite n="PopupContainerShadow.png" x="202" y="403" w="114" h="60"/>
     <sprite n="ProhibitionIcon.png" x="21" y="71" w="17" h="17"/>
@@ -86,7 +87,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="RustyLockpick.png" x="476" y="145" w="20" h="20"/>
     <sprite n="SackSlot.png" x="40" y="71" w="17" h="16"/>
     <sprite n="SavingIcon.png" x="367" y="71" w="11" h="14"/>
-    <sprite n="SpeechBubbleCloseArrow.png" x="506" y="15" w="3" h="2"/>
+    <sprite n="SpeechBubbleCloseArrow.png" x="506" y="20" w="3" h="2"/>
     <sprite n="SpeechBubblePipe.png" x="202" y="465" w="5" h="3"/>
     <sprite n="SteelLockpick.png" x="321" y="145" w="20" h="20"/>
     <sprite n="Ticket.png" x="268" y="145" w="20" h="20"/>
@@ -97,7 +98,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="UIControlContainerEdgeRightLarge.png" x="118" y="499" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeRightSmall.png" x="164" y="499" w="5" h="10"/>
     <sprite n="UITextButtonContainerEdge.png" x="125" y="499" w="5" h="11"/>
-    <sprite n="UITextButtonContainerPattern.png" x="506" y="19" w="1" h="11"/>
+    <sprite n="UITextButtonContainerPattern.png" x="506" y="24" w="1" h="11"/>
     <sprite n="XboxA.png" x="290" y="71" w="14" h="14"/>
     <sprite n="XboxB.png" x="306" y="71" w="14" h="14"/>
     <sprite n="XboxJunkSlot.png" x="299" y="498" w="12" h="12"/>
