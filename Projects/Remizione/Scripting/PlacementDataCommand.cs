@@ -11,7 +11,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal PlacementDataCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, ChanceArg, CompletedRunsArg, DistributionArg, RoomPhaseArg, StageArg, TriesArg)
+            : base(script, source, body, 1, ChanceArg, CompletedRunsArg, DistributionArg, MaximumArg, MaximumPerRunArg, RollsArg, RoomPhaseArg, StageArg)
         {
         }
 
@@ -31,7 +31,9 @@ namespace Remizione.Scripting
 
             var roomKind = Parser.ParseEnum<RoomKind>(this, 0);
             var distributionStrategy = Parser.ParseEnumArgument(this, DistributionArg, PlacementDistributionStrategy.Random);
-            var tries = HasArg(TriesArg) ? Parser.ParseInt32RangeArgument(this, TriesArg) : new Int32Range(1);
+            var rolls = HasArg(RollsArg) ? Parser.ParseInt32RangeArgument(this, RollsArg) : new Int32Range(1);
+            var maximum = HasArg(MaximumArg) ? Parser.ParseInt32Argument(this, MaximumArg) : 0;
+            var maximumPerRun = HasArg(MaximumPerRunArg) ? Parser.ParseInt32Argument(this, MaximumPerRunArg) : 0;
             var conditions = new List<PlacementCondition>();
 
             // Chance
@@ -63,7 +65,7 @@ namespace Remizione.Scripting
             }
 
             // Placement data
-            var placementData = new PlacementData(distributionStrategy, conditions.ToArray(), tries);
+            var placementData = new PlacementData(distributionStrategy, conditions.ToArray(), rolls, maximum, maximumPerRun);
             gameSession.PlacementDataPool.Add(roomKind, thing.StaticName, placementData);
         }
     }

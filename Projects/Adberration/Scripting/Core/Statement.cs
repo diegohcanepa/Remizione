@@ -56,6 +56,7 @@ namespace Adberration.Scripting
         protected static readonly string LocalizationIdArg = "#lid";
         protected static readonly string LoopedArg = "#looped";
         protected static readonly string MaximumArg = "#maximum";
+        protected static readonly string MaximumPerRunArg = "#maximum-per-run";
         protected static readonly string ModifierArg = "#modifier";
         protected static readonly string NoAwaitArg = "#no-await";
         protected static readonly string NoCaptionArg = "#no-caption";
@@ -83,6 +84,7 @@ namespace Adberration.Scripting
         protected static readonly string ReverseArg = "#reverse";
         protected static readonly string RightArg = "#right";
         protected static readonly string RightTriggerArg = "#right-trigger";
+        protected static readonly string RollsArg = "#rolls";
         protected static readonly string RoomPhaseArg = "#room-phase";
         protected static readonly string ScaleArg = "#scale";
         protected static readonly string ScopeArg = "#scope";
@@ -97,7 +99,6 @@ namespace Adberration.Scripting
         protected static readonly string TargetArg = "#target";
         protected static readonly string TransientArg = "#transient";
         protected static readonly string TransitionAwareArg = "#transition-aware";
-        protected static readonly string TriesArg = "#tries";
         protected static readonly string TweenArg = "#tween";
         protected static readonly string UniqueArg = "#unique";
         protected static readonly string UnparentArg = "#unparent";

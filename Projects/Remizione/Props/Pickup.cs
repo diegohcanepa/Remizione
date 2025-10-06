@@ -123,6 +123,8 @@ namespace Remizione
         {
             Position = origin;
             this.metaItem = metaItem;
+            this.amount = Math.Max(1, amount);
+
             this.DefaultImageName = metaItem.Name;
             isCollecting = false;
             room.Children.Add(this);

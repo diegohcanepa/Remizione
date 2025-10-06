@@ -25,9 +25,7 @@ namespace Remizione
         private readonly Dictionary<string, MetaItem[]> friendlyItems = [];
         private Actor? player;
         private Vector2? playerPosition;
-        private readonly List<RideRoom> rideRooms = [];
         private readonly RoomEditor? roomEditor;
-        private RunInfo? runInfo;
         private readonly List<GameThing> staticThings = [];
         private readonly Dictionary<string, GameThing> staticThingsDict = [];
 
@@ -44,7 +42,6 @@ namespace Remizione
             this.HUD = new HUD(this);
             this.StaticThings = new(staticThings);
             this.IsMouseVisible = false;
-            this.RideRooms = new(rideRooms);
 
             ObjectPools = new ObjectPools(this);
             ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(game), 100);
@@ -89,22 +86,15 @@ namespace Remizione
         // EndRun
         private void EndRun()
         {
-            if (!IsRunInProgress)
+            if (!RunInfo.HasContent)
                 return;
 
             IsHUDVisible = false;
             GameplayMode = GameplayMode.Adventure;
             Player?.Reheal();
             Player?.Inventory.Clear();
-
-            foreach (var room in rideRooms)
-            {
-                room.Children.Clear();
-            }
-
+            RunInfo.Dispose();
             CleanUpRuntimeEntities();
-            rideRooms.Clear();
-            runInfo = null;
             RunProgress = -1;
             Seed = 0;
         }
@@ -416,15 +406,9 @@ namespace Remizione
                 throw new InvalidOperationException("A run is already in progress.");
 
             if (Seed == 0)
-                this.Seed = System.Environment.TickCount;
+                Seed = System.Environment.TickCount;
 
-            runInfo = new RunInfo(this, RunLength);
-
-            for (var i = 0; i < RunLength; i++)
-            {
-                var room = new RideRoom(this, string.Empty, i, i == RunLength - 1);
-                rideRooms.Add(room);
-            }
+            RunInfo.Generate(this, RunLength);
 
             NextRunRoom();
         }
@@ -500,7 +484,7 @@ namespace Remizione
 
         // IsRunInProgress
         [ScriptProperty]
-        public bool IsRunInProgress => runInfo != null; 
+        public bool IsRunInProgress => RunInfo.HasContent;
 
         // KeyItemTarget
         [ScriptProperty]
@@ -534,16 +518,16 @@ namespace Remizione
 
             RunProgress++;
 
-            if (RunProgress == rideRooms.Count)
+            if (RunProgress == RunInfo.RideRooms.Count)
             {
                 CompletedRuns++;
                 EndRun();
             }
             else
             {
-                var nextRoom = rideRooms[RunProgress];
+                var nextRoom = RunInfo.RideRooms[RunProgress];
 
-                EnterRoom(rideRooms[RunProgress]);
+                EnterRoom(RunInfo.RideRooms[RunProgress]);
 
                 if (RunProgress > 0 && Player != null)
                 {
@@ -596,7 +580,7 @@ namespace Remizione
 
             RunProgress--;
 
-            var previousRoom = rideRooms[RunProgress];
+            var previousRoom = RunInfo.RideRooms[RunProgress];
 
             EnterRoom(previousRoom);
 
@@ -614,9 +598,6 @@ namespace Remizione
 
             return;
         }
-
-        // RideRooms
-        public ReadOnlyCollection<RideRoom> RideRooms { get; }
 
         // Room
         [ScriptProperty]

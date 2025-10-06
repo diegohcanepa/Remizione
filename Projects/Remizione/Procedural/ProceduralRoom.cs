@@ -65,10 +65,9 @@ namespace Remizione
         // DistributeClumped
         private void DistributeClumped(ProceduralRoomGrid grid, GameThing thing, PlacementData placementData)
         {
-            int totalCount = Random.Next(placementData.Tries.Minimum, placementData.Tries.Maximum + 1);
+            int totalCount = Random.Next(placementData.Rolls.Minimum, placementData.Rolls.Maximum + 1);
             int clumpSize = 3 + Random.Next(3);
             int clumpCount = (totalCount + clumpSize - 1) / clumpSize;
-
             Size sizeInCells = grid.GetRequiredGridSpace(thing);
 
             for (int i = 0; i < clumpCount; i++)
@@ -76,7 +75,10 @@ namespace Remizione
                 if (!grid.TryReserveSpace(thing.StaticName, sizeInCells, out int baseCol, out int baseRow))
                     break;
 
-                SpawnThing(grid, thing, baseCol, baseRow);
+                SpawnThing(grid, thing, baseCol, baseRow, placementData);
+                placementData.LogSpawn(thing.StaticName);
+                if (!placementData.CanSpawn(thing.StaticName))
+                    return;
 
                 for (int j = 0; j < clumpSize - 1; j++)
                 {
@@ -84,7 +86,12 @@ namespace Remizione
                     int offsetRow = baseRow + Random.Next(-1, 2);
 
                     if (grid.TryReserveSpace(thing.StaticName, sizeInCells, out int col, out int row, offsetCol, offsetRow))
-                        SpawnThing(grid, thing, col, row);
+                    {
+                        SpawnThing(grid, thing, col, row, placementData);
+                        placementData.LogSpawn(thing.StaticName);
+                        if (!placementData.CanSpawn(thing.StaticName))
+                            return;
+                    }
                 }
             }
         }
@@ -93,7 +100,7 @@ namespace Remizione
         private void DistributeRandomly(ProceduralRoomGrid grid, GameThing thing, PlacementData placementData)
         {
             Size sizeInCells = grid.GetRequiredGridSpace(thing);
-            var count = Random.Next(placementData.Tries.Minimum, placementData.Tries.Maximum + 1);
+            var count = Random.Next(placementData.Rolls.Minimum, placementData.Rolls.Maximum + 1);
 
             for (int i = 0; i < count; i++)
             {
@@ -108,8 +115,11 @@ namespace Remizione
 
                     if (grid.TryReserveSpace(thing.StaticName, sizeInCells, out int finalCol, out int finalRow, col, row))
                     {
-                        SpawnThing(grid, thing, finalCol, finalRow);
+                        SpawnThing(grid, thing, finalCol, finalRow, placementData);
                         placed = true;
+                        placementData.LogSpawn(thing.StaticName);
+                        if (!placementData.CanSpawn(thing.StaticName))
+                            return;
                     }
                 }
             }
@@ -131,7 +141,10 @@ namespace Remizione
                 if (noise > noiseThreshold)
                     continue;
 
-                SpawnThing(grid, thing, col, row);
+                SpawnThing(grid, thing, col, row, placementData);
+                placementData.LogSpawn(thing.StaticName);
+                if (!placementData.CanSpawn(thing.StaticName))
+                    return;
             }
         }
 
@@ -215,7 +228,7 @@ namespace Remizione
         }
 
         // SpawnThing
-        private void SpawnThing(ProceduralRoomGrid grid, GameThing thing, int col, int row)
+        private void SpawnThing(ProceduralRoomGrid grid, GameThing thing, int col, int row, PlacementData placementData)
         {
             var sizeInCells = grid.GetRequiredGridSpace(thing);
             var ltPos = grid.GetPosition(col, row) + new Vector2(.5f);
@@ -223,6 +236,9 @@ namespace Remizione
             var instance = CreateRuntimeThingCloneCore(thing.StaticName);
             instance.Position = rect.GetPoint(RectanglePoint.Bottom);
             Children.Add(instance);
+
+            if (placementData.MaximumPerRun > 0)
+                RunInfo.LogSpawn(thing.StaticName);
         }
 
         #endregion
@@ -319,6 +335,8 @@ namespace Remizione
 
                         if (!placementData.IsAvailable(thing, Random))
                             continue;
+
+                        placementData.ResetSpawnCount();
 
                         switch (placementData.DistributionStrategy)
                         {

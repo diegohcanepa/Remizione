@@ -1,22 +1,62 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Remizione
 {
     /// <summary>
     /// RunInfo
     /// </summary>
-    internal sealed class RunInfo
+    public static class RunInfo
     {
-        private readonly List<RideRoom> rideRooms = [];
+        private static readonly Dictionary<string, int> spawnData = [];
+        private static readonly List<RideRoom> rideRooms = [];
 
-        // Constructor
-        internal RunInfo(GameSession session, int length)
+        // Generate
+        public static void Generate(GameSession session, int length)
         {
             for (var i = 0; i < length; i++)
             {
                 var room = new RideRoom(session, string.Empty, i, i == length - 1);
                 rideRooms.Add(room);
             }
+
+            HasContent = true;
         }
+
+        // Dispose
+        public static void Dispose()
+        {
+            foreach (var room in rideRooms)
+            {
+                room.Children.Clear();
+            }
+
+            rideRooms.Clear();
+            spawnData.Clear();
+
+            HasContent = false;
+        }
+
+        // GetSpawnCount
+        public static int GetSpawnCount(string staticName)
+        {
+            return spawnData.ContainsKey(staticName) ? spawnData[staticName] : 0;
+        }
+
+        // HasContent
+        public static bool HasContent { get; private set; }
+
+        // LogSpawn
+        public static void LogSpawn(string staticName)
+        {
+            if (spawnData.ContainsKey(staticName))
+                spawnData[staticName]++;
+            else
+                spawnData[staticName] = 1;
+        }
+
+        // RideRooms
+        public static ReadOnlyCollection<RideRoom> RideRooms { get; } = rideRooms.AsReadOnly();
     }
 }
