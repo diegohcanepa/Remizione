@@ -160,11 +160,6 @@ namespace Remizione
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
 
-            // Frame
-            var bbox = SelectedThing.BoundingBox;
-            bbox.Offset(-session.Camera.Offset);
-            Game.Shapes.DrawFrame(bbox, Color.Yellow * .3f, .2f);
-
             // Name
             var value = SelectedThing.Name + " (" + SelectedThing.GetType().Name + ")" + (SelectedThing.Persistent ? " [persistent]" : string.Empty);
             DrawText(gameTime, text, value, ColorPalette.HighlightedText, ScaleInfo.Text.Small);
@@ -391,6 +386,9 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
+            if (!IsActive)
+                return HandleInputResult.Unhandled;
+
             if (InputManager.DefaultPlayer.Keyboard.IsKeyPressed(Keys.G))
             {
                 ProceduralRoom.ShowGrid = !ProceduralRoom.ShowGrid;
@@ -403,9 +401,6 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
-            if (!IsActive)
-                return HandleInputResult.Unhandled;
-
             if (InputManager.DefaultPlayer.Keyboard.IsKeyPressed(Keys.F10))
             {
                 session.Save();
@@ -415,6 +410,12 @@ namespace Remizione
             else if (InputManager.DefaultPlayer.Keyboard.IsKeyPressed(Keys.F3))
             {
                 editMode = EditMode.Things;
+            }
+
+            else if (InputManager.DefaultPlayer.Keyboard.IsKeyPressed(Keys.B))
+            {
+                GameThing.ShowBoundingBoxes = !GameThing.ShowBoundingBoxes;
+                handled = true;
             }
 
             else if (InputManager.DefaultPlayer.Keyboard.IsKeyPressed(Keys.C))

@@ -761,6 +761,12 @@
 /processorParam:Quality=Best
 /build:Audio/Music/ThemePark.wav;Audio/Music/ThemePark
 
+#begin Audio/Music/Toilet.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Toilet.wav;Audio/Music/Toilet
+
 #begin Effects/Blur.fx
 /importer:EffectImporter
 /processor:EffectProcessor

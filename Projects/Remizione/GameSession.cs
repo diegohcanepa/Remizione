@@ -406,7 +406,7 @@ namespace Remizione
                 throw new InvalidOperationException("A run is already in progress.");
 
             if (Seed == 0)
-                Seed = System.Environment.TickCount;
+                Seed = 2857140;// System.Environment.TickCount;
 
             RunInfo.Generate(this, RunLength);
 

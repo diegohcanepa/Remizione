@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:112d202d591725a9bbf8aa9456966330:2e4e5829a95e6cabf3aaa3612c7672ac:a599c785bf3f7b20dc199cf5feec8e9c$ -->
+<!-- $TexturePacker:SmartUpdate:8c74be2b819aaf02c3a7b024ce1493de:3c281c54b48a873b6b2937e5c96a2f43:a599c785bf3f7b20dc199cf5feec8e9c$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,8 +20,8 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="ToiletRoom.png" width="256" height="256">
-    <sprite n="Door01.png" x="2" y="139" w="19" h="30"/>
-    <sprite n="Door02.png" x="2" y="171" w="19" h="30"/>
+    <sprite n="ExpendingMachine.png" x="2" y="139" w="21" h="32"/>
     <sprite n="ToiletRoom.png" x="2" y="2" w="240" h="135"/>
-    <sprite n="ToiletRoomPatch.png" x="2" y="203" w="11" h="13"/>
+    <sprite n="Water.png" x="2" y="196" w="25" h="7"/>
+    <sprite n="WC.png" x="2" y="173" w="16" h="21"/>
 </TextureAtlas>

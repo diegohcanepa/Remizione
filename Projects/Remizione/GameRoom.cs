@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -24,6 +25,8 @@ namespace Remizione
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
         private static Light playerLight = null!;
+        private string lastKnownMusicTag = string.Empty;
+        private FacingDirection lastKnownPlayerDirection;
         private Vector2? lastKnownPlayerPosition;
         private readonly List<TriggerArea> triggerAreas = [];
         private readonly List<WalkArea> walkAreas = [];
@@ -556,12 +559,17 @@ namespace Remizione
         // Lights
         public NamedObjectReadOnlyCollection<Light> Lights { get; }
 
-        // PreservePlayerPosition
+        // PreserveBeforeGateway
         [ScriptMethod]
-        public void PreservePlayerPosition()
+        public void PreserveBeforeGateway()
         {
             if (Session.Player != null)
+            {
+                lastKnownPlayerDirection = Session.Player.Direction;
                 lastKnownPlayerPosition = Session.Player.Position;
+            }
+
+            lastKnownMusicTag = AudioManager.Music.CurrentTag;
         }
 
         // RemoveWalkArea
@@ -580,12 +588,21 @@ namespace Remizione
             return false;
         }
 
-        // RestorePlayerPosition
+        // RestoreAfterGateway
         [ScriptMethod]
-        public void RestorePlayerPosition()
+        public void RestoreAfterGateway()
         {
             if (lastKnownPlayerPosition.HasValue && Session.Player != null)
+            {
                 Session.Player.Position = lastKnownPlayerPosition.Value;
+                Session.Player.Direction = lastKnownPlayerDirection;
+                Children.Add(Session.Player);
+                Session.Player.FlipHorizontally();
+                Session.Camera.FollowTarget(Session.Player, true);
+            }
+
+            if (!string.IsNullOrWhiteSpace(lastKnownMusicTag))
+                AudioManager.Music.PlayTag(lastKnownMusicTag);
         }
 
         // SelectWalkArea

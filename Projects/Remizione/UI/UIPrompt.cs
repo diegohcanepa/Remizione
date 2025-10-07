@@ -45,7 +45,7 @@ namespace Remizione.UI
                 {
                     target = currentTarget;
                     button.Text = currentTarget.LocalizedDisplayName;
-                    Sound.Play(SoundNames.UIPrompt);
+                    //Sound.Play(SoundNames.UIPrompt);
                 }
             }
             else

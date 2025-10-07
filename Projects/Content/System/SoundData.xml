@@ -13,6 +13,7 @@
 	<Music Name="PilgrimPath01" MaxInstances="2" Tags="PilgrimPath" />
 	<Music Name="Ride01" MaxInstances="2" Tags="Ride" />
 	<Music Name="ThemePark" MaxInstances="2" Tags="ThemePark" />
+	<Music Name="Toilet" MaxInstances="2" Tags="Toilet" />
 	
 	<!-- FX -->
 	<FX Name="AppleBite" MaxInstances="2" />

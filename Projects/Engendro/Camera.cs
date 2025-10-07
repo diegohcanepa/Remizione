@@ -546,7 +546,8 @@ namespace Engendro
             }
             else if (Target != null)
             {
-                Approach(Target.Position);
+                if (CanScrollHorizontally || CanScrollVertically)
+                    Approach(Target.Position);
             }
         }
 

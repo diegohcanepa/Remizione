@@ -151,6 +151,9 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            if (session.Room is not ProceduralRoom)
+                return;
+
             if (!IsVisible)
                 return;
 
@@ -207,7 +210,7 @@ namespace Remizione
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
-            if (actor == null || session.IsAwaiting)
+            if (actor == null || session.IsAwaiting || session.Room is not ProceduralRoom)
                 return HandleInputResult.Unhandled;
 
             // Use item

@@ -173,8 +173,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Door-assets/Door01.png</key>
-            <key type="filename">Door-assets/Door02.png</key>
+            <key type="filename">ExpendingMachine-assets/ExpendingMachine.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -183,13 +182,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>5,8,9,15</rect>
+                <rect>5,8,11,16</rect>
                 <key>scale9Paddings</key>
-                <rect>5,8,9,15</rect>
+                <rect>5,8,11,16</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Toilet-assets/ToiletRoom.png</key>
+            <key type="filename">ToiletRoom-assets/ToiletRoom.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -204,7 +203,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Toilet-assets/ToiletRoomPatch.png</key>
+            <key type="filename">WC-assets/WC.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -213,9 +212,24 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>3,3,5,7</rect>
+                <rect>4,5,8,11</rect>
                 <key>scale9Paddings</key>
-                <rect>3,3,5,7</rect>
+                <rect>4,5,8,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Water-assets/Water.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,2,13,3</rect>
+                <key>scale9Paddings</key>
+                <rect>6,2,13,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -226,8 +240,10 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>Toilet-assets</filename>
-                    <filename>Door-assets</filename>
+                    <filename>ToiletRoom-assets</filename>
+                    <filename>Water-assets</filename>
+                    <filename>ExpendingMachine-assets</filename>
+                    <filename>WC-assets</filename>
                 </array>
             </struct>
         </map>

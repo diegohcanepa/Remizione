@@ -141,6 +141,9 @@ namespace Remizione
 
             for (int i = Room.CulledThings.Count - 1; i >= 0; i--)
             {
+                if (Room.CulledThings[i] == this)
+                    continue;
+
                 if (Room.CulledThings[i] is GameThing target && target.CanInteract(this))
                     return target;
             }

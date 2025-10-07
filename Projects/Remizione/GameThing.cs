@@ -198,13 +198,13 @@ namespace Remizione
             int vertexCount = Collider.Vertices.Count;
             var vertices = new Vector2[vertexCount];
 
-            var offset = GetPivotBasedPolyOffset();
+            var offset = ColliderPlacement == PlacementMode.Relative ? GetPivotBasedPolyOffset() : Vector2.Zero;
             Collider.GetVertices(vertices, offset);
 
             holePoly.SetVertices(vertices);
             holePolyInflated.SetVertices(vertices, .05f);
 
-            if (IsFlippedHorizontally)
+            if (ColliderPlacement == PlacementMode.Relative && IsFlippedHorizontally)
             {
                 holePoly.FlipHorizontally(X);
                 holePolyInflated.FlipHorizontally(X);
@@ -576,6 +576,9 @@ namespace Remizione
 
             if (ShowHotspots)
                 DrawBox(Game, RuntimeHotspot.BoundingRectangleF, Color.Purple * .2f);
+
+            if (ShowBoundingBoxes)
+                Game.Shapes.DrawFrame(BoundingBox, Color.Yellow * .3f, .2f);
         }
 
         // GridMargin
@@ -605,7 +608,10 @@ namespace Remizione
         // HitEffect
         [ScriptProperty]
         public HitEffect HitEffect { get; set; }
-        
+
+        // ShowBoundingBoxes
+        public static bool ShowBoundingBoxes { get; set; }
+
         // ShowColliders
         public static bool ShowColliders { get; set; }
 
@@ -749,7 +755,7 @@ namespace Remizione
         // GetFootstepSound
         public Sound? GetFootstepSound(Vector2 position)
         {
-            if (RuntimeHotspot?.Contains(position) == true)
+            if (RuntimeCollider?.Contains(position) == true)
                 return TerrainSound;
 
             return null;
@@ -998,6 +1004,12 @@ namespace Remizione
         {
             get
             {
+                if (HotspotPlacement == PlacementMode.Absolute)
+                {
+                    isHotspotDirty = false;
+                    return Hotspot;
+                }
+
                 if (isHotspotDirty)
                 {
                     if (Hotspot.IsEmpty)
@@ -1014,11 +1026,6 @@ namespace Remizione
                         hotspotPoly.SetVertices(vertices);
                         if (IsFlippedHorizontally)
                             hotspotPoly.FlipHorizontally(X);
-                    }
-                    else
-                    {
-                        isHotspotDirty = false;
-                        return Hotspot;
                     }
 
                     isHotspotDirty = false;
