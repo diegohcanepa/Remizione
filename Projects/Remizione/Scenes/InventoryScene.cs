@@ -503,7 +503,7 @@ namespace Remizione
             base.OnDraw(gameTime);
 
             Game.SpriteBatch.Begin(Game.Camera);
-            Game.Shapes.DrawRectangle(Screen.Area, Color.Black * .6f);
+            Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.BackgroundShade);
             Game.SpriteBatch.End();
 
             if (Owner.Session.Room is ProceduralRoom)

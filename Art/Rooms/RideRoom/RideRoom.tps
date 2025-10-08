@@ -173,7 +173,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">TerrainMedium-assets/TerrainMedium.png</key>
+            <key type="filename">Medium-assets/Medium.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -188,7 +188,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">TerrainSmall-assets/TerrainSmall.png</key>
+            <key type="filename">Small-assets/Small.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -210,8 +210,8 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>TerrainSmall-assets</filename>
-                    <filename>TerrainMedium-assets</filename>
+                    <filename>Small-assets</filename>
+                    <filename>Medium-assets</filename>
                 </array>
             </struct>
         </map>

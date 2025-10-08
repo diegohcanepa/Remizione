@@ -12,19 +12,17 @@ namespace Remizione
     /// </summary>
     public sealed class RideRoom : ProceduralRoom
     {
-        private enum TerrainSize { TerrainSmall, TerrainMedium }
-
         private static readonly ChanceTable terrainTable = new();
-        private static readonly Dictionary<string, Vector2[]> terrainVertices = [];
+        private static readonly Dictionary<RoomSize, Vector2[]> terrainVertices = [];
 
         // Static constructor
         static RideRoom()
         {
-            terrainTable.Add(TerrainSize.TerrainSmall.ToString(), 1, 2000);
-            terrainTable.Add(TerrainSize.TerrainMedium.ToString(), 1, 50);
+            terrainTable.Add(RoomSize.Small.ToString(), 1, 100);
+            terrainTable.Add(RoomSize.Medium.ToString(), 1, 100);
 
-            terrainVertices[TerrainSize.TerrainSmall.ToString()] = ReadOnlyPolygon.GetVertices("234,17;234,122;5,122;5,17");
-            terrainVertices[TerrainSize.TerrainMedium.ToString()] = ReadOnlyPolygon.GetVertices("324,18;324,120;7,120;7,18");
+            terrainVertices[RoomSize.Small] = ReadOnlyPolygon.GetVertices("234,17;234,122;5,122;5,17");
+            terrainVertices[RoomSize.Medium] = ReadOnlyPolygon.GetVertices("324,18;324,120;7,120;7,18");
         }
 
         // Constructor
@@ -68,12 +66,12 @@ namespace Remizione
         {
             if (terrainTable.GetValue(Random) is ChanceTableItem item)
             {
-                walkAreaVertices = terrainVertices[item.Name];
+                walkAreaVertices = terrainVertices[Enum.Parse<RoomSize>(item.Name)];
                 return item.Name;
             }
             else
             {
-                walkAreaVertices = Array.Empty<Vector2>();
+                walkAreaVertices = [];
                 return string.Empty;
             }
         }
@@ -186,8 +184,8 @@ namespace Remizione
                 }
             }
 
-            DecorationGrid.MarkOccupiedMargin("Margin", 0, 1, 0, 2);
-            MainGrid.MarkOccupiedMargin("Margin", 0, 1, 0, 2);
+            DecorationGrid.MarkOccupiedMargin("Margin", 1, 1, 1, 2);
+            MainGrid.MarkOccupiedMargin("Margin", 1, 1, 1, 2);
         }
 
         // OnPopulateCompleted

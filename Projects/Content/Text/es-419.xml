@@ -255,6 +255,7 @@ Bla bla bla</String>
   <String Key="Prop.EnergyBolt">Chispa</String>
   <String Key="Prop.ExitTower">Torre de salida</String>
   <String Key="Prop.ExpendingMachine">Máquina expendedora</String>
+  <String Key="Prop.FoodStall">Puesto de comida</String>
   <String Key="Prop.PilgrimSack">Saco del Peregrino</String>
   <String Key="Prop.PortableToilet">Pequeño purgatorio</String>
   <String Key="Prop.PostClock">Tiempo tirano</String>

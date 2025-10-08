@@ -833,6 +833,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">FoodStall-assets/FoodStall.png</key>
+            <key type="filename">FoodStall-assets/FoodStallShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,14,27,29</rect>
+                <key>scale9Paddings</key>
+                <rect>13,14,27,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Grass-assets/GrassA.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1988,6 +2004,7 @@
                     <filename>WaterPuddleB-assets</filename>
                     <filename>WaterPuddleC-assets</filename>
                     <filename>Toilet-assets</filename>
+                    <filename>FoodStall-assets</filename>
                 </array>
             </struct>
         </map>

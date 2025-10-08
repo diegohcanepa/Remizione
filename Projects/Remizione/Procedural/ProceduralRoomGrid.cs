@@ -114,21 +114,21 @@ namespace Remizione
         // MarkOccupiedMargin
         public void MarkOccupiedMargin(string label, int marginLeft, int marginTop, int marginRight, int marginBottom)
         {
-            // Top
-            if (marginTop > 0)
-                MarkOccupied(label, 0, 0, ColCount, marginTop);
-
-            // Bottom
-            if (marginBottom > 0)
-                MarkOccupied(label, 0, RowCount - marginBottom, ColCount, marginBottom);
-
             // Left
             if (marginLeft > 0)
                 MarkOccupied(label, 0, marginTop, marginLeft, RowCount - marginTop - marginBottom);
 
+            // Top
+            if (marginTop > 0)
+                MarkOccupied(label, 0, 0, ColCount, marginTop);
+
             // Right
             if (marginRight > 0)
                 MarkOccupied(label, ColCount - marginRight, marginTop, marginRight, RowCount - marginTop - marginBottom);
+
+            // Bottom
+            if (marginBottom > 0)
+                MarkOccupied(label, 0, RowCount - marginBottom, ColCount, marginBottom);
         }
 
         // Name
