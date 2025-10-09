@@ -128,7 +128,7 @@ namespace Remizione
         protected override void ExtendScriptRegistry(ScriptRegistry scriptRegistry)
         {
             scriptRegistry.RegisterEntity(typeof(Actor));
-            scriptRegistry.RegisterEntity(typeof(Baal));
+            scriptRegistry.RegisterEntity(typeof(Zabul));
             scriptRegistry.RegisterEntity(typeof(BloodyEye));
             scriptRegistry.RegisterEntity(typeof(BreakableProp));
             scriptRegistry.RegisterEntity(typeof(CardReader));
@@ -588,9 +588,9 @@ namespace Remizione
             {
                 previousRoom.Children.Add(Player);
 
-                if (previousRoom.RightTower != null)
+                if (previousRoom.RightConnector != null)
                 {
-                    Player.Position = previousRoom.RightTower.GetApproachPosition(Player, true);
+                    Player.Position = previousRoom.RightConnector.GetApproachPosition(Player, true);
                     Camera.FollowTarget(Player);
                     Camera.FocusTarget();
                 }

@@ -315,14 +315,16 @@ namespace Remizione
             // BehindBackground (layer)
             DrawThings(gameTime, RenderLayer.BehindBackground, interactiveTarget);
 
-            // Room Background
+            // Background
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
             base.OnDraw(gameTime);
-            OnDrawCustomBackground(gameTime);
             Game.SpriteBatch.End();
 
             // Background (layer)
             DrawThings(gameTime, RenderLayer.Background, interactiveTarget);
+
+            // OverBackground (layer)
+            DrawThings(gameTime, RenderLayer.OverBackground, interactiveTarget);
 
             // Shadows
             DrawShadows(gameTime);
@@ -370,11 +372,6 @@ namespace Remizione
 #if DEBUG
             DrawDebugBoxes();
 #endif
-        }
-
-        // OnDrawCustomBackground
-        protected virtual void OnDrawCustomBackground(GameTime gameTime)
-        {
         }
 
         // OnHandleInput

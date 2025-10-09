@@ -14,7 +14,7 @@ namespace Remizione
         private float angularVelocity;
         private const float bounceFactor = .8f;
         private float delayTimer;
-        private const float gravity = 350;
+        private const float gravity = 400;
         private float groundY;
         private readonly ImageSprite image;
         private float launchDelay;
@@ -82,7 +82,7 @@ namespace Remizione
                 delayTimer += dt;
                 if (delayTimer >= launchDelay)
                 {
-                    velocity = new(RandomBetween(-30f, 30f), RandomBetween(-20f, 10f));
+                    velocity = new(RandomBetween(-35f, 35f), RandomBetween(-20f, 10f));
                     angularVelocity = RandomBetween(-5f, 5f);
                     launched = true;
                 }

@@ -15,6 +15,7 @@ namespace Remizione
         public BreakableProp(GameSession session, string name)
             : base(session, name)
         {
+            Faction = Faction.Enemy;
             HitEffect = HitEffect.Shake;
             HurtShake = new(1.5f, 0);
 
@@ -72,11 +73,12 @@ namespace Remizione
             if (IsBroken)
                 return;
 
+            RenderLayer = RenderLayer.OverBackground;
+
             IsBroken = true;
             for (var i = 0; i < pieces.Count; i++)
             {
                 pieces[i].Launch();
-                //DepthOffset = -10000;
             }
         }
 

@@ -8,9 +8,6 @@ namespace Remizione
     // ActorSize
     public enum ActorSize { Small, Medium, Large }
 
-    // Affinity
-    public enum Affinity { Good, Evil }
-
     // AIStateName
     public enum AIStateName { Attack, Charge, Chase, CloseAttack, Decide, Idle, Move, Patrol, RangeAttack }
 
@@ -22,6 +19,9 @@ namespace Remizione
 
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
+
+    // Faction
+    public enum Faction { Player, Enemy }
 
     // GameplayMode
     public enum GameplayMode { Adventure, Run }
@@ -94,7 +94,7 @@ namespace Remizione
     public enum RainDropImpactKind { None, Ground, Water }
 
     // RenderLayer
-    public enum RenderLayer { BehindBackground, Background, Default, Foreground, ForegroundNoLight }
+    public enum RenderLayer { BehindBackground, Background, OverBackground, Default, Foreground, ForegroundNoLight }
 
     // RoomKind
     public enum RoomKind { RideRoom }

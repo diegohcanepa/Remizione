@@ -673,6 +673,10 @@ namespace Remizione
                 Direction = FacingDirection.Left;
         }
 
+        // Faction
+        [ScriptProperty]
+        public Faction Faction { get; set; }
+
         // FloatingForce
         [ScriptProperty]
         public float FloatingForce
@@ -1045,7 +1049,7 @@ namespace Remizione
         // TakeDamage
         public void TakeDamage(GameThing attacker, int amount, DamageType damageType, bool critical, Vector2 knockback, ImpactWordName impactWord)
         {
-            if (IsDead || amount <= 0)
+            if (IsDead || amount <= 0 || attacker.Faction == Faction)
                 return;
 
             if (InvulnerabilityPeriod && Blinker.IsRunning)

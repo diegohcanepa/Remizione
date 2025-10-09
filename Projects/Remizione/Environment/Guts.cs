@@ -45,7 +45,7 @@ namespace Remizione
                 }
             }
 
-            RenderLayer = RenderLayer.Background;
+            RenderLayer = RenderLayer.OverBackground;
         }
 
         #region Protected members
@@ -65,10 +65,11 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
+            
             for (var i = 0; i < pieces.Count; i++)
             {
                 pieces[i].Launch();
-                RenderLayer = RenderLayer.Background;
+                RenderLayer = RenderLayer.OverBackground;
             }
 
             Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicOut, 0, 1, 400);

@@ -63,13 +63,13 @@ namespace Remizione
             if (LoadState != LoadState.Loaded)
                 return;
 
-            if (PropState == PropState.Unlocked && Room is RideRoom rideRoom && rideRoom.RightTower != null)
+            if (PropState == PropState.Unlocked && Room is RideRoom rideRoom && rideRoom.RightConnector != null)
             {
                 if (rideRoom.RoomPhase != RunPhase.End)
-                    rideRoom.RightTower.Collider = new Polygon("0,0;0,46;11,49;24,42;29,43;17,51;28,56;43,54;51,46;45,0");
+                    rideRoom.RightConnector.Collider = new Polygon("0,0;0,46;11,49;24,42;29,43;17,51;28,56;43,54;51,46;45,0");
 
-                rideRoom.RightTower.PropState = PropState.Open;
-                rideRoom.RightTower.AnimationPlayer.Play(AnimationNames.Opening, false);
+                rideRoom.RightConnector.PropState = PropState.Open;
+                rideRoom.RightConnector.AnimationPlayer.Play(AnimationNames.Opening, false);
                 PlaySound(SoundNames.TowerDoorClose);
             }
         }

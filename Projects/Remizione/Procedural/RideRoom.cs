@@ -125,22 +125,22 @@ namespace Remizione
             // Right tower
             if (RoomPhase != RunPhase.End)
             {
-                RightTower = CreateRuntimeClone("RightTower") as IsometricProp;
-                if (RightTower != null)
+                RightConnector = CreateRuntimeClone("RightTower") as IsometricProp;
+                if (RightConnector != null)
                 {
-                    RightTower.Position = new Vector2(CustomWidth - 9, RightTower.BoundingBox.Height - 4);
-                    MainGrid.ReserveSpace(RightTower, false);
-                    Children.Add(RightTower);
+                    RightConnector.Position = new Vector2(CustomWidth - 9, RightConnector.BoundingBox.Height - 4);
+                    MainGrid.ReserveSpace(RightConnector, false);
+                    Children.Add(RightConnector);
 
                     if (CreateRuntimeClone("RightTowerPatch") is IsometricProp rightTowerPatch)
                     {
-                        rightTowerPatch.Position = RightTower.Position;
+                        rightTowerPatch.Position = RightConnector.Position;
                         Children.Add(rightTowerPatch);
                     }
 
                     if (Session.ScriptLibrary.GetRoutine(RoutineNames.GotoNextRunRoom) is Script script)
                     {
-                        var lt = RightTower.BoundingBox.GetPoint(RectanglePoint.LeftTop);
+                        var lt = RightConnector.BoundingBox.GetPoint(RectanglePoint.LeftTop);
                         Vector2[] vertices = ReadOnlyPolygon.GetVertices("35,44;27,50;19,44;23,41");
 
                         for (var i = 0; i < vertices.Length; i++)
@@ -153,32 +153,32 @@ namespace Remizione
                 }
             }
 
-            // Exit tower
+            // Exit rail
             else
             {
-                this.RightTower = CreateRuntimeClone("ExitTower") as IsometricProp;
-                if (this.RightTower != null)
+                this.RightConnector = Session.GetEntity<IsometricProp>("ExitRail");
+                if (this.RightConnector != null)
                 {
-                    this.RightTower.Position = new Vector2(CustomWidth - 22, RightTower.BoundingBox.Height - 12);
-                    MainGrid.ReserveSpace(RightTower, false);
-                    Children.Add(this.RightTower);
+                    this.RightConnector.Position = new Vector2(CustomWidth, RightConnector.BoundingBox.Height - 22);
+                    MainGrid.ReserveSpace(RightConnector, false);
+                    Children.Add(this.RightConnector);
 
                     if (Session.GetEntity<ExitRideCar>(nameof(ExitRideCar)) is ExitRideCar exitRideCar)
                     {
-                        exitRideCar.Position = RightTower.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 9);
+                        exitRideCar.Position = RightConnector.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 15, -6);
                         MainGrid.ReserveSpace(exitRideCar, false);
                         Children.Add(exitRideCar);
                     }
                 }
             }
 
-            if (RightTower != null)
+            if (RightConnector != null)
             {
                 if (CreateRuntimeClone(nameof(CardReader)) is CardReader cardReader)
                 {
-                    cardReader.Position = this.RightTower.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -20);
+                    cardReader.Position = this.RightConnector.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -20);
                     if (RoomPhase == RunPhase.End)
-                        cardReader.Position += new Vector2(20, -5);
+                        cardReader.Position += new Vector2(20, -15);
 
                     MainGrid.ReserveSpace(cardReader, false);
                     Children.Add(cardReader);
@@ -210,7 +210,7 @@ namespace Remizione
             AnimationPlayer.Play("Open", false);
         }
 
-        // RightTower
-        public IsometricProp? RightTower { get; private set; }
+        // RightConnector
+        public IsometricProp? RightConnector { get; private set; }
     }
 }

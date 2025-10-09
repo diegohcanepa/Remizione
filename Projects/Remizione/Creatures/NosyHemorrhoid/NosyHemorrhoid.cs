@@ -26,12 +26,6 @@ namespace Remizione
         // OnFindEnemy
         protected override GameThing? OnFindEnemy() => LastKnownAttacker;
 
-        // OnLoad
-        protected override void OnLoad()
-        {
-            base.OnLoad();
-        }
-
         // OnStart
         protected override void OnStart()
         {

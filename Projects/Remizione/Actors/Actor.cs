@@ -266,7 +266,7 @@ namespace Remizione
         // OnDie
         protected override void OnDie()
         {
-            if (Guts > 0)
+            if (Guts > 0 || customGuts?.Count > 0)
             {
                 if (Room != null)
                 {
@@ -508,10 +508,6 @@ namespace Remizione
 
         #endregion
 
-        // Affinity
-        [ScriptProperty]
-        public Affinity Affinity { get; set; }
-
         // AnimationSettings
         public ActorAnimationSettings AnimationSettings { get; } = new();
 
@@ -612,7 +608,7 @@ namespace Remizione
 
         // Guts
         [ScriptProperty]
-        public int Guts { get; set; }
+        public int Guts { get; set; } = 3;
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)

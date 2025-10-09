@@ -9,7 +9,7 @@
         public Creature(GameSession session, string name)
             : base(session, name)
         {
-            Affinity = Affinity.Evil;
+            Faction = Faction.Enemy;
             AllowInteraction = false;
             ContactDamage = true;
             PowerBonus = 1;
