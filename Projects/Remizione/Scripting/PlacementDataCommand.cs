@@ -11,7 +11,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal PlacementDataCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, ChanceArg, CompletedRunsArg, DistributionArg, MaximumArg, MaximumPerRunArg, RollsArg, RoomPhaseArg, StageArg)
+            : base(script, source, body, 1, ChanceArg, CompletedRunsArg, DistributionArg, MaximumArg, MaximumPerRunArg, RollsArg, RoomPhaseArg, RoomWidthArg, StageArg)
         {
         }
 
@@ -55,6 +55,13 @@ namespace Remizione.Scripting
             {
                 var roomPhase = Parser.ParseEnumArgument<RunPhase>(this, RoomPhaseArg);
                 conditions.Add(new RunPhasePlacementCondition(roomPhase));
+            }
+
+            // Room width
+            if (HasArg(RoomWidthArg))
+            {
+                var width = Parser.ParseInt32RangeArgument(this, RoomWidthArg);
+                conditions.Add(new RoomWidthPlacementCondition(width));
             }
 
             // Stage

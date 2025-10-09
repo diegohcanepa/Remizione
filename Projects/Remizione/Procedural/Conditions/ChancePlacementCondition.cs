@@ -17,7 +17,7 @@ namespace Remizione
         public float Chance { get; }
 
         // IsAvailable
-        public override bool IsAvailable(GameThing thing, Random random)
+        public override bool IsAvailable(ProceduralRoom room, GameThing thing, Random random)
         {
             return random.NextDouble() < Chance;
         }

@@ -15,7 +15,7 @@ namespace Remizione
         }
 
         // IsAvailable
-        public override bool IsAvailable(GameThing thing, Random random)
+        public override bool IsAvailable(ProceduralRoom room, GameThing thing, Random random)
         {
             return Range.Contains(thing.Session.RunProgress);
         }

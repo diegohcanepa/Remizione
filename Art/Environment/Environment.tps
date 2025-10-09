@@ -248,6 +248,8 @@
             </struct>
             <key type="filename">CrossLargeA-assets/CrossLargeA.png</key>
             <key type="filename">CrossLargeA-assets/CrossLargeAShadow.png</key>
+            <key type="filename">CrossLargeB-assets/CrossLargeB.png</key>
+            <key type="filename">CrossLargeB-assets/CrossLargeBShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -2005,6 +2007,7 @@
                     <filename>WaterPuddleC-assets</filename>
                     <filename>Toilet-assets</filename>
                     <filename>FoodStall-assets</filename>
+                    <filename>CrossLargeB-assets</filename>
                 </array>
             </struct>
         </map>

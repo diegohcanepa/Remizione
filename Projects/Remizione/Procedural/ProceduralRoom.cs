@@ -248,8 +248,8 @@ namespace Remizione
         // DecorationGrid
         protected ProceduralRoomGrid DecorationGrid { get; } = new ProceduralRoomGrid("Decoration");
 
-        // GetTerrainData
-        protected abstract string GetTerrainData(out Vector2[] walkAreaVertices);
+        // GetRoomData
+        protected abstract string GetRoomData(out Vector2[] walkAreaVertices);
 
         // MainGrid
         protected ProceduralRoomGrid MainGrid { get; } = new ProceduralRoomGrid("Main");
@@ -275,7 +275,7 @@ namespace Remizione
             {
                 Sprite.ClearAnimations();
                 
-                var terrainImageName = GetTerrainData(out var walkAreaVertices);
+                var terrainImageName = GetRoomData(out var walkAreaVertices);
                 var animation = AddAnimation(terrainImageName);
                 animation.AddFrame(terrainImageName, 1000);
 
@@ -333,7 +333,7 @@ namespace Remizione
                     {
                         var placementData = placementDataList[i];
 
-                        if (!placementData.IsAvailable(thing, Random))
+                        if (!placementData.IsAvailable(this, thing, Random))
                             continue;
 
                         placementData.ResetSpawnCount();

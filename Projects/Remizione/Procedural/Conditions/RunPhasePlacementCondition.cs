@@ -14,9 +14,9 @@ namespace Remizione
         }
 
         // IsAvailable
-        public override bool IsAvailable(GameThing thing, Random random)
+        public override bool IsAvailable(ProceduralRoom room, GameThing thing, Random random)
         {
-            return thing.Session.Room is ProceduralRoom room && room.RoomPhase == Phase;
+            return room.RoomPhase == Phase;
         }
 
         // Phase

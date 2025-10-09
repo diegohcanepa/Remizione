@@ -42,7 +42,7 @@ namespace Remizione
         public PlacementDistributionStrategy DistributionStrategy { get; }
 
         // IsAvailable
-        public bool IsAvailable(GameThing thing, Random random)
+        public bool IsAvailable(ProceduralRoom room, GameThing thing, Random random)
         {
             if (Rolls.IsEmpty)
                 return false;
@@ -52,7 +52,7 @@ namespace Remizione
 
             for (int i = 0; i < conditions.Count; i++)
             {
-                if (!conditions[i].IsAvailable(thing, random))
+                if (!conditions[i].IsAvailable(room, thing, random))
                     return false;
             }
 

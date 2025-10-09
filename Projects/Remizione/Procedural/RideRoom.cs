@@ -61,12 +61,13 @@ namespace Remizione
 
         #region Protected members
 
-        // GetTerrainData
-        protected override string GetTerrainData(out Vector2[] walkAreaVertices)
+        // GetRoomData
+        protected override string GetRoomData(out Vector2[] walkAreaVertices)
         {
             if (terrainTable.GetValue(Random) is ChanceTableItem item)
             {
-                walkAreaVertices = terrainVertices[Enum.Parse<RoomSize>(item.Name)];
+                var size = Enum.Parse<RoomSize>(item.Name);
+                walkAreaVertices = terrainVertices[size];
                 return item.Name;
             }
             else

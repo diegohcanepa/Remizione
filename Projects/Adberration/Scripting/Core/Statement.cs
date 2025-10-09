@@ -86,6 +86,7 @@ namespace Adberration.Scripting
         protected static readonly string RightTriggerArg = "#right-trigger";
         protected static readonly string RollsArg = "#rolls";
         protected static readonly string RoomPhaseArg = "#room-phase";
+        protected static readonly string RoomWidthArg = "#room-width";
         protected static readonly string ScaleArg = "#scale";
         protected static readonly string ScopeArg = "#scope";
         protected static readonly string SkillChanceArg = "#skill-chance";
