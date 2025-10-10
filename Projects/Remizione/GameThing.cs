@@ -262,6 +262,15 @@ namespace Remizione
 
                     Session.ObjectPools.Pickups.Get()?.Drop(room, Position, metaItem, loot.Amount);
                 }
+
+                var tokens = TokenReward.Random();
+                if (tokens > 0)
+                {
+                    for (var i = 0; i < tokens; i++)
+                    {
+                        Session.ObjectPools.Tokens.Get()?.Drop(room, Position);
+                    }
+                }
             }
         }
 
@@ -1139,6 +1148,10 @@ namespace Remizione
         // TerrainSound
         [ScriptProperty]
         public Sound? TerrainSound { get; set; }
+
+        // TokenReward
+        [ScriptProperty]
+        public Int32Range TokenReward { get; set; }
 
         // ThrowableSpawnPosition
         [ScriptProperty]

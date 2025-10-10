@@ -515,6 +515,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/PickupGeneric.wav;Audio/FX/PickupGeneric
 
+#begin Audio/FX/PickupToken.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/PickupToken.wav;Audio/FX/PickupToken
+
 #begin Audio/FX/PotteryBreak1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

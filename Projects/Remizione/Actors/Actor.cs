@@ -823,6 +823,10 @@ namespace Remizione
             InteractiveTarget = null;
         }
 
+        // Tokens
+        [ScriptProperty]
+        public int Tokens { get; set; }
+
         // UseSelectedItem
         public void UseSelectedItem(InventoryCategory category)
         {

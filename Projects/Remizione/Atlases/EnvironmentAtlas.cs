@@ -21,6 +21,7 @@ namespace Remizione
             GlobalLight = this[nameof(GlobalLight)];
             LightningLight = this[nameof(LightningLight)];
             RainParticles = CreateReadOnlyCollection("RainParticle", 1, 5);
+            Token = this[nameof(Token)];
         }
 
         // CraftingMark
@@ -49,5 +50,8 @@ namespace Remizione
 
         // RainParticles
         public ReadOnlyCollection<AtlasImage> RainParticles { get; }
+
+        // Token
+        public AtlasImage Token { get; }
     }
 }

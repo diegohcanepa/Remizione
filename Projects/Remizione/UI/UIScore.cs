@@ -12,23 +12,15 @@ namespace Remizione.UI
         private const int duration = 2000;
 
         private int deltaScore;
-        private readonly ImageSprite icon;
         private bool isInitializing = true;
         private int score;
         private readonly TextSprite scoreText;
         private readonly FloatTween tween = new();
 
         // Constructor
-        public UIScore(EngendroGame game, AtlasImage iconImage, Color textColor)
+        public UIScore(EngendroGame game, Color textColor)
             : base(game)
         {
-            // Icon
-            this.icon = new(game, iconImage)
-            {
-                PivotOrigin = RectanglePoint.RightTop,
-                Scale = ScaleInfo.UIElement.Tiny
-            };
-
             // Score text
             this.scoreText = new TextSprite(Game, Fonts.CommonOutline)
             {
@@ -47,13 +39,7 @@ namespace Remizione.UI
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
-            icon.Draw(gameTime);
-            Game.SpriteBatch.End();
-
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.AlphaBlend, null);
             scoreText.Draw(gameTime);
-            Game.SpriteBatch.End();
         }
 
         // OnUpdate
@@ -83,18 +69,18 @@ namespace Remizione.UI
             set => scoreText.Color = value;
         }
 
+        // PivotOrigin
+        public RectanglePoint PivotOrigin
+        {
+            get => scoreText.PivotOrigin;
+            set => scoreText.PivotOrigin = value;
+        }
+
         // Position
         public Vector2 Position
         {
-            get => icon.Position;
-            set
-            {
-                if (value != icon.Position)
-                {
-                    icon.Position = value;
-                    scoreText.Position = icon.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -3);
-                }
-            }
+            get => scoreText.Position;
+            set => scoreText.Position = value;
         }
 
         // Score
