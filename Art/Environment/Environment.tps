@@ -342,36 +342,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Environment-assets/EnergyBolt.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,7,5</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,7,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/EnergyBoltShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,3,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,3,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Environment-assets/GlobalLight.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -603,6 +573,21 @@
                 <rect>4,1,7,1</rect>
                 <key>scale9Paddings</key>
                 <rect>4,1,7,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Environment-assets/Ticket.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,3,8,5</rect>
+                <key>scale9Paddings</key>
+                <rect>4,3,8,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1737,6 +1722,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">SpeakerPost-assets/SpeakerPost.png</key>
+            <key type="filename">SpeakerPost-assets/SpeakerPostShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,11,12,21</rect>
+                <key>scale9Paddings</key>
+                <rect>6,11,12,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">SpearTrap-assets/SpearTrap01.png</key>
             <key type="filename">SpearTrap-assets/SpearTrap02.png</key>
             <key type="filename">SpearTrap-assets/SpearTrap03.png</key>
@@ -1848,6 +1849,38 @@
                 <rect>7,11,15,21</rect>
                 <key>scale9Paddings</key>
                 <rect>7,11,15,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">TreeBentA-assets/TreeBentA.png</key>
+            <key type="filename">TreeBentA-assets/TreeBentAShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,9,12,17</rect>
+                <key>scale9Paddings</key>
+                <rect>6,9,12,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">TreeBentB-assets/TreeBentB.png</key>
+            <key type="filename">TreeBentB-assets/TreeBentBShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,9,15,19</rect>
+                <key>scale9Paddings</key>
+                <rect>8,9,15,19</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -2025,6 +2058,9 @@
                     <filename>FoodStall-assets</filename>
                     <filename>CrossLargeB-assets</filename>
                     <filename>ExitRail-assets</filename>
+                    <filename>SpeakerPost-assets</filename>
+                    <filename>TreeBentA-assets</filename>
+                    <filename>TreeBentB-assets</filename>
                 </array>
             </struct>
         </map>

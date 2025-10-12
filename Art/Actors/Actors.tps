@@ -291,6 +291,43 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Designer-assets/Move01.png</key>
+            <key type="filename">Designer-assets/Move02.png</key>
+            <key type="filename">Designer-assets/Move03.png</key>
+            <key type="filename">Designer-assets/Move04.png</key>
+            <key type="filename">Designer-assets/Stand01.png</key>
+            <key type="filename">Designer-assets/StandHead01.png</key>
+            <key type="filename">Designer-assets/StandHead02.png</key>
+            <key type="filename">Designer-assets/TalkHead01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,5,11,10</rect>
+                <key>scale9Paddings</key>
+                <rect>6,5,11,10</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Designer-assets/TalkHead02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,3,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,3,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Edmund-assets/Gut0.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -373,6 +410,27 @@
                 <rect>3,3,7,6</rect>
                 <key>scale9Paddings</key>
                 <rect>3,3,7,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Mandinga-assets/Move01.png</key>
+            <key type="filename">Mandinga-assets/Move02.png</key>
+            <key type="filename">Mandinga-assets/Move03.png</key>
+            <key type="filename">Mandinga-assets/Move04.png</key>
+            <key type="filename">Mandinga-assets/Stand01.png</key>
+            <key type="filename">Mandinga-assets/StandHead01.png</key>
+            <key type="filename">Mandinga-assets/StandHead02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,8,18,15</rect>
+                <key>scale9Paddings</key>
+                <rect>9,8,18,15</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -512,6 +570,8 @@
                     <filename>HellGoat-assets</filename>
                     <filename>NosyHemorrhoid-assets</filename>
                     <filename>Zabul-assets</filename>
+                    <filename>Designer-assets</filename>
+                    <filename>Mandinga-assets</filename>
                 </array>
             </struct>
         </map>

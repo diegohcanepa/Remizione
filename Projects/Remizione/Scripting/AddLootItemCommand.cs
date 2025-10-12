@@ -14,6 +14,10 @@ namespace Remizione.Scripting
                 throw new ScriptException(script, "You need to call begin-loot-table first.");
 
             var itemName = body.Clauses[0];
+
+            if (itemName != ChanceTable.Nothing && MetaItem.Find(itemName) == null)
+                throw new ScriptException(script, $"MetaItem '{itemName}' not found.");
+
             AssertKeyword(1, "weight");
             var weight = Parser.ParseFloat(this, 2);
 

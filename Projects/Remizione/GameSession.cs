@@ -273,10 +273,6 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
                 playerPosition = XmlConverterExtension.ToVector2(playerPositionValue);
 
-            ////////////////
-            // Stats
-            ////////////////
-
             // CompletedRuns
             if (sessionNode.Attributes[nameof(CompletedRuns)]?.Value is string completedRuns)
                 this.CompletedRuns = XmlConvert.ToInt32(completedRuns);
@@ -284,6 +280,10 @@ namespace Remizione
             // Deaths
             if (sessionNode.Attributes[nameof(Deaths)]?.Value is string deaths)
                 this.Deaths = XmlConvert.ToInt32(deaths);
+
+            // Tickets
+            if (sessionNode.Attributes[nameof(Tickets)]?.Value is string tickets)
+                this.Tickets = XmlConvert.ToInt32(tickets);
         }
 
         // OnResume
@@ -385,15 +385,14 @@ namespace Remizione
             if (playerPosition.HasValue)
                 output.WriteAttributeString(nameof(playerPosition), XmlConverterExtension.ToString(playerPosition.Value));
 
-            ////////////////
-            // Stats
-            ////////////////
-
             // CompletedRuns
             output.WriteAttributeString(nameof(CompletedRuns), XmlConvert.ToString(CompletedRuns));
 
             // Deaths
             output.WriteAttributeString(nameof(Deaths), XmlConvert.ToString(Deaths));
+
+            // Tickets
+            output.WriteAttributeString(nameof(Tickets), XmlConvert.ToString(Tickets));
         }
 
         #endregion
@@ -406,7 +405,7 @@ namespace Remizione
                 throw new InvalidOperationException("A run is already in progress.");
 
             if (Seed == 0)
-                Seed = 5843562;// System.Environment.TickCount;
+                Seed = System.Environment.TickCount; //5843562;
 
             RunInfo.Generate(this, RunLength);
 
@@ -637,6 +636,9 @@ namespace Remizione
 
         // StaticThings
         public NamedObjectReadOnlyCollection<GameThing> StaticThings { get; }
+
+        // Tickets
+        public int Tickets { get; set; }
 
         // TotalRuns
         [ScriptProperty]

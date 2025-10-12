@@ -22,7 +22,7 @@
         internal const string LootBagJump = nameof(LootBagJump);
         internal const string MetalPropBreak = nameof(MetalPropBreak);
         internal const string PickupGeneric = nameof(PickupGeneric);
-        internal const string PickupToken = nameof(PickupToken);
+        internal const string PickupTicket = nameof(PickupTicket);
         internal const string PotteryBreak = nameof(PotteryBreak);
         internal const string PowerRestored = nameof(PowerRestored);
         internal const string Rain = nameof(Rain);

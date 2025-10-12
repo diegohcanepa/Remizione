@@ -47,7 +47,7 @@ namespace Remizione
                 Ducks.Return(duck);
         }
 
-        // Tokens
-        public ObjectPool<Token> Tokens { get; } = new ObjectPool<Token>(() => new Token(session), 30);
+        // Tickets
+        public ObjectPool<Ticket> Tickets { get; } = new ObjectPool<Ticket>(() => new Ticket(session), 30);
     }
 }

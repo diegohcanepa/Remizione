@@ -215,6 +215,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/BlipC.wav;Audio/FX/BlipC
 
+#begin Audio/FX/BlipMandinga.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/BlipMandinga.wav;Audio/FX/BlipMandinga
+
 #begin Audio/FX/BodyFallMedium1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -515,11 +521,11 @@
 /processorParam:Quality=Best
 /build:Audio/FX/PickupGeneric.wav;Audio/FX/PickupGeneric
 
-#begin Audio/FX/PickupToken.wav
+#begin Audio/FX/PickupTicket.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/FX/PickupToken.wav;Audio/FX/PickupToken
+/build:Audio/FX/PickupTicket.wav;Audio/FX/PickupTicket
 
 #begin Audio/FX/PotteryBreak1.wav
 /importer:WavImporter

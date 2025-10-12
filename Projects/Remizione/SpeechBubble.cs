@@ -120,11 +120,16 @@ namespace Remizione
                 pipe.Y += Math.Abs(pipeHeight - pipe.BoundingBox.Height);
             }
 
-            pipe.Color = ColorPalette.SpeechBubble.Shadow;
-            pipe.Position += Vector2.One;
-            pipe.Draw(gameTime);
-            pipe.Position -= Vector2.One;
-            pipe.Color = ColorPalette.SpeechBubble.Fill;
+            // Shadow
+            if (!pipe.IsFlippedVertically)
+            {
+                pipe.Color = ColorPalette.SpeechBubble.Shadow;
+                pipe.Position += Vector2.One;
+                pipe.Draw(gameTime);
+                pipe.Position -= Vector2.One;
+                pipe.Color = ColorPalette.SpeechBubble.Fill;
+            }
+
             pipe.Draw(gameTime);
 
             if (text.TypingState == RunningState.Running)

@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Strings>
   <String Key="Actor.Berta">Berta Idle</String>
+  <String Key="Actor.Designer">Lord Percival</String>
   <String Key="Actor.Dog">Perro</String>
   <String Key="Actor.Edmund">Edmundo Idle</String>
   <String Key="Actor.Grandma">Dulce ancianita</String>
   <String Key="Actor.HellGoat">Cabra del infierno</String>
+  <String Key="Actor.Mandinga">Mandinga</String>
   <String Key="Actor.NosyHemorrhoid">Hemorroide fisgona</String>
   <String Key="Actor.Sister">Sor Jamona</String>
   <String Key="ActorProperty.Grace.Description">La gracia quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
@@ -58,6 +60,8 @@
   <String Key="Item.Firecracker.Name">Petardo</String>
   <String Key="Item.Gold.Description">Un puñado de polvo de oro.</String>
   <String Key="Item.Gold.Name">Polvo de oro</String>
+  <String Key="Item.Lantern.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
+  <String Key="Item.Lantern.Name">Lámpara</String>
   <String Key="Item.Lockpicking.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.Lockpicking.Name">Forzar cerraduras</String>
   <String Key="Item.MagneticCard.Description">Utiliza esta tarjeta con la máquina lectora de la torre para abrirte camino.</String>

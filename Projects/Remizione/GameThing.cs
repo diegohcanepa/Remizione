@@ -232,6 +232,18 @@ namespace Remizione
         // CanCheckCollisions
         protected virtual bool CanCheckCollisions() => CollisionDetection;
 
+        // CanDamage
+        protected bool CanDamage(GameThing target)
+        {
+            if (Faction == target.Faction)
+                return false;
+            
+            if (target.Faction == Faction.Neutral)
+                return true;
+            
+            return true;
+        }
+
         // CanInteractCore
         protected virtual bool CanInteractCore(Actor requester)
         {
@@ -263,12 +275,12 @@ namespace Remizione
                     Session.ObjectPools.Pickups.Get()?.Drop(room, Position, metaItem, loot.Amount);
                 }
 
-                var tokens = TokenReward.Random();
-                if (tokens > 0)
+                var tickets = TicketReward.Random();
+                if (tickets > 0 && Session.Player != null)
                 {
-                    for (var i = 0; i < tokens; i++)
+                    for (var i = 0; i < tickets; i++)
                     {
-                        Session.ObjectPools.Tokens.Get()?.Drop(room, Position);
+                        Session.ObjectPools.Tickets.Get()?.Drop(room, Position);
                     }
                 }
             }
@@ -1149,9 +1161,9 @@ namespace Remizione
         [ScriptProperty]
         public Sound? TerrainSound { get; set; }
 
-        // TokenReward
+        // TicketReward
         [ScriptProperty]
-        public Int32Range TokenReward { get; set; }
+        public Int32Range TicketReward { get; set; }
 
         // ThrowableSpawnPosition
         [ScriptProperty]

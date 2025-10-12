@@ -15,7 +15,6 @@ namespace Remizione
         public BreakableProp(GameSession session, string name)
             : base(session, name)
         {
-            Faction = Faction.Enemy;
             HitEffect = HitEffect.Shake;
             HurtShake = new(1.5f, 0);
 

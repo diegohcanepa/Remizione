@@ -5,9 +5,9 @@ using System;
 namespace Remizione
 {
     /// <summary>
-    /// Token
+    /// Ticket
     /// </summary>
-    public class Token : Prop
+    public class Ticket : Prop
     {
         #region Private fields
 
@@ -27,15 +27,14 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public Token(GameSession session)
+        public Ticket(GameSession session)
             : base(session, string.Empty)
         {
-            this.image = new(Game, Atlases.Environment.Token)
+            this.image = new(Game, Atlases.Environment.Ticket)
             {
                 PivotOrigin = RectanglePoint.Center,
+                Scale = new(.25f)
             };
-
-            this.image.Tweens.OpacityTween = Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, .8f, .6f, 80, -1);
         }
 
         #endregion
@@ -67,9 +66,10 @@ namespace Remizione
             if (!launched)
             {
                 delayTimer += dt;
+                
                 if (delayTimer >= launchDelay)
                 {
-                    velocity = new(RandomBetween(-65f, 65f), RandomBetween(-30f, 20f));
+                    velocity = new(RandomBetween(-85f, 85f), RandomBetween(-30f, 20f));
                     angularVelocity = RandomBetween(-5f, 5f);
                     launched = true;
                 }
@@ -101,10 +101,10 @@ namespace Remizione
 
             if (Session.Player?.DistanceTo(image.Position) <= 5)
             {
-                Session.Player.PlaySound(SoundNames.PickupToken);
-                Session.Player.Tokens++;
+                Session.Player.PlaySound(SoundNames.PickupTicket);
+                Session.Tickets++;
                 Unparent();
-                Session.ObjectPools.Tokens.Return(this);
+                Session.ObjectPools.Tickets.Return(this);
             }
         }
 
@@ -117,7 +117,7 @@ namespace Remizione
 
             image.Position = new(RandomBetween(origin.X - 15, origin.X + 15f), origin.Y  + yOffset);
 
-            groundY = origin.Y + Randomizer.Next(-3, 3);
+            groundY = origin.Y + Randomizer.Next(-5, 3);
             launchDelay = RandomBetween(0, .1f);
             delayTimer = 0;
             launched = false;

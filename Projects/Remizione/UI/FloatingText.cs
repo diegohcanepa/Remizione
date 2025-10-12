@@ -9,6 +9,7 @@ namespace Remizione
     public sealed class FloatingText : GameObject
     {
         private const int fadeDuration = 250;
+        private static readonly float defaultScale = ScaleInfo.Text.Huge.X;
 
         private readonly FloatTween opacityTween = new();
         private readonly GameSession session;
@@ -25,7 +26,6 @@ namespace Remizione
             this.text = new TextSprite(session.Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
-                Scale = ScaleInfo.Text.Huge,
                 PivotOrigin = RectanglePoint.Bottom
             };
         }
@@ -33,12 +33,13 @@ namespace Remizione
         #region Private members
 
         // ShowCore
-        private void ShowCore(Vector2 origin, string value, Color color, Vector2 distance, int duration)
+        private void ShowCore(Vector2 origin, string value, Color color, Vector2 distance, float scale, int duration)
         {
             if (duration < fadeDuration)
                 duration = fadeDuration;
 
             text.Color = color;
+            text.Scale = new(scale);
             text.Text = value;
             text.Position = origin;
 
@@ -86,14 +87,20 @@ namespace Remizione
         // Show
         public void Show(Vector2 origin, string value, Color color, int duration = 1000)
         {
-            ShowCore(origin, value, color, new Vector2(Randomizer.Next(-5, 5), Randomizer.Next(-12, -1)), duration);
+            Show(origin, value, color, defaultScale, duration);
+        }
+
+        // Show
+        public void Show(Vector2 origin, string value, Color color, float scale, int duration = 1000)
+        {
+            ShowCore(origin, value, color, new Vector2(Randomizer.Next(-5, 5), Randomizer.Next(-12, -1)), scale, duration);
         }
 
         // Show
         public void Show(Vector2 origin, string value, bool critical)
         {
             var color = critical ? ColorPalette.Text.Highlight : ColorPalette.Text.Default;
-            ShowCore(origin, value, color, new(0, -6), 700);
+            ShowCore(origin, value, color, new(0, -6), defaultScale, 700);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Remizione
         private readonly UIPrompt prompt;
         private readonly ImageSprite savingIcon;
         private readonly GameSession session;
-        private readonly UITokens tokens;
+        private readonly UITicketMeter ticketMeter;
 
         #endregion
 
@@ -62,7 +62,7 @@ namespace Remizione
             // Trincket slot
             this.TrincketSlot = new(Game);
 
-            this.tokens = new(Game);
+            this.ticketMeter = new(Game);
         }
 
         #endregion
@@ -73,7 +73,7 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             if (session.Player != null)
-                tokens.Draw(gameTime);
+                ticketMeter.Draw(gameTime);
 
             if (session.IsHUDVisible)
             {
@@ -127,8 +127,8 @@ namespace Remizione
 
             if (session.Player != null)
             {
-                tokens.Value = session.Player.Tokens;
-                tokens.Update(gameTime);
+                ticketMeter.Value = session.Tickets;
+                ticketMeter.Update(gameTime);
             }
         }
 

@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Remizione.UI
 {
@@ -13,23 +12,23 @@ namespace Remizione.UI
 
         private int deltaScore;
         private bool isInitializing = true;
-        private int score;
-        private readonly TextSprite scoreText;
         private readonly FloatTween tween = new();
+        private int value;
+        private readonly TextSprite valueText;
 
         // Constructor
         public UIScore(EngendroGame game, Color textColor)
             : base(game)
         {
             // Score text
-            this.scoreText = new TextSprite(Game, Fonts.CommonOutline)
+            this.valueText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = textColor,
                 PivotOrigin = RectanglePoint.Top,
-                Scale = ScaleInfo.Text.VeryLarge,
+                Scale = ScaleInfo.Text.ExtraLarge,
             };
 
-            this.Score = 0;
+            this.Value = 0;
 
             isInitializing = true;
         }
@@ -39,7 +38,7 @@ namespace Remizione.UI
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            scoreText.Draw(gameTime);
+            valueText.Draw(gameTime);
         }
 
         // OnUpdate
@@ -52,7 +51,7 @@ namespace Remizione.UI
                 if (newDeltaScore != deltaScore)
                 {
                     deltaScore = newDeltaScore;
-                    scoreText.Text = deltaScore.ToString();
+                    valueText.Text = deltaScore.ToString();
                 }
             }
         }
@@ -60,42 +59,42 @@ namespace Remizione.UI
         #endregion
 
         // BoundingBox
-        public RectangleF BoundingBox => scoreText.BoundingBox;
+        public RectangleF BoundingBox => valueText.BoundingBox;
 
         // Color
         public Color Color
         {
-            get => scoreText.Color;
-            set => scoreText.Color = value;
+            get => valueText.Color;
+            set => valueText.Color = value;
         }
 
         // PivotOrigin
         public RectanglePoint PivotOrigin
         {
-            get => scoreText.PivotOrigin;
-            set => scoreText.PivotOrigin = value;
+            get => valueText.PivotOrigin;
+            set => valueText.PivotOrigin = value;
         }
 
         // Position
         public Vector2 Position
         {
-            get => scoreText.Position;
-            set => scoreText.Position = value;
+            get => valueText.Position;
+            set => valueText.Position = value;
         }
 
-        // Score
-        public int Score
+        // Value
+        public int Value
         {
-            get => score;
+            get => value;
             set
             {
-                if (value != score || isInitializing)
+                if (value != this.value || isInitializing)
                 {
                     if (!isInitializing)
-                        tween.Start(TweenStyle.Linear, score, value, duration);
+                        tween.Start(TweenStyle.Linear, this.value, value, duration);
 
-                    score = value;
-                    scoreText.Text = score.ToString();
+                    this.value = value;
+                    valueText.Text = this.value.ToString();
                     isInitializing = false;
                 }
             }

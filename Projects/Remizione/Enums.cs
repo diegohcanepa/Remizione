@@ -21,7 +21,7 @@ namespace Remizione
     public enum DustParticleKind { None, Dust, Ash }
 
     // Faction
-    public enum Faction { Player, Enemy }
+    public enum Faction { Neutral, Good, Evil }
 
     // GameplayMode
     public enum GameplayMode { Adventure, Run }

@@ -9,9 +9,9 @@
         public Creature(GameSession session, string name)
             : base(session, name)
         {
-            Faction = Faction.Enemy;
             AllowInteraction = false;
             ContactDamage = true;
+            Faction = Faction.Evil;
             PowerBonus = 1;
             PlacementPhase = PlacementPhase.Creature;
         }
