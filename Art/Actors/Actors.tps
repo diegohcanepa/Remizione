@@ -420,6 +420,8 @@
             <key type="filename">Mandinga-assets/Stand01.png</key>
             <key type="filename">Mandinga-assets/StandHead01.png</key>
             <key type="filename">Mandinga-assets/StandHead02.png</key>
+            <key type="filename">Mandinga-assets/TalkHead01.png</key>
+            <key type="filename">Mandinga-assets/TalkHead02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

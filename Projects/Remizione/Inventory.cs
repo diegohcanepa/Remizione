@@ -16,11 +16,6 @@ namespace Remizione
             this.Thingies = new ItemContainer(owner, InventoryCategory.Thingies);
             this.Junk = new ItemContainer(owner, InventoryCategory.Junk);
             this.KeyItems = new ItemContainer(owner, InventoryCategory.KeyItems);
-            this.Quirks = new ItemContainer(owner, InventoryCategory.Quirks)
-            {
-                Size = 12
-            };
-
             this.Trinkets = new ItemContainer(owner, InventoryCategory.Trinkets);
         }
 
@@ -62,7 +57,6 @@ namespace Remizione
                 InventoryCategory.Consumables => Consumables,
                 InventoryCategory.Junk => Junk,
                 InventoryCategory.KeyItems => KeyItems,
-                InventoryCategory.Quirks => Quirks,
                 InventoryCategory.Thingies => Thingies,
                 InventoryCategory.Trinkets => Trinkets,
                 _ => throw new ArgumentException($"Invalid inventory category: {category}", nameof(category)),
@@ -74,9 +68,6 @@ namespace Remizione
 
         // KeyItems
         public ItemContainer KeyItems { get; }
-
-        // Quirks
-        public ItemContainer Quirks { get; }
 
         // Thingies
         public ItemContainer Thingies { get; }

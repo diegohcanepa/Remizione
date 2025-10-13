@@ -385,6 +385,7 @@
             <key type="filename">Items-assets/Cross.png</key>
             <key type="filename">Items-assets/Duck.png</key>
             <key type="filename">Items-assets/Firecracker.png</key>
+            <key type="filename">Items-assets/Lantern.png</key>
             <key type="filename">Items-assets/MagneticCard.png</key>
             <key type="filename">Items-assets/MasterLockpick.png</key>
             <key type="filename">Items-assets/MissingItem.png</key>

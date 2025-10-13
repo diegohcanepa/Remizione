@@ -21,7 +21,7 @@ namespace Remizione
         private readonly UITextButton buttonConsume;
         private readonly UITextButton buttonDiscard;
         private readonly UITextButton buttonEquip;
-        private readonly List<InventoryCategory> categories = [InventoryCategory.Junk, InventoryCategory.Thingies, InventoryCategory.Consumables, InventoryCategory.Trinkets, InventoryCategory.KeyItems, InventoryCategory.Quirks];
+        private readonly List<InventoryCategory> categories = [InventoryCategory.Junk, InventoryCategory.Thingies, InventoryCategory.Consumables, InventoryCategory.Trinkets, InventoryCategory.KeyItems];
         private readonly ImageSprite[] categoryIcons;
         private readonly ImageSprite[] categoryMarkers;
         private readonly TextSprite categoryText;

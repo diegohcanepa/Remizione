@@ -50,10 +50,7 @@ namespace Remizione
                 Opacity = .4f,
             };
 
-            if (grid.ItemContainer.Category == InventoryCategory.Quirks)
-                stateIcon.Image = Atlases.UI.InventorySlotQuestionIcon;
-            else
-                stateIcon.Image = Atlases.UI.InventorySlotLockIcon;
+            stateIcon.Image = Atlases.UI.InventorySlotLockIcon;
 
             // Amount text
             amountText = new TextSprite(Game, Fonts.CommonOutline)
@@ -79,7 +76,7 @@ namespace Remizione
 
             if (Item == null)
             {
-                if (Index > grid.ItemContainer.Size - 1 || grid.ItemContainer.Category == InventoryCategory.Quirks)
+                if (Index > grid.ItemContainer.Size - 1)
                     stateIcon.Draw(gameTime);
             }
             else
