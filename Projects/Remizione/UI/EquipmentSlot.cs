@@ -165,7 +165,7 @@ namespace Remizione
             if (!HideButton)
                 button.Draw(gameTime);
 
-            if (lastKnownItem?.MetaItem.Unique == false)
+            if (lastKnownItem?.MetaItem.AllowEmpty == true)
             {
                 Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
                 amountText.Draw(gameTime);

@@ -269,7 +269,7 @@ namespace Remizione
                 else if (GetLoot() is ChanceTableItem loot && MetaItem.Find(loot.Name) is MetaItem metaItem)
                 {
                     // Avoid looting unique things already in inventory
-                    if (metaItem.Unique && Session.Player?.Inventory.Find(metaItem) != null)
+                    if (metaItem.Category == InventoryCategory.Trinkets && Session.Player?.Inventory.Find(metaItem) != null)
                         return;
 
                     Session.ObjectPools.Pickups.Get()?.Drop(room, Position, metaItem, loot.Amount);

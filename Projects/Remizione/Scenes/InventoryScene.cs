@@ -350,7 +350,7 @@ namespace Remizione
 
                 var pos = itemDescription.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
 
-                // Health
+                // HP
                 if (item.MetaItem.HP != null)
                 {
                     heartBonus.Position = itemDescription.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
@@ -375,7 +375,7 @@ namespace Remizione
             const int spacing = 3;
 
             var iconWidth = categoryIcons[0].BoundingBox.Width;
-            var totalWidth = categoryIcons.Length * iconWidth + (categoryIcons.Length - 1) * spacing;
+            var totalWidth = categoryIcons.Length * iconWidth + (categoryIcons.Length) * spacing;
             float x = (navigationBar.BoundingBox.GetPoint(RectanglePoint.Top).X - totalWidth / 2) + (iconWidth / 2);
             float y = navigationBar.BoundingBox.GetPoint(RectanglePoint.Top, 0, -7).Y;
 

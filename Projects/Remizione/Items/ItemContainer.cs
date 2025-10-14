@@ -32,10 +32,7 @@ namespace Remizione
             if (metaItem.Category != Category)
                 throw new InvalidOperationException($"Meta item '{metaItem.Name}' does not belong to the category '{Category}'.");
 
-            if (metaItem.Unique)
-                amount = 1;
-
-            var item = Find(metaItem.Name);
+            var item = metaItem.AllowEmpty ? Find(metaItem.Name) : null;
 
             if (item == null)
             {
@@ -43,12 +40,7 @@ namespace Remizione
                 items.Add(item);
             }
             else
-            {
-                if (metaItem.Unique)
-                    item.Count = 1;
-                else
-                    item.Count += amount;
-            }
+               item.Count += amount;
 
             return item;
         }
@@ -115,6 +107,9 @@ namespace Remizione
 
         // IsEmpty
         public bool IsEmpty => items.Count == 0;
+
+        // IsFull
+        public bool IsFull => items.Count >= Size;
 
         // IsEquipment
         public bool IsEquipment => Category == InventoryCategory.Junk || Category == InventoryCategory.Thingies || Category == InventoryCategory.Trinkets;

@@ -185,10 +185,10 @@ namespace Remizione
             {
                 amountText.Color = ColorPalette.Text.Default;
 
-                if (item.MetaItem.Unique)
-                    amountText.Text = string.Empty;
-                else
+                if (item.MetaItem.AllowEmpty)
                     amountText.Text = $"{item.Count}";
+                else
+                    amountText.Text = string.Empty;
 
                 icon.Opacity = item.Count == 0 ? .3f : 1;
             }

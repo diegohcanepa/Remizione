@@ -145,10 +145,10 @@ namespace Remizione
         // GetDisplayAmount
         public string GetDisplayAmount()
         {
-            if (MetaItem.Unique)
-                return string.Empty;
-            else
+            if (MetaItem.AllowEmpty)
                 return count.ToString(CultureInfo.InvariantCulture);
+            else
+                return string.Empty;
         }
 
         // GetDisplayStat

@@ -101,7 +101,6 @@ namespace Adberration.Scripting
         protected static readonly string TransientArg = "#transient";
         protected static readonly string TransitionAwareArg = "#transition-aware";
         protected static readonly string TweenArg = "#tween";
-        protected static readonly string UniqueArg = "#unique";
         protected static readonly string UnparentArg = "#unparent";
         protected static readonly string VibrateArg = "#vibrate";
         protected static readonly string VolumeArg = "#volume";

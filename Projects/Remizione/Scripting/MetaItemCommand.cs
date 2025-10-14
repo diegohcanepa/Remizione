@@ -8,7 +8,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 2, ActionArg, AllowEmptyArg, CriticalChanceArg, DamageArg, DamageIntensityArg, DamageTypeArg, DurabilityArg, HPArg, ImpactWordArg, KnockbackArg, PassiveEffectCooldownArg, PreventDiscardArg, RangeArg, ReplenishAmountArg, SkillChanceArg, SoundArg, UniqueArg)
+            : base(script, source, body, 2, ActionArg, AllowEmptyArg, CriticalChanceArg, DamageArg, DamageIntensityArg, DamageTypeArg, DurabilityArg, HPArg, ImpactWordArg, KnockbackArg, PassiveEffectCooldownArg, PreventDiscardArg, RangeArg, ReplenishAmountArg, SkillChanceArg, SoundArg)
         {
             var name = Parser.ParseName(this, 0);
             var category = Parser.ParseEnum<InventoryCategory>(this, 1);
@@ -30,7 +30,6 @@ namespace Remizione.Scripting
                 ReplenishAmount = Parser.ParseInt32Argument(this, ReplenishAmountArg),
                 SkillChance = Parser.ParseInt32Argument(this, SkillChanceArg),
                 Sound = Parser.ParseSoundArgument(this, SoundArg),
-                Unique = HasArg(UniqueArg)
             };
         }
     }

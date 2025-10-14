@@ -104,15 +104,18 @@ namespace Remizione
             }
             else if (Session.Player?.DistanceTo(this) < 5)
             {
-                isCollecting = true;
-                DepthOffset = 10;
+                if (!Session.Player.Inventory.GetContainer(metaItem.Category).IsFull)
+                { 
+                    isCollecting = true;
+                    DepthOffset = 10;
 
-                scaleTween.Start(TweenStyle.Linear, Scale, Vector2.Zero, 150);
-                Tweens.ScaleTween = scaleTween;
+                    scaleTween.Start(TweenStyle.Linear, Scale, Vector2.Zero, 150);
+                    Tweens.ScaleTween = scaleTween;
 
-                Session.Player?.Inventory.GetContainer(metaItem.Category).Add(metaItem, amount);
+                    Session.Player?.Inventory.GetContainer(metaItem.Category).Add(metaItem, amount);
 
-                Session.HUD.Log.Show(LogVerb.PickedUp, metaItem.LocalizedDisplayName, metaItem.Image);
+                    Session.HUD.Log.Show(LogVerb.PickedUp, metaItem.LocalizedDisplayName, metaItem.Image);
+                }
             }
         }
 

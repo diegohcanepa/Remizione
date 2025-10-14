@@ -63,13 +63,26 @@ namespace Remizione
             if (LoadState != LoadState.Loaded)
                 return;
 
-            if (PropState == PropState.Unlocked && Room is RideRoom rideRoom && rideRoom.RightConnector != null)
+            if (PropState == PropState.Unlocked && Room is RideRoom rideRoom)
             {
-                if (rideRoom.RoomPhase != RunPhase.End)
-                    rideRoom.RightConnector.Collider = new Polygon("0,0;0,46;11,49;24,42;29,43;17,51;28,56;43,54;51,46;45,0");
+                if (rideRoom.LeftTower != null)
+                {
+                    if (rideRoom.RoomPhase != RunPhase.Start)
+                        rideRoom.LeftTower.Collider = new Polygon("45,0;45,46;35,51;12,43;7,44;29,52;16,56;0,49;0,0");
 
-                rideRoom.RightConnector.PropState = PropState.Open;
-                rideRoom.RightConnector.AnimationPlayer.Play(AnimationNames.Opening, false);
+                    rideRoom.LeftTower.PropState = PropState.Open;
+                    rideRoom.LeftTower.AnimationPlayer.Play(AnimationNames.Opening, false);
+                }
+
+                if (rideRoom.RightConnector != null)
+                {
+                    if (rideRoom.RoomPhase != RunPhase.End)
+                        rideRoom.RightConnector.Collider = new Polygon("0,0;0,46;11,49;24,42;29,43;17,51;28,56;43,54;51,46;45,0");
+
+                    rideRoom.RightConnector.PropState = PropState.Open;
+                    rideRoom.RightConnector.AnimationPlayer.Play(AnimationNames.Opening, false);
+                }
+
                 PlaySound(SoundNames.TowerDoorClose);
             }
         }

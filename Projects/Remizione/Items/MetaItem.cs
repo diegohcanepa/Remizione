@@ -167,8 +167,5 @@ namespace Remizione
 
         // ToString
         public override string ToString() => Name;
-
-        // Unique
-        public bool Unique { get; init; }
     }
 }

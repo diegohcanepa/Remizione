@@ -90,8 +90,7 @@ namespace Remizione
 
             item.Use();
 
-            if (!item.MetaItem.Unique)
-                Session.HUD.Log.Show(LogVerb.Lost, item.DisplayText, item.MetaItem.Image);
+            Session.HUD.Log.Show(LogVerb.Lost, item.DisplayText, item.MetaItem.Image);
 
             var text = TextRepository.GetValue(success ? "Misc.Success" : "Misc.Failed");
 
