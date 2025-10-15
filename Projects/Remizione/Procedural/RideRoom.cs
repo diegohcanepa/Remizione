@@ -53,7 +53,7 @@ namespace Remizione
             {
                 var metaItem = MetaItem.FindNotNull(MetaItem.MagneticCardName);
                 var position = WalkArea != null ? WalkArea.RandomWalkablePoint() : BoundingBox.GetRandomPoint();
-                Session.ObjectPools.Pickups.Get()?.Drop(this, position, metaItem, 1);
+                Session.ObjectPools.Pickups.Get()?.Drop(this, position, metaItem);
             }
         }
 

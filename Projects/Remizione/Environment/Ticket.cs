@@ -33,7 +33,7 @@ namespace Remizione
             this.image = new(Game, Atlases.Environment.Ticket)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Scale = new(.25f)
+                Scale = new(.6f)
             };
         }
 

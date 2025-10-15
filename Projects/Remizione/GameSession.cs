@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using Remizione.Scripting;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 
@@ -416,6 +415,7 @@ namespace Remizione
         [ScriptMethod]
         public void CancelRun()
         {
+            Tickets = 0;
             Deaths++;
             EndRun();
         }

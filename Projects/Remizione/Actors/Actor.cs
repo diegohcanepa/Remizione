@@ -259,7 +259,7 @@ namespace Remizione
         // OnCollision
         protected override void OnCollision(GameThing thing)
         {
-            if (ContactDamage && CanDamage(thing))
+            if (thing.ContactDamage && thing.CanDamage(this))
                 ApplyContactDamage(thing);
         }
 

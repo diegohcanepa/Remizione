@@ -3,12 +3,12 @@
 namespace Remizione.Scripting
 {
     // AddLootItemCommand
-    // Arguments: {MetaItem} weight {float} [#amount:Integer]
+    // Arguments: {MetaItem} weight {float}
     internal sealed class AddLootItemCommand : NonAwaitableCommand
     {
         // Constructor
         internal AddLootItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 3, AmountArg)
+            : base(script, source, body, 3)
         {
             if (string.IsNullOrWhiteSpace(BeginLootTableCommand.ActiveName))
                 throw new ScriptException(script, "You need to call begin-loot-table first.");
@@ -23,10 +23,7 @@ namespace Remizione.Scripting
 
             var lootTable = ChanceTable.Find(BeginLootTableCommand.ActiveName);
             lootTable ??= ChanceTable.Register(BeginLootTableCommand.ActiveName);
-
-            var amount = Parser.ParseInt32Argument(this, AmountArg, 1);
-
-            lootTable.Add(itemName, amount, weight);
+            lootTable.Add(itemName, 1, weight);
         }
     }
 }

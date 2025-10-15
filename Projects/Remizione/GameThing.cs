@@ -232,18 +232,6 @@ namespace Remizione
         // CanCheckCollisions
         protected virtual bool CanCheckCollisions() => CollisionDetection;
 
-        // CanDamage
-        protected bool CanDamage(GameThing target)
-        {
-            if (Faction == target.Faction)
-                return false;
-            
-            if (target.Faction == Faction.Neutral)
-                return true;
-            
-            return true;
-        }
-
         // CanInteractCore
         protected virtual bool CanInteractCore(Actor requester)
         {
@@ -263,7 +251,7 @@ namespace Remizione
             {
                 if (HasMagneticCard && MetaItem.Find(MetaItem.MagneticCardName) is MetaItem magneticCard)
                 {
-                    Session.ObjectPools.Pickups.Get()?.Drop(room, Position, magneticCard, 1);
+                    Session.ObjectPools.Pickups.Get()?.Drop(room, Position, magneticCard);
                     HasMagneticCard = false;
                 }
                 else if (GetLoot() is ChanceTableItem loot && MetaItem.Find(loot.Name) is MetaItem metaItem)
@@ -272,15 +260,18 @@ namespace Remizione
                     if (metaItem.Category == InventoryCategory.Trinkets && Session.Player?.Inventory.Find(metaItem) != null)
                         return;
 
-                    Session.ObjectPools.Pickups.Get()?.Drop(room, Position, metaItem, loot.Amount);
+                    Session.ObjectPools.Pickups.Get()?.Drop(room, Position, metaItem);
                 }
 
-                var tickets = TicketReward.Random();
-                if (tickets > 0 && Session.Player != null)
+                if (Randomizer.Random.NextDouble() < TicketRewardChance)
                 {
-                    for (var i = 0; i < tickets; i++)
+                    var tickets = TicketReward.Random();
+                    if (tickets > 0 && Session.Player != null)
                     {
-                        Session.ObjectPools.Tickets.Get()?.Drop(room, Position);
+                        for (var i = 0; i < tickets; i++)
+                        {
+                            Session.ObjectPools.Tickets.Get()?.Drop(room, Position);
+                        }
                     }
                 }
             }
@@ -475,6 +466,18 @@ namespace Remizione
 
         // Blinker
         public Blinker<bool> Blinker { get; } = new(false, true);
+
+        // CanDamage
+        public bool CanDamage(GameThing target)
+        {
+            if (Faction == target.Faction)
+                return false;
+
+            if (target.Faction == Faction.Neutral)
+                return true;
+
+            return true;
+        }
 
         // CanInteract
         public bool CanInteract(Actor requester)
@@ -1164,6 +1167,10 @@ namespace Remizione
         // TicketReward
         [ScriptProperty]
         public Int32Range TicketReward { get; set; }
+
+        // TicketRewardChance
+        [ScriptProperty]
+        public float TicketRewardChance { get; set; } = .5f;
 
         // ThrowableSpawnPosition
         [ScriptProperty]

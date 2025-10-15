@@ -76,11 +76,17 @@ namespace Remizione
 
                 if (rideRoom.RightConnector != null)
                 {
-                    if (rideRoom.RoomPhase != RunPhase.End)
-                        rideRoom.RightConnector.Collider = new Polygon("0,0;0,46;11,49;24,42;29,43;17,51;28,56;43,54;51,46;45,0");
-
                     rideRoom.RightConnector.PropState = PropState.Open;
-                    rideRoom.RightConnector.AnimationPlayer.Play(AnimationNames.Opening, false);
+                    
+                    if (rideRoom.RoomPhase == RunPhase.End)
+                    {
+                        PlaySound(SoundNames.PowerRestored);
+                    }
+                    else
+                    {
+                        rideRoom.RightConnector.Collider = new Polygon("0,0;0,46;11,49;24,42;29,43;17,51;28,56;43,54;51,46;45,0");
+                        rideRoom.RightConnector.AnimationPlayer.Play(AnimationNames.Opening, false);
+                    }
                 }
 
                 PlaySound(SoundNames.TowerDoorClose);
