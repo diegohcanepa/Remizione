@@ -11,7 +11,7 @@ namespace Remizione
         internal static Color BackgroundColor { get; } = new Color(0, 2, 5);
 
         // BackgroundShade
-        internal static Color BackgroundShade { get; } = Color.Black * .2f;
+        internal static Color BackgroundShade { get; } = Color.Black * .7f;
 
         // ContextMenu
         internal static class ContextMenu

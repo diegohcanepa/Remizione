@@ -38,7 +38,7 @@ namespace Remizione
             {
                 PivotOrigin = RectanglePoint.RightTop,
                 Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -6, 3),
-                Scale = ScaleInfo.UIElement.Medium
+                Scale = ScaleInfo.UIElement.Tiny
             };
 
             // Prompt

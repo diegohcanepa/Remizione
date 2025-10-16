@@ -31,7 +31,7 @@ namespace Remizione
         internal static readonly InputBinding Back = InputManager.AddBinding(nameof(Back), GetButtonB(), Keys.Escape);
         internal static readonly InputBinding ConsumeItem = InputManager.AddBinding(nameof(ConsumeItem), Buttons.A, Keys.E);
         internal static readonly InputBinding Continue = InputManager.AddBinding(nameof(Continue), GetButtonA(), Keys.E);
-        internal static readonly InputBinding Close = InputManager.AddBinding(nameof(Close), GetButtonB(), Keys.Escape);
+        internal static readonly InputBinding Close = InputManager.AddBinding(nameof(Close), GetButtonB(), Keys.X);
         internal static readonly InputBinding Discard = InputManager.AddBinding(nameof(Discard), Buttons.Y, Keys.Delete);
         internal static readonly InputBinding EquipItem = InputManager.AddBinding(nameof(EquipItem), Buttons.A, Keys.E);
         internal static readonly InputBinding Exit = InputManager.AddBinding(nameof(Exit), GetButtonB(), Keys.Escape);

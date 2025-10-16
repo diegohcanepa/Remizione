@@ -54,7 +54,7 @@
   <String Key="Item.Chili.Name">Hot chili</String>
   <String Key="Item.Cross.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Cross.Name">Cross</String>
-  <String Key="Item.Duck.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
+  <String Key="Item.Duck.Description">These rubber ducks are a courtesy of Mandinga himself, so you can bravely defend against the most hideous and abominable creatures of Remizione. Quack them to death!</String>
   <String Key="Item.Duck.Name">Rubber duck</String>
   <String Key="Item.Firecracker.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Firecracker.Name">Firecracker</String>
@@ -68,7 +68,7 @@
   <String Key="Item.MagneticCard.Name">Magnetic card</String>
   <String Key="Item.MasterLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.MasterLockpick.Name">Master lockpick</String>
-  <String Key="Item.PieceOfWood.Description" />
+  <String Key="Item.PieceOfWood.Description"></String>
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
