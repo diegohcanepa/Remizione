@@ -335,6 +335,7 @@
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryQuirks.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryTrinkets.png</key>
             <key type="filename">UI-assets/ProhibitionMark.png</key>
+            <key type="filename">UIIcons-assets/HeartHalfIconWithShadow.png</key>
             <key type="filename">UIIcons-assets/HeartIconWithShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

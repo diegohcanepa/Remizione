@@ -19,6 +19,7 @@ namespace Remizione
             EquipmentSlot = this[nameof(EquipmentSlot)];
             HeartEmptyIcon = this[nameof(HeartEmptyIcon)];
             HeartHalfIcon = this[nameof(HeartHalfIcon)];
+            HeartHalfIconWithShadow = this[nameof(HeartHalfIconWithShadow)];
             HeartIcon = this[nameof(HeartIcon)];
             HeartIconWithShadow = this[nameof(HeartIconWithShadow)];
             InventoryCategoryNotEmpty = this[nameof(InventoryCategoryNotEmpty)];
@@ -100,6 +101,9 @@ namespace Remizione
 
         // HeartHalfIcon
         public AtlasImage HeartHalfIcon { get; }
+
+        // HeartHalfIconWithShadow
+        public AtlasImage HeartHalfIconWithShadow { get; }
 
         // HeartIcon
         public AtlasImage HeartIcon { get; }

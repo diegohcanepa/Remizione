@@ -33,7 +33,7 @@ namespace Remizione
         private readonly ImageSprite gridContainer;
         private readonly Dictionary<InventoryCategory, InventoryGrid> grids = [];
         private readonly UIHealthMeter healthMeter;
-        private readonly UIHealthBonus heartBonus;
+        private readonly UIHPBonus hpBonus;
         private readonly ImageSprite infoContainer;
         private readonly ImageSprite infoTitleContainer;
         private readonly TextSprite itemDescription;
@@ -169,7 +169,7 @@ namespace Remizione
             };
 
             // Heart bonus
-            this.heartBonus = new(Game);
+            this.hpBonus = new(Game);
 
             // Info container
             this.infoContainer = new(Game, Atlases.UI.InventoryInfoContainer)
@@ -337,7 +337,7 @@ namespace Remizione
         // InvalidateItemInfo
         private void InvalidateItemInfo()
         {
-            heartBonus.Value = null;
+            hpBonus.Amount = 0;
 
             if (activeGrid.SelectedItem is Item item)
             {
@@ -353,9 +353,8 @@ namespace Remizione
                 // HP
                 if (item.MetaItem.HP != null)
                 {
-                    heartBonus.Position = itemDescription.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
-                    heartBonus.Value = item.MetaItem.HP;
-                    pos.Y += heartBonus.BoundingBox.Height;
+                    hpBonus.Position = itemDescription.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
+                    hpBonus.Amount = item.MetaItem.HP.MaximumValue;
                 }
             }
             else
@@ -564,8 +563,7 @@ namespace Remizione
             itemDescription.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            if (heartBonus.Value != null)
-                heartBonus.Draw(gameTime);
+            hpBonus.Draw(gameTime);
         }
 
         // OnHandleInput
