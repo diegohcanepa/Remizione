@@ -42,7 +42,7 @@ namespace Remizione
     public enum ImpactWordName { None, AghGreen, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
 
     // InventoryCategory
-    public enum InventoryCategory { None, Consumables, Junk, KeyItems, Thingies, Trinkets }
+    public enum InventoryCategory { None, Consumables, Junk, KeyItems, Gadgets, Trinkets }
 
     // InventoryVerb
     public enum InventoryVerb { Equip, Unequip }

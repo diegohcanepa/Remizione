@@ -54,7 +54,7 @@ namespace Remizione
             };
 
             // Thingie slot
-            this.ThingieSlot = new(session)
+            this.GadgetSlot = new(session)
             {
                 SceneScope = session
             };
@@ -83,7 +83,7 @@ namespace Remizione
                     {
                         BagSlot.Draw(gameTime);
                         JunkSlot.Draw(gameTime);
-                        ThingieSlot.Draw(gameTime);
+                        GadgetSlot.Draw(gameTime);
                     }
 
                     if (session.Room is ProceduralRoom)
@@ -115,7 +115,7 @@ namespace Remizione
             TargetMeter.Update(gameTime);
             BagSlot.Update(gameTime);
             JunkSlot.Update(gameTime);
-            ThingieSlot.Update(gameTime);
+            GadgetSlot.Update(gameTime);
             TrincketSlot.Update(gameTime);
             healthMeter.Update(gameTime);
             prompt.Update(gameTime);
@@ -137,6 +137,9 @@ namespace Remizione
         // BagSlot
         public SackSlot BagSlot { get; }
 
+        // GadgetSlot
+        public GadgetSlot GadgetSlot { get; }
+
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
@@ -149,7 +152,7 @@ namespace Remizione
             if (JunkSlot.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            if (ThingieSlot.HandleInput(gameTime) == HandleInputResult.Handled)
+            if (GadgetSlot.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
             if (BagSlot.HandleInput(gameTime) == HandleInputResult.Handled)
@@ -173,7 +176,7 @@ namespace Remizione
             healthMeter.Actor = session.Player;
             BagSlot.Actor = session.Player;
             JunkSlot.Actor = session.Player;
-            ThingieSlot.Actor = session.Player;
+            GadgetSlot.Actor = session.Player;
             TrincketSlot.Actor = session.Player;
         }
 
@@ -185,9 +188,6 @@ namespace Remizione
 
         // TargetMeter
         public UITargetMeter TargetMeter { get; }
-
-        // ThingieSlot
-        public ThingieSlot ThingieSlot { get; }
 
         // TrincketSlot
         public TrinketSlot TrincketSlot { get; }

@@ -112,7 +112,7 @@ namespace Remizione
         public bool IsFull => items.Count >= Size;
 
         // IsEquipment
-        public bool IsEquipment => Category == InventoryCategory.Junk || Category == InventoryCategory.Thingies || Category == InventoryCategory.Trinkets;
+        public bool IsEquipment => Category == InventoryCategory.Junk || Category == InventoryCategory.Gadgets || Category == InventoryCategory.Trinkets;
 
         // Owner
         public Actor Owner { get; }

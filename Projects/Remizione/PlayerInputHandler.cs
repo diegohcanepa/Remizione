@@ -54,7 +54,7 @@ namespace Remizione
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 Actor.UseSelectedItem(InventoryCategory.Junk);
             else
-                Actor.UseSelectedItem(InventoryCategory.Thingies);
+                Actor.UseSelectedItem(InventoryCategory.Gadgets);
 
             return HandleInputResult.Unhandled;
         }

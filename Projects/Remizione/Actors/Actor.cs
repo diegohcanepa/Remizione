@@ -378,9 +378,9 @@ namespace Remizione
             if (attributes[nameof(Inventory.KeyItems)]?.Value is string keyItemsData)
                 Inventory.KeyItems.SetSerializationData(keyItemsData);
 
-            // Thingies
-            if (attributes[nameof(Inventory.Thingies)]?.Value is string thingiesData)
-                Inventory.Thingies.SetSerializationData(thingiesData);
+            // Gadgets
+            if (attributes[nameof(Inventory.Gadgets)]?.Value is string gadgetsData)
+                Inventory.Gadgets.SetSerializationData(gadgetsData);
 
             // Trinkets
             if (attributes[nameof(Inventory.Trinkets)]?.Value is string trinketsData)
@@ -494,7 +494,7 @@ namespace Remizione
             output.WriteAttributeString(nameof(Inventory.Consumables), Inventory.Consumables.GetSerializationData());
             output.WriteAttributeString(nameof(Inventory.Junk), Inventory.Junk.GetSerializationData());
             output.WriteAttributeString(nameof(Inventory.KeyItems), Inventory.KeyItems.GetSerializationData());
-            output.WriteAttributeString(nameof(Inventory.Thingies), Inventory.Thingies.GetSerializationData());
+            output.WriteAttributeString(nameof(Inventory.Gadgets), Inventory.Gadgets.GetSerializationData());
             output.WriteAttributeString(nameof(Inventory.Trinkets), Inventory.Trinkets.GetSerializationData());
         }
 

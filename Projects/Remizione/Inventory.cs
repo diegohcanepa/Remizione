@@ -13,7 +13,7 @@ namespace Remizione
         public Inventory(Actor owner)
         {
             this.Consumables = new ItemContainer(owner, InventoryCategory.Consumables);
-            this.Thingies = new ItemContainer(owner, InventoryCategory.Thingies);
+            this.Gadgets = new ItemContainer(owner, InventoryCategory.Gadgets);
             this.Junk = new ItemContainer(owner, InventoryCategory.Junk);
             this.KeyItems = new ItemContainer(owner, InventoryCategory.KeyItems);
             this.Trinkets = new ItemContainer(owner, InventoryCategory.Trinkets);
@@ -57,20 +57,20 @@ namespace Remizione
                 InventoryCategory.Consumables => Consumables,
                 InventoryCategory.Junk => Junk,
                 InventoryCategory.KeyItems => KeyItems,
-                InventoryCategory.Thingies => Thingies,
+                InventoryCategory.Gadgets => Gadgets,
                 InventoryCategory.Trinkets => Trinkets,
                 _ => throw new ArgumentException($"Invalid inventory category: {category}", nameof(category)),
             };
         }
+
+        // Gadgets
+        public ItemContainer Gadgets { get; }
 
         // Junk
         public ItemContainer Junk { get; }
 
         // KeyItems
         public ItemContainer KeyItems { get; }
-
-        // Thingies
-        public ItemContainer Thingies { get; }
 
         // Trinkets
         public ItemContainer Trinkets { get; }

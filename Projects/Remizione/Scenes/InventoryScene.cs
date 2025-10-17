@@ -21,12 +21,13 @@ namespace Remizione
         private readonly UITextButton buttonConsume;
         private readonly UITextButton buttonDiscard;
         private readonly UITextButton buttonEquip;
-        private readonly List<InventoryCategory> categories = [InventoryCategory.Junk, InventoryCategory.Thingies, InventoryCategory.Consumables, InventoryCategory.Trinkets, InventoryCategory.KeyItems];
+        private readonly List<InventoryCategory> categories = [InventoryCategory.Junk, InventoryCategory.Gadgets, InventoryCategory.Consumables, InventoryCategory.Trinkets, InventoryCategory.KeyItems];
         private readonly ImageSprite[] categoryIcons;
         private readonly ImageSprite[] categoryMarkers;
         private readonly TextSprite categoryText;
         private readonly ImageSprite checkMark;
         private InventoryCategory currentCategory;
+        private readonly GadgetSlot gadgetSlot;
         private readonly JunkSlot junkSlot;
         private readonly Dictionary<InventoryCategory, Item?> equippedItems = [];
         private readonly ImageSprite gridContainer;
@@ -42,7 +43,6 @@ namespace Remizione
         private readonly ImageSprite navigationBar;
         private readonly UITextButton nextCategoryButton;
         private readonly UITextButton previousCategoryButton;
-        private readonly ThingieSlot thingiesSlot;
         private readonly TrinketSlot trinketSlot;
 
         #endregion
@@ -56,7 +56,7 @@ namespace Remizione
             this.Owner = owner;
 
             equippedItems[InventoryCategory.Junk] = null;
-            equippedItems[InventoryCategory.Thingies] = null;
+            equippedItems[InventoryCategory.Gadgets] = null;
             equippedItems[InventoryCategory.Trinkets] = null;
 
             // Health meter
@@ -73,8 +73,8 @@ namespace Remizione
                 SceneScope = this
             };
 
-            // Thingies slot
-            this.thingiesSlot = new(Owner.Session)
+            // Gadget slot
+            this.gadgetSlot = new(Owner.Session)
             {
                 Actor = owner,
                 HideButton = true,
@@ -111,7 +111,7 @@ namespace Remizione
                 };
             }
 
-            activeGrid = grids[InventoryCategory.Thingies];
+            activeGrid = grids[InventoryCategory.Gadgets];
 
             // Navigation bar
             this.navigationBar = new(Game, Atlases.UI.InventoryNavigationBar)
@@ -305,7 +305,7 @@ namespace Remizione
             InvalidateItemInfo();
 
             if (activeGrid.ItemContainer.Category == InventoryCategory.Junk ||
-                activeGrid.ItemContainer.Category == InventoryCategory.Thingies ||
+                activeGrid.ItemContainer.Category == InventoryCategory.Gadgets ||
                 activeGrid.ItemContainer.Category == InventoryCategory.Trinkets)
             {
                 InvalidateEquippedItem(activeGrid.ItemContainer.SelectedItem);
@@ -513,7 +513,7 @@ namespace Remizione
             }
 
             junkSlot.Draw(gameTime);
-            thingiesSlot.Draw(gameTime);
+            gadgetSlot.Draw(gameTime);
 
             // Containers
             Game.SpriteBatch.Begin(Game.Camera);
@@ -547,7 +547,7 @@ namespace Remizione
             activeGrid.Draw(gameTime);
 
             if (equippedItems[InventoryCategory.Junk]?.MetaItem.Category == currentCategory ||
-                equippedItems[InventoryCategory.Thingies]?.MetaItem.Category == currentCategory ||
+                equippedItems[InventoryCategory.Gadgets]?.MetaItem.Category == currentCategory ||
                 equippedItems[InventoryCategory.Trinkets]?.MetaItem.Category == currentCategory)
             {
                 Game.SpriteBatch.Begin(Game.Camera);
@@ -647,7 +647,7 @@ namespace Remizione
             currentCategory = Owner.HP < Owner.MaxHP ? InventoryCategory.Consumables : InventoryCategory.Junk;
 
             equippedItems[InventoryCategory.Junk] = Owner.Inventory.Junk.SelectedItem;
-            equippedItems[InventoryCategory.Thingies] = Owner.Inventory.Thingies.SelectedItem;
+            equippedItems[InventoryCategory.Gadgets] = Owner.Inventory.Gadgets.SelectedItem;
             equippedItems[InventoryCategory.Trinkets] = Owner.Inventory.Trinkets.SelectedItem;
 
             lastKnownInput = InputMethod.None;
@@ -681,7 +681,7 @@ namespace Remizione
             activeGrid.Update(gameTime);
             gridContainer.Update(gameTime);
             junkSlot.Update(gameTime);
-            thingiesSlot.Update(gameTime);
+            gadgetSlot.Update(gameTime);
             trinketSlot.Update(gameTime);
             healthMeter.Update(gameTime);
             itemName.Update(gameTime);
