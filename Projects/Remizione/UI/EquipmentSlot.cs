@@ -79,13 +79,13 @@ namespace Remizione
             {
                 AllowSound = false,
                 ImageName = $"{inventoryCategory}Slot",
-                PivotOrigin = RectanglePoint.LeftBottom,
+                PivotOrigin = horizontalCycle ? RectanglePoint.RightBottom : RectanglePoint.LeftBottom
             };
 
             if (horizontalCycle)
-                button.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -4, 0);
+                button.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 2, -1);
             else
-                button.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -4, 0);
+                button.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3, -1);
 
             InvalidateItem();
         }
@@ -151,9 +151,6 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (session.Room is not ProceduralRoom)
-                return;
-
             if (!IsVisible)
                 return;
 
@@ -210,7 +207,7 @@ namespace Remizione
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
-            if (actor == null || session.IsAwaiting || session.Room is not ProceduralRoom)
+            if (actor == null || session.IsAwaiting)
                 return HandleInputResult.Unhandled;
 
             // Use item

@@ -420,6 +420,9 @@ namespace Remizione
             EndRun();
         }
 
+        // CanSave
+        public override bool CanSave => !IsRunInProgress && base.CanSave;
+
         // CompleteRun
         [ScriptMethod]
         public void CompleteRun()

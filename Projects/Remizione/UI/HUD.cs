@@ -53,7 +53,7 @@ namespace Remizione
                 SceneScope = session
             };
 
-            // Thingie slot
+            // Gadget slot
             this.GadgetSlot = new(session)
             {
                 SceneScope = session
@@ -86,12 +86,11 @@ namespace Remizione
                         GadgetSlot.Draw(gameTime);
                     }
 
+                    TrincketSlot.Draw(gameTime);
+                    healthMeter.Draw(gameTime);
+
                     if (session.Room is ProceduralRoom)
-                    {
-                        TrincketSlot.Draw(gameTime);
-                        healthMeter.Draw(gameTime);
                         TargetMeter.Draw(gameTime);
-                    }
                 }
 
                 Log.Draw(gameTime);

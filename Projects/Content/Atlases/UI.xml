@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:ff0b5a289c2734a49c904a8c6399a8a5:81d1cd3812a1b0c89faea5f08b733f19:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:cd8e88384d456b4c63c6ed8c596dd336:c13d02bbe53ae3db6084765ff5cd6bb7:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -53,23 +53,23 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="InventoryInfoTitleContainer.png" x="238" y="499" w="100" h="8"/>
     <sprite n="InventoryNavigationBar.png" x="132" y="499" w="84" h="9"/>
     <sprite n="InventorySlot.png" x="427" y="145" w="18" h="19"/>
+    <sprite n="InventorySlotGadgetsIcon.png" x="412" y="78" w="10" h="10"/>
     <sprite n="InventorySlotJunkIcon.png" x="218" y="499" w="9" h="9"/>
     <sprite n="InventorySlotLockIcon.png" x="229" y="499" w="7" h="9"/>
     <sprite n="InventorySlotQuestionIcon.png" x="93" y="499" w="7" h="11"/>
     <sprite n="InventorySlotSelected.png" x="406" y="145" w="19" h="19"/>
-    <sprite n="InventorySlotThingiesIcon.png" x="412" y="78" w="10" h="10"/>
     <sprite n="InventorySlotTrinketsIcon.png" x="102" y="499" w="7" h="11"/>
     <sprite n="KeyboardD.png" x="212" y="71" w="14" h="14"/>
     <sprite n="KeyboardDelete.png" x="94" y="71" w="19" h="14"/>
     <sprite n="KeyboardE.png" x="228" y="71" w="14" h="14"/>
     <sprite n="KeyboardEscape.png" x="115" y="71" w="19" h="14"/>
+    <sprite n="KeyboardGadgetsSlot.png" x="447" y="159" w="12" h="12"/>
     <sprite n="KeyboardI.png" x="244" y="71" w="14" h="14"/>
-    <sprite n="KeyboardJunkSlot.png" x="447" y="159" w="12" h="12"/>
+    <sprite n="KeyboardJunkSlot.png" x="486" y="145" w="12" h="12"/>
     <sprite n="KeyboardNextTab.png" x="136" y="71" w="18" h="14"/>
     <sprite n="KeyboardPreviousTab.png" x="156" y="71" w="18" h="14"/>
     <sprite n="KeyboardS.png" x="260" y="71" w="14" h="14"/>
-    <sprite n="KeyboardSackSlot.png" x="486" y="145" w="12" h="12"/>
-    <sprite n="KeyboardThingiesSlot.png" x="486" y="159" w="12" h="12"/>
+    <sprite n="KeyboardSackSlot.png" x="486" y="159" w="12" h="12"/>
     <sprite n="KeyboardX.png" x="276" y="71" w="14" h="14"/>
     <sprite n="KeyboardZ.png" x="292" y="71" w="14" h="14"/>
     <sprite n="Lantern.png" x="299" y="465" w="20" h="20"/>
@@ -102,13 +102,13 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="UITextButtonContainerPattern.png" x="506" y="24" w="1" h="11"/>
     <sprite n="XboxA.png" x="308" y="71" w="14" h="14"/>
     <sprite n="XboxB.png" x="324" y="71" w="14" h="14"/>
-    <sprite n="XboxJunkSlot.png" x="461" y="165" w="12" h="12"/>
+    <sprite n="XboxGadgetsSlot.png" x="461" y="165" w="12" h="12"/>
+    <sprite n="XboxJunkSlot.png" x="475" y="173" w="12" h="12"/>
     <sprite n="XboxLeftShoulder.png" x="176" y="71" w="16" h="14"/>
     <sprite n="XboxNextTab.png" x="194" y="71" w="16" h="14"/>
     <sprite n="XboxPreviousTab.png" x="176" y="71" w="16" h="14"/>
     <sprite n="XboxRightShoulder.png" x="194" y="71" w="16" h="14"/>
-    <sprite n="XboxSackSlot.png" x="475" y="173" w="12" h="12"/>
-    <sprite n="XboxThingiesSlot.png" x="489" y="173" w="12" h="12"/>
+    <sprite n="XboxSackSlot.png" x="489" y="173" w="12" h="12"/>
     <sprite n="XboxX.png" x="340" y="71" w="14" h="14"/>
     <sprite n="XboxY.png" x="356" y="71" w="14" h="14"/>
 </TextureAtlas>

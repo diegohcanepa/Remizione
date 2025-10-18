@@ -530,6 +530,10 @@ namespace Remizione
         [ScriptProperty]
         public DustParticleKind DustParticleKind { get; set; } = DustParticleKind.Ash;
 
+        // Flat2D
+        [ScriptProperty]
+        public bool Flat2D { get; set; }
+
         // GlobalLightSize
         [ScriptProperty]
         public Vector2 GlobalLightSize

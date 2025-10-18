@@ -282,6 +282,30 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Inventory-assets/InventorySlotGadgetsIcon.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryConsumables.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryGadgets.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryJunk.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryKeyItems.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryQuirks.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryTrinkets.png</key>
+            <key type="filename">UI-assets/ProhibitionMark.png</key>
+            <key type="filename">UIIcons-assets/HeartHalfIconWithShadow.png</key>
+            <key type="filename">UIIcons-assets/HeartIconWithShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Inventory-assets/InventorySlotJunkIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -324,30 +348,6 @@
                 <rect>14,3,27,5</rect>
                 <key>scale9Paddings</key>
                 <rect>14,3,27,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Inventory-assets/InventorySlotThingiesIcon.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryConsumables.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryGadgets.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryJunk.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryKeyItems.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryQuirks.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryTrinkets.png</key>
-            <key type="filename">UI-assets/ProhibitionMark.png</key>
-            <key type="filename">UIIcons-assets/HeartHalfIconWithShadow.png</key>
-            <key type="filename">UIIcons-assets/HeartIconWithShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -423,16 +423,16 @@
                 <false/>
             </struct>
             <key type="filename">KeyboardControls-assets/KeyboardD.png</key>
+            <key type="filename">KeyboardControls-assets/KeyboardGadgetsSlot.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardI.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardJunkSlot.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardS.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardSackSlot.png</key>
-            <key type="filename">KeyboardControls-assets/KeyboardThingiesSlot.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardX.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardZ.png</key>
+            <key type="filename">XboxControls-assets/XboxGadgetsSlot.png</key>
             <key type="filename">XboxControls-assets/XboxJunkSlot.png</key>
             <key type="filename">XboxControls-assets/XboxSackSlot.png</key>
-            <key type="filename">XboxControls-assets/XboxThingiesSlot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

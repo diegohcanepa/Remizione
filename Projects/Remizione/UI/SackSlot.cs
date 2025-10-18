@@ -30,7 +30,7 @@ namespace Remizione
             this.slotImage = new ImageSprite(Game, Atlases.UI.SackSlot)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -2, -2),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -8, -2),
             };
 
             // Button
@@ -38,8 +38,8 @@ namespace Remizione
             {
                 AllowPressEffect = false,
                 ImageName = nameof(SackSlot),
-                PivotOrigin = RectanglePoint.RightBottom,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 3, -2),
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3, 0),
             };
         }
 

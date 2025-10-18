@@ -253,7 +253,7 @@ namespace Remizione
         public void Launch(Item item)
         {
             this.bounceCount = 0;
-            this.checkWalkArea = true;
+            this.checkWalkArea = item.Owner.Room?.Flat2D == false;
             this.collectCooldown = -1;
             this.ignoreThing = null;
             this.isGrounded = false;
