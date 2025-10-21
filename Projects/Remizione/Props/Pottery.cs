@@ -17,7 +17,7 @@ namespace Remizione
             HitEffect = HitEffect.Shake;
             HitTestPolygon = TestPolygon.Hotspot;
             HurtSound = Sound.Find(SoundNames.ImpactA);
-            MaxHP = 6;
+            MaxHP = 5;
             PreventKnockback = true;
         }
     }

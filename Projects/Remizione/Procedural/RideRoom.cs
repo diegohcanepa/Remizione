@@ -33,8 +33,8 @@ namespace Remizione
 
         #region Private members
 
-        // DeployMagneticCard
-        private void DeployMagneticCard()
+        // DeployCoin
+        private void DeployCoin()
         {
             var creatures = new List<Creature>();
             foreach (var thing in Children)
@@ -47,11 +47,11 @@ namespace Remizione
 
             if (index >= 0)
             {
-                creatures[index].HasMagneticCard = true;
+                creatures[index].HasCoin = true;
             }
             else if (WalkArea != null)
             {
-                var metaItem = MetaItem.FindNotNull(MetaItem.MagneticCardName);
+                var metaItem = MetaItem.FindNotNull(MetaItem.CoinItemName);
                 var position = WalkArea != null ? WalkArea.RandomWalkablePoint() : BoundingBox.GetRandomPoint();
                 Session.ObjectPools.Pickups.Get()?.Drop(this, position, metaItem);
             }
@@ -174,14 +174,14 @@ namespace Remizione
 
             if (RightConnector != null)
             {
-                if (CreateRuntimeClone(nameof(CardReader)) is CardReader cardReader)
+                if (CreateRuntimeClone(nameof(SaintPeregrine)) is SaintPeregrine statue)
                 {
-                    cardReader.Position = this.RightConnector.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -20);
+                    statue.Position = this.RightConnector.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -5, -15);
                     if (RoomPhase == RunPhase.End)
-                        cardReader.Position += new Vector2(20, -15);
+                        statue.Position += new Vector2(20, -1);
 
-                    MainGrid.ReserveSpace(cardReader, false);
-                    Children.Add(cardReader);
+                    MainGrid.ReserveSpace(statue, false);
+                    Children.Add(statue);
                 }
             }
 
@@ -192,7 +192,7 @@ namespace Remizione
         // OnPopulateCompleted
         protected override void OnPopulateCompleted()
         {
-            DeployMagneticCard();
+            DeployCoin();
         }
 
         // RequiresPersistence

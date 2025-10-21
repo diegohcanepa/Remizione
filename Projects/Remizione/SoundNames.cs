@@ -26,6 +26,8 @@
         internal const string PotteryBreak = nameof(PotteryBreak);
         internal const string PowerRestored = nameof(PowerRestored);
         internal const string Rain = nameof(Rain);
+        internal const string SaintPeregrine = nameof(SaintPeregrine);
+        internal const string SaintPeregrineFreedom = nameof(SaintPeregrineFreedom);
         internal const string ShockZap = nameof(ShockZap);
         internal const string SpearTrap = nameof(SpearTrap);
         internal const string TestSkillFail = nameof(TestSkillFail);

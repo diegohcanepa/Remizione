@@ -1658,6 +1658,24 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">SaintPeregrine-assets/SaintPeregrine01.png</key>
+            <key type="filename">SaintPeregrine-assets/SaintPeregrine02.png</key>
+            <key type="filename">SaintPeregrine-assets/SaintPeregrine03.png</key>
+            <key type="filename">SaintPeregrine-assets/SaintPeregrineShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,13,17,26</rect>
+                <key>scale9Paddings</key>
+                <rect>9,13,17,26</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">SinnerCross-assets/SinnerCross.png</key>
             <key type="filename">SinnerCross-assets/SinnerCrossShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -2044,6 +2062,7 @@
                     <filename>SpeakerPost-assets</filename>
                     <filename>TreeBentA-assets</filename>
                     <filename>TreeBentB-assets</filename>
+                    <filename>SaintPeregrine-assets</filename>
                 </array>
             </struct>
         </map>

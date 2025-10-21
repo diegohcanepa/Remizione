@@ -383,6 +383,7 @@
             </struct>
             <key type="filename">Items-assets/Battery.png</key>
             <key type="filename">Items-assets/Chili.png</key>
+            <key type="filename">Items-assets/Coin.png</key>
             <key type="filename">Items-assets/Cross.png</key>
             <key type="filename">Items-assets/Duck.png</key>
             <key type="filename">Items-assets/Firecracker.png</key>

@@ -8,6 +8,7 @@
   <String Key="Actor.HellGoat">Hell goat</String>
   <String Key="Actor.Mandinga">Mandinga</String>
   <String Key="Actor.NosyHemorrhoid">Nosy hemorrhoid</String>
+  <String Key="Actor.RiderlessHead">Riderless Head</String>
   <String Key="Actor.Sister">Sister Ham</String>
   <String Key="ActorProperty.Grace.Description">The ashes quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Grace.Name">Grace</String>
@@ -20,10 +21,10 @@
   <String Key="DurabilityState.Worn">Worn</String>
   <String Key="HitType.Critical">Critical!</String>
   <String Key="HUDMessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
+  <String Key="HUDMessageKind.CoinRequired">You need gold coins.</String>
   <String Key="HUDMessageKind.EnoughOfThat">You already have enough of that.</String>
   <String Key="HUDMessageKind.ExtraTime">Extra time!</String>
   <String Key="HUDMessageKind.InventoryFull">You cannot carry more items.</String>
-  <String Key="HUDMessageKind.MagneticCardRequired">You need the magnetic card.</String>
   <String Key="HUDMessageKind.NotEnoughFaith">Not enough Faith.</String>
   <String Key="InputBinding.Back">Back</String>
   <String Key="InputBinding.Close">Close</String>
@@ -52,9 +53,11 @@
   <String Key="Item.Battery.Name">Battery</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
   <String Key="Item.Chili.Name">Hot chili</String>
+  <String Key="Item.Coin.Description">Saint Peregrine’s favorite currency. Because salvation isn’t free — it comes at a divinely suggested price. Insert enough, and the path to redemption miraculously opens.</String>
+  <String Key="Item.Coin.Name">Gold coin</String>
   <String Key="Item.Cross.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Cross.Name">Cross</String>
-  <String Key="Item.Duck.Description">These rubber ducks are a courtesy of Mandinga himself, so you can bravely defend against the most hideous and abominable creatures of Remizione. Quack them to death!</String>
+  <String Key="Item.Duck.Description">Official ride merch. Chuck ’em, pick ’em up, chuck ’em again — the circle of quack.</String>
   <String Key="Item.Duck.Name">Rubber duck</String>
   <String Key="Item.Firecracker.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Firecracker.Name">Firecracker</String>
@@ -82,6 +85,7 @@
   <String Key="KeyItemAction.UnlockDoor">Unlock door</String>
   <String Key="KeyItemAction.UnlockTrunk">Unlock trunk</String>
   <String Key="KeyItemAction.UseCardReader">Use card reader</String>
+  <String Key="KeyItemAction.UseCoin">Leave Your Tithe</String>
   <String Key="Languages.Abbreviations">Miss | Mr. | DR.</String>
   <String Key="Languages.de-de">Deutsch</String>
   <String Key="Languages.en-us">English</String>
@@ -182,7 +186,7 @@
   <String Key="MessageBox.SlotDeleted">The slot has been deleted.</String>
   <String Key="MessageBox.Warning">Warning!</String>
   <String Key="Misc.And">and</String>
-  <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=</String>
+  <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
   <String Key="Misc.Credits">Remizione
 
@@ -266,6 +270,7 @@ Bla bla bla</String>
   <String Key="Prop.Pottery">Clay pot</String>
   <String Key="Prop.RideCar">Ride car</String>
   <String Key="Prop.Sack">Sack</String>
+  <String Key="Prop.SaintPeregrine">Saint Peregrine</String>
   <String Key="Prop.Sign">Sign</String>
   <String Key="Prop.Toilet">Toilet</String>
   <String Key="Prop.Tower">Tower</String>

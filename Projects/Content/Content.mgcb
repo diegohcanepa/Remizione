@@ -227,12 +227,6 @@
 /processorParam:Quality=Best
 /build:Audio/FX/BodyFallMedium1.wav
 
-#begin Audio/FX/CardReaderUnlocked.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/CardReaderUnlocked.wav;Audio/FX/CardReaderUnlocked
-
 #begin Audio/FX/DoodleDoo.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -473,6 +467,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/ImpactB.wav;Audio/FX/ImpactB
 
+#begin Audio/FX/InsertCoin.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/InsertCoin.wav;Audio/FX/InsertCoin
+
 #begin Audio/FX/ItemDiscard.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -562,6 +562,36 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/RideCarStop.wav;Audio/FX/RideCarStop
+
+#begin Audio/FX/SaintPeregrine1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SaintPeregrine1.wav;Audio/FX/SaintPeregrine1
+
+#begin Audio/FX/SaintPeregrine2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SaintPeregrine2.wav;Audio/FX/SaintPeregrine2
+
+#begin Audio/FX/SaintPeregrine3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SaintPeregrine3.wav;Audio/FX/SaintPeregrine3
+
+#begin Audio/FX/SaintPeregrineArm.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SaintPeregrineArm.wav;Audio/FX/SaintPeregrineArm
+
+#begin Audio/FX/SaintPeregrineFreedom.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/SaintPeregrineFreedom.wav;Audio/FX/SaintPeregrineFreedom
 
 #begin Audio/FX/ShockZap1.wav
 /importer:WavImporter

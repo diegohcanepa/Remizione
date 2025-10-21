@@ -64,7 +64,7 @@ namespace Remizione
                     TextErrorColor = ColorPalette.Text.Terra
                 };
 
-                console.CommandList.Add("add-item MagneticCard to $Player");
+                console.CommandList.Add("add-item Coin to $Player");
                 console.CommandList.Add("add-item MasterLockpick to $Player");
                 console.CommandList.Add("=>> $BeginRun()");
                 console.CommandList.Add("=>> $NextRunRoom()");
@@ -141,6 +141,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(Pottery));
             scriptRegistry.RegisterEntity(typeof(Prop));
             scriptRegistry.RegisterEntity(typeof(RideRoom));
+            scriptRegistry.RegisterEntity(typeof(SaintPeregrine));
             scriptRegistry.RegisterEntity(typeof(SpearTrap));
             scriptRegistry.RegisterEntity(typeof(Tombstone));
             scriptRegistry.RegisterEntity(typeof(Trunk));

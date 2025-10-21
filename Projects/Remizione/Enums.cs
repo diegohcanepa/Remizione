@@ -33,7 +33,7 @@ namespace Remizione
     public enum HitEffect { None, Shake, Blink }
 
     // HUDMessageKind
-    public enum HUDMessageKind { CannotPlaceItem, EnoughOfThat, ExtraTime, InventoryFull, MagneticCardRequired }
+    public enum HUDMessageKind { CannotPlaceItem, EnoughOfThat, ExtraTime, InventoryFull, CoinRequired }
 
     // ImpactType
     public enum ImpactType { Low, Medium, High }

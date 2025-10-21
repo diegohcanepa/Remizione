@@ -22,7 +22,6 @@
 	<FX Name="BlipC" MaxInstances="4" Volume=".5" />
 	<FX Name="BlipMandinga" MaxInstances="4" />
 	<FX Name="BodyFallMedium" MaxInstances="8" Sounds="1..1" />
-	<FX Name="CardReaderUnlocked" />
 	<FX Name="DoodleDoo" />
 	<FX Name="DoorToilet" />
 	<FX Name="EdmundHurt" MaxInstances="4" Sounds="1..2" />
@@ -44,6 +43,7 @@
 	<FX Name="GutsSmall" MaxInstances="6" />
 	<FX Name="ImpactA" MaxInstances="6" />
 	<FX Name="ImpactB" MaxInstances="6" />
+	<FX Name="InsertCoin" />
 	<FX Name="ItemDiscard" MaxInstances="4" />	
 	<FX Name="ItemEquip" MaxInstances="4" />
 	<FX Name="Lightning" MaxInstances="4" />
@@ -58,6 +58,9 @@
 	<FX Name="Raven" />
 	<FX Name="RideCarLoop" MaxInstances="4" />
 	<FX Name="RideCarStop" MaxInstances="4" />
+	<FX Name="SaintPeregrine" MaxInstances="2" Sounds="1..3" />
+	<FX Name="SaintPeregrineArm" />
+	<FX Name="SaintPeregrineFreedom" />
 	<FX Name="ShockZap" MaxInstances="6" Sounds="1..2" />
 	<FX Name="SmallWhooshA" MaxInstances="6" Sounds="1..4" />
 	<FX Name="SpearTrap" MaxInstances="4" />

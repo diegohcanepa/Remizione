@@ -8,6 +8,7 @@
   <String Key="Actor.HellGoat">Cabra del infierno</String>
   <String Key="Actor.Mandinga">Mandinga</String>
   <String Key="Actor.NosyHemorrhoid">Hemorroide fisgona</String>
+  <String Key="Actor.RiderlessHead">Cabeza sin jinete</String>
   <String Key="Actor.Sister">Sor Jamona</String>
   <String Key="ActorProperty.Grace.Description">La gracia quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Grace.Name">Gracia</String>
@@ -20,10 +21,10 @@
   <String Key="DurabilityState.Worn">Gastado</String>
   <String Key="HitType.Critical">¡Crítico!</String>
   <String Key="HUDMessageKind.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
+  <String Key="HUDMessageKind.CoinRequired">Necesitas monedas de oro.</String>
   <String Key="HUDMessageKind.EnoughOfThat">Ya tienes suficiente.</String>
   <String Key="HUDMessageKind.ExtraTime">¡Tiempo extra!</String>
   <String Key="HUDMessageKind.InventoryFull">No puedes llevar más objetos.</String>
-  <String Key="HUDMessageKind.MagneticCardRequired">Necesitas la tarjeta magnética.</String>
   <String Key="HUDMessageKind.NotEnoughFaith">Estás falto de Fé.</String>
   <String Key="InputBinding.Back">Atrás</String>
   <String Key="InputBinding.Close">Cerrar</String>
@@ -52,6 +53,8 @@
   <String Key="Item.Battery.Name">Batería</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
   <String Key="Item.Chili.Name">Chile picante</String>
+  <String Key="Item.Coin.Description">La moneda favorita de San Peregrino. Porque la salvación no es gratis: tiene un precio divinamente sugerido. Insertá las suficientes y el camino a la redención se abre... milagrosamente.</String>
+  <String Key="Item.Coin.Name">Moneda de oro</String>
   <String Key="Item.Cross.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Cross.Name">Cruz de Zumbito</String>
   <String Key="Item.Duck.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
@@ -82,6 +85,7 @@
   <String Key="KeyItemAction.UnlockDoor">Abrir puerta</String>
   <String Key="KeyItemAction.UnlockTrunk">Abrir baúl</String>
   <String Key="KeyItemAction.UseCardReader">Usar lector de tarjeta</String>
+  <String Key="KeyItemAction.UseCoin">Dejar diezmo</String>
   <String Key="Languages.Abbreviations">Srta.|Sr.|Dr.</String>
   <String Key="Languages.de-de">Deutsch</String>
   <String Key="Languages.en-us">English</String>
@@ -182,7 +186,7 @@
   <String Key="MessageBox.SlotDeleted">La ranura ha sido eliminada.</String>
   <String Key="MessageBox.Warning">¡Atención!</String>
   <String Key="Misc.And">y</String>
-  <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=</String>
+  <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
   <String Key="Misc.Credits">Remizione
 
@@ -266,6 +270,7 @@ Bla bla bla</String>
   <String Key="Prop.Pottery">Vasija</String>
   <String Key="Prop.RideCar">Carrito</String>
   <String Key="Prop.Sack">Bolsa</String>
+  <String Key="Prop.SaintPeregrine">San Peregrino</String>
   <String Key="Prop.Sign">Cartel</String>
   <String Key="Prop.Toilet">Baño</String>
   <String Key="Prop.Tower">Torre</String>

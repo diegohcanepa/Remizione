@@ -214,6 +214,13 @@
             <key type="filename">Edmund-assets/ContactDamage02.png</key>
             <key type="filename">Edmund-assets/Hurt01.png</key>
             <key type="filename">Edmund-assets/Hurt02.png</key>
+            <key type="filename">Edmund-assets/InsertCoin01.png</key>
+            <key type="filename">Edmund-assets/InsertCoin02.png</key>
+            <key type="filename">Edmund-assets/InsertCoin03.png</key>
+            <key type="filename">Edmund-assets/InsertCoin04.png</key>
+            <key type="filename">Edmund-assets/InsertCoin05.png</key>
+            <key type="filename">Edmund-assets/InsertCoin06.png</key>
+            <key type="filename">Edmund-assets/InsertCoin07.png</key>
             <key type="filename">Edmund-assets/LookBehind01.png</key>
             <key type="filename">Edmund-assets/Move01.png</key>
             <key type="filename">Edmund-assets/Move02.png</key>
@@ -314,20 +321,6 @@
                 <false/>
             </struct>
             <key type="filename">Designer-assets/TalkHead02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,3,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,3,5,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Edmund-assets/Gut0.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -337,9 +330,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,1,5,2</rect>
+                <rect>2,3,5,5</rect>
                 <key>scale9Paddings</key>
-                <rect>2,1,5,2</rect>
+                <rect>2,3,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

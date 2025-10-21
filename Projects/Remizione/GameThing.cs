@@ -249,10 +249,10 @@ namespace Remizione
         {
             if (Session.Room is ProceduralRoom room)
             {
-                if (HasMagneticCard && MetaItem.Find(MetaItem.MagneticCardName) is MetaItem magneticCard)
+                if (HasCoin && MetaItem.Find(MetaItem.CoinItemName) is MetaItem goldCoin)
                 {
-                    Session.ObjectPools.Pickups.Get()?.Drop(room, Position, magneticCard);
-                    HasMagneticCard = false;
+                    Session.ObjectPools.Pickups.Get()?.Drop(room, Position, goldCoin);
+                    HasCoin = false;
                 }
                 else if (GetLoot() is ChanceTableItem loot && MetaItem.Find(loot.Name) is MetaItem metaItem)
                 {
@@ -832,8 +832,8 @@ namespace Remizione
         // GetThrowableSpawnPosition
         public Vector2 GetThrowableSpawnPosition() => this.GetAbsolutePoint(ThrowableSpawnPosition);
 
-        // HasMagneticCard
-        public bool HasMagneticCard { get; set; }
+        // HasCoin
+        public bool HasCoin { get; set; }
 
         // HighlightInteraction
         [ScriptProperty]

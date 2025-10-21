@@ -85,6 +85,9 @@ namespace Remizione
         // Category
         public InventoryCategory Category { get; }
 
+        // CoinItemName
+        public const string CoinItemName = "Coin";
+
         // CriticalChance
         public int CriticalChance { get; init; }
 
@@ -140,9 +143,6 @@ namespace Remizione
 
         // LocalizedDisplayName
         public string LocalizedDisplayName { get; }
-
-        // MagneticCardName
-        public const string MagneticCardName = "MagneticCard";
 
         // Name
         public string Name { get; }
