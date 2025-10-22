@@ -17,10 +17,10 @@ namespace Remizione
         }
 
         // ChangeState
-        public void ChangeState(AIStateName newState)
+        public void ChangeState(AIStateName? newState)
         {
             CurrentState?.Exit();
-            CurrentState = states[newState];
+            CurrentState = newState.HasValue ? states[newState.Value] : null;
             CurrentState?.Enter();
         }
 

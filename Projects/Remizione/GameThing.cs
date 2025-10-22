@@ -467,18 +467,6 @@ namespace Remizione
         // Blinker
         public Blinker<bool> Blinker { get; } = new(false, true);
 
-        // CanDamage
-        public bool CanDamage(GameThing target)
-        {
-            if (Faction == target.Faction)
-                return false;
-
-            if (target.Faction == Faction.Neutral)
-                return true;
-
-            return true;
-        }
-
         // CanInteract
         public bool CanInteract(Actor requester)
         {
@@ -632,6 +620,18 @@ namespace Remizione
         // HitEffect
         [ScriptProperty]
         public HitEffect HitEffect { get; set; }
+
+        // IsEnemy
+        public bool IsEnemy(GameThing target)
+        {
+            if (Faction == target.Faction)
+                return false;
+
+            if (target.Faction == Faction.Neutral)
+                return false;
+
+            return true;
+        }
 
         // ShowBoundingBoxes
         public static bool ShowBoundingBoxes { get; set; }
@@ -1175,13 +1175,6 @@ namespace Remizione
         // ThrowableSpawnPosition
         [ScriptProperty]
         public Vector2 ThrowableSpawnPosition { get; set; }
-
-        // ViewAngle
-        public float ViewAngle { get; set; } = 90;
-
-        // ViewDistance
-        [ScriptProperty]
-        public float ViewDistance { get; set; }
 
         // WalkArea
         public WalkArea? WalkArea => walkArea ?? Room?.WalkArea;

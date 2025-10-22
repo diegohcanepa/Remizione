@@ -15,12 +15,12 @@
             FloatingForce = 1;
             ShadowSpotSize = 5;
 
-            _ = new ZabulChargeState(AIStateMachine);
+            PerceptionSensor.ViewDistance = 200;
+            PerceptionSensor.ViewAngle = 360;
+
+            _ = new ChargeState(AIStateMachine);
             _ = new ZabulDecideState(AIStateMachine);
         }
-
-        // OnFindEnemy
-        protected override GameThing? OnFindEnemy() => Session.Player;
 
         // OnStart
         protected override void OnStart()

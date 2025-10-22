@@ -16,9 +16,9 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            var enemy = Owner.FindEnemy();
+            var target = Owner.PerceptionSensor.CurrentTarget;
 
-            if (enemy == null)
+            if (target == null)
                 StateMachine.ChangeState(AIStateName.Patrol);
             else
                 StateMachine.ChangeState(AIStateName.Charge);

@@ -23,9 +23,6 @@ namespace Remizione
 
         #region Protected members
 
-        // OnFindEnemy
-        protected override GameThing? OnFindEnemy() => LastKnownAttacker;
-
         // OnStart
         protected override void OnStart()
         {

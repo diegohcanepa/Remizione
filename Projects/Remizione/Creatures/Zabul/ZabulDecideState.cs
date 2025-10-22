@@ -16,8 +16,10 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            var enemy = Owner.Session.Player;
-            if (enemy != null)
+            if (Owner.PerceptionSensor.CurrentTarget is not GameThing target)
+                return;
+
+            if (target != null)
                 StateMachine.ChangeState(AIStateName.Charge);
         }
     }

@@ -54,6 +54,7 @@ namespace Remizione
             this.IgnoreWalkArea = false;
             this.Inventory = new(this);
             this.shadowSpot = new ShadowSpot(this);
+            this.PerceptionSensor = new PerceptionSensor(this);
 
             headSprite = new AnimatedSprite(Game)
             {
@@ -259,7 +260,7 @@ namespace Remizione
         // OnCollision
         protected override void OnCollision(GameThing thing)
         {
-            if (thing.ContactDamage && thing.CanDamage(this))
+            if (thing.ContactDamage && thing.IsEnemy(this))
                 ApplyContactDamage(thing);
         }
 
@@ -337,9 +338,6 @@ namespace Remizione
         {
             shadowSpot.Draw(gameTime);
         }
-
-        // OnFindEnemy
-        protected virtual GameThing? OnFindEnemy() => null;
 
         // OnLoad
         protected override void OnLoad()
@@ -477,6 +475,9 @@ namespace Remizione
 
             Inventory.Trinkets.SelectedItem?.Update(gameTime);
 
+            if (AIStateMachine.CurrentState != null)
+                PerceptionSensor.Update(gameTime);
+
             AIStateMachine.Update(gameTime);
             StateMachine.Update(gameTime);
         }
@@ -538,23 +539,6 @@ namespace Remizione
             }
         }
 
-        // CanSeeTarget
-        public bool CanSeeTarget(GameThing target)
-        {
-            Vector2 toTarget = target.Position - Position;
-
-            if (ViewDistance > 0 && toTarget.Length() > ViewDistance)
-                return false;
-
-            Vector2 directionToTarget = Vector2.Normalize(toTarget);
-            Vector2 forward = Direction == FacingDirection.Right ? Vector2.UnitX : -Vector2.UnitX;
-
-            float dot = Vector2.Dot(forward, directionToTarget);
-            float angleThreshold = MathF.Cos(MathHelper.ToRadians(ViewAngle / 2f));
-
-            return dot >= angleThreshold;
-        }
-
         // ChooseKeyItem
         public bool ChooseKeyItem(string text)
         {
@@ -585,17 +569,6 @@ namespace Remizione
         // FastMoveFactor
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public float FastMoveFactor { get; set; } = 1;
-
-        // FindEnemy
-        public GameThing? FindEnemy()
-        {
-            var result = OnFindEnemy();
-
-            if (result?.IsDead == true)
-                result = null;
-
-            return result;
-        }
 
         // FootstepSound
         [ScriptProperty]
@@ -724,6 +697,9 @@ namespace Remizione
 
             return true;
         }
+
+        // PerceptionSensor
+        public PerceptionSensor PerceptionSensor { get; }
 
         // PlayerNumber
         [ScriptProperty]
