@@ -479,6 +479,6 @@ namespace Remizione
         }
 
         // SelectedThing
-        internal GameThing? SelectedThing { get; private set; }
+        internal static GameThing? SelectedThing { get; private set; }
     }
 }

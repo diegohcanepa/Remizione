@@ -130,7 +130,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(Zabul));
             scriptRegistry.RegisterEntity(typeof(BloodyEye));
             scriptRegistry.RegisterEntity(typeof(BreakableProp));
-            scriptRegistry.RegisterEntity(typeof(CardReader));
+            scriptRegistry.RegisterEntity(typeof(DepositMachine));
             scriptRegistry.RegisterEntity(typeof(CreditsRoom));
             scriptRegistry.RegisterEntity(typeof(ExitRideCar));
             scriptRegistry.RegisterEntity(typeof(GameRoom));
@@ -405,7 +405,7 @@ namespace Remizione
                 throw new InvalidOperationException("A run is already in progress.");
 
             if (Seed == 0)
-                Seed = System.Environment.TickCount; //5843562;
+                Seed = System.Environment.TickCount;
 
             RunInfo.Generate(this, RunLength);
 

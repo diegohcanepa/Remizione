@@ -173,24 +173,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">CardReader-assets/CardReader.png</key>
-            <key type="filename">CardReader-assets/CardReaderLightGreen.png</key>
-            <key type="filename">CardReader-assets/CardReaderLightRed.png</key>
-            <key type="filename">CardReader-assets/CardReaderShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,9,13,18</rect>
-                <key>scale9Paddings</key>
-                <rect>6,9,13,18</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">CrossA-assets/CrossA.png</key>
             <key type="filename">CrossA-assets/CrossAShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -277,6 +259,24 @@
                 <rect>5,10,11,19</rect>
                 <key>scale9Paddings</key>
                 <rect>5,10,11,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">DepositMachine-assets/DepositMachine.png</key>
+            <key type="filename">DepositMachine-assets/DepositMachineLightGreen.png</key>
+            <key type="filename">DepositMachine-assets/DepositMachineLightRed.png</key>
+            <key type="filename">DepositMachine-assets/DepositMachineShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,9,13,18</rect>
+                <key>scale9Paddings</key>
+                <rect>6,9,13,18</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1223,6 +1223,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">LagoonA-assets/LagoonA.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>25,17,51,33</rect>
+                <key>scale9Paddings</key>
+                <rect>25,17,51,33</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">LargeRockA-assets/LargeRockA.png</key>
             <key type="filename">LargeRockA-assets/LargeRockAShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -1691,6 +1706,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Sign-assets/Sign.png</key>
+            <key type="filename">Sign-assets/SignShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,7,9,14</rect>
+                <key>scale9Paddings</key>
+                <rect>5,7,9,14</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">SinnerCross-assets/SinnerCross.png</key>
             <key type="filename">SinnerCross-assets/SinnerCrossShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -2067,7 +2098,6 @@
                     <filename>ExitRideCar-assets</filename>
                     <filename>LeftTower-assets</filename>
                     <filename>RightTower-assets</filename>
-                    <filename>CardReader-assets</filename>
                     <filename>Firecracker-assets</filename>
                     <filename>WaterPuddleB-assets</filename>
                     <filename>WaterPuddleC-assets</filename>
@@ -2078,6 +2108,9 @@
                     <filename>TreeBentA-assets</filename>
                     <filename>TreeBentB-assets</filename>
                     <filename>SaintPeregrine-assets</filename>
+                    <filename>DepositMachine-assets</filename>
+                    <filename>LagoonA-assets</filename>
+                    <filename>Sign-assets</filename>
                 </array>
             </struct>
         </map>

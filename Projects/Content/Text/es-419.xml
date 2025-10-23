@@ -84,7 +84,6 @@
   <String Key="ItemProperty.Chance">Chance</String>
   <String Key="KeyItemAction.UnlockDoor">Abrir puerta</String>
   <String Key="KeyItemAction.UnlockTrunk">Abrir baúl</String>
-  <String Key="KeyItemAction.UseCardReader">Usar lector de tarjeta</String>
   <String Key="KeyItemAction.UseCoin">Dejar diezmo</String>
   <String Key="Languages.Abbreviations">Srta.|Sr.|Dr.</String>
   <String Key="Languages.de-de">Deutsch</String>
@@ -257,9 +256,9 @@ Bla bla bla</String>
   <String Key="Playtime.Minutes">minutos</String>
   <String Key="Prop.ATM">Cajero automático</String>
   <String Key="Prop.Bag">Bolsa</String>
-  <String Key="Prop.CardReader">Lector de tarjeta</String>
   <String Key="Prop.Cross">Cruz</String>
   <String Key="Prop.CrucifiedMan">Hombre crucificado</String>
+  <String Key="Prop.DepositMachine">Máquina de depósito</String>
   <String Key="Prop.EnergyBolt">Chispa</String>
   <String Key="Prop.ExitTower">Torre de salida</String>
   <String Key="Prop.ExpendingMachine">Máquina expendedora</String>

@@ -587,7 +587,10 @@ namespace Remizione
                 DrawBox(Game, RuntimeHotspot.BoundingRectangleF, Color.Purple * .2f);
 
             if (ShowBoundingBoxes)
-                Game.Shapes.DrawFrame(BoundingBox, Color.Yellow * .3f, .2f);
+                Game.Shapes.DrawFrame(BoundingBox, Color.Yellow * .2f, .2f);
+
+            if (RoomEditor.SelectedThing == this)
+                Game.Shapes.DrawFrame(BoundingBox, Color.Green * .6f, .5f);
         }
 
         // GridMargin

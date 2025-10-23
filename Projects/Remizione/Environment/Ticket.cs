@@ -33,7 +33,7 @@ namespace Remizione
             this.image = new(Game, Atlases.Environment.Ticket)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Scale = new(.6f)
+                Scale = new(.75f)
             };
         }
 
@@ -69,8 +69,8 @@ namespace Remizione
                 
                 if (delayTimer >= launchDelay)
                 {
-                    velocity = new(RandomBetween(-85f, 85f), RandomBetween(-30f, 20f));
-                    angularVelocity = RandomBetween(-5f, 5f);
+                    velocity = new(RandomBetween(-115, 115), RandomBetween(-30f, 20f));
+                    angularVelocity = RandomBetween(-5, 5);
                     launched = true;
                 }
 

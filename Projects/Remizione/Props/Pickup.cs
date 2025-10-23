@@ -83,13 +83,14 @@ namespace Remizione
                     Session.ObjectPools.Pickups.Return(this);
                 }
             }
-            else if (Session.Player?.DistanceTo(this) < 5)
+            else if (Session.Player?.DistanceTo(this) < 4)
             {
                 if (!Session.Player.Inventory.GetContainer(metaItem.Category).IsFull)
                 { 
                     isCollecting = true;
                     DepthOffset = 10;
-
+                    PivotOrigin = RectanglePoint.Top;
+                    Y -= BoundingBox.Height;
                     scaleTween.Start(TweenStyle.Linear, Scale, Vector2.Zero, 150);
                     Tweens.ScaleTween = scaleTween;
 
@@ -105,6 +106,7 @@ namespace Remizione
         // Drop
         public void Drop(Room room, Vector2 origin, MetaItem metaItem)
         {
+            PivotOrigin = RectanglePoint.Bottom;
             Position = origin;
             this.metaItem = metaItem;
 
