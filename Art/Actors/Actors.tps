@@ -221,6 +221,7 @@
             <key type="filename">Edmund-assets/InsertCoin05.png</key>
             <key type="filename">Edmund-assets/InsertCoin06.png</key>
             <key type="filename">Edmund-assets/InsertCoin07.png</key>
+            <key type="filename">Edmund-assets/InsertCoin08.png</key>
             <key type="filename">Edmund-assets/LookBehind01.png</key>
             <key type="filename">Edmund-assets/Move01.png</key>
             <key type="filename">Edmund-assets/Move02.png</key>

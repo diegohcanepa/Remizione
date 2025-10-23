@@ -255,6 +255,12 @@ namespace Remizione
                 handled = true;
             }
 
+            if (InputManager.DefaultPlayer.Keyboard.IsKeyPressed(Keys.K))
+            {
+                session.KillEnemies();
+                handled = true;
+            }
+
             else if (SelectedThing != null)
             {
                 var control = InputManager.DefaultPlayer.Keyboard.IsKeyDown(Keys.LeftControl);

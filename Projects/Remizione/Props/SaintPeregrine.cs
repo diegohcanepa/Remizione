@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Engendro.Audio;
+using Microsoft.Xna.Framework;
 
 namespace Remizione
 {
@@ -8,6 +9,8 @@ namespace Remizione
     /// </summary>
     public sealed class SaintPeregrine : IsometricProp
     {
+        private readonly ImageSprite eyes;
+
         // Constructor
         public SaintPeregrine(GameSession session, string name)
             : base(session, name)
@@ -15,9 +18,24 @@ namespace Remizione
             this.HitEffect = HitEffect.Shake;
             this.HitTestPolygon = TestPolygon.Hotspot;
             PropState = PropState.Locked;
+
+            this.eyes = new ImageSprite(Game, Atlas?.GetImage($"{StaticName}Eyes"))
+            {
+            };
+
+            eyes.Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, 1, .7f, 70, -1);
         }
 
         #region Protected members
+
+        // OnDraw
+        protected override void OnDraw(GameTime gameTime)
+        {
+            base.OnDraw(gameTime);
+
+            if (PropState == PropState.Unlocked)
+                eyes.Draw(gameTime);
+        }
 
         // OnPropStateChanged
         protected override void OnPropStateChanged()
@@ -43,21 +61,28 @@ namespace Remizione
                 if (rideRoom.RightConnector != null)
                 {
                     rideRoom.RightConnector.PropState = PropState.Open;
-
-                    if (rideRoom.RoomPhase == RunPhase.End)
-                    {
-                        Sound.Play(SoundNames.SaintPeregrineFreedom);
-                    }
-                    else
-                    {
-                        rideRoom.RightConnector.Collider = new Polygon("0,0;0,46;11,49;24,42;29,43;17,51;28,56;43,54;51,46;45,0");
-                        rideRoom.RightConnector.AnimationPlayer.Play(AnimationNames.Opening, false);
-                        Sound.Play(SoundNames.SaintPeregrine);
-                    }
+                    rideRoom.RightConnector.Collider = new Polygon("0,0;0,46;11,49;24,42;29,43;17,51;28,56;43,54;51,46;45,0");
+                    rideRoom.RightConnector.AnimationPlayer.Play(AnimationNames.Opening, false);
+                    Sound.Play(SoundNames.SaintPeregrine);
                 }
 
-                PlaySound(SoundNames.TowerDoorClose);
+                if (rideRoom.RoomPhase != RunPhase.End)
+                    PlaySound(SoundNames.TowerDoorClose);
             }
+        }
+
+        // OnTransform
+        protected override void OnTransform(TransformChange change)
+        {
+            base.OnTransform(change);
+            eyes?.MatchTransform(Sprite);
+        }
+
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            base.OnUpdate(gameTime);
+            eyes.Update(gameTime);
         }
 
         #endregion

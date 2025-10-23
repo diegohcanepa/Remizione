@@ -83,6 +83,9 @@ namespace Remizione
                 if (target.MaxHP == 0)
                     continue;
 
+                if (target.IsDead)
+                    continue;
+
                 // Not an enemy
                 if (!Owner.IsEnemy(target))
                     continue;

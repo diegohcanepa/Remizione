@@ -16,6 +16,9 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
+            if (Owner.Session.IsAwaiting)
+                return;
+
             if (Owner.PerceptionSensor.CurrentTarget is not GameThing target)
                 return;
 

@@ -493,6 +493,20 @@ namespace Remizione
         [ScriptProperty]
         public Prop? KeyItemTarget { get; set; }
 
+        // KillEnemies
+        [ScriptMethod]
+        public void KillEnemies()
+        {
+            if (Room == null)
+                return;
+
+            for (int i = Room.Children.Count-1; i >= 0; i--)
+            {
+                if (Room.Children[i] is Actor actor && !actor.IsDead && actor != Player)
+                    actor.Die();
+            }
+        }
+
         // KillPlayer
         [ScriptMethod]
         public void KillPlayer()

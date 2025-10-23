@@ -554,9 +554,6 @@ namespace Remizione
         [ScriptProperty]
         public bool CollisionDetection { get; set; } = true;
 
-        // ContactDamage
-        public bool ContactDamage { get; set; }
-
         // ContactDamageType
         public DamageType ContactDamageType { get; set; }
 

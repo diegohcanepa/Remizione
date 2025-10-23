@@ -10,7 +10,7 @@
             : base(session, name)
         {
             AllowInteraction = false;
-            ContactDamage = true;
+            ContactDamageType = DamageType.Physical;
             Faction = Faction.Evil;
             PowerBonus = 1;
             PlacementPhase = PlacementPhase.Creature;
