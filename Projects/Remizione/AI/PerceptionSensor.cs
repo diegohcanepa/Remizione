@@ -41,6 +41,9 @@ namespace Remizione
         // CurrentTarget
         public GameThing? CurrentTarget { get; private set; } = null;
 
+        // DefaultRefreshRate
+        public const int DefaultRefreshRate = 500;
+
         // HasLOS
         public bool HasLOS(GameThing target)
         {
@@ -51,7 +54,7 @@ namespace Remizione
         public Actor Owner { get; }
 
         // RefreshRate (ms)
-        public int RefreshRate { get; set; } = 500;
+        public int RefreshRate { get; set; } = DefaultRefreshRate;
 
         // Update
         public void Update(GameTime gameTime)

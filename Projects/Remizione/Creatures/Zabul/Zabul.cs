@@ -1,4 +1,6 @@
-﻿namespace Remizione
+﻿using Engendro;
+
+namespace Remizione
 {
     /// <summary>
     /// Zabul
@@ -25,6 +27,7 @@
         // OnStart
         protected override void OnStart()
         {
+            PerceptionSensor.RefreshRate = Randomizer.Next(PerceptionSensor.DefaultRefreshRate / 2, PerceptionSensor.DefaultRefreshRate);
             AIStateMachine.ChangeState(AIStateName.Decide);
         }
     }
