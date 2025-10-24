@@ -143,6 +143,9 @@ namespace Remizione
                     if (thing.IsDead || !thing.CollisionDetection)
                         continue;
 
+                    if (Altitude > thing.CollisionHeight)
+                        continue;
+
                     // If thing is an obstacle (walk area hole)
                     if (thing.RuntimeCollider.Contains(Position))
                     {
@@ -553,6 +556,10 @@ namespace Remizione
         // CollisionDetection
         [ScriptProperty]
         public bool CollisionDetection { get; set; } = true;
+
+        // CollisionHeight
+        [ScriptProperty]
+        public int CollisionHeight { get; set; }
 
         // ContactDamageType
         public DamageType ContactDamageType { get; set; }

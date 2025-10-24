@@ -44,6 +44,9 @@ namespace Remizione
 
         #region IHoleArea explicit implementation
 
+        // CollisionHeight
+        int IHoleArea.CollisionHeight => 0;
+
         // IsActive
         bool IHoleArea.IsActive => true;
 

@@ -71,15 +71,21 @@ namespace Remizione
         }
 
         // CollectThingHoles
-        private void CollectThingHoles(GameThing? requester, List<IHoleArea> list, ref RectangleF clipBox)
+        private void CollectThingHoles(GameThing requester, List<IHoleArea> list, ref RectangleF clipBox)
         {
             for (var i = 0; i < Room.CulledThings.Count; i++)
             {
                 if (Room.CulledThings[i] == requester)
                     continue;
 
-                if (Room.CulledThings[i] is IHoleArea holeArea && holeArea.IsActive && !holeArea.Polygon.IsEmpty)
+                if (Room.CulledThings[i] is IHoleArea holeArea && holeArea.IsActive)
                 {
+                    if (requester.Altitude > holeArea.CollisionHeight)
+                        continue;
+
+                    if (holeArea.Polygon.IsEmpty)
+                        continue;
+
                     if (holeArea.Polygon.BoundingRectangleF.Intersects(clipBox))
                         list.Add(holeArea);
                 }

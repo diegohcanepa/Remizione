@@ -13,6 +13,9 @@ namespace Remizione
         // ClampOutside
         Vector2 ClampOutside(Vector2 position);
 
+        // CollisionHeight
+        int CollisionHeight { get; }
+
         // CollectPathNodes
         void CollectPathNodes(IList<PathNode> list);
 

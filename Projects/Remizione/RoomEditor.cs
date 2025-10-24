@@ -473,6 +473,7 @@ namespace Remizione
                     else if (session.Player is Actor player)
                     {
                         session.Camera.FollowTarget(player);
+                        SelectedThing = null;
                     }
                 }
             }

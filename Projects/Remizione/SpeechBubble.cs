@@ -155,20 +155,6 @@ namespace Remizione
             return bubbleArea;
         }
 
-        /*
-        // GetBubbleArea
-        private RectangleF GetBubbleArea(ref Vector2 origin)
-        {
-            float w = text.BoundingBox.Width;
-            float h = text.MeasureDisplayText().Y + 2;
-
-            bubbleArea = new RectangleF(origin.X - (w / 2), origin.Y - h - pipe.BoundingBox.Height + 1, w, h);
-            bubbleArea.Inflate(textPadding);
-
-            return bubbleArea;
-        }
-        */
-
         // Layout
         private void Layout()
         {
