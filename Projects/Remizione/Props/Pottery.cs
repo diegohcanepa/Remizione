@@ -11,6 +11,7 @@ namespace Remizione
         public Pottery(GameSession session, string name)
             : base(session, name)
         {
+            AllowInteraction = false;
             DeathSound = Sound.Find(SoundNames.PotteryBreak);
             DepthOffset = -4;
             DisplayNameKey = "Prop.Pottery";

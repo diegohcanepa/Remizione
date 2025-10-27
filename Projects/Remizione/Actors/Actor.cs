@@ -119,7 +119,10 @@ namespace Remizione
         // ApplyContactDamage
         private void ApplyContactDamage(GameThing attacker)
         {
-            if (session.IsAwaiting || !CanChangeState)
+            if (session.IsAwaiting || !CanChangeState || attacker.ContactDamageType == DamageType.None)
+                return;
+
+            if (!CanTakeDamage(attacker))
                 return;
 
             if (MetaItem.Find(attacker.ContactDamageType.ToString() + "Damage") is not MetaItem metaItem)
@@ -132,6 +135,51 @@ namespace Remizione
             metaItem.ApplyDamage(attacker, this);
 
             StateMachine.ChangeState(contactDamageState.Name);
+        }
+
+        // InflictContactDamage
+        private bool InflictContactDamage()
+        {
+            if (session.IsAwaiting)
+                return false;
+
+            if (ContactDamageType == DamageType.None)
+                return false;
+
+            if (Room == null)
+                return false;
+
+            for (int i = 0; i < Room.CulledThings.Count; i++)
+            {
+                // Skip if it is the same thing
+                if (Room.CulledThings[i] == this)
+                    continue;
+
+                if (Room.CulledThings[i] is Actor actor)
+                {
+                    if (actor.IsDead)
+                        continue;
+
+                    if (!IsEnemy(actor))
+                        continue;
+
+                    if (ContactDamagePolygon == TestPolygon.Collider)
+                    {
+                        if (RuntimeCollider.Contains(actor.Position))
+                        {
+                            actor.ApplyContactDamage(this);
+                            return true;
+                        }
+                    }
+                    else if (RuntimeHotspot.BoundingRectangleF.Intersects(actor.RuntimeHotspot.BoundingRectangleF))
+                    {
+                        actor.ApplyContactDamage(this);
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         // FindInteractiveTarget
@@ -256,13 +304,6 @@ namespace Remizione
 
         // InputHandler
         protected InputHandler? InputHandler { get; set; }
-
-        // OnCollision
-        protected override void OnCollision(GameThing thing)
-        {
-            if (thing.ContactDamageType != DamageType.None && thing.IsEnemy(this))
-                ApplyContactDamage(thing);
-        }
 
         // OnDie
         protected override void OnDie()
@@ -432,12 +473,13 @@ namespace Remizione
             LastKnownAttacker = attacker;
             FaceTo(attacker);
 
+            /*
             if (Sprite.Animations.Contains(ActorStateNames.Hurt))
             {
-                Blinker.Stop();
                 Stand();
                 StateMachine.ChangeState(ActorStateNames.Hurt);
             }
+            */
         }
 
         // OnUnload
@@ -461,6 +503,8 @@ namespace Remizione
                 this.InteractiveTarget = FindInteractiveTarget();
 
             headTween.Update(gameTime);
+
+            InflictContactDamage();
 
             if (AnimationSettings.DetachedHead)
                 headSprite.Update(gameTime);
@@ -554,13 +598,6 @@ namespace Remizione
             }
 
             return false;
-        }
-
-        // DummyDamage
-        [ScriptMethod]
-        public void DummyDamage()
-        {
-            TakeDamage(this, 1, DamageType.Physical, false, Vector2.Zero, ImpactWordName.None);
         }
 
         // FastMove

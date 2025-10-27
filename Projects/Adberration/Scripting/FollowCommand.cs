@@ -1,32 +1,27 @@
 ﻿namespace Adberration.Scripting
 {
     // FollowCommand
-    // Syntax: {Thing} [#focus] [#speed-ratio:Float]
+    // Syntax: {Thing} [#focus]
     internal sealed class FollowCommand : NonAwaitableCommand
     {
-        private const string SpeedRatioArg = "#speed-ratio";
-
         // Constructor
         internal FollowCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, FocusArg, SpeedRatioArg)
+            : base(script, source, body, 1, FocusArg)
         {
             AssertEntity<Thing>(0);
-            Parser.ParseRatioArgument(this, SpeedRatioArg, 1);
         }
 
         // OnExecute
         protected override void OnExecute()
         {
             var thing = AssertEntity<Thing>(0);
-            if (thing != null)
-            {
-                if (HasArg(FocusArg))
-                {
-                    Session.Camera.Position = thing.Position;
-                }
+            if (thing == null)
+                return;
 
-                Session.Camera.FollowTarget(thing);
-            }
+            if (HasArg(FocusArg))
+                Session.Camera.Position = thing.Position;
+
+            Session.Camera.FollowTarget(thing);
         }
     }
 }

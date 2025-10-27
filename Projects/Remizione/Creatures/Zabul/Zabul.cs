@@ -13,6 +13,7 @@ namespace Remizione
         {
             BodySize = ActorSize.Small;
             AnimationSettings.SupressAll();
+            ContactDamagePolygon = TestPolygon.Hotspot;
             Guts = 0;
             FloatingForce = 1;
             ShadowSpotSize = 5;

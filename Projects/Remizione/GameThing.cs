@@ -17,6 +17,7 @@ namespace Remizione
     {
         #region Private fields
 
+        private readonly Blinker<bool> blinker = new(false, true);
         private Polygon collider = new();
         private PlacementMode colliderPlacement = PlacementMode.Relative;
         private string displayNameKey = string.Empty;
@@ -29,7 +30,6 @@ namespace Remizione
         private FloatTween? hurtTween;
         private float floatingForce;
         private FloatTween? floatingTween;
-        private ImpactWord? impactWord;
         private bool isCollisionDirty;
         private bool isHotspotDirty = true;
         private readonly Vector2Tween knockbackTween = new();
@@ -342,6 +342,7 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
+            blinker.Stop();
             isCollisionDirty = true;
             InvalidateCollisionPolygons();
             InvalidateWalkArea();
@@ -371,13 +372,6 @@ namespace Remizione
         protected override void OnUnload()
         {
             base.OnUnload();
-
-            if (impactWord != null)
-            {
-                Session.ImpactWordPool.Return(impactWord);
-                impactWord = null;
-            }
-
             OpacityFactor = 1;
         }
 
@@ -398,8 +392,6 @@ namespace Remizione
 
             base.OnUpdate(gameTime);
 
-            impactWord?.Update(gameTime);
-
             if (shouldClampToWalkablePosition || Session.Player == this)
             {
                 ClampToWalkablePosition();
@@ -408,8 +400,8 @@ namespace Remizione
 
             AttachedLight?.Update(gameTime);
 
-            if (Blinker.IsRunning)
-                Blinker.Update(gameTime);
+            if (blinker.IsRunning)
+                blinker.Update(gameTime);
         }
 
         // OnUpdateEmittingSound
@@ -467,9 +459,6 @@ namespace Remizione
         [ScriptProperty]
         public int AttackRange { get; set; } = -1;
 
-        // Blinker
-        public Blinker<bool> Blinker { get; } = new(false, true);
-
         // CanInteract
         public bool CanInteract(Actor requester)
         {
@@ -501,6 +490,18 @@ namespace Remizione
 
                 return false;
             }
+        }
+
+        // CanTakeDamage
+        public bool CanTakeDamage(GameThing attacker)
+        {
+            if (IsDead || attacker.Faction == Faction)
+                return false;
+
+            if (blinker.IsRunning)
+                return false;
+
+            return true;
         }
 
         // Collider
@@ -560,6 +561,9 @@ namespace Remizione
         // CollisionHeight
         [ScriptProperty]
         public int CollisionHeight { get; set; }
+
+        // ContactDamagePolygon
+        public TestPolygon ContactDamagePolygon { get; set; } = TestPolygon.Collider;
 
         // ContactDamageType
         public DamageType ContactDamageType { get; set; }
@@ -628,6 +632,12 @@ namespace Remizione
         [ScriptProperty]
         public HitEffect HitEffect { get; set; }
 
+        // InvulnerabilityPeriod
+        public bool InvulnerabilityPeriod => blinker.IsRunning;
+
+        // IsBlinking
+        public bool IsBlinking => blinker.IsRunning && blinker.CurrentValue;
+
         // IsEnemy
         public bool IsEnemy(GameThing target)
         {
@@ -668,9 +678,6 @@ namespace Remizione
                 }
             }
         }
-
-        // DrawImpactWord
-        public void DrawImpactWord(GameTime gameTime) => impactWord?.Draw(gameTime);
 
         // DrawLights
         public void DrawLights(GameTime gameTime)
@@ -921,10 +928,6 @@ namespace Remizione
         [ScriptProperty]
         public TestPolygon InteractionPolygon { get; set; } = TestPolygon.Hotspot;
 
-        // InvulnerabilityPeriod
-        [ScriptProperty]
-        public bool InvulnerabilityPeriod { get; set; }
-
         // IsBehind
         public bool IsBehind(GameThing thing)
         {
@@ -1080,10 +1083,7 @@ namespace Remizione
         // TakeDamage
         public void TakeDamage(GameThing attacker, int amount, DamageType damageType, bool critical, Vector2 knockback, ImpactWordName impactWord)
         {
-            if (IsDead || amount <= 0 || attacker.Faction == Faction)
-                return;
-
-            if (InvulnerabilityPeriod && Blinker.IsRunning)
+            if (amount <= 0 || !CanTakeDamage(attacker))
                 return;
 
             knockback = PreventKnockback ? Vector2.Zero : knockback;
@@ -1102,10 +1102,7 @@ namespace Remizione
 
             // Impact word
             if (maxHP > 0 && impactWord != ImpactWordName.None && GetImpactWordPosition() is Vector2 wordPos)
-            {
-                this.impactWord ??= Session.ImpactWordPool.Get();
-                this.impactWord.Show(impactWord, wordPos);
-            }
+                Session.ImpactWordPool.Get()?.Show(impactWord, wordPos);
 
             if (MaxHP == 0)
                 return;
@@ -1117,7 +1114,7 @@ namespace Remizione
 
             HP -= amount;
 
-            if (knockback == Vector2.Zero && HP <= 0)
+            if ((knockback == Vector2.Zero || Session.Player != this) && HP <= 0)
             {
                 Die();
             }
@@ -1147,7 +1144,9 @@ namespace Remizione
                 hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
 
                 if (HitEffect == HitEffect.Blink)
-                    Blinker.Start(20, 5);
+                    blinker.Start(40, Session.Player == this ? 15 : 4);
+                else
+                    blinker.Stop();
 
                 if (amount > 0)
                     Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), amount.ToString(), critical);

@@ -55,5 +55,14 @@ namespace Engendro
             if (pool.Count < maxSize)
                 pool.Enqueue(obj);
         }
+
+        // ReturnAll
+        public void ReturnAll()
+        {
+            while (inUse.Count > 0)
+            {
+                this.Return(inUse[0]);
+            }
+        }
     }
 }

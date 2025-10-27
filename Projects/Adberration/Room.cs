@@ -287,9 +287,7 @@ namespace Adberration
                 {
                     zoom = value;
                     if (IsCurrentRoom)
-                    {
                         Session.Camera.Zoom = zoom;
-                    }
                 }
             }
         }

@@ -150,11 +150,13 @@ namespace Remizione
         // DrawImpactWords
         private void DrawImpactWords(GameTime gameTime)
         {
+            if (Session.ImpactWordPool.InUse.Count == 0)
+                return;
+
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
-            for (int i = 0; i < CulledThings.Count; i++)
+            for (int i = 0; i < Session.ImpactWordPool.InUse.Count; i++)
             {
-                if (CulledThings[i] is GameThing thing)
-                    thing.DrawImpactWord(gameTime);
+                Session.ImpactWordPool.InUse[i].Draw(gameTime);
             }
             Game.SpriteBatch.End();
         }
@@ -186,9 +188,13 @@ namespace Remizione
                 {
                     ShaderEffect? effect = null;
 
-                    if (thing.Blinker.CurrentValue)
+                    if (thing.IsBlinking)
                     {
-                        RemizioneGame.Effects.ColorReduction.SetColor(1, 0, 0, 1);
+                        if (thing == Session.Player)
+                            RemizioneGame.Effects.ColorReduction.SetColor(.5f, .5f, .5f, .5f);
+                        else
+                            RemizioneGame.Effects.ColorReduction.SetColor(1, 0, 0, 1);
+                        
                         effect = RemizioneGame.Effects.ColorReduction;
                     }
                     else if (interactiveTarget == thing && thing.HighlightInteraction)
@@ -415,6 +421,7 @@ namespace Remizione
         protected override void OnUnload()
         {
             base.OnUnload();
+            Session.ImpactWordPool.ReturnAll();
             dustEmitter?.Deactivate();
             fireflyEmitter?.Deactivate();
         }
@@ -423,6 +430,11 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+
+            for (int i = 0; i < Session.ImpactWordPool.InUse.Count; i++)
+            {
+                Session.ImpactWordPool.InUse[i].Update(gameTime);
+            }
 
             TestTriggerAreas();
 

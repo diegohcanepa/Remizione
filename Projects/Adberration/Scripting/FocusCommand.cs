@@ -37,14 +37,10 @@ namespace Adberration.Scripting
         {
             thing = AssertEntity<Thing>(0);
             if (thing == null)
-            {
                 return;
-            }
 
             if (HasArg(FollowArg))
-            {
                 Session.Camera.StopFollowing();
-            }
 
             // Duration
             var duration = Parser.ParseInt32Argument(this, DurationArg);
@@ -55,9 +51,7 @@ namespace Adberration.Scripting
             var position = thing.Position;
 
             if ((Math.Abs(position.X - Session.Camera.Position.X) <= 0) && (Math.Abs(position.Y - Session.Camera.Position.Y) <= 0))
-            {
                 duration = 0;
-            }
 
             if (duration > 0)
             {

@@ -29,6 +29,7 @@ namespace Remizione
         public RideRoom(GameSession session, string name, int roomIndex, bool isLastRoom)
             : base(session, name, RoomKind.RideRoom, roomIndex, isLastRoom)
         {
+            Zoom = 1.1f;
         }
 
         #region Private members

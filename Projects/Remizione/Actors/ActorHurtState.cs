@@ -19,24 +19,16 @@ namespace Remizione
         public override void Enter()
         {
             base.Enter();
-            Owner.Blinker.Start(50);
             cooldown = 600;
-        }
-
-        // Exit
-        public override void Exit()
-        {
-            Owner.Blinker.Stop();
-            base.Exit();
         }
 
         // CheckTransitions
         public override string? CheckTransitions()
         {
-            if (Owner.AnimationPlayer.Animation != null && !Owner.AnimationPlayer.IsPlaying)
+            if (cooldown <= 0)
                 return ActorStateNames.Stand;
 
-            else if (cooldown <= 0)
+            else if (Owner.AnimationPlayer.Animation != null && !Owner.AnimationPlayer.IsPlaying)
                 return ActorStateNames.Stand;
 
             else

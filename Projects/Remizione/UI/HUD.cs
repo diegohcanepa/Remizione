@@ -72,9 +72,6 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (session.Player != null)
-                ticketMeter.Draw(gameTime);
-
             if (session.IsHUDVisible)
             {
                 if (session.GameplayMode == GameplayMode.Run)
@@ -90,7 +87,10 @@ namespace Remizione
                     healthMeter.Draw(gameTime);
 
                     if (session.Room is ProceduralRoom)
+                    {
                         TargetMeter.Draw(gameTime);
+                        ticketMeter.Draw(gameTime);
+                    }
                 }
 
                 Log.Draw(gameTime);
