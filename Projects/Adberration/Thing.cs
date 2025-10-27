@@ -152,7 +152,7 @@ namespace Adberration
         }
 
         // Depth
-        public override float Depth => BottomPosition.Y + DepthOffset;
+        public override float Depth => BottomPosition.Y + DepthOffset + Altitude;
 
         // DepthOffset
         [ScriptProperty]
