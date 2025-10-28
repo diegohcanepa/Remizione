@@ -514,7 +514,7 @@ namespace Remizione
 
         // AllowGlobalLight
         [ScriptProperty]
-        public bool AllowGlobalLight { get; set; } = true;
+        public bool AllowGlobalLight { get; set; }
 
         // AllowPauseMenu
         [ScriptProperty]

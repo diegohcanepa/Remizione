@@ -25,13 +25,13 @@ namespace Remizione
 
             for (var i = 0; i < hearts.Length; i++)
             {
-                hearts[i] = new(Game, Atlases.UI.HeartIcon)
+                hearts[i] = new(Game, Atlases.UI.HeartIconWithShadow)
                 {
                     Scale = ScaleInfo.UIElement.Medium,
                     Position = pos
                 };
 
-                pos.X += hearts[i].BoundingBox.Width;
+                pos.X += hearts[i].BoundingBox.Width + .5f;
             }
         }
 
@@ -50,10 +50,10 @@ namespace Remizione
             for (int i = 0; i < totalHearts; i++)
             {
                 if (i < fullHearts)
-                    hearts[i].Image = Atlases.UI.HeartIcon;
+                    hearts[i].Image = Atlases.UI.HeartIconWithShadow;
 
                 else if (i == fullHearts && hasHalfHeart)
-                    hearts[i].Image = Atlases.UI.HeartHalfIcon;
+                    hearts[i].Image = Atlases.UI.HeartHalfIconWithShadow;
 
                 else
                     hearts[i].Image = Atlases.UI.HeartEmptyIcon;
