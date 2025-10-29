@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -10,7 +11,7 @@ namespace Remizione
     public sealed class ChanceTable
     {
         private readonly List<ChanceTableItem> items = [];
-        private readonly Random random = new();
+        private Random random = new();
         private static readonly Dictionary<string, ChanceTable> tables = [];
 
         #region Static members
@@ -31,6 +32,12 @@ namespace Remizione
         }
 
         #endregion
+
+        // Constructor
+        public ChanceTable()
+        {
+            this.Items = new ReadOnlyCollection<ChanceTableItem>(items);
+        }
 
         // Add
         public void Add(string value, int amount, float weight)
@@ -74,7 +81,53 @@ namespace Remizione
             return null;
         }
 
+        // GeValue
+        public ChanceTableItem? GetValue(Func<ChanceTableItem, float> multiplier)
+        {
+            if (items.Count == 0)
+                return null;
+
+            float total = 0;
+            
+            // Calculate final weights
+            for (int i = 0; i < items.Count; i++)
+            {
+                float w = items[i].Weight * (multiplier?.Invoke(items[i]) ?? 1f);
+
+                if (w < 0)
+                    w = 0;
+
+                if (w > 0)
+                    total += w;
+            }
+
+            if (total <= 0)
+                return null;
+
+            float r = (float)random.NextDouble() * total;
+            
+            for (int i = 0; i < items.Count; i++)
+            {
+                float w = items[i].Weight * (multiplier?.Invoke(items[i]) ?? 1f);
+                if (w <= 0)
+                    continue;
+            
+                if (r < w)
+                    return items[i];
+                
+                r -= w;
+            }
+
+            return null;
+        }
+
+        // Items
+        public ReadOnlyCollection<ChanceTableItem> Items { get; }
+
         // Nothing
         public const string Nothing = "<Nothing>";
+
+        // SetSeed
+        public void SetSeed(int seed) => random = new Random(seed);
     }
 }

@@ -15,24 +15,6 @@ namespace Adberration.Scripting
     {
         #region Private members
 
-        // AssertArgumentValue
-        private static string? AssertArgumentValue(Statement statement, string argName)
-        {
-            string? result = null;
-
-            if (statement.Body.Args.GetArg(argName) is StatementArg arg)
-            {
-                if (string.IsNullOrWhiteSpace(arg.Value))
-                {
-                    throw new ScriptException(statement, ScriptException.GetMissingArgValueMessage(argName));
-                }
-
-                result = arg.Value;
-            }
-
-            return result;
-        }
-
         // AssertClauseIndexArguments
         private static void AssertClauseIndexArguments(Statement statement, int clauseIndex)
         {
@@ -43,6 +25,22 @@ namespace Adberration.Scripting
         }
 
         #endregion
+
+        // ParseArgumentValue
+        public static string? ParseArgumentValue(Statement statement, string argName)
+        {
+            string? result = null;
+
+            if (statement.Body.Args.GetArg(argName) is StatementArg arg)
+            {
+                if (string.IsNullOrWhiteSpace(arg.Value))
+                    throw new ScriptException(statement, ScriptException.GetMissingArgValueMessage(argName));
+
+                result = arg.Value;
+            }
+
+            return result;
+        }
 
         // ParseBoolean
         public static bool ParseBoolean(Statement statement, int clauseIndex)
@@ -55,9 +53,7 @@ namespace Adberration.Scripting
         public static bool ParseBoolean(Statement statement, string value)
         {
             if (!bool.TryParse(value, out var result))
-            {
                 throw ScriptExceptionBuilder.ValueParseError(statement, value, typeof(bool));
-            }
 
             return result;
         }
@@ -72,7 +68,7 @@ namespace Adberration.Scripting
         public static bool ParseBooleanArgument(Statement statement, string argName, bool defaultValue)
         {
             var result = defaultValue;
-            if (AssertArgumentValue(statement, argName) is string value)
+            if (ParseArgumentValue(statement, argName) is string value)
             {
                 result = ParseBoolean(statement, value);
             }
@@ -124,7 +120,7 @@ namespace Adberration.Scripting
         public static Color ParseColorArgument(Statement statement, string argName, Color defaultValue)
         {
             var result = defaultValue;
-            if (AssertArgumentValue(statement, argName) is string value)
+            if (ParseArgumentValue(statement, argName) is string value)
                 result = ParseColor(statement, value);
 
             return result;
@@ -174,7 +170,7 @@ namespace Adberration.Scripting
         // ParseDiceExpressionArgument
         public static DiceExpression? ParseDiceExpressionArgument(Statement statement, string argName)
         {
-            var expresion = AssertArgumentValue(statement, argName) ?? string.Empty;
+            var expresion = ParseArgumentValue(statement, argName) ?? string.Empty;
 
             if (expresion.Length > 0)
                 expresion = RemoveQuotes(expresion);
@@ -317,7 +313,7 @@ namespace Adberration.Scripting
             where T : struct
         {
             var result = defaultValue;
-            if (AssertArgumentValue(statement, argName) is string value)
+            if (ParseArgumentValue(statement, argName) is string value)
                 result = ParseEnum<T>(statement, value);
 
             return result;
@@ -387,7 +383,7 @@ namespace Adberration.Scripting
         public static string[]? ParseFlagsArgument(Statement statement, string argName)
         {
             string[]? result = null;
-            if (AssertArgumentValue(statement, argName) is string value)
+            if (ParseArgumentValue(statement, argName) is string value)
                 result = ParseFlags(statement, value);
 
             return result;
@@ -419,7 +415,7 @@ namespace Adberration.Scripting
         public static float ParseFloatArgument(Statement statement, string argName, float defaultValue)
         {
             var result = defaultValue;
-            if (AssertArgumentValue(statement, argName) is string value)
+            if (ParseArgumentValue(statement, argName) is string value)
                 result = ParseFloat(statement, value);
 
             return result;
@@ -472,7 +468,7 @@ namespace Adberration.Scripting
         {
             var result = defaultValue;
 
-            if (AssertArgumentValue(statement, argName) is string value)
+            if (ParseArgumentValue(statement, argName) is string value)
                 result = ParseFloatRange(statement, value);
 
             return result;
@@ -538,7 +534,7 @@ namespace Adberration.Scripting
         {
             var result = defaultValue;
 
-            if (AssertArgumentValue(statement, argName) is string value)
+            if (ParseArgumentValue(statement, argName) is string value)
                 result = ParseInt32(statement, value);
 
             return result;
@@ -568,7 +564,7 @@ namespace Adberration.Scripting
         public static int[] ParseInt32ArrayArgument(Statement statement, string argName)
         {
             var result = Array.Empty<int>();
-            if (AssertArgumentValue(statement, argName) is string value)
+            if (ParseArgumentValue(statement, argName) is string value)
                 result = ParseInt32Array(statement, value);
 
             return result;
@@ -601,7 +597,7 @@ namespace Adberration.Scripting
         {
             var result = defaultValue;
 
-            if (AssertArgumentValue(statement, argName) is string value)
+            if (ParseArgumentValue(statement, argName) is string value)
                 result = ParseInt32Range(statement, value);
 
             return result;
@@ -644,7 +640,7 @@ namespace Adberration.Scripting
         // ParseNameArgument
         public static string? ParseNameArgument(Statement statement, string argName)
         {
-            return AssertArgumentValue(statement, argName);
+            return ParseArgumentValue(statement, argName);
         }
 
         // ParseNames
@@ -719,7 +715,7 @@ namespace Adberration.Scripting
         {
             var result = defaultValue;
 
-            if (AssertArgumentValue(statement, argName) is string value)
+            if (ParseArgumentValue(statement, argName) is string value)
                 result = ParseQuotedString(statement, value);
 
             return result;
@@ -782,7 +778,7 @@ namespace Adberration.Scripting
         public static float ParseRatioArgument(Statement statement, string argName, float defaultValue)
         {
             var result = defaultValue;
-            if (AssertArgumentValue(statement, argName) is string value)
+            if (ParseArgumentValue(statement, argName) is string value)
                 result = ParseRatio(statement, value);
 
             return result;
@@ -820,7 +816,7 @@ namespace Adberration.Scripting
         public static Rectangle ParseRectangleArgument(Statement statement, string argName, Rectangle defaultValue)
         {
             var result = defaultValue;
-            if (AssertArgumentValue(statement, argName) is string value)
+            if (ParseArgumentValue(statement, argName) is string value)
                 result = ParseRectangle(statement, value);
 
             return result;
@@ -880,7 +876,7 @@ namespace Adberration.Scripting
         public static Script? ParseRoutineArgument(Statement statement, string argName, Script? defaultValue)
         {
             var result = defaultValue;
-            if (AssertArgumentValue(statement, argName) is string value)
+            if (ParseArgumentValue(statement, argName) is string value)
                 result = ParseRoutine(statement, value);
 
             return result;
@@ -901,7 +897,7 @@ namespace Adberration.Scripting
         {
             Sound? result = null;
 
-            if (AssertArgumentValue(statement, argName) is string value)
+            if (ParseArgumentValue(statement, argName) is string value)
                 result = ParseSound(statement, value);
 
             return result;
@@ -1007,7 +1003,7 @@ namespace Adberration.Scripting
         {
             var result = defaultValue;
 
-            if (AssertArgumentValue(statement, argName) is string value)
+            if (ParseArgumentValue(statement, argName) is string value)
                 result = ParseVector2(statement, value);
 
             return result;

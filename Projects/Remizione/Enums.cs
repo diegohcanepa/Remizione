@@ -62,6 +62,9 @@ namespace Remizione
     // LogVerb
     public enum LogVerb { Lost, PickedUp, ItemRequired }
 
+    // LootTag
+    public enum LootTag { Heal, Weapoon }
+
     // MenuItemName
     public enum MenuItemName { Options, Resume, Start, Exit, ExitToMainMenu, Yes, No, Cancel, Accept, Credits, WishlistNow, Memoirs }
 

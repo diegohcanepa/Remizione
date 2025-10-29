@@ -15,6 +15,7 @@ namespace Adberration.Scripting
         protected static readonly string AmountArg = "#amount";
         protected static readonly string AnimationArg = "#animation";
         protected static readonly string AtArg = "#at";
+        protected static readonly string BaseWeightArg = "#base-weight";
         protected static readonly string BounceDelayArg = "#bounce-delay";
         protected static readonly string BouncesArg = "#bounces";
         protected static readonly string ChanceArg = "#chance";
@@ -35,6 +36,7 @@ namespace Adberration.Scripting
         protected static readonly string EmitterArg = "#emitter";
         protected static readonly string EquipArg = "#equip";
         protected static readonly string EventFrameArg = "#event";
+        protected static readonly string ExcludeTagsArg = "#exclude-tags";
         protected static readonly string FaceArg = "#face";
         protected static readonly string FadeArg = "#fade";
         protected static readonly string FastArg = "#fast";
@@ -75,12 +77,14 @@ namespace Adberration.Scripting
         protected static readonly string PrefixArg = "#prefix";
         protected static readonly string PreserveArg = "#preserve";
         protected static readonly string PreventDiscardArg = "#prevent-discard";
+        protected static readonly string QualityArg = "#quality";
         protected static readonly string RadiansArg = "#radians";
         protected static readonly string RandomFrameArg = "#random-frame";
         protected static readonly string RangeArg = "#range";
         protected static readonly string RelativeArg = "#relative";
         protected static readonly string RepeatArg = "#repeat";
         protected static readonly string ReplenishAmountArg = "#replenish-amount";
+        protected static readonly string RequiredTagsArg = "#required-tags";
         protected static readonly string ReverseArg = "#reverse";
         protected static readonly string RightArg = "#right";
         protected static readonly string RightTriggerArg = "#right-trigger";
@@ -97,10 +101,12 @@ namespace Adberration.Scripting
         protected static readonly string StyleArg = "#style";
         protected static readonly string SubAreaArg = "#sub-area";
         protected static readonly string SuccessStateArg = "#success-state";
+        protected static readonly string TagsArg = "#tags";
         protected static readonly string TargetArg = "#target";
         protected static readonly string TransientArg = "#transient";
         protected static readonly string TransitionAwareArg = "#transition-aware";
         protected static readonly string TweenArg = "#tween";
+        protected static readonly string UnlockedArg = "#unlocked";
         protected static readonly string UnparentArg = "#unparent";
         protected static readonly string VibrateArg = "#vibrate";
         protected static readonly string VolumeArg = "#volume";

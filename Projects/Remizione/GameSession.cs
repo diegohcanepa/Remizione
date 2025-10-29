@@ -76,6 +76,8 @@ namespace Remizione
             this.echoScene = new(Game);
 
             LocalizationSource = LocalizationSource.Script;
+
+            this.MetaItemPool = new();
         }
 
         #endregion
@@ -284,6 +286,10 @@ namespace Remizione
             // Tickets
             if (sessionNode.Attributes[nameof(Tickets)]?.Value is string tickets)
                 this.Tickets = XmlConvert.ToInt32(tickets);
+
+            // MetaItemPool
+            if (sessionNode.Attributes[nameof(MetaItemPool)]?.Value is string metaItemPoolData)
+                MetaItemPool.Deserialize(metaItemPoolData);
         }
 
         // OnResume
@@ -309,11 +315,15 @@ namespace Remizione
                 HUD.ShowSavingIcon();
         }
 
+        // OnScriptLibraryLoaded
+        protected override void OnScriptLibraryLoaded()
+        {
+            MetaItemPool.InitializeDefaults();
+        }
+
         // OnStart
         protected override void OnStart()
         {
-            base.OnStart();
-
             var keyItems = MetaItem.GetItems(InventoryCategory.KeyItems);
 
             var metaItems = new List<MetaItem>();
@@ -393,6 +403,9 @@ namespace Remizione
 
             // Tickets
             output.WriteAttributeString(nameof(Tickets), XmlConvert.ToString(Tickets));
+
+            // MetaItemPool
+            output.WriteAttributeString(nameof(MetaItemPool), MetaItemPool.Serialize());
         }
 
         #endregion
@@ -500,7 +513,7 @@ namespace Remizione
             if (Room == null)
                 return;
 
-            for (int i = Room.Children.Count-1; i >= 0; i--)
+            for (int i = Room.Children.Count - 1; i >= 0; i--)
             {
                 if (Room.Children[i] is Actor actor && !actor.IsDead && actor != Player)
                     actor.Die();
@@ -521,6 +534,9 @@ namespace Remizione
         // LightingSystem
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;
+
+        // MetaItemPool
+        public MetaItemPool MetaItemPool { get; }
 
         // NextRoom
         [ScriptProperty]

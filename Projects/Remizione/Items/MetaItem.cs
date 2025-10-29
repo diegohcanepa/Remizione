@@ -4,6 +4,7 @@ using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -17,7 +18,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(string name, InventoryCategory category)
+        public MetaItem(string name, InventoryCategory category, LootTag[] tags, LootTag[] requiredTags, LootTag[] excludeTags)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -31,6 +32,9 @@ namespace Remizione
             this.LocalizedDescription = Localization.GetItemDescription(this);
             this.LocalizedDisplayName = Localization.GetItemName(this);
             this.Image = Atlases.UI.GetImage(Name);
+            this.Tags = new(tags);
+            this.RequiredTags = new(requiredTags);
+            this.ExcludeTags = new(excludeTags);
         }
 
         #endregion
@@ -82,6 +86,9 @@ namespace Remizione
             return true;
         }
 
+        // BaseWeight
+        public float BaseWeight { get; init; }
+
         // Category
         public InventoryCategory Category { get; }
 
@@ -99,6 +106,9 @@ namespace Remizione
 
         // Durability
         public int Durability { get; init; }
+
+        // ExcludeTags
+        public ReadOnlyCollection<LootTag> ExcludeTags { get; }
 
         // Find
         public static MetaItem? Find(string name) => items.TryGetValue(name, out var result) ? result : null;
@@ -153,11 +163,17 @@ namespace Remizione
         // PreventDiscard
         public bool PreventDiscard { get; init; }
 
+        // Quality
+        public int Quality { get; init; }
+
         // Range
         public int Range { get; init; }
 
         // ReplenishAmount
         public int ReplenishAmount { get; init; }
+
+        // RequiredTags
+        public ReadOnlyCollection<LootTag> RequiredTags { get; }
 
         // SkillChance
         public int SkillChance { get; init; }
@@ -165,7 +181,13 @@ namespace Remizione
         // Sound
         public Sound? Sound { get; init; }
 
+        // Tags
+        public ReadOnlyCollection<LootTag> Tags { get; }
+
         // ToString
         public override string ToString() => Name;
+
+        // Unlocked
+        public bool Unlocked { get; init; }
     }
 }

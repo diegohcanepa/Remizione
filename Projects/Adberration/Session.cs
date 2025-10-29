@@ -643,6 +643,11 @@ namespace Adberration
         {
         }
 
+        // OnScriptLibraryLoaded
+        protected virtual void OnScriptLibraryLoaded()
+        {
+        }
+
         // OnShowSoundCaption
         protected virtual void OnShowSoundCaption(SoundInstance soundInstance)
         {
@@ -1172,6 +1177,8 @@ namespace Adberration
             State = GameSessionState.LoadingScripts;
             ScriptLibrary.Load();
             State = GameSessionState.Idle;
+
+            OnScriptLibraryLoaded();
 
             startingRoom = null;
             if (!IsNewSession)

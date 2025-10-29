@@ -7,13 +7,14 @@ using Engendro.PathFinding;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Remizione
 {
     /// <summary>
     /// GameThing 
     /// </summary>
-    public abstract class GameThing : Thing, IHoleArea, ILightSource
+    public abstract class GameThing : Thing, IHoleArea, ILightSource, ILootContext
     {
         #region Private fields
 
@@ -21,6 +22,7 @@ namespace Remizione
         private Polygon collider = new();
         private PlacementMode colliderPlacement = PlacementMode.Relative;
         private string displayNameKey = string.Empty;
+        private Faction faction;
         private readonly Polygon holePolyInflated = new();
         private readonly Polygon holePoly = new();
         private readonly Polygon hotspotPoly = new();
@@ -33,6 +35,7 @@ namespace Remizione
         private bool isCollisionDirty;
         private bool isHotspotDirty = true;
         private readonly Vector2Tween knockbackTween = new();
+        private readonly List<LootTag> lootTags = [];
         private int maxHP;
         private PathNode[]? pathNodes;
         private RenderLayer renderLayer;
@@ -51,6 +54,7 @@ namespace Remizione
         {
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
+            this.LootTags = new(lootTags);
             this.LootTableName = StaticName;
             this.ResistanceTableName = StaticName;
         }
@@ -713,7 +717,18 @@ namespace Remizione
 
         // Faction
         [ScriptProperty]
-        public Faction Faction { get; set; }
+        public Faction Faction
+        {
+            get => faction;
+            set
+            {
+                if (value != faction)
+                {
+                    faction = value;
+                    Room?.RecountEnemies();
+                }
+            }
+        }
 
         // FloatingForce
         [ScriptProperty]
@@ -973,6 +988,9 @@ namespace Remizione
         // LootTableName
         [ScriptProperty]
         public string LootTableName { get; set; }
+
+        // LootTags
+        public ReadOnlyCollection<LootTag> LootTags { get; }
 
         // MaxHP
         [ScriptProperty]
