@@ -22,11 +22,13 @@ namespace Remizione
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
         private readonly Dictionary<string, MetaItem[]> friendlyItems = [];
+        private readonly PilgrimSackScene pilgrimSackScene;
         private Actor? player;
         private Vector2? playerPosition;
         private readonly RoomEditor? roomEditor;
         private readonly List<GameThing> staticThings = [];
         private readonly Dictionary<string, GameThing> staticThingsDict = [];
+        private readonly UseKeyItemScene useKeyItemScene;
 
         #endregion
 
@@ -37,6 +39,7 @@ namespace Remizione
             : base(game, new RemizionePersistenceModel(), ContentHelper.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
+            this.PilgrimSack = new(this);
             this.Environment = new Environment(this);
             this.HUD = new HUD(this);
             this.StaticThings = new(staticThings);
@@ -64,8 +67,8 @@ namespace Remizione
                     TextErrorColor = ColorPalette.Text.Terra
                 };
 
-                console.CommandList.Add("add-item Coin to $Player");
-                console.CommandList.Add("add-item MasterLockpick to $Player");
+                console.CommandList.Add("add-item Coin");
+                console.CommandList.Add("add-item MasterLockpick");
                 console.CommandList.Add("=>> $BeginRun()");
                 console.CommandList.Add("=>> $NextRunRoom()");
                 console.CommandList.Add("=>> $PreviousRunRoom()");
@@ -78,6 +81,8 @@ namespace Remizione
             LocalizationSource = LocalizationSource.Script;
 
             this.MetaItemPool = new();
+            this.pilgrimSackScene = new PilgrimSackScene(PilgrimSack);
+            this.useKeyItemScene = new UseKeyItemScene(PilgrimSack);
         }
 
         #endregion
@@ -93,7 +98,7 @@ namespace Remizione
             IsHUDVisible = false;
             GameplayMode = GameplayMode.Adventure;
             Player?.Reheal();
-            Player?.Inventory.Clear();
+            PilgrimSack.Clear();
             RunInfo.Dispose();
             CleanUpRuntimeEntities();
             RunProgress = -1;
@@ -168,7 +173,7 @@ namespace Remizione
             scriptRegistry.RegisterStatement("begin-rain", typeof(BeginRainCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("create-dialog-block", typeof(CreateDialogBlockCommand));
             scriptRegistry.RegisterStatement("echo", typeof(EchoCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("empty-inventory", typeof(EmptyInventoryCommand), CodingContext.Execution);
+            scriptRegistry.RegisterStatement("empty-pilgrim-sack", typeof(EmptyPilgrimSackCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("end-resistance-table", typeof(EndResistanceTableCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("end-loot-table", typeof(EndLootTableCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("ensure-session-scene", typeof(EnsureSessionSceneCommand));
@@ -324,7 +329,7 @@ namespace Remizione
         // OnStart
         protected override void OnStart()
         {
-            var keyItems = MetaItem.GetItems(InventoryCategory.KeyItems);
+            var keyItems = MetaItem.GetItems(ItemCategory.KeyItems);
 
             var metaItems = new List<MetaItem>();
             foreach (var entity in Entities)
@@ -436,6 +441,24 @@ namespace Remizione
 
         // CanSave
         public override bool CanSave => !IsRunInProgress && base.CanSave;
+
+        // ChooseKeyItem
+        public bool ChooseKeyItem(string text)
+        {
+            if (Player == null)
+                return false;
+
+            Player.Stand();
+            if (OutcomeTarget is Prop prop)
+            {
+                KeyItemTarget = prop;
+                useKeyItemScene.Text = text;
+                useKeyItemScene.SceneController.Push();
+                return true;
+            }
+
+            return false;
+        }
 
         // CompleteRun
         [ScriptMethod]
@@ -579,6 +602,9 @@ namespace Remizione
         // ObjectPools
         public ObjectPools ObjectPools { get; }
 
+        // PilgrimSack
+        public PilgrimSack PilgrimSack { get; }
+
         // Player
         [ScriptProperty]
         public Actor? Player
@@ -666,6 +692,20 @@ namespace Remizione
         {
             echoScene.Text = text;
             Game.SceneManager.Push(echoScene);
+        }
+
+        // ShowPilgrimSack
+        [ScriptMethod]
+        public void ShowPilgrimSack()
+        {
+            if (Player == null)
+                return;
+
+            Player.Stand();
+            if (Camera.Target == Player)
+                Camera.FocusTarget();
+
+            pilgrimSackScene.SceneController.Push();
         }
 
         // StaticThings

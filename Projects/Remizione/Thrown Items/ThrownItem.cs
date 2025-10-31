@@ -26,6 +26,7 @@ namespace Remizione
         private Item? item;
         private GameThing? lastThingCollisioned;
         private readonly int maxBounces = 3;    // gravedad base
+        private GameThing? owner;
         private readonly float radius;      // "tamaño" del objeto en píxeles
         private readonly Vector2Tween scaleTween = new();
         private readonly Polygon testPoly = new();
@@ -62,12 +63,12 @@ namespace Remizione
         // CheckCollision
         private GameThing? CheckCollision(bool applyDamage)
         {
-            if (Room == null || item == null)
+            if (Room == null || item == null || owner == null)
                 return null;
 
             for (var i = 0; i < Room.CulledThings.Count; i++)
             {
-                if (Room.CulledThings[i] == this || Room.CulledThings[i] == item.Owner || Room.CulledThings[i] == ignoreThing)
+                if (Room.CulledThings[i] == this || Room.CulledThings[i] == owner || Room.CulledThings[i] == ignoreThing)
                     continue;
 
                 if (Room.CulledThings[i] is GameThing target && !target.IgnoreThrowables && target.CollisionDetection && target != lastThingCollisioned && !target.IsDead)
@@ -76,7 +77,7 @@ namespace Remizione
                     {
                         if (lastThingCollisioned == null && applyDamage)
                         {
-                            item.ApplyDamage(target);
+                            item.ApplyDamage(owner, target);
                             if (ImpactSound != null)
                                 PlaySound(ImpactSound);
                             velocity = new Vector2(-velocity.X, velocity.Y) * Randomizer.Next(.2f, .5f);
@@ -94,7 +95,7 @@ namespace Remizione
         // CheckWalkAreaCollision
         private bool CheckWalkAreaCollision()
         {
-            if (item?.Owner.Room?.WalkArea is WalkArea walkArea)
+            if (owner?.Room?.WalkArea is WalkArea walkArea)
             {
                 if (Y >= walkArea.Polygon.BoundingRectangleF.Top && !walkArea.Contains(Position))
                 {
@@ -106,21 +107,21 @@ namespace Remizione
             return false;
         }
 
-        // ReturnToOwner
-        private void ReturnToOwner()
+        // ReturnToSack
+        private void ReturnToSack()
         {
-            if (HasParent && item?.Owner is Actor actor)
+            if (HasParent && item != null)
             {
                 Unparent();
                 Session.ObjectPools.ReturnThrownItem(this);
-                actor.Inventory.Junk.Add(item.Name, 1);
+                Session.PilgrimSack.Add(item.Name, 1);
             }
         }
 
         // UpdateCollectState
         private void UpdateCollectState(GameTime gameTime)
         {
-            if (item == null)
+            if (item == null || owner == null)
                 return;
 
             if (collectCooldown > 0)
@@ -129,7 +130,7 @@ namespace Remizione
                 if (collectCooldown < 0)
                     collectCooldown = 0;
             }
-            else if (scaleTween.IsRunning || DistanceTo(item.Owner) <= 10)
+            else if (scaleTween.IsRunning || DistanceTo(owner) <= 10)
             {
                 if (!scaleTween.IsRunning)
                 {
@@ -143,8 +144,8 @@ namespace Remizione
 
                     if (!scaleTween.IsRunning)
                     {
-                        item.Owner.PlaySound(SoundNames.ThrowablePickup);
-                        ReturnToOwner();
+                        owner.PlaySound(SoundNames.ThrowablePickup);
+                        ReturnToSack();
                     }
                 }
             }
@@ -200,7 +201,7 @@ namespace Remizione
             base.OnUnload();
 
             if (scaleTween.IsRunning)
-                ReturnToOwner();
+                ReturnToSack();
         }
 
         // OnUpdate
@@ -250,10 +251,11 @@ namespace Remizione
         public override float Depth => depth;
 
         // Launch
-        public void Launch(Item item)
+        public void Launch(GameThing owner, Item item)
         {
+            this.owner = owner;
             this.bounceCount = 0;
-            this.checkWalkArea = item.Owner.Room?.Flat2D == false;
+            this.checkWalkArea = owner.Room?.Flat2D == false;
             this.collectCooldown = -1;
             this.ignoreThing = null;
             this.isGrounded = false;
@@ -263,24 +265,24 @@ namespace Remizione
             this.velocity = initialVelocity;
             this.lastThingCollisioned = null;
 
-            if (item.Owner.Room == null)
+            if (owner.Room == null)
             {
-                ReturnToOwner();
+                ReturnToSack();
                 return;
             }
             
-            item.Use();
+            item.Use(owner);
 
-            depth = item.Owner.Depth + .01f;
+            depth = owner.Depth + .01f;
 
             this.item = item;
-            this.Position = item.Owner.GetThrowableSpawnPosition();
-            this.floorY = item.Owner.Y;
+            this.Position = owner.GetThrowableSpawnPosition();
+            this.floorY = owner.Y;
 
-            if (item.Owner.IsFlippedHorizontally)
+            if (owner.IsFlippedHorizontally)
                 velocity.X *= -1;
 
-            item.Owner.Room.Children.Add(this);
+            owner.Room.Children.Add(this);
 
             ignoreThing = CheckCollision(false);
             var y = float.MinValue;
@@ -290,19 +292,19 @@ namespace Remizione
 
                 for (var i = 0; i < testPoly.Vertices.Count; i++)
                 {
-                    if (item.Owner.IsFlippedHorizontally)
+                    if (owner.IsFlippedHorizontally)
                     {
-                        if (testPoly.Vertices[i].X > item.Owner.X)
+                        if (testPoly.Vertices[i].X > owner.X)
                             continue;
                     }
-                    else if (testPoly.Vertices[i].X < item.Owner.X)
+                    else if (testPoly.Vertices[i].X < owner.X)
                         continue;
 
                     if (testPoly.Vertices[i].Y > y)
                         y = testPoly.Vertices[i].Y;
                 }
 
-                if (item.Owner.Y <= y)
+                if (owner.Y <= y)
                     ignoreThing = null;
             }
         }

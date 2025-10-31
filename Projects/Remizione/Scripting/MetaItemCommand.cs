@@ -11,7 +11,7 @@ namespace Remizione.Scripting
             : base(script, source, body, 2, ActionArg, AllowEmptyArg, BaseWeightArg, CriticalChanceArg, DamageArg, DamageIntensityArg, DamageTypeArg, DurabilityArg, ExcludeTagsArg, HPArg, ImpactWordArg, KnockbackArg, PassiveEffectCooldownArg, PreventDiscardArg, QualityArg, RangeArg, ReplenishAmountArg, RequiredTagsArg, SkillChanceArg, SoundArg, TagsArg, UnlockedArg)
         {
             var name = Parser.ParseName(this, 0);
-            var category = Parser.ParseEnum<InventoryCategory>(this, 1);
+            var category = Parser.ParseEnum<ItemCategory>(this, 1);
 
             var tagsArgValue = Parser.ParseArgumentValue(this, TagsArg) ?? string.Empty;
             var tags = string.IsNullOrWhiteSpace(tagsArgValue) ? [] : Parser.ParseEnums<LootTag>(this, tagsArgValue);

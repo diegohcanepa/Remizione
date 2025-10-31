@@ -9,7 +9,7 @@ namespace Remizione
     {
         // Constructor
         public JunkSlot(GameSession session)
-            : base(session, Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 7, -2), InventoryCategory.Junk, InputBindings.UseJunkItem, true)
+            : base(session, Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 7, -2), ItemCategory.Junk, InputBindings.UseJunkItem, true)
         {
         }
     }

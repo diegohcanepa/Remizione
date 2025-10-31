@@ -23,9 +23,9 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public Item(ItemContainer container, MetaItem metaItem)
+        public Item(PilgrimSack pilgrimSack, MetaItem metaItem)
         {
-            this.Container = container;
+            this.PilgrimSack = pilgrimSack;
             this.MetaItem = metaItem;
             this.PassiveEffectCooldown = metaItem.PassiveEffectCooldown;
         }
@@ -75,17 +75,14 @@ namespace Remizione
         #endregion
 
         // ApplyDamage
-        public void ApplyDamage(GameThing target)
+        public void ApplyDamage(GameThing attacker, GameThing target)
         {
-            if (MetaItem.ApplyDamage(Owner, target))
+            if (MetaItem.ApplyDamage(attacker, target))
             {
                 if (MetaItem.Durability > 0 && Durability > 0)
                     Durability -= 1;
             }
         }
-
-        // Container
-        public ItemContainer Container { get; private set; }
 
         // Count
         public int Count
@@ -168,10 +165,13 @@ namespace Remizione
         }
 
         // Index
-        public int Index => Container.IndexOf(this);
+        public int Index => PilgrimSack.IndexOf(this);
+
+        // IsEquipped
+        public bool IsEquipped => PilgrimSack.GetEquippedItem(MetaItem.Category) == this;
 
         // IsSelected
-        public bool IsSelected => Container.SelectedItem == this;
+        public bool IsSelected => PilgrimSack.SelectedItem == this;
 
         // Knockback
         public Vector2 Knockback => MetaItem.Knockback;
@@ -196,11 +196,11 @@ namespace Remizione
         // Name
         public string Name => MetaItem.Name;
 
-        // Owner
-        public Actor Owner => Container.Owner;
-
         // PassiveEffectCooldown
         public int PassiveEffectCooldown { get; set; }
+
+        // PilgrimSack
+        public PilgrimSack PilgrimSack { get; private set; }
 
         /*
         // Update
@@ -224,8 +224,8 @@ namespace Remizione
         // Remove
         public void Remove()
         {
-            Container.SelectPrevious();
-            Container.Remove(this);
+            PilgrimSack.SelectPrevious();
+            PilgrimSack.Remove(this);
         }
 
         // Replenish
@@ -236,7 +236,7 @@ namespace Remizione
         }
 
         // Select
-        public void Select() => Container.Select(this);
+        public void Select() => PilgrimSack.Select(this);
 
         // SkillChance
         public int SkillChance => MetaItem.SkillChance + (Level * 5);
@@ -261,15 +261,15 @@ namespace Remizione
         }
 
         // Use
-        public bool Use()
+        public bool Use(GameThing? owner)
         {
-            if (MetaItem.HP != null)
-                Owner.HP += MetaItem.HP.Roll();
+            if (owner != null && MetaItem.HP != null)
+                owner.HP += MetaItem.HP.Roll();
 
             if (!MetaItem.IsPassive && Count > 0)
             {
                 if (Count == 1 && !MetaItem.AllowEmpty)
-                    Container.Remove(this);
+                    PilgrimSack.Remove(this);
                 else
                     Count--;
             }

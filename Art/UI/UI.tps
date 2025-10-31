@@ -173,6 +173,61 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Inventory-assets/EquipmentSlotGadgetsIcon.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryConsumables.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryGadgets.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryJunk.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryKeyItems.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryNone.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryQuirks.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryTrinkets.png</key>
+            <key type="filename">UI-assets/ProhibitionMark.png</key>
+            <key type="filename">UIIcons-assets/HeartHalfIconWithShadow.png</key>
+            <key type="filename">UIIcons-assets/HeartIconWithShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Inventory-assets/EquipmentSlotJunkIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Inventory-assets/EquipmentSlotTrinketsIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,3,3,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,3,3,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Inventory-assets/InventoryCategoryContainer.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -264,63 +319,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Inventory-assets/InventorySlot.png</key>
-            <key type="filename">Inventory-assets/InventorySlotSelected.png</key>
-            <key type="filename">UI-assets/EquipmentSlot.png</key>
-            <key type="filename">UI-assets/SackSlot.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,5,9,9</rect>
-                <key>scale9Paddings</key>
-                <rect>5,5,9,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Inventory-assets/InventorySlotGadgetsIcon.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryConsumables.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryGadgets.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryJunk.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryKeyItems.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryQuirks.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryTrinkets.png</key>
-            <key type="filename">UI-assets/ProhibitionMark.png</key>
-            <key type="filename">UIIcons-assets/HeartHalfIconWithShadow.png</key>
-            <key type="filename">UIIcons-assets/HeartIconWithShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,5,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Inventory-assets/InventorySlotJunkIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,5,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Inventory-assets/InventorySlotLockIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -351,7 +349,10 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Inventory-assets/InventorySlotTrinketsIcon.png</key>
+            <key type="filename">Inventory-assets/PilgrimSackSlot.png</key>
+            <key type="filename">Inventory-assets/PilgrimSackSlotSelected.png</key>
+            <key type="filename">UI-assets/EquipmentSlot.png</key>
+            <key type="filename">UI-assets/SackSlot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -360,9 +361,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,3,3,5</rect>
+                <rect>5,5,9,9</rect>
                 <key>scale9Paddings</key>
-                <rect>2,3,3,5</rect>
+                <rect>5,5,9,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

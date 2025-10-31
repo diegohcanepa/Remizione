@@ -6,13 +6,14 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Remizione
 {
     /// <summary>
-    /// InventorySlot
+    /// PilgtimSackSlot
     /// </summary>
-    public sealed class InventorySlot : GameObject
+    public sealed class PilgtimSackSlot : GameObject
     {
         #region Private fields
 
         private readonly TextSprite amountText;
+        private readonly ImageSprite checkMark;
         private readonly InventoryGrid grid;
         private readonly ImageSprite icon;
         private Item? item;
@@ -25,7 +26,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public InventorySlot(InventoryGrid grid)
+        public PilgtimSackSlot(InventoryGrid grid)
             : base(grid.Game)
         {
             this.grid = grid;
@@ -38,10 +39,10 @@ namespace Remizione
             };
 
             // Slot image
-            this.slotImage = new(Game, Atlases.UI.InventorySlot);
+            this.slotImage = new(Game, Atlases.UI.PilgrimSackSlot);
 
             // Selected slot image
-            this.selectedSlotImage = new(Game, Atlases.UI.InventorySlotSelected);
+            this.selectedSlotImage = new(Game, Atlases.UI.PilgrimSackSlotSelected);
 
             // State icon image
             this.stateIcon = new(Game)
@@ -50,14 +51,19 @@ namespace Remizione
                 Opacity = .4f,
             };
 
-            stateIcon.Image = Atlases.UI.InventorySlotLockIcon;
-
             // Amount text
             amountText = new TextSprite(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.Text.Large
+            };
+
+            // Checkmark
+            this.checkMark = new(Game, Atlases.UI.CheckMark)
+            {
+                PivotOrigin = RectanglePoint.RightTop,
+                Scale = ScaleInfo.UIElement.Medium
             };
         }
 
@@ -69,6 +75,7 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
+            
             if (IsSelected)
                 selectedSlotImage.Draw(gameTime);
             else
@@ -76,16 +83,16 @@ namespace Remizione
 
             if (Item == null)
             {
-                if (Index > grid.ItemContainer.Size - 1)
+                if (Index > grid.PilgrimSack.Size - 1)
                     stateIcon.Draw(gameTime);
             }
             else
                 icon.Draw(gameTime);
 
-            Game.SpriteBatch.End();
-
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearWrap);
             amountText.Draw(gameTime);
+            if (Item?.IsEquipped == true)
+                checkMark.Draw(gameTime);
+
             Game.SpriteBatch.End();
         }
 
@@ -152,10 +159,10 @@ namespace Remizione
             if (Item == null)
                 return;
 
-            if (Item.MetaItem.Category == InventoryCategory.Consumables)
+            if (Item.MetaItem.Category == ItemCategory.Consumables)
             {
                 Item.MetaItem.Sound?.Play();
-                Item.Use();
+                Item.Use(grid.PilgrimSack.Session.Player);
                 if (Item.Index < 0)
                     Item = null;
                 Refresh();
@@ -175,6 +182,7 @@ namespace Remizione
                 icon.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Center, 0, -1);
                 stateIcon.Position = icon.Position;
                 amountText.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1.5f);
+                checkMark.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -5);
             }
         }
 

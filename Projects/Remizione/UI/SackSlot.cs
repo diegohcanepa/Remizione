@@ -11,7 +11,6 @@ namespace Remizione
     {
         #region Private fields
 
-        private Actor? actor;
         private readonly UITextButton button;
         private readonly GameSession session;
         private readonly ImageSprite slotImage;
@@ -34,7 +33,7 @@ namespace Remizione
             };
 
             // Button
-            this.button = new(Game, InputBindings.Inventory)
+            this.button = new(Game, InputBindings.PilgrimSack)
             {
                 AllowPressEffect = false,
                 ImageName = nameof(SackSlot),
@@ -72,28 +71,15 @@ namespace Remizione
 
         #endregion
 
-        // Actor
-        public Actor? Actor
-        {
-            get => actor;
-            set
-            {
-                if (value != actor)
-                {
-                    actor = value;
-                }
-            }
-        }
-
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
-            if (actor == null || session.IsAwaiting)
+            if (session.IsAwaiting)
                 return HandleInputResult.Unhandled;
 
             if (button.TestPressed(PlayerIndex.One))
             {
-                actor.ShowInventory();
+                session.ShowPilgrimSack();
                 return HandleInputResult.Handled;
             }
 
@@ -101,6 +87,6 @@ namespace Remizione
         }
 
         // IsVisible
-        public bool IsVisible => actor != null && actor.Session.IsCurrentScene;
+        public bool IsVisible => session.Player != null && session.IsCurrentScene;
     }
 }

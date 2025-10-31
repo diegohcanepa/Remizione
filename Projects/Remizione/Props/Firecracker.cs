@@ -57,6 +57,9 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            if (Owner == null)
+                return;
+
             base.OnUpdate(gameTime);
 
             if (cooldown > 0)
@@ -78,7 +81,7 @@ namespace Remizione
                         if (Session.Room.CulledThings[i] is GameThing target)
                         {
                             if (target.DistanceTo(this) <= Item.Range)
-                                Item.MetaItem.ApplyDamage(Item.Owner, target);
+                                Item.MetaItem.ApplyDamage(Owner, target);
                         }
                     }
                 }

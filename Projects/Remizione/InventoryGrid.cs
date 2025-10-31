@@ -16,11 +16,12 @@ namespace Remizione
 
         const int slotSize = 20;
 
+        private ItemCategory categoryFilter;
         private readonly int columns;
         private Vector2 position;
         private readonly int rows;
         private int selectedSlotIndex;
-        private readonly List<InventorySlot> slots;
+        private readonly List<PilgtimSackSlot> slots;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 100 };
 
         #endregion
@@ -28,20 +29,21 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public InventoryGrid(ItemContainer itemContainer, int columns, int rows)
-            : base(itemContainer.Owner.Game)
+        public InventoryGrid(PilgrimSack pilgrimSack, ItemCategory categoryFilter, int columns, int rows)
+            : base(pilgrimSack.Session.Game)
         {
-            this.ItemContainer = itemContainer;
+            this.PilgrimSack = pilgrimSack;
             this.columns = columns;
             this.rows = rows;
-            this.slots = new List<InventorySlot>(columns * rows);
+            this.slots = new List<PilgtimSackSlot>(columns * rows);
 
             for (int i = 0; i < columns * rows; i++)
             {
-                slots.Add(new InventorySlot(this));
+                slots.Add(new PilgtimSackSlot(this));
             }
 
-            Populate();
+            this.CategoryFilter = categoryFilter;
+            
             Layout();
         }
 
@@ -112,6 +114,28 @@ namespace Remizione
                 return false;
         }
 
+        // Populate
+        private void Populate(ItemCategory category)
+        {
+            Clear();
+
+            int index = 0;
+
+            foreach (var item in PilgrimSack.GetItems(category))
+            {
+                if (index >= slots.Count)
+                    break;
+
+                slots[index].Item = item;
+                index++;
+            }
+
+            if (PilgrimSack.SelectedItem != null)
+                SelectSlot(PilgrimSack.SelectedItem.Name);
+            else
+                SelectSlot(0);
+        }
+
         #endregion
 
         #region Protected members
@@ -141,6 +165,17 @@ namespace Remizione
         // BoundingBox
         public RectangleF BoundingBox { get; private set; }
 
+        // CategoryFilter
+        public ItemCategory CategoryFilter
+        {
+            get => categoryFilter;
+            set
+            {
+                categoryFilter = value;
+                Populate(categoryFilter);
+            }
+        }
+
         // Clear
         public void Clear()
         {
@@ -157,13 +192,13 @@ namespace Remizione
             {
                 SelectedSlot.Item = null;
                 item.Discard();
-                if (ItemContainer.SelectedItem != null)
-                    SelectSlot(ItemContainer.SelectedItem.Name);
+                if (PilgrimSack.SelectedItem != null)
+                    SelectSlot(PilgrimSack.SelectedItem.Name);
             }
         }
 
         // GetSlot
-        public InventorySlot? GetSlot(Item item)
+        public PilgtimSackSlot? GetSlot(Item item)
         {
             for (var i = 0; i < slots.Count; i++)
             {
@@ -175,10 +210,10 @@ namespace Remizione
         }
 
         // GetSlotAt
-        public InventorySlot? GetSlotAt(Vector2 position) => GetSlotAt((int)position.X, (int)position.Y);
+        public PilgtimSackSlot? GetSlotAt(Vector2 position) => GetSlotAt((int)position.X, (int)position.Y);
 
         // GetSlotAt
-        public InventorySlot? GetSlotAt(int x, int y)
+        public PilgtimSackSlot? GetSlotAt(int x, int y)
         {
             if (!BoundingBox.Contains(x, y))
                 return null;
@@ -246,7 +281,7 @@ namespace Remizione
         {
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
             {
-                if (GetSlotAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is InventorySlot slot)
+                if (GetSlotAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is PilgtimSackSlot slot)
                 {
                     MouseCursor.Instance.AnimateClick();
 
@@ -267,32 +302,10 @@ namespace Remizione
         }
 
         // IndexOf
-        public int IndexOf(InventorySlot slot) => slots.IndexOf(slot);
+        public int IndexOf(PilgtimSackSlot slot) => slots.IndexOf(slot);
 
-        // ItemContainer
-        public ItemContainer ItemContainer { get; }
-
-        // Populate
-        public void Populate()
-        {
-            Clear();
-
-            int index = 0;
-
-            foreach (var item in ItemContainer.GetItems())
-            {
-                if (index >= slots.Count)
-                    break;
-
-                slots[index].Item = item;
-                index++;
-            }
-
-            if (ItemContainer.SelectedItem != null)
-                SelectSlot(ItemContainer.SelectedItem.Name);
-            else
-                SelectSlot(0);
-        }
+        // PilgrimSack
+        public PilgrimSack PilgrimSack { get; }
 
         // Position
         public Vector2 Position
@@ -318,7 +331,7 @@ namespace Remizione
         // SelectSlot
         public void SelectSlot(Vector2 position)
         {
-            if (GetSlotAt(position) is InventorySlot slot)
+            if (GetSlotAt(position) is PilgtimSackSlot slot)
                 SelectSlot(slot);
         }
 
@@ -338,7 +351,7 @@ namespace Remizione
         }
 
         // SelectSlot
-        public bool SelectSlot(InventorySlot slot)
+        public bool SelectSlot(PilgtimSackSlot slot)
         {
             for (var i = 0; i < slots.Count; i++)
             {
@@ -356,7 +369,7 @@ namespace Remizione
         public Item? SelectedItem => SelectedSlot?.Item;
 
         // SelectedSlot
-        public InventorySlot SelectedSlot => slots[selectedSlotIndex];
+        public PilgtimSackSlot SelectedSlot => slots[selectedSlotIndex];
 
         // SelectedSlotIndex
         public int SelectedSlotIndex

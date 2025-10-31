@@ -39,13 +39,13 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public UseKeyItemScene(Actor owner)
-            : base(owner.Game)
+        public UseKeyItemScene(PilgrimSack pilgrimSack)
+            : base(pilgrimSack.Session.Game)
         {
-            this.Owner = owner;
+            this.PilgrimSack = pilgrimSack;
 
             // Bottom gradient
-            bottomGradient = new ImageSprite(owner.Game, Atlases.UI.BottomGradient)
+            bottomGradient = new ImageSprite(Game, Atlases.UI.BottomGradient)
             {
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
@@ -53,7 +53,7 @@ namespace Remizione
             };
 
             // SlotImage
-            this.slotImage = new(Game, Atlases.UI.InventorySlot)
+            this.slotImage = new(Game, Atlases.UI.PilgrimSackSlot)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Position = slotPosition
@@ -87,7 +87,7 @@ namespace Remizione
             };
 
             // Close button
-            buttonClose = new UITextButton(owner.Game, InputBindings.Close)
+            buttonClose = new UITextButton(Game, InputBindings.Close)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -2),
@@ -103,7 +103,7 @@ namespace Remizione
             };
 
             // Use button
-            buttonUse = new UITextButton(owner.Game, InputBindings.UseFriendlyItem)
+            buttonUse = new UITextButton(Game, InputBindings.UseFriendlyItem)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -12),
@@ -223,7 +223,7 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (!IsCurrentScene || Owner.Session.IsOutcomeInProgress)
+            if (!IsCurrentScene || PilgrimSack.Session.IsOutcomeInProgress)
                 return;
 
             // Gradient
@@ -267,11 +267,11 @@ namespace Remizione
                 var itemName = SelectedItem?.Item.Name;
                 SceneController.Pop();
 
-                if (itemName != null && Owner.Session.KeyItemTarget != null)
+                if (itemName != null && PilgrimSack.Session.KeyItemTarget != null)
                 {
-                    var scriptName = $"{Owner.Session.KeyItemTarget.StaticName}-With-{itemName}";
-                    if (Owner.Session.ScriptLibrary.GetRoutine(scriptName) is Script script)
-                        Owner.Session.AwaitScript(script);
+                    var scriptName = $"{PilgrimSack.Session.KeyItemTarget.StaticName}-With-{itemName}";
+                    if (PilgrimSack.Session.ScriptLibrary.GetRoutine(scriptName) is Script script)
+                        PilgrimSack.Session.AwaitScript(script);
                 }
 
                 return HandleInputResult.Handled;
@@ -328,19 +328,18 @@ namespace Remizione
 
             base.OnLoadContent();
 
-            target = Owner.Session.OutcomeTarget as Prop;
+            target = PilgrimSack.Session.OutcomeTarget as Prop;
 
             if (target != null)
             {
                 visualItems.Clear();
 
-                var friendlyItems = Owner.Session.GetFriendlyItems(target.StaticName);
+                var friendlyItems = PilgrimSack.Session.GetFriendlyItems(target.StaticName);
 
-                var container = Owner.Inventory.GetContainer(InventoryCategory.KeyItems);
                 for (var i = 0; i < friendlyItems.Length; i++)
                 {
-                    if (container.Find(friendlyItems[i].Name) is Item item)
-                        visualItems.Add(new(item));
+                    if (PilgrimSack.Find(friendlyItems[i].Name) is Item item)
+                        visualItems.Add(new(PilgrimSack.Session.Game, item));
                 }
 
                 Select(0);
@@ -366,8 +365,8 @@ namespace Remizione
 
         #endregion
 
-        // Owner
-        public Actor Owner { get; set; }
+        // PilgrimSack
+        public PilgrimSack PilgrimSack { get; set; }
 
         // Text
         public string? Text
@@ -384,8 +383,8 @@ namespace Remizione
             private readonly ImageSprite image;
 
             // Constructor
-            public VisualItem(Item item)
-                : base(item.Owner.Game)
+            public VisualItem(RemizioneGame game, Item item)
+                : base(game)
             {
                 this.Item = item;
 

@@ -18,7 +18,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public MetaItem(string name, InventoryCategory category, LootTag[] tags, LootTag[] requiredTags, LootTag[] excludeTags)
+        public MetaItem(string name, ItemCategory category, LootTag[] tags, LootTag[] requiredTags, LootTag[] excludeTags)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -90,7 +90,7 @@ namespace Remizione
         public float BaseWeight { get; init; }
 
         // Category
-        public InventoryCategory Category { get; }
+        public ItemCategory Category { get; }
 
         // CoinItemName
         public const string CoinItemName = "Coin";
@@ -117,7 +117,7 @@ namespace Remizione
         public static MetaItem FindNotNull(string name) => Find(name) ?? throw new InvalidOperationException($"MetaItem '{name}' not found.");
 
         // GetItems
-        public static List<MetaItem> GetItems(InventoryCategory category)
+        public static List<MetaItem> GetItems(ItemCategory category)
         {
             var result = new List<MetaItem>();
 
@@ -140,7 +140,7 @@ namespace Remizione
         public ImpactWordName ImpactWord { get; init; }
 
         // IsEquipment
-        public bool IsEquipment => Category == InventoryCategory.Junk || Category == InventoryCategory.Gadgets || Category == InventoryCategory.Trinkets;
+        public bool IsEquipment => Category == ItemCategory.Junk || Category == ItemCategory.Gadgets || Category == ItemCategory.Trinkets;
 
         // IsPassive
         public bool IsPassive => PassiveEffectCooldown > 0;

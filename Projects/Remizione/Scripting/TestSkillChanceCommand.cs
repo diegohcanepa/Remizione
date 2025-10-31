@@ -36,7 +36,7 @@ namespace Remizione.Scripting
             var propState = Parser.ParseEnumArgument<PropState>(this, SuccessStateArg);
 
             // Item
-            if (session.Player.Inventory.Find(Body.Clauses[1]) is Item item)
+            if (session.PilgrimSack.Find(Body.Clauses[1]) is Item item)
                 prop.TestSkillChance(session.Player, item, propState);
         }
     }

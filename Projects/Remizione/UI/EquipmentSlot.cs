@@ -30,12 +30,12 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        protected EquipmentSlot(GameSession session, Vector2 position, InventoryCategory inventoryCategory, InputBinding inputBinding, bool horizontalCycle)
+        protected EquipmentSlot(GameSession session, Vector2 position, ItemCategory itemCategory, InputBinding inputBinding, bool horizontalCycle)
             : base(session.Game)
         {
             this.session = session;
 
-            this.InventoryCategory = inventoryCategory;
+            this.ItemCategory = itemCategory;
             this.HorizontalCycle = horizontalCycle;
 
             if (horizontalCycle)
@@ -78,7 +78,7 @@ namespace Remizione
             this.button = new(Game, inputBinding)
             {
                 AllowSound = false,
-                ImageName = $"{inventoryCategory}Slot",
+                ImageName = $"{itemCategory}Slot",
                 PivotOrigin = horizontalCycle ? RectanglePoint.RightBottom : RectanglePoint.LeftBottom
             };
 
@@ -97,7 +97,7 @@ namespace Remizione
         // InvalidateItem
         private void InvalidateItem()
         {
-            lastKnownItem = actor?.Inventory.GetContainer(InventoryCategory).SelectedItem;
+            lastKnownItem = session.PilgrimSack.GetEquippedItem(ItemCategory);
 
             if (lastKnownItem != null)
             {
@@ -108,7 +108,7 @@ namespace Remizione
             }
             else
             {
-                itemImage.Image = Atlases.UI.GetImage($"InventorySlot{InventoryCategory}Icon");
+                itemImage.Image = Atlases.UI.GetImage($"EquipmentSlot{ItemCategory}Icon");
                 itemImage.Scale = ScaleInfo.UIElement.Medium;
                 itemImageScaleTween.Stop();
             }
@@ -129,19 +129,13 @@ namespace Remizione
         // SelectNext
         private bool SelectNext()
         {
-            if (actor != null)
-                return actor.Inventory.GetContainer(InventoryCategory).SelectNext() != null;
-            else
-                return false;
+            return session.PilgrimSack.SelectNext() != null;
         }
 
         // SelectPrevious
         private bool SelectPrevious()
         {
-            if (actor != null)
-                return actor.Inventory.GetContainer(InventoryCategory).SelectPrevious() != null;
-            else
-                return false;
+            return session.PilgrimSack.SelectPrevious() != null;
         }
 
         #endregion
@@ -176,7 +170,7 @@ namespace Remizione
             if (!IsVisible)
                 return;
 
-            if (lastKnownItem != actor?.Inventory.GetContainer(InventoryCategory).SelectedItem)
+            if (lastKnownItem != session.PilgrimSack.GetEquippedItem(ItemCategory))
                 InvalidateItem();
             else
                 InvalidateItemAmount(false);
@@ -215,13 +209,13 @@ namespace Remizione
             {
                 if (lastKnownItem == null)
                 {
-                    if (actor.Inventory.GetContainer(InventoryCategory).SelectPrevious() == null)
+                    if (session.PilgrimSack.SelectPrevious() == null)
                         Sound.Play(SoundNames.Error);
                     else
                         Sound.Play(SoundNames.UIHover);
                 }
                 else
-                    actor.UseSelectedItem(InventoryCategory);
+                    actor.UseEquippedItem(ItemCategory);
 
                 return HandleInputResult.Handled;
             }
@@ -253,8 +247,8 @@ namespace Remizione
         // HorizontalCycle
         public bool HorizontalCycle { get; }
 
-        // InventoryCategory
-        public InventoryCategory InventoryCategory { get; }
+        // ItemCategory
+        public ItemCategory ItemCategory { get; }
 
         // IsVisible
         public bool IsVisible => SceneScope == null || Game.SceneManager.CurrentScene == SceneScope;

@@ -14,6 +14,7 @@ namespace Remizione
         private readonly ImageSprite itemImage;
         private readonly Vector2Tween itemImageScaleTween = new();
         private Item? lastKnownItem;
+        private readonly PilgrimSack pilgrimSack;
         private readonly ImageSprite slotImage;
 
         #endregion
@@ -21,9 +22,11 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public TrinketSlot(EngendroGame game)
-            : base(game)
+        public TrinketSlot(PilgrimSack pilgrimSack)
+            : base(pilgrimSack.Session.Game)
         {
+            this.pilgrimSack = pilgrimSack;
+
             // Slot image
             this.slotImage = new ImageSprite(Game, Atlases.UI.TrinketSlot)
             {
@@ -47,7 +50,7 @@ namespace Remizione
         // InvalidateItem
         private void InvalidateItem()
         {
-            lastKnownItem = actor?.Inventory.Trinkets.SelectedItem;
+            lastKnownItem = pilgrimSack.EquippedTrinket;
             if (lastKnownItem != null)
             {
                 itemImage.Image = lastKnownItem.MetaItem.Image;
@@ -56,7 +59,7 @@ namespace Remizione
             }
             else
             {
-                itemImage.Image = Atlases.UI.InventorySlotTrinketsIcon;
+                itemImage.Image = Atlases.UI.EquipmentSlotTrinketsIcon;
                 itemImage.Scale = ScaleInfo.UIElement.Medium;
                 itemImageScaleTween.Stop();
             }
@@ -78,7 +81,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (lastKnownItem != actor?.Inventory.Trinkets.SelectedItem)
+            if (lastKnownItem != pilgrimSack.EquippedTrinket)
                 InvalidateItem();
 
             itemImage.Update(gameTime);

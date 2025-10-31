@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Remizione.UI
+namespace Remizione
 {
     /// <summary>
     /// UITicketMeter
@@ -11,7 +11,6 @@ namespace Remizione.UI
     {
         private readonly ImageSprite icon;
         private readonly UIScore score;
-        private readonly TextSprite title;
 
         // Constructor
         public UITicketMeter(EngendroGame game)
@@ -25,18 +24,8 @@ namespace Remizione.UI
                 Scale = ScaleInfo.UIElement.Small
             };
 
-            // Title
-            this.title = new TextSprite(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Green,
-                PivotOrigin = RectanglePoint.RightTop,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop),
-                Scale = ScaleInfo.Text.Large,
-                Text = "Tickets"
-            };
-
             // Score
-            this.score = new UIScore(game, ColorPalette.Text.Terra)
+            this.score = new UIScore(game, ColorPalette.Text.Terra, false)
             {
                 PivotOrigin = RectanglePoint.Right,
                 Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, -1, .5f)
@@ -52,7 +41,6 @@ namespace Remizione.UI
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
-            //title.Draw(gameTime);
             icon.Draw(gameTime);
             score.Draw(gameTime);
             Game.SpriteBatch.End();
@@ -65,6 +53,12 @@ namespace Remizione.UI
         }
 
         #endregion
+
+        // SetInitialValue
+        public void SetInitialValue(int value)
+        {
+            score.SetInitialValue(value);
+        }
 
         // Value
         public int Value

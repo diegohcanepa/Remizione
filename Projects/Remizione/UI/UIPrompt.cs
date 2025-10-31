@@ -2,7 +2,7 @@
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
-namespace Remizione.UI
+namespace Remizione
 {
     /// <summary>
     /// UIPrompt

@@ -1,7 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 
-namespace Remizione.UI
+namespace Remizione
 {
     /// <summary>
     /// UIScore
@@ -17,9 +17,11 @@ namespace Remizione.UI
         private readonly TextSprite valueText;
 
         // Constructor
-        public UIScore(EngendroGame game, Color textColor)
+        public UIScore(EngendroGame game, Color textColor, bool progressive = true)
             : base(game)
         {
+            this.Progressive = progressive;
+
             // Score text
             this.valueText = new TextSprite(Game, Fonts.CommonOutline)
             {
@@ -31,6 +33,7 @@ namespace Remizione.UI
             this.Value = 0;
 
             isInitializing = true;
+            Progressive = progressive;
         }
 
         #region Protected members
@@ -82,6 +85,16 @@ namespace Remizione.UI
             set => valueText.Position = value;
         }
 
+        // Progressive
+        public bool Progressive { get; }
+
+        // SetInitialValue
+        public void SetInitialValue(int value)
+        {
+            isInitializing = true;
+            this.Value = value;
+        }
+
         // Value
         public int Value
         {
@@ -95,7 +108,9 @@ namespace Remizione.UI
 
                     this.value = value;
                     valueText.Text = this.value.ToString();
-                    isInitializing = false;
+
+                    if (Progressive)
+                        isInitializing = false;
                 }
             }
         }

@@ -264,7 +264,7 @@ namespace Remizione
                 else if (GetLoot() is ChanceTableItem loot && MetaItem.Find(loot.Name) is MetaItem metaItem)
                 {
                     // Avoid looting unique things already in inventory
-                    if (metaItem.Category == InventoryCategory.Trinkets && Session.Player?.Inventory.Find(metaItem) != null)
+                    if (metaItem.Category == ItemCategory.Trinkets && Session.PilgrimSack.Find(metaItem.Name) != null)
                         return;
 
                     Session.ObjectPools.Pickups.Get()?.Drop(room, Position, metaItem);
@@ -485,10 +485,9 @@ namespace Remizione
                     return false;
 
                 var friendlyItems = Session.GetFriendlyItems(StaticName);
-                var container = Session.Player.Inventory.GetContainer(InventoryCategory.KeyItems);
                 for (var i = 0; i < friendlyItems.Length; i++)
                 {
-                    if (container.Find(friendlyItems[i].Name) != null)
+                    if (Session.PilgrimSack.Find(friendlyItems[i].Name) != null)
                         return true;
                 }
 

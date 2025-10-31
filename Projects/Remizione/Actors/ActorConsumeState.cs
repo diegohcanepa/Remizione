@@ -49,7 +49,7 @@ namespace Remizione
             {
                 if (frame.IsEvent)
                 {
-                    Item.Use();
+                    Item.Use(Owner);
 
                     if (Item.MetaItem.Sound != null)
                         Owner.PlaySound(Item.MetaItem.Sound);

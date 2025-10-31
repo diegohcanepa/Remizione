@@ -3,18 +3,16 @@
 namespace Remizione.Scripting
 {
     // AddItemCommand
-    // Syntax: {Item} to {Actor} [#amount:Integer]
+    // Syntax: {Item} [#amount:Integer]
     internal sealed class AddItemCommand : NonAwaitableCommand
     {
         private readonly MetaItem? metaItem;
 
         // Constructor
         internal AddItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 3, AmountArg, EquipArg)
+            : base(script, source, body, 1, AmountArg, EquipArg)
         {
             var itemName = Parser.ParseName(this, 0);
-            AssertKeyword(1, "to");
-            Parser.ParseEntity<Actor>(this, 2);
             Parser.ParseInt32Argument(this, AmountArg);
 
             metaItem = MetaItem.Find(itemName);
@@ -25,17 +23,17 @@ namespace Remizione.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            var actor = Parser.ParseEntity<Actor>(this, 2);
-            if (actor == null || metaItem == null)
+            if (metaItem == null)
+                return;
+
+            if (Session is not GameSession session)
                 return;
 
             var amount = Parser.ParseInt32Argument(this, AmountArg, 1);
-            var container = actor.Inventory.GetContainer(metaItem.Category);
-            if (container.Add(metaItem.Name, amount) is Item item && HasArg(EquipArg))
+            if (session.PilgrimSack.Add(metaItem.Name, amount) is Item item && HasArg(EquipArg))
             {
                 if (metaItem.IsEquipment)
-                    container.Select(metaItem.Name);
-
+                    session.PilgrimSack.Equip(item);
             }
         }
     }

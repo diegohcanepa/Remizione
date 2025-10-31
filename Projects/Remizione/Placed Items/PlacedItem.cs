@@ -24,6 +24,7 @@ namespace Remizione
         protected override void OnUnload()
         {
             base.OnUnload();
+            this.Owner = null;
         }
 
         #endregion
@@ -31,10 +32,14 @@ namespace Remizione
         // Item
         public Item? Item { get; private set; }
 
+        // Owner
+        public GameThing? Owner { get; private set; }
+
         // Place
-        public void Place(Item item, Vector2 position)
+        public void Place(GameThing owner, Item item, Vector2 position)
         {
-            item.Use();
+            this.Owner = owner;
+            item.Use(owner);
             this.Item = item;
             this.Position = position;
 

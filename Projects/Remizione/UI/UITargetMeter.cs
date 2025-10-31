@@ -1,7 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 
-namespace Remizione.UI
+namespace Remizione
 {
     /// <summary>
     /// UITargetMeter

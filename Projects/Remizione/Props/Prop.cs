@@ -88,7 +88,7 @@ namespace Remizione
             var successChance = item.SkillChance - SkillChancePenalty;
             var success = roll <= successChance;
 
-            item.Use();
+            item.Use(actor);
 
             Session.HUD.Log.Show(LogVerb.Lost, item.DisplayText, item.MetaItem.Image);
 

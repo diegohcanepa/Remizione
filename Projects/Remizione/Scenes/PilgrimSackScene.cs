@@ -3,35 +3,33 @@ using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 
 namespace Remizione
 {
     /// <summary>
-    /// InventoryScene
+    /// PilgrimSackScene
     /// </summary>
-    public sealed class InventoryScene : Scene
+    public sealed class PilgrimSackScene : Scene
     {
         #region Private fields
 
         private const int maxInfoTextWidth = 100;
 
-        private InventoryGrid activeGrid;
         private readonly UITextButton buttonClose;
         private readonly UITextButton buttonConsume;
         private readonly UITextButton buttonDiscard;
         private readonly UITextButton buttonEquip;
-        private readonly List<InventoryCategory> categories = [InventoryCategory.Junk, InventoryCategory.Gadgets, InventoryCategory.Consumables, InventoryCategory.Trinkets, InventoryCategory.KeyItems];
+        private readonly List<ItemCategory> categories = [];
         private readonly ImageSprite[] categoryIcons;
         private readonly ImageSprite[] categoryMarkers;
         private readonly TextSprite categoryText;
-        private readonly ImageSprite checkMark;
-        private InventoryCategory currentCategory;
+        private ItemCategory currentCategory;
         private readonly GadgetSlot gadgetSlot;
+        private InventoryGrid grid;
         private readonly JunkSlot junkSlot;
-        private readonly Dictionary<InventoryCategory, Item?> equippedItems = [];
         private readonly ImageSprite gridContainer;
-        private readonly Dictionary<InventoryCategory, InventoryGrid> grids = [];
         private readonly UIHealthMeter healthMeter;
         private readonly UIHPBonus hpBonus;
         private readonly ImageSprite infoContainer;
@@ -42,7 +40,9 @@ namespace Remizione
         private InputMethod lastKnownInput;
         private readonly ImageSprite navigationBar;
         private readonly UITextButton nextCategoryButton;
+        private readonly PilgrimSack pilgrimSack;
         private readonly UITextButton previousCategoryButton;
+        private readonly UITicketMeter ticketMeter;
         private readonly TrinketSlot trinketSlot;
 
         #endregion
@@ -50,68 +50,56 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public InventoryScene(Actor owner)
-            : base(owner.Game, SceneSettings.PausePreviousScenes)
+        public PilgrimSackScene(PilgrimSack pilgrimSack)
+            : base(pilgrimSack.Session.Game, SceneSettings.PausePreviousScenes)
         {
-            this.Owner = owner;
+            this.pilgrimSack = pilgrimSack;
 
-            equippedItems[InventoryCategory.Junk] = null;
-            equippedItems[InventoryCategory.Gadgets] = null;
-            equippedItems[InventoryCategory.Trinkets] = null;
+            foreach (var category in Enum.GetValues<ItemCategory>())
+            {
+                categories.Add(category);
+            }
 
             // Health meter
             this.healthMeter = new(Game)
             {
-                Actor = owner,
             };
 
             // Junk slot
-            this.junkSlot = new(Owner.Session)
+            this.junkSlot = new(pilgrimSack.Session)
             {
-                Actor = owner,
                 HideButton = true,
                 SceneScope = this
             };
 
             // Gadget slot
-            this.gadgetSlot = new(Owner.Session)
+            this.gadgetSlot = new(pilgrimSack.Session)
             {
-                Actor = owner,
                 HideButton = true,
                 SceneScope = this
             };
 
-            // Trinket slot
-            this.trinketSlot = new(Game)
-            {
-                Actor = owner,
-            };
+            // Ticket meter
+            this.ticketMeter = new(Game);
 
-            // Checkmark
-            this.checkMark = new(Game, Atlases.UI.CheckMark)
+            // Trinket slot
+            this.trinketSlot = new(pilgrimSack)
             {
-                PivotOrigin = RectanglePoint.RightTop,
-                Scale = ScaleInfo.UIElement.Medium
             };
 
             // Grid container
             this.gridContainer = new(Game, Atlases.UI.InventoryGridContainer)
             {
                 PivotOrigin = RectanglePoint.LeftTop,
-                Position = new(22, 36),
+                Position = new(22, 38),
             };
 
-            // Create grids for each category
+            // Create grid
             var gridPos = gridContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 3, 3);
-            foreach (var category in categories)
+            grid = new InventoryGrid(pilgrimSack, ItemCategory.None, 4, 3)
             {
-                grids[category] = new InventoryGrid(owner.Inventory.GetContainer(category), 4, 3)
-                {
-                    Position = gridPos
-                };
-            }
-
-            activeGrid = grids[InventoryCategory.Gadgets];
+                Position = gridPos
+            };
 
             // Navigation bar
             this.navigationBar = new(Game, Atlases.UI.InventoryNavigationBar)
@@ -158,13 +146,13 @@ namespace Remizione
                 Position = gridContainer.BoundingBox.GetPoint(RectanglePoint.RightTop)
             };
 
-            // Category
+            // Category text
             this.categoryText = new(Game, Fonts.Common)
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Center,
                 Scale = ScaleInfo.Text.ExtraLarge,
-                Position = navigationBar.BoundingBox.GetPoint(RectanglePoint.Center, 0, .5f),
+                Position = navigationBar.BoundingBox.GetPoint(RectanglePoint.Center, 0, .75f),
                 ShadowOffset = new Vector2(0, .75f)
             };
 
@@ -214,7 +202,7 @@ namespace Remizione
             };
 
             // Close button
-            buttonClose = new UITextButton(owner.Game, InputBindings.Close)
+            buttonClose = new UITextButton(Game, InputBindings.Close)
             {
                 AllowPressEffect = false,
                 PivotOrigin = RectanglePoint.RightBottom,
@@ -222,7 +210,7 @@ namespace Remizione
             };
 
             // Consume button
-            buttonConsume = new UITextButton(owner.Game, InputBindings.ConsumeItem)
+            buttonConsume = new UITextButton(Game, InputBindings.ConsumeItem)
             {
                 AllowSound = false,
                 PivotOrigin = RectanglePoint.LeftBottom,
@@ -230,14 +218,14 @@ namespace Remizione
             };
 
             // Discard button
-            buttonDiscard = new UITextButton(owner.Game, InputBindings.Discard)
+            buttonDiscard = new UITextButton(Game, InputBindings.Discard)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.RightBottom, -4, -3)
             };
 
             // Equip button
-            buttonEquip = new UITextButton(owner.Game, InputBindings.EquipItem)
+            buttonEquip = new UITextButton(Game, InputBindings.EquipItem)
             {
                 AllowSound = false,
                 PivotOrigin = RectanglePoint.LeftBottom,
@@ -256,17 +244,17 @@ namespace Remizione
         {
             buttonClose.Draw(gameTime);
 
-            if (activeGrid.SelectedItem is not Item item)
+            if (grid.SelectedItem is not Item item)
                 return;
 
             if (!item.MetaItem.PreventDiscard)
                 buttonDiscard.Draw(gameTime);
 
-            if (item.MetaItem.Category == InventoryCategory.Consumables)
+            if (item.MetaItem.Category == ItemCategory.Consumables)
             {
                 buttonConsume.Draw(gameTime);
             }
-            else if (item.MetaItem.IsEquipment)
+            else if (item.MetaItem.Category == ItemCategory.Trinkets)
             {
                 buttonEquip.Draw(gameTime);
             }
@@ -300,38 +288,35 @@ namespace Remizione
         // InvalidateCategory
         private void InvalidateCategory()
         {
-            activeGrid = grids[currentCategory];
-            categoryText.Text = Localization.GetValue(currentCategory);
-            InvalidateItemInfo();
+            categoryText.Text = currentCategory == ItemCategory.None ? TextRepository.GetValue("Misc.All") : Localization.GetValue(currentCategory);
 
+            /*
             if (activeGrid.ItemContainer.Category == InventoryCategory.Junk ||
                 activeGrid.ItemContainer.Category == InventoryCategory.Gadgets ||
                 activeGrid.ItemContainer.Category == InventoryCategory.Trinkets)
             {
                 InvalidateEquippedItem(activeGrid.ItemContainer.SelectedItem);
             }
+            */
 
             foreach (var category in categories)
             {
                 categoryIcons[categories.IndexOf(category)].Opacity = currentCategory == category ? 1f : .5f;
                 categoryIcons[categories.IndexOf(category)].Scale = new(.8f);
             }
+
+            grid.CategoryFilter = currentCategory;
+
+            InvalidateItemInfo();
         }
 
         // InvalidateEquippedItem
         private void InvalidateEquippedItem(Item? item)
         {
-            if (item != null && grids[item.MetaItem.Category].GetSlot(item) is InventorySlot slot)
-            {
-                buttonEquip.Text = Localization.GetValue(InventoryVerb.Unequip);
-                checkMark.Image = Atlases.UI.CheckMark;
-                checkMark.Position = slot.BoundingBox.GetPoint(RectanglePoint.RightBottom, -1, -8);
-            }
+            if (item != null && item.IsEquipped)
+                buttonEquip.Text = Localization.GetValue(InventoryVerb.TakeOff);
             else
-            {
-                buttonEquip.Text = Localization.GetValue(InventoryVerb.Equip);
-                checkMark.Image = null;
-            }
+                buttonEquip.Text = Localization.GetValue(InventoryVerb.Wear);
         }
 
         // InvalidateItemInfo
@@ -339,7 +324,7 @@ namespace Remizione
         {
             hpBonus.Amount = 0;
 
-            if (activeGrid.SelectedItem is Item item)
+            if (grid.SelectedItem is Item item)
             {
                 itemName.Text = TextRepository.GetValue($"Item.{item.Name}.Name") + (item.Level == 0 ? string.Empty : $" +{item.Level}");
                 itemDescription.Opacity = 1;
@@ -382,7 +367,7 @@ namespace Remizione
             {
                 categoryIcons[i].X = x + i * (iconWidth + spacing);
                 categoryIcons[i].Y = y;
-                categoryMarkers[i].Image = Owner.Inventory.GetContainer(categories[i]).Count == 0 ? null : Atlases.UI.InventoryCategoryNotEmpty;
+                categoryMarkers[i].Image = pilgrimSack.HasItems(categories[i]) ? Atlases.UI.InventoryCategoryNotEmpty : null;
                 categoryMarkers[i].Position = categoryIcons[i].BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, 1.5f);
             }
         }
@@ -418,22 +403,16 @@ namespace Remizione
         // TestDiscard
         private bool TestDiscard(Item item)
         {
-            if (!item.MetaItem.PreventDiscard && buttonDiscard.TestPressed(PlayerIndex.One))
+            if (item.MetaItem.PreventDiscard)
+                return false;
+
+            if (buttonDiscard.TestPressed(PlayerIndex.One))
             {
                 if (buttonDiscard.IsBeating)
                 {
                     Sound.Play(SoundNames.ItemDiscard);
-                    activeGrid.DiscardSelectedItem();
-
-                    if (equippedItems.ContainsKey(item.MetaItem.Category))
-                    {
-                        if (item == equippedItems[item.MetaItem.Category])
-                        {
-                            equippedItems[item.MetaItem.Category] = activeGrid.SelectedItem;
-                            InvalidateEquippedItem(equippedItems[item.MetaItem.Category]);
-                        }
-                    }
-
+                    grid.DiscardSelectedItem();
+                    InvalidateEquippedItem(pilgrimSack.SelectedItem);
                     LayoutCategoryIcons();
                     InvalidateItemInfo();
                 }
@@ -449,11 +428,11 @@ namespace Remizione
         // TestConsume
         private bool TestConsume(Item selectedItem)
         {
-            if (selectedItem.MetaItem.Category == InventoryCategory.Consumables)
+            if (selectedItem.MetaItem.Category == ItemCategory.Consumables)
             {
                 if (buttonConsume.TestPressed(PlayerIndex.One))
                 {
-                    activeGrid.SelectedSlot.PerformDefaultAction();
+                    grid.SelectedSlot.PerformDefaultAction();
                     InvalidateItemInfo();
                     LayoutCategoryIcons();
                     return true;
@@ -466,24 +445,16 @@ namespace Remizione
         // TestEquip
         private bool TestEquip(Item selectedItem)
         {
-            if (selectedItem.MetaItem.IsEquipment)
+            if (selectedItem.MetaItem.Category == ItemCategory.Trinkets)
             {
                 if (buttonEquip.TestPressed(PlayerIndex.One))
                 {
                     Sound.Play(SoundNames.ItemEquip);
-
-                    if (equippedItems[activeGrid.ItemContainer.Category] == null)
-                    {
-                        equippedItems[activeGrid.ItemContainer.Category] = selectedItem;
-                        activeGrid.ItemContainer.Select(selectedItem);
-                    }
+                    if (selectedItem.IsEquipped)
+                        pilgrimSack.Unequip(selectedItem);
                     else
-                    {
-                        equippedItems[activeGrid.ItemContainer.Category] = null;
-                        activeGrid.ItemContainer.ClearSelection();
-                    }
-
-                    InvalidateEquippedItem(equippedItems[activeGrid.ItemContainer.Category]);
+                        pilgrimSack.Equip(selectedItem);
+                    InvalidateEquippedItem(selectedItem);
                     
                     return true;
                 }
@@ -505,10 +476,11 @@ namespace Remizione
             Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.BackgroundShade);
             Game.SpriteBatch.End();
 
-            if (Owner.Session.Room is ProceduralRoom)
+            if (pilgrimSack.Session.GameplayMode == GameplayMode.Run)
             {
                 trinketSlot.Draw(gameTime);
                 healthMeter.Draw(gameTime);
+                ticketMeter.Draw(gameTime);
             }
 
             junkSlot.Draw(gameTime);
@@ -543,16 +515,7 @@ namespace Remizione
 
             DrawButtons(gameTime);
 
-            activeGrid.Draw(gameTime);
-
-            if (equippedItems[InventoryCategory.Junk]?.MetaItem.Category == currentCategory ||
-                equippedItems[InventoryCategory.Gadgets]?.MetaItem.Category == currentCategory ||
-                equippedItems[InventoryCategory.Trinkets]?.MetaItem.Category == currentCategory)
-            {
-                Game.SpriteBatch.Begin(Game.Camera);
-                checkMark.Draw(gameTime);
-                Game.SpriteBatch.End();
-            }
+            grid.Draw(gameTime);
 
             nextCategoryButton.Draw(gameTime);
             previousCategoryButton.Draw(gameTime);
@@ -573,7 +536,7 @@ namespace Remizione
                 return HandleInputResult.Handled;
 
             // Grid
-            if (activeGrid.HandleInput(gameTime) == HandleInputResult.Handled)
+            if (grid.HandleInput(gameTime) == HandleInputResult.Handled)
             {
                 InvalidateItemInfo();
                 buttonDiscard.IsBeating = false;
@@ -587,7 +550,7 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
-            if (activeGrid.SelectedItem is Item selectedItem)
+            if (grid.SelectedItem is Item selectedItem)
             {
                 // Discard
                 if (TestDiscard(selectedItem))
@@ -630,41 +593,24 @@ namespace Remizione
         {
             base.OnLoadContent();
 
+            healthMeter.Actor = pilgrimSack.Session.Player;
+            junkSlot.Actor = healthMeter.Actor;
+            gadgetSlot.Actor = healthMeter.Actor;
+            trinketSlot.Actor = healthMeter.Actor;
+
             LayoutCategoryIcons();
 
             buttonDiscard.IsBeating = false;
 
             Sound.Play(SoundNames.UIInventoryOpen);
 
-            // Populate grids
-            foreach (var grid in grids.Values)
-            {
-                grid.Populate();
-            }
-
-            currentCategory = Owner.HP < Owner.MaxHP ? InventoryCategory.Consumables : InventoryCategory.Junk;
-
-            equippedItems[InventoryCategory.Junk] = Owner.Inventory.Junk.SelectedItem;
-            equippedItems[InventoryCategory.Gadgets] = Owner.Inventory.Gadgets.SelectedItem;
-            equippedItems[InventoryCategory.Trinkets] = Owner.Inventory.Trinkets.SelectedItem;
+            currentCategory = ItemCategory.None;
 
             lastKnownInput = InputMethod.None;
 
             InvalidateCategory();
-        }
 
-        // OnUnloadContent
-        protected override void OnUnloadContent()
-        {
-            base.OnUnloadContent();
-
-            foreach (var keyValue in equippedItems)
-            {
-                if (keyValue.Value != null)
-                    keyValue.Value.Select();
-                else
-                    Owner.Inventory.GetContainer(keyValue.Key).ClearSelection();
-            }
+            ticketMeter.SetInitialValue(pilgrimSack.Session.Tickets);
         }
 
         // OnUpdate
@@ -676,7 +622,7 @@ namespace Remizione
             buttonDiscard.Update(gameTime);
             buttonEquip.Update(gameTime);
             categoryText.Update(gameTime);
-            activeGrid.Update(gameTime);
+            grid.Update(gameTime);
             gridContainer.Update(gameTime);
             junkSlot.Update(gameTime);
             gadgetSlot.Update(gameTime);
@@ -689,11 +635,11 @@ namespace Remizione
 
             if (lastKnownInput != InputManager.DefaultPlayer.LastInputMethod)
                 lastKnownInput = InputManager.DefaultPlayer.LastInputMethod;
+
+            ticketMeter.Value = pilgrimSack.Session.Tickets;
+            ticketMeter.Update(gameTime);
         }
 
         #endregion
-
-        // Owner
-        public Actor Owner { get; set; }
     }
 }

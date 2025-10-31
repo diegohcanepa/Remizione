@@ -1,7 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Remizione.UI;
 
 namespace Remizione.Menus
 {

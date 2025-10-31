@@ -1,7 +1,6 @@
 ﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Remizione.UI;
 
 namespace Remizione
 {
@@ -59,10 +58,11 @@ namespace Remizione
                 SceneScope = session
             };
 
-            // Trincket slot
-            this.TrincketSlot = new(Game);
-
+            // Ticket meter
             this.ticketMeter = new(Game);
+
+            // Trincket slot
+            this.TrincketSlot = new(session.PilgrimSack);
         }
 
         #endregion
@@ -83,11 +83,10 @@ namespace Remizione
                         GadgetSlot.Draw(gameTime);
                     }
 
-                    TrincketSlot.Draw(gameTime);
-                    healthMeter.Draw(gameTime);
-
-                    if (session.Room is ProceduralRoom)
+                    if (session.IsCurrentScene)
                     {
+                        TrincketSlot.Draw(gameTime);
+                        healthMeter.Draw(gameTime);
                         TargetMeter.Draw(gameTime);
                         ticketMeter.Draw(gameTime);
                     }
@@ -173,10 +172,10 @@ namespace Remizione
         public void Reset()
         {
             healthMeter.Actor = session.Player;
-            BagSlot.Actor = session.Player;
-            JunkSlot.Actor = session.Player;
-            GadgetSlot.Actor = session.Player;
-            TrincketSlot.Actor = session.Player;
+            //BagSlot.Actor = session.Player;
+            //JunkSlot.Actor = session.Player;
+            //GadgetSlot.Actor = session.Player;
+            //TrincketSlot.Actor = session.Player;
         }
 
         // ShowSavingIcon

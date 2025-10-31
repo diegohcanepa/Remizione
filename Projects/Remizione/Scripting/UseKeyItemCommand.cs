@@ -20,8 +20,7 @@ namespace Remizione.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            if ((Session as GameSession)?.Player is Actor actor)
-                actor.ChooseKeyItem(Parser.ParseQuotedString(this, 0));
+            (Session as GameSession)?.ChooseKeyItem(Parser.ParseQuotedString(this, 0));
         }
     }
 }

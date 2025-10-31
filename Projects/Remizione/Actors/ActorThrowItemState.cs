@@ -54,7 +54,7 @@ namespace Remizione
                         if (Owner.WhooshSound != null)
                             Owner.PlaySound(Owner.WhooshSound);
 
-                        throwable.Launch(Item);
+                        throwable.Launch(Owner, Item);
                     }
 
                     itemUsed = true;

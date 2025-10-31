@@ -39,14 +39,8 @@
   <String Key="InputBinding.Select">Select</String>
   <String Key="InputBinding.UseFriendlyItem">Use</String>
   <String Key="InputBinding.UseItem">Use</String>
-  <String Key="InventoryCategory.Consumables">Consumables</String>
-  <String Key="InventoryCategory.Gadgets">Gadgets</String>
-  <String Key="InventoryCategory.Junk">Junk</String>
-  <String Key="InventoryCategory.KeyItems">Key items</String>
-  <String Key="InventoryCategory.Quirks">Quirks</String>
-  <String Key="InventoryCategory.Trinkets">Trinkets</String>
-  <String Key="InventoryVerb.Equip">Equip</String>
-  <String Key="InventoryVerb.Unequip">Unequip</String>
+  <String Key="InventoryVerb.TakeOff">Take off</String>
+  <String Key="InventoryVerb.Wear">Wear</String>
   <String Key="Item.Apple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.Apple.Name">Apple</String>
   <String Key="Item.Battery.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
@@ -71,7 +65,7 @@
   <String Key="Item.MagneticCard.Name">Magnetic card</String>
   <String Key="Item.MasterLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.MasterLockpick.Name">Master lockpick</String>
-  <String Key="Item.PieceOfWood.Description"></String>
+  <String Key="Item.PieceOfWood.Description" />
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
@@ -81,6 +75,12 @@
   <String Key="Item.SteelLockpick.Name">Steel lockpick</String>
   <String Key="Item.Ticket.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.Ticket.Name">Ticket</String>
+  <String Key="ItemCategory.Consumables">Consumables</String>
+  <String Key="ItemCategory.Gadgets">Gadgets</String>
+  <String Key="ItemCategory.Junk">Junk</String>
+  <String Key="ItemCategory.KeyItems">Key items</String>
+  <String Key="ItemCategory.Quirks">Quirks</String>
+  <String Key="ItemCategory.Trinkets">Trinkets</String>
   <String Key="ItemProperty.Chance">Chance</String>
   <String Key="KeyItemAction.UnlockDoor">Unlock door</String>
   <String Key="KeyItemAction.UnlockTrunk">Unlock trunk</String>
@@ -184,6 +184,7 @@
   <String Key="MessageBox.QuitToMenu">Quit to main menu?</String>
   <String Key="MessageBox.SlotDeleted">The slot has been deleted.</String>
   <String Key="MessageBox.Warning">Warning!</String>
+  <String Key="Misc.All">All</String>
   <String Key="Misc.And">and</String>
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>

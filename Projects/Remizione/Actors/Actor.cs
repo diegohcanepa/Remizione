@@ -25,7 +25,6 @@ namespace Remizione
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
         private readonly FloatTween headTween = new();
-        private InventoryScene? inventoryScene;
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private readonly List<Vector2> pendingPathNodes = [];
@@ -36,7 +35,6 @@ namespace Remizione
         private readonly ActorStandState standState;
         private int suspendInteractionCooldown;
         private readonly ActorThrowItemState throwItemState;
-        private UseKeyItemScene? useKeyItemScene;
 
         #endregion
 
@@ -52,7 +50,6 @@ namespace Remizione
             this.DisplayNameKey = $"Actor.{StaticName}";
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
-            this.Inventory = new(this);
             this.shadowSpot = new ShadowSpot(this);
             this.PerceptionSensor = new PerceptionSensor(this);
 
@@ -221,7 +218,7 @@ namespace Remizione
         private void PlaceItem(Item item)
         {
             if (Session.ObjectPools.GetPlacedItem(item.Name) is PlacedItem placedItem)
-                placedItem.Place(item, Position);
+                placedItem.Place(this, item, Position);
         }
 
         // ResetHeadTween
@@ -400,32 +397,6 @@ namespace Remizione
             }
         }
 
-        // OnRead
-        protected override void OnRead(XmlAttributeCollection attributes)
-        {
-            base.OnRead(attributes);
-
-            // Consumables
-            if (attributes[nameof(Inventory.Consumables)]?.Value is string consumablesData)
-                Inventory.Consumables.SetSerializationData(consumablesData);
-
-            // Junk
-            if (attributes[nameof(Inventory.Junk)]?.Value is string junkData)
-                Inventory.Junk.SetSerializationData(junkData);
-
-            // KeyItems
-            if (attributes[nameof(Inventory.KeyItems)]?.Value is string keyItemsData)
-                Inventory.KeyItems.SetSerializationData(keyItemsData);
-
-            // Gadgets
-            if (attributes[nameof(Inventory.Gadgets)]?.Value is string gadgetsData)
-                Inventory.Gadgets.SetSerializationData(gadgetsData);
-
-            // Trinkets
-            if (attributes[nameof(Inventory.Trinkets)]?.Value is string trinketsData)
-                Inventory.Trinkets.SetSerializationData(trinketsData);
-        }
-
         // OnStartMoving
         protected override void OnStartMoving()
         {
@@ -517,8 +488,6 @@ namespace Remizione
             UpdateFootstep();
             footstepEffect?.Update(gameTime);
 
-            Inventory.Trinkets.SelectedItem?.Update(gameTime);
-
             if (AIStateMachine.CurrentState != null)
                 PerceptionSensor.Update(gameTime);
 
@@ -529,18 +498,6 @@ namespace Remizione
         // OnWillpowerChanged
         protected virtual void OnWillpowerChanged()
         {
-        }
-
-        // OnWrite
-        protected override void OnWrite(XmlWriter output)
-        {
-            base.OnWrite(output);
-
-            output.WriteAttributeString(nameof(Inventory.Consumables), Inventory.Consumables.GetSerializationData());
-            output.WriteAttributeString(nameof(Inventory.Junk), Inventory.Junk.GetSerializationData());
-            output.WriteAttributeString(nameof(Inventory.KeyItems), Inventory.KeyItems.GetSerializationData());
-            output.WriteAttributeString(nameof(Inventory.Gadgets), Inventory.Gadgets.GetSerializationData());
-            output.WriteAttributeString(nameof(Inventory.Trinkets), Inventory.Trinkets.GetSerializationData());
         }
 
         // StateMachine
@@ -581,23 +538,6 @@ namespace Remizione
                 return StateMachine.CurrentState is ActorStandState ||
                        StateMachine.CurrentState is ActorMoveState;
             }
-        }
-
-        // ChooseKeyItem
-        public bool ChooseKeyItem(string text)
-        {
-            Stand();
-            useKeyItemScene ??= new UseKeyItemScene(this);
-
-            if (Session.OutcomeTarget is Prop prop)
-            {
-                Session.KeyItemTarget = prop;
-                useKeyItemScene.Text = text;
-                useKeyItemScene.SceneController.Push();
-                return true;
-            }
-
-            return false;
         }
 
         // FastMove
@@ -672,12 +612,6 @@ namespace Remizione
 
         // InteractiveTarget
         public GameThing? InteractiveTarget { get; private set; }
-
-        // Inventory
-        public Inventory Inventory { get; }
-
-        // InventorySelectedItemName
-        public string InventorySelectedItemName { get; set; } = string.Empty;
 
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }
@@ -786,17 +720,6 @@ namespace Remizione
                 floatingText.Show(GetOverheadPosition(), text, color, duration);
         }
 
-        // ShowInventory
-        [ScriptMethod]
-        public void ShowInventory()
-        {
-            Stand();
-            inventoryScene ??= new InventoryScene(this);
-            if (Session.Camera.Target == this)
-                Session.Camera.FocusTarget();
-            inventoryScene.SceneController.Push();
-        }
-
         // SpeechBubbleSound
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public Sound? SpeechBubbleSound { get; set; }
@@ -831,10 +754,10 @@ namespace Remizione
             InteractiveTarget = null;
         }
 
-        // UseSelectedItem
-        public void UseSelectedItem(InventoryCategory category)
+        // UseEquippedItem
+        public void UseEquippedItem(ItemCategory category)
         {
-            if (Inventory.GetContainer(category).SelectedItem is not Item item)
+            if (session.PilgrimSack.GetEquippedItem(category) is not Item item)
                 return;
 
             if (item.Count <= 0)

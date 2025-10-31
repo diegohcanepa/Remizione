@@ -5,18 +5,17 @@ using System.Globalization;
 namespace Remizione
 {
     /// <summary>
-    /// ItemContainer
+    /// PilgrimSack
     /// </summary>
-    public sealed class ItemContainer
+    public sealed class PilgrimSack
     {
         private readonly List<Item> items = [];
         private const string NoneValue = "[None]";
 
         // Constructor
-        public ItemContainer(Actor owner, InventoryCategory category)
+        public PilgrimSack(GameSession session)
         {
-            this.Owner = owner;
-            this.Category = category;
+            this.Session = session;
         }
 
         // Add
@@ -29,24 +28,26 @@ namespace Remizione
         // Add
         public Item? Add(MetaItem metaItem, int amount)
         {
-            if (metaItem.Category != Category)
-                throw new InvalidOperationException($"Meta item '{metaItem.Name}' does not belong to the category '{Category}'.");
-
             var item = metaItem.AllowEmpty ? Find(metaItem.Name) : null;
 
             if (item == null)
             {
                 item = new Item(this, metaItem) { Count = amount };
                 items.Add(item);
+
+                var category = item.MetaItem.Category;
+
+                if (category == ItemCategory.Gadgets && EquippedGadget == null ||
+                    category == ItemCategory.Junk && EquippedJunk == null)
+                {
+                    Equip(item);
+                }
             }
             else
                item.Count += amount;
 
             return item;
         }
-
-        // Category
-        public InventoryCategory Category { get; }
 
         // Clear
         public void Clear()
@@ -64,6 +65,65 @@ namespace Remizione
         // Count
         public int Count => items.Count;
 
+        // Equip
+        public void Equip(Item item)
+        {
+            if (!item.MetaItem.IsEquipment)
+                return;
+
+            switch (item.MetaItem.Category)
+            {
+                // Gadgets
+                case ItemCategory.Gadgets:
+                    EquippedGadget = item;
+                    break;
+
+                // Junk
+                case ItemCategory.Junk:
+                    EquippedJunk = item;
+                    break;
+
+                // Trinkets
+                case ItemCategory.Trinkets:
+                    EquippedTrinket = item;
+                    break;
+            }
+        }
+
+        // EquipNext
+        public void EquipNext(ItemCategory category)
+        {
+            if (items.Count == 0)
+                return;
+
+            if (category == ItemCategory.None)
+                return;
+
+            var currentItem = GetEquippedItem(category);
+            var index = currentItem == null ? -1 : items.IndexOf(currentItem);
+
+            for (var i = 1; i <= items.Count; i++)
+            {
+                var nextIndex = (index + i) % items.Count;
+                var nextItem = items[nextIndex];
+
+                if (nextItem.MetaItem.Category == category)
+                {
+                    Equip(nextItem);
+                    break;
+                }
+            }
+        }
+
+        // EquippedGadget
+        public Item? EquippedGadget { get; private set; }
+
+        // EquippedJunk
+        public Item? EquippedJunk { get; private set; } 
+
+        // EquippedTrinket
+        public Item? EquippedTrinket { get; private set; }
+
         // Find
         public Item? Find(string name)
         {
@@ -79,8 +139,34 @@ namespace Remizione
         // FindNotNull
         public Item FindNotNull(string name) => Find(name) ?? throw new InvalidOperationException($"Item '{name}' not found.");
 
+        // GetEquippedItem
+        public Item? GetEquippedItem(ItemCategory category)
+        {
+            return category switch
+            {
+                ItemCategory.Gadgets => EquippedGadget,
+                ItemCategory.Junk => EquippedJunk,
+                ItemCategory.Trinkets => EquippedTrinket,
+                _ => null,
+            };
+        }
+
         // GetItems
         public Item[] GetItems() => items.ToArray();
+
+        // GetItems
+        public Item[] GetItems(ItemCategory category)
+        {
+            var result = new List<Item>();
+            
+            for (var i = 0; i < items.Count; i++)
+            {
+                if (category == ItemCategory.None || items[i].MetaItem.Category == category)
+                    result.Add(items[i]);
+            }
+            
+            return result.ToArray();
+        }
 
         // GetSerializationData
         public string GetSerializationData()
@@ -99,6 +185,18 @@ namespace Remizione
             return string.Join(";", result);
         }
 
+        // HasItems
+        public bool HasItems(ItemCategory category)
+        {
+            for (var i = 0; i < items.Count; i++)
+            {
+                if (items[i].MetaItem.Category == category)
+                    return true;
+            }
+
+            return false;
+        }
+
         // IndexOf
         public int IndexOf(Item item) => items.IndexOf(item);
 
@@ -110,12 +208,6 @@ namespace Remizione
 
         // IsFull
         public bool IsFull => items.Count >= Size;
-
-        // IsEquipment
-        public bool IsEquipment => Category == InventoryCategory.Junk || Category == InventoryCategory.Gadgets || Category == InventoryCategory.Trinkets;
-
-        // Owner
-        public Actor Owner { get; }
 
         // Remove
         public bool Remove(string name)
@@ -140,6 +232,8 @@ namespace Remizione
                     else
                         SelectedItem = null;
                 }
+        
+                EquipNext(item.MetaItem.Category);
 
                 return true;
             }
@@ -168,9 +262,6 @@ namespace Remizione
                 return false;
         }
 
-        // SelectedItem
-        public Item? SelectedItem { get; private set; }
-
         // SelectFirst
         public Item? SelectFirst()
         {
@@ -182,6 +273,9 @@ namespace Remizione
 
             return null;
         }
+
+        // SelectedItem
+        public Item? SelectedItem { get; private set; }
 
         // SelectLast
         public Item? SelectLast()
@@ -271,7 +365,35 @@ namespace Remizione
             }
         }
 
+        // Session
+        public GameSession Session { get; }
+
         // Size
         public int Size { get; set; } = 4;
+
+        // Unequip
+        public void Unequip(Item item)
+        {
+            if (!item.MetaItem.IsEquipment)
+                return;
+
+            switch (item.MetaItem.Category)
+            {
+                // Gadgets
+                case ItemCategory.Gadgets:
+                    EquippedGadget = null;
+                    break;
+
+                // Junk
+                case ItemCategory.Junk:
+                    EquippedJunk = null;
+                    break;
+
+                // Trinkets
+                case ItemCategory.Trinkets:
+                    EquippedTrinket = null;
+                    break;
+            }
+        }
     }
 }

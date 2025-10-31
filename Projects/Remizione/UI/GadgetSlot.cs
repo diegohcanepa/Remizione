@@ -9,7 +9,7 @@ namespace Remizione
     {
         // Constructor
         public GadgetSlot(GameSession session)
-            : base(session, Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 25, -2), InventoryCategory.Gadgets, InputBindings.UseGadgetItem, false)
+            : base(session, Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 25, -2), ItemCategory.Gadgets, InputBindings.UseGadgetItem, false)
         {
         }
     }

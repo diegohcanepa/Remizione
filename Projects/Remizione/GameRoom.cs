@@ -24,6 +24,7 @@ namespace Remizione
         private RenderTarget2D? lightMapTarget;
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
+        private readonly List<LootTag> lootTags = [];
         private static Light playerLight = null!;
         private string lastKnownMusicTag = string.Empty;
         private FacingDirection lastKnownPlayerDirection;
@@ -315,6 +316,11 @@ namespace Remizione
             RecountEnemies();
         }
 
+        // OnCollectLootTags
+        protected virtual void OnCollectLootTags(List<LootTag> collectedTags)
+        {
+        }
+
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
@@ -498,6 +504,13 @@ namespace Remizione
             return result;
         }
 
+        // AddLootTag
+        public void AddLootTag(LootTag lootTag)
+        {
+            if (!lootTags.Contains(lootTag))
+                lootTags.Add(lootTag);
+        }
+
         // AddTriggerArea
         public TriggerArea AddTriggerArea(string name, Script routine, Script? exitRoutine, bool await, bool stopActor, bool once, FlagCondition? condition, params Vector2[] vertices)
         {
@@ -563,6 +576,16 @@ namespace Remizione
         // Flat2D
         [ScriptProperty]
         public bool Flat2D { get; set; }
+
+        // GetCurrentLootTags
+        public List<LootTag> GetCurrentLootTags()
+        {
+            var result = new List<LootTag>(lootTags);
+
+            OnCollectLootTags(result);
+
+            return result;
+        }
 
         // GlobalLightSize
         [ScriptProperty]
