@@ -25,7 +25,6 @@
         internal const string PickupTicket = nameof(PickupTicket);
         internal const string PotteryBreak = nameof(PotteryBreak);
         internal const string PowerRestored = nameof(PowerRestored);
-        internal const string Rain = nameof(Rain);
         internal const string Redemption = nameof(Redemption);
         internal const string SaintPeregrine = nameof(SaintPeregrine);
         internal const string ShockZap = nameof(ShockZap);

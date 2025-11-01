@@ -26,11 +26,8 @@ namespace Remizione
         private readonly ImageSprite[] categoryMarkers;
         private readonly TextSprite categoryText;
         private ItemCategory currentCategory;
-        private readonly GadgetSlot gadgetSlot;
-        private InventoryGrid grid;
-        private readonly JunkSlot junkSlot;
+        private readonly ItemGrid grid;
         private readonly ImageSprite gridContainer;
-        private readonly UIHealthMeter healthMeter;
         private readonly UIHPBonus hpBonus;
         private readonly ImageSprite infoContainer;
         private readonly ImageSprite infoTitleContainer;
@@ -42,8 +39,6 @@ namespace Remizione
         private readonly UITextButton nextCategoryButton;
         private readonly PilgrimSack pilgrimSack;
         private readonly UITextButton previousCategoryButton;
-        private readonly UITicketMeter ticketMeter;
-        private readonly TrinketSlot trinketSlot;
 
         #endregion
 
@@ -60,33 +55,6 @@ namespace Remizione
                 categories.Add(category);
             }
 
-            // Health meter
-            this.healthMeter = new(Game)
-            {
-            };
-
-            // Junk slot
-            this.junkSlot = new(pilgrimSack.Session)
-            {
-                HideButton = true,
-                SceneScope = this
-            };
-
-            // Gadget slot
-            this.gadgetSlot = new(pilgrimSack.Session)
-            {
-                HideButton = true,
-                SceneScope = this
-            };
-
-            // Ticket meter
-            this.ticketMeter = new(Game);
-
-            // Trinket slot
-            this.trinketSlot = new(pilgrimSack)
-            {
-            };
-
             // Grid container
             this.gridContainer = new(Game, Atlases.UI.InventoryGridContainer)
             {
@@ -95,8 +63,8 @@ namespace Remizione
             };
 
             // Create grid
-            var gridPos = gridContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 3, 3);
-            grid = new InventoryGrid(pilgrimSack, ItemCategory.None, 4, 3)
+            var gridPos = gridContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 5, 5);
+            grid = new ItemGrid(pilgrimSack, ItemCategory.None, 4, 3)
             {
                 Position = gridPos
             };
@@ -254,9 +222,10 @@ namespace Remizione
             {
                 buttonConsume.Draw(gameTime);
             }
-            else if (item.MetaItem.Category == ItemCategory.Trinkets)
+            else if (item.MetaItem.IsEquipment)
             {
-                buttonEquip.Draw(gameTime);
+                if (!item.IsEquipped || item.MetaItem.Category == ItemCategory.Trinkets)
+                    buttonEquip.Draw(gameTime);
             }
         }
 
@@ -290,15 +259,6 @@ namespace Remizione
         {
             categoryText.Text = currentCategory == ItemCategory.None ? TextRepository.GetValue("Misc.All") : Localization.GetValue(currentCategory);
 
-            /*
-            if (activeGrid.ItemContainer.Category == InventoryCategory.Junk ||
-                activeGrid.ItemContainer.Category == InventoryCategory.Gadgets ||
-                activeGrid.ItemContainer.Category == InventoryCategory.Trinkets)
-            {
-                InvalidateEquippedItem(activeGrid.ItemContainer.SelectedItem);
-            }
-            */
-
             foreach (var category in categories)
             {
                 categoryIcons[categories.IndexOf(category)].Opacity = currentCategory == category ? 1f : .5f;
@@ -308,15 +268,6 @@ namespace Remizione
             grid.CategoryFilter = currentCategory;
 
             InvalidateItemInfo();
-        }
-
-        // InvalidateEquippedItem
-        private void InvalidateEquippedItem(Item? item)
-        {
-            if (item != null && item.IsEquipped)
-                buttonEquip.Text = Localization.GetValue(InventoryVerb.TakeOff);
-            else
-                buttonEquip.Text = Localization.GetValue(InventoryVerb.Wear);
         }
 
         // InvalidateItemInfo
@@ -333,13 +284,19 @@ namespace Remizione
                 itemDescription.Text = $"@Item.{item.Name}.Description";
                 itemIcon.Image = item.MetaItem.Image;
 
-                var pos = itemDescription.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
-
                 // HP
                 if (item.MetaItem.HP != null)
                 {
                     hpBonus.Position = itemDescription.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
                     hpBonus.Amount = item.MetaItem.HP.MaximumValue;
+                }
+
+                if (item.MetaItem.Category == ItemCategory.Trinkets)
+                {
+                    if (item.IsEquipped == true)
+                        buttonEquip.Text = Localization.GetValue(InventoryVerb.TakeOff);
+                    else
+                        buttonEquip.Text = Localization.GetValue(InventoryVerb.Equip);
                 }
             }
             else
@@ -412,7 +369,6 @@ namespace Remizione
                 {
                     Sound.Play(SoundNames.ItemDiscard);
                     grid.DiscardSelectedItem();
-                    InvalidateEquippedItem(pilgrimSack.SelectedItem);
                     LayoutCategoryIcons();
                     InvalidateItemInfo();
                 }
@@ -443,21 +399,23 @@ namespace Remizione
         }
 
         // TestEquip
-        private bool TestEquip(Item selectedItem)
+        private bool TestEquip(Item item)
         {
-            if (selectedItem.MetaItem.Category == ItemCategory.Trinkets)
+            if (item.IsEquipped && item.MetaItem.Category != ItemCategory.Trinkets)
+                return false;
+
+            if (buttonEquip.TestPressed(PlayerIndex.One))
             {
-                if (buttonEquip.TestPressed(PlayerIndex.One))
-                {
-                    Sound.Play(SoundNames.ItemEquip);
-                    if (selectedItem.IsEquipped)
-                        pilgrimSack.Unequip(selectedItem);
-                    else
-                        pilgrimSack.Equip(selectedItem);
-                    InvalidateEquippedItem(selectedItem);
-                    
-                    return true;
-                }
+                Sound.Play(SoundNames.ItemEquip);
+               
+                if (item.IsEquipped)
+                    pilgrimSack.Unequip(item);
+                else
+                    pilgrimSack.Equip(item);
+
+                InvalidateItemInfo();
+
+                return true;
             }
 
             return false;
@@ -472,19 +430,7 @@ namespace Remizione
         {
             base.OnDraw(gameTime);
 
-            Game.SpriteBatch.Begin(Game.Camera);
-            Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.BackgroundShade);
-            Game.SpriteBatch.End();
-
-            if (pilgrimSack.Session.GameplayMode == GameplayMode.Run)
-            {
-                trinketSlot.Draw(gameTime);
-                healthMeter.Draw(gameTime);
-                ticketMeter.Draw(gameTime);
-            }
-
-            junkSlot.Draw(gameTime);
-            gadgetSlot.Draw(gameTime);
+            pilgrimSack.Session.HUD.Draw(gameTime);
 
             // Containers
             Game.SpriteBatch.Begin(Game.Camera);
@@ -593,11 +539,6 @@ namespace Remizione
         {
             base.OnLoadContent();
 
-            healthMeter.Actor = pilgrimSack.Session.Player;
-            junkSlot.Actor = healthMeter.Actor;
-            gadgetSlot.Actor = healthMeter.Actor;
-            trinketSlot.Actor = healthMeter.Actor;
-
             LayoutCategoryIcons();
 
             buttonDiscard.IsBeating = false;
@@ -609,14 +550,15 @@ namespace Remizione
             lastKnownInput = InputMethod.None;
 
             InvalidateCategory();
-
-            ticketMeter.SetInitialValue(pilgrimSack.Session.Tickets);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+            
+            pilgrimSack.Session.HUD.Update(gameTime);
+
             buttonClose.Update(gameTime);
             buttonConsume.Update(gameTime);
             buttonDiscard.Update(gameTime);
@@ -624,10 +566,6 @@ namespace Remizione
             categoryText.Update(gameTime);
             grid.Update(gameTime);
             gridContainer.Update(gameTime);
-            junkSlot.Update(gameTime);
-            gadgetSlot.Update(gameTime);
-            trinketSlot.Update(gameTime);
-            healthMeter.Update(gameTime);
             itemName.Update(gameTime);
             itemDescription.Update(gameTime);
             nextCategoryButton.Update(gameTime);
@@ -635,9 +573,6 @@ namespace Remizione
 
             if (lastKnownInput != InputManager.DefaultPlayer.LastInputMethod)
                 lastKnownInput = InputManager.DefaultPlayer.LastInputMethod;
-
-            ticketMeter.Value = pilgrimSack.Session.Tickets;
-            ticketMeter.Update(gameTime);
         }
 
         #endregion

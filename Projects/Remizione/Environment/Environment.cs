@@ -15,7 +15,6 @@ namespace Remizione
         {
             this.session = session;
             this.Lightning = new(session);
-            this.Rain = new Rain(session);
 
             // Global light
             this.GlobalLight ??= new Light(session.Game, "GlobalLight")
@@ -39,16 +38,9 @@ namespace Remizione
         internal void Update(GameTime gameTime)
         {
             Lightning.Update(gameTime);
-            Rain.Update(gameTime);
         }
 
         #endregion
-
-        // EnterRoom
-        public void EnterRoom()
-        {
-            Rain.EnterRoom();
-        }
 
         // ExitRoom
         public void ExitRoom()
@@ -57,8 +49,5 @@ namespace Remizione
 
         // Lightning
         public Lightning Lightning { get; }
-
-        // Rain
-        public Rain Rain { get; }
     }
 }

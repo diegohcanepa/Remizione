@@ -20,7 +20,6 @@ namespace Remizione
             GutStains = CreateReadOnlyCollection("GutStain", 1, 2);
             GlobalLight = this[nameof(GlobalLight)];
             LightningLight = this[nameof(LightningLight)];
-            RainParticles = CreateReadOnlyCollection("RainParticle", 1, 5);
             Ticket = this[nameof(Ticket)];
         }
 
@@ -47,9 +46,6 @@ namespace Remizione
 
         // LightningLight
         public AtlasImage LightningLight { get; }
-
-        // RainParticles
-        public ReadOnlyCollection<AtlasImage> RainParticles { get; }
 
         // Ticket
         public AtlasImage Ticket { get; }

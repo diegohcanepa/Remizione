@@ -349,8 +349,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Inventory-assets/PilgrimSackSlot.png</key>
-            <key type="filename">Inventory-assets/PilgrimSackSlotSelected.png</key>
+            <key type="filename">Inventory-assets/ItemGridSlot.png</key>
+            <key type="filename">Inventory-assets/ItemGridSlotSelected.png</key>
             <key type="filename">UI-assets/EquipmentSlot.png</key>
             <key type="filename">UI-assets/SackSlot.png</key>
             <struct type="IndividualSpriteSettings">

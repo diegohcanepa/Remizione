@@ -49,9 +49,6 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (!IsVisible)
-                return;
-
             Game.SpriteBatch.Begin(Game.Camera);
             slotImage.Draw(gameTime);
             Game.SpriteBatch.End();
@@ -62,9 +59,6 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (!IsVisible)
-                return;
-
             button.Update(gameTime);
             slotImage.Update(gameTime);
         }
@@ -85,8 +79,5 @@ namespace Remizione
 
             return HandleInputResult.Unhandled;
         }
-
-        // IsVisible
-        public bool IsVisible => session.Player != null && session.IsCurrentScene;
     }
 }

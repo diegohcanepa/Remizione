@@ -91,13 +91,13 @@ namespace Remizione
         }
 
         // EquipNext
-        public void EquipNext(ItemCategory category)
+        public Item? EquipNext(ItemCategory category, MetaItem? metaItem = null)
         {
             if (items.Count == 0)
-                return;
+                return null;
 
             if (category == ItemCategory.None)
-                return;
+                return null;
 
             var currentItem = GetEquippedItem(category);
             var index = currentItem == null ? -1 : items.IndexOf(currentItem);
@@ -109,10 +109,15 @@ namespace Remizione
 
                 if (nextItem.MetaItem.Category == category)
                 {
-                    Equip(nextItem);
-                    break;
+                    if (metaItem == null || metaItem.Name == nextItem.MetaItem.Name)
+                    {
+                        Equip(nextItem);
+                        return nextItem;
+                    }
                 }
             }
+
+            return null;
         }
 
         // EquippedGadget
@@ -123,6 +128,36 @@ namespace Remizione
 
         // EquippedTrinket
         public Item? EquippedTrinket { get; private set; }
+
+        // EquipPrevious
+        public Item? EquipPrevious(ItemCategory category, MetaItem? metaItem = null)
+        {
+            if (items.Count == 0)
+                return null;
+
+            if (category == ItemCategory.None)
+                return null;
+
+            var currentItem = GetEquippedItem(category);
+            var index = currentItem == null ? items.Count : items.IndexOf(currentItem);
+
+            for (var i = 1; i <= items.Count; i++)
+            {
+                var prevIndex = (index - i + items.Count) % items.Count;
+                var prevItem = items[prevIndex];
+
+                if (prevItem.MetaItem.Category == category)
+                {
+                    if (metaItem == null || metaItem.Name == prevItem.MetaItem.Name)
+                    {
+                        Equip(prevItem);
+                        return prevItem;
+                    }
+                }
+            }
+
+            return null;
+        }
 
         // Find
         public Item? Find(string name)
@@ -221,19 +256,21 @@ namespace Remizione
         // Remove
         public bool Remove(Item item)
         {
+            var itemIndex = items.IndexOf(item);
             if (items.Remove(item))
             {
                 if (SelectedItem == item)
                 {
-                    if (item.Index > 0)
-                        Select(items[item.Index - 1]);
-                    else if (item.Index < items.Count - 1)
-                        Select(items[item.Index + 1]);
+                    if (itemIndex > 0)
+                        Select(items[itemIndex - 1]);
+                    else if (itemIndex < items.Count - 1)
+                        Select(items[itemIndex + 1]);
                     else
                         SelectedItem = null;
                 }
-        
-                EquipNext(item.MetaItem.Category);
+
+                if (EquipNext(item.MetaItem.Category, item.MetaItem) == null)
+                    EquipNext(item.MetaItem.Category);
 
                 return true;
             }

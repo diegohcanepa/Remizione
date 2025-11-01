@@ -24,7 +24,7 @@ namespace Remizione
     public enum Faction { Neutral, Good, Evil }
 
     // GameplayMode
-    public enum GameplayMode { Adventure, Run }
+    public enum GameplayMode { Adventure, Action }
 
     // GridMeasureType
     public enum GridMeasureType { BoundingBox, Collider, Hotspot }
@@ -42,7 +42,7 @@ namespace Remizione
     public enum ImpactWordName { None, AghGreen, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
 
     // InventoryVerb
-    public enum InventoryVerb { TakeOff, Wear }
+    public enum InventoryVerb { TakeOff, Equip }
 
     // ItemAction
     public enum ItemAction { None, Place, Throw }
@@ -92,9 +92,6 @@ namespace Remizione
 
     // PropState
     public enum PropState { None, Closed, Empty, TurnedOff, Open, Locked, Unlocked }
-
-    // RainDropImpactKind
-    public enum RainDropImpactKind { None, Ground, Water }
 
     // RenderLayer
     public enum RenderLayer { BehindBackground, Background, OverBackground, Default, Foreground, ForegroundNoLight }

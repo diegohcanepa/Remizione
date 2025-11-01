@@ -1,20 +1,19 @@
 ﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Remizione
 {
     /// <summary>
-    /// PilgtimSackSlot
+    /// ItemGridSlot
     /// </summary>
-    public sealed class PilgtimSackSlot : GameObject
+    public sealed class ItemGridSlot : GameObject
     {
         #region Private fields
 
         private readonly TextSprite amountText;
         private readonly ImageSprite checkMark;
-        private readonly InventoryGrid grid;
+        private readonly ItemGrid grid;
         private readonly ImageSprite icon;
         private Item? item;
         private readonly ImageSprite selectedSlotImage;
@@ -26,7 +25,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public PilgtimSackSlot(InventoryGrid grid)
+        public ItemGridSlot(ItemGrid grid)
             : base(grid.Game)
         {
             this.grid = grid;
@@ -39,10 +38,10 @@ namespace Remizione
             };
 
             // Slot image
-            this.slotImage = new(Game, Atlases.UI.PilgrimSackSlot);
+            this.slotImage = new(Game, Atlases.UI.ItemGridSlot);
 
             // Selected slot image
-            this.selectedSlotImage = new(Game, Atlases.UI.PilgrimSackSlotSelected);
+            this.selectedSlotImage = new(Game, Atlases.UI.ItemGridSlotSelected);
 
             // State icon image
             this.stateIcon = new(Game)
@@ -90,6 +89,7 @@ namespace Remizione
                 icon.Draw(gameTime);
 
             amountText.Draw(gameTime);
+
             if (Item?.IsEquipped == true)
                 checkMark.Draw(gameTime);
 

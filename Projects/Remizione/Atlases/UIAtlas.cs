@@ -27,8 +27,8 @@ namespace Remizione
             InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
             InventoryInfoTitleContainer = this[nameof(InventoryInfoTitleContainer)];
             InventoryNavigationBar = this[nameof(InventoryNavigationBar)];
-            PilgrimSackSlot = this[nameof(PilgrimSackSlot)];
-            PilgrimSackSlotSelected = this[nameof(PilgrimSackSlotSelected)];
+            ItemGridSlot = this[nameof(ItemGridSlot)];
+            ItemGridSlotSelected = this[nameof(ItemGridSlotSelected)];
             EquipmentSlotTrinketsIcon = this[nameof(EquipmentSlotTrinketsIcon)];
             MessageContainer = this[nameof(MessageContainer)];
             MouseCursorArrow = this[nameof(MouseCursorArrow)];
@@ -88,7 +88,6 @@ namespace Remizione
         // HeartHalfIcon
         public AtlasImage HeartHalfIcon { get; }
 
-
         // HeartHalfIconWithShadow
         public AtlasImage HeartHalfIconWithShadow { get; }
 
@@ -104,11 +103,11 @@ namespace Remizione
         // MouseCursorArrow
         public AtlasImage MouseCursorArrow { get; }
 
-        // PilgrimSackSlot
-        public AtlasImage PilgrimSackSlot { get; }
+        // ItemGridSlot
+        public AtlasImage ItemGridSlot { get; }
 
-        // PilgrimSackSlotSelected
-        public AtlasImage PilgrimSackSlotSelected { get; }
+        // ItemGridSlotSelected
+        public AtlasImage ItemGridSlotSelected { get; }
 
         // Pixel
         public AtlasImage Pixel { get; }

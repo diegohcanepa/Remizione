@@ -13,15 +13,14 @@ namespace Remizione
     {
         #region Private fields
 
-        private Actor? actor;
         private readonly TextSprite amountText;
         private readonly UITextButton button;
         private readonly ImageSprite itemImage;
         private readonly Vector2Tween itemImageScaleTween = new();
         private int lastKnownCount;
         private Item? lastKnownItem;
-        private readonly InputBinding nextInputBinding;
-        private readonly InputBinding previousInputBinding;
+        private readonly InputBinding? nextInputBinding;
+        private readonly InputBinding? previousInputBinding;
         private readonly GameSession session;
         private readonly ImageSprite slotImage;
 
@@ -30,29 +29,29 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        protected EquipmentSlot(GameSession session, Vector2 position, ItemCategory itemCategory, InputBinding inputBinding, bool horizontalCycle)
+        protected EquipmentSlot(GameSession session, Vector2 position, ItemCategory itemCategory, InputBinding? inputBinding)
             : base(session.Game)
         {
             this.session = session;
 
             this.ItemCategory = itemCategory;
-            this.HorizontalCycle = horizontalCycle;
 
-            if (horizontalCycle)
+            // Bindings
+            if (itemCategory == ItemCategory.Junk)
             {
                 previousInputBinding = InputBindings.SelectLeft;
                 nextInputBinding = InputBindings.SelectRight;
             }
-            else
+            else if (itemCategory == ItemCategory.Gadgets)
             {
                 previousInputBinding = InputBindings.SelectUp;
                 nextInputBinding = InputBindings.SelectDown;
             }
 
             // Slot image
-            this.slotImage = new ImageSprite(Game, Atlases.UI.EquipmentSlot)
+            this.slotImage = new ImageSprite(Game, itemCategory == ItemCategory.Trinkets ? Atlases.UI.TrinketSlot : Atlases.UI.EquipmentSlot)
             {
-                PivotOrigin = RectanglePoint.LeftBottom,
+                PivotOrigin = itemCategory == ItemCategory.Trinkets ? RectanglePoint.LeftTop : RectanglePoint.LeftBottom,
                 Position = position
             };
 
@@ -63,6 +62,9 @@ namespace Remizione
                 Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Center, 0, -1),
                 Scale = ScaleInfo.UIElement.Small
             };
+
+            if (itemCategory == ItemCategory.Trinkets)
+                itemImage.X -= .5f;
 
             // Amount
             this.amountText = new TextSprite(Game, Fonts.CommonOutline)
@@ -79,13 +81,18 @@ namespace Remizione
             {
                 AllowSound = false,
                 ImageName = $"{itemCategory}Slot",
-                PivotOrigin = horizontalCycle ? RectanglePoint.RightBottom : RectanglePoint.LeftBottom
             };
 
-            if (horizontalCycle)
-                button.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 2, -1);
-            else
+            if (itemCategory == ItemCategory.Junk)
+            {
+                button.PivotOrigin = RectanglePoint.RightBottom;
+                button.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 3, -1);
+            }
+            else if (itemCategory == ItemCategory.Gadgets)
+            {
+                button.PivotOrigin = RectanglePoint.LeftBottom;
                 button.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3, -1);
+            }
 
             InvalidateItem();
         }
@@ -126,18 +133,6 @@ namespace Remizione
             }
         }
 
-        // SelectNext
-        private bool SelectNext()
-        {
-            return session.PilgrimSack.SelectNext() != null;
-        }
-
-        // SelectPrevious
-        private bool SelectPrevious()
-        {
-            return session.PilgrimSack.SelectPrevious() != null;
-        }
-
         #endregion
 
         #region Protected members
@@ -145,15 +140,12 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (!IsVisible)
-                return;
-
             Game.SpriteBatch.Begin(Game.Camera);
             slotImage.Draw(gameTime);
             itemImage.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            if (!HideButton)
+            if (session.IsCurrentScene)
                 button.Draw(gameTime);
 
             if (lastKnownItem?.MetaItem.AllowEmpty == true)
@@ -167,9 +159,6 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (!IsVisible)
-                return;
-
             if (lastKnownItem != session.PilgrimSack.GetEquippedItem(ItemCategory))
                 InvalidateItem();
             else
@@ -182,26 +171,10 @@ namespace Remizione
 
         #endregion
 
-        // Actor
-        public Actor? Actor
-        {
-            get => actor;
-            set
-            {
-                if (value != actor)
-                {
-                    actor = value;
-                    lastKnownCount = -1;
-                    lastKnownItem = null;
-                    InvalidateItem();
-                }
-            }
-        }
-
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
-            if (actor == null || session.IsAwaiting)
+            if (session.Player == null || session.IsAwaiting)
                 return HandleInputResult.Unhandled;
 
             // Use item
@@ -209,30 +182,30 @@ namespace Remizione
             {
                 if (lastKnownItem == null)
                 {
-                    if (session.PilgrimSack.SelectPrevious() == null)
+                    if (session.PilgrimSack.EquipPrevious(ItemCategory) == null)
                         Sound.Play(SoundNames.Error);
                     else
                         Sound.Play(SoundNames.UIHover);
                 }
                 else
-                    actor.UseEquippedItem(ItemCategory);
+                    session.Player.UseEquippedItem(ItemCategory);
 
                 return HandleInputResult.Handled;
             }
 
             // Previous item
-            if (previousInputBinding.IsPressed(PlayerIndex.One))
+            if (previousInputBinding?.IsPressed(PlayerIndex.One) == true)
             {
-                if (SelectPrevious())
+                if (session.PilgrimSack.EquipPrevious(ItemCategory) != null)
                     Sound.Play(SoundNames.UIHover);
 
                 return HandleInputResult.Handled;
             }
 
             // Next item
-            else if (nextInputBinding.IsPressed(PlayerIndex.One))
+            else if (nextInputBinding?.IsPressed(PlayerIndex.One) == true)
             {
-                if (SelectNext())
+                if (session.PilgrimSack.EquipNext(ItemCategory) != null)
                     Sound.Play(SoundNames.UIHover);
 
                 return HandleInputResult.Handled;
@@ -241,19 +214,7 @@ namespace Remizione
             return HandleInputResult.Unhandled;
         }
 
-        // HideButton
-        public bool HideButton { get; set; }
-
-        // HorizontalCycle
-        public bool HorizontalCycle { get; }
-
         // ItemCategory
         public ItemCategory ItemCategory { get; }
-
-        // IsVisible
-        public bool IsVisible => SceneScope == null || Game.SceneManager.CurrentScene == SceneScope;
-
-        // SceneScope
-        public Scene? SceneScope { get; set; }
     }
 }

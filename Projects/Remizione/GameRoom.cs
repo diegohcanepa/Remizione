@@ -355,9 +355,6 @@ namespace Remizione
             // Shadows
             DrawShadows(gameTime);
 
-            // Rain drop impacts
-            Session.Environment.Rain.DrawImpacts(gameTime);
-
             // Default (layer)
             DrawThings(gameTime, RenderLayer.Default, interactiveTarget);
 
@@ -366,10 +363,6 @@ namespace Remizione
 
             // Foreround (layer)
             DrawThings(gameTime, RenderLayer.Foreground, interactiveTarget);
-
-            // Rain
-            if (Session.Environment.Rain.IsRaining)
-                Session.Environment.Rain.Draw(gameTime);
 
             Session.Environment.Lightning.Draw(gameTime);
 

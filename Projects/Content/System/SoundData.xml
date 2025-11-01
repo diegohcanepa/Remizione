@@ -4,7 +4,6 @@
 	<Ambience Name="Ambience1" MaxInstances="1" />
 	<Ambience Name="Day" />
 	<Ambience Name="Night" />
-	<Ambience Name="Rain" MaxInstances="2" />
 	
 	<!-- Music -->
 	<Music Name="Arrival" MaxInstances="2" />

@@ -10,7 +10,7 @@ namespace Remizione
     /// <summary>
     /// InventoryGrid
     /// </summary>
-    public sealed class InventoryGrid : GameObject, IInputHandler
+    public sealed class ItemGrid : GameObject, IInputHandler
     {
         #region Private fields
 
@@ -21,7 +21,7 @@ namespace Remizione
         private Vector2 position;
         private readonly int rows;
         private int selectedSlotIndex;
-        private readonly List<PilgtimSackSlot> slots;
+        private readonly List<ItemGridSlot> slots;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 100 };
 
         #endregion
@@ -29,17 +29,17 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public InventoryGrid(PilgrimSack pilgrimSack, ItemCategory categoryFilter, int columns, int rows)
+        public ItemGrid(PilgrimSack pilgrimSack, ItemCategory categoryFilter, int columns, int rows)
             : base(pilgrimSack.Session.Game)
         {
             this.PilgrimSack = pilgrimSack;
             this.columns = columns;
             this.rows = rows;
-            this.slots = new List<PilgtimSackSlot>(columns * rows);
+            this.slots = new List<ItemGridSlot>(columns * rows);
 
             for (int i = 0; i < columns * rows; i++)
             {
-                slots.Add(new PilgtimSackSlot(this));
+                slots.Add(new ItemGridSlot(this));
             }
 
             this.CategoryFilter = categoryFilter;
@@ -198,7 +198,7 @@ namespace Remizione
         }
 
         // GetSlot
-        public PilgtimSackSlot? GetSlot(Item item)
+        public ItemGridSlot? GetSlot(Item item)
         {
             for (var i = 0; i < slots.Count; i++)
             {
@@ -210,10 +210,10 @@ namespace Remizione
         }
 
         // GetSlotAt
-        public PilgtimSackSlot? GetSlotAt(Vector2 position) => GetSlotAt((int)position.X, (int)position.Y);
+        public ItemGridSlot? GetSlotAt(Vector2 position) => GetSlotAt((int)position.X, (int)position.Y);
 
         // GetSlotAt
-        public PilgtimSackSlot? GetSlotAt(int x, int y)
+        public ItemGridSlot? GetSlotAt(int x, int y)
         {
             if (!BoundingBox.Contains(x, y))
                 return null;
@@ -281,7 +281,7 @@ namespace Remizione
         {
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
             {
-                if (GetSlotAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is PilgtimSackSlot slot)
+                if (GetSlotAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is ItemGridSlot slot)
                 {
                     MouseCursor.Instance.AnimateClick();
 
@@ -302,7 +302,7 @@ namespace Remizione
         }
 
         // IndexOf
-        public int IndexOf(PilgtimSackSlot slot) => slots.IndexOf(slot);
+        public int IndexOf(ItemGridSlot slot) => slots.IndexOf(slot);
 
         // PilgrimSack
         public PilgrimSack PilgrimSack { get; }
@@ -331,7 +331,7 @@ namespace Remizione
         // SelectSlot
         public void SelectSlot(Vector2 position)
         {
-            if (GetSlotAt(position) is PilgtimSackSlot slot)
+            if (GetSlotAt(position) is ItemGridSlot slot)
                 SelectSlot(slot);
         }
 
@@ -351,7 +351,7 @@ namespace Remizione
         }
 
         // SelectSlot
-        public bool SelectSlot(PilgtimSackSlot slot)
+        public bool SelectSlot(ItemGridSlot slot)
         {
             for (var i = 0; i < slots.Count; i++)
             {
@@ -369,7 +369,7 @@ namespace Remizione
         public Item? SelectedItem => SelectedSlot?.Item;
 
         // SelectedSlot
-        public PilgtimSackSlot SelectedSlot => slots[selectedSlotIndex];
+        public ItemGridSlot SelectedSlot => slots[selectedSlotIndex];
 
         // SelectedSlotIndex
         public int SelectedSlotIndex

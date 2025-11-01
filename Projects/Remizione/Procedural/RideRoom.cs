@@ -30,7 +30,6 @@ namespace Remizione
             : base(session, name, RoomKind.RideRoom, roomIndex, isLastRoom)
         {
             AllowGlobalLight = true;
-            Zoom = 1.1f;
         }
 
         #region Private members
@@ -155,15 +154,29 @@ namespace Remizione
                 }
             }
 
-            // Exit rail
+            // Exit Tunnel
             else
-            {
+            {      
                 this.RightConnector = Session.GetEntity<IsometricProp>("ExitRail");
+
                 if (this.RightConnector != null)
                 {
-                    this.RightConnector.Position = new Vector2(CustomWidth, RightConnector.BoundingBox.Height - 22);
+                    this.RightConnector.Position = new Vector2(CustomWidth, 0);
                     MainGrid.ReserveSpace(RightConnector, false);
                     Children.Add(this.RightConnector);
+
+                    if (Session.GetEntity<IsometricProp>("ExitTunnel") is IsometricProp exitTunnel)
+                    {
+                        exitTunnel.Position = RightConnector.Position;
+                        Children.Add(exitTunnel);
+                    }
+
+                    if (Session.GetEntity<IsometricProp>("ExitTunnelPatch") is IsometricProp exitTunnelPatch)
+                    {
+                        exitTunnelPatch.Position = RightConnector.Position;
+                        exitTunnelPatch.Y += 30;
+                        Children.Add(exitTunnelPatch);
+                    }
 
                     if (Session.GetEntity<ExitRideCar>(nameof(ExitRideCar)) is ExitRideCar exitRideCar)
                     {
@@ -180,7 +193,7 @@ namespace Remizione
                 {
                     statue.Position = this.RightConnector.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -5, -15);
                     if (RoomPhase == RunPhase.End)
-                        statue.Position += new Vector2(20, -1);
+                        statue.Position += new Vector2(20, -41);
 
                     MainGrid.ReserveSpace(statue, false);
                     Children.Add(statue);

@@ -38,9 +38,6 @@ namespace Remizione
         // PropRevealOpacity
         public const float PropRevealOpacity = .5f;
 
-        // RainDurationRange
-        public static readonly Int32Range RainDurationRange = new(180000, 300000);
-
         // SteamAppID
         public const int SteamAppID = 480;
 

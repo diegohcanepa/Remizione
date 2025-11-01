@@ -25,6 +25,7 @@ namespace Remizione
         private readonly PilgrimSackScene pilgrimSackScene;
         private Actor? player;
         private Vector2? playerPosition;
+        private readonly UIPrompt prompt;
         private readonly RoomEditor? roomEditor;
         private readonly List<GameThing> staticThings = [];
         private readonly Dictionary<string, GameThing> staticThingsDict = [];
@@ -83,6 +84,9 @@ namespace Remizione
             this.MetaItemPool = new();
             this.pilgrimSackScene = new PilgrimSackScene(PilgrimSack);
             this.useKeyItemScene = new UseKeyItemScene(PilgrimSack);
+
+            // Prompt
+            this.prompt = new(this);
         }
 
         #endregion
@@ -170,7 +174,6 @@ namespace Remizione
             scriptRegistry.RegisterStatement("await-popup", typeof(AwaitPopupCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("begin-resistance-table", typeof(BeginResistanceTableCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("begin-loot-table", typeof(BeginLootTableCommand), CodingContext.Initialization);
-            scriptRegistry.RegisterStatement("begin-rain", typeof(BeginRainCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("create-dialog-block", typeof(CreateDialogBlockCommand));
             scriptRegistry.RegisterStatement("echo", typeof(EchoCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("empty-pilgrim-sack", typeof(EmptyPilgrimSackCommand), CodingContext.Execution);
@@ -199,7 +202,11 @@ namespace Remizione
         {
             base.OnDraw(gameTime);
 
-            HUD.Draw(gameTime);
+            if (GameplayMode == GameplayMode.Action && IsHUDVisible && IsCurrentScene)
+                HUD.Draw(gameTime);
+
+            if (!IsAwaiting)
+                prompt.Draw(gameTime);
 
             if (IsPaused)
             {
@@ -215,8 +222,6 @@ namespace Remizione
         // OnEnterRoom
         protected override void OnEnterRoom(Room room)
         {
-            Environment.EnterRoom();
-
             var width = room.Width == 0 ? room.CustomWidth : room.Width;
             var height = room.Height == 0 ? room.CustomHeight : room.Height;
             Camera.Setup(width, height, room.ScrollLock, room.Zoom);
@@ -311,15 +316,6 @@ namespace Remizione
             }
         }
 
-        // OnSave
-        protected override void OnSave()
-        {
-            base.OnSave();
-
-            if (IsCurrentScene)
-                HUD.ShowSavingIcon();
-        }
-
         // OnScriptLibraryLoaded
         protected override void OnScriptLibraryLoaded()
         {
@@ -373,7 +369,10 @@ namespace Remizione
             roomEditor?.HandleInput();
 
             Environment.Update(gameTime);
-            HUD.Update(gameTime);
+            prompt.Update(gameTime);
+
+            if (GameplayMode == GameplayMode.Action && IsHUDVisible)
+                HUD.Update(gameTime);
 
             // Check game over condition
             if (!IsAwaiting)

@@ -53,7 +53,7 @@ namespace Remizione
             };
 
             // SlotImage
-            this.slotImage = new(Game, Atlases.UI.PilgrimSackSlot)
+            this.slotImage = new(Game, Atlases.UI.ItemGridSlot)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Position = slotPosition

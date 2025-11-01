@@ -11,11 +11,13 @@ namespace Remizione
     {
         #region Private fields
 
+        private readonly GadgetSlot gadgetSlot;
         private readonly UIHealthMeter healthMeter;
-        private readonly UIPrompt prompt;
-        private readonly ImageSprite savingIcon;
+        private readonly JunkSlot junkSlot;
+        private readonly SackSlot sackSlot;
         private readonly GameSession session;
         private readonly UITicketMeter ticketMeter;
+        private readonly TrinketSlot trinketSlot;
 
         #endregion
 
@@ -32,37 +34,20 @@ namespace Remizione
             this.Message = new(Game);
             this.TargetMeter = new(Game);
 
-            // Saving icon
-            this.savingIcon = new ImageSprite(Game, Atlases.UI.SavingIcon)
-            {
-                PivotOrigin = RectanglePoint.RightTop,
-                Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -6, 3),
-                Scale = ScaleInfo.UIElement.Tiny
-            };
-
-            // Prompt
-            this.prompt = new(session);
-
-            // Bag slot
-            this.BagSlot = new(session);
-
             // Junk slot
-            this.JunkSlot = new(session)
-            {
-                SceneScope = session
-            };
+            this.junkSlot = new(session);
 
             // Gadget slot
-            this.GadgetSlot = new(session)
-            {
-                SceneScope = session
-            };
+            this.gadgetSlot = new(session);
+
+            // Sack slot
+            this.sackSlot = new(session);
 
             // Ticket meter
             this.ticketMeter = new(Game);
 
             // Trincket slot
-            this.TrincketSlot = new(session.PilgrimSack);
+            this.trinketSlot = new(session);
         }
 
         #endregion
@@ -72,56 +57,34 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (session.IsHUDVisible)
+            if (session.IsCurrentScene)
             {
-                if (session.GameplayMode == GameplayMode.Run)
-                {
-                    if (!session.IsConsoleVisible)
-                    {
-                        BagSlot.Draw(gameTime);
-                        JunkSlot.Draw(gameTime);
-                        GadgetSlot.Draw(gameTime);
-                    }
-
-                    if (session.IsCurrentScene)
-                    {
-                        TrincketSlot.Draw(gameTime);
-                        healthMeter.Draw(gameTime);
-                        TargetMeter.Draw(gameTime);
-                        ticketMeter.Draw(gameTime);
-                    }
-                }
-
+                sackSlot.Draw(gameTime);
+                if (session.IsRunInProgress)
+                    TargetMeter.Draw(gameTime);
                 Log.Draw(gameTime);
                 Message.Draw(gameTime);
             }
 
-            if (!session.IsAwaiting)
-                prompt.Draw(gameTime);
-
-            if (savingIcon.Tweens.IsTweening)
-            {
-                Game.SpriteBatch.Begin(Game.Camera);
-                savingIcon.Draw(gameTime);
-                Game.SpriteBatch.End();
-            }
+            junkSlot.Draw(gameTime);
+            gadgetSlot.Draw(gameTime);
+            trinketSlot.Draw(gameTime);
+            healthMeter.Draw(gameTime);
+            ticketMeter.Draw(gameTime);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             TargetMeter.Update(gameTime);
-            BagSlot.Update(gameTime);
-            JunkSlot.Update(gameTime);
-            GadgetSlot.Update(gameTime);
-            TrincketSlot.Update(gameTime);
+            sackSlot.Update(gameTime);
+            junkSlot.Update(gameTime);
+            gadgetSlot.Update(gameTime);
+            trinketSlot.Update(gameTime);
             healthMeter.Update(gameTime);
-            prompt.Update(gameTime);
 
             Log.Update(gameTime);
             Message.Update(gameTime);
-
-            savingIcon.Update(gameTime);
 
             if (session.Player != null)
             {
@@ -132,12 +95,6 @@ namespace Remizione
 
         #endregion
 
-        // BagSlot
-        public SackSlot BagSlot { get; }
-
-        // GadgetSlot
-        public GadgetSlot GadgetSlot { get; }
-
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
@@ -147,20 +104,17 @@ namespace Remizione
             if (session.IsConsoleVisible || session.GameplayMode == GameplayMode.Adventure)
                 return HandleInputResult.Unhandled;
 
-            if (JunkSlot.HandleInput(gameTime) == HandleInputResult.Handled)
+            if (junkSlot.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            if (GadgetSlot.HandleInput(gameTime) == HandleInputResult.Handled)
+            if (gadgetSlot.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            if (BagSlot.HandleInput(gameTime) == HandleInputResult.Handled)
+            if (sackSlot.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
             return HandleInputResult.Unhandled;
         }
-
-        // JunkSlot
-        public JunkSlot JunkSlot { get; }
 
         // Log
         public UILog Log { get; }
@@ -172,22 +126,9 @@ namespace Remizione
         public void Reset()
         {
             healthMeter.Actor = session.Player;
-            //BagSlot.Actor = session.Player;
-            //JunkSlot.Actor = session.Player;
-            //GadgetSlot.Actor = session.Player;
-            //TrincketSlot.Actor = session.Player;
-        }
-
-        // ShowSavingIcon
-        public void ShowSavingIcon()
-        {
-            savingIcon.Tweens.OpacityTween = FloatTween.Create(TweenStyle.QuadraticInOut, 1, .8f, 300, 10);
         }
 
         // TargetMeter
         public UITargetMeter TargetMeter { get; }
-
-        // TrincketSlot
-        public TrinketSlot TrincketSlot { get; }
     }
 }

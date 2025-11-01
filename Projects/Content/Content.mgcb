@@ -89,6 +89,21 @@
 #begin Atlases/Menu.xml
 /copy:Atlases/Menu.xml
 
+#begin Atlases/Monitor.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Atlases/Monitor.png
+
+#begin Atlases/Monitor.xml
+/copy:Atlases/Monitor.xml
+
 #begin Atlases/RideRoom.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -181,12 +196,6 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Ambience/Night.wav;Audio/Ambience/Night
-
-#begin Audio/Ambience/Rain.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Ambience/Rain.wav
 
 #begin Audio/FX/AppleBite.wav
 /importer:WavImporter

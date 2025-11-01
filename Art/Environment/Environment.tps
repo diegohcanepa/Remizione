@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.9.0</string>
+        <string>7.9.1</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -372,81 +372,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Environment-assets/RainParticle1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>45,11,89,21</rect>
-                <key>scale9Paddings</key>
-                <rect>45,11,89,21</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/RainParticle2.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>33,10,66,19</rect>
-                <key>scale9Paddings</key>
-                <rect>33,10,66,19</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/RainParticle3.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>40,8,80,17</rect>
-                <key>scale9Paddings</key>
-                <rect>40,8,80,17</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/RainParticle4.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>22,8,43,17</rect>
-                <key>scale9Paddings</key>
-                <rect>22,8,43,17</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/RainParticle5.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>78,16,155,32</rect>
-                <key>scale9Paddings</key>
-                <rect>78,16,155,32</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Environment-assets/ShadowSpot10.png</key>
             <key type="filename">Environment-assets/ShadowSpot11.png</key>
             <struct type="IndividualSpriteSettings">
@@ -588,21 +513,6 @@
                 <rect>4,3,8,5</rect>
                 <key>scale9Paddings</key>
                 <rect>4,3,8,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ExitRail-assets/ExitRail.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,12,31,23</rect>
-                <key>scale9Paddings</key>
-                <rect>16,12,31,23</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1648,17 +1558,9 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">RainDropImpacts-assets/RainDropImpactA01.png</key>
-            <key type="filename">RainDropImpacts-assets/RainDropImpactA02.png</key>
-            <key type="filename">RainDropImpacts-assets/RainDropImpactA03.png</key>
-            <key type="filename">RainDropImpacts-assets/RainDropImpactB01.png</key>
-            <key type="filename">RainDropImpacts-assets/RainDropImpactB02.png</key>
-            <key type="filename">RainDropImpacts-assets/RainDropImpactB03.png</key>
-            <key type="filename">RainDropImpacts-assets/RainDropImpactB04.png</key>
-            <key type="filename">RainDropImpacts-assets/RainDropImpactC01.png</key>
-            <key type="filename">RainDropImpacts-assets/RainDropImpactC02.png</key>
-            <key type="filename">RainDropImpacts-assets/RainDropImpactC03.png</key>
-            <key type="filename">RainDropImpacts-assets/RainDropImpactC04.png</key>
+            <key type="filename">RideExit-assets/ExitRail.png</key>
+            <key type="filename">RideExit-assets/ExitTunnel.png</key>
+            <key type="filename">RideExit-assets/ExitTunnelPatch.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1667,9 +1569,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>6,4,13,8</rect>
+                <rect>36,29,71,57</rect>
                 <key>scale9Paddings</key>
-                <rect>6,4,13,8</rect>
+                <rect>36,29,71,57</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -2061,7 +1963,6 @@
                     <filename>LargeRockB-assets</filename>
                     <filename>SmallRockB-assets</filename>
                     <filename>LootBag-assets</filename>
-                    <filename>RainDropImpacts-assets</filename>
                     <filename>SinnerCross-assets</filename>
                     <filename>Pickups-assets</filename>
                     <filename>ImpactWords-assets</filename>
@@ -2103,7 +2004,6 @@
                     <filename>WaterPuddleC-assets</filename>
                     <filename>Toilet-assets</filename>
                     <filename>CrossLargeB-assets</filename>
-                    <filename>ExitRail-assets</filename>
                     <filename>SpeakerPost-assets</filename>
                     <filename>TreeBentA-assets</filename>
                     <filename>TreeBentB-assets</filename>
@@ -2111,6 +2011,7 @@
                     <filename>DepositMachine-assets</filename>
                     <filename>LagoonA-assets</filename>
                     <filename>Sign-assets</filename>
+                    <filename>RideExit-assets</filename>
                 </array>
             </struct>
         </map>

@@ -11,7 +11,7 @@ namespace Remizione.Scripting
             : base(script, source, args, 1)
         {
             if (MetaItem.Find(Body.Clauses[0]) == null)
-                throw new ScriptException(this, $"Item '{Body.Clauses[1]}' is not defined.");
+                throw new ScriptException(this, $"Item '{Body.Clauses[0]}' is not defined.");
         }
 
         // OnExecute
@@ -23,7 +23,7 @@ namespace Remizione.Scripting
             if (session.Player == null)
                 return;
 
-            if (session.PilgrimSack.Find(Body.Clauses[1]) is Item item)
+            if (session.PilgrimSack.Find(Body.Clauses[0]) is Item item)
                 item.Use(session.Player);
         }
     }
