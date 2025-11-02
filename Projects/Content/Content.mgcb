@@ -815,6 +815,12 @@
 /processorParam:Quality=Best
 /build:Audio/Music/GameOver.wav;Audio/Music/GameOver
 
+#begin Audio/Music/Monitor.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Monitor.wav;Audio/Music/Monitor
+
 #begin Audio/Music/PilgrimPath01.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
