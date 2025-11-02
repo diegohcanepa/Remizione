@@ -228,7 +228,7 @@ namespace Engendro
             Orientation = PolygonOrientation.CounterClockwise;
         }
 
-        // Contains (optimized with ChatGPT)
+        // Contains
         public bool Contains(Vector2 point)
         {
             if (IsEmpty || !BoundingRectangleF.Contains(point))
@@ -247,6 +247,18 @@ namespace Engendro
             }
 
             return inside;
+        }
+
+        // ContainsVertex
+        public bool ContainsVertex(ReadOnlyPolygon polygon)
+        {
+            for (var i = 0; i < polygon.Vertices.Count; i++)
+            {
+                if (Contains(polygon.Vertices[i]))
+                    return true;
+            }
+
+            return false;
         }
 
         // GetClosestPointOnEdge

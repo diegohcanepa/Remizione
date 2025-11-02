@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:c88cc0b8712674cf45cea9d4105c3d93:8dc2037f0bc7fc0723149f7196701035:727a0b1ceb97000f7b752481a192984d$ -->
+<!-- $TexturePacker:SmartUpdate:d1a04eb9f625f97c0408e8b6ac79e634:5c58bd31e9e9f5446c0851fe4e859e19:727a0b1ceb97000f7b752481a192984d$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -21,5 +21,5 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="RideRoom.png" width="512" height="512">
     <sprite n="Medium.png" x="2" y="2" w="330" h="150"/>
-    <sprite n="Small.png" x="2" y="154" w="240" h="150"/>
+    <sprite n="Small.png" x="2" y="154" w="300" h="150"/>
 </TextureAtlas>

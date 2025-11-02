@@ -49,38 +49,22 @@ namespace Remizione
                 controlList[i].Update(gameTime);
 
                 if (!layout && controlList[i].BoundingBox != bbox)
-                {
                     layout = true;
-                }
             }
 
             if (layout)
-            {
                 Layout();
-            }
         }
 
         #endregion
 
         // Add
-        public UITextButton Add(string text, InputBinding? inputBinding)
+        public UITextButton Add(InputBinding inputBinding)
         {
-            return Add(text, inputBinding);
-        }
-
-        // Add
-        public UITextButton Add(string text, InputBinding? gameInput, string? imageName)
-        {
-            UITextButton control = new(Game, gameInput)
+            UITextButton control = new(Game, inputBinding)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
-                Text = text
             };
-
-            if (!string.IsNullOrWhiteSpace(imageName))
-            {
-                control.ImageName = imageName;
-            }
 
             controlList.Add(control);
 

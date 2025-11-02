@@ -607,6 +607,16 @@ namespace Remizione
                 Game.Shapes.DrawFrame(BoundingBox, Color.Green * .6f, .5f);
         }
 
+        // ShowBoundingBoxes
+        public static bool ShowBoundingBoxes { get; set; }
+
+        // ShowColliders
+        public static bool ShowColliders { get; set; }
+
+        // ShowHotspots
+        public static bool ShowHotspots { get; set; }
+#endif
+
         // GridMargin
         [ScriptProperty]
         public Vector2 GridMargin { get; set; }
@@ -652,16 +662,6 @@ namespace Remizione
 
             return true;
         }
-
-        // ShowBoundingBoxes
-        public static bool ShowBoundingBoxes { get; set; }
-
-        // ShowColliders
-        public static bool ShowColliders { get; set; }
-
-        // ShowHotspots
-        public static bool ShowHotspots { get; set; }
-#endif
 
         // DeathSound
         [ScriptProperty]
@@ -959,7 +959,7 @@ namespace Remizione
         public bool IsDead => (HP <= 0 && MaxHP > 0) || (HP == int.MinValue);
 
         // IsEmittingLight
-        public virtual bool IsEmittingLight => AttachedLight != null && AttachedLight.IsEmitting;
+        public virtual bool IsEmittingLight => AttachedLight != null && !IgnoreAttachedLight && AttachedLight.IsEmitting;
 
         // IsMouseOver
         public bool IsMouseOver()

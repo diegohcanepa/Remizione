@@ -168,7 +168,7 @@ namespace Remizione
                             return true;
                         }
                     }
-                    else if (RuntimeHotspot.BoundingRectangleF.Intersects(actor.RuntimeHotspot.BoundingRectangleF))
+                    else if (RuntimeHotspot.ContainsVertex(actor.RuntimeHotspot))
                     {
                         actor.ApplyContactDamage(this);
                         return true;

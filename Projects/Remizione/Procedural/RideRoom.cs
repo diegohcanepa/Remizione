@@ -19,10 +19,10 @@ namespace Remizione
         static RideRoom()
         {
             terrainTable.Add(RoomSize.Small.ToString(), 1, 100);
-            terrainTable.Add(RoomSize.Medium.ToString(), 1, 100);
+            //terrainTable.Add(RoomSize.Medium.ToString(), 1, 100);
 
-            terrainVertices[RoomSize.Small] = ReadOnlyPolygon.GetVertices("234,17;234,122;5,122;5,17");
-            terrainVertices[RoomSize.Medium] = ReadOnlyPolygon.GetVertices("324,18;324,120;7,120;7,18");
+            terrainVertices[RoomSize.Small] = ReadOnlyPolygon.GetVertices("295,17;295,122;5,122;5,17");
+            //terrainVertices[RoomSize.Medium] = ReadOnlyPolygon.GetVertices("324,18;324,120;7,120;7,18");
         }
 
         // Constructor

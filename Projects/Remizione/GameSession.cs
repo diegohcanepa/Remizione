@@ -7,6 +7,7 @@ using Remizione.Scripting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Xml;
 
 namespace Remizione
@@ -118,16 +119,13 @@ namespace Remizione
         {
             get
             {
-                if (!EngendroGame.DebugMode)
-                    return base.CanHandleRoomInput;
-
-                if (console != null && console.IsActive)
+                if (console?.IsActive == true)
                     return false;
 
-                if (roomEditor != null && roomEditor.IsActive)
+                if (roomEditor?.IsActive == true)
                     return false;
 
-                return true;
+                return base.CanHandleRoomInput;
             }
         }
 
@@ -141,12 +139,14 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(Zabul));
             scriptRegistry.RegisterEntity(typeof(BloodyEye));
             scriptRegistry.RegisterEntity(typeof(BreakableProp));
+            scriptRegistry.RegisterEntity(typeof(CloseUpRoom));
             scriptRegistry.RegisterEntity(typeof(DepositMachine));
             scriptRegistry.RegisterEntity(typeof(CreditsRoom));
             scriptRegistry.RegisterEntity(typeof(ExitRideCar));
             scriptRegistry.RegisterEntity(typeof(GameRoom));
             scriptRegistry.RegisterEntity(typeof(HellGoat));
             scriptRegistry.RegisterEntity(typeof(IsometricProp));
+            scriptRegistry.RegisterEntity(typeof(Monitor));
             scriptRegistry.RegisterEntity(typeof(NosyHemorrhoid));
             scriptRegistry.RegisterEntity(typeof(PostClock));
             scriptRegistry.RegisterEntity(typeof(Pottery));

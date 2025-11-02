@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:7b06b550a61d35dafb37251902e3ac6d:e35bb9d13056a8502046b803b8bceffa:391f3728ce36fa87ff02aadce74a4a71$ -->
+<!-- $TexturePacker:SmartUpdate:4123bd3a1891facecb626485faf0aab3:d0e98eaa654e89f488eb357b8175f5fc:391f3728ce36fa87ff02aadce74a4a71$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -24,6 +24,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="ATM02.png" x="470" y="263" w="39" h="44"/>
     <sprite n="Foreground01.png" x="2" y="139" w="307" h="135"/>
     <sprite n="Foreground02.png" x="2" y="276" w="307" h="135"/>
+    <sprite n="ForegroundBushes.png" x="311" y="293" w="95" h="14"/>
     <sprite n="FrontHouse.png" x="449" y="167" w="51" h="94"/>
     <sprite n="RemizioneLight.png" x="311" y="203" w="116" h="88"/>
     <sprite n="RideCar01.png" x="484" y="2" w="25" h="21"/>
