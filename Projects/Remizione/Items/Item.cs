@@ -224,7 +224,6 @@ namespace Remizione
         // Remove
         public void Remove()
         {
-            PilgrimSack.SelectPrevious();
             PilgrimSack.Remove(this);
         }
 

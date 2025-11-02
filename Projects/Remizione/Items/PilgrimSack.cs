@@ -53,6 +53,9 @@ namespace Remizione
         public void Clear()
         {
             SelectedItem = null;
+            EquippedJunk = null;
+            EquippedGadget = null;
+            EquippedTrinket = null;
             items.Clear();
         }
 
@@ -259,6 +262,15 @@ namespace Remizione
             var itemIndex = items.IndexOf(item);
             if (items.Remove(item))
             {
+                if (EquippedJunk == item)
+                    EquippedJunk = null;
+
+                if (EquippedGadget == item)
+                    EquippedGadget = null;
+
+                if (EquippedTrinket == item)
+                    EquippedTrinket = null;
+
                 if (SelectedItem == item)
                 {
                     if (itemIndex > 0)
