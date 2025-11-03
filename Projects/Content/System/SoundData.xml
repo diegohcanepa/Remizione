@@ -37,6 +37,7 @@
 	<FX Name="FootstepA" MaxInstances="8" Sounds="1..2" Volume=".4" />
 	<FX Name="FootstepWater" MaxInstances="8" Sounds="1..6" Volume=".9" />
 	<FX Name="FuseHissing" MaxInstances="10" />
+	<FX Name="GateOpen" />
 	<FX Name="Gesture1" />
 	<FX Name="GutsLarge" MaxInstances="6" />
 	<FX Name="GutsMedium" MaxInstances="6" />

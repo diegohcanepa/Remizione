@@ -455,6 +455,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/FuseHissing.wav;Audio/FX/FuseHissing
 
+#begin Audio/FX/GateOpen.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/GateOpen.wav;Audio/FX/GateOpen
+
 #begin Audio/FX/Gesture1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

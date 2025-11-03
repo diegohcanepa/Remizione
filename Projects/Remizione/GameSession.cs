@@ -7,7 +7,6 @@ using Remizione.Scripting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 using System.Xml;
 
 namespace Remizione
@@ -136,6 +135,7 @@ namespace Remizione
         protected override void ExtendScriptRegistry(ScriptRegistry scriptRegistry)
         {
             scriptRegistry.RegisterEntity(typeof(Actor));
+            scriptRegistry.RegisterEntity(typeof(ArenaRoom));
             scriptRegistry.RegisterEntity(typeof(Zabul));
             scriptRegistry.RegisterEntity(typeof(BloodyEye));
             scriptRegistry.RegisterEntity(typeof(BreakableProp));
@@ -583,6 +583,9 @@ namespace Remizione
                 var nextRoom = RunInfo.RideRooms[RunProgress];
 
                 EnterRoom(RunInfo.RideRooms[RunProgress]);
+
+                if (nextRoom.RoomPhase == RunPhase.Start)
+                    AwaitRoutine(RoutineNames.IncomingRideCarIntro);
 
                 if (RunProgress > 0 && Player != null)
                 {

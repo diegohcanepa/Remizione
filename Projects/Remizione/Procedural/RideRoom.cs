@@ -78,16 +78,6 @@ namespace Remizione
             }
         }
 
-        // OnLoad
-        protected override void OnLoad()
-        {
-            base.OnLoad();
-            AudioManager.Music.PlayTag("Ride");
-
-            if (RoomPhase == RunPhase.Start)
-                Session.AwaitRoutine(RoutineNames.IncomingRideCarIntro);
-        }
-
         // OnPopulating
         protected override void OnPopulating()
         {
@@ -107,7 +97,7 @@ namespace Remizione
                 if (LeftTower != null)
                 {
                     MainGrid.ReserveSpace(LeftTower, false);
-                    Children.Add(this.LeftTower);
+                    Children.Add(LeftTower);
 
                     if (CreateRuntimeClone("LeftTowerPatch") is IsometricProp leftTowerPatch)
                     {

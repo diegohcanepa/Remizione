@@ -49,15 +49,6 @@ namespace Remizione
 
             if (PropState == PropState.Unlocked && Room is RideRoom rideRoom)
             {
-                if (rideRoom.LeftTower != null)
-                {
-                    if (rideRoom.RoomPhase != RunPhase.Start)
-                        rideRoom.LeftTower.Collider = new Polygon("45,0;45,46;35,51;12,43;7,44;29,52;16,56;0,49;0,0");
-
-                    rideRoom.LeftTower.PropState = PropState.Open;
-                    rideRoom.LeftTower.AnimationPlayer.Play(AnimationNames.Opening, false);
-                }
-
                 if (rideRoom.RightConnector != null)
                 {
                     rideRoom.RightConnector.PropState = PropState.Open;

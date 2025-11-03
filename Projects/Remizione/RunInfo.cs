@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Remizione
@@ -9,20 +8,8 @@ namespace Remizione
     /// </summary>
     public static class RunInfo
     {
-        private static readonly Dictionary<string, int> spawnData = [];
         private static readonly List<RideRoom> rideRooms = [];
-
-        // Generate
-        public static void Generate(GameSession session, int length)
-        {
-            for (var i = 0; i < length; i++)
-            {
-                var room = new RideRoom(session, string.Empty, i, i == length - 1);
-                rideRooms.Add(room);
-            }
-
-            HasContent = true;
-        }
+        private static readonly Dictionary<string, int> spawnData = [];
 
         // Dispose
         public static void Dispose()
@@ -38,10 +25,27 @@ namespace Remizione
             HasContent = false;
         }
 
+        // Generate
+        public static void Generate(GameSession session, int length)
+        {
+            for (var i = 0; i < length; i++)
+            {
+                var room = new RideRoom(session, string.Empty, i, i == length - 1);
+                rideRooms.Add(room);
+            }
+
+            foreach (var room in rideRooms)
+            {
+                room.Load();
+            }
+
+            HasContent = true;
+        }
+
         // GetSpawnCount
         public static int GetSpawnCount(string staticName)
         {
-            return spawnData.ContainsKey(staticName) ? spawnData[staticName] : 0;
+            return spawnData.TryGetValue(staticName, out var value) ? value : 0;
         }
 
         // HasContent
@@ -50,8 +54,8 @@ namespace Remizione
         // LogSpawn
         public static void LogSpawn(string staticName)
         {
-            if (spawnData.ContainsKey(staticName))
-                spawnData[staticName]++;
+            if (spawnData.TryGetValue(staticName, out var value))
+                spawnData[staticName] = ++value;
             else
                 spawnData[staticName] = 1;
         }
