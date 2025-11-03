@@ -119,16 +119,11 @@ namespace Remizione
             image.Position = Position;
 
             if (HasText)
-            {
                 LayoutText();
-                BoundingBox = RectangleF.Union(image.BoundingBox, containerPattern.BoundingBox, containerEdgeLeft.BoundingBox);
-            }
-            else
-            {
-                BoundingBox = image.BoundingBox;
-            }
 
             label.OpacityFactor = IsEnabled ? 1 : .3f;
+
+            InvalidateBoundingBox();
 
             if (pivotOrigin == RectanglePoint.Bottom || pivotOrigin == RectanglePoint.Top)
             {
@@ -139,6 +134,17 @@ namespace Remizione
                 containerPattern.X -= offset;
                 label.X -= offset;
             }
+
+            InvalidateBoundingBox();
+        }
+
+        // InvalidateBoundingBox
+        private void InvalidateBoundingBox()
+        {
+            if (HasText)
+                BoundingBox = RectangleF.Union(image.BoundingBox, containerPattern.BoundingBox, containerEdgeLeft.BoundingBox);
+            else
+                BoundingBox = image.BoundingBox;
         }
 
         // LayoutText
@@ -208,6 +214,9 @@ namespace Remizione
             }
 
             image.Draw(gameTime);
+
+            Game.Shapes.DrawFrame(BoundingBox, Color.Green * .2f, 1);
+
             Game.SpriteBatch.End();
         }
 

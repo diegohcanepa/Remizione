@@ -62,6 +62,10 @@ namespace Remizione
 
         #endregion
 
+        // PropAmount
+        [ScriptProperty]
+        public int PropAmount { get; set; }
+
         // PropState
         [ScriptProperty]
         public PropState PropState

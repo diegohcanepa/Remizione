@@ -22,10 +22,10 @@ namespace Remizione
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
         private readonly Dictionary<string, MetaItem[]> friendlyItems = [];
+        private readonly UIInteractPrompt interactPrompt;
         private readonly PilgrimSackScene pilgrimSackScene;
         private Actor? player;
         private Vector2? playerPosition;
-        private readonly UIPrompt prompt;
         private readonly RoomEditor? roomEditor;
         private readonly List<GameThing> staticThings = [];
         private readonly Dictionary<string, GameThing> staticThingsDict = [];
@@ -86,7 +86,7 @@ namespace Remizione
             this.useKeyItemScene = new UseKeyItemScene(PilgrimSack);
 
             // Prompt
-            this.prompt = new(this);
+            this.interactPrompt = new(this);
         }
 
         #endregion
@@ -206,7 +206,7 @@ namespace Remizione
                 HUD.Draw(gameTime);
 
             if (!IsAwaiting)
-                prompt.Draw(gameTime);
+                interactPrompt.Draw(gameTime);
 
             if (IsPaused)
             {
@@ -369,7 +369,7 @@ namespace Remizione
             roomEditor?.HandleInput();
 
             Environment.Update(gameTime);
-            prompt.Update(gameTime);
+            interactPrompt.Update(gameTime);
 
             if (GameplayMode == GameplayMode.Action && IsHUDVisible)
                 HUD.Update(gameTime);

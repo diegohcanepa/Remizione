@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.9.0</string>
+        <string>7.9.1</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -215,6 +215,21 @@
                 <rect>8,11,15,23</rect>
                 <key>scale9Paddings</key>
                 <rect>8,11,15,23</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Arena1-assets/Tunnel.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,9,13,17</rect>
+                <key>scale9Paddings</key>
+                <rect>7,9,13,17</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
