@@ -418,7 +418,7 @@ namespace Remizione
         public GameSession Session { get; }
 
         // Size
-        public int Size { get; set; } = 4;
+        public int Size { get; set; } = 12;
 
         // Unequip
         public void Unequip(Item item)

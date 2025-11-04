@@ -160,6 +160,9 @@ namespace Remizione
         // PassiveEffectCooldown
         public int PassiveEffectCooldown { get; init; }
 
+        // PickupSound
+        public Sound? PickupSound { get; init; }
+
         // PreventDiscard
         public bool PreventDiscard { get; init; }
 

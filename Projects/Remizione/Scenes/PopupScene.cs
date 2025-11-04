@@ -13,7 +13,7 @@ namespace Remizione
         #region Private fields
 
         private readonly InputBinding[] bindings;
-        private readonly UITextButton[] buttons;
+        private readonly UIButton[] buttons;
         private readonly ImageSprite container;
         private readonly ImageSprite shadow;
         private readonly TextSprite text;
@@ -33,10 +33,10 @@ namespace Remizione
             this.titleSprite = new TextSprite(session.Game, Fonts.Common) { Color = ColorPalette.PopupTitle, PivotOrigin = RectanglePoint.Top, Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 12), Scale = ScaleInfo.PopupTitle, Text = title };
             this.text = new TextSprite(session.Game, Fonts.Common) { Color = ColorPalette.TextWhite, MaximumWidth = 220, PivotOrigin = RectanglePoint.Top, Position = titleSprite.BoundingBox.GetPoint(RectanglePoint.Bottom), Scale = ScaleInfo.PopupText, Text = text };
 
-            buttons = new UITextButton[inputBindings.Length];
+            buttons = new UIButton[inputBindings.Length];
             for (var i = 0; i < inputBindings.Length; i++)
             {
-                buttons[i] = new UITextButton(Game, inputBindings[i]) { PivotOrigin = RectanglePoint.RightTop };
+                buttons[i] = new UIButton(Game, inputBindings[i]) { PivotOrigin = RectanglePoint.RightTop };
             }
         }
 

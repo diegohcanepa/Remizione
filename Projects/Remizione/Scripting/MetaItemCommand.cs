@@ -8,7 +8,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 2, ActionArg, AllowEmptyArg, BaseWeightArg, CriticalChanceArg, DamageArg, DamageIntensityArg, DamageTypeArg, DurabilityArg, ExcludeTagsArg, HPArg, ImpactWordArg, KnockbackArg, PassiveEffectCooldownArg, PreventDiscardArg, QualityArg, RangeArg, ReplenishAmountArg, RequiredTagsArg, SkillChanceArg, SoundArg, TagsArg, UnlockedArg)
+            : base(script, source, body, 2, ActionArg, AllowEmptyArg, BaseWeightArg, CriticalChanceArg, DamageArg, DamageIntensityArg, DamageTypeArg, DurabilityArg, ExcludeTagsArg, HPArg, ImpactWordArg, KnockbackArg, PassiveEffectCooldownArg, PickupSoundArg, PreventDiscardArg, QualityArg, RangeArg, ReplenishAmountArg, RequiredTagsArg, SkillChanceArg, SoundArg, TagsArg, UnlockedArg)
         {
             var name = Parser.ParseName(this, 0);
             var category = Parser.ParseEnum<ItemCategory>(this, 1);
@@ -35,6 +35,7 @@ namespace Remizione.Scripting
                 ImpactWord = Parser.ParseEnumArgument(this, ImpactWordArg, ImpactWordName.None),
                 Knockback = Parser.ParseVector2Argument(this, KnockbackArg),
                 PassiveEffectCooldown = Parser.ParseInt32Argument(this, PassiveEffectCooldownArg),
+                PickupSound = Parser.ParseSoundArgument(this, PickupSoundArg),
                 PreventDiscard = HasArg(PreventDiscardArg),
                 Quality = Parser.ParseInt32Argument(this, QualityArg),
                 Range = Parser.ParseInt32Argument(this, RangeArg),

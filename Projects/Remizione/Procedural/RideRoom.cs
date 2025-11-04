@@ -215,6 +215,9 @@ namespace Remizione
             AnimationPlayer.Play("Open", false);
         }
 
+        // RequiredCoins
+        public int RequiredCoins { get; set; } = 3;
+
         // RightConnector
         public IsometricProp? RightConnector { get; private set; }
     }

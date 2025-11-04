@@ -7,9 +7,9 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Remizione
 {
     /// <summary>
-    /// UITextButton
+    /// UIButton
     /// </summary>
-    public sealed class UITextButton : GameObject, IBoundingBox
+    public sealed class UIButton : GameObject, IBoundingBox
     {
         #region Private fields
 
@@ -33,7 +33,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public UITextButton(EngendroGame game, InputBinding? inputBinding = null)
+        public UIButton(EngendroGame game, InputBinding? inputBinding = null)
             : base(game)
         {
             this.inputBinding = inputBinding;
@@ -214,8 +214,6 @@ namespace Remizione
             }
 
             image.Draw(gameTime);
-
-            Game.Shapes.DrawFrame(BoundingBox, Color.Green * .2f, 1);
 
             Game.SpriteBatch.End();
         }

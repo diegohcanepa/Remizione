@@ -14,7 +14,7 @@ namespace Remizione
         #region Private fields
 
         private readonly TextSprite amountText;
-        private readonly UITextButton button;
+        private readonly UIButton button;
         private readonly ImageSprite itemImage;
         private readonly Vector2Tween itemImageScaleTween = new();
         private int lastKnownCount;

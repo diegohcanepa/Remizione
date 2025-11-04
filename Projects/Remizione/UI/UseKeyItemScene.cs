@@ -19,8 +19,8 @@ namespace Remizione
         private readonly TextSprite amountText;
         private const float animationSpeed = 14;
         private readonly ImageSprite bottomGradient;
-        private readonly UITextButton buttonClose;
-        private readonly UITextButton buttonUse;
+        private readonly UIButton buttonClose;
+        private readonly UIButton buttonUse;
         private readonly TextSprite chanceText;
         private readonly TextSprite itemNameText;
         private int selectedIndex;
@@ -87,7 +87,7 @@ namespace Remizione
             };
 
             // Close button
-            buttonClose = new UITextButton(Game, InputBindings.Close)
+            buttonClose = new UIButton(Game, InputBindings.Close)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -2),
@@ -103,7 +103,7 @@ namespace Remizione
             };
 
             // Use button
-            buttonUse = new UITextButton(Game, InputBindings.UseFriendlyItem)
+            buttonUse = new UIButton(Game, InputBindings.UseFriendlyItem)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -12),

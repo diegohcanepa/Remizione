@@ -41,6 +41,13 @@ namespace Remizione
                 eyes.Draw(gameTime);
         }
 
+        // OnPropAmountChanged
+        protected override void OnPropAmountChanged()
+        {
+            if (PropAmount == requiredCoins)
+                PropState = PropState.Unlocked;
+        }
+
         // OnPropStateChanged
         protected override void OnPropStateChanged()
         {
@@ -92,12 +99,7 @@ namespace Remizione
             {
                 if (value < 0)
                     value = 1;
-
-                if (value != requiredCoins)
-                {
-                    requiredCoins = value;
-                    PropAmount = requiredCoins;
-                }
+                requiredCoins = value;
             }
         }
     }

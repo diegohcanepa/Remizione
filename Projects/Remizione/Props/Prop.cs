@@ -10,6 +10,7 @@ namespace Remizione
     /// </summary>
     public class Prop : GameThing
     {
+        private int propAmount;
         private PropState propState;
         private readonly ImageSprite shadow;
 
@@ -48,6 +49,11 @@ namespace Remizione
             InvalidateShadowImage();
         }
 
+        // OnPropAmountChanged
+        protected virtual void OnPropAmountChanged()
+        {
+        }
+
         // OnPropStateChanged
         protected virtual void OnPropStateChanged()
         {
@@ -64,7 +70,18 @@ namespace Remizione
 
         // PropAmount
         [ScriptProperty]
-        public int PropAmount { get; set; }
+        public int PropAmount
+        {
+            get => propAmount;
+            set
+            {
+                if (value != propAmount)
+                {
+                    propAmount = value;
+                    OnPropAmountChanged();
+                }
+            }
+        }
 
         // PropState
         [ScriptProperty]
@@ -94,7 +111,7 @@ namespace Remizione
 
             item.Use(actor);
 
-            Session.HUD.Log.Show(LogVerb.Lost, item.DisplayText, item.MetaItem.Image);
+            Session.HUD.Log.Show(LogVerb.Lost, item.MetaItem);
 
             var text = TextRepository.GetValue(success ? "Misc.Success" : "Misc.Failed");
 

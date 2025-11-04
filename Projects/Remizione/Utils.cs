@@ -54,7 +54,7 @@ namespace Remizione
         internal static string GetVersion() => $"Build {GameSettings.Build} " + (EngendroGame.DebugMode ? "(dev)" : "(rel)");
 
         // LayoutControlsHorizontally
-        public static void LayoutControlsHorizontally(UITextButton[] controlList, float spacing)
+        public static void LayoutControlsHorizontally(UIButton[] controlList, float spacing)
         {
             float width = 0;
 
@@ -80,7 +80,7 @@ namespace Remizione
         }
 
         // LayoutControlsVertically
-        public static void LayoutControlsVertically(UITextButton[] controlList, float spacing)
+        public static void LayoutControlsVertically(UIButton[] controlList, float spacing)
         {
             var pos = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom);
 

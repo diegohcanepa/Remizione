@@ -11,7 +11,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly UITextButton button;
+        private readonly UIButton button;
         private readonly GameSession session;
         private readonly ImageSprite slotImage;
 

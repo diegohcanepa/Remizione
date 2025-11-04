@@ -13,6 +13,7 @@ namespace Remizione
         {
             BottomGradient = this[nameof(BottomGradient)];
             CheckMark = this[nameof(CheckMark)];
+            CoinIcon = this[nameof(CoinIcon)];
             CoinSlot = this[nameof(CoinSlot)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
@@ -52,6 +53,9 @@ namespace Remizione
 
         // CheckMark
         public AtlasImage CheckMark { get; }
+
+        // CoinIcon
+        public AtlasImage CoinIcon { get; }
 
         // CoinSlot
         public AtlasImage CoinSlot { get; }

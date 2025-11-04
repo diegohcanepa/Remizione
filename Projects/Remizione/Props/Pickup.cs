@@ -96,7 +96,7 @@ namespace Remizione
 
                     Session.PilgrimSack.Add(metaItem, 1);
 
-                    Session.HUD.Log.Show(LogVerb.PickedUp, metaItem.LocalizedDisplayName, metaItem.Image);
+                    Session.HUD.Log.Show(LogVerb.PickedUp, metaItem);
                 }
             }
         }

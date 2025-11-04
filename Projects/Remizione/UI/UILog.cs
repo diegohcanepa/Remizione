@@ -100,14 +100,25 @@ namespace Remizione
         public void Show(string message, bool isWarning, AtlasImage? image = null) => ShowCore(message, string.Empty, isWarning, image);
 
         // Show
-        public void Show(LogVerb verb, string noun, AtlasImage? image = null)
+        public void Show(LogVerb verb, string noun, bool isWarning, AtlasImage? image = null)
+        {
+            ShowCore(Localization.GetValue(verb), noun, isWarning, image);
+        }
+
+        // Show
+        public void Show(LogVerb verb, MetaItem metaItem)
         {
             var isWarning = verb == LogVerb.Lost || verb == LogVerb.ItemRequired;
 
-            ShowCore(Localization.GetValue(verb), noun, isWarning, image);
+            ShowCore(Localization.GetValue(verb), metaItem.LocalizedDisplayName, isWarning, metaItem.Image);
 
             if (verb == LogVerb.PickedUp)
-                Sound.Play(SoundNames.UILogPickup);
+            {
+                if (metaItem.PickupSound != null)
+                    metaItem.PickupSound.Play();
+                else
+                    Sound.Play(SoundNames.PickupGeneric);
+            }
 
             else if (verb == LogVerb.ItemRequired)
                 Sound.Play(SoundNames.Error);

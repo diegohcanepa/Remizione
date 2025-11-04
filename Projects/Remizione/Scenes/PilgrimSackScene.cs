@@ -17,10 +17,10 @@ namespace Remizione
 
         private const int maxInfoTextWidth = 100;
 
-        private readonly UITextButton buttonClose;
-        private readonly UITextButton buttonConsume;
-        private readonly UITextButton buttonDiscard;
-        private readonly UITextButton buttonEquip;
+        private readonly UIButton buttonClose;
+        private readonly UIButton buttonConsume;
+        private readonly UIButton buttonDiscard;
+        private readonly UIButton buttonEquip;
         private readonly List<ItemCategory> categories = [];
         private readonly ImageSprite[] categoryIcons;
         private readonly ImageSprite[] categoryMarkers;
@@ -36,9 +36,9 @@ namespace Remizione
         private readonly TextSprite itemName;
         private InputMethod lastKnownInput;
         private readonly ImageSprite navigationBar;
-        private readonly UITextButton nextCategoryButton;
+        private readonly UIButton nextCategoryButton;
         private readonly PilgrimSack pilgrimSack;
-        private readonly UITextButton previousCategoryButton;
+        private readonly UIButton previousCategoryButton;
 
         #endregion
 
@@ -170,7 +170,7 @@ namespace Remizione
             };
 
             // Close button
-            buttonClose = new UITextButton(Game, InputBindings.Close)
+            buttonClose = new UIButton(Game, InputBindings.Close)
             {
                 AllowPressEffect = false,
                 PivotOrigin = RectanglePoint.RightBottom,
@@ -178,7 +178,7 @@ namespace Remizione
             };
 
             // Consume button
-            buttonConsume = new UITextButton(Game, InputBindings.ConsumeItem)
+            buttonConsume = new UIButton(Game, InputBindings.ConsumeItem)
             {
                 AllowSound = false,
                 PivotOrigin = RectanglePoint.LeftBottom,
@@ -186,14 +186,14 @@ namespace Remizione
             };
 
             // Discard button
-            buttonDiscard = new UITextButton(Game, InputBindings.Discard)
+            buttonDiscard = new UIButton(Game, InputBindings.Discard)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.RightBottom, -4, -3)
             };
 
             // Equip button
-            buttonEquip = new UITextButton(Game, InputBindings.EquipItem)
+            buttonEquip = new UIButton(Game, InputBindings.EquipItem)
             {
                 AllowSound = false,
                 PivotOrigin = RectanglePoint.LeftBottom,

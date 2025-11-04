@@ -9,7 +9,7 @@ namespace Remizione
     /// </summary>
     public sealed class UIInteractPrompt : GameObject
     {
-        private readonly UITextButton button;
+        private readonly UIButton button;
         private readonly ImageSprite coin;
         private readonly ImageSprite coinSlot;
         private readonly GameSession session;
@@ -29,7 +29,7 @@ namespace Remizione
             };
 
             // Coin
-            this.coin = new(Game, Atlases.UI.GetImageNotNull("Coin"))
+            this.coin = new(Game, Atlases.UI.CoinIcon)
             {
                 PivotOrigin = RectanglePoint.Left,
                 Scale = ScaleInfo.UIElement.Small
@@ -52,20 +52,20 @@ namespace Remizione
             {
                 button.Draw(gameTime);
 
-                if (target is SaintPeregrine statue && statue.RequiredCoins > 0)
+                if (target is SaintPeregrine statue && statue.RequiredCoins > 0 && statue.PropState != PropState.Unlocked)
                 {
                     Game.SpriteBatch.Begin(button.Camera, SamplerState.PointClamp);
 
-                    var pos = button.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0);
+                    var pos = button.BoundingBox.GetPoint(RectanglePoint.Right, 2, 0);
                     
                     for (var i = 0; i < statue.RequiredCoins; i++)
                     {
-                        var image = statue.PropAmount <= i ? coin : coinSlot;
+                        var image = statue.PropAmount > i ? coin : coinSlot;
                         
                         image.Position = pos;
                         image.Draw(gameTime);
 
-                        image.X += image.BoundingBox.Width;
+                        pos.X += image.BoundingBox.Width;
                     }
 
                     Game.SpriteBatch.End();

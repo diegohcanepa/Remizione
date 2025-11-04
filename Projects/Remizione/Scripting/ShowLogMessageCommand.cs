@@ -25,7 +25,7 @@ namespace Remizione.Scripting
             {
                 var verb = Parser.ParseEnum<LogVerb>(this, 0);
                 if (MetaItem.Find(Body.Clauses[1]) is MetaItem metaItem)
-                    session.HUD.Log.Show(verb, metaItem.LocalizedDisplayName, metaItem.Image);
+                    session.HUD.Log.Show(verb, metaItem);
             }
         }
 

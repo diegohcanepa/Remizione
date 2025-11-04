@@ -8,7 +8,7 @@ namespace Remizione
     /// </summary>
     public sealed class CreditsRoom : GameRoom
     {
-        private readonly UITextButton button;
+        private readonly UIButton button;
         private int buttonDisplayCooldown = 10000;
         private readonly Credits credits;
         private int creditsCooldown = 2000;
@@ -20,7 +20,7 @@ namespace Remizione
             AllowPauseMenu = false;
             AtlasName = string.Empty;
 
-            this.button = new UITextButton(Game, InputBindings.Exit)
+            this.button = new UIButton(Game, InputBindings.Exit)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom)
