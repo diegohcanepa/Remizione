@@ -1896,6 +1896,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">UnderRideEntrance-assets/UnderRideEntrance.png</key>
+            <key type="filename">UnderRideEntrance-assets/UnderRideEntranceShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,13,25,27</rect>
+                <key>scale9Paddings</key>
+                <rect>12,13,25,27</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">WaterPuddleA-assets/WaterPuddleA.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -2012,6 +2028,7 @@
                     <filename>LagoonA-assets</filename>
                     <filename>Sign-assets</filename>
                     <filename>RideExit-assets</filename>
+                    <filename>UnderRideEntrance-assets</filename>
                 </array>
             </struct>
         </map>

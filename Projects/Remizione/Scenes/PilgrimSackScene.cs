@@ -401,6 +401,9 @@ namespace Remizione
         // TestEquip
         private bool TestEquip(Item item)
         {
+            if (!item.MetaItem.IsEquipment)
+                return false;
+
             if (item.IsEquipped && item.MetaItem.Category != ItemCategory.Trinkets)
                 return false;
 
