@@ -26,6 +26,7 @@ namespace Remizione
         private InputMethod lastKnownInputMethod;
         private RectanglePoint pivotOrigin;
         private Vector2 position;
+        private float scaleFactor;
         private readonly Vector2Tween scaleTween = new();
 
         #endregion
@@ -33,37 +34,39 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public UIButton(EngendroGame game, InputBinding? inputBinding = null)
+        public UIButton(EngendroGame game, InputBinding? inputBinding = null, float scaleFactor = 1)
             : base(game)
         {
             this.inputBinding = inputBinding;
+            this.scaleFactor = scaleFactor;
+
             this.Camera = game.Camera;
 
             // Container
             this.containerPattern = new ImageSprite(Game, Atlases.UI.UITextButtonContainerPattern)
             {
                 PivotOrigin = RectanglePoint.Right,
-                Scale = ScaleInfo.UIElement.Medium
+                Scale = ScaleInfo.UIElement.Medium * scaleFactor
             };
 
             // ContainerEdgeLeft
             this.containerEdgeLeft = new ImageSprite(Game, Atlases.UI.UITextButtonContainerEdge)
             {
                 PivotOrigin = RectanglePoint.Right,
-                Scale = ScaleInfo.UIElement.Medium
+                Scale = ScaleInfo.UIElement.Medium * scaleFactor
             };
 
             // Label
             this.label = new TextSprite(game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
-                Scale = ScaleInfo.Text.VeryLarge
+                Scale = ScaleInfo.Text.VeryLarge * scaleFactor
             };
 
             // Image
             this.image = new ImageSprite(game)
             {
-                Scale = ScaleInfo.UIElement.Medium,
+                Scale = ScaleInfo.UIElement.Medium * scaleFactor
             };
 
             this.label.Text = inputBinding == null ? string.Empty : Localization.GetValue(inputBinding);
@@ -164,7 +167,7 @@ namespace Remizione
                 label.Position = image.BoundingBox.GetPoint(RectanglePoint.Right, horzImagePadding, .7f);
             }
 
-            containerPattern.ScaleX = label.BoundingBox.Width + 6;
+            containerPattern.ScaleX = label.BoundingBox.Width + 6 * scaleFactor;
             containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Center, 0, 0).Y;
             containerEdgeLeft.Y = containerPattern.Y;
 
@@ -321,11 +324,11 @@ namespace Remizione
                {
                     isBeating = value;
 
-                    image.Scale = ScaleInfo.UIElement.Medium;
+                    image.Scale = ScaleInfo.UIElement.Medium * scaleFactor;
 
                     if (isBeating)
                     {
-                        scaleTween.Start(TweenStyle.Linear, image.Scale, image.Scale * 1.1f, 100, -1);
+                        scaleTween.Start(TweenStyle.Linear, image.Scale, image.Scale * 1.1f * scaleFactor, 100, -1);
                         image.Tweens.ScaleTween = scaleTween;
                     }
                     else
@@ -414,14 +417,14 @@ namespace Remizione
             {
                 if (result && !scaleTween.IsRunning)
                 {
-                    scaleTween.Start(TweenStyle.Linear, ScaleInfo.UIElement.Medium, image.Scale * .95f, 60, 2);
+                    scaleTween.Start(TweenStyle.Linear, ScaleInfo.UIElement.Medium * scaleFactor, image.Scale * .95f * scaleFactor, 60, 2);
                     image.Tweens.ScaleTween = scaleTween;
                 }
             }
             else
             {
                 scaleTween.Stop();
-                image.Scale = ScaleInfo.UIElement.Medium;
+                image.Scale = ScaleInfo.UIElement.Medium * scaleFactor;
             }
 
             return result;
