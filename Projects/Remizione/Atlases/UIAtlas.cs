@@ -43,6 +43,7 @@ namespace Remizione
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
+            TrinketSlot = this[nameof(TrinketSlot)];
             UITextButtonContainerEdge = this[nameof(UITextButtonContainerEdge)];
             UITextButtonContainerPattern = this[nameof(UITextButtonContainerPattern)];
         }
@@ -142,6 +143,9 @@ namespace Remizione
 
         // SpeechBubblePipe
         public AtlasImage SpeechBubblePipe { get; }
+
+        // TrinketSlot
+        public AtlasImage TrinketSlot { get; }
 
         // UITextButtonContainerEdge
         public AtlasImage UITextButtonContainerEdge { get; }
