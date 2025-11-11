@@ -145,7 +145,17 @@ namespace Remizione
             if (MetaItem.AllowEmpty)
                 return count.ToString(CultureInfo.InvariantCulture);
             else
-                return string.Empty;
+            {
+                var groupCount = 0;
+
+                for (var i = 0; i < PilgrimSack.Count; i++)
+                {
+                    if (PilgrimSack[i].MetaItem == MetaItem)    
+                        groupCount++;
+                }
+
+                return groupCount == 0 ? string.Empty : groupCount.ToString(CultureInfo.InvariantCulture);
+            }
         }
 
         // GetDisplayStat

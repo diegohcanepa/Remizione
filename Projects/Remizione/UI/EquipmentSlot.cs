@@ -49,7 +49,7 @@ namespace Remizione
             }
 
             // Slot image
-            this.slotImage = new ImageSprite(Game, itemCategory == ItemCategory.Trinkets ? Atlases.UI.TrinketSlot : Atlases.UI.EquipmentSlot)
+            this.slotImage = new ImageSprite(Game, Atlases.UI.EquipmentSlot)
             {
                 PivotOrigin = itemCategory == ItemCategory.Trinkets ? RectanglePoint.LeftTop : RectanglePoint.LeftBottom,
                 Position = position
@@ -60,7 +60,7 @@ namespace Remizione
             {
                 PivotOrigin = RectanglePoint.Center,
                 Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Center, 0, -1),
-                Scale = ScaleInfo.UIElement.Small
+                Scale = ScaleInfo.UIElement.Tiny
             };
 
             if (itemCategory == ItemCategory.Trinkets)
@@ -79,6 +79,7 @@ namespace Remizione
             // Button
             this.button = new(Game, inputBinding)
             {
+                AllowPressEffect = false,
                 AllowSound = false,
                 ImageName = $"{itemCategory}Slot",
             };
@@ -109,7 +110,7 @@ namespace Remizione
             if (lastKnownItem != null)
             {
                 itemImage.Image = lastKnownItem.MetaItem.Image;
-                itemImageScaleTween.Start(TweenStyle.Linear, new Vector2(.3f), ScaleInfo.UIElement.Small, 70);
+                itemImageScaleTween.Start(TweenStyle.Linear, new Vector2(.3f), ScaleInfo.UIElement.Tiny, 70);
                 itemImage.Tweens.ScaleTween = itemImageScaleTween;
                 InvalidateItemAmount(true);
             }
@@ -145,8 +146,8 @@ namespace Remizione
             itemImage.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            if (session.IsCurrentScene)
-                button.Draw(gameTime);
+            //if (session.IsCurrentScene)
+            //    button.Draw(gameTime);
 
             if (lastKnownItem?.MetaItem.AllowEmpty == true)
             {

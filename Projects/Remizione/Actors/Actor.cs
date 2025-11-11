@@ -4,9 +4,7 @@ using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
-using System.Xml;
 
 namespace Remizione
 {
@@ -406,7 +404,7 @@ namespace Remizione
                 moveVerticalTween.Start(TweenStyle.QuadraticInOut, 0, .8f, 100, -1);
 
             if (AnimationSettings.MoveSway)
-                moveBalancingTween.Start(TweenStyle.QuadraticInOut, 0, .03f, FastMove ? 100 : 200, -1);
+                moveBalancingTween.Start(TweenStyle.QuadraticInOut, 0, .04f, FastMove ? 100 : 200, -1);
         }
 
         // OnStopMoving
