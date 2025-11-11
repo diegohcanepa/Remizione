@@ -20,7 +20,7 @@ namespace Remizione
             this.icon = new ImageSprite(Game, Atlases.UI.GetImageNotNull("TicketIcon"))
             {
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -2, 0),
                 Scale = ScaleInfo.UIElement.Small
             };
 
