@@ -108,6 +108,9 @@ namespace Remizione
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }
 
+    // StackMode
+    public enum StackMode { None, Persistent, Disposable }
+
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }
 

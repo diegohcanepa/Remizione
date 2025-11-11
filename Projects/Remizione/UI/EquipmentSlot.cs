@@ -146,10 +146,12 @@ namespace Remizione
             itemImage.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            //if (session.IsCurrentScene)
-            //    button.Draw(gameTime);
+            /*
+            if (session.IsCurrentScene)
+                button.Draw(gameTime);
+            */
 
-            if (lastKnownItem?.MetaItem.AllowEmpty == true)
+            if (lastKnownItem?.MetaItem.StackMode != StackMode.None)
             {
                 Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
                 amountText.Draw(gameTime);

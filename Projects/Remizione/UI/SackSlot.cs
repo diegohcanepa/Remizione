@@ -49,11 +49,13 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            /*
             Game.SpriteBatch.Begin(Game.Camera);
             slotImage.Draw(gameTime);
             Game.SpriteBatch.End();
 
             button.Draw(gameTime);
+            */
         }
 
         // OnUpdate

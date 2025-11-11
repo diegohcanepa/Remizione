@@ -193,7 +193,7 @@ namespace Remizione
             {
                 amountText.Color = ColorPalette.Text.Default;
 
-                if (item.MetaItem.AllowEmpty)
+                if (item.MetaItem.StackMode != StackMode.None)
                     amountText.Text = $"{item.Count}";
                 else
                     amountText.Text = string.Empty;

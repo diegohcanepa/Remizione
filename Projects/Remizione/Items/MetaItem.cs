@@ -66,9 +66,6 @@ namespace Remizione
         // AllItems
         public static IEnumerable<MetaItem> AllItems => items.Values;
 
-        // AllowEmpty
-        public bool AllowEmpty { get; init; }
-
         // ApplyDamage
         public bool ApplyDamage(GameThing attacker, GameThing target)
         {
@@ -145,6 +142,9 @@ namespace Remizione
         // IsPassive
         public bool IsPassive => PassiveEffectCooldown > 0;
 
+        // IsStackable
+        public bool IsStackable { get; init; }
+
         // Knockback
         public Vector2 Knockback { get; init; }
 
@@ -172,9 +172,6 @@ namespace Remizione
         // Range
         public int Range { get; init; }
 
-        // ReplenishAmount
-        public int ReplenishAmount { get; init; }
-
         // RequiredTags
         public ReadOnlyCollection<LootTag> RequiredTags { get; }
 
@@ -183,6 +180,9 @@ namespace Remizione
 
         // Sound
         public Sound? Sound { get; init; }
+
+        // StackMode
+        public StackMode StackMode { get; init; }
 
         // Tags
         public ReadOnlyCollection<LootTag> Tags { get; }

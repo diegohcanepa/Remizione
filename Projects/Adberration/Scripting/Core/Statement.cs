@@ -11,7 +11,6 @@ namespace Adberration.Scripting
         #region Argument names
 
         protected static readonly string ActionArg = "#action";
-        protected static readonly string AllowEmptyArg = "#allow-empty";
         protected static readonly string AmountArg = "#amount";
         protected static readonly string AnimationArg = "#animation";
         protected static readonly string AtArg = "#at";
@@ -84,7 +83,6 @@ namespace Adberration.Scripting
         protected static readonly string RangeArg = "#range";
         protected static readonly string RelativeArg = "#relative";
         protected static readonly string RepeatArg = "#repeat";
-        protected static readonly string ReplenishAmountArg = "#replenish-amount";
         protected static readonly string RequiredTagsArg = "#required-tags";
         protected static readonly string ReverseArg = "#reverse";
         protected static readonly string RightArg = "#right";
@@ -97,6 +95,7 @@ namespace Adberration.Scripting
         protected static readonly string SkillChanceArg = "#skill-chance";
         protected static readonly string SoundArg = "#sound";
         protected static readonly string SpeedFactorArg = "#speed-factor";
+        protected static readonly string StackModeArg = "#stack-mode";
         protected static readonly string StageArg = "#stage";
         protected static readonly string StartDelayArg = "#start-delay";
         protected static readonly string StyleArg = "#style";

@@ -8,7 +8,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 2, ActionArg, AllowEmptyArg, BaseWeightArg, CriticalChanceArg, DamageArg, DamageIntensityArg, DamageTypeArg, DurabilityArg, ExcludeTagsArg, HPArg, ImpactWordArg, KnockbackArg, PassiveEffectCooldownArg, PickupSoundArg, PreventDiscardArg, QualityArg, RangeArg, ReplenishAmountArg, RequiredTagsArg, SkillChanceArg, SoundArg, TagsArg, UnlockedArg)
+            : base(script, source, body, 2, ActionArg, BaseWeightArg, CriticalChanceArg, DamageArg, DamageIntensityArg, DamageTypeArg, DurabilityArg, ExcludeTagsArg, HPArg, ImpactWordArg, KnockbackArg, PassiveEffectCooldownArg, PickupSoundArg, PreventDiscardArg, QualityArg, RangeArg, RequiredTagsArg, SkillChanceArg, SoundArg, StackModeArg, TagsArg, UnlockedArg)
         {
             var name = Parser.ParseName(this, 0);
             var category = Parser.ParseEnum<ItemCategory>(this, 1);
@@ -25,7 +25,6 @@ namespace Remizione.Scripting
             _ = new MetaItem(name, category, tags, requiredTags, excludeTags)
             {
                 Action = Parser.ParseEnumArgument(this, ActionArg, ItemAction.None),
-                AllowEmpty = HasArg(AllowEmptyArg),
                 BaseWeight = Parser.ParseFloatArgument(this, DurabilityArg, 1),
                 CriticalChance = Parser.ParseInt32Argument(this, CriticalChanceArg),
                 Damage = Parser.ParseDiceExpressionArgument(this, DamageArg) ?? null,
@@ -39,9 +38,9 @@ namespace Remizione.Scripting
                 PreventDiscard = HasArg(PreventDiscardArg),
                 Quality = Parser.ParseInt32Argument(this, QualityArg),
                 Range = Parser.ParseInt32Argument(this, RangeArg),
-                ReplenishAmount = Parser.ParseInt32Argument(this, ReplenishAmountArg),
                 SkillChance = Parser.ParseInt32Argument(this, SkillChanceArg),
                 Sound = Parser.ParseSoundArgument(this, SoundArg),
+                StackMode = Parser.ParseEnumArgument(this, StackModeArg, StackMode.None),
                 Unlocked = HasArg(UnlockedArg)
             };
         }

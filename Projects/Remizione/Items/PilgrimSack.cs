@@ -28,7 +28,7 @@ namespace Remizione
         // Add
         public Item? Add(MetaItem metaItem, int amount)
         {
-            var item = metaItem.AllowEmpty ? Find(metaItem.Name) : null;
+            var item = metaItem.StackMode != StackMode.None ? Find(metaItem.Name) : null;
 
             if (item == null)
             {

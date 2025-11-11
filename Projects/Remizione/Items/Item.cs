@@ -92,7 +92,7 @@ namespace Remizione
             {
                 if (value != count)
                 {
-                    count = Math.Clamp(value, MetaItem.AllowEmpty ? 0 : 1, 999);
+                    count = Math.Clamp(value, MetaItem.StackMode == StackMode.Persistent ? 0 : 1, 999);
                     isDisplayTextDiry = true;
                 }
             }
@@ -142,20 +142,10 @@ namespace Remizione
         // GetDisplayAmount
         public string GetDisplayAmount()
         {
-            if (MetaItem.AllowEmpty)
+            if (MetaItem.StackMode != StackMode.None)
                 return count.ToString(CultureInfo.InvariantCulture);
             else
-            {
-                var groupCount = 0;
-
-                for (var i = 0; i < PilgrimSack.Count; i++)
-                {
-                    if (PilgrimSack[i].MetaItem == MetaItem)    
-                        groupCount++;
-                }
-
-                return groupCount == 0 ? string.Empty : groupCount.ToString(CultureInfo.InvariantCulture);
-            }
+                return string.Empty;
         }
 
         // GetDisplayStat
@@ -237,13 +227,6 @@ namespace Remizione
             PilgrimSack.Remove(this);
         }
 
-        // Replenish
-        public void Replenish()
-        {
-            if (MetaItem.ReplenishAmount > 0)
-                Count = MetaItem.ReplenishAmount;
-        }
-
         // Select
         public void Select() => PilgrimSack.Select(this);
 
@@ -277,7 +260,7 @@ namespace Remizione
 
             if (!MetaItem.IsPassive && Count > 0)
             {
-                if (Count == 1 && !MetaItem.AllowEmpty)
+                if (Count == 1 && MetaItem.StackMode != StackMode.Persistent)
                     PilgrimSack.Remove(this);
                 else
                     Count--;
