@@ -94,7 +94,7 @@ namespace Remizione
         }
 
         // EquipNext
-        public Item? EquipNext(ItemCategory category, MetaItem? metaItem = null)
+        public Item? EquipNext(ItemCategory category)
         {
             if (items.Count == 0)
                 return null;
@@ -112,11 +112,8 @@ namespace Remizione
 
                 if (nextItem.MetaItem.Category == category)
                 {
-                    if (metaItem == null || metaItem.Name == nextItem.MetaItem.Name)
-                    {
-                        Equip(nextItem);
-                        return nextItem;
-                    }
+                    Equip(nextItem);
+                    return nextItem;
                 }
             }
 
@@ -133,7 +130,7 @@ namespace Remizione
         public Item? EquippedTrinket { get; private set; }
 
         // EquipPrevious
-        public Item? EquipPrevious(ItemCategory category, MetaItem? metaItem = null)
+        public Item? EquipPrevious(ItemCategory category)
         {
             if (items.Count == 0)
                 return null;
@@ -151,11 +148,8 @@ namespace Remizione
 
                 if (prevItem.MetaItem.Category == category)
                 {
-                    if (metaItem == null || metaItem.Name == prevItem.MetaItem.Name)
-                    {
-                        Equip(prevItem);
-                        return prevItem;
-                    }
+                    Equip(prevItem);
+                    return prevItem;
                 }
             }
 
@@ -281,8 +275,7 @@ namespace Remizione
                         SelectedItem = null;
                 }
 
-                if (EquipNext(item.MetaItem.Category, item.MetaItem) == null)
-                    EquipNext(item.MetaItem.Category);
+                EquipNext(item.MetaItem.Category);
 
                 return true;
             }

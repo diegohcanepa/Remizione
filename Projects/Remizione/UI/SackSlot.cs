@@ -11,7 +11,8 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly UIButton button;
+        private readonly TextSprite amountText;
+        private int lastKnownCount;
         private readonly GameSession session;
         private readonly ImageSprite slotImage;
 
@@ -29,16 +30,17 @@ namespace Remizione
             this.slotImage = new ImageSprite(Game, Atlases.UI.SackSlot)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -8, -2),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -2, -3),
             };
 
-            // Button
-            this.button = new(Game, InputBindings.PilgrimSack)
+            // Amount
+            this.amountText = new TextSprite(Game, Fonts.CommonOutline)
             {
-                AllowPressEffect = false,
-                ImageName = nameof(SackSlot),
-                PivotOrigin = RectanglePoint.LeftBottom,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3, 0),
+                Color = ColorPalette.Text.Default,
+                PivotOrigin = RectanglePoint.Top,
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2),
+                Scale = ScaleInfo.Text.Large,
+                Spacing = -5
             };
         }
 
@@ -49,20 +51,22 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            /*
             Game.SpriteBatch.Begin(Game.Camera);
             slotImage.Draw(gameTime);
+            amountText.Draw(gameTime);
             Game.SpriteBatch.End();
-
-            button.Draw(gameTime);
-            */
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            button.Update(gameTime);
             slotImage.Update(gameTime);
+
+            if (lastKnownCount != session.PilgrimSack.Count)
+            {
+                lastKnownCount = session.PilgrimSack.Count;
+                amountText.Text = $"{session.PilgrimSack.Count}/{session.PilgrimSack.Size}";
+            }
         }
 
         #endregion
@@ -73,7 +77,7 @@ namespace Remizione
             if (session.IsAwaiting)
                 return HandleInputResult.Unhandled;
 
-            if (button.TestPressed(PlayerIndex.One))
+            if (InputBindings.PilgrimSack.IsPressed(PlayerIndex.One))
             {
                 session.ShowPilgrimSack();
                 return HandleInputResult.Handled;

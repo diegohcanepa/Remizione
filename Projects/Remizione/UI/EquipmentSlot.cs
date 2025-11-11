@@ -14,7 +14,6 @@ namespace Remizione
         #region Private fields
 
         private readonly TextSprite amountText;
-        private readonly UIButton button;
         private readonly ImageSprite itemImage;
         private readonly Vector2Tween itemImageScaleTween = new();
         private int lastKnownCount;
@@ -23,6 +22,7 @@ namespace Remizione
         private readonly InputBinding? previousInputBinding;
         private readonly GameSession session;
         private readonly ImageSprite slotImage;
+        private readonly InputBinding? useInputBinding;
 
         #endregion
 
@@ -33,8 +33,8 @@ namespace Remizione
             : base(session.Game)
         {
             this.session = session;
-
             this.ItemCategory = itemCategory;
+            this.useInputBinding = inputBinding;
 
             // Bindings
             if (itemCategory == ItemCategory.Junk)
@@ -76,25 +76,6 @@ namespace Remizione
                 Spacing = -5
             };
 
-            // Button
-            this.button = new(Game, inputBinding)
-            {
-                AllowPressEffect = false,
-                AllowSound = false,
-                ImageName = $"{itemCategory}Slot",
-            };
-
-            if (itemCategory == ItemCategory.Junk)
-            {
-                button.PivotOrigin = RectanglePoint.RightBottom;
-                button.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 3, -1);
-            }
-            else if (itemCategory == ItemCategory.Gadgets)
-            {
-                button.PivotOrigin = RectanglePoint.LeftBottom;
-                button.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3, -1);
-            }
-
             InvalidateItem();
         }
 
@@ -112,25 +93,26 @@ namespace Remizione
                 itemImage.Image = lastKnownItem.MetaItem.Image;
                 itemImageScaleTween.Start(TweenStyle.Linear, new Vector2(.3f), ScaleInfo.UIElement.Tiny, 70);
                 itemImage.Tweens.ScaleTween = itemImageScaleTween;
-                InvalidateItemAmount(true);
             }
             else
             {
+                lastKnownCount = 0;
                 itemImage.Image = Atlases.UI.GetImage($"EquipmentSlot{ItemCategory}Icon");
                 itemImage.Scale = ScaleInfo.UIElement.Medium;
                 itemImageScaleTween.Stop();
             }
+
+            InvalidateItemAmount(true);
         }
 
         // InvalidateItemAmount
         private void InvalidateItemAmount(bool enforce)
         {
-            if (lastKnownItem != null && (lastKnownItem.Count != lastKnownCount || enforce))
+            if (lastKnownItem?.Count != lastKnownCount || enforce)
             {
-                lastKnownCount = lastKnownItem.Count;
-                itemImage.OpacityFactor = lastKnownCount == 0 ? .3f : 1;
-                amountText.Text = lastKnownItem.GetDisplayAmount();
-                button.IsEnabled = true;
+                lastKnownCount = lastKnownItem == null ? 0 : lastKnownItem.Count;
+                itemImage.OpacityFactor = lastKnownCount == 0 && lastKnownItem != null ? .3f : 1;
+                amountText.Text = lastKnownItem == null ? string.Empty : lastKnownItem.GetDisplayAmount();
             }
         }
 
@@ -145,11 +127,6 @@ namespace Remizione
             slotImage.Draw(gameTime);
             itemImage.Draw(gameTime);
             Game.SpriteBatch.End();
-
-            /*
-            if (session.IsCurrentScene)
-                button.Draw(gameTime);
-            */
 
             if (lastKnownItem?.MetaItem.StackMode != StackMode.None)
             {
@@ -167,7 +144,6 @@ namespace Remizione
             else
                 InvalidateItemAmount(false);
 
-            button.Update(gameTime);
             slotImage.Update(gameTime);
             itemImage.Update(gameTime);
         }
@@ -181,7 +157,7 @@ namespace Remizione
                 return HandleInputResult.Unhandled;
 
             // Use item
-            if (button.TestPressed(PlayerIndex.One))
+            if (useInputBinding?.IsPressed(PlayerIndex.One) == true)
             {
                 if (lastKnownItem == null)
                 {
