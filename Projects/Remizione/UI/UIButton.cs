@@ -43,14 +43,14 @@ namespace Remizione
             this.Camera = game.Camera;
 
             // Container
-            this.containerPattern = new ImageSprite(Game, Atlases.UI.UITextButtonContainerPattern)
+            this.containerPattern = new ImageSprite(Game, Atlases.UI.UIButtonContainerPattern)
             {
                 PivotOrigin = RectanglePoint.Right,
                 Scale = ScaleInfo.UIElement.Medium * scaleFactor
             };
 
             // ContainerEdgeLeft
-            this.containerEdgeLeft = new ImageSprite(Game, Atlases.UI.UITextButtonContainerEdge)
+            this.containerEdgeLeft = new ImageSprite(Game, Atlases.UI.UIButtonContainerEdge)
             {
                 PivotOrigin = RectanglePoint.Right,
                 Scale = ScaleInfo.UIElement.Medium * scaleFactor

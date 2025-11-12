@@ -14,7 +14,6 @@ namespace Remizione
             BottomGradient = this[nameof(BottomGradient)];
             CheckMark = this[nameof(CheckMark)];
             CoinIcon = this[nameof(CoinIcon)];
-            CoinSlot = this[nameof(CoinSlot)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
@@ -37,14 +36,13 @@ namespace Remizione
             Pixel = this[nameof(Pixel)];
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
-            ProhibitionIcon = this[nameof(ProhibitionIcon)];
-            ProhibitionMark = this[nameof(ProhibitionMark)];
             SackSlot = this[nameof(SackSlot)];
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
-            UITextButtonContainerEdge = this[nameof(UITextButtonContainerEdge)];
-            UITextButtonContainerPattern = this[nameof(UITextButtonContainerPattern)];
+            TicketIcon = this[nameof(TicketIcon)];
+            UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
+            UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
 
         // BottomGradient
@@ -55,9 +53,6 @@ namespace Remizione
 
         // CoinIcon
         public AtlasImage CoinIcon { get; }
-
-        // CoinSlot
-        public AtlasImage CoinSlot { get; }
 
         // ContextMenuOptionSelector
         public AtlasImage ContextMenuOptionSelector { get; }
@@ -125,12 +120,6 @@ namespace Remizione
         // PopupContainerShadow
         public AtlasImage PopupContainerShadow { get; }
 
-        // ProhibitionIcon
-        public AtlasImage ProhibitionIcon { get; }
-
-        // ProhibitionMark
-        public AtlasImage ProhibitionMark { get; }
-
         // SackSlot
         public AtlasImage SackSlot { get; }
 
@@ -143,10 +132,13 @@ namespace Remizione
         // SpeechBubblePipe
         public AtlasImage SpeechBubblePipe { get; }
 
-        // UITextButtonContainerEdge
-        public AtlasImage UITextButtonContainerEdge { get; }
+        // TicketIcon
+        public AtlasImage TicketIcon { get; }
 
-        // UITextButtonContainerPattern
-        public AtlasImage UITextButtonContainerPattern { get; }
+        // UIButtonContainerEdge
+        public AtlasImage UIButtonContainerEdge { get; }
+
+        // UIButtonContainerPattern
+        public AtlasImage UIButtonContainerPattern { get; }
     }
 }

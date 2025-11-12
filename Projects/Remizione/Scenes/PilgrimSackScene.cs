@@ -3,7 +3,6 @@ using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 
 namespace Remizione
@@ -21,7 +20,7 @@ namespace Remizione
         private readonly UIButton buttonConsume;
         private readonly UIButton buttonDiscard;
         private readonly UIButton buttonEquip;
-        private readonly List<ItemCategory> categories = [];
+        private readonly List<ItemCategory> categories = [ItemCategory.None, ItemCategory.Junk, ItemCategory.Gadgets, ItemCategory.Consumables, ItemCategory.Trinkets, ItemCategory.KeyItems];
         private readonly ImageSprite[] categoryIcons;
         private readonly ImageSprite[] categoryMarkers;
         private readonly TextSprite categoryText;
@@ -49,11 +48,6 @@ namespace Remizione
             : base(pilgrimSack.Session.Game, SceneSettings.PausePreviousScenes)
         {
             this.pilgrimSack = pilgrimSack;
-
-            foreach (var category in Enum.GetValues<ItemCategory>())
-            {
-                categories.Add(category);
-            }
 
             // Grid container
             this.gridContainer = new(Game, Atlases.UI.InventoryGridContainer)
@@ -410,7 +404,7 @@ namespace Remizione
             if (buttonEquip.TestPressed(PlayerIndex.One))
             {
                 Sound.Play(SoundNames.ItemEquip);
-               
+
                 if (item.IsEquipped)
                     pilgrimSack.Unequip(item);
                 else
@@ -559,7 +553,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-            
+
             pilgrimSack.Session.HUD.Update(gameTime);
 
             buttonClose.Update(gameTime);
