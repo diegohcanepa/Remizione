@@ -82,7 +82,7 @@ namespace Remizione
 
             if (Item == null)
             {
-                if (Index > grid.PilgrimSack.Size - 1)
+                if (Index > PilgrimSack.MaximumSize - 1)
                     stateIcon.Draw(gameTime);
             }
             else

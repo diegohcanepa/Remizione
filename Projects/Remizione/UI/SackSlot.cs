@@ -65,7 +65,7 @@ namespace Remizione
             if (lastKnownCount != session.PilgrimSack.Count)
             {
                 lastKnownCount = session.PilgrimSack.Count;
-                amountText.Text = $"{session.PilgrimSack.Count}/{session.PilgrimSack.Size}";
+                amountText.Text = $"{session.PilgrimSack.Count}/{PilgrimSack.MaximumSize}";
             }
         }
 

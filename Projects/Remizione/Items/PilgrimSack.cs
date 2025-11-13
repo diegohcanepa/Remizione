@@ -44,7 +44,7 @@ namespace Remizione
                 }
             }
             else
-               item.Count += amount;
+                item.Count += amount;
 
             return item;
         }
@@ -124,7 +124,7 @@ namespace Remizione
         public Item? EquippedGadget { get; private set; }
 
         // EquippedJunk
-        public Item? EquippedJunk { get; private set; } 
+        public Item? EquippedJunk { get; private set; }
 
         // EquippedTrinket
         public Item? EquippedTrinket { get; private set; }
@@ -190,13 +190,13 @@ namespace Remizione
         public Item[] GetItems(ItemCategory category)
         {
             var result = new List<Item>();
-            
+
             for (var i = 0; i < items.Count; i++)
             {
                 if (category == ItemCategory.None || items[i].MetaItem.Category == category)
                     result.Add(items[i]);
             }
-            
+
             return result.ToArray();
         }
 
@@ -205,7 +205,6 @@ namespace Remizione
         {
             var result = new List<string>
             {
-                Size.ToString(CultureInfo.InvariantCulture),
                 SelectedItem is null ? NoneValue : SelectedItem.Name
             };
 
@@ -239,7 +238,10 @@ namespace Remizione
         public bool IsEmpty => items.Count == 0;
 
         // IsFull
-        public bool IsFull => items.Count >= Size;
+        public bool IsFull => items.Count >= MaximumSize;
+
+        // MaximumSize
+        public const int MaximumSize = 12;
 
         // Remove
         public bool Remove(string name)
@@ -391,10 +393,6 @@ namespace Remizione
             {
                 if (i == 0)
                 {
-                    Size = int.Parse(itemList[i], CultureInfo.InvariantCulture);
-                }
-                else if (i == 1)
-                {
                     SelectedItem = Find(itemList[i]);
                 }
                 else
@@ -409,9 +407,6 @@ namespace Remizione
 
         // Session
         public GameSession Session { get; }
-
-        // Size
-        public int Size { get; set; } = 12;
 
         // Unequip
         public void Unequip(Item item)
