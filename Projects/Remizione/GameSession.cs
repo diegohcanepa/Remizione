@@ -300,6 +300,10 @@ namespace Remizione
             // MetaItemPool
             if (sessionNode.Attributes[nameof(MetaItemPool)]?.Value is string metaItemPoolData)
                 MetaItemPool.Deserialize(metaItemPoolData);
+
+            // PilgrimSack
+            if (sessionNode.Attributes[nameof(PilgrimSack)]?.Value is string pilgrimSackData)
+                PilgrimSack.SetSerializationData(pilgrimSackData);
         }
 
         // OnResume
@@ -410,6 +414,10 @@ namespace Remizione
 
             // MetaItemPool
             output.WriteAttributeString(nameof(MetaItemPool), MetaItemPool.Serialize());
+
+            // PilgrimSack
+            if (PilgrimSack.GetSerializationData() is string pilgrimSack)
+                output.WriteAttributeString(nameof(PilgrimSack), pilgrimSack);
         }
 
         #endregion

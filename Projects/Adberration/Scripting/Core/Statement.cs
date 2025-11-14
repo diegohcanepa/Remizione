@@ -81,6 +81,7 @@ namespace Adberration.Scripting
         protected static readonly string RadiansArg = "#radians";
         protected static readonly string RandomFrameArg = "#random-frame";
         protected static readonly string RangeArg = "#range";
+        protected static readonly string RealmArg = "#realm";
         protected static readonly string RelativeArg = "#relative";
         protected static readonly string RepeatArg = "#repeat";
         protected static readonly string RequiredTagsArg = "#required-tags";
@@ -94,6 +95,7 @@ namespace Adberration.Scripting
         protected static readonly string ScopeArg = "#scope";
         protected static readonly string SkillChanceArg = "#skill-chance";
         protected static readonly string SoundArg = "#sound";
+        protected static readonly string SouvenirArg = "#souvenir";
         protected static readonly string SpeedFactorArg = "#speed-factor";
         protected static readonly string StackModeArg = "#stack-mode";
         protected static readonly string StageArg = "#stage";

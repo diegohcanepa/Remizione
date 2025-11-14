@@ -53,6 +53,9 @@ namespace Remizione
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }
 
+    // ItemRealm
+    public enum ItemRealm { Earthly, Infernal, Celestial }
+
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, Global, MuzzleFlash, Outdoor, Player }
 

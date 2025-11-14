@@ -1,4 +1,5 @@
 ﻿using Adberration.Scripting;
+using System;
 
 namespace Remizione.Scripting
 {
@@ -15,8 +16,11 @@ namespace Remizione.Scripting
 
             var itemName = body.Clauses[0];
 
-            if (itemName != ChanceTable.Nothing && MetaItem.Find(itemName) == null)
-                throw new ScriptException(script, $"MetaItem '{itemName}' not found.");
+            if (!Enum.IsDefined(typeof(ItemCategory), itemName))
+            {
+                if (itemName != ChanceTable.Nothing && MetaItem.Find(itemName) == null)
+                    throw new ScriptException(script, $"MetaItem '{itemName}' not found.");
+            }
 
             AssertKeyword(1, "weight");
             var weight = Parser.ParseFloat(this, 2);

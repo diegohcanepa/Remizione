@@ -22,6 +22,9 @@ namespace Remizione
         {
             CodeContract.NotEmpty(name, nameof(name));
 
+            if (Enum.IsDefined(typeof(ItemCategory), name))
+                throw new InvalidOperationException($"The name '{name}' cannot be used because it is an item category.");
+
             if (items.ContainsKey(name))
                 throw new InvalidOperationException($"The meta item '{name}' already exists.");
             else
@@ -142,6 +145,9 @@ namespace Remizione
         // IsPassive
         public bool IsPassive => PassiveEffectCooldown > 0;
 
+        // IsSouvenir
+        public bool IsSouvenir { get; init; }
+
         // IsStackable
         public bool IsStackable { get; init; }
 
@@ -171,6 +177,9 @@ namespace Remizione
 
         // Range
         public int Range { get; init; }
+
+        // Realm
+        public ItemRealm Realm { get; init; }
 
         // RequiredTags
         public ReadOnlyCollection<LootTag> RequiredTags { get; }

@@ -8,7 +8,7 @@ namespace Remizione.Scripting
     {
         // Constructor
         internal MetaItemCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 2, ActionArg, BaseWeightArg, CriticalChanceArg, DamageArg, DamageIntensityArg, DamageTypeArg, DurabilityArg, ExcludeTagsArg, HPArg, ImpactWordArg, KnockbackArg, PassiveEffectCooldownArg, PickupSoundArg, PreventDiscardArg, QualityArg, RangeArg, RequiredTagsArg, SkillChanceArg, SoundArg, StackModeArg, TagsArg, UnlockedArg)
+            : base(script, source, body, 2, ActionArg, BaseWeightArg, CriticalChanceArg, DamageArg, DamageIntensityArg, DamageTypeArg, DurabilityArg, ExcludeTagsArg, HPArg, ImpactWordArg, KnockbackArg, PassiveEffectCooldownArg, PickupSoundArg, PreventDiscardArg, QualityArg, RangeArg, RealmArg, RequiredTagsArg, SkillChanceArg, SoundArg, SouvenirArg, StackModeArg, TagsArg, UnlockedArg)
         {
             var name = Parser.ParseName(this, 0);
             var category = Parser.ParseEnum<ItemCategory>(this, 1);
@@ -32,12 +32,14 @@ namespace Remizione.Scripting
                 Durability = Parser.ParseInt32Argument(this, DurabilityArg, -1),
                 HP = Parser.ParseDiceExpressionArgument(this, HPArg),
                 ImpactWord = Parser.ParseEnumArgument(this, ImpactWordArg, ImpactWordName.None),
+                IsSouvenir = HasArg(SouvenirArg),
                 Knockback = Parser.ParseVector2Argument(this, KnockbackArg),
                 PassiveEffectCooldown = Parser.ParseInt32Argument(this, PassiveEffectCooldownArg),
                 PickupSound = Parser.ParseSoundArgument(this, PickupSoundArg),
                 PreventDiscard = HasArg(PreventDiscardArg),
                 Quality = Parser.ParseInt32Argument(this, QualityArg),
                 Range = Parser.ParseInt32Argument(this, RangeArg),
+                Realm = Parser.ParseEnumArgument(this, RealmArg, ItemRealm.Earthly),
                 SkillChance = Parser.ParseInt32Argument(this, SkillChanceArg),
                 Sound = Parser.ParseSoundArgument(this, SoundArg),
                 StackMode = Parser.ParseEnumArgument(this, StackModeArg, StackMode.None),
