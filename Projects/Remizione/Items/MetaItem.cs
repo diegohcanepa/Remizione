@@ -22,6 +22,9 @@ namespace Remizione
         {
             CodeContract.NotEmpty(name, nameof(name));
 
+            if (Enum.IsDefined(typeof(ItemRealm), name))
+                throw new InvalidOperationException($"The name '{name}' cannot be used because it is an item realm.");
+
             if (Enum.IsDefined(typeof(ItemCategory), name))
                 throw new InvalidOperationException($"The name '{name}' cannot be used because it is an item category.");
 
@@ -111,10 +114,19 @@ namespace Remizione
         public ReadOnlyCollection<LootTag> ExcludeTags { get; }
 
         // Find
-        public static MetaItem? Find(string name) => items.TryGetValue(name, out var result) ? result : null;
+        public static MetaItem? Find(string name)
+        {
+            if (items.TryGetValue(name, out var result))
+                return result;
+            else
+                return null;
+        }
 
         // FindNotNull
-        public static MetaItem FindNotNull(string name) => Find(name) ?? throw new InvalidOperationException($"MetaItem '{name}' not found.");
+        public static MetaItem FindNotNull(string name)
+        {
+            return Find(name) ?? throw new InvalidOperationException($"MetaItem '{name}' not found.");
+        }
 
         // GetItems
         public static List<MetaItem> GetItems(ItemCategory category)
@@ -124,6 +136,20 @@ namespace Remizione
             foreach (var item in items.Values)
             {
                 if (item.Category == category)
+                    result.Add(item);
+            }
+
+            return result;
+        }
+
+        // GetItems
+        public static List<MetaItem> GetItems(ItemRealm realm)
+        {
+            var result = new List<MetaItem>();
+
+            foreach (var item in items.Values)
+            {
+                if (item.Realm == realm)
                     result.Add(item);
             }
 

@@ -526,6 +526,7 @@ namespace Adberration
 
                 CleanUpRuntimeEntities();
                 IsRunning = false;
+                OnShutDown();
             }
 
             IsDisposed = true;
@@ -650,6 +651,11 @@ namespace Adberration
 
         // OnShowSoundCaption
         protected virtual void OnShowSoundCaption(SoundInstance soundInstance)
+        {
+        }
+
+        // OnShutDown
+        protected virtual void OnShutDown()
         {
         }
 

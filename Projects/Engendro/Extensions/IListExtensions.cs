@@ -10,6 +10,8 @@ namespace Engendro
     {
         private static readonly Random random = new();
 
+        #region Private members
+
         // ShuffleCore
         private static void ShuffleCore<T>(this IList<T> list, Random? randomObj)
         {
@@ -22,18 +24,20 @@ namespace Engendro
             }
         }
 
+        #endregion
 
-        // GetRandomElement
-        public static T? GetRandomElement<T>(this IList<T> list) where T : class
+        // GetRandomItem
+        public static T? GetRandomItem<T>(this IList<T> list, Random? random = null) where T : class
         {
-            TryGetRandomElement(list, out var result);
+            TryGetRandomItem(list, out var result);
             return result;
         }
 
         // RandomIndex
-        public static int RandomIndex<T>(this IList<T> list)
+        public static int RandomIndex<T>(this IList<T> list, Random? random = null)
         {
-            return list.Count == 0 ? -1 : Randomizer.Next(0, list.Count - 1);
+            random ??= Random.Shared;
+            return list.Count == 0 ? -1 : random.Next(list.Count);
         }
 
         // Shuffle
@@ -108,16 +112,19 @@ namespace Engendro
             return true;
         }
 
-        // TryGetRandomElement
-        public static bool TryGetRandomElement<T>(this IList<T> list, out T? element) where T : class
+        // TryGetRandomItem
+        public static bool TryGetRandomItem<T>(this IList<T> list, out T? item, Random? random = null) where T : class
         {
             if (list.Count == 0)
             {
-                element = default;
+                item = default;
                 return false;
             }
 
-            element = list[Randomizer.Next(0, list.Count - 1)];
+            random ??= Random.Shared;
+
+            var index = Random.Shared.Next(list.Count);
+            item = list[index];
 
             return true;
         }

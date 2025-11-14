@@ -1,4 +1,6 @@
-﻿namespace Engendro
+﻿using System.Collections.Generic;
+
+namespace Engendro
 {
     /// <summary>
     /// StringExtensions
@@ -14,9 +16,7 @@
             while (index <= text.Length - 1)
             {
                 if (text[index] == ' ' || text[index] == '\n' || text[index] == '\t')
-                {
                     result++;
-                }
 
                 index++;
             }

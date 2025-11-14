@@ -58,7 +58,7 @@ namespace Engendro.Audio
             SoundInstance? result;
             List<Sound> instances = new(Sound.FindByTag(tag));
             if (instances.Count > 0)
-                result = instances.GetRandomElement()?.PopInstance();
+                result = instances.GetRandomItem()?.PopInstance();
             else
                 result = Sound.Find(tag)?.PopInstance();
 

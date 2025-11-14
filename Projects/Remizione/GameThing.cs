@@ -254,14 +254,33 @@ namespace Remizione
         // DropLoot
         protected void DropLoot()
         {
-            if (Session.Room is ProceduralRoom room)
+            if (Session.Room is not ProceduralRoom room)
+                return;
+
+            if (HasCoin && MetaItem.Find(MetaItem.CoinItemName) is MetaItem goldCoin)
             {
-                if (HasCoin && MetaItem.Find(MetaItem.CoinItemName) is MetaItem goldCoin)
+                Session.ObjectPools.Pickups.Get()?.Drop(room, Position, goldCoin);
+                HasCoin = false;
+            }
+            else if (GetLoot() is ChanceTableItem lootItem)
+            {
+                MetaItem? metaItem;
+
+                // Get meta item based on realm, category or name
+                if (Enum.IsDefined(typeof(ItemRealm), lootItem.Name))
                 {
-                    Session.ObjectPools.Pickups.Get()?.Drop(room, Position, goldCoin);
-                    HasCoin = false;
+                    metaItem = Session.MetaItemPool.GetRandomItem(Enum.Parse<ItemRealm>(lootItem.Name));
                 }
-                else if (GetLoot() is ChanceTableItem loot && MetaItem.Find(loot.Name) is MetaItem metaItem)
+                else if (Enum.IsDefined(typeof(ItemCategory), lootItem.Name))
+                {
+                    metaItem = Session.MetaItemPool.GetRandomItem(Enum.Parse<ItemCategory>(lootItem.Name));
+                }
+                else
+                {
+                    metaItem = Session.MetaItemPool.Find(lootItem.Name);
+                }
+
+                if (metaItem != null)
                 {
                     // Avoid looting unique things already in inventory
                     if (metaItem.Category == ItemCategory.Trinkets && Session.PilgrimSack.Find(metaItem.Name) != null)
@@ -269,16 +288,16 @@ namespace Remizione
 
                     Session.ObjectPools.Pickups.Get()?.Drop(room, Position, metaItem);
                 }
+            }
 
-                if (Randomizer.Random.NextDouble() < TicketRewardChance)
+            if (Randomizer.Random.NextDouble() < TicketRewardChance)
+            {
+                var tickets = TicketReward.Random();
+                if (tickets > 0 && Session.Player != null)
                 {
-                    var tickets = TicketReward.Random();
-                    if (tickets > 0 && Session.Player != null)
+                    for (var i = 0; i < tickets; i++)
                     {
-                        for (var i = 0; i < tickets; i++)
-                        {
-                            Session.ObjectPools.Tickets.Get()?.Drop(room, Position);
-                        }
+                        Session.ObjectPools.Tickets.Get()?.Drop(room, Position);
                     }
                 }
             }

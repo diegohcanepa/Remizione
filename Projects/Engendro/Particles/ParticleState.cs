@@ -102,7 +102,7 @@ namespace Engendro
         // GetImage
         public AtlasImage? GetImage()
         {
-            return Images.GetRandomElement();
+            return Images.GetRandomItem();
         }
 
         // Gravity

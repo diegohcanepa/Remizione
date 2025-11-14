@@ -75,14 +75,10 @@ namespace Engendro
         protected virtual void Dispose(bool disposing)
         {
             if (isDisposed)
-            {
                 return;
-            }
 
             if (disposing)
-            {
                 Content?.Dispose();
-            }
 
             isDisposed = true;
         }
