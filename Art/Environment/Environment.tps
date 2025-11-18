@@ -1558,6 +1558,38 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">RideCar-assets/RideCar01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,4,12,7</rect>
+                <key>scale9Paddings</key>
+                <rect>6,4,12,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">RideCar-assets/RideCar02.png</key>
+            <key type="filename">RideCar-assets/RideCar03.png</key>
+            <key type="filename">RideCar-assets/RideCar04.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,6,13,11</rect>
+                <key>scale9Paddings</key>
+                <rect>7,6,13,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">RideExit-assets/ExitRail.png</key>
             <key type="filename">RideExit-assets/ExitTunnel.png</key>
             <key type="filename">RideExit-assets/ExitTunnelPatch.png</key>
@@ -1578,7 +1610,6 @@
             <key type="filename">SaintPeregrine-assets/SaintPeregrine01.png</key>
             <key type="filename">SaintPeregrine-assets/SaintPeregrine02.png</key>
             <key type="filename">SaintPeregrine-assets/SaintPeregrine03.png</key>
-            <key type="filename">SaintPeregrine-assets/SaintPeregrineShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -2046,6 +2077,7 @@
                     <filename>RideExit-assets</filename>
                     <filename>UnderRideEntrance-assets</filename>
                     <filename>TunnelDoor-assets</filename>
+                    <filename>RideCar-assets</filename>
                 </array>
             </struct>
         </map>

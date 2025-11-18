@@ -243,6 +243,8 @@
             <key type="filename">Edmund-assets/Stand04.png</key>
             <key type="filename">Edmund-assets/StandHead01.png</key>
             <key type="filename">Edmund-assets/StandHead02.png</key>
+            <key type="filename">Edmund-assets/TakeSack01.png</key>
+            <key type="filename">Edmund-assets/TakeSack02.png</key>
             <key type="filename">Edmund-assets/TalkHead01.png</key>
             <key type="filename">Edmund-assets/TalkHead02.png</key>
             <key type="filename">Edmund-assets/ThrowItem01.png</key>
@@ -477,6 +479,8 @@
             <key type="filename">Sister-assets/Bend01.png</key>
             <key type="filename">Sister-assets/Bend02.png</key>
             <key type="filename">Sister-assets/Bend03.png</key>
+            <key type="filename">Sister-assets/GiveSack01.png</key>
+            <key type="filename">Sister-assets/GiveSack02.png</key>
             <key type="filename">Sister-assets/Move01.png</key>
             <key type="filename">Sister-assets/Move02.png</key>
             <key type="filename">Sister-assets/Move03.png</key>

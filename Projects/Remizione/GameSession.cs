@@ -159,6 +159,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(Pottery));
             scriptRegistry.RegisterEntity(typeof(Prop));
             scriptRegistry.RegisterEntity(typeof(IsoRideRoom));
+            scriptRegistry.RegisterEntity(typeof(RideCar));
             scriptRegistry.RegisterEntity(typeof(SaintPeregrine));
             scriptRegistry.RegisterEntity(typeof(SpearTrap));
             scriptRegistry.RegisterEntity(typeof(Tombstone));
@@ -241,8 +242,12 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
-            if (HUD.HandleInput(gameTime) == HandleInputResult.Handled)
+            if (roomEditor?.HandleInput() == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
+
+            else if (HUD.HandleInput(gameTime) == HandleInputResult.Handled)
+                return HandleInputResult.Handled;
+
             else
                 return base.OnHandleInput(gameTime);
         }
@@ -369,8 +374,6 @@ namespace Remizione
 
                 console?.Update(gameTime);
             }
-
-            roomEditor?.HandleInput();
 
             Environment.Update(gameTime);
             interactPrompt.Update(gameTime);

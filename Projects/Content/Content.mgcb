@@ -278,6 +278,18 @@
 /processorParam:Quality=Best
 /build:Audio/FX/DoorToilet.wav;Audio/FX/DoorToilet
 
+#begin Audio/FX/DoorTunnelClose.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/DoorTunnelClose.wav;Audio/FX/DoorTunnelClose
+
+#begin Audio/FX/DoorTunnelOpen.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/DoorTunnelOpen.wav;Audio/FX/DoorTunnelOpen
+
 #begin Audio/FX/EdmundHurt1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -553,6 +565,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/PickupTicket.wav;Audio/FX/PickupTicket
+
+#begin Audio/FX/PneumaticDoor.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/PneumaticDoor.wav;Audio/FX/PneumaticDoor
 
 #begin Audio/FX/PotteryBreak1.wav
 /importer:WavImporter
