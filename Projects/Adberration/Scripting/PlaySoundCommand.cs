@@ -65,7 +65,7 @@ namespace Adberration.Scripting
 
             var volume = Parser.ParseFloatRangeArgument(this, VolumeArg, new FloatRange(instance.Volume.Master));
 
-            instance.Volume.Master = volume.Random();
+            instance.Volume.Master = volume.RandomValue();
 
             // Fade
             if (HasArg(FadeArg))

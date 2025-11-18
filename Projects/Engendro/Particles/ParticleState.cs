@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -46,7 +47,7 @@ namespace Engendro
                 return value;
 
             var halfDeviation = deviation / 2.0f;
-            return Randomizer.Next(value - halfDeviation, value + halfDeviation);
+            return RandomHelper.Next(value - halfDeviation, value + halfDeviation);
         }
 
         // GenerateVector2
@@ -72,7 +73,7 @@ namespace Engendro
         // GenerateLifespan
         public int GenerateLifespan()
         {
-            return Randomizer.Next(MinLifespan, MaxLifespan);
+            return Random.Shared.Next(MinLifespan, MaxLifespan + 1);
         }
 
         // GenerateOpacity

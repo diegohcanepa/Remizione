@@ -63,13 +63,13 @@ namespace Remizione
         // GetCellLabel
         public string GetCellLabel(int col, int row) => occupiedName[col, row];
 
-        // GetPosition
-        public Vector2 GetPosition(int col, int row)
+        // GetPixelArea
+        public RectangleF GetPixelArea(int col, int row)
         {
             int x = col * CellSize;
             int y = row * CellSize;
 
-            return new(x, y);
+            return new(x, y, CellSize, CellSize);
         }
 
         // GetRequiredGridSpace
@@ -87,6 +87,12 @@ namespace Remizione
         public bool IsCellFree(int col, int row)
         {
             return col >= 0 && col < ColCount && row >= 0 && row < RowCount && !occupied[col, row];
+        }
+
+        // MarkOccupied
+        public void MarkOccupied(string label, int col, int row)
+        {
+            MarkOccupied(label, col, row, Size.Unit);
         }
 
         // MarkOccupied
@@ -109,26 +115,6 @@ namespace Remizione
                     }
                 }
             }
-        }
-
-        // MarkOccupiedMargin
-        public void MarkOccupiedMargin(string label, int marginLeft, int marginTop, int marginRight, int marginBottom)
-        {
-            // Left
-            if (marginLeft > 0)
-                MarkOccupied(label, 0, marginTop, marginLeft, RowCount - marginTop - marginBottom);
-
-            // Top
-            if (marginTop > 0)
-                MarkOccupied(label, 0, 0, ColCount, marginTop);
-
-            // Right
-            if (marginRight > 0)
-                MarkOccupied(label, ColCount - marginRight, marginTop, marginRight, RowCount - marginTop - marginBottom);
-
-            // Bottom
-            if (marginBottom > 0)
-                MarkOccupied(label, 0, RowCount - marginBottom, ColCount, marginBottom);
         }
 
         // Name

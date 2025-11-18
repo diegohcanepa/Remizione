@@ -76,8 +76,8 @@ namespace Engendro
         // Minimum
         public int Minimum { get; }
 
-        // Random
-        public int Random() => Randomizer.Next(Minimum, Maximum);
+        // RandomValue
+        public int RandomValue() => Random.Shared.Next(Minimum, Maximum + 1);
 
         // Separator
         public static readonly string Separator = "|";

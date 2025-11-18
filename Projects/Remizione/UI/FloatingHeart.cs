@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Remizione
 {
@@ -55,12 +56,12 @@ namespace Remizione
         // Show
         public void Show(Vector2 origin, bool half)
         {
-            var distance = new Vector2(Randomizer.Next(3, 13), Randomizer.Next(-10, -5));
+            var distance = new Vector2(Random.Shared.Next(3, 14), Random.Shared.Next(-10, -5));
 
             if (spawnLeft)
                 distance.X *= -1;
 
-            var duration = Randomizer.Next(1000, 2500);
+            var duration = Random.Shared.Next(1000, 2500);
 
             image.Image = half ? Atlases.UI.HeartHalfIcon : Atlases.UI.HeartIcon;
 
@@ -70,10 +71,10 @@ namespace Remizione
             opacityTween.StartDelay = (int)(duration * .9f);
             opacityTween.Start(TweenStyle.CubicIn, 1, 0, duration - opacityTween.StartDelay);
 
-            var r = Randomizer.Next(6, 10);
+            var r = Random.Shared.Next(6, 11);
             rotationTween.Start(TweenStyle.Linear, -r, r, 100, -1);
 
-            scaleTween.Start(TweenStyle.Linear, Vector2.Zero, ScaleInfo.UIElement.Medium, Randomizer.Next(100, 300));
+            scaleTween.Start(TweenStyle.Linear, Vector2.Zero, ScaleInfo.UIElement.Medium, Random.Shared.Next(100, 300));
 
             image.Tweens.ScaleTween = scaleTween;
             image.Tweens.XTween = xTween;

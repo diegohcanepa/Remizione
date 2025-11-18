@@ -85,7 +85,7 @@ namespace Remizione
             }
             else if (Session.Player?.DistanceTo(this) < 4)
             {
-                if (!Session.PilgrimSack.IsFull)
+                if (!Session.Inventory.IsFull)
                 { 
                     isCollecting = true;
                     DepthOffset = 10;
@@ -94,7 +94,7 @@ namespace Remizione
                     scaleTween.Start(TweenStyle.Linear, Scale, Vector2.Zero, 150);
                     Tweens.ScaleTween = scaleTween;
 
-                    Session.PilgrimSack.Add(metaItem, 1);
+                    Session.Inventory.Add(metaItem, 1);
 
                     Session.HUD.Log.Show(LogVerb.PickedUp, metaItem);
                 }

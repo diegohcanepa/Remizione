@@ -36,6 +36,9 @@ namespace Engendro
         // GetHashCode
         public override int GetHashCode() => HashCode.Combine(Width, Height);
 
+        // Unit
+        public static Size Unit { get; } = new(1, 1);
+
         // Width
         public int Width { get; } = width;
     }

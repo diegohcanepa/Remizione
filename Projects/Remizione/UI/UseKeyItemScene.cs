@@ -39,10 +39,10 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public UseKeyItemScene(PilgrimSack pilgrimSack)
+        public UseKeyItemScene(Inventory pilgrimSack)
             : base(pilgrimSack.Session.Game)
         {
-            this.PilgrimSack = pilgrimSack;
+            this.Inventory = pilgrimSack;
 
             // Bottom gradient
             bottomGradient = new ImageSprite(Game, Atlases.UI.BottomGradient)
@@ -223,7 +223,7 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (!IsCurrentScene || PilgrimSack.Session.IsOutcomeInProgress)
+            if (!IsCurrentScene || Inventory.Session.IsOutcomeInProgress)
                 return;
 
             // Gradient
@@ -267,11 +267,11 @@ namespace Remizione
                 var itemName = SelectedItem?.Item.Name;
                 SceneController.Pop();
 
-                if (itemName != null && PilgrimSack.Session.KeyItemTarget != null)
+                if (itemName != null && Inventory.Session.KeyItemTarget != null)
                 {
-                    var scriptName = $"{PilgrimSack.Session.KeyItemTarget.StaticName}-With-{itemName}";
-                    if (PilgrimSack.Session.ScriptLibrary.GetRoutine(scriptName) is Script script)
-                        PilgrimSack.Session.AwaitScript(script);
+                    var scriptName = $"{Inventory.Session.KeyItemTarget.StaticName}-With-{itemName}";
+                    if (Inventory.Session.ScriptLibrary.GetRoutine(scriptName) is Script script)
+                        Inventory.Session.AwaitScript(script);
                 }
 
                 return HandleInputResult.Handled;
@@ -328,18 +328,18 @@ namespace Remizione
 
             base.OnLoadContent();
 
-            target = PilgrimSack.Session.OutcomeTarget as Prop;
+            target = Inventory.Session.OutcomeTarget as Prop;
 
             if (target != null)
             {
                 visualItems.Clear();
 
-                var friendlyItems = PilgrimSack.Session.GetFriendlyItems(target.StaticName);
+                var friendlyItems = Inventory.Session.GetFriendlyItems(target.StaticName);
 
                 for (var i = 0; i < friendlyItems.Length; i++)
                 {
-                    if (PilgrimSack.Find(friendlyItems[i].Name) is Item item)
-                        visualItems.Add(new(PilgrimSack.Session.Game, item));
+                    if (Inventory.Find(friendlyItems[i].Name) is Item item)
+                        visualItems.Add(new(Inventory.Session.Game, item));
                 }
 
                 Select(0);
@@ -365,8 +365,8 @@ namespace Remizione
 
         #endregion
 
-        // PilgrimSack
-        public PilgrimSack PilgrimSack { get; set; }
+        // Inventory
+        public Inventory Inventory { get; set; }
 
         // Text
         public string? Text

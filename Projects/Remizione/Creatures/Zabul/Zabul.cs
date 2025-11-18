@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using System;
 
 namespace Remizione
 {
@@ -28,7 +29,7 @@ namespace Remizione
         // OnStart
         protected override void OnStart()
         {
-            PerceptionSensor.RefreshRate = Randomizer.Next(PerceptionSensor.DefaultRefreshRate / 2, PerceptionSensor.DefaultRefreshRate);
+            PerceptionSensor.RefreshRate = Random.Shared.Next(PerceptionSensor.DefaultRefreshRate / 2, PerceptionSensor.DefaultRefreshRate + 1);
             AIStateMachine.ChangeState(AIStateName.Decide);
         }
     }

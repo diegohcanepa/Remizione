@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Remizione
 {
@@ -56,9 +57,9 @@ namespace Remizione
         public override float RotationSpeed => 2;
 
         // Scale
-        public override Vector2 Scale => new(Randomizer.Next(.4f, .9f));
+        public override Vector2 Scale => new(RandomHelper.Next(.4f, .9f));
 
         // Speed
-        public override Vector2 Speed => new(Randomizer.Next(-8, 8), Randomizer.Next(-1, 1));
+        public override Vector2 Speed => new(Random.Shared.Next(-8, 9), Random.Shared.Next(-1, 2));
     }
 }

@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace Remizione
 {
     /// <summary>
-    /// PilgrimSack
+    /// Inventory
     /// </summary>
-    public sealed class PilgrimSack
+    public sealed class Inventory
     {
         private readonly List<Item> items = [];
         private const string NoneValue = "[None]";
 
         // Constructor
-        public PilgrimSack(GameSession session)
+        public Inventory(GameSession session)
         {
             this.Session = session;
         }

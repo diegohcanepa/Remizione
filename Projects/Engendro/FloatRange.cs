@@ -86,9 +86,9 @@ namespace Engendro
         public float Minimum { get; }
 
         // Random
-        public float Random()
+        public float RandomValue()
         {
-            return Randomizer.Next(Minimum, Maximum);
+            return RandomHelper.Next(Minimum, Maximum);
         }
 
         // Separator

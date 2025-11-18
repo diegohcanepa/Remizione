@@ -173,7 +173,7 @@ namespace Engendro.Audio
 
             if (PopMode == SoundPopMode.Random)
             {
-                return assetNames.Count == 1 ? assetNames[0] : assetNames[Randomizer.Next(0, assetNames.Count - 1)];
+                return assetNames.Count == 1 ? assetNames[0] : assetNames[Random.Shared.Next(0, assetNames.Count)];
             }
             else
             {

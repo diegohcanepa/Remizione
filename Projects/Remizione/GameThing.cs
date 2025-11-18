@@ -283,16 +283,16 @@ namespace Remizione
                 if (metaItem != null)
                 {
                     // Avoid looting unique things already in inventory
-                    if (metaItem.Category == ItemCategory.Trinkets && Session.PilgrimSack.Find(metaItem.Name) != null)
+                    if (metaItem.Category == ItemCategory.Trinkets && Session.Inventory.Find(metaItem.Name) != null)
                         return;
 
                     Session.ObjectPools.Pickups.Get()?.Drop(room, Position, metaItem);
                 }
             }
 
-            if (Randomizer.Random.NextDouble() < TicketRewardChance)
+            if (Random.Shared.NextDouble() < TicketRewardChance)
             {
-                var tickets = TicketReward.Random();
+                var tickets = TicketReward.RandomValue();
                 if (tickets > 0 && Session.Player != null)
                 {
                     for (var i = 0; i < tickets; i++)
@@ -506,7 +506,7 @@ namespace Remizione
                 var friendlyItems = Session.GetFriendlyItems(StaticName);
                 for (var i = 0; i < friendlyItems.Length; i++)
                 {
-                    if (Session.PilgrimSack.Find(friendlyItems[i].Name) != null)
+                    if (Session.Inventory.Find(friendlyItems[i].Name) != null)
                         return true;
                 }
 

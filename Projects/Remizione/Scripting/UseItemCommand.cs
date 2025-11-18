@@ -23,7 +23,7 @@ namespace Remizione.Scripting
             if (session.Player == null)
                 return;
 
-            if (session.PilgrimSack.Find(Body.Clauses[0]) is Item item)
+            if (session.Inventory.Find(Body.Clauses[0]) is Item item)
                 item.Use(session.Player);
         }
     }

@@ -29,10 +29,10 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public ItemGrid(PilgrimSack pilgrimSack, ItemCategory categoryFilter, int columns, int rows)
+        public ItemGrid(Inventory pilgrimSack, ItemCategory categoryFilter, int columns, int rows)
             : base(pilgrimSack.Session.Game)
         {
-            this.PilgrimSack = pilgrimSack;
+            this.Inventory = pilgrimSack;
             this.columns = columns;
             this.rows = rows;
             this.slots = new List<ItemGridSlot>(columns * rows);
@@ -121,7 +121,7 @@ namespace Remizione
 
             int index = 0;
 
-            foreach (var item in PilgrimSack.GetItems(category))
+            foreach (var item in Inventory.GetItems(category))
             {
                 if (index >= slots.Count)
                     break;
@@ -130,8 +130,8 @@ namespace Remizione
                 index++;
             }
 
-            if (PilgrimSack.SelectedItem != null)
-                SelectSlot(PilgrimSack.SelectedItem.Name);
+            if (Inventory.SelectedItem != null)
+                SelectSlot(Inventory.SelectedItem.Name);
             else
                 SelectSlot(0);
         }
@@ -192,8 +192,8 @@ namespace Remizione
             {
                 SelectedSlot.Item = null;
                 item.Discard();
-                if (PilgrimSack.SelectedItem != null)
-                    SelectSlot(PilgrimSack.SelectedItem.Name);
+                if (Inventory.SelectedItem != null)
+                    SelectSlot(Inventory.SelectedItem.Name);
             }
         }
 
@@ -304,8 +304,8 @@ namespace Remizione
         // IndexOf
         public int IndexOf(ItemGridSlot slot) => slots.IndexOf(slot);
 
-        // PilgrimSack
-        public PilgrimSack PilgrimSack { get; }
+        // Inventory
+        public Inventory Inventory { get; }
 
         // Position
         public Vector2 Position

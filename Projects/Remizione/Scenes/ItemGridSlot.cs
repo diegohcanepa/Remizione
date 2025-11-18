@@ -82,7 +82,7 @@ namespace Remizione
 
             if (Item == null)
             {
-                if (Index > PilgrimSack.MaximumSize - 1)
+                if (Index > Inventory.MaximumSize - 1)
                     stateIcon.Draw(gameTime);
             }
             else
@@ -162,7 +162,7 @@ namespace Remizione
             if (Item.MetaItem.Category == ItemCategory.Consumables)
             {
                 Item.MetaItem.Sound?.Play();
-                Item.Use(grid.PilgrimSack.Session.Player);
+                Item.Use(grid.Inventory.Session.Player);
                 if (Item.Index < 0)
                     Item = null;
                 Refresh();

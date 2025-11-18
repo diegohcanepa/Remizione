@@ -8,7 +8,7 @@ namespace Remizione
     /// </summary>
     public static class RunInfo
     {
-        private static readonly List<RideRoom> rideRooms = [];
+        private static readonly List<IsoRideRoom> rideRooms = [];
         private static readonly Dictionary<string, int> spawnData = [];
 
         // Dispose
@@ -30,7 +30,7 @@ namespace Remizione
         {
             for (var i = 0; i < length; i++)
             {
-                var room = new RideRoom(session, string.Empty, i, i == length - 1);
+                var room = new IsoRideRoom(session, string.Empty, i, i == length - 1);
                 rideRooms.Add(room);
             }
 
@@ -61,6 +61,6 @@ namespace Remizione
         }
 
         // RideRooms
-        public static ReadOnlyCollection<RideRoom> RideRooms { get; } = rideRooms.AsReadOnly();
+        public static ReadOnlyCollection<IsoRideRoom> RideRooms { get; } = rideRooms.AsReadOnly();
     }
 }

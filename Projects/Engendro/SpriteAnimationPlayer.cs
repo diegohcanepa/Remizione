@@ -1,5 +1,6 @@
 ﻿using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Engendro
 {
@@ -160,7 +161,7 @@ namespace Engendro
             {
                 // RandomFrame
                 case FramePosition.Random:
-                    frameIndex = Randomizer.Next(0, Animation.FrameCount - 1);
+                    frameIndex = Random.Shared.Next(0, Animation.FrameCount);
                     break;
 
                 // FirstFrame

@@ -91,7 +91,7 @@ namespace Engendro
             this.Count = count;
             this.counter = 0;
             this.delayCooldown = startDelay;
-            this.elapsedInterval = interval.Random();
+            this.elapsedInterval = interval.RandomValue();
 
             IsRunning = true;
         }
@@ -126,7 +126,7 @@ namespace Engendro
                 }
                 else
                 {
-                    this.elapsedInterval = Interval.Random();
+                    this.elapsedInterval = Interval.RandomValue();
                     valueIndex++;
                     if (valueIndex == values.Count)
                         valueIndex = 0;

@@ -12,30 +12,24 @@ namespace Remizione
     {
         #region Private fields
 
+        private readonly TextSprite cellLabel;
         private int instanceCount;
         private bool populated;
         private readonly int randomSeed;
-        private readonly TextSprite cellLabel;
 
         #endregion
 
         #region Constructor
 
         // Constructor
-        protected ProceduralRoom(GameSession session, string name, RoomKind roomKind, int roomIndex, bool isLastRoom)
+        protected ProceduralRoom(GameSession session, string name, RoomKind roomKind, int roomIndex)
             : base(session, name)
         {
-            this.RoomKind = roomKind;
             this.RoomIndex = roomIndex;
+            this.RoomKind = roomKind;
 
+            AllowGlobalLight = true;
             LightingSystem = true;
-
-            if (roomIndex == 0)
-                RoomPhase = RunPhase.Start;
-            else if (isLastRoom)
-                RoomPhase = RunPhase.End;
-            else
-                RoomPhase = RunPhase.Mid;
 
             int salt = roomIndex;
             this.randomSeed = GetSeed(Session.Seed, salt);
@@ -149,20 +143,20 @@ namespace Remizione
         }
 
         // DrawGrid
-        private void DrawGrid(ProceduralRoomGrid grid, GameTime gameTime)
+        private void DrawGrid(GameTime gameTime)
         {
-            for (var col = 0; col < grid.ColCount; col++)
+            for (var col = 0; col < Grid.ColCount; col++)
             {
-                for (var row = 0; row < grid.RowCount; row++)
+                for (var row = 0; row < Grid.RowCount; row++)
                 {
-                    var pos = grid.GetPosition(col, row);
-                    var rect = new RectangleF(pos.X + 1, pos.Y + 1, grid.CellSize, grid.CellSize);
+                    var pos = Grid.GetPixelArea(col, row).GetPoint(RectanglePoint.LeftTop);
+                    var rect = new RectangleF(pos.X + 1, pos.Y + 1, Grid.CellSize, Grid.CellSize);
                     rect.Inflate(-1, -1);
-                    var color = (grid.IsCellFree(col, row) ? Color.Green : Color.Red) * .1f;
+                    var color = (Grid.IsCellFree(col, row) ? Color.Green : Color.Red) * .1f;
 
                     Game.Shapes.DrawRectangle(rect, color);
 
-                    cellLabel.Text = grid.GetCellLabel(col, row);
+                    cellLabel.Text = Grid.GetCellLabel(col, row);
                     cellLabel.Position = pos + new Vector2(2);
                     cellLabel.Draw(gameTime);
                 }
@@ -218,20 +212,11 @@ namespace Remizione
             return result;
         }
 
-        // GetTargetGrid
-        private ProceduralRoomGrid GetTargetGrid(PlacementPhase phase)
-        {
-            if (phase == PlacementPhase.Terrain)
-                return DecorationGrid;
-            else
-                return MainGrid;
-        }
-
         // SpawnThing
         private void SpawnThing(ProceduralRoomGrid grid, GameThing thing, int col, int row, PlacementData placementData)
         {
             var sizeInCells = grid.GetRequiredGridSpace(thing);
-            var ltPos = grid.GetPosition(col, row) + new Vector2(.5f);
+            var ltPos = grid.GetPixelArea(col, row).GetPoint(RectanglePoint.LeftTop) + new Vector2(.5f);
             var rect = new RectangleF(ltPos.X, ltPos.Y, sizeInCells.Width * grid.CellSize, sizeInCells.Height * grid.CellSize);
             var instance = CreateRuntimeThingCloneCore(thing.StaticName);
             instance.Position = rect.GetPoint(RectanglePoint.Bottom);
@@ -245,14 +230,8 @@ namespace Remizione
 
         #region Protected members
 
-        // DecorationGrid
-        protected ProceduralRoomGrid DecorationGrid { get; } = new ProceduralRoomGrid("Decoration");
-
-        // GetRoomData
-        protected abstract string GetRoomData(out Vector2[] walkAreaVertices);
-
-        // MainGrid
-        protected ProceduralRoomGrid MainGrid { get; } = new ProceduralRoomGrid("Main");
+        // Grid
+        protected ProceduralRoomGrid Grid { get; } = new("Grid");
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
@@ -261,7 +240,7 @@ namespace Remizione
             Game.SpriteBatch.Begin(Session.Camera);
 
             if (ShowGrid)
-                DrawGrid(MainGrid, gameTime);
+                DrawGrid(gameTime);
 
             Game.SpriteBatch.End();
         }
@@ -273,26 +252,31 @@ namespace Remizione
 
             if (!populated)
             {
-                Sprite.ClearAnimations();
-                
-                var terrainImageName = GetRoomData(out var walkAreaVertices);
-                var animation = AddAnimation(terrainImageName);
-                animation.AddFrame(terrainImageName, 1000);
-
                 populated = true;
 
                 CustomWidth = (int)BoundingBox.Width;
                 CustomHeight = (int)BoundingBox.Height;
+                Grid.Resize(CustomWidth, CustomHeight);
 
-                DecorationGrid.Resize(CustomWidth, CustomHeight);
-                MainGrid.Resize(CustomWidth, CustomHeight);
+                OnSetupWalkArea();
 
-                ClearWalkAreas();
-                AddWalkArea("<Default>", walkAreaVertices);
+                if (WalkArea != null)
+                {
+                    for (var row = 0; row < Grid.RowCount; row++)
+                    {
+                        for (var col = 0; col < Grid.ColCount; col++)
+                        {
+                            var cellArea = Grid.GetPixelArea(row, col);
+
+                            if (!WalkArea.Polygon.BoundingRectangleF.Contains(cellArea))
+                                Grid.MarkOccupied(string.Empty, col, row);
+                        }
+                    }
+                }
 
                 OnPopulating();
                 Populate();
-                OnPopulateCompleted();
+                OnPopulated();
             }
         }
 
@@ -301,8 +285,13 @@ namespace Remizione
         {
         }
 
-        // OnPopulateCompleted
-        protected virtual void OnPopulateCompleted()
+        // OnPopulated
+        protected virtual void OnPopulated()
+        {
+        }
+
+        // OnSetupWalkArea
+        protected virtual void OnSetupWalkArea()
         {
         }
 
@@ -317,8 +306,6 @@ namespace Remizione
             {
                 if (phase == PlacementPhase.None)
                     continue;
-
-                var grid = GetTargetGrid(phase);
 
                 var staticThings = GetStaticThings(phase);
                 staticThings.Shuffle(Random);
@@ -342,17 +329,17 @@ namespace Remizione
                         {
                             // Random
                             case PlacementDistributionStrategy.Random:
-                                DistributeRandomly(grid, thing, placementData);
+                                DistributeRandomly(Grid, thing, placementData);
                                 break;
 
                             // Clump
                             case PlacementDistributionStrategy.Clump:
-                                DistributeClumped(grid, thing, placementData);
+                                DistributeClumped(Grid, thing, placementData);
                                 break;
 
                             // NoiseMap 
                             case PlacementDistributionStrategy.NoiseMap:
-                                DistributeWithNoiseMap(grid, thing, placementData, randomSeed);
+                                DistributeWithNoiseMap(Grid, thing, placementData, randomSeed);
                                 break;
                         }
                     }
@@ -362,6 +349,9 @@ namespace Remizione
 
         // Random
         protected Random Random { get; }
+
+        // RequiresPersistence
+        protected sealed override bool RequiresPersistence => false;
 
         #endregion
 
@@ -419,9 +409,6 @@ namespace Remizione
 
         // RoomKind
         public RoomKind RoomKind { get; }
-
-        // RoomPhase
-        public RunPhase RoomPhase { get; }
 
         // ShowGrid
         public static bool ShowGrid { get; set; }

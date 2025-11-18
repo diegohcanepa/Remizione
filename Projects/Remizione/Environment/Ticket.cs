@@ -117,7 +117,7 @@ namespace Remizione
 
             image.Position = new(RandomBetween(origin.X - 15, origin.X + 15f), origin.Y  + yOffset);
 
-            groundY = origin.Y + Randomizer.Next(-5, 3);
+            groundY = origin.Y + Random.Shared.Next(-5, 4);
             launchDelay = RandomBetween(0, .1f);
             delayTimer = 0;
             launched = false;

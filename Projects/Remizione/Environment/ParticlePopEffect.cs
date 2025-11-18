@@ -105,7 +105,7 @@ namespace Remizione
             CleanUp();
 
             color = splashColor;
-            int count = BurstSize.Random();
+            int count = BurstSize.RandomValue();
 
             for (int i = 0; i < count; i++)
             {

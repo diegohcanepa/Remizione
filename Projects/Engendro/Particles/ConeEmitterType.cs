@@ -28,7 +28,7 @@ namespace Engendro
 
             var angle = (float)Math.Atan2(Direction.Y, Direction.X);
 
-            var newAngle = Randomizer.Next(angle - Spread / 2.0f, angle + Spread / 2.0f);
+            var newAngle = RandomHelper.Next(angle - Spread / 2.0f, angle + Spread / 2.0f);
 
             Vector2 particleDirection = new((float)Math.Cos(newAngle), (float)Math.Sin(newAngle));
 

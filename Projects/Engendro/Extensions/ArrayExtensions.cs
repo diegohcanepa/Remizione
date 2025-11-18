@@ -25,16 +25,5 @@ namespace Engendro
 
             return result.ToArray();
         }
-
-        // RandomIndex
-        public static int RandomIndex(this Array array)
-        {
-            if (array.Length == 0)
-            {
-                return -1;
-            }
-
-            return Randomizer.Next(0, array.Length - 1);
-        }
     }
 }

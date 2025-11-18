@@ -755,7 +755,7 @@ namespace Remizione
         // UseEquippedItem
         public void UseEquippedItem(ItemCategory category)
         {
-            if (session.PilgrimSack.GetEquippedItem(category) is not Item item)
+            if (session.Inventory.GetEquippedItem(category) is not Item item)
                 return;
 
             if (item.Count <= 0)

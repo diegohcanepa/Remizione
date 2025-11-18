@@ -15,7 +15,7 @@ namespace Remizione.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            (Session as GameSession)?.PilgrimSack.Clear();
+            (Session as GameSession)?.Inventory.Clear();
         }
     }
 }

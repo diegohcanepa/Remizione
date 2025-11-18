@@ -86,7 +86,7 @@ namespace Remizione
         // InvalidateItem
         private void InvalidateItem()
         {
-            lastKnownItem = session.PilgrimSack.GetEquippedItem(ItemCategory);
+            lastKnownItem = session.Inventory.GetEquippedItem(ItemCategory);
 
             if (lastKnownItem != null)
             {
@@ -139,7 +139,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (lastKnownItem != session.PilgrimSack.GetEquippedItem(ItemCategory))
+            if (lastKnownItem != session.Inventory.GetEquippedItem(ItemCategory))
                 InvalidateItem();
             else
                 InvalidateItemAmount(false);
@@ -161,7 +161,7 @@ namespace Remizione
             {
                 if (lastKnownItem == null)
                 {
-                    if (session.PilgrimSack.EquipPrevious(ItemCategory) == null)
+                    if (session.Inventory.EquipPrevious(ItemCategory) == null)
                         Sound.Play(SoundNames.Error);
                     else
                         Sound.Play(SoundNames.UIHover);
@@ -175,7 +175,7 @@ namespace Remizione
             // Previous item
             if (previousInputBinding?.IsPressed(PlayerIndex.One) == true)
             {
-                if (session.PilgrimSack.EquipPrevious(ItemCategory) != null)
+                if (session.Inventory.EquipPrevious(ItemCategory) != null)
                     Sound.Play(SoundNames.UIHover);
 
                 return HandleInputResult.Handled;
@@ -184,7 +184,7 @@ namespace Remizione
             // Next item
             else if (nextInputBinding?.IsPressed(PlayerIndex.One) == true)
             {
-                if (session.PilgrimSack.EquipNext(ItemCategory) != null)
+                if (session.Inventory.EquipNext(ItemCategory) != null)
                     Sound.Play(SoundNames.UIHover);
 
                 return HandleInputResult.Handled;

@@ -17,7 +17,7 @@ namespace Remizione
             : base(session, string.Empty)
         {
             Atlas = Atlases.Environment;
-            DefaultImageName = $"GutStain{Randomizer.Next(1, 2)}";
+            DefaultImageName = $"GutStain{Random.Shared.Next(1, 3)}";
             PivotOrigin = RectanglePoint.Center;
             Opacity = .3f;
 

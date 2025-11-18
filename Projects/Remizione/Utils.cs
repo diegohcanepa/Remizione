@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Remizione
 {
@@ -44,7 +45,7 @@ namespace Remizione
 
                 LightKind.Fireplace => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.01f, 1200, -1),
 
-                LightKind.Lantern => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.1f, Randomizer.Next(1100, 1400), -1),
+                LightKind.Lantern => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.1f, Random.Shared.Next(1100, 1400), -1),
 
                 _ => null,
             };

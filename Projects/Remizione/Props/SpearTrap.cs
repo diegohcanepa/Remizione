@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Remizione
 {
@@ -83,7 +84,7 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            cooldownInterval = Randomizer.Next(3500, 7000);
+            cooldownInterval = Random.Shared.Next(3500, 7000);
             Prepare();
         }
 

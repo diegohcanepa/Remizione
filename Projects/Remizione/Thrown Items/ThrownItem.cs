@@ -80,7 +80,7 @@ namespace Remizione
                             item.ApplyDamage(owner, target);
                             if (ImpactSound != null)
                                 PlaySound(ImpactSound);
-                            velocity = new Vector2(-velocity.X, velocity.Y) * Randomizer.Next(.2f, .5f);
+                            velocity = new Vector2(-velocity.X, velocity.Y) * RandomHelper.Next(.2f, .5f);
                             lastThingCollisioned = target;
                         }
 
@@ -99,7 +99,7 @@ namespace Remizione
             {
                 if (Y >= walkArea.Polygon.BoundingRectangleF.Top && !walkArea.Contains(Position))
                 {
-                    velocity = new Vector2(-velocity.X, velocity.Y) * Randomizer.Next(.2f, .5f);
+                    velocity = new Vector2(-velocity.X, velocity.Y) * RandomHelper.Next(.2f, .5f);
                     return true;
                 }
             }
@@ -114,7 +114,7 @@ namespace Remizione
             {
                 Unparent();
                 Session.ObjectPools.ReturnThrownItem(this);
-                Session.PilgrimSack.Add(item.Name, 1);
+                Session.Inventory.Add(item.Name, 1);
             }
         }
 
@@ -164,7 +164,7 @@ namespace Remizione
                     velocity = new Vector2(velocity.X * horizontalDamping, -velocity.Y * bounciness);
 
                     // Agregar variación a la rotación para que no termine siempre igual
-                    float randomTwist = (float)(Randomizer.Random.NextDouble() - 0.5) * 0.4f;
+                    float randomTwist = (float)(Random.Shared.NextDouble() - 0.5) * 0.4f;
                     Rotation += randomTwist; // pequeño “sacudón”
 
                     bounceCount++;

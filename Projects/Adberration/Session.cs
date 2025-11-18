@@ -108,20 +108,20 @@ namespace Adberration
         {
             this.NextRoom = nextRoom;
 
+            OnRoomExit(currentRoom, nextRoom);
+
             if (musicTagRoomScope != null)
             {
                 AudioManager.Music.PlayTag(musicTagRoomScope);
                 musicTagRoomScope = null;
             }
 
-            OnExitRoom(currentRoom, nextRoom);
-
             if (CanUnloadRoom(currentRoom))
                 currentRoom.Unload();
             else
                 currentRoom.Pause();
 
-            OnExitRoomCompleted(currentRoom, nextRoom);
+            OnRoomExitCompleted(currentRoom, nextRoom);
 
             NextRoom = null;
             PreviousRoom = currentRoom;
@@ -575,13 +575,13 @@ namespace Adberration
         {
         }
 
-        // OnExitRoom
-        protected virtual void OnExitRoom(Room currentRoom, Room nextRoom)
+        // OnRoomExit
+        protected virtual void OnRoomExit(Room currentRoom, Room nextRoom)
         {
         }
 
-        // OnExitRoomCompleted
-        protected virtual void OnExitRoomCompleted(Room currentRoom, Room nextRoom)
+        // OnRoomExitCompleted
+        protected virtual void OnRoomExitCompleted(Room currentRoom, Room nextRoom)
         {
         }
 
@@ -936,7 +936,7 @@ namespace Adberration
         // GenerateRandomNumber
         public int GenerateRandomNumber(string name, Int32Range range)
         {
-            var result = range.Random();
+            var result = range.RandomValue();
             randomNumbers[name] = result;
             return result;
         }

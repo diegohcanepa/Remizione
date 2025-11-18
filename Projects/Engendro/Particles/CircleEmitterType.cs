@@ -14,12 +14,12 @@ namespace Engendro
         // GetParticlePosition
         public Vector2 GetParticlePosition(Vector2 emitterPosition)
         {
-            var newAngle = Randomizer.Next(0, 2 * MathHelper.Pi);
+            var newAngle = RandomHelper.Next(0, 2 * MathHelper.Pi);
             Vector2 positionVector = new((float)Math.Cos(newAngle), (float)Math.Sin(newAngle));
 
             positionVector.Normalize();
 
-            var distance = Randomizer.Next(0, Radius);
+            var distance = RandomHelper.Next(0, Radius);
             var position = positionVector * distance;
 
             var x = emitterPosition.X + position.X;

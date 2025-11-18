@@ -8,9 +8,9 @@ using System.Collections.Generic;
 namespace Remizione
 {
     /// <summary>
-    /// PilgrimSackScene
+    /// InventoryScene
     /// </summary>
-    public sealed class PilgrimSackScene : Scene
+    public sealed class InventoryScene : Scene
     {
         #region Private fields
 
@@ -30,13 +30,13 @@ namespace Remizione
         private readonly UIHPBonus hpBonus;
         private readonly ImageSprite infoContainer;
         private readonly ImageSprite infoTitleContainer;
+        private readonly Inventory inventory;
         private readonly TextSprite itemDescription;
         private readonly ImageSprite itemIcon;
         private readonly TextSprite itemName;
         private InputMethod lastKnownInput;
         private readonly ImageSprite navigationBar;
         private readonly UIButton nextCategoryButton;
-        private readonly PilgrimSack pilgrimSack;
         private readonly UIButton previousCategoryButton;
 
         #endregion
@@ -44,10 +44,10 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public PilgrimSackScene(PilgrimSack pilgrimSack)
+        public InventoryScene(Inventory pilgrimSack)
             : base(pilgrimSack.Session.Game, SceneSettings.PausePreviousScenes)
         {
-            this.pilgrimSack = pilgrimSack;
+            this.inventory = pilgrimSack;
 
             // Grid container
             this.gridContainer = new(Game, Atlases.UI.InventoryGridContainer)
@@ -318,7 +318,7 @@ namespace Remizione
             {
                 categoryIcons[i].X = x + i * (iconWidth + spacing);
                 categoryIcons[i].Y = y;
-                categoryMarkers[i].Image = pilgrimSack.HasItems(categories[i]) ? Atlases.UI.InventoryCategoryNotEmpty : null;
+                categoryMarkers[i].Image = inventory.HasItems(categories[i]) ? Atlases.UI.InventoryCategoryNotEmpty : null;
                 categoryMarkers[i].Position = categoryIcons[i].BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, 1.5f);
             }
         }
@@ -406,9 +406,9 @@ namespace Remizione
                 Sound.Play(SoundNames.ItemEquip);
 
                 if (item.IsEquipped)
-                    pilgrimSack.Unequip(item);
+                    inventory.Unequip(item);
                 else
-                    pilgrimSack.Equip(item);
+                    inventory.Equip(item);
 
                 InvalidateItemInfo();
 
@@ -427,7 +427,7 @@ namespace Remizione
         {
             base.OnDraw(gameTime);
 
-            pilgrimSack.Session.HUD.Draw(gameTime);
+            inventory.Session.HUD.Draw(gameTime);
 
             // Containers
             Game.SpriteBatch.Begin(Game.Camera);
@@ -554,7 +554,7 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-            pilgrimSack.Session.HUD.Update(gameTime);
+            inventory.Session.HUD.Update(gameTime);
 
             buttonClose.Update(gameTime);
             buttonConsume.Update(gameTime);

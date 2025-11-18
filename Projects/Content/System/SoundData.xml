@@ -28,7 +28,6 @@
 	<FX Name="ElectricZapStrong" />
 	<FX Name="EnergyBolt" MaxInstances="8" Sounds="1..3" />
 	<FX Name="Error" MaxInstances="4" Sounds="1..2" />
-	<FX Name="EvilLaugh" MaxInstances="4" Sounds="1..4" />
 	<FX Name="ExitAlarm" />
 	<FX Name="Fart" />
 	<FX Name="FartLong" MaxInstances="4" Sounds="1..6" />

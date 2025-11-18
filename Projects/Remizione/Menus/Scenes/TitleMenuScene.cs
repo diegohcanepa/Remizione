@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Remizione.Menus
 {
@@ -126,7 +127,7 @@ namespace Remizione.Menus
         // ResetNextBlinkTimer
         private void ResetNextBlinkTimer()
         {
-            nextBlinkTimer.Start(Randomizer.Next(7000, 15000));
+            nextBlinkTimer.Start(Random.Shared.Next(7000, 15000));
         }
 
         // ShowCredits

@@ -23,7 +23,7 @@ namespace Remizione
         private readonly EchoScene echoScene;
         private readonly Dictionary<string, MetaItem[]> friendlyItems = [];
         private readonly UIInteractPrompt interactPrompt;
-        private readonly PilgrimSackScene pilgrimSackScene;
+        private readonly InventoryScene inventoryScene;
         private Actor? player;
         private Vector2? playerPosition;
         private readonly RoomEditor? roomEditor;
@@ -40,7 +40,7 @@ namespace Remizione
             : base(game, new RemizionePersistenceModel(), ContentHelper.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
-            this.PilgrimSack = new(this);
+            this.Inventory = new(this);
             this.Environment = new Environment(this);
             this.HUD = new HUD(this);
             this.StaticThings = new(staticThings);
@@ -82,8 +82,8 @@ namespace Remizione
             LocalizationSource = LocalizationSource.Script;
 
             this.MetaItemPool = new();
-            this.pilgrimSackScene = new PilgrimSackScene(PilgrimSack);
-            this.useKeyItemScene = new UseKeyItemScene(PilgrimSack);
+            this.inventoryScene = new InventoryScene(Inventory);
+            this.useKeyItemScene = new UseKeyItemScene(Inventory);
 
             // Prompt
             this.interactPrompt = new(this);
@@ -102,7 +102,7 @@ namespace Remizione
             IsHUDVisible = false;
             GameplayMode = GameplayMode.Adventure;
             Player?.Reheal();
-            PilgrimSack.Clear();
+            Inventory.Clear();
             RunInfo.Dispose();
             CleanUpRuntimeEntities();
             RunProgress = -1;
@@ -112,6 +112,13 @@ namespace Remizione
         #endregion
 
         #region Protected members
+
+        // BeforeRoomExit
+        protected override void OnRoomExit(Room currentRoom, Room nextRoom)
+        {
+            Environment.ExitRoom();
+            HUD.Reset();
+        }
 
         // CanHandleRoomInput
         protected override bool CanHandleRoomInput
@@ -151,7 +158,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(PostClock));
             scriptRegistry.RegisterEntity(typeof(Pottery));
             scriptRegistry.RegisterEntity(typeof(Prop));
-            scriptRegistry.RegisterEntity(typeof(RideRoom));
+            scriptRegistry.RegisterEntity(typeof(IsoRideRoom));
             scriptRegistry.RegisterEntity(typeof(SaintPeregrine));
             scriptRegistry.RegisterEntity(typeof(SpearTrap));
             scriptRegistry.RegisterEntity(typeof(Tombstone));
@@ -231,13 +238,6 @@ namespace Remizione
                 Camera.FollowTarget(Player, true);
         }
 
-        // OnExitRoom
-        protected override void OnExitRoom(Room currentRoom, Room nextRoom)
-        {
-            Environment.ExitRoom();
-            HUD.Reset();
-        }
-
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
@@ -301,9 +301,9 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(MetaItemPool)]?.Value is string metaItemPoolData)
                 MetaItemPool.Deserialize(metaItemPoolData);
 
-            // PilgrimSack
-            if (sessionNode.Attributes[nameof(PilgrimSack)]?.Value is string pilgrimSackData)
-                PilgrimSack.SetSerializationData(pilgrimSackData);
+            // Inventory
+            if (sessionNode.Attributes[nameof(Inventory)]?.Value is string inventoryData)
+                Inventory.SetSerializationData(inventoryData);
         }
 
         // OnResume
@@ -415,9 +415,9 @@ namespace Remizione
             // MetaItemPool
             output.WriteAttributeString(nameof(MetaItemPool), MetaItemPool.Serialize());
 
-            // PilgrimSack
-            if (PilgrimSack.GetSerializationData() is string pilgrimSack)
-                output.WriteAttributeString(nameof(PilgrimSack), pilgrimSack);
+            // Inventory
+            if (Inventory.GetSerializationData() is string inventoryData)
+                output.WriteAttributeString(nameof(Inventory), inventoryData);
         }
 
         #endregion
@@ -521,6 +521,9 @@ namespace Remizione
         // ImpactWordPool
         public ObjectPool<ImpactWord> ImpactWordPool { get; }
 
+        // Inventory
+        public Inventory Inventory { get; }
+
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
 
@@ -592,7 +595,7 @@ namespace Remizione
 
                 EnterRoom(RunInfo.RideRooms[RunProgress]);
 
-                if (nextRoom.RoomPhase == RunPhase.Start)
+                if (nextRoom.RoomIndex == 0)
                     AwaitRoutine(RoutineNames.IncomingRideCarIntro);
 
                 if (RunProgress > 0 && Player != null)
@@ -611,9 +614,6 @@ namespace Remizione
 
         // ObjectPools
         public ObjectPools ObjectPools { get; }
-
-        // PilgrimSack
-        public PilgrimSack PilgrimSack { get; }
 
         // Player
         [ScriptProperty]
@@ -704,9 +704,9 @@ namespace Remizione
             Game.SceneManager.Push(echoScene);
         }
 
-        // ShowPilgrimSack
+        // ShowInventory
         [ScriptMethod]
-        public void ShowPilgrimSack()
+        public void ShowInventory()
         {
             if (Player == null)
                 return;
@@ -715,7 +715,7 @@ namespace Remizione
             if (Camera.Target == Player)
                 Camera.FocusTarget();
 
-            pilgrimSackScene.SceneController.Push();
+            inventoryScene.SceneController.Push();
         }
 
         // StaticThings

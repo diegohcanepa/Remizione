@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 
 namespace Engendro
 {
@@ -59,14 +60,10 @@ namespace Engendro
             var result = Vector2.Zero;
 
             if (rectangle.Width > 0)
-            {
-                result.X = Randomizer.Next(rectangle.Left, rectangle.Right);
-            }
+                result.X = Random.Shared.Next(rectangle.Left, rectangle.Right + 1);
 
             if (rectangle.Height > 0)
-            {
-                result.Y = Randomizer.Next(rectangle.Top, rectangle.Bottom);
-            }
+                result.Y = Random.Shared.Next(rectangle.Top, rectangle.Bottom + 1);
 
             return result;
         }

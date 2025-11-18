@@ -260,6 +260,7 @@ Bla bla bla</String>
   <String Key="Prop.Cross">Cruz</String>
   <String Key="Prop.CrucifiedMan">Hombre crucificado</String>
   <String Key="Prop.DepositMachine">Máquina de depósito</String>
+  <String Key="Prop.Door">Puerta</String>
   <String Key="Prop.EnergyBolt">Chispa</String>
   <String Key="Prop.ExitTower">Torre de salida</String>
   <String Key="Prop.ExpendingMachine">Máquina expendedora</String>

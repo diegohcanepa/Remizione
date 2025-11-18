@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Remizione
 {
@@ -22,7 +23,7 @@ namespace Remizione
         {
             cooldown = 0;
 
-            var distance = Randomizer.Next(50, 100);
+            var distance = Random.Shared.Next(50, 100);
 
             if (Owner.Direction == FacingDirection.Right)
                 Owner.MoveTo(Owner.Position - new Vector2(distance, 0));

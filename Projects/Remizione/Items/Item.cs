@@ -23,9 +23,9 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public Item(PilgrimSack pilgrimSack, MetaItem metaItem)
+        public Item(Inventory pilgrimSack, MetaItem metaItem)
         {
-            this.PilgrimSack = pilgrimSack;
+            this.Inventory = pilgrimSack;
             this.MetaItem = metaItem;
             this.PassiveEffectCooldown = metaItem.PassiveEffectCooldown;
         }
@@ -165,13 +165,16 @@ namespace Remizione
         }
 
         // Index
-        public int Index => PilgrimSack.IndexOf(this);
+        public int Index => Inventory.IndexOf(this);
+
+        // Inventory
+        public Inventory Inventory { get; private set; }
 
         // IsEquipped
-        public bool IsEquipped => PilgrimSack.GetEquippedItem(MetaItem.Category) == this;
+        public bool IsEquipped => Inventory.GetEquippedItem(MetaItem.Category) == this;
 
         // IsSelected
-        public bool IsSelected => PilgrimSack.SelectedItem == this;
+        public bool IsSelected => Inventory.SelectedItem == this;
 
         // Knockback
         public Vector2 Knockback => MetaItem.Knockback;
@@ -199,9 +202,6 @@ namespace Remizione
         // PassiveEffectCooldown
         public int PassiveEffectCooldown { get; set; }
 
-        // PilgrimSack
-        public PilgrimSack PilgrimSack { get; private set; }
-
         /*
         // Update
         public void Update(GameTime gameTime)
@@ -224,11 +224,11 @@ namespace Remizione
         // Remove
         public void Remove()
         {
-            PilgrimSack.Remove(this);
+            Inventory.Remove(this);
         }
 
         // Select
-        public void Select() => PilgrimSack.Select(this);
+        public void Select() => Inventory.Select(this);
 
         // SkillChance
         public int SkillChance => MetaItem.SkillChance + (Level * 5);
@@ -261,7 +261,7 @@ namespace Remizione
             if (!MetaItem.IsPassive && Count > 0)
             {
                 if (Count == 1 && MetaItem.StackMode != StackMode.Persistent)
-                    PilgrimSack.Remove(this);
+                    Inventory.Remove(this);
                 else
                     Count--;
             }

@@ -62,10 +62,10 @@ namespace Remizione
         {
             slotImage.Update(gameTime);
 
-            if (lastKnownCount != session.PilgrimSack.Count)
+            if (lastKnownCount != session.Inventory.Count)
             {
-                lastKnownCount = session.PilgrimSack.Count;
-                amountText.Text = $"{session.PilgrimSack.Count}/{PilgrimSack.MaximumSize}";
+                lastKnownCount = session.Inventory.Count;
+                amountText.Text = $"{session.Inventory.Count}/{Inventory.MaximumSize}";
             }
         }
 
@@ -77,9 +77,9 @@ namespace Remizione
             if (session.IsAwaiting)
                 return HandleInputResult.Unhandled;
 
-            if (InputBindings.PilgrimSack.IsPressed(PlayerIndex.One))
+            if (InputBindings.Inventory.IsPressed(PlayerIndex.One))
             {
-                session.ShowPilgrimSack();
+                session.ShowInventory();
                 return HandleInputResult.Handled;
             }
 

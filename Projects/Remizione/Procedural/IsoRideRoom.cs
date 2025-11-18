@@ -8,15 +8,15 @@ using System.Collections.Generic;
 namespace Remizione
 {
     /// <summary>
-    /// RideRoom
+    /// IsoRideRoom
     /// </summary>
-    public sealed class RideRoom : ProceduralRoom
+    public sealed class IsoRideRoom : ProceduralRoom
     {
         private static readonly ChanceTable terrainTable = new();
         private static readonly Dictionary<RoomSize, Vector2[]> terrainVertices = [];
 
         // Static constructor
-        static RideRoom()
+        static IsoRideRoom()
         {
             terrainTable.Add(RoomSize.Small.ToString(), 1, 100);
             //terrainTable.Add(RoomSize.Medium.ToString(), 1, 100);
@@ -26,8 +26,8 @@ namespace Remizione
         }
 
         // Constructor
-        public RideRoom(GameSession session, string name, int roomIndex, bool isLastRoom)
-            : base(session, name, RoomKind.RideRoom, roomIndex, isLastRoom)
+        public IsoRideRoom(GameSession session, string name, int roomIndex, bool isLastRoom)
+            : base(session, name, RoomKind.Hub, roomIndex)
         {
             AllowGlobalLight = true;
         }
@@ -62,31 +62,16 @@ namespace Remizione
 
         #region Protected members
 
-        // GetRoomData
-        protected override string GetRoomData(out Vector2[] walkAreaVertices)
-        {
-            if (terrainTable.GetValue(Random) is ChanceTableItem item)
-            {
-                var size = Enum.Parse<RoomSize>(item.Name);
-                walkAreaVertices = terrainVertices[size];
-                return item.Name;
-            }
-            else
-            {
-                walkAreaVertices = [];
-                return string.Empty;
-            }
-        }
-
         // OnPopulating
         protected override void OnPopulating()
         {
+            /*
             if (RoomPhase == RunPhase.Start)
             {
                 // Entrance rail
                 if (Session.GetEntity<GameThing>("EntranceRail") is GameThing entranceRail)
                 {
-                    MainGrid.ReserveSpace(entranceRail);
+                    Grid.ReserveSpace(entranceRail);
                     Children.Add(entranceRail);
                 }
             }
@@ -96,7 +81,7 @@ namespace Remizione
                 LeftTower = CreateRuntimeClone("LeftTower") as IsometricProp;
                 if (LeftTower != null)
                 {
-                    MainGrid.ReserveSpace(LeftTower, false);
+                    Grid.ReserveSpace(LeftTower, false);
                     Children.Add(LeftTower);
 
                     if (CreateRuntimeClone("LeftTowerPatch") is IsometricProp leftTowerPatch)
@@ -120,7 +105,7 @@ namespace Remizione
                 if (RightConnector != null)
                 {
                     RightConnector.Position = new Vector2(CustomWidth - 9, RightConnector.BoundingBox.Height - 4);
-                    MainGrid.ReserveSpace(RightConnector, false);
+                    Grid.ReserveSpace(RightConnector, false);
                     Children.Add(RightConnector);
 
                     if (CreateRuntimeClone("RightTowerPatch") is IsometricProp rightTowerPatch)
@@ -152,7 +137,7 @@ namespace Remizione
                 if (this.RightConnector != null)
                 {
                     this.RightConnector.Position = new Vector2(CustomWidth, 0);
-                    MainGrid.ReserveSpace(RightConnector, false);
+                    Grid.ReserveSpace(RightConnector, false);
                     Children.Add(this.RightConnector);
 
                     if (Session.GetEntity<IsometricProp>("ExitTunnel") is IsometricProp exitTunnel)
@@ -171,7 +156,7 @@ namespace Remizione
                     if (Session.GetEntity<ExitRideCar>(nameof(ExitRideCar)) is ExitRideCar exitRideCar)
                     {
                         exitRideCar.Position = RightConnector.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 15, -6);
-                        MainGrid.ReserveSpace(exitRideCar, false);
+                        Grid.ReserveSpace(exitRideCar, false);
                         Children.Add(exitRideCar);
                     }
                 }
@@ -185,24 +170,16 @@ namespace Remizione
                     if (RoomPhase == RunPhase.End)
                         statue.Position += new Vector2(20, -41);
 
-                    MainGrid.ReserveSpace(statue, false);
+                    Grid.ReserveSpace(statue, false);
                     Children.Add(statue);
                 }
             }
 
-            DecorationGrid.MarkOccupiedMargin("Margin", 1, 1, 1, 2);
-            MainGrid.MarkOccupiedMargin("Margin", 1, 1, 1, 2);
+            Grid.MarkOccupiedMargin("Margin", 1, 1, 1, 2);
+
+            */
         }
-
-        // OnPopulateCompleted
-        protected override void OnPopulateCompleted()
-        {
-            DeployCoin();
-        }
-
-        // RequiresPersistence
-        protected override bool RequiresPersistence => false;
-
+        
         #endregion
 
         // LeftTower

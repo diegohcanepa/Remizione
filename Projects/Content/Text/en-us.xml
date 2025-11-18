@@ -260,6 +260,7 @@ Bla bla bla</String>
   <String Key="Prop.Cross">Cross</String>
   <String Key="Prop.CrucifiedMan">Crucified man</String>
   <String Key="Prop.DepositMachine">Deposit machine</String>
+  <String Key="Prop.Door">Door</String>
   <String Key="Prop.EnergyBolt">Energy bolt</String>
   <String Key="Prop.ExitTower">Exit tower</String>
   <String Key="Prop.ExpendingMachine">Expending machine</String>

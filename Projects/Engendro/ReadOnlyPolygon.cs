@@ -398,9 +398,7 @@ namespace Engendro
                 {
                     // In some cases a 'snapped' endpoint is just a little over the line due to rounding errors. So a 0.5 margin is used to tackle those cases.
                     if (Geometry.DistanceToSegment(start, v1, v2) > epsilon && Geometry.DistanceToSegment(end, v1, v2) > epsilon)
-                    {
                         return true;
-                    }
                 }
             }
 
@@ -426,7 +424,7 @@ namespace Engendro
         public Vector2 RandomPoint()
         {
             var bounds = BoundingRectangle;
-            Vector2 result = new(Randomizer.Next(bounds.Left, bounds.Right), Randomizer.Next(bounds.Top, bounds.Bottom));
+            Vector2 result = new(Random.Shared.Next(bounds.Left, bounds.Right + 1), Random.Shared.Next(bounds.Top, bounds.Bottom + 1));
             result = Clamp(result);
             return result;
         }

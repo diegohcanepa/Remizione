@@ -20,24 +20,6 @@ namespace Engendro
         }
 
         // Random
-        public static Vector2 Random(this Vector2 origin, float radius)
-        {
-            return Random(origin, radius, radius);
-        }
-
-        // Random
-        public static Vector2 Random(this Vector2 origin, Int32Range range)
-        {
-            return Random(origin, range.Minimum, range.Maximum);
-        }
-
-        // Random
-        public static Vector2 Random(this Vector2 origin, FloatRange range)
-        {
-            return Random(origin, range.Minimum, range.Maximum);
-        }
-
-        // Random
         public static Vector2 Random(this Vector2 origin, float minimumRadius, float maximumRadius)
         {
             return Random(origin, new Vector2(minimumRadius), new Vector2(maximumRadius));
@@ -47,23 +29,17 @@ namespace Engendro
         public static Vector2 Random(this Vector2 origin, Vector2 minimumRadius, Vector2 maximumRadius)
         {
             if (minimumRadius.X < 0 || minimumRadius.Y < 0)
-            {
                 throw new ArgumentOutOfRangeException(nameof(minimumRadius), "Value must be greater than zero.");
-            }
 
             if (maximumRadius.X < 0 || maximumRadius.Y < 0)
-            {
                 throw new ArgumentOutOfRangeException(nameof(maximumRadius), "Value must be greater than zero.");
-            }
 
             if (minimumRadius.X > maximumRadius.X || minimumRadius.Y > maximumRadius.Y)
-            {
                 throw new ArgumentOutOfRangeException(nameof(minimumRadius), "Minimum radius cannot be greater than the maximum radius.");
-            }
 
             var angle = random.NextDouble() * Math.PI * 2;
-            var xRadius = Randomizer.Next(minimumRadius.X, maximumRadius.X);
-            var yRadius = Randomizer.Next(minimumRadius.Y, maximumRadius.Y);
+            var xRadius = RandomHelper.Next(minimumRadius.X, maximumRadius.X);
+            var yRadius = RandomHelper.Next(minimumRadius.Y, maximumRadius.Y);
             var x = origin.X + xRadius * Math.Cos(angle);
             var y = origin.Y + yRadius * Math.Sin(angle);
 

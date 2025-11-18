@@ -22,11 +22,11 @@ namespace Remizione
 
             scale = new Vector2(.5f);
 
-            speed.X = Randomizer.Next(2.5f, 5);
+            speed.X = RandomHelper.Next(2.5f, 5);
             if (DiceExpression.Dice10.Roll() <= 5)
                 speed.X *= -1;
 
-            speed.Y = Randomizer.Next(1, 3);
+            speed.Y = Random.Shared.Next(1, 4);
             if (DiceExpression.Dice10.Roll() <= 5)
                 speed.Y *= -1;
 
@@ -43,7 +43,7 @@ namespace Remizione
         public override Vector2 Acceleration => acceleration;
 
         // Color
-        public override Color Color => colors[Randomizer.Next(colors.Length - 1)];
+        public override Color Color => colors[Random.Shared.Next(colors.Length)];
 
         // Gravity
         public override Vector2 Gravity => Vector2.Zero;

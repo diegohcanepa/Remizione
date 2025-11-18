@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Remizione
 {
@@ -93,7 +94,7 @@ namespace Remizione
         // Show
         public void Show(Vector2 origin, string value, Color color, float scale, int duration = 1000)
         {
-            ShowCore(origin, value, color, new Vector2(Randomizer.Next(-5, 5), Randomizer.Next(-12, -1)), scale, duration);
+            ShowCore(origin, value, color, new Vector2(Random.Shared.Next(-5, 6), Random.Shared.Next(-12, -1)), scale, duration);
         }
 
         // Show

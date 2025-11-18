@@ -22,7 +22,7 @@ namespace Adberration.Scripting
         protected override void OnExecute()
         {
             var range = Parser.ParseInt32Range(this, 0);
-            duration = range.Random();
+            duration = range.RandomValue();
         }
 
         // OnUpdate

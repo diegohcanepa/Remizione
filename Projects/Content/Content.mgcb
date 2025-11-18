@@ -59,6 +59,21 @@
 #begin Atlases/Environment.xml
 /copy:Atlases/Environment.xml
 
+#begin Atlases/Hub.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Atlases/Hub.png
+
+#begin Atlases/Hub.xml
+/copy:Atlases/Hub.xml
+
 #begin Atlases/Lounge.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -310,30 +325,6 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/Error2.wav;Audio/FX/Error2
-
-#begin Audio/FX/EvilLaugh1.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/EvilLaugh1.wav;Audio/FX/EvilLaugh1
-
-#begin Audio/FX/EvilLaugh2.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/EvilLaugh2.wav;Audio/FX/EvilLaugh2
-
-#begin Audio/FX/EvilLaugh3.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/EvilLaugh3.wav;Audio/FX/EvilLaugh3
-
-#begin Audio/FX/EvilLaugh4.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/EvilLaugh4.wav;Audio/FX/EvilLaugh4
 
 #begin Audio/FX/ExitAlarm.wav
 /importer:WavImporter

@@ -32,7 +32,7 @@ namespace Engendro
         // StartFromRange
         public void StartFromRange()
         {
-            Start(TimeRange.Random());
+            Start(TimeRange.RandomValue());
         }
 
         // Stop

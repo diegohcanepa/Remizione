@@ -30,7 +30,7 @@ namespace Remizione.Scripting
                 return;
 
             var amount = Parser.ParseInt32Argument(this, AmountArg, 1);
-            session.PilgrimSack.Add(metaItem.Name, amount);
+            session.Inventory.Add(metaItem.Name, amount);
         }
     }
 }
