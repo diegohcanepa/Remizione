@@ -29,7 +29,7 @@ namespace Remizione.Scripting
             if (thing.PlacementPhase == PlacementPhase.None)
                 throw new ScriptException(this, "PlacementPhase is not defined.");
 
-            var roomKind = Parser.ParseEnum<RoomKind>(this, 0);
+            var roomKind = Parser.ParseEnum<RideRoomKind>(this, 0);
             var distributionStrategy = Parser.ParseEnumArgument(this, DistributionArg, PlacementDistributionStrategy.Random);
             var rolls = HasArg(RollsArg) ? Parser.ParseInt32RangeArgument(this, RollsArg) : new Int32Range(1);
             var maximum = HasArg(MaximumArg) ? Parser.ParseInt32Argument(this, MaximumArg) : 0;

@@ -22,16 +22,15 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        protected ProceduralRoom(GameSession session, string name, RoomKind roomKind, int roomIndex)
+        protected ProceduralRoom(GameSession session, string name, RoomDescriptor descriptor)
             : base(session, name)
         {
-            this.RoomIndex = roomIndex;
-            this.RoomKind = roomKind;
+            this.Descriptor = descriptor;
 
             AllowGlobalLight = true;
             LightingSystem = true;
 
-            int salt = roomIndex;
+            int salt = descriptor.Id;
             this.randomSeed = GetSeed(Session.Seed, salt);
             this.Random = new Random(randomSeed);
 
@@ -48,7 +47,7 @@ namespace Remizione
         // CreateRuntimeThingCloneCore
         private GameThing CreateRuntimeThingCloneCore(string staticName)
         {
-            if (Session.CreateRuntimeThingClone(staticName, $"{staticName}*{RoomIndex}_{Name}_{instanceCount}") is not GameThing result)
+            if (Session.CreateRuntimeThingClone(staticName, $"{staticName}*{Descriptor.Id}_{Name}_{instanceCount}") is not GameThing result)
                 throw new InvalidOperationException($"Failed to create runtime clone from'{staticName}'.");
 
             instanceCount++;
@@ -223,7 +222,7 @@ namespace Remizione
             Children.Add(instance);
 
             if (placementData.MaximumPerRun > 0)
-                RunInfo.LogSpawn(thing.StaticName);
+                RunManager.LogSpawn(thing.StaticName);
         }
 
         #endregion
@@ -298,7 +297,7 @@ namespace Remizione
         // Populate
         private void Populate()
         {
-            var data = Session.PlacementDataPool.GetRoomPlacementData(RoomKind);
+            var data = Session.PlacementDataPool.GetRoomPlacementData(Descriptor.RoomKind);
             if (data.Count == 0)
                 return;
 
@@ -384,6 +383,9 @@ namespace Remizione
             return CreateRuntimeThingCloneCore(staticName);
         }
 
+        // Descriptor
+        public RoomDescriptor Descriptor { get; }
+
         // PlaceRuntimeCloneAt
         public GameThing? PlaceRuntimeCloneAt(GameThing thing, Vector2 position)
         {
@@ -403,12 +405,6 @@ namespace Remizione
 
             return result;
         }
-
-        // RoomIndex
-        public int RoomIndex { get; }
-
-        // RoomKind
-        public RoomKind RoomKind { get; }
 
         // ShowGrid
         public static bool ShowGrid { get; set; }

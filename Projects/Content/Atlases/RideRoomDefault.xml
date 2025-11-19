@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:e27110b7be087ef89e4e1895b818def0:7f8ee073367a66083dcc2cc35856fa2b:5039389849ae7f9cf7d847dafb0258d3$ -->
+<!-- $TexturePacker:SmartUpdate:8a4aa7bd944af806910dbd194941d5d9:fb8216c9fe7a4eca8d2ff31e59407b1d:1b01d05942bb01dfd220e3b369af6f33$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,15 +19,6 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Hub.png" width="512" height="512">
-    <sprite n="Hub.png" x="2" y="2" w="480" h="135"/>
-    <sprite n="LeftGateClosed.png" x="2" y="189" w="15" h="66"/>
-    <sprite n="LeftGateOpenBack.png" x="2" y="374" w="12" h="49"/>
-    <sprite n="LeftGateOpenFront.png" x="484" y="2" w="18" h="61"/>
-    <sprite n="LeftSign.png" x="2" y="139" w="9" h="22"/>
-    <sprite n="LeftWall.png" x="484" y="129" w="16" h="58"/>
-    <sprite n="RightGateClosed.png" x="2" y="257" w="14" h="62"/>
-    <sprite n="RightGateOpenBack.png" x="2" y="321" w="12" h="51"/>
-    <sprite n="RightGateOpenFront.png" x="484" y="65" w="17" h="62"/>
-    <sprite n="RightSign.png" x="2" y="163" w="9" h="22"/>
+<TextureAtlas imagePath="RideRoomDefault.png" width="256" height="256">
+    <sprite n="RideRoomDefault.png" x="3" y="3" w="240" h="135"/>
 </TextureAtlas>

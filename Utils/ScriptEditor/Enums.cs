@@ -12,7 +12,7 @@
         Unknown,
         Declaration,
         Initialization,
-        Instantiation,
+        Cloning,
         Room,
         TransientRoom,
         Thing,

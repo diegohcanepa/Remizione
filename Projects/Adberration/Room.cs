@@ -101,8 +101,8 @@ namespace Adberration
             if (Atlas == null && !string.IsNullOrWhiteSpace(AtlasName))
             {
                 var atlasEncodedName = ScriptSyntax.RuntimeRoomNamePrefix + AtlasName;
-                this.Atlas = Engendro.Atlas.GetInstance(atlasEncodedName);
-                this.Atlas ??= new Engendro.Atlas(Content, atlasEncodedName, GetAtlasPath(), false);
+                this.Atlas = Atlas.GetInstance(atlasEncodedName);
+                this.Atlas ??= new Atlas(Content, atlasEncodedName, GetAtlasPath(), false);
             }
 
             ResetAreas();

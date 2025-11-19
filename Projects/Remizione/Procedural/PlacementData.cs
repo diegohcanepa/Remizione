@@ -26,7 +26,7 @@ namespace Remizione
         // CanSpawn
         public bool CanSpawn(string staticName)
         {
-            if (MaximumPerRun > 0 && RunInfo.GetSpawnCount(staticName) >= MaximumPerRun)
+            if (MaximumPerRun > 0 && RunManager.GetSpawnCount(staticName) >= MaximumPerRun)
                 return false;
 
             if (Maximum > 0 && SpawnCount >= Maximum)
@@ -47,7 +47,7 @@ namespace Remizione
             if (Rolls.IsEmpty)
                 return false;
 
-            if (MaximumPerRun > 0 && RunInfo.GetSpawnCount(thing.StaticName) >= MaximumPerRun)
+            if (MaximumPerRun > 0 && RunManager.GetSpawnCount(thing.StaticName) >= MaximumPerRun)
                 return false;
 
             for (int i = 0; i < conditions.Count; i++)
@@ -63,7 +63,7 @@ namespace Remizione
         public void LogSpawn(string staticName)
         {
             SpawnCount++;
-            RunInfo.LogSpawn(staticName);
+            RunManager.LogSpawn(staticName);
         }
 
         // Maximum

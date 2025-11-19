@@ -70,9 +70,6 @@ namespace Remizione
 
                 console.CommandList.Add("add-item Coin");
                 console.CommandList.Add("add-item MasterLockpick");
-                console.CommandList.Add("=>> $BeginRun()");
-                console.CommandList.Add("=>> $NextRunRoom()");
-                console.CommandList.Add("=>> $PreviousRunRoom()");
 
                 roomEditor = new RoomEditor(this);
             }
@@ -96,16 +93,15 @@ namespace Remizione
         // EndRun
         private void EndRun()
         {
-            if (!RunInfo.HasContent)
+            if (!RunManager.HasContent)
                 return;
 
             IsHUDVisible = false;
             GameplayMode = GameplayMode.Adventure;
             Player?.Reheal();
             Inventory.Clear();
-            RunInfo.Dispose();
+            RunManager.Clear();
             CleanUpRuntimeEntities();
-            RunProgress = -1;
             Seed = 0;
         }
 
@@ -136,7 +132,7 @@ namespace Remizione
         }
 
         // CanUnloadRoom
-        protected override bool CanUnloadRoom(Room room) => !IsRunInProgress || room.InstanceKind == InstanceKind.Static;
+        protected override bool CanUnloadRoom(Room room) => !RunManager.HasContent || room.InstanceKind == InstanceKind.Static;
 
         // ExtendScriptRegistry
         protected override void ExtendScriptRegistry(ScriptRegistry scriptRegistry)
@@ -152,14 +148,15 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(ExitRideCar));
             scriptRegistry.RegisterEntity(typeof(GameRoom));
             scriptRegistry.RegisterEntity(typeof(HellGoat));
+            scriptRegistry.RegisterEntity(typeof(Hub));
             scriptRegistry.RegisterEntity(typeof(IsometricProp));
             scriptRegistry.RegisterEntity(typeof(Monitor));
             scriptRegistry.RegisterEntity(typeof(NosyHemorrhoid));
             scriptRegistry.RegisterEntity(typeof(PostClock));
             scriptRegistry.RegisterEntity(typeof(Pottery));
             scriptRegistry.RegisterEntity(typeof(Prop));
-            scriptRegistry.RegisterEntity(typeof(IsoRideRoom));
             scriptRegistry.RegisterEntity(typeof(RideCar));
+            scriptRegistry.RegisterEntity(typeof(RideDoor));
             scriptRegistry.RegisterEntity(typeof(SaintPeregrine));
             scriptRegistry.RegisterEntity(typeof(SpearTrap));
             scriptRegistry.RegisterEntity(typeof(Tombstone));
@@ -426,18 +423,15 @@ namespace Remizione
         #endregion
 
         // BeginRun
-        [ScriptMethod]
         public void BeginRun()
         {
-            if (IsRunInProgress)
+            if (RunManager.HasContent)
                 throw new InvalidOperationException("A run is already in progress.");
 
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            RunInfo.Generate(this, RunLength);
-
-            NextRunRoom();
+            RunManager.Generate(this, 3);
         }
 
         // CancelRun
@@ -450,7 +444,7 @@ namespace Remizione
         }
 
         // CanSave
-        public override bool CanSave => !IsRunInProgress && base.CanSave;
+        public override bool CanSave => !RunManager.HasContent && base.CanSave;
 
         // ChooseKeyItem
         public bool ChooseKeyItem(string text)
@@ -534,10 +528,6 @@ namespace Remizione
         [ScriptProperty]
         public bool IsHUDVisible { get; set; } = true;
 
-        // IsRunInProgress
-        [ScriptProperty]
-        public bool IsRunInProgress => RunInfo.HasContent;
-
         // KeyItemTarget
         [ScriptProperty]
         public Prop? KeyItemTarget { get; set; }
@@ -578,43 +568,6 @@ namespace Remizione
         [ScriptProperty]
         public new GameRoom? NextRoom => (GameRoom?)base.NextRoom;
 
-        // NextRunRoom
-        [ScriptMethod]
-        public void NextRunRoom()
-        {
-            if (!IsRunInProgress)
-                throw new InvalidOperationException("No run in progress.");
-
-            RunProgress++;
-
-            if (RunProgress == RunInfo.RideRooms.Count)
-            {
-                CompletedRuns++;
-                EndRun();
-            }
-            else
-            {
-                var nextRoom = RunInfo.RideRooms[RunProgress];
-
-                EnterRoom(RunInfo.RideRooms[RunProgress]);
-
-                if (nextRoom.RoomIndex == 0)
-                    AwaitRoutine(RoutineNames.IncomingRideCarIntro);
-
-                if (RunProgress > 0 && Player != null)
-                {
-                    nextRoom.Children.Add(Player);
-
-                    if (nextRoom.LeftTower != null)
-                    {
-                        Player.Position = nextRoom.LeftTower.GetApproachPosition(Player, true);
-                        Camera.FollowTarget(Player);
-                        Camera.FocusTarget();
-                    }
-                }
-            }
-        }
-
         // ObjectPools
         public ObjectPools ObjectPools { get; }
 
@@ -640,47 +593,9 @@ namespace Remizione
         [ScriptProperty]
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
 
-        // PreviousRunRoom
-        [ScriptMethod]
-        public void PreviousRunRoom()
-        {
-            if (!IsRunInProgress)
-                throw new InvalidOperationException("No run in progress.");
-
-            if (RunProgress <= 0)
-                return;
-
-            RunProgress--;
-
-            var previousRoom = RunInfo.RideRooms[RunProgress];
-
-            EnterRoom(previousRoom);
-
-            if (RunProgress >= 0 && Player != null)
-            {
-                previousRoom.Children.Add(Player);
-
-                if (previousRoom.RightConnector != null)
-                {
-                    Player.Position = previousRoom.RightConnector.GetApproachPosition(Player, true);
-                    Camera.FollowTarget(Player);
-                    Camera.FocusTarget();
-                }
-            }
-
-            return;
-        }
-
         // Room
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
-
-        // RunLength
-        public int RunLength { get; set; } = 3;
-
-        // RunProgress
-        [ScriptProperty]
-        public int RunProgress { get; private set; } = -1;
 
         // Seed
         [ScriptProperty]

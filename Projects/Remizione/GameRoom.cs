@@ -415,11 +415,7 @@ namespace Remizione
 
             lightMapTarget = Game.RenderTargets.AuxiliaryTargets[0];
             lightSources.Clear();
-
-            // ??
-            //if (Width <= Screen.NativeWidth)
-            //    Session.RoomCamera.Position += new Vector2(0, 5);
-
+            
             // Prepare lights
             if (Atlas != null)
             {

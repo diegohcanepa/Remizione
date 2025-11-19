@@ -60,7 +60,7 @@ namespace Remizione
             if (session.IsCurrentScene)
             {
                 sackSlot.Draw(gameTime);
-                if (session.IsRunInProgress)
+                if (RunManager.HasContent)
                     TargetMeter.Draw(gameTime);
                 Log.Draw(gameTime);
                 Message.Draw(gameTime);
