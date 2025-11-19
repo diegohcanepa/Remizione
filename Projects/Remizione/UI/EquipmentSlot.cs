@@ -19,7 +19,6 @@ namespace Remizione
         private int lastKnownCount;
         private Item? lastKnownItem;
         private readonly InputBinding? nextInputBinding;
-        private readonly InputBinding? previousInputBinding;
         private readonly GameSession session;
         private readonly ImageSprite slotImage;
         private readonly InputBinding? useInputBinding;
@@ -38,19 +37,15 @@ namespace Remizione
 
             // Bindings
             if (itemCategory == ItemCategory.Junk)
-            {
-                previousInputBinding = InputBindings.SelectLeft;
-                nextInputBinding = InputBindings.SelectRight;
-            }
+                nextInputBinding = InputBindings.SelectLeft;
+            
             else if (itemCategory == ItemCategory.Gadgets)
-            {
-                previousInputBinding = InputBindings.SelectUp;
-                nextInputBinding = InputBindings.SelectDown;
-            }
+                nextInputBinding = InputBindings.SelectRight;
 
             // Slot image
             this.slotImage = new ImageSprite(Game, Atlases.UI.EquipmentSlot)
             {
+                Opacity = .9f,
                 PivotOrigin = itemCategory == ItemCategory.Trinkets ? RectanglePoint.LeftTop : RectanglePoint.LeftBottom,
                 Position = position
             };
@@ -71,7 +66,7 @@ namespace Remizione
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Top,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -3),
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -4),
                 Scale = ScaleInfo.Text.Large,
                 Spacing = -5
             };
@@ -172,17 +167,8 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
-            // Previous item
-            if (previousInputBinding?.IsPressed(PlayerIndex.One) == true)
-            {
-                if (session.Inventory.EquipPrevious(ItemCategory) != null)
-                    Sound.Play(SoundNames.UIHover);
-
-                return HandleInputResult.Handled;
-            }
-
             // Next item
-            else if (nextInputBinding?.IsPressed(PlayerIndex.One) == true)
+            if (nextInputBinding?.IsPressed(PlayerIndex.One) == true)
             {
                 if (session.Inventory.EquipNext(ItemCategory) != null)
                     Sound.Play(SoundNames.UIHover);

@@ -14,7 +14,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private const int maxInfoTextWidth = 100;
+        private const int maxInfoTextWidth = 78;
 
         private readonly UIButton buttonClose;
         private readonly UIButton buttonConsume;
@@ -53,11 +53,11 @@ namespace Remizione
             this.gridContainer = new(Game, Atlases.UI.InventoryGridContainer)
             {
                 PivotOrigin = RectanglePoint.LeftTop,
-                Position = new(22, 38),
+                Position = new(32, 38),
             };
 
             // Create grid
-            var gridPos = gridContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 5, 5);
+            var gridPos = gridContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 5, 3);
             grid = new ItemGrid(pilgrimSack, ItemCategory.None, 4, 3)
             {
                 Position = gridPos
@@ -176,7 +176,7 @@ namespace Remizione
             {
                 AllowSound = false,
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 5, -3)
+                Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 3, -3)
             };
 
             // Discard button
@@ -191,7 +191,7 @@ namespace Remizione
             {
                 AllowSound = false,
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 5, -3)
+                Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 3, -3)
             };
 
             LayoutCategoryIcons();
@@ -274,7 +274,7 @@ namespace Remizione
                 itemName.Text = TextRepository.GetValue($"Item.{item.Name}.Name") + (item.Level == 0 ? string.Empty : $" +{item.Level}");
                 itemDescription.Opacity = 1;
                 itemDescription.PivotOrigin = RectanglePoint.LeftTop;
-                itemDescription.Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 6, 3);
+                itemDescription.Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 5, 3);
                 itemDescription.Text = $"@Item.{item.Name}.Description";
                 itemIcon.Image = item.MetaItem.Image;
 
