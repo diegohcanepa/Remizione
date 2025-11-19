@@ -257,12 +257,7 @@ namespace Remizione
             if (Session.Room is not ProceduralRoom room)
                 return;
 
-            if (HasCoin && MetaItem.Find(MetaItem.CoinItemName) is MetaItem goldCoin)
-            {
-                Session.ObjectPools.Pickups.Get()?.Drop(room, Position, goldCoin);
-                HasCoin = false;
-            }
-            else if (GetLoot() is ChanceTableItem lootItem)
+            if (GetLoot() is ChanceTableItem lootItem)
             {
                 MetaItem? metaItem;
 
@@ -878,9 +873,6 @@ namespace Remizione
 
         // GetThrowableSpawnPosition
         public Vector2 GetThrowableSpawnPosition() => this.GetAbsolutePoint(ThrowableSpawnPosition);
-
-        // HasCoin
-        public bool HasCoin { get; set; }
 
         // HighlightInteraction
         [ScriptProperty]

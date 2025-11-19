@@ -32,34 +32,6 @@ namespace Remizione
             AllowGlobalLight = true;
         }
 
-        #region Private members
-
-        // DeployCoin
-        private void DeployCoin()
-        {
-            var creatures = new List<Creature>();
-            foreach (var thing in Children)
-            {
-                if (thing is Creature creature)
-                    creatures.Add(creature);
-            }
-
-            var index = creatures.RandomIndex();
-
-            if (index >= 0)
-            {
-                creatures[index].HasCoin = true;
-            }
-            else if (WalkArea != null)
-            {
-                var metaItem = MetaItem.FindNotNull(MetaItem.CoinItemName);
-                var position = WalkArea != null ? WalkArea.RandomWalkablePoint() : BoundingBox.GetRandomPoint();
-                Session.ObjectPools.Pickups.Get()?.Drop(this, position, metaItem);
-            }
-        }
-
-        #endregion
-
         #region Protected members
 
         // OnPopulating
