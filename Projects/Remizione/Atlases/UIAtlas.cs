@@ -30,6 +30,7 @@ namespace Remizione
             InventoryNavigationBar = this[nameof(InventoryNavigationBar)];
             ItemGridSlot = this[nameof(ItemGridSlot)];
             ItemGridSlotSelected = this[nameof(ItemGridSlotSelected)];
+            EquipmentSlotTrinketsIcon = this[nameof(EquipmentSlotTrinketsIcon)];
             MessageContainer = this[nameof(MessageContainer)];
             MouseCursorArrow = this[nameof(MouseCursorArrow)];
             Pixel = this[nameof(Pixel)];
@@ -64,6 +65,9 @@ namespace Remizione
 
         // EquipmentSlot
         public AtlasImage EquipmentSlot { get; }
+
+        // EquipmentSlotTrinketsIcon
+        public AtlasImage EquipmentSlotTrinketsIcon { get; }
 
         // InventoryCategoryNotEmpty
         public AtlasImage InventoryCategoryNotEmpty { get; }
