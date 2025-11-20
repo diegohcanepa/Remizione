@@ -110,6 +110,26 @@ namespace Remizione
 
         #endregion
 
+        // GetPlayerPosition
+        public Vector2 GetPlayerPosition(int roomId, out RideDoor? targetDoor)
+        {
+            targetDoor = null;
+
+            foreach (var thing in Children)
+            {
+                if (thing is RideDoor door && door.TargetRoom != null)
+                {
+                    if (door.TargetRoom.RoomGraph.Id == roomId)
+                    {
+                        targetDoor = door;
+                        return door.GetAbsolutePoint(door.ApproachPosition);
+                    }
+                }
+            }
+
+            return Vector2.Zero;
+        }
+
         // HubDoor
         public RideDoor? HubDoor { get; set; }
     }
