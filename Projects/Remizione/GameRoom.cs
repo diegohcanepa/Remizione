@@ -198,7 +198,7 @@ namespace Remizione
                         
                         effect = RemizioneGame.Effects.ColorReduction;
                     }
-                    else if (interactiveTarget == thing && thing.HighlightInteraction)
+                    else if (interactiveTarget == thing && thing.HighlightInteraction && thing.Opacity == 1)
                     {
                         RemizioneGame.Effects.ColorSaturation.SetColor(.8f, .8f, .8f, 0);
                         effect = RemizioneGame.Effects.ColorSaturation;

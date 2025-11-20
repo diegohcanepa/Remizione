@@ -257,6 +257,30 @@
 /processorParam:Quality=Best
 /build:Audio/FX/DoodleDoo.wav;Audio/FX/DoodleDoo
 
+#begin Audio/FX/DoorClose1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/DoorClose1.wav;Audio/FX/DoorClose1
+
+#begin Audio/FX/DoorClose2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/DoorClose2.wav;Audio/FX/DoorClose2
+
+#begin Audio/FX/DoorOpen1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/DoorOpen1.wav;Audio/FX/DoorOpen1
+
+#begin Audio/FX/DoorOpen2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/DoorOpen2.wav;Audio/FX/DoorOpen2
+
 #begin Audio/FX/DoorToilet.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

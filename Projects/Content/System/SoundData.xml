@@ -23,6 +23,8 @@
 	<FX Name="BlipMandinga" MaxInstances="4" />
 	<FX Name="BodyFallMedium" MaxInstances="8" Sounds="1..1" />
 	<FX Name="DoodleDoo" />
+	<FX Name="DoorClose" MaxInstances="4" Sounds="1..2" />
+	<FX Name="DoorOpen" MaxInstances="4" Sounds="1..2" />
 	<FX Name="DoorToilet" />
 	<FX Name="DoorTunnelClose" />
 	<FX Name="DoorTunnelOpen" />

@@ -1,84 +1,93 @@
-﻿using System;
+﻿using Engendro;
+using System;
+using System.Collections.Generic;
 
 namespace Remizione
 {
     /// <summary>
-    /// RunDescriptorGenerator
+    /// RunGraphGenerator
     /// </summary>
-    public sealed class RunDescriptorGenerator
+    public sealed class RunGraphGenerator
     {
         private readonly Random random;
-        private int roomCount;
+        private int roomId;
 
         // Constructor
-        public RunDescriptorGenerator(int seed)
+        public RunGraphGenerator(int seed)
         {
             random = new Random(seed);
         }
 
         // Generate
-        public RunDescriptor Generate(int paths)
+        public RunGraph Generate(int pathCount)
         {
-            var run = new RunDescriptor(paths);
-            roomCount = 0;
+            var entryRooms = new List<RoomGraph>();
+            roomId = 0;
 
-            for (int i = 0; i < paths; i++)
+            for (int i = 0; i < pathCount; i++)
             {
-                int length = RandomRange(MinLength, MaxLength + 1);
-                var root = GenerateMainPath(length);
-                run.Paths[i] = root;
+                int length = random.Next(MinLength, MaxLength + 1);
+                var entryRoom = GeneratePath(i, length);
+                entryRooms.Add(entryRoom);
             }
 
-            return run;
+            return new RunGraph(entryRooms);
         }
 
         #region Private members
 
         // CreateRoom
-        private RoomDescriptor CreateRoom(RideRoomKind kind)
+        private RoomGraph CreateRoom(RideRoomKind kind, int pathIndex, bool isRoot)
         {
-            var result = new RoomDescriptor(roomCount, kind);
-            roomCount++;
+            var result = new RoomGraph(roomId, isRoot, pathIndex, kind);
+            roomId++;
             return result;
         }
 
-        // GenerateMainPath
-        private RoomDescriptor GenerateMainPath(int length)
+        // GeneratePath
+        private RoomGraph GeneratePath(int pathIndex, int length)
         {
-            RoomDescriptor first = CreateRoom(RideRoomKind.Default);
-            RoomDescriptor prev = first;
+            RoomGraph first = CreateRoom(RideRoomKind.Default, pathIndex, true);
+            RoomGraph prev = first;
 
             // columna principal
             for (int i = 1; i < length; i++)
             {
-                var next = CreateRoom(RideRoomKind.Default);
+                var next = CreateRoom(RideRoomKind.Default, pathIndex, false);
                 prev.Up = next;
                 next.Down = prev;
                 prev = next;
             }
 
             // generar side dead-ends
-            RoomDescriptor? cur = first;
+            RoomGraph? cur = first;
             int countForPath = 0;
 
             while (cur != null)
             {
                 for (int s = 0; s < MaxSidePerRoom; s++)
                 {
-                    if (countForPath >= MaxSidePerPath) break;
+                    if (countForPath >= MaxSidePerPath)
+                        break;
 
-                    if (Roll(SideChancePercent))
+                    // Left connection
+                    if (DiceExpression.Dice100.Roll() <= SideChancePercent)
                     {
                         if (cur.Left == null)
                         {
-                            var side = CreateRoom(RideRoomKind.Default);
+                            var side = CreateRoom(RideRoomKind.Default, pathIndex, false);
                             cur.Left = side;
                             side.Right = cur;
                             countForPath++;
                         }
-                        else if (cur.Right == null)
+                    }
+
+                    // Right connection
+                    if (DiceExpression.Dice100.Roll() <= SideChancePercent)
+                    {
+                        if (cur.Right == null)
                         {
-                            var side = CreateRoom(RideRoomKind.Default);
+                            var side = CreateRoom(RideRoomKind.Default, pathIndex, false);
                             cur.Right = side;
                             side.Left = cur;
                             countForPath++;
@@ -90,18 +99,6 @@ namespace Remizione
             }
 
             return first;
-        }
-
-        // RandomRange
-        private int RandomRange(int minInclusive, int maxExclusive)
-        {
-            return random.Next(minInclusive, maxExclusive);
-        }
-
-        // Roll
-        private bool Roll(int percent)
-        {
-            return RandomRange(0, 100) < percent;
         }
 
         #endregion

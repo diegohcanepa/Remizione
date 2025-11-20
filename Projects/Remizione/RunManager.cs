@@ -12,7 +12,7 @@ namespace Remizione
 
         private static readonly List<RideRoom> entryRooms = [];
         private static readonly List<RideRoom> rooms = [];
-        private static RunDescriptor? runDescriptor;
+        private static RunGraph? runGraph;
         private static readonly Dictionary<string, int> spawnData = [];
 
         #endregion
@@ -20,9 +20,9 @@ namespace Remizione
         #region Private members
 
         // CreateRideRoom
-        private static RideRoom CreateRideRoom(GameSession session, RoomDescriptor descriptor)
+        private static RideRoom CreateRideRoom(GameSession session, RoomGraph roomGraph)
         {
-            return new RideRoom(session, descriptor);
+            return new RideRoom(session, roomGraph);
         }
         
         #endregion
@@ -35,6 +35,7 @@ namespace Remizione
                 room.Children.Clear();
             }
 
+            runGraph = null;
             entryRooms.Clear();
             rooms.Clear();
             spawnData.Clear();
@@ -45,19 +46,19 @@ namespace Remizione
         public static ReadOnlyCollection<RideRoom> EntryRooms { get; } = entryRooms.AsReadOnly();
 
         // Generate
-        public static void Generate(GameSession session, int length)
+        public static void Generate(GameSession session)
         {
-            // Create run descriptor
-            runDescriptor = new RunDescriptorGenerator(session.Seed).Generate(3);
+            // Create run graph
+            runGraph = new RunGraphGenerator(session.Seed).Generate(3);
 
-            // Create all rooms from all paths
-            for (var i = 0; i < runDescriptor.Paths.Length; i++)
+            // Create procedural rooms
+            for (var i = 0; i < runGraph.EntryRooms.Count; i++)
             {
                 var isFirstRoom = true;
 
-                foreach (var roomDescriptor in runDescriptor.GetRoomDescriptors(i))
+                foreach (var roomGraph in runGraph.GetRooms(i))
                 {
-                    var room = CreateRideRoom(session, roomDescriptor);
+                    var room = CreateRideRoom(session, roomGraph);
 
                     if (isFirstRoom)
                     {
@@ -82,7 +83,7 @@ namespace Remizione
         {
             foreach (var room in rooms)
             {
-                if (room.Descriptor.Id == id)
+                if (room.RoomGraph.Id == id)
                     return room;    
             }
 

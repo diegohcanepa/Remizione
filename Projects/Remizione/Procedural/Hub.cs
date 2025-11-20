@@ -16,19 +16,28 @@
         // LinkDoors
         private void LinkDoors()
         {
-            var prefix = $"{nameof(RideDoor)}*";
+            var prefix = $"{nameof(RideDoor)}Up*";
 
             // Left door    
             if (Children.Find($"{prefix}Left") is RideDoor leftDoor)
-                leftDoor.NextRoom = RunManager.EntryRooms[0];
+            {
+                leftDoor.TargetRoom = RunManager.EntryRooms[0];
+                RunManager.EntryRooms[0].HubDoor = leftDoor;
+            }
 
             // Middle door    
             if (Children.Find($"{prefix}Middle") is RideDoor middleDoor)
-                middleDoor.NextRoom = RunManager.EntryRooms[1];
+            {
+                middleDoor.TargetRoom = RunManager.EntryRooms[1];
+                RunManager.EntryRooms[1].HubDoor = middleDoor;
+            }
 
             // Right door    
             if (Children.Find($"{prefix}Right") is RideDoor rightDoor)
-                rightDoor.NextRoom = RunManager.EntryRooms[2];
+            {
+                rightDoor.TargetRoom = RunManager.EntryRooms[2];
+                RunManager.EntryRooms[2].HubDoor = rightDoor;
+            }
         }
 
         #endregion
@@ -38,9 +47,14 @@
         // OnLoad
         protected override void OnLoad()
         {
-            Session.BeginRun();
-            base.OnLoad();
-            LinkDoors();
+            if (!RunManager.HasContent)
+            {
+                Session.BeginRun();
+                base.OnLoad();
+                LinkDoors();
+            }
+            else
+                base.OnLoad();
         }
 
         #endregion

@@ -17,6 +17,9 @@ namespace Remizione
     // DamageType
     public enum DamageType { None, Physical, Acid, Explosive, Fire, Ice, Lightning, Poison }
 
+    // RideDoorDirection
+    public enum RideDoorDirection { Up, Right, Down, Left }
+
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
 

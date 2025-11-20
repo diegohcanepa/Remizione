@@ -1590,8 +1590,10 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">RideDoor-assets/RideDoor01.png</key>
-            <key type="filename">RideDoor-assets/RideDoor02.png</key>
+            <key type="filename">RideDoorDown-assets/RideDoorDown01.png</key>
+            <key type="filename">RideDoorDown-assets/RideDoorDown02.png</key>
+            <key type="filename">RideDoorUp-assets/RideDoorUp01.png</key>
+            <key type="filename">RideDoorUp-assets/RideDoorUp02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1603,6 +1605,24 @@
                 <rect>8,9,17,18</rect>
                 <key>scale9Paddings</key>
                 <rect>8,9,17,18</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">RideDoorLeft-assets/RideDoorLeft01.png</key>
+            <key type="filename">RideDoorLeft-assets/RideDoorLeft02.png</key>
+            <key type="filename">RideDoorRight-assets/RideDoorRight01.png</key>
+            <key type="filename">RideDoorRight-assets/RideDoorRight02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,14,8,27</rect>
+                <key>scale9Paddings</key>
+                <rect>4,14,8,27</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -2094,7 +2114,10 @@
                     <filename>UnderRideEntrance-assets</filename>
                     <filename>TunnelDoor-assets</filename>
                     <filename>RideCar-assets</filename>
-                    <filename>RideDoor-assets</filename>
+                    <filename>RideDoorUp-assets</filename>
+                    <filename>RideDoorLeft-assets</filename>
+                    <filename>RideDoorRight-assets</filename>
+                    <filename>RideDoorDown-assets</filename>
                 </array>
             </struct>
         </map>

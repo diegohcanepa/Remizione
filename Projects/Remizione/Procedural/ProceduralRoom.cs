@@ -22,16 +22,16 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        protected ProceduralRoom(GameSession session, string name, RoomDescriptor descriptor)
+        protected ProceduralRoom(GameSession session, string name, RoomGraph roomGraph)
             : base(session, name)
         {
-            this.Descriptor = descriptor;
+            this.RoomGraph = roomGraph;
 
             AllowGlobalLight = true;
             LightingSystem = true;
 
-            int salt = descriptor.Id;
-            this.randomSeed = GetSeed(Session.Seed, salt);
+            int salt = roomGraph.Id;
+            this.randomSeed = RandomHelper.GetSeed(Session.Seed, salt);
             this.Random = new Random(randomSeed);
 
             this.cellLabel = new(Game, Fonts.Common)
@@ -47,7 +47,7 @@ namespace Remizione
         // CreateRuntimeThingCloneCore
         private GameThing CreateRuntimeThingCloneCore(string staticName)
         {
-            if (Session.CreateRuntimeThingClone(staticName, $"{staticName}*{Descriptor.Id}_{Name}_{instanceCount}") is not GameThing result)
+            if (Session.CreateRuntimeThingClone(staticName, $"{staticName}*{RoomGraph.Id}_{Name}_{instanceCount}") is not GameThing result)
                 throw new InvalidOperationException($"Failed to create runtime clone from'{staticName}'.");
 
             instanceCount++;
@@ -182,21 +182,6 @@ namespace Remizione
             }
         }
 
-        // GetSeed
-        private static int GetSeed(int seed, int salt)
-        {
-            uint h = (uint)seed;
-
-            h ^= (uint)salt * 0x9E3779B9; // golden number (Knuth)
-            h ^= h >> 16;
-            h *= 0x85EBCA6B;
-            h ^= h >> 13;
-            h *= 0xC2B2AE35;
-            h ^= h >> 16;
-
-            return (int)h;
-        }
-
         // GetStaticThings
         private List<GameThing> GetStaticThings(PlacementPhase phase)
         {
@@ -297,7 +282,7 @@ namespace Remizione
         // Populate
         private void Populate()
         {
-            var data = Session.PlacementDataPool.GetRoomPlacementData(Descriptor.RoomKind);
+            var data = Session.PlacementDataPool.GetRoomPlacementData(RoomGraph.RoomKind);
             if (data.Count == 0)
                 return;
 
@@ -383,9 +368,6 @@ namespace Remizione
             return CreateRuntimeThingCloneCore(staticName);
         }
 
-        // Descriptor
-        public RoomDescriptor Descriptor { get; }
-
         // PlaceRuntimeCloneAt
         public GameThing? PlaceRuntimeCloneAt(GameThing thing, Vector2 position)
         {
@@ -406,7 +388,13 @@ namespace Remizione
             return result;
         }
 
+        // RoomGraph
+        public RoomGraph RoomGraph { get; }
+
         // ShowGrid
         public static bool ShowGrid { get; set; }
+
+        // ToString
+        public override string ToString() => $"ProcRoom_{RoomGraph.Id}";
     }
 }

@@ -431,7 +431,7 @@ namespace Remizione
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            RunManager.Generate(this, 3);
+            RunManager.Generate(this);
         }
 
         // CancelRun

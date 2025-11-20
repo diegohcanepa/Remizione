@@ -94,7 +94,7 @@ namespace Remizione
         private void DrawRoomData(GameTime gameTime, GameRoom room)
         {
             NewLine(text);
-            DrawText(gameTime, text, $"ROOM ({room.Name})", ColorPalette.HighlightedText);
+            DrawText(gameTime, text, $"ROOM ({room})", ColorPalette.HighlightedText);
             DrawText(gameTime, text, $"Culled things: {room.CulledThings.Count} ({room.Children.Count})");
             DrawText(gameTime, text, $"Custom size: {room.CustomWidth}x{room.CustomHeight}");
         }
