@@ -13,11 +13,11 @@ namespace Remizione
 
         private readonly GadgetSlot gadgetSlot;
         private readonly UIHealthMeter healthMeter;
-        private readonly JunkSlot junkSlot;
+        private readonly LeftJunkSlot junkLeftSlot;
+        private readonly RightJunkSlot junkRightSlot;
         private readonly SackSlot sackSlot;
         private readonly GameSession session;
         private readonly UITicketMeter ticketMeter;
-        private readonly TrinketSlot trinketSlot;
 
         #endregion
 
@@ -34,11 +34,11 @@ namespace Remizione
             this.Message = new(Game);
             this.TargetMeter = new(Game);
 
-            // Junk slot
-            this.junkSlot = new(session);
+            // left junk slot
+            this.junkLeftSlot = new(session);
 
-            // Gadget slot
-            this.gadgetSlot = new(session);
+            // Right junk slot
+            this.junkRightSlot = new(session);
 
             // Sack slot
             this.sackSlot = new(session);
@@ -47,7 +47,7 @@ namespace Remizione
             this.ticketMeter = new(Game);
 
             // Trincket slot
-            this.trinketSlot = new(session);
+            this.gadgetSlot = new(session);
         }
 
         #endregion
@@ -66,9 +66,9 @@ namespace Remizione
                 Message.Draw(gameTime);
             }
 
-            junkSlot.Draw(gameTime);
+            junkLeftSlot.Draw(gameTime);
+            junkRightSlot.Draw(gameTime);
             gadgetSlot.Draw(gameTime);
-            trinketSlot.Draw(gameTime);
             healthMeter.Draw(gameTime);
             ticketMeter.Draw(gameTime);
         }
@@ -78,9 +78,9 @@ namespace Remizione
         {
             TargetMeter.Update(gameTime);
             sackSlot.Update(gameTime);
-            junkSlot.Update(gameTime);
+            junkLeftSlot.Update(gameTime);
+            junkRightSlot.Update(gameTime);
             gadgetSlot.Update(gameTime);
-            trinketSlot.Update(gameTime);
             healthMeter.Update(gameTime);
 
             Log.Update(gameTime);
@@ -104,10 +104,10 @@ namespace Remizione
             if (session.IsConsoleVisible || session.GameplayMode == GameplayMode.Adventure)
                 return HandleInputResult.Unhandled;
 
-            if (junkSlot.HandleInput(gameTime) == HandleInputResult.Handled)
+            if (junkLeftSlot.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            if (gadgetSlot.HandleInput(gameTime) == HandleInputResult.Handled)
+            if (junkRightSlot.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
             if (sackSlot.HandleInput(gameTime) == HandleInputResult.Handled)

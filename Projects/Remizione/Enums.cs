@@ -23,6 +23,9 @@ namespace Remizione
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
 
+    // Equipment
+    public enum Equipment { LeftJunk, RightJunk, Gadget }
+
     // Faction
     public enum Faction { Neutral, Good, Evil }
 

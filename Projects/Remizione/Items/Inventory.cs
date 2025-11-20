@@ -37,7 +37,7 @@ namespace Remizione
                 var category = item.MetaItem.Category;
 
                 if (category == ItemCategory.Gadgets && EquippedGadget == null ||
-                    category == ItemCategory.Junk && EquippedJunk == null)
+                    category == ItemCategory.Junk && EquippedJunkLeft == null)
                 {
                     Equip(item);
                 }
@@ -52,9 +52,9 @@ namespace Remizione
         public void Clear()
         {
             SelectedItem = null;
-            EquippedJunk = null;
+            EquippedJunkLeft = null;
             EquippedGadget = null;
-            EquippedTrinket = null;
+            EquippedJunkRight = null;
             items.Clear();
         }
 
@@ -82,12 +82,12 @@ namespace Remizione
 
                 // Junk
                 case ItemCategory.Junk:
-                    EquippedJunk = item;
+                    EquippedJunkLeft = item;
                     break;
 
                 // Trinkets
                 case ItemCategory.Trinkets:
-                    EquippedTrinket = item;
+                    EquippedJunkRight = item;
                     break;
             }
         }
@@ -122,11 +122,11 @@ namespace Remizione
         // EquippedGadget
         public Item? EquippedGadget { get; private set; }
 
-        // EquippedJunk
-        public Item? EquippedJunk { get; private set; }
+        // EquippedJunkLeft
+        public Item? EquippedJunkLeft { get; private set; }
 
-        // EquippedTrinket
-        public Item? EquippedTrinket { get; private set; }
+        // EquippedJunkRight
+        public Item? EquippedJunkRight { get; private set; }
 
         // EquipPrevious
         public Item? EquipPrevious(ItemCategory category)
@@ -176,8 +176,8 @@ namespace Remizione
             return category switch
             {
                 ItemCategory.Gadgets => EquippedGadget,
-                ItemCategory.Junk => EquippedJunk,
-                ItemCategory.Trinkets => EquippedTrinket,
+                ItemCategory.Junk => EquippedJunkLeft,
+                ItemCategory.Trinkets => EquippedJunkRight,
                 _ => null,
             };
         }
@@ -257,14 +257,14 @@ namespace Remizione
             var itemIndex = items.IndexOf(item);
             if (items.Remove(item))
             {
-                if (EquippedJunk == item)
-                    EquippedJunk = null;
+                if (EquippedJunkLeft == item)
+                    EquippedJunkLeft = null;
 
                 if (EquippedGadget == item)
                     EquippedGadget = null;
 
-                if (EquippedTrinket == item)
-                    EquippedTrinket = null;
+                if (EquippedJunkRight == item)
+                    EquippedJunkRight = null;
 
                 if (SelectedItem == item)
                 {
@@ -422,12 +422,12 @@ namespace Remizione
 
                 // Junk
                 case ItemCategory.Junk:
-                    EquippedJunk = null;
+                    EquippedJunkLeft = null;
                     break;
 
                 // Trinkets
                 case ItemCategory.Trinkets:
-                    EquippedTrinket = null;
+                    EquippedJunkRight = null;
                     break;
             }
         }

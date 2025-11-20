@@ -47,7 +47,7 @@
   <String Key="Item.Battery.Name">Batería</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
   <String Key="Item.Chili.Name">Chile picante</String>
-  <String Key="Item.Coin.Description">La moneda favorita de San Peregrino. Porque la salvación no es gratis: tiene un precio divinamente sugerido. Insertá las suficientes y el camino a la redención se abre... milagrosamente.</String>
+  <String Key="Item.Coin.Description">La moneda favorita de San Peregrino. Porque la salvación no es gratis: tiene un precio divinamente sugerido.</String>
   <String Key="Item.Coin.Name">Moneda de oro</String>
   <String Key="Item.Cross.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Cross.Name">Cruz de Zumbito</String>
@@ -79,8 +79,6 @@
   <String Key="ItemCategory.Gadgets">Cositas</String>
   <String Key="ItemCategory.Junk">Cachivaches</String>
   <String Key="ItemCategory.KeyItems">Objetos clave</String>
-  <String Key="ItemCategory.Quirks">Rasgos</String>
-  <String Key="ItemCategory.Trinkets">Chucherias</String>
   <String Key="ItemProperty.Chance">Chance</String>
   <String Key="KeyItemAction.UnlockDoor">Abrir puerta</String>
   <String Key="KeyItemAction.UnlockTrunk">Abrir baúl</String>
