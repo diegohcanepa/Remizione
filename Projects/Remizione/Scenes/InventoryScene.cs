@@ -22,6 +22,7 @@ namespace Remizione
         private readonly UIButton buttonEquip;
         private readonly List<ItemCategory> categories = [ItemCategory.None, ItemCategory.LeftHand, ItemCategory.RightHand, ItemCategory.Consumables, ItemCategory.Gadgets, ItemCategory.KeyItems];
         private readonly ImageSprite[] categoryIcons;
+        private readonly Vector2Tween categoryIconTween = Vector2Tween.Create(TweenStyle.Linear, .8f, .9f, 200, -1);
         private readonly ImageSprite[] categoryMarkers;
         private readonly TextSprite categoryText;
         private ItemCategory currentCategory;
@@ -255,8 +256,11 @@ namespace Remizione
 
             foreach (var category in categories)
             {
-                categoryIcons[categories.IndexOf(category)].Opacity = currentCategory == category ? 1f : .5f;
-                categoryIcons[categories.IndexOf(category)].Scale = new(.8f);
+                categoryIcons[categories.IndexOf(category)].Tweens.Reset();
+                if (category == currentCategory)
+                    categoryIcons[categories.IndexOf(category)].Tweens.ScaleTween = categoryIconTween;
+                else
+                    categoryIcons[categories.IndexOf(category)].Scale = categoryIconTween.StartValue;
             }
 
             grid.CategoryFilter = currentCategory;
@@ -570,6 +574,11 @@ namespace Remizione
 
             if (lastKnownInput != InputManager.DefaultPlayer.LastInputMethod)
                 lastKnownInput = InputManager.DefaultPlayer.LastInputMethod;
+
+            for (var i = 0; i < categoryIcons.Length; i++)
+            {
+                categoryIcons[i].Update(gameTime);
+            }
         }
 
         #endregion

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:7db42d317160541d351b72c17a1defee:bc3b381facb937433873518294efa0f1:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:c0cbc57fb07e35c5c3eb2b90a13af86a:bfa1a496258c1deaaf2afaa96bf62565:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -45,9 +45,11 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="InventoryCategoryGadgets.png" x="255" y="160" w="11" h="11"/>
     <sprite n="InventoryCategoryKeyItems.png" x="255" y="173" w="11" h="11"/>
     <sprite n="InventoryCategoryLeftHand.png" x="85" y="208" w="11" h="11"/>
+    <sprite n="InventoryCategoryLeftHandContent.png" x="85" y="208" w="11" h="11"/>
     <sprite n="InventoryCategoryNone.png" x="72" y="211" w="11" h="11"/>
-    <sprite n="InventoryCategoryNotEmpty.png" x="506" y="15" w="3" h="3"/>
+    <sprite n="InventoryCategoryNotEmpty.png" x="506" y="19" w="2" h="2"/>
     <sprite n="InventoryCategoryRightHand.png" x="39" y="219" w="11" h="11"/>
+    <sprite n="InventoryCategoryRightHandContent.png" x="39" y="219" w="11" h="11"/>
     <sprite n="InventoryGridContainer.png" x="384" y="145" w="88" h="65"/>
     <sprite n="InventoryInfoContainer.png" x="384" y="145" w="88" h="65"/>
     <sprite n="InventoryInfoTitleContainer.png" x="88" y="176" w="76" h="8"/>
@@ -76,20 +78,20 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MissingItem.png" x="210" y="176" w="20" h="20"/>
     <sprite n="MouseCursorArrow.png" x="422" y="80" w="7" h="7"/>
     <sprite n="PickupShadow.png" x="449" y="80" w="7" h="3"/>
-    <sprite n="Pixel.png" x="509" y="24" w="1" h="1"/>
+    <sprite n="Pixel.png" x="509" y="23" w="1" h="1"/>
     <sprite n="PopupContainer.png" x="2" y="71" w="264" h="74"/>
     <sprite n="PopupContainerShadow.png" x="268" y="145" w="114" h="60"/>
     <sprite n="RottenApple.png" x="232" y="176" w="20" h="20"/>
     <sprite n="RustyLockpick.png" x="88" y="186" w="20" h="20"/>
     <sprite n="SackSlot.png" x="268" y="71" w="17" h="16"/>
     <sprite n="SavingIcon.png" x="305" y="71" w="16" h="16"/>
-    <sprite n="SpeechBubbleCloseArrow.png" x="506" y="20" w="3" h="2"/>
+    <sprite n="SpeechBubbleCloseArrow.png" x="506" y="15" w="3" h="2"/>
     <sprite n="SpeechBubblePipe.png" x="449" y="85" w="5" h="3"/>
     <sprite n="SteelLockpick.png" x="110" y="186" w="20" h="20"/>
     <sprite n="TicketIcon.png" x="22" y="187" w="18" h="12"/>
     <sprite n="TipBalloon.png" x="254" y="186" w="12" h="13"/>
     <sprite n="UIButtonContainerEdge.png" x="32" y="217" w="5" h="11"/>
-    <sprite n="UIButtonContainerPattern.png" x="506" y="24" w="1" h="11"/>
+    <sprite n="UIButtonContainerPattern.png" x="506" y="23" w="1" h="11"/>
     <sprite n="UIControlContainerEdgeLeftLarge.png" x="32" y="230" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeLeftSmall.png" x="98" y="208" w="5" h="10"/>
     <sprite n="UIControlContainerEdgeRightLarge.png" x="65" y="219" w="5" h="11"/>
