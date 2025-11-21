@@ -84,7 +84,7 @@ namespace Remizione
         internal static Color PopupTitle { get; } = new Color(116, 95, 75);
 
         // SceneShade
-        internal static Color SceneShade { get; } = Color.Black * .5f;
+        internal static Color SceneShade { get; } = Color.Black * .8f;
 
         // ShadowOpacity
         public const float ShadowOpacity = .3f;

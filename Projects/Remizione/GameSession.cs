@@ -152,6 +152,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(IsometricProp));
             scriptRegistry.RegisterEntity(typeof(Monitor));
             scriptRegistry.RegisterEntity(typeof(NosyHemorrhoid));
+            scriptRegistry.RegisterEntity(typeof(NumberSix));
             scriptRegistry.RegisterEntity(typeof(PostClock));
             scriptRegistry.RegisterEntity(typeof(Pottery));
             scriptRegistry.RegisterEntity(typeof(Prop));

@@ -306,21 +306,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">EntranceRail-assets/EntranceRail.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,8,31,15</rect>
-                <key>scale9Paddings</key>
-                <rect>16,8,31,15</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Environment-assets/CraftingMark.png</key>
             <key type="filename">PostClock-assets/PostClockPiece7.png</key>
             <key type="filename">PotteryA-assets/PotteryAPiece4.png</key>
@@ -408,8 +393,6 @@
             </struct>
             <key type="filename">Environment-assets/ShadowSpot6.png</key>
             <key type="filename">Environment-assets/ShadowSpot7.png</key>
-            <key type="filename">PieceOfWood-assets/PieceOfWood.png</key>
-            <key type="filename">PieceOfWood-assets/PieceOfWoodShadow.png</key>
             <key type="filename">TombstoneB-assets/TombstoneBPiece3.png</key>
             <key type="filename">TombstoneD-assets/TombstoneDPiece3.png</key>
             <struct type="IndividualSpriteSettings">
@@ -516,44 +499,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">ExitRideCar-assets/ExitRideCar01.png</key>
-            <key type="filename">ExitRideCar-assets/ExitRideCar02.png</key>
-            <key type="filename">ExitRideCar-assets/ExitRideCar03.png</key>
-            <key type="filename">ExitRideCar-assets/ExitRideCarShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>10,8,20,15</rect>
-                <key>scale9Paddings</key>
-                <rect>10,8,20,15</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ExitTower-assets/ExitTower01.png</key>
-            <key type="filename">ExitTower-assets/ExitTower02.png</key>
-            <key type="filename">ExitTower-assets/ExitTower03.png</key>
-            <key type="filename">ExitTower-assets/ExitTower04.png</key>
-            <key type="filename">ExitTower-assets/ExitTower05.png</key>
-            <key type="filename">ExitTower-assets/ExitTowerShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,20,33,39</rect>
-                <key>scale9Paddings</key>
-                <rect>16,20,33,39</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">FenceA-assets/FenceA.png</key>
             <key type="filename">FenceA-assets/FenceAShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -635,8 +580,6 @@
             <key type="filename">Firecracker-assets/Firecracker01.png</key>
             <key type="filename">Firecracker-assets/Firecracker02.png</key>
             <key type="filename">Firecracker-assets/Firecracker03.png</key>
-            <key type="filename">PilgrimSack-assets/PilgrimSack.png</key>
-            <key type="filename">PilgrimSack-assets/PilgrimSackShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1115,24 +1058,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">IncomingRideCar-assets/IncomingRideCar01.png</key>
-            <key type="filename">IncomingRideCar-assets/IncomingRideCar02.png</key>
-            <key type="filename">IncomingRideCar-assets/IncomingRideCar03.png</key>
-            <key type="filename">IncomingRideCar-assets/IncomingRideCar04.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,7,15,15</rect>
-                <key>scale9Paddings</key>
-                <rect>7,7,15,15</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">LagoonA-assets/LagoonA.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1226,48 +1151,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">LeftTower-assets/LeftTower01.png</key>
-            <key type="filename">LeftTower-assets/LeftTower02.png</key>
-            <key type="filename">LeftTower-assets/LeftTower03.png</key>
-            <key type="filename">LeftTower-assets/LeftTower04.png</key>
-            <key type="filename">LeftTower-assets/LeftTower05.png</key>
-            <key type="filename">LeftTower-assets/LeftTowerShadow.png</key>
-            <key type="filename">RightTower-assets/RightTower01.png</key>
-            <key type="filename">RightTower-assets/RightTower02.png</key>
-            <key type="filename">RightTower-assets/RightTower03.png</key>
-            <key type="filename">RightTower-assets/RightTower04.png</key>
-            <key type="filename">RightTower-assets/RightTower05.png</key>
-            <key type="filename">RightTower-assets/RightTowerShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,16,33,33</rect>
-                <key>scale9Paddings</key>
-                <rect>16,16,33,33</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">LeftTower-assets/LeftTowerPatch.png</key>
-            <key type="filename">RightTower-assets/RightTowerPatch.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,8,10,15</rect>
-                <key>scale9Paddings</key>
-                <rect>5,8,10,15</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Lightning-assets/Lightning01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1313,8 +1196,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">LootBag-assets/LootBag.png</key>
-            <key type="filename">LootBag-assets/LootBagShadow.png</key>
+            <key type="filename">NumberSix-assets/NumberSix01.png</key>
+            <key type="filename">NumberSix-assets/NumberSix02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1323,9 +1206,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,2,4,5</rect>
+                <rect>4,7,8,13</rect>
                 <key>scale9Paddings</key>
-                <rect>2,2,4,5</rect>
+                <rect>4,7,8,13</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1626,23 +1509,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">RideExit-assets/ExitRail.png</key>
-            <key type="filename">RideExit-assets/ExitTunnel.png</key>
-            <key type="filename">RideExit-assets/ExitTunnelPatch.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>36,29,71,57</rect>
-                <key>scale9Paddings</key>
-                <rect>36,29,71,57</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">SaintPeregrine-assets/SaintPeregrine01.png</key>
             <key type="filename">SaintPeregrine-assets/SaintPeregrine02.png</key>
             <key type="filename">SaintPeregrine-assets/SaintPeregrine03.png</key>
@@ -1772,23 +1638,6 @@
                 <rect>3,6,5,13</rect>
                 <key>scale9Paddings</key>
                 <rect>3,6,5,13</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Toilet-assets/Toilet01.png</key>
-            <key type="filename">Toilet-assets/Toilet02.png</key>
-            <key type="filename">Toilet-assets/ToiletShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,9,15,18</rect>
-                <key>scale9Paddings</key>
-                <rect>7,9,15,18</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1963,38 +1812,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">TunnelDoor-assets/TunnelDoorClosed.png</key>
-            <key type="filename">TunnelDoor-assets/TunnelDoorOpen.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,12,12,25</rect>
-                <key>scale9Paddings</key>
-                <rect>6,12,12,25</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UnderRideEntrance-assets/UnderRideEntrance.png</key>
-            <key type="filename">UnderRideEntrance-assets/UnderRideEntranceShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>12,13,25,27</rect>
-                <key>scale9Paddings</key>
-                <rect>12,13,25,27</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">WaterPuddleA-assets/WaterPuddleA.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -2061,13 +1878,11 @@
                     <filename>LargeRockA-assets</filename>
                     <filename>LargeRockB-assets</filename>
                     <filename>SmallRockB-assets</filename>
-                    <filename>LootBag-assets</filename>
                     <filename>SinnerCross-assets</filename>
                     <filename>Pickups-assets</filename>
                     <filename>ImpactWords-assets</filename>
                     <filename>Throwables-assets</filename>
                     <filename>Lightning-assets</filename>
-                    <filename>PieceOfWood-assets</filename>
                     <filename>Trunk-assets</filename>
                     <filename>Grass-assets</filename>
                     <filename>FlatStones-assets</filename>
@@ -2075,8 +1890,6 @@
                     <filename>FenceB-assets</filename>
                     <filename>FenceC-assets</filename>
                     <filename>FenceD-assets</filename>
-                    <filename>EntranceRail-assets</filename>
-                    <filename>PilgrimSack-assets</filename>
                     <filename>TombstoneA-assets</filename>
                     <filename>TombstoneB-assets</filename>
                     <filename>TombstoneC-assets</filename>
@@ -2093,15 +1906,9 @@
                     <filename>Guts-assets</filename>
                     <filename>SpearTrap-assets</filename>
                     <filename>PostClock-assets</filename>
-                    <filename>IncomingRideCar-assets</filename>
-                    <filename>ExitTower-assets</filename>
-                    <filename>ExitRideCar-assets</filename>
-                    <filename>LeftTower-assets</filename>
-                    <filename>RightTower-assets</filename>
                     <filename>Firecracker-assets</filename>
                     <filename>WaterPuddleB-assets</filename>
                     <filename>WaterPuddleC-assets</filename>
-                    <filename>Toilet-assets</filename>
                     <filename>CrossLargeB-assets</filename>
                     <filename>SpeakerPost-assets</filename>
                     <filename>TreeBentA-assets</filename>
@@ -2110,14 +1917,12 @@
                     <filename>DepositMachine-assets</filename>
                     <filename>LagoonA-assets</filename>
                     <filename>Sign-assets</filename>
-                    <filename>RideExit-assets</filename>
-                    <filename>UnderRideEntrance-assets</filename>
-                    <filename>TunnelDoor-assets</filename>
                     <filename>RideCar-assets</filename>
                     <filename>RideDoorUp-assets</filename>
                     <filename>RideDoorLeft-assets</filename>
                     <filename>RideDoorRight-assets</filename>
                     <filename>RideDoorDown-assets</filename>
+                    <filename>NumberSix-assets</filename>
                 </array>
             </struct>
         </map>
