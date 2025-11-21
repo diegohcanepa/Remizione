@@ -36,17 +36,17 @@ namespace Remizione
             this.useInputBinding = inputBinding;
 
             // Bindings
-            if (itemCategory == ItemCategory.Junk)
+            if (itemCategory == ItemCategory.LeftHand)
                 nextInputBinding = InputBindings.SelectLeft;
             
-            else if (itemCategory == ItemCategory.Gadgets)
+            else if (itemCategory == ItemCategory.RightHand)
                 nextInputBinding = InputBindings.SelectRight;
 
             // Slot image
             this.slotImage = new ImageSprite(Game, Atlases.UI.EquipmentSlot)
             {
                 Opacity = .9f,
-                PivotOrigin = itemCategory == ItemCategory.Trinkets ? RectanglePoint.LeftTop : RectanglePoint.LeftBottom,
+                PivotOrigin = itemCategory == ItemCategory.Gadgets ? RectanglePoint.LeftTop : RectanglePoint.LeftBottom,
                 Position = position
             };
 
@@ -58,7 +58,7 @@ namespace Remizione
                 Scale = ScaleInfo.UIElement.Tiny
             };
 
-            if (itemCategory == ItemCategory.Trinkets)
+            if (itemCategory == ItemCategory.Gadgets)
                 itemImage.X -= .5f;
 
             // Amount
@@ -88,11 +88,13 @@ namespace Remizione
                 itemImage.Image = lastKnownItem.MetaItem.Image;
                 itemImageScaleTween.Start(TweenStyle.Linear, new Vector2(.3f), ScaleInfo.UIElement.Tiny, 70);
                 itemImage.Tweens.ScaleTween = itemImageScaleTween;
+                itemImage.Opacity = 1;
             }
             else
             {
                 lastKnownCount = 0;
-                itemImage.Image = Atlases.UI.GetImage($"EquipmentSlot{ItemCategory}Icon");
+                itemImage.Image = Atlases.UI.GetImage($"InventoryCategory{ItemCategory}");
+                itemImage.Opacity = .2f;
                 itemImage.Scale = ScaleInfo.UIElement.Medium;
                 itemImageScaleTween.Stop();
             }

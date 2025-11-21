@@ -41,8 +41,8 @@ namespace Remizione
         internal static readonly InputBinding SelectDialogOption = InputManager.AddBinding(nameof(SelectDialogOption), Buttons.A, Keys.E, Keys.Enter);
         internal static readonly InputBinding SpeechBubble = InputManager.AddBinding(nameof(SpeechBubble), Buttons.A, Keys.E, Keys.Enter);
         internal static readonly InputBinding UseFriendlyItem = InputManager.AddBinding(nameof(UseFriendlyItem), Buttons.A, Keys.E, Keys.Enter);
-        internal static readonly InputBinding UseJunkItem = InputManager.AddBinding(nameof(UseJunkItem), Buttons.X, Keys.Z);
-        internal static readonly InputBinding UseGadgetItem = InputManager.AddBinding(nameof(UseGadgetItem), Buttons.B, Keys.X);
+        internal static readonly InputBinding UseLeftHandItem = InputManager.AddBinding(nameof(UseLeftHandItem), Buttons.X, Keys.Z);
+        internal static readonly InputBinding UseRightHandItem = InputManager.AddBinding(nameof(UseRightHandItem), Buttons.B, Keys.X);
 
         // Keyboard movement
         internal static readonly InputBinding KeyboardMoveDown = InputManager.AddBinding(nameof(KeyboardMoveDown), 0, Keys.S);

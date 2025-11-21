@@ -13,11 +13,11 @@ namespace Remizione
 
         private readonly GadgetSlot gadgetSlot;
         private readonly UIHealthMeter healthMeter;
-        private readonly JunkSlot junkSlot;
+        private readonly LeftHandSlot leftHandSlot;
+        private readonly RightHandSlot rightHandSlot;
         private readonly SackSlot sackSlot;
         private readonly GameSession session;
         private readonly UITicketMeter ticketMeter;
-        private readonly TrinketSlot trinketSlot;
 
         #endregion
 
@@ -34,8 +34,11 @@ namespace Remizione
             this.Message = new(Game);
             this.TargetMeter = new(Game);
 
-            // Junk slot
-            this.junkSlot = new(session);
+            // Left hand slot
+            this.leftHandSlot = new(session);
+
+            // Right hand slot
+            this.rightHandSlot = new(session);
 
             // Gadget slot
             this.gadgetSlot = new(session);
@@ -45,9 +48,6 @@ namespace Remizione
 
             // Ticket meter
             this.ticketMeter = new(Game);
-
-            // Trincket slot
-            this.trinketSlot = new(session);
         }
 
         #endregion
@@ -66,9 +66,9 @@ namespace Remizione
                 Message.Draw(gameTime);
             }
 
-            junkSlot.Draw(gameTime);
+            leftHandSlot.Draw(gameTime);
+            rightHandSlot.Draw(gameTime);
             gadgetSlot.Draw(gameTime);
-            trinketSlot.Draw(gameTime);
             healthMeter.Draw(gameTime);
             ticketMeter.Draw(gameTime);
         }
@@ -78,9 +78,9 @@ namespace Remizione
         {
             TargetMeter.Update(gameTime);
             sackSlot.Update(gameTime);
-            junkSlot.Update(gameTime);
+            leftHandSlot.Update(gameTime);
+            rightHandSlot.Update(gameTime);
             gadgetSlot.Update(gameTime);
-            trinketSlot.Update(gameTime);
             healthMeter.Update(gameTime);
 
             Log.Update(gameTime);
@@ -104,10 +104,10 @@ namespace Remizione
             if (session.IsConsoleVisible || session.GameplayMode == GameplayMode.Adventure)
                 return HandleInputResult.Unhandled;
 
-            if (junkSlot.HandleInput(gameTime) == HandleInputResult.Handled)
+            if (leftHandSlot.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            if (gadgetSlot.HandleInput(gameTime) == HandleInputResult.Handled)
+            if (rightHandSlot.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
             if (sackSlot.HandleInput(gameTime) == HandleInputResult.Handled)

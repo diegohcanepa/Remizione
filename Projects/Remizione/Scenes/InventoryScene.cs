@@ -20,7 +20,7 @@ namespace Remizione
         private readonly UIButton buttonConsume;
         private readonly UIButton buttonDiscard;
         private readonly UIButton buttonEquip;
-        private readonly List<ItemCategory> categories = [ItemCategory.None, ItemCategory.Junk, ItemCategory.Gadgets, ItemCategory.Consumables, ItemCategory.Trinkets, ItemCategory.KeyItems];
+        private readonly List<ItemCategory> categories = [ItemCategory.None, ItemCategory.LeftHand, ItemCategory.RightHand, ItemCategory.Consumables, ItemCategory.Gadgets, ItemCategory.KeyItems];
         private readonly ImageSprite[] categoryIcons;
         private readonly ImageSprite[] categoryMarkers;
         private readonly TextSprite categoryText;
@@ -218,7 +218,7 @@ namespace Remizione
             }
             else if (item.MetaItem.IsEquipment)
             {
-                if (!item.IsEquipped || item.MetaItem.Category == ItemCategory.Trinkets)
+                if (!item.IsEquipped || item.MetaItem.Category == ItemCategory.Gadgets)
                     buttonEquip.Draw(gameTime);
             }
         }
@@ -285,7 +285,7 @@ namespace Remizione
                     hpBonus.Amount = item.MetaItem.HP.MaximumValue;
                 }
 
-                if (item.MetaItem.Category == ItemCategory.Trinkets)
+                if (item.MetaItem.Category == ItemCategory.Gadgets)
                 {
                     if (item.IsEquipped == true)
                         buttonEquip.Text = Localization.GetValue(InventoryVerb.TakeOff);
@@ -398,7 +398,7 @@ namespace Remizione
             if (!item.MetaItem.IsEquipment)
                 return false;
 
-            if (item.IsEquipped && item.MetaItem.Category != ItemCategory.Trinkets)
+            if (item.IsEquipped && item.MetaItem.Category != ItemCategory.Gadgets)
                 return false;
 
             if (buttonEquip.TestPressed(PlayerIndex.One))

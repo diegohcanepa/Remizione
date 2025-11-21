@@ -278,7 +278,7 @@ namespace Remizione
                 if (metaItem != null)
                 {
                     // Avoid looting unique things already in inventory
-                    if (metaItem.Category == ItemCategory.Trinkets && Session.Inventory.Find(metaItem.Name) != null)
+                    if (metaItem.Category == ItemCategory.Gadgets && Session.Inventory.Find(metaItem.Name) != null)
                         return;
 
                     Session.ObjectPools.Pickups.Get()?.Drop(room, Position, metaItem);

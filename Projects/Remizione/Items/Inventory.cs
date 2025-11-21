@@ -36,8 +36,8 @@ namespace Remizione
 
                 var category = item.MetaItem.Category;
 
-                if (category == ItemCategory.Gadgets && EquippedGadget == null ||
-                    category == ItemCategory.Junk && EquippedJunk == null)
+                if (category == ItemCategory.RightHand && RightHand == null ||
+                    category == ItemCategory.LeftHand && LeftHand == null)
                 {
                     Equip(item);
                 }
@@ -52,9 +52,9 @@ namespace Remizione
         public void Clear()
         {
             SelectedItem = null;
-            EquippedJunk = null;
-            EquippedGadget = null;
-            EquippedTrinket = null;
+            LeftHand = null;
+            RightHand = null;
+            Gadget = null;
             items.Clear();
         }
 
@@ -75,19 +75,19 @@ namespace Remizione
 
             switch (item.MetaItem.Category)
             {
-                // Gadgets
+                // Left hand
+                case ItemCategory.LeftHand:
+                    LeftHand = item;
+                    break;
+
+                // Right hand
+                case ItemCategory.RightHand:
+                    RightHand = item;
+                    break;
+
+                // Gadget
                 case ItemCategory.Gadgets:
-                    EquippedGadget = item;
-                    break;
-
-                // Junk
-                case ItemCategory.Junk:
-                    EquippedJunk = item;
-                    break;
-
-                // Trinkets
-                case ItemCategory.Trinkets:
-                    EquippedTrinket = item;
+                    Gadget = item;
                     break;
             }
         }
@@ -118,15 +118,6 @@ namespace Remizione
 
             return null;
         }
-
-        // EquippedGadget
-        public Item? EquippedGadget { get; private set; }
-
-        // EquippedJunk
-        public Item? EquippedJunk { get; private set; }
-
-        // EquippedTrinket
-        public Item? EquippedTrinket { get; private set; }
 
         // EquipPrevious
         public Item? EquipPrevious(ItemCategory category)
@@ -170,14 +161,17 @@ namespace Remizione
         // FindNotNull
         public Item FindNotNull(string name) => Find(name) ?? throw new InvalidOperationException($"Item '{name}' not found.");
 
+        // Gadget
+        public Item? Gadget { get; private set; }
+
         // GetEquippedItem
         public Item? GetEquippedItem(ItemCategory category)
         {
             return category switch
             {
-                ItemCategory.Gadgets => EquippedGadget,
-                ItemCategory.Junk => EquippedJunk,
-                ItemCategory.Trinkets => EquippedTrinket,
+                ItemCategory.RightHand => RightHand,
+                ItemCategory.LeftHand => LeftHand,
+                ItemCategory.Gadgets => Gadget,
                 _ => null,
             };
         }
@@ -239,6 +233,9 @@ namespace Remizione
         // IsFull
         public bool IsFull => items.Count >= MaximumSize;
 
+        // LeftHand
+        public Item? LeftHand { get; private set; }
+
         // MaximumSize
         public const int MaximumSize = 12;
 
@@ -257,14 +254,14 @@ namespace Remizione
             var itemIndex = items.IndexOf(item);
             if (items.Remove(item))
             {
-                if (EquippedJunk == item)
-                    EquippedJunk = null;
+                if (LeftHand == item)
+                    LeftHand = null;
 
-                if (EquippedGadget == item)
-                    EquippedGadget = null;
+                if (RightHand == item)
+                    RightHand = null;
 
-                if (EquippedTrinket == item)
-                    EquippedTrinket = null;
+                if (Gadget == item)
+                    Gadget = null;
 
                 if (SelectedItem == item)
                 {
@@ -283,6 +280,9 @@ namespace Remizione
             else
                 return false;
         }
+
+        // RightHand
+        public Item? RightHand { get; private set; }
 
         // Select
         public bool Select(string name)
@@ -417,17 +417,17 @@ namespace Remizione
             {
                 // Gadgets
                 case ItemCategory.Gadgets:
-                    EquippedGadget = null;
+                    Gadget = null;
                     break;
 
-                // Junk
-                case ItemCategory.Junk:
-                    EquippedJunk = null;
+                // Left hand
+                case ItemCategory.LeftHand:
+                    LeftHand = null;
                     break;
 
-                // Trinkets
-                case ItemCategory.Trinkets:
-                    EquippedTrinket = null;
+                // Right hand
+                case ItemCategory.RightHand:
+                    RightHand = null;
                     break;
             }
         }
