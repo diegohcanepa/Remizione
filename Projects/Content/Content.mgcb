@@ -533,23 +533,29 @@
 /processorParam:Quality=Best
 /build:Audio/FX/Lightning.wav;Audio/FX/Lightning
 
-#begin Audio/FX/LootBagJump.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/LootBagJump.wav;Audio/FX/LootBagJump
-
-#begin Audio/FX/LootBagLand.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/LootBagLand.wav;Audio/FX/LootBagLand
-
 #begin Audio/FX/MetalPropBreak.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/MetalPropBreak.wav;Audio/FX/MetalPropBreak
+
+#begin Audio/FX/NumberSixA.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/NumberSixA.wav;Audio/FX/NumberSixA
+
+#begin Audio/FX/NumberSixB.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/NumberSixB.wav;Audio/FX/NumberSixB
+
+#begin Audio/FX/NumberSixC.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/NumberSixC.wav;Audio/FX/NumberSixC
 
 #begin Audio/FX/PickupBag.wav
 /importer:WavImporter

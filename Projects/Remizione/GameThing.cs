@@ -422,37 +422,58 @@ namespace Remizione
                 blinker.Update(gameTime);
         }
 
-        // OnUpdateEmittingSound
+        // OnUpdateEmittingSound (re-implementada)
         protected override void OnUpdateEmittingSound(SoundInstance instance, float masterVolume)
         {
-            const int margin = 50;
+            const int margin = 80; // margen en píxeles fuera del VisibleBox donde el volumen cae linealmente a 0
 
             RectangleF visible = Session.Camera.VisibleBox;
-            //var centerX = visible.Center.X;
+            float spriteX = Position.X;
 
-            // Expandimos los límites visibles con el margen extra
+            // límites extendidos (visible box + margen a ambos lados)
             float leftLimit = visible.Left - margin;
             float rightLimit = visible.Right + margin;
 
-            // Cálculo del Pan (-1 izquierda, 0 centro, 1 derecha)
-            float pan = MathHelper.Clamp(MathHelper.Lerp(-1f, 1f, (X - leftLimit) / (rightLimit - leftLimit)), -1f, 1f);
+            // Denominador para normalizar pan respecto al centro (ancho/2 + margin).
+            // Protegemos contra ancho 0.
+            float halfRange = (visible.Width * 0.5f) + margin;
+            if (halfRange <= 0.0001f) halfRange = 1f; // fallback seguro
 
-            // Cálculo del Volumen (1 dentro del VisibleBox, 0 fuera del margen extendido)
+            // Pan: -1 en leftLimit, 0 en el centro de la cámara, +1 en rightLimit
+            float centerX = visible.Center.X;
+            float pan = MathHelper.Clamp((spriteX - centerX) / halfRange, -1f, 1f);
+
+            // Volumen:
+            // - Si está dentro del VisibleBox => 1
+            // - Si está fuera del leftLimit/rightLimit => 0
+            // - Si está entre VisibleBox y límite extendido => interpolación lineal 1 -> 0
             float volume;
             if (visible.Contains(Position))
             {
                 volume = 1f;
             }
-            else if (X < leftLimit || X > rightLimit)
+            else if (spriteX <= leftLimit || spriteX >= rightLimit)
             {
+                // completamente fuera del rango extendido
                 volume = 0f;
             }
             else
             {
-                float distanceToEdge = Math.Min(Math.Abs(X - visible.Left), Math.Abs(X - visible.Right));
-                volume = MathHelper.Clamp(distanceToEdge / margin, 0f, 1f);
+                // Está fuera del VisibleBox pero dentro del margen extendido.
+                if (spriteX < visible.Left)
+                {
+                    // se encuentra a la izquierda del VisibleBox
+                    float t = (visible.Left - spriteX) / margin; // 0..1
+                    volume = MathHelper.Clamp(1f - t, 0f, 1f);
+                }
+                else // spriteX > visible.Right
+                {
+                    float t = (spriteX - visible.Right) / margin; // 0..1
+                    volume = MathHelper.Clamp(1f - t, 0f, 1f);
+                }
             }
 
+            // Aplicar valores al SoundInstance
             instance.Pan = pan;
             instance.Volume.Current = volume * masterVolume;
         }
@@ -595,6 +616,7 @@ namespace Remizione
                 PlaySound(DeathSound);
 
             OnDie();
+            Room?.RecountEnemies();
             DropLoot();
         }
 

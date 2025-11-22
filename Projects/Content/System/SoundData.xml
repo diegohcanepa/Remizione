@@ -51,9 +51,10 @@
 	<FX Name="ItemDiscard" MaxInstances="4" />	
 	<FX Name="ItemEquip" MaxInstances="4" />
 	<FX Name="Lightning" MaxInstances="4" />
-	<FX Name="LootBagLand" MaxInstances="4" />
-	<FX Name="LootBagJump" MaxInstances="4" />
 	<FX Name="MetalPropBreak" MaxInstances="4" />
+	<FX Name="NumberSixA" />
+	<FX Name="NumberSixB" />
+	<FX Name="NumberSixC" />
 	<FX Name="PickupBag" MaxInstances="2" />
 	<FX Name="PickupCoin" MaxInstances="2" />
 	<FX Name="PickupGeneric" MaxInstances="2" />

@@ -623,7 +623,7 @@ namespace Remizione
             for (int i = 0; i < Children.Count; i++)
             {
                 if (Children[i] is GameThing thing && thing.Faction == Faction.Evil)
-                    EnemyCount++;
+                EnemyCount++;
             }
         }
 

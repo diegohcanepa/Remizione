@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:ee3e4e7c348c46645ed63308d80d4a86:c77b1c61eb8626fba4e733b59b80c6ab:5039389849ae7f9cf7d847dafb0258d3$ -->
+<!-- $TexturePacker:SmartUpdate:87b6f3d16094bc65673e28cf338ffc5a:b538c7e54e09f7a282b2c0cf591e6ccf:5039389849ae7f9cf7d847dafb0258d3$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,15 +20,19 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Hub.png" width="512" height="512">
+    <sprite n="FlashingLights01.png" x="316" y="139" w="34" h="24"/>
+    <sprite n="FlashingLights02.png" x="352" y="139" w="34" h="24"/>
+    <sprite n="FlashingLights03.png" x="388" y="139" w="34" h="24"/>
     <sprite n="Foreground.png" x="2" y="139" w="312" h="51"/>
     <sprite n="Hub.png" x="2" y="2" w="480" h="135"/>
-    <sprite n="LeftGateClosed.png" x="316" y="139" w="15" h="66"/>
-    <sprite n="LeftGateOpenBack.png" x="363" y="139" w="12" h="49"/>
+    <sprite n="LeftGateClosed.png" x="442" y="139" w="15" h="66"/>
+    <sprite n="LeftGateOpenBack.png" x="459" y="203" w="12" h="49"/>
     <sprite n="LeftGateOpenFront.png" x="484" y="2" w="18" h="61"/>
-    <sprite n="LeftSign.png" x="377" y="139" w="9" h="22"/>
-    <sprite n="LeftWall.png" x="484" y="129" w="16" h="58"/>
-    <sprite n="RightGateClosed.png" x="333" y="139" w="14" h="62"/>
-    <sprite n="RightGateOpenBack.png" x="349" y="139" w="12" h="51"/>
+    <sprite n="LeftSign.png" x="489" y="176" w="9" h="22"/>
+    <sprite n="LeftWall.png" x="424" y="139" w="16" h="58"/>
+    <sprite n="RightGateClosed.png" x="459" y="139" w="14" h="62"/>
+    <sprite n="RightGateOpenBack.png" x="475" y="176" w="12" h="51"/>
     <sprite n="RightGateOpenFront.png" x="484" y="65" w="17" h="62"/>
-    <sprite n="RightSign.png" x="388" y="139" w="9" h="22"/>
+    <sprite n="RightGatePatch.png" x="484" y="129" w="17" h="45"/>
+    <sprite n="RightSign.png" x="500" y="176" w="9" h="22"/>
 </TextureAtlas>

@@ -173,6 +173,23 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Hub-assets/FlashingLights01.png</key>
+            <key type="filename">Hub-assets/FlashingLights02.png</key>
+            <key type="filename">Hub-assets/FlashingLights03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,6,17,12</rect>
+                <key>scale9Paddings</key>
+                <rect>9,6,17,12</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Hub-assets/Foreground.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

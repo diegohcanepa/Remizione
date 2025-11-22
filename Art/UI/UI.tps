@@ -316,8 +316,10 @@
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryGadgets.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryKeyItems.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryLeftHand.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryLeftHandContent.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryNone.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryRightHand.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryRightHandContent.png</key>
             <key type="filename">UIIcons-assets/HeartHalfIconWithShadow.png</key>
             <key type="filename">UIIcons-assets/HeartIconWithShadow.png</key>
             <struct type="IndividualSpriteSettings">

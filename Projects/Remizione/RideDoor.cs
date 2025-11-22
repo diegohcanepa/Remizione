@@ -11,6 +11,8 @@ namespace Remizione
     public class RideDoor : Prop
     {
         private bool isOpen;
+        private readonly Vector2Tween scaleTween = new();
+        private readonly FloatTween xTween = new();
 
         // Constructor
         public RideDoor(GameSession session, string name)
@@ -54,7 +56,39 @@ namespace Remizione
             if (isOpen)
                 Sprite.Player.Play("Open");
             else
-                Sprite.Player.Play("Close");
+                Sprite.Player.Play("Closed");
+        }
+
+        #endregion
+
+        #region Protected members
+
+        // OnDraw
+        protected override void OnDraw(GameTime gameTime)
+        {
+            if (!AllowInteraction && Opacity < 1)
+                return;
+            
+            base.OnDraw(gameTime);
+        }
+
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            base.OnUpdate(gameTime);
+
+            AllowInteraction = Room?.EnemyCount == 0;
+            
+            if (AllowInteraction)
+            {
+                if (!IsOpen && Used)
+                    Open();
+            }
+            else
+            {
+                if (IsOpen)
+                    Close();
+            }
         }
 
         #endregion
@@ -65,6 +99,14 @@ namespace Remizione
         {
             if (CloseSound != null)
                 PlaySound(CloseSound);
+
+            SyncAnimation();
+
+            scaleTween.Start(TweenStyle.QuadraticInOut, Scale, new Vector2(1f, .96f), 100, 2);
+            xTween.Start(TweenStyle.QuadraticInOut, X, X - 1, 50, 4);
+
+            Tweens.ScaleTween = scaleTween;
+            Tweens.XTween = xTween;
 
             IsOpen = false;
         }
@@ -110,12 +152,6 @@ namespace Remizione
             }
         }
 
-        // TargetRoom
-        public RideRoom? TargetRoom { get; set; }
-
-        // TargetRoomPosition
-        public Vector2 TargetRoomPosition { get; set; }
-
         // Open
         [ScriptMethod]
         public void Open()
@@ -123,11 +159,23 @@ namespace Remizione
             if (OpenSound != null)
                 PlaySound(OpenSound);
 
+            SyncAnimation();
+
             IsOpen = true;
         }
 
         // OpenSound
         [ScriptProperty]
         public Sound? OpenSound { get; set; }
+
+        // TargetRoom
+        public RideRoom? TargetRoom { get; set; }
+
+        // TargetRoomPosition
+        public Vector2 TargetRoomPosition { get; set; }
+
+        // Used
+        [ScriptProperty]
+        public bool Used { get; set; }
     }
 }
