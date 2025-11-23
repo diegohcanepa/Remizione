@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Remizione
@@ -22,7 +23,13 @@ namespace Remizione
         // CreateRideRoom
         private static RideRoom CreateRideRoom(GameSession session, RoomGraph roomGraph)
         {
-            return new RideRoom(session, roomGraph);
+            RideRoom? result = null;
+
+            // Default
+            if (roomGraph.RoomStyle == RideRoomStyle.Default)
+                result = new DefaultRideRoom(session, roomGraph);      
+
+            return result ?? throw new InvalidOperationException("Cannot create ride room.");
         }
         
         #endregion

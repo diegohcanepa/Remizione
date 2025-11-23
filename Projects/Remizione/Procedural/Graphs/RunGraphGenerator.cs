@@ -37,9 +37,9 @@ namespace Remizione
         #region Private members
 
         // CreateRoom
-        private RoomGraph CreateRoom(RideRoomKind kind, int pathIndex, bool isRoot)
+        private RoomGraph CreateRoom(RideRoomStyle style, int pathIndex, bool isRoot)
         {
-            var result = new RoomGraph(roomId, isRoot, pathIndex, kind);
+            var result = new RoomGraph(roomId, isRoot, pathIndex, style);
             roomId++;
             return result;
         }
@@ -47,13 +47,13 @@ namespace Remizione
         // GeneratePath
         private RoomGraph GeneratePath(int pathIndex, int length)
         {
-            RoomGraph first = CreateRoom(RideRoomKind.Default, pathIndex, true);
+            RoomGraph first = CreateRoom(RideRoomStyle.Default, pathIndex, true);
             RoomGraph prev = first;
 
             // columna principal
             for (int i = 1; i < length; i++)
             {
-                var next = CreateRoom(RideRoomKind.Default, pathIndex, false);
+                var next = CreateRoom(RideRoomStyle.Default, pathIndex, false);
                 prev.Up = next;
                 next.Down = prev;
                 prev = next;
@@ -75,7 +75,7 @@ namespace Remizione
                     {
                         if (cur.Left == null)
                         {
-                            var side = CreateRoom(RideRoomKind.Default, pathIndex, false);
+                            var side = CreateRoom(RideRoomStyle.Default, pathIndex, false);
                             cur.Left = side;
                             side.Right = cur;
                             countForPath++;
@@ -87,7 +87,7 @@ namespace Remizione
                     {
                         if (cur.Right == null)
                         {
-                            var side = CreateRoom(RideRoomKind.Default, pathIndex, false);
+                            var side = CreateRoom(RideRoomStyle.Default, pathIndex, false);
                             cur.Right = side;
                             side.Left = cur;
                             countForPath++;

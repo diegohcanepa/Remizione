@@ -511,6 +511,12 @@ namespace Remizione
         }
 
         // AddWalkArea
+        public WalkArea AddWalkArea(string name, string vertices)
+        {
+            return AddWalkArea(name, ReadOnlyPolygon.GetVertices(vertices));
+        }
+
+        // AddWalkArea
         public WalkArea AddWalkArea(string name, params Vector2[] vertices)
         {
             CodeContract.NotDuplicate(WalkAreas, name, nameof(name));

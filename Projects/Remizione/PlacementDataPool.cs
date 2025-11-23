@@ -8,25 +8,25 @@ namespace Remizione
     /// </summary>
     public sealed class PlacementDataPool
     {
-        private readonly Dictionary<RideRoomKind, RoomPlacementData> roomData = [];
+        private readonly Dictionary<RideRoomStyle, RoomPlacementData> roomData = [];
 
         // Constructor
         public PlacementDataPool()
         {
-            foreach (var roomKind in Enum.GetValues<RideRoomKind>())
+            foreach (var roomStyle in Enum.GetValues<RideRoomStyle>())
             {
-                roomData.Add(roomKind, new());
+                roomData.Add(roomStyle, new());
             }
         }
 
         // Add
-        public void Add(RideRoomKind roomKind, string thingName, PlacementData placementData)
+        public void Add(RideRoomStyle roomStyle, string thingName, PlacementData placementData)
         {
-            if (roomData.TryGetValue(roomKind, out var roomInfo))
+            if (roomData.TryGetValue(roomStyle, out var roomInfo))
                 roomInfo.Add(thingName, placementData);
         }
 
         // GetRoomPlacementData
-        public RoomPlacementData GetRoomPlacementData(RideRoomKind roomKind) => roomData[roomKind];
+        public RoomPlacementData GetRoomPlacementData(RideRoomStyle roomStyle) => roomData[roomStyle];
     }
 }

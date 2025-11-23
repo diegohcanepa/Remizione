@@ -198,6 +198,12 @@ namespace Remizione
         #endregion
 
         // AddHole
+        public HoleArea AddHole(string name, string vertices)
+        {
+            return AddHole(name, null, ReadOnlyPolygon.GetVertices(vertices));
+        }
+
+        // AddHole
         public HoleArea AddHole(string name, FlagCondition? condition, params Vector2[] vertices)
         {
             HoleArea result = new(this, name, condition, vertices);

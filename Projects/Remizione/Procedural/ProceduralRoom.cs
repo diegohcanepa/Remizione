@@ -242,15 +242,13 @@ namespace Remizione
                 CustomHeight = (int)BoundingBox.Height;
                 Grid.Resize(CustomWidth, CustomHeight);
 
-                OnSetupWalkArea();
-
                 if (WalkArea != null)
                 {
                     for (var row = 0; row < Grid.RowCount; row++)
                     {
                         for (var col = 0; col < Grid.ColCount; col++)
                         {
-                            var cellArea = Grid.GetPixelArea(row, col);
+                            var cellArea = Grid.GetPixelArea(col, row);
 
                             if (!WalkArea.Polygon.BoundingRectangleF.Contains(cellArea))
                                 Grid.MarkOccupied(string.Empty, col, row);
@@ -274,15 +272,10 @@ namespace Remizione
         {
         }
 
-        // OnSetupWalkArea
-        protected virtual void OnSetupWalkArea()
-        {
-        }
-
         // Populate
         private void Populate()
         {
-            var data = Session.PlacementDataPool.GetRoomPlacementData(RoomGraph.RoomKind);
+            var data = Session.PlacementDataPool.GetRoomPlacementData(RoomGraph.RoomStyle);
             if (data.Count == 0)
                 return;
 

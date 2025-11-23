@@ -29,7 +29,7 @@ namespace Remizione.Scripting
             if (thing.PlacementPhase == PlacementPhase.None)
                 throw new ScriptException(this, "PlacementPhase is not defined.");
 
-            var roomKind = Parser.ParseEnum<RideRoomKind>(this, 0);
+            var roomStyle = Parser.ParseEnum<RideRoomStyle>(this, 0);
             var distributionStrategy = Parser.ParseEnumArgument(this, DistributionArg, PlacementDistributionStrategy.Random);
             var rolls = HasArg(RollsArg) ? Parser.ParseInt32RangeArgument(this, RollsArg) : new Int32Range(1);
             var maximum = HasArg(MaximumArg) ? Parser.ParseInt32Argument(this, MaximumArg) : 0;
@@ -66,7 +66,7 @@ namespace Remizione.Scripting
 
             // Placement data
             var placementData = new PlacementData(distributionStrategy, conditions.ToArray(), rolls, maximum, maximumPerRun);
-            gameSession.PlacementDataPool.Add(roomKind, thing.StaticName, placementData);
+            gameSession.PlacementDataPool.Add(roomStyle, thing.StaticName, placementData);
         }
     }
 }

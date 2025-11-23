@@ -6,12 +6,12 @@
     public sealed class RoomGraph
     {
         // Constructor
-        public RoomGraph(int id, bool isRoot, int pathIndex, RideRoomKind roomKind)
+        public RoomGraph(int id, bool isRoot, int pathIndex, RideRoomStyle roomStyle)
         {
             this.Id = id;
             this.IsRoot = isRoot;
             this.PathIndex = pathIndex;
-            this.RoomKind = roomKind;
+            this.RoomStyle = roomStyle;
         }
 
         // Down
@@ -32,8 +32,11 @@
         // Right
         public RoomGraph? Right { get; set; }
 
-        // RoomKind
-        public RideRoomKind RoomKind { get; }
+        // RoomShape
+        public RideRoomShape RoomShape { get; }
+
+        // RoomStyle
+        public RideRoomStyle RoomStyle { get; }
 
         // Up
         public RoomGraph? Up { get; set; }

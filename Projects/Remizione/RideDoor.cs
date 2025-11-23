@@ -147,6 +147,8 @@ namespace Remizione
                 if (value != isOpen)
                 {
                     isOpen = value;
+                    if (isOpen)
+                        Used = true;
                     SyncAnimation();
                 }
             }

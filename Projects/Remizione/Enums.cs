@@ -102,8 +102,11 @@ namespace Remizione
     // RenderLayer
     public enum RenderLayer { BehindBackground, Background, OverBackground, Default, Foreground, ForegroundNoLight }
 
-    // RideRoomKind
-    public enum RideRoomKind { Default }
+    // RideRoomStyle
+    public enum RideRoomStyle { Default }
+
+    // RideRoomShape
+    public enum RideRoomShape { Default }
 
     // RoomSize
     public enum RoomSize { Small, Medium }
