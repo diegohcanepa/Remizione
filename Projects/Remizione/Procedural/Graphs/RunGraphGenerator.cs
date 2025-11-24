@@ -39,8 +39,8 @@ namespace Remizione
         // CreateRoom
         private RoomGraph CreateRoom(RideRoomStyle style, int pathIndex, bool isRoot)
         {
-            var result = new RoomGraph(roomId, isRoot, pathIndex, style);
             roomId++;
+            var result = new RoomGraph(roomId, isRoot, pathIndex, style);
             return result;
         }
 

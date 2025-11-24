@@ -23,7 +23,7 @@ namespace Remizione
             {
                 if (Atlas?.GetImage($"{StaticName}Piece{index}") is AtlasImage image)
                 {
-                    pieces.Add(new(this, image));
+                    pieces.Add(new(session.Game, image));
                     index++;
                 }
                 else
@@ -77,7 +77,7 @@ namespace Remizione
             IsBroken = true;
             for (var i = 0; i < pieces.Count; i++)
             {
-                pieces[i].Launch();
+                pieces[i].Launch(this);
             }
         }
 

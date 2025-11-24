@@ -19,6 +19,7 @@ namespace Remizione
             : base(session, name)
         {
             Atlas = Atlases.Environment;
+            CollisionDetection = false;
             DisplayNameKey = "Verb.Enter";
             CloseSound = Sound.Find("DoorClose");
             OpenSound = Sound.Find("DoorOpen");
@@ -62,15 +63,6 @@ namespace Remizione
         #endregion
 
         #region Protected members
-
-        // OnDraw
-        protected override void OnDraw(GameTime gameTime)
-        {
-            if (!AllowInteraction && Opacity < 1)
-                return;
-            
-            base.OnDraw(gameTime);
-        }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
@@ -122,12 +114,13 @@ namespace Remizione
             if (TargetRoom != null)
             {
                 Vector2 pos = Vector2.Zero;
+                int roomId = 0;
                 if (Room is RideRoom rideRoom)
-                {
-                    pos = TargetRoom.GetPlayerPosition(rideRoom.RoomGraph.Id, out RideDoor? door);
-                    if (door != null)
-                        door.IsOpen = true;
-                }
+                    roomId = rideRoom.RoomGraph.Id;
+
+                pos = TargetRoom.GetPlayerPosition(roomId, out RideDoor? door);
+                if (door != null)
+                    door.IsOpen = true;
 
                 ConnectCore(TargetRoom, pos);
             }

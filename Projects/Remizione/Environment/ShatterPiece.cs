@@ -20,7 +20,7 @@ namespace Remizione
         private float launchDelay;
         private bool launched;
         private float life = 2;
-        private readonly GameThing owner;
+        private GameRoom? room;
         private static readonly Color shadowColor = Color.Black * .3f;
         private static readonly Vector2 shadowOffset = new(.5f);
         private Vector2 velocity;
@@ -30,11 +30,9 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public ShatterPiece(GameThing owner, AtlasImage image)
-            : base(owner.Game)
+        public ShatterPiece(RemizioneGame game, AtlasImage image)
+            : base(game)
         {
-            this.owner = owner;
-
             this.image = new(Game, image)
             {
                 PivotOrigin = RectanglePoint.Center
@@ -108,15 +106,33 @@ namespace Remizione
                     velocity.Y = 0;
             }
 
+            CheckWalkAreaCollision();
+
             life -= dt;
+
 
             image.Update(gameTime);
         }
 
         #endregion
 
+        // CheckWalkAreaCollision
+        private bool CheckWalkAreaCollision()
+        {
+            if (room?.WalkArea is WalkArea walkArea)
+            {
+                if (image.Y >= walkArea.Polygon.BoundingRectangleF.Top && !walkArea.Contains(image.Position))
+                {
+                    velocity = new Vector2(-velocity.X, velocity.Y) * RandomHelper.Next(.2f, .5f);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         // Launch
-        public void Launch()
+        public void Launch(GameThing owner)
         {
             var bounds = owner.BoundingBox;
             float yOffset = RandomBetween(-4f, 2f);
@@ -127,6 +143,7 @@ namespace Remizione
             groundY = owner.Y + Random.Shared.Next(-3, 4);
             launchDelay = RandomBetween(0, .1f);
             delayTimer = 0;
+            room = owner.Session.Room;
             launched = false;
         }
 

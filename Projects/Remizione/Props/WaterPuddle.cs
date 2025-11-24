@@ -10,7 +10,7 @@
             : base(session, name)
         {
             CollisionDetection = false;
-            PlacementPhase = PlacementPhase.NaturalObject;
+            PlacementPhase = PlacementPhase.Object;
             RenderLayer = RenderLayer.Background;
             //TerrainParticleColor = new Color(75, 133, 150);
             //TerrainSound = Sound.Find(SoundNames.FootstepWater);

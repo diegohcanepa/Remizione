@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Remizione.Scripting
 {
     // PlacementDataCommand
-    // Arguments: {RoomKind} [#chance:Ratio] [#distribution:DistributionStrategy] [#instances:Int32Range] [#stage:Int32Range]
+    // Arguments: {RoomStyle} [#chance:Ratio] [#distribution:DistributionStrategy] [#instances:Int32Range] [#stage:Int32Range]
     internal sealed class PlacementDataCommand : NonAwaitableCommand
     {
         // Constructor

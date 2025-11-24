@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 
 namespace Remizione
 {
@@ -53,6 +52,7 @@ namespace Remizione
                 if (CreateRuntimeClone("RideDoorDown") is RideDoor downDoor)
                 {
                     downDoor.Position = DoorDownPosition;
+                    Grid.ReserveSpace(downDoor, false);
 
                     if (RoomGraph.Down != null)
                         downDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Down.Id);
@@ -87,19 +87,24 @@ namespace Remizione
         #endregion
 
         // GetPlayerPosition
-        public Vector2 GetPlayerPosition(int roomId, out RideDoor? targetDoor)
+        public Vector2 GetPlayerPosition(int previousRoomId, out RideDoor? targetDoor)
         {
             targetDoor = null;
 
             foreach (var thing in Children)
             {
-                if (thing is RideDoor door && door.TargetRoom != null)
+                if (thing is RideDoor door)
                 {
-                    if (door.TargetRoom.RoomGraph.Id == roomId)
+                    if (door.TargetRoom == null)
                     {
-                        targetDoor = door;
-                        return door.GetAbsolutePoint(door.ApproachPosition);
+                        if (previousRoomId == 0)
+                            targetDoor = door;
                     }
+                    else if (door.TargetRoom.RoomGraph.Id == previousRoomId)
+                        targetDoor = door;
+
+                    if (targetDoor != null)
+                        return door.GetAbsolutePoint(door.ApproachPosition);
                 }
             }
 
@@ -108,5 +113,19 @@ namespace Remizione
 
         // HubDoor
         public RideDoor? HubDoor { get; set; }
+    }
+
+    /// <summary>
+    /// RideRoomWall
+    /// </summary>
+    public sealed class RideRoomWall : Prop
+    {
+        // Constructor
+        public RideRoomWall(GameSession session, string vertices)
+            : base(session, string.Empty)
+        {
+            Hotspot = new Polygon(vertices);
+            HotspotPlacement = PlacementMode.Absolute;
+        }
     }
 }

@@ -20,23 +20,26 @@ namespace Remizione
         public UILog(EngendroGame game)
             : base(game)
         {
+            // Icon
             this.icon = new ImageSprite(game)
             {
-                PivotOrigin = RectanglePoint.LeftTop,
-                Scale = ScaleInfo.UIElement.Medium
+                PivotOrigin = RectanglePoint.Top,
+                Scale = ScaleInfo.UIElement.Tiny
             };
 
+            // Verb
             this.verbText = new(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Left,
+                PivotOrigin = RectanglePoint.Top,
                 Scale = ScaleInfo.Text.Giant
             };
 
+            // Noun
             this.nounText = new(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.LeftTop,
+                PivotOrigin = RectanglePoint.Top,
                 Scale = ScaleInfo.Text.VeryLarge
             };
         }
@@ -47,13 +50,13 @@ namespace Remizione
         private void ShowCore(string verb, string noun, bool isWarning, AtlasImage? image)
         {
             verbText.Color = isWarning ? ColorPalette.Text.Orange : ColorPalette.Text.Green;
-            verbText.Position = new Vector2(8, 25);
+            verbText.Position = new Vector2(120, 95);
             verbText.Text = verb;
 
-            nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -2);
+            nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2);
             nounText.Text = noun;
             icon.Image = image;
-            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
+            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2);
 
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 1000);
         }

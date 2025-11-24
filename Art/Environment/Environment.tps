@@ -499,84 +499,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">FenceA-assets/FenceA.png</key>
-            <key type="filename">FenceA-assets/FenceAShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,5,11,9</rect>
-                <key>scale9Paddings</key>
-                <rect>5,5,11,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">FenceB-assets/FenceB.png</key>
-            <key type="filename">FenceB-assets/FenceBShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>9,6,17,13</rect>
-                <key>scale9Paddings</key>
-                <rect>9,6,17,13</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">FenceC-assets/FenceC.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>10,7,19,13</rect>
-                <key>scale9Paddings</key>
-                <rect>10,7,19,13</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">FenceC-assets/FenceCShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>11,5,21,11</rect>
-                <key>scale9Paddings</key>
-                <rect>11,5,21,11</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">FenceD-assets/FenceD.png</key>
-            <key type="filename">FenceD-assets/FenceDShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>12,8,23,17</rect>
-                <key>scale9Paddings</key>
-                <rect>12,8,23,17</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Firecracker-assets/Firecracker01.png</key>
             <key type="filename">Firecracker-assets/Firecracker02.png</key>
             <key type="filename">Firecracker-assets/Firecracker03.png</key>
@@ -613,186 +535,6 @@
                 <rect>1,1,3,3</rect>
                 <key>scale9Paddings</key>
                 <rect>1,1,3,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">FlatStones-assets/FlatStonesA.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>11,7,21,13</rect>
-                <key>scale9Paddings</key>
-                <rect>11,7,21,13</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">FlatStones-assets/FlatStonesB.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>12,8,25,16</rect>
-                <key>scale9Paddings</key>
-                <rect>12,8,25,16</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">FlatStones-assets/FlatStonesC.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>15,5,29,9</rect>
-                <key>scale9Paddings</key>
-                <rect>15,5,29,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">FlatStones-assets/FlatStonesD.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,4,9,8</rect>
-                <key>scale9Paddings</key>
-                <rect>5,4,9,8</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">FlatStones-assets/FlatStonesE.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>11,7,22,15</rect>
-                <key>scale9Paddings</key>
-                <rect>11,7,22,15</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">FlatStones-assets/FlatStonesF.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,3,11,5</rect>
-                <key>scale9Paddings</key>
-                <rect>5,3,11,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Grass-assets/GrassA.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>18,9,35,17</rect>
-                <key>scale9Paddings</key>
-                <rect>18,9,35,17</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Grass-assets/GrassB.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>18,8,35,17</rect>
-                <key>scale9Paddings</key>
-                <rect>18,8,35,17</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Grass-assets/GrassC.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>20,11,39,21</rect>
-                <key>scale9Paddings</key>
-                <rect>20,11,39,21</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Grass-assets/GrassD.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>29,15,58,29</rect>
-                <key>scale9Paddings</key>
-                <rect>29,15,58,29</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Grass-assets/GrassE.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,6,15,13</rect>
-                <key>scale9Paddings</key>
-                <rect>7,6,15,13</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Grass-assets/GrassF.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>12,5,23,11</rect>
-                <key>scale9Paddings</key>
-                <rect>12,5,23,11</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1055,99 +797,6 @@
                 <rect>5,3,10,7</rect>
                 <key>scale9Paddings</key>
                 <rect>5,3,10,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">LagoonA-assets/LagoonA.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>25,17,51,33</rect>
-                <key>scale9Paddings</key>
-                <rect>25,17,51,33</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">LargeRockA-assets/LargeRockA.png</key>
-            <key type="filename">LargeRockA-assets/LargeRockAShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>14,11,27,21</rect>
-                <key>scale9Paddings</key>
-                <rect>14,11,27,21</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">LargeRockB-assets/LargeRockB.png</key>
-            <key type="filename">LargeRockB-assets/LargeRockBShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>12,13,25,25</rect>
-                <key>scale9Paddings</key>
-                <rect>12,13,25,25</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">LargeRockC-assets/LargeRockC.png</key>
-            <key type="filename">LargeRockC-assets/LargeRockCShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>9,10,17,20</rect>
-                <key>scale9Paddings</key>
-                <rect>9,10,17,20</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">LargeRockD-assets/LargeRockD.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>9,8,17,15</rect>
-                <key>scale9Paddings</key>
-                <rect>9,8,17,15</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">LargeRockD-assets/LargeRockDShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>11,4,23,8</rect>
-                <key>scale9Paddings</key>
-                <rect>11,4,23,8</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1459,6 +1108,7 @@
             <key type="filename">RideCar-assets/RideCar02.png</key>
             <key type="filename">RideCar-assets/RideCar03.png</key>
             <key type="filename">RideCar-assets/RideCar04.png</key>
+            <key type="filename">RideCar-assets/RideCar05.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1701,86 +1351,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">TreeA-assets/TreeA.png</key>
-            <key type="filename">TreeA-assets/TreeAShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,10,12,21</rect>
-                <key>scale9Paddings</key>
-                <rect>6,10,12,21</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">TreeB-assets/TreeB.png</key>
-            <key type="filename">TreeB-assets/TreeBShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,11,15,21</rect>
-                <key>scale9Paddings</key>
-                <rect>7,11,15,21</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">TreeBentA-assets/TreeBentA.png</key>
-            <key type="filename">TreeBentA-assets/TreeBentAShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,9,12,17</rect>
-                <key>scale9Paddings</key>
-                <rect>6,9,12,17</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">TreeBentB-assets/TreeBentB.png</key>
-            <key type="filename">TreeBentB-assets/TreeBentBShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>8,9,15,19</rect>
-                <key>scale9Paddings</key>
-                <rect>8,9,15,19</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">TreeC-assets/TreeC.png</key>
-            <key type="filename">TreeC-assets/TreeCShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,11,11,21</rect>
-                <key>scale9Paddings</key>
-                <rect>6,11,11,21</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Trunk-assets/Trunk01.png</key>
             <key type="filename">Trunk-assets/Trunk02.png</key>
             <struct type="IndividualSpriteSettings">
@@ -1884,14 +1454,9 @@
                     <filename>DustParticles-assets</filename>
                     <filename>CrossA-assets</filename>
                     <filename>CrossLargeA-assets</filename>
-                    <filename>TreeA-assets</filename>
-                    <filename>TreeB-assets</filename>
-                    <filename>TreeC-assets</filename>
                     <filename>CrossB-assets</filename>
                     <filename>CrossC-assets</filename>
                     <filename>SmallRockA-assets</filename>
-                    <filename>LargeRockA-assets</filename>
-                    <filename>LargeRockB-assets</filename>
                     <filename>SmallRockB-assets</filename>
                     <filename>SinnerCross-assets</filename>
                     <filename>Pickups-assets</filename>
@@ -1899,18 +1464,10 @@
                     <filename>Throwables-assets</filename>
                     <filename>Lightning-assets</filename>
                     <filename>Trunk-assets</filename>
-                    <filename>Grass-assets</filename>
-                    <filename>FlatStones-assets</filename>
-                    <filename>FenceA-assets</filename>
-                    <filename>FenceB-assets</filename>
-                    <filename>FenceC-assets</filename>
-                    <filename>FenceD-assets</filename>
                     <filename>TombstoneA-assets</filename>
                     <filename>TombstoneB-assets</filename>
                     <filename>TombstoneC-assets</filename>
                     <filename>TombstoneD-assets</filename>
-                    <filename>LargeRockC-assets</filename>
-                    <filename>LargeRockD-assets</filename>
                     <filename>CrucifiedA-assets</filename>
                     <filename>PotteryA-assets</filename>
                     <filename>PotteryB-assets</filename>
@@ -1926,11 +1483,8 @@
                     <filename>WaterPuddleC-assets</filename>
                     <filename>CrossLargeB-assets</filename>
                     <filename>SpeakerPost-assets</filename>
-                    <filename>TreeBentA-assets</filename>
-                    <filename>TreeBentB-assets</filename>
                     <filename>SaintPeregrine-assets</filename>
                     <filename>DepositMachine-assets</filename>
-                    <filename>LagoonA-assets</filename>
                     <filename>Sign-assets</filename>
                     <filename>RideCar-assets</filename>
                     <filename>RideDoorUp-assets</filename>
