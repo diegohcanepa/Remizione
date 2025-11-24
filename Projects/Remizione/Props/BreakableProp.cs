@@ -7,7 +7,7 @@ namespace Remizione
     /// <summary>
     /// BreakableProp
     /// </summary>
-    public class BreakableProp : IsometricProp
+    public class BreakableProp : Prop
     {
         private readonly List<ShatterPiece> pieces = [];
 

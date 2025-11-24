@@ -6,7 +6,7 @@ namespace Remizione
     /// <summary>
     /// DepositMachine
     /// </summary>
-    public sealed class DepositMachine : IsometricProp
+    public sealed class DepositMachine : Prop
     {
         private readonly ImageSprite lightLayer;
 

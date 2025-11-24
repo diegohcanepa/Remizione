@@ -93,6 +93,16 @@ namespace Adberration
             return HandleInputResult.Unhandled;
         }
 
+        // OnEnter
+        protected virtual void OnEnter()
+        {
+        }
+
+        // OnExit
+        protected virtual void OnExit()
+        {
+        }
+
         // OnLoad
         protected override void OnLoad()
         {
@@ -245,13 +255,15 @@ namespace Adberration
         public int CustomWidth { get; set; }
 
         // Enter
-        public virtual void Enter()
+        public void Enter()
         {
+            OnEnter();
         }
 
         // Exit
-        public virtual void Exit()
+        public void Exit()
         {
+            OnExit();
         }
 
         // HandleInput

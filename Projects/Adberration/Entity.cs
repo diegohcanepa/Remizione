@@ -80,13 +80,11 @@ namespace Adberration
             {
                 // Load script
                 loadScript = session.ScriptLibrary.GetScript(ScriptType.Load, Name);
-                if (loadScript == null)
-                    loadScript = session.ScriptLibrary.GetScript(ScriptType.Load, StaticName);
+                loadScript ??= session.ScriptLibrary.GetScript(ScriptType.Load, StaticName);
 
                 // Unload script
                 unloadScript = session.ScriptLibrary.GetScript(ScriptType.Unload, Name);
-                if (unloadScript == null)
-                    unloadScript = session.ScriptLibrary.GetScript(ScriptType.Unload, StaticName);
+                unloadScript ??= session.ScriptLibrary.GetScript(ScriptType.Unload, StaticName);
             }
         }
 
@@ -666,18 +664,6 @@ namespace Adberration
         }
 
         // PlaySound
-        public void PlaySound(SoundInstance instance, bool looped = false)
-        {
-            if (instance != null)
-            {
-                instance.Emitter = this;
-                instance.IsLooped = looped;
-                instance.Play();
-                Session.Room?.RegisterSound(instance);
-            }
-        }
-
-        // PlaySound
         public SoundInstance? PlaySound(Sound sound, bool looped = false)
         {
             if (sound?.PopInstance() is SoundInstance result)
@@ -689,6 +675,17 @@ namespace Adberration
             else
             {
                 return null;
+            }
+        }
+
+        // PlaySound
+        public void PlaySound(SoundInstance instance, bool looped = false)
+        {
+            if (instance != null)
+            {
+                instance.Emitter = this;
+                instance.IsLooped = looped;
+                instance.Play();
             }
         }
 

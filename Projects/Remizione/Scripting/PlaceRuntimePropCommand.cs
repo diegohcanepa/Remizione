@@ -10,7 +10,7 @@ namespace Remizione.Scripting
         internal PlaceRuntimePropCommand(Script script, string source, StatementBody body)
             : base(script, source, body, 1)
         {
-            if (Session.GetEntity<IsometricProp>(Body.Clauses[0]) == null)
+            if (Session.GetEntity<Prop>(Body.Clauses[0]) == null)
                 throw new ScriptException(this, $"The prop {Body.Clauses[0]} does not exist.");
         }
 

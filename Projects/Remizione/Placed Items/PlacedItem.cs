@@ -5,7 +5,7 @@ namespace Remizione
     /// <summary>
     /// PlacedItem
     /// </summary>
-    public abstract class PlacedItem : IsometricProp
+    public abstract class PlacedItem : Prop
     {
         // Constructor
         protected PlacedItem(GameSession session)

@@ -8,7 +8,7 @@ namespace Remizione
     /// <summary>
     /// SaintPeregrine
     /// </summary>
-    public sealed class SaintPeregrine : IsometricProp
+    public sealed class SaintPeregrine : Prop
     {
         private readonly ImageSprite eyes;
         private int requiredCoins;
@@ -17,6 +17,7 @@ namespace Remizione
         public SaintPeregrine(GameSession session, string name)
             : base(session, name)
         {
+            this.Atlas = Atlases.Environment;
             this.HitEffect = HitEffect.Shake;
             this.HitTestPolygon = TestPolygon.Hotspot;
             PropState = PropState.Locked;

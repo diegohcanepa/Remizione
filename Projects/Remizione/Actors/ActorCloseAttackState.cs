@@ -37,7 +37,7 @@ namespace Remizione
                     if (target == null || target == Owner)
                         continue;
 
-                    if (target is IsometricProp && target == Owner.InteractiveTarget)
+                    if (target is Prop && target == Owner.InteractiveTarget)
                     {
                         if (!Owner.Y.IsBetween(target.Position.Y - target.BoundingBox.Height / 2, target.Position.Y))
                             return;

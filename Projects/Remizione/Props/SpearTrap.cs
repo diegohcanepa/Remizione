@@ -7,7 +7,7 @@ namespace Remizione
     /// <summary>
     /// SpearTrap
     /// </summary>
-    public class SpearTrap : IsometricProp
+    public class SpearTrap : Prop
     {
         private enum SpearState { Prepared, Reloading, Attacking, Up }
 
@@ -26,6 +26,7 @@ namespace Remizione
         public SpearTrap(GameSession session, string name)
             : base(session, name)
         {
+            Atlas = Atlases.Environment;
             CollisionDetection = false;
             DepthOffset = -5;
             GridMeasureType = GridMeasureType.Collider;

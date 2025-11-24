@@ -3,12 +3,13 @@
     /// <summary>
     /// WaterPuddle
     /// </summary>
-    public class WaterPuddle : IsometricProp
+    public class WaterPuddle : Prop
     {
         // Constructor
         public WaterPuddle(GameSession session, string name)
             : base(session, name)
         {
+            Atlas = Atlases.Environment;
             CollisionDetection = false;
             PlacementPhase = PlacementPhase.Object;
             RenderLayer = RenderLayer.Background;

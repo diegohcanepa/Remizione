@@ -80,8 +80,7 @@ namespace Adberration
             base.OnLoad();
 
             // If thing has no atlas
-            if (Atlas == null)
-                Atlas = Session.Room?.Atlas;
+            Atlas ??= Session.Room?.Atlas;
         }
 
         // OnMoveToCompleted

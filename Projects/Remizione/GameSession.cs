@@ -135,11 +135,9 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(CloseUpRoom));
             scriptRegistry.RegisterEntity(typeof(DepositMachine));
             scriptRegistry.RegisterEntity(typeof(CreditsRoom));
-            scriptRegistry.RegisterEntity(typeof(ExitRideCar));
             scriptRegistry.RegisterEntity(typeof(GameRoom));
             scriptRegistry.RegisterEntity(typeof(HellGoat));
             scriptRegistry.RegisterEntity(typeof(Hub));
-            scriptRegistry.RegisterEntity(typeof(IsometricProp));
             scriptRegistry.RegisterEntity(typeof(Monitor));
             scriptRegistry.RegisterEntity(typeof(NosyHemorrhoid));
             scriptRegistry.RegisterEntity(typeof(NumberSix));
