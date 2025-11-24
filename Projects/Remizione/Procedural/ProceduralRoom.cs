@@ -29,6 +29,7 @@ namespace Remizione
 
             AllowGlobalLight = true;
             LightingSystem = true;
+            UnloadMode = Adberration.UnloadMode.Manual;
 
             int salt = roomGraph.Id;
             this.randomSeed = RandomHelper.GetSeed(Session.Seed, salt);
@@ -281,7 +282,7 @@ namespace Remizione
 
             foreach (var phase in Enum.GetValues<PlacementPhase>())
             {
-                if (phase == PlacementPhase.None)
+                if (phase == PlacementPhase.None || phase == PlacementPhase.Creature)
                     continue;
 
                 var staticThings = GetStaticThings(phase);

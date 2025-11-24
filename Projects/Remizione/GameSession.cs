@@ -109,13 +109,6 @@ namespace Remizione
 
         #region Protected members
 
-        // BeforeRoomExit
-        protected override void OnRoomExit(Room currentRoom, Room nextRoom)
-        {
-            Environment.ExitRoom();
-            HUD.Reset();
-        }
-
         // CanHandleRoomInput
         protected override bool CanHandleRoomInput
         {
@@ -130,9 +123,6 @@ namespace Remizione
                 return base.CanHandleRoomInput;
             }
         }
-
-        // CanUnloadRoom
-        protected override bool CanUnloadRoom(Room room) => !RunManager.HasContent || room.InstanceKind == InstanceKind.Static;
 
         // ExtendScriptRegistry
         protected override void ExtendScriptRegistry(ScriptRegistry scriptRegistry)
@@ -235,6 +225,13 @@ namespace Remizione
             // Follow player
             if (Player != null && Player.InCurrentRoom)
                 Camera.FollowTarget(Player, true);
+        }
+
+        // OnExitRoom
+        protected override void OnExitRoom(Room currentRoom, Room nextRoom)
+        {
+            Environment.ExitRoom();
+            HUD.Reset();
         }
 
         // OnHandleInput

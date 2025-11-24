@@ -3,6 +3,7 @@ using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -111,11 +112,13 @@ namespace Adberration
         // OnPause
         protected override void OnPause()
         {
+            // Pause all local scripts
             for (var i = 0; i < routines.Count; i++)
             {
                 Session.ScriptProcessor.PauseScript(routines[i]);
             }
 
+            // Pause all sounds
             for (var i = 0; i < sounds.Count; i++)
             {
                 sounds[i].Pause();
@@ -141,7 +144,7 @@ namespace Adberration
         {
             if (Content != null)
             {
-                Engendro.Atlas.DisposeFromContent(Content);
+                Atlas.DisposeFromContent(Content);
                 Content.Dispose();
                 Content = null;
             }
@@ -241,6 +244,16 @@ namespace Adberration
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public int CustomWidth { get; set; }
 
+        // Enter
+        public virtual void Enter()
+        {
+        }
+
+        // Exit
+        public virtual void Exit()
+        {
+        }
+
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
@@ -270,6 +283,9 @@ namespace Adberration
         {
             return Name;
         }
+
+        // UnloadMode
+        public UnloadMode UnloadMode { get; set; }
 
         // Unparent
         public override sealed void Unparent()

@@ -29,4 +29,7 @@
 
     // PersistentTypeScope
     public enum PersistentTypeScope { InheritedAndDeclared, DeclaredOnly }
+
+    // UnloadMode
+    public enum UnloadMode { Automatic, Manual }
 }

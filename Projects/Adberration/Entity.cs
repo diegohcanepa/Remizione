@@ -95,7 +95,7 @@ namespace Adberration
         #region ISoundEmitter implementation
 
         // IsAvailable
-        bool ISoundEmitter.IsAvailable => LoadState == LoadState.Loaded;
+        bool ISoundEmitter.IsAvailable => Parent != null && Parent == Session.Room;
 
         // Update
         void ISoundEmitter.Update(SoundInstance soundInstance, float masterVolume)
@@ -618,9 +618,7 @@ namespace Adberration
         {
             pauseCount++;
             if (pauseCount == 1)
-            {
                 OnPause();
-            }
         }
 
         // Persistent

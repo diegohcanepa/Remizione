@@ -108,7 +108,8 @@ namespace Adberration
         {
             this.NextRoom = nextRoom;
 
-            OnRoomExit(currentRoom, nextRoom);
+            currentRoom.Exit();
+            OnExitRoom(currentRoom, nextRoom);
 
             if (musicTagRoomScope != null)
             {
@@ -116,12 +117,12 @@ namespace Adberration
                 musicTagRoomScope = null;
             }
 
-            if (CanUnloadRoom(currentRoom))
+            if (currentRoom.UnloadMode == UnloadMode.Automatic)
                 currentRoom.Unload();
             else
                 currentRoom.Pause();
 
-            OnRoomExitCompleted(currentRoom, nextRoom);
+            OnExitRoomCompleted(currentRoom, nextRoom);
 
             NextRoom = null;
             PreviousRoom = currentRoom;
@@ -496,9 +497,6 @@ namespace Adberration
         // CanHandleRoomInput
         protected virtual bool CanHandleRoomInput => true;
 
-        // CanUnloadRoom
-        protected virtual bool CanUnloadRoom(Room room) => true;
-
         // DeserializeEntities
         protected IEnumerable<Entity> DeserializeEntities(string value)
         {
@@ -575,13 +573,13 @@ namespace Adberration
         {
         }
 
-        // OnRoomExit
-        protected virtual void OnRoomExit(Room currentRoom, Room nextRoom)
+        // OnExitRoom
+        protected virtual void OnExitRoom(Room currentRoom, Room nextRoom)
         {
         }
 
-        // OnRoomExitCompleted
-        protected virtual void OnRoomExitCompleted(Room currentRoom, Room nextRoom)
+        // OnExitRoomCompleted
+        protected virtual void OnExitRoomCompleted(Room currentRoom, Room nextRoom)
         {
         }
 
@@ -917,6 +915,7 @@ namespace Adberration
 
             nextRoom.Load();
 
+            nextRoom.Enter();
             OnEnterRoom(nextRoom);
             OnEnterRoomCompleted(nextRoom);
             BeginEnterRoomOutcome();
