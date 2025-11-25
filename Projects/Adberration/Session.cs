@@ -914,8 +914,8 @@ namespace Adberration
                 ScriptProcessor.RunScript(script);
 
             nextRoom.Load();
-
             nextRoom.Enter();
+
             OnEnterRoom(nextRoom);
             OnEnterRoomCompleted(nextRoom);
             BeginEnterRoomOutcome();

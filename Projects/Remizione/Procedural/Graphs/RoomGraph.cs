@@ -1,7 +1,7 @@
 ﻿namespace Remizione
 {
     /// <summary>
-    /// RoomDescriptor
+    /// RoomGraph
     /// </summary>
     public sealed class RoomGraph
     {
@@ -16,6 +16,9 @@
 
         // Down
         public RoomGraph? Down { get; set; }
+
+        // HasCoin
+        public bool HasCoin { get; set; }
 
         // Id
         public int Id { get; }

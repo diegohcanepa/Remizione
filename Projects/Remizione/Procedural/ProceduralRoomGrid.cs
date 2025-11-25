@@ -76,7 +76,7 @@ namespace Remizione
         public Size GetRequiredGridSpace(GameThing thing)
         {
             var bbox = thing.GetGridPixelArea();
-            
+
             int width = (int)Math.Ceiling(bbox.Width / CellSize);
             int height = (int)Math.Ceiling(bbox.Height / CellSize);
 

@@ -15,9 +15,9 @@ namespace Remizione
         public Trunk(GameSession session, string name)
             : base(session, name)
         {
+            Atlas = Atlases.Environment;
             DeathSound = Sound.Find(SoundNames.WoodDebris);
             DisplayNameKey = "Prop.Trunk";
-            GridMargin = new(10, 20);
             HitEffect = HitEffect.Shake;
             HurtSound = Sound.Find(SoundNames.ImpactA);
             PropState = PropState.Closed;

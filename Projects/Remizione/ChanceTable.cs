@@ -88,7 +88,7 @@ namespace Remizione
                 return null;
 
             float total = 0;
-            
+
             // Calculate final weights
             for (int i = 0; i < items.Count; i++)
             {
@@ -105,16 +105,16 @@ namespace Remizione
                 return null;
 
             float r = (float)random.NextDouble() * total;
-            
+
             for (int i = 0; i < items.Count; i++)
             {
                 float w = items[i].Weight * (multiplier?.Invoke(items[i]) ?? 1f);
                 if (w <= 0)
                     continue;
-            
+
                 if (r < w)
                     return items[i];
-                
+
                 r -= w;
             }
 

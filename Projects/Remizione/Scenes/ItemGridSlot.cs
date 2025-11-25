@@ -74,7 +74,7 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
-            
+
             if (IsSelected)
                 selectedSlotImage.Draw(gameTime);
             else

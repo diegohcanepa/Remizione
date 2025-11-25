@@ -659,7 +659,7 @@ namespace Remizione
 
         // GridMeasureType
         [ScriptProperty]
-        public GridMeasureType GridMeasureType { get;set; }
+        public GridMeasureType GridMeasureType { get; set; }
 
         // GetGridPixelArea
         public RectangleF GetGridPixelArea()

@@ -3,7 +3,6 @@ using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -210,6 +209,28 @@ namespace Adberration
 
         #region Internal members
 
+        // Enter
+        internal void Enter()
+        {
+            OnEnter();
+
+            for (var i = 0; i < Children.Count; i++)
+            {
+                Children[i].EnterRoom();
+            }
+        }
+
+        // Exit
+        internal void Exit()
+        {
+            OnExit();
+
+            for (var i = 0; i < Children.Count; i++)
+            {
+                Children[i].ExitRoom();
+            }
+        }
+
         // RegisterRoutine
         internal void RegisterRoutine(Script routine)
         {
@@ -253,18 +274,6 @@ namespace Adberration
         // CustomWidth
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public int CustomWidth { get; set; }
-
-        // Enter
-        public void Enter()
-        {
-            OnEnter();
-        }
-
-        // Exit
-        public void Exit()
-        {
-            OnExit();
-        }
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)

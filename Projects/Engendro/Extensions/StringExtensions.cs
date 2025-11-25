@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Engendro
+﻿namespace Engendro
 {
     /// <summary>
     /// StringExtensions

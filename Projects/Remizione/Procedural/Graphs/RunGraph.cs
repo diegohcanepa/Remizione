@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Remizione
@@ -9,9 +10,11 @@ namespace Remizione
     public class RunGraph
     {
         // Constructor
-        public RunGraph(IList<RoomGraph> entryRooms)
+        public RunGraph(IList<RoomGraph> entryRooms, Random random)
         {
             this.EntryRooms = new ReadOnlyCollection<RoomGraph>(entryRooms);
+            if (PlaceCoin(random) is RoomGraph roomGraph)
+                roomGraph.HasCoin = true;
         }
 
         #region Private members
@@ -19,16 +22,53 @@ namespace Remizione
         // GetMainPathRooms
         private static List<RoomGraph> GetMainPathRooms(RoomGraph entryRoom)
         {
-            var list = new List<RoomGraph>();
-            var cur = entryRoom;
-            while (cur != null)
+            var result = new List<RoomGraph>();
+            var current = entryRoom;
+            while (current != null)
             {
-                list.Add(cur);
-                cur = cur.Up;
+                result.Add(current);
+                current = current.Up;
             }
-            return list;
+            return result;
         }
 
+        // PlaceCoin
+        private RoomGraph? PlaceCoin(Random random)
+        {
+            if (EntryRooms.Count == 0)
+                return null;
+
+            // Choose random path
+            var pathIndex = random.Next(EntryRooms.Count);
+            var root = EntryRooms[pathIndex];
+
+            var main = GetMainPathRooms(root);
+            if (main.Count == 0)
+                return null;
+
+            // inicio de la "mitad superior" (incluye el punto medio)
+            int startIndex = main.Count / 2;
+
+            var candidates = new List<RoomGraph>();
+
+            for (int i = startIndex; i < main.Count; i++)
+            {
+                var m = main[i];
+                candidates.Add(m);
+
+                if (m.Left != null)
+                    candidates.Add(m.Left);
+
+                if (m.Right != null)
+                    candidates.Add(m.Right);
+            }
+
+            // Si por alguna razón no hay candidatos (muy raro), fallback al último main
+            if (candidates.Count == 0)
+                return main[main.Count - 1];
+
+            return candidates[random.Next(candidates.Count)];
+        }
         #endregion
 
         // EntryRooms

@@ -12,6 +12,7 @@ namespace Remizione
             : base(session, name)
         {
             AllowInteraction = false;
+            Atlas = Atlases.Environment;
             DeathSound = Sound.Find(SoundNames.PotteryBreak);
             DepthOffset = -4;
             DisplayNameKey = "Prop.Pottery";

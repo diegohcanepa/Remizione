@@ -282,7 +282,7 @@ namespace Remizione
 
             foreach (var phase in Enum.GetValues<PlacementPhase>())
             {
-                if (phase == PlacementPhase.None || phase == PlacementPhase.Creature)
+                if (phase == PlacementPhase.None)
                     continue;
 
                 var staticThings = GetStaticThings(phase);

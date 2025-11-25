@@ -14,7 +14,7 @@ namespace Remizione.Scripting
                 throw new ScriptException(script, "Another table is being defined.");
 
             ActiveName = Parser.ParseName(this, 0);
-            
+
             var defaultModifier = Parser.ParseInt32Argument(this, ModifierArg, 1);
             ResistanceTable.Register(ActiveName, defaultModifier);
         }

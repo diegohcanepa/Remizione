@@ -320,8 +320,8 @@ namespace Remizione
             get => isBeating;
             set
             {
-               if (value != isBeating)
-               {
+                if (value != isBeating)
+                {
                     isBeating = value;
 
                     image.Scale = ScaleInfo.UIElement.Medium * scaleFactor;
@@ -336,7 +336,7 @@ namespace Remizione
                         scaleTween.Stop();
                         image.Tweens.ScaleTween = null;
                     }
-               }
+                }
             }
         }
 

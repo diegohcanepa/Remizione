@@ -50,6 +50,7 @@
 	<FX Name="InsertCoin" />
 	<FX Name="ItemDiscard" MaxInstances="4" />	
 	<FX Name="ItemEquip" MaxInstances="4" />
+	<FX Name="ItemPop" MaxInstances="4" />
 	<FX Name="Lightning" MaxInstances="4" />
 	<FX Name="MetalPropBreak" MaxInstances="4" />
 	<FX Name="NumberSixA" />

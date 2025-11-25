@@ -43,7 +43,7 @@ namespace Remizione
             }
 
             this.CategoryFilter = categoryFilter;
-            
+
             Layout();
         }
 

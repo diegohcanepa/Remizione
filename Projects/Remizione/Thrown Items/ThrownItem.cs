@@ -270,7 +270,7 @@ namespace Remizione
                 ReturnToSack();
                 return;
             }
-            
+
             item.Use(owner);
 
             depth = owner.Depth + .01f;

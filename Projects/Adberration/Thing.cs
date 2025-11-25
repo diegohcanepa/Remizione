@@ -74,6 +74,16 @@ namespace Adberration
             }
         }
 
+        // OnEnterRoom
+        protected virtual void OnEnterRoom()
+        {
+        }
+
+        // OnExitRoom
+        protected virtual void OnExitRoom()
+        {
+        }
+
         // OnLoad
         protected override void OnLoad()
         {
@@ -125,6 +135,32 @@ namespace Adberration
                     //if (moveSegment.IsEmpty)
                     //    StopMoving();
                 }
+            }
+        }
+
+        #endregion
+
+        #region Internal members
+
+        // EnterRoom
+        internal void EnterRoom()
+        {
+            OnEnterRoom();
+
+            for (var i = 0; i < Children.Count; i++)
+            {
+                Children[i].EnterRoom();
+            }
+        }
+
+        // ExitRoom
+        internal void ExitRoom()
+        {
+            OnExitRoom();
+
+            for (var i = 0; i < Children.Count; i++)
+            {
+                Children[i].ExitRoom();
             }
         }
 

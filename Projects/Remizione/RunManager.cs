@@ -27,11 +27,11 @@ namespace Remizione
 
             // Default
             if (roomGraph.RoomStyle == RideRoomStyle.Default)
-                result = new DefaultRideRoom(session, roomGraph);      
+                result = new DefaultRideRoom(session, roomGraph);
 
             return result ?? throw new InvalidOperationException("Cannot create ride room.");
         }
-        
+
         #endregion
 
         // Clear
@@ -91,7 +91,7 @@ namespace Remizione
             foreach (var room in rooms)
             {
                 if (room.RoomGraph.Id == id)
-                    return room;    
+                    return room;
             }
 
             return null;

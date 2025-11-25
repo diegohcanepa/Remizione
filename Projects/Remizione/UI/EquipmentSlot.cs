@@ -38,7 +38,7 @@ namespace Remizione
             // Bindings
             if (itemCategory == ItemCategory.LeftHand)
                 nextInputBinding = InputBindings.SelectLeft;
-            
+
             else if (itemCategory == ItemCategory.RightHand)
                 nextInputBinding = InputBindings.SelectRight;
 

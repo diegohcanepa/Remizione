@@ -195,7 +195,7 @@ namespace Remizione
                             RemizioneGame.Effects.ColorReduction.SetColor(.5f, .5f, .5f, .5f);
                         else
                             RemizioneGame.Effects.ColorReduction.SetColor(1, 0, 0, 1);
-                        
+
                         effect = RemizioneGame.Effects.ColorReduction;
                     }
                     else if (interactiveTarget == thing && thing.HighlightInteraction && thing.Opacity == 1)
@@ -415,7 +415,7 @@ namespace Remizione
 
             lightMapTarget = Game.RenderTargets.AuxiliaryTargets[0];
             lightSources.Clear();
-            
+
             // Prepare lights
             if (Atlas != null)
             {
@@ -629,7 +629,7 @@ namespace Remizione
             for (int i = 0; i < Children.Count; i++)
             {
                 if (Children[i] is GameThing thing && thing.Faction == Faction.Evil)
-                EnemyCount++;
+                    EnemyCount++;
             }
         }
 

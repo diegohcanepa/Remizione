@@ -527,6 +527,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/ItemEquip.wav;Audio/FX/ItemEquip
 
+#begin Audio/FX/ItemPop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/ItemPop.wav;Audio/FX/ItemPop
+
 #begin Audio/FX/Lightning.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

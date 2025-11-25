@@ -1,6 +1,4 @@
-﻿using Adberration.Scripting;
-
-namespace Remizione
+﻿namespace Remizione
 {
     /// <summary>
     /// RideCar

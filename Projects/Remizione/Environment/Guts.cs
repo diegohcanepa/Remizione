@@ -65,7 +65,7 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            
+
             for (var i = 0; i < pieces.Count; i++)
             {
                 pieces[i].Launch(this);

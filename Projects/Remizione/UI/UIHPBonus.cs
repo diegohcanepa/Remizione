@@ -131,7 +131,7 @@ namespace Remizione
                 if (value != position)
                 {
                     position = value;
-                    Invalidate();                    
+                    Invalidate();
                 }
             }
         }

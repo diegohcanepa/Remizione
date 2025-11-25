@@ -1,7 +1,6 @@
 ﻿using Adberration;
 using Engendro;
 using Microsoft.Xna.Framework;
-using System;
 
 namespace Remizione
 {
@@ -86,7 +85,7 @@ namespace Remizione
             else if (Session.Player?.DistanceTo(this) < 4)
             {
                 if (!Session.Inventory.IsFull)
-                { 
+                {
                     isCollecting = true;
                     DepthOffset = 10;
                     PivotOrigin = RectanglePoint.Top;
@@ -116,6 +115,8 @@ namespace Remizione
 
             scaleTween.Start(TweenStyle.Linear, Vector2.Zero, ScaleInfo.UIElement.Tiny, 250);
             Tweens.ScaleTween = scaleTween;
+
+            PlaySound(SoundNames.ItemPop);
         }
     }
 }

@@ -70,7 +70,7 @@ namespace Remizione
             base.OnUpdate(gameTime);
 
             AllowInteraction = Room?.EnemyCount == 0;
-            
+
             if (AllowInteraction)
             {
                 if (!IsOpen && Used)

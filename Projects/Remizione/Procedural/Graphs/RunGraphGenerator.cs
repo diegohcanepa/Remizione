@@ -31,7 +31,7 @@ namespace Remizione
                 entryRooms.Add(entryRoom);
             }
 
-            return new RunGraph(entryRooms);
+            return new RunGraph(entryRooms, random);
         }
 
         #region Private members
@@ -104,7 +104,7 @@ namespace Remizione
         #endregion
 
         // MaxLength
-        public int MaxLength { get; set; } = 7;
+        public int MaxLength { get; set; } = 3;
 
         // MaxSidePerRoom
         public int MaxSidePerRoom { get; set; } = 1;
@@ -113,7 +113,7 @@ namespace Remizione
         public int MaxSidePerPath { get; set; } = int.MaxValue;
 
         // MinLength
-        public int MinLength { get; set; } = 4;
+        public int MinLength { get; set; } = 2;
 
         // SideChancePercent
         public int SideChancePercent { get; set; } = 50;

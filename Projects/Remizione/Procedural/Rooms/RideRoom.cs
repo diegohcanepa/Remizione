@@ -8,6 +8,8 @@ namespace Remizione
     /// </summary>
     public abstract class RideRoom : ProceduralRoom
     {
+        private bool coinDropped = false;
+
         // Constructor
         protected RideRoom(GameSession session, RoomGraph graph)
             : base(session, string.Empty, graph)
@@ -52,8 +54,9 @@ namespace Remizione
                 if (CreateRuntimeClone("RideDoorDown") is RideDoor downDoor)
                 {
                     downDoor.Position = DoorDownPosition;
-                    Grid.ReserveSpace(downDoor, false);
-
+                    var pixelArea = downDoor.GetGridPixelArea();
+                    pixelArea.Offset(0, -pixelArea.Height);
+                    Grid.ReserveSpace("Door", pixelArea.ToRectangle());
                     if (RoomGraph.Down != null)
                         downDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Down.Id);
 
@@ -82,6 +85,22 @@ namespace Remizione
         protected override void OnPopulating()
         {
             PopulateDoors();
+        }
+
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            base.OnUpdate(gameTime);
+
+            if (!coinDropped)
+            {
+                if (RoomGraph.HasCoin && EnemyCount == 0 && MetaItem.Find(MetaItem.CoinItemName) is MetaItem metaItem)
+                {
+                    coinDropped = true;
+                    var coinPosition = WalkArea != null ? WalkArea.Polygon.BoundingRectangleF.Center : BoundingBox.Center;
+                    Session.ObjectPools.Pickups.Get()?.Drop(this, coinPosition, metaItem);
+                }
+            }
         }
 
         #endregion

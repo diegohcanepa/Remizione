@@ -17,18 +17,6 @@ namespace Remizione
         {
             HitEffect = HitEffect.Shake;
             HurtShake = new(1.5f, 0);
-
-            var index = 1;
-            while (true)
-            {
-                if (Atlas?.GetImage($"{StaticName}Piece{index}") is AtlasImage image)
-                {
-                    pieces.Add(new(session.Game, image));
-                    index++;
-                }
-                else
-                    break;
-            }
         }
 
         #region Protected members
@@ -48,6 +36,27 @@ namespace Remizione
             }
             else
                 base.OnDraw(gameTime);
+        }
+
+        // OnLoad
+        protected override void OnLoad()
+        {
+            base.OnLoad();
+
+            if (pieces.Count == 0)
+            {
+                var index = 1;
+                while (true)
+                {
+                    if (Atlas?.GetImage($"{StaticName}Piece{index}") is AtlasImage image)
+                    {
+                        pieces.Add(new(Session.Game, image));
+                        index++;
+                    }
+                    else
+                        break;
+                }
+            }
         }
 
         // OnUpdate
