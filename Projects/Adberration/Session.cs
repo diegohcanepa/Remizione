@@ -820,7 +820,7 @@ namespace Adberration
         public Camera Camera { get; }
 
         // CanSave
-        public virtual bool CanSave => AllowSaving && !IsSaving && SaveFileNumber >= 0 && Room != null && Room.CanSave && !IsAwaiting;
+        public virtual bool CanSave => AllowSaving && !IsSaving && !IsAwaiting && SaveFileNumber >= 0 && Room?.CanSave == true;
 
         // Chapter
         [ScriptProperty]

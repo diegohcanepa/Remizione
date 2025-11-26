@@ -96,13 +96,16 @@ namespace Remizione
             if (!RunManager.HasContent)
                 return;
 
+            if (GetEntity<Hub>(nameof(Hub)) is Hub hubRoom)
+                hubRoom.Unload();
+
             IsHUDVisible = false;
             GameplayMode = GameplayMode.Adventure;
             Player?.Reheal();
-            Inventory.Clear();
             RunManager.Clear();
             CleanUpRuntimeEntities();
             Seed = 0;
+            Save();
         }
 
         #endregion
@@ -419,6 +422,7 @@ namespace Remizione
         #endregion
 
         // BeginRun
+        [ScriptMethod]
         public void BeginRun()
         {
             if (RunManager.HasContent)
@@ -435,12 +439,10 @@ namespace Remizione
         public void CancelRun()
         {
             Tickets = 0;
+            Inventory.Clear();
             Deaths++;
             EndRun();
         }
-
-        // CanSave
-        public override bool CanSave => !RunManager.HasContent && base.CanSave;
 
         // ChooseKeyItem
         public bool ChooseKeyItem(string text)

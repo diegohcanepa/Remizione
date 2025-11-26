@@ -64,6 +64,14 @@ namespace Remizione
 
         #region Protected members
 
+        // Onunload
+        protected override void OnUnload()
+        {
+            base.OnUnload();
+            IsOpen = false;
+            Used = false;
+        }
+
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {

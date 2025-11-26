@@ -9,6 +9,7 @@
         public Hub(GameSession session, string name)
             : base(session, name)
         {
+            UnloadMode = Adberration.UnloadMode.Manual;
         }
 
         #region Private members
@@ -47,14 +48,8 @@
         // OnLoad
         protected override void OnLoad()
         {
-            if (!RunManager.HasContent)
-            {
-                Session.BeginRun();
-                base.OnLoad();
-                LinkDoors();
-            }
-            else
-                base.OnLoad();
+            base.OnLoad();
+            LinkDoors();
         }
 
         #endregion

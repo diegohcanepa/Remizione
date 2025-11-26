@@ -15,7 +15,7 @@ namespace Remizione
             : base(session, string.Empty, graph)
         {
             AllowGlobalLight = true;
-            AtlasName = $"RideRoom{graph.RoomStyle}";
+            AtlasName = $"{graph.RoomStyle}RideRoom";
             DefaultImageName = AtlasName;
         }
 

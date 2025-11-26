@@ -311,9 +311,6 @@ namespace Adberration
             set => Sprite.OpacityFactor = value;
         }
 
-        // RequiresPersistence
-        protected virtual bool RequiresPersistence => false;
-
         // Sprite
         protected AnimatedSprite Sprite { get; }
 
@@ -326,9 +323,6 @@ namespace Adberration
         {
             if (!isInitialized)
             {
-                if (RequiresPersistence && !Persistent)
-                    throw new InvalidOperationException($"Entity '{Name}' must be persistent.");
-
                 isInitialized = true;
                 OnInitialize();
             }

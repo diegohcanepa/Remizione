@@ -479,9 +479,6 @@ namespace Remizione
             }
         }
 
-        // RequiresPersistence
-        protected override bool RequiresPersistence => true;
-
         #endregion
 
         // AddLight

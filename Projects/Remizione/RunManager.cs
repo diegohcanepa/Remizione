@@ -55,6 +55,8 @@ namespace Remizione
         // Generate
         public static void Generate(GameSession session)
         {
+            HasContent = true;
+
             // Create run graph
             runGraph = new RunGraphGenerator(session.Seed).Generate(3);
 
@@ -81,8 +83,6 @@ namespace Remizione
             {
                 room.Load();
             }
-
-            HasContent = true;
         }
 
         // GetRoom

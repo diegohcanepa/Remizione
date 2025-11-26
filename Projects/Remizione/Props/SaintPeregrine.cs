@@ -1,5 +1,4 @@
-﻿using Adberration.Scripting;
-using Engendro;
+﻿using Engendro;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -10,7 +9,6 @@ namespace Remizione
     public sealed class SaintPeregrine : Prop
     {
         private readonly ImageSprite eyes;
-        private int requiredCoins;
 
         // Constructor
         public SaintPeregrine(GameSession session, string name)
@@ -26,8 +24,6 @@ namespace Remizione
             };
 
             eyes.Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, 1, .7f, 70, -1);
-
-            RequiredCoins = 1;
         }
 
         #region Protected members
@@ -44,7 +40,7 @@ namespace Remizione
         // OnPropAmountChanged
         protected override void OnPropAmountChanged()
         {
-            if (PropAmount == requiredCoins)
+            if (PropAmount == 1)
                 PropState = PropState.Unlocked;
         }
 
@@ -92,18 +88,5 @@ namespace Remizione
         }
 
         #endregion
-
-        // RequiredCoins
-        [ScriptProperty]
-        public int RequiredCoins
-        {
-            get => requiredCoins;
-            set
-            {
-                if (value < 0)
-                    value = 1;
-                requiredCoins = value;
-            }
-        }
     }
 }

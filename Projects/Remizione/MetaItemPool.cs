@@ -128,6 +128,9 @@ namespace Remizione
         // Unlock
         public void Unlock(MetaItem metaItem)
         {
+            if (IsUnlocked(metaItem))
+                return;
+
             unlockedDictionary.Add(metaItem.Name, metaItem);
             unlockedList.Add(metaItem);
         }

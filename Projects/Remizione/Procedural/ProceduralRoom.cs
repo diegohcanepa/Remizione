@@ -328,9 +328,6 @@ namespace Remizione
         // Random
         protected Random Random { get; }
 
-        // RequiresPersistence
-        protected sealed override bool RequiresPersistence => false;
-
         #endregion
 
         // CanPlaceThingAt

@@ -44,6 +44,21 @@
 #begin Atlases/Arena1.xml
 /copy:Atlases/Arena1.xml
 
+#begin Atlases/DefaultRideRoom.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Atlases/DefaultRideRoom.png
+
+#begin Atlases/DefaultRideRoom.xml
+/copy:Atlases/DefaultRideRoom.xml
+
 #begin Atlases/Environment.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -103,21 +118,6 @@
 
 #begin Atlases/Monitor.xml
 /copy:Atlases/Monitor.xml
-
-#begin Atlases/RideRoomDefault.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Atlases/RideRoomDefault.png
-
-#begin Atlases/RideRoomDefault.xml
-/copy:Atlases/RideRoomDefault.xml
 
 #begin Atlases/ThemePark.png
 /importer:TextureImporter
