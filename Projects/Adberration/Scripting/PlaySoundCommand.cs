@@ -12,7 +12,7 @@ namespace Adberration.Scripting
 
         // Constructor
         internal PlaySoundCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, DelayArg, EmitterArg, FadeArg, IndexArg, ScopeArg, LoopedArg, NoCaptionArg, PanArg, PauseAwareArg, PitchArg, TransitionAwareArg, VolumeArg)
+            : base(script, source, body, 1, DelayArg, EmitterArg, FadeArg, IndexArg, ScopeArg, LoopedArg, PanArg, PauseAwareArg, PitchArg, TransitionAwareArg, VolumeArg)
         {
             var name = Parser.ParseName(this, 0);
 
@@ -79,9 +79,6 @@ namespace Adberration.Scripting
                 instance.PlayDelayed(delay);
             else
                 instance.Play();
-
-            if (instance.Sound.Caption.Length > 0 && !HasArg(NoCaptionArg))
-                Session.ShowSoundCaption(instance);
 
             if (scope == LifetimeScope.Room)
                 Session.Room?.RegisterSound(instance);

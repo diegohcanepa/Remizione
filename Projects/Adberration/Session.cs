@@ -91,6 +91,17 @@ namespace Adberration
             }
         }
 
+        // DeserializeEntities
+        private IEnumerable<Entity> DeserializeEntities(string value)
+        {
+            var names = value.Split(';');
+            foreach (var name in names)
+            {
+                if (GetEntity(name) is Entity entity)
+                    yield return entity;
+            }
+        }
+
         // EndOutcome
         private void EndOutcome()
         {
@@ -290,6 +301,20 @@ namespace Adberration
                 AudioManager.Music.Play(musicSoundName, true);
 
             return result;
+        }
+
+        // SerializeEntities
+        private static string SerializeEntities(IList<Thing> things)
+        {
+            List<string> list = [];
+
+            for (var i = 0; i < things.Count; i++)
+            {
+                if (things[i].Persistent && things[i].InstanceKind != InstanceKind.Anonymous)
+                    list.Add(things[i].Name);
+            }
+
+            return string.Join(";", list);
         }
 
         // UpdateScripts
@@ -497,17 +522,6 @@ namespace Adberration
         // CanHandleRoomInput
         protected virtual bool CanHandleRoomInput => true;
 
-        // DeserializeEntities
-        protected IEnumerable<Entity> DeserializeEntities(string value)
-        {
-            var names = value.Split(';');
-            foreach (var name in names)
-            {
-                if (GetEntity(name) is Entity entity)
-                    yield return entity;
-            }
-        }
-
         // Dispose
         protected override void Dispose(bool disposing)
         {
@@ -597,11 +611,6 @@ namespace Adberration
             return HandleInputResult.Unhandled;
         }
 
-        // OnInitializeEntities
-        protected virtual void OnInitializeEntities()
-        {
-        }
-
         // OnOutcome
         protected virtual void OnOutcome(Thing target)
         {
@@ -647,11 +656,6 @@ namespace Adberration
         {
         }
 
-        // OnShowSoundCaption
-        protected virtual void OnShowSoundCaption(SoundInstance soundInstance)
-        {
-        }
-
         // OnShutDown
         protected virtual void OnShutDown()
         {
@@ -688,20 +692,6 @@ namespace Adberration
         {
         }
 
-        // SerializeEntities
-        protected static string SerializeEntities(IList<Thing> things)
-        {
-            List<string> list = [];
-
-            for (var i = 0; i < things.Count; i++)
-            {
-                if (things[i].Persistent && things[i].InstanceKind != InstanceKind.Anonymous)
-                    list.Add(things[i].Name);
-            }
-
-            return string.Join(";", list);
-        }
-
         #endregion
 
         #region Internal members
@@ -713,7 +703,7 @@ namespace Adberration
         internal void RegisterEntity(Entity entity)
         {
             if (State != GameSessionState.LoadingScripts && !ScriptEnvironment.IsCreatingClone)
-                throw new InvalidOperationException("This action can be performed during the initialization phase only.");
+                throw new InvalidOperationException("This action can be performed during the initialization only.");
 
             if (!ScriptEnvironment.IsCreatingClone)
             {
@@ -845,18 +835,6 @@ namespace Adberration
             }
         }
 
-        // CreateRuntimeRoomClone
-        public Room CreateRuntimeRoomClone(string staticName, string instanceName)
-        {
-            return ScriptEnvironment.CreateRuntimeRoomClone(staticName, instanceName, false);
-        }
-
-        // CreateRuntimeThingClone
-        public Thing CreateRuntimeThingClone(string staticName, string instanceName)
-        {
-            return ScriptEnvironment.CreateRuntimeThingClone(staticName, instanceName, false);
-        }
-
         // CreateFlagCondition
         public FlagCondition CreateFlagCondition(IList<string> flags)
         {
@@ -874,6 +852,13 @@ namespace Adberration
             }
 
             return new FlagCondition(expressions);
+        }
+
+
+        // CreateRuntimeThingClone
+        public Thing CreateRuntimeThingClone(string staticName, string instanceName)
+        {
+            return ScriptEnvironment.CreateRuntimeThingClone(staticName, instanceName, false);
         }
 
         // CurrentMusicName
@@ -1157,12 +1142,6 @@ namespace Adberration
         // ScriptProcessor
         public ScriptProcessor ScriptProcessor { get; }
 
-        // ShowSoundCaption
-        public void ShowSoundCaption(SoundInstance soundInstance)
-        {
-            OnShowSoundCaption(soundInstance);
-        }
-
         // Start
         public void Start()
         {
@@ -1203,8 +1182,6 @@ namespace Adberration
 
                 State = GameSessionState.Idle;
             }
-
-            OnInitializeEntities();
 
             for (var i = 0; i < Entities.Count; i++)
             {

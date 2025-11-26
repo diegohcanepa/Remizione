@@ -62,7 +62,7 @@ namespace Remizione
         }
 
         // GetItems
-        public List<MetaItem> GetItems(ItemRealm realm)
+        public List<MetaItem> GetItems(Realm realm)
         {
             var result = new List<MetaItem>();
 
@@ -88,7 +88,7 @@ namespace Remizione
         }
 
         // GetRandomItem
-        public MetaItem? GetRandomItem(ItemRealm realm)
+        public MetaItem? GetRandomItem(Realm realm)
         {
             return GetItems(realm).GetRandomItem();
         }

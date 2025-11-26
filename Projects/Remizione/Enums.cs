@@ -51,13 +51,10 @@ namespace Remizione
     public enum ItemAction { None, Place, Throw }
 
     // ItemCategory
-    public enum ItemCategory { None, Consumables, LeftHand, KeyItems, RightHand, Gadgets }
+    public enum ItemCategory { None, LeftHand, RightHand, Gadgets, KeyItems }
 
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }
-
-    // ItemRealm
-    public enum ItemRealm { Earthly, Infernal, Celestial }
 
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, Global, MuzzleFlash, Outdoor, Player }
@@ -98,6 +95,9 @@ namespace Remizione
 
     // PropState
     public enum PropState { None, Closed, Empty, TurnedOff, Open, Locked, Unlocked }
+
+    // Realm
+    public enum Realm { Earthly, Infernal, Celestial }
 
     // RenderLayer
     public enum RenderLayer { BehindBackground, Background, OverBackground, Default, Foreground, ForegroundNoLight }

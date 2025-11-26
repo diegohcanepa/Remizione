@@ -22,7 +22,7 @@ namespace Remizione
         {
             CodeContract.NotEmpty(name, nameof(name));
 
-            if (Enum.IsDefined(typeof(ItemRealm), name))
+            if (Enum.IsDefined(typeof(Realm), name))
                 throw new InvalidOperationException($"The name '{name}' cannot be used because it is an item realm.");
 
             if (Enum.IsDefined(typeof(ItemCategory), name))
@@ -143,7 +143,7 @@ namespace Remizione
         }
 
         // GetItems
-        public static List<MetaItem> GetItems(ItemRealm realm)
+        public static List<MetaItem> GetItems(Realm realm)
         {
             var result = new List<MetaItem>();
 
@@ -205,7 +205,7 @@ namespace Remizione
         public int Range { get; init; }
 
         // Realm
-        public ItemRealm Realm { get; init; }
+        public Realm Realm { get; init; }
 
         // RequiredTags
         public ReadOnlyCollection<LootTag> RequiredTags { get; }

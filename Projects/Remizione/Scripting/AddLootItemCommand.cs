@@ -17,7 +17,7 @@ namespace Remizione.Scripting
             var itemName = body.Clauses[0];
 
             if (!Enum.IsDefined(typeof(ItemCategory), itemName) &&
-                !Enum.IsDefined(typeof(ItemRealm), itemName))
+                !Enum.IsDefined(typeof(Realm), itemName))
             {
                 if (itemName != ChanceTable.Nothing && MetaItem.Find(itemName) == null)
                     throw new ScriptException(script, $"MetaItem '{itemName}' not found.");

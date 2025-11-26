@@ -257,33 +257,7 @@ namespace Remizione
             if (Session.Room is not ProceduralRoom room)
                 return;
 
-            if (GetLoot() is ChanceTableItem lootItem)
-            {
-                MetaItem? metaItem;
-
-                // Get meta item based on realm, category or name
-                if (Enum.IsDefined(typeof(ItemRealm), lootItem.Name))
-                {
-                    metaItem = Session.MetaItemPool.GetRandomItem(Enum.Parse<ItemRealm>(lootItem.Name));
-                }
-                else if (Enum.IsDefined(typeof(ItemCategory), lootItem.Name))
-                {
-                    metaItem = Session.MetaItemPool.GetRandomItem(Enum.Parse<ItemCategory>(lootItem.Name));
-                }
-                else
-                {
-                    metaItem = Session.MetaItemPool.Find(lootItem.Name);
-                }
-
-                if (metaItem != null)
-                {
-                    // Avoid looting unique things already in inventory
-                    if (metaItem.Category == ItemCategory.Gadgets && Session.Inventory.Find(metaItem.Name) != null)
-                        return;
-
-                    Session.ObjectPools.Pickups.Get()?.Drop(room, Position, metaItem);
-                }
-            }
+            Loot.TryDropLoot(room, Position, LootTableName, out _);
 
             if (Random.Shared.NextDouble() < TicketRewardChance)
             {
@@ -860,15 +834,6 @@ namespace Remizione
                 return this.GetAbsoluteBounds(AnimationPlayer.Frame.SubArea);
             else
                 return RectangleF.Empty;
-        }
-
-        // GetLoot
-        public ChanceTableItem? GetLoot()
-        {
-            if (ChanceTable.Find(LootTableName) is ChanceTable table && table.GetValue() is ChanceTableItem value)
-                return value;
-            else
-                return null;
         }
 
         // GetOverheadPosition

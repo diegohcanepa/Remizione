@@ -393,6 +393,11 @@ namespace Remizione
 #endif
         }
 
+        // OnEnemiesCleared
+        protected virtual void OnEnemiesCleared()
+        {
+        }
+
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
@@ -621,12 +626,19 @@ namespace Remizione
         // RecountEnemies
         public void RecountEnemies()
         {
-            EnemyCount = 0;
+            var count = 0;
 
             for (int i = 0; i < Children.Count; i++)
             {
                 if (Children[i] is GameThing thing && thing.Faction == Faction.Evil)
-                    EnemyCount++;
+                    count++;
+            }
+
+            if (EnemyCount != count)
+            {
+                EnemyCount = count;
+                if (count == 0)
+                    OnEnemiesCleared();
             }
         }
 

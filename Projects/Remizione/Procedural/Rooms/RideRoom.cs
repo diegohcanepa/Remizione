@@ -8,7 +8,7 @@ namespace Remizione
     /// </summary>
     public abstract class RideRoom : ProceduralRoom
     {
-        private bool coinDropped = false;
+        private bool lootDropped = false;
 
         // Constructor
         protected RideRoom(GameSession session, RoomGraph graph)
@@ -81,26 +81,27 @@ namespace Remizione
         // DoorUpPosition
         protected Vector2 DoorUpPosition { get; set; }
 
+        // OnEnemiesCleared
+        protected override void OnEnemiesCleared()
+        {
+            if (lootDropped)    
+                return;
+
+            var dropPosition = WalkArea != null ? WalkArea.Polygon.BoundingRectangleF.Center : BoundingBox.Center;
+
+            if (RoomGraph.HasCoin)
+            {
+                if (MetaItem.Find(MetaItem.CoinItemName) is MetaItem metaItem)
+                    Session.ObjectPools.Pickups.Get()?.Drop(this, dropPosition, metaItem);
+            }
+            else if (Loot.TryDropLoot(this, dropPosition, GetType().Name, out _))
+                lootDropped = true;
+        }
+
         // OnPopulating
         protected override void OnPopulating()
         {
             PopulateDoors();
-        }
-
-        // OnUpdate
-        protected override void OnUpdate(GameTime gameTime)
-        {
-            base.OnUpdate(gameTime);
-
-            if (!coinDropped)
-            {
-                if (RoomGraph.HasCoin && EnemyCount == 0 && MetaItem.Find(MetaItem.CoinItemName) is MetaItem metaItem)
-                {
-                    coinDropped = true;
-                    var coinPosition = WalkArea != null ? WalkArea.Polygon.BoundingRectangleF.Center : BoundingBox.Center;
-                    Session.ObjectPools.Pickups.Get()?.Drop(this, coinPosition, metaItem);
-                }
-            }
         }
 
         #endregion

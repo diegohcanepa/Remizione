@@ -32,6 +32,9 @@
         // PathIndex
         public int PathIndex { get; }
 
+        // Realm
+        public Realm Realm { get; set; }
+
         // Right
         public RoomGraph? Right { get; set; }
 

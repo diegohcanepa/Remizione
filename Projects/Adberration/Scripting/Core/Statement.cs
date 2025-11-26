@@ -60,7 +60,6 @@ namespace Adberration.Scripting
         protected static readonly string MaximumPerRunArg = "#maximum-per-run";
         protected static readonly string ModifierArg = "#modifier";
         protected static readonly string NoAwaitArg = "#no-await";
-        protected static readonly string NoCaptionArg = "#no-caption";
         protected static readonly string OffArg = "#off";
         protected static readonly string OnceArg = "#once";
         protected static readonly string OnExitArg = "#on-exit";

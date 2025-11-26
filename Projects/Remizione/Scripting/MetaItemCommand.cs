@@ -39,7 +39,7 @@ namespace Remizione.Scripting
                 PreventDiscard = HasArg(PreventDiscardArg),
                 Quality = Parser.ParseInt32Argument(this, QualityArg),
                 Range = Parser.ParseInt32Argument(this, RangeArg),
-                Realm = Parser.ParseEnumArgument(this, RealmArg, ItemRealm.Earthly),
+                Realm = Parser.ParseEnumArgument(this, RealmArg, Realm.Earthly),
                 SkillChance = Parser.ParseInt32Argument(this, SkillChanceArg),
                 Sound = Parser.ParseSoundArgument(this, SoundArg),
                 StackMode = Parser.ParseEnumArgument(this, StackModeArg, StackMode.None),
