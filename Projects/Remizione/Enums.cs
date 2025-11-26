@@ -51,7 +51,7 @@ namespace Remizione
     public enum ItemAction { None, Place, Throw }
 
     // ItemCategory
-    public enum ItemCategory { None, LeftHand, RightHand, Gadgets, KeyItems }
+    public enum ItemCategory { None, LeftHand, RightHand, Consumables, Gadgets, KeyItems }
 
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }
@@ -84,11 +84,14 @@ namespace Remizione
         Accept = 8
     }
 
-    // PlacementDistributionStrategy
-    public enum PlacementDistributionStrategy { Random, Clump, NoiseMap }
-
     // PlacementPhase
     public enum PlacementPhase { None, Decoration, Object, Creature }
+
+    // PlaceholderSize
+    public enum PlaceholderSize { Small, Medium, Large, Any }
+
+    // PlaceholderType
+    public enum PlaceholderType { Wall, Floor, Manual }
 
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }

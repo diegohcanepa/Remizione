@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -12,9 +13,8 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly TextSprite cellLabel;
         private int instanceCount;
-        private bool populated;
+        private readonly List<Placeholder> placeholders = [];
         private readonly int randomSeed;
 
         #endregion
@@ -33,12 +33,8 @@ namespace Remizione
 
             int salt = roomGraph.Id;
             this.randomSeed = RandomHelper.GetSeed(Session.Seed, salt);
+            this.Placeholders = new ReadOnlyCollection<Placeholder>(placeholders);
             this.Random = new Random(randomSeed);
-
-            this.cellLabel = new(Game, Fonts.Common)
-            {
-                Scale = new(.04f)
-            };
         }
 
         #endregion
@@ -56,150 +52,47 @@ namespace Remizione
             return result;
         }
 
-        // DistributeClumped
-        private void DistributeClumped(ProceduralRoomGrid grid, GameThing thing, PlacementData placementData)
-        {
-            int totalCount = Random.Next(placementData.Rolls.Minimum, placementData.Rolls.Maximum + 1);
-            int clumpSize = 3 + Random.Next(3);
-            int clumpCount = (totalCount + clumpSize - 1) / clumpSize;
-            Size sizeInCells = grid.GetRequiredGridSpace(thing);
-
-            for (int i = 0; i < clumpCount; i++)
-            {
-                if (!grid.TryReserveSpace(thing.StaticName, sizeInCells, out int baseCol, out int baseRow))
-                    break;
-
-                SpawnThing(grid, thing, baseCol, baseRow, placementData);
-                placementData.LogSpawn(thing.StaticName);
-                if (!placementData.CanSpawn(thing.StaticName))
-                    return;
-
-                for (int j = 0; j < clumpSize - 1; j++)
-                {
-                    int offsetCol = baseCol + Random.Next(-1, 2);
-                    int offsetRow = baseRow + Random.Next(-1, 2);
-
-                    if (grid.TryReserveSpace(thing.StaticName, sizeInCells, out int col, out int row, offsetCol, offsetRow))
-                    {
-                        SpawnThing(grid, thing, col, row, placementData);
-                        placementData.LogSpawn(thing.StaticName);
-                        if (!placementData.CanSpawn(thing.StaticName))
-                            return;
-                    }
-                }
-            }
-        }
-
-        // DistributeRandomly
-        private void DistributeRandomly(ProceduralRoomGrid grid, GameThing thing, PlacementData placementData)
-        {
-            Size sizeInCells = grid.GetRequiredGridSpace(thing);
-            var count = Random.Next(placementData.Rolls.Minimum, placementData.Rolls.Maximum + 1);
-
-            for (int i = 0; i < count; i++)
-            {
-                // Intentos limitados para evitar bucles infinitos si no hay espacio
-                int maxAttempts = 20 + (sizeInCells.Width * sizeInCells.Height) * 2;
-                bool placed = false;
-
-                for (int attempt = 0; attempt < maxAttempts && !placed; attempt++)
-                {
-                    int col = Random.Next(grid.ColCount - sizeInCells.Width + 1);
-                    int row = Random.Next(grid.RowCount - sizeInCells.Height + 1);
-
-                    if (grid.TryReserveSpace(thing.StaticName, sizeInCells, out int finalCol, out int finalRow, col, row))
-                    {
-                        SpawnThing(grid, thing, finalCol, finalRow, placementData);
-                        placed = true;
-                        placementData.LogSpawn(thing.StaticName);
-                        if (!placementData.CanSpawn(thing.StaticName))
-                            return;
-                    }
-                }
-            }
-        }
-
-        // DistributeWithNoiseMap
-        private void DistributeWithNoiseMap(ProceduralRoomGrid grid, GameThing thing, PlacementData placementData, int seed)
-        {
-            Size sizeInCells = grid.GetRequiredGridSpace(thing);
-            float noiseThreshold = 0.2f;
-            int attempts = 100;
-
-            for (int i = 0; i < attempts; i++)
-            {
-                if (!grid.TryReserveSpace(thing.StaticName, sizeInCells, out int col, out int row))
-                    break;
-
-                float noise = GetNoise(col, row, seed);
-                if (noise > noiseThreshold)
-                    continue;
-
-                SpawnThing(grid, thing, col, row, placementData);
-                placementData.LogSpawn(thing.StaticName);
-                if (!placementData.CanSpawn(thing.StaticName))
-                    return;
-            }
-        }
-
-        // DrawGrid
-        private void DrawGrid(GameTime gameTime)
-        {
-            for (var col = 0; col < Grid.ColCount; col++)
-            {
-                for (var row = 0; row < Grid.RowCount; row++)
-                {
-                    var pos = Grid.GetPixelArea(col, row).GetPoint(RectanglePoint.LeftTop);
-                    var rect = new RectangleF(pos.X + 1, pos.Y + 1, Grid.CellSize, Grid.CellSize);
-                    rect.Inflate(-1, -1);
-                    var color = (Grid.IsCellFree(col, row) ? Color.Green : Color.Red) * .1f;
-
-                    Game.Shapes.DrawRectangle(rect, color);
-
-                    cellLabel.Text = Grid.GetCellLabel(col, row);
-                    cellLabel.Position = pos + new Vector2(2);
-                    cellLabel.Draw(gameTime);
-                }
-            }
-        }
-
-        // GetNoise
-        private static float GetNoise(int col, int row, int seed)
-        {
-            unchecked
-            {
-                int hash = seed;
-                hash = (hash * 397) ^ col;
-                hash = (hash * 397) ^ row;
-
-                // Mezcla adicional para mayor dispersión
-                hash ^= (hash >> 13);
-                hash *= 0x5bd1e995;
-                hash ^= (hash >> 15);
-
-                // Normaliza a 0..1
-                uint uhash = (uint)hash;
-                return (uhash & 0xFFFFFF) / (float)0xFFFFFF;
-            }
-        }
-
         // GetStaticThings
-        private List<GameThing> GetStaticThings(PlacementPhase phase)
+        private List<GameThing> GetStaticThings(Placeholder placeholder)
         {
             var result = new List<GameThing>();
 
-            for (var i = 0; i < Session.StaticThings.Count; i++)
+            foreach (var staticThing in Session.StaticThings)
             {
-                if (Session.StaticThings[i].PlacementPhase == phase)
-                    result.Add(Session.StaticThings[i]);
+                // Match placeholder type?
+                if (staticThing.PlaceholderType != placeholder.PlaceholderType)
+                    continue;
+
+                // Match placeholder size?
+                if (placeholder.Size != PlaceholderSize.Any && staticThing.PlaceholderSize != placeholder.Size)
+                    continue;
+                
+                result.Add(staticThing);
             }
 
             return result;
         }
 
-        // SpawnThing
-        private void SpawnThing(ProceduralRoomGrid grid, GameThing thing, int col, int row, PlacementData placementData)
+        // PopulateThing
+        private void PopulateThing(GameThing thing, PlacementData placementData)
         {
+            var count = Random.Next(placementData.Rolls.Minimum, placementData.Rolls.Maximum + 1);
+
+            /*
+            for (int i = 0; i < count; i++)
+            {
+                SpawnThing(thing, finalCol, finalRow, placementData);
+                placementData.LogSpawn(thing.StaticName);
+                if (!placementData.CanSpawn(thing.StaticName))
+                    return;
+            }
+            */
+        }
+
+        // SpawnThing
+        private void SpawnThing(GameThing thing, int col, int row, PlacementData placementData)
+        {
+            /*
             var sizeInCells = grid.GetRequiredGridSpace(thing);
             var ltPos = grid.GetPixelArea(col, row).GetPoint(RectanglePoint.LeftTop) + new Vector2(.5f);
             var rect = new RectangleF(ltPos.X, ltPos.Y, sizeInCells.Width * grid.CellSize, sizeInCells.Height * grid.CellSize);
@@ -209,58 +102,24 @@ namespace Remizione
 
             if (placementData.MaximumPerRun > 0)
                 RunManager.LogSpawn(thing.StaticName);
+            */
         }
 
         #endregion
 
         #region Protected members
 
-        // Grid
-        protected ProceduralRoomGrid Grid { get; } = new("Grid");
-
-        // OnDraw
-        protected override void OnDraw(GameTime gameTime)
-        {
-            base.OnDraw(gameTime);
-            Game.SpriteBatch.Begin(Session.Camera);
-
-            if (ShowGrid)
-                DrawGrid(gameTime);
-
-            Game.SpriteBatch.End();
-        }
-
         // OnLoad
         protected override void OnLoad()
         {
             base.OnLoad();
 
-            if (!populated)
-            {
-                populated = true;
+            CustomWidth = (int)BoundingBox.Width;
+            CustomHeight = (int)BoundingBox.Height;
 
-                CustomWidth = (int)BoundingBox.Width;
-                CustomHeight = (int)BoundingBox.Height;
-                Grid.Resize(CustomWidth, CustomHeight);
-
-                if (WalkArea != null)
-                {
-                    for (var row = 0; row < Grid.RowCount; row++)
-                    {
-                        for (var col = 0; col < Grid.ColCount; col++)
-                        {
-                            var cellArea = Grid.GetPixelArea(col, row);
-
-                            if (!WalkArea.Polygon.BoundingRectangleF.Contains(cellArea))
-                                Grid.MarkOccupied(string.Empty, col, row);
-                        }
-                    }
-                }
-
-                OnPopulating();
-                Populate();
-                OnPopulated();
-            }
+            OnPopulating();
+            Populate();
+            OnPopulated();
         }
 
         // OnPopulating
@@ -280,14 +139,19 @@ namespace Remizione
             if (data.Count == 0)
                 return;
 
-            foreach (var phase in Enum.GetValues<PlacementPhase>())
+            var placeholders = new List<Placeholder>(Placeholders);
+            placeholders.Shuffle(Random);
+
+            // Placeholders
+            foreach (var placeholder in placeholders)
             {
-                if (phase == PlacementPhase.None)
+                if (placeholder.Used)
                     continue;
 
-                var staticThings = GetStaticThings(phase);
+                var staticThings = GetStaticThings(placeholder);
                 staticThings.Shuffle(Random);
 
+                // Filtered things
                 foreach (var thing in staticThings)
                 {
                     var placementDataList = data.GetList(thing.StaticName);
@@ -301,25 +165,11 @@ namespace Remizione
                         if (!placementData.IsAvailable(this, thing, Random))
                             continue;
 
-                        placementData.ResetSpawnCount();
-
-                        switch (placementData.DistributionStrategy)
-                        {
-                            // Random
-                            case PlacementDistributionStrategy.Random:
-                                DistributeRandomly(Grid, thing, placementData);
-                                break;
-
-                            // Clump
-                            case PlacementDistributionStrategy.Clump:
-                                DistributeClumped(Grid, thing, placementData);
-                                break;
-
-                            // NoiseMap 
-                            case PlacementDistributionStrategy.NoiseMap:
-                                DistributeWithNoiseMap(Grid, thing, placementData, randomSeed);
-                                break;
-                        }
+                        var instance = CreateRuntimeThingCloneCore(thing.StaticName);
+                        instance.Position = placeholder.Polygon.BoundingRectangleF.GetPoint(RectanglePoint.Bottom);
+                        Children.Add(instance);
+                        placeholder.Used = true;
+                        break;
                     }
                 }
             }
@@ -329,6 +179,14 @@ namespace Remizione
         protected Random Random { get; }
 
         #endregion
+
+        // AddPlaceholder
+        public Placeholder AddPlaceholder(string name, PlaceholderType type, PlaceholderSize size, bool flipImage, string vertices)
+        {
+            var result = new Placeholder(name, type, size, flipImage, ReadOnlyPolygon.GetVertices(vertices));
+            placeholders.Add(result);
+            return result;
+        }
 
         // CanPlaceThingAt
         public bool CanPlaceThingAt(GameThing thing, Vector2 position)
@@ -359,6 +217,9 @@ namespace Remizione
             return CreateRuntimeThingCloneCore(staticName);
         }
 
+        // Placeholders
+        public ReadOnlyCollection<Placeholder> Placeholders { get; }
+
         // PlaceRuntimeCloneAt
         public GameThing? PlaceRuntimeCloneAt(GameThing thing, Vector2 position)
         {
@@ -381,9 +242,6 @@ namespace Remizione
 
         // RoomGraph
         public RoomGraph RoomGraph { get; }
-
-        // ShowGrid
-        public static bool ShowGrid { get; set; }
 
         // ToString
         public override string ToString() => $"ProcRoom_{RoomGraph.Id}";

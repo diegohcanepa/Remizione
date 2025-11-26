@@ -29,7 +29,6 @@ namespace Adberration.Scripting
         protected static readonly string DecimalsArg = "#decimals";
         protected static readonly string DelayArg = "#delay";
         protected static readonly string DepthOffsetArg = "#depth-offset";
-        protected static readonly string DistributionArg = "#distribution";
         protected static readonly string DurabilityArg = "#durability";
         protected static readonly string DurationArg = "#duration";
         protected static readonly string EmitterArg = "#emitter";

@@ -9,8 +9,8 @@
 	<Music Name="Arrival" MaxInstances="2" />
 	<Music Name="FirstSteps" MaxInstances="2" />
 	<Music Name="GameOver" MaxInstances="2" />
-	<Music Name="Monitor" MaxInstances="2" Tags="Monitor" />
-	<Music Name="PilgrimPath01" MaxInstances="2" Tags="PilgrimPath" />
+	<Music Name="Monitor" MaxInstances="2" Tags="Monitor,Ride" />
+	<Music Name="PilgrimPath01" MaxInstances="2" Tags="Ride" />
 	<Music Name="Ride01" MaxInstances="2" Tags="Ride" />
 	<Music Name="ThemePark" MaxInstances="2" Tags="ThemePark" />
 	<Music Name="Toilet" MaxInstances="2" Tags="Toilet" />

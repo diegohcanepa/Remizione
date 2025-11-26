@@ -395,12 +395,6 @@ namespace Remizione
             if (!IsActive)
                 return HandleInputResult.Unhandled;
 
-            if (InputManager.DefaultPlayer.Keyboard.IsKeyPressed(Keys.G))
-            {
-                ProceduralRoom.ShowGrid = !ProceduralRoom.ShowGrid;
-                return HandleInputResult.Handled;
-            }
-
             if (InputManager.DefaultPlayer.Keyboard.IsKeyPressed(Keys.V))
             {
                 leftPanelVisible = !leftPanelVisible;

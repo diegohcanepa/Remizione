@@ -13,9 +13,8 @@ namespace Remizione
         private readonly List<PlacementCondition> conditions = [];
 
         // Constructor
-        public PlacementData(PlacementDistributionStrategy distributionStrategy, PlacementCondition[] conditions, Int32Range rolls, int maximum, int maximumPerRun)
+        public PlacementData(PlacementCondition[] conditions, Int32Range rolls, int maximum, int maximumPerRun)
         {
-            this.DistributionStrategy = distributionStrategy;
             this.conditions.AddRange(conditions);
             this.Conditions = new(conditions);
             this.Rolls = rolls;
@@ -37,9 +36,6 @@ namespace Remizione
 
         // Conditions
         public ReadOnlyCollection<PlacementCondition> Conditions { get; }
-
-        // DistributionStrategy
-        public PlacementDistributionStrategy DistributionStrategy { get; }
 
         // IsAvailable
         public bool IsAvailable(ProceduralRoom room, GameThing thing, Random random)

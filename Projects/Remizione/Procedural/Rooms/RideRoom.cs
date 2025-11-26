@@ -54,12 +54,8 @@ namespace Remizione
                 if (CreateRuntimeClone("RideDoorDown") is RideDoor downDoor)
                 {
                     downDoor.Position = DoorDownPosition;
-                    var pixelArea = downDoor.GetGridPixelArea();
-                    pixelArea.Offset(0, -pixelArea.Height);
-                    Grid.ReserveSpace("Door", pixelArea.ToRectangle());
                     if (RoomGraph.Down != null)
                         downDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Down.Id);
-
                     Children.Add(downDoor);
                 }
             }
