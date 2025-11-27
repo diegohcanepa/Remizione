@@ -27,7 +27,9 @@ namespace Remizione
         private Actor? player;
         private Vector2? playerPosition;
         private readonly RoomEditor? roomEditor;
+        private readonly List<Prop> staticProps = [];
         private readonly List<GameThing> staticThings = [];
+        private readonly Dictionary<string, Prop> staticPropsDict = [];
         private readonly Dictionary<string, GameThing> staticThingsDict = [];
         private readonly UseKeyItemScene useKeyItemScene;
 
@@ -43,6 +45,7 @@ namespace Remizione
             this.Inventory = new(this);
             this.Environment = new Environment(this);
             this.HUD = new HUD(this);
+            this.StaticProps = new(staticProps);
             this.StaticThings = new(staticThings);
             this.IsMouseVisible = false;
 
@@ -160,7 +163,6 @@ namespace Remizione
             scriptRegistry.RegisterStatement("add-item", typeof(AddItemCommand), CodingContext.Any);
             scriptRegistry.RegisterStatement("add-light", typeof(AddLightCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("add-resistance", typeof(AddResistanceCommand), CodingContext.Initialization);
-            scriptRegistry.RegisterStatement("add-loot-item", typeof(AddLootItemCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("add-trigger-area", typeof(AddTriggerAreaCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("add-walk-area", typeof(AddWalkAreaCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("animate-actor", typeof(AnimateActorCommand));
@@ -170,12 +172,10 @@ namespace Remizione
             scriptRegistry.RegisterStatement("await-player-approach", typeof(AwaitPlayerApproachCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("await-popup", typeof(AwaitPopupCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("begin-resistance-table", typeof(BeginResistanceTableCommand), CodingContext.Initialization);
-            scriptRegistry.RegisterStatement("begin-loot-table", typeof(BeginLootTableCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("create-dialog-block", typeof(CreateDialogBlockCommand));
             scriptRegistry.RegisterStatement("echo", typeof(EchoCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("empty-pilgrim-sack", typeof(EmptyPilgrimSackCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("end-resistance-table", typeof(EndResistanceTableCommand), CodingContext.Initialization);
-            scriptRegistry.RegisterStatement("end-loot-table", typeof(EndLootTableCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             scriptRegistry.RegisterStatement("exit-session", typeof(ExitSessionCommand));
             scriptRegistry.RegisterStatement("meta-item", typeof(MetaItemCommand), CodingContext.Declaration);
@@ -343,6 +343,12 @@ namespace Remizione
                     staticThings.Add(thing);
                     staticThingsDict.Add(thing.StaticName, thing);
 
+                    if (thing is Prop prop)
+                    {
+                        staticProps.Add(prop);
+                        staticPropsDict.Add(prop.StaticName, prop);
+                    }
+
                     // Collect friendly items
                     metaItems.Clear();
                     for (var i = 0; i < keyItems.Count; i++)
@@ -501,10 +507,16 @@ namespace Remizione
                 return [];
         }
 
+        // GetStaticProp
+        public Prop? GetStaticProp(string name)
+        {
+            return staticPropsDict.TryGetValue(name, out var result) ? result : null;
+        }
+
         // GetStaticThing
         public GameThing? GetStaticThing(string name)
         {
-            return staticThingsDict.TryGetValue(name, out var thing) ? thing : null;
+            return staticThingsDict.TryGetValue(name, out var result) ? result : null;
         }
 
         // HasFriendlyItems
@@ -634,8 +646,11 @@ namespace Remizione
             inventoryScene.SceneController.Push();
         }
 
+        // StaticProps
+        public NamedObjectReadOnlyCollection<GameThing> StaticProps { get; }
+
         // StaticThings
-        public NamedObjectReadOnlyCollection<GameThing> StaticThings { get; }
+        public NamedObjectReadOnlyCollection<Prop> StaticThings { get; }
 
         // Tickets
         public int Tickets { get; set; }

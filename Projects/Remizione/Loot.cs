@@ -9,14 +9,11 @@ namespace Remizione
     internal static class Loot
     {
         // TryDropLoot
-        internal static bool TryDropLoot(GameRoom room, Vector2 position, string tableName, out MetaItem? metaItem)
+        internal static bool TryDropLoot(GameRoom room, ChanceTable chanceTable, Vector2 position, string tableName, out MetaItem? metaItem)
         {
             metaItem = null;
 
-            if (ChanceTable.Find(tableName) is not ChanceTable table)
-                return false;
-
-            if (table.GetValue() is not ChanceTableItem lootItem)
+            if (chanceTable.GetValue() is not ChanceTableItem lootItem)
                 return false;
 
             // Get meta item based on realm, category or name

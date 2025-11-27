@@ -15,8 +15,6 @@ namespace Remizione
             : base(session, string.Empty, graph)
         {
             AllowGlobalLight = true;
-            AtlasName = $"{graph.RoomStyle}RideRoom";
-            DefaultImageName = AtlasName;
         }
 
         #region Private members
@@ -90,8 +88,10 @@ namespace Remizione
                 if (MetaItem.Find(MetaItem.CoinItemName) is MetaItem metaItem)
                     Session.ObjectPools.Pickups.Get()?.Drop(this, dropPosition, metaItem);
             }
-            else if (Loot.TryDropLoot(this, dropPosition, GetType().Name, out _))
-                lootDropped = true;
+            else
+                Loot.TryDropLoot(this, Config.LootTable, dropPosition, GetType().Name, out _);
+                
+            lootDropped = true;
         }
 
         // OnPopulating

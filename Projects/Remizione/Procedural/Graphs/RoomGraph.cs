@@ -38,9 +38,6 @@
         // Right
         public RoomGraph? Right { get; set; }
 
-        // RoomShape
-        public RideRoomShape RoomShape { get; }
-
         // RoomStyle
         public RideRoomStyle RoomStyle { get; }
 

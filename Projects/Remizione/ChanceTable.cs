@@ -121,6 +121,9 @@ namespace Remizione
             return null;
         }
 
+        // IsEmpty
+        public bool IsEmpty => items.Count == 0;
+
         // Items
         public ReadOnlyCollection<ChanceTableItem> Items { get; }
 

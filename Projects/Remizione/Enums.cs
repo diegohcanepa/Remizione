@@ -108,9 +108,6 @@ namespace Remizione
     // RideRoomStyle
     public enum RideRoomStyle { Default }
 
-    // RideRoomShape
-    public enum RideRoomShape { Default }
-
     // RoomSize
     public enum RoomSize { Small, Medium }
 

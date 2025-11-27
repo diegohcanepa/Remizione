@@ -257,7 +257,7 @@ namespace Remizione
             if (Session.Room is not ProceduralRoom room)
                 return;
 
-            Loot.TryDropLoot(room, Position, LootTableName, out _);
+            //Loot.TryDropLoot(room, Position, LootTableName, out _);
 
             if (Random.Shared.NextDouble() < TicketRewardChance)
             {

@@ -44,7 +44,7 @@
 #begin Atlases/Arena1.xml
 /copy:Atlases/Arena1.xml
 
-#begin Atlases/DefaultRideRoom.png
+#begin Atlases/BlueStoneRoom.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -54,10 +54,10 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Atlases/DefaultRideRoom.png
+/build:Atlases/BlueStoneRoom.png
 
-#begin Atlases/DefaultRideRoom.xml
-/copy:Atlases/DefaultRideRoom.xml
+#begin Atlases/BlueStoneRoom.xml
+/copy:Atlases/BlueStoneRoom.xml
 
 #begin Atlases/Environment.png
 /importer:TextureImporter
@@ -940,6 +940,12 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Color
 /build:Fonts/CommonOutline.bmp
+
+#begin System/PropConfig.json
+/copy:System/PropConfig.json
+
+#begin System/RoomConfig.json
+/copy:System/RoomConfig.json
 
 #begin System/ScriptLibrary.esl
 /copy:System/ScriptLibrary.esl

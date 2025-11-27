@@ -27,7 +27,7 @@ namespace Remizione
 
             // Default
             if (roomGraph.RoomStyle == RideRoomStyle.Default)
-                result = new DefaultRideRoom(session, roomGraph);
+                result = new BlueStoneRoom(session, roomGraph);
 
             return result ?? throw new InvalidOperationException("Cannot create ride room.");
         }

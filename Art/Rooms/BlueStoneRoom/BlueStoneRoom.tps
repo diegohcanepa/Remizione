@@ -124,7 +124,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../Projects/Content/Atlases/DefaultRideRoom.xml</filename>
+                <filename>../../../Projects/Content/Atlases/BlueStoneRoom.xml</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -173,7 +173,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">DefaultRideRoom-assets/DefaultRideRoom.png</key>
+            <key type="filename">BlueStoneRoom-assets/BlueStoneRoom.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -195,7 +195,7 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>DefaultRideRoom-assets</filename>
+                    <filename>BlueStoneRoom-assets</filename>
                 </array>
             </struct>
         </map>
