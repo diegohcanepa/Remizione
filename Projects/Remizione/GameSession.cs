@@ -288,9 +288,9 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(CompletedRuns)]?.Value is string completedRuns)
                 this.CompletedRuns = XmlConvert.ToInt32(completedRuns);
 
-            // Deaths
-            if (sessionNode.Attributes[nameof(Deaths)]?.Value is string deaths)
-                this.Deaths = XmlConvert.ToInt32(deaths);
+            // FailedRuns
+            if (sessionNode.Attributes[nameof(FailedRuns)]?.Value is string failedRuns)
+                this.FailedRuns = XmlConvert.ToInt32(failedRuns);
 
             // Tickets
             if (sessionNode.Attributes[nameof(Tickets)]?.Value is string tickets)
@@ -386,7 +386,7 @@ namespace Remizione
             {
                 if (Player?.IsDead == true)
                 {
-                    Deaths++;
+                    FailedRuns++;
                     AwaitRoutine(RoutineNames.GameOver);
                 }
             }
@@ -409,8 +409,8 @@ namespace Remizione
             // CompletedRuns
             output.WriteAttributeString(nameof(CompletedRuns), XmlConvert.ToString(CompletedRuns));
 
-            // Deaths
-            output.WriteAttributeString(nameof(Deaths), XmlConvert.ToString(Deaths));
+            // FailedRuns
+            output.WriteAttributeString(nameof(FailedRuns), XmlConvert.ToString(FailedRuns));
 
             // Tickets
             output.WriteAttributeString(nameof(Tickets), XmlConvert.ToString(Tickets));
@@ -444,7 +444,7 @@ namespace Remizione
         {
             Tickets = 0;
             Inventory.Clear();
-            Deaths++;
+            FailedRuns++;
             EndRun();
         }
 
@@ -478,16 +478,16 @@ namespace Remizione
         [ScriptProperty]
         public int CompletedRuns { get; set; }
 
-        // Deaths
-        [ScriptProperty]
-        public int Deaths { get; set; }
-
         // DialogOptionId
         [ScriptProperty]
         public int DialogOptionId { get; set; }
 
         // Environment
         public Environment Environment { get; }
+
+        // FailedRuns
+        [ScriptProperty]
+        public int FailedRuns { get; set; }
 
         // Game
         public new RemizioneGame Game { get; }
@@ -652,6 +652,6 @@ namespace Remizione
 
         // TotalRuns
         [ScriptProperty]
-        public int TotalRuns => CompletedRuns + Deaths;
+        public int TotalRuns => CompletedRuns + FailedRuns;
     }
 }

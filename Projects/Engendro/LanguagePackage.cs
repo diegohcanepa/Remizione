@@ -23,8 +23,11 @@ namespace Engendro
         // Constructor
         private LanguagePackage(string languageTag, string path)
         {
-            this.LanguageTag = CodeContract.NotEmpty(languageTag, nameof(languageTag));
-            this.Path = CodeContract.NotEmpty(path, nameof(path));
+            CodeContract.NotEmpty(languageTag, nameof(languageTag));
+            CodeContract.NotEmpty(path, nameof(path));
+
+            this.LanguageTag = languageTag;
+            this.Path = path;
             this.CultureInfo = CultureInfo.GetCultureInfo(languageTag) ?? CultureInfo.InvariantCulture;
         }
 

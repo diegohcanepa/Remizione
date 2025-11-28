@@ -42,6 +42,8 @@ namespace Engendro
         public EngendroGame(string title, string contentRootDirectory, int nativeWidth, int nativeHeight, RunningPlatform platform)
             : base()
         {
+            CodeContract.NotEmpty(contentRootDirectory, nameof(contentRootDirectory));
+
             if (Instance != null)
                 throw new InvalidOperationException("This class cannot be instantiated twice.");
             else
@@ -54,7 +56,7 @@ namespace Engendro
                 GraphicsProfile = GraphicsProfile.HiDef
             };
 
-            Content.RootDirectory = CodeContract.NotEmpty(contentRootDirectory, nameof(contentRootDirectory));
+            Content.RootDirectory = contentRootDirectory;
 
             this.ViewportAdapter = new ViewportAdapter(this, nativeWidth, nativeHeight);
             this.Camera = new Camera(this, "UI", nativeWidth, nativeHeight);

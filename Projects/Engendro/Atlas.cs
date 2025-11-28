@@ -28,11 +28,13 @@ namespace Engendro
         // Constructor
         public Atlas(ContentManager content, string name, string assetName, bool useFolderNames)
         {
+            CodeContract.NotEmpty(name, nameof(name));
+
             // Content
             this.Content = content;
 
             // Name
-            this.Name = CodeContract.NotEmpty(name, nameof(name));
+            this.Name = name;
 
             // Name must be unique
             if (instancesByName.ContainsKey(name))

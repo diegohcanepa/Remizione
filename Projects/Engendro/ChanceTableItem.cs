@@ -1,4 +1,4 @@
-﻿namespace Remizione
+﻿namespace Engendro
 {
     /// <summary>
     /// ChanceTableItem

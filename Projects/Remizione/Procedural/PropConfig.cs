@@ -1,5 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Remizione.Procedural;
+﻿using Engendro;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -21,13 +21,15 @@ namespace Remizione
         private static readonly Dictionary<string, PropConfig> data = [];
 
         // Constructor
-        private PropConfig(string name, IList<string> tags, ChanceTable lootTable, IList<string> pools, float weight, int maxPerRoom, int maxPerRun)
+        private PropConfig(string name, IList<string> tags, ChanceTable lootTable, IList<string> pools, float weight, int maxPerRoom, int maxPerRun, int requiredRuns, int requiredCompletedRuns)
             : base(name, tags, lootTable)
         {
             this.Pools = new(pools);
             this.Weight = weight;
             this.MaxPerRoom = maxPerRoom;
             this.MaxPerRun = maxPerRun;
+            this.RequiredRuns = requiredRuns;
+            this.RequiredCompletedRuns = requiredCompletedRuns;
         }
 
         #region Static members
@@ -71,6 +73,16 @@ namespace Remizione
                     if (propElement.TryGetProperty("maxPerRun", out JsonElement maxPerRunElement))
                         maxPerRun = maxPerRunElement.GetInt32();
 
+                    // RequiredCompletedRuns
+                    var requiredCompletedRuns = 0;
+                    if (propElement.TryGetProperty("requiredCompletedRuns", out JsonElement requiredCompletedRunsElement))
+                        requiredCompletedRuns = requiredCompletedRunsElement.GetInt32();
+
+                    // RequiredRuns
+                    var requiredRuns = 0;
+                    if (propElement.TryGetProperty("requiredRuns", out JsonElement requiredRunsElement))
+                        requiredRuns = requiredRunsElement.GetInt32();
+
                     // Tags
                     var tags = ConfigHelper.GetTags(propElement);
 
@@ -81,7 +93,7 @@ namespace Remizione
                     var pools = ConfigHelper.GetPools(propElement);
 
                     // Add configuration
-                    var propConfig = new PropConfig(propName, tags, loot, pools, weight, maxPerRoom);
+                    var propConfig = new PropConfig(propName, tags, loot, pools, weight, maxPerRoom, maxPerRun, requiredRuns, requiredCompletedRuns);
                     data.Add(propName, propConfig);
                 }
             }
@@ -100,6 +112,12 @@ namespace Remizione
 
         // Pools
         public ReadOnlyCollection<string> Pools { get; }
+
+        // RequiredCompletedRuns
+        public int RequiredCompletedRuns { get; }
+
+        // RequiredRuns
+        public int RequiredRuns { get; }
 
         // ToString
         public override string ToString() => Name;

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Remizione
+namespace Engendro
 {
     /// <summary>
     /// ChanceTable
@@ -20,7 +20,7 @@ namespace Remizione
         }
 
         // Add
-        public void Add(string value, int amount, float weight)
+        public void Add(string value, float weight, int amount = 1)
         {
             if (string.IsNullOrEmpty(value))
                 return;

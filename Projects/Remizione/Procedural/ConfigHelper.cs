@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Engendro;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
-namespace Remizione.Procedural
+namespace Remizione
 {
     /// <summary>
     /// ConfigHelper
@@ -43,7 +44,7 @@ namespace Remizione.Procedural
                     if (lootEntryElement[0].GetString() is not string lootEntryName)
                         throw new InvalidDataException("Loot entry name not found.");
 
-                    loot.Add(lootEntryName, 1, lootEntryElement[1].GetInt32());
+                    loot.Add(lootEntryName, lootEntryElement[1].GetInt32());
                 }
             }
 

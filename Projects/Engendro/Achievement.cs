@@ -8,8 +8,10 @@
         // Constructor
         internal Achievement(int index, string name)
         {
+            CodeContract.NotEmpty(name, nameof(name));
+
             this.Index = index;
-            this.Name = CodeContract.NotEmpty(name, nameof(name));
+            this.Name = name;
         }
 
         // Index

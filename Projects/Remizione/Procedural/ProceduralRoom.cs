@@ -64,6 +64,10 @@ namespace Remizione
                 if (PropConfig.GetConfig(prop.StaticName) is not PropConfig propConfig)
                     continue;
 
+                // Run constraints
+                if (!PassesRunConstraints(propConfig))
+                    continue;
+
                 // DenyPools
                 if (scope.DenyPools.Count > 0)
                 {
@@ -122,6 +126,34 @@ namespace Remizione
             }
 
             return false;
+        }
+
+        // PassesRunConstraints
+        private bool PassesRunConstraints(PropConfig propConfig)
+        {
+            // MaxPerRun
+            if (propConfig.MaxPerRun > 0)
+            {
+                int spawnedRun = RunManager.GetSpawnCount(propConfig.Name);
+                if (spawnedRun >= propConfig.MaxPerRun)
+                    return false;
+            }
+
+            // RequiredRuns
+            if (propConfig.RequiredRuns > 0)
+            {
+                if (Session.TotalRuns < propConfig.RequiredRuns)
+                    return false;
+            }
+
+            // RequiredCompletedRuns
+            if (propConfig.RequiredCompletedRuns > 0)
+            {
+                if (Session.CompletedRuns < propConfig.RequiredCompletedRuns)
+                    return false;
+            }
+
+            return true;
         }
 
         #endregion
@@ -183,6 +215,7 @@ namespace Remizione
             {
                 spawnedCounts[filteredProps[i].Name] = 0;
             }
+
             // 3) Shuffle placeholders
             var placeholders = new List<Placeholder>(Placeholders);
             placeholders.Shuffle(Random);
@@ -238,7 +271,7 @@ namespace Remizione
                 var chanceTable = new ChanceTable();
                 foreach (var prop in candidates)
                 {
-                    chanceTable.Add(prop.Name, 1, prop.Weight);
+                    chanceTable.Add(prop.Name, prop.Weight);
                 }
 
                 if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)

@@ -10,21 +10,17 @@ namespace Engendro
     public static class CodeContract
     {
         // EqualOrGreaterThanZero
-        public static float EqualOrGreaterThanZero(float value, string paramName)
+        public static void EqualOrGreaterThanZero(float value, string paramName)
         {
             if (value < 0)
                 throw new ArgumentOutOfRangeException(paramName, "Value must be equal or greater than zero.");
-
-            return value;
         }
 
         // GreaterThanZero
-        public static float GreaterThanZero(float value, string paramName)
+        public static void GreaterThanZero(float value, string paramName)
         {
             if (value < 1)
                 throw new ArgumentOutOfRangeException(paramName, "Value must be greater than zero.");
-
-            return value;
         }
 
         // IsValidName
@@ -60,12 +56,10 @@ namespace Engendro
         }
 
         // NotEmpty
-        public static string NotEmpty(string? value, string paramName)
+        public static void NotEmpty(string? value, string paramName)
         {
             if (string.IsNullOrWhiteSpace(value))
                 throw new ArgumentException("Value cannot be null, empty or contain only whitespaces.", paramName);
-
-            return value;
         }
 
         // NotLoaded
@@ -74,12 +68,6 @@ namespace Engendro
             NotEmpty(objectName, nameof(objectName));
             if (!isLoaded)
                 throw new InvalidOperationException($"The {objectName} object is not loaded.");
-        }
-
-        // NotNull
-        public static T NotNull<T>(T? value, string? paramName) where T : class
-        {
-            return value ?? throw new ArgumentNullException(paramName);
         }
 
         // ThrowDuplicatedNameException
@@ -96,21 +84,17 @@ namespace Engendro
         }
 
         // ValidRange
-        public static float ValidRange(float value, float min, float max, string paramName)
+        public static void ValidRange(float value, float min, float max, string paramName)
         {
             if (!value.IsBetween(min, max))
                 throw new ArgumentOutOfRangeException(paramName, $"Value must be between {min} and {max}.");
-
-            return value;
         }
 
         // ValidRatio
-        public static float ValidRatio(float value, string paramName)
+        public static void ValidRatio(float value, string paramName)
         {
             if (!value.IsBetween(0, 1))
                 throw new ArgumentOutOfRangeException(paramName, $"Value must be between 0 and 1.");
-
-            return value;
         }
     }
 }
