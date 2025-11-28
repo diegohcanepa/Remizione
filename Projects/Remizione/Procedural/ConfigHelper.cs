@@ -52,7 +52,7 @@ namespace Remizione
         }
 
         // GetScopeRule
-        internal static RoomConfigScopeRule GetScopeRule(JsonElement roomElement, string propertyName)
+        internal static ConfigScopeRule GetScopeRule(JsonElement roomElement, string propertyName)
         {
             static void Populate(JsonElement tags, List<string> list)
             {
@@ -88,7 +88,7 @@ namespace Remizione
                     Populate(denyTagsElement, denyTags);
             }
 
-            return new RoomConfigScopeRule(allowPools, denyPools, allowTags, denyTags);
+            return new ConfigScopeRule(allowPools, denyPools, allowTags, denyTags);
         }
 
         // GetPools

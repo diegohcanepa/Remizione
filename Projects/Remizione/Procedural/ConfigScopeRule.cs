@@ -4,12 +4,12 @@ using System.Collections.ObjectModel;
 namespace Remizione
 {
     /// <summary>
-    /// RoomConfigScopeRule
+    /// ConfigScopeRule
     /// </summary>
-    public sealed class RoomConfigScopeRule
+    public sealed class ConfigScopeRule
     {
         // Constructor
-        public RoomConfigScopeRule(IList<string> allowPools, IList<string> denyPools, IList<string> allowTags, IList<string> denyTags)
+        public ConfigScopeRule(IList<string> allowPools, IList<string> denyPools, IList<string> allowTags, IList<string> denyTags)
         {
             this.AllowPools = new(allowPools);
             this.DenyPools = new(denyPools);

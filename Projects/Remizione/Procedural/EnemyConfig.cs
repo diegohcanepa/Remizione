@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 
@@ -14,53 +15,36 @@ namespace Remizione
         private static readonly Dictionary<string, EnemyConfig> data = [];
 
         // Constructor
-        private EnemyConfig(string name, IList<string> tags, ChanceTable lootTable)
-            : base(name, tags, lootTable)
+        private EnemyConfig(JsonElement element)
+            : base(element)
         {
+            // MaxPerRoom
+            if (element.TryGetProperty("maxPerRoom", out JsonElement maxPerRoomElement))
+                MaxPerRoom = maxPerRoomElement.GetInt32();
         }
 
         #region Static members
 
         // GetConfig
-        public static EnemyConfig GetConfig(string propName)
+        public static EnemyConfig? GetConfig(string propName)
         {
-            return data[propName];
+            return data.TryGetValue(propName, out EnemyConfig? config) ? config : null;
         }
 
         // Load
         public static void Load(string fileName)
         {
-            try
+            var enemies = LoadCore<EnemyConfig>(fileName, "enemies", (JsonElement element) => new EnemyConfig(element));
+
+            foreach (var enemyConfig in enemies)
             {
-                using var input = TitleContainer.OpenStream(fileName);
-                using JsonDocument doc = JsonDocument.Parse(input);
-                var root = doc.RootElement;
-
-                if (!root.TryGetProperty("props", out JsonElement propsArray) || propsArray.ValueKind != JsonValueKind.Array)
-                    throw new InvalidDataException("Prop is not an array.");
-
-                foreach (JsonElement propElement in propsArray.EnumerateArray())
-                {
-                    // Name
-                    if (propElement.GetProperty("name").GetString() is not string propName)
-                        throw new InvalidDataException("Prop name not found.");
-
-                    // Tags
-                    var tags = ConfigHelper.GetTags(propElement);
-
-                    // Loot
-                    var loot = ConfigHelper.GetLoot(propElement);
-
-                    // Add configuration
-                    var enemyConfig = new EnemyConfig(propName, tags, loot);
-                    data.Add(propName, enemyConfig);
-                }
-            }
-            catch (FileNotFoundException)
-            {
+                data.Add(enemyConfig.Name, enemyConfig);
             }
         }
 
         #endregion
+
+        // MaxPerRoom
+        public int MaxPerRoom { get; }
     }
 }
