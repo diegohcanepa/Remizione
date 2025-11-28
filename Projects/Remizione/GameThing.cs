@@ -8,10 +8,11 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace Remizione
 {
-    /// <summary>
+    /// <summary> 
     /// GameThing 
     /// </summary>
     public abstract class GameThing : Thing, IHoleArea, ILightSource, ILootContext
@@ -162,7 +163,9 @@ namespace Remizione
                 return RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top);
             }
             else
+            {
                 return null;
+            }
         }
 
         // GetPivotBasedPolyOffset
@@ -224,7 +227,10 @@ namespace Remizione
         #region Protected members
 
         // CanCheckCollisions
-        protected virtual bool CanCheckCollisions() => CollisionDetection;
+        protected virtual bool CanCheckCollisions()
+        {
+            return CollisionDetection;
+        }
 
         // CanInteractCore
         protected virtual bool CanInteractCore(Actor requester)
@@ -743,7 +749,9 @@ namespace Remizione
                         floatingTween.Start(TweenStyle.CubicInOut, 0, field, 200, -1);
                     }
                     else
+                    {
                         floatingTween?.Stop();
+                    }
                 }
             }
         }
@@ -787,7 +795,10 @@ namespace Remizione
         }
 
         // GetFloatingTextPosition
-        public Vector2 GetFloatingTextPosition(Vector2 knockback) => GetFloatingTextPosition(knockback, 0, 0);
+        public Vector2 GetFloatingTextPosition(Vector2 knockback)
+        {
+            return GetFloatingTextPosition(knockback, 0, 0);
+        }
 
         // GetFloatingTextPosition
         public Vector2 GetFloatingTextPosition(Vector2 knockback, int xOffset, int yOffset)
@@ -824,7 +835,10 @@ namespace Remizione
         }
 
         // GetOverheadPosition
-        public Vector2 GetOverheadPosition() => GetOverheadPosition(0, 0);
+        public Vector2 GetOverheadPosition()
+        {
+            return GetOverheadPosition(0, 0);
+        }
 
         // GetOverheadPosition
         public Vector2 GetOverheadPosition(int xOffset, int yOffset)
@@ -846,7 +860,10 @@ namespace Remizione
         }
 
         // GetThrowableSpawnPosition
-        public Vector2 GetThrowableSpawnPosition() => this.GetAbsolutePoint(ThrowableSpawnPosition);
+        public Vector2 GetThrowableSpawnPosition()
+        {
+            return this.GetAbsolutePoint(ThrowableSpawnPosition);
+        }
 
         // HighlightInteraction
         [ScriptProperty]
@@ -1005,7 +1022,10 @@ namespace Remizione
 
         // Reheal
         [ScriptMethod]
-        public virtual void Reheal() => HP = MaxHP;
+        public virtual void Reheal()
+        {
+            HP = MaxHP;
+        }
 
         // RenderLayer
         [ScriptProperty]
@@ -1147,7 +1167,7 @@ namespace Remizione
                     blinker.Stop();
 
                 if (amount > 0)
-                    Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), amount.ToString(), critical);
+                    Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), amount.ToString(CultureInfo.InvariantCulture), critical);
 
                 if (Session.Player == attacker)
                     Session.HUD.TargetMeter.Target = this;

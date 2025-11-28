@@ -9,18 +9,25 @@ namespace Remizione
 {
     /// <summary>
     /// PropConfig
+    /// name
+    /// loot
+    /// maxPerRoom
+    /// pools
+    /// tags
+    /// weight
     /// </summary>
     public sealed class PropConfig : Config
     {
         private static readonly Dictionary<string, PropConfig> data = [];
 
         // Constructor
-        private PropConfig(string name, IList<string> tags, ChanceTable lootTable, IList<string> pools, float weight, int maxPerRoom)
+        private PropConfig(string name, IList<string> tags, ChanceTable lootTable, IList<string> pools, float weight, int maxPerRoom, int maxPerRun)
             : base(name, tags, lootTable)
         {
             this.Pools = new(pools);
             this.Weight = weight;
             this.MaxPerRoom = maxPerRoom;
+            this.MaxPerRun = maxPerRun;
         }
 
         #region Static members
@@ -59,6 +66,11 @@ namespace Remizione
                     if (propElement.TryGetProperty("maxPerRoom", out JsonElement maxPerRoomElement))
                         maxPerRoom = maxPerRoomElement.GetInt32();
 
+                    // MaxPerRun
+                    var maxPerRun = 0;
+                    if (propElement.TryGetProperty("maxPerRun", out JsonElement maxPerRunElement))
+                        maxPerRun = maxPerRunElement.GetInt32();
+
                     // Tags
                     var tags = ConfigHelper.GetTags(propElement);
 
@@ -82,6 +94,9 @@ namespace Remizione
 
         // MaxPerRoom
         public int MaxPerRoom { get; }
+
+        // MaxPerRun
+        public int MaxPerRun { get; }
 
         // Pools
         public ReadOnlyCollection<string> Pools { get; }

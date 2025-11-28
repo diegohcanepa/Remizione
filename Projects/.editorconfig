@@ -1,0 +1,13 @@
+﻿[*.cs]
+
+# Default severity for all analyzer diagnostics
+dotnet_analyzer_diagnostic.severity = suggestion
+
+# IDE0008: Use explicit type
+dotnet_diagnostic.IDE0008.severity = none
+
+# IDE0007: Use implicit type
+dotnet_diagnostic.IDE0007.severity = none
+
+# IDE0003: Remove qualification
+dotnet_diagnostic.IDE0003.severity = none

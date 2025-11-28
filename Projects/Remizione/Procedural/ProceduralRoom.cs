@@ -56,125 +56,97 @@ namespace Remizione
         // FilterPropsByRoomScope
         private List<PropConfig> FilterPropsByRoomScope(IList<Prop> props)
         {
-            var result = new List<PropConfig>();
+            var outList = new List<PropConfig>();
             var scope = Config.PropScopeRule;
 
             foreach (var prop in props)
             {
-                if (PropConfig.GetConfig(prop.StaticName) is not PropConfig p)
+                if (PropConfig.GetConfig(prop.StaticName) is not PropConfig propConfig)
                     continue;
 
                 // DenyPools
-                if (scope.DenyPools.Count > 0 && p.Pools.Count > 0)
+                if (scope.DenyPools.Count > 0)
                 {
-                    var skip = false;
-                    for (int i = 0; i < scope.DenyPools.Count; i++)
-                    {
-                        for (int j = 0; j < p.Pools.Count; j++)
-                        {
-                            if (StringEquals(scope.DenyPools[i], p.Pools[j]))
-                            {
-                                skip = true;
-                                break;
-                            }
-                        }
-
-                        if (skip)
-                            break;
-                    }
-
-                    if (skip)
+                    if (Intersects(scope.DenyPools, propConfig.Pools))
                         continue;
                 }
 
-                // denyTags
-                if (scope.DenyTags.Count > 0 && p.Tags.Count > 0)
+                // DenyTags
+                if (scope.DenyTags.Count > 0)
                 {
-                    var skip = false;
-                    for (int i = 0; i < scope.DenyTags.Count; i++)
-                    {
-                        for (int j = 0; j < p.Tags.Count; j++)
-                        {
-                            if (StringEquals(scope.DenyTags[i], p.Tags[j]))
-                            {
-                                skip = true;
-                                break;
-                            }
-                        }
-
-                        if (skip)
-                            break;
-                    }
-
-                    if (skip)
+                    if (Intersects(scope.DenyTags, propConfig.Tags))
                         continue;
                 }
 
-                // AllowPools (if present require intersection)
-                if (scope.AllowPools.Count > 0 && p.Pools.Count > 0)
+                // AllowPools (si existe, requiere intersección)
+                if (scope.AllowPools.Count > 0)
                 {
-                    var ok = false;
-
-                    for (int i = 0; i < scope.AllowPools.Count; i++)
-                    {
-                        for (int j = 0; j < p.Pools.Count; j++)
-                        {
-                            if (StringEquals(scope.AllowPools[i], p.Pools[j]))
-                            {
-                                ok = true;
-                                break;
-                            }
-                        }
-
-                        if (ok)
-                            break;
-                    }
-
-                    if (!ok)
+                    if (!Intersects(scope.AllowPools, propConfig.Pools))
                         continue;
                 }
                 else
                 {
-                    // AllowTags: if contains "any" accept; else require intersection if list not empty
-                    if (scope.AllowTags.Count > 0 && p.Tags.Count > 0)
+                    // AllowTags VACÍO -> aceptar todo (equivalente a "any")
+                    if (scope.AllowTags.Count > 0)
                     {
-                        var ok = false;
-                        for (int i = 0; i < scope.AllowTags.Count; i++)
-                        {
-                            for (int j = 0; j < p.Tags.Count; j++)
-                            {
-                                if (StringEquals(scope.AllowTags[i], p.Tags[j]))
-                                {
-                                    ok = true;
-                                    break;
-                                }
-                            }
-
-                            if (ok)
-                                break;
-                        }
-
-                        if (!ok)
+                        // si hay al menos una tag en allow, requerimos intersección
+                        if (!Intersects(scope.AllowTags, propConfig.Tags))
                             continue;
                     }
+
+                    // si AllowTags está vacío o es null, no filtramos por tags (aceptamos)
                 }
 
                 // Passed all checks
-                result.Add(p);
+                outList.Add(propConfig);
             }
 
-            return result;
+            return outList;
         }
 
-        // StringEquals
-        private static bool StringEquals(string a, string b)
+        // Intersects
+        private static bool Intersects(ReadOnlyCollection<string> listA, ReadOnlyCollection<string> listB)
         {
-            return string.Compare(a, b, StringComparison.OrdinalIgnoreCase) == 0;
+            if (listA.Count == 0 || listB.Count == 0)
+                return false;
+
+            for (int i = 0; i < listA.Count; i++)
+            {
+                var va = listA[i];
+
+                for (int j = 0; j < listB.Count; j++)
+                {
+                    if (string.Equals(va, listB[j], StringComparison.OrdinalIgnoreCase))
+                        return true;
+                }
+            }
+
+            return false;
         }
 
         #endregion
 
         #region Protected members
+
+        // AddPlaceholder
+        protected void AddPlaceholder(string name, float fillChance, bool flipImage, string vertices, params string[] allowedTags)
+        {
+            for (var i = 0; i < placeholders.Count; i++)
+            {
+                if (placeholders[i].Name == name)
+                    throw new InvalidOperationException("Duplicated name.");
+            }
+
+            var placeholder = new Placeholder(name, fillChance, flipImage, ReadOnlyPolygon.GetVertices(vertices), allowedTags);
+            placeholders.Add(placeholder);
+        }
+
+        // AddWall
+        protected void AddWall(string vertices)
+        {
+            var wall = new RideRoomWall(Session, "36,0;36,46;5,111;0,111;0,0");
+            Children.Add(wall);
+        }
 
         // OnLoad
         protected override void OnLoad()
@@ -236,16 +208,8 @@ namespace Remizione
                     // placeholder.allowedTags (si existe) -> requiere intersección
                     if (ph.AllowedTags.Count > 0)
                     {
-                        bool ok = false;
-                        for (int t = 0; t < ph.AllowedTags.Count; t++)
-                        {
-                            for (int pt = 0; pt < p.Tags.Count; pt++)
-                            {
-                                if (StringEquals(ph.AllowedTags[t], p.Tags[pt])) { ok = true; break; }
-                            }
-                            if (ok) break;
-                        }
-                        if (!ok) continue;
+                        if (!Intersects(ph.AllowedTags, p.Tags))
+                            continue;
                     }
 
                     // MaxPerRoom: <=0 => ilimitado; >0 chequeamos contador
@@ -253,6 +217,14 @@ namespace Remizione
                     {
                         spawnedCounts.TryGetValue(p.Name, out var spawned);
                         if (spawned >= p.MaxPerRoom)
+                            continue;
+                    }
+
+                    // MaxPerRun
+                    if (p.MaxPerRun > 0)
+                    {
+                        var spawnedCount = RunManager.GetSpawnCount(p.Name);
+                        if (spawnedCount >= p.MaxPerRun)
                             continue;
                     }
 
@@ -275,12 +247,15 @@ namespace Remizione
                 if (PropConfig.GetConfig(chanceTableItem.Name) is not PropConfig chosen)
                     continue;
 
-                // incrementar contador si aplica
+                // Log spawn in room
                 if (chosen.MaxPerRoom > 0)
                 {
                     spawnedCounts.TryGetValue(chosen.Name, out var prev);
                     spawnedCounts[chosen.Name] = prev + 1;
                 }
+
+                // Log spawn in run
+                RunManager.LogSpawn(chosen.Name);
 
                 // marcar placeholder usado
                 ph.Used = true;
@@ -295,14 +270,6 @@ namespace Remizione
         protected Random Random { get; }
 
         #endregion
-
-        // AddPlaceholder
-        public Placeholder AddPlaceholder(string name, float fillChance, bool flipImage, string vertices, params string[] allowedTags)
-        {
-            var result = new Placeholder(name, fillChance, flipImage, ReadOnlyPolygon.GetVertices(vertices), allowedTags);
-            placeholders.Add(result);
-            return result;
-        }
 
         // CanPlaceThingAt
         public bool CanPlaceThingAt(GameThing thing, Vector2 position)

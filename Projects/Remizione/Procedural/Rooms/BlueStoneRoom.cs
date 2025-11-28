@@ -15,8 +15,8 @@ namespace Remizione
             AddWalkArea("WalkArea", "207,46;237,109;5,109;36,46;83,46;88,44;164,44;170,46");
 
             // Walls
-            Children.Add(new RideRoomWall(session, "36,0;36,46;5,111;0,111;0,0"));
-            Children.Add(new RideRoomWall(session, "206,0;206,46;237,111;240,111;240,0"));
+            AddWall("36,0;36,46;5,111;0,111;0,0");
+            AddWall("206,0;206,46;237,111;240,111;240,0");
 
             // Placeholders
             AddPlaceholder("1", .5f, false, "41,32;56,32;56,47;41,47");

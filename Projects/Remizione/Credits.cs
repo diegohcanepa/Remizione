@@ -134,7 +134,10 @@ namespace Remizione
         #endregion
 
         // Hide
-        public void Hide() => IsRunning = false;
+        public void Hide()
+        {
+            IsRunning = false;
+        }
 
         // IsActiveInGameLoop
         public override bool IsActiveInGameLoop => IsRunning;

@@ -8,7 +8,7 @@ namespace Remizione
     /// </summary>
     public abstract class RideRoom : ProceduralRoom
     {
-        private bool lootDropped = false;
+        private bool lootDropped;
 
         // Constructor
         protected RideRoom(GameSession session, RoomGraph graph)
@@ -89,7 +89,9 @@ namespace Remizione
                     Session.ObjectPools.Pickups.Get()?.Drop(this, dropPosition, metaItem);
             }
             else
-                Loot.TryDropLoot(this, Config.LootTable, dropPosition, GetType().Name, out _);
+            {
+                Loot.TryDropLoot(this, Config.LootTable, dropPosition, out _);
+            }
 
             lootDropped = true;
         }
@@ -117,7 +119,9 @@ namespace Remizione
                             targetDoor = door;
                     }
                     else if (door.TargetRoom.RoomGraph.Id == previousRoomId)
+                    {
                         targetDoor = door;
+                    }
 
                     if (targetDoor != null)
                         return door.GetAbsolutePoint(door.ApproachPosition);

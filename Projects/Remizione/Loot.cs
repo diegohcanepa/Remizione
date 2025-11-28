@@ -9,7 +9,7 @@ namespace Remizione
     internal static class Loot
     {
         // TryDropLoot
-        internal static bool TryDropLoot(GameRoom room, ChanceTable chanceTable, Vector2 position, string tableName, out MetaItem? metaItem)
+        internal static bool TryDropLoot(GameRoom room, ChanceTable chanceTable, Vector2 position, out MetaItem? metaItem)
         {
             metaItem = null;
 
