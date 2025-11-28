@@ -17,7 +17,6 @@ namespace Remizione
         #region Private fields
 
         private Color brightnessColor;
-        private float brightnessModifier;
         private int currentDrawIndex;
         private static DustEmitter dustEmitter = null!;
         private static FireflyEmitter fireflyEmitter = null!;
@@ -548,13 +547,13 @@ namespace Remizione
         [ScriptProperty]
         public float BrightnessModifier
         {
-            get => brightnessModifier;
+            get;
             set
             {
-                if (value != brightnessModifier)
+                if (value != field)
                 {
-                    brightnessModifier = Math.Clamp(value, 0, 1);
-                    brightnessColor = Color.White * brightnessModifier;
+                    field = Math.Clamp(value, 0, 1);
+                    brightnessColor = Color.White * field;
                 }
             }
         }

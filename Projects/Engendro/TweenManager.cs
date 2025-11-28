@@ -9,14 +9,6 @@ namespace Engendro
     {
         #region Private fields
 
-        private FloatTween? altitudeTween;
-        private ColorTween? colorTween;
-        private FloatTween? opacityTween;
-        private Vector2Tween? positionTween;
-        private FloatTween? rotationTween;
-        private Vector2Tween? scaleTween;
-        private FloatTween? xTween;
-        private FloatTween? yTween;
 
         #endregion
 
@@ -113,24 +105,24 @@ namespace Engendro
         // AltitudeTween
         public FloatTween? AltitudeTween
         {
-            get => altitudeTween;
+            get;
             set
             {
-                altitudeTween = value;
-                if (altitudeTween != null && altitudeTween.State != RunningState.Stopped)
-                    Sprite.Altitude = altitudeTween.CurrentValue;
+                field = value;
+                if (field != null && field.State != RunningState.Stopped)
+                    Sprite.Altitude = field.CurrentValue;
             }
         }
 
         // ColorTween
         public ColorTween? ColorTween
         {
-            get => colorTween;
+            get;
             set
             {
-                colorTween = value;
-                if (colorTween != null && colorTween.State != RunningState.Stopped)
-                    Sprite.Color = colorTween.CurrentValue;
+                field = value;
+                if (field != null && field.State != RunningState.Stopped)
+                    Sprite.Color = field.CurrentValue;
             }
         }
 
@@ -166,22 +158,22 @@ namespace Engendro
         // OpacityTween
         public FloatTween? OpacityTween
         {
-            get => opacityTween;
+            get;
             set
             {
-                opacityTween = value;
-                if (opacityTween != null && opacityTween.State != RunningState.Stopped)
-                    Sprite.Opacity = opacityTween.CurrentValue;
+                field = value;
+                if (field != null && field.State != RunningState.Stopped)
+                    Sprite.Opacity = field.CurrentValue;
             }
         }
 
         // PositionTween
         public Vector2Tween? PositionTween
         {
-            get => positionTween;
+            get;
             set
             {
-                positionTween = value;
+                field = value;
 
                 if (value != null)
                 {
@@ -210,24 +202,24 @@ namespace Engendro
         // RotationTween
         public FloatTween? RotationTween
         {
-            get => rotationTween;
+            get;
             set
             {
-                rotationTween = value;
-                if (rotationTween != null && rotationTween.State != RunningState.Stopped)
-                    Sprite.Rotation = rotationTween.CurrentValue;
+                field = value;
+                if (field != null && field.State != RunningState.Stopped)
+                    Sprite.Rotation = field.CurrentValue;
             }
         }
 
         // ScaleTween
         public Vector2Tween? ScaleTween
         {
-            get => scaleTween;
+            get;
             set
             {
-                scaleTween = value;
-                if (scaleTween != null && scaleTween.State != RunningState.Stopped)
-                    Sprite.Scale = scaleTween.CurrentValue;
+                field = value;
+                if (field != null && field.State != RunningState.Stopped)
+                    Sprite.Scale = field.CurrentValue;
             }
         }
 
@@ -237,16 +229,16 @@ namespace Engendro
         // XTween
         public FloatTween? XTween
         {
-            get => xTween;
+            get;
             set
             {
-                xTween = value;
+                field = value;
 
-                if (xTween != null)
+                if (field != null)
                 {
                     PositionTween = null;
 
-                    if (value != null && xTween.State != RunningState.Stopped)
+                    if (value != null && field.State != RunningState.Stopped)
                         Sprite.X = value.CurrentValue;
                 }
             }
@@ -255,16 +247,16 @@ namespace Engendro
         // YTween
         public FloatTween? YTween
         {
-            get => yTween;
+            get;
             set
             {
-                yTween = value;
+                field = value;
 
-                if (yTween != null)
+                if (field != null)
                 {
                     PositionTween = null;
 
-                    if (value != null && yTween.State != RunningState.Stopped)
+                    if (value != null && field.State != RunningState.Stopped)
                         Sprite.Y = value.CurrentValue;
                 }
             }

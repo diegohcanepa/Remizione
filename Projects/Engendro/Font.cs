@@ -8,7 +8,6 @@ namespace Engendro
     /// </summary>
     public class Font
     {
-        private SpriteFont? font;
 
         #region Protected members
 
@@ -49,12 +48,12 @@ namespace Engendro
         // SpriteFont
         public SpriteFont? SpriteFont
         {
-            get => font;
+            get;
             set
             {
-                if (value != font)
+                if (value != field)
                 {
-                    font = value;
+                    field = value;
                     OnSpriteFontChanged();
                 }
             }

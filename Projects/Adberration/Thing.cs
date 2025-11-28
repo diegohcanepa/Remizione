@@ -13,7 +13,6 @@ namespace Adberration
 
         private Vector2 moveDirection;
         private readonly PathSegment moveSegment = new();
-        private float speed;
 
         #endregion
 
@@ -298,13 +297,13 @@ namespace Adberration
         [ScriptProperty]
         public float Speed
         {
-            get => speed;
+            get;
             set
             {
-                if (value != speed)
+                if (value != field)
                 {
-                    this.speed = value;
-                    if (speed == 0)
+                    field = value;
+                    if (field == 0)
                         StopMoving();
                 }
             }

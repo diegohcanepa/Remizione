@@ -11,15 +11,8 @@ namespace Engendro
     {
         #region Private fields
 
-        private float altitude;
         private RectangleF boundingBox;
-        private SpriteEffects effects;
-        private AtlasImage? internalImage;
-        private float opacity = 1;
-        private float opacityFactor = 1;
-        private RectanglePoint pivotOrigin;
         private Vector2 position;
-        private float rotation;
         private Vector2 scale = Vector2.One;
 
         #endregion
@@ -61,12 +54,12 @@ namespace Engendro
         // InternalImage
         protected AtlasImage? InternalImage
         {
-            get => internalImage;
+            get;
             set
             {
-                if (value != internalImage)
+                if (value != field)
                 {
-                    internalImage = value;
+                    field = value;
                     IsBoundingBoxDirty = true;
                 }
             }
@@ -83,7 +76,7 @@ namespace Engendro
                 return;
 
             var pos = Position;
-            pos.Y -= altitude;
+            pos.Y -= Altitude;
             if (VisualParent != null)
                 pos = GetAbsolutePosition();
 
@@ -91,12 +84,12 @@ namespace Engendro
             if (InternalImage.TextureArea.IsEmpty)
             {
                 // No, so draw the entire texture
-                Game.SpriteBatch.Draw(InternalImage.Atlas.Texture, pos, null, Color * opacity * OpacityFactor, Rotation, Pivot.Position, Scale, Effects, 0);
+                Game.SpriteBatch.Draw(InternalImage.Atlas.Texture, pos, null, Color * Opacity * OpacityFactor, Rotation, Pivot.Position, Scale, Effects, 0);
             }
             else
             {
                 // Yes, so just draw the specified SourceRect
-                Game.SpriteBatch.Draw(InternalImage.Atlas.Texture, pos, InternalImage.TextureArea, Color * opacity * OpacityFactor, Rotation, Pivot.Position, Scale, Effects, 0);
+                Game.SpriteBatch.Draw(InternalImage.Atlas.Texture, pos, InternalImage.TextureArea, Color * Opacity * OpacityFactor, Rotation, Pivot.Position, Scale, Effects, 0);
             }
         }
 
@@ -128,14 +121,14 @@ namespace Engendro
         // Altitude
         public float Altitude
         {
-            get => altitude;
+            get;
             set
             {
-                if (value != altitude)
+                if (value != field)
                 {
-                    altitude = value;
-                    if (altitude < 0)
-                        altitude = 0;
+                    field = value;
+                    if (field < 0)
+                        field = 0;
 
                     IsBoundingBoxDirty = true;
 
@@ -200,14 +193,14 @@ namespace Engendro
         // Effects
         public SpriteEffects Effects
         {
-            get => effects;
+            get;
             set
             {
-                if (value != effects)
+                if (value != field)
                 {
-                    this.effects = value;
-                    IsFlippedHorizontally = HasFlag(effects, SpriteEffects.FlipHorizontally);
-                    IsFlippedVertically = HasFlag(effects, SpriteEffects.FlipVertically);
+                    field = value;
+                    IsFlippedHorizontally = HasFlag(field, SpriteEffects.FlipHorizontally);
+                    IsFlippedVertically = HasFlag(field, SpriteEffects.FlipVertically);
                     OnTransform(TransformChange.Effects);
                 }
             }
@@ -315,24 +308,24 @@ namespace Engendro
         // Opacity
         public float Opacity
         {
-            get => opacity;
+            get;
             set
             {
-                if (value != opacity)
-                    opacity = MathHelper.Clamp(value, 0, 1);
+                if (value != field)
+                    field = MathHelper.Clamp(value, 0, 1);
             }
-        }
+        } = 1;
 
         // OpacityFactor
         public float OpacityFactor
         {
-            get => opacityFactor;
+            get;
             set
             {
-                if (value != opacityFactor)
-                    opacityFactor = MathHelper.Clamp(value, 0, 1);
+                if (value != field)
+                    field = MathHelper.Clamp(value, 0, 1);
             }
-        }
+        } = 1;
 
         // Pivot
         public SpritePivot Pivot { get; }
@@ -340,12 +333,12 @@ namespace Engendro
         // PivotOrigin
         public RectanglePoint PivotOrigin
         {
-            get => pivotOrigin;
+            get;
             set
             {
-                if (value != pivotOrigin)
+                if (value != field)
                 {
-                    pivotOrigin = value;
+                    field = value;
                     IsBoundingBoxDirty = true;
                     OnTransform(TransformChange.PivotOrigin);
                 }
@@ -371,12 +364,12 @@ namespace Engendro
         // Rotation
         public float Rotation
         {
-            get => rotation;
+            get;
             set
             {
-                if (rotation != value)
+                if (field != value)
                 {
-                    rotation = value;
+                    field = value;
                     OnTransform(TransformChange.Rotation);
                 }
             }

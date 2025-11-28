@@ -10,7 +10,6 @@ namespace Remizione
     /// </summary>
     public class RideDoor : Prop
     {
-        private bool isOpen;
         private readonly Vector2Tween scaleTween = new();
         private readonly FloatTween xTween = new();
 
@@ -54,7 +53,7 @@ namespace Remizione
         // SyncAnimation
         private void SyncAnimation()
         {
-            if (isOpen)
+            if (IsOpen)
                 Sprite.Player.Play("Open");
             else
                 Sprite.Player.Play("Closed");
@@ -142,13 +141,13 @@ namespace Remizione
         [ScriptProperty]
         public bool IsOpen
         {
-            get => isOpen;
+            get;
             set
             {
-                if (value != isOpen)
+                if (value != field)
                 {
-                    isOpen = value;
-                    if (isOpen)
+                    field = value;
+                    if (field)
                         Used = true;
                     SyncAnimation();
                 }

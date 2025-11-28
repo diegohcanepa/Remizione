@@ -11,7 +11,6 @@ namespace Engendro
     {
         #region Private fields
 
-        private SpriteAnimation? animation;
         private int frameCooldown;
         private int frameIndex = -1;
         private readonly AnimatedSprite sprite;
@@ -31,12 +30,12 @@ namespace Engendro
         // Animation
         public SpriteAnimation? Animation
         {
-            get => animation;
+            get;
             set
             {
                 if (value != null)
                 {
-                    animation = value;
+                    field = value;
                     Stop();
                     GoTo(FramePosition.First);
                 }

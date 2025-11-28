@@ -8,7 +8,6 @@ namespace Remizione
     /// </summary>
     public sealed class UIHealthMeter : GameObject
     {
-        private Actor? actor;
         private int fullHearts;
         private bool hasHalfHeart;
         private readonly ImageSprite[] hearts;
@@ -40,12 +39,12 @@ namespace Remizione
         // Invalidate
         private void Invalidate()
         {
-            if (actor == null)
+            if (Actor == null)
                 return;
 
-            fullHearts = actor.HP / 2;
-            hasHalfHeart = actor.HP % 2 == 1;
-            totalHearts = actor.MaxHP / 2;
+            fullHearts = Actor.HP / 2;
+            hasHalfHeart = Actor.HP % 2 == 1;
+            totalHearts = Actor.MaxHP / 2;
 
             for (int i = 0; i < totalHearts; i++)
             {
@@ -59,8 +58,8 @@ namespace Remizione
                     hearts[i].Image = Atlases.UI.HeartEmptyIcon;
             }
 
-            lastKnownValue = actor.HP;
-            lastKnownMaxValue = actor.MaxHP;
+            lastKnownValue = Actor.HP;
+            lastKnownMaxValue = Actor.MaxHP;
         }
 
         #endregion
@@ -70,7 +69,7 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (actor == null)
+            if (Actor == null)
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera);
@@ -84,9 +83,9 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (actor != null)
+            if (Actor != null)
             {
-                if (lastKnownValue != actor.HP || lastKnownMaxValue != actor.MaxHP)
+                if (lastKnownValue != Actor.HP || lastKnownMaxValue != Actor.MaxHP)
                     Invalidate();
             }
         }
@@ -96,14 +95,14 @@ namespace Remizione
         // Actor
         public Actor? Actor
         {
-            get => actor;
+            get;
             set
             {
-                if (value != actor)
+                if (value != field)
                 {
-                    actor = value;
+                    field = value;
 
-                    if (actor == null)
+                    if (field == null)
                     {
                         lastKnownValue = int.MinValue;
                         lastKnownMaxValue = int.MinValue;

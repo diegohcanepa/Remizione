@@ -251,9 +251,9 @@ namespace Remizione
                     // MaxPerRoom: <=0 => ilimitado; >0 chequeamos contador
                     if (p.MaxPerRoom > 0)
                     {
-                        int spawned = 0;
-                        spawnedCounts.TryGetValue(p.Name, out spawned);
-                        if (spawned >= p.MaxPerRoom) continue;
+                        spawnedCounts.TryGetValue(p.Name, out var spawned);
+                        if (spawned >= p.MaxPerRoom)
+                            continue;
                     }
 
                     candidates.Add(p);
@@ -278,8 +278,7 @@ namespace Remizione
                 // incrementar contador si aplica
                 if (chosen.MaxPerRoom > 0)
                 {
-                    int prev = 0;
-                    spawnedCounts.TryGetValue(chosen.Name, out prev);
+                    spawnedCounts.TryGetValue(chosen.Name, out var prev);
                     spawnedCounts[chosen.Name] = prev + 1;
                 }
 

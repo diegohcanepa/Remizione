@@ -9,7 +9,6 @@ namespace Engendro
     public sealed class Shapes
     {
         private readonly EngendroGame game;
-        private Texture2D? pixel;
 
         // Constructor
         internal Shapes(EngendroGame game)
@@ -66,13 +65,13 @@ namespace Engendro
         {
             get
             {
-                if (pixel == null)
+                if (field == null)
                 {
-                    pixel = new Texture2D(game.GraphicsDevice, 1, 1);
-                    pixel.SetData([Color.White]);
+                    field = new Texture2D(game.GraphicsDevice, 1, 1);
+                    field.SetData([Color.White]);
                 }
 
-                return pixel;
+                return field;
             }
         }
     }

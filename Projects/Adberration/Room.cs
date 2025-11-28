@@ -20,7 +20,6 @@ namespace Adberration
         private readonly List<Thing> culledThings = new(1000);
         private readonly List<Script> routines = [];
         private readonly List<SoundInstance> sounds = [];
-        private float zoom = 1;
 
         #endregion
 
@@ -317,24 +316,23 @@ namespace Adberration
         [ScriptProperty]
         public float Zoom
         {
-            get => zoom;
+            get;
             set
             {
-                if (value != zoom)
+                if (value != field)
                 {
-                    zoom = value;
+                    field = value;
                     if (IsCurrentRoom)
-                        Session.Camera.Zoom = zoom;
+                        Session.Camera.Zoom = field;
                 }
             }
-        }
+        } = 1;
 
         /// <summary>
         /// Area
         /// </summary>
         public class Area : INamedObject
         {
-            private bool isEnabled = true;
 
             #region Constructor
 
@@ -379,16 +377,16 @@ namespace Adberration
             // IsEnabled
             public bool IsEnabled
             {
-                get => isEnabled;
+                get;
                 set
                 {
-                    if (value != isEnabled)
+                    if (value != field)
                     {
-                        this.isEnabled = value;
+                        field = value;
                         OnEnabledChanged();
                     }
                 }
-            }
+            } = true;
 
             // IsInCullingBox
             public bool IsInCullingBox => Room.Session.Camera.CullingBox.Intersects(Polygon.BoundingRectangleF);

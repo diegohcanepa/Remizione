@@ -9,8 +9,6 @@ namespace Engendro.Audio
     {
         #region Private fields
 
-        private float current = 1;
-        private float master = 1;
         private readonly FloatTween tween = new();
 
         #endregion
@@ -44,16 +42,16 @@ namespace Engendro.Audio
         // Current
         public float Current
         {
-            get => current;
+            get;
             set
             {
-                if (value != current)
-                    current = MathHelper.Clamp(value, 0, 1);
+                if (value != field)
+                    field = MathHelper.Clamp(value, 0, 1);
             }
-        }
+        } = 1;
 
         // Effective
-        public float Effective => Master * current;
+        public float Effective => Master * Current;
 
         // FadeIn
         public void FadeIn(int duration) => FadeIn(duration, 1);
@@ -112,13 +110,13 @@ namespace Engendro.Audio
         // Master
         public float Master
         {
-            get => master;
+            get;
             set
             {
-                if (value != master)
-                    master = MathHelper.Clamp(value, 0, 1);
+                if (value != field)
+                    field = MathHelper.Clamp(value, 0, 1);
             }
-        }
+        } = 1;
 
         // Name
         public string Name { get; }

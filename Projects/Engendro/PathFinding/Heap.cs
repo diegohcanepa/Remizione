@@ -6,7 +6,6 @@
     public sealed class Heap<T>(int maxHeapSize) where T : IHeapItem<T>
     {
         private readonly T[] items = new T[maxHeapSize];
-        private int currentItemCount;
 
         #region Private members
 
@@ -19,11 +18,11 @@
                 var childIndexRight = item.HeapIndex * 2 + 2;
                 int swapIndex;
 
-                if (childIndexLeft < currentItemCount)
+                if (childIndexLeft < Count)
                 {
                     swapIndex = childIndexLeft;
 
-                    if (childIndexRight < currentItemCount)
+                    if (childIndexRight < Count)
                     {
                         if (items[childIndexLeft].CompareTo(items[childIndexRight]) < 0)
                         {
@@ -82,10 +81,10 @@
         // Add
         public void Add(T item)
         {
-            item.HeapIndex = currentItemCount;
-            items[currentItemCount] = item;
+            item.HeapIndex = Count;
+            items[Count] = item;
             SortUp(item);
-            currentItemCount++;
+            Count++;
         }
 
         // Contains
@@ -95,14 +94,14 @@
         }
 
         // Count
-        public int Count => currentItemCount;
+        public int Count { get; private set; }
 
         // RemoveFirst
         public T RemoveFirst()
         {
             var firstItem = items[0];
-            currentItemCount--;
-            items[0] = items[currentItemCount];
+            Count--;
+            items[0] = items[Count];
             items[0].HeapIndex = 0;
             SortDown(items[0]);
             return firstItem;

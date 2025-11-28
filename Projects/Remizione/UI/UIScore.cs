@@ -13,7 +13,6 @@ namespace Remizione
         private int deltaScore;
         private bool isInitializing = true;
         private readonly FloatTween tween = new();
-        private int value;
         private readonly TextSprite valueText;
 
         // Constructor
@@ -98,16 +97,16 @@ namespace Remizione
         // Value
         public int Value
         {
-            get => value;
+            get;
             set
             {
-                if (value != this.value || isInitializing)
+                if (value != field || isInitializing)
                 {
                     if (!isInitializing)
-                        tween.Start(TweenStyle.Linear, this.value, value, duration);
+                        tween.Start(TweenStyle.Linear, field, value, duration);
 
-                    this.value = value;
-                    valueText.Text = this.value.ToString();
+                    field = value;
+                    valueText.Text = field.ToString();
 
                     if (Progressive)
                         isInitializing = false;

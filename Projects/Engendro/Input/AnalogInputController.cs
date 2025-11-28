@@ -7,9 +7,7 @@ namespace Engendro.Input
     /// </summary>
     public abstract class AnalogInputController
     {
-        private int autoRepeatRate = 100;
         private int autoRepeatCooldown;
-        private float tolerance = .3f;
 
         #region Protected members
 
@@ -30,16 +28,16 @@ namespace Engendro.Input
         // AutoRepeatRate
         public int AutoRepeatRate
         {
-            get => autoRepeatRate;
+            get;
             set
             {
-                if (value != autoRepeatRate)
+                if (value != field)
                 {
-                    autoRepeatRate = value;
+                    field = value;
                     autoRepeatCooldown = 0;
                 }
             }
-        }
+        } = 100;
 
         // CanAutoRepeat
         public bool CanAutoRepeat => AutoRepeatRate > 0;
@@ -50,16 +48,16 @@ namespace Engendro.Input
         // Tolerance
         public float Tolerance
         {
-            get => tolerance;
+            get;
             set
             {
-                if (value != tolerance)
+                if (value != field)
                 {
                     OnToleranceChanged(value);
-                    tolerance = value;
+                    field = value;
                 }
             }
-        }
+        } = .3f;
 
         // Update
         public virtual void Update(GameTime gameTime)

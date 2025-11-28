@@ -15,7 +15,6 @@ namespace Remizione
         private readonly ImageSprite checkMark;
         private readonly ItemGrid grid;
         private readonly ImageSprite icon;
-        private Item? item;
         private readonly ImageSprite selectedSlotImage;
         private readonly ImageSprite slotImage;
         private readonly ImageSprite stateIcon;
@@ -99,7 +98,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (item != null && item.Count == 0)
+            if (Item != null && Item.Count == 0)
                 icon.Opacity = .5f;
             else
                 icon.Opacity = 1;
@@ -112,7 +111,7 @@ namespace Remizione
         // Activate
         public void Activate()
         {
-            if (item != null)
+            if (Item != null)
             {
                 icon.Scale = ScaleInfo.UIElement.Medium;
             }
@@ -141,13 +140,13 @@ namespace Remizione
         // Item
         public Item? Item
         {
-            get => item;
+            get;
             set
             {
-                if (value != item)
+                if (value != field)
                 {
-                    item = value;
-                    icon.Image = item?.MetaItem.Image;
+                    field = value;
+                    icon.Image = field?.MetaItem.Image;
                     Refresh();
                 }
             }
@@ -189,16 +188,16 @@ namespace Remizione
         // Refresh
         public void Refresh()
         {
-            if (item != null)
+            if (Item != null)
             {
                 amountText.Color = ColorPalette.Text.Default;
 
-                if (item.MetaItem.StackMode != StackMode.None)
-                    amountText.Text = $"{item.Count}";
+                if (Item.MetaItem.StackMode != StackMode.None)
+                    amountText.Text = $"{Item.Count}";
                 else
                     amountText.Text = string.Empty;
 
-                icon.Opacity = item.Count == 0 ? .3f : 1;
+                icon.Opacity = Item.Count == 0 ? .3f : 1;
             }
             else
             {

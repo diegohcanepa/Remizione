@@ -11,17 +11,14 @@ namespace Remizione
     {
         #region Private fields
 
-        private HorizontalAlignment alignment;
         private readonly ImageSprite back;
         private readonly ImageSprite container;
         private readonly ImageSprite fore;
-        private int maximumValue;
         private readonly Vector2 padding = new(.5f);
         private Vector2 position;
         private static readonly Color previousValue = new(171, 81, 48);
         private readonly ImageSprite previousValue1;
         private readonly FloatTween tween = new() { StartDelay = 200 };
-        private int value;
         private float width;
 
         #endregion
@@ -75,7 +72,7 @@ namespace Remizione
             fore.Position = Position + padding;
             previousValue1.Position = Position + padding;
 
-            if (alignment == HorizontalAlignment.Center)
+            if (Alignment == HorizontalAlignment.Center)
             {
                 var xOffset = container.BoundingBox.Width / 2;
                 container.X -= xOffset;
@@ -84,7 +81,7 @@ namespace Remizione
                 previousValue1.X -= xOffset;
             }
 
-            else if (alignment == HorizontalAlignment.Right)
+            else if (Alignment == HorizontalAlignment.Right)
             {
                 var xOffset = container.BoundingBox.Width;
                 container.X += xOffset;
@@ -97,10 +94,10 @@ namespace Remizione
         // Convierte un valor lógico (0..MaximumValue) a ancho proporcional (0..fixedWidth)
         private float GetScaledWidth(float val)
         {
-            if (maximumValue <= 0)
+            if (MaximumValue <= 0)
                 return 0;
             else
-                return (val / maximumValue) * width;
+                return (val / MaximumValue) * width;
         }
 
         #endregion
@@ -132,12 +129,12 @@ namespace Remizione
         // Alignment
         public HorizontalAlignment Alignment
         {
-            get => alignment;
+            get;
             set
             {
-                if (value != alignment)
+                if (value != field)
                 {
-                    this.alignment = value;
+                    field = value;
                     Invalidate();
                 }
             }
@@ -155,13 +152,13 @@ namespace Remizione
         // MaximumValue
         public int MaximumValue
         {
-            get => maximumValue;
+            get;
             set
             {
-                if (value != maximumValue)
+                if (value != field)
                 {
-                    this.maximumValue = value;
-                    this.Value = maximumValue; // setea al maximo
+                    field = value;
+                    this.Value = field; // setea al maximo
                     back.ScaleX = width;  // back siempre ancho fijo
                     container.ScaleX = width + (padding.X * 2);
                     Invalidate();
@@ -186,14 +183,14 @@ namespace Remizione
         // Value
         public int Value
         {
-            get => value;
+            get;
             set
             {
-                if (value != this.value)
+                if (value != field)
                 {
                     float newWidth = GetScaledWidth(value);
 
-                    if (value < this.value)
+                    if (value < field)
                     {
                         float prevWidth = fore.ScaleX;
                         float diff = Math.Abs(prevWidth - newWidth);
@@ -206,7 +203,7 @@ namespace Remizione
                         tween.Stop();
                     }
 
-                    this.value = value;
+                    field = value;
                     fore.ScaleX = newWidth;
                 }
             }
@@ -223,8 +220,8 @@ namespace Remizione
                     width = value;
                     back.ScaleX = width;
                     container.ScaleX = width + (padding.X * 2);
-                    fore.ScaleX = GetScaledWidth(this.value);
-                    previousValue1.ScaleX = GetScaledWidth(this.value);
+                    fore.ScaleX = GetScaledWidth(Value);
+                    previousValue1.ScaleX = GetScaledWidth(Value);
                     Invalidate();
                 }
             }

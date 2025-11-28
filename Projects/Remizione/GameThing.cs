@@ -19,30 +19,17 @@ namespace Remizione
         #region Private fields
 
         private readonly Blinker<bool> blinker = new(false, true);
-        private Polygon collider = new();
-        private PlacementMode colliderPlacement = PlacementMode.Relative;
-        private string displayNameKey = string.Empty;
-        private Faction faction;
-        private readonly Polygon holePolyInflated = new();
         private readonly Polygon holePoly = new();
-        private readonly Polygon hotspotPoly = new();
-        private PlacementMode hotspotPlacement = PlacementMode.Relative;
-        private int hp;
         private Vector2Tween? hurtShakeTween;
         private FloatTween? hurtTween;
-        private float floatingForce;
         private FloatTween? floatingTween;
         private bool isCollisionDirty;
         private bool isHotspotDirty = true;
         private readonly Vector2Tween knockbackTween = new();
         private readonly List<LootTag> lootTags = [];
-        private int maxHP;
         private PathNode[]? pathNodes;
-        private RenderLayer renderLayer;
         private int renderLayerDepth;
         private bool shouldClampToWalkablePosition;
-        private WalkArea? walkArea;
-        private string walkAreaName = string.Empty;
 
         #endregion
 
@@ -70,7 +57,7 @@ namespace Remizione
             {
                 InvalidateCollisionPolygons();
                 if (holePoly.Contains(position))
-                    position = holePolyInflated.GetClosestPointOnEdge(position);
+                    position = RuntimeCollider.GetClosestPointOnEdge(position);
             }
 
             return position;
@@ -87,20 +74,20 @@ namespace Remizione
             if (pathNodes == null || pathNodes.Length != Collider.Vertices.Count)
                 pathNodes = new PathNode[Collider.Vertices.Count];
 
-            for (int i = 0; i < holePolyInflated.Vertices.Count; i++)
+            for (int i = 0; i < RuntimeCollider.Vertices.Count; i++)
             {
                 // Is point concave?
-                if (holePolyInflated.IsVertexConcave(i))
+                if (RuntimeCollider.IsVertexConcave(i))
                     continue;
 
                 // Is point outside walk area
-                if (WalkArea != null && !WalkArea.Contains(holePolyInflated.Vertices[i]))
+                if (WalkArea != null && !WalkArea.Contains(RuntimeCollider.Vertices[i]))
                     continue;
 
                 if (pathNodes[i] == null)
-                    pathNodes[i] = new(holePolyInflated.Vertices[i]);
+                    pathNodes[i] = new(RuntimeCollider.Vertices[i]);
                 else
-                    pathNodes[i].Position = holePolyInflated.Vertices[i];
+                    pathNodes[i].Position = RuntimeCollider.Vertices[i];
 
                 list.Add(pathNodes[i]);
             }
@@ -209,12 +196,12 @@ namespace Remizione
             Collider.GetVertices(vertices, offset);
 
             holePoly.SetVertices(vertices);
-            holePolyInflated.SetVertices(vertices, .05f);
+            RuntimeCollider.SetVertices(vertices, .05f);
 
             if (ColliderPlacement == PlacementMode.Relative && IsFlippedHorizontally)
             {
                 holePoly.FlipHorizontally(X);
-                holePolyInflated.FlipHorizontally(X);
+                RuntimeCollider.FlipHorizontally(X);
             }
 
             isCollisionDirty = false;
@@ -223,10 +210,10 @@ namespace Remizione
         // InvalidateWalkArea
         private void InvalidateWalkArea()
         {
-            if (!string.IsNullOrWhiteSpace(walkAreaName))
-                walkArea = Room?.WalkAreas.Find(walkAreaName);
+            if (!string.IsNullOrWhiteSpace(WalkAreaName))
+                WalkArea = Room?.WalkAreas.Find(WalkAreaName);
             else
-                walkArea = null;
+                WalkArea = null;
 
             shouldClampToWalkablePosition = true;
             isCollisionDirty = true;
@@ -479,7 +466,7 @@ namespace Remizione
                 return false;
 
             if (InteractionPolygon == TestPolygon.Collider)
-                return holePolyInflated.BoundingRectangleF.Intersects(requester.GetAbsoluteBounds(requester.HotspotDetectorArea));
+                return RuntimeCollider.BoundingRectangleF.Intersects(requester.GetAbsoluteBounds(requester.HotspotDetectorArea));
             else
                 return RuntimeHotspot.BoundingRectangleF.Intersects(requester.GetAbsoluteBounds(requester.HotspotDetectorArea));
         }
@@ -520,29 +507,29 @@ namespace Remizione
         [ScriptProperty]
         public Polygon Collider
         {
-            get => collider;
+            get;
             set
             {
-                collider = value;
+                field = value;
                 isCollisionDirty = true;
                 InvalidateCollisionPolygons();
             }
-        }
+        } = new();
 
         // ColliderPlacement
         [ScriptProperty]
         public PlacementMode ColliderPlacement
         {
-            get => colliderPlacement;
+            get;
             set
             {
-                if (value != colliderPlacement)
+                if (value != field)
                 {
-                    colliderPlacement = value;
+                    field = value;
                     isCollisionDirty = true;
                 }
             }
-        }
+        } = PlacementMode.Relative;
 
         // ClampToWalkablePosition
         public void ClampToWalkablePosition()
@@ -681,16 +668,16 @@ namespace Remizione
         [ScriptProperty]
         public string DisplayNameKey
         {
-            get => displayNameKey;
+            get;
             set
             {
-                if (value != displayNameKey)
+                if (value != field)
                 {
-                    displayNameKey = value;
+                    field = value;
                     LocalizedDisplayName = TextRepository.GetValue(DisplayNameKey);
                 }
             }
-        }
+        } = string.Empty;
 
         // DrawLights
         public void DrawLights(GameTime gameTime)
@@ -728,12 +715,12 @@ namespace Remizione
         [ScriptProperty]
         public Faction Faction
         {
-            get => faction;
+            get;
             set
             {
-                if (value != faction)
+                if (value != field)
                 {
-                    faction = value;
+                    field = value;
                     Room?.RecountEnemies();
                 }
             }
@@ -743,17 +730,17 @@ namespace Remizione
         [ScriptProperty]
         public float FloatingForce
         {
-            get => floatingForce;
+            get;
             set
             {
-                if (value != floatingForce)
+                if (value != field)
                 {
-                    floatingForce = value;
+                    field = value;
 
-                    if (floatingForce > 0)
+                    if (field > 0)
                     {
                         floatingTween ??= new FloatTween();
-                        floatingTween.Start(TweenStyle.CubicInOut, 0, floatingForce, 200, -1);
+                        floatingTween.Start(TweenStyle.CubicInOut, 0, field, 200, -1);
                     }
                     else
                         floatingTween?.Stop();
@@ -886,27 +873,27 @@ namespace Remizione
         [ScriptProperty]
         public PlacementMode HotspotPlacement
         {
-            get => hotspotPlacement;
+            get;
             set
             {
-                if (value != hotspotPlacement)
+                if (value != field)
                 {
-                    hotspotPlacement = value;
+                    field = value;
                     isHotspotDirty = true;
                 }
             }
-        }
+        } = PlacementMode.Relative;
 
         // HP
         [ScriptProperty]
         public int HP
         {
-            get => hp;
+            get;
             set
             {
-                if (value != hp)
+                if (value != field)
                 {
-                    hp = Math.Min(value, MaxHP);
+                    field = Math.Min(value, MaxHP);
                     OnHPChanged();
                 }
             }
@@ -993,12 +980,12 @@ namespace Remizione
         [ScriptProperty]
         public int MaxHP
         {
-            get => maxHP;
+            get;
             set
             {
-                if (value != maxHP)
+                if (value != field)
                 {
-                    maxHP = value;
+                    field = value;
                     HP = value;
                 }
             }
@@ -1024,13 +1011,13 @@ namespace Remizione
         [ScriptProperty]
         public RenderLayer RenderLayer
         {
-            get => renderLayer;
+            get;
             set
             {
-                if (value != renderLayer)
+                if (value != field)
                 {
-                    renderLayer = value;
-                    renderLayerDepth = (int)renderLayer;
+                    field = value;
+                    renderLayerDepth = (int)field;
                 }
             }
         }
@@ -1046,7 +1033,7 @@ namespace Remizione
         public new GameRoom? Room => Parent as GameRoom;
 
         // RuntimeCollider
-        public Polygon RuntimeCollider => holePolyInflated;
+        public Polygon RuntimeCollider { get; } = new();
 
         // RuntimeHotspot
         public Polygon RuntimeHotspot
@@ -1063,7 +1050,7 @@ namespace Remizione
                 {
                     if (Hotspot.IsEmpty)
                     {
-                        hotspotPoly.Clear();
+                        field.Clear();
                     }
                     else if (HotspotPlacement == PlacementMode.Relative)
                     {
@@ -1072,17 +1059,17 @@ namespace Remizione
 
                         var vertices = new Vector2[Hotspot.Vertices.Count];
                         Hotspot.GetVertices(vertices, offset);
-                        hotspotPoly.SetVertices(vertices);
+                        field.SetVertices(vertices);
                         if (IsFlippedHorizontally)
-                            hotspotPoly.FlipHorizontally(X);
+                            field.FlipHorizontally(X);
                     }
 
                     isHotspotDirty = false;
                 }
 
-                return hotspotPoly;
+                return field;
             }
-        }
+        } = new();
 
         // ScoreValue
         [ScriptProperty]
@@ -1112,7 +1099,7 @@ namespace Remizione
             }
 
             // Impact word
-            if (maxHP > 0 && impactWord != ImpactWordName.None && GetImpactWordPosition() is Vector2 wordPos)
+            if (MaxHP > 0 && impactWord != ImpactWordName.None && GetImpactWordPosition() is Vector2 wordPos)
                 Session.ImpactWordPool.Get()?.Show(impactWord, wordPos);
 
             if (MaxHP == 0)
@@ -1194,21 +1181,20 @@ namespace Remizione
         public Vector2 ThrowableSpawnPosition { get; set; }
 
         // WalkArea
-        public WalkArea? WalkArea => walkArea ?? Room?.WalkArea;
+        public WalkArea? WalkArea { get => field ?? Room?.WalkArea; private set; }
 
         // WalkAreaName
         [ScriptProperty]
         public string WalkAreaName
         {
-            get => walkAreaName;
-            set
+            get; set
             {
-                if (value != walkAreaName)
+                if (value != field)
                 {
-                    walkAreaName = value;
+                    field = value;
                     InvalidateWalkArea();
                 }
             }
-        }
+        } = string.Empty;
     }
 }

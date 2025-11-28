@@ -8,7 +8,6 @@ namespace Engendro
     /// </summary>
     public static class XOREncryptor
     {
-        private static string encryptionKey = "NIEPOX";
 
         #region Private members
 
@@ -87,16 +86,16 @@ namespace Engendro
         // EncryptionKey
         public static string EncryptionKey
         {
-            get => encryptionKey;
+            get;
             set
             {
-                if (value != encryptionKey)
+                if (value != field)
                 {
                     CodeContract.NotEmpty(value, nameof(value));
-                    encryptionKey = value;
+                    field = value;
                 }
             }
-        }
+        } = "NIEPOX";
 
         // IsEncryptedXml
         public static bool IsEncryptedXml(Stream input)

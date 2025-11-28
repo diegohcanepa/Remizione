@@ -17,14 +17,11 @@ namespace Adberration
     {
         #region Private fields
 
-        private string atlasFolder = string.Empty;
         private bool firstUpdate;
         private bool isInitialized;
         private bool isUnloading;
         private readonly Script? loadScript;
-        private Entity? parent;
         private int pauseCount;
-        private bool persistent;
         private readonly Script? unloadScript;
         private readonly List<Entity> unparentList = [];
 
@@ -390,17 +387,17 @@ namespace Adberration
         [ScriptProperty]
         public string AtlasFolder
         {
-            get => atlasFolder;
+            get;
             set
             {
-                if (value != atlasFolder)
+                if (value != field)
                 {
-                    atlasFolder = value;
+                    field = value;
                     Sprite.ImagePath = EncodeImagePath();
                     OnAtlasFolderChanged();
                 }
             }
-        }
+        } = string.Empty;
 
         // AutoPlayAnimation
         [ScriptProperty]
@@ -582,12 +579,12 @@ namespace Adberration
         // Parent
         public Entity? Parent
         {
-            get => parent;
+            get;
             private set
             {
-                if (value != parent)
+                if (value != field)
                 {
-                    var previousParent = parent;
+                    var previousParent = field;
 
                     if (value != null)
                     {
@@ -598,7 +595,7 @@ namespace Adberration
                             throw new InvalidOperationException("Enities are not allowed to parent each other.");
                     }
 
-                    parent = value;
+                    field = value;
 
                     OnParentChanged(previousParent);
                 }
@@ -616,13 +613,13 @@ namespace Adberration
         // Persistent
         public bool Persistent
         {
-            get => persistent;
+            get;
             internal set
             {
                 if (InstanceKind == InstanceKind.Anonymous || Session.State != GameSessionState.LoadingScripts)
                     throw new InvalidOperationException();
 
-                this.persistent = value;
+                field = value;
             }
         }
 

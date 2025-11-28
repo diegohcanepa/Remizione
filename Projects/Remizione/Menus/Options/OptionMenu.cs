@@ -16,7 +16,6 @@ namespace Remizione.Menus
         private readonly ImageSprite highlightSprite;
         private readonly List<IOption> options = [];
         private Vector2 position;
-        private int selectedIndex = -1;
         private readonly StickInputController stick;
 
         #endregion
@@ -250,21 +249,21 @@ namespace Remizione.Menus
         // SelectedIndex
         public int SelectedIndex
         {
-            get => selectedIndex;
+            get;
             set
             {
-                if (value != selectedIndex)
+                if (value != field)
                 {
-                    if (selectedIndex != -1)
+                    if (field != -1)
                     {
                         //SoundManager.Play(SoundNames.MenuItem.ToString());
                     }
 
-                    selectedIndex = value;
+                    field = value;
                     Invalidate();
                 }
             }
-        }
+        } = -1;
 
         // SelectedOption
         public IOption? SelectedOption => SelectedIndex == -1 ? null : options[SelectedIndex];

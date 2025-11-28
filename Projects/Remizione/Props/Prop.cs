@@ -10,8 +10,6 @@ namespace Remizione
     /// </summary>
     public class Prop : GameThing
     {
-        private int propAmount;
-        private PropState propState;
         private readonly ImageSprite shadow;
 
         #region Constructor
@@ -72,12 +70,12 @@ namespace Remizione
         [ScriptProperty]
         public int PropAmount
         {
-            get => propAmount;
+            get;
             set
             {
-                if (value != propAmount)
+                if (value != field)
                 {
-                    propAmount = value;
+                    field = value;
                     OnPropAmountChanged();
                 }
             }
@@ -87,12 +85,12 @@ namespace Remizione
         [ScriptProperty]
         public PropState PropState
         {
-            get => propState;
+            get;
             set
             {
                 if (value != PropState)
                 {
-                    propState = value;
+                    field = value;
                     OnPropStateChanged();
                 }
             }

@@ -14,7 +14,6 @@ namespace Engendro.Input
         #region Private fields
 
         private static readonly Dictionary<string, InputBinding> bindings = [];
-        private static int playerCount = 1;
         private static readonly List<PlayerInputManager> playerInputManagers = [];
         private static int suspendInterval;
 
@@ -43,7 +42,7 @@ namespace Engendro.Input
             if (suspendInterval > 0)
                 suspendInterval -= gameTime.ElapsedGameTime.Milliseconds;
 
-            for (int i = 0; i < playerCount; i++)
+            for (int i = 0; i < PlayerCount; i++)
             {
                 playerInputManagers[i].Update(gameTime);
             }
@@ -111,13 +110,13 @@ namespace Engendro.Input
         // PlayerCount
         public static int PlayerCount
         {
-            get => playerCount;
+            get;
             set
             {
                 CodeContract.ValidRange(value, 1, MaximumPlayers, nameof(value));
-                playerCount = value;
+                field = value;
             }
-        }
+        } = 1;
 
         // Players
         public static ReadOnlyCollection<PlayerInputManager> Players { get; }

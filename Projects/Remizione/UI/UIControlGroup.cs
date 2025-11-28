@@ -12,8 +12,6 @@ namespace Remizione
     public sealed class UIControlGroup : GameObject
     {
         private readonly List<UIButton> controlList = [];
-        private UIControlGroupLayoutStyle layoutStyle;
-        private float spacing = 2;
 
         // Constructor
         public UIControlGroup(EngendroGame game)
@@ -88,25 +86,25 @@ namespace Remizione
         // Layout
         public void Layout()
         {
-            if (layoutStyle == UIControlGroupLayoutStyle.Vertically)
+            if (LayoutStyle == UIControlGroupLayoutStyle.Vertically)
             {
-                Utils.LayoutControlsVertically(controlList.ToArray(), spacing);
+                Utils.LayoutControlsVertically(controlList.ToArray(), Spacing);
             }
             else
             {
-                Utils.LayoutControlsHorizontally(controlList.ToArray(), spacing);
+                Utils.LayoutControlsHorizontally(controlList.ToArray(), Spacing);
             }
         }
 
         // LayoutStyle
         public UIControlGroupLayoutStyle LayoutStyle
         {
-            get => layoutStyle;
+            get;
             set
             {
-                if (value != layoutStyle)
+                if (value != field)
                 {
-                    layoutStyle = value;
+                    field = value;
                     Layout();
                 }
             }
@@ -121,15 +119,15 @@ namespace Remizione
         // Spacing
         public float Spacing
         {
-            get => spacing;
+            get;
             set
             {
-                if (value != spacing)
+                if (value != field)
                 {
-                    spacing = value;
+                    field = value;
                     Layout();
                 }
             }
-        }
+        } = 2;
     }
 }

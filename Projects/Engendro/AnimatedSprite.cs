@@ -8,14 +8,7 @@ namespace Engendro
     /// </summary>
     public class AnimatedSprite : Sprite
     {
-        #region Private fields
-
         private readonly NamedObjectCollection<SpriteAnimation> animations = [];
-        private Atlas? atlas;
-        private string defaultImageName = string.Empty;
-        private string imagePath = string.Empty;
-
-        #endregion
 
         #region Constructors
 
@@ -132,12 +125,12 @@ namespace Engendro
         // Atlas
         public Atlas? Atlas
         {
-            get => atlas;
+            get;
             set
             {
-                if (value != atlas)
+                if (value != field)
                 {
-                    atlas = value;
+                    field = value;
                     InvalidateAnimationFrames();
                     OnAtlasChanged();
                 }
@@ -155,16 +148,16 @@ namespace Engendro
         // DefaultImageName
         public string DefaultImageName
         {
-            get => defaultImageName;
+            get;
             set
             {
-                if (value != defaultImageName)
+                if (value != field)
                 {
-                    this.defaultImageName = value;
+                    field = value;
                     InvalidateInternalImage();
                 }
             }
-        }
+        } = string.Empty;
 
         // Direction
         public AnimationDirection Direction { get; private set; }
@@ -172,17 +165,17 @@ namespace Engendro
         // ImagePath
         public string ImagePath
         {
-            get => imagePath;
+            get;
             set
             {
-                if (value != imagePath)
+                if (value != field)
                 {
-                    imagePath = value;
+                    field = value;
                     InvalidateAnimationFrames();
                     OnImagePathChanged();
                 }
             }
-        }
+        } = string.Empty;
 
         // Player
         public SpriteAnimationPlayer Player { get; }

@@ -24,7 +24,6 @@ namespace Remizione
         private readonly Dictionary<string, MetaItem[]> friendlyItems = [];
         private readonly UIInteractPrompt interactPrompt;
         private readonly InventoryScene inventoryScene;
-        private Actor? player;
         private Vector2? playerPosition;
         private readonly RoomEditor? roomEditor;
         private readonly List<Prop> staticProps = [];
@@ -584,12 +583,12 @@ namespace Remizione
         [ScriptProperty]
         public Actor? Player
         {
-            get => player;
+            get;
             set
             {
-                if (value != player)
+                if (value != field)
                 {
-                    this.player = value;
+                    field = value;
                     HUD.Reset();
                 }
             }

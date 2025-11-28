@@ -12,11 +12,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private int count = 1;
-        private string displayText = string.Empty;
-        private int durability;
         private bool isDisplayTextDiry = true;
-        private int level;
 
         #endregion
 
@@ -67,7 +63,7 @@ namespace Remizione
                     text += $" ({TextRepository.GetValue("@DurabilityState.Broken")})";
             }
 
-            displayText = text;
+            DisplayText = text;
 
             isDisplayTextDiry = false;
         }
@@ -87,16 +83,16 @@ namespace Remizione
         // Count
         public int Count
         {
-            get => count;
+            get;
             set
             {
-                if (value != count)
+                if (value != field)
                 {
-                    count = Math.Clamp(value, MetaItem.StackMode == StackMode.Persistent ? 0 : 1, 999);
+                    field = Math.Clamp(value, MetaItem.StackMode == StackMode.Persistent ? 0 : 1, 999);
                     isDisplayTextDiry = true;
                 }
             }
-        }
+        } = 1;
 
         // CriticalChance
         public int CriticalChance => MetaItem.CriticalChance + (Level * 5);
@@ -121,19 +117,21 @@ namespace Remizione
                 if (isDisplayTextDiry)
                     InvalidateDisplayText();
 
-                return displayText;
+                return field;
             }
-        }
+
+            private set;
+        } = string.Empty;
 
         // Durability
         public int Durability
         {
-            get => durability;
+            get;
             set
             {
-                this.durability = value;
-                if (durability < 0)
-                    durability = 0;
+                field = value;
+                if (field < 0)
+                    field = 0;
 
                 isDisplayTextDiry = true;
             }
@@ -143,7 +141,7 @@ namespace Remizione
         public string GetDisplayAmount()
         {
             if (MetaItem.StackMode != StackMode.None)
-                return count.ToString(CultureInfo.InvariantCulture);
+                return Count.ToString(CultureInfo.InvariantCulture);
             else
                 return string.Empty;
         }
@@ -182,12 +180,12 @@ namespace Remizione
         // Level
         public int Level
         {
-            get => level;
+            get;
             set
             {
-                if (value != level)
+                if (value != field)
                 {
-                    this.level = value;
+                    field = value;
                     isDisplayTextDiry = true;
                 }
             }

@@ -24,7 +24,6 @@ namespace Engendro
         private Matrix resTranslationMatrix = Matrix.Identity;
         private Vector3 resTranslationVector = Vector3.Zero;
         private float rightBarrier;
-        private float rotation;
         private readonly FloatTween rotationTween = new();
         private Matrix rotationTranslationMatrix = Matrix.Identity;
         private Matrix scaleMatrix = Matrix.Identity;
@@ -35,7 +34,6 @@ namespace Engendro
         private Matrix transformationMatrix;
         private readonly int viewportHeight;
         private readonly int viewportWidth;
-        private float zoom = 1;
         private readonly FloatRange zoomRange = new(minZoom, maxZoom);
         private readonly FloatTween zoomTween = new();
 
@@ -113,34 +111,34 @@ namespace Engendro
         // InvalidateLimits
         private void InvalidateLimits()
         {
-            var vw = viewportWidth / zoom;
-            var vh = viewportHeight / zoom;
+            var vw = viewportWidth / ZoomCore;
+            var vh = viewportHeight / ZoomCore;
 
             this.leftBarrier = vw * .5f;
             this.rightBarrier = SceneWidth - vw * .5f;
             this.bottomBarrier = SceneHeight - vh * .5f;
             this.topBarrier = vh * .5f;
 
-            this.CanScrollHorizontally = ScrollLock != ScrollLock.Horizontal && ScrollLock != ScrollLock.All && SceneWidth * zoom > viewportWidth;
-            this.CanScrollVertically = ScrollLock != ScrollLock.Vertical && ScrollLock != ScrollLock.All && SceneHeight * zoom > viewportHeight;
+            this.CanScrollHorizontally = ScrollLock != ScrollLock.Horizontal && ScrollLock != ScrollLock.All && SceneWidth * ZoomCore > viewportWidth;
+            this.CanScrollVertically = ScrollLock != ScrollLock.Vertical && ScrollLock != ScrollLock.All && SceneHeight * ZoomCore > viewportHeight;
         }
 
         // ZoomCore
         private float ZoomCore
         {
-            get => zoom;
+            get;
             set
             {
                 value = zoomRange.Clamp(value);
 
-                if (value != zoom)
+                if (value != field)
                 {
-                    zoom = value;
+                    field = value;
                     InvalidateLimits();
                     isMatrixDirty = true;
                 }
             }
-        }
+        } = 1;
 
         #endregion
 
@@ -261,8 +259,8 @@ namespace Engendro
 
                 Matrix.CreateTranslation(ref camTranslationVector, out camTranslationMatrix);
 
-                scaleVector.X = zoom;
-                scaleVector.Y = zoom;
+                scaleVector.X = ZoomCore;
+                scaleVector.Y = ZoomCore;
                 scaleVector.Z = 1;
 
                 Matrix.CreateScale(ref scaleVector, out scaleMatrix);
@@ -273,7 +271,7 @@ namespace Engendro
 
                 Matrix.CreateTranslation(ref resTranslationVector, out resTranslationMatrix);
 
-                Matrix.CreateRotationZ(rotation, out rotationTranslationMatrix);
+                Matrix.CreateRotationZ(Rotation, out rotationTranslationMatrix);
 
                 transformationMatrix = camTranslationMatrix *
                             rotationTranslationMatrix *
@@ -344,7 +342,7 @@ namespace Engendro
                 position.X = MathHelper.Clamp(position.X, leftBarrier, rightBarrier);
                 position.Y = MathHelper.Clamp(position.Y, topBarrier, bottomBarrier);
 
-                VisibleBox = new RectangleF(position.X - (viewportWidth / 2 / zoom), position.Y - viewportHeight / 2 / zoom, viewportWidth / zoom, viewportHeight / zoom);
+                VisibleBox = new RectangleF(position.X - (viewportWidth / 2 / ZoomCore), position.Y - viewportHeight / 2 / ZoomCore, viewportWidth / ZoomCore, viewportHeight / ZoomCore);
 
                 CullingBox = RectangleF.Inflate(VisibleBox,
                                                 VisibleBox.Width * (CullingBoxScale.X - 1),
@@ -378,7 +376,7 @@ namespace Engendro
         // Rotate
         public void Rotate(TweenStyle tweenStyle, float rotationValue, int duration, int bounceCount)
         {
-            if (rotation == rotationValue)
+            if (Rotation == rotationValue)
             {
                 return;
             }
@@ -389,12 +387,12 @@ namespace Engendro
         // Rotation
         public float Rotation
         {
-            get => rotation;
+            get;
             set
             {
-                if (value != rotation)
+                if (value != field)
                 {
-                    rotation = value;
+                    field = value;
                     isMatrixDirty = true;
                 }
             }

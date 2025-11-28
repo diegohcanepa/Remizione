@@ -21,16 +21,11 @@ namespace Engendro
         private bool customSpacing;
         private string displayTextCopy = string.Empty;
         private const string ellipsesValue = "...";
-        private Font? font;
         private bool hasTypingSoundControl;
         private string lastWord = string.Empty;
-        private int lineSpacing = int.MinValue;
-        private int maximumWidth;
-        private bool multiline = true;
         private int previousLineSpacing;
         private float previousSpacing;
         private const string space = " ";
-        private float spacing = float.MinValue;
         private static readonly StringBuilder stringBuilder = new();
         private string? text;
         private int textRepositoryLoadCount;
@@ -94,7 +89,7 @@ namespace Engendro
                 return;
             }
 
-            if (maximumWidth == 0)
+            if (MaximumWidth == 0)
             {
                 DisplayText = text;
                 LineCount = 1;
@@ -263,7 +258,7 @@ namespace Engendro
                 line += symbol;
                 lineWidth += size.X;
 
-                if (lineWidth >= maximumWidth)
+                if (lineWidth >= MaximumWidth)
                 {
                     // Ensure punctuation symbols
                     if (i + 1 < text.Length)
@@ -320,7 +315,7 @@ namespace Engendro
                 {
                     result.Add(string.Empty);
                 }
-                else if (MeasureScaledString(lines[i]).X > maximumWidth)
+                else if (MeasureScaledString(lines[i]).X > MaximumWidth)
                 {
                     result.AddRange(WrapAsianLine(lines[i]));
                 }
@@ -390,7 +385,7 @@ namespace Engendro
 
                     var addSpace = !(i == words.Length - 1);
 
-                    if (lineWidth + size.X <= maximumWidth)
+                    if (lineWidth + size.X <= MaximumWidth)
                     {
                         stringBuilder.Append(word + (addSpace ? space : string.Empty));
                         lineWidth += size.X + spaceWidth;
@@ -549,12 +544,12 @@ namespace Engendro
         // Font
         public Font? Font
         {
-            get => font;
+            get;
             set
             {
-                if (font != value)
+                if (field != value)
                 {
-                    font = value;
+                    field = value;
                     Invalidate();
                 }
             }
@@ -581,16 +576,16 @@ namespace Engendro
         // LineSpacing
         public int LineSpacing
         {
-            get => lineSpacing;
+            get;
             set
             {
-                if (value != lineSpacing)
+                if (value != field)
                 {
-                    lineSpacing = value;
-                    customSpacing = lineSpacing != int.MinValue || spacing != float.MinValue;
+                    field = value;
+                    customSpacing = field != int.MinValue || Spacing != float.MinValue;
                 }
             }
-        }
+        } = int.MinValue;
 
         // LocalizedTextChanged
         public event EventHandler? LocalizedTextChanged;
@@ -598,12 +593,12 @@ namespace Engendro
         // MaximumWidth
         public int MaximumWidth
         {
-            get => maximumWidth;
+            get;
             set
             {
-                if (value != maximumWidth)
+                if (value != field)
                 {
-                    maximumWidth = value;
+                    field = value;
                     Invalidate();
                 }
             }
@@ -618,16 +613,16 @@ namespace Engendro
         // Multiline
         public bool Multiline
         {
-            get => multiline;
+            get;
             set
             {
-                if (value != multiline)
+                if (value != field)
                 {
-                    multiline = value;
+                    field = value;
                     Invalidate();
                 }
             }
-        }
+        } = true;
 
         // PauseDuration
         public int PauseDuration { get; set; } = 400;
@@ -644,16 +639,16 @@ namespace Engendro
         // Spacing
         public float Spacing
         {
-            get => spacing;
+            get;
             set
             {
-                if (value != spacing)
+                if (value != field)
                 {
-                    spacing = value;
-                    customSpacing = lineSpacing != int.MinValue || spacing != float.MinValue;
+                    field = value;
+                    customSpacing = LineSpacing != int.MinValue || field != float.MinValue;
                 }
             }
-        }
+        } = float.MinValue;
 
         // StartTyping
         public void StartTyping()

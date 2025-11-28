@@ -20,7 +20,6 @@ namespace Remizione
         private enum EditMode { Things }
         private EditMode editMode;
         private readonly TextSprite editorInfoText;
-        private bool isActive;
         private bool leftPanelVisible = true;
         private readonly List<Thing> selectedThings = [];
         private readonly GameSession session;
@@ -372,7 +371,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (!isActive)
+            if (!IsActive)
                 return;
 
             base.OnUpdate(gameTime);
@@ -441,16 +440,16 @@ namespace Remizione
         // IsActive
         public bool IsActive
         {
-            get => isActive;
+            get;
             set
             {
-                if (value != isActive)
+                if (value != field)
                 {
-                    isActive = value;
+                    field = value;
 
                     session.IsMouseVisible = IsActive;
 
-                    if (isActive)
+                    if (field)
                     {
                         if (session.Player != null && session.Player.InCurrentRoom)
                             SelectedThing = session.Player;

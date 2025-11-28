@@ -8,7 +8,6 @@ namespace Engendro
     /// </summary>
     public sealed class Timer
     {
-        private int duration;
 
         #region Constructors
 
@@ -29,7 +28,7 @@ namespace Engendro
         // Duration
         public int Duration
         {
-            get => duration;
+            get;
             set
             {
                 if (value < 0)
@@ -37,7 +36,7 @@ namespace Engendro
                     value = 0;
                 }
 
-                this.duration = value;
+                field = value;
 
                 Stop();
             }

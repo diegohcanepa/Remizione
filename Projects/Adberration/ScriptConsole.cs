@@ -18,9 +18,7 @@ namespace Adberration
 
         private int commandIndex = -1;
         private readonly TextSprite cursorSprite;
-        private bool hasError;
         private string inputText = string.Empty;
-        private bool isActive;
         private readonly Session session;
         private readonly TextSprite textSprite;
 
@@ -190,7 +188,7 @@ namespace Adberration
             Game.Shapes.DrawRectangle(BackgroundArea, Color.Black);
             textSprite.Draw(gameTime);
 
-            if (!hasError && !string.IsNullOrWhiteSpace(inputText))
+            if (!HasError && !string.IsNullOrWhiteSpace(inputText))
                 cursorSprite.Draw(gameTime);
 
             Game.SpriteBatch.End();
@@ -233,13 +231,13 @@ namespace Adberration
         // HasError
         public bool HasError
         {
-            get => hasError;
+            get;
             set
             {
-                if (value != hasError)
+                if (value != field)
                 {
-                    hasError = value;
-                    textSprite.Color = hasError ? TextErrorColor : TextDefaultColor;
+                    field = value;
+                    textSprite.Color = field ? TextErrorColor : TextDefaultColor;
                 }
             }
         }
@@ -250,12 +248,12 @@ namespace Adberration
         // IsActive
         public bool IsActive
         {
-            get => isActive;
+            get;
             set
             {
-                if (value != isActive)
+                if (value != field)
                 {
-                    isActive = value;
+                    field = value;
                     HasError = false;
                     textSprite.Clear();
                     commandIndex = -1;

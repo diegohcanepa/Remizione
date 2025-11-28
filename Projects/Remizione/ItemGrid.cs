@@ -15,12 +15,9 @@ namespace Remizione
         #region Private fields
 
         const int slotSize = 20;
-
-        private ItemCategory categoryFilter;
         private readonly int columns;
         private Vector2 position;
         private readonly int rows;
-        private int selectedSlotIndex;
         private readonly List<ItemGridSlot> slots;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 100 };
 
@@ -168,11 +165,11 @@ namespace Remizione
         // CategoryFilter
         public ItemCategory CategoryFilter
         {
-            get => categoryFilter;
+            get;
             set
             {
-                categoryFilter = value;
-                Populate(categoryFilter);
+                field = value;
+                Populate(field);
             }
         }
 
@@ -369,16 +366,16 @@ namespace Remizione
         public Item? SelectedItem => SelectedSlot?.Item;
 
         // SelectedSlot
-        public ItemGridSlot SelectedSlot => slots[selectedSlotIndex];
+        public ItemGridSlot SelectedSlot => slots[SelectedSlotIndex];
 
         // SelectedSlotIndex
         public int SelectedSlotIndex
         {
-            get => selectedSlotIndex;
+            get;
             set
             {
                 SelectedSlot?.Deactivate();
-                selectedSlotIndex = value;
+                field = value;
                 SelectedSlot?.Activate();
             }
         }

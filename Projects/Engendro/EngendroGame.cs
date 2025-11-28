@@ -19,7 +19,6 @@ namespace Engendro
         private static int fpsFrames;
         private bool isPaused;
         private Renderer2D? renderTargets;
-        private static RunningPlatform runningPlatform;
 
         #endregion
 
@@ -272,12 +271,12 @@ namespace Engendro
         {
             get
             {
-                if (runningPlatform == RunningPlatform.Unknown)
+                if (field == RunningPlatform.Unknown)
                     throw new InvalidOperationException();
 
-                return runningPlatform;
+                return field;
             }
-            private set => runningPlatform = value;
+            private set;
         }
 
         // SceneManager

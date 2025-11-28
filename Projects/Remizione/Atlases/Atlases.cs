@@ -9,11 +9,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private static Atlas actors = null!;
-        private static EnvironmentAtlas environment = null!;
         private static bool isLoaded;
-        private static MenuAtlas menu = null!;
-        private static UIAtlas ui = null!;
 
         #endregion
 
@@ -23,10 +19,10 @@ namespace Remizione
         private static void Load()
         {
             isLoaded = true;
-            actors = new Atlas(EngendroGame.Instance.Content, nameof(Actors), ContentHelper.EncodePath(ContentFolder.Atlases, nameof(Actors)), true);
-            environment = new EnvironmentAtlas(EngendroGame.Instance);
-            menu = new MenuAtlas(EngendroGame.Instance);
-            ui = new UIAtlas(EngendroGame.Instance);
+            Actors = new Atlas(EngendroGame.Instance.Content, nameof(Actors), ContentHelper.EncodePath(ContentFolder.Atlases, nameof(Actors)), true);
+            Environment = new EnvironmentAtlas(EngendroGame.Instance);
+            Menu = new MenuAtlas(EngendroGame.Instance);
+            UI = new UIAtlas(EngendroGame.Instance);
         }
 
         #endregion
@@ -38,9 +34,11 @@ namespace Remizione
             {
                 if (!isLoaded)
                     Load();
-                return actors;
+                return field;
             }
-        }
+
+            private set;
+        } = null!;
 
         // Environment
         internal static EnvironmentAtlas Environment
@@ -49,9 +47,11 @@ namespace Remizione
             {
                 if (!isLoaded)
                     Load();
-                return environment;
+                return field;
             }
-        }
+
+            private set;
+        } = null!;
 
         // Menu
         internal static MenuAtlas Menu
@@ -60,9 +60,11 @@ namespace Remizione
             {
                 if (!isLoaded)
                     Load();
-                return menu;
+                return field;
             }
-        }
+
+            private set;
+        } = null!;
 
         // UI
         internal static UIAtlas UI
@@ -71,8 +73,10 @@ namespace Remizione
             {
                 if (!isLoaded)
                     Load();
-                return ui;
+                return field;
             }
-        }
+
+            private set;
+        } = null!;
     }
 }

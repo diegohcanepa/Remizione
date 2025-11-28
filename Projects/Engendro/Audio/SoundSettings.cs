@@ -7,10 +7,6 @@ namespace Engendro.Audio
     /// </summary>
     public sealed class SoundSettings
     {
-        private int maxInstances = 1;
-        private float pan;
-        private float pitch;
-        private float volume = 1;
 
         // Caption
         public string Caption { get; set; } = string.Empty;
@@ -21,18 +17,18 @@ namespace Engendro.Audio
         // MaxInstances
         public int MaxInstances
         {
-            get => maxInstances;
+            get;
             set
             {
                 ArgumentOutOfRangeException.ThrowIfLessThan(value, 1);
-                this.maxInstances = value;
+                field = value;
             }
-        }
+        } = 1;
 
         // Pan
         public float Pan
         {
-            get => pan;
+            get;
             set
             {
                 if (value < -1.0f || value > 1.0f)
@@ -40,7 +36,7 @@ namespace Engendro.Audio
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
-                this.pan = value;
+                field = value;
             }
         }
 
@@ -50,7 +46,7 @@ namespace Engendro.Audio
         // Pitch
         public float Pitch
         {
-            get => pitch;
+            get;
             set
             {
                 if (value < -1.0f || value > 1.0f)
@@ -58,7 +54,7 @@ namespace Engendro.Audio
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
-                this.pitch = value;
+                field = value;
             }
         }
 
@@ -80,7 +76,7 @@ namespace Engendro.Audio
         // Volume
         public float Volume
         {
-            get => volume;
+            get;
             set
             {
                 if (value < 0.0f || value > 1.0f)
@@ -88,8 +84,8 @@ namespace Engendro.Audio
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
-                this.volume = value;
+                field = value;
             }
-        }
+        } = 1;
     }
 }

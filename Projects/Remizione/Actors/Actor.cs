@@ -26,7 +26,6 @@ namespace Remizione
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private readonly List<Vector2> pendingPathNodes = [];
-        private PlayerNumber playerNumber = PlayerNumber.None;
         private readonly GameSession session;
         private readonly ShadowSpot shadowSpot;
         private SpeechBubble? speechBubble;
@@ -674,19 +673,19 @@ namespace Remizione
         [ScriptProperty]
         public PlayerNumber PlayerNumber
         {
-            get => playerNumber;
+            get;
             set
             {
-                if (value != playerNumber)
+                if (value != field)
                 {
-                    this.playerNumber = value;
+                    field = value;
                     if (value == PlayerNumber.None)
                         InputHandler = null;
                     else
                         InputHandler = new PlayerInputHandler<Actor>(this, (PlayerIndex)value);
                 }
             }
-        }
+        } = PlayerNumber.None;
 
         // Say
         public void Say(string text, bool awaitInput)

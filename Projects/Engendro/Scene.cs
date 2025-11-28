@@ -13,10 +13,8 @@ namespace Engendro
     {
         #region Private fields
 
-        private int height;
         private bool isDisposed;
         private int pauseCount;
-        private int width;
 
         #endregion
 
@@ -180,10 +178,10 @@ namespace Engendro
         // Height
         public int Height
         {
-            get => height;
+            get;
             protected set
             {
-                height = value;
+                field = value;
                 InvalidateBoundingBox();
             }
         }
@@ -283,10 +281,10 @@ namespace Engendro
         // Width
         public int Width
         {
-            get => width;
+            get;
             protected set
             {
-                width = value;
+                field = value;
                 InvalidateBoundingBox();
             }
         }

@@ -14,7 +14,6 @@ namespace Remizione
         private Color color = Color.White;
         private int duration;
         private readonly Blinker<bool> flashBlinker = new(false, true);
-        private LightKind lightKind;
         private readonly ImageSprite lightSprite;
         private int litTweenDuration;
         private readonly FloatTween opacityTween = new();
@@ -49,14 +48,14 @@ namespace Remizione
             lightSprite.Color = Color;
             lightSprite.Scale = Scale;
 
-            switch (lightKind)
+            switch (LightKind)
             {
                 //  Fire
                 case LightKind.Fire:
                     Passes = 2;
                     Color = new Color(255, 127, 90) * .4f;
-                    lightSprite.Tweens.ColorTween = Utils.CreateLightColorTween(lightKind, Color);
-                    lightSprite.Tweens.ScaleTween = Utils.CreateLightScaleTween(lightKind, Scale);
+                    lightSprite.Tweens.ColorTween = Utils.CreateLightColorTween(LightKind, Color);
+                    lightSprite.Tweens.ScaleTween = Utils.CreateLightScaleTween(LightKind, Scale);
                     litTweenDuration = 2000;
                     unlitTweenDuration = 2000;
                     break;
@@ -64,8 +63,8 @@ namespace Remizione
                 //  Fireplace
                 case LightKind.Fireplace:
                     Passes = 2;
-                    lightSprite.Tweens.ColorTween = Utils.CreateLightColorTween(lightKind, Color);
-                    lightSprite.Tweens.ScaleTween = Utils.CreateLightScaleTween(lightKind, Scale);
+                    lightSprite.Tweens.ColorTween = Utils.CreateLightColorTween(LightKind, Color);
+                    lightSprite.Tweens.ScaleTween = Utils.CreateLightScaleTween(LightKind, Scale);
                     litTweenDuration = 1000;
                     unlitTweenDuration = 1000;
                     break;
@@ -223,12 +222,12 @@ namespace Remizione
         // LightKind
         public LightKind LightKind
         {
-            get => lightKind;
+            get;
             set
             {
-                if (value != lightKind)
+                if (value != field)
                 {
-                    this.lightKind = value;
+                    field = value;
                     Invalidate();
                 }
             }

@@ -10,7 +10,6 @@ namespace Engendro.Input
     {
         #region Private fields
 
-        private static bool allowVibration = true;
         private GamePadState previousState;
         private int suspendVibrationInterval;
         private readonly Timer vibrationTimer = new();
@@ -85,13 +84,13 @@ namespace Engendro.Input
         // AllowVibration
         public static bool AllowVibration
         {
-            get => allowVibration;
+            get;
             set
             {
-                if (value != allowVibration)
+                if (value != field)
                 {
-                    allowVibration = value;
-                    if (!allowVibration)
+                    field = value;
+                    if (!field)
                     {
                         foreach (var player in InputManager.Players)
                         {
@@ -100,7 +99,7 @@ namespace Engendro.Input
                     }
                 }
             }
-        }
+        } = true;
 
         // GamePadDeadZone
         public GamePadDeadZone DeadZone { get; set; } = GamePadDeadZone.IndependentAxes;

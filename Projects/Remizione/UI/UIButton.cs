@@ -15,16 +15,11 @@ namespace Remizione
 
         private readonly ImageSprite containerPattern;
         private readonly ImageSprite containerEdgeLeft;
-        private bool hideText;
         private const float horzImagePadding = 1.5f;
         private readonly ImageSprite image;
-        private string? imageName;
         private InputBinding? inputBinding;
-        private bool isBeating;
-        private bool isEnabled = true;
         private readonly TextSprite label;
         private InputMethod lastKnownInputMethod;
-        private RectanglePoint pivotOrigin;
         private Vector2 position;
         private readonly float scaleFactor;
         private readonly Vector2Tween scaleTween = new();
@@ -118,7 +113,7 @@ namespace Remizione
         {
             // Image
             image.Image = GetInputBindingImage(ImageName, InputBinding);
-            image.PivotOrigin = pivotOrigin;
+            image.PivotOrigin = PivotOrigin;
             image.Position = Position;
 
             if (HasText)
@@ -128,7 +123,7 @@ namespace Remizione
 
             InvalidateBoundingBox();
 
-            if (pivotOrigin == RectanglePoint.Bottom || pivotOrigin == RectanglePoint.Top)
+            if (PivotOrigin == RectanglePoint.Bottom || PivotOrigin == RectanglePoint.Top)
             {
                 var offset = BoundingBox.Width / 2 - (image.BoundingBox.Width / 2);
 
@@ -272,12 +267,12 @@ namespace Remizione
         // HideText
         public bool HideText
         {
-            get => hideText;
+            get;
             set
             {
-                if (value != hideText)
+                if (value != field)
                 {
-                    hideText = value;
+                    field = value;
                     Invalidate();
                 }
             }
@@ -289,12 +284,12 @@ namespace Remizione
         // ImageName
         public string? ImageName
         {
-            get => imageName;
+            get;
             set
             {
-                if (value != imageName)
+                if (value != field)
                 {
-                    imageName = value;
+                    field = value;
                     Invalidate();
                 }
             }
@@ -317,16 +312,16 @@ namespace Remizione
         // IsBeating
         public bool IsBeating
         {
-            get => isBeating;
+            get;
             set
             {
-                if (value != isBeating)
+                if (value != field)
                 {
-                    isBeating = value;
+                    field = value;
 
                     image.Scale = ScaleInfo.UIElement.Medium * scaleFactor;
 
-                    if (isBeating)
+                    if (field)
                     {
                         scaleTween.Start(TweenStyle.Linear, image.Scale, image.Scale * 1.1f * scaleFactor, 100, -1);
                         image.Tweens.ScaleTween = scaleTween;
@@ -343,16 +338,16 @@ namespace Remizione
         // IsEnabled
         public bool IsEnabled
         {
-            get => isEnabled;
+            get;
             set
             {
-                if (value != isEnabled)
+                if (value != field)
                 {
-                    isEnabled = value;
+                    field = value;
                     Invalidate();
                 }
             }
-        }
+        } = true;
 
         // IsMouseOver
         public bool IsMouseOver { get; private set; }
@@ -360,12 +355,12 @@ namespace Remizione
         // PivotOrigin
         public RectanglePoint PivotOrigin
         {
-            get => pivotOrigin;
+            get;
             set
             {
-                if (value != pivotOrigin)
+                if (value != field)
                 {
-                    pivotOrigin = value;
+                    field = value;
                     Invalidate();
                 }
             }

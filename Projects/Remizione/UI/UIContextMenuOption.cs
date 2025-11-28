@@ -11,7 +11,6 @@ namespace Remizione
         #region Private fields
 
         private readonly ImageSprite iconSprite;
-        private bool isSelected;
         private readonly UIContextMenu<T> menu;
         private Vector2 position;
         private readonly FloatTween shakeTween = new();
@@ -88,12 +87,12 @@ namespace Remizione
         // IsSelected
         public bool IsSelected
         {
-            get => isSelected;
+            get;
             set
             {
-                if (value != isSelected)
+                if (value != field)
                 {
-                    this.isSelected = value;
+                    field = value;
                     Invalidate();
                 }
             }

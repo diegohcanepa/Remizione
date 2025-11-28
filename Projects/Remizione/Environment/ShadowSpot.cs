@@ -11,7 +11,6 @@ namespace Remizione
         #region Private fields
 
         private readonly Actor actor;
-        private int size;
         private readonly ImageSprite spotImage;
 
         #endregion
@@ -75,12 +74,12 @@ namespace Remizione
         // Size
         public int Size
         {
-            get => size;
+            get;
             set
             {
-                if (value != size)
+                if (value != field)
                 {
-                    this.size = value;
+                    field = value;
                     spotImage.Image = Atlases.Environment.GetImage($"{nameof(ShadowSpot)}{value}");
                 }
             }

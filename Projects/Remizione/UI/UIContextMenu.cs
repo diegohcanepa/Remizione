@@ -19,7 +19,6 @@ namespace Remizione
         private readonly ImageSprite optionSelector;
         private Vector2 optionTextScale = ScaleInfo.ContextMenu.Option;
         private Vector2 position;
-        private int selectedIndex = -1;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 200 };
 
         #endregion
@@ -285,19 +284,19 @@ namespace Remizione
         // SelectedIndex
         public int SelectedIndex
         {
-            get => selectedIndex;
+            get;
             set
             {
-                if (value != selectedIndex)
+                if (value != field)
                 {
-                    this.selectedIndex = value;
+                    field = value;
                     Invalidate();
                 }
             }
-        }
+        } = -1;
 
         // SelectedOption
-        public UIContextMenuOption<T>? SelectedOption => selectedIndex == -1 ? null : optionList[selectedIndex];
+        public UIContextMenuOption<T>? SelectedOption => SelectedIndex == -1 ? null : optionList[SelectedIndex];
 
         // SelectInputBinding
         public InputBinding? SelectInputBinding { get; set; }

@@ -5,7 +5,6 @@
     /// </summary>
     public class ImageSprite : Sprite
     {
-        private AtlasImage? image;
 
         // Constructor
         public ImageSprite(EngendroGame game)
@@ -23,12 +22,12 @@
         // Image
         public AtlasImage? Image
         {
-            get => image;
+            get;
             set
             {
-                if (value != image)
+                if (value != field)
                 {
-                    this.image = value;
+                    field = value;
                     InternalImage = value;
                 }
             }

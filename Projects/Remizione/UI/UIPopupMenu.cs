@@ -18,7 +18,6 @@ namespace Remizione
 
         private readonly List<UIPopupMenuOption<TLinkedObject>> optionList = [];
         private Vector2 position;
-        private UIPopupMenuOption<TLinkedObject>? selectedOption;
         private readonly bool sorted;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 200 };
         private Vector2 textScale = ScaleInfo.Text.Large;
@@ -275,16 +274,16 @@ namespace Remizione
         // SelectedOption
         public UIPopupMenuOption<TLinkedObject>? SelectedOption
         {
-            get => selectedOption;
+            get;
             set
             {
-                if (value != selectedOption)
+                if (value != field)
                 {
-                    if (selectedOption != null && value != null)
+                    if (field != null && value != null)
                         Sound.Play(SoundNames.UISelectA);
 
-                    selectedOption = value;
-                    OnSelectionChanged?.Invoke(selectedOption);
+                    field = value;
+                    OnSelectionChanged?.Invoke(field);
                 }
             }
         }

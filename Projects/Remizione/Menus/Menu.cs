@@ -17,7 +17,6 @@ namespace Remizione.Menus
         private bool layout;
         private readonly List<MenuItem> items = [];
         private Vector2 position;
-        private MenuItem? selectedItem;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 250 };
 
         #endregion
@@ -250,17 +249,17 @@ namespace Remizione.Menus
         // SelectedItem
         public MenuItem? SelectedItem
         {
-            get => selectedItem;
+            get;
             set
             {
-                if (value != selectedItem)
+                if (value != field)
                 {
-                    if (selectedItem != null)
+                    if (field != null)
                     {
                         //SoundManager.Play(SoundNames.MenuItem.ToString());
                     }
 
-                    selectedItem = value;
+                    field = value;
                     Invalidate();
                 }
             }

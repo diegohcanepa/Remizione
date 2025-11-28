@@ -8,7 +8,6 @@ namespace Remizione
     /// </summary>
     public sealed class UIHPBonus : GameObject
     {
-        private int amount;
         private int fullHearts;
         private bool hasHalfHeart;
         private readonly ImageSprite[] hearts;
@@ -39,8 +38,8 @@ namespace Remizione
         // Invalidate
         private void Invalidate()
         {
-            fullHearts = amount / 2;
-            hasHalfHeart = amount % 2 == 1;
+            fullHearts = Amount / 2;
+            hasHalfHeart = Amount % 2 == 1;
 
             for (var i = 0; i < hearts.Length; i++)
             {
@@ -63,7 +62,7 @@ namespace Remizione
                 }
             }
 
-            lastKnownValue = amount;
+            lastKnownValue = Amount;
 
             for (var i = 0; i < hearts.Length; i++)
             {
@@ -78,7 +77,7 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (amount <= 0)
+            if (Amount <= 0)
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera);
@@ -95,9 +94,9 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (amount > 0)
+            if (Amount > 0)
             {
-                if (lastKnownValue != amount)
+                if (lastKnownValue != Amount)
                     Invalidate();
             }
         }
@@ -107,14 +106,14 @@ namespace Remizione
         // Amount
         public int Amount
         {
-            get => amount;
+            get;
             set
             {
-                if (value != amount)
+                if (value != field)
                 {
-                    amount = value;
+                    field = value;
 
-                    if (amount <= 0)
+                    if (field <= 0)
                         lastKnownValue = int.MinValue;
 
                     Invalidate();
