@@ -1008,18 +1008,6 @@ namespace Remizione
         [ScriptProperty]
         public Vector2 OverheadOrigin { get; set; }
 
-        // PlacementPhase
-        [ScriptProperty]
-        public PlacementPhase PlacementPhase { get; set; }
-
-        // PlaceholderSize
-        [ScriptProperty]
-        public PlaceholderSize PlaceholderSize { get; set; }
-
-        // PlaceholderType
-        [ScriptProperty]
-        public PlaceholderType PlaceholderType { get; set; }
-
         // PowerBonus
         [ScriptProperty]
         public int PowerBonus { get; set; }

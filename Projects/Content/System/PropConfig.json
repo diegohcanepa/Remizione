@@ -4,8 +4,8 @@
 			"name": "PotteryA",
 			"tags": ["pottery"],
 			"loot": [
-				["RottenApple", 70],
-				[ "RustyLockpick", 25]
+				[ "RottenApple", 70 ],
+				[ "RustyLockpick", 25 ]
 			]
 		}
 	]

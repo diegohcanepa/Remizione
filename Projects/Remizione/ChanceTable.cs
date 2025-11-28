@@ -12,26 +12,6 @@ namespace Remizione
     {
         private readonly List<ChanceTableItem> items = [];
         private Random random = new();
-        private static readonly Dictionary<string, ChanceTable> tables = [];
-
-        #region Static members
-
-        // Find
-        public static ChanceTable? Find(string name) => tables.TryGetValue(name, out var result) ? result : null;
-
-        // Register
-        public static ChanceTable Register(string name)
-        {
-            if (tables.ContainsKey(name))
-                throw new InvalidOperationException($"Table '{name}' already exists.");
-
-            var result = new ChanceTable();
-            tables[name] = result;
-
-            return result;
-        }
-
-        #endregion
 
         // Constructor
         public ChanceTable()

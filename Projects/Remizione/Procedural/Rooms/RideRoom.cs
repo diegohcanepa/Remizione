@@ -78,7 +78,7 @@ namespace Remizione
         // OnEnemiesCleared
         protected override void OnEnemiesCleared()
         {
-            if (lootDropped)    
+            if (lootDropped)
                 return;
 
             var dropPosition = WalkArea != null ? WalkArea.Polygon.BoundingRectangleF.Center : BoundingBox.Center;
@@ -90,7 +90,7 @@ namespace Remizione
             }
             else
                 Loot.TryDropLoot(this, Config.LootTable, dropPosition, GetType().Name, out _);
-                
+
             lootDropped = true;
         }
 

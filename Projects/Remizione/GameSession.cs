@@ -179,7 +179,6 @@ namespace Remizione
             scriptRegistry.RegisterStatement("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             scriptRegistry.RegisterStatement("exit-session", typeof(ExitSessionCommand));
             scriptRegistry.RegisterStatement("meta-item", typeof(MetaItemCommand), CodingContext.Declaration);
-            scriptRegistry.RegisterStatement("placement-data", typeof(PlacementDataCommand), CodingContext.EntityDeclaration);
             scriptRegistry.RegisterStatement("say", typeof(SayCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("select-walk-area", typeof(SelectWalkAreaCommand));
             scriptRegistry.RegisterStatement("set-light", typeof(SetLightCommand), CodingContext.Execution);
@@ -596,9 +595,6 @@ namespace Remizione
             }
         }
 
-        // PlacementDataPool
-        public PlacementDataPool PlacementDataPool { get; } = new();
-
         // PreviousRoom
         [ScriptProperty]
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
@@ -647,10 +643,10 @@ namespace Remizione
         }
 
         // StaticProps
-        public NamedObjectReadOnlyCollection<GameThing> StaticProps { get; }
+        public NamedObjectReadOnlyCollection<Prop> StaticProps { get; }
 
         // StaticThings
-        public NamedObjectReadOnlyCollection<Prop> StaticThings { get; }
+        public NamedObjectReadOnlyCollection<GameThing> StaticThings { get; }
 
         // Tickets
         public int Tickets { get; set; }

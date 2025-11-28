@@ -32,7 +32,7 @@ namespace Remizione.Procedural
         internal static ChanceTable GetLoot(JsonElement parentElement)
         {
             var loot = new ChanceTable();
-            
+
             if (parentElement.TryGetProperty("loot", out JsonElement lootElement))
             {
                 foreach (JsonElement lootEntryElement in lootElement.EnumerateArray())

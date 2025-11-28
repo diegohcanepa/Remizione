@@ -16,7 +16,6 @@ namespace Remizione
             HitTestPolygon = TestPolygon.Collider;
             HurtSound = Sound.Find(SoundNames.ImpactA);
             MaxHP = 8;
-            PlacementPhase = PlacementPhase.Object;
             ResistanceTableName = "ExplosiveOnly";
             PreventKnockback = true;
         }

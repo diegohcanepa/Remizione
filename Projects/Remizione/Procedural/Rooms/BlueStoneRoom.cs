@@ -19,12 +19,12 @@ namespace Remizione
             Children.Add(new RideRoomWall(session, "206,0;206,46;237,111;240,111;240,0"));
 
             // Placeholders
-            AddPlaceholder("1", PlaceholderType.Floor, PlaceholderSize.Medium, 1, false, "41,32;56,32;56,47;41,47");
-            AddPlaceholder("2", PlaceholderType.Floor, PlaceholderSize.Medium, 1, false, "64,34;79,34;79,49;64,49");
-            AddPlaceholder("3", PlaceholderType.Floor, PlaceholderSize.Medium, 1, false, "4170,34;185,34;185,49;170,49");
-            AddPlaceholder("4", PlaceholderType.Floor, PlaceholderSize.Medium, 1, false, "189,32;204,32;204,47;189,47");
-            AddPlaceholder("5", PlaceholderType.Floor, PlaceholderSize.Medium, 1, false, "219,92;234,92;234,107;219,107");
-            AddPlaceholder("6", PlaceholderType.Floor, PlaceholderSize.Medium, 1, false, "8,92;23,92;23,107;8,107");
+            AddPlaceholder("1", .5f, false, "41,32;56,32;56,47;41,47");
+            AddPlaceholder("2", .5f, false, "64,34;79,34;79,49;64,49");
+            AddPlaceholder("3", .5f, false, "4170,34;185,34;185,49;170,49");
+            AddPlaceholder("4", .5f, false, "189,32;204,32;204,47;189,47");
+            AddPlaceholder("5", .5f, false, "219,92;234,92;234,107;219,107");
+            AddPlaceholder("6", .5f, false, "8,92;23,92;23,107;8,107");
 
             // Doors
             DoorUpPosition = new Vector2(126, 41);
