@@ -1,4 +1,4 @@
-﻿using Remizione.Procedural;
+﻿using Engendro;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -104,6 +104,6 @@ namespace Remizione
         public static ReadOnlyCollection<RideRoom> Rooms { get; } = rooms.AsReadOnly();
 
         // SpawnCounter
-        public static SpawnCounter SpawnCounter { get; } = new();
+        public static NamedCounter SpawnCounter { get; } = new();
     }
 }

@@ -10,6 +10,7 @@ namespace Remizione
     /// </summary>
     public class Prop : GameThing
     {
+        private readonly PropConfig? config;
         private readonly ImageSprite shadow;
 
         #region Constructor
@@ -24,6 +25,8 @@ namespace Remizione
                 Opacity = ColorPalette.ShadowOpacity,
                 PivotOrigin = RectanglePoint.Bottom,
             };
+
+            config = PropConfig.GetConfig(StaticName);
         }
 
         #endregion
@@ -36,6 +39,14 @@ namespace Remizione
         #endregion
 
         #region Protected members
+
+        // OnDie
+        protected override void OnDie()
+        {
+            base.OnDie();
+            if (config?.KillGoal > 0)
+                Session.KillCounter.Increment(StaticName);
+        }
 
         // OnDrawShadow
         protected override void OnDrawShadow(GameTime gameTime) => shadow.Draw(gameTime);

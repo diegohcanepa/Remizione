@@ -293,6 +293,10 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(Tickets)]?.Value is string tickets)
                 this.Tickets = XmlConvert.ToInt32(tickets);
 
+            // KillCounter
+            if (sessionNode.Attributes[nameof(KillCounter)]?.Value is string killCounterData)
+                KillCounter.Deserialize(killCounterData);
+
             // MetaItemPool
             if (sessionNode.Attributes[nameof(UnlockedMetaItems)]?.Value is string metaItemPoolData)
                 UnlockedMetaItems.Deserialize(metaItemPoolData);
@@ -405,6 +409,9 @@ namespace Remizione
 
             // Tickets
             output.WriteAttributeString(nameof(Tickets), XmlConvert.ToString(Tickets));
+
+            // KillCounter
+            output.WriteAttributeString(nameof(KillCounter), KillCounter.Serialize());
 
             // MetaItemPool
             output.WriteAttributeString(nameof(UnlockedMetaItems), UnlockedMetaItems.Serialize());
@@ -523,6 +530,9 @@ namespace Remizione
         // KeyItemTarget
         [ScriptProperty]
         public Prop? KeyItemTarget { get; set; }
+
+        // KillCounter
+        public NamedCounter KillCounter { get; } = new();
 
         // KillEnemies
         [ScriptMethod]

@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using Remizione.Procedural;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,7 +16,7 @@ namespace Remizione
         private int instanceCount;
         private readonly List<Placeholder> placeholders = [];
         private readonly int randomSeed;
-        private readonly SpawnCounter spawnCounter = new();
+        private readonly NamedCounter spawnCounter = new();
 
         #endregion
 
