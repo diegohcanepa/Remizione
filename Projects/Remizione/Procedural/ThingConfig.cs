@@ -17,6 +17,12 @@ namespace Remizione
         protected ThingConfig(JsonElement element)
             : base(element)
         {
+            // MaxAmount
+            if (element.TryGetProperty("maxAmount", out JsonElement maxAmountElement))
+                MaxAmount = maxAmountElement.GetInt32();
+            else
+                MaxAmount = 1;
+
             // MaxPerRoom
             if (element.TryGetProperty("maxPerRoom", out JsonElement maxPerRoomElement))
                 MaxPerRoom = maxPerRoomElement.GetInt32();
@@ -41,6 +47,9 @@ namespace Remizione
 
         // KillGoalReward
         public string KillGoalReward { get; } = string.Empty;
+
+        // MaxAmount
+        public int MaxAmount { get; }
 
         // MaxPerRoom
         public int MaxPerRoom { get; }

@@ -112,6 +112,7 @@ namespace Remizione
             MetaItem.Load(ContentHelper.EncodePath(Content, ContentFolder.System, "MetaItems.json"));
             RoomConfig.Load(ContentHelper.EncodePath(Content, ContentFolder.System, "RoomConfig.json"));
             PropConfig.Load(ContentHelper.EncodePath(Content, ContentFolder.System, "PropConfig.json"));
+            EnemyConfig.Load(ContentHelper.EncodePath(Content, ContentFolder.System, "EnemyConfig.json"));
 
             Fonts.Initialize(Content);
             LocalizationManager.Initialize(this);

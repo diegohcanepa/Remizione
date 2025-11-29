@@ -4,21 +4,26 @@
 		// 1. Hereda todas las reglas y propiedades del esquema base
 		{ "$ref": "ConfigSchema.json" }
 	],
-	// 2. Define propiedades o reglas específicas para el esquema derivado
+	// 2. Define propiedades o reglas especÃ­ficas para el esquema derivado
 	"properties": {
+		"maxAmount": {
+			"type": "integer",
+			"minimum": 1,
+			"description": "NÃºmero maximo de veces que este elemento puede spawnear."
+		},
 		"maxPerRoom": {
 			"type": "integer",
 			"minimum": 0,
-			"description": "Número maximo de veces que este elemento puede aparecer por 'room'."
+			"description": "NÃºmero maximo de veces que este elemento puede aparecer por 'room'."
 		},
 		"killGoal": {
 			"type": "integer",
 			"minimum": 0,
-			"description": "Objetivo de muertes para esta configuración."
+			"description": "Objetivo de muertes para esta configuraciÃ³n."
 		},
 		"killGoalReward": {
 			"type": "string",
-			"description": "Nombre del MetaItem que se otorga como recompensa al completar el objetivo de muertes (debe ser un MetaItem válido)."
+			"description": "Nombre del MetaItem que se otorga como recompensa al completar el objetivo de muertes (debe ser un MetaItem vÃ¡lido)."
 		}
 	},
 	"additionalProperties": false

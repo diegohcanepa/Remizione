@@ -15,7 +15,6 @@
             ContactDamageType = DamageType.Physical;
             Faction = Faction.Evil;
             PowerBonus = 1;
-
             config = EnemyConfig.GetConfig(StaticName);
         }
 

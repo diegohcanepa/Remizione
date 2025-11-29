@@ -80,6 +80,42 @@ namespace Remizione
             return outList;
         }
 
+        // GetEnemySpawnPoints
+        private List<Vector2> GetEnemySpawnPoints(Rectangle area, int count, int cellSize)
+        {
+            var cells = new List<Vector2>();
+
+            for (int y = area.Y; y < area.Bottom; y += cellSize)
+            {
+                for (int x = area.X; x < area.Right; x += cellSize)
+                {
+                    // Centro de la celda
+                    var cx = x + cellSize * 0.5f;
+                    var cy = y + cellSize * 0.5f;
+
+                    // Solo agregamos si el centro cae dentro
+                    if (cx >= area.Left && cx <= area.Right &&
+                        cy >= area.Top && cy <= area.Bottom)
+                    {
+                        cells.Add(new Vector2(cx, cy));
+                    }
+                }
+            }
+
+            // Mezclamos
+            for (int i = cells.Count - 1; i > 0; i--)
+            {
+                int j = Random.Next(i + 1);
+                (cells[i], cells[j]) = (cells[j], cells[i]);
+            }
+
+            // Devolvemos solo los que pidieron
+            if (cells.Count > count)
+                cells.RemoveRange(count, cells.Count - count);
+
+            return cells;
+        }
+
         #endregion
 
         #region Protected members
@@ -137,6 +173,8 @@ namespace Remizione
         // PopulateEnemies
         private void PopulateEnemies()
         {
+            var enemyList = new List<string>();
+
             // 1) Filter by room scope
             var filteredEnemies = FilterByRoomScope<EnemyConfig>(EnemyConfig.All, Config.EnemyScope);
 
@@ -169,15 +207,38 @@ namespace Remizione
                 if (EnemyConfig.GetConfig(chanceTableItem.Name) is not EnemyConfig chosen)
                     continue;
 
-                // Log spawn in room
-                spawnCounter.Increment(chosen.Name);
+                var spawnCount = Random.Next(1, p.MaxAmount + 1);
+                for (var j = 0; j < spawnCount; j++)
+                {
+                    // Log spawn in room
+                    spawnCounter.Increment(chosen.Name);
 
-                // Log spawn in run
-                RunManager.SpawnCounter.Increment(chosen.Name);
+                    // Log spawn in run
+                    RunManager.SpawnCounter.Increment(chosen.Name);
 
-                var instance = CreateRuntimeThingCloneCore(chosen.Name);
-                //instance.Position = ph.Polygon.BoundingRectangleF.GetPoint(RectanglePoint.Bottom);
-                Children.Add(instance);
+                    enemyList.Add(chosen.Name);
+
+                    // MaxPerRoom
+                    if (!p.PassesMaxPerRoomConstraint(spawnCounter.GetCount(chosen.Name)))
+                        break;
+
+                    // MaxPerRun
+                    if (!p.PassesMaxPerRunConstraint())
+                        break;
+                }
+            }
+
+            if (WalkArea != null && enemyList.Count > 0)
+            {
+                var poly = new Polygon(WalkArea.Polygon.Vertices, -30);
+
+                var spawnPoints = GetEnemySpawnPoints(poly.BoundingRectangle, enemyList.Count, 18);
+                for (var i = 0; i < spawnPoints.Count; i++)
+                {
+                    var instance = CreateRuntimeThingCloneCore(enemyList[i]);
+                    instance.Position = spawnPoints[i];
+                    Children.Add(instance);
+                }
             }
         }
 
