@@ -215,9 +215,9 @@ namespace Engendro.Input
         public void SuspendVibration(int duration) => suspendVibrationInterval = duration;
 
         // Vibrate
-        public void Vibrate(GamePadVibrationSettings settings)
+        public bool Vibrate(GamePadVibrationSettings settings)
         {
-            Vibrate(settings.Duration, settings.LeftMotor, settings.RightMotor, settings.LeftTrigger, settings.RightTrigger);
+            return Vibrate(settings.Duration, settings.LeftMotor, settings.RightMotor, settings.LeftTrigger, settings.RightTrigger);
         }
 
         // Vibrate

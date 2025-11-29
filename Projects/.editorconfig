@@ -11,3 +11,9 @@ dotnet_diagnostic.IDE0007.severity = none
 
 # IDE0003: Remove qualification
 dotnet_diagnostic.IDE0003.severity = none
+
+# IDE0058: Remove unnecessary expression value
+dotnet_diagnostic.IDE0058.severity = none
+
+# IDE0130: Namespace does not match folder structure
+dotnet_diagnostic.IDE0130.severity = none

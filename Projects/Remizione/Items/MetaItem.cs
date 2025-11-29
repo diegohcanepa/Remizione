@@ -1,5 +1,4 @@
-﻿
-using Engendro;
+﻿using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
@@ -16,6 +15,7 @@ namespace Remizione
     public sealed class MetaItem
     {
         private static readonly Dictionary<string, MetaItem> items = [];
+        private static bool loaded;
 
         #region Constructor
 
@@ -25,9 +25,13 @@ namespace Remizione
             // Name
             this.Name = element.GetProperty("name").GetString() ?? throw new InvalidDataException("Name not found.");
 
+            CodeContract.ValidName(this.Name, string.Empty);
+
+            // Name cannot be a realm 
             if (Enum.IsDefined(typeof(Realm), Name))
                 throw new InvalidOperationException($"The name '{Name}' cannot be used because it is an item realm.");
 
+            // Name cannot be a category
             if (Enum.IsDefined(typeof(ItemCategory), Name))
                 throw new InvalidOperationException($"The name '{Name}' cannot be used because it is an item category.");
 
@@ -68,6 +72,10 @@ namespace Remizione
             // IsStackable
             if (element.TryGetProperty("isStackable", out JsonElement isStackableElement))
                 IsStackable = isStackableElement.GetBoolean();
+
+            // Knockback
+            if (element.TryGetProperty("knockback", out JsonElement knockbackElement) && knockbackElement.GetString() is string knockbackValue)
+                Knockback = DataConverter.ToVector2(knockbackValue);
 
             // PassiveEffectCooldown
             if (element.TryGetProperty("passiveEffectCooldown", out JsonElement passiveEffectCooldownElement))
@@ -118,6 +126,8 @@ namespace Remizione
             this.LocalizedDescription = Localization.GetItemDescription(this);
             this.LocalizedDisplayName = Localization.GetItemName(this);
             this.Image = Atlases.UI.GetImage(Name);
+
+            items.Add(Name, this);
         }
 
         #endregion
@@ -194,18 +204,12 @@ namespace Remizione
         // Load
         public static void Load(string fileName)
         {
-            using var input = TitleContainer.OpenStream(fileName);
-            using JsonDocument doc = JsonDocument.Parse(input);
-            var root = doc.RootElement;
+            if (loaded)
+                throw new InvalidOperationException("Data is already loaded.");
 
-            if (!root.TryGetProperty("metaItems", out JsonElement arrayElement) || arrayElement.ValueKind != JsonValueKind.Array)
-                throw new InvalidDataException();
+            Utils.LoadJsonData<MetaItem>(fileName, (JsonElement element) => new MetaItem(element));
 
-            foreach (JsonElement element in arrayElement.EnumerateArray())
-            {
-                var metaItem = new MetaItem(element);
-                items.Add(metaItem.Name, metaItem);
-            }
+            loaded = true;
         }
 
         #endregion

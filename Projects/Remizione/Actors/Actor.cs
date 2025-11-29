@@ -119,14 +119,12 @@ namespace Remizione
             if (!CanTakeDamage(attacker))
                 return;
 
-            if (MetaItem.Find(attacker.ContactDamageType.ToString() + "Damage") is not MetaItem metaItem)
+            if (attacker.ContactDamageMetaItem == null)
                 return;
 
             Stand();
 
-            InputManager.DefaultPlayer.GamePad.Vibrate(200, 1, 1);
-
-            metaItem.ApplyDamage(attacker, this);
+            attacker.ContactDamageMetaItem.ApplyDamage(attacker, this);
 
             StateMachine.ChangeState(contactDamageState.Name);
         }
@@ -291,10 +289,16 @@ namespace Remizione
         protected AIStateMachine AIStateMachine { get; }
 
         // CalculateSpeed
-        protected override float CalculateSpeed() => base.CalculateSpeed() * (FastMove ? FastMoveFactor : 1);
+        protected override float CalculateSpeed()
+        {
+            return base.CalculateSpeed() * (FastMove ? FastMoveFactor : 1);
+        }
 
         // CanCheckCollisions
-        protected override bool CanCheckCollisions() => !IsFollowingPath && base.CanCheckCollisions();
+        protected override bool CanCheckCollisions()
+        {
+            return !IsFollowingPath && base.CanCheckCollisions();
+        }
 
         // InputHandler
         protected InputHandler? InputHandler { get; set; }
@@ -506,7 +510,10 @@ namespace Remizione
         public ActorAnimationSettings AnimationSettings { get; } = new();
 
         // Animate
-        public SpriteAnimation? Animate(string animationName) => Animate(animationName, false, AnimationDirection.Forward, false);
+        public SpriteAnimation? Animate(string animationName)
+        {
+            return Animate(animationName, false, AnimationDirection.Forward, false);
+        }
 
         // Animate
         public SpriteAnimation? Animate(string animationName, bool loop, AnimationDirection direction, bool preserve)
@@ -532,8 +539,7 @@ namespace Remizione
                 if (IsDead || session.IsAwaiting)
                     return false;
 
-                return StateMachine.CurrentState is ActorStandState ||
-                       StateMachine.CurrentState is ActorMoveState;
+                return StateMachine.CurrentState is ActorStandState or ActorMoveState;
             }
         }
 
@@ -617,7 +623,7 @@ namespace Remizione
         public bool IsPlayer => Session.Player == this;
 
         // IsStandingOrMoving
-        public bool IsStandingOrMoving => StateMachine.CurrentState is ActorStandState || StateMachine.CurrentState is ActorMoveState;
+        public bool IsStandingOrMoving => StateMachine.CurrentState is ActorStandState or ActorMoveState;
 
         // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;
@@ -723,7 +729,10 @@ namespace Remizione
 
         // Stand
         [ScriptMethod()]
-        public void Stand(bool forceRestart = false) => StateMachine.ChangeState(ActorStateNames.Stand, forceRestart);
+        public void Stand(bool forceRestart = false)
+        {
+            StateMachine.ChangeState(ActorStateNames.Stand, forceRestart);
+        }
 
         // StartTalking
         public void StartTalking()

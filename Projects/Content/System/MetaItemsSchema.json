@@ -1,0 +1,131 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MetaItem Data File (Validado con Enums)",
+  "description": "Schema para el archivo que contiene la lista de MetaItems, con validaci�n estricta de tipos de datos y valores de Enums.",
+  "type": "object",
+  "properties": {
+    "metaItems": {
+      "type": "array",
+      "description": "Una lista de objetos MetaItem.",
+      "items": {
+        "$ref": "#/definitions/MetaItem"
+      }
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "definitions": {
+    "MetaItem": {
+      "type": "object",
+      "description": "Definición de las propiedades de un MetaItem.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "El nombre único del item. (Requerido)"
+        },
+        "action": {
+          "type": "string",
+          "description": "La acción asociada al item (Enum ItemAction).",
+          "enum": [ "None", "Place", "Throw" ]
+        },
+        "category": {
+          "type": "string",
+          "description": "La categoría del item (Enum ItemCategory).",
+          "enum": [ "None", "LeftHand", "RightHand", "Consumable", "Gadget", "KeyItem" ]
+        },
+        "criticalChance": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "La probabilidad de golpe crítico (valor por defecto: 1)."
+        },
+        "damage": {
+          "type": "string",
+          "description": "Expresión de dado para el dado (ej: '1d6+2')."
+        },
+        "damageType": {
+          "type": "string",
+          "description": "El tipo de dado del item (Enum DamageType).",
+          "enum": [ "None", "Physical", "Acid", "Explosive", "Fire", "Ice", "Lightning", "Poison" ]
+        },
+        "durability": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Durabilidad del item."
+        },
+        "hp": {
+          "type": "string",
+          "description": "Expresión de dado para los puntos de vida que otorga (ej: '1d4')."
+        },
+        "impactWord": {
+          "type": "string",
+          "description": "La palabra de impacto asociada (Enum ImpactWordName).",
+          "enum": [ "None", "AghGreen", "AghRed", "BoomPurple", "BoomRed", "BangBlue", "BangRed", "CrackBlue", "CrackYellow", "CuackPurple", "CuackYellow", "Kapow", "KapowStrong", "OuchBlue", "OuchGreen", "PlopRed", "PlopYellow", "SlapBlue", "SlapRed", "Zap" ]
+        },
+        "isStackable": {
+          "type": "boolean",
+          "description": "Indica si el item puede ser apilado."
+        },
+        "knockback": {
+          "type": "string",
+          "description": "Fuerza de empuje (Vector2) representada como 'X, Y' (ej: '100, 50')."
+        },
+        "passiveEffectCooldown": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Tiempo de enfriamiento para el efecto pasivo (ms o ticks)."
+        },
+        "pickupSound": {
+          "type": "string",
+          "description": "Nombre del sonido al recoger el item (se busca en Sound.FindNotNull)."
+        },
+        "preventDiscard": {
+          "type": "boolean",
+          "description": "Indica si se previene el descarte del item."
+        },
+        "quality": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Calidad del item."
+        },
+        "range": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Rango de ataque o uso del item."
+        },
+        "realm": {
+          "type": "string",
+          "description": "El reino o ámbito del item (Enum Realm).",
+          "enum": [ "Earthly", "Infernal", "Celestial" ]
+        },
+        "skillChance": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Probabilidad de habilidad asociada."
+        },
+        "sound": {
+          "type": "string",
+          "description": "Nombre del sonido principal al usar el item (se busca en Sound.FindNotNull)."
+        },
+        "stackMode": {
+          "type": "string",
+          "description": "Modo de apilamiento (Enum StackMode).",
+          "enum": [ "None", "Persistent", "Disposable" ]
+        },
+        "unlocked": {
+          "type": "boolean",
+          "description": "Indica si el item está desbloqueado."
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Peso del item (valor por defecto: 1)."
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

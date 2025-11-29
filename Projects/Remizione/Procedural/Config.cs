@@ -29,20 +29,6 @@ namespace Remizione
             if (element.TryGetProperty("maxPerRun", out JsonElement maxPerRunElement))
                 MaxPerRun = maxPerRunElement.GetInt32();
 
-            // KillGoal
-            if (element.TryGetProperty("killGoal", out JsonElement killGoalElement))
-                KillGoal = killGoalElement.GetInt32();
-
-            // KillGoalReward
-            if (element.TryGetProperty("killGoalReward", out JsonElement killGoalRewardElement))
-            {
-                if (killGoalRewardElement.GetString() is string killGoalRewardValue)
-                {
-                    ConfigHelper.AssertMetaItem(killGoalRewardValue);
-                    KillGoalReward = killGoalRewardValue;
-                }
-            }
-
             // RequiredCompletedRuns
             if (element.TryGetProperty("requiredCompletedRuns", out JsonElement requiredCompletedRunsElement))
                 RequiredCompletedRuns = requiredCompletedRunsElement.GetInt32();
@@ -60,32 +46,6 @@ namespace Remizione
             // Pools
             Pools = new(ConfigHelper.GetPools(element));
         }
-
-        // LoadCore
-        protected static List<T> LoadCore<T>(string fileName, string rootName, Func<JsonElement, T> onCreate)
-        {
-            var result = new List<T>();
-
-            using var input = TitleContainer.OpenStream(fileName);
-            using JsonDocument doc = JsonDocument.Parse(input);
-            var root = doc.RootElement;
-
-            if (!root.TryGetProperty(rootName, out JsonElement arrayElement) || arrayElement.ValueKind != JsonValueKind.Array)
-                throw new InvalidDataException();
-
-            foreach (JsonElement element in arrayElement.EnumerateArray())
-            {
-                result.Add(onCreate(element));
-            }
-
-            return result;
-        }
-
-        // KillGoal
-        public int KillGoal { get; }
-
-        // KillGoalReward
-        public string KillGoalReward { get; } = string.Empty;
 
         // LootTable
         public ChanceTable LootTable { get; }

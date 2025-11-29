@@ -363,7 +363,7 @@ namespace Engendro
 
             for (var i = 0; i < vertices.Length; i++)
             {
-                vertices[i] = XmlConverterExtension.ToVector2(values[i].Trim());
+                vertices[i] = DataConverter.ToVector2(values[i].Trim());
             }
 
             return vertices;

@@ -10,14 +10,6 @@
 			],
 			"killGoal": 10,
 			"killGoalReward": "MasterLockpick"
-		},
-		{
-			"name": "PotteryB",
-			"tags": [ "floor" ],
-			"loot": [
-				[ "RottenApple", 70 ],
-				[ "RustyLockpick", 25 ]
-			]
 		}
 	]
 }

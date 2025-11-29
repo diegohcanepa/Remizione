@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Config Data File",
+  "description": "Schema para un archivo de configuración base que contiene varias definiciones.",
+  "type": "object",
+  "properties": {
+    "configItems": {
+      "type": "array",
+      "description": "Una lista de objetos de configuración base (Config).",
+      "items": {
+        "$ref": "#/definitions/Config"
+      }
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "definitions": {
+    "Config": {
+      "type": "object",
+      "description": "Definición de las propiedades de configuración base.",
+        "properties": {
+            "name": {
+                "type": "string",
+                "description": "Nombre único de la configuración. (Requerido)"
+            },
+            "weight": {
+                "type": "number",
+                "format": "float",
+                "default": 1.0,
+                "minimum": 0,
+                "description": "Peso o probabilidad asociada a esta configuración. Por defecto es 1."
+            },
+            "maxPerRun": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Número máximo de veces que este elemento puede aparecer por 'run'."
+            },
+            "requiredCompletedRuns": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Número de 'runs' completadas requeridas para que esta configuración sea elegible."
+            },
+            "requiredRuns": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Número total de 'runs' jugadas requeridas para que esta configuración sea elegible."
+            },
+            "tags": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
+            },
+            "pools": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "description": "Lista de 'pools' a las que pertenece esta configuración (Tags)."
+            },
+            "lootTable": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/definitions/LootEntry"
+                },
+                "description": "Tabla de loot asociada a esta configuración."
+            }
+        },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "LootEntry": {
+      "type": "object",
+      "description": "Representa una entrada en la tabla de loot (asumo ChanceTable es un array de objetos).",
+      "properties": {
+        "item": {
+          "type": "string",
+          "description": "Nombre del item de loot."
+        },
+        "chance": {
+          "type": "number",
+          "format": "float",
+          "minimum": 0,
+          "description": "Probabilidad de que caiga este item (peso)."
+        }
+      },
+      "required": [
+        "item",
+        "chance"
+      ]
+    }
+  }
+}

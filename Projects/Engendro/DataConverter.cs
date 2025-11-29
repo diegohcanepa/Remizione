@@ -7,19 +7,17 @@ using System.Globalization;
 namespace Engendro
 {
     /// <summary>
-    /// XmlConverterExtension
+    /// DataConverter
     /// </summary>
-    public static class XmlConverterExtension
+    public static class DataConverter
     {
         // ToColor
         public static Color ToColor(string value)
         {
             var values = value.Split(',');
 
-            if (values.Length < 3 || values.Length > 4)
-            {
+            if (values.Length is < 3 or > 4)
                 throw new ArgumentException("The specified value is not a valid color.", nameof(value));
-            }
 
             var r = byte.Parse(values[0], CultureInfo.InvariantCulture);
             var g = byte.Parse(values[1], CultureInfo.InvariantCulture);

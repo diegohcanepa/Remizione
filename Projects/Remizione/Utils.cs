@@ -1,7 +1,10 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Text.Json;
 
 namespace Remizione
 {
@@ -79,7 +82,7 @@ namespace Remizione
         }
 
         // LayoutControlsHorizontally
-        public static void LayoutControlsHorizontally(UIButton[] controlList, float spacing)
+        internal static void LayoutControlsHorizontally(UIButton[] controlList, float spacing)
         {
             float width = 0;
 
@@ -105,7 +108,7 @@ namespace Remizione
         }
 
         // LayoutControlsVertically
-        public static void LayoutControlsVertically(UIButton[] controlList, float spacing)
+        internal static void LayoutControlsVertically(UIButton[] controlList, float spacing)
         {
             var pos = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom);
 
@@ -114,6 +117,22 @@ namespace Remizione
                 controlList[i].PivotOrigin = RectanglePoint.RightBottom;
                 controlList[i].Position = pos;
                 pos.Y -= controlList[i].BoundingBox.Height + spacing;
+            }
+        }
+
+        // LoadJsonData
+        internal static void LoadJsonData<T>(string fileName, Func<JsonElement, T> onCreate, string rootName = "data")
+        {
+            using var input = TitleContainer.OpenStream(fileName);
+            using JsonDocument doc = JsonDocument.Parse(input);
+            var root = doc.RootElement;
+
+            if (!root.TryGetProperty(rootName, out JsonElement arrayElement) || arrayElement.ValueKind != JsonValueKind.Array)
+                throw new InvalidDataException();
+
+            foreach (JsonElement element in arrayElement.EnumerateArray())
+            {
+                onCreate(element);
             }
         }
     }

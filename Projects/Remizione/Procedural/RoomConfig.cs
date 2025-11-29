@@ -19,6 +19,8 @@ namespace Remizione
         {
             this.PropScope = ConfigHelper.GetTagScope(element, "propRules");
             this.EnemyScope = ConfigHelper.GetTagScope(element, "enemyRules");
+
+            data.Add(Name, this);
         }
 
         #region Static members
@@ -32,12 +34,7 @@ namespace Remizione
         // Load
         public static void Load(string fileName)
         {
-            var rooms = LoadCore<RoomConfig>(fileName, "rooms", (JsonElement element) => new RoomConfig(element));
-
-            foreach (var roomConfig in rooms)
-            {
-                data.Add(roomConfig.Name, roomConfig);
-            }
+            Utils.LoadJsonData<RoomConfig>(fileName, (JsonElement element) => new RoomConfig(element));
         }
 
         #endregion

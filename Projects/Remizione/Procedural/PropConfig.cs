@@ -10,7 +10,7 @@ namespace Remizione
     /// <summary>
     /// PropConfig
     /// </summary>
-    public sealed class PropConfig : Config
+    public sealed class PropConfig : ThingConfig
     {
         private static readonly Dictionary<string, PropConfig> data = [];
 
@@ -18,9 +18,7 @@ namespace Remizione
         private PropConfig(JsonElement element)
             : base(element)
         {
-            // MaxPerRoom
-            if (element.TryGetProperty("maxPerRoom", out JsonElement maxPerRoomElement))
-                MaxPerRoom = maxPerRoomElement.GetInt32();
+            data.Add(Name, this);
         }
 
         #region Static members
@@ -34,12 +32,7 @@ namespace Remizione
         // Load
         public static void Load(string fileName)
         {
-            var props = LoadCore<PropConfig>(fileName, "props", (JsonElement element) => new PropConfig(element));
-
-            foreach (var propConfig in props)
-            {
-                data.Add(propConfig.Name, propConfig);
-            }
+            Utils.LoadJsonData<PropConfig>(fileName, (JsonElement element) => new PropConfig(element));
         }
 
         // Validate
@@ -48,8 +41,5 @@ namespace Remizione
         }
 
         #endregion
-
-        // MaxPerRoom
-        public int MaxPerRoom { get; }
     }
 }

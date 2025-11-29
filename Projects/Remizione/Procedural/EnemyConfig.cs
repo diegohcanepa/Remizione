@@ -10,7 +10,7 @@ namespace Remizione
     /// <summary>
     /// EnemyConfig
     /// </summary>
-    public sealed class EnemyConfig : Config
+    public sealed class EnemyConfig : ThingConfig
     {
         private static readonly Dictionary<string, EnemyConfig> data = [];
 
@@ -18,9 +18,7 @@ namespace Remizione
         private EnemyConfig(JsonElement element)
             : base(element)
         {
-            // MaxPerRoom
-            if (element.TryGetProperty("maxPerRoom", out JsonElement maxPerRoomElement))
-                MaxPerRoom = maxPerRoomElement.GetInt32();
+            data.Add(Name, this);
         }
 
         #region Static members
@@ -34,20 +32,12 @@ namespace Remizione
         // Load
         public static void Load(string fileName)
         {
-            var enemies = LoadCore<EnemyConfig>(fileName, "enemies", (JsonElement element) => new EnemyConfig(element));
-
-            foreach (var enemyConfig in enemies)
-            {
-                data.Add(enemyConfig.Name, enemyConfig);
-            }
+            Utils.LoadJsonData<EnemyConfig>(fileName, (JsonElement element) => new EnemyConfig(element));
         }
 
         #endregion
 
         // Data
         public static ReadOnlyDictionary<string, EnemyConfig> Data { get; } = new(data);
-
-        // MaxPerRoom
-        public int MaxPerRoom { get; }
     }
 }

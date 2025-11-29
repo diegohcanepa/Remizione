@@ -27,7 +27,7 @@ namespace Adberration
             // Color
             if (propertyInfo.PropertyType == typeof(Color))
             {
-                propertyInfo.SetValue(entity, value == null ? Sprite.DefaultColor : XmlConverterExtension.ToColor(value));
+                propertyInfo.SetValue(entity, value == null ? Sprite.DefaultColor : DataConverter.ToColor(value));
                 return;
             }
 
@@ -64,21 +64,21 @@ namespace Adberration
             // Polygon
             if (propertyInfo.PropertyType == typeof(Polygon))
             {
-                propertyInfo.SetValue(entity, value == null ? null : XmlConverterExtension.ToPolygon(value));
+                propertyInfo.SetValue(entity, value == null ? null : DataConverter.ToPolygon(value));
                 return;
             }
 
             // Rectangle
             if (propertyInfo.PropertyType == typeof(Rectangle))
             {
-                propertyInfo.SetValue(entity, value == null ? Rectangle.Empty : XmlConverterExtension.ToRectangle(value));
+                propertyInfo.SetValue(entity, value == null ? Rectangle.Empty : DataConverter.ToRectangle(value));
                 return;
             }
 
             // RectangleF
             if (propertyInfo.PropertyType == typeof(RectangleF))
             {
-                propertyInfo.SetValue(entity, value == null ? RectangleF.Empty : XmlConverterExtension.ToRectangleF(value));
+                propertyInfo.SetValue(entity, value == null ? RectangleF.Empty : DataConverter.ToRectangleF(value));
                 return;
             }
 
@@ -92,7 +92,7 @@ namespace Adberration
             // Size
             if (propertyInfo.PropertyType == typeof(Size))
             {
-                propertyInfo.SetValue(entity, value == null ? Size.Empty : XmlConverterExtension.ToSize(value));
+                propertyInfo.SetValue(entity, value == null ? Size.Empty : DataConverter.ToSize(value));
                 return;
             }
 
@@ -113,7 +113,7 @@ namespace Adberration
             // Vector2
             if (propertyInfo.PropertyType == typeof(Vector2))
             {
-                propertyInfo.SetValue(entity, value == null ? Vector2.Zero : XmlConverterExtension.ToVector2(value));
+                propertyInfo.SetValue(entity, value == null ? Vector2.Zero : DataConverter.ToVector2(value));
                 return;
             }
         }
@@ -148,7 +148,7 @@ namespace Adberration
             if (propertyInfo.PropertyType == typeof(Color))
             {
                 if (propValue is Color value)
-                    output.WriteAttributeString(storageName, XmlConverterExtension.ToString(value));
+                    output.WriteAttributeString(storageName, DataConverter.ToString(value));
 
                 return;
             }
@@ -191,7 +191,7 @@ namespace Adberration
             if (propertyInfo.PropertyType == typeof(Polygon))
             {
                 if (propValue is Polygon polygon)
-                    output.WriteAttributeString(storageName, XmlConverterExtension.ToString(polygon));
+                    output.WriteAttributeString(storageName, DataConverter.ToString(polygon));
 
                 return;
             }
@@ -200,7 +200,7 @@ namespace Adberration
             if (propertyInfo.PropertyType == typeof(Rectangle))
             {
                 if (propValue is Rectangle value)
-                    output.WriteAttributeString(storageName, XmlConverterExtension.ToString(value));
+                    output.WriteAttributeString(storageName, DataConverter.ToString(value));
 
                 return;
             }
@@ -209,7 +209,7 @@ namespace Adberration
             if (propertyInfo.PropertyType == typeof(RectangleF))
             {
                 if (propValue is RectangleF value)
-                    output.WriteAttributeString(storageName, XmlConverterExtension.ToString(value));
+                    output.WriteAttributeString(storageName, DataConverter.ToString(value));
 
                 return;
             }
@@ -227,7 +227,7 @@ namespace Adberration
             if (propertyInfo.PropertyType == typeof(Size))
             {
                 if (propValue is Size value)
-                    output.WriteAttributeString(storageName, XmlConverterExtension.ToString(value));
+                    output.WriteAttributeString(storageName, DataConverter.ToString(value));
 
                 return;
             }
@@ -254,7 +254,7 @@ namespace Adberration
             if (propertyInfo.PropertyType == typeof(Vector2))
             {
                 if (propValue is Vector2 value)
-                    output.WriteAttributeString(storageName, XmlConverterExtension.ToString(value));
+                    output.WriteAttributeString(storageName, DataConverter.ToString(value));
 
                 return;
             }

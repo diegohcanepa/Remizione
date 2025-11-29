@@ -1,12 +1,12 @@
 {
-	"rooms": [
-		{
-			"name": "BlueStoneRoom",
-			"tags": [],
-			"loot": [
-				["Apple", 100],
-				["<Nothing>", 1]
-			]
-		}
-	]
+  "data": [
+    {
+      "name": "BlueStoneRoom",
+      "tags": [],
+      "loot": [
+        [ "Apple", 100 ],
+        [ "<Nothing>", 1 ]
+      ]
+    }
+  ]
 }

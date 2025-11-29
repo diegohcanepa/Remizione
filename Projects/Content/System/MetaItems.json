@@ -1,5 +1,6 @@
 {
-	"metaItems": [
+	"$schema": "./MetaItemsSchema.json",
+	"data": [
 		{
 			"name": "Apple",
 			"category": "Consumable",
@@ -23,6 +24,7 @@
 			"action": "Throw",
 			"damage": "1d2",
 			"impactWord": "CuackYellow",
+			"knockback": "4,0",
 			"preventDiscard": true,
 			"sound": "ThrowableDuck",
 			"stackMode": "Persistent"

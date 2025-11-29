@@ -17,18 +17,18 @@ namespace Remizione
             if (chanceTable.GetValue() is not ChanceTableItem lootItem)
                 return false;
 
-            // Get meta item based on realm, category or name
+            // Get an unlocked meta item based on realm, category or name
             if (Enum.IsDefined(typeof(Realm), lootItem.Name))
             {
-                metaItem = room.Session.MetaItemPool.GetRandomItem(Enum.Parse<Realm>(lootItem.Name));
+                metaItem = room.Session.UnlockedMetaItems.GetRandomItem(Enum.Parse<Realm>(lootItem.Name));
             }
             else if (Enum.IsDefined(typeof(ItemCategory), lootItem.Name))
             {
-                metaItem = room.Session.MetaItemPool.GetRandomItem(Enum.Parse<ItemCategory>(lootItem.Name));
+                metaItem = room.Session.UnlockedMetaItems.GetRandomItem(Enum.Parse<ItemCategory>(lootItem.Name));
             }
             else
             {
-                metaItem = room.Session.MetaItemPool.Find(lootItem.Name);
+                metaItem = room.Session.UnlockedMetaItems.Find(lootItem.Name);
             }
 
             if (metaItem != null)

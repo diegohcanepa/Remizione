@@ -15,7 +15,7 @@ namespace Remizione
     /// <summary> 
     /// GameThing 
     /// </summary>
-    public abstract class GameThing : Thing, IHoleArea, ILightSource, ILootContext
+    public abstract class GameThing : Thing, IHoleArea, ILightSource
     {
         #region Private fields
 
@@ -27,7 +27,6 @@ namespace Remizione
         private bool isCollisionDirty;
         private bool isHotspotDirty = true;
         private readonly Vector2Tween knockbackTween = new();
-        private readonly List<LootTag> lootTags = [];
         private PathNode[]? pathNodes;
         private int renderLayerDepth;
         private bool shouldClampToWalkablePosition;
@@ -42,7 +41,6 @@ namespace Remizione
         {
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
-            this.LootTags = new(lootTags);
             this.LootTableName = StaticName;
             this.ResistanceTableName = StaticName;
         }
@@ -571,7 +569,21 @@ namespace Remizione
         public TestPolygon ContactDamagePolygon { get; set; } = TestPolygon.Collider;
 
         // ContactDamageType
-        public DamageType ContactDamageType { get; set; }
+        public DamageType ContactDamageType
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    ContactDamageMetaItem = MetaItem.Find(field.ToString() + "Damage");
+                }
+            }
+        }
+
+        // ContactDamageMetaItem
+        public MetaItem? ContactDamageMetaItem { get; private set; }
 
         // Die
         [ScriptMethod]
@@ -989,9 +1001,6 @@ namespace Remizione
         // LootTableName
         [ScriptProperty]
         public string LootTableName { get; set; }
-
-        // LootTags
-        public ReadOnlyCollection<LootTag> LootTags { get; }
 
         // MaxHP
         [ScriptProperty]

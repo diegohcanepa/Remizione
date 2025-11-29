@@ -77,7 +77,7 @@ namespace Remizione
 
             LocalizationSource = LocalizationSource.Script;
 
-            this.MetaItemPool = new();
+            this.UnlockedMetaItems = new();
             this.inventoryScene = new InventoryScene(Inventory);
             this.useKeyItemScene = new UseKeyItemScene(Inventory);
 
@@ -279,7 +279,7 @@ namespace Remizione
 
             // Player position
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
-                playerPosition = XmlConverterExtension.ToVector2(playerPositionValue);
+                playerPosition = DataConverter.ToVector2(playerPositionValue);
 
             // CompletedRuns
             if (sessionNode.Attributes[nameof(CompletedRuns)]?.Value is string completedRuns)
@@ -294,8 +294,8 @@ namespace Remizione
                 this.Tickets = XmlConvert.ToInt32(tickets);
 
             // MetaItemPool
-            if (sessionNode.Attributes[nameof(MetaItemPool)]?.Value is string metaItemPoolData)
-                MetaItemPool.Deserialize(metaItemPoolData);
+            if (sessionNode.Attributes[nameof(UnlockedMetaItems)]?.Value is string metaItemPoolData)
+                UnlockedMetaItems.Deserialize(metaItemPoolData);
 
             // Inventory
             if (sessionNode.Attributes[nameof(Inventory)]?.Value is string inventoryData)
@@ -319,7 +319,7 @@ namespace Remizione
         // OnScriptLibraryLoaded
         protected override void OnScriptLibraryLoaded()
         {
-            MetaItemPool.InitializeDefaults();
+            UnlockedMetaItems.InitializeDefaults();
         }
 
         // OnStart
@@ -395,7 +395,7 @@ namespace Remizione
 
             // PlayerPosition
             if (playerPosition.HasValue)
-                output.WriteAttributeString(nameof(playerPosition), XmlConverterExtension.ToString(playerPosition.Value));
+                output.WriteAttributeString(nameof(playerPosition), DataConverter.ToString(playerPosition.Value));
 
             // CompletedRuns
             output.WriteAttributeString(nameof(CompletedRuns), XmlConvert.ToString(CompletedRuns));
@@ -407,7 +407,7 @@ namespace Remizione
             output.WriteAttributeString(nameof(Tickets), XmlConvert.ToString(Tickets));
 
             // MetaItemPool
-            output.WriteAttributeString(nameof(MetaItemPool), MetaItemPool.Serialize());
+            output.WriteAttributeString(nameof(UnlockedMetaItems), UnlockedMetaItems.Serialize());
 
             // Inventory
             if (Inventory.GetSerializationData() is string inventoryData)
@@ -553,9 +553,6 @@ namespace Remizione
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;
 
-        // MetaItemPool
-        public MetaItemPool MetaItemPool { get; }
-
         // NextRoom
         [ScriptProperty]
         public new GameRoom? NextRoom => (GameRoom?)base.NextRoom;
@@ -634,5 +631,8 @@ namespace Remizione
         // TotalRuns
         [ScriptProperty]
         public int TotalRuns => CompletedRuns + FailedRuns;
+
+        // UnlockedMetaItems
+        public UnlockedMetaItems UnlockedMetaItems { get; }
     }
 }

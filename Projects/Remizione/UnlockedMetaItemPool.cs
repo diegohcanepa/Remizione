@@ -6,15 +6,15 @@ using System.Collections.ObjectModel;
 namespace Remizione
 {
     /// <summary>
-    /// MetaItemPool
+    /// UnlockedMetaItemPool
     /// </summary>
-    public sealed class MetaItemPool
+    public sealed class UnlockedMetaItemPool
     {
         private readonly Dictionary<string, MetaItem> unlockedDictionary = [];
         private readonly List<MetaItem> unlockedList = [];
 
         // Constructor
-        public MetaItemPool()
+        public UnlockedMetaItemPool()
         {
             UnlockedItems = new(unlockedList);
         }
@@ -35,10 +35,7 @@ namespace Remizione
         // Find
         public MetaItem? Find(string name)
         {
-            if (unlockedDictionary.TryGetValue(name, out var result))
-                return result;
-            else
-                return null;
+            return unlockedDictionary.TryGetValue(name, out var result) ? result : null;
         }
 
         // FindNotNull
