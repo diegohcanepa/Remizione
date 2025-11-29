@@ -26,9 +26,7 @@ namespace Remizione
         private readonly InventoryScene inventoryScene;
         private Vector2? playerPosition;
         private readonly RoomEditor? roomEditor;
-        private readonly List<Prop> staticProps = [];
         private readonly List<GameThing> staticThings = [];
-        private readonly Dictionary<string, Prop> staticPropsDict = [];
         private readonly Dictionary<string, GameThing> staticThingsDict = [];
         private readonly UseKeyItemScene useKeyItemScene;
 
@@ -44,7 +42,6 @@ namespace Remizione
             this.Inventory = new(this);
             this.Environment = new Environment(this);
             this.HUD = new HUD(this);
-            this.StaticProps = new(staticProps);
             this.StaticThings = new(staticThings);
             this.IsMouseVisible = false;
 
@@ -102,6 +99,7 @@ namespace Remizione
                 hubRoom.Unload();
 
             IsHUDVisible = false;
+            Inventory.Clear();
             GameplayMode = GameplayMode.Adventure;
             Player?.Reheal();
             RunManager.Clear();
@@ -341,12 +339,6 @@ namespace Remizione
                     staticThings.Add(thing);
                     staticThingsDict.Add(thing.StaticName, thing);
 
-                    if (thing is Prop prop)
-                    {
-                        staticProps.Add(prop);
-                        staticPropsDict.Add(prop.StaticName, prop);
-                    }
-
                     // Collect friendly items
                     metaItems.Clear();
                     for (var i = 0; i < keyItems.Count; i++)
@@ -443,7 +435,6 @@ namespace Remizione
         public void CancelRun()
         {
             Tickets = 0;
-            Inventory.Clear();
             FailedRuns++;
             EndRun();
         }
@@ -503,12 +494,6 @@ namespace Remizione
                 return items;
             else
                 return [];
-        }
-
-        // GetStaticProp
-        public Prop? GetStaticProp(string name)
-        {
-            return staticPropsDict.TryGetValue(name, out var result) ? result : null;
         }
 
         // GetStaticThing
@@ -640,9 +625,6 @@ namespace Remizione
 
             inventoryScene.SceneController.Push();
         }
-
-        // StaticProps
-        public NamedObjectReadOnlyCollection<Prop> StaticProps { get; }
 
         // StaticThings
         public NamedObjectReadOnlyCollection<GameThing> StaticThings { get; }

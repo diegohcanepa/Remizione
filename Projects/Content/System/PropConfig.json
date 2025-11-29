@@ -2,7 +2,17 @@
 	"props": [
 		{
 			"name": "PotteryA",
-			"tags": ["pottery"],
+			"tags": [ "floor" ],
+			"loot": [
+				[ "RottenApple", 70 ],
+				[ "RustyLockpick", 25 ]
+			],
+			"killGoal": 10,
+			"killGoalReward": "MasterLockPick"
+		},
+		{
+			"name": "PotteryB",
+			"tags": [ "floor" ],
 			"loot": [
 				[ "RottenApple", 70 ],
 				[ "RustyLockpick", 25 ]

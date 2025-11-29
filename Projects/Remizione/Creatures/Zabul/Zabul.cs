@@ -5,7 +5,7 @@ namespace Remizione
     /// <summary>
     /// Zabul
     /// </summary>
-    public sealed class Zabul : Creature
+    public sealed class Zabul : Enemy
     {
         // Constructor
         public Zabul(GameSession session, string name)

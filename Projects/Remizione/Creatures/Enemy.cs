@@ -1,12 +1,12 @@
 ﻿namespace Remizione
 {
     /// <summary>
-    /// Creature
+    /// Enemy
     /// </summary>
-    public class Creature : Actor
+    public class Enemy : Actor
     {
         // Constructor
-        public Creature(GameSession session, string name)
+        public Enemy(GameSession session, string name)
             : base(session, name)
         {
             AllowInteraction = false;

@@ -5,7 +5,7 @@ namespace Remizione
     /// <summary>
     /// Nosy Hemorrhoid
     /// </summary>
-    public sealed class NosyHemorrhoid : Creature
+    public sealed class NosyHemorrhoid : Enemy
     {
         // Constructor
         public NosyHemorrhoid(GameSession session, string name)

@@ -4,12 +4,12 @@ using System.Collections.ObjectModel;
 namespace Remizione
 {
     /// <summary>
-    /// ConfigScopeRule
+    /// TagScope
     /// </summary>
-    public sealed class ConfigScopeRule
+    public sealed class TagScope
     {
         // Constructor
-        public ConfigScopeRule(IList<string> allowPools, IList<string> denyPools, IList<string> allowTags, IList<string> denyTags)
+        public TagScope(IList<string> allowPools, IList<string> denyPools, IList<string> allowTags, IList<string> denyTags)
         {
             this.AllowPools = new(allowPools);
             this.DenyPools = new(denyPools);
@@ -19,15 +19,15 @@ namespace Remizione
         }
 
         // AllowPools
-        public ReadOnlyCollection<string> AllowPools { get; }
+        public Tags AllowPools { get; }
 
         // AllowTags
-        public ReadOnlyCollection<string> AllowTags { get; }
+        public Tags AllowTags { get; }
 
         // DenyPools
-        public ReadOnlyCollection<string> DenyPools { get; }
+        public Tags DenyPools { get; }
 
         // DenyTags
-        public ReadOnlyCollection<string> DenyTags { get; }
+        public Tags DenyTags { get; }
     }
 }

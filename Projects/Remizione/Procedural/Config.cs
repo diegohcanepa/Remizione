@@ -29,6 +29,14 @@ namespace Remizione
             if (element.TryGetProperty("maxPerRun", out JsonElement maxPerRunElement))
                 MaxPerRun = maxPerRunElement.GetInt32();
 
+            // KillGoal
+            if (element.TryGetProperty("killGoal", out JsonElement killGoalElement))
+                KillGoal = killGoalElement.GetInt32();
+
+            // KillGoalReward
+            if (element.TryGetProperty("killGoalReward", out JsonElement killGoalRewardElement))
+                KillGoalReward = killGoalRewardElement.GetString() ?? string.Empty;
+
             // RequiredCompletedRuns
             if (element.TryGetProperty("requiredCompletedRuns", out JsonElement requiredCompletedRunsElement))
                 RequiredCompletedRuns = requiredCompletedRunsElement.GetInt32();
@@ -40,8 +48,8 @@ namespace Remizione
             // Tags
             Tags = new(ConfigHelper.GetTags(element));
 
-            // Loot
-            LootTable = ConfigHelper.GetLoot(element);
+            // LootTable
+            LootTable = ConfigHelper.GetLootTable(element);
 
             // Pools
             Pools = new(ConfigHelper.GetPools(element));
@@ -67,6 +75,12 @@ namespace Remizione
             return result;
         }
 
+        // KillGoal
+        public int KillGoal { get; }
+
+        // KillGoalReward
+        public string KillGoalReward { get; }
+
         // LootTable
         public ChanceTable LootTable { get; }
 
@@ -76,8 +90,75 @@ namespace Remizione
         // Name
         public string Name { get; }
 
+        // PassesRunConstraints
+        public bool PassesRunConstraints(GameSession session)
+        {
+            // MaxPerRun
+            if (MaxPerRun > 0)
+            {
+                int spawnedRun = RunManager.GetSpawnCount(Name);
+                if (spawnedRun >= MaxPerRun)
+                    return false;
+            }
+
+            // RequiredRuns
+            if (RequiredRuns > 0)
+            {
+                if (session.TotalRuns < RequiredRuns)
+                    return false;
+            }
+
+            // RequiredCompletedRuns
+            if (RequiredCompletedRuns > 0)
+            {
+                if (session.CompletedRuns < RequiredCompletedRuns)
+                    return false;
+            }
+
+            return true;
+        }
+
+        // PassesScope
+        public bool PassesScope(TagScope scope)
+        {
+            // DenyPools
+            if (scope.DenyPools.Count > 0)
+            {
+                if (Utils.Intersects(scope.DenyPools, Pools))
+                    return false;
+            }
+
+            // DenyTags
+            if (scope.DenyTags.Count > 0)
+            {
+                if (Utils.Intersects(scope.DenyTags, Tags))
+                    return false;
+            }
+
+            // AllowPools (si existe, requiere intersección)
+            if (scope.AllowPools.Count > 0)
+            {
+                if (!Utils.Intersects(scope.AllowPools, Pools))
+                    return false;
+            }
+            else
+            {
+                // AllowTags VACÍO -> aceptar todo (equivalente a "any")
+                if (scope.AllowTags.Count > 0)
+                {
+                    // si hay al menos una tag en allow, requerimos intersección
+                    if (!Utils.Intersects(scope.AllowTags, Tags))
+                        return false;
+                }
+
+                // si AllowTags está vacío o es null, no filtramos por tags (aceptamos)
+            }
+
+            return true;
+        }
+
         // Pools
-        public ReadOnlyCollection<string> Pools { get; }
+        public Tags Pools { get; }
 
         // RequiredCompletedRuns
         public int RequiredCompletedRuns { get; }
@@ -86,7 +167,7 @@ namespace Remizione
         public int RequiredRuns { get; }
 
         // Tags
-        public ReadOnlyCollection<string> Tags { get; }
+        public Tags Tags { get; }
 
         // ToString
         public override string ToString()

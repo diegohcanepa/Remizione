@@ -29,8 +29,8 @@ namespace Remizione
             return result;
         }
 
-        // GetLoot
-        internal static ChanceTable GetLoot(JsonElement parentElement)
+        // GetLootTable
+        internal static ChanceTable GetLootTable(JsonElement parentElement)
         {
             var loot = new ChanceTable();
 
@@ -51,8 +51,8 @@ namespace Remizione
             return loot;
         }
 
-        // GetScopeRule
-        internal static ConfigScopeRule GetScopeRule(JsonElement roomElement, string propertyName)
+        // GetTagScope
+        internal static TagScope GetTagScope(JsonElement roomElement, string propertyName)
         {
             static void Populate(JsonElement tags, List<string> list)
             {
@@ -88,7 +88,7 @@ namespace Remizione
                     Populate(denyTagsElement, denyTags);
             }
 
-            return new ConfigScopeRule(allowPools, denyPools, allowTags, denyTags);
+            return new TagScope(allowPools, denyPools, allowTags, denyTags);
         }
 
         // GetPools

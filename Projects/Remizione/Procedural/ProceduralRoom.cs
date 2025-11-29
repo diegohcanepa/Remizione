@@ -53,53 +53,56 @@ namespace Remizione
             return result;
         }
 
+        // FilterEnemiesByRoomScope
+        private List<EnemyConfig> FilterEnemiesByRoomScope(IList<GameThing> things)
+        {
+            var outList = new List<EnemyConfig>();
+            var scope = Config.EnemyScope;
+
+            foreach (var thing in things)
+            {
+                if (thing is not Enemy enemy)
+                    continue;
+
+                if (EnemyConfig.GetConfig(enemy.StaticName) is not EnemyConfig enemyConfig)
+                    continue;
+
+                // Run constraints
+                if (!enemyConfig.PassesRunConstraints(Session))
+                    continue;
+
+                // Scope rule
+                if (!enemyConfig.PassesScope(scope))
+                    continue;
+
+                // Passed all checks
+                outList.Add(enemyConfig);
+            }
+
+            return outList;
+        }
+
         // FilterPropsByRoomScope
-        private List<PropConfig> FilterPropsByRoomScope(IList<Prop> props)
+        private List<PropConfig> FilterPropsByRoomScope(IList<GameThing> things)
         {
             var outList = new List<PropConfig>();
-            var scope = Config.PropScopeRule;
+            var scope = Config.PropScope;
 
-            foreach (var prop in props)
+            foreach (var thing in things)
             {
+                if (thing is not Prop prop)
+                    continue;
+
                 if (PropConfig.GetConfig(prop.StaticName) is not PropConfig propConfig)
                     continue;
 
                 // Run constraints
-                if (!PassesRunConstraints(propConfig))
+                if (!propConfig.PassesRunConstraints(Session))
                     continue;
 
-                // DenyPools
-                if (scope.DenyPools.Count > 0)
-                {
-                    if (Intersects(scope.DenyPools, propConfig.Pools))
-                        continue;
-                }
-
-                // DenyTags
-                if (scope.DenyTags.Count > 0)
-                {
-                    if (Intersects(scope.DenyTags, propConfig.Tags))
-                        continue;
-                }
-
-                // AllowPools (si existe, requiere intersección)
-                if (scope.AllowPools.Count > 0)
-                {
-                    if (!Intersects(scope.AllowPools, propConfig.Pools))
-                        continue;
-                }
-                else
-                {
-                    // AllowTags VACÍO -> aceptar todo (equivalente a "any")
-                    if (scope.AllowTags.Count > 0)
-                    {
-                        // si hay al menos una tag en allow, requerimos intersección
-                        if (!Intersects(scope.AllowTags, propConfig.Tags))
-                            continue;
-                    }
-
-                    // si AllowTags está vacío o es null, no filtramos por tags (aceptamos)
-                }
+                // Scope rule
+                if (!propConfig.PassesScope(scope))
+                    continue;
 
                 // Passed all checks
                 outList.Add(propConfig);
@@ -108,60 +111,12 @@ namespace Remizione
             return outList;
         }
 
-        // Intersects
-        private static bool Intersects(ReadOnlyCollection<string> listA, ReadOnlyCollection<string> listB)
-        {
-            if (listA.Count == 0 || listB.Count == 0)
-                return false;
-
-            for (int i = 0; i < listA.Count; i++)
-            {
-                var va = listA[i];
-
-                for (int j = 0; j < listB.Count; j++)
-                {
-                    if (string.Equals(va, listB[j], StringComparison.OrdinalIgnoreCase))
-                        return true;
-                }
-            }
-
-            return false;
-        }
-
-        // PassesRunConstraints
-        private bool PassesRunConstraints(PropConfig propConfig)
-        {
-            // MaxPerRun
-            if (propConfig.MaxPerRun > 0)
-            {
-                int spawnedRun = RunManager.GetSpawnCount(propConfig.Name);
-                if (spawnedRun >= propConfig.MaxPerRun)
-                    return false;
-            }
-
-            // RequiredRuns
-            if (propConfig.RequiredRuns > 0)
-            {
-                if (Session.TotalRuns < propConfig.RequiredRuns)
-                    return false;
-            }
-
-            // RequiredCompletedRuns
-            if (propConfig.RequiredCompletedRuns > 0)
-            {
-                if (Session.CompletedRuns < propConfig.RequiredCompletedRuns)
-                    return false;
-            }
-
-            return true;
-        }
-
         #endregion
 
         #region Protected members
 
         // AddPlaceholder
-        protected void AddPlaceholder(string name, float fillChance, bool flipImage, string vertices, params string[] allowedTags)
+        protected void AddPlaceholder(string name, float fillChance, bool flipImage, string vertices, params string[] allowTags)
         {
             for (var i = 0; i < placeholders.Count; i++)
             {
@@ -169,7 +124,7 @@ namespace Remizione
                     throw new InvalidOperationException("Duplicated name.");
             }
 
-            var placeholder = new Placeholder(name, fillChance, flipImage, ReadOnlyPolygon.GetVertices(vertices), allowedTags);
+            var placeholder = new Placeholder(name, fillChance, flipImage, ReadOnlyPolygon.GetVertices(vertices), allowTags);
             placeholders.Add(placeholder);
         }
 
@@ -206,8 +161,81 @@ namespace Remizione
         // Populate
         private void Populate()
         {
+            PopulateProps();
+            PopulateEnemies();
+        }
+
+        // PopulateEnemies
+        private void PopulateEnemies()
+        {
             // 1) Filter by room scope
-            var filteredProps = FilterPropsByRoomScope(Session.StaticProps);
+            var filteredEnemies = FilterEnemiesByRoomScope(Session.StaticThings);
+
+            // 2) Initialize spawnedCounts
+            var spawnedCounts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+            for (int i = 0; i < filteredEnemies.Count; i++)
+            {
+                spawnedCounts[filteredEnemies[i].Name] = 0;
+            }
+
+            // Construir candidatos iterando props
+            var candidates = new List<EnemyConfig>();
+            for (int i = 0; i < filteredEnemies.Count; i++)
+            {
+                var p = filteredEnemies[i];
+
+                // MaxPerRoom: <=0 => ilimitado; >0 chequeamos contador
+                if (p.MaxPerRoom > 0)
+                {
+                    spawnedCounts.TryGetValue(p.Name, out var spawned);
+                    if (spawned >= p.MaxPerRoom)
+                        continue;
+                }
+
+                // MaxPerRun
+                if (p.MaxPerRun > 0)
+                {
+                    var spawnedCount = RunManager.GetSpawnCount(p.Name);
+                    if (spawnedCount >= p.MaxPerRun)
+                        continue;
+                }
+
+                candidates.Add(p);
+
+                // Pick
+                var chanceTable = new ChanceTable();
+                foreach (var enemy in candidates)
+                {
+                    chanceTable.Add(enemy.Name, enemy.Weight);
+                }
+
+                if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
+                    continue;
+
+                if (EnemyConfig.GetConfig(chanceTableItem.Name) is not EnemyConfig chosen)
+                    continue;
+
+                // Log spawn in room
+                if (chosen.MaxPerRoom > 0)
+                {
+                    spawnedCounts.TryGetValue(chosen.Name, out var prev);
+                    spawnedCounts[chosen.Name] = prev + 1;
+                }
+
+                // Log spawn in run
+                RunManager.LogSpawn(chosen.Name);
+
+                var instance = CreateRuntimeThingCloneCore(chosen.Name);
+                //instance.Position = ph.Polygon.BoundingRectangleF.GetPoint(RectanglePoint.Bottom);
+                Children.Add(instance);
+            }
+        }
+
+        // PopulateProps
+        private void PopulateProps()
+        {
+            // 1) Filter by room scope
+            var filteredProps = FilterPropsByRoomScope(Session.StaticThings);
 
             // 2) Initialize spawnedCounts
             var spawnedCounts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
@@ -239,9 +267,9 @@ namespace Remizione
                     var p = filteredProps[i];
 
                     // placeholder.allowedTags (si existe) -> requiere intersección
-                    if (ph.AllowedTags.Count > 0)
+                    if (ph.AllowTags.Count > 0)
                     {
-                        if (!Intersects(ph.AllowedTags, p.Tags))
+                        if (!Utils.Intersects(ph.AllowTags, p.Tags))
                             continue;
                     }
 
@@ -290,7 +318,7 @@ namespace Remizione
                 // Log spawn in run
                 RunManager.LogSpawn(chosen.Name);
 
-                // marcar placeholder usado
+                // Flag placeholder as used
                 ph.Used = true;
 
                 var instance = CreateRuntimeThingCloneCore(chosen.Name);
@@ -363,6 +391,6 @@ namespace Remizione
         public RoomGraph RoomGraph { get; }
 
         // ToString
-        public override string ToString() => $"ProcRoom_{RoomGraph.Id}";
+        public override string ToString() => $"{GetType().Name}_{RoomGraph.Id}";
     }
 }

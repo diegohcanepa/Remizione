@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -52,7 +53,30 @@ namespace Remizione
         }
 
         // GetVersion
-        internal static string GetVersion() => $"Build {GameSettings.Build} " + (EngendroGame.DebugMode ? "(dev)" : "(rel)");
+        internal static string GetVersion()
+        {
+            return $"Build {GameSettings.Build} " + (EngendroGame.DebugMode ? "(dev)" : "(rel)");
+        }
+
+        // Intersects
+        internal static bool Intersects(ReadOnlyCollection<string> listA, ReadOnlyCollection<string> listB)
+        {
+            if (listA.Count == 0 || listB.Count == 0)
+                return false;
+
+            for (int i = 0; i < listA.Count; i++)
+            {
+                var va = listA[i];
+
+                for (int j = 0; j < listB.Count; j++)
+                {
+                    if (string.Equals(va, listB[j], StringComparison.OrdinalIgnoreCase))
+                        return true;
+                }
+            }
+
+            return false;
+        }
 
         // LayoutControlsHorizontally
         public static void LayoutControlsHorizontally(UIButton[] controlList, float spacing)
