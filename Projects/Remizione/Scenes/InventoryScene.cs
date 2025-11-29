@@ -20,7 +20,7 @@ namespace Remizione
         private readonly UIButton buttonConsume;
         private readonly UIButton buttonDiscard;
         private readonly UIButton buttonEquip;
-        private readonly List<ItemCategory> categories = [ItemCategory.None, ItemCategory.LeftHand, ItemCategory.RightHand, ItemCategory.Consumables, ItemCategory.Gadgets, ItemCategory.KeyItems];
+        private readonly List<ItemCategory> categories = [ItemCategory.None, ItemCategory.LeftHand, ItemCategory.RightHand, ItemCategory.Consumable, ItemCategory.Gadget, ItemCategory.KeyItem];
         private readonly ImageSprite[] categoryIcons;
         private readonly Vector2Tween categoryIconTween = Vector2Tween.Create(TweenStyle.Linear, .8f, .9f, 200, -1);
         private readonly ImageSprite[] categoryMarkers;
@@ -213,13 +213,13 @@ namespace Remizione
             if (!item.MetaItem.PreventDiscard)
                 buttonDiscard.Draw(gameTime);
 
-            if (item.MetaItem.Category == ItemCategory.Consumables)
+            if (item.MetaItem.Category == ItemCategory.Consumable)
             {
                 buttonConsume.Draw(gameTime);
             }
             else if (item.MetaItem.IsEquipment)
             {
-                if (!item.IsEquipped || item.MetaItem.Category == ItemCategory.Gadgets)
+                if (!item.IsEquipped || item.MetaItem.Category == ItemCategory.Gadget)
                     buttonEquip.Draw(gameTime);
             }
         }
@@ -275,7 +275,7 @@ namespace Remizione
 
             if (grid.SelectedItem is Item item)
             {
-                itemName.Text = TextRepository.GetValue($"Item.{item.Name}.Name") + (item.Level == 0 ? string.Empty : $" +{item.Level}");
+                itemName.Text = TextRepository.GetValue($"Item.{item.Name}.Name");
                 itemDescription.Opacity = 1;
                 itemDescription.PivotOrigin = RectanglePoint.LeftTop;
                 itemDescription.Position = infoContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 5, 3);
@@ -289,7 +289,7 @@ namespace Remizione
                     hpBonus.Amount = item.MetaItem.HP.MaximumValue;
                 }
 
-                if (item.MetaItem.Category == ItemCategory.Gadgets)
+                if (item.MetaItem.Category == ItemCategory.Gadget)
                 {
                     if (item.IsEquipped == true)
                         buttonEquip.Text = Localization.GetValue(InventoryVerb.TakeOff);
@@ -382,7 +382,7 @@ namespace Remizione
         // TestConsume
         private bool TestConsume(Item selectedItem)
         {
-            if (selectedItem.MetaItem.Category == ItemCategory.Consumables)
+            if (selectedItem.MetaItem.Category == ItemCategory.Consumable)
             {
                 if (buttonConsume.TestPressed(PlayerIndex.One))
                 {
@@ -402,7 +402,7 @@ namespace Remizione
             if (!item.MetaItem.IsEquipment)
                 return false;
 
-            if (item.IsEquipped && item.MetaItem.Category != ItemCategory.Gadgets)
+            if (item.IsEquipped && item.MetaItem.Category != ItemCategory.Gadget)
                 return false;
 
             if (buttonEquip.TestPressed(PlayerIndex.One))

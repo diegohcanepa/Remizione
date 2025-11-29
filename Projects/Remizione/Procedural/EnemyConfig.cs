@@ -44,6 +44,9 @@ namespace Remizione
 
         #endregion
 
+        // Data
+        public static ReadOnlyDictionary<string, EnemyConfig> Data { get; } = new(data);
+
         // MaxPerRoom
         public int MaxPerRoom { get; }
     }

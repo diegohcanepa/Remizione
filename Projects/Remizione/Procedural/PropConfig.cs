@@ -42,6 +42,11 @@ namespace Remizione
             }
         }
 
+        // Validate
+        public static void Validate()
+        {
+        }
+
         #endregion
 
         // MaxPerRoom

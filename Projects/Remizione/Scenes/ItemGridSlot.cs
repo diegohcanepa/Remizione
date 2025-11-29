@@ -158,7 +158,7 @@ namespace Remizione
             if (Item == null)
                 return;
 
-            if (Item.MetaItem.Category == ItemCategory.Consumables)
+            if (Item.MetaItem.Category == ItemCategory.Consumable)
             {
                 Item.MetaItem.Sound?.Play();
                 Item.Use(grid.Inventory.Session.Player);

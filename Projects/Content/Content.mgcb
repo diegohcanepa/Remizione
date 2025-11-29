@@ -941,6 +941,9 @@
 /processorParam:TextureFormat=Color
 /build:Fonts/CommonOutline.bmp
 
+#begin System/MetaItems.json
+/copy:System/MetaItems.json
+
 #begin System/PropConfig.json
 /copy:System/PropConfig.json
 

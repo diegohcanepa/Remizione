@@ -51,7 +51,7 @@ namespace Remizione
     public enum ItemAction { None, Place, Throw }
 
     // ItemCategory
-    public enum ItemCategory { None, LeftHand, RightHand, Consumables, Gadgets, KeyItems }
+    public enum ItemCategory { None, LeftHand, RightHand, Consumable, Gadget, KeyItem }
 
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }

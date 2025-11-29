@@ -46,7 +46,7 @@ namespace Remizione
             this.slotImage = new ImageSprite(Game, Atlases.UI.EquipmentSlot)
             {
                 Opacity = .9f,
-                PivotOrigin = itemCategory == ItemCategory.Gadgets ? RectanglePoint.LeftTop : RectanglePoint.LeftBottom,
+                PivotOrigin = itemCategory == ItemCategory.Gadget ? RectanglePoint.LeftTop : RectanglePoint.LeftBottom,
                 Position = position
             };
 
@@ -58,7 +58,7 @@ namespace Remizione
                 Scale = ScaleInfo.UIElement.Tiny
             };
 
-            if (itemCategory == ItemCategory.Gadgets)
+            if (itemCategory == ItemCategory.Gadget)
                 itemImage.X -= .5f;
 
             // Amount

@@ -38,12 +38,8 @@ namespace Remizione
 
             var text = MetaItem.LocalizedDisplayName;
 
-            // Add level
-            if (Level > 0)
-                text += $" +{Level}";
-
             // Durability state
-            else if (MetaItem.Durability > 0)
+            if (MetaItem.Durability > 0)
             {
                 var ratio = Durability / MetaItem.Durability;
 
@@ -93,9 +89,6 @@ namespace Remizione
                 }
             }
         } = 1;
-
-        // CriticalChance
-        public int CriticalChance => MetaItem.CriticalChance + (Level * 5);
 
         // Discard
         public bool Discard()
@@ -177,20 +170,6 @@ namespace Remizione
         // Knockback
         public Vector2 Knockback => MetaItem.Knockback;
 
-        // Level
-        public int Level
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    isDisplayTextDiry = true;
-                }
-            }
-        }
-
         // MetaItem
         public MetaItem MetaItem { get; }
 
@@ -229,7 +208,7 @@ namespace Remizione
         public void Select() => Inventory.Select(this);
 
         // SkillChance
-        public int SkillChance => MetaItem.SkillChance + (Level * 5);
+        public int SkillChance => MetaItem.SkillChance;
 
         // ToString
         public override string ToString() => DisplayText;

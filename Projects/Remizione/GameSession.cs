@@ -175,7 +175,6 @@ namespace Remizione
             scriptRegistry.RegisterStatement("end-resistance-table", typeof(EndResistanceTableCommand), CodingContext.Initialization);
             scriptRegistry.RegisterStatement("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             scriptRegistry.RegisterStatement("exit-session", typeof(ExitSessionCommand));
-            scriptRegistry.RegisterStatement("meta-item", typeof(MetaItemCommand), CodingContext.Declaration);
             scriptRegistry.RegisterStatement("say", typeof(SayCommand), CodingContext.Execution);
             scriptRegistry.RegisterStatement("select-walk-area", typeof(SelectWalkAreaCommand));
             scriptRegistry.RegisterStatement("set-light", typeof(SetLightCommand), CodingContext.Execution);
@@ -326,7 +325,7 @@ namespace Remizione
         // OnStart
         protected override void OnStart()
         {
-            var keyItems = MetaItem.GetItems(ItemCategory.KeyItems);
+            var keyItems = MetaItem.GetItems(ItemCategory.KeyItem);
 
             var metaItems = new List<MetaItem>();
             foreach (var entity in Entities)

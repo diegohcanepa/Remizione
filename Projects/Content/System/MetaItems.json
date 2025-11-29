@@ -1,0 +1,63 @@
+{
+	"metaItems": [
+		{
+			"name": "Apple",
+			"category": "Consumable",
+			"hp": "2",
+			"sound": "AppleBite",
+			"unlocked": true
+		},
+		{
+			"name": "Coin",
+			"category": "KeyItem",
+			"pickupSound": "PickupCoin",
+			"preventDiscard": true
+		},
+		{
+			"name": "Cross",
+			"category": "Gadget"
+		},
+		{
+			"name": "Duck",
+			"category": "LeftHand",
+			"action": "Throw",
+			"damage": "1d2",
+			"impactWord": "CuackYellow",
+			"preventDiscard": true,
+			"sound": "ThrowableDuck",
+			"stackMode": "Persistent"
+		},
+		{
+			"name": "Firecracker",
+			"category": "RightHand",
+			"action": "Place",
+			"damage": "10",
+			"damageType": "Explosive",
+			"impactWord": "KapowStrong",
+			"range": 20,
+			"sound": "Firecracker",
+			"stackMode": "Disposable"
+		},
+		{
+			"name": "Lantern",
+			"category": "Gadget"
+		},
+		{
+			"name": "MasterLockpick",
+			"category": "KeyItem",
+			"skillChance": 75
+		},
+		{
+			"name": "RottenApple",
+			"category": "Consumable",
+			"hp": "1",
+			"sound": "AppleBite",
+			"unlocked": true
+		},
+		{
+			"name": "RustyLockpick",
+			"category": "KeyItem",
+			"skillChance": 30
+		}
+	]
+}

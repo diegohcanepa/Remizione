@@ -8,7 +8,7 @@
 				[ "RustyLockpick", 25 ]
 			],
 			"killGoal": 10,
-			"killGoalReward": "MasterLockPick"
+			"killGoalReward": "MasterLockpick"
 		},
 		{
 			"name": "PotteryB",

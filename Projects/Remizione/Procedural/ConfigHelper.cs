@@ -10,6 +10,8 @@ namespace Remizione
     /// </summary>
     internal static class ConfigHelper
     {
+        #region Private members
+
         // GetStringArrayValues
         private static List<string> GetStringArrayValues(JsonElement parentElement, string propertyName)
         {
@@ -29,6 +31,15 @@ namespace Remizione
             return result;
         }
 
+        #endregion
+
+        // AssertMetaItem
+        internal static void AssertMetaItem(string name)
+        {
+            if (name != ChanceTable.Nothing && MetaItem.Find(name) == null)
+                throw new InvalidDataException($"Meta item {name} does not exist.");
+        }
+
         // GetLootTable
         internal static ChanceTable GetLootTable(JsonElement parentElement)
         {
@@ -43,6 +54,8 @@ namespace Remizione
 
                     if (lootEntryElement[0].GetString() is not string lootEntryName)
                         throw new InvalidDataException("Loot entry name not found.");
+
+                    AssertMetaItem(lootEntryName);
 
                     loot.Add(lootEntryName, lootEntryElement[1].GetInt32());
                 }

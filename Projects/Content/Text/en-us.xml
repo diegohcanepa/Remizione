@@ -65,7 +65,7 @@
   <String Key="Item.MagneticCard.Name">Magnetic card</String>
   <String Key="Item.MasterLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.MasterLockpick.Name">Master lockpick</String>
-  <String Key="Item.PieceOfWood.Description"></String>
+  <String Key="Item.PieceOfWood.Description" />
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
@@ -75,9 +75,9 @@
   <String Key="Item.SteelLockpick.Name">Steel lockpick</String>
   <String Key="Item.Ticket.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.Ticket.Name">Ticket</String>
-  <String Key="ItemCategory.Consumables">Consumables</String>
-  <String Key="ItemCategory.Gadgets">Gadgets</String>
-  <String Key="ItemCategory.KeyItems">Key items</String>
+  <String Key="ItemCategory.Consumable">Consumables</String>
+  <String Key="ItemCategory.Gadget">Gadgets</String>
+  <String Key="ItemCategory.KeyItem">Key items</String>
   <String Key="ItemCategory.LeftHand">Left hand</String>
   <String Key="ItemCategory.RightHand">Right hand</String>
   <String Key="ItemProperty.Chance">Chance</String>

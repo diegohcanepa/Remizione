@@ -86,7 +86,7 @@ namespace Remizione
                     break;
 
                 // Gadget
-                case ItemCategory.Gadgets:
+                case ItemCategory.Gadget:
                     Gadget = item;
                     break;
             }
@@ -171,7 +171,7 @@ namespace Remizione
             {
                 ItemCategory.RightHand => RightHand,
                 ItemCategory.LeftHand => LeftHand,
-                ItemCategory.Gadgets => Gadget,
+                ItemCategory.Gadget => Gadget,
                 _ => null,
             };
         }
@@ -416,7 +416,7 @@ namespace Remizione
             switch (item.MetaItem.Category)
             {
                 // Gadgets
-                case ItemCategory.Gadgets:
+                case ItemCategory.Gadget:
                     Gadget = null;
                     break;
 

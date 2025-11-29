@@ -109,6 +109,7 @@ namespace Remizione
             Effects = new GameEffects(this);
 
             AudioManager.LoadSoundData(ContentHelper.EncodePath(Content, ContentFolder.System, "SoundData.xml"));
+            MetaItem.Load(ContentHelper.EncodePath(Content, ContentFolder.System, "MetaItems.json"));
             RoomConfig.Load(ContentHelper.EncodePath(Content, ContentFolder.System, "RoomConfig.json"));
             PropConfig.Load(ContentHelper.EncodePath(Content, ContentFolder.System, "PropConfig.json"));
 

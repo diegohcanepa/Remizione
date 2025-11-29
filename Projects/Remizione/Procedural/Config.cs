@@ -35,7 +35,13 @@ namespace Remizione
 
             // KillGoalReward
             if (element.TryGetProperty("killGoalReward", out JsonElement killGoalRewardElement))
-                KillGoalReward = killGoalRewardElement.GetString() ?? string.Empty;
+            {
+                if (killGoalRewardElement.GetString() is string killGoalRewardValue)
+                {
+                    ConfigHelper.AssertMetaItem(killGoalRewardValue);
+                    KillGoalReward = killGoalRewardValue;
+                }
+            }
 
             // RequiredCompletedRuns
             if (element.TryGetProperty("requiredCompletedRuns", out JsonElement requiredCompletedRunsElement))
@@ -79,7 +85,7 @@ namespace Remizione
         public int KillGoal { get; }
 
         // KillGoalReward
-        public string KillGoalReward { get; }
+        public string KillGoalReward { get; } = string.Empty;
 
         // LootTable
         public ChanceTable LootTable { get; }
