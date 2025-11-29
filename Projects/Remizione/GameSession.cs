@@ -633,6 +633,6 @@ namespace Remizione
         public int TotalRuns => CompletedRuns + FailedRuns;
 
         // UnlockedMetaItems
-        public UnlockedMetaItems UnlockedMetaItems { get; }
+        public UnlockedMetaItemPool UnlockedMetaItems { get; }
     }
 }

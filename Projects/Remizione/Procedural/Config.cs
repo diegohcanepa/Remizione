@@ -56,16 +56,18 @@ namespace Remizione
         // Name
         public string Name { get; }
 
+        // PassesMaxPerRunConstraint
+        public bool PassesMaxPerRunConstraint()
+        {
+            return MaxPerRun == 0 || RunManager.SpawnCounter.GetCount(Name) < MaxPerRun;
+        }
+
         // PassesRunConstraints
         public bool PassesRunConstraints(GameSession session)
         {
             // MaxPerRun
-            if (MaxPerRun > 0)
-            {
-                int spawnedRun = RunManager.GetSpawnCount(Name);
-                if (spawnedRun >= MaxPerRun)
-                    return false;
-            }
+            if (MaxPerRun > 0 && RunManager.SpawnCounter.GetCount(Name) >= MaxPerRun)
+                return false;
 
             // RequiredRuns
             if (RequiredRuns > 0)
@@ -84,8 +86,8 @@ namespace Remizione
             return true;
         }
 
-        // PassesScope
-        public bool PassesScope(TagScope scope)
+        // PassesTagScope
+        public bool PassesTagScope(TagScope scope)
         {
             // DenyPools
             if (scope.DenyPools.Count > 0)

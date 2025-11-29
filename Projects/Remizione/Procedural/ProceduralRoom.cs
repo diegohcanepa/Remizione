@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using Remizione.Procedural;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,7 @@ namespace Remizione
         private int instanceCount;
         private readonly List<Placeholder> placeholders = [];
         private readonly int randomSeed;
+        private readonly SpawnCounter spawnCounter = new();
 
         #endregion
 
@@ -28,9 +30,9 @@ namespace Remizione
             this.Config = RoomConfig.GetConfig(StaticName);
             this.RoomGraph = roomGraph;
 
-            AllowGlobalLight = true;
-            LightingSystem = true;
-            UnloadMode = Adberration.UnloadMode.Manual;
+            this.AllowGlobalLight = true;
+            this.LightingSystem = true;
+            this.UnloadMode = Adberration.UnloadMode.Manual;
 
             int salt = roomGraph.Id;
             this.randomSeed = RandomHelper.GetSeed(Session.Seed, salt);
@@ -53,59 +55,27 @@ namespace Remizione
             return result;
         }
 
-        // FilterEnemiesByRoomScope
-        private List<EnemyConfig> FilterEnemiesByRoomScope(IList<GameThing> things)
+        // FilterByRoomScope
+        private List<T> FilterByRoomScope<T>(IList<T> configList, TagScope tagScope)
+            where T : ThingConfig
         {
-            var outList = new List<EnemyConfig>();
-            var scope = Config.EnemyScope;
+            var outList = new List<T>();
 
-            foreach (var thing in things)
+            foreach (var config in configList)
             {
-                if (thing is not Enemy enemy)
-                    continue;
-
-                if (EnemyConfig.GetConfig(enemy.StaticName) is not EnemyConfig enemyConfig)
-                    continue;
+                if (Session.GetStaticThing(config.Name) is null)
+                    throw new InvalidOperationException($"There is no static thing named '{config.Name}'. ");
 
                 // Run constraints
-                if (!enemyConfig.PassesRunConstraints(Session))
+                if (!config.PassesRunConstraints(Session))
                     continue;
 
-                // Scope rule
-                if (!enemyConfig.PassesScope(scope))
+                // Tag scope
+                if (!config.PassesTagScope(tagScope))
                     continue;
 
                 // Passed all checks
-                outList.Add(enemyConfig);
-            }
-
-            return outList;
-        }
-
-        // FilterPropsByRoomScope
-        private List<PropConfig> FilterPropsByRoomScope(IList<GameThing> things)
-        {
-            var outList = new List<PropConfig>();
-            var scope = Config.PropScope;
-
-            foreach (var thing in things)
-            {
-                if (thing is not Prop prop)
-                    continue;
-
-                if (PropConfig.GetConfig(prop.StaticName) is not PropConfig propConfig)
-                    continue;
-
-                // Run constraints
-                if (!propConfig.PassesRunConstraints(Session))
-                    continue;
-
-                // Scope rule
-                if (!propConfig.PassesScope(scope))
-                    continue;
-
-                // Passed all checks
-                outList.Add(propConfig);
+                outList.Add(config);
             }
 
             return outList;
@@ -169,14 +139,7 @@ namespace Remizione
         private void PopulateEnemies()
         {
             // 1) Filter by room scope
-            var filteredEnemies = FilterEnemiesByRoomScope(Session.StaticThings);
-
-            // 2) Initialize spawnedCounts
-            var spawnedCounts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-            for (int i = 0; i < filteredEnemies.Count; i++)
-            {
-                spawnedCounts[filteredEnemies[i].Name] = 0;
-            }
+            var filteredEnemies = FilterByRoomScope<EnemyConfig>(EnemyConfig.All, Config.EnemyScope);
 
             // Construir candidatos iterando props
             var candidates = new List<EnemyConfig>();
@@ -184,21 +147,13 @@ namespace Remizione
             {
                 var p = filteredEnemies[i];
 
-                // MaxPerRoom: <=0 => ilimitado; >0 chequeamos contador
-                if (p.MaxPerRoom > 0)
-                {
-                    spawnedCounts.TryGetValue(p.Name, out var spawned);
-                    if (spawned >= p.MaxPerRoom)
-                        continue;
-                }
+                // MaxPerRoom
+                if (!p.PassesMaxPerRoomConstraint(spawnCounter.GetCount(p.Name)))
+                    continue;
 
                 // MaxPerRun
-                if (p.MaxPerRun > 0)
-                {
-                    var spawnedCount = RunManager.GetSpawnCount(p.Name);
-                    if (spawnedCount >= p.MaxPerRun)
-                        continue;
-                }
+                if (!p.PassesMaxPerRunConstraint())
+                    continue;
 
                 candidates.Add(p);
 
@@ -216,14 +171,10 @@ namespace Remizione
                     continue;
 
                 // Log spawn in room
-                if (chosen.MaxPerRoom > 0)
-                {
-                    spawnedCounts.TryGetValue(chosen.Name, out var prev);
-                    spawnedCounts[chosen.Name] = prev + 1;
-                }
+                spawnCounter.Increment(chosen.Name);
 
                 // Log spawn in run
-                RunManager.LogSpawn(chosen.Name);
+                RunManager.SpawnCounter.Increment(chosen.Name);
 
                 var instance = CreateRuntimeThingCloneCore(chosen.Name);
                 //instance.Position = ph.Polygon.BoundingRectangleF.GetPoint(RectanglePoint.Bottom);
@@ -235,20 +186,13 @@ namespace Remizione
         private void PopulateProps()
         {
             // 1) Filter by room scope
-            var filteredProps = FilterPropsByRoomScope(Session.StaticThings);
+            var filteredProps = FilterByRoomScope<PropConfig>(PropConfig.All, Config.PropScope);
 
-            // 2) Initialize spawnedCounts
-            var spawnedCounts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-            for (int i = 0; i < filteredProps.Count; i++)
-            {
-                spawnedCounts[filteredProps[i].Name] = 0;
-            }
-
-            // 3) Shuffle placeholders
+            // 2) Shuffle placeholders
             var placeholders = new List<Placeholder>(Placeholders);
             placeholders.Shuffle(Random);
 
-            // 4) Iterate placeholders
+            // 3) Iterate placeholders
             for (int pi = 0; pi < placeholders.Count; pi++)
             {
                 var ph = placeholders[pi];
@@ -273,21 +217,13 @@ namespace Remizione
                             continue;
                     }
 
-                    // MaxPerRoom: <=0 => ilimitado; >0 chequeamos contador
-                    if (p.MaxPerRoom > 0)
-                    {
-                        spawnedCounts.TryGetValue(p.Name, out var spawned);
-                        if (spawned >= p.MaxPerRoom)
-                            continue;
-                    }
+                    // MaxPerRoom
+                    if (!p.PassesMaxPerRoomConstraint(spawnCounter.GetCount(p.Name)))
+                        continue;
 
                     // MaxPerRun
-                    if (p.MaxPerRun > 0)
-                    {
-                        var spawnedCount = RunManager.GetSpawnCount(p.Name);
-                        if (spawnedCount >= p.MaxPerRun)
-                            continue;
-                    }
+                    if (!p.PassesMaxPerRunConstraint())
+                        continue;
 
                     candidates.Add(p);
                 }
@@ -309,14 +245,10 @@ namespace Remizione
                     continue;
 
                 // Log spawn in room
-                if (chosen.MaxPerRoom > 0)
-                {
-                    spawnedCounts.TryGetValue(chosen.Name, out var prev);
-                    spawnedCounts[chosen.Name] = prev + 1;
-                }
+                spawnCounter.Increment(chosen.Name);
 
                 // Log spawn in run
-                RunManager.LogSpawn(chosen.Name);
+                RunManager.SpawnCounter.Increment(chosen.Name);
 
                 // Flag placeholder as used
                 ph.Used = true;
@@ -332,29 +264,6 @@ namespace Remizione
 
         #endregion
 
-        // CanPlaceThingAt
-        public bool CanPlaceThingAt(GameThing thing, Vector2 position)
-        {
-            if (!thing.Collider.IsEmpty)
-            {
-                var box = new RectangleF(position, thing.Collider.BoundingRectangleF.Size);
-
-                for (int i = 0; i < CulledThings.Count; i++)
-                {
-                    if (CulledThings[i] == thing)
-                        continue;
-
-                    if (CulledThings[i] is IHoleArea holeArea)
-                    {
-                        if (holeArea.Polygon.BoundingRectangleF.Intersects(box))
-                            return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
         // Config
         public RoomConfig Config { get; }
 
@@ -366,26 +275,6 @@ namespace Remizione
 
         // Placeholders
         public ReadOnlyCollection<Placeholder> Placeholders { get; }
-
-        // PlaceRuntimeCloneAt
-        public GameThing? PlaceRuntimeCloneAt(GameThing thing, Vector2 position)
-        {
-            GameThing? result = null;
-
-            if (CanPlaceThingAt(thing, position))
-            {
-                result = Session.CreateRuntimeThingClone(thing.StaticName, string.Empty) as GameThing;
-                if (result != null)
-                {
-                    result.Position = position;
-                    Children.Add(result);
-                }
-                else
-                    return null;
-            }
-
-            return result;
-        }
 
         // RoomGraph
         public RoomGraph RoomGraph { get; }

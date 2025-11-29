@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Remizione.Procedural;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -14,7 +15,6 @@ namespace Remizione
         private static readonly List<RideRoom> entryRooms = [];
         private static readonly List<RideRoom> rooms = [];
         private static RunGraph? runGraph;
-        private static readonly Dictionary<string, int> spawnData = [];
 
         #endregion
 
@@ -45,7 +45,7 @@ namespace Remizione
             runGraph = null;
             entryRooms.Clear();
             rooms.Clear();
-            spawnData.Clear();
+            SpawnCounter.Reset();
             HasContent = false;
         }
 
@@ -97,25 +97,13 @@ namespace Remizione
             return null;
         }
 
-        // GetSpawnCount
-        public static int GetSpawnCount(string staticName)
-        {
-            return spawnData.TryGetValue(staticName, out var value) ? value : 0;
-        }
-
         // HasContent
         public static bool HasContent { get; private set; }
 
-        // LogSpawn
-        public static void LogSpawn(string staticName)
-        {
-            if (spawnData.TryGetValue(staticName, out var value))
-                spawnData[staticName] = ++value;
-            else
-                spawnData[staticName] = 1;
-        }
-
         // Rooms
         public static ReadOnlyCollection<RideRoom> Rooms { get; } = rooms.AsReadOnly();
+
+        // SpawnCounter
+        public static SpawnCounter SpawnCounter { get; } = new();
     }
 }

@@ -13,15 +13,20 @@ namespace Remizione
     public sealed class PropConfig : ThingConfig
     {
         private static readonly Dictionary<string, PropConfig> data = [];
+        private static readonly List<PropConfig> dataList = [];
 
         // Constructor
         private PropConfig(JsonElement element)
             : base(element)
         {
             data.Add(Name, this);
+            dataList.Add(this);
         }
 
         #region Static members
+
+        // All
+        public static ReadOnlyCollection<PropConfig> All { get; } = new(dataList);
 
         // GetConfig
         public static PropConfig? GetConfig(string propName)

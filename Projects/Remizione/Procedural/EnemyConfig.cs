@@ -13,15 +13,20 @@ namespace Remizione
     public sealed class EnemyConfig : ThingConfig
     {
         private static readonly Dictionary<string, EnemyConfig> data = [];
+        private static readonly List<EnemyConfig> dataList = [];
 
         // Constructor
         private EnemyConfig(JsonElement element)
             : base(element)
         {
             data.Add(Name, this);
+            dataList.Add(this);
         }
 
         #region Static members
+
+        // All
+        public static ReadOnlyCollection<EnemyConfig> All { get; } = new(dataList);
 
         // GetConfig
         public static EnemyConfig? GetConfig(string propName)

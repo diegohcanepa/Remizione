@@ -44,5 +44,14 @@ namespace Remizione
 
         // MaxPerRoom
         public int MaxPerRoom { get; }
+
+        // PassesMaxPerRoomConstraint
+        public bool PassesMaxPerRoomConstraint(int instanceCount)
+        {
+            if (MaxPerRoom > 0 && instanceCount >= MaxPerRoom)
+                return false;
+            else
+                return true;
+        }
     }
 }
