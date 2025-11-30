@@ -1,9 +1,0 @@
-{
-	"$schema": "./ThingSchema.json",
-	"data": [
-		{
-			"name": "Zabul",
-			"maxAmount": 4
-		}
-	]
-}

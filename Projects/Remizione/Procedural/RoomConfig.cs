@@ -17,8 +17,8 @@ namespace Remizione
         private RoomConfig(JsonElement element)
             : base(element)
         {
-            this.PropScope = ConfigHelper.GetTagScope(element, "propRules");
-            this.EnemyScope = ConfigHelper.GetTagScope(element, "enemyRules");
+            this.PropScope = ConfigHelper.GetScopeRules(element, "propRules");
+            this.EnemyScope = ConfigHelper.GetScopeRules(element, "enemyRules");
 
             data.Add(Name, this);
         }
@@ -40,9 +40,9 @@ namespace Remizione
         #endregion
 
         // EnemyScope
-        public TagScope EnemyScope { get; }
+        public ScopeRules EnemyScope { get; }
 
         // PropScope
-        public TagScope PropScope { get; }
+        public ScopeRules PropScope { get; }
     }
 }

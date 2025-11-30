@@ -64,8 +64,8 @@ namespace Remizione
             return loot;
         }
 
-        // GetTagScope
-        internal static TagScope GetTagScope(JsonElement roomElement, string propertyName)
+        // GetScopeRules
+        internal static ScopeRules GetScopeRules(JsonElement roomElement, string propertyName)
         {
             static void Populate(JsonElement tags, List<string> list)
             {
@@ -82,26 +82,32 @@ namespace Remizione
             var allowTags = new List<string>();
             var denyTags = new List<string>();
 
-            if (roomElement.TryGetProperty(propertyName, out JsonElement rulesElement))
+            var maxInstances = -1;
+
+            if (roomElement.TryGetProperty(propertyName, out JsonElement scopeElement))
             {
                 // Allow pools
-                if (rulesElement.TryGetProperty("allowPools", out JsonElement allowPoolsElement))
+                if (scopeElement.TryGetProperty("allowPools", out JsonElement allowPoolsElement))
                     Populate(allowPoolsElement, allowPools);
 
                 // Deny pools
-                if (rulesElement.TryGetProperty("denyPools", out JsonElement denyPoolsElement))
+                if (scopeElement.TryGetProperty("denyPools", out JsonElement denyPoolsElement))
                     Populate(denyPoolsElement, denyPools);
 
                 // Allow tags
-                if (rulesElement.TryGetProperty("allowTags", out JsonElement allowTagsElement))
+                if (scopeElement.TryGetProperty("allowTags", out JsonElement allowTagsElement))
                     Populate(allowTagsElement, allowTags);
 
                 // Deny tags
-                if (rulesElement.TryGetProperty("denyTags", out JsonElement denyTagsElement))
+                if (scopeElement.TryGetProperty("denyTags", out JsonElement denyTagsElement))
                     Populate(denyTagsElement, denyTags);
+
+                // MaxPerRoom
+                if (scopeElement.TryGetProperty("maxPerRoom", out JsonElement maxPerRoom))
+                    maxInstances = maxPerRoom.GetInt32();
             }
 
-            return new TagScope(allowPools, denyPools, allowTags, denyTags);
+            return new ScopeRules(allowPools, denyPools, allowTags, denyTags);
         }
 
         // GetPools

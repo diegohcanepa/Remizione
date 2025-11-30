@@ -86,8 +86,8 @@ namespace Remizione
             return true;
         }
 
-        // PassesTagScope
-        public bool PassesTagScope(TagScope scope)
+        // PassesScope
+        public bool PassesScope(ScopeRules scope)
         {
             // DenyPools
             if (scope.DenyPools.Count > 0)

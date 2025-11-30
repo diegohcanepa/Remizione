@@ -55,7 +55,7 @@ namespace Remizione
         }
 
         // FilterByRoomScope
-        private List<T> FilterByRoomScope<T>(IList<T> configList, TagScope tagScope)
+        private List<T> FilterByRoomScope<T>(IList<T> configList, ScopeRules scope)
             where T : ThingConfig
         {
             var outList = new List<T>();
@@ -69,8 +69,8 @@ namespace Remizione
                 if (!config.PassesRunConstraints(Session))
                     continue;
 
-                // Tag scope
-                if (!config.PassesTagScope(tagScope))
+                // Scope rules
+                if (!config.PassesScope(scope))
                     continue;
 
                 // Passed all checks
@@ -173,6 +173,12 @@ namespace Remizione
         // PopulateEnemies
         private void PopulateEnemies()
         {
+            if (Config.PropScope.MaxPerRoom == 0)
+                return;
+
+            var instanceCount = 0;
+            var maxInstances = Config.EnemyScope.MaxPerRoom;
+
             var enemyList = new List<string>();
 
             // 1) Filter by room scope
@@ -238,6 +244,12 @@ namespace Remizione
                     var instance = CreateRuntimeThingCloneCore(enemyList[i]);
                     instance.Position = spawnPoints[i];
                     Children.Add(instance);
+
+                    instanceCount++;
+
+                    // Max prop per room (global)
+                    if (maxInstances > 0 && instanceCount == maxInstances)
+                        break;
                 }
             }
         }
@@ -245,6 +257,12 @@ namespace Remizione
         // PopulateProps
         private void PopulateProps()
         {
+            if (Config.PropScope.MaxPerRoom == 0)
+                return;
+
+            var instanceCount = 0;
+            var maxInstances = Config.PropScope.MaxPerRoom;
+
             // 1) Filter by room scope
             var filteredProps = FilterByRoomScope<PropConfig>(PropConfig.All, Config.PropScope);
 
@@ -316,6 +334,12 @@ namespace Remizione
                 var instance = CreateRuntimeThingCloneCore(chosen.Name);
                 instance.Position = ph.Polygon.BoundingRectangleF.GetPoint(RectanglePoint.Bottom);
                 Children.Add(instance);
+
+                instanceCount++;
+
+                // Max prop per room (global)
+                if (maxInstances > 0 && instanceCount == maxInstances)
+                    return;
             }
         }
 
