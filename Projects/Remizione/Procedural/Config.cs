@@ -38,13 +38,13 @@ namespace Remizione
                 RequiredRuns = requiredRunsElement.GetInt32();
 
             // Tags
-            Tags = new(ConfigHelper.GetTags(element));
+            Tags = new(ConfigHelper.GetStringArrayValues(element, "tags"));
 
             // LootTable
             LootTable = ConfigHelper.GetLootTable(element);
 
             // Pools
-            Pools = new(ConfigHelper.GetPools(element));
+            Pools = new(ConfigHelper.GetStringArrayValues(element, "pools"));
         }
 
         // LootTable

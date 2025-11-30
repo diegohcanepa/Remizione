@@ -207,7 +207,7 @@ namespace Remizione
             if (loaded)
                 throw new InvalidOperationException("Data is already loaded.");
 
-            Utils.LoadJsonData<MetaItem>(fileName, (JsonElement element) => new MetaItem(element));
+            Utils.LoadJsonData(fileName, (JsonElement element) => new MetaItem(element));
 
             loaded = true;
         }

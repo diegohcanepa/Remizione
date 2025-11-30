@@ -17,8 +17,25 @@ namespace Remizione
         private RoomConfig(JsonElement element)
             : base(element)
         {
-            this.PropScope = ConfigHelper.GetScopeRules(element, "propRules");
-            this.EnemyScope = ConfigHelper.GetScopeRules(element, "enemyRules");
+            // Enemy scope
+            var allowPools = ConfigHelper.GetStringArrayValues(element, "enemyAllowPools");
+            var denyPools = ConfigHelper.GetStringArrayValues(element, "enemyDenyPools");
+            var allowTags = ConfigHelper.GetStringArrayValues(element, "enemyAllowTags");
+            var denyTags = ConfigHelper.GetStringArrayValues(element, "enemyDenyTags");
+            var maxPerRoom = -1;
+            if (element.TryGetProperty("maxEnemies", out JsonElement maxEnemiesElement))
+                maxPerRoom = maxEnemiesElement.GetInt32();
+            this.EnemyScope = new ScopeRules(allowPools, denyPools, allowTags, denyTags, maxPerRoom);
+
+            // Prop scope
+            allowPools = ConfigHelper.GetStringArrayValues(element, "propAllowPools");
+            denyPools = ConfigHelper.GetStringArrayValues(element, "propDenyPools");
+            allowTags = ConfigHelper.GetStringArrayValues(element, "propAllowTags");
+            denyTags = ConfigHelper.GetStringArrayValues(element, "propDenyTags");
+            maxPerRoom = -1;
+            if (element.TryGetProperty("maxProps", out JsonElement maxPropsElement))
+                maxPerRoom = maxPropsElement.GetInt32();
+            this.PropScope = new ScopeRules(allowPools, denyPools, allowTags, denyTags, maxPerRoom);
 
             data.Add(Name, this);
         }

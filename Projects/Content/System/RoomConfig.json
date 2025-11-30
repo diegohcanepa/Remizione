@@ -1,12 +1,17 @@
 {
-  "$schema": "./RoomConfigSchema.json",
+  "$schema": "./RoomConfigData.schema.json",
   "data": [
     {
       "name": "BlueStoneRoom",
-      "tags": [],
       "loot": [
-        [ "Apple", 100 ],
-        [ "<Nothing>", 1 ]
+        [
+          "Apple",
+          100
+        ],
+        [
+          "<Nothing>",
+          1
+        ]
       ]
     }
   ]

@@ -1,0 +1,8 @@
+{
+  "$schema": "./ThingConfigData.schema.json",
+  "data": [
+    {
+      "name": "Zabul"
+    }
+  ]
+}

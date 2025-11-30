@@ -10,29 +10,6 @@ namespace Remizione
     /// </summary>
     internal static class ConfigHelper
     {
-        #region Private members
-
-        // GetStringArrayValues
-        private static List<string> GetStringArrayValues(JsonElement parentElement, string propertyName)
-        {
-            var result = new List<string>();
-
-            if (parentElement.TryGetProperty(propertyName, out JsonElement property))
-            {
-                foreach (JsonElement element in property.EnumerateArray())
-                {
-                    if (element.GetString() is not string name)
-                        throw new InvalidDataException();
-
-                    result.Add(name);
-                }
-            }
-
-            return result;
-        }
-
-        #endregion
-
         // AssertMetaItem
         internal static void AssertMetaItem(string name)
         {
@@ -64,62 +41,23 @@ namespace Remizione
             return loot;
         }
 
-        // GetScopeRules
-        internal static ScopeRules GetScopeRules(JsonElement roomElement, string propertyName)
+        // GetStringArrayValues
+        internal static List<string> GetStringArrayValues(JsonElement parentElement, string propertyName)
         {
-            static void Populate(JsonElement tags, List<string> list)
+            var result = new List<string>();
+
+            if (parentElement.TryGetProperty(propertyName, out JsonElement property))
             {
-                foreach (var tag in tags.EnumerateArray())
+                foreach (JsonElement element in property.EnumerateArray())
                 {
-                    if (tag.GetString() is string tagName)
-                        list.Add(tagName);
+                    if (element.GetString() is not string name)
+                        throw new InvalidDataException();
+
+                    result.Add(name);
                 }
             }
 
-            var allowPools = new List<string>();
-            var denyPools = new List<string>();
-
-            var allowTags = new List<string>();
-            var denyTags = new List<string>();
-
-            var maxInstances = -1;
-
-            if (roomElement.TryGetProperty(propertyName, out JsonElement scopeElement))
-            {
-                // Allow pools
-                if (scopeElement.TryGetProperty("allowPools", out JsonElement allowPoolsElement))
-                    Populate(allowPoolsElement, allowPools);
-
-                // Deny pools
-                if (scopeElement.TryGetProperty("denyPools", out JsonElement denyPoolsElement))
-                    Populate(denyPoolsElement, denyPools);
-
-                // Allow tags
-                if (scopeElement.TryGetProperty("allowTags", out JsonElement allowTagsElement))
-                    Populate(allowTagsElement, allowTags);
-
-                // Deny tags
-                if (scopeElement.TryGetProperty("denyTags", out JsonElement denyTagsElement))
-                    Populate(denyTagsElement, denyTags);
-
-                // MaxPerRoom
-                if (scopeElement.TryGetProperty("maxPerRoom", out JsonElement maxPerRoom))
-                    maxInstances = maxPerRoom.GetInt32();
-            }
-
-            return new ScopeRules(allowPools, denyPools, allowTags, denyTags);
-        }
-
-        // GetPools
-        internal static List<string> GetPools(JsonElement parentElement)
-        {
-            return GetStringArrayValues(parentElement, "pools");
-        }
-
-        // GetTags
-        internal static List<string> GetTags(JsonElement parentElement)
-        {
-            return GetStringArrayValues(parentElement, "tags");
+            return result;
         }
     }
 }

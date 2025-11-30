@@ -1,0 +1,23 @@
+{
+  "$schema": "./ThingConfigData.schema.json",
+  "data": [
+    {
+      "name": "PotteryA",
+      "tags": [ "floor" ],
+      "loot": [
+        [ "RottenApple", 70 ],
+        [ "RustyLockpick", 25 ]
+      ],
+      "killGoal": 10,
+      "killGoalReward": "MasterLockpick"
+    },
+    {
+      "name": "PotteryB",
+      "tags": [ "floor" ],
+      "loot": [
+        [ "RottenApple", 70 ],
+        [ "RustyLockpick", 25 ]
+      ]
+    }
+  ]
+}
