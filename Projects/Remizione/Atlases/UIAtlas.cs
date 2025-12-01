@@ -9,7 +9,7 @@ namespace Remizione
     {
         // Constructor
         public UIAtlas(EngendroGame game)
-            : base(game.Content, "UI", ContentHelper.EncodePath(ContentFolder.Atlases, "UI"), false)
+            : base(game.Content, "UI", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
             BottomGradient = this[nameof(BottomGradient)];
             CheckMark = this[nameof(CheckMark)];

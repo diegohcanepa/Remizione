@@ -9,7 +9,7 @@ namespace Remizione
     {
         // Constructor
         public MenuAtlas(EngendroGame game)
-            : base(game.Content, "Menu", ContentHelper.EncodePath(ContentFolder.Atlases, "Menu"), false)
+            : base(game.Content, "Menu", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "Menu"), false)
         {
             BottomOrnament = this[nameof(BottomOrnament)];
             ContainerScreen = this[nameof(ContainerScreen)];

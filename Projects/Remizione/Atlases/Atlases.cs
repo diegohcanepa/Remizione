@@ -19,7 +19,7 @@ namespace Remizione
         private static void Load()
         {
             isLoaded = true;
-            Actors = new Atlas(EngendroGame.Instance.Content, nameof(Actors), ContentHelper.EncodePath(ContentFolder.Atlases, nameof(Actors)), true);
+            Actors = new Atlas(EngendroGame.Instance.Content, nameof(Actors), ContentManagerExtension.EncodePath(ContentFolder.Atlases, nameof(Actors)), true);
             Environment = new EnvironmentAtlas(EngendroGame.Instance);
             Menu = new MenuAtlas(EngendroGame.Instance);
             UI = new UIAtlas(EngendroGame.Instance);

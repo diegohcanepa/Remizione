@@ -49,7 +49,7 @@ namespace Remizione
             for (var i = 0; i < names.Length; i++)
             {
                 var fileName = Path.ChangeExtension(names[i].ToLower(CultureInfo.InvariantCulture), LanguagePackage.FileExtension);
-                var path = ContentHelper.EncodePath(game.Content, ContentFolder.Text, fileName);
+                var path = ContentManagerExtension.EncodePath(game.Content, ContentFolder.Text, fileName);
                 LanguagePackage.Add(names[i], path);
             }
 

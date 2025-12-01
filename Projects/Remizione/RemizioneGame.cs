@@ -21,10 +21,10 @@ namespace Remizione
         {
             this.MouseCursor = new MouseCursor(this);
 
-            AudioManager.AmbienceCategory.ContentPath = ContentHelper.EncodeAudioPath(ContentFolder.Ambience);
-            AudioManager.MusicCategory.ContentPath = ContentHelper.EncodeAudioPath(ContentFolder.Music);
-            AudioManager.FXCategory.ContentPath = ContentHelper.EncodeAudioPath(ContentFolder.FX);
-            AudioManager.VoiceCategory.ContentPath = ContentHelper.EncodeAudioPath(ContentFolder.Voices);
+            AudioManager.AmbienceCategory.ContentPath = Content.EncodeAudioPath(ContentFolder.Ambience);
+            AudioManager.MusicCategory.ContentPath = Content.EncodeAudioPath(ContentFolder.Music);
+            AudioManager.FXCategory.ContentPath = Content.EncodeAudioPath(ContentFolder.FX);
+            AudioManager.VoiceCategory.ContentPath = Content.EncodeAudioPath(ContentFolder.Voices);
 
             IsFixedTimeStep = false;
             Graphics.SynchronizeWithVerticalRetrace = true;
@@ -108,11 +108,11 @@ namespace Remizione
 
             Effects = new GameEffects(this);
 
-            AudioManager.LoadSoundData(ContentHelper.EncodePath(Content, ContentFolder.System, "SoundData.xml"));
-            MetaItem.Load(ContentHelper.EncodePath(Content, ContentFolder.System, "MetaItems.json"));
-            RoomConfig.Load(ContentHelper.EncodePath(Content, ContentFolder.System, "RoomConfig.json"));
-            PropConfig.Load(ContentHelper.EncodePath(Content, ContentFolder.System, "PropConfig.json"));
-            EnemyConfig.Load(ContentHelper.EncodePath(Content, ContentFolder.System, "EnemyConfig.json"));
+            AudioManager.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "SoundData.xml"));
+            MetaItem.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "MetaItems.json"));
+            RoomConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "RoomConfig.json"));
+            PropConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "PropConfig.json"));
+            EnemyConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "EnemyConfig.json"));
 
             Fonts.Initialize(Content);
             LocalizationManager.Initialize(this);

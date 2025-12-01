@@ -298,7 +298,7 @@ namespace Remizione
         // GetAtlasPath
         protected override string GetAtlasPath()
         {
-            return ContentHelper.EncodePath(ContentFolder.Atlases, AtlasName);
+            return ContentManagerExtension.EncodePath(ContentFolder.Atlases, AtlasName);
         }
 
         // OnChildAdded

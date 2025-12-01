@@ -36,7 +36,7 @@ namespace Remizione
 
         // Constructor
         public GameSession(RemizioneGame game, int slotNumber)
-            : base(game, new RemizionePersistenceModel(), ContentHelper.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
+            : base(game, new RemizionePersistenceModel(), ContentManagerExtension.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
             this.Inventory = new(this);

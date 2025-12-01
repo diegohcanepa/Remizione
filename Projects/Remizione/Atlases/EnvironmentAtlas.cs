@@ -10,7 +10,7 @@ namespace Remizione
     {
         // Constructor
         public EnvironmentAtlas(EngendroGame game)
-            : base(game.Content, "Environment", ContentHelper.EncodePath(ContentFolder.Atlases, "Environment"), false)
+            : base(game.Content, "Environment", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "Environment"), false)
         {
             CraftingMark = this[nameof(CraftingMark)];
             DefaultLight = this[nameof(DefaultLight)];

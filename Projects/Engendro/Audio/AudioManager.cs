@@ -13,12 +13,12 @@ namespace Engendro.Audio
     /// </summary>
     public static class AudioManager
     {
-        private static readonly string[] validAttributes = ["Caption", "MaxInstances", "Name", "Pan", "Pitch", "PopMode", "Sounds", "SubPath", "Tags", "TransitionAware", "PauseAware", "Volume"];
+        private static readonly string[] validAttributes = ["Caption", "MaxInstances", "Name", "Pan", "Pitch", "PopMode", "Sounds", "Tags", "TransitionAware", "PauseAware", "Volume"];
 
         #region Private members
 
-        // LoadSoundDataCore
-        private static void LoadSoundDataCore(XmlDocument doc, SoundCategoryName category)
+        // LoadCore
+        private static void LoadCore(XmlDocument doc, SoundCategoryName category)
         {
             foreach (XmlNode? node in doc.GetElementsByTagName(category.ToString()))
             {
@@ -83,10 +83,6 @@ namespace Engendro.Audio
                         settings.SoundNames = soundNames;
                     }
                 }
-
-                // SubPath
-                if (attributes["SubPath"]?.Value is string subPath)
-                    settings.SubPath = subPath;
 
                 // Tags
                 if (attributes["Tags"]?.Value is string tags)
@@ -200,8 +196,8 @@ namespace Engendro.Audio
             }
         }
 
-        // LoadSoundData
-        public static void LoadSoundData(string fileName)
+        // Load
+        public static void Load(string fileName)
         {
             try
             {
@@ -209,10 +205,10 @@ namespace Engendro.Audio
                 XmlDocument doc = new();
                 doc.Load(input);
 
-                LoadSoundDataCore(doc, SoundCategoryName.Ambience);
-                LoadSoundDataCore(doc, SoundCategoryName.Music);
-                LoadSoundDataCore(doc, SoundCategoryName.FX);
-                LoadSoundDataCore(doc, SoundCategoryName.Voice);
+                LoadCore(doc, SoundCategoryName.Ambience);
+                LoadCore(doc, SoundCategoryName.Music);
+                LoadCore(doc, SoundCategoryName.FX);
+                LoadCore(doc, SoundCategoryName.Voice);
             }
             catch (FileNotFoundException)
             {

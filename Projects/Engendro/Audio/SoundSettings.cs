@@ -7,7 +7,6 @@ namespace Engendro.Audio
     /// </summary>
     public sealed class SoundSettings
     {
-
         // Caption
         public string Caption { get; set; } = string.Empty;
 
@@ -63,9 +62,6 @@ namespace Engendro.Audio
 
         // SoundNames
         public string? SoundNames { get; set; }
-
-        // SubPath
-        public string SubPath { get; set; } = string.Empty;
 
         // Tags
         public string? Tags { get; set; }

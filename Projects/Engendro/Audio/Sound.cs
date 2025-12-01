@@ -35,7 +35,7 @@ namespace Engendro.Audio
         }
 
         // Constructor
-        private Sound(string name, SoundCategory category, string[]? soundNames, string[]? tags, int maxInstances, float volume, float pan, float pitch, SoundPopMode popMode, bool transitionAware, bool pauseAware, string caption, string subPath)
+        private Sound(string name, SoundCategory category, string[]? soundNames, string[]? tags, int maxInstances, float volume, float pan, float pitch, SoundPopMode popMode, bool transitionAware, bool pauseAware, string caption)
         {
             // Name cannot be empty
             CodeContract.NotEmpty(name, nameof(name));
@@ -68,7 +68,6 @@ namespace Engendro.Audio
             this.Pan = pan;
             this.Pitch = pitch;
             this.Caption = caption;
-            this.SubPath = subPath;
 
             if (soundNames == null || soundNames.Length == 0)
                 soundNames = [Name];
@@ -104,7 +103,7 @@ namespace Engendro.Audio
         #region Private members
 
         // EncodeAssetName
-        private static string EncodeAssetName(SoundCategory category, string name, params string[] subPaths)
+        private static string EncodeAssetName(SoundCategory category, string name)
         {
             if (!string.IsNullOrWhiteSpace(category.ContentPath))
             {
@@ -112,9 +111,6 @@ namespace Engendro.Audio
                 [
                    category.ContentPath
                 ];
-
-                if (subPaths != null)
-                    paths.AddRange(subPaths);
 
                 paths.Add(name);
 
@@ -139,12 +135,6 @@ namespace Engendro.Audio
         // LoadCore
         private void LoadCore(ContentManager content)
         {
-            LoadCore(content, string.Empty);
-        }
-
-        // LoadCore
-        private void LoadCore(ContentManager content, string subPath)
-        {
             if (IsLoaded)
                 return;
 
@@ -152,16 +142,16 @@ namespace Engendro.Audio
 
             for (var i = 0; i < soundEffects.Count; i++)
             {
-                soundEffects[assetNames[i]] = LoadSoundEffect(content, i, subPath);
+                soundEffects[assetNames[i]] = LoadSoundEffect(content, i);
             }
 
             IsLoaded = true;
         }
 
         // LoadSoundEffect
-        private SoundEffect LoadSoundEffect(ContentManager content, int assetNameIndex, string subPath)
+        private SoundEffect LoadSoundEffect(ContentManager content, int assetNameIndex)
         {
-            var assetName = EncodeAssetName(Category, assetNames[assetNameIndex], this.SubPath, subPath);
+            var assetName = EncodeAssetName(Category, assetNames[assetNameIndex]);
             return content.Load<SoundEffect>(assetName);
         }
 
@@ -235,8 +225,7 @@ namespace Engendro.Audio
                                                settings.PopMode,
                                                settings.TransitionAware,
                                                settings.PauseAware,
-                                               settings.Caption,
-                                               settings.SubPath);
+                                               settings.Caption);
         }
 
         // Dispose
@@ -324,14 +313,9 @@ namespace Engendro.Audio
         // Load
         public void Load(ContentManager content)
         {
-            Load(content, string.Empty);
-        }
-
-        // Load
-        public void Load(ContentManager content, string subPath)
-        {
             if (this.content == null)
-                LoadCore(content, subPath);
+                LoadCore(content);
+
             else if (this.content != content)
                 throw new InvalidOperationException("Sound has been loaded from another content manager.");
         }
@@ -513,9 +497,6 @@ namespace Engendro.Audio
             }
         }
 
-        // SubPath
-        public string SubPath { get; }
-
         // Tags
         public ReadOnlyCollection<string> Tags { get; }
 
@@ -526,16 +507,13 @@ namespace Engendro.Audio
         public bool TransitionAware { get; }
 
         // TryLoad
-        public bool TryLoad(ContentManager content) => TryLoad(content, string.Empty);
-
-        // TryLoad
-        public bool TryLoad(ContentManager content, string subPath)
+        public bool TryLoad(ContentManager content)
         {
             if (this.content == null)
             {
                 try
                 {
-                    LoadCore(content, subPath);
+                    LoadCore(content);
                     return true;
                 }
                 catch (ContentLoadException)

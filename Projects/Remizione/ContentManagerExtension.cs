@@ -5,14 +5,14 @@ using System.IO;
 namespace Remizione
 {
     /// <summary>
-    /// ContentHelper
+    /// ContentManagerExtension
     /// </summary>
-    internal static class ContentHelper
+    internal static class ContentManagerExtension
     {
         // EncodeAudioPath
-        internal static string EncodeAudioPath(ContentFolder folder)
+        internal static string EncodeAudioPath(this ContentManager content, ContentFolder folder)
         {
-            if (folder == ContentFolder.FX || folder == ContentFolder.Ambience || folder == ContentFolder.Music || folder == ContentFolder.Voices)
+            if (folder is ContentFolder.FX or ContentFolder.Ambience or ContentFolder.Music or ContentFolder.Voices)
                 return Path.Combine("Audio", folder.ToString());
 
             throw new ArgumentException("Invalid folder.", nameof(folder));

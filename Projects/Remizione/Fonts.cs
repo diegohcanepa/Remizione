@@ -17,7 +17,7 @@ namespace Remizione
         // LoadFont
         private static SpriteFont LoadFont(ContentManager content, string fontName)
         {
-            var assetName = ContentHelper.EncodePath(ContentFolder.Fonts, fontName);
+            var assetName = ContentManagerExtension.EncodePath(ContentFolder.Fonts, fontName);
             return content.Load<SpriteFont>(assetName);
         }
 
