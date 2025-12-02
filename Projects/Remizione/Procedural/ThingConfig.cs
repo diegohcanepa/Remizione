@@ -20,16 +20,6 @@ namespace Remizione
         public ThingConfig(JsonElement element)
             : base(element)
         {
-            // MaxAmount
-            if (element.TryGetProperty("maxAmount", out JsonElement maxAmountElement))
-                MaxAmount = maxAmountElement.GetInt32();
-            else
-                MaxAmount = 1;
-
-            // MaxPerRoom
-            if (element.TryGetProperty("maxPerRoom", out JsonElement maxPerRoomElement))
-                MaxPerRoom = maxPerRoomElement.GetInt32();
-
             // KillGoal
             if (element.TryGetProperty("killGoal", out JsonElement killGoalElement))
                 KillGoal = killGoalElement.GetInt32();
@@ -44,9 +34,23 @@ namespace Remizione
                 }
             }
 
-            // Unlocked
-            if (element.TryGetProperty("unlocked", out JsonElement unlockedElement))
-                Unlocked = unlockedElement.GetBoolean();
+            // MaxPerRoom
+            MaxPerRoom = 1;
+            if (element.TryGetProperty("maxPerRoom", out JsonElement maxPerRoomElement))
+                MaxPerRoom = Math.Max(MaxPerRoom, maxPerRoomElement.GetInt32());
+
+            // MaxSpawnAmount
+            MaxSpawnAmount = 1;
+            if (element.TryGetProperty("maxSpawnAmount", out JsonElement maxSpawnAmountElement))
+                MaxSpawnAmount = Math.Max(1, maxSpawnAmountElement.GetInt32());
+
+            // MinSpawnAmount
+            MinSpawnAmount = 1;
+            if (element.TryGetProperty("minSpawnAmount", out JsonElement minSpawnAmountElement))
+                MinSpawnAmount = Math.Max(1, minSpawnAmountElement.GetInt32());
+
+            if (MinSpawnAmount > MaxSpawnAmount)
+                throw new InvalidOperationException($"[{Name}]: {nameof(MinSpawnAmount)} cannot be greater than MaxSpawnAmount.");
 
             data.Add(Name, this);
             dataList.Add(this);
@@ -80,11 +84,14 @@ namespace Remizione
         // KillGoalReward
         public string KillGoalReward { get; } = string.Empty;
 
-        // MaxAmount
-        public int MaxAmount { get; }
-
         // MaxPerRoom
         public int MaxPerRoom { get; }
+
+        // MaxSpawnAmount
+        public int MaxSpawnAmount { get; }
+
+        // MinSpawnAmount
+        public int MinSpawnAmount { get; }
 
         // PassesMaxPerRoomConstraint
         public bool PassesMaxPerRoomConstraint(int instanceCount)
@@ -94,8 +101,5 @@ namespace Remizione
             else
                 return true;
         }
-
-        // Unlocked
-        public bool Unlocked { get; }
     }
 }

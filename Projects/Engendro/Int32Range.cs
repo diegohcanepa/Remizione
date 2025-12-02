@@ -76,8 +76,14 @@ namespace Engendro
         // Minimum
         public int Minimum { get; }
 
+        // Parse
+        public static Int32Range Parse(string value)
+        {
+            return TryParse(value, out var range) ? range : throw new FormatException(nameof(value));
+        }
+
         // RandomValue
-        public int RandomValue() => Random.Shared.Next(Minimum, Maximum + 1);
+        public int RandomValue(Random random) => random.Next(Minimum, Maximum + 1);
 
         // Separator
         public static readonly string Separator = "|";

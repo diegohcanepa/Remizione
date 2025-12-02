@@ -257,7 +257,7 @@ namespace Remizione
 
             if (Random.Shared.NextDouble() < TicketRewardChance)
             {
-                var tickets = TicketReward.RandomValue();
+                var tickets = TicketReward.RandomValue(Random.Shared);
                 if (tickets > 0 && Session.Player != null)
                 {
                     for (var i = 0; i < tickets; i++)

@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace Remizione
@@ -9,6 +10,7 @@ namespace Remizione
     /// </summary>
     public abstract class RideRoom : ProceduralRoom
     {
+        protected static Dictionary<string, Type> derivedTypes = [];
         private readonly List<RideDoor> doors = [];
         private bool lootDropped;
 
@@ -101,7 +103,7 @@ namespace Remizione
 
             for (var i = 0; i < doors.Count; i++)
             {
-                doors[i].SwitchStateCooldown = (int)RandomHelper.Next(700, 1500);
+                doors[i].SwitchStateCooldown = (int)RandomHelper.Next(Random, 700, 1500);
             }
 
             lootDropped = true;
@@ -116,7 +118,7 @@ namespace Remizione
             {
                 for (var i = 0; i < doors.Count; i++)
                 {
-                    doors[i].SwitchStateCooldown = (int)RandomHelper.Next(500, 1000);
+                    doors[i].SwitchStateCooldown = (int)RandomHelper.Next(Random, 500, 1000);
                 }
             }
         }
@@ -138,6 +140,17 @@ namespace Remizione
         }
 
         #endregion
+
+        // CreateInstance
+        public static RideRoom CreateInstance(GameSession session, RoomGraph graph)
+        {
+            if (graph.Config == null)
+                throw new InvalidOperationException($"Missing config in room graph.");
+
+            var type = derivedTypes[graph.Config.Name];
+            var result = Activator.CreateInstance(type, session, graph) as RideRoom ?? throw new InvalidOperationException($"Cannot create instance [{graph.Config.Name}]");
+            return result;
+        }
 
         // GetPlayerPosition
         public Vector2 GetPlayerPosition(int previousRoomId, out RideDoor? targetDoor)

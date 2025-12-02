@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reflection;
 
 namespace Remizione
 {
@@ -15,22 +16,6 @@ namespace Remizione
         private static readonly List<RideRoom> entryRooms = [];
         private static readonly List<RideRoom> rooms = [];
         private static RunGraph? runGraph;
-
-        #endregion
-
-        #region Private members
-
-        // CreateRideRoom
-        private static RideRoom CreateRideRoom(GameSession session, RoomGraph roomGraph)
-        {
-            RideRoom? result = null;
-
-            // Default
-            if (roomGraph.RoomStyle == RideRoomStyle.Default)
-                result = new BlueStoneRoom(session, roomGraph);
-
-            return result ?? throw new InvalidOperationException("Cannot create ride room.");
-        }
 
         #endregion
 
@@ -58,7 +43,7 @@ namespace Remizione
             HasContent = true;
 
             // Create run graph
-            runGraph = new RunGraphGenerator(session.Seed).Generate(3);
+            runGraph = new RunGraphGenerator(session.Seed).Generate(session, 3);
 
             // Create procedural rooms
             for (var i = 0; i < runGraph.EntryRooms.Count; i++)
@@ -67,7 +52,7 @@ namespace Remizione
 
                 foreach (var roomGraph in runGraph.GetRooms(i))
                 {
-                    var room = CreateRideRoom(session, roomGraph);
+                    var room = RideRoom.CreateInstance(session, roomGraph);
 
                     if (isFirstRoom)
                     {

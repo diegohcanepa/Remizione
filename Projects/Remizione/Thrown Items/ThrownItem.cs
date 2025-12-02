@@ -80,7 +80,7 @@ namespace Remizione
                             item.ApplyDamage(owner, target);
                             if (ImpactSound != null)
                                 PlaySound(ImpactSound);
-                            velocity = new Vector2(-velocity.X, velocity.Y) * RandomHelper.Next(.2f, .5f);
+                            velocity = new Vector2(-velocity.X, velocity.Y) * RandomHelper.Next(Random.Shared, .2f, .5f);
                             lastThingCollisioned = target;
                         }
 
@@ -99,7 +99,7 @@ namespace Remizione
             {
                 if (Y >= walkArea.Polygon.BoundingRectangleF.Top && !walkArea.Contains(Position))
                 {
-                    velocity = new Vector2(-velocity.X, velocity.Y) * RandomHelper.Next(.2f, .5f);
+                    velocity = new Vector2(-velocity.X, velocity.Y) * RandomHelper.Next(Random.Shared, .2f, .5f);
                     return true;
                 }
             }

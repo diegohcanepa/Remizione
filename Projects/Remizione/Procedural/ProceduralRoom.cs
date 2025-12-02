@@ -26,7 +26,7 @@ namespace Remizione
         protected ProceduralRoom(GameSession session, string name, RoomGraph roomGraph)
             : base(session, name)
         {
-            this.Config = RoomConfig.GetConfig(StaticName);
+            this.Config = RoomConfig.Find(StaticName);
             this.RoomGraph = roomGraph;
 
             this.AllowGlobalLight = true;
@@ -179,7 +179,7 @@ namespace Remizione
         // PopulateEnemies
         private void PopulateEnemies()
         {
-            if (Config.PropScope.MaxPerRoom == 0)
+            if (Config.EnemyScope.MaxPerRoom == 0)
                 return;
 
             var instanceCount = 0;
@@ -219,7 +219,7 @@ namespace Remizione
                 if (ThingConfig.Find(chanceTableItem.Name) is not ThingConfig chosen)
                     continue;
 
-                var spawnCount = Random.Next(1, p.MaxAmount + 1);
+                var spawnCount = Random.Next(p.MinSpawnAmount, p.MaxSpawnAmount + 1);
                 for (var j = 0; j < spawnCount; j++)
                 {
                     // Log spawn in room

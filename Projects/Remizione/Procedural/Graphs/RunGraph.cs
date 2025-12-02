@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engendro;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -9,15 +10,90 @@ namespace Remizione
     /// </summary>
     public class RunGraph
     {
+        private readonly List<RoomConfig> availableRoomConfigs;
+        private readonly GameSession session;
+
         // Constructor
-        public RunGraph(IList<RoomGraph> entryRooms, Random random)
+        public RunGraph(GameSession session, IList<RoomGraph> entryRooms, Random random, Tags tags)
         {
+            this.session = session;
+
             this.EntryRooms = new ReadOnlyCollection<RoomGraph>(entryRooms);
+
             if (PlaceCoin(random) is RoomGraph roomGraph)
                 roomGraph.HasCoin = true;
+
+            this.availableRoomConfigs = GetAvailableRooms(tags);
+
+            for (var i = 0; i < entryRooms.Count; i++)
+            {
+                AssignRoomTypes(i);
+            }
         }
 
         #region Private members
+
+        // AssignRoomTypes
+        private void AssignRoomTypes(int pathIndex)
+        {
+            var roomGraphs = GetRooms(pathIndex);
+            var candidates = new List<RoomConfig>();
+
+            // Room graphs in path index
+            for (var i = 0; i < roomGraphs.Count; i++)
+            {
+                candidates.Clear();
+                
+                foreach (var roomConfig in availableRoomConfigs)
+                {
+                    if (!roomConfig.PassesMaxPerRunConstraint())
+                        continue;
+                    
+                    candidates.Add(roomConfig);
+                }
+
+                // Pick
+                var chanceTable = new ChanceTable();
+                foreach (var candidate in candidates)
+                {
+                    chanceTable.Add(candidate.Name, candidate.Weight, 1, candidate);
+                }
+
+                if (chanceTable.GetValue() is ChanceTableItem chanceTableItem && chanceTableItem.Tag is RoomConfig chosenConfig)
+                {
+                    RunManager.SpawnCounter.Increment(chosenConfig.Name);
+                    roomGraphs[i].Config = chosenConfig;
+                }
+            }
+        }
+
+        // GetAvailableRooms
+        private List<RoomConfig> GetAvailableRooms(Tags tags)
+        {
+            var outList = new List<RoomConfig>();
+
+            foreach (var roomConfig in RoomConfig.All)
+            {
+                if (!session.UnlockedPool.IsUnlocked(roomConfig.Name))
+                    continue;
+
+                // Run constraints
+                if (!roomConfig.PassesRunConstraints(session))
+                    continue;
+
+                // Tags
+                if (tags.Count > 0 && roomConfig.Tags.Count > 0)
+                {
+                    if (!Utils.Intersects(tags, roomConfig.Tags))
+                        continue;
+                }
+
+                // Passed all checks
+                outList.Add(roomConfig);
+            }
+
+            return outList;
+        }
 
         // GetMainPathRooms
         private static List<RoomGraph> GetMainPathRooms(RoomGraph entryRoom)
@@ -69,6 +145,7 @@ namespace Remizione
 
             return candidates[random.Next(candidates.Count)];
         }
+
         #endregion
 
         // EntryRooms

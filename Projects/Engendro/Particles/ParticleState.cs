@@ -47,7 +47,7 @@ namespace Engendro
                 return value;
 
             var halfDeviation = deviation / 2.0f;
-            return RandomHelper.Next(value - halfDeviation, value + halfDeviation);
+            return RandomHelper.Next(System.Random.Shared, value - halfDeviation, value + halfDeviation);
         }
 
         // GenerateVector2

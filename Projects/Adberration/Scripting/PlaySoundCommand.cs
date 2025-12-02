@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework.Audio;
+using System;
 
 namespace Adberration.Scripting
 {
@@ -65,7 +66,7 @@ namespace Adberration.Scripting
 
             var volume = Parser.ParseFloatRangeArgument(this, VolumeArg, new FloatRange(instance.Volume.Master));
 
-            instance.Volume.Master = volume.RandomValue();
+            instance.Volume.Master = volume.RandomValue(Random.Shared);
 
             // Fade
             if (HasArg(FadeArg))

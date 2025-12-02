@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 
 namespace Adberration.Scripting
 {
@@ -22,7 +23,7 @@ namespace Adberration.Scripting
         protected override void OnExecute()
         {
             var range = Parser.ParseInt32Range(this, 0);
-            duration = range.RandomValue();
+            duration = range.RandomValue(Random.Shared);
         }
 
         // OnUpdate

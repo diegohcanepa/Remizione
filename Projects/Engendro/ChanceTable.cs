@@ -20,13 +20,13 @@ namespace Engendro
         }
 
         // Add
-        public void Add(string value, float weight, int amount = 1)
+        public void Add(string value, float weight, int amount = 1, object? tag = null)
         {
             if (string.IsNullOrEmpty(value))
                 return;
 
             CodeContract.GreaterThanZero(weight, nameof(weight));
-            items.Add(new(value, amount, weight));
+            items.Add(new(value, amount, weight, tag));
         }
 
         // Count

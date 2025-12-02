@@ -19,7 +19,7 @@ namespace Remizione
         }
 
         // Generate
-        public RunGraph Generate(int pathCount)
+        public RunGraph Generate(GameSession session, int pathCount)
         {
             var entryRooms = new List<RoomGraph>();
             roomId = 0;
@@ -31,29 +31,29 @@ namespace Remizione
                 entryRooms.Add(entryRoom);
             }
 
-            return new RunGraph(entryRooms, random);
+            return new RunGraph(session, entryRooms, random, new Tags([]));
         }
 
         #region Private members
 
         // CreateRoom
-        private RoomGraph CreateRoom(RideRoomStyle style, int pathIndex, bool isRoot)
+        private RoomGraph CreateRoom(int pathIndex, bool isRoot)
         {
             roomId++;
-            var result = new RoomGraph(roomId, isRoot, pathIndex, style);
+            var result = new RoomGraph(roomId, isRoot, pathIndex);
             return result;
         }
 
         // GeneratePath
         private RoomGraph GeneratePath(int pathIndex, int length)
         {
-            RoomGraph first = CreateRoom(RideRoomStyle.Default, pathIndex, true);
+            RoomGraph first = CreateRoom(pathIndex, true);
             RoomGraph prev = first;
 
             // columna principal
             for (int i = 1; i < length; i++)
             {
-                var next = CreateRoom(RideRoomStyle.Default, pathIndex, false);
+                var next = CreateRoom(pathIndex, false);
                 prev.Up = next;
                 next.Down = prev;
                 prev = next;
@@ -75,7 +75,7 @@ namespace Remizione
                     {
                         if (cur.Left == null)
                         {
-                            var side = CreateRoom(RideRoomStyle.Default, pathIndex, false);
+                            var side = CreateRoom(pathIndex, false);
                             cur.Left = side;
                             side.Right = cur;
                             countForPath++;
@@ -87,7 +87,7 @@ namespace Remizione
                     {
                         if (cur.Right == null)
                         {
-                            var side = CreateRoom(RideRoomStyle.Default, pathIndex, false);
+                            var side = CreateRoom(pathIndex, false);
                             cur.Right = side;
                             side.Left = cur;
                             countForPath++;

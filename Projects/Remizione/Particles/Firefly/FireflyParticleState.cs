@@ -22,7 +22,7 @@ namespace Remizione
 
             scale = new Vector2(.5f);
 
-            speed.X = RandomHelper.Next(2.5f, 5);
+            speed.X = RandomHelper.Next(Random.Shared, 2.5f, 5);
             if (DiceExpression.Dice10.Roll() <= 5)
                 speed.X *= -1;
 

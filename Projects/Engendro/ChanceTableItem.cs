@@ -6,11 +6,12 @@
     public sealed class ChanceTableItem
     {
         // Constructor
-        public ChanceTableItem(string name, int amount, float weight)
+        public ChanceTableItem(string name, int amount, float weight, object? tag = null)
         {
             this.Name = name;
             this.Amount = amount;
             this.Weight = weight;
+            this.Tag = tag;
         }
 
         // Amount
@@ -18,6 +19,9 @@
 
         // Name
         public string Name { get; }
+
+        // Tag
+        public object? Tag { get; }
 
         // Weight
         public float Weight { get; }

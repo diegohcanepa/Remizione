@@ -20,14 +20,14 @@ namespace Remizione
             this.Name = element.GetProperty("name").GetString() ?? throw new InvalidDataException("Name not found.");
 
             // Weight
+            Weight = 1;
             if (element.TryGetProperty("weight", out JsonElement weightElement))
                 Weight = weightElement.GetSingle();
-            else
-                Weight = 1;
 
             // MaxPerRun
+            MaxPerRun = 1;
             if (element.TryGetProperty("maxPerRun", out JsonElement maxPerRunElement))
-                MaxPerRun = maxPerRunElement.GetInt32();
+                MaxPerRun = Math.Max(MaxPerRun, maxPerRunElement.GetInt32());
 
             // RequiredCompletedRuns
             if (element.TryGetProperty("requiredCompletedRuns", out JsonElement requiredCompletedRunsElement))
@@ -45,6 +45,10 @@ namespace Remizione
 
             // Pools
             Pools = new(ConfigHelper.GetStringArrayValues(element, "pools"));
+
+            // Unlocked
+            if (element.TryGetProperty("unlocked", out JsonElement unlockedElement))
+                Unlocked = unlockedElement.GetBoolean();
         }
 
         // LootTable
@@ -142,6 +146,9 @@ namespace Remizione
         {
             return Name;
         }
+
+        // Unlocked
+        public bool Unlocked { get; }
 
         // Weight
         public float Weight { get; }

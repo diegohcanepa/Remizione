@@ -117,6 +117,12 @@ namespace Remizione
                     Unlock(metaItem.Name);
             }
 
+            foreach (var roomConfig in RoomConfig.All)
+            {
+                if (roomConfig.Unlocked)
+                    Unlock(roomConfig.Name);
+            }
+
             foreach (var thingConfig in ThingConfig.All)
             {
                 if (thingConfig.Unlocked)

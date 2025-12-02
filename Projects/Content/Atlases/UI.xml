@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:c0cbc57fb07e35c5c3eb2b90a13af86a:bfa1a496258c1deaaf2afaa96bf62565:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:51dd4122fbd5956b7bcc4452ff65ea51:bfa1a496258c1deaaf2afaa96bf62565:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -40,10 +40,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="HeartHalfIconWithShadow.png" x="2" y="238" w="11" h="10"/>
     <sprite n="HeartIcon.png" x="39" y="232" w="11" h="9"/>
     <sprite n="HeartIconWithShadow.png" x="52" y="219" w="11" h="10"/>
-    <sprite n="InventoryCategoryConsumables.png" x="255" y="147" w="11" h="11"/>
+    <sprite n="InventoryCategoryConsumable.png" x="255" y="147" w="11" h="11"/>
     <sprite n="InventoryCategoryContainer.png" x="422" y="71" w="60" h="7"/>
-    <sprite n="InventoryCategoryGadgets.png" x="255" y="160" w="11" h="11"/>
-    <sprite n="InventoryCategoryKeyItems.png" x="255" y="173" w="11" h="11"/>
+    <sprite n="InventoryCategoryGadget.png" x="255" y="160" w="11" h="11"/>
+    <sprite n="InventoryCategoryKeyItem.png" x="255" y="173" w="11" h="11"/>
     <sprite n="InventoryCategoryLeftHand.png" x="85" y="208" w="11" h="11"/>
     <sprite n="InventoryCategoryLeftHandContent.png" x="85" y="208" w="11" h="11"/>
     <sprite n="InventoryCategoryNone.png" x="72" y="211" w="11" h="11"/>

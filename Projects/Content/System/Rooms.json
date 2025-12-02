@@ -3,6 +3,7 @@
   "data": [
     {
       "name": "BlueStoneRoom",
+      "unlocked": true,
       "loot": [
         [
           "Apple",

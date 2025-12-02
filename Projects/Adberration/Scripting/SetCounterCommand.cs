@@ -1,4 +1,6 @@
-﻿namespace Adberration.Scripting
+﻿using System;
+
+namespace Adberration.Scripting
 {
     // SetCounterCommand
     // Arguments: {Counter} to {Int32Range}
@@ -18,7 +20,7 @@
         {
             if (Session.ScriptEnvironment.GetCounter(Body.Clauses[0]) is Counter counter)
             {
-                counter.Value = Parser.ParseInt32Range(this, 2).RandomValue();
+                counter.Value = Parser.ParseInt32Range(this, 2).RandomValue(Random.Shared);
             }
         }
     }

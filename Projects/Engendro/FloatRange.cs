@@ -85,10 +85,16 @@ namespace Engendro
         // Minimum
         public float Minimum { get; }
 
-        // Random
-        public float RandomValue()
+        // Parse
+        public static FloatRange Parse(string value)
         {
-            return RandomHelper.Next(Minimum, Maximum);
+            return TryParse(value, out var range) ? range : throw new FormatException(nameof(value));
+        }
+
+        // RandomValue
+        public float RandomValue(Random random)
+        {
+            return RandomHelper.Next(random, Minimum, Maximum);
         }
 
         // Separator

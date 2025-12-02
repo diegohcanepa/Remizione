@@ -23,12 +23,12 @@ namespace Engendro
         }
 
         // Next
-        public static float Next(float minValue, float maxValue)
+        public static float Next(Random random, float minValue, float maxValue)
         {
             if (minValue == maxValue)
                 return minValue;
             else
-                return (float)Random.Shared.NextSingle() * (maxValue - minValue) + minValue;
+                return (float)random.NextSingle() * (maxValue - minValue) + minValue;
         }
     }
 }

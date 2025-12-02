@@ -17,16 +17,19 @@
     },
     "maxPerRun": {
       "type": "integer",
-      "minimum": 0,
+      "default": 1,
+      "minimum": 1,
       "description": "Número máximo de veces que este elemento puede aparecer por 'run'."
     },
     "requiredCompletedRuns": {
       "type": "integer",
+      "default": 0,
       "minimum": 0,
       "description": "Número de 'runs' completadas requeridas para que esta configuración sea elegible."
     },
     "requiredRuns": {
       "type": "integer",
+      "default": 0,
       "minimum": 0,
       "description": "Número total de 'runs' jugadas requeridas para que esta configuración sea elegible."
     },
@@ -43,7 +46,14 @@
         "type": "string"
       },
       "description": "Lista de 'pools' a las que pertenece esta configuración (Tags)."
+    },
+    "unlocked": {
+      "type": "boolean",
+      "default": false,
+      "description": "El elemento está desbloqueado por default."
     }
   },
-  "required": [ "name" ]
+  "required": [
+    "name"
+  ]
 }

@@ -12,6 +12,6 @@ namespace Engendro
         T Delta { get; }
         T Maximum { get; }
         T Minimum { get; }
-        T RandomValue();
+        T RandomValue(Random random);
     }
 }

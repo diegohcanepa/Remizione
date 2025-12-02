@@ -38,8 +38,8 @@ namespace Engendro
                 throw new ArgumentOutOfRangeException(nameof(minimumRadius), "Minimum radius cannot be greater than the maximum radius.");
 
             var angle = random.NextDouble() * Math.PI * 2;
-            var xRadius = RandomHelper.Next(minimumRadius.X, maximumRadius.X);
-            var yRadius = RandomHelper.Next(minimumRadius.Y, maximumRadius.Y);
+            var xRadius = RandomHelper.Next(System.Random.Shared, minimumRadius.X, maximumRadius.X);
+            var yRadius = RandomHelper.Next(System.Random.Shared, minimumRadius.Y, maximumRadius.Y);
             var x = origin.X + xRadius * Math.Cos(angle);
             var y = origin.Y + yRadius * Math.Sin(angle);
 

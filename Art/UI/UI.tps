@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.9.1</string>
+        <string>7.10.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -312,9 +312,9 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryConsumables.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryGadgets.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryKeyItems.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryConsumable.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryGadget.png</key>
+            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryKeyItem.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryLeftHand.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryLeftHandContent.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryNone.png</key>

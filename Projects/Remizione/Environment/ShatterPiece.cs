@@ -123,7 +123,7 @@ namespace Remizione
             {
                 if (image.Y >= walkArea.Polygon.BoundingRectangleF.Top && !walkArea.Contains(image.Position))
                 {
-                    velocity = new Vector2(-velocity.X, velocity.Y) * RandomHelper.Next(.2f, .5f);
+                    velocity = new Vector2(-velocity.X, velocity.Y) * RandomHelper.Next(Random.Shared, .2f, .5f);
                     return true;
                 }
             }

@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 
@@ -12,6 +13,7 @@ namespace Remizione
     public sealed class RoomConfig : Config
     {
         private static readonly Dictionary<string, RoomConfig> data = [];
+        private static readonly List<RoomConfig> dataList = [];
 
         // Constructor
         private RoomConfig(JsonElement element)
@@ -38,14 +40,18 @@ namespace Remizione
             this.PropScope = new ScopeRules(allowPools, denyPools, allowTags, denyTags, maxPerRoom);
 
             data.Add(Name, this);
+            dataList.Add(this);
         }
 
         #region Static members
 
-        // GetConfig
-        public static RoomConfig GetConfig(string roomName)
+        // All
+        public static ReadOnlyCollection<RoomConfig> All { get; } = new(dataList);
+
+        // Find
+        public static RoomConfig Find(string name)
         {
-            return data[roomName];
+            return data[name];
         }
 
         // Load

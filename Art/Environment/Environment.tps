@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.9.1</string>
+        <string>7.10.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -1142,6 +1142,7 @@
             <key type="filename">RideDoorDown-assets/RideDoorDown02.png</key>
             <key type="filename">RideDoorUp-assets/RideDoorUp01.png</key>
             <key type="filename">RideDoorUp-assets/RideDoorUp02.png</key>
+            <key type="filename">RideDoorUp-assets/RideDoorUpLock.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1158,8 +1159,10 @@
             </struct>
             <key type="filename">RideDoorLeft-assets/RideDoorLeft01.png</key>
             <key type="filename">RideDoorLeft-assets/RideDoorLeft02.png</key>
+            <key type="filename">RideDoorLeft-assets/RideDoorLeftLock.png</key>
             <key type="filename">RideDoorRight-assets/RideDoorRight01.png</key>
             <key type="filename">RideDoorRight-assets/RideDoorRight02.png</key>
+            <key type="filename">RideDoorRight-assets/RideDoorRightLock.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

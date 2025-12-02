@@ -9,23 +9,35 @@
     {
       "type": "object",
       "properties": {
-        "maxPerRoom": {
-          "type": "integer",
-          "minimum": 0,
-          "description": "Número maximo de veces que este elemento puede aparecer por 'room'."
-        },
         "killGoal": {
           "type": "integer",
+          "default": 0,
           "minimum": 0,
           "description": "Objetivo de muertes para esta configuración."
         },
         "killGoalReward": {
           "type": "string",
-          "description": "Nombre del MetaItem que se otorga como recompensa al completar el objetivo de muertes (debe ser un MetaItem válido)."
+          "default": 0,
+          "description": "Nombre del MetaItem que se otorga como recompensa al completar el objetivo de muertes (debe ser un MetaItem válido).",
+          "minimum": 0
         },
-        "unlocked": {
-          "type": "boolean",
-          "description": "El elemento está desbloqueado por default."
+        "maxPerRoom": {
+          "type": "integer",
+          "default": 0,
+          "description": "Número maximo de veces que este elemento puede aparecer por 'room'.",
+          "minimum": 0
+        },
+        "maxSpawnAmount": {
+          "type": "integer",
+          "default": 1,
+          "minimum": 1,
+          "description": "Número maximo de veces que este elemento se spawnea en el 'room'."
+        },
+        "minSpawnAmount": {
+          "type": "integer",
+          "default": 1,
+          "minimum": 1,
+          "description": "Número mínimo de veces que este elemento se spawnea en el 'room'."
         }
       }
     }

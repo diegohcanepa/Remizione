@@ -179,12 +179,12 @@ namespace Engendro
 
             if (Width > 0)
             {
-                result.X = RandomHelper.Next(Left, Right);
+                result.X = RandomHelper.Next(System.Random.Shared, Left, Right);
             }
 
             if (Height > 0)
             {
-                result.Y = RandomHelper.Next(Top, Bottom);
+                result.Y = RandomHelper.Next(System.Random.Shared, Top, Bottom);
             }
 
             return result;

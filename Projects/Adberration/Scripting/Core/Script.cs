@@ -588,28 +588,28 @@ namespace Adberration.Scripting
         {
             // SetTargetEntity
             if (value == ScriptCapability.SetTargetEntity)
-                return ScriptType == ScriptType.Room || ScriptType == ScriptType.Thing ||
-                       ScriptType == ScriptType.Load || ScriptType == ScriptType.Unload ||
-                       ScriptType == ScriptType.Enter || ScriptType == ScriptType.Outcome;
+                return ScriptType is ScriptType.Room or ScriptType.Thing or
+                       ScriptType.Load or ScriptType.Unload or
+                       ScriptType.Enter or ScriptType.Outcome;
 
             // EntityContext
             if (value == ScriptCapability.EntityContext)
             {
-                return ScriptType != ScriptType.EnterRoom &&
-                       ScriptType != ScriptType.Routine &&
-                       ScriptType != ScriptType.NewSession &&
-                       ScriptType != ScriptType.Cloning &&
-                       ScriptType != ScriptType.Declaration &&
-                       ScriptType != ScriptType.Initialization;
+                return ScriptType is not ScriptType.EnterRoom and
+                       not ScriptType.Routine and
+                       not ScriptType.NewSession and
+                       not ScriptType.Cloning and
+                       not ScriptType.Declaration and
+                       not ScriptType.Initialization;
             }
 
             // Awaitable
             if (value == ScriptCapability.Await)
             {
-                return ScriptType == ScriptType.Routine ||
-                       ScriptType == ScriptType.NewSession ||
-                       ScriptType == ScriptType.Outcome ||
-                       ScriptType == ScriptType.Enter;
+                return ScriptType is ScriptType.Routine or
+                       ScriptType.NewSession or
+                       ScriptType.Outcome or
+                       ScriptType.Enter;
             }
 
             // Discardable
@@ -622,7 +622,7 @@ namespace Adberration.Scripting
 
             // EntityDeclaration
             if (value == ScriptCapability.EntityDeclaration)
-                return ScriptType == ScriptType.Thing || ScriptType == ScriptType.Room;
+                return ScriptType is ScriptType.Thing or ScriptType.Room;
 
             return false;
         }
