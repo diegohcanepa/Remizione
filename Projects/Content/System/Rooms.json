@@ -1,5 +1,5 @@
 {
-  "$schema": "./RoomConfigData.schema.json",
+  "$schema": "./RoomData.schema.json",
   "data": [
     {
       "name": "BlueStoneRoom",

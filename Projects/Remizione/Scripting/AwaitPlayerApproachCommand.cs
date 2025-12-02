@@ -1,10 +1,11 @@
-﻿using Adberration.Scripting;
+﻿using Adberration;
+using Adberration.Scripting;
 using Microsoft.Xna.Framework;
 
 namespace Remizione.Scripting
 {
     // AwaitPlayerApproachCommand
-    // Syntax: [#fast] [#target:CommonThing]
+    // Syntax: [#face:] [#fast] [#target:CommonThing]
     [ForceAwait]
     internal sealed class AwaitPlayerApproachCommand : AwaitableCommand
     {
@@ -14,9 +15,10 @@ namespace Remizione.Scripting
 
         // Constructor
         internal AwaitPlayerApproachCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 0, FastArg, TargetArg)
+            : base(script, source, body, 0, FaceArg, FastArg, TargetArg)
         {
             Parser.ParseEntityArgument<GameThing>(this, TargetArg, null);
+            Parser.ParseEnumArgument<FacingDirection>(this, FaceArg);
         }
 
         #region Protected members
@@ -39,9 +41,6 @@ namespace Remizione.Scripting
             if (target == null)
                 return;
 
-            if (HasArg(FastArg))
-                return;
-
             var destination = target.GetApproachPosition(player, true);
 
             if (player.MoveTo(destination))
@@ -57,6 +56,9 @@ namespace Remizione.Scripting
 
             if (player == null)
                 return;
+
+            if (HasArg(FaceArg))
+                player.Direction = Parser.ParseEnumArgument<FacingDirection>(this, FaceArg);
 
             if (target != null)
                 player.FaceTo(target);

@@ -55,15 +55,21 @@ namespace Remizione
         }
 
         // FilterByRoomScope
-        private List<T> FilterByRoomScope<T>(IList<T> configList, ScopeRules scope)
-            where T : ThingConfig
+        private List<ThingConfig> FilterByRoomScope<T>(IList<ThingConfig> configList, ScopeRules scope)
+            where T : GameThing
         {
-            var outList = new List<T>();
+            var outList = new List<ThingConfig>();
 
             foreach (var config in configList)
             {
-                if (Session.GetStaticThing(config.Name) is null)
-                    throw new InvalidOperationException($"There is no static thing named '{config.Name}'. ");
+                if (!Session.UnlockedPool.IsUnlocked(config.Name))
+                    continue;
+
+                var thing = Session.GetStaticThing(config.Name) ?? throw new InvalidOperationException($"There is no static thing named '{config.Name}'. ");
+
+                // Is expected type?
+                if (thing is not T)
+                    continue;
 
                 // Run constraints
                 if (!config.PassesRunConstraints(Session))
@@ -182,10 +188,10 @@ namespace Remizione
             var enemyList = new List<string>();
 
             // 1) Filter by room scope
-            var filteredEnemies = FilterByRoomScope<EnemyConfig>(EnemyConfig.All, Config.EnemyScope);
+            var filteredEnemies = FilterByRoomScope<Enemy>(ThingConfig.All, Config.EnemyScope);
 
             // Construir candidatos iterando props
-            var candidates = new List<EnemyConfig>();
+            var candidates = new List<ThingConfig>();
             for (int i = 0; i < filteredEnemies.Count; i++)
             {
                 var p = filteredEnemies[i];
@@ -210,7 +216,7 @@ namespace Remizione
                 if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
                     continue;
 
-                if (EnemyConfig.GetConfig(chanceTableItem.Name) is not EnemyConfig chosen)
+                if (ThingConfig.Find(chanceTableItem.Name) is not ThingConfig chosen)
                     continue;
 
                 var spawnCount = Random.Next(1, p.MaxAmount + 1);
@@ -264,7 +270,7 @@ namespace Remizione
             var maxInstances = Config.PropScope.MaxPerRoom;
 
             // 1) Filter by room scope
-            var filteredProps = FilterByRoomScope<PropConfig>(PropConfig.All, Config.PropScope);
+            var filteredProps = FilterByRoomScope<Prop>(ThingConfig.All, Config.PropScope);
 
             // 2) Shuffle placeholders
             var placeholders = new List<Placeholder>(Placeholders);
@@ -283,7 +289,7 @@ namespace Remizione
                     continue;
 
                 // Construir candidatos iterando props
-                var candidates = new List<PropConfig>();
+                var candidates = new List<ThingConfig>();
                 for (int i = 0; i < filteredProps.Count; i++)
                 {
                     var p = filteredProps[i];
@@ -319,7 +325,7 @@ namespace Remizione
                 if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
                     continue;
 
-                if (PropConfig.GetConfig(chanceTableItem.Name) is not PropConfig chosen)
+                if (ThingConfig.Find(chanceTableItem.Name) is not ThingConfig chosen)
                     continue;
 
                 // Log spawn in room

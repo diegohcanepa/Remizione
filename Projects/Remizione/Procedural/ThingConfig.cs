@@ -11,10 +11,13 @@ namespace Remizione
     /// <summary>
     /// ThingConfig
     /// </summary>
-    public abstract class ThingConfig : Config
+    public sealed class ThingConfig : Config
     {
+        private static readonly Dictionary<string, ThingConfig> data = [];
+        private static readonly List<ThingConfig> dataList = [];
+
         // Constructor
-        protected ThingConfig(JsonElement element)
+        public ThingConfig(JsonElement element)
             : base(element)
         {
             // MaxAmount
@@ -40,7 +43,36 @@ namespace Remizione
                     KillGoalReward = killGoalRewardValue;
                 }
             }
+
+            // Unlocked
+            if (element.TryGetProperty("unlocked", out JsonElement unlockedElement))
+                Unlocked = unlockedElement.GetBoolean();
+
+            data.Add(Name, this);
+            dataList.Add(this);
         }
+
+        #region Static members
+
+        // All
+        public static ReadOnlyCollection<ThingConfig> All { get; } = new(dataList);
+
+        // Find
+        public static ThingConfig? Find(string name)
+        {
+            return data.TryGetValue(name, out ThingConfig? config) ? config : null;
+        }
+
+        // Load
+        public static void Load(params string[] fileNames)
+        {
+            for (var i = 0; i < fileNames.Length; i++)
+            {
+                Utils.LoadJsonData<ThingConfig>(fileNames[i], (JsonElement element) => new ThingConfig(element));
+            }
+        }
+
+        #endregion
 
         // KillGoal
         public int KillGoal { get; }
@@ -62,5 +94,8 @@ namespace Remizione
             else
                 return true;
         }
+
+        // Unlocked
+        public bool Unlocked { get; }
     }
 }

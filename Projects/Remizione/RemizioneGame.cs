@@ -21,10 +21,10 @@ namespace Remizione
         {
             this.MouseCursor = new MouseCursor(this);
 
-            AudioManager.AmbienceCategory.ContentPath = Content.EncodeAudioPath(ContentFolder.Ambience);
-            AudioManager.MusicCategory.ContentPath = Content.EncodeAudioPath(ContentFolder.Music);
-            AudioManager.FXCategory.ContentPath = Content.EncodeAudioPath(ContentFolder.FX);
-            AudioManager.VoiceCategory.ContentPath = Content.EncodeAudioPath(ContentFolder.Voices);
+            AudioManager.AmbienceCategory.ContentPath = ContentManagerExtension.EncodeAudioPath(ContentFolder.Ambience);
+            AudioManager.MusicCategory.ContentPath = ContentManagerExtension.EncodeAudioPath(ContentFolder.Music);
+            AudioManager.FXCategory.ContentPath = ContentManagerExtension.EncodeAudioPath(ContentFolder.FX);
+            AudioManager.VoiceCategory.ContentPath = ContentManagerExtension.EncodeAudioPath(ContentFolder.Voices);
 
             IsFixedTimeStep = false;
             Graphics.SynchronizeWithVerticalRetrace = true;
@@ -108,21 +108,17 @@ namespace Remizione
 
             Effects = new GameEffects(this);
 
+            LocalizationManager.Initialize(this);
+
             AudioManager.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "SoundData.xml"));
             MetaItem.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "MetaItems.json"));
-            RoomConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "RoomConfig.json"));
-            PropConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "PropConfig.json"));
-            EnemyConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "EnemyConfig.json"));
+            RoomConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
+            ThingConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"),
+                             ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"));
 
             Fonts.Initialize(Content);
-            LocalizationManager.Initialize(this);
             UserSettingsData userSettings = UserSettingsData.Load(this);
             UserSettingsData.Apply(this, userSettings);
-
-            // TODO: UNCOMMENT DURING DEV ONLY
-            if (LanguagePackage.GetPackage(LocalizationManager.English) is LanguagePackage languagePackage)
-                TextRepository.Load(languagePackage);
-
 
 #if QUICK_START
             QuickStart();

@@ -539,6 +539,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/Lightning.wav;Audio/FX/Lightning
 
+#begin Audio/FX/LockOpen.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/LockOpen.wav;Audio/FX/LockOpen
+
 #begin Audio/FX/MetalPropBreak.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -941,17 +947,17 @@
 /processorParam:TextureFormat=Color
 /build:Fonts/CommonOutline.bmp
 
-#begin System/EnemyConfig.json
-/copy:System/EnemyConfig.json
+#begin System/Actors.json
+/copy:System/Actors.json
 
 #begin System/MetaItems.json
 /copy:System/MetaItems.json
 
-#begin System/PropConfig.json
-/copy:System/PropConfig.json
+#begin System/Props.json
+/copy:System/Props.json
 
-#begin System/RoomConfig.json
-/copy:System/RoomConfig.json
+#begin System/Rooms.json
+/copy:System/Rooms.json
 
 #begin System/ScriptLibrary.esl
 /copy:System/ScriptLibrary.esl

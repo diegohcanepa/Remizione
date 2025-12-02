@@ -20,6 +20,7 @@ namespace Remizione
         #region Private fields
 
         private readonly Blinker<bool> blinker = new(false, true);
+        private readonly ThingConfig? config;
         private readonly Polygon holePoly = new();
         private Vector2Tween? hurtShakeTween;
         private FloatTween? hurtTween;
@@ -39,10 +40,14 @@ namespace Remizione
         protected GameThing(GameSession session, string name)
             : base(session, name)
         {
+            Utils.AssertName(name, this);
+
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
             this.LootTableName = StaticName;
             this.ResistanceTableName = StaticName;
+
+            config = ThingConfig.Find(StaticName);
         }
 
         #endregion
@@ -597,6 +602,14 @@ namespace Remizione
             OnDie();
             Room?.RecountEnemies();
             DropLoot();
+
+            if (config?.KillGoal > 0)
+            {
+                if (Session.KillCounter.Increment(StaticName) >= config.KillGoal)
+                {
+                    Session.UnlockedPool.Unlock(config.KillGoalReward);
+                }
+            }
         }
 
 #if DEBUG

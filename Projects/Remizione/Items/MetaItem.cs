@@ -27,6 +27,8 @@ namespace Remizione
 
             CodeContract.ValidName(this.Name, string.Empty);
 
+            Utils.AssertName(Name, this);
+
             // Name cannot be a realm 
             if (Enum.IsDefined(typeof(Realm), Name))
                 throw new InvalidOperationException($"The name '{Name}' cannot be used because it is an item realm.");

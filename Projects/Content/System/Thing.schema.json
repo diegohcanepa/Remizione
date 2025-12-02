@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "ThingConfig.schema.json",
-  "title": "Thing config schema",
+  "$id": "Thing.schema.json",
+  "title": "Thing schema",
   "allOf": [
     {
       "$ref": "./Config.schema.json"
@@ -22,6 +22,10 @@
         "killGoalReward": {
           "type": "string",
           "description": "Nombre del MetaItem que se otorga como recompensa al completar el objetivo de muertes (debe ser un MetaItem válido)."
+        },
+        "unlocked": {
+          "type": "boolean",
+          "description": "El elemento está desbloqueado por default."
         }
       }
     }

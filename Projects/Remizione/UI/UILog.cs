@@ -49,7 +49,7 @@ namespace Remizione
         private void ShowCore(string verb, string noun, bool isWarning, AtlasImage? image)
         {
             verbText.Color = isWarning ? ColorPalette.Text.Orange : ColorPalette.Text.Green;
-            verbText.Position = new Vector2(120, 10);
+            verbText.Position = new Vector2(120, 5);
             verbText.Text = verb;
 
             nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2);

@@ -32,12 +32,14 @@ namespace Engendro
         }
 
         // Increment
-        public void Increment(string name)
+        public int Increment(string name)
         {
             if (data.TryGetValue(name, out var value))
                 data[name] = ++value;
             else
                 data[name] = 1;
+
+            return data[name];
         }
 
         // Reset

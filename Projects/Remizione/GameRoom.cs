@@ -39,6 +39,8 @@ namespace Remizione
         public GameRoom(GameSession session, string name)
             : base(session, name)
         {
+            Utils.AssertName(name, this);
+
             this.Session = session;
 
             this.GlobalLightSize = GameSettings.DefaultGlobalLightSize;

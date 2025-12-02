@@ -77,7 +77,7 @@ namespace Remizione
 
             LocalizationSource = LocalizationSource.Script;
 
-            this.UnlockedMetaItems = new();
+            this.UnlockedPool = new(this);
             this.inventoryScene = new InventoryScene(Inventory);
             this.useKeyItemScene = new UseKeyItemScene(Inventory);
 
@@ -298,8 +298,8 @@ namespace Remizione
                 KillCounter.Deserialize(killCounterData);
 
             // MetaItemPool
-            if (sessionNode.Attributes[nameof(UnlockedMetaItems)]?.Value is string metaItemPoolData)
-                UnlockedMetaItems.Deserialize(metaItemPoolData);
+            if (sessionNode.Attributes[nameof(UnlockedPool)]?.Value is string metaItemPoolData)
+                UnlockedPool.Deserialize(metaItemPoolData);
 
             // Inventory
             if (sessionNode.Attributes[nameof(Inventory)]?.Value is string inventoryData)
@@ -323,7 +323,7 @@ namespace Remizione
         // OnScriptLibraryLoaded
         protected override void OnScriptLibraryLoaded()
         {
-            UnlockedMetaItems.InitializeDefaults();
+            UnlockedPool.InitializeDefaults();
         }
 
         // OnStart
@@ -414,7 +414,7 @@ namespace Remizione
             output.WriteAttributeString(nameof(KillCounter), KillCounter.Serialize());
 
             // MetaItemPool
-            output.WriteAttributeString(nameof(UnlockedMetaItems), UnlockedMetaItems.Serialize());
+            output.WriteAttributeString(nameof(UnlockedPool), UnlockedPool.Serialize());
 
             // Inventory
             if (Inventory.GetSerializationData() is string inventoryData)
@@ -642,7 +642,7 @@ namespace Remizione
         [ScriptProperty]
         public int TotalRuns => CompletedRuns + FailedRuns;
 
-        // UnlockedMetaItems
-        public UnlockedMetaItemPool UnlockedMetaItems { get; }
+        // UnlockedPool
+        public UnlockedPool UnlockedPool { get; }
     }
 }

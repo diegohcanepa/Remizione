@@ -52,6 +52,7 @@
 	<FX Name="ItemEquip" MaxInstances="4" />
 	<FX Name="ItemPop" MaxInstances="4" />
 	<FX Name="Lightning" MaxInstances="4" />
+	<FX Name="LockOpen" MaxInstances="3" />
 	<FX Name="MetalPropBreak" MaxInstances="4" />
 	<FX Name="NumberSixA" />
 	<FX Name="NumberSixB" />

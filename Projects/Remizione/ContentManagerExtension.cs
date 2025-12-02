@@ -10,7 +10,7 @@ namespace Remizione
     internal static class ContentManagerExtension
     {
         // EncodeAudioPath
-        internal static string EncodeAudioPath(this ContentManager content, ContentFolder folder)
+        internal static string EncodeAudioPath(ContentFolder folder)
         {
             if (folder is ContentFolder.FX or ContentFolder.Ambience or ContentFolder.Music or ContentFolder.Voices)
                 return Path.Combine("Audio", folder.ToString());

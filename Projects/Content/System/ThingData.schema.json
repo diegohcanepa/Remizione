@@ -1,12 +1,12 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "ThingConfigData.schema.json",
+    "$id": "ThingData.schema.json",
     "title": "Things array schema",
     "type": "object",
     "properties": {
       "data": {
         "type": "array",
-        "items": { "$ref": "./ThingConfig.schema.json" }
+        "items": { "$ref": "./Thing.schema.json" }
       }
     },
     "required": [ "data" ]

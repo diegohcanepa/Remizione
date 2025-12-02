@@ -26,7 +26,7 @@ namespace Remizione
             this.CollisionDetection = false;
             this.Atlas = Atlases.UI;
             this.Collider = new("20,12;20,22;0,22;0,12");
-            this.DepthOffset = -5;
+            this.DepthOffset = -1;
             this.IgnoreWalkArea = false;
 
             // Shadow
@@ -74,6 +74,8 @@ namespace Remizione
                 return;
             }
 
+            shadow.Scale = Scale;
+
             if (isCollecting)
             {
                 if (!scaleTween.IsRunning)
@@ -87,7 +89,6 @@ namespace Remizione
                 if (!Session.Inventory.IsFull)
                 {
                     isCollecting = true;
-                    DepthOffset = 10;
                     PivotOrigin = RectanglePoint.Top;
                     Y -= BoundingBox.Height;
                     scaleTween.Start(TweenStyle.Linear, Scale, Vector2.Zero, 150);
@@ -113,7 +114,7 @@ namespace Remizione
             isCollecting = false;
             room.Children.Add(this);
 
-            scaleTween.Start(TweenStyle.Linear, Vector2.Zero, ScaleInfo.UIElement.Tiny, 250);
+            scaleTween.Start(TweenStyle.Linear, Vector2.Zero, new(.4f), 250);
             Tweens.ScaleTween = scaleTween;
 
             PlaySound(SoundNames.ItemPop);

@@ -13,6 +13,25 @@ namespace Remizione
     /// </summary>
     internal static class Utils
     {
+        // AssertName
+        internal static void AssertName(string name, object sender)
+        {
+            // Name cannot be a meta item
+            if (sender is not MetaItem)
+            {
+                if (MetaItem.Find(name) != null)
+                    throw new InvalidOperationException($"The name '{name}' is already taken by a MetaItem.");
+            }
+
+            // Name cannot be a realm 
+            if (Enum.IsDefined(typeof(Realm), name))
+                throw new InvalidOperationException($"The name '{name}' cannot be used because it is an item realm.");
+
+            // Name cannot be a category
+            if (Enum.IsDefined(typeof(ItemCategory), name))
+                throw new InvalidOperationException($"The name '{name}' cannot be used because it is an item category.");
+        }
+
         // CreateVersionLabel
         internal static TextSprite CreateVersionLabel(EngendroGame game)
         {

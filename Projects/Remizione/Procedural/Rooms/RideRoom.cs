@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace Remizione
 {
@@ -8,6 +9,7 @@ namespace Remizione
     /// </summary>
     public abstract class RideRoom : ProceduralRoom
     {
+        private readonly List<RideDoor> doors = [];
         private bool lootDropped;
 
         // Constructor
@@ -27,6 +29,7 @@ namespace Remizione
             {
                 upDoor.Position = DoorUpPosition;
                 upDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Up.Id);
+                doors.Add(upDoor);
                 Children.Add(upDoor);
             }
 
@@ -35,6 +38,7 @@ namespace Remizione
             {
                 leftDoor.Position = DoorLeftPosition;
                 leftDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Left.Id);
+                doors.Add(leftDoor);
                 Children.Add(leftDoor);
             }
 
@@ -43,6 +47,7 @@ namespace Remizione
             {
                 rightDoor.Position = DoorRightPosition;
                 rightDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Right.Id);
+                doors.Add(rightDoor);
                 Children.Add(rightDoor);
             }
 
@@ -54,6 +59,7 @@ namespace Remizione
                     downDoor.Position = DoorDownPosition;
                     if (RoomGraph.Down != null)
                         downDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Down.Id);
+                    doors.Add(downDoor);
                     Children.Add(downDoor);
                 }
             }
@@ -93,7 +99,36 @@ namespace Remizione
                 Loot.TryDropLoot(this, Config.LootTable, dropPosition, out _);
             }
 
+            for (var i = 0; i < doors.Count; i++)
+            {
+                doors[i].SwitchStateCooldown = (int)RandomHelper.Next(700, 1500);
+            }
+
             lootDropped = true;
+        }
+
+        // OnEnter
+        protected override void OnEnter()
+        {
+            base.OnEnter();
+            
+            if (EnemyCount > 0)
+            {
+                for (var i = 0; i < doors.Count; i++)
+                {
+                    doors[i].SwitchStateCooldown = (int)RandomHelper.Next(500, 1000);
+                }
+            }
+        }
+
+        // OnLoad
+        protected override void OnLoad()
+        {
+            base.OnLoad();
+            for (var i = 0; i < doors.Count; i++)
+            {
+                doors[i].IsOpen = true;
+            }
         }
 
         // OnPopulating

@@ -1,0 +1,9 @@
+{
+  "$schema": "./ThingData.schema.json",
+  "data": [
+    {
+      "name": "Zabul",
+      "unlocked": true
+    }
+  ]
+}

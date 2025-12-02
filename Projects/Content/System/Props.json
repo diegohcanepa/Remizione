@@ -1,5 +1,5 @@
 {
-  "$schema": "./ThingConfigData.schema.json",
+  "$schema": "./ThingData.schema.json",
   "data": [
     {
       "name": "PotteryA",
@@ -9,7 +9,8 @@
         [ "RustyLockpick", 25 ]
       ],
       "killGoal": 10,
-      "killGoalReward": "MasterLockpick"
+      "killGoalReward": "MasterLockpick",
+      "unlocked": true
     },
     {
       "name": "PotteryB",
@@ -17,7 +18,8 @@
       "loot": [
         [ "RottenApple", 70 ],
         [ "RustyLockpick", 25 ]
-      ]
+      ],
+      "unlocked": true
     }
   ]
 }

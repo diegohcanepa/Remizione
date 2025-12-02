@@ -20,15 +20,15 @@ namespace Remizione
             // Get an unlocked meta item based on realm, category or name
             if (Enum.IsDefined(typeof(Realm), lootItem.Name))
             {
-                metaItem = room.Session.UnlockedMetaItems.GetRandomItem(Enum.Parse<Realm>(lootItem.Name));
+                metaItem = room.Session.UnlockedPool.GetRandomMetaItem(Enum.Parse<Realm>(lootItem.Name));
             }
             else if (Enum.IsDefined(typeof(ItemCategory), lootItem.Name))
             {
-                metaItem = room.Session.UnlockedMetaItems.GetRandomItem(Enum.Parse<ItemCategory>(lootItem.Name));
+                metaItem = room.Session.UnlockedPool.GetRandomMetaItem(Enum.Parse<ItemCategory>(lootItem.Name));
             }
             else
             {
-                metaItem = room.Session.UnlockedMetaItems.Find(lootItem.Name);
+                metaItem = room.Session.UnlockedPool.FindMetaItem(lootItem.Name);
             }
 
             if (metaItem != null)

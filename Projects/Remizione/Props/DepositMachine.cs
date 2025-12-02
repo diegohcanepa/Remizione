@@ -50,7 +50,7 @@ namespace Remizione
         }
 
         // OnPropStateChanged
-        protected override void OnPropStateChanged()
+        protected override void OnPropStateChanged(PropState previousState)
         {
             AnimationPlayer.Play(PropState == PropState.Locked ? AnimationNames.Locked : AnimationNames.Unlocked, false);
 
