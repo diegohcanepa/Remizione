@@ -25,7 +25,6 @@ namespace Remizione
                 Weight = weightElement.GetSingle();
 
             // MaxPerRun
-            MaxPerRun = 1;
             if (element.TryGetProperty("maxPerRun", out JsonElement maxPerRunElement))
                 MaxPerRun = Math.Max(MaxPerRun, maxPerRunElement.GetInt32());
 

@@ -116,6 +116,8 @@ namespace Remizione
             ThingConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"),
                              ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"));
 
+            RideRoom.RegisterRideRoom(typeof(BlueStoneRoom));
+
             Fonts.Initialize(Content);
             UserSettingsData userSettings = UserSettingsData.Load(this);
             UserSettingsData.Apply(this, userSettings);

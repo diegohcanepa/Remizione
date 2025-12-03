@@ -7,11 +7,6 @@ namespace Remizione
     /// </summary>
     public sealed class BlueStoneRoom : RideRoom
     {
-        static BlueStoneRoom()
-        {
-            derivedTypes[nameof(BlueStoneRoom)] = typeof(BlueStoneRoom);
-        }
-
         // Constructor
         public BlueStoneRoom(GameSession session, RoomGraph graph)
             : base(session, graph)

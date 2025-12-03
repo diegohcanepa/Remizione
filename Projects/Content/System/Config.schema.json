@@ -17,8 +17,8 @@
     },
     "maxPerRun": {
       "type": "integer",
-      "default": 1,
-      "minimum": 1,
+      "default": 0,
+      "minimum": 0,
       "description": "Número máximo de veces que este elemento puede aparecer por 'run'."
     },
     "requiredCompletedRuns": {

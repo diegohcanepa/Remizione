@@ -14,6 +14,8 @@ namespace Remizione
 
         private readonly List<MetaItem> metaItems = [];
         private readonly Dictionary<string, MetaItem> metaItemsDict = [];
+        private readonly List<RoomConfig> roomConfigs = [];
+        private readonly Dictionary<string, RoomConfig> roomConfigsDict = [];
         private readonly GameSession session;
         private readonly List<GameThing> things = [];
         private readonly Dictionary<string, GameThing> thingsDict = [];
@@ -164,6 +166,12 @@ namespace Remizione
                     thingsDict.Add(name, thing);
                     unlock = true;
                 }
+            }
+            else if (RoomConfig.Find(name) is RoomConfig roomConfig)
+            {
+                roomConfigs.Add(roomConfig);
+                roomConfigsDict.Add(name, roomConfig);
+                unlock = true;
             }
 
             if (unlock)

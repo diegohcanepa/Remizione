@@ -10,7 +10,7 @@ namespace Remizione
     /// </summary>
     public abstract class RideRoom : ProceduralRoom
     {
-        protected static Dictionary<string, Type> derivedTypes = [];
+        private static Dictionary<string, Type> derivedTypes = [];
         private readonly List<RideDoor> doors = [];
         private bool lootDropped;
 
@@ -181,6 +181,12 @@ namespace Remizione
 
         // HubDoor
         public RideDoor? HubDoor { get; set; }
+
+        // RegisterRideRoom
+        public static void RegisterRideRoom(Type type)
+        {
+            derivedTypes.Add(type.Name, type);
+        }
     }
 
     /// <summary>
