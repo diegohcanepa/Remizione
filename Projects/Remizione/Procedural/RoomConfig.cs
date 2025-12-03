@@ -1,8 +1,5 @@
-﻿using Engendro;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Text.Json;
 
 namespace Remizione
@@ -20,20 +17,20 @@ namespace Remizione
             : base(element)
         {
             // Enemy scope
-            var allowPools = ConfigHelper.GetStringArrayValues(element, "enemyAllowPools");
-            var denyPools = ConfigHelper.GetStringArrayValues(element, "enemyDenyPools");
-            var allowTags = ConfigHelper.GetStringArrayValues(element, "enemyAllowTags");
-            var denyTags = ConfigHelper.GetStringArrayValues(element, "enemyDenyTags");
+            var allowPools = ConfigHelper.GetTags(element, "enemyAllowPools");
+            var denyPools = ConfigHelper.GetTags(element, "enemyDenyPools");
+            var allowTags = ConfigHelper.GetTags(element, "enemyAllowTags");
+            var denyTags = ConfigHelper.GetTags(element, "enemyDenyTags");
             var maxPerRoom = -1;
             if (element.TryGetProperty("maxEnemies", out JsonElement maxEnemiesElement))
                 maxPerRoom = maxEnemiesElement.GetInt32();
             this.EnemyScope = new ScopeRules(allowPools, denyPools, allowTags, denyTags, maxPerRoom);
 
             // Prop scope
-            allowPools = ConfigHelper.GetStringArrayValues(element, "propAllowPools");
-            denyPools = ConfigHelper.GetStringArrayValues(element, "propDenyPools");
-            allowTags = ConfigHelper.GetStringArrayValues(element, "propAllowTags");
-            denyTags = ConfigHelper.GetStringArrayValues(element, "propDenyTags");
+            allowPools = ConfigHelper.GetTags(element, "propAllowPools");
+            denyPools = ConfigHelper.GetTags(element, "propDenyPools");
+            allowTags = ConfigHelper.GetTags(element, "propAllowTags");
+            denyTags = ConfigHelper.GetTags(element, "propDenyTags");
             maxPerRoom = -1;
             if (element.TryGetProperty("maxProps", out JsonElement maxPropsElement))
                 maxPerRoom = maxPropsElement.GetInt32();

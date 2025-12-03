@@ -87,7 +87,7 @@ namespace Adberration.Scripting
         // IsDeclarationReservedWord
         public static bool IsDeclarationReservedWord(string value)
         {
-            return value == CloneableKeyword || value == ClassKeyword || value == PersistentKeyword;
+            return value is CloneableKeyword or ClassKeyword or PersistentKeyword;
         }
 
         // IsNumericType

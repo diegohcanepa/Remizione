@@ -41,23 +41,13 @@ namespace Remizione
             return loot;
         }
 
-        // GetStringArrayValues
-        internal static List<string> GetStringArrayValues(JsonElement parentElement, string propertyName)
+        // GetTags
+        internal static Tags GetTags(JsonElement element, string propertyName)
         {
-            var result = new List<string>();
-
-            if (parentElement.TryGetProperty(propertyName, out JsonElement property))
-            {
-                foreach (JsonElement element in property.EnumerateArray())
-                {
-                    if (element.GetString() is not string name)
-                        throw new InvalidDataException();
-
-                    result.Add(name);
-                }
-            }
-
-            return result;
+            if (element.TryGetProperty(propertyName, out JsonElement tagsElement))
+                return new(tagsElement.GetString());
+            else
+                return Tags.EmptyList;
         }
     }
 }

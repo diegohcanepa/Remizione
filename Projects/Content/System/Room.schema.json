@@ -10,38 +10,23 @@
 			"type": "object",
 			"properties": {
 				"enemyAllowPools": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					},
-					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
+					"type": "string",
+					"description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
 				},
 				"enemyAllowTags": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					},
-					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
+					"type": "string",
+					"description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
 				},
 				"enemyDenyPools": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					},
-					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
+					"type": "string",
+					"description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
 				},
 				"enemyDenyTags": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					},
-					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
+					"type": "string",
+					"description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
 				},
 				"propAllowPools": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					},
+					"type": "string",
 					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
 				},
 				"maxEnemies": {
@@ -55,24 +40,15 @@
 					"description": "Número máximo de veces que este elemento puede aparecer por 'run'."
 				},
 				"propAllowTags": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					},
+					"type": "string",
 					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
 				},
 				"propDenyPools": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					},
+					"type": "string",
 					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
 				},
 				"propDenyTags": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					},
+					"type": "string",
 					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
 				}
 			}

@@ -93,21 +93,21 @@ namespace Adberration.Scripting
                 CodingContext.Any => true,
 
                 // EntityDeclaration
-                CodingContext.EntityDeclaration => scriptType == ScriptType.Room || scriptType == ScriptType.Thing,
+                CodingContext.EntityDeclaration => scriptType is ScriptType.Room or ScriptType.Thing,
 
                 // Declaration
                 CodingContext.Declaration => scriptType == ScriptType.Declaration,
 
                 // Instantiation
-                CodingContext.Instantiation => scriptType == ScriptType.Cloning || scriptType == ScriptType.Room || scriptType == ScriptType.Thing,
+                CodingContext.Instantiation => scriptType is ScriptType.Cloning or ScriptType.Room or ScriptType.Thing,
 
                 // Initialization
                 CodingContext.Initialization => scriptType == ScriptType.Initialization,
 
                 // Execution
-                CodingContext.Execution => scriptType == ScriptType.EnterRoom || scriptType == ScriptType.Enter || scriptType == ScriptType.Outcome ||
-                                           scriptType == ScriptType.Routine || scriptType == ScriptType.NewSession || scriptType == ScriptType.Load ||
-                                           scriptType == ScriptType.Unload || scriptType == ScriptType.Initialization,
+                CodingContext.Execution => scriptType is ScriptType.EnterRoom or ScriptType.Enter or ScriptType.Outcome or
+                                           ScriptType.Routine or ScriptType.NewSession or ScriptType.Load or
+                                           ScriptType.Unload or ScriptType.Initialization,
                 // Default
                 _ => false,
             };

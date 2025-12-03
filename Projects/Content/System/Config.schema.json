@@ -34,18 +34,12 @@
       "description": "Número total de 'runs' jugadas requeridas para que esta configuración sea elegible."
     },
     "tags": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
+      "type": "string",
+      "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
     },
     "pools": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Lista de 'pools' a las que pertenece esta configuración (Tags)."
+      "type": "string",
+      "description": "Lista de etiquetas a las que pertenece esta configuración (Tags)."
     },
     "unlocked": {
       "type": "boolean",

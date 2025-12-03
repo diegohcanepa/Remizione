@@ -75,7 +75,7 @@ namespace Remizione
             sprite.Image = Atlases.Environment.GetImage(kind.ToString());
             sprite.Opacity = 1;
             sprite.Position = position;
-            sprite.Rotation = RandomHelper.Next(Random.Shared, - .5f, .5f);
+            sprite.Rotation = RandomHelper.Next(Random.Shared, -.5f, .5f);
             scaleTween.Start(TweenStyle.Linear, maxScale / 2, maxScale, 100);
             sprite.Tweens.ScaleTween = scaleTween;
 

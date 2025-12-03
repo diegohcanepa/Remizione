@@ -3,7 +3,7 @@
   "data": [
     {
       "name": "PotteryA",
-      "tags": [ "floor" ],
+      "tags": "floor",
       "loot": [
         [ "RottenApple", 70 ],
         [ "RustyLockpick", 25 ]
@@ -14,7 +14,7 @@
     },
     {
       "name": "PotteryB",
-      "tags": [ "floor" ],
+      "tags": "floor",
       "loot": [
         [ "RottenApple", 70 ],
         [ "RustyLockpick", 25 ]

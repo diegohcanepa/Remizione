@@ -1,8 +1,6 @@
 ﻿using Engendro;
-using Microsoft.Xna.Framework;
+using SharpDX.Direct3D9;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 
@@ -37,13 +35,13 @@ namespace Remizione
                 RequiredRuns = requiredRunsElement.GetInt32();
 
             // Tags
-            Tags = new(ConfigHelper.GetStringArrayValues(element, "tags"));
+            Tags = ConfigHelper.GetTags(element, "tags");
 
             // LootTable
             LootTable = ConfigHelper.GetLootTable(element);
 
             // Pools
-            Pools = new(ConfigHelper.GetStringArrayValues(element, "pools"));
+            ConfigHelper.GetTags(element, "pools");
 
             // Unlocked
             if (element.TryGetProperty("unlocked", out JsonElement unlockedElement))

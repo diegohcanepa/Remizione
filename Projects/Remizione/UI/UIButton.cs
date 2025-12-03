@@ -123,7 +123,7 @@ namespace Remizione
 
             InvalidateBoundingBox();
 
-            if (PivotOrigin == RectanglePoint.Bottom || PivotOrigin == RectanglePoint.Top)
+            if (PivotOrigin is RectanglePoint.Bottom or RectanglePoint.Top)
             {
                 var offset = BoundingBox.Width / 2 - (image.BoundingBox.Width / 2);
 

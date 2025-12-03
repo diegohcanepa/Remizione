@@ -1,8 +1,7 @@
 ﻿using Engendro;
-using System;
+using Remizione.Procedural.Graphs;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Reflection;
 
 namespace Remizione
 {
@@ -43,7 +42,12 @@ namespace Remizione
             HasContent = true;
 
             // Create run graph
-            runGraph = new RunGraphGenerator(session.Seed).Generate(session, 3);
+            var settings = new RunGraphGeneratorSettings()
+            {
+                Seed = session.Seed
+            };
+
+            runGraph = RunGraphGenerator.Generate(session, settings);
 
             // Create procedural rooms
             for (var i = 0; i < runGraph.EntryRooms.Count; i++)

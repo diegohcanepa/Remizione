@@ -3,7 +3,6 @@ using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 
@@ -264,7 +263,7 @@ namespace Remizione
         public ImpactWordName ImpactWord { get; }
 
         // IsEquipment
-        public bool IsEquipment => Category == ItemCategory.LeftHand || Category == ItemCategory.RightHand || Category == ItemCategory.Gadget;
+        public bool IsEquipment => Category is ItemCategory.LeftHand or ItemCategory.RightHand or ItemCategory.Gadget;
 
         // IsPassive
         public bool IsPassive => PassiveEffectCooldown > 0;

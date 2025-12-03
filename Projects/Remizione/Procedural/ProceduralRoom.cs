@@ -54,8 +54,8 @@ namespace Remizione
             return result;
         }
 
-        // FilterByRoomScope
-        private List<ThingConfig> FilterByRoomScope<T>(IList<ThingConfig> configList, ScopeRules scope)
+        // FilterByScope
+        private List<ThingConfig> FilterByScope<T>(IList<ThingConfig> configList, ScopeRules scope)
             where T : GameThing
         {
             var outList = new List<ThingConfig>();
@@ -179,32 +179,27 @@ namespace Remizione
         // PopulateEnemies
         private void PopulateEnemies()
         {
-            if (Config.EnemyScope.MaxPerRoom == 0)
-                return;
-
             var instanceCount = 0;
             var maxInstances = Config.EnemyScope.MaxPerRoom;
 
             var enemyList = new List<string>();
 
             // 1) Filter by room scope
-            var filteredEnemies = FilterByRoomScope<Enemy>(ThingConfig.All, Config.EnemyScope);
+            var configList = FilterByScope<Enemy>(ThingConfig.All, Config.EnemyScope);
 
             // Construir candidatos iterando props
             var candidates = new List<ThingConfig>();
-            for (int i = 0; i < filteredEnemies.Count; i++)
+            foreach (var config in configList)
             {
-                var p = filteredEnemies[i];
-
                 // MaxPerRoom
-                if (!p.PassesMaxPerRoomConstraint(spawnCounter.GetCount(p.Name)))
+                if (!config.PassesMaxPerRoomConstraint(spawnCounter.GetCount(config.Name)))
                     continue;
 
                 // MaxPerRun
-                if (!p.PassesMaxPerRunConstraint())
+                if (!config.PassesMaxPerRunConstraint())
                     continue;
 
-                candidates.Add(p);
+                candidates.Add(config);
 
                 // Pick
                 var chanceTable = new ChanceTable();
@@ -219,7 +214,7 @@ namespace Remizione
                 if (ThingConfig.Find(chanceTableItem.Name) is not ThingConfig chosen)
                     continue;
 
-                var spawnCount = Random.Next(p.MinSpawnAmount, p.MaxSpawnAmount + 1);
+                var spawnCount = Random.Next(config.MinSpawnAmount, config.MaxSpawnAmount + 1);
                 for (var j = 0; j < spawnCount; j++)
                 {
                     // Log spawn in room
@@ -231,11 +226,11 @@ namespace Remizione
                     enemyList.Add(chosen.Name);
 
                     // MaxPerRoom
-                    if (!p.PassesMaxPerRoomConstraint(spawnCounter.GetCount(chosen.Name)))
+                    if (!config.PassesMaxPerRoomConstraint(spawnCounter.GetCount(chosen.Name)))
                         break;
 
                     // MaxPerRun
-                    if (!p.PassesMaxPerRunConstraint())
+                    if (!config.PassesMaxPerRunConstraint())
                         break;
                 }
             }
@@ -253,7 +248,7 @@ namespace Remizione
 
                     instanceCount++;
 
-                    // Max prop per room (global)
+                    // Max prop per room (any enemy)
                     if (maxInstances > 0 && instanceCount == maxInstances)
                         break;
                 }
@@ -263,53 +258,47 @@ namespace Remizione
         // PopulateProps
         private void PopulateProps()
         {
-            if (Config.PropScope.MaxPerRoom == 0)
-                return;
-
             var instanceCount = 0;
             var maxInstances = Config.PropScope.MaxPerRoom;
 
             // 1) Filter by room scope
-            var filteredProps = FilterByRoomScope<Prop>(ThingConfig.All, Config.PropScope);
+            var configList = FilterByScope<Prop>(ThingConfig.All, Config.PropScope);
 
             // 2) Shuffle placeholders
             var placeholders = new List<Placeholder>(Placeholders);
             placeholders.Shuffle(Random);
 
             // 3) Iterate placeholders
-            for (int pi = 0; pi < placeholders.Count; pi++)
+            foreach (var placeholder in placeholders)
             {
-                var ph = placeholders[pi];
-
-                if (ph.Used)
+                // Already used
+                if (placeholder.Used)
                     continue;
 
-                // Roll de fillChance (si falla, placeholder queda vacío)
-                if (Random.NextDouble() > float.Clamp(ph.FillChance, 0, 1))
+                // Roll fillChance
+                if (Random.NextDouble() > float.Clamp(placeholder.FillChance, 0, 1))
                     continue;
 
-                // Construir candidatos iterando props
+                // Collect candidates
                 var candidates = new List<ThingConfig>();
-                for (int i = 0; i < filteredProps.Count; i++)
+                foreach (var config in configList)
                 {
-                    var p = filteredProps[i];
-
-                    // placeholder.allowedTags (si existe) -> requiere intersección
-                    if (ph.AllowTags.Count > 0)
+                    // Allow tags
+                    if (placeholder.AllowTags.Count > 0)
                     {
-                        if (!Utils.Intersects(ph.AllowTags, p.Tags))
+                        if (!Utils.Intersects(placeholder.AllowTags, config.Tags))
                             continue;
                     }
 
                     // MaxPerRoom
-                    if (!p.PassesMaxPerRoomConstraint(spawnCounter.GetCount(p.Name)))
+                    if (!config.PassesMaxPerRoomConstraint(spawnCounter.GetCount(config.Name)))
                         continue;
 
                     // MaxPerRun
-                    if (!p.PassesMaxPerRunConstraint())
+                    if (!config.PassesMaxPerRunConstraint())
                         continue;
 
-                    candidates.Add(p);
+                    candidates.Add(config);
                 }
 
                 if (candidates.Count == 0)
@@ -335,15 +324,15 @@ namespace Remizione
                 RunManager.SpawnCounter.Increment(chosen.Name);
 
                 // Flag placeholder as used
-                ph.Used = true;
+                placeholder.Used = true;
 
                 var instance = CreateRuntimeThingCloneCore(chosen.Name);
-                instance.Position = ph.Polygon.BoundingRectangleF.GetPoint(RectanglePoint.Bottom);
+                instance.Position = placeholder.Polygon.BoundingRectangleF.GetPoint(RectanglePoint.Bottom);
                 Children.Add(instance);
 
                 instanceCount++;
 
-                // Max prop per room (global)
+                // Max per room (any prop)
                 if (maxInstances > 0 && instanceCount == maxInstances)
                     return;
             }

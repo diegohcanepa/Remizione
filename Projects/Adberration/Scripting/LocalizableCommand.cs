@@ -74,8 +74,8 @@ namespace Adberration.Scripting
 
             if (!Literal && !TextRepository.IsKeyReference(result))
             {
-                if (textSource == LocalizationSource.TextRepository ||
-                    textSource == LocalizationSource.TextRepositoryOtherwiseScript)
+                if (textSource is LocalizationSource.TextRepository or
+                    LocalizationSource.TextRepositoryOtherwiseScript)
                 {
                     var key = EncodeTextKey();
                     var textRepositoryValue = TextRepository.GetValue(key);

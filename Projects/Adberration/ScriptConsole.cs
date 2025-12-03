@@ -57,7 +57,7 @@ namespace Adberration
             if (CommandList.Count == 0)
                 return;
 
-            if (e.Key == Keys.Down || e.Key == Keys.Up)
+            if (e.Key is Keys.Down or Keys.Up)
             {
                 if (commandIndex == -1)
                 {

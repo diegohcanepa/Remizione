@@ -26,7 +26,7 @@ namespace Adberration.Persistence
         // Map
         public PersistentProperty Map(string propertyName)
         {
-            if (propertyName == nameof(Entity.Name) || propertyName == nameof(Entity.Parent))
+            if (propertyName is (nameof(Entity.Name)) or (nameof(Entity.Parent)))
             {
                 throw new InvalidOperationException($"The property '{propertyName}' is implicitly persisted as part of the persistent model.");
             }

@@ -1,7 +1,6 @@
 ﻿using Engendro;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -113,18 +112,21 @@ namespace Remizione
         {
             unlockedNames.Clear();
 
+            // Meta items
             foreach (var metaItem in MetaItem.AllItems)
             {
                 if (metaItem.Unlocked)
                     Unlock(metaItem.Name);
             }
 
+            // Rooms
             foreach (var roomConfig in RoomConfig.All)
             {
                 if (roomConfig.Unlocked)
                     Unlock(roomConfig.Name);
             }
 
+            // Things (actor and props)
             foreach (var thingConfig in ThingConfig.All)
             {
                 if (thingConfig.Unlocked)
@@ -151,22 +153,27 @@ namespace Remizione
                 return;
 
             var unlock = false;
-            
+
+            // Is a meta item?
             if (MetaItem.Find(name) is MetaItem metaItem)
             {
                 metaItems.Add(metaItem);
                 metaItemsDict.Add(name, metaItem);
                 unlock = true;
             }
+
+            // Actor or prop
             else if (session.GetEntity<GameThing>(name) is GameThing thing)
             {
-                if (thing is Actor || thing is Prop)
+                if (thing is Actor or Prop)
                 {
                     things.Add(thing);
                     thingsDict.Add(name, thing);
                     unlock = true;
                 }
             }
+
+            // Room
             else if (RoomConfig.Find(name) is RoomConfig roomConfig)
             {
                 roomConfigs.Add(roomConfig);

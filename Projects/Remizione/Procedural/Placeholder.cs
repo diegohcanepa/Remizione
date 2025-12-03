@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using System.Collections.ObjectModel;
 
 namespace Remizione
 {

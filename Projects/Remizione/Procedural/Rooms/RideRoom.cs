@@ -10,7 +10,7 @@ namespace Remizione
     /// </summary>
     public abstract class RideRoom : ProceduralRoom
     {
-        private static Dictionary<string, Type> derivedTypes = [];
+        private static readonly Dictionary<string, Type> derivedTypes = [];
         private readonly List<RideDoor> doors = [];
         private bool lootDropped;
 
@@ -113,7 +113,7 @@ namespace Remizione
         protected override void OnEnter()
         {
             base.OnEnter();
-            
+
             if (EnemyCount > 0)
             {
                 for (var i = 0; i < doors.Count; i++)

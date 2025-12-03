@@ -31,10 +31,8 @@ namespace Remizione
             {
                 for (var i = 0; i < Owner.Room.CulledThings.Count; i++)
                 {
-                    var target = Owner.Room.CulledThings[i] as GameThing;
-
                     // Skip owner
-                    if (target == null || target == Owner)
+                    if (Owner.Room.CulledThings[i] is not GameThing target || target == Owner)
                         continue;
 
                     if (target is Prop && target == Owner.InteractiveTarget)

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 namespace Remizione
 {
@@ -10,14 +9,20 @@ namespace Remizione
     /// </summary>
     public sealed class Tags : ReadOnlyCollection<string>
     {
-        private static readonly HashSet<string> allowedTags = new()
-        {
+        private static readonly HashSet<string> allowedTags =
+        [
             "ceiling",
             "flip",
             "floor",
             "pottery",
             "wall",
-        };
+        ];
+
+        // Constructor
+        public Tags(string? tags)
+            : base(tags is null ? [] : tags.Split(','))
+        {
+        }
 
         // Constructor
         public Tags(IList<string> tags)
@@ -30,5 +35,8 @@ namespace Remizione
                     throw new ArgumentException($"'{tag}' is not a valid tag.");
             }
         }
+
+        // EmptyList
+        public static Tags EmptyList { get; } = new Tags([]);
     }
 }

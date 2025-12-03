@@ -500,37 +500,37 @@ namespace Engendro
             }
 
             // AtBottom
-            public bool AtBottom => sprite.PivotOrigin == RectanglePoint.LeftBottom ||
-                                    sprite.PivotOrigin == RectanglePoint.RightBottom ||
-                                    sprite.PivotOrigin == RectanglePoint.Bottom;
+            public bool AtBottom => sprite.PivotOrigin is RectanglePoint.LeftBottom or
+                                    RectanglePoint.RightBottom or
+                                    RectanglePoint.Bottom;
 
             // AtLeft
-            public bool AtLeft => sprite.PivotOrigin == RectanglePoint.LeftBottom ||
-                                  sprite.PivotOrigin == RectanglePoint.LeftTop ||
-                                  sprite.PivotOrigin == RectanglePoint.Left;
+            public bool AtLeft => sprite.PivotOrigin is RectanglePoint.LeftBottom or
+                                  RectanglePoint.LeftTop or
+                                  RectanglePoint.Left;
 
             // AtMiddle
             public bool AtMiddle => sprite.PivotOrigin == RectanglePoint.Center;
 
             // AtMiddleX
-            public bool AtMiddleX => sprite.PivotOrigin == RectanglePoint.Bottom ||
-                                     sprite.PivotOrigin == RectanglePoint.Top ||
-                                     sprite.PivotOrigin == RectanglePoint.Center;
+            public bool AtMiddleX => sprite.PivotOrigin is RectanglePoint.Bottom or
+                                     RectanglePoint.Top or
+                                     RectanglePoint.Center;
 
             // AtMiddleY
-            public bool AtMiddleY => sprite.PivotOrigin == RectanglePoint.Left ||
-                                     sprite.PivotOrigin == RectanglePoint.Right ||
-                                     sprite.PivotOrigin == RectanglePoint.Center;
+            public bool AtMiddleY => sprite.PivotOrigin is RectanglePoint.Left or
+                                     RectanglePoint.Right or
+                                     RectanglePoint.Center;
 
             // AtRight
-            public bool AtRight => sprite.PivotOrigin == RectanglePoint.RightBottom ||
-                                   sprite.PivotOrigin == RectanglePoint.RightTop ||
-                                   sprite.PivotOrigin == RectanglePoint.Right;
+            public bool AtRight => sprite.PivotOrigin is RectanglePoint.RightBottom or
+                                   RectanglePoint.RightTop or
+                                   RectanglePoint.Right;
 
             // AtTop
-            public bool AtTop => sprite.PivotOrigin == RectanglePoint.LeftTop ||
-                                 sprite.PivotOrigin == RectanglePoint.RightTop ||
-                                 sprite.PivotOrigin == RectanglePoint.Top;
+            public bool AtTop => sprite.PivotOrigin is RectanglePoint.LeftTop or
+                                 RectanglePoint.RightTop or
+                                 RectanglePoint.Top;
 
             // Position
             public Vector2 Position

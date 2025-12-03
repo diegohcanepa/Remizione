@@ -171,7 +171,7 @@ namespace Adberration.Scripting
 
             // Form header
             signature = tokens[0];
-            if (ScriptType != ScriptType.EnterRoom && ScriptType != ScriptType.NewSession)
+            if (ScriptType is not ScriptType.EnterRoom and not ScriptType.NewSession)
             {
                 if (tokens.Length < 2)
                     ThrowScriptSyntaxError(this, "Missing header name.");

@@ -110,7 +110,7 @@ namespace Remizione
         // Show
         public void Show(LogVerb verb, MetaItem metaItem)
         {
-            var isWarning = verb == LogVerb.Lost || verb == LogVerb.ItemRequired;
+            var isWarning = verb is LogVerb.Lost or LogVerb.ItemRequired;
 
             ShowCore(Localization.GetValue(verb), metaItem.LocalizedDisplayName, isWarning, metaItem.Image);
 

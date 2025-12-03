@@ -13,7 +13,7 @@
 
             while (index <= text.Length - 1)
             {
-                if (text[index] == ' ' || text[index] == '\n' || text[index] == '\t')
+                if (text[index] is ' ' or '\n' or '\t')
                     result++;
 
                 index++;

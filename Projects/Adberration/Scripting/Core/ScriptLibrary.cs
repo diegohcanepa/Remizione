@@ -197,7 +197,7 @@ namespace Adberration.Scripting
             CompilationPhase = CompilationPhase.Routines;
             foreach (var script in AllScripts)
             {
-                if (script.ScriptType == ScriptType.Routine || script.ScriptType == ScriptType.NewSession)
+                if (script.ScriptType is ScriptType.Routine or ScriptType.NewSession)
                 {
                     script.Compile();
                 }

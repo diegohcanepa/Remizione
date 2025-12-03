@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Remizione.Procedural.Graphs;
 using System;
 using System.Collections.Generic;
 
@@ -7,37 +8,32 @@ namespace Remizione
     /// <summary>
     /// RunGraphGenerator
     /// </summary>
-    public sealed class RunGraphGenerator
+    public static class RunGraphGenerator
     {
-        private readonly Random random;
-        private int roomId;
-
-        // Constructor
-        public RunGraphGenerator(int seed)
-        {
-            random = new Random(seed);
-        }
+        private static int roomId;
 
         // Generate
-        public RunGraph Generate(GameSession session, int pathCount)
+        public static RunGraph Generate(GameSession session, RunGraphGeneratorSettings settings)
         {
+            var random = new Random(settings.Seed);
+
             var entryRooms = new List<RoomGraph>();
             roomId = 0;
 
-            for (int i = 0; i < pathCount; i++)
+            for (int i = 0; i < settings.PathCount; i++)
             {
-                int length = random.Next(MinLength, MaxLength + 1);
-                var entryRoom = GeneratePath(i, length);
+                int length = random.Next(settings.MinLength, settings.MaxLength + 1);
+                var entryRoom = GeneratePath(i, length, settings);
                 entryRooms.Add(entryRoom);
             }
 
-            return new RunGraph(session, entryRooms, random, new Tags([]));
+            return new RunGraph(session, entryRooms, random, settings.Pools, settings.Tags);
         }
 
         #region Private members
 
         // CreateRoom
-        private RoomGraph CreateRoom(int pathIndex, bool isRoot)
+        private static RoomGraph CreateRoom(int pathIndex, bool isRoot)
         {
             roomId++;
             var result = new RoomGraph(roomId, isRoot, pathIndex);
@@ -45,7 +41,7 @@ namespace Remizione
         }
 
         // GeneratePath
-        private RoomGraph GeneratePath(int pathIndex, int length)
+        private static RoomGraph GeneratePath(int pathIndex, int length, RunGraphGeneratorSettings settings)
         {
             RoomGraph first = CreateRoom(pathIndex, true);
             RoomGraph prev = first;
@@ -65,13 +61,13 @@ namespace Remizione
 
             while (cur != null)
             {
-                for (int s = 0; s < MaxSidePerRoom; s++)
+                for (int s = 0; s < settings.MaxSidePerRoom; s++)
                 {
-                    if (countForPath >= MaxSidePerPath)
+                    if (countForPath >= settings.MaxSidePerPath)
                         break;
 
                     // Left connection
-                    if (DiceExpression.Dice100.Roll() <= SideChancePercent)
+                    if (DiceExpression.Dice100.Roll() <= settings.SideChancePercent)
                     {
                         if (cur.Left == null)
                         {
@@ -83,7 +79,7 @@ namespace Remizione
                     }
 
                     // Right connection
-                    if (DiceExpression.Dice100.Roll() <= SideChancePercent)
+                    if (DiceExpression.Dice100.Roll() <= settings.SideChancePercent)
                     {
                         if (cur.Right == null)
                         {
@@ -102,20 +98,5 @@ namespace Remizione
         }
 
         #endregion
-
-        // MaxLength
-        public int MaxLength { get; set; } = 3;
-
-        // MaxSidePerRoom
-        public int MaxSidePerRoom { get; set; } = 1;
-
-        // MaxSidePerPath
-        public int MaxSidePerPath { get; set; } = int.MaxValue;
-
-        // MinLength
-        public int MinLength { get; set; } = 2;
-
-        // SideChancePercent
-        public int SideChancePercent { get; set; } = 50;
     }
 }

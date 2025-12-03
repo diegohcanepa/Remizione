@@ -22,7 +22,7 @@ namespace Adberration.Scripting
             var rightOperand = Parser.ParseEntities<Entity>(this, 2);
             var op = Body.Clauses[1];
 
-            if (op == ScriptSyntax.EqualityOp || op == ScriptSyntax.InOp)
+            if (op is ScriptSyntax.EqualityOp or ScriptSyntax.InOp)
             {
                 return rightOperand.Contains(leftOperand);
             }

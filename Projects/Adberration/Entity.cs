@@ -40,7 +40,7 @@ namespace Adberration
             // Annonymous
             if (string.IsNullOrWhiteSpace(name))
             {
-                if (session.State == GameSessionState.Uninitialized || session.State == GameSessionState.LoadingScripts)
+                if (session.State is GameSessionState.Uninitialized or GameSessionState.LoadingScripts)
                     throw new InvalidOperationException("Cannot create anonymous entities until session is fully initialized.");
 
                 InstanceKind = InstanceKind.Anonymous;
@@ -128,7 +128,7 @@ namespace Adberration
         {
             child.Parent = this;
 
-            if (LoadState == LoadState.Loaded || LoadState == LoadState.Loading)
+            if (LoadState is LoadState.Loaded or LoadState.Loading)
             {
                 child.Load();
                 Invalidate();

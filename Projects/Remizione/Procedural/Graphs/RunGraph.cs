@@ -14,7 +14,7 @@ namespace Remizione
         private readonly GameSession session;
 
         // Constructor
-        public RunGraph(GameSession session, IList<RoomGraph> entryRooms, Random random, Tags tags)
+        public RunGraph(GameSession session, IList<RoomGraph> entryRooms, Random random, Tags pools, Tags tags)
         {
             this.session = session;
 
@@ -23,7 +23,7 @@ namespace Remizione
             if (PlaceCoin(random) is RoomGraph roomGraph)
                 roomGraph.HasCoin = true;
 
-            this.availableRoomConfigs = GetAvailableRooms(tags);
+            this.availableRoomConfigs = GetAvailableRooms(pools, tags);
 
             for (var i = 0; i < entryRooms.Count; i++)
             {
@@ -43,12 +43,12 @@ namespace Remizione
             for (var i = 0; i < roomGraphs.Count; i++)
             {
                 candidates.Clear();
-                
+
                 foreach (var roomConfig in availableRoomConfigs)
                 {
                     if (!roomConfig.PassesMaxPerRunConstraint())
                         continue;
-                    
+
                     candidates.Add(roomConfig);
                 }
 
@@ -68,7 +68,7 @@ namespace Remizione
         }
 
         // GetAvailableRooms
-        private List<RoomConfig> GetAvailableRooms(Tags tags)
+        private List<RoomConfig> GetAvailableRooms(Tags pools, Tags tags)
         {
             var outList = new List<RoomConfig>();
 
@@ -81,8 +81,15 @@ namespace Remizione
                 if (!roomConfig.PassesRunConstraints(session))
                     continue;
 
+                // Pools
+                if (pools.Count > 0)
+                {
+                    if (!Utils.Intersects(pools, roomConfig.Pools))
+                        continue;
+                }
+
                 // Tags
-                if (tags.Count > 0 && roomConfig.Tags.Count > 0)
+                if (tags.Count > 0)
                 {
                     if (!Utils.Intersects(tags, roomConfig.Tags))
                         continue;

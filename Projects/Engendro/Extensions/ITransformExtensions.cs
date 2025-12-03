@@ -74,33 +74,33 @@ namespace Engendro
         // HasBottomPivot
         public static bool HasBottomPivot(RectanglePoint value)
         {
-            return value == RectanglePoint.LeftBottom ||
-                   value == RectanglePoint.RightBottom ||
-                   value == RectanglePoint.Bottom;
+            return value is RectanglePoint.LeftBottom or
+                   RectanglePoint.RightBottom or
+                   RectanglePoint.Bottom;
         }
 
         // HasLeftPivot
         public static bool HasLeftPivot(RectanglePoint value)
         {
-            return value == RectanglePoint.LeftBottom ||
-                   value == RectanglePoint.LeftTop ||
-                   value == RectanglePoint.Left;
+            return value is RectanglePoint.LeftBottom or
+                   RectanglePoint.LeftTop or
+                   RectanglePoint.Left;
         }
 
         // HasRightPivot
         public static bool HasRightPivot(RectanglePoint value)
         {
-            return value == RectanglePoint.RightBottom ||
-                   value == RectanglePoint.RightTop ||
-                   value == RectanglePoint.Right;
+            return value is RectanglePoint.RightBottom or
+                   RectanglePoint.RightTop or
+                   RectanglePoint.Right;
         }
 
         // HasTopPivot
         public static bool HasTopPivot(RectanglePoint value)
         {
-            return value == RectanglePoint.LeftTop ||
-                   value == RectanglePoint.RightTop ||
-                   value == RectanglePoint.Top;
+            return value is RectanglePoint.LeftTop or
+                   RectanglePoint.RightTop or
+                   RectanglePoint.Top;
         }
     }
 }
