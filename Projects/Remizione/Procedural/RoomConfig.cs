@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 
@@ -16,6 +17,14 @@ namespace Remizione
         private RoomConfig(JsonElement element)
             : base(element)
         {
+            // LockType
+            if (element.TryGetProperty("lockType", out JsonElement lockTypeElement))
+                LockType = Enum.Parse<LockType>(lockTypeElement.GetString() ?? string.Empty);
+
+            // Placement
+            if (element.TryGetProperty("placement", out JsonElement placementElement))
+                Placement = Enum.Parse<RoomPlacement>(placementElement.GetString() ?? string.Empty);
+
             // Enemy scope
             var allowPools = ConfigHelper.GetTags(element, "enemyAllowPools");
             var denyPools = ConfigHelper.GetTags(element, "enemyDenyPools");
@@ -61,6 +70,35 @@ namespace Remizione
 
         // EnemyScope
         public ScopeRules EnemyScope { get; }
+
+        // LockType
+        public LockType LockType { get; }
+
+        // PassesPlacementConstraint
+        public bool PassesPlacementConstraint(RoomGraph roomGraph)
+        {
+            if (Placement == RoomPlacement.Any)
+                return true;
+
+            if (roomGraph.IsSide)
+            {
+                if (roomGraph.Right != null)
+                    return Placement == RoomPlacement.Left || Placement == RoomPlacement.MiddleOrLeft;
+
+                else if (roomGraph.Left != null)
+                    return Placement == RoomPlacement.Right || Placement == RoomPlacement.MiddleOrRight;
+
+                else
+                    return false;
+            }
+            else
+            {
+                return Placement == RoomPlacement.Middle;
+            }
+        }
+
+        // Placement
+        public RoomPlacement Placement { get; }
 
         // PropScope
         public ScopeRules PropScope { get; }

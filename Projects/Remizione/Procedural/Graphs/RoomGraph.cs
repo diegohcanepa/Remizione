@@ -25,6 +25,9 @@
         // Id
         public int Id { get; }
 
+        // IsSide
+        public bool IsSide => Down == null;
+
         // IsRoot
         public bool IsRoot { get; }
 

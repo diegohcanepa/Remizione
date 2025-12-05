@@ -49,6 +49,17 @@ namespace Remizione
 
         #region Private members
 
+        // InitializeProceduralContent
+        private void InitializeProceduralContent()
+        {
+            MetaItem.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "MetaItems.json"));
+            RoomConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
+            ThingConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"),
+                             ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"));
+            
+            RideRoom.RegisterRideRoom(typeof(CommonRoom));
+        }
+
 #if !QUICK_START
         // DefaultStart
         private void DefaultStart()
@@ -107,20 +118,14 @@ namespace Remizione
             base.OnInitialize();
 
             Effects = new GameEffects(this);
-
             LocalizationManager.Initialize(this);
-
             AudioManager.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "SoundData.xml"));
-            MetaItem.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "MetaItems.json"));
-            RoomConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
-            ThingConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"),
-                             ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"));
-
-            RideRoom.RegisterRideRoom(typeof(BlueStoneRoom));
-
+            
             Fonts.Initialize(Content);
             UserSettingsData userSettings = UserSettingsData.Load(this);
             UserSettingsData.Apply(this, userSettings);
+
+            InitializeProceduralContent();
 
 #if QUICK_START
             QuickStart();

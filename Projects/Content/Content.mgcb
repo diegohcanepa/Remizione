@@ -44,7 +44,7 @@
 #begin Atlases/Arena1.xml
 /copy:Atlases/Arena1.xml
 
-#begin Atlases/BlueStoneRoom.png
+#begin Atlases/CommonRoom.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -54,10 +54,10 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Atlases/BlueStoneRoom.png
+/build:Atlases/CommonRoom.png
 
-#begin Atlases/BlueStoneRoom.xml
-/copy:Atlases/BlueStoneRoom.xml
+#begin Atlases/CommonRoom.xml
+/copy:Atlases/CommonRoom.xml
 
 #begin Atlases/Environment.png
 /importer:TextureImporter

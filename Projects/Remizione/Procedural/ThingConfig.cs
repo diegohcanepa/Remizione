@@ -13,10 +13,23 @@ namespace Remizione
         private static readonly Dictionary<string, ThingConfig> data = [];
         private static readonly List<ThingConfig> dataList = [];
 
+        #region Constructor
+
         // Constructor
         public ThingConfig(JsonElement element)
             : base(element)
         {
+            // InteractionGoal
+            if (element.TryGetProperty("interactionGoal", out JsonElement interactionGoalElement))
+                InteractionGoal = interactionGoalElement.GetInt32();
+
+            // InteractionGoalReward
+            if (element.TryGetProperty("interactionGoalReward", out JsonElement interactionGoalRewardElement))
+            {
+                if (interactionGoalRewardElement.GetString() is string interactionGoalRewardValue)
+                    InteractionGoalReward = new(interactionGoalRewardValue.Split(','));
+            }
+
             // KillGoal
             if (element.TryGetProperty("killGoal", out JsonElement killGoalElement))
                 KillGoal = killGoalElement.GetInt32();
@@ -25,10 +38,7 @@ namespace Remizione
             if (element.TryGetProperty("killGoalReward", out JsonElement killGoalRewardElement))
             {
                 if (killGoalRewardElement.GetString() is string killGoalRewardValue)
-                {
-                    ConfigHelper.AssertMetaItem(killGoalRewardValue);
-                    KillGoalReward = killGoalRewardValue;
-                }
+                    KillGoalReward = new(killGoalRewardValue.Split(','));
             }
 
             // MaxPerRoom
@@ -53,6 +63,8 @@ namespace Remizione
             dataList.Add(this);
         }
 
+        #endregion
+
         #region Static members
 
         // All
@@ -75,11 +87,17 @@ namespace Remizione
 
         #endregion
 
+        // InteractionGoal
+        public int InteractionGoal { get; }
+
+        // InteractionGoalReward
+        public ReadOnlyCollection<string> InteractionGoalReward { get; } = [];
+
         // KillGoal
         public int KillGoal { get; }
 
         // KillGoalReward
-        public string KillGoalReward { get; } = string.Empty;
+        public ReadOnlyCollection<string> KillGoalReward { get; } = [];
 
         // MaxPerRoom
         public int MaxPerRoom { get; }
@@ -93,10 +111,14 @@ namespace Remizione
         // PassesMaxPerRoomConstraint
         public bool PassesMaxPerRoomConstraint(int instanceCount)
         {
-            if (MaxPerRoom > 0 && instanceCount >= MaxPerRoom)
-                return false;
-            else
-                return true;
+            return MaxPerRoom == 0 || instanceCount < MaxPerRoom;
+        }
+
+        // Validate
+        public override void Validate()
+        {
+            ValidateNames(nameof(InteractionGoalReward), InteractionGoalReward);
+            ValidateNames(nameof(InteractionGoalReward), KillGoalReward);
         }
     }
 }

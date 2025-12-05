@@ -29,28 +29,28 @@ namespace Remizione
             // Up
             if (RoomGraph.Up != null && CreateRuntimeClone("RideDoorUp") is RideDoor upDoor)
             {
-                upDoor.Position = DoorUpPosition;
-                upDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Up.Id);
                 doors.Add(upDoor);
                 Children.Add(upDoor);
+                upDoor.Position = DoorAnchorUp;
+                upDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Up.Id);
             }
 
             // Left
             if (RoomGraph.Left != null && CreateRuntimeClone("RideDoorLeft") is RideDoor leftDoor)
             {
-                leftDoor.Position = DoorLeftPosition;
-                leftDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Left.Id);
                 doors.Add(leftDoor);
                 Children.Add(leftDoor);
+                leftDoor.Position = DoorAnchorLeft;
+                leftDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Left.Id);
             }
 
             // Right
             if (RoomGraph.Right != null && CreateRuntimeClone("RideDoorRight") is RideDoor rightDoor)
             {
-                rightDoor.Position = DoorRightPosition;
-                rightDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Right.Id);
                 doors.Add(rightDoor);
                 Children.Add(rightDoor);
+                rightDoor.Position = DoorAnchorRight;
+                rightDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Right.Id);
             }
 
             // Down
@@ -58,11 +58,11 @@ namespace Remizione
             {
                 if (CreateRuntimeClone("RideDoorDown") is RideDoor downDoor)
                 {
-                    downDoor.Position = DoorDownPosition;
-                    if (RoomGraph.Down != null)
-                        downDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Down.Id);
                     doors.Add(downDoor);
                     Children.Add(downDoor);
+                    downDoor.Position = DoorAnchorDown;
+                    if (RoomGraph.Down != null)
+                        downDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Down.Id);
                 }
             }
         }
@@ -71,17 +71,17 @@ namespace Remizione
 
         #region Protected members
 
-        // DoorDownPosition
-        protected Vector2 DoorDownPosition { get; set; }
+        // DoorAnchorDown
+        protected Vector2 DoorAnchorDown { get; set; }
 
-        // DoorLeftPosition
-        protected Vector2 DoorLeftPosition { get; set; }
+        // DoorAnchorLeft
+        protected Vector2 DoorAnchorLeft { get; set; }
 
-        // DoorRightPosition
-        protected Vector2 DoorRightPosition { get; set; }
+        // DoorAnchorRight
+        protected Vector2 DoorAnchorRight { get; set; }
 
-        // DoorUpPosition
-        protected Vector2 DoorUpPosition { get; set; }
+        // DoorAnchorUp
+        protected Vector2 DoorAnchorUp { get; set; }
 
         // OnEnemiesCleared
         protected override void OnEnemiesCleared()
@@ -137,6 +137,18 @@ namespace Remizione
         protected override void OnPopulating()
         {
             PopulateDoors();
+        }
+
+        // OnPopulated
+        protected override void OnPopulated()
+        {
+            base.OnPopulated();
+            
+            foreach (var door in Children)
+            {
+                if (door is RideDoor rideDoor)
+                    rideDoor.Prepare();
+            }
         }
 
         #endregion

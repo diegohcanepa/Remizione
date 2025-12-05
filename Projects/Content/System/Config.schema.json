@@ -8,18 +8,15 @@
       "type": "string",
       "description": "Nombre único de la configuración. (Requerido)"
     },
-    "weight": {
-      "type": "number",
-      "format": "float",
-      "default": 1.0,
-      "minimum": 0,
-      "description": "Peso o probabilidad asociada a esta configuración. Por defecto es 1."
-    },
     "maxPerRun": {
       "type": "integer",
       "default": 0,
       "minimum": 0,
       "description": "Número máximo de veces que este elemento puede aparecer por 'run'."
+    },
+    "pools": {
+      "type": "string",
+      "description": "Lista de etiquetas a las que pertenece esta configuración (Tags)."
     },
     "requiredCompletedRuns": {
       "type": "integer",
@@ -37,16 +34,19 @@
       "type": "string",
       "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
     },
-    "pools": {
-      "type": "string",
-      "description": "Lista de etiquetas a las que pertenece esta configuración (Tags)."
-    },
     "unlocked": {
       "type": "boolean",
       "default": false,
       "description": "El elemento está desbloqueado por default."
+    },
+    "weight": {
+      "type": "number",
+      "format": "float",
+      "default": 1.0,
+      "minimum": 0,
+      "description": "Peso o probabilidad asociada a esta configuración. Por defecto es 1."
     }
-  },
+ },
   "required": [
     "name"
   ]

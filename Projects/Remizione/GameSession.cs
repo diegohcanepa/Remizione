@@ -589,6 +589,10 @@ namespace Remizione
         [ScriptProperty]
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
 
+        // RideDoor
+        [ScriptProperty]
+        public RideDoor? RideDoor => OutcomeTarget as RideDoor;
+
         // Room
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;

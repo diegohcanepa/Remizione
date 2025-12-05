@@ -3,11 +3,6 @@
     // RunGraphGeneratorSettings
     public sealed class RunGraphGeneratorSettings
     {
-        // Constructor
-        public RunGraphGeneratorSettings()
-        {
-        }
-
         // MaxLength
         public int MaxLength { get; init; } = 3;
 
@@ -31,8 +26,5 @@
 
         // SideChancePercent
         public int SideChancePercent { get; init; } = 50;
-
-        // Tags
-        public Tags Tags { get; init; } = new([]);
     }
 }

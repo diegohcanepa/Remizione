@@ -606,7 +606,10 @@ namespace Remizione
             {
                 if (Session.KillCounter.Increment(StaticName) >= config.KillGoal)
                 {
-                    Session.UnlockedPool.Unlock(config.KillGoalReward);
+                    for (var i = 0; i < config.KillGoalReward.Count; i++)
+                    {
+                        Session.UnlockedPool.Unlock(config.KillGoalReward[i]);
+                    }
                 }
             }
         }

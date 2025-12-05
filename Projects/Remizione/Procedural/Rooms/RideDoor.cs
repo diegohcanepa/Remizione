@@ -1,7 +1,9 @@
-﻿using Adberration.Scripting;
+﻿using Adberration;
+using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Remizione
 {
@@ -18,16 +20,28 @@ namespace Remizione
         public RideDoor(GameSession session, string name)
             : base(session, name)
         {
+            if (name.StartsWith("RideDoorUp", StringComparison.OrdinalIgnoreCase))
+                DoorDirection = Adberration.Direction.Up;
+
+            else if (name.StartsWith("RideDoorDown", StringComparison.OrdinalIgnoreCase))
+                DoorDirection = Adberration.Direction.Down;
+
+            else if (name.StartsWith("RideDoorLeft", StringComparison.OrdinalIgnoreCase))
+                DoorDirection = Adberration.Direction.Left;
+
+            else if (name.StartsWith("RideDoorRight", StringComparison.OrdinalIgnoreCase))
+                DoorDirection = Adberration.Direction.Right;
+
+            else
+                throw new InvalidOperationException("Cannot infere door direction from entity name.");
+
             Atlas = Atlases.Environment;
             CollisionDetection = false;
             DisplayNameKey = "Verb.Enter";
             CloseSound = Sound.Find("DoorClose");
             OpenSound = Sound.Find("DoorOpen");
-            SyncAnimation();
 
             this.lockImage = new(Game, Atlas.GetImage($"{StaticName}Lock"));
-
-            PropState = PropState.Locked;
         }
 
         #region Private members
@@ -149,7 +163,7 @@ namespace Remizione
         {
             if (TargetRoom != null)
             {
-                Vector2 pos = Vector2.Zero;
+                var pos = Vector2.Zero;
                 int roomId = 0;
                 if (Room is RideRoom rideRoom)
                     roomId = rideRoom.RoomGraph.Id;
@@ -165,6 +179,9 @@ namespace Remizione
                 BackToHub(rideRoom.HubDoor);
             }
         }
+
+        // Direction
+        public Direction DoorDirection { get; }
 
         // IsOpen
         [ScriptProperty]
@@ -208,6 +225,37 @@ namespace Remizione
         // OpenSound
         [ScriptProperty]
         public Sound? OpenSound { get; set; }
+
+        // Prepare
+        [ScriptMethod]
+        public void Prepare()
+        {
+            Sprite.ClearAnimations();
+
+            string prefix;
+
+            // Hub, uses common room style
+            if (Room is not RideRoom rideRoom || TargetRoom?.Config is not RoomConfig config)
+                prefix = $"{nameof(CommonRoom)}";
+
+            // Side rooms uses its own style
+            else if (rideRoom.RoomGraph.IsSide)
+                prefix = $"{rideRoom.Config.Name}";
+
+            // Root rooms uses target room style
+            else
+                prefix = $"{config.Name}";
+
+            prefix = $"{prefix}Door{DoorDirection}";
+
+            var animation = AddAnimation("Closed");
+            animation.AddFrame(prefix + animation.Name, 1000);
+
+            animation = AddAnimation("Open");
+            animation.AddFrame(prefix + animation.Name, 1000);
+
+            SyncAnimation();
+        }
 
         // SwitchStateCooldown
         public int SwitchStateCooldown { get; set; }

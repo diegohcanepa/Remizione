@@ -2,7 +2,7 @@
   "$schema": "./RoomData.schema.json",
   "data": [
     {
-      "name": "BlueStoneRoom",
+      "name": "CommonRoom",
       "unlocked": true,
       "loot": [
         [

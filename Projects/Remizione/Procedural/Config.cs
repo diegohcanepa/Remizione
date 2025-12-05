@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using SharpDX.Direct3D9;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
@@ -11,6 +12,8 @@ namespace Remizione
     /// </summary>
     public abstract class Config
     {
+        private static Dictionary<string, Config> configs = [];
+
         // Constructor
         protected Config(JsonElement element)
         {
@@ -41,12 +44,26 @@ namespace Remizione
             LootTable = ConfigHelper.GetLootTable(element);
 
             // Pools
-            ConfigHelper.GetTags(element, "pools");
+            Pools = ConfigHelper.GetTags(element, "pools");
 
             // Unlocked
             if (element.TryGetProperty("unlocked", out JsonElement unlockedElement))
                 Unlocked = unlockedElement.GetBoolean();
         }
+
+        #region Protected members
+
+        // ValidateNames
+        protected void ValidateNames(string properyName, IList<string> names)
+        {
+            for (var i = 0; i < names.Count; i++)
+            {
+                if (!configs.ContainsKey(names[i]))
+                    throw new InvalidOperationException($"'{names[i]}' listed in [{Name}.{properyName}] does not exist.");
+            }
+        }
+
+        #endregion
 
         // LootTable
         public ChanceTable LootTable { get; }
@@ -146,6 +163,20 @@ namespace Remizione
 
         // Unlocked
         public bool Unlocked { get; }
+
+        // Validate
+        public virtual void Validate()
+        {
+        }
+
+        // ValidateAllConfigurations
+        public static void ValidateAllConfigurations()
+        {
+            foreach (var config in configs.Values)
+            {
+                config.Validate();
+            }
+        }
 
         // Weight
         public float Weight { get; }

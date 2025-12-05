@@ -27,13 +27,13 @@ namespace Remizione
                 entryRooms.Add(entryRoom);
             }
 
-            return new RunGraph(session, entryRooms, random, settings.Pools, settings.Tags);
+            return new RunGraph(session, entryRooms, random, settings.Pools);
         }
 
         #region Private members
 
-        // CreateRoom
-        private static RoomGraph CreateRoom(int pathIndex, bool isRoot)
+        // CreateRoomGraph
+        private static RoomGraph CreateRoomGraph(int pathIndex, bool isRoot)
         {
             roomId++;
             var result = new RoomGraph(roomId, isRoot, pathIndex);
@@ -43,13 +43,13 @@ namespace Remizione
         // GeneratePath
         private static RoomGraph GeneratePath(int pathIndex, int length, RunGraphGeneratorSettings settings)
         {
-            RoomGraph first = CreateRoom(pathIndex, true);
+            RoomGraph first = CreateRoomGraph(pathIndex, true);
             RoomGraph prev = first;
 
             // columna principal
             for (int i = 1; i < length; i++)
             {
-                var next = CreateRoom(pathIndex, false);
+                var next = CreateRoomGraph(pathIndex, false);
                 prev.Up = next;
                 next.Down = prev;
                 prev = next;
@@ -71,7 +71,7 @@ namespace Remizione
                     {
                         if (cur.Left == null)
                         {
-                            var side = CreateRoom(pathIndex, false);
+                            var side = CreateRoomGraph(pathIndex, false);
                             cur.Left = side;
                             side.Right = cur;
                             countForPath++;
@@ -83,7 +83,7 @@ namespace Remizione
                     {
                         if (cur.Right == null)
                         {
-                            var side = CreateRoom(pathIndex, false);
+                            var side = CreateRoomGraph(pathIndex, false);
                             cur.Right = side;
                             side.Left = cur;
                             countForPath++;

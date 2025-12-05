@@ -5,10 +5,10 @@ namespace Remizione
     /// <summary>
     /// BlueStoneRoom
     /// </summary>
-    public sealed class BlueStoneRoom : RideRoom
+    public sealed class CommonRoom : RideRoom
     {
         // Constructor
-        public BlueStoneRoom(GameSession session, RoomGraph graph)
+        public CommonRoom(GameSession session, RoomGraph graph)
             : base(session, graph)
         {
             // Walk area    
@@ -28,10 +28,10 @@ namespace Remizione
             AddPlaceholder("7", 1, false, "64,4;79,4;79,19;64,19", "wall");
 
             // Doors
-            DoorUpPosition = new Vector2(126, 41);
-            DoorLeftPosition = new Vector2(21, 80);
-            DoorRightPosition = new Vector2(220, 80);
-            DoorDownPosition = new Vector2(152, 145);
+            DoorAnchorUp = new Vector2(126, 41);
+            DoorAnchorLeft = new Vector2(21, 80);
+            DoorAnchorRight = new Vector2(220, 80);
+            DoorAnchorDown = new Vector2(152, 145);
         }
     }
 }

@@ -62,6 +62,9 @@ namespace Remizione
     // LightState
     public enum LightState { Off, On, TurningOn, TurningOff }
 
+    // LockType
+    public enum LockType { None, Silver, Gold }
+
     // LogVerb
     public enum LogVerb { Lost, PickedUp, ItemRequired }
 
@@ -96,11 +99,8 @@ namespace Remizione
     // RenderLayer
     public enum RenderLayer { BehindBackground, Background, OverBackground, Default, Foreground, ForegroundNoLight }
 
-    // RoomSize
-    public enum RoomSize { Small, Medium }
-
-    // RunPhase
-    public enum RunPhase { None, Start, Mid, End }
+    // RoomPlacement
+    public enum RoomPlacement { Any, Left, Right, Middle, MiddleOrLeft, MiddleOrRight }
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }

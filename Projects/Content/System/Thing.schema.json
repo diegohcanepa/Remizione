@@ -9,6 +9,18 @@
     {
       "type": "object",
       "properties": {
+        "interactionGoal": {
+          "type": "integer",
+          "default": 0,
+          "minimum": 0,
+          "description": "Objetivo de interacciones para esta configuración."
+        },
+        "interactionGoalReward": {
+          "type": "string",
+          "default": 0,
+          "description": "Lista elementos que desbloquea el interaction goal (items, rooms, actors, props).",
+          "minimum": 0
+        },
         "killGoal": {
           "type": "integer",
           "default": 0,
@@ -18,7 +30,7 @@
         "killGoalReward": {
           "type": "string",
           "default": 0,
-          "description": "Nombre del MetaItem que se otorga como recompensa al completar el objetivo de muertes (debe ser un MetaItem válido).",
+          "description": "Lista elementos que desbloquea el kill goal (items, rooms, actors, props).",
           "minimum": 0
         },
         "maxPerRoom": {

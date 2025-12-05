@@ -14,27 +14,27 @@
 
         #region Private members
 
-        // LinkDoors
-        private void LinkDoors()
+        // LinkPathDoors
+        private void LinkPathDoors()
         {
-            var prefix = $"{nameof(RideDoor)}Up*";
+            var prefix = $"{nameof(RideDoor)}Up*Hub*";
 
             // Left door    
-            if (Children.Find($"{prefix}Left") is RideDoor leftDoor)
+            if (Children.Find($"{prefix}1") is RideDoor leftDoor)
             {
                 leftDoor.TargetRoom = RunManager.EntryRooms[0];
                 RunManager.EntryRooms[0].HubDoor = leftDoor;
             }
 
             // Middle door    
-            if (Children.Find($"{prefix}Middle") is RideDoor middleDoor)
+            if (Children.Find($"{prefix}2") is RideDoor middleDoor)
             {
                 middleDoor.TargetRoom = RunManager.EntryRooms[1];
                 RunManager.EntryRooms[1].HubDoor = middleDoor;
             }
 
             // Right door    
-            if (Children.Find($"{prefix}Right") is RideDoor rightDoor)
+            if (Children.Find($"{prefix}3") is RideDoor rightDoor)
             {
                 rightDoor.TargetRoom = RunManager.EntryRooms[2];
                 RunManager.EntryRooms[2].HubDoor = rightDoor;
@@ -49,7 +49,7 @@
         protected override void OnLoad()
         {
             base.OnLoad();
-            LinkDoors();
+            LinkPathDoors();
         }
 
         #endregion

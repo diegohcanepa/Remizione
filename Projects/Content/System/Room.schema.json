@@ -25,9 +25,15 @@
 					"type": "string",
 					"description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
 				},
-				"propAllowPools": {
+				"lockType": {
 					"type": "string",
-					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
+					"default": "None",
+					"enum": [
+						"None",
+						"Silver",
+						"Gold"
+					],
+					"description": "Tipo de lock."
 				},
 				"maxEnemies": {
 					"type": "integer",
@@ -39,6 +45,23 @@
 					"minimum": -1,
 					"description": "Número máximo de veces que este elemento puede aparecer por 'run'."
 				},
+				"placement": {
+					"type": "string",
+					"enum": [
+						"Any",
+						"Left",
+						"Right",
+						"Middle",
+						"MiddleOrLeft",
+						"MiddleOrRight"
+					],
+					"default": "Any",
+					"description": "Lugares donde puede ser spawneado el room."
+				},
+				"propAllowPools": {
+					"type": "string",
+					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
+				},
 				"propAllowTags": {
 					"type": "string",
 					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
@@ -49,6 +72,16 @@
 				},
 				"propDenyTags": {
 					"type": "string",
+					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
+				},
+				"sideConstraint": {
+					"type": "string",
+					"enum": [
+						"None",
+						"Left",
+						"Right"
+					],
+					"default": "None",
 					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
 				}
 			}
