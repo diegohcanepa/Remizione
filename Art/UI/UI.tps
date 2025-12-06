@@ -320,6 +320,7 @@
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryLeftHandContent.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryRightHand.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryRightHandContent.png</key>
+            <key type="filename">UI-assets/EdmundIcon.png</key>
             <key type="filename">UIIcons-assets/HeartHalfIconWithShadow.png</key>
             <key type="filename">UIIcons-assets/HeartIconWithShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -497,6 +498,24 @@
                 <rect>2,2,3,3</rect>
                 <key>scale9Paddings</key>
                 <rect>2,2,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UI-assets/BertaIcon.png</key>
+            <key type="filename">UIIcons-assets/HeartEmptyIcon.png</key>
+            <key type="filename">UIIcons-assets/HeartHalfIcon.png</key>
+            <key type="filename">UIIcons-assets/HeartIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,6,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,6,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -743,23 +762,6 @@
                 <rect>0,3,1,5</rect>
                 <key>scale9Paddings</key>
                 <rect>0,3,1,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UIIcons-assets/HeartEmptyIcon.png</key>
-            <key type="filename">UIIcons-assets/HeartHalfIcon.png</key>
-            <key type="filename">UIIcons-assets/HeartIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,6,5</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,6,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

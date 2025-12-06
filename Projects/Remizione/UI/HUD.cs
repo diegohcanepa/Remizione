@@ -32,6 +32,7 @@ namespace Remizione
             this.healthMeter = new(session.Game);
             this.Log = new(Game);
             this.Message = new(Game);
+            this.PlayerSelector = new(session);
             this.TargetMeter = new(Game);
 
             // Left hand slot
@@ -57,6 +58,12 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            if (session.GameplayMode == GameplayMode.Adventure)
+            {
+                PlayerSelector.Draw(gameTime);
+                return;
+            }
+
             if (session.IsCurrentScene)
             {
                 ticketMeter.Draw(gameTime);
@@ -101,8 +108,11 @@ namespace Remizione
             if (session.IsAwaiting)
                 return HandleInputResult.Unhandled;
 
-            if (session.IsConsoleVisible || session.GameplayMode == GameplayMode.Adventure)
+            if (session.IsConsoleVisible)
                 return HandleInputResult.Unhandled;
+
+            if (session.GameplayMode == GameplayMode.Adventure)
+                return PlayerSelector.HandleInput(gameTime);
 
             if (leftHandSlot.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
@@ -122,10 +132,14 @@ namespace Remizione
         // Message
         public HUDMessage Message { get; }
 
+        // PlayerSelector
+        public UIPlayerSelector PlayerSelector { get; }
+
         // Reset
         public void Reset()
         {
             healthMeter.Actor = session.Player;
+            PlayerSelector.Invalidate();
         }
 
         // TargetMeter

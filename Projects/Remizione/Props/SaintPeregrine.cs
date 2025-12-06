@@ -9,22 +9,46 @@ namespace Remizione
     public sealed class SaintPeregrine : Prop
     {
         private readonly ImageSprite eyes;
+        private int unlockCooldown;
 
         // Constructor
         public SaintPeregrine(GameSession session, string name)
             : base(session, name)
         {
             this.Atlas = Atlases.Environment;
+            this.HighlightInteraction = false;
             this.HitEffect = HitEffect.Shake;
             this.HitTestPolygon = TestPolygon.Hotspot;
-            PropState = PropState.Locked;
+            this.PropState = PropState.Locked;
 
-            this.eyes = new ImageSprite(Game, Atlas?.GetImage($"{StaticName}Eyes"))
-            {
-            };
+            this.eyes = new ImageSprite(Game, Atlas?.GetImage($"{StaticName}Eyes"));
 
             eyes.Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, 1, .7f, 70, -1);
+
+            SetStateHandler(PropState.Locked, Lock);
+            SetStateHandler(PropState.Unlocked, Unlock);
+            
+            InitializeState(PropState.Locked);
         }
+
+        #region Private members
+
+        // Lock
+        private bool Lock()
+        {
+            AnimationPlayer.Play(AnimationNames.Locked, false);
+            return true;
+        }
+
+        // Unlock
+        private bool Unlock()
+        {
+            unlockCooldown = 500;
+            return true;
+        }
+
+        #endregion
+
 
         #region Protected members
 
@@ -37,19 +61,6 @@ namespace Remizione
                 eyes.Draw(gameTime);
         }
 
-        /*
-        // OnPropStateChanged
-        protected override void OnPropStateChanged(PropState previousState)
-        {
-            AnimationPlayer.Play(PropState == PropState.Locked ? AnimationNames.Locked : AnimationNames.Unlocked, false);
-
-            AllowInteraction = PropState == PropState.Locked;
-
-            if (LoadState != LoadState.Loaded)
-                return;
-        }
-        */
-
         // OnTransform
         protected override void OnTransform(TransformChange change)
         {
@@ -61,7 +72,20 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+
             eyes.Update(gameTime);
+
+            if (unlockCooldown > 0)
+            {
+                unlockCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+                if (unlockCooldown <= 0)
+                {
+                    unlockCooldown = 0;
+                    PlaySound(SoundNames.SaintPeregrineArm);
+                    AnimationPlayer.Play(AnimationNames.Unlocked, false);
+                }
+            }
+
         }
 
         #endregion

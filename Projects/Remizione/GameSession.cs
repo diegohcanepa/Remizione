@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Remizione.Scripting;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 
@@ -25,6 +26,7 @@ namespace Remizione
         private readonly UIInteractPrompt interactPrompt;
         private readonly InventoryScene inventoryScene;
         private Vector2? playerPosition;
+        private readonly List<Actor> players = [];
         private readonly RoomEditor? roomEditor;
         private readonly List<GameThing> staticThings = [];
         private readonly Dictionary<string, GameThing> staticThingsDict = [];
@@ -39,6 +41,7 @@ namespace Remizione
             : base(game, new RemizionePersistenceModel(), ContentManagerExtension.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
+            this.Players = new(players);
             this.Inventory = new(this);
             this.Environment = new Environment(this);
             this.HUD = new HUD(this);
@@ -195,7 +198,9 @@ namespace Remizione
         {
             base.OnDraw(gameTime);
 
-            if (GameplayMode == GameplayMode.Action && IsHUDVisible && IsCurrentScene)
+            if (GameplayMode == GameplayMode.Adventure)
+                HUD.Draw(gameTime);
+            else if (IsHUDVisible && IsCurrentScene)
                 HUD.Draw(gameTime);
 
             if (!IsAwaiting)
@@ -350,6 +355,9 @@ namespace Remizione
                         this.friendlyItems[thing.StaticName] = metaItems.ToArray();
                 }
             }
+
+            AddPlayer("Edmund");
+            AddPlayer("Berta");
         }
 
         // OnUpdate
@@ -417,6 +425,23 @@ namespace Remizione
         }
 
         #endregion
+
+        // AddPlayer
+        public void AddPlayer(string actorName)
+        {
+            if (GetEntity<Actor>(actorName) is Actor actor)
+                AddPlayer(actor);
+        }
+
+        // AddPlayer
+        public void AddPlayer(Actor actor)
+        {
+            if (!players.Contains(actor))
+            {
+                players.Add(actor);
+                HUD.PlayerSelector.Invalidate();
+            }
+        }
 
         // BeginRun
         [ScriptMethod]
@@ -578,13 +603,24 @@ namespace Remizione
                 {
                     field = value;
                     HUD.Reset();
+                    if (value != null)
+                        Camera.FollowTarget(value);
                 }
             }
         }
 
+        // Players
+        public ReadOnlyCollection<Actor> Players { get; }
+
         // PreviousRoom
         [ScriptProperty]
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
+
+        // RemovePlayer
+        public void RemovePlayer(Actor actor)
+        {
+            players.Remove(actor);
+        }
 
         // RideDoor
         [ScriptProperty]

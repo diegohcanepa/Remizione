@@ -57,5 +57,8 @@ namespace Remizione
         internal static readonly InputBinding SelectLeft = InputManager.AddBinding(nameof(SelectLeft), Buttons.DPadLeft, Keys.Left);
         internal static readonly InputBinding SelectRight = InputManager.AddBinding(nameof(SelectRight), Buttons.DPadRight, Keys.Right);
         internal static readonly InputBinding SelectUp = InputManager.AddBinding(nameof(SelectUp), Buttons.DPadUp, Keys.Up);
+
+        internal static readonly InputBinding NextPlayer = InputManager.AddBinding(nameof(NextPlayer), Buttons.RightShoulder, Keys.Tab);
+        internal static readonly InputBinding PreviousPlayer = InputManager.AddBinding(nameof(PreviousPlayer), Buttons.LeftShoulder, ModifiersKey.Shift, Keys.Tab);
     }
 }

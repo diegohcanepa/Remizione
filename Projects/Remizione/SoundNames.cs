@@ -27,6 +27,7 @@
         internal const string PowerRestored = nameof(PowerRestored);
         internal const string Redemption = nameof(Redemption);
         internal const string SaintPeregrine = nameof(SaintPeregrine);
+        internal const string SaintPeregrineArm = nameof(SaintPeregrineArm);
         internal const string ShockZap = nameof(ShockZap);
         internal const string SpearTrap = nameof(SpearTrap);
         internal const string TestSkillFail = nameof(TestSkillFail);
@@ -39,6 +40,7 @@
         internal const string UIPrompt = nameof(UIPrompt);
         internal const string UISelectA = nameof(UISelectA);
         internal const string UISelectB = nameof(UISelectB);
+        internal const string UISelectPlayer = nameof(UISelectPlayer);
         internal const string WoodDebris = nameof(WoodDebris);
     }
 }

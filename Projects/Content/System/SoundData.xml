@@ -85,6 +85,7 @@
 	<FX Name="UIPrompt" MaxInstances="4" Volume=".1" />
 	<FX Name="UISelectA" MaxInstances="4" />
 	<FX Name="UISelectB" MaxInstances="4" />
+	<FX Name="UISelectPlayer" MaxInstances="4" />
 	<FX Name="WoodDebris" MaxInstances="4" Sounds="1..2" />
 	<FX Name="WhooshA" MaxInstances="6" />
 	<FX Name="ZapLoop" />

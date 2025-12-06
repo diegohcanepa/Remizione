@@ -21,7 +21,7 @@ namespace Remizione
             this.slot = new ImageSprite(Game, Atlases.UI.TicketSlot)
             {
                 PivotOrigin = RectanglePoint.Top,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 206, 112)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 205, 111)
             };
 
             // Icon
@@ -36,7 +36,7 @@ namespace Remizione
             this.score = new UIScore(game, ColorPalette.Text.Default, ScaleInfo.Text.Large, false)
             {
                 PivotOrigin = RectanglePoint.Top,
-                Position = icon.BoundingBox.GetPoint(RectanglePoint.Bottom)
+                Position = icon.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1)
             };
         }
 
