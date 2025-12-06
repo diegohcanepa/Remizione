@@ -66,7 +66,7 @@ namespace Remizione
 
             for (var i = 0; i < hearts.Length; i++)
             {
-                hearts[i].Position = new(position.X + i * hearts[i].BoundingBox.Width, position.Y);
+                hearts[i].Position = new(position.X + (i * hearts[i].BoundingBox.Width), position.Y);
             }
         }
 

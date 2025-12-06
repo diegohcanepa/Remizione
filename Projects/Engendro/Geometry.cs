@@ -14,23 +14,23 @@ namespace Engendro
         {
             float dx = w.X - v.X;
             float dy = w.Y - v.Y;
-            float l2 = dx * dx + dy * dy;
+            float l2 = (dx * dx) + (dy * dy);
 
             if (l2 == 0)
-                return (p.X - v.X) * (p.X - v.X) + (p.Y - v.Y) * (p.Y - v.Y);
+                return ((p.X - v.X) * (p.X - v.X)) + ((p.Y - v.Y) * (p.Y - v.Y));
 
-            float t = ((p.X - v.X) * dx + (p.Y - v.Y) * dy) / l2;
+            float t = (((p.X - v.X) * dx) + ((p.Y - v.Y) * dy)) / l2;
 
             if (t < 0)
-                return (p.X - v.X) * (p.X - v.X) + (p.Y - v.Y) * (p.Y - v.Y);
+                return ((p.X - v.X) * (p.X - v.X)) + ((p.Y - v.Y) * (p.Y - v.Y));
 
             if (t > 1)
-                return (p.X - w.X) * (p.X - w.X) + (p.Y - w.Y) * (p.Y - w.Y);
+                return ((p.X - w.X) * (p.X - w.X)) + ((p.Y - w.Y) * (p.Y - w.Y));
 
-            float projX = v.X + t * dx;
-            float projY = v.Y + t * dy;
+            float projX = v.X + (t * dx);
+            float projY = v.Y + (t * dy);
 
-            return (p.X - projX) * (p.X - projX) + (p.Y - projY) * (p.Y - projY);
+            return ((p.X - projX) * (p.X - projX)) + ((p.Y - projY) * (p.Y - projY));
         }
 
         // DistanceToSegment (Optimized by ChatGPT)
@@ -44,7 +44,7 @@ namespace Engendro
         {
             var ab = b - a;
             var bc = c - b;
-            return Math.Abs(ab.X * bc.Y - ab.Y * bc.X) < epsilon;
+            return Math.Abs((ab.X * bc.Y) - (ab.Y * bc.X)) < epsilon;
         }
 
         // LineSegmentsCross

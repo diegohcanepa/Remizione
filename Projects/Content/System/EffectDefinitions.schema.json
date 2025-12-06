@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "EffectDefinitions.schema.json",
+  "title": "EffectDefinition Data File (Validado con Enums)",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "description": "Una lista de objetos EffectDefinition.",
+      "items": {
+        "$ref": "#/definitions/EffectDefinition"
+      }
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "definitions": {
+    "EffectDefinition": {
+      "type": "object",
+      "description": "Definición de las propiedades de un MetaItem.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "El nombre único del item. (Requerido)"
+        },
+        "criticalChance": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "La probabilidad de golpe crítico (valor por defecto: 1)."
+        },
+        "damage": {
+          "type": "string",
+          "description": "Expresión de dado para el dado (ej: '1d6+2')."
+        },
+        "damageType": {
+          "type": "string",
+          "description": "El tipo de dado del item (Enum DamageType).",
+          "enum": [ "None", "Physical", "Acid", "Explosive", "Fire", "Ice", "Lightning", "Poison" ]
+        },
+        "hp": {
+          "type": "string",
+          "description": "Expresión de dado para los puntos de vida que otorga (ej: '1d4')."
+        },
+        "impactWord": {
+          "type": "string",
+          "description": "La palabra de impacto asociada (Enum ImpactWordName).",
+          "enum": [ "None", "AghGreen", "AghRed", "BoomPurple", "BoomRed", "BangBlue", "BangRed", "CrackBlue", "CrackYellow", "CuackPurple", "CuackYellow", "Kapow", "KapowStrong", "OuchBlue", "OuchGreen", "PlopRed", "PlopYellow", "SlapBlue", "SlapRed", "Zap" ]
+        },
+        "knockback": {
+          "type": "string",
+          "description": "Fuerza de empuje (Vector2) representada como 'X, Y' (ej: '100, 50')."
+        },
+        "sound": {
+          "type": "string",
+          "description": "Nombre del sonido principal al usar el item (se busca en Sound.FindNotNull)."
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

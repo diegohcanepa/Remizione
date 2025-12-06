@@ -30,8 +30,7 @@
 					"default": "None",
 					"enum": [
 						"None",
-						"Silver",
-						"Gold"
+						"Padlock"
 					],
 					"description": "Tipo de lock."
 				},

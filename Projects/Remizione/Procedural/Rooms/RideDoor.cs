@@ -21,16 +21,16 @@ namespace Remizione
             : base(session, name)
         {
             if (name.StartsWith("RideDoorUp", StringComparison.OrdinalIgnoreCase))
-                DoorDirection = Adberration.Direction.Up;
+                DoorDirection = RideDoorDirection.Up;
 
             else if (name.StartsWith("RideDoorDown", StringComparison.OrdinalIgnoreCase))
-                DoorDirection = Adberration.Direction.Down;
+                DoorDirection = RideDoorDirection.Down;
 
             else if (name.StartsWith("RideDoorLeft", StringComparison.OrdinalIgnoreCase))
-                DoorDirection = Adberration.Direction.Left;
+                DoorDirection = RideDoorDirection.Left;
 
             else if (name.StartsWith("RideDoorRight", StringComparison.OrdinalIgnoreCase))
-                DoorDirection = Adberration.Direction.Right;
+                DoorDirection = RideDoorDirection.Right;
 
             else
                 throw new InvalidOperationException("Cannot infere door direction from entity name.");
@@ -42,6 +42,13 @@ namespace Remizione
             OpenSound = Sound.Find("DoorOpen");
 
             this.lockImage = new(Game, Atlas.GetImage($"{StaticName}Lock"));
+
+            SetStateHandler(PropState.Closed, Close);
+            SetStateHandler(PropState.Locked, Lock);
+            SetStateHandler(PropState.Open, Open);
+            SetStateHandler(PropState.Unlocked, Unlock);
+
+            InitializeState(PropState.Closed);
         }
 
         #region Private members
@@ -53,6 +60,23 @@ namespace Remizione
                 return;
 
             ConnectCore(hubRoom, hubDoor.BoundingBox.GetPoint(RectanglePoint.Bottom));
+        }
+
+        // Close
+        private bool Close()
+        {
+            if (CloseSound != null)
+                PlaySound(CloseSound);
+
+            SyncAnimation();
+
+            scaleTween.Start(TweenStyle.QuadraticInOut, Scale, new Vector2(1f, .96f), 100, 2);
+            xTween.Start(TweenStyle.QuadraticInOut, X, X - 1, 50, 4);
+
+            Tweens.ScaleTween = scaleTween;
+            Tweens.XTween = xTween;
+
+            return true;
         }
 
         // ConnectCore
@@ -69,13 +93,56 @@ namespace Remizione
             Session.EnterRoom(targetRoom);
         }
 
+        // Lock
+        private bool Lock()
+        {
+            // Down doors cannot be locked
+            return DoorDirection != RideDoorDirection.Down;
+        }
+
+        // OnPropStateChanged
+        protected override void OnPropStateChanged()
+        {
+            base.OnPropStateChanged();
+            SyncAnimation();
+        }
+
+        // Open
+        private bool Open()
+        {
+            if (PropState == PropState.Locked)
+                return false;
+
+            if (OpenSound != null)
+                PlaySound(OpenSound);
+
+            SyncAnimation();
+
+            scaleTween.Start(TweenStyle.QuadraticInOut, Scale, new Vector2(1f, .96f), 100, 2);
+            xTween.Start(TweenStyle.QuadraticInOut, X, X - 1, 50, 4);
+
+            Tweens.ScaleTween = scaleTween;
+            Tweens.XTween = xTween;
+
+            return true;
+        }
+
         // SyncAnimation
         private void SyncAnimation()
         {
-            if (IsOpen)
+            if (PropState == PropState.Open)
                 Sprite.Player.Play("Open");
             else
                 Sprite.Player.Play("Closed");
+        }
+
+        // Unlock
+        private bool Unlock()
+        {
+            SwitchStateCooldown = 500;
+            Sound.Play(SoundNames.LockOpen);
+
+            return true;
         }
 
         #endregion
@@ -99,14 +166,6 @@ namespace Remizione
                 lockImage.Draw(gameTime);
         }
 
-        // OnPropStateChanged
-        protected override void OnPropStateChanged(PropState previousState)
-        {
-            base.OnPropStateChanged(previousState);
-            if (previousState == PropState.Locked && PropState == PropState.Unlocked)
-                PlaySound(SoundNames.LockOpen);
-        }
-
         // OnTransform
         protected override void OnTransform(TransformChange change)
         {
@@ -122,36 +181,23 @@ namespace Remizione
             if (SwitchStateCooldown > 0)
             {
                 SwitchStateCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+                
                 if (SwitchStateCooldown <= 0)
                 {
                     SwitchStateCooldown = 0;
-                    if (IsOpen)
-                        Close();
-                    else
-                        Open();
+
+                    if (PropState != PropState.Locked)
+                    {
+                        if (PropState == PropState.Open)
+                            PropState = PropState.Closed;
+                        else
+                            PropState = PropState.Open;
+                    }
                 }
             }
         }
 
         #endregion
-
-        // Close
-        [ScriptMethod]
-        public void Close()
-        {
-            if (CloseSound != null)
-                PlaySound(CloseSound);
-
-            SyncAnimation();
-
-            scaleTween.Start(TweenStyle.QuadraticInOut, Scale, new Vector2(1f, .96f), 100, 2);
-            xTween.Start(TweenStyle.QuadraticInOut, X, X - 1, 50, 4);
-
-            Tweens.ScaleTween = scaleTween;
-            Tweens.XTween = xTween;
-
-            IsOpen = false;
-        }
 
         // CloseSound
         [ScriptProperty]
@@ -170,7 +216,7 @@ namespace Remizione
 
                 pos = TargetRoom.GetPlayerPosition(roomId, out RideDoor? door);
                 if (door != null)
-                    door.IsOpen = true;
+                    door.PropState = PropState.Open;
 
                 ConnectCore(TargetRoom, pos);
             }
@@ -181,46 +227,7 @@ namespace Remizione
         }
 
         // Direction
-        public Direction DoorDirection { get; }
-
-        // IsOpen
-        [ScriptProperty]
-        public bool IsOpen
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    if (value && PropState == PropState.Locked)
-                        return;
-
-                    field = value;
-                    SyncAnimation();
-                }
-            }
-        }
-
-        // Open
-        [ScriptMethod]
-        public void Open()
-        {
-            if (PropState == PropState.Locked)
-                return;
-
-            if (OpenSound != null)
-                PlaySound(OpenSound);
-
-            SyncAnimation();
-
-            scaleTween.Start(TweenStyle.QuadraticInOut, Scale, new Vector2(1f, .96f), 100, 2);
-            xTween.Start(TweenStyle.QuadraticInOut, X, X - 1, 50, 4);
-
-            Tweens.ScaleTween = scaleTween;
-            Tweens.XTween = xTween;
-
-            IsOpen = true;
-        }
+        public RideDoorDirection DoorDirection { get; }
 
         // OpenSound
         [ScriptProperty]
@@ -253,8 +260,6 @@ namespace Remizione
 
             animation = AddAnimation("Open");
             animation.AddFrame(prefix + animation.Name, 1000);
-
-            SyncAnimation();
         }
 
         // SwitchStateCooldown

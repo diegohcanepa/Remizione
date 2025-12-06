@@ -26,10 +26,10 @@ namespace Engendro
             DrawRectangle(new Rectangle(rect.X, rect.Y + rect.Height - thickness, rect.Width, thickness), color);
 
             // Left
-            DrawRectangle(new Rectangle(rect.X, rect.Y + thickness, thickness, rect.Height - thickness * 2), color);
+            DrawRectangle(new Rectangle(rect.X, rect.Y + thickness, thickness, rect.Height - (thickness * 2)), color);
 
             // Right
-            DrawRectangle(new Rectangle(rect.X + rect.Width - thickness, rect.Y + thickness, thickness, rect.Height - thickness * 2), color);
+            DrawRectangle(new Rectangle(rect.X + rect.Width - thickness, rect.Y + thickness, thickness, rect.Height - (thickness * 2)), color);
         }
 
         // DrawFrame
@@ -42,10 +42,10 @@ namespace Engendro
             DrawRectangle(new RectangleF(rect.X, rect.Y + rect.Height - thickness, rect.Width, thickness), color);
 
             // Left
-            DrawRectangle(new RectangleF(rect.X, rect.Y + thickness, thickness, rect.Height - thickness * 2), color);
+            DrawRectangle(new RectangleF(rect.X, rect.Y + thickness, thickness, rect.Height - (thickness * 2)), color);
 
             // Right
-            DrawRectangle(new RectangleF(rect.X + rect.Width - thickness, rect.Y + thickness, thickness, rect.Height - thickness * 2), color);
+            DrawRectangle(new RectangleF(rect.X + rect.Width - thickness, rect.Y + thickness, thickness, rect.Height - (thickness * 2)), color);
         }
 
         // DrawRectangle

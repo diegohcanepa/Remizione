@@ -20,12 +20,12 @@ namespace Remizione
         private readonly UIButton buttonConsume;
         private readonly UIButton buttonDiscard;
         private readonly UIButton buttonEquip;
-        private readonly List<ItemCategory> categories = [ItemCategory.None, ItemCategory.LeftHand, ItemCategory.RightHand, ItemCategory.Consumable, ItemCategory.Gadget, ItemCategory.KeyItem];
-        private readonly ImageSprite[] categoryIcons;
+        private readonly List<ItemCategory?> categories = [null, ItemCategory.LeftHand, ItemCategory.RightHand, ItemCategory.Consumable, ItemCategory.Gadget, ItemCategory.KeyItem];
+        private readonly List<ImageSprite> categoryIcons = [];
         private readonly Vector2Tween categoryIconTween = Vector2Tween.Create(TweenStyle.Linear, .8f, .9f, 200, -1);
         private readonly ImageSprite[] categoryMarkers;
         private readonly TextSprite categoryText;
-        private ItemCategory currentCategory;
+        private ItemCategory? currentCategory;
         private readonly ItemGrid grid;
         private readonly ImageSprite gridContainer;
         private readonly UIHPBonus hpBonus;
@@ -45,10 +45,10 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public InventoryScene(Inventory pilgrimSack)
-            : base(pilgrimSack.Session.Game, SceneSettings.PausePreviousScenes)
+        public InventoryScene(Inventory inventory)
+            : base(inventory.Session.Game, SceneSettings.PausePreviousScenes)
         {
-            this.inventory = pilgrimSack;
+            this.inventory = inventory;
 
             // Grid container
             this.gridContainer = new(Game, Atlases.UI.InventoryGridContainer)
@@ -59,7 +59,7 @@ namespace Remizione
 
             // Create grid
             var gridPos = gridContainer.BoundingBox.GetPoint(RectanglePoint.LeftTop, 5, 3);
-            grid = new ItemGrid(pilgrimSack, ItemCategory.None, 4, 3)
+            grid = new ItemGrid(inventory, null, 4, 3)
             {
                 Position = gridPos
             };
@@ -72,14 +72,27 @@ namespace Remizione
             };
 
             // Category icons
-            categoryIcons = new ImageSprite[categories.Count];
-            for (int i = 0; i < categoryIcons.Length; i++)
+            for (int i = 0; i < categories.Count; i++)
             {
-                categoryIcons[i] = new(Game, Atlases.UI.GetImage($"InventoryCategory{categories[i]}"))
+                ImageSprite image;
+                if (categories[i] == null)
                 {
-                    PivotOrigin = RectanglePoint.Center,
-                    Scale = ScaleInfo.UIElement.Medium
-                };
+                    image = new(Game, Atlases.UI.GetImage("InventoryCategoryAll"))
+                    {
+                        PivotOrigin = RectanglePoint.Center,
+                        Scale = ScaleInfo.UIElement.Medium
+                    };
+                }
+                else
+                {
+                    image = new(Game, Atlases.UI.GetImage($"InventoryCategory{categories[i]}"))
+                    {
+                        PivotOrigin = RectanglePoint.Center,
+                        Scale = ScaleInfo.UIElement.Medium
+                    };
+                }
+
+                categoryIcons.Add(image);
             }
 
             // Category markers
@@ -229,7 +242,7 @@ namespace Remizione
         {
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
             {
-                for (var i = 0; i < categoryIcons.Length; i++)
+                for (var i = 0; i < categoryIcons.Count; i++)
                 {
                     if (categoryIcons[i].BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
                     {
@@ -252,7 +265,7 @@ namespace Remizione
         // InvalidateCategory
         private void InvalidateCategory()
         {
-            categoryText.Text = currentCategory == ItemCategory.None ? TextRepository.GetValue("Misc.All") : Localization.GetValue(currentCategory);
+            categoryText.Text = currentCategory is ItemCategory c ? Localization.GetValue(c) : TextRepository.GetValue("Misc.All");
 
             foreach (var category in categories)
             {
@@ -283,15 +296,15 @@ namespace Remizione
                 itemIcon.Image = item.MetaItem.Image;
 
                 // HP
-                if (item.MetaItem.HP != null)
+                if (item.MetaItem.Effect.HP != null)
                 {
                     hpBonus.Position = itemDescription.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 1);
-                    hpBonus.Amount = item.MetaItem.HP.MaximumValue;
+                    hpBonus.Amount = item.MetaItem.Effect.HP.MaximumValue;
                 }
 
                 if (item.MetaItem.Category == ItemCategory.Gadget)
                 {
-                    if (item.IsEquipped == true)
+                    if (item.IsEquipped)
                         buttonEquip.Text = Localization.GetValue(InventoryVerb.TakeOff);
                     else
                         buttonEquip.Text = Localization.GetValue(InventoryVerb.Equip);
@@ -314,15 +327,19 @@ namespace Remizione
             const int spacing = 3;
 
             var iconWidth = categoryIcons[0].BoundingBox.Width;
-            var totalWidth = categoryIcons.Length * iconWidth + (categoryIcons.Length) * spacing;
-            float x = (navigationBar.BoundingBox.GetPoint(RectanglePoint.Top).X - totalWidth / 2) + (iconWidth / 2);
+            var totalWidth = (categoryIcons.Count * iconWidth) + (categoryIcons.Count * spacing);
+            float x = navigationBar.BoundingBox.GetPoint(RectanglePoint.Top).X - (totalWidth / 2) + (iconWidth / 2);
             float y = navigationBar.BoundingBox.GetPoint(RectanglePoint.Top, 0, -7).Y;
 
-            for (var i = 0; i < categoryIcons.Length; i++)
+            for (var i = 0; i < categoryIcons.Count; i++)
             {
-                categoryIcons[i].X = x + i * (iconWidth + spacing);
+                categoryIcons[i].X = x + (i * (iconWidth + spacing));
                 categoryIcons[i].Y = y;
-                categoryMarkers[i].Image = inventory.HasItems(categories[i]) ? Atlases.UI.InventoryCategoryNotEmpty : null;
+
+                if (categories[i] is not ItemCategory itemCategory)
+                    continue;
+
+                categoryMarkers[i].Image = inventory.HasItems(itemCategory) ? Atlases.UI.InventoryCategoryNotEmpty : null;
                 categoryMarkers[i].Position = categoryIcons[i].BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, 1.5f);
             }
         }
@@ -444,7 +461,7 @@ namespace Remizione
 
             Game.SpriteBatch.End();
 
-            for (int i = 0; i < categoryIcons.Length; i++)
+            for (int i = 0; i < categoryIcons.Count; i++)
             {
                 Effect? shader = null;
                 if (currentCategory != categories[i] && categoryIcons[i].BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
@@ -546,7 +563,7 @@ namespace Remizione
 
             Sound.Play(SoundNames.UIInventoryOpen);
 
-            currentCategory = ItemCategory.None;
+            currentCategory = null;
 
             lastKnownInput = InputMethod.None;
 
@@ -575,7 +592,7 @@ namespace Remizione
             if (lastKnownInput != InputManager.DefaultPlayer.LastInputMethod)
                 lastKnownInput = InputManager.DefaultPlayer.LastInputMethod;
 
-            for (var i = 0; i < categoryIcons.Length; i++)
+            for (var i = 0; i < categoryIcons.Count; i++)
             {
                 categoryIcons[i].Update(gameTime);
             }

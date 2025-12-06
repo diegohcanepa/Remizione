@@ -229,7 +229,7 @@ namespace Remizione
             Position += velocity * dt;
 
             // Rotation based on horizontal speed (ω = v/r)
-            Rotation += (velocity.X / radius) * dt;
+            Rotation += velocity.X / radius * dt;
 
             // Floor collision
             UpdateFloorCollision();

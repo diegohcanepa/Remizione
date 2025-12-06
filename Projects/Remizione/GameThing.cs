@@ -581,13 +581,13 @@ namespace Remizione
                 if (value != field)
                 {
                     field = value;
-                    ContactDamageMetaItem = MetaItem.Find(field.ToString() + "Damage");
+                    ContactDamageEffect = EffectDefinition.Find(field.ToString() + "Damage");
                 }
             }
         }
 
         // ContactDamageMetaItem
-        public MetaItem? ContactDamageMetaItem { get; private set; }
+        public EffectDefinition? ContactDamageEffect { get; private set; }
 
         // Die
         [ScriptMethod]
@@ -1123,12 +1123,16 @@ namespace Remizione
         public new GameSession Session { get; }
 
         // TakeDamage
-        public void TakeDamage(GameThing attacker, int amount, DamageType damageType, bool critical, Vector2 knockback, ImpactWordName impactWord)
+        public void TakeDamage(GameThing attacker, EffectDefinition effect)
         {
+            if (effect.Damage == null)
+                return;
+
+            var amount = effect.Damage.Roll();
             if (amount <= 0 || !CanTakeDamage(attacker))
                 return;
 
-            knockback = PreventKnockback ? Vector2.Zero : knockback;
+            var knockback = PreventKnockback ? Vector2.Zero : effect.Knockback;
 
             if (HurtSound != null)
                 PlaySound(HurtSound);
@@ -1143,14 +1147,15 @@ namespace Remizione
             }
 
             // Impact word
-            if (MaxHP > 0 && impactWord != ImpactWordName.None && GetImpactWordPosition() is Vector2 wordPos)
-                Session.ImpactWordPool.Get()?.Show(impactWord, wordPos);
+            if (MaxHP > 0 && effect.ImpactWord != ImpactWordName.None && GetImpactWordPosition() is Vector2 wordPos)
+                Session.ImpactWordPool.Get()?.Show(effect.ImpactWord, wordPos);
 
             if (MaxHP == 0)
                 return;
 
-            amount = (int)(amount * GetResistanceModifier(damageType));
+            var critical = DiceExpression.Dice100.Roll() <= effect.CriticalChance;
 
+            amount = (int)(amount * GetResistanceModifier(effect.DamageType));
             if (amount > HP)
                 amount = HP;
 
@@ -1191,7 +1196,7 @@ namespace Remizione
                     blinker.Stop();
 
                 if (amount > 0)
-                    Session.ObjectPools.FloatingTexts.Get()?.Show(GetFloatingTextPosition(knockback), amount.ToString(CultureInfo.InvariantCulture), critical);
+                    Session.ObjectPools.FloatingTexts.Get()?.ShowDamage(GetFloatingTextPosition(knockback), amount.ToString(CultureInfo.InvariantCulture), critical);
 
                 if (Session.Player == attacker)
                     Session.HUD.TargetMeter.Target = this;
@@ -1200,7 +1205,7 @@ namespace Remizione
                     Session.HUD.TargetMeter.Target = attacker;
 
                 if (amount > 0)
-                    OnTakeDamage(attacker, amount, damageType, knockback);
+                    OnTakeDamage(attacker, amount, effect.DamageType, effect.Knockback);
             }
         }
 

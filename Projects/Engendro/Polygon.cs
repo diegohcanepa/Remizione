@@ -36,10 +36,10 @@ namespace Engendro
             for (int i = 0; i < vertices.Length; i++)
             {
                 if (originX.HasValue)
-                    vertices[i].X = 2 * originX.Value - vertices[i].X;
+                    vertices[i].X = (2 * originX.Value) - vertices[i].X;
 
                 if (originY.HasValue)
-                    vertices[i].Y = 2 * originY.Value - vertices[i].Y;
+                    vertices[i].Y = (2 * originY.Value) - vertices[i].Y;
             }
 
             SetVertices(vertices);

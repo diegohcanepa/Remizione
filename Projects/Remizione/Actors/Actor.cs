@@ -119,12 +119,12 @@ namespace Remizione
             if (!CanTakeDamage(attacker))
                 return;
 
-            if (attacker.ContactDamageMetaItem == null)
+            if (attacker.ContactDamageEffect == null)
                 return;
 
             Stand();
 
-            attacker.ContactDamageMetaItem.ApplyDamage(attacker, this);
+            attacker.ContactDamageEffect.ApplyDamage(attacker, this);
 
             StateMachine.ChangeState(contactDamageState.Name);
         }
@@ -314,6 +314,7 @@ namespace Remizione
                     {
                         ActorSize.Small => Vector2.One,
                         ActorSize.Medium => Vector2.One * 1.25f,
+                        ActorSize.Large => Vector2.One * 2,
                         _ => Vector2.One * 1.5f
                     };
 

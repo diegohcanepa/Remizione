@@ -69,7 +69,7 @@ namespace Remizione
         // ApplyDamage
         public void ApplyDamage(GameThing attacker, GameThing target)
         {
-            if (MetaItem.ApplyDamage(attacker, target))
+            if (MetaItem.Effect.ApplyDamage(attacker, target))
             {
                 if (MetaItem.Durability > 0 && Durability > 0)
                     Durability -= 1;
@@ -145,7 +145,7 @@ namespace Remizione
             string value = string.Empty;
 
             // Health
-            if (property == ItemProperty.Health && MetaItem.HP is DiceExpression exp)
+            if (property == ItemProperty.Health && MetaItem.Effect.HP is DiceExpression exp)
                 value = exp.GetValueRangeAsString();
 
             // Chance
@@ -168,7 +168,7 @@ namespace Remizione
         public bool IsSelected => Inventory.SelectedItem == this;
 
         // Knockback
-        public Vector2 Knockback => MetaItem.Knockback;
+        public Vector2 Knockback => MetaItem.Effect.Knockback;
 
         // MetaItem
         public MetaItem MetaItem { get; }
@@ -205,13 +205,19 @@ namespace Remizione
         }
 
         // Select
-        public void Select() => Inventory.Select(this);
+        public void Select()
+        {
+            Inventory.Select(this);
+        }
 
         // SkillChance
         public int SkillChance => MetaItem.SkillChance;
 
         // ToString
-        public override string ToString() => DisplayText;
+        public override string ToString()
+        {
+            return DisplayText;
+        }
 
         // Update
         public void Update(GameTime gameTime)
@@ -232,8 +238,8 @@ namespace Remizione
         // Use
         public bool Use(GameThing? owner)
         {
-            if (owner != null && MetaItem.HP != null)
-                owner.HP += MetaItem.HP.Roll();
+            if (owner != null && MetaItem.Effect.HP != null)
+                owner.HP += MetaItem.Effect.HP.Roll();
 
             if (!MetaItem.IsPassive && Count > 0)
             {

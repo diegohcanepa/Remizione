@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System.Globalization;
 
 namespace Remizione
 {
@@ -16,7 +17,7 @@ namespace Remizione
         private readonly TextSprite valueText;
 
         // Constructor
-        public UIScore(EngendroGame game, Color textColor, bool progressive = true)
+        public UIScore(EngendroGame game, Color textColor, Vector2 textScale, bool progressive = true)
             : base(game)
         {
             this.Progressive = progressive;
@@ -26,7 +27,7 @@ namespace Remizione
             {
                 Color = textColor,
                 PivotOrigin = RectanglePoint.Top,
-                Scale = ScaleInfo.Text.ExtraLarge,
+                Scale = textScale
             };
 
             this.Value = 0;
@@ -53,7 +54,7 @@ namespace Remizione
                 if (newDeltaScore != deltaScore)
                 {
                     deltaScore = newDeltaScore;
-                    valueText.Text = deltaScore.ToString();
+                    valueText.Text = deltaScore.ToString(CultureInfo.InvariantCulture);
                 }
             }
         }
@@ -106,7 +107,7 @@ namespace Remizione
                         tween.Start(TweenStyle.Linear, field, value, duration);
 
                     field = value;
-                    valueText.Text = field.ToString();
+                    valueText.Text = field.ToString(CultureInfo.InvariantCulture);
 
                     if (Progressive)
                         isInitializing = false;

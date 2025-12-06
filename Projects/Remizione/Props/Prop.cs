@@ -2,6 +2,8 @@
 using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
 
 namespace Remizione
 {
@@ -10,6 +12,8 @@ namespace Remizione
     /// </summary>
     public class Prop : GameThing
     {
+        private readonly Dictionary<PropState, Func<bool>?> handlers = [];
+        private PropState propState;
         private readonly ImageSprite shadow;
 
         #region Constructor
@@ -37,8 +41,20 @@ namespace Remizione
 
         #region Protected members
 
+        // InitializeState
+        protected void InitializeState(PropState initialState)
+        {
+            propState = initialState;
+            OnInitializeState(initialState);
+        }
+
         // OnDrawShadow
         protected override void OnDrawShadow(GameTime gameTime) => shadow.Draw(gameTime);
+
+        // OnInitializeState
+        protected virtual void OnInitializeState(PropState state)
+        {
+        }
 
         // OnLoad
         protected override void OnLoad()
@@ -47,13 +63,8 @@ namespace Remizione
             InvalidateShadowImage();
         }
 
-        // OnPropAmountChanged
-        protected virtual void OnPropAmountChanged()
-        {
-        }
-
         // OnPropStateChanged
-        protected virtual void OnPropStateChanged(PropState previousState)
+        protected virtual void OnPropStateChanged()
         {
         }
 
@@ -64,35 +75,32 @@ namespace Remizione
             shadow?.MatchTransform(Sprite);
         }
 
-        #endregion
-
-        // PropAmount
-        [ScriptProperty]
-        public int PropAmount
+        // SetStateHandler
+        protected void SetStateHandler(PropState s, Func<bool>? handler)
         {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    OnPropAmountChanged();
-                }
-            }
+            handlers[s] = handler;
         }
+
+        #endregion
 
         // PropState
         [ScriptProperty]
         public PropState PropState
         {
-            get;
+            get => propState;
             set
             {
-                if (value != PropState)
+                if (propState == value)
+                    return;
+
+                // Try handler
+                if (handlers.TryGetValue(value, out var handler))
                 {
-                    var previousState = field;
-                    field = value;
-                    OnPropStateChanged(previousState);
+                    if (handler == null || handler())
+                    {
+                        propState = value;
+                        OnPropStateChanged();
+                    }
                 }
             }
         }

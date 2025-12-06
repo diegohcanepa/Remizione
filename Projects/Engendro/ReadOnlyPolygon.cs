@@ -240,7 +240,7 @@ namespace Engendro
             for (int i = 0, j = count - 1; i < count; j = i++)
             {
                 if ((vertices[i].Y > point.Y) != (vertices[j].Y > point.Y) &&
-                    point.X < (vertices[j].X - vertices[i].X) * (point.Y - vertices[i].Y) / (vertices[j].Y - vertices[i].Y) + vertices[i].X)
+                    point.X < ((vertices[j].X - vertices[i].X) * (point.Y - vertices[i].Y) / (vertices[j].Y - vertices[i].Y)) + vertices[i].X)
                 {
                     inside = !inside;
                 }
@@ -291,8 +291,8 @@ namespace Engendro
 
             var u = (((x3 - x1) * (x2 - x1)) + ((y3 - y1) * (y2 - y1))) / (((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)));
 
-            var xu = x1 + u * (x2 - x1);
-            var yu = y1 + u * (y2 - y1);
+            var xu = x1 + (u * (x2 - x1));
+            var yu = y1 + (u * (y2 - y1));
 
             Vector2 lineVector;
             if (u < 0)
@@ -320,7 +320,7 @@ namespace Engendro
 
                 for (int i = 0; i < vertices.Count; i++)
                 {
-                    hash = hash * 31 + vertices[i].GetHashCode();
+                    hash = (hash * 31) + vertices[i].GetHashCode();
                 }
 
                 return hash;

@@ -19,12 +19,15 @@ namespace Remizione
         #region Protected members
 
         // GetAnimationName
-        protected override string GetAnimationName() => MetaItem?.Name ?? string.Empty;
+        protected override string GetAnimationName()
+        {
+            return MetaItem?.Name ?? string.Empty;
+        }
 
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (MetaItem?.Damage == null)
+            if (MetaItem?.Effect.Damage == null)
                 return;
 
             if (!damageTaken && Owner.Room != null && Owner.GetFrameSubArea() != RectangleF.Empty)
@@ -37,15 +40,14 @@ namespace Remizione
 
                     if (target is Prop && target == Owner.InteractiveTarget)
                     {
-                        if (!Owner.Y.IsBetween(target.Position.Y - target.BoundingBox.Height / 2, target.Position.Y))
+                        if (!Owner.Y.IsBetween(target.Position.Y - (target.BoundingBox.Height / 2), target.Position.Y))
                             return;
                     }
 
                     if (target.RuntimeHotspot.BoundingRectangleF.Intersects(Owner.GetFrameSubArea()))
                     {
                         damageTaken = true;
-                        var damageAmount = MetaItem.Damage.Roll();
-                        target.TakeDamage(Owner, damageAmount, MetaItem.DamageType, false, MetaItem.Knockback, MetaItem.ImpactWord);
+                        target.TakeDamage(Owner, MetaItem.Effect);
                     }
                 }
             }

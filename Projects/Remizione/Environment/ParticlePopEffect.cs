@@ -111,8 +111,8 @@ namespace Remizione
             {
                 if (pool.Get() is Particle particle)
                 {
-                    float vx = (float)(random.NextDouble() * 2 - 1) * HorizontalSpeed;
-                    float vy = -(float)(random.NextDouble() * (VerticalSpeed.Delta) + VerticalSpeed.Minimum);
+                    float vx = (float)((random.NextDouble() * 2) - 1) * HorizontalSpeed;
+                    float vy = -(float)((random.NextDouble() * VerticalSpeed.Delta) + VerticalSpeed.Minimum);
 
                     particle.Position = position;
                     particle.Velocity = new Vector2(vx, vy);

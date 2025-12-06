@@ -13,8 +13,8 @@ namespace Engendro
         // AngleBetween
         public static double AngleBetween(this Vector2 vector1, Vector2 vector2)
         {
-            double sin = vector1.X * vector2.Y - vector2.X * vector1.Y;
-            double cos = vector1.X * vector2.X + vector1.Y * vector2.Y;
+            double sin = (vector1.X * vector2.Y) - (vector2.X * vector1.Y);
+            double cos = (vector1.X * vector2.X) + (vector1.Y * vector2.Y);
 
             return Math.Atan2(sin, cos) * (180 / Math.PI);
         }
@@ -40,8 +40,8 @@ namespace Engendro
             var angle = random.NextDouble() * Math.PI * 2;
             var xRadius = RandomHelper.Next(System.Random.Shared, minimumRadius.X, maximumRadius.X);
             var yRadius = RandomHelper.Next(System.Random.Shared, minimumRadius.Y, maximumRadius.Y);
-            var x = origin.X + xRadius * Math.Cos(angle);
-            var y = origin.Y + yRadius * Math.Sin(angle);
+            var x = origin.X + (xRadius * Math.Cos(angle));
+            var y = origin.Y + (yRadius * Math.Sin(angle));
 
             return new Vector2((float)x, (float)y);
         }

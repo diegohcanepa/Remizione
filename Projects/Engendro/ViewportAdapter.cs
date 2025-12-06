@@ -27,7 +27,7 @@ namespace Engendro
 
             this.VirtualWidth = virtualWidth;
             this.VirtualHeight = virtualHeight;
-            this.VirtualAspectRatio = (VirtualWidth / (float)VirtualHeight);
+            this.VirtualAspectRatio = VirtualWidth / (float)VirtualHeight;
 
             SetDisplaySize(virtualWidth, virtualHeight);
         }
@@ -82,13 +82,13 @@ namespace Engendro
         {
             // Figure out the largest area that fits in this resolution at the desired aspect ratio
             var width = DisplayWidth;
-            var height = (int)(width / DisplayAspectRatio + .5f);
+            var height = (int)((width / DisplayAspectRatio) + .5f);
 
             if (height > DisplayHeight)
             {
                 invertScale = true;
                 height = DisplayHeight;
-                width = (int)(height * DisplayAspectRatio + .5f);
+                width = (int)((height * DisplayAspectRatio) + .5f);
             }
             else
             {

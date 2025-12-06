@@ -38,6 +38,7 @@ namespace Remizione
             breakCooldoown = 1000;
         }
 
+        /*
         // OnPropStateChanged
         protected override void OnPropStateChanged(PropState previousState)
         {
@@ -51,6 +52,7 @@ namespace Remizione
             if (PropState == PropState.Open)
                 PlaySound(SoundNames.TrunkOpen);
         }
+        */
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)

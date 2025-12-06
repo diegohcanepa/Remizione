@@ -160,7 +160,7 @@ namespace Remizione
 
             if (Item.MetaItem.Category == ItemCategory.Consumable)
             {
-                Item.MetaItem.Sound?.Play();
+                Item.MetaItem.Effect.Sound?.Play();
                 Item.Use(grid.Inventory.Session.Player);
                 if (Item.Index < 0)
                     Item = null;

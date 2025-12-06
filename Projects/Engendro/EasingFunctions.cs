@@ -34,7 +34,7 @@ namespace Engendro
             else
             {
                 var sign = power % 2 == 0 ? -1 : 1;
-                return (float)(sign / 2.0 * (Math.Pow(progress - 2, power) + sign * 2));
+                return (float)(sign / 2.0 * (Math.Pow(progress - 2, power) + (sign * 2)));
             }
         }
 
@@ -64,7 +64,7 @@ namespace Engendro
             var ts = progress * progress;
             var tc = ts * progress;
 
-            return (33 * tc * ts + -59 * ts * ts + 32 * tc + -5 * ts);
+            return (33 * tc * ts) + (-59 * ts * ts) + (32 * tc) + (-5 * ts);
         }
 
         // ElasticOut
@@ -73,13 +73,13 @@ namespace Engendro
             var ts = progress * progress;
             var tc = ts * progress;
 
-            return (33 * tc * ts + -106 * ts * ts + 126 * tc + -67 * ts + 15 * progress);
+            return (33 * tc * ts) + (-106 * ts * ts) + (126 * tc) + (-67 * ts) + (15 * progress);
         }
 
         // ElasticInOut
         public static float ElasticInOut(float t)
         {
-            return (t <= 0.5f) ? ElasticIn(t * 2) / 2 : ElasticOut(t * 2 - 1) / 2 + 0.5f;
+            return (t <= 0.5f) ? ElasticIn(t * 2) / 2 : (ElasticOut((t * 2) - 1) / 2) + 0.5f;
         }
 
         // Linear
@@ -157,7 +157,7 @@ namespace Engendro
         // SineInOut
         public static float SineInOut(float progress)
         {
-            return -(float)Math.Cos(MathHelper.Pi * progress) / 2f + .5f;
+            return (-(float)Math.Cos(MathHelper.Pi * progress) / 2f) + .5f;
         }
     }
 }

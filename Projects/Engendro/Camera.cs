@@ -91,10 +91,10 @@ namespace Engendro
             Rectangle sceneBounds = new(0, 0, SceneWidth, SceneHeight);
 
             // Calculate the minimum and maximum limits for the camera position
-            var minX = sceneBounds.Left + visibleWidth / 2;
-            var maxX = sceneBounds.Right - visibleWidth / 2;
-            var minY = sceneBounds.Top + visibleHeight / 2;
-            var maxY = sceneBounds.Bottom - visibleHeight / 2;
+            var minX = sceneBounds.Left + (visibleWidth / 2);
+            var maxX = sceneBounds.Right - (visibleWidth / 2);
+            var minY = sceneBounds.Top + (visibleHeight / 2);
+            var maxY = sceneBounds.Bottom - (visibleHeight / 2);
 
             // Applies constraint to camera position, snapping it to the center of the view
             Position = new Vector2(MathHelper.Clamp(Position.X, minX, maxX), MathHelper.Clamp(Position.Y, minY, maxY));
@@ -115,8 +115,8 @@ namespace Engendro
             var vh = viewportHeight / ZoomCore;
 
             this.leftBarrier = vw * .5f;
-            this.rightBarrier = SceneWidth - vw * .5f;
-            this.bottomBarrier = SceneHeight - vh * .5f;
+            this.rightBarrier = SceneWidth - (vw * .5f);
+            this.bottomBarrier = SceneHeight - (vh * .5f);
             this.topBarrier = vh * .5f;
 
             this.CanScrollHorizontally = ScrollLock != ScrollLock.Horizontal && ScrollLock != ScrollLock.All && SceneWidth * ZoomCore > viewportWidth;
@@ -308,10 +308,10 @@ namespace Engendro
 
             // Clamp destination to keep tween out effect
             if (destination.X + (VisibleBox.Width / 2) > SceneWidth)
-                destination.X = SceneWidth - VisibleBox.Width / 2;
+                destination.X = SceneWidth - (VisibleBox.Width / 2);
 
             if (destination.Y + (VisibleBox.Height / 2) > SceneHeight)
-                destination.Y = SceneHeight - VisibleBox.Height / 2;
+                destination.Y = SceneHeight - (VisibleBox.Height / 2);
 
             moveTween.Start(tweenStyle, Position, destination, duration);
         }
@@ -342,7 +342,7 @@ namespace Engendro
                 position.X = MathHelper.Clamp(position.X, leftBarrier, rightBarrier);
                 position.Y = MathHelper.Clamp(position.Y, topBarrier, bottomBarrier);
 
-                VisibleBox = new RectangleF(position.X - (viewportWidth / 2 / ZoomCore), position.Y - viewportHeight / 2 / ZoomCore, viewportWidth / ZoomCore, viewportHeight / ZoomCore);
+                VisibleBox = new RectangleF(position.X - (viewportWidth / 2 / ZoomCore), position.Y - (viewportHeight / 2 / ZoomCore), viewportWidth / ZoomCore, viewportHeight / ZoomCore);
 
                 CullingBox = RectangleF.Inflate(VisibleBox,
                                                 VisibleBox.Width * (CullingBoxScale.X - 1),

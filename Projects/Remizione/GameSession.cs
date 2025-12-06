@@ -100,6 +100,7 @@ namespace Remizione
 
             IsHUDVisible = false;
             Inventory.Clear();
+            Tickets = 0;
             GameplayMode = GameplayMode.Adventure;
             Player?.Reheal();
             RunManager.Clear();
@@ -320,12 +321,6 @@ namespace Remizione
             }
         }
 
-        // OnScriptLibraryLoaded
-        protected override void OnScriptLibraryLoaded()
-        {
-            UnlockedPool.InitializeDefaults();
-        }
-
         // OnStart
         protected override void OnStart()
         {
@@ -440,7 +435,6 @@ namespace Remizione
         [ScriptMethod]
         public void CancelRun()
         {
-            Tickets = 0;
             FailedRuns++;
             EndRun();
         }
@@ -509,7 +503,10 @@ namespace Remizione
         }
 
         // HasFriendlyItems
-        public bool HasFriendlyItems(string staticName) => friendlyItems.ContainsKey(staticName);
+        public bool HasFriendlyItems(string staticName)
+        {
+            return friendlyItems.ContainsKey(staticName);
+        }
 
         // HUD
         public HUD HUD { get; }
@@ -640,6 +637,7 @@ namespace Remizione
         public NamedObjectReadOnlyCollection<GameThing> StaticThings { get; }
 
         // Tickets
+        [ScriptProperty]
         public int Tickets { get; set; }
 
         // TotalRuns

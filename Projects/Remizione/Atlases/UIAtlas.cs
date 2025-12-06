@@ -40,6 +40,7 @@ namespace Remizione
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
             TicketIcon = this[nameof(TicketIcon)];
+            TicketSlot = this[nameof(TicketSlot)];
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
@@ -130,6 +131,9 @@ namespace Remizione
 
         // TicketIcon
         public AtlasImage TicketIcon { get; }
+
+        // TicketSlot
+        public AtlasImage TicketSlot { get; }
 
         // UIButtonContainerEdge
         public AtlasImage UIButtonContainerEdge { get; }

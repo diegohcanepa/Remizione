@@ -51,7 +51,7 @@ namespace Remizione
     public enum ItemAction { None, Place, Throw }
 
     // ItemCategory
-    public enum ItemCategory { None, LeftHand, RightHand, Consumable, Gadget, KeyItem }
+    public enum ItemCategory { LeftHand, RightHand, Consumable, Gadget, KeyItem }
 
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }
@@ -63,7 +63,7 @@ namespace Remizione
     public enum LightState { Off, On, TurningOn, TurningOff }
 
     // LockType
-    public enum LockType { None, Silver, Gold }
+    public enum LockType { None, Padlock }
 
     // LogVerb
     public enum LogVerb { Lost, PickedUp, ItemRequired }

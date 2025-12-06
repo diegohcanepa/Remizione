@@ -1,0 +1,12 @@
+{
+	"$schema": "./EffectDefinitions.schema.json",
+	"data": [
+		{
+			"name": "PhysicalDamage",
+            "damage": "1",
+			"hp": "2",
+            "knockback": "8,0",
+			"sound": "AppleBite"
+		}
+	]
+}

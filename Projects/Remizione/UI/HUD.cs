@@ -59,6 +59,7 @@ namespace Remizione
         {
             if (session.IsCurrentScene)
             {
+                ticketMeter.Draw(gameTime);
                 sackSlot.Draw(gameTime);
                 if (RunManager.HasContent)
                     TargetMeter.Draw(gameTime);
@@ -70,7 +71,6 @@ namespace Remizione
             rightHandSlot.Draw(gameTime);
             gadgetSlot.Draw(gameTime);
             healthMeter.Draw(gameTime);
-            ticketMeter.Draw(gameTime);
         }
 
         // OnUpdate

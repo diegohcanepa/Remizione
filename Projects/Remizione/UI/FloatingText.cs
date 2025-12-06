@@ -94,11 +94,11 @@ namespace Remizione
         // Show
         public void Show(Vector2 origin, string value, Color color, float scale, int duration = 1000)
         {
-            ShowCore(origin, value, color, new Vector2(Random.Shared.Next(-5, 6), Random.Shared.Next(-12, -1)), scale, duration);
+            ShowCore(origin, value, color, new Vector2(0, -6), scale, duration);
         }
 
-        // Show
-        public void Show(Vector2 origin, string value, bool critical)
+        // ShowDamage
+        public void ShowDamage(Vector2 origin, string value, bool critical)
         {
             var color = critical ? ColorPalette.Text.Highlight : ColorPalette.Text.Default;
             ShowCore(origin, value, color, new(0, -6), defaultScale, 700);

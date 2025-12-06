@@ -37,13 +37,7 @@ namespace Remizione
                 eyes.Draw(gameTime);
         }
 
-        // OnPropAmountChanged
-        protected override void OnPropAmountChanged()
-        {
-            if (PropAmount == 1)
-                PropState = PropState.Unlocked;
-        }
-
+        /*
         // OnPropStateChanged
         protected override void OnPropStateChanged(PropState previousState)
         {
@@ -53,25 +47,8 @@ namespace Remizione
 
             if (LoadState != LoadState.Loaded)
                 return;
-
-            /*
-            if (PropState == PropState.Unlocked && Room is IsoRideRoom rideRoom)
-            {
-                if (rideRoom.RightConnector != null)
-                {
-                    rideRoom.RightConnector.PropState = PropState.Open;
-                    if (rideRoom.RoomPhase != RunPhase.End)
-                    {
-                        rideRoom.RightConnector.Collider = new Polygon("0,0;0,46;11,49;24,42;29,43;17,51;28,56;43,54;51,46;45,0");
-                        PlaySound(SoundNames.TowerDoorClose);
-                    }
-
-                    rideRoom.RightConnector.AnimationPlayer.Play(AnimationNames.Opening, false);
-                    Sound.Play(SoundNames.SaintPeregrine);
-                }
-            }
-            */
         }
+        */
 
         // OnTransform
         protected override void OnTransform(TransformChange change)

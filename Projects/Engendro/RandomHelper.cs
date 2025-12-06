@@ -28,7 +28,7 @@ namespace Engendro
             if (minValue == maxValue)
                 return minValue;
             else
-                return (float)random.NextSingle() * (maxValue - minValue) + minValue;
+                return ((float)random.NextSingle() * (maxValue - minValue)) + minValue;
         }
     }
 }

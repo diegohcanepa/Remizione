@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Remizione
 {
@@ -36,8 +37,8 @@ namespace Remizione
 
                 var category = item.MetaItem.Category;
 
-                if (category == ItemCategory.RightHand && RightHand == null ||
-                    category == ItemCategory.LeftHand && LeftHand == null)
+                if ((category == ItemCategory.RightHand && RightHand == null) ||
+                    (category == ItemCategory.LeftHand && LeftHand == null))
                 {
                     Equip(item);
                 }
@@ -59,10 +60,16 @@ namespace Remizione
         }
 
         // ClearSelection
-        public void ClearSelection() => SelectedItem = null;
+        public void ClearSelection()
+        {
+            SelectedItem = null;
+        }
 
         // Contains
-        public bool Contains(Item item) => items.Contains(item);
+        public bool Contains(Item item)
+        {
+            return items.Contains(item);
+        }
 
         // Count
         public int Count => items.Count;
@@ -98,9 +105,6 @@ namespace Remizione
             if (items.Count == 0)
                 return null;
 
-            if (category == ItemCategory.None)
-                return null;
-
             var currentItem = GetEquippedItem(category);
             var index = currentItem == null ? -1 : items.IndexOf(currentItem);
 
@@ -123,9 +127,6 @@ namespace Remizione
         public Item? EquipPrevious(ItemCategory category)
         {
             if (items.Count == 0)
-                return null;
-
-            if (category == ItemCategory.None)
                 return null;
 
             var currentItem = GetEquippedItem(category);
@@ -159,7 +160,10 @@ namespace Remizione
         }
 
         // FindNotNull
-        public Item FindNotNull(string name) => Find(name) ?? throw new InvalidOperationException($"Item '{name}' not found.");
+        public Item FindNotNull(string name)
+        {
+            return Find(name) ?? throw new InvalidOperationException($"Item '{name}' not found.");
+        }
 
         // Gadget
         public Item? Gadget { get; private set; }
@@ -177,16 +181,19 @@ namespace Remizione
         }
 
         // GetItems
-        public Item[] GetItems() => items.ToArray();
+        public Item[] GetItems()
+        {
+            return items.ToArray();
+        }
 
         // GetItems
-        public Item[] GetItems(ItemCategory category)
+        public Item[] GetItems(ItemCategory? category)
         {
             var result = new List<Item>();
 
             for (var i = 0; i < items.Count; i++)
             {
-                if (category == ItemCategory.None || items[i].MetaItem.Category == category)
+                if (category == null || items[i].MetaItem.Category == category)
                     result.Add(items[i]);
             }
 
@@ -222,7 +229,10 @@ namespace Remizione
         }
 
         // IndexOf
-        public int IndexOf(Item item) => items.IndexOf(item);
+        public int IndexOf(Item item)
+        {
+            return items.IndexOf(item);
+        }
 
         // Indexer
         public Item this[int index] => items[index];
@@ -399,7 +409,7 @@ namespace Remizione
                     var itemData = itemList[i].Split(':');
 
                     if (MetaItem.Find(itemData[0]) != null)
-                        Add(itemData[0], int.Parse(itemData[1]));
+                        Add(itemData[0], int.Parse(itemData[1], CultureInfo.InvariantCulture));
                 }
             }
         }

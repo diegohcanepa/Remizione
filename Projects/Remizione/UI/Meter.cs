@@ -97,7 +97,7 @@ namespace Remizione
             if (MaximumValue <= 0)
                 return 0;
             else
-                return (val / MaximumValue) * width;
+                return val / MaximumValue * width;
         }
 
         #endregion

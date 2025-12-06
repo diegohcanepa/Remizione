@@ -14,8 +14,8 @@
         {
             while (true)
             {
-                var childIndexLeft = item.HeapIndex * 2 + 1;
-                var childIndexRight = item.HeapIndex * 2 + 2;
+                var childIndexLeft = (item.HeapIndex * 2) + 1;
+                var childIndexRight = (item.HeapIndex * 2) + 2;
                 int swapIndex;
 
                 if (childIndexLeft < Count)

@@ -127,9 +127,16 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            for (var i = 0; i < doors.Count; i++)
+
+            foreach (var door in doors)
             {
-                doors[i].IsOpen = true;
+                if (door.DoorDirection is RideDoorDirection.Left or RideDoorDirection.Right)
+                {
+                    if (door.TargetRoom?.Config.LockType != LockType.None)
+                        door.PropState = PropState.Locked;
+                }
+
+                door.PropState = PropState.Locked;
             }
         }
 
@@ -143,7 +150,7 @@ namespace Remizione
         protected override void OnPopulated()
         {
             base.OnPopulated();
-            
+
             foreach (var door in Children)
             {
                 if (door is RideDoor rideDoor)

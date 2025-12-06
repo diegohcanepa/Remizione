@@ -13,8 +13,8 @@ namespace Remizione
     /// </summary>
     public sealed class MetaItem
     {
-        private static readonly Dictionary<string, MetaItem> items = [];
         private static bool loaded;
+        private static readonly Dictionary<string, MetaItem> metaItems = [];
 
         #region Constructor
 
@@ -45,38 +45,42 @@ namespace Remizione
                 Category = Enum.Parse<ItemCategory>(categoryValue);
 
             // CriticalChance
+            var criticalChance = 1;
             if (element.TryGetProperty("criticalChance", out JsonElement criticalChanceElement))
-                CriticalChance = criticalChanceElement.GetInt32();
-            else
-                CriticalChance = 1;
+                criticalChance = criticalChanceElement.GetInt32();
 
             // Damage
+            DiceExpression? damage = null;
             if (element.TryGetProperty("damage", out JsonElement damageElement) && damageElement.GetString() is string damageValue)
-                Damage = new(damageValue);
+                damage = new(damageValue);
 
             // DamageType
+            var damageType = DamageType.None;
             if (element.TryGetProperty("damageType", out JsonElement damageTypeElement) && damageTypeElement.GetString() is string damageTypeValue)
-                DamageType = Enum.Parse<DamageType>(damageTypeValue);
+                damageType = Enum.Parse<DamageType>(damageTypeValue);
 
             // Durability
             if (element.TryGetProperty("durability", out JsonElement durabilityElement))
                 Durability = durabilityElement.GetInt32();
 
             // HP
+            DiceExpression? hp = null;
             if (element.TryGetProperty("hp", out JsonElement hpElement) && hpElement.GetString() is string hpValue)
-                HP = new(hpValue);
+                hp = new(hpValue);
 
             // ImpactWord
+            var impactWord = ImpactWordName.None;
             if (element.TryGetProperty("impactWord", out JsonElement impactWordElement) && impactWordElement.GetString() is string impactWordValue)
-                ImpactWord = Enum.Parse<ImpactWordName>(impactWordValue);
+                impactWord = Enum.Parse<ImpactWordName>(impactWordValue);
 
             // IsStackable
             if (element.TryGetProperty("isStackable", out JsonElement isStackableElement))
                 IsStackable = isStackableElement.GetBoolean();
 
             // Knockback
+            var knockback = Vector2.Zero;
             if (element.TryGetProperty("knockback", out JsonElement knockbackElement) && knockbackElement.GetString() is string knockbackValue)
-                Knockback = DataConverter.ToVector2(knockbackValue);
+                knockback = DataConverter.ToVector2(knockbackValue);
 
             // PassiveEffectCooldown
             if (element.TryGetProperty("passiveEffectCooldown", out JsonElement passiveEffectCooldownElement))
@@ -107,8 +111,9 @@ namespace Remizione
                 SkillChance = skillChanceElement.GetInt32();
 
             // Sound
+            Sound? sound = null;
             if (element.TryGetProperty("sound", out JsonElement soundElement) && soundElement.GetString() is string soundValue)
-                Sound = Sound.FindNotNull(soundValue);
+                sound = Sound.FindNotNull(soundValue);
 
             // StackMode
             if (element.TryGetProperty("stackMode", out JsonElement stackModeElement) && stackModeElement.GetString() is string stackModeValue)
@@ -124,32 +129,23 @@ namespace Remizione
             else
                 Weight = 1;
 
+            // Effect
+            this.Effect = new($"<{Name} Effect>")
+            {
+                CriticalChance = criticalChance,
+                Damage = damage,
+                DamageType = damageType,
+                HP = hp,
+                ImpactWord = impactWord,
+                Knockback = knockback,
+                Sound = sound
+            };
+
             this.LocalizedDescription = Localization.GetItemDescription(this);
             this.LocalizedDisplayName = Localization.GetItemName(this);
             this.Image = Atlases.UI.GetImage(Name);
 
-            items.Add(Name, this);
-        }
-
-        #endregion
-
-        #region Private members
-
-        // CalculateKnockback
-        private Vector2 CalculateKnockback(ActorSize size)
-        {
-            var knockbackBase = Knockback;
-
-            return size switch
-            {
-                // Small
-                ActorSize.Small => knockbackBase * 1.5f,
-                // Medium
-                ActorSize.Medium => knockbackBase * 1f,
-                // Large
-                ActorSize.Large => knockbackBase * .3f,
-                _ => knockbackBase,
-            };
+            metaItems.Add(Name, this);
         }
 
         #endregion
@@ -157,12 +153,12 @@ namespace Remizione
         #region Static members
 
         // AllItems
-        public static IEnumerable<MetaItem> AllItems => items.Values;
+        public static IEnumerable<MetaItem> AllItems => metaItems.Values;
 
         // Find
         public static MetaItem? Find(string name)
         {
-            if (items.TryGetValue(name, out var result))
+            if (metaItems.TryGetValue(name, out var result))
                 return result;
             else
                 return null;
@@ -171,7 +167,7 @@ namespace Remizione
         // FindNotNull
         public static MetaItem FindNotNull(string name)
         {
-            return Find(name) ?? throw new InvalidOperationException($"MetaItem '{name}' not found.");
+            return Find(name) ?? throw new InvalidOperationException($"{nameof(MetaItem)} '{name}' not found.");
         }
 
         // GetItems
@@ -179,7 +175,7 @@ namespace Remizione
         {
             var result = new List<MetaItem>();
 
-            foreach (var item in items.Values)
+            foreach (var item in metaItems.Values)
             {
                 if (item.Category == category)
                     result.Add(item);
@@ -193,7 +189,7 @@ namespace Remizione
         {
             var result = new List<MetaItem>();
 
-            foreach (var item in items.Values)
+            foreach (var item in metaItems.Values)
             {
                 if (item.Realm == realm)
                     result.Add(item);
@@ -218,49 +214,20 @@ namespace Remizione
         // Action
         public ItemAction Action { get; }
 
-        // ApplyDamage
-        public bool ApplyDamage(GameThing attacker, GameThing target)
-        {
-            if (Damage == null)
-                return false;
-
-            int damageAmount = Damage.Roll();
-
-            var finalKnockback = Knockback;
-            if (target is Actor actor)
-                finalKnockback = CalculateKnockback(actor.BodySize);
-
-            target.TakeDamage(attacker, damageAmount, DamageType, DiceExpression.Dice100.Roll() <= CriticalChance, finalKnockback, ImpactWord);
-
-            return true;
-        }
-
         // Category
         public ItemCategory Category { get; }
 
         // CoinItemName
         public const string CoinItemName = "Coin";
 
-        // CriticalChance
-        public int CriticalChance { get; }
-
-        // Damage
-        public DiceExpression? Damage { get; }
-
-        // DamageType
-        public DamageType DamageType { get; }
-
         // Durability
         public int Durability { get; }
 
-        // HP
-        public DiceExpression? HP { get; }
+        // Effect
+        public EffectDefinition Effect { get; }
 
         // Image
         public AtlasImage? Image { get; }
-
-        // ImpactWord
-        public ImpactWordName ImpactWord { get; }
 
         // IsEquipment
         public bool IsEquipment => Category is ItemCategory.LeftHand or ItemCategory.RightHand or ItemCategory.Gadget;
@@ -270,9 +237,6 @@ namespace Remizione
 
         // IsStackable
         public bool IsStackable { get; }
-
-        // Knockback
-        public Vector2 Knockback { get; init; }
 
         // LocalizedDescription
         public string LocalizedDescription { get; }
@@ -303,9 +267,6 @@ namespace Remizione
 
         // SkillChance
         public int SkillChance { get; }
-
-        // Sound
-        public Sound? Sound { get; }
 
         // StackMode
         public StackMode StackMode { get; }

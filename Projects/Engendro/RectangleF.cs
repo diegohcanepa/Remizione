@@ -39,7 +39,7 @@ namespace Engendro
         // =
         public static bool operator ==(RectangleF left, RectangleF right)
         {
-            return (left.X == right.X && left.Y == right.Y && left.Width == right.Width && left.Height == right.Height);
+            return left.X == right.X && left.Y == right.Y && left.Width == right.Width && left.Height == right.Height;
         }
 
         // !=
@@ -60,7 +60,7 @@ namespace Engendro
         public readonly float Bottom => Y + Height;
 
         // Center
-        public readonly Vector2 Center => new(Left + Width / 2, Top + Height / 2);
+        public readonly Vector2 Center => new(Left + (Width / 2), Top + (Height / 2));
 
         // Clamp
         public readonly Vector2 Clamp(Vector2 value)
@@ -132,7 +132,7 @@ namespace Engendro
             return origin switch
             {
                 // Bottom
-                RectanglePoint.Bottom => new Vector2(X + Width / 2 + xOffset, Bottom + yOffset),
+                RectanglePoint.Bottom => new Vector2(X + (Width / 2) + xOffset, Bottom + yOffset),
 
                 // LeftBottom
                 RectanglePoint.LeftBottom => new Vector2(Left + xOffset, Bottom + yOffset),

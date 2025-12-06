@@ -96,8 +96,8 @@ namespace Remizione
                 for (int x = area.X; x < area.Right; x += cellSize)
                 {
                     // Centro de la celda
-                    var cx = x + cellSize * 0.5f;
-                    var cy = y + cellSize * 0.5f;
+                    var cx = x + (cellSize * 0.5f);
+                    var cy = y + (cellSize * 0.5f);
 
                     // Solo agregamos si el centro cae dentro
                     if (cx >= area.Left && cx <= area.Right &&
@@ -142,7 +142,7 @@ namespace Remizione
         // AddWall
         protected void AddWall(string vertices)
         {
-            var wall = new RideRoomWall(Session, "36,0;36,46;5,111;0,111;0,0");
+            var wall = new RideRoomWall(Session, vertices);
             Children.Add(wall);
         }
 
@@ -359,6 +359,9 @@ namespace Remizione
         public RoomGraph RoomGraph { get; }
 
         // ToString
-        public override string ToString() => $"{GetType().Name}_{RoomGraph.Id}";
+        public override string ToString()
+        {
+            return $"{GetType().Name}_{RoomGraph.Id}";
+        }
     }
 }

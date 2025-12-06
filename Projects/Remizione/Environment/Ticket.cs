@@ -44,7 +44,7 @@ namespace Remizione
         // RandomBetween
         private static float RandomBetween(float min, float max)
         {
-            return (float)(Random.Shared.NextDouble() * (max - min) + min);
+            return (float)((Random.Shared.NextDouble() * (max - min)) + min);
         }
 
         #endregion

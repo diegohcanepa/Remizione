@@ -12,7 +12,7 @@ namespace Engendro
         // Lerp
         protected override float Lerp(float startValue, float endValue, float progress)
         {
-            var result = startValue + (endValue - startValue) * progress;
+            var result = startValue + ((endValue - startValue) * progress);
             if (Decimals >= 0)
                 result = result.Round(Decimals);
 

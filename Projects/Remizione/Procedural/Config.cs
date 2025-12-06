@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +11,7 @@ namespace Remizione
     /// </summary>
     public abstract class Config
     {
-        private static Dictionary<string, Config> configs = [];
+        private static readonly Dictionary<string, Config> configs = [];
 
         // Constructor
         protected Config(JsonElement element)

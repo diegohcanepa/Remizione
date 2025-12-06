@@ -73,15 +73,15 @@ namespace Remizione
 
                 if (Item != null && Session.Room != null)
                 {
-                    if (Item.MetaItem.Sound != null)
-                        explosionSound = PlaySound(Item.MetaItem.Sound);
+                    if (Item.MetaItem.Effect.Sound != null)
+                        explosionSound = PlaySound(Item.MetaItem.Effect.Sound);
 
                     for (var i = 0; i < Session.Room.CulledThings.Count; i++)
                     {
                         if (Session.Room.CulledThings[i] is GameThing target)
                         {
                             if (target.DistanceTo(this) <= Item.Range)
-                                Item.MetaItem.ApplyDamage(Owner, target);
+                                Item.MetaItem.Effect.ApplyDamage(Owner, target);
                         }
                     }
                 }

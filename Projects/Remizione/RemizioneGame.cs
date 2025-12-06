@@ -52,11 +52,12 @@ namespace Remizione
         // InitializeProceduralContent
         private void InitializeProceduralContent()
         {
+            EffectDefinition.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "EffectDefinitions.json"));
             MetaItem.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "MetaItems.json"));
             RoomConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
             ThingConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"),
                              ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"));
-            
+
             RideRoom.RegisterRideRoom(typeof(CommonRoom));
         }
 
@@ -120,7 +121,7 @@ namespace Remizione
             Effects = new GameEffects(this);
             LocalizationManager.Initialize(this);
             AudioManager.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "SoundData.xml"));
-            
+
             Fonts.Initialize(Content);
             UserSettingsData userSettings = UserSettingsData.Load(this);
             UserSettingsData.Apply(this, userSettings);

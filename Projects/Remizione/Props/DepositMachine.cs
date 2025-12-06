@@ -49,6 +49,7 @@ namespace Remizione
             }
         }
 
+        /*
         // OnPropStateChanged
         protected override void OnPropStateChanged(PropState previousState)
         {
@@ -75,6 +76,7 @@ namespace Remizione
             else
                 AttachedLight?.TurnOff(true);
         }
+        */
 
         // OnTransform
         protected override void OnTransform(TransformChange change)

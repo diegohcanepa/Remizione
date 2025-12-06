@@ -96,10 +96,16 @@ namespace Remizione
         #endregion
 
         // Hide
-        public void Hide() => fadeTween.Stop();
+        public void Hide()
+        {
+            fadeTween.Stop();
+        }
 
         // Show
-        public void Show(string message, bool isWarning, AtlasImage? image = null) => ShowCore(message, string.Empty, isWarning, image);
+        public void Show(string message, bool isWarning, AtlasImage? image = null)
+        {
+            ShowCore(message, string.Empty, isWarning, image);
+        }
 
         // Show
         public void Show(LogVerb verb, string noun, bool isWarning, AtlasImage? image = null)

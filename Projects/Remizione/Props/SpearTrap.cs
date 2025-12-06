@@ -68,7 +68,10 @@ namespace Remizione
         }
 
         // ResetCooldown
-        private void ResetCooldown() => cooldown = cooldownInterval;
+        private void ResetCooldown()
+        {
+            cooldown = cooldownInterval;
+        }
 
         #endregion
 
@@ -113,7 +116,7 @@ namespace Remizione
                 else if (!damageApplied && Session.Player != null && RuntimeHotspot.BoundingRectangleF.Intersects(Session.Player.RuntimeCollider.BoundingRectangleF))
                 {
                     damageApplied = true;
-                    metaItem.ApplyDamage(this, Session.Player);
+                    metaItem.Effect.ApplyDamage(this, Session.Player);
                 }
             }
 

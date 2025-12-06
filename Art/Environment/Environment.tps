@@ -1138,11 +1138,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">RideDoorDown-assets/RideDoorDown01.png</key>
-            <key type="filename">RideDoorDown-assets/RideDoorDown02.png</key>
-            <key type="filename">RideDoorUp-assets/RideDoorUp01.png</key>
-            <key type="filename">RideDoorUp-assets/RideDoorUp02.png</key>
-            <key type="filename">RideDoorUp-assets/RideDoorUpLock.png</key>
+            <key type="filename">RideDoorDown-assets/CommonRoomDoorDownClosed.png</key>
+            <key type="filename">RideDoorDown-assets/CommonRoomDoorDownOpen.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1151,17 +1148,17 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>8,9,17,18</rect>
+                <rect>8,9,16,18</rect>
                 <key>scale9Paddings</key>
-                <rect>8,9,17,18</rect>
+                <rect>8,9,16,18</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">RideDoorLeft-assets/RideDoorLeft01.png</key>
-            <key type="filename">RideDoorLeft-assets/RideDoorLeft02.png</key>
+            <key type="filename">RideDoorLeft-assets/CommonRoomDoorLeftClosed.png</key>
+            <key type="filename">RideDoorLeft-assets/CommonRoomDoorLeftOpen.png</key>
             <key type="filename">RideDoorLeft-assets/RideDoorLeftLock.png</key>
-            <key type="filename">RideDoorRight-assets/RideDoorRight01.png</key>
-            <key type="filename">RideDoorRight-assets/RideDoorRight02.png</key>
+            <key type="filename">RideDoorRight-assets/CommonRoomDoorRightClosed.png</key>
+            <key type="filename">RideDoorRight-assets/CommonRoomDoorRightOpen.png</key>
             <key type="filename">RideDoorRight-assets/RideDoorRightLock.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1174,6 +1171,23 @@
                 <rect>4,14,8,27</rect>
                 <key>scale9Paddings</key>
                 <rect>4,14,8,27</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">RideDoorUp-assets/CommonRoomDoorUpClosed.png</key>
+            <key type="filename">RideDoorUp-assets/CommonRoomDoorUpOpen.png</key>
+            <key type="filename">RideDoorUp-assets/RideDoorUpLock.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,9,17,18</rect>
+                <key>scale9Paddings</key>
+                <rect>8,9,17,18</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

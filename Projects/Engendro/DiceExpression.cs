@@ -102,10 +102,10 @@ namespace Engendro
         public bool IsFixedValue { get; }
 
         // MaximumValue
-        public int MaximumValue => IsFixedValue ? FixedValue : DiceCount * DiceSides + Modifier;
+        public int MaximumValue => IsFixedValue ? FixedValue : (DiceCount * DiceSides) + Modifier;
 
         // MinimumValue
-        public int MinimumValue => IsFixedValue ? FixedValue : DiceCount * 1 + Modifier;
+        public int MinimumValue => IsFixedValue ? FixedValue : (DiceCount * 1) + Modifier;
 
         // Modifier
         public int Modifier { get; }

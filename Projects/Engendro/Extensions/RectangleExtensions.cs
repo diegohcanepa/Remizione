@@ -26,7 +26,7 @@ namespace Engendro
             return origin switch
             {
                 // Bottom
-                RectanglePoint.Bottom => new Vector2(rectangle.X + rectangle.Width / 2 + xOffset, rectangle.Bottom + yOffset),
+                RectanglePoint.Bottom => new Vector2(rectangle.X + (rectangle.Width / 2) + xOffset, rectangle.Bottom + yOffset),
 
                 // LeftBottom
                 RectanglePoint.LeftBottom => new Vector2(rectangle.Left + xOffset, rectangle.Bottom + yOffset),

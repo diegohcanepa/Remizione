@@ -950,6 +950,9 @@
 #begin System/Actors.json
 /copy:System/Actors.json
 
+#begin System/EffectDefinitions.json
+/copy:System/EffectDefinitions.json
+
 #begin System/MetaItems.json
 /copy:System/MetaItems.json
 

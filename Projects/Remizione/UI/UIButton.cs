@@ -125,7 +125,7 @@ namespace Remizione
 
             if (PivotOrigin is RectanglePoint.Bottom or RectanglePoint.Top)
             {
-                var offset = BoundingBox.Width / 2 - (image.BoundingBox.Width / 2);
+                var offset = (BoundingBox.Width / 2) - (image.BoundingBox.Width / 2);
 
                 image.X -= offset;
                 containerEdgeLeft.X -= offset;
@@ -162,7 +162,7 @@ namespace Remizione
                 label.Position = image.BoundingBox.GetPoint(RectanglePoint.Right, horzImagePadding, .7f);
             }
 
-            containerPattern.ScaleX = label.BoundingBox.Width + 6 * scaleFactor;
+            containerPattern.ScaleX = label.BoundingBox.Width + (6 * scaleFactor);
             containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Center, 0, 0).Y;
             containerEdgeLeft.Y = containerPattern.Y;
 

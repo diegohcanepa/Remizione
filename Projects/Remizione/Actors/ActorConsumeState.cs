@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -51,8 +52,8 @@ namespace Remizione
                 {
                     Item.Use(Owner);
 
-                    if (Item.MetaItem.Sound != null)
-                        Owner.PlaySound(Item.MetaItem.Sound);
+                    if (Item.MetaItem.Effect.Sound is Sound sound)
+                        Owner.PlaySound(sound);
 
                     soundPlayed = true;
                 }

@@ -26,7 +26,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public ItemGrid(Inventory pilgrimSack, ItemCategory categoryFilter, int columns, int rows)
+        public ItemGrid(Inventory pilgrimSack, ItemCategory? categoryFilter, int columns, int rows)
             : base(pilgrimSack.Session.Game)
         {
             this.Inventory = pilgrimSack;
@@ -79,25 +79,25 @@ namespace Remizione
                 case Direction.Down:
                     row = SelectedSlotIndex / columns;
                     row = (row + 1) % rows; // Movimiento cíclico vertical
-                    index = row * columns + (SelectedSlotIndex % columns);
+                    index = (row * columns) + (SelectedSlotIndex % columns);
                     break;
 
                 case Direction.Left:
                     col = SelectedSlotIndex % columns;
                     col = (col - 1 + columns) % columns; // Movimiento cíclico horizontal
-                    index = (SelectedSlotIndex / columns) * columns + col;
+                    index = (SelectedSlotIndex / columns * columns) + col;
                     break;
 
                 case Direction.Right:
                     col = SelectedSlotIndex % columns;
                     col = (col + 1) % columns; // Movimiento cíclico horizontal
-                    index = (SelectedSlotIndex / columns) * columns + col;
+                    index = (SelectedSlotIndex / columns * columns) + col;
                     break;
 
                 default:
                     row = SelectedSlotIndex / columns;
                     row = (row - 1 + rows) % rows; // Movimiento cíclico vertical
-                    index = row * columns + (SelectedSlotIndex % columns);
+                    index = (row * columns) + (SelectedSlotIndex % columns);
                     break;
             }
 
@@ -112,7 +112,7 @@ namespace Remizione
         }
 
         // Populate
-        private void Populate(ItemCategory category)
+        private void Populate(ItemCategory? category)
         {
             Clear();
 
@@ -163,7 +163,7 @@ namespace Remizione
         public RectangleF BoundingBox { get; private set; }
 
         // CategoryFilter
-        public ItemCategory CategoryFilter
+        public ItemCategory? CategoryFilter
         {
             get;
             set
@@ -207,7 +207,10 @@ namespace Remizione
         }
 
         // GetSlotAt
-        public ItemGridSlot? GetSlotAt(Vector2 position) => GetSlotAt((int)position.X, (int)position.Y);
+        public ItemGridSlot? GetSlotAt(Vector2 position)
+        {
+            return GetSlotAt((int)position.X, (int)position.Y);
+        }
 
         // GetSlotAt
         public ItemGridSlot? GetSlotAt(int x, int y)
@@ -221,7 +224,7 @@ namespace Remizione
             if (row >= rows)
                 return null;
 
-            int index = row * columns + col;
+            int index = (row * columns) + col;
 
             return slots[index];
         }
@@ -232,8 +235,8 @@ namespace Remizione
             int row = index / columns;
             int col = index % columns;
 
-            return new Vector2(Position.X + col * slotSize,
-                               Position.Y + row * slotSize);
+            return new Vector2(Position.X + (col * slotSize),
+                               Position.Y + (row * slotSize));
         }
 
         // HandleInput
@@ -299,7 +302,10 @@ namespace Remizione
         }
 
         // IndexOf
-        public int IndexOf(ItemGridSlot slot) => slots.IndexOf(slot);
+        public int IndexOf(ItemGridSlot slot)
+        {
+            return slots.IndexOf(slot);
+        }
 
         // Inventory
         public Inventory Inventory { get; }

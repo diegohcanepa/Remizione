@@ -47,6 +47,7 @@ namespace Remizione
             // Bottom gradient
             bottomGradient = new ImageSprite(Game, Atlases.UI.BottomGradient)
             {
+                Opacity = .6f,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
                 Scale = new Vector2(1, 1.2f)
@@ -130,8 +131,8 @@ namespace Remizione
 
                 // Escala y opacidad basadas en distancia
                 float distance = MathF.Abs(offset);
-                float scale = MathF.Max(.6f, .8f - distance * .2f); // escala mínima 0.6
-                float alpha = MathF.Max(.3f, 1 - distance * .3f); // transparencia mínima 0.3
+                float scale = MathF.Max(.6f, .8f - (distance * .2f)); // escala mínima 0.6
+                float alpha = MathF.Max(.3f, 1 - (distance * .3f)); // transparencia mínima 0.3
 
                 visualItems[index].Opacity = alpha;
                 visualItems[index].Scale = new(scale);
