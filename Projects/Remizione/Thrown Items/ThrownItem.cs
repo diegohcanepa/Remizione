@@ -14,7 +14,6 @@ namespace Remizione
 
         private int bounceCount;
         private readonly float bounciness;  // Cuánto rebota (0=sin rebote, 1=rebotar igual de fuerte)
-        private bool checkWalkArea;
         private int collectCooldown = -1;
         private float depth;
         private float floorY;               // Cuánto se frena en horizontal al chocar
@@ -24,7 +23,7 @@ namespace Remizione
         private readonly Vector2 initialVelocity;     // gravedad base
         private bool isGrounded;
         private Item? item;
-        private GameThing? lastThingCollisioned;
+        private object? lastThingCollisioned;
         private readonly int maxBounces = 3;    // gravedad base
         private GameThing? owner;
         private readonly float radius;      // "tamaño" del objeto en píxeles
@@ -63,8 +62,25 @@ namespace Remizione
         // CheckCollision
         private GameThing? CheckCollision(bool applyDamage)
         {
+            void Bounce()
+            {
+                if (ImpactSound != null)
+                    PlaySound(ImpactSound);
+                velocity = new Vector2(-velocity.X, velocity.Y) * RandomHelper.Next(Random.Shared, .2f, .5f);
+            }
+
             if (Room == null || item == null || owner == null)
                 return null;
+
+            for (var i = 0; i < Room.Walls.Count; i++)
+            {
+                if (Room.Walls[i] != lastThingCollisioned && Room.Walls[i].Contains(Position))
+                {
+                    lastThingCollisioned = Room.Walls[i];
+                    Bounce();
+                    return null;
+                }
+            }
 
             for (var i = 0; i < Room.CulledThings.Count; i++)
             {
@@ -78,9 +94,7 @@ namespace Remizione
                         if (lastThingCollisioned == null && applyDamage)
                         {
                             item.ApplyDamage(owner, target);
-                            if (ImpactSound != null)
-                                PlaySound(ImpactSound);
-                            velocity = new Vector2(-velocity.X, velocity.Y) * RandomHelper.Next(Random.Shared, .2f, .5f);
+                            Bounce();
                             lastThingCollisioned = target;
                         }
 
@@ -90,21 +104,6 @@ namespace Remizione
             }
 
             return null;
-        }
-
-        // CheckWalkAreaCollision
-        private bool CheckWalkAreaCollision()
-        {
-            if (owner?.Room?.WalkArea is WalkArea walkArea)
-            {
-                if (Y >= walkArea.Polygon.BoundingRectangleF.Top && !walkArea.Contains(Position))
-                {
-                    velocity = new Vector2(-velocity.X, velocity.Y) * RandomHelper.Next(Random.Shared, .2f, .5f);
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         // ReturnToSack
@@ -235,11 +234,7 @@ namespace Remizione
             UpdateFloorCollision();
 
             // Object collision
-            if (CheckCollision(true) == null)
-            {
-                if (checkWalkArea && CheckWalkAreaCollision())
-                    checkWalkArea = false;
-            }
+            CheckCollision(true);
         }
 
         // Shadow
@@ -255,7 +250,6 @@ namespace Remizione
         {
             this.owner = owner;
             this.bounceCount = 0;
-            this.checkWalkArea = owner.Room?.Flat2D == false;
             this.collectCooldown = -1;
             this.ignoreThing = null;
             this.isGrounded = false;

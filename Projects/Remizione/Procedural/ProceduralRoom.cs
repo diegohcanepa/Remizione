@@ -139,13 +139,6 @@ namespace Remizione
             placeholders.Add(placeholder);
         }
 
-        // AddWall
-        protected void AddWall(string vertices)
-        {
-            var wall = new RideRoomWall(Session, vertices);
-            Children.Add(wall);
-        }
-
         // OnLoad
         protected override void OnLoad()
         {

@@ -136,7 +136,7 @@ namespace Remizione
                         door.PropState = PropState.Locked;
                 }
 
-                door.PropState = PropState.Locked;
+                door.PropState = PropState.Open;
             }
         }
 
@@ -205,20 +205,6 @@ namespace Remizione
         public static void RegisterRideRoom(Type type)
         {
             derivedTypes.Add(type.Name, type);
-        }
-    }
-
-    /// <summary>
-    /// RideRoomWall
-    /// </summary>
-    public sealed class RideRoomWall : Prop
-    {
-        // Constructor
-        public RideRoomWall(GameSession session, string vertices)
-            : base(session, string.Empty)
-        {
-            Hotspot = new Polygon(vertices);
-            HotspotPlacement = PlacementMode.Absolute;
         }
     }
 }

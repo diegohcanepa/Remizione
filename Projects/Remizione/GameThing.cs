@@ -1195,7 +1195,8 @@ namespace Remizione
                 else
                     blinker.Stop();
 
-                if (amount > 0)
+                /*
+                if (amount > 0 && this != Session.Player)
                     Session.ObjectPools.FloatingTexts.Get()?.ShowDamage(GetFloatingTextPosition(knockback), amount.ToString(CultureInfo.InvariantCulture), critical);
 
                 if (Session.Player == attacker)
@@ -1203,6 +1204,7 @@ namespace Remizione
 
                 else if (Session.Player == this)
                     Session.HUD.TargetMeter.Target = attacker;
+                */
 
                 if (amount > 0)
                     OnTakeDamage(attacker, amount, effect.DamageType, effect.Knockback);

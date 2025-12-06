@@ -152,7 +152,7 @@ namespace Remizione
         // CanInteractCore
         protected override bool CanInteractCore(Actor requester)
         {
-            if (SwitchStateCooldown > 0)
+            if (SwitchStateCooldown > 0 || Room?.EnemyCount > 0)
                 return false;
             else
                 return base.CanInteractCore(requester);

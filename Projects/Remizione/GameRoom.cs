@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -30,6 +31,7 @@ namespace Remizione
         private Vector2? lastKnownPlayerPosition;
         private readonly List<TriggerArea> triggerAreas = [];
         private readonly List<WalkArea> walkAreas = [];
+        private readonly List<ReadOnlyPolygon> walls = [];
 
         #endregion
 
@@ -42,11 +44,11 @@ namespace Remizione
             Utils.AssertName(name, this);
 
             this.Session = session;
-
             this.GlobalLightSize = GameSettings.DefaultGlobalLightSize;
             this.Lights = new NamedObjectReadOnlyCollection<Light>(lights);
             this.TriggerAreas = new RoomAreaReadOnlyCollection<TriggerArea>(triggerAreas);
             this.WalkAreas = new RoomAreaReadOnlyCollection<WalkArea>(walkAreas);
+            this.Walls = new(walls);
 
             dustEmitter ??= new DustEmitter(session, 6, 1000, 35);
             fireflyEmitter ??= new FireflyEmitter(session, 1, 500, 20);
@@ -533,6 +535,12 @@ namespace Remizione
             return result;
         }
 
+        // AddWall
+        protected void AddWall(string vertices)
+        {
+            walls.Add(new ReadOnlyPolygon(vertices));
+        }
+
         // AllowFireflyParticles
         [ScriptProperty]
         public bool AllowFireflyParticles { get; set; }
@@ -570,10 +578,6 @@ namespace Remizione
         // EnemyCount
         [ScriptProperty]
         public int EnemyCount { get; private set; }
-
-        // Flat2D
-        [ScriptProperty]
-        public bool Flat2D { get; set; }
 
         // GetCurrentLootTags
         public List<LootTag> GetCurrentLootTags()
@@ -702,5 +706,8 @@ namespace Remizione
 
         // WalkAreas
         public RoomAreaReadOnlyCollection<WalkArea> WalkAreas { get; }
+
+        // Walls
+        public ReadOnlyCollection<ReadOnlyPolygon> Walls { get; }
     }
 }
