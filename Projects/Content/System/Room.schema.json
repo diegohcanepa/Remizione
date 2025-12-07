@@ -1,89 +1,89 @@
 {
-	"$schema": "http://json-schema.org/draft-07/schema#",
-	"$id": "Room.schema.json",
-	"title": "Room schema",
-	"allOf": [
-		{
-			"$ref": "./Config.schema.json"
-		},
-		{
-			"type": "object",
-			"properties": {
-				"enemyAllowPools": {
-					"type": "string",
-					"description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
-				},
-				"enemyAllowTags": {
-					"type": "string",
-					"description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
-				},
-				"enemyDenyPools": {
-					"type": "string",
-					"description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
-				},
-				"enemyDenyTags": {
-					"type": "string",
-					"description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
-				},
-				"lockType": {
-					"type": "string",
-					"default": "None",
-					"enum": [
-						"None",
-						"Padlock"
-					],
-					"description": "Tipo de lock."
-				},
-				"maxEnemies": {
-					"type": "integer",
-					"minimum": -1,
-					"description": "Número máximo de veces que este elemento puede aparecer por 'run'."
-				},
-				"maxProps": {
-					"type": "integer",
-					"minimum": -1,
-					"description": "Número máximo de veces que este elemento puede aparecer por 'run'."
-				},
-				"placement": {
-					"type": "string",
-					"enum": [
-						"Any",
-						"Left",
-						"Right",
-						"Middle",
-						"MiddleOrLeft",
-						"MiddleOrRight"
-					],
-					"default": "Any",
-					"description": "Lugares donde puede ser spawneado el room."
-				},
-				"propAllowPools": {
-					"type": "string",
-					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
-				},
-				"propAllowTags": {
-					"type": "string",
-					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
-				},
-				"propDenyPools": {
-					"type": "string",
-					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
-				},
-				"propDenyTags": {
-					"type": "string",
-					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
-				},
-				"sideConstraint": {
-					"type": "string",
-					"enum": [
-						"None",
-						"Left",
-						"Right"
-					],
-					"default": "None",
-					"description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
-				}
-			}
-		}
-	]
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "Room.schema.json",
+    "title": "Room schema",
+    "allOf": [
+        {
+            "$ref": "./Config.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "enemyAllowPools": {
+                    "type": "string",
+                    "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
+                },
+                "enemyAllowTags": {
+                    "type": "string",
+                    "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
+                },
+                "enemyDenyPools": {
+                    "type": "string",
+                    "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
+                },
+                "enemyDenyTags": {
+                    "type": "string",
+                    "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
+                },
+                "lockType": {
+                    "type": "string",
+                    "default": "None",
+                    "enum": [
+                        "None",
+                        "Padlock"
+                    ],
+                    "description": "Tipo de lock."
+                },
+                "maxEnemies": {
+                    "type": "integer",
+                    "minimum": -1,
+                    "description": "Número máximo de veces que este elemento puede aparecer por 'run'."
+                },
+                "maxProps": {
+                    "type": "integer",
+                    "minimum": -1,
+                    "description": "Número máximo de veces que este elemento puede aparecer por 'run'."
+                },
+                "placement": {
+                    "type": "string",
+                    "enum": [
+                        "Any",
+                        "Left",
+                        "Right",
+                        "Middle",
+                        "MiddleOrLeft",
+                        "MiddleOrRight"
+                    ],
+                    "default": "Any",
+                    "description": "Lugares donde puede ser spawneado el room."
+                },
+                "propAllowPools": {
+                    "type": "string",
+                    "description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
+                },
+                "propAllowTags": {
+                    "type": "string",
+                    "description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
+                },
+                "propDenyPools": {
+                    "type": "string",
+                    "description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
+                },
+                "propDenyTags": {
+                    "type": "string",
+                    "description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
+                },
+                "sideConstraint": {
+                    "type": "string",
+                    "enum": [
+                        "None",
+                        "Left",
+                        "Right"
+                    ],
+                    "default": "None",
+                    "description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
+                }
+            }
+        }
+    ]
 }

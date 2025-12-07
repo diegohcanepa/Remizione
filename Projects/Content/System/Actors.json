@@ -2,8 +2,13 @@
   "$schema": "./ThingData.schema.json",
   "data": [
     {
-      "name": "Zabul",
+      "name": "EnviousEye",
       "unlocked": true
+    },
+    {
+      "name": "Zabul",
+      "unlocked": true,
+      "maxSpawnAmount": 3
     }
   ]
 }

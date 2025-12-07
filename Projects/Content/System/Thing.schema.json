@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "Thing.schema.json",
   "title": "Thing schema",
   "allOf": [
@@ -17,9 +17,8 @@
         },
         "interactionGoalReward": {
           "type": "string",
-          "default": 0,
-          "description": "Lista elementos que desbloquea el interaction goal (items, rooms, actors, props).",
-          "minimum": 0
+          "default": "0",
+          "description": "Lista elementos que desbloquea el interaction goal (items, rooms, actors, props)."
         },
         "killGoal": {
           "type": "integer",
@@ -29,9 +28,8 @@
         },
         "killGoalReward": {
           "type": "string",
-          "default": 0,
-          "description": "Lista elementos que desbloquea el kill goal (items, rooms, actors, props).",
-          "minimum": 0
+          "default": "0",
+          "description": "Lista elementos que desbloquea el kill goal (items, rooms, actors, props)."
         },
         "maxPerRoom": {
           "type": "integer",

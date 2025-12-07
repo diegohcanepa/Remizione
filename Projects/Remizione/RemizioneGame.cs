@@ -120,7 +120,7 @@ namespace Remizione
 
             Effects = new GameEffects(this);
             LocalizationManager.Initialize(this);
-            AudioManager.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "SoundData.xml"));
+            AudioManager.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Sounds.xml"));
 
             Fonts.Initialize(Content);
             UserSettingsData userSettings = UserSettingsData.Load(this);

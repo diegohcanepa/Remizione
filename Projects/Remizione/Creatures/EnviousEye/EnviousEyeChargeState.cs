@@ -3,14 +3,14 @@
 namespace Remizione
 {
     /// <summary>
-    /// NosyHemorrhoidChargeState
+    /// EnviousEyeChargeState
     /// </summary>
-    internal class NosyHemorrhoidChargeState : AIState
+    internal class EnviousEyeChargeState : AIState
     {
         private int cooldown;
 
         // Constructor
-        public NosyHemorrhoidChargeState(AIStateMachine stateMachine)
+        public EnviousEyeChargeState(AIStateMachine stateMachine)
             : base(stateMachine, AIStateName.Charge)
         {
         }

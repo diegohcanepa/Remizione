@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.9.1</string>
+        <string>7.10.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -339,6 +339,29 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">EnviousEye-assets/Move01.png</key>
+            <key type="filename">EnviousEye-assets/Move02.png</key>
+            <key type="filename">EnviousEye-assets/Move03.png</key>
+            <key type="filename">EnviousEye-assets/Move04.png</key>
+            <key type="filename">EnviousEye-assets/Stand01.png</key>
+            <key type="filename">EnviousEye-assets/Stand02.png</key>
+            <key type="filename">EnviousEye-assets/Stand03.png</key>
+            <key type="filename">EnviousEye-assets/Stand04.png</key>
+            <key type="filename">EnviousEye-assets/Stand05.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,3,13,5</rect>
+                <key>scale9Paddings</key>
+                <rect>6,3,13,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Grandma-assets/Stand01.png</key>
             <key type="filename">Grandma-assets/StandHead01.png</key>
             <key type="filename">Grandma-assets/StandHead02.png</key>
@@ -429,29 +452,6 @@
                 <rect>9,8,18,15</rect>
                 <key>scale9Paddings</key>
                 <rect>9,8,18,15</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">NosyHemorrhoid-assets/Move01.png</key>
-            <key type="filename">NosyHemorrhoid-assets/Move02.png</key>
-            <key type="filename">NosyHemorrhoid-assets/Move03.png</key>
-            <key type="filename">NosyHemorrhoid-assets/Move04.png</key>
-            <key type="filename">NosyHemorrhoid-assets/Stand01.png</key>
-            <key type="filename">NosyHemorrhoid-assets/Stand02.png</key>
-            <key type="filename">NosyHemorrhoid-assets/Stand03.png</key>
-            <key type="filename">NosyHemorrhoid-assets/Stand04.png</key>
-            <key type="filename">NosyHemorrhoid-assets/Stand05.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,3,13,5</rect>
-                <key>scale9Paddings</key>
-                <rect>6,3,13,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -568,10 +568,10 @@
                     <filename>Berta-assets</filename>
                     <filename>BloodyEye-assets</filename>
                     <filename>HellGoat-assets</filename>
-                    <filename>NosyHemorrhoid-assets</filename>
                     <filename>Zabul-assets</filename>
                     <filename>Designer-assets</filename>
                     <filename>Mandinga-assets</filename>
+                    <filename>EnviousEye-assets</filename>
                 </array>
             </struct>
         </map>

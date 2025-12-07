@@ -51,7 +51,7 @@ namespace Remizione
         {
             return lightKind switch
             {
-                LightKind.Fire => ColorTween.Create(TweenStyle.Linear, color, color * .94f, 90, -1),
+                LightKind.Fire => ColorTween.Create(TweenStyle.Linear, color, color * .9f, 90, -1),
                 LightKind.Fireplace => ColorTween.Create(TweenStyle.Linear, color, color * .96f, 90, -1),
                 LightKind.Lantern => ColorTween.Create(TweenStyle.Linear, color * .98f, color * .96f, 90, -1),
                 _ => null,

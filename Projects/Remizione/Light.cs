@@ -53,7 +53,6 @@ namespace Remizione
                 //  Fire
                 case LightKind.Fire:
                     Passes = 2;
-                    Color = new Color(255, 127, 90) * .4f;
                     lightSprite.Tweens.ColorTween = Utils.CreateLightColorTween(LightKind, Color);
                     lightSprite.Tweens.ScaleTween = Utils.CreateLightScaleTween(LightKind, Scale);
                     litTweenDuration = 2000;

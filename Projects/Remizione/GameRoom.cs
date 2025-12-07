@@ -24,7 +24,6 @@ namespace Remizione
         private RenderTarget2D? lightMapTarget;
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
-        private readonly List<LootTag> lootTags = [];
         private static Light playerLight = null!;
         private string lastKnownMusicTag = string.Empty;
         private FacingDirection lastKnownPlayerDirection;
@@ -319,11 +318,6 @@ namespace Remizione
             RecountEnemies();
         }
 
-        // OnCollectLootTags
-        protected virtual void OnCollectLootTags(List<LootTag> collectedTags)
-        {
-        }
-
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
@@ -498,13 +492,6 @@ namespace Remizione
             return result;
         }
 
-        // AddLootTag
-        public void AddLootTag(LootTag lootTag)
-        {
-            if (!lootTags.Contains(lootTag))
-                lootTags.Add(lootTag);
-        }
-
         // AddTriggerArea
         public TriggerArea AddTriggerArea(string name, Script routine, Script? exitRoutine, bool await, bool stopActor, bool once, FlagCondition? condition, params Vector2[] vertices)
         {
@@ -579,16 +566,6 @@ namespace Remizione
         [ScriptProperty]
         public int EnemyCount { get; private set; }
 
-        // GetCurrentLootTags
-        public List<LootTag> GetCurrentLootTags()
-        {
-            var result = new List<LootTag>(lootTags);
-
-            OnCollectLootTags(result);
-
-            return result;
-        }
-
         // GlobalLightSize
         [ScriptProperty]
         public Vector2 GlobalLightSize
@@ -596,10 +573,6 @@ namespace Remizione
             get => Session.Environment.GlobalLight.Scale;
             set => Session.Environment.GlobalLight.Scale = value;
         }
-
-        // IsOutdoor
-        [ScriptProperty]
-        public bool IsOutdoor { get; set; } = true;
 
         // IsWalkable
         public virtual bool IsWalkable => true;
@@ -647,22 +620,6 @@ namespace Remizione
             }
         }
 
-        // RemoveWalkArea
-        public bool RemoveWalkArea(string name)
-        {
-            if (WalkAreas.Find(name) is WalkArea walkArea)
-            {
-                walkAreas.Remove(walkArea);
-
-                if (WalkArea == walkArea)
-                    WalkArea = null;
-
-                return true;
-            }
-
-            return false;
-        }
-
         // RestoreAfterGateway
         [ScriptMethod]
         public void RestoreAfterGateway()
@@ -694,8 +651,7 @@ namespace Remizione
         {
             var interval = new Int32Range(30);
             int count = 8;
-            if (IsOutdoor)
-                Session.Environment.GlobalLight.Flash(interval, count);
+            Session.Environment.GlobalLight.Flash(interval, count);
         }
 
         // TriggerAreas

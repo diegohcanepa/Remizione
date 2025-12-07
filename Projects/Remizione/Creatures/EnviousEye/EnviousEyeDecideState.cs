@@ -3,12 +3,12 @@
 namespace Remizione
 {
     /// <summary>
-    /// NosyHemorrhoidDecideState
+    /// EnviousEyeDecideState
     /// </summary>
-    internal class NosyHemorrhoidDecideState : AIState
+    internal class EnviousEyeDecideState : AIState
     {
         // Constructor
-        public NosyHemorrhoidDecideState(AIStateMachine stateMachine)
+        public EnviousEyeDecideState(AIStateMachine stateMachine)
             : base(stateMachine, AIStateName.Decide)
         {
         }

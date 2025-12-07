@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SoundData>
+<Data>
 	<!-- Ambience -->
 	<Ambience Name="Ambience1" MaxInstances="1" />
 	<Ambience Name="Day" />
@@ -89,4 +89,4 @@
 	<FX Name="WoodDebris" MaxInstances="4" Sounds="1..2" />
 	<FX Name="WhooshA" MaxInstances="6" />
 	<FX Name="ZapLoop" />
-</SoundData>
+</Data>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:fb1f35c3ec5b383c41c264f6c80a998f:8d9b54d6476676930185ce1482c647cc:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:32ae49b3afa2ebb37ab9d3d8439a0e3c:ebdec596c7f46383c1ab49ed50692241:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -102,6 +102,15 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Edmund-assets/TalkHead02.png" x="334" y="179" w="28" h="25"/>
     <sprite n="Edmund-assets/ThrowItem01.png" x="364" y="179" w="28" h="25"/>
     <sprite n="Edmund-assets/ThrowItem02.png" x="394" y="179" w="28" h="25"/>
+    <sprite n="EnviousEye-assets/Move01.png" x="455" y="52" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Move02.png" x="228" y="86" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Move03.png" x="228" y="99" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Move04.png" x="228" y="112" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand01.png" x="455" y="52" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand02.png" x="315" y="91" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand03.png" x="315" y="104" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand04.png" x="315" y="117" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand05.png" x="315" y="130" w="25" h="11"/>
     <sprite n="Grandma-assets/Stand01.png" x="489" y="191" w="21" h="20"/>
     <sprite n="Grandma-assets/StandHead01.png" x="489" y="213" w="21" h="20"/>
     <sprite n="Grandma-assets/StandHead02.png" x="244" y="170" w="21" h="20"/>
@@ -125,15 +134,6 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Mandinga-assets/StandHead02.png" x="228" y="30" w="36" h="30"/>
     <sprite n="Mandinga-assets/TalkHead01.png" x="266" y="30" w="36" h="30"/>
     <sprite n="Mandinga-assets/TalkHead02.png" x="190" y="30" w="36" h="30"/>
-    <sprite n="NosyHemorrhoid-assets/Move01.png" x="455" y="52" w="25" h="11"/>
-    <sprite n="NosyHemorrhoid-assets/Move02.png" x="228" y="86" w="25" h="11"/>
-    <sprite n="NosyHemorrhoid-assets/Move03.png" x="228" y="99" w="25" h="11"/>
-    <sprite n="NosyHemorrhoid-assets/Move04.png" x="228" y="112" w="25" h="11"/>
-    <sprite n="NosyHemorrhoid-assets/Stand01.png" x="455" y="52" w="25" h="11"/>
-    <sprite n="NosyHemorrhoid-assets/Stand02.png" x="315" y="91" w="25" h="11"/>
-    <sprite n="NosyHemorrhoid-assets/Stand03.png" x="315" y="104" w="25" h="11"/>
-    <sprite n="NosyHemorrhoid-assets/Stand04.png" x="315" y="117" w="25" h="11"/>
-    <sprite n="NosyHemorrhoid-assets/Stand05.png" x="315" y="130" w="25" h="11"/>
     <sprite n="Reaper-assets/Move01.png" x="2" y="174" w="22" h="17"/>
     <sprite n="Reaper-assets/Move02.png" x="124" y="140" w="22" h="17"/>
     <sprite n="Reaper-assets/Move03.png" x="148" y="140" w="22" h="17"/>

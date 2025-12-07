@@ -5,14 +5,14 @@ using System;
 namespace Remizione
 {
     /// <summary>
-    /// NosyHemorrhoidPatrolState
+    /// EnviousEyePatrolState
     /// </summary>
-    internal class NosyHemorrhoidPatrolState : AIState
+    internal class EnviousEyePatrolState : AIState
     {
         private int cooldown;
 
         // Constructor
-        public NosyHemorrhoidPatrolState(AIStateMachine stateMachine)
+        public EnviousEyePatrolState(AIStateMachine stateMachine)
             : base(stateMachine, AIStateName.Patrol)
         {
         }

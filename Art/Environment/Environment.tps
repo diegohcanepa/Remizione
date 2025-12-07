@@ -1109,6 +1109,9 @@
             <key type="filename">RideCar-assets/RideCar03.png</key>
             <key type="filename">RideCar-assets/RideCar04.png</key>
             <key type="filename">RideCar-assets/RideCar05.png</key>
+            <key type="filename">RideCar-assets/RideCar06.png</key>
+            <key type="filename">RideCar-assets/RideCar07.png</key>
+            <key type="filename">RideCar-assets/RideCar08.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

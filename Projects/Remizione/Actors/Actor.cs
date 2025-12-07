@@ -621,6 +621,7 @@ namespace Remizione
         public bool IsFollowingPath { get; private set; }
 
         // IsPlayer
+        [ScriptProperty]
         public bool IsPlayer => Session.Player == this;
 
         // IsStandingOrMoving

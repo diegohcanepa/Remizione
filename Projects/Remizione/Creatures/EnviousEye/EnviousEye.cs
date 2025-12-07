@@ -3,12 +3,12 @@
 namespace Remizione
 {
     /// <summary>
-    /// Nosy Hemorrhoid
+    /// EnviousEye
     /// </summary>
-    public sealed class NosyHemorrhoid : Enemy
+    public sealed class EnviousEye : Enemy
     {
         // Constructor
-        public NosyHemorrhoid(GameSession session, string name)
+        public EnviousEye(GameSession session, string name)
             : base(session, name)
         {
             AnimationSettings.SupressAll();
@@ -16,9 +16,9 @@ namespace Remizione
             Guts = 7;
             ShadowSpotSize = 0;
 
-            _ = new NosyHemorrhoidDecideState(AIStateMachine);
-            _ = new NosyHemorrhoidPatrolState(AIStateMachine);
-            _ = new NosyHemorrhoidChargeState(AIStateMachine);
+            _ = new EnviousEyeDecideState(AIStateMachine);
+            _ = new EnviousEyePatrolState(AIStateMachine);
+            _ = new EnviousEyeChargeState(AIStateMachine);
         }
 
         #region Protected members

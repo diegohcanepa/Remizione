@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "EffectDefinitions.schema.json",
   "title": "EffectDefinition Data File (Validado con Enums)",
   "type": "object",
@@ -8,14 +8,14 @@
       "type": "array",
       "description": "Una lista de objetos EffectDefinition.",
       "items": {
-        "$ref": "#/definitions/EffectDefinition"
+        "$ref": "#/$defs/EffectDefinition"
       }
     }
   },
   "required": [
     "data"
   ],
-  "definitions": {
+  "$defs": {
     "EffectDefinition": {
       "type": "object",
       "description": "Definición de las propiedades de un MetaItem.",

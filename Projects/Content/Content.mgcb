@@ -971,8 +971,8 @@
 #begin System/ScriptLibrary.esl
 /copy:System/ScriptLibrary.esl
 
-#begin System/SoundData.xml
-/copy:System/SoundData.xml
+#begin System/Sounds.xml
+/copy:System/Sounds.xml
 
 #begin Text/en-us.lpkg
 /copy:Text/en-us.lpkg

@@ -146,7 +146,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(HellGoat));
             scriptRegistry.RegisterEntity(typeof(Hub));
             scriptRegistry.RegisterEntity(typeof(Monitor));
-            scriptRegistry.RegisterEntity(typeof(NosyHemorrhoid));
+            scriptRegistry.RegisterEntity(typeof(EnviousEye));
             scriptRegistry.RegisterEntity(typeof(NumberSix));
             scriptRegistry.RegisterEntity(typeof(PostClock));
             scriptRegistry.RegisterEntity(typeof(Pottery));
@@ -380,12 +380,15 @@ namespace Remizione
                 HUD.Update(gameTime);
 
             // Check game over condition
-            if (!IsAwaiting)
+            if (GameplayMode == GameplayMode.Action)
             {
-                if (Player?.IsDead == true)
+                if (!IsAwaiting)
                 {
-                    FailedRuns++;
-                    AwaitRoutine(RoutineNames.GameOver);
+                    if (Player?.IsDead == true)
+                    {
+                        FailedRuns++;
+                        AwaitRoutine(RoutineNames.GameOver);
+                    }
                 }
             }
         }
@@ -601,6 +604,7 @@ namespace Remizione
             {
                 if (value != field)
                 {
+                    field?.StopMoving();
                     field = value;
                     HUD.Reset();
                     if (value != null)
