@@ -203,6 +203,30 @@
 /processorParam:Quality=Best
 /build:Audio/FX/AppleBite.wav
 
+#begin Audio/FX/BertaHurt1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/BertaHurt1.wav;Audio/FX/BertaHurt1
+
+#begin Audio/FX/BertaHurt2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/BertaHurt2.wav;Audio/FX/BertaHurt2
+
+#begin Audio/FX/BertaHurt3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/BertaHurt3.wav;Audio/FX/BertaHurt3
+
+#begin Audio/FX/BertaHurt4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/BertaHurt4.wav;Audio/FX/BertaHurt4
+
 #begin Audio/FX/BlipA1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -593,6 +617,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/PickupTicket.wav;Audio/FX/PickupTicket
 
+#begin Audio/FX/PlayerDamage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/PlayerDamage.wav;Audio/FX/PlayerDamage
+
 #begin Audio/FX/PneumaticDoor.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -880,6 +910,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Music/Ride01.wav;Audio/Music/Ride01
+
+#begin Audio/Music/Run01.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Run01.wav;Audio/Music/Run01
 
 #begin Audio/Music/ThemePark.wav
 /importer:WavImporter

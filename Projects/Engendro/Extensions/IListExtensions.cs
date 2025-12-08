@@ -33,6 +33,59 @@ namespace Engendro
             return result;
         }
 
+        // NextIndex
+        public static int NextIndex<T>(this IList<T> list, T currentItem)
+        {
+            var currentIndex = list.IndexOf(currentItem);
+            return currentIndex < 0 ? -1 : NextIndex(list, currentIndex);
+        }
+
+        // NextIndex
+        public static int NextIndex<T>(this IList<T> list, int currentIndex)
+        {
+            // El operador módulo (%) maneja el wrap-around automáticamente.
+            // (currentIndex + 1) será el siguiente índice. Si es igual al Count,
+            // el módulo con Count devolverá 0.
+            return (currentIndex + 1) % list.Count;
+        }
+
+        // NextItem
+        public static T? NextItem<T>(this IList<T> list, T currentItem)
+        {
+            var index = NextIndex(list, currentItem);
+            if (index < 0)
+                return default;
+            else
+                return list[index];
+        }
+
+        // PreviousIndex
+        public static int PreviousIndex<T>(this IList<T> list, T currentItem)
+        {
+            var currentIndex = list.IndexOf(currentItem);
+            return currentIndex < 0 ? -1 : PreviousIndex(list, currentIndex);
+        }
+
+        // PreviousIndex
+        public static int PreviousIndex<T>(this IList<T> list, int currentIndex)
+        {
+            // El método más seguro para obtener el índice anterior cíclico en C# es:
+            // (currentIndex - 1 + list.Count) garantiza que el resultado de (currentIndex - 1)
+            // no sea negativo (lo que ocurre cuando currentIndex es 0), y luego
+            // el módulo (%) con Count realiza el wrap-around al último índice.
+            return (currentIndex - 1 + list.Count) % list.Count;
+        }
+
+        // PreviousItem
+        public static T? PreviousItem<T>(this IList<T> list, T currentItem)
+        {
+            var index = PreviousIndex(list, currentItem);
+            if (index < 0)
+                return default;
+            else
+                return list[index];
+        }
+
         // RandomIndex
         public static int RandomIndex<T>(this IList<T> list, Random? random = null)
         {

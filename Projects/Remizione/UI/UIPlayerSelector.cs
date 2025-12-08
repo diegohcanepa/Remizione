@@ -54,7 +54,7 @@ namespace Remizione
         {
             Vector2 InvalidateIcon(int i, Vector2 pos)
             {
-                icons[i].Opacity = session.Players[i].IsPlayer ? 1 : .7f;
+                icons[i].Opacity = session.Players[i].IsPlayer ? 1.4f : .8f;
                 icons[i].Scale = session.Players[i].IsPlayer ? ScaleInfo.UIElement.Large : ScaleInfo.UIElement.Medium;
                 icons[i].Position = pos;
                 icons[i].Image = Atlases.UI.GetImage(session.Players[i].Name + "Icon");
@@ -90,30 +90,14 @@ namespace Remizione
             {
                 if (InputBindings.PreviousPlayer.IsPressed(PlayerIndex.One))
                 {
-                    var index = session.Players.IndexOf(session.Player);
-                    if (index == 0)
-                        index = session.Players.Count - 1;
-                    else
-                        index--;
-
-                    session.Player = session.Players[index];
-
+                    session.Player = session.Players.NextItem(session.Player);
                     Sound.Play(SoundNames.UISelectPlayer);
-
                     return HandleInputResult.Handled;
                 }
                 else if (InputBindings.NextPlayer.IsPressed(PlayerIndex.One))
                 {
-                    var index = session.Players.IndexOf(session.Player);
-                    if (index == session.Players.Count - 1)
-                        index = 0;
-                    else
-                        index++;
-
-                    session.Player = session.Players[index];
-
+                    session.Player = session.Players.PreviousItem(session.Player);
                     Sound.Play(SoundNames.UISelectPlayer);
-
                     return HandleInputResult.Handled;
                 }
             }

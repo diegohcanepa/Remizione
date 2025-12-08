@@ -190,6 +190,15 @@
                 <false/>
             </struct>
             <key type="filename">Berta-assets/Back01.png</key>
+            <key type="filename">Berta-assets/InsertCoin01.png</key>
+            <key type="filename">Berta-assets/InsertCoin02.png</key>
+            <key type="filename">Berta-assets/InsertCoin03.png</key>
+            <key type="filename">Berta-assets/InsertCoin04.png</key>
+            <key type="filename">Berta-assets/InsertCoin05.png</key>
+            <key type="filename">Berta-assets/InsertCoin06.png</key>
+            <key type="filename">Berta-assets/InsertCoin07.png</key>
+            <key type="filename">Berta-assets/InsertCoin08.png</key>
+            <key type="filename">Berta-assets/LookBehind01.png</key>
             <key type="filename">Berta-assets/Move01.png</key>
             <key type="filename">Berta-assets/RaiseArm01.png</key>
             <key type="filename">Berta-assets/RaiseArm02.png</key>
@@ -197,8 +206,12 @@
             <key type="filename">Berta-assets/Stand01.png</key>
             <key type="filename">Berta-assets/StandHead01.png</key>
             <key type="filename">Berta-assets/StandHead02.png</key>
+            <key type="filename">Berta-assets/TakeSack01.png</key>
+            <key type="filename">Berta-assets/TakeSack02.png</key>
             <key type="filename">Berta-assets/TalkHead01.png</key>
             <key type="filename">Berta-assets/TalkHead02.png</key>
+            <key type="filename">Berta-assets/ThrowItem01.png</key>
+            <key type="filename">Berta-assets/ThrowItem02.png</key>
             <key type="filename">Edmund-assets/Back01.png</key>
             <key type="filename">Edmund-assets/BackRaiseArm01.png</key>
             <key type="filename">Edmund-assets/BackRaiseArm02.png</key>
@@ -260,6 +273,21 @@
                 <rect>7,6,14,13</rect>
                 <key>scale9Paddings</key>
                 <rect>7,6,14,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Berta-assets/Guts0.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,2,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,2,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

@@ -287,6 +287,10 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
                 playerPosition = DataConverter.ToVector2(playerPositionValue);
 
+            // AllowPlayerSelector
+            if (sessionNode.Attributes[nameof(AllowPlayerSelector)]?.Value is string allowPlayerSelector)
+                this.AllowPlayerSelector= XmlConvert.ToBoolean(allowPlayerSelector);
+
             // CompletedRuns
             if (sessionNode.Attributes[nameof(CompletedRuns)]?.Value is string completedRuns)
                 this.CompletedRuns = XmlConvert.ToInt32(completedRuns);
@@ -407,6 +411,9 @@ namespace Remizione
             if (playerPosition.HasValue)
                 output.WriteAttributeString(nameof(playerPosition), DataConverter.ToString(playerPosition.Value));
 
+            // AllowPlayerSelector
+            output.WriteAttributeString(nameof(AllowPlayerSelector), XmlConvert.ToString(AllowPlayerSelector));
+
             // CompletedRuns
             output.WriteAttributeString(nameof(CompletedRuns), XmlConvert.ToString(CompletedRuns));
 
@@ -445,6 +452,10 @@ namespace Remizione
                 HUD.PlayerSelector.Invalidate();
             }
         }
+
+        // AllowPlayerSelector
+        [ScriptProperty]
+        public bool AllowPlayerSelector { get; set; }
 
         // BeginRun
         [ScriptMethod]

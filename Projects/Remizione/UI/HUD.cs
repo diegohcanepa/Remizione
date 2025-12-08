@@ -60,7 +60,8 @@ namespace Remizione
         {
             if (session.GameplayMode == GameplayMode.Adventure)
             {
-                PlayerSelector.Draw(gameTime);
+                if (session.AllowPlayerSelector)
+                    PlayerSelector.Draw(gameTime);
                 return;
             }
 

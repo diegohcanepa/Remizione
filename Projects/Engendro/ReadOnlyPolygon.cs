@@ -151,9 +151,10 @@ namespace Engendro
         // OffsetCore
         protected void OffsetCore(float x, float y)
         {
+            var offsetVector = new Vector2(x, y);
             for (var i = 0; i < vertices.Count; i++)
             {
-                vertices[i] += new Vector2(x, y);
+                vertices[i] += offsetVector;
             }
         }
 

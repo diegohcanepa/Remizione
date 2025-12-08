@@ -13,6 +13,7 @@
 			"name": "PhysicalDamage",
             "damage": "1",
 			"impactWord": "AghRed",
+			"knockback": "8,0",
 			"sound": "AppleBite"
 		},		
 		{

@@ -48,33 +48,63 @@ namespace Engendro
         #endregion
 
         // Deflate
-        public void Deflate(float distance) => DeflateCore(distance);
+        public void Deflate(float distance)
+        {
+            DeflateCore(distance);
+        }
 
         // Flip
-        public void Flip(float originX, float originY) => FlipCore(originX, originY);
+        public void Flip(float originX, float originY)
+        {
+            FlipCore(originX, originY);
+        }
 
         // FlipHorizontally
-        public void FlipHorizontally(float originX) => FlipCore(originX, null);
+        public void FlipHorizontally(float originX)
+        {
+            FlipCore(originX, null);
+        }
 
         // FlipVertically
-        public void FlipVertically(float originY) => FlipCore(null, originY);
+        public void FlipVertically(float originY)
+        {
+            FlipCore(null, originY);
+        }
 
         // Inflate
-        public void Inflate(float distance) => InflateCore(distance);
+        public void Inflate(float distance)
+        {
+            InflateCore(distance);
+        }
 
         // Offset
-        public void Offset(float x, float y) => OffsetCore(x, y);
+        public void Offset(float x, float y)
+        {
+            OffsetCore(x, y);
+        }
 
         // SetVertices
-        public void SetVertices(string value) => SetVerticesCore(value, 0);
+        public void SetVertices(string value)
+        {
+            SetVerticesCore(value, 0);
+        }
 
         // SetVertices
-        public void SetVertices(string value, float inflate) => SetVerticesCore(value, 0);
+        public void SetVertices(string value, float inflate)
+        {
+            SetVerticesCore(value, 0);
+        }
 
         // SetVertices
-        public void SetVertices(IList<Vector2> vertices) => SetVerticesCore(vertices, 0);
+        public void SetVertices(IList<Vector2> vertices)
+        {
+            SetVerticesCore(vertices, 0);
+        }
 
         // SetVertices
-        public void SetVertices(IList<Vector2> vertices, float inflate) => SetVerticesCore(vertices, inflate);
+        public void SetVertices(IList<Vector2> vertices, float inflate)
+        {
+            SetVerticesCore(vertices, inflate);
+        }
     }
 }
