@@ -1,8 +1,10 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using Remizione.Traps;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Remizione
 {
@@ -166,92 +168,51 @@ namespace Remizione
         private void Populate()
         {
             PopulateProps();
+            PopulateHazards();
             PopulateEnemies();
         }
 
         // PopulateEnemies
         private void PopulateEnemies()
         {
-            var instanceCount = 0;
             var maxInstances = Config.EnemyScope.MaxPerRoom;
-
-            var enemyList = new List<string>();
-
-            // 1) Filter by room scope
             var configList = FilterByScope<Enemy>(ThingConfig.All, Config.EnemyScope);
+            SpawnInWalkArea(configList, maxInstances);
+        }
 
-            // Construir candidatos iterando props
-            var candidates = new List<ThingConfig>();
-            foreach (var config in configList)
+        // PopulateHazards
+        private void PopulateHazards()
+        {
+            var maxInstances = Config.HazardScope.MaxPerRoom;
+            var configList = FilterByScope<Hazard>(ThingConfig.All, Config.HazardScope);
+            SpawnInWalkArea(configList, maxInstances);
+
+            var props = new List<Prop>(Children.OfType<Prop>());
+
+            // Remove hazards that collides with props
+            var removeList = new List<Hazard>();
+            foreach (var hazard in Children.OfType<Hazard>())
             {
-                // MaxPerRoom
-                if (!config.PassesMaxPerRoomConstraint(spawnCounter.GetCount(config.Name)))
-                    continue;
-
-                // MaxPerRun
-                if (!config.PassesMaxPerRunConstraint())
-                    continue;
-
-                candidates.Add(config);
-
-                // Pick
-                var chanceTable = new ChanceTable();
-                foreach (var enemy in candidates)
+                foreach (var prop in props)
                 {
-                    chanceTable.Add(enemy.Name, enemy.Weight);
-                }
-
-                if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
-                    continue;
-
-                if (ThingConfig.Find(chanceTableItem.Name) is not ThingConfig chosen)
-                    continue;
-
-                var spawnCount = Random.Next(config.MinSpawnAmount, config.MaxSpawnAmount + 1);
-                for (var j = 0; j < spawnCount; j++)
-                {
-                    // Log spawn in room
-                    spawnCounter.Increment(chosen.Name);
-
-                    // Log spawn in run
-                    RunManager.SpawnCounter.Increment(chosen.Name);
-
-                    enemyList.Add(chosen.Name);
-
-                    // MaxPerRoom
-                    if (!config.PassesMaxPerRoomConstraint(spawnCounter.GetCount(chosen.Name)))
+                    if (hazard.Collider.BoundingRectangleF.Intersects(prop.Collider.BoundingRectangleF))
+                    {
+                        removeList.Add(hazard);
                         break;
-
-                    // MaxPerRun
-                    if (!config.PassesMaxPerRunConstraint())
-                        break;
+                    }
                 }
             }
 
-            if (WalkArea != null && enemyList.Count > 0)
+            foreach (var hazard in removeList)
             {
-                var poly = new Polygon(WalkArea.Polygon.Vertices, -30);
-
-                var spawnPoints = GetEnemySpawnPoints(poly.BoundingRectangle, enemyList.Count, 18);
-                for (var i = 0; i < spawnPoints.Count; i++)
-                {
-                    var instance = CreateRuntimeThingCloneCore(enemyList[i]);
-                    instance.Position = spawnPoints[i];
-                    Children.Add(instance);
-
-                    instanceCount++;
-
-                    // Max prop per room (any enemy)
-                    if (maxInstances > 0 && instanceCount == maxInstances)
-                        break;
-                }
+                hazard.Unparent();
             }
         }
 
         // PopulateProps
         private void PopulateProps()
         {
-            var instanceCount = 0;
+            var roomInstanceCount = 0;
             var maxInstances = Config.PropScope.MaxPerRoom;
 
             // 1) Filter by room scope
@@ -323,16 +284,90 @@ namespace Remizione
                 instance.Position = placeholder.Polygon.BoundingRectangleF.GetPoint(RectanglePoint.Bottom);
                 Children.Add(instance);
 
-                instanceCount++;
+                roomInstanceCount++;
 
                 // Max per room (any prop)
-                if (maxInstances > 0 && instanceCount == maxInstances)
+                if (maxInstances > 0 && roomInstanceCount == maxInstances)
                     return;
             }
         }
 
         // Random
         protected Random Random { get; }
+
+        // SpawnInWalkArea
+        private void SpawnInWalkArea(IList<ThingConfig> configList, int maxInstances)
+        {
+            var roomInstanceCount = 0;
+            var nameList = new List<string>();
+
+            // Construir candidatos iterando props
+            var candidates = new List<ThingConfig>();
+            foreach (var config in configList)
+            {
+                // MaxPerRoom
+                if (!config.PassesMaxPerRoomConstraint(spawnCounter.GetCount(config.Name)))
+                    continue;
+
+                // MaxPerRun
+                if (!config.PassesMaxPerRunConstraint())
+                    continue;
+
+                candidates.Add(config);
+
+                // Pick
+                var chanceTable = new ChanceTable();
+                foreach (var enemy in candidates)
+                {
+                    chanceTable.Add(enemy.Name, enemy.Weight);
+                }
+
+                if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
+                    continue;
+
+                if (ThingConfig.Find(chanceTableItem.Name) is not ThingConfig chosen)
+                    continue;
+
+                var spawnCount = Random.Next(config.MinSpawnAmount, config.MaxSpawnAmount + 1);
+                for (var j = 0; j < spawnCount; j++)
+                {
+                    // Log spawn in room
+                    spawnCounter.Increment(chosen.Name);
+
+                    // Log spawn in run
+                    RunManager.SpawnCounter.Increment(chosen.Name);
+
+                    nameList.Add(chosen.Name);
+
+                    // MaxPerRoom
+                    if (!config.PassesMaxPerRoomConstraint(spawnCounter.GetCount(chosen.Name)))
+                        break;
+
+                    // MaxPerRun
+                    if (!config.PassesMaxPerRunConstraint())
+                        break;
+                }
+            }
+
+            if (WalkArea != null && nameList.Count > 0)
+            {
+                var poly = new Polygon(WalkArea.Polygon.Vertices, -30);
+
+                var spawnPoints = GetEnemySpawnPoints(poly.BoundingRectangle, nameList.Count, 18);
+                for (var i = 0; i < spawnPoints.Count; i++)
+                {
+                    var instance = CreateRuntimeThingCloneCore(nameList[i]);
+                    instance.Position = spawnPoints[i];
+                    Children.Add(instance);
+
+                    roomInstanceCount++;
+
+                    // Max per room (any)
+                    if (maxInstances > 0 && instanceCount == maxInstances)
+                        break;
+                }
+            }
+        }
 
         #endregion
 

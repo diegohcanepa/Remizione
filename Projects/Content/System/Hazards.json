@@ -1,0 +1,11 @@
+{
+  "$schema": "./ThingData.schema.json",
+  "data": [
+    {
+      "name": "SpearTrap",
+      "maxSpawnAmount": 6,
+      "minSpawnAmount": 3,
+      "unlocked": true
+    }
+  ]
+}

@@ -249,14 +249,15 @@ namespace Remizione
         // DropLoot
         protected void DropLoot()
         {
+            if (config == null)
+                return;
+
             if (Session.Room is not ProceduralRoom room)
                 return;
 
-            //Loot.TryDropLoot(room, Position, LootTableName, out _);
-
-            if (Random.Shared.NextDouble() < TicketRewardChance)
+            if (config.TicketRewardAmount > 0 && Random.Shared.NextDouble() < config.TicketRewardChance)
             {
-                var tickets = TicketReward.RandomValue(Random.Shared);
+                var tickets = Random.Shared.Next(config.TicketRewardAmount + 1);
                 if (tickets > 0 && Session.Player != null)
                 {
                     for (var i = 0; i < tickets; i++)
@@ -647,30 +648,6 @@ namespace Remizione
         public static bool ShowHotspots { get; set; }
 #endif
 
-        // GridMargin
-        [ScriptProperty]
-        public Vector2 GridMargin { get; set; }
-
-        // GridMeasureType
-        [ScriptProperty]
-        public GridMeasureType GridMeasureType { get; set; }
-
-        // GetGridPixelArea
-        public RectangleF GetGridPixelArea()
-        {
-            var result = GridMeasureType switch
-            {
-                GridMeasureType.BoundingBox => BoundingBox,
-                GridMeasureType.Collider => Collider.BoundingRectangleF,
-                GridMeasureType.Hotspot => Hotspot.BoundingRectangleF,
-                _ => RectangleF.Empty,
-            };
-
-            result.Inflate(GridMargin);
-
-            return result;
-        }
-
         // HitEffect
         [ScriptProperty]
         public HitEffect HitEffect { get; set; }
@@ -1036,10 +1013,6 @@ namespace Remizione
         [ScriptProperty]
         public Vector2 OverheadOrigin { get; set; }
 
-        // PowerBonus
-        [ScriptProperty]
-        public int PowerBonus { get; set; }
-
         // PreventKnockback
         [ScriptProperty]
         public bool PreventKnockback { get; set; }
@@ -1218,14 +1191,6 @@ namespace Remizione
         // TerrainSound
         [ScriptProperty]
         public Sound? TerrainSound { get; set; }
-
-        // TicketReward
-        [ScriptProperty]
-        public Int32Range TicketReward { get; set; }
-
-        // TicketRewardChance
-        [ScriptProperty]
-        public float TicketRewardChance { get; set; } = .5f;
 
         // ThrowableSpawnPosition
         [ScriptProperty]

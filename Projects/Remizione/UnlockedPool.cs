@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Remizione.Traps;
 using System;
 using System.Collections.Generic;
 
@@ -126,7 +127,7 @@ namespace Remizione
                     Unlock(roomConfig.Name);
             }
 
-            // Things (actor and props)
+            // Things (Actor / Props / Hazard)
             foreach (var thingConfig in ThingConfig.All)
             {
                 if (thingConfig.Unlocked)
@@ -162,10 +163,10 @@ namespace Remizione
                 unlock = true;
             }
 
-            // Actor or prop
+            // Actor / Prop / Hazard
             else if (session.GetEntity<GameThing>(name) is GameThing thing)
             {
-                if (thing is Actor or Prop)
+                if (thing is Actor or Prop or Hazard)
                 {
                     things.Add(thing);
                     thingsDict.Add(name, thing);

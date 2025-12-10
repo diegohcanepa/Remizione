@@ -112,7 +112,7 @@ namespace Remizione
             if (session.IsConsoleVisible)
                 return HandleInputResult.Unhandled;
 
-            if (session.GameplayMode == GameplayMode.Adventure)
+            if (session.GameplayMode == GameplayMode.Adventure && session.AllowPlayerSelector)
                 return PlayerSelector.HandleInput(gameTime);
 
             if (leftHandSlot.HandleInput(gameTime) == HandleInputResult.Handled)

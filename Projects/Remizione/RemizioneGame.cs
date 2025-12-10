@@ -56,7 +56,8 @@ namespace Remizione
             MetaItem.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "MetaItems.json"));
             RoomConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
             ThingConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"),
-                             ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"));
+                             ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"),
+                             ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Hazards.json"));
 
             RideRoom.RegisterRideRoom(typeof(CommonRoom));
         }

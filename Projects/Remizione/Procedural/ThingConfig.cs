@@ -42,7 +42,7 @@ namespace Remizione
             }
 
             // MaxPerRoom
-            MaxPerRoom = 1;
+            MaxPerRoom = 0;
             if (element.TryGetProperty("maxPerRoom", out JsonElement maxPerRoomElement))
                 MaxPerRoom = Math.Max(MaxPerRoom, maxPerRoomElement.GetInt32());
 
@@ -58,6 +58,14 @@ namespace Remizione
 
             if (MinSpawnAmount > MaxSpawnAmount)
                 throw new InvalidOperationException($"[{Name}]: {nameof(MinSpawnAmount)} cannot be greater than MaxSpawnAmount.");
+
+            // TicketRewardAmount
+            if (element.TryGetProperty("TicketRewardAmount", out JsonElement ticketRewardAmountElement))
+                TicketRewardAmount = ticketRewardAmountElement.GetInt32();
+
+            // TicketRewardChance
+            if (element.TryGetProperty("TicketRewardChance", out JsonElement ticketRewardChanceElement))
+                TicketRewardChance = ticketRewardChanceElement.GetSingle();
 
             data.Add(Name, this);
             dataList.Add(this);
@@ -113,6 +121,12 @@ namespace Remizione
         {
             return MaxPerRoom == 0 || instanceCount < MaxPerRoom;
         }
+
+        // TicketRewardAmount
+        public int TicketRewardAmount { get; set; }
+
+        // TicketRewardChance
+        public float TicketRewardChance { get; set; }
 
         // Validate
         public override void Validate()

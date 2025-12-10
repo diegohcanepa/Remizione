@@ -8,7 +8,9 @@
     {
       "name": "Zabul",
       "unlocked": true,
-      "maxSpawnAmount": 3
+      "maxSpawnAmount": 3,
+      "TicketRewardAmount": 20,
+      "TicketRewardChance": 0.9
     }
   ]
 }

@@ -35,6 +35,16 @@ namespace Remizione
                 maxPerRoom = maxEnemiesElement.GetInt32();
             this.EnemyScope = new ScopeRules(allowPools, denyPools, allowTags, denyTags, maxPerRoom);
 
+            // Hazard scope
+            allowPools = ConfigHelper.GetTags(element, "hazardAllowPools");
+            denyPools = ConfigHelper.GetTags(element, "hazardDenyPools");
+            allowTags = ConfigHelper.GetTags(element, "hazardAllowTags");
+            denyTags = ConfigHelper.GetTags(element, "hazardDenyTags");
+            maxPerRoom = -1;
+            if (element.TryGetProperty("maxHazards", out JsonElement maxHazardsElement))
+                maxPerRoom = maxHazardsElement.GetInt32();
+            this.HazardScope = new ScopeRules(allowPools, denyPools, allowTags, denyTags, maxPerRoom);
+
             // Prop scope
             allowPools = ConfigHelper.GetTags(element, "propAllowPools");
             denyPools = ConfigHelper.GetTags(element, "propDenyPools");
@@ -70,6 +80,9 @@ namespace Remizione
 
         // EnemyScope
         public ScopeRules EnemyScope { get; }
+
+        // HazardScope
+        public ScopeRules HazardScope { get; }
 
         // LockType
         public LockType LockType { get; }

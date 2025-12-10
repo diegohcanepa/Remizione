@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Remizione.Traps;
 using System;
 
 namespace Remizione
@@ -6,7 +7,7 @@ namespace Remizione
     /// <summary>
     /// SpearTrap
     /// </summary>
-    public class SpearTrap : Prop
+    public class SpearTrap : Hazard
     {
         private enum SpearState { Prepared, Reloading, Attacking, Up }
 
@@ -17,7 +18,7 @@ namespace Remizione
         private bool damageApplied;
         private int cooldown;
         private int cooldownInterval;
-        private static readonly MetaItem metaItem = MetaItem.FindNotNull(nameof(SpearTrap));
+        private static readonly EffectDefinition effect = EffectDefinition.FindNotNull(nameof(SpearTrap));
         private int upCooldown;
         private SpearState state;
 
@@ -25,11 +26,7 @@ namespace Remizione
         public SpearTrap(GameSession session, string name)
             : base(session, name)
         {
-            Atlas = Atlases.Environment;
-            CollisionDetection = false;
             DepthOffset = -5;
-            GridMeasureType = GridMeasureType.Collider;
-            IgnoreThrowables = true;
 
             var animation = AddAnimation(PreparedAnimationName);
             animation.AddFrame("SpearTrap01", 1000);
@@ -116,7 +113,7 @@ namespace Remizione
                 else if (!damageApplied && Session.Player != null && RuntimeHotspot.BoundingRectangleF.Intersects(Session.Player.RuntimeCollider.BoundingRectangleF))
                 {
                     damageApplied = true;
-                    metaItem.Effect.ApplyDamage(this, Session.Player);
+                    effect.ApplyDamage(this, Session.Player);
                 }
             }
 

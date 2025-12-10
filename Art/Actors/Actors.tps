@@ -190,6 +190,13 @@
                 <false/>
             </struct>
             <key type="filename">Berta-assets/Back01.png</key>
+            <key type="filename">Berta-assets/BackRaiseArm01.png</key>
+            <key type="filename">Berta-assets/BackRaiseArm02.png</key>
+            <key type="filename">Berta-assets/BackRaiseArm03.png</key>
+            <key type="filename">Berta-assets/ContactDamage01.png</key>
+            <key type="filename">Berta-assets/ContactDamage02.png</key>
+            <key type="filename">Berta-assets/Hurt01.png</key>
+            <key type="filename">Berta-assets/Hurt02.png</key>
             <key type="filename">Berta-assets/InsertCoin01.png</key>
             <key type="filename">Berta-assets/InsertCoin02.png</key>
             <key type="filename">Berta-assets/InsertCoin03.png</key>

@@ -48,7 +48,19 @@
           "default": 1,
           "minimum": 1,
           "description": "Número mínimo de veces que este elemento se spawnea en el 'room'."
-        }
+        },
+        "ticketRewardAmount": {
+          "type": "integer",
+          "default": 0,
+          "minimum": 0,
+          "description": "Máximo de tickets que puede dropear."
+        },
+        "ticketRewardChance": {
+          "type":"number",
+          "default": 0,
+          "minimum": 0,
+          "description": "Chances de dropear tickets."
+        }        
       }
     }
   ]
