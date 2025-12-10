@@ -60,6 +60,10 @@
           "default": 0,
           "minimum": 0,
           "description": "Chances de dropear tickets."
+        },       
+        "usePlaceholder": {
+          "type":"boolean",
+          "description": "Indica si tiene que ser spawneado en un placeholder del room."
         }        
       }
     }

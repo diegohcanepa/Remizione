@@ -10,7 +10,8 @@
       ],
       "killGoal": 10,
       "killGoalReward": "MasterLockpick",
-      "unlocked": true
+      "unlocked": true,
+      "usePlaceholder": true
     },
     {
       "name": "PotteryB",
@@ -19,7 +20,8 @@
         [ "RottenApple", 70 ],
         [ "RustyLockpick", 25 ]
       ],
-      "unlocked": true
+      "unlocked": true,
+      "usePlaceholder": true
     }
   ]
 }

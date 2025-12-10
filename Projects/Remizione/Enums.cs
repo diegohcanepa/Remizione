@@ -87,6 +87,9 @@ namespace Remizione
         Accept = 8
     }
 
+    // PlaceholderTarget
+    public enum PlaceholderTarget { Prop, Enemy, Any }
+
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
 

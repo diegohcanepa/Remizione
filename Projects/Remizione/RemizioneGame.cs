@@ -52,14 +52,12 @@ namespace Remizione
         // InitializeProceduralContent
         private void InitializeProceduralContent()
         {
+            RideRoom.RegisterRideRoom(typeof(CommonRoom));
             EffectDefinition.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "EffectDefinitions.json"));
             MetaItem.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "MetaItems.json"));
             RoomConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
             ThingConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"),
-                             ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"),
-                             ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Hazards.json"));
-
-            RideRoom.RegisterRideRoom(typeof(CommonRoom));
+                             ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"));
         }
 
 #if !QUICK_START

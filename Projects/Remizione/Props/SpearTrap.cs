@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Remizione.Traps;
 using System;
 
 namespace Remizione
@@ -7,7 +6,7 @@ namespace Remizione
     /// <summary>
     /// SpearTrap
     /// </summary>
-    public class SpearTrap : Hazard
+    public class SpearTrap : Prop
     {
         private enum SpearState { Prepared, Reloading, Attacking, Up }
 
@@ -26,6 +25,10 @@ namespace Remizione
         public SpearTrap(GameSession session, string name)
             : base(session, name)
         {
+            Atlas = Atlases.Environment;
+            CollisionDetection = false;
+            IgnoreThrowables = true;
+
             DepthOffset = -5;
 
             var animation = AddAnimation(PreparedAnimationName);

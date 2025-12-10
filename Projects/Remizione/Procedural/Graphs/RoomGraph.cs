@@ -14,7 +14,7 @@
         }
 
         // RoomConfig
-        public RoomConfig? Config { get; set; }
+        public RoomConfig Config { get; set; }
 
         // Down
         public RoomGraph? Down { get; set; }

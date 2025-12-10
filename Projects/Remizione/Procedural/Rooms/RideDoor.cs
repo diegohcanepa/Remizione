@@ -247,11 +247,11 @@ namespace Remizione
 
             // Side rooms uses its own style
             else if (rideRoom.RoomGraph.IsSide)
-                prefix = $"{rideRoom.Config.Name}";
+                prefix = $"{rideRoom.Config.Template}";
 
             // Root rooms uses target room style
             else
-                prefix = $"{config.Name}";
+                prefix = $"{config.Template}";
 
             prefix = $"{prefix}Door{DoorDirection}";
 

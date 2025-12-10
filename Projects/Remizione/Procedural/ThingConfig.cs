@@ -60,12 +60,16 @@ namespace Remizione
                 throw new InvalidOperationException($"[{Name}]: {nameof(MinSpawnAmount)} cannot be greater than MaxSpawnAmount.");
 
             // TicketRewardAmount
-            if (element.TryGetProperty("TicketRewardAmount", out JsonElement ticketRewardAmountElement))
+            if (element.TryGetProperty("ticketRewardAmount", out JsonElement ticketRewardAmountElement))
                 TicketRewardAmount = ticketRewardAmountElement.GetInt32();
 
             // TicketRewardChance
-            if (element.TryGetProperty("TicketRewardChance", out JsonElement ticketRewardChanceElement))
+            if (element.TryGetProperty("ticketRewardChance", out JsonElement ticketRewardChanceElement))
                 TicketRewardChance = ticketRewardChanceElement.GetSingle();
+
+            // UsePlaceholder
+            if (element.TryGetProperty("usePlaceholder", out JsonElement usePlaceholderElement))
+                UsePlaceholder = usePlaceholderElement.GetBoolean();
 
             data.Add(Name, this);
             dataList.Add(this);
@@ -123,10 +127,13 @@ namespace Remizione
         }
 
         // TicketRewardAmount
-        public int TicketRewardAmount { get; set; }
+        public int TicketRewardAmount { get; }
 
         // TicketRewardChance
-        public float TicketRewardChance { get; set; }
+        public float TicketRewardChance { get; }
+
+        // UsePlaceholder
+        public bool UsePlaceholder { get; }    
 
         // Validate
         public override void Validate()

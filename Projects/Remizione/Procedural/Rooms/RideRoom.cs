@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Remizione
 {
@@ -151,10 +152,30 @@ namespace Remizione
         {
             base.OnPopulated();
 
-            foreach (var door in Children)
+            // Prepare doors
+            var doors = new List<RideDoor>(Children.OfType<RideDoor>());
+            for (var i = 0; i < doors.Count; i++)
             {
-                if (door is RideDoor rideDoor)
-                    rideDoor.Prepare();
+                doors[i].Prepare();
+            }
+
+            // Remove things that collides with doors
+            var removeList = new List<GameThing>();
+            foreach (var child in Children.OfType<GameThing>())
+            {
+                if (child is RideDoor)
+                    continue;
+
+                for (var i = 0; i < doors.Count; i++)
+                {
+                    if (child.BoundingBox.Intersects(doors[i].BoundingBox))
+                        removeList.Add(child);
+                }
+            }
+
+            for (var i = 0; i < removeList.Count; i++)
+            {
+                removeList[i].Unparent();
             }
         }
 
@@ -166,7 +187,7 @@ namespace Remizione
             if (graph.Config == null)
                 throw new InvalidOperationException($"Missing config in room graph.");
 
-            var type = derivedTypes[graph.Config.Name];
+            var type = derivedTypes[graph.Config.Template];
             var result = Activator.CreateInstance(type, session, graph) as RideRoom ?? throw new InvalidOperationException($"Cannot create instance [{graph.Config.Name}]");
             return result;
         }
@@ -200,6 +221,12 @@ namespace Remizione
 
         // HubDoor
         public RideDoor? HubDoor { get; set; }
+
+        // IsRegistered
+        public static bool IsRegistered(string typeName)
+        {
+            return derivedTypes.ContainsKey(typeName);
+        }
 
         // RegisterRideRoom
         public static void RegisterRideRoom(Type type)

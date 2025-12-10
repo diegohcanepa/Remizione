@@ -995,9 +995,6 @@
 #begin System/EffectDefinitions.json
 /copy:System/EffectDefinitions.json
 
-#begin System/Hazards.json
-/copy:System/Hazards.json
-
 #begin System/MetaItems.json
 /copy:System/MetaItems.json
 

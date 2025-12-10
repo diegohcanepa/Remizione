@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using Remizione.Traps;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,7 +27,10 @@ namespace Remizione
         protected ProceduralRoom(GameSession session, string name, RoomGraph roomGraph)
             : base(session, name)
         {
-            this.Config = RoomConfig.Find(StaticName);
+            if (roomGraph.Config == null)
+                throw new InvalidOperationException("RoomGraph has no room config assigned.");
+
+            this.Config = RoomConfig.FindNotNull(roomGraph.Config.Name);
             this.RoomGraph = roomGraph;
 
             this.AllowGlobalLight = true;
@@ -88,8 +90,8 @@ namespace Remizione
             return outList;
         }
 
-        // GetEnemySpawnPoints
-        private List<Vector2> GetEnemySpawnPoints(Rectangle area, int count, int cellSize)
+        // GetSpawnPoints
+        private List<Vector2> GetSpawnPoints(Rectangle area, int count, int cellSize)
         {
             var cells = new List<Vector2>();
 
@@ -168,66 +170,48 @@ namespace Remizione
         private void Populate()
         {
             PopulateProps();
-            PopulateHazards();
             PopulateEnemies();
         }
 
         // PopulateEnemies
         private void PopulateEnemies()
         {
-            var maxInstances = Config.EnemyScope.MaxPerRoom;
-            var configList = FilterByScope<Enemy>(ThingConfig.All, Config.EnemyScope);
-            SpawnInWalkArea(configList, maxInstances);
-        }
-
-        // PopulateHazards
-        private void PopulateHazards()
-        {
-            var maxInstances = Config.HazardScope.MaxPerRoom;
-            var configList = FilterByScope<Hazard>(ThingConfig.All, Config.HazardScope);
-            SpawnInWalkArea(configList, maxInstances);
-
-            var props = new List<Prop>(Children.OfType<Prop>());
-
-            // Remove hazards that collides with props
-            var removeList = new List<Hazard>();
-            foreach (var hazard in Children.OfType<Hazard>())
-            {
-                foreach (var prop in props)
-                {
-                    if (hazard.Collider.BoundingRectangleF.Intersects(prop.Collider.BoundingRectangleF))
-                    {
-                        removeList.Add(hazard);
-                        break;
-                    }
-                }
-            }
-
-            foreach (var hazard in removeList)
-            {
-                hazard.Unparent();
-            }
+            var configList = FilterByScope<Enemy>(ThingConfig.All, Config.Scope);
+            SpawnInPlaceholders(configList, Config.MaxEnemies, PlaceholderTarget.Enemy);
+            SpawnInWalkArea(configList, Config.MaxEnemies);
         }
 
         // PopulateProps
         private void PopulateProps()
         {
-            var roomInstanceCount = 0;
-            var maxInstances = Config.PropScope.MaxPerRoom;
+            var configList = FilterByScope<Prop>(ThingConfig.All, Config.Scope);
+            SpawnInPlaceholders(configList, Config.MaxProps, PlaceholderTarget.Prop);
+            SpawnInWalkArea(configList, Config.MaxProps);
+        }
 
-            // 1) Filter by room scope
-            var configList = FilterByScope<Prop>(ThingConfig.All, Config.PropScope);
+        // Random
+        protected Random Random { get; }
 
-            // 2) Shuffle placeholders
+        // SpawnInPlaceholders
+        private void SpawnInPlaceholders(IList<ThingConfig> configList, int maxInstances, PlaceholderTarget target)
+        {
+            // 1) Shuffle placeholders
             var placeholders = new List<Placeholder>(Placeholders);
             placeholders.Shuffle(Random);
 
-            // 3) Iterate placeholders
+            // 2) Iterate placeholders
             foreach (var placeholder in placeholders)
             {
                 // Already used
                 if (placeholder.Used)
                     continue;
+
+                // Test placeholder target
+                if (placeholder.Target != PlaceholderTarget.Any)
+                {
+                    if (placeholder.Target != target)
+                        continue;
+                }
 
                 // Roll fillChance
                 if (Random.NextDouble() > float.Clamp(placeholder.FillChance, 0, 1))
@@ -237,6 +221,9 @@ namespace Remizione
                 var candidates = new List<ThingConfig>();
                 foreach (var config in configList)
                 {
+                    if (!config.UsePlaceholder)
+                        continue;
+
                     // Allow tags
                     if (placeholder.AllowTags.Count > 0)
                     {
@@ -260,9 +247,9 @@ namespace Remizione
 
                 // Pick
                 var chanceTable = new ChanceTable();
-                foreach (var prop in candidates)
+                foreach (var candidate in candidates)
                 {
-                    chanceTable.Add(prop.Name, prop.Weight);
+                    chanceTable.Add(candidate.Name, candidate.Weight);
                 }
 
                 if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
@@ -270,9 +257,6 @@ namespace Remizione
 
                 if (ThingConfig.Find(chanceTableItem.Name) is not ThingConfig chosen)
                     continue;
-
-                // Log spawn in room
-                spawnCounter.Increment(chosen.Name);
 
                 // Log spawn in run
                 RunManager.SpawnCounter.Increment(chosen.Name);
@@ -284,27 +268,24 @@ namespace Remizione
                 instance.Position = placeholder.Polygon.BoundingRectangleF.GetPoint(RectanglePoint.Bottom);
                 Children.Add(instance);
 
-                roomInstanceCount++;
-
-                // Max per room (any prop)
-                if (maxInstances > 0 && roomInstanceCount == maxInstances)
+                // Max per room
+                if (maxInstances != -1 && spawnCounter.Increment(chosen.Name) >= maxInstances)
                     return;
             }
         }
 
-        // Random
-        protected Random Random { get; }
-
         // SpawnInWalkArea
         private void SpawnInWalkArea(IList<ThingConfig> configList, int maxInstances)
         {
-            var roomInstanceCount = 0;
             var nameList = new List<string>();
 
             // Construir candidatos iterando props
             var candidates = new List<ThingConfig>();
             foreach (var config in configList)
             {
+                if (config.UsePlaceholder)
+                    continue;
+
                 // MaxPerRoom
                 if (!config.PassesMaxPerRoomConstraint(spawnCounter.GetCount(config.Name)))
                     continue;
@@ -317,9 +298,9 @@ namespace Remizione
 
                 // Pick
                 var chanceTable = new ChanceTable();
-                foreach (var enemy in candidates)
+                foreach (var candidate in candidates)
                 {
-                    chanceTable.Add(enemy.Name, enemy.Weight);
+                    chanceTable.Add(candidate.Name, candidate.Weight);
                 }
 
                 if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
@@ -331,16 +312,13 @@ namespace Remizione
                 var spawnCount = Random.Next(config.MinSpawnAmount, config.MaxSpawnAmount + 1);
                 for (var j = 0; j < spawnCount; j++)
                 {
-                    // Log spawn in room
-                    spawnCounter.Increment(chosen.Name);
-
                     // Log spawn in run
                     RunManager.SpawnCounter.Increment(chosen.Name);
 
                     nameList.Add(chosen.Name);
 
                     // MaxPerRoom
-                    if (!config.PassesMaxPerRoomConstraint(spawnCounter.GetCount(chosen.Name)))
+                    if (!config.PassesMaxPerRoomConstraint(spawnCounter.Increment(chosen.Name)))
                         break;
 
                     // MaxPerRun
@@ -353,18 +331,12 @@ namespace Remizione
             {
                 var poly = new Polygon(WalkArea.Polygon.Vertices, -30);
 
-                var spawnPoints = GetEnemySpawnPoints(poly.BoundingRectangle, nameList.Count, 18);
+                var spawnPoints = GetSpawnPoints(poly.BoundingRectangle, nameList.Count, 18);
                 for (var i = 0; i < spawnPoints.Count; i++)
                 {
                     var instance = CreateRuntimeThingCloneCore(nameList[i]);
                     instance.Position = spawnPoints[i];
                     Children.Add(instance);
-
-                    roomInstanceCount++;
-
-                    // Max per room (any)
-                    if (maxInstances > 0 && instanceCount == maxInstances)
-                        break;
                 }
             }
         }

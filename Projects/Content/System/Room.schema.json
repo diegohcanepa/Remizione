@@ -9,38 +9,22 @@
         {
             "type": "object",
             "properties": {
-                "enemyAllowPools": {
+                "allowPools": {
                     "type": "string",
                     "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
                 },
-                "enemyAllowTags": {
+                "allowTags": {
                     "type": "string",
                     "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
                 },
-                "enemyDenyPools": {
+                "denyPools": {
                     "type": "string",
                     "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
                 },
-                "enemyDenyTags": {
+                "denyTags": {
                     "type": "string",
                     "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
                 },
-                "hazardAllowPools": {
-                    "type": "string",
-                    "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
-                },
-                "hazardAllowTags": {
-                    "type": "string",
-                    "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
-                },
-                "hazardDenyPools": {
-                    "type": "string",
-                    "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
-                },
-                "hazardDenyTags": {
-                    "type": "string",
-                    "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
-                },                
                 "lockType": {
                     "type": "string",
                     "default": "None",
@@ -51,11 +35,6 @@
                     "description": "Tipo de lock."
                 },
                 "maxEnemies": {
-                    "type": "integer",
-                    "minimum": -1,
-                    "description": "Número máximo de veces que este elemento puede aparecer por 'room'."
-                },
-                "maxHazards": {
                     "type": "integer",
                     "minimum": -1,
                     "description": "Número máximo de veces que este elemento puede aparecer por 'room'."
@@ -78,33 +57,14 @@
                     "default": "Any",
                     "description": "Lugares donde puede ser spawneado el room."
                 },
-                "propAllowPools": {
+                "template": {
                     "type": "string",
-                    "description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
-                },
-                "propAllowTags": {
-                    "type": "string",
-                    "description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
-                },
-                "propDenyPools": {
-                    "type": "string",
-                    "description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
-                },
-                "propDenyTags": {
-                    "type": "string",
-                    "description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
-                },
-                "sideConstraint": {
-                    "type": "string",
-                    "enum": [
-                        "None",
-                        "Left",
-                        "Right"
-                    ],
-                    "default": "None",
-                    "description": "Lista de etiquetas (strings) usadas para aplicar restricciones de 'scope' (Tags)."
+                    "description": "Nombre del template de room a instanciar."
                 }
-            }
+            },
+            "required": [
+                "template"
+            ]
         }
     ]
 }

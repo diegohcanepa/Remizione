@@ -2,7 +2,8 @@
   "$schema": "./RoomData.schema.json",
   "data": [
     {
-      "name": "CommonRoom",
+      "name": "CommonRoomA",
+      "template": "CommonRoom",
       "unlocked": true,
       "loot": [
         [

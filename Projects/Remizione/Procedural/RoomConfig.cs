@@ -21,39 +21,37 @@ namespace Remizione
             if (element.TryGetProperty("lockType", out JsonElement lockTypeElement))
                 LockType = Enum.Parse<LockType>(lockTypeElement.GetString() ?? string.Empty);
 
+            // MaxEnemies
+            MaxEnemies = -1;
+            if (element.TryGetProperty("maxEnemies", out JsonElement maxEnemiesElement))
+                MaxEnemies = maxEnemiesElement.GetInt32();
+
+            // MaxProps
+            MaxProps = -1;
+            if (element.TryGetProperty("maxProps", out JsonElement maxPropsElement))
+                MaxProps = maxPropsElement.GetInt32();
+
             // Placement
             if (element.TryGetProperty("placement", out JsonElement placementElement))
                 Placement = Enum.Parse<RoomPlacement>(placementElement.GetString() ?? string.Empty);
 
-            // Enemy scope
-            var allowPools = ConfigHelper.GetTags(element, "enemyAllowPools");
-            var denyPools = ConfigHelper.GetTags(element, "enemyDenyPools");
-            var allowTags = ConfigHelper.GetTags(element, "enemyAllowTags");
-            var denyTags = ConfigHelper.GetTags(element, "enemyDenyTags");
-            var maxPerRoom = -1;
-            if (element.TryGetProperty("maxEnemies", out JsonElement maxEnemiesElement))
-                maxPerRoom = maxEnemiesElement.GetInt32();
-            this.EnemyScope = new ScopeRules(allowPools, denyPools, allowTags, denyTags, maxPerRoom);
+            // Scope
+            var allowPools = ConfigHelper.GetTags(element, "allowPools");
+            var denyPools = ConfigHelper.GetTags(element, "denyPools");
+            var allowTags = ConfigHelper.GetTags(element, "allowTags");
+            var denyTags = ConfigHelper.GetTags(element, "denyTags");
+            
+            this.Scope = new ScopeRules(allowPools, denyPools, allowTags, denyTags);
 
-            // Hazard scope
-            allowPools = ConfigHelper.GetTags(element, "hazardAllowPools");
-            denyPools = ConfigHelper.GetTags(element, "hazardDenyPools");
-            allowTags = ConfigHelper.GetTags(element, "hazardAllowTags");
-            denyTags = ConfigHelper.GetTags(element, "hazardDenyTags");
-            maxPerRoom = -1;
-            if (element.TryGetProperty("maxHazards", out JsonElement maxHazardsElement))
-                maxPerRoom = maxHazardsElement.GetInt32();
-            this.HazardScope = new ScopeRules(allowPools, denyPools, allowTags, denyTags, maxPerRoom);
+            // Template
+            if (element.TryGetProperty("template", out JsonElement templateElement))
+                Template = templateElement.GetString() ?? string.Empty;
 
-            // Prop scope
-            allowPools = ConfigHelper.GetTags(element, "propAllowPools");
-            denyPools = ConfigHelper.GetTags(element, "propDenyPools");
-            allowTags = ConfigHelper.GetTags(element, "propAllowTags");
-            denyTags = ConfigHelper.GetTags(element, "propDenyTags");
-            maxPerRoom = -1;
-            if (element.TryGetProperty("maxProps", out JsonElement maxPropsElement))
-                maxPerRoom = maxPropsElement.GetInt32();
-            this.PropScope = new ScopeRules(allowPools, denyPools, allowTags, denyTags, maxPerRoom);
+            if (string.IsNullOrWhiteSpace(Template))
+                throw new InvalidOperationException($"Missing template in room config [{Name}].");
+
+            if (!RideRoom.IsRegistered(Template))
+                throw new InvalidOperationException($"Template '{Template}' is not valid.");
 
             data.Add(Name, this);
             dataList.Add(this);
@@ -65,7 +63,13 @@ namespace Remizione
         public static ReadOnlyCollection<RoomConfig> All { get; } = new(dataList);
 
         // Find
-        public static RoomConfig Find(string name)
+        public static RoomConfig? Find(string name)
+        {
+            return data.TryGetValue(name, out var roomConfig) ? roomConfig : null;
+        }
+
+        // FindNotNull
+        public static RoomConfig FindNotNull(string name)
         {
             return data[name];
         }
@@ -78,14 +82,14 @@ namespace Remizione
 
         #endregion
 
-        // EnemyScope
-        public ScopeRules EnemyScope { get; }
-
-        // HazardScope
-        public ScopeRules HazardScope { get; }
-
         // LockType
         public LockType LockType { get; }
+
+        // MaxEnemies
+        public int MaxEnemies { get; }
+
+        // MaxProps
+        public int MaxProps { get; }
 
         // PassesPlacementConstraint
         public bool PassesPlacementConstraint(RoomGraph roomGraph)
@@ -113,7 +117,10 @@ namespace Remizione
         // Placement
         public RoomPlacement Placement { get; }
 
-        // PropScope
-        public ScopeRules PropScope { get; }
+        // Scope
+        public ScopeRules Scope { get; }
+
+        // Template
+        public string Template { get; }
     }
 }

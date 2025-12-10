@@ -3,7 +3,7 @@
 namespace Remizione
 {
     /// <summary>
-    /// BlueStoneRoom
+    /// CommonRoom
     /// </summary>
     public sealed class CommonRoom : RideRoom
     {
