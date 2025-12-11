@@ -52,7 +52,8 @@ namespace Remizione
         // InitializeProceduralContent
         private void InitializeProceduralContent()
         {
-            RideRoom.RegisterRideRoom(typeof(CommonRoom));
+            RideRoom.RegisterTemplates();
+            
             EffectDefinition.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "EffectDefinitions.json"));
             MetaItem.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "MetaItems.json"));
             RoomConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));

@@ -15,7 +15,7 @@ namespace Remizione
         #region Private fields
 
         private int instanceCount;
-        private readonly List<Placeholder> placeholders = [];
+        private readonly NamedObjectCollection<Placeholder> placeholders = [];
         private readonly int randomSeed;
         private readonly NamedCounter spawnCounter = new();
 
@@ -39,7 +39,7 @@ namespace Remizione
 
             int salt = roomGraph.Id;
             this.randomSeed = RandomHelper.GetSeed(Session.Seed, salt);
-            this.Placeholders = new ReadOnlyCollection<Placeholder>(placeholders);
+            this.Placeholders = new(placeholders);
             this.Random = new Random(randomSeed);
 
             // Apply placeholder overrides
@@ -149,17 +149,13 @@ namespace Remizione
 
         #region Protected members
 
-        // AddPlaceholder
-        protected void AddPlaceholder(string name, float fillChance, bool flipImage, string vertices, params string[] allowTags)
+        // AddPlaceholders
+        protected void AddPlaceholders(IList<Placeholder> list)
         {
-            for (var i = 0; i < placeholders.Count; i++)
+            for (var i = 0; i < list.Count; i++)
             {
-                if (placeholders[i].Name == name)
-                    throw new InvalidOperationException("Duplicated name.");
+                placeholders.Add(list[i]);       
             }
-
-            var placeholder = new Placeholder(name, fillChance, flipImage, ReadOnlyPolygon.GetVertices(vertices), allowTags);
-            placeholders.Add(placeholder);
         }
 
         // OnLoad
@@ -372,7 +368,7 @@ namespace Remizione
         }
 
         // Placeholders
-        public ReadOnlyCollection<Placeholder> Placeholders { get; }
+        public NamedObjectReadOnlyCollection<Placeholder> Placeholders { get; }
 
         // RoomGraph
         public RoomGraph RoomGraph { get; }

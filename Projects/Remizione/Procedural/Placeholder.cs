@@ -6,15 +6,15 @@ namespace Remizione
     /// <summary>
     /// Placeholder
     /// </summary>
-    public sealed class Placeholder
+    public sealed class Placeholder : INamedObject
     {
         // Constructor
-        public Placeholder(string name, float fillChance, bool flipImage, Vector2[] vertices, string[] allowTags, PlaceholderTarget target = PlaceholderTarget.Prop)
+        public Placeholder(string name, float fillChance, bool flipImage, string vertices, string[] allowTags, PlaceholderTarget target = PlaceholderTarget.Prop)
         {
             this.Name = name;
             this.FillChance = fillChance;
             this.FlipImage = flipImage;
-            this.Polygon = new ReadOnlyPolygon(Geometry.SimplifyPolygon(vertices));
+            this.Polygon = new ReadOnlyPolygon(vertices);
             this.AllowTags = new(allowTags);
             this.Target = target;
         }

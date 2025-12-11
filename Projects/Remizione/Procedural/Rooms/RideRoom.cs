@@ -11,7 +11,7 @@ namespace Remizione
     /// </summary>
     public abstract class RideRoom : ProceduralRoom
     {
-        private static readonly Dictionary<string, Type> derivedTypes = [];
+        private static readonly Dictionary<string, (Type, string[])> derivedTypes = [];
         private readonly List<RideDoor> doors = [];
         private bool lootDropped;
 
@@ -66,6 +66,12 @@ namespace Remizione
                         downDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Down.Id);
                 }
             }
+        }
+
+        // Register
+        private static void Register(Type type, string[] placeholderNames)
+        {
+            derivedTypes.Add(type.Name, (type, placeholderNames));
         }
 
         #endregion
@@ -187,7 +193,7 @@ namespace Remizione
             if (graph.Config == null)
                 throw new InvalidOperationException($"Missing config in room graph.");
 
-            var type = derivedTypes[graph.Config.Template];
+            var type = derivedTypes[graph.Config.Template].Item1;
             var result = Activator.CreateInstance(type, session, graph) as RideRoom ?? throw new InvalidOperationException($"Cannot create instance [{graph.Config.Name}]");
             return result;
         }
@@ -219,6 +225,21 @@ namespace Remizione
             return Vector2.Zero;
         }
 
+        // HasPlaceholder
+        public static bool HasPlaceholder(string typeName, string placeholderName)
+        {
+            if (derivedTypes.TryGetValue(typeName, out var result))
+            {
+                for (var i = 0; i < result.Item2.Length; i++)
+                {
+                    if (string.Compare(placeholderName, result.Item2[i], StringComparison.InvariantCulture) == 0)
+                        return true;
+                }
+            }
+            
+            return false;
+        }
+
         // HubDoor
         public RideDoor? HubDoor { get; set; }
 
@@ -228,10 +249,10 @@ namespace Remizione
             return derivedTypes.ContainsKey(typeName);
         }
 
-        // RegisterRideRoom
-        public static void RegisterRideRoom(Type type)
+        // RegisterTemplates
+        public static void RegisterTemplates()
         {
-            derivedTypes.Add(type.Name, type);
+            Register(typeof(CommonRoom), CommonRoom.GetPlaceholderNames());
         }
     }
 }

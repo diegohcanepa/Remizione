@@ -53,14 +53,18 @@ namespace Remizione
             if (!RideRoom.IsRegistered(Template))
                 throw new InvalidOperationException($"Template '{Template}' is not valid.");
 
+            // Placeholders override
             var placeholdersList = new List<PlaceholderOverride>();
             if (element.TryGetProperty("placeholders", out JsonElement placeholdersElement) && placeholdersElement.ValueKind == JsonValueKind.Array)
             {
-                // Iterar sobre cada elemento dentro del array "placeholders"
                 foreach (JsonElement placeholderElement in placeholdersElement.EnumerateArray())
                 {
                     // Name
                     var phName = placeholderElement.GetProperty("name").GetString() ?? throw new InvalidOperationException("Placeholder must have a name.");
+
+                    // Check if template has a placeholder
+                    if (!RideRoom.HasPlaceholder(Template, phName))
+                        throw new InvalidOperationException($"There is no {phName} placeholder defined in template [{Template}]");
 
                     // Fill chance
                     float? phFillChance = null;
