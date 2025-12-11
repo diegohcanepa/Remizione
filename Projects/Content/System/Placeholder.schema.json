@@ -1,0 +1,36 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "Placeholder.schema.json",
+    "title": "Placeholder schema",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Nombre del placeholder (predefinido en el template)."
+        },
+        "allowTags": {
+            "type": "string",
+            "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
+        },
+        "fillChance": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Probabilidad (0.0 a 1.0) de que el placeholder se llene."
+        },
+        "target": {
+            "type": "string",
+            "enum": [
+                "Prop",
+                "Enemy",
+                "Any"
+            ],
+            "default": "Prop",
+            "description": "Tipo de elemento objetivo que puede ocupar este placeholder."
+        }
+    },
+    "required": [
+        "name",
+        "fillChance"
+    ]
+}

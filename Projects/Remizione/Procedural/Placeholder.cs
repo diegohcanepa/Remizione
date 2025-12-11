@@ -16,14 +16,14 @@ namespace Remizione
             this.FlipImage = flipImage;
             this.Polygon = new ReadOnlyPolygon(Geometry.SimplifyPolygon(vertices));
             this.AllowTags = new(allowTags);
-            Target = target;
+            this.Target = target;
         }
 
         // AllowTags
-        public Tags AllowTags { get; }
+        public Tags AllowTags { get; set; }
 
         // FillChance
-        public float FillChance { get; }
+        public float FillChance { get; set; }
 
         // FlipImage    
         public bool FlipImage { get; }
@@ -35,7 +35,7 @@ namespace Remizione
         public ReadOnlyPolygon Polygon { get; }
 
         // Target
-        public PlaceholderTarget Target { get; }
+        public PlaceholderTarget Target { get; set; }
 
         // Used
         public bool Used { get; set; }

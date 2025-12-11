@@ -53,6 +53,40 @@ namespace Remizione
             if (!RideRoom.IsRegistered(Template))
                 throw new InvalidOperationException($"Template '{Template}' is not valid.");
 
+            var placeholdersList = new List<PlaceholderOverride>();
+            if (element.TryGetProperty("placeholders", out JsonElement placeholdersElement) && placeholdersElement.ValueKind == JsonValueKind.Array)
+            {
+                // Iterar sobre cada elemento dentro del array "placeholders"
+                foreach (JsonElement placeholderElement in placeholdersElement.EnumerateArray())
+                {
+                    // Name
+                    var phName = placeholderElement.GetProperty("name").GetString() ?? throw new InvalidOperationException("Placeholder must have a name.");
+
+                    // Fill chance
+                    float? phFillChance = null;
+                    if (element.TryGetProperty("fillChance", out JsonElement fillChanceElement))
+                        phFillChance = fillChanceElement.GetSingle();
+
+                    // Target
+                    PlaceholderTarget? phTarget = null;
+                    if (placeholderElement.TryGetProperty("target", out JsonElement targetElement))
+                    {
+                        if (Enum.TryParse<PlaceholderTarget>(targetElement.GetString(), out PlaceholderTarget placeholderTarget))
+                            phTarget = placeholderTarget;
+                    }
+
+                    // AllowTags
+                    Tags? phAllowTags = ConfigHelper.GetTags(placeholderElement, "allowTags");
+                    if (phAllowTags.Count == 0)
+                        phAllowTags = null;
+
+                    // 4. Crear la instancia de Placeholder
+                    placeholdersList.Add(new PlaceholderOverride(phName, phFillChance, allowTags, phTarget));
+                }
+            }
+            
+            this.PlaceholderOverrides = new ReadOnlyCollection<PlaceholderOverride>(placeholdersList);
+
             data.Add(Name, this);
             dataList.Add(this);
         }
@@ -113,6 +147,9 @@ namespace Remizione
                 return Placement == RoomPlacement.Middle;
             }
         }
+
+        // PlaceholderOverrides
+        public ReadOnlyCollection<PlaceholderOverride> PlaceholderOverrides { get; }
 
         // Placement
         public RoomPlacement Placement { get; }
