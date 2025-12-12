@@ -148,6 +148,7 @@ namespace Remizione
             scriptRegistry.RegisterEntity(typeof(Monitor));
             scriptRegistry.RegisterEntity(typeof(EnviousEye));
             scriptRegistry.RegisterEntity(typeof(NumberSix));
+            scriptRegistry.RegisterEntity(typeof(Pickup));
             scriptRegistry.RegisterEntity(typeof(PostClock));
             scriptRegistry.RegisterEntity(typeof(Pottery));
             scriptRegistry.RegisterEntity(typeof(Prop));
@@ -605,6 +606,10 @@ namespace Remizione
 
         // ObjectPools
         public ObjectPools ObjectPools { get; }
+
+        // Pickup
+        [ScriptProperty]
+        public Pickup? Pickup => OutcomeTarget as Pickup;
 
         // Player
         [ScriptProperty]

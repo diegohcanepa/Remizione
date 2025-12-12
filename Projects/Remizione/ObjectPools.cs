@@ -38,7 +38,7 @@ namespace Remizione
         }
 
         // Pickups
-        public ObjectPool<Pickup> Pickups { get; } = new ObjectPool<Pickup>(() => new Pickup(session), 30);
+        public ObjectPool<Pickup> Pickups { get; } = new ObjectPool<Pickup>(() => new Pickup(session, string.Empty), 30);
 
         // ReturnThrownItem
         public void ReturnThrownItem(ThrownItem item)

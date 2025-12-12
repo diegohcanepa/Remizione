@@ -58,10 +58,9 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (session.GameplayMode == GameplayMode.Adventure)
+            if (session.AllowPlayerSelector)
             {
-                if (session.AllowPlayerSelector)
-                    PlayerSelector.Draw(gameTime);
+                PlayerSelector.Draw(gameTime);
                 return;
             }
 
@@ -112,7 +111,7 @@ namespace Remizione
             if (session.IsConsoleVisible)
                 return HandleInputResult.Unhandled;
 
-            if (session.GameplayMode == GameplayMode.Adventure && session.AllowPlayerSelector)
+            if (session.AllowPlayerSelector)
                 return PlayerSelector.HandleInput(gameTime);
 
             if (leftHandSlot.HandleInput(gameTime) == HandleInputResult.Handled)

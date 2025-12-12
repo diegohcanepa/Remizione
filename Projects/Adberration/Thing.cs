@@ -26,9 +26,11 @@ namespace Adberration
             Sprite.SoundEmitter = this;
 
             // Cache outcome script
-            if (InstanceKind != InstanceKind.Anonymous)
+            //if (InstanceKind != InstanceKind.Anonymous)
             {
-                OutcomeScript = session.ScriptLibrary.GetOutcome(name);
+                if (!string.IsNullOrWhiteSpace(name))
+                    OutcomeScript = session.ScriptLibrary.GetOutcome(name);
+
                 OutcomeScript ??= session.ScriptLibrary.GetOutcome(StaticName);
             }
         }

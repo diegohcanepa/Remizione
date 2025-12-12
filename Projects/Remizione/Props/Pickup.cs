@@ -1,4 +1,5 @@
 ﻿using Adberration;
+using Adberration.Scripting;
 using Engendro;
 using Microsoft.Xna.Framework;
 
@@ -11,49 +12,30 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly FloatTween altitudeTween = new();
-        private bool isCollecting;
         private MetaItem? metaItem;
         private readonly Vector2Tween scaleTween = new();
-        private readonly ImageSprite shadow;
 
         #endregion
 
         // Constructor
-        public Pickup(GameSession session)
-            : base(session, string.Empty)
+        public Pickup(GameSession session, string name)
+            : base(session, name)
         {
+            this.Atlas = Atlases.Environment;
             this.CollisionDetection = false;
-            this.Atlas = Atlases.UI;
-            this.Collider = new("20,12;20,22;0,22;0,12");
             this.DepthOffset = -1;
+            this.HighlightInteraction = false;
+            this.Hotspot = new("0,4;7,4;8,8;-1,8");
             this.IgnoreWalkArea = false;
-
-            // Shadow
-            this.shadow = new ImageSprite(session.Game, Atlases.UI.GetImage(nameof(Pickup) + "Shadow"))
-            {
-                Opacity = ColorPalette.ShadowOpacity,
-                PivotOrigin = RectanglePoint.Bottom,
-            };
         }
 
         #region Protected members
-
-        // OnDrawShadow
-        protected override void OnDrawShadow(GameTime gameTime)
-        {
-            shadow.Position = BoundingBox.GetPoint(RectanglePoint.Bottom);
-            if (altitudeTween.IsRunning)
-                shadow.Y += altitudeTween.CurrentValue;
-            shadow.Draw(gameTime);
-        }
 
         // OnUnload
         protected override void OnUnload()
         {
             base.OnUnload();
             this.metaItem = null;
-            altitudeTween.Stop();
         }
 
         // OnUpdate
@@ -63,45 +45,23 @@ namespace Remizione
                 return;
 
             base.OnUpdate(gameTime);
-
-            if (scaleTween.IsRunning)
-                return;
-
-            if (!altitudeTween.IsRunning)
-            {
-                altitudeTween.Start(TweenStyle.QuadraticInOut, 0, .5f, 200, -1);
-                Tweens.AltitudeTween = altitudeTween;
-                return;
-            }
-
-            shadow.Scale = Scale;
-
-            if (isCollecting)
-            {
-                if (!scaleTween.IsRunning)
-                {
-                    Unparent();
-                    Session.ObjectPools.Pickups.Return(this);
-                }
-            }
-            else if (Session.Player?.DistanceTo(this) < 4)
-            {
-                if (!Session.Inventory.IsFull)
-                {
-                    isCollecting = true;
-                    PivotOrigin = RectanglePoint.Top;
-                    Y -= BoundingBox.Height;
-                    scaleTween.Start(TweenStyle.Linear, Scale, Vector2.Zero, 150);
-                    Tweens.ScaleTween = scaleTween;
-
-                    Session.Inventory.Add(metaItem, 1);
-
-                    Session.HUD.Log.Show(LogVerb.PickedUp, metaItem);
-                }
-            }
         }
 
         #endregion
+
+        // Collect
+        [ScriptMethod]
+        public void Collect()
+        {
+            if (metaItem != null)
+            {
+                Session.Player?.Animate("TakeSack");
+                Session.Inventory.Add(metaItem, 1);
+                Session.HUD.Log.Show(LogVerb.PickedUp, metaItem);
+                Unparent();
+                Session.ObjectPools.Pickups.Return(this);
+            }
+        }
 
         // Drop
         public void Drop(Room room, Vector2 origin, MetaItem metaItem)
@@ -109,12 +69,14 @@ namespace Remizione
             PivotOrigin = RectanglePoint.Bottom;
             Position = origin;
             this.metaItem = metaItem;
+            var isCoin = metaItem.Name == MetaItem.CoinItemName;
+            this.DefaultImageName = isCoin ? nameof(Atlases.Environment.Coin) : nameof(Atlases.Environment.Sack);
+            scaleTween.Start(TweenStyle.Linear, Vector2.Zero, Vector2.One, 250);
 
-            this.DefaultImageName = metaItem.Name;
-            isCollecting = false;
+            this.DisplayNameKey = $"Item.{metaItem.Name}.Name";
+
             room.Children.Add(this);
 
-            scaleTween.Start(TweenStyle.Linear, Vector2.Zero, new(.4f), 250);
             Tweens.ScaleTween = scaleTween;
 
             PlaySound(SoundNames.ItemPop);
