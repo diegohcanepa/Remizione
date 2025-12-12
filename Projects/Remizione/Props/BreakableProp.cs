@@ -50,7 +50,7 @@ namespace Remizione
                 {
                     if (Atlas?.GetImage($"{StaticName}Piece{index}") is AtlasImage image)
                     {
-                        pieces.Add(new(Session.Game, image));
+                        pieces.Add(new(Session.Game, image, Vector2.One));
                         index++;
                     }
                     else

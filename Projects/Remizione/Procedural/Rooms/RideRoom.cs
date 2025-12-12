@@ -121,6 +121,10 @@ namespace Remizione
         {
             base.OnEnter();
 
+            RoomGraph.Visited = true;
+
+            Session.HUD.MiniMap.CurrentRoom = RoomGraph;
+
             if (EnemyCount > 0)
             {
                 for (var i = 0; i < doors.Count; i++)

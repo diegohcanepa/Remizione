@@ -26,7 +26,7 @@
         public int Id { get; }
 
         // IsSide
-        public bool IsSide => Down == null;
+        public bool IsSide => Down == null && !IsRoot;
 
         // IsRoot
         public bool IsRoot { get; }
@@ -45,5 +45,8 @@
 
         // Up
         public RoomGraph? Up { get; set; }
+
+        // Visited
+        public bool Visited { get; set; }
     }
 }

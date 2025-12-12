@@ -4,6 +4,6 @@
     public interface ISoundEmitter
     {
         bool IsAvailable { get; }
-        void Update(SoundInstance soundInstance, float baseVolume);
+        void Update(SoundInstance soundInstance, float effectiveVolume);
     }
 }

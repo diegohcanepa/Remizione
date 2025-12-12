@@ -20,6 +20,8 @@
         internal const string ItemPop = nameof(ItemPop);
         internal const string Lightning = nameof(Lightning);
         internal const string LockOpen = nameof(LockOpen);
+        internal const string LootCoin = nameof(LootCoin);
+        internal const string LootSack = nameof(LootSack);
         internal const string MetalPropBreak = nameof(MetalPropBreak);
         internal const string PickupGeneric = nameof(PickupGeneric);
         internal const string PickupTicket = nameof(PickupTicket);

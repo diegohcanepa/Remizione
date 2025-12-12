@@ -54,9 +54,8 @@ namespace Engendro.Audio
             {
                 if (Emitter.IsAvailable)
                 {
-                    var baseVolume = Sound.Volume * Volume.Master * Sound.Category.Volume.Master;
                     Volume.Reset();
-                    Emitter.Update(this, baseVolume);
+                    Emitter.Update(this, GetEffectiveVolume());
                     instance.Volume = Volume.Current;
                 }
                 else
@@ -189,6 +188,12 @@ namespace Engendro.Audio
                     InvalidateVolume();
                 }
             }
+        }
+
+        // GetEffectiveVolume
+        public float GetEffectiveVolume()
+        {
+            return Sound.Volume * Volume.Master * Sound.Category.Volume.Master;
         }
 
         // GetRunningInstance

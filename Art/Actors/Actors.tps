@@ -207,6 +207,7 @@
             <key type="filename">Berta-assets/InsertCoin08.png</key>
             <key type="filename">Berta-assets/LookBehind01.png</key>
             <key type="filename">Berta-assets/Move01.png</key>
+            <key type="filename">Berta-assets/PickUp01.png</key>
             <key type="filename">Berta-assets/RaiseArm01.png</key>
             <key type="filename">Berta-assets/RaiseArm02.png</key>
             <key type="filename">Berta-assets/RaiseArm03.png</key>
@@ -248,9 +249,6 @@
             <key type="filename">Edmund-assets/Move03.png</key>
             <key type="filename">Edmund-assets/Move04.png</key>
             <key type="filename">Edmund-assets/PickUp01.png</key>
-            <key type="filename">Edmund-assets/PickUp02.png</key>
-            <key type="filename">Edmund-assets/PickUp03.png</key>
-            <key type="filename">Edmund-assets/PickUp04.png</key>
             <key type="filename">Edmund-assets/Pray01.png</key>
             <key type="filename">Edmund-assets/Pray02.png</key>
             <key type="filename">Edmund-assets/Pray03.png</key>
@@ -280,21 +278,6 @@
                 <rect>7,6,14,13</rect>
                 <key>scale9Paddings</key>
                 <rect>7,6,14,13</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Berta-assets/Guts0.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,2,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>3,2,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -359,7 +342,6 @@
                 <false/>
             </struct>
             <key type="filename">Designer-assets/TalkHead02.png</key>
-            <key type="filename">Edmund-assets/Gut0.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

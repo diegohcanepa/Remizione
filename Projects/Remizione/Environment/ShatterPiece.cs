@@ -30,12 +30,13 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public ShatterPiece(RemizioneGame game, AtlasImage image)
+        public ShatterPiece(RemizioneGame game, AtlasImage image, Vector2 scale)
             : base(game)
         {
             this.image = new(Game, image)
             {
-                PivotOrigin = RectanglePoint.Center
+                PivotOrigin = RectanglePoint.Center,
+                Scale = scale
             };
         }
 

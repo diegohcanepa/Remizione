@@ -312,10 +312,10 @@ namespace Remizione
                 {
                     var gutScale = BodySize switch
                     {
-                        ActorSize.Small => Vector2.One,
-                        ActorSize.Medium => Vector2.One * 1.25f,
-                        ActorSize.Large => Vector2.One * 2,
-                        _ => Vector2.One * 1.5f
+                        ActorSize.Small => Vector2.One * .55f,
+                        ActorSize.Medium => Vector2.One * .75f,
+                        ActorSize.Large => Vector2.One,
+                        _ => Vector2.One * 1.25f
                     };
 
                     var guts = new Guts(Session, Guts, gutScale, customGuts)
@@ -325,12 +325,15 @@ namespace Remizione
 
                     Room.Children.Add(guts);
 
-                    _ = BodySize switch
+                    if (Guts > 0)
                     {
-                        ActorSize.Small => guts.PlaySound(SoundNames.GutsSmall),
-                        ActorSize.Medium => guts.PlaySound(SoundNames.GutsMedium),
-                        _ => guts.PlaySound(SoundNames.GutsLarge)
-                    };
+                        _ = BodySize switch
+                        {
+                            ActorSize.Small => guts.PlaySound(SoundNames.GutsSmall),
+                            ActorSize.Medium => guts.PlaySound(SoundNames.GutsMedium),
+                            _ => guts.PlaySound(SoundNames.GutsLarge)
+                        };
+                    }
 
                     Unparent();
                 }

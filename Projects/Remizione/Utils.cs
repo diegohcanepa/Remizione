@@ -1,4 +1,6 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.ObjectModel;
@@ -12,6 +14,62 @@ namespace Remizione
     /// </summary>
     internal static class Utils
     {
+        // ApplySoundEmitter
+        internal static void ApplySoundEmitter(Entity emitter, SoundInstance instance, float effectiveVolume)
+        {
+            const int margin = 80; // margen en píxeles fuera del VisibleBox donde el volumen cae linealmente a 0
+
+            RectangleF visible = emitter.Session.Camera.VisibleBox;
+            float spriteX = emitter.Position.X;
+
+            // límites extendidos (visible box + margen a ambos lados)
+            float leftLimit = visible.Left - margin;
+            float rightLimit = visible.Right + margin;
+
+            // Denominador para normalizar pan respecto al centro (ancho/2 + margin).
+            // Protegemos contra ancho 0.
+            float halfRange = (visible.Width * 0.5f) + margin;
+            if (halfRange <= 0.0001f) halfRange = 1f; // fallback seguro
+
+            // Pan: -1 en leftLimit, 0 en el centro de la cámara, +1 en rightLimit
+            float centerX = visible.Center.X;
+            float pan = MathHelper.Clamp((spriteX - centerX) / halfRange, -1f, 1f);
+
+            // Volumen:
+            // - Si está dentro del VisibleBox => 1
+            // - Si está fuera del leftLimit/rightLimit => 0
+            // - Si está entre VisibleBox y límite extendido => interpolación lineal 1 -> 0
+            float volume;
+            if (visible.Contains(emitter.Position))
+            {
+                volume = 1f;
+            }
+            else if (spriteX <= leftLimit || spriteX >= rightLimit)
+            {
+                // completamente fuera del rango extendido
+                volume = 0f;
+            }
+            else
+            {
+                // Está fuera del VisibleBox pero dentro del margen extendido.
+                if (spriteX < visible.Left)
+                {
+                    // se encuentra a la izquierda del VisibleBox
+                    float t = (visible.Left - spriteX) / margin; // 0..1
+                    volume = MathHelper.Clamp(1f - t, 0f, 1f);
+                }
+                else // spriteX > visible.Right
+                {
+                    float t = (spriteX - visible.Right) / margin; // 0..1
+                    volume = MathHelper.Clamp(1f - t, 0f, 1f);
+                }
+            }
+
+            // Aplicar valores al SoundInstance
+            instance.Pan = pan;
+            instance.Volume.Current = volume * effectiveVolume;
+        }
+
         // AssertName
         internal static void AssertName(string name, object sender)
         {

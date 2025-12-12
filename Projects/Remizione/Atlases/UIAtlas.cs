@@ -43,6 +43,15 @@ namespace Remizione
             TicketSlot = this[nameof(TicketSlot)];
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
+            UIMiniMapContainer = this[nameof(UIMiniMapContainer)];
+
+            UIMiniMapCurrentRoom = this[nameof(UIMiniMapCurrentRoom)];
+            UIMiniMapNotVisitedRoom = this[nameof(UIMiniMapNotVisitedRoom)];
+            UIMiniMapVisitedRoom = this[nameof(UIMiniMapVisitedRoom)];
+
+            UIMiniMapCurrentSideRoom = this[nameof(UIMiniMapCurrentSideRoom)];
+            UIMiniMapNotVisitedSideRoom = this[nameof(UIMiniMapNotVisitedSideRoom)];
+            UIMiniMapVisitedSideRoom = this[nameof(UIMiniMapVisitedSideRoom)];
         }
 
         // BottomGradient
@@ -140,5 +149,26 @@ namespace Remizione
 
         // UIButtonContainerPattern
         public AtlasImage UIButtonContainerPattern { get; }
+
+        // UIMiniMapContainer
+        public AtlasImage UIMiniMapContainer { get; }
+
+        // UIMiniMapCurrentRoom
+        public AtlasImage UIMiniMapCurrentRoom { get; }
+
+        // UIMiniMapNotVisitedRoom
+        public AtlasImage UIMiniMapNotVisitedRoom { get; }
+
+        // UIMiniMapVisitedRoom
+        public AtlasImage UIMiniMapVisitedRoom { get; }
+
+        // UIMiniMapCurrentSideRoom
+        public AtlasImage UIMiniMapCurrentSideRoom { get; }
+
+        // UIMiniMapNotVisitedSideRoom
+        public AtlasImage UIMiniMapNotVisitedSideRoom { get; }
+
+        // UIMiniMapVisitedSideRoom
+        public AtlasImage UIMiniMapVisitedSideRoom { get; }
     }
 }

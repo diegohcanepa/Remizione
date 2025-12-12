@@ -27,7 +27,7 @@ namespace Remizione
             {
                 for (var i = 0; i < guts; i++)
                 {
-                    var piece = new ShatterPiece(session.Game, Atlases.Environment.Guts[i])
+                    var piece = new ShatterPiece(session.Game, Atlases.Environment.Guts[i], scale)
                     {
                         Scale = scale
                     };
@@ -41,7 +41,7 @@ namespace Remizione
             {
                 for (var i = 0; i < extraImages.Count; i++)
                 {
-                    pieces.Add(new ShatterPiece(session.Game, extraImages[i]) { });
+                    pieces.Add(new ShatterPiece(session.Game, extraImages[i], scale));
                 }
             }
 

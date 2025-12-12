@@ -2,6 +2,7 @@
 using Adberration.Scripting;
 using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Remizione
 {
@@ -12,7 +13,9 @@ namespace Remizione
     {
         #region Private fields
 
+        private bool isCoin;
         private MetaItem? metaItem;
+        private int popCooldown;
         private readonly Vector2Tween scaleTween = new();
 
         #endregion
@@ -23,13 +26,33 @@ namespace Remizione
         {
             this.Atlas = Atlases.Environment;
             this.CollisionDetection = false;
-            this.DepthOffset = -1;
             this.HighlightInteraction = false;
-            this.Hotspot = new("0,4;7,4;8,8;-1,8");
+            this.Hotspot = new("7,0;7,7;0,7;0,0");
             this.IgnoreWalkArea = false;
         }
 
+        #region Private members
+
+        // Pop
+        private void Pop()
+        {
+            AllowInteraction = true;    
+            Tweens.ScaleTween = scaleTween;
+            PlaySound(isCoin ? SoundNames.LootCoin : SoundNames.LootSack);
+        }
+
+        #endregion
+
         #region Protected members
+
+        // OnDraw
+        protected override void OnDraw(GameTime gameTime)
+        {
+            if (popCooldown > 0)
+                return;
+
+            base.OnDraw(gameTime);
+        }
 
         // OnUnload
         protected override void OnUnload()
@@ -44,6 +67,13 @@ namespace Remizione
             if (metaItem == null)
                 return;
 
+            if (popCooldown > 0)
+            {
+                popCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+                if (popCooldown <= 0)
+                    Pop();
+            }
+
             base.OnUpdate(gameTime);
         }
 
@@ -55,7 +85,7 @@ namespace Remizione
         {
             if (metaItem != null)
             {
-                Session.Player?.Animate("TakeSack");
+                Session.Player?.Animate(AnimationNames.PickUp);
                 Session.Inventory.Add(metaItem, 1);
                 Session.HUD.Log.Show(LogVerb.PickedUp, metaItem);
                 Unparent();
@@ -69,17 +99,19 @@ namespace Remizione
             PivotOrigin = RectanglePoint.Bottom;
             Position = origin;
             this.metaItem = metaItem;
-            var isCoin = metaItem.Name == MetaItem.CoinItemName;
+            this.isCoin = metaItem.Name == MetaItem.CoinItemName;
+
+            popCooldown = Random.Shared.Next(800, 1500);
+            
+            this.AllowInteraction = false;
             this.DefaultImageName = isCoin ? nameof(Atlases.Environment.Coin) : nameof(Atlases.Environment.Sack);
-            scaleTween.Start(TweenStyle.Linear, Vector2.Zero, Vector2.One, 250);
-
             this.DisplayNameKey = $"Item.{metaItem.Name}.Name";
+            this.DepthOffset = isCoin ? -100 : -1;
+            this.PivotOrigin = isCoin ? RectanglePoint.Center : RectanglePoint.Bottom;
 
+            var scale = isCoin ? new(.6f) : Vector2.One;
+            scaleTween.Start(TweenStyle.Linear, scale, scale * 1.1f, 100, -1);
             room.Children.Add(this);
-
-            Tweens.ScaleTween = scaleTween;
-
-            PlaySound(SoundNames.ItemPop);
         }
     }
 }

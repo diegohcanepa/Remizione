@@ -10,6 +10,7 @@
         internal const string Locked = nameof(Locked);
         internal const string Open = nameof(Open);
         internal const string Opening = nameof(Opening);
+        internal const string PickUp = nameof(PickUp);
         internal const string ThrowItem = nameof(ThrowItem);
         internal const string Unlocked = nameof(Unlocked);
     }

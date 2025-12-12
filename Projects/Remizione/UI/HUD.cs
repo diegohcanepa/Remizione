@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using Remizione.UI;
 
 namespace Remizione
 {
@@ -49,6 +50,9 @@ namespace Remizione
 
             // Ticket meter
             this.ticketMeter = new(Game);
+
+            // Mini map
+            this.MiniMap = new(Game);
         }
 
         #endregion
@@ -72,6 +76,7 @@ namespace Remizione
                     TargetMeter.Draw(gameTime);
                 Log.Draw(gameTime);
                 Message.Draw(gameTime);
+                MiniMap.Draw(gameTime);
             }
 
             leftHandSlot.Draw(gameTime);
@@ -128,6 +133,9 @@ namespace Remizione
 
         // Log
         public UILog Log { get; }
+
+        // MiniMap
+        public UIMiniMap MiniMap { get; }
 
         // Message
         public HUDMessage Message { get; }
