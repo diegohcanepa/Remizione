@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Remizione
@@ -154,7 +153,7 @@ namespace Remizione
         {
             for (var i = 0; i < list.Count; i++)
             {
-                placeholders.Add(list[i]);       
+                placeholders.Add(list[i]);
             }
         }
 

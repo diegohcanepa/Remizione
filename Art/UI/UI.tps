@@ -189,6 +189,7 @@
                 <false/>
             </struct>
             <key type="filename">Inventory-assets/InventoryCategoryNotEmpty.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapMarker.png</key>
             <key type="filename">UI-assets/SpeechBubbleCloseArrow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -500,9 +501,9 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MiniMap-assets/UIMiniMapCurrentRoom.png</key>
-            <key type="filename">MiniMap-assets/UIMiniMapNotVisitedRoom.png</key>
-            <key type="filename">MiniMap-assets/UIMiniMapVisitedRoom.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapRoom0.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapRoom1.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapRoom2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -517,9 +518,26 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MiniMap-assets/UIMiniMapCurrentSideRoom.png</key>
-            <key type="filename">MiniMap-assets/UIMiniMapNotVisitedSideRoom.png</key>
-            <key type="filename">MiniMap-assets/UIMiniMapVisitedSideRoom.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapRoom3.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapRoom4.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapRoom5.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapRoom6.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapRoom7.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapRoom8.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,4,3</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,4,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>
             <struct type="IndividualSpriteSettings">

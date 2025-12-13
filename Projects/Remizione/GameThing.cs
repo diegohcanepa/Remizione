@@ -7,7 +7,6 @@ using Engendro.PathFinding;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace Remizione
 {

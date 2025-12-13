@@ -40,7 +40,7 @@ namespace Remizione
             var denyPools = ConfigHelper.GetTags(element, "denyPools");
             var allowTags = ConfigHelper.GetTags(element, "allowTags");
             var denyTags = ConfigHelper.GetTags(element, "denyTags");
-            
+
             this.Scope = new ScopeRules(allowPools, denyPools, allowTags, denyTags);
 
             // Template
@@ -88,7 +88,7 @@ namespace Remizione
                     placeholdersList.Add(new PlaceholderOverride(phName, phFillChance, allowTags, phTarget));
                 }
             }
-            
+
             this.PlaceholderOverrides = new ReadOnlyCollection<PlaceholderOverride>(placeholdersList);
 
             data.Add(Name, this);

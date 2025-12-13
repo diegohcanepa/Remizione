@@ -36,7 +36,7 @@ namespace Remizione
         // Pop
         private void Pop()
         {
-            AllowInteraction = true;    
+            AllowInteraction = true;
             Tweens.ScaleTween = scaleTween;
             PlaySound(isCoin ? SoundNames.LootCoin : SoundNames.LootSack);
         }
@@ -110,7 +110,7 @@ namespace Remizione
             this.isCoin = metaItem.Name == MetaItem.CoinItemName;
 
             popCooldown = Random.Shared.Next(800, 1500);
-            
+
             this.AllowInteraction = false;
             this.DefaultImageName = isCoin ? nameof(Atlases.Environment.Coin) : nameof(Atlases.Environment.Sack);
             this.DisplayNameKey = $"Item.{metaItem.Name}.Name";

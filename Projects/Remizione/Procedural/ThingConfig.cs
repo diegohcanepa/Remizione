@@ -133,7 +133,7 @@ namespace Remizione
         public float TicketRewardChance { get; }
 
         // UsePlaceholder
-        public bool UsePlaceholder { get; }    
+        public bool UsePlaceholder { get; }
 
         // Validate
         public override void Validate()

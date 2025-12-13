@@ -1,5 +1,4 @@
-﻿using Adberration;
-using Adberration.Scripting;
+﻿using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
@@ -181,7 +180,7 @@ namespace Remizione
             if (SwitchStateCooldown > 0)
             {
                 SwitchStateCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                
+
                 if (SwitchStateCooldown <= 0)
                 {
                     SwitchStateCooldown = 0;

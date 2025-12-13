@@ -220,6 +220,8 @@ namespace Remizione
         // OnEnterRoom
         protected override void OnEnterRoom(Room room)
         {
+            GameplayMode = room is ProceduralRoom or Hub ? GameplayMode.Action : GameplayMode.Adventure;
+
             var width = room.Width == 0 ? room.CustomWidth : room.Width;
             var height = room.Height == 0 ? room.CustomHeight : room.Height;
             Camera.Setup(width, height, room.ScrollLock, room.Zoom);
@@ -285,7 +287,7 @@ namespace Remizione
 
             // AllowPlayerSelector
             if (sessionNode.Attributes[nameof(AllowPlayerSelector)]?.Value is string allowPlayerSelector)
-                this.AllowPlayerSelector= XmlConvert.ToBoolean(allowPlayerSelector);
+                this.AllowPlayerSelector = XmlConvert.ToBoolean(allowPlayerSelector);
 
             // CompletedRuns
             if (sessionNode.Attributes[nameof(CompletedRuns)]?.Value is string completedRuns)
@@ -520,7 +522,7 @@ namespace Remizione
 
         // GameplayMode
         [ScriptProperty]
-        public GameplayMode GameplayMode => Room is ProceduralRoom || Room is Hub ? GameplayMode.Action : GameplayMode.Adventure;
+        public GameplayMode GameplayMode { get; private set; }
 
         // GetFriendlyItems
         public MetaItem[] GetFriendlyItems(string staticName)

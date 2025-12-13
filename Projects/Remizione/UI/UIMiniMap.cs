@@ -1,7 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 
 namespace Remizione.UI
@@ -11,14 +10,21 @@ namespace Remizione.UI
     /// </summary>
     public sealed class UIMiniMap : GameObject
     {
+        #region Private fields
+
         private enum RoomImage { MiddleCurrent, MiddleVisited, MiddleNotVisited, LeftCurrent, LeftVisited, LeftNotVisited, RightCurrent, RightVisited, RightNotVisited };
         private readonly ImageSprite container;
+        private readonly Vector2 containerCenter;
         private int downLimit;
         private readonly HashSet<RoomGraph> drawnRooms = [];
         private readonly ImageSprite marker;
         private readonly FloatTween opacityTween = new();
         private readonly ImageSprite[] roomImages;
         private int upLimit;
+
+        #endregion
+
+        #region Constructor
 
         // Constructor
         public UIMiniMap(EngendroGame game)
@@ -30,6 +36,8 @@ namespace Remizione.UI
                 PivotOrigin = RectanglePoint.RightTop,
                 Position = new(234, 2)
             };
+
+            containerCenter = container.BoundingBox.Center - (Vector2.UnitY * .5f);
 
             // Marker
             marker = new ImageSprite(game, Atlases.UI.GetImageNotNull("UIMiniMapMarker"))
@@ -50,7 +58,9 @@ namespace Remizione.UI
             }
 
             opacityTween.Start(TweenStyle.CubicInOut, 1, .6f, 300, -1);
-       }
+        }
+
+        #endregion
 
         #region Private members
 
@@ -138,7 +148,7 @@ namespace Remizione.UI
             drawnRooms.Clear();
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             container.Draw(gameTime);
-            var pos = container.BoundingBox.Center;
+            var pos = containerCenter;
 
             if (CurrentRoom.IsSide)
             {

@@ -27,7 +27,7 @@ namespace Remizione
 
             SetStateHandler(PropState.Locked, Lock);
             SetStateHandler(PropState.Unlocked, Unlock);
-            
+
             InitializeState(PropState.Locked);
         }
 
