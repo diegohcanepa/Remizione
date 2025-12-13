@@ -62,9 +62,10 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (session.AllowPlayerSelector)
+            if (session.GameplayMode == GameplayMode.Adventure)
             {
-                PlayerSelector.Draw(gameTime);
+                if (session.AllowPlayerSelector)
+                    PlayerSelector.Draw(gameTime);
                 return;
             }
 
@@ -76,7 +77,9 @@ namespace Remizione
                     TargetMeter.Draw(gameTime);
                 Log.Draw(gameTime);
                 Message.Draw(gameTime);
-                MiniMap.Draw(gameTime);
+
+                if (session.Room is ProceduralRoom)
+                    MiniMap.Draw(gameTime);
             }
 
             leftHandSlot.Draw(gameTime);
@@ -94,6 +97,7 @@ namespace Remizione
             rightHandSlot.Update(gameTime);
             gadgetSlot.Update(gameTime);
             healthMeter.Update(gameTime);
+            MiniMap.Update(gameTime);
 
             Log.Update(gameTime);
             Message.Update(gameTime);

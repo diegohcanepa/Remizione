@@ -104,7 +104,6 @@ namespace Remizione
             IsHUDVisible = false;
             Inventory.Clear();
             Tickets = 0;
-            GameplayMode = GameplayMode.Adventure;
             Player?.Reheal();
             RunManager.Clear();
             CleanUpRuntimeEntities();
@@ -276,10 +275,6 @@ namespace Remizione
             if (sessionNode == null || sessionNode.Attributes == null)
                 throw new InvalidOperationException("Session node attributes not found");
 
-            // GameplayMode
-            if (sessionNode.Attributes[nameof(GameplayMode)]?.Value is string gameplayMode)
-                GameplayMode = Enum.Parse<GameplayMode>(gameplayMode);
-
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
                 Player = GetEntity<Actor>(player);
@@ -363,6 +358,9 @@ namespace Remizione
 
             AddPlayer("Edmund");
             AddPlayer("Berta");
+
+            if (IsNewSession)
+                UnlockedPool.InitializeDefaults();
         }
 
         // OnUpdate
@@ -401,9 +399,6 @@ namespace Remizione
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
-            // GameplayMode
-            output.WriteAttributeString(nameof(GameplayMode), XmlConvert.ToString((int)GameplayMode));
-
             // Player
             if (Player != null)
                 output.WriteAttributeString(nameof(Player), Player.Name);
@@ -525,7 +520,7 @@ namespace Remizione
 
         // GameplayMode
         [ScriptProperty]
-        public GameplayMode GameplayMode { get; set; }
+        public GameplayMode GameplayMode => Room is ProceduralRoom || Room is Hub ? GameplayMode.Action : GameplayMode.Adventure;
 
         // GetFriendlyItems
         public MetaItem[] GetFriendlyItems(string staticName)

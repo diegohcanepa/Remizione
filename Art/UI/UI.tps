@@ -485,11 +485,43 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">MiniMap-assets/UIMiniMapContainer.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,11,19,21</rect>
+                <key>scale9Paddings</key>
+                <rect>9,11,19,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MiniMap-assets/UIMiniMapCurrentRoom.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapNotVisitedRoom.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapVisitedRoom.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,3,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,3,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MiniMap-assets/UIMiniMapCurrentSideRoom.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapNotVisitedSideRoom.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapVisitedSideRoom.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>
-            <key type="filename">UI-assets/UIMiniMapCurrentSideRoom.png</key>
-            <key type="filename">UI-assets/UIMiniMapNotVisitedSideRoom.png</key>
-            <key type="filename">UI-assets/UIMiniMapVisitedSideRoom.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -768,38 +800,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UI-assets/UIMiniMapContainer.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>11,11,23,23</rect>
-                <key>scale9Paddings</key>
-                <rect>11,11,23,23</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UI-assets/UIMiniMapCurrentRoom.png</key>
-            <key type="filename">UI-assets/UIMiniMapNotVisitedRoom.png</key>
-            <key type="filename">UI-assets/UIMiniMapVisitedRoom.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,3,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,3,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">XboxControls-assets/XboxLeftShoulder.png</key>
             <key type="filename">XboxControls-assets/XboxRightShoulder.png</key>
             <struct type="IndividualSpriteSettings">
@@ -832,6 +832,7 @@
                     <filename>Items-assets</filename>
                     <filename>Inventory-assets</filename>
                     <filename>InventoryCategoryIcons-assets</filename>
+                    <filename>MiniMap-assets</filename>
                 </array>
             </struct>
         </map>

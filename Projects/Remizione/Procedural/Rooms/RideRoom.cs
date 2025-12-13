@@ -105,7 +105,8 @@ namespace Remizione
             }
             else
             {
-                Loot.TryDropLoot(this, Config.LootTable, dropPosition, out _);
+                if (Loot.TryDropLoot(this, Config.LootTable, dropPosition, out _))
+                    RoomGraph.SackCount++;
             }
 
             for (var i = 0; i < doors.Count; i++)

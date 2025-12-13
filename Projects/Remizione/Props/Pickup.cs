@@ -85,6 +85,14 @@ namespace Remizione
         {
             if (metaItem != null)
             {
+                if (Room is ProceduralRoom procRoom)
+                {
+                    if (isCoin)
+                        procRoom.RoomGraph.HasCoin = false;
+                    else
+                        procRoom.RoomGraph.SackCount--;
+                }
+
                 Session.Player?.Animate(AnimationNames.PickUp);
                 Session.Inventory.Add(metaItem, 1);
                 Session.HUD.Log.Show(LogVerb.PickedUp, metaItem);

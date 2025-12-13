@@ -61,7 +61,8 @@ namespace Remizione
                     chanceTable.Add(candidate.Name, candidate.Weight, 1, candidate);
                 }
 
-                if (chanceTable.GetValue() is ChanceTableItem chanceTableItem && chanceTableItem.Context is RoomConfig chosenConfig)
+                var item = chanceTable.GetValue();
+                if (item != null && item.Context is RoomConfig chosenConfig)
                 {
                     RunManager.SpawnCounter.Increment(chosenConfig.Name);
                     roomGraph.Config = chosenConfig;

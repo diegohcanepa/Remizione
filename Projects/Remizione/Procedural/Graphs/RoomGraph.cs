@@ -43,6 +43,9 @@
         // Right
         public RoomGraph? Right { get; set; }
 
+        // SackCount
+        public int SackCount { get; set; }
+
         // Up
         public RoomGraph? Up { get; set; }
 
