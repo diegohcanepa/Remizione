@@ -65,7 +65,7 @@ namespace Remizione
                     Scale = ScaleInfo.Text.VeryLarge,
                 };
 
-                console = new ScriptConsole(this, InputBindings.Console, consoleText, new RectangleF(0, 240, 480, 30))
+                console = new(this, InputBindings.Console, consoleText, new RectangleF(0, 240, 480, 30))
                 {
                     TextErrorColor = ColorPalette.Text.Terra
                 };

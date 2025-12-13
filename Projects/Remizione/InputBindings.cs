@@ -51,8 +51,8 @@ namespace Remizione
         internal static readonly InputBinding KeyboardMoveUp = InputManager.AddBinding(nameof(KeyboardMoveUp), 0, Keys.W);
 
         // Generic options
-        internal static readonly InputBinding NextTab = InputManager.AddBinding(nameof(NextTab), Buttons.RightShoulder, Keys.Tab);
-        internal static readonly InputBinding PreviousTab = InputManager.AddBinding(nameof(PreviousTab), Buttons.LeftShoulder, ModifiersKey.Shift, Keys.Tab);
+        internal static readonly InputBinding NextTab = InputManager.AddBinding(nameof(NextTab), Buttons.RightShoulder, Keys.Right);
+        internal static readonly InputBinding PreviousTab = InputManager.AddBinding(nameof(PreviousTab), Buttons.LeftShoulder, ModifiersKey.Shift, Keys.Left);
         internal static readonly InputBinding SelectDown = InputManager.AddBinding(nameof(SelectDown), Buttons.DPadDown, Keys.Down);
         internal static readonly InputBinding SelectLeft = InputManager.AddBinding(nameof(SelectLeft), Buttons.DPadLeft, Keys.Left);
         internal static readonly InputBinding SelectRight = InputManager.AddBinding(nameof(SelectRight), Buttons.DPadRight, Keys.Right);

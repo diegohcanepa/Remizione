@@ -57,18 +57,11 @@ namespace Remizione
 
         #endregion
 
-        #region Protected members
+        #region Private members
 
-        // OnDraw
-        protected override void OnDraw(GameTime gameTime)
+        // DrawForActionMode
+        private void DrawForActionMode(GameTime gameTime)
         {
-            if (session.GameplayMode == GameplayMode.Adventure)
-            {
-                if (session.AllowPlayerSelector)
-                    PlayerSelector.Draw(gameTime);
-                return;
-            }
-
             if (session.IsCurrentScene)
             {
                 ticketMeter.Draw(gameTime);
@@ -88,24 +81,46 @@ namespace Remizione
             healthMeter.Draw(gameTime);
         }
 
+        // DrawForAdventureMode
+        private void DrawForAdventureMode(GameTime gameTime)
+        {
+            if (session.AllowPlayerSelector)
+                PlayerSelector.Draw(gameTime);
+        }
+
+        #endregion
+
+        #region Protected members
+
+        // OnDraw
+        protected override void OnDraw(GameTime gameTime)
+        {
+            if (session.GameplayMode == GameplayMode.Adventure)
+                DrawForAdventureMode(gameTime);
+            else
+                DrawForActionMode(gameTime);
+        }
+
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            TargetMeter.Update(gameTime);
-            sackSlot.Update(gameTime);
-            leftHandSlot.Update(gameTime);
-            rightHandSlot.Update(gameTime);
-            gadgetSlot.Update(gameTime);
-            healthMeter.Update(gameTime);
-            MiniMap.Update(gameTime);
-
-            Log.Update(gameTime);
-            Message.Update(gameTime);
-
-            if (session.Player != null)
+            if (session.GameplayMode == GameplayMode.Action)
             {
-                ticketMeter.Value = session.Tickets;
-                ticketMeter.Update(gameTime);
+                TargetMeter.Update(gameTime);
+                sackSlot.Update(gameTime);
+                leftHandSlot.Update(gameTime);
+                rightHandSlot.Update(gameTime);
+                gadgetSlot.Update(gameTime);
+                healthMeter.Update(gameTime);
+                MiniMap.Update(gameTime);
+                Log.Update(gameTime);
+                Message.Update(gameTime);
+
+                if (session.Player != null)
+                {
+                    ticketMeter.Value = session.Tickets;
+                    ticketMeter.Update(gameTime);
+                }
             }
         }
 
@@ -120,17 +135,22 @@ namespace Remizione
             if (session.IsConsoleVisible)
                 return HandleInputResult.Unhandled;
 
-            if (session.AllowPlayerSelector)
-                return PlayerSelector.HandleInput(gameTime);
+            if (session.GameplayMode == GameplayMode.Adventure)
+            {
+                if (session.AllowPlayerSelector)
+                    return PlayerSelector.HandleInput(gameTime);
+            }
+            else
+            {
+                if (leftHandSlot.HandleInput(gameTime) == HandleInputResult.Handled)
+                    return HandleInputResult.Handled;
 
-            if (leftHandSlot.HandleInput(gameTime) == HandleInputResult.Handled)
-                return HandleInputResult.Handled;
+                if (rightHandSlot.HandleInput(gameTime) == HandleInputResult.Handled)
+                    return HandleInputResult.Handled;
 
-            if (rightHandSlot.HandleInput(gameTime) == HandleInputResult.Handled)
-                return HandleInputResult.Handled;
-
-            if (sackSlot.HandleInput(gameTime) == HandleInputResult.Handled)
-                return HandleInputResult.Handled;
+                if (sackSlot.HandleInput(gameTime) == HandleInputResult.Handled)
+                    return HandleInputResult.Handled;
+            }
 
             return HandleInputResult.Unhandled;
         }
