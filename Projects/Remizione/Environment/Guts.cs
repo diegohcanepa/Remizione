@@ -13,13 +13,13 @@ namespace Remizione
         private readonly List<ShatterPiece> pieces = [];
 
         // Constructor
-        public Guts(GameSession session, int amount, Vector2 scale, IList<AtlasImage>? extraImages)
+        public Guts(GameSession session, bool bloodStain, int amount, Vector2 scale, IList<AtlasImage>? extraImages)
             : base(session, string.Empty)
         {
             Atlas = Atlases.Environment;
-            DefaultImageName = $"GutStain{Random.Shared.Next(1, 3)}";
+            DefaultImageName = Atlases.Environment.GutStains[Random.Shared.Next(0, 2)].Name;
             PivotOrigin = RectanglePoint.Center;
-            Opacity = .3f;
+            Opacity = bloodStain ? .8f : 0;
 
             // Guts pieces
             var guts = Math.Min(amount, Atlases.Environment.Guts.Count);

@@ -312,13 +312,13 @@ namespace Remizione
                 {
                     var gutScale = BodySize switch
                     {
-                        ActorSize.Small => Vector2.One * .55f,
-                        ActorSize.Medium => Vector2.One * .75f,
+                        ActorSize.Small => Vector2.One,
+                        ActorSize.Medium => Vector2.One,
                         ActorSize.Large => Vector2.One,
                         _ => Vector2.One * 1.25f
                     };
 
-                    var guts = new Guts(Session, Guts, gutScale, customGuts)
+                    var guts = new Guts(Session, Guts > 0, Guts, gutScale, customGuts)
                     {
                         Position = Position,
                     };

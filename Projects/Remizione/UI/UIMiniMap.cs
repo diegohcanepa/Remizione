@@ -17,9 +17,11 @@ namespace Remizione.UI
         private readonly Vector2 containerCenter;
         private int downLimit;
         private readonly HashSet<RoomGraph> drawnRooms = [];
-        private readonly ImageSprite marker;
+        private readonly ImageSprite endMarker;
+        private readonly ImageSprite looMarker;
         private readonly FloatTween opacityTween = new();
         private readonly ImageSprite[] roomImages;
+        private readonly ImageSprite startMarker;
         private int upLimit;
 
         #endregion
@@ -39,8 +41,22 @@ namespace Remizione.UI
 
             containerCenter = container.BoundingBox.Center - (Vector2.UnitY * .5f);
 
-            // Marker
-            marker = new ImageSprite(game, Atlases.UI.GetImageNotNull("UIMiniMapMarker"))
+            // End marker
+            endMarker = new ImageSprite(game, Atlases.UI.GetImageNotNull("UIMiniMapEndMarker"))
+            {
+                PivotOrigin = RectanglePoint.Center,
+                Scale = ScaleInfo.UIElement.Tiny
+            };
+
+            // Loot marker
+            looMarker = new ImageSprite(game, Atlases.UI.GetImageNotNull("UIMiniMapMarker"))
+            {
+                PivotOrigin = RectanglePoint.Center,
+                Scale = ScaleInfo.UIElement.Tiny
+            };
+
+            // Start marker
+            startMarker = new ImageSprite(game, Atlases.UI.GetImageNotNull("UIMiniMapStartMarker"))
             {
                 PivotOrigin = RectanglePoint.Center,
                 Scale = ScaleInfo.UIElement.Tiny
@@ -102,8 +118,8 @@ namespace Remizione.UI
 
             if (roomGraph.SackCount > 0 || roomGraph.HasCoin)
             {
-                marker.Position = image.BoundingBox.Center;
-                marker.Draw(gameTime);
+                looMarker.Position = image.BoundingBox.Center;
+                looMarker.Draw(gameTime);
             }
 
             drawnRooms.Add(roomGraph);
@@ -130,6 +146,17 @@ namespace Remizione.UI
                     upLimit++;
                     DrawRoom(gameTime, roomGraph.Up, position - new Vector2(0, image.BoundingBox.Height));
                 }
+            }
+
+            if (roomGraph.IsRoot)
+            {
+                startMarker.Position = image.BoundingBox.GetPoint(RectanglePoint.Bottom, -.25f, 0);
+                startMarker.Draw(gameTime);
+            }
+            else if (roomGraph.Up == null && !roomGraph.IsSide)
+            {
+                endMarker.Position = image.BoundingBox.GetPoint(RectanglePoint.Top, -.25f, 0);
+                endMarker.Draw(gameTime);
             }
         }
 
