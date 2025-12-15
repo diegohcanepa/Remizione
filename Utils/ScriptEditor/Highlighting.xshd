@@ -31,6 +31,8 @@
 			<Word>Room </Word>
 			<Word>EnterRoom</Word>
 			<Word>Enter </Word>
+			<Word>Entering </Word>
+			<Word>Exiting </Word>
 			<Word>Load </Word>
 			<Word>Unload </Word>
 			<Word>Outcome </Word>

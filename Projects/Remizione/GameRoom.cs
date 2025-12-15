@@ -574,6 +574,10 @@ namespace Remizione
             set => Session.Environment.GlobalLight.Scale = value;
         }
 
+        // IsProcedural
+        [ScriptProperty]
+        public virtual bool IsProcedural => false;
+
         // IsWalkable
         public virtual bool IsWalkable => true;
 

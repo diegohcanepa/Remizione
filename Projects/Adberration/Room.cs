@@ -18,6 +18,8 @@ namespace Adberration
 
         private readonly List<Area> areas = [];
         private readonly List<Thing> culledThings = new(1000);
+        private readonly Script? enteringScript;
+        private readonly Script? exitingScript;
         private readonly List<Script> routines = [];
         private readonly List<SoundInstance> sounds = [];
 
@@ -34,6 +36,16 @@ namespace Adberration
             CustomWidth = Session.Game.ViewportAdapter.VirtualWidth;
             CulledThings = new ReadOnlyCollection<Thing>(culledThings);
             Areas = new ReadOnlyCollection<Area>(areas);
+
+            // Cache scripts
+            if (InstanceKind != InstanceKind.Anonymous)
+            {
+                enteringScript = session.ScriptLibrary.GetScript(ScriptType.Entering, Name);
+                enteringScript ??= session.ScriptLibrary.GetScript(ScriptType.Entering, StaticName);
+
+                exitingScript = session.ScriptLibrary.GetScript(ScriptType.Exiting, Name);
+                exitingScript ??= session.ScriptLibrary.GetScript(ScriptType.Exiting, StaticName);
+            }
         }
 
         #endregion
@@ -91,8 +103,8 @@ namespace Adberration
             return HandleInputResult.Unhandled;
         }
 
-        // OnEnter
-        protected virtual void OnEnter()
+        // OnEntering
+        protected virtual void OnEntering()
         {
         }
 
@@ -211,7 +223,10 @@ namespace Adberration
         // Enter
         internal void Enter()
         {
-            OnEnter();
+            if (enteringScript != null)
+                RunScript(enteringScript);
+
+            OnEntering();
 
             for (var i = 0; i < Children.Count; i++)
             {
@@ -222,6 +237,9 @@ namespace Adberration
         // Exit
         internal void Exit()
         {
+            if (exitingScript != null)
+                RunScript(exitingScript);
+
             OnExit();
 
             for (var i = 0; i < Children.Count; i++)

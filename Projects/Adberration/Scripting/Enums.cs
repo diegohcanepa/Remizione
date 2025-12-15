@@ -23,7 +23,7 @@
     }
 
     // ScriptType
-    public enum ScriptType { Declaration, Initialization, Cloning, Room, Thing, Load, Unload, Enter, EnterRoom, Outcome, Routine, NewSession }
+    public enum ScriptType { Declaration, Initialization, Cloning, Room, Thing, Load, Unload, Enter, Entering, EnterRoom, Exiting, Outcome, Routine, NewSession }
 
     // StatementType
     public enum StatementType { If, Else, Endif, Restart, Return, AwaitableCommand, NonAwaitableCommmand, LocalizationComment }

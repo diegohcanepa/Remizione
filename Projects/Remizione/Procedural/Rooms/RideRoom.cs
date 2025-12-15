@@ -117,11 +117,9 @@ namespace Remizione
             lootDropped = true;
         }
 
-        // OnEnter
-        protected override void OnEnter()
+        // OnEntering
+        protected override void OnEntering()
         {
-            base.OnEnter();
-
             RoomGraph.Visited = true;
 
             Session.HUD.MiniMap.CurrentRoom = RoomGraph;

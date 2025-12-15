@@ -366,6 +366,9 @@ namespace Remizione
             return CreateRuntimeThingCloneCore(staticName);
         }
 
+        // IsProcedural
+        public override bool IsProcedural => true;
+
         // Placeholders
         public NamedObjectReadOnlyCollection<Placeholder> Placeholders { get; }
 

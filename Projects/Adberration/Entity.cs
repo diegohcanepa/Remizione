@@ -156,18 +156,6 @@ namespace Adberration
             unparentList.Remove(child);
         }
 
-        // RunScript
-        private void RunScript(Script script)
-        {
-            if (InstanceKind == InstanceKind.Anonymous)
-                return;
-
-            if (script.HasCapability(ScriptCapability.SetTargetEntity))
-                script.SetTargetEntity(Name);
-
-            Session.ScriptProcessor.RunScript(script);
-        }
-
         #endregion
 
         #region Protected members
@@ -306,6 +294,18 @@ namespace Adberration
         {
             get => Sprite.OpacityFactor;
             set => Sprite.OpacityFactor = value;
+        }
+
+        // RunScript
+        protected void RunScript(Script script)
+        {
+            if (InstanceKind == InstanceKind.Anonymous)
+                return;
+
+            if (script.HasCapability(ScriptCapability.SetTargetEntity))
+                script.SetTargetEntity(Name);
+
+            Session.ScriptProcessor.RunScript(script);
         }
 
         // Sprite
