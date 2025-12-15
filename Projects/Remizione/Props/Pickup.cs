@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -16,7 +17,7 @@ namespace Remizione
         private bool isCoin;
         private MetaItem? metaItem;
         private int popCooldown;
-        private readonly Vector2Tween scaleTween = new();
+        private BounceScaleEffect bounceScaleEffect = new();
 
         #endregion
 
@@ -37,8 +38,10 @@ namespace Remizione
         private void Pop()
         {
             AllowInteraction = true;
-            Tweens.ScaleTween = scaleTween;
-            PlaySound(isCoin ? SoundNames.LootCoin : SoundNames.LootSack);
+            bounceScaleEffect.Play(isCoin ? .6f : 1, .75f);
+
+            if (Sound.Find(isCoin ? SoundNames.LootCoin : SoundNames.LootSack)?.PopInstance() is SoundInstance soundInstance)
+                soundInstance.PlayDelayed(300);
         }
 
         #endregion
@@ -72,9 +75,13 @@ namespace Remizione
                 popCooldown -= gameTime.ElapsedGameTime.Milliseconds;
                 if (popCooldown <= 0)
                     Pop();
+                return;
             }
 
             base.OnUpdate(gameTime);
+
+            bounceScaleEffect.Update(gameTime);
+            Scale = new(bounceScaleEffect.Value);
         }
 
         #endregion
@@ -104,6 +111,7 @@ namespace Remizione
         // Drop
         public void Drop(Room room, Vector2 origin, MetaItem metaItem)
         {
+            Sprite.ClearAnimations();
             PivotOrigin = RectanglePoint.Bottom;
             Position = origin;
             this.metaItem = metaItem;
@@ -112,13 +120,22 @@ namespace Remizione
             popCooldown = Random.Shared.Next(800, 1500);
 
             this.AllowInteraction = false;
-            this.DefaultImageName = isCoin ? nameof(Atlases.Environment.Coin) : nameof(Atlases.Environment.Sack);
+            this.DefaultImageName = isCoin ? string.Empty : nameof(Atlases.Environment.Sack);
             this.DisplayNameKey = $"Item.{metaItem.Name}.Name";
             this.DepthOffset = isCoin ? -100 : -1;
             this.PivotOrigin = isCoin ? RectanglePoint.Center : RectanglePoint.Bottom;
+            this.Scale = Vector2.Zero;
 
-            var scale = isCoin ? new(.6f) : Vector2.One;
-            scaleTween.Start(TweenStyle.Linear, scale, scale * 1.1f, 100, -1);
+            if (isCoin)
+            {
+                var animation = Sprite.AddAnimation("Coin");
+                animation.AddFrame("Coin01", 2500);
+                animation.AddFrame("Coin02", 100);
+                animation.AddFrame("Coin03", 100);
+                animation.AddFrame("Coin04", 100);
+            }
+
+            AnimationPlayer.Play("Coin", true);
             room.Children.Add(this);
         }
     }

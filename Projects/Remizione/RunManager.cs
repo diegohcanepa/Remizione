@@ -44,8 +44,8 @@ namespace Remizione
             // Create run graph
             var settings = new RunGraphGeneratorSettings()
             {
-                MinLength = 4,
-                MaxLength = 8,
+                //MinLength = 4,
+                MaxLength = 3,
                 Seed = session.Seed
             };
 

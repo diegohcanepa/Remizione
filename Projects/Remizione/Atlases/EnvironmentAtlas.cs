@@ -12,7 +12,6 @@ namespace Remizione
         public EnvironmentAtlas(EngendroGame game)
             : base(game.Content, "Environment", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "Environment"), false)
         {
-            Coin = this[nameof(Coin)];
             CraftingMark = this[nameof(CraftingMark)];
             DefaultLight = this[nameof(DefaultLight)];
             DustParticles = CreateReadOnlyCollection("DustParticle", 1, 1);
@@ -24,9 +23,6 @@ namespace Remizione
             Sack = this[nameof(Sack)];
             Ticket = this[nameof(Ticket)];
         }
-
-        // Coin
-        public AtlasImage Coin { get; }
 
         // CraftingMark
         public AtlasImage CraftingMark { get; }
