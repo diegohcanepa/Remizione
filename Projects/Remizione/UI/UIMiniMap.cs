@@ -119,7 +119,28 @@ namespace Remizione.UI
             if (roomGraph.SackCount > 0 || roomGraph.HasCoin)
             {
                 looMarker.Position = image.BoundingBox.Center;
+
+                if (roomGraph.IsSide)
+                {
+                    if (roomGraph.Right != null)
+                        looMarker.X -= .25f;
+
+                    else if (roomGraph.Left != null)
+                        looMarker.X += .25f;
+                }
+
                 looMarker.Draw(gameTime);
+            }
+
+            if (roomGraph.IsRoot)
+            {
+                startMarker.Position = image.BoundingBox.GetPoint(RectanglePoint.Bottom, -.25f, 0);
+                startMarker.Draw(gameTime);
+            }
+            else if (roomGraph.Up == null && !roomGraph.IsSide)
+            {
+                endMarker.Position = image.BoundingBox.GetPoint(RectanglePoint.Top, -.25f, 0);
+                endMarker.Draw(gameTime);
             }
 
             drawnRooms.Add(roomGraph);
@@ -146,17 +167,6 @@ namespace Remizione.UI
                     upLimit++;
                     DrawRoom(gameTime, roomGraph.Up, position - new Vector2(0, image.BoundingBox.Height));
                 }
-            }
-
-            if (roomGraph.IsRoot)
-            {
-                startMarker.Position = image.BoundingBox.GetPoint(RectanglePoint.Bottom, -.25f, 0);
-                startMarker.Draw(gameTime);
-            }
-            else if (roomGraph.Up == null && !roomGraph.IsSide)
-            {
-                endMarker.Position = image.BoundingBox.GetPoint(RectanglePoint.Top, -.25f, 0);
-                endMarker.Draw(gameTime);
             }
         }
 
