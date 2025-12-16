@@ -46,7 +46,7 @@ namespace Remizione
         {
             return
             [
-                new("Floor1", .5f, false, "41,32;56,32;56,47;41,47", ["floor"]),
+                new("Floor1", .5f, false, "41,32;56,32;56,47;41,47", ["floor","expendingMachine"]),
                 new("Floor2", .5f, false, "64,34;79,34;79,49;64,49", ["floor"]),
                 new("Floor3", .5f, false, "4170,34;185,34;185,49;170,49", ["floor"]),
                 new("Floor4", .5f, false, "189,32;204,32;204,47;189,47", ["floor"]),

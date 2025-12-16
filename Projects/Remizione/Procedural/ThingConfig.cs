@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engendro;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
@@ -58,6 +59,11 @@ namespace Remizione
 
             if (MinSpawnAmount > MaxSpawnAmount)
                 throw new InvalidOperationException($"[{Name}]: {nameof(MinSpawnAmount)} cannot be greater than MaxSpawnAmount.");
+
+            // SpawnChance
+            SpawnChance = 1;
+            if (element.TryGetProperty("spawnChance", out JsonElement spawnChanceElement))
+                SpawnChance = spawnChanceElement.GetSingle();
 
             // TicketRewardAmount
             if (element.TryGetProperty("ticketRewardAmount", out JsonElement ticketRewardAmountElement))
@@ -125,6 +131,9 @@ namespace Remizione
         {
             return MaxPerRoom == 0 || instanceCount < MaxPerRoom;
         }
+
+        // SpawnChance
+        public Ratio SpawnChance { get; }
 
         // TicketRewardAmount
         public int TicketRewardAmount { get; }

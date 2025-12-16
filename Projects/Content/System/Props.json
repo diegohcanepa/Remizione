@@ -2,6 +2,13 @@
   "$schema": "./ThingData.schema.json",
   "data": [
     {
+      "name": "ExpendingMachine",
+      "maxPerRun": 1,
+      "tags": "floor",
+      "unlocked": true,
+      "usePlaceholder": true
+    },
+    {
       "name": "PotteryA",
       "tags": "floor",
       "loot": [

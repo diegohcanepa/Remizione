@@ -49,6 +49,13 @@
           "minimum": 1,
           "description": "Número mínimo de veces que este elemento se spawnea en el 'room'."
         },
+        "spawnChance": {
+          "type":"number",
+          "default": 1,
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Chances de spawn."
+        },       
         "ticketRewardAmount": {
           "type": "integer",
           "default": 0,
@@ -59,6 +66,7 @@
           "type":"number",
           "default": 0,
           "minimum": 0,
+          "maximum": 1,
           "description": "Chances de dropear tickets."
         },       
         "usePlaceholder": {

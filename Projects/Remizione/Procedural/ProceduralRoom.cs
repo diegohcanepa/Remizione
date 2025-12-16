@@ -228,7 +228,7 @@ namespace Remizione
                 }
 
                 // Roll fillChance
-                if (Random.NextDouble() > float.Clamp(placeholder.FillChance, 0, 1))
+                if (!placeholder.FillChance.Roll(Random))
                     continue;
 
                 // Collect candidates
@@ -251,6 +251,10 @@ namespace Remizione
 
                     // MaxPerRun
                     if (!config.PassesMaxPerRunConstraint())
+                        continue;
+
+                    // SpawnChance
+                    if (!config.SpawnChance.Roll(Random))
                         continue;
 
                     candidates.Add(config);
@@ -291,67 +295,102 @@ namespace Remizione
         // SpawnInWalkArea
         private void SpawnInWalkArea(IList<ThingConfig> configList, int maxInstances)
         {
-            var nameList = new List<string>();
+            if (WalkArea == null)
+                return;
 
-            // Construir candidatos iterando props
+            // 1) Collect candidates
             var candidates = new List<ThingConfig>();
             foreach (var config in configList)
             {
                 if (config.UsePlaceholder)
                     continue;
 
-                // MaxPerRoom
                 if (!config.PassesMaxPerRoomConstraint(spawnCounter.GetCount(config.Name)))
                     continue;
 
-                // MaxPerRun
                 if (!config.PassesMaxPerRunConstraint())
                     continue;
 
-                candidates.Add(config);
+                if (!config.SpawnChance.Roll(Random))
+                    continue;
 
-                // Pick
-                var chanceTable = new ChanceTable();
-                foreach (var candidate in candidates)
+                candidates.Add(config);
+            }
+
+            if (candidates.Count == 0)
+                return;
+
+            // 2) Build chance table
+            var table = new ChanceTable();
+            foreach (var c in candidates)
+            {
+                table.Add(c.Name, c.Weight);
+            }
+
+            var spawnedNames = new List<string>();
+            int remainingInstances = maxInstances;
+
+            // Corte blando
+            var continueChance = 1f;
+            const float decay = 0.7f; // ajustable
+
+            // seguridad
+            int safety = candidates.Count;
+
+            // 3) Pick groups
+            while (table.Count > 0 && safety-- > 0)
+            {
+                if (maxInstances > 0 && remainingInstances <= 0)
+                    break;
+
+                // roll de continuación (solo si es infinito)
+                if (maxInstances <= 0)
                 {
-                    chanceTable.Add(candidate.Name, candidate.Weight);
+                    if (Random.NextDouble() > continueChance)
+                        break;
+
+                    continueChance *= decay;
                 }
 
-                if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
+                if (table.GetValue() is not ChanceTableItem item)
+                    break;
+
+                table.Remove(item.Name);
+
+                if (ThingConfig.Find(item.Name) is not ThingConfig chosen)
                     continue;
 
-                if (ThingConfig.Find(chanceTableItem.Name) is not ThingConfig chosen)
-                    continue;
+                int min = Math.Max(1, chosen.MinSpawnAmount);
+                int max = Math.Max(min, chosen.MaxSpawnAmount);
+                int amount = Random.Next(min, max + 1);
 
-                var spawnCount = Random.Next(config.MinSpawnAmount, config.MaxSpawnAmount + 1);
-                for (var j = 0; j < spawnCount; j++)
+                // respetar maxInstances si existe
+                if (maxInstances > 0)
+                    amount = Math.Min(amount, remainingInstances);
+
+                for (int i = 0; i < amount; i++)
                 {
-                    // Log spawn in run
+                    spawnCounter.Increment(chosen.Name);
                     RunManager.SpawnCounter.Increment(chosen.Name);
+                    spawnedNames.Add(chosen.Name);
 
-                    nameList.Add(chosen.Name);
-
-                    // MaxPerRoom
-                    if (!config.PassesMaxPerRoomConstraint(spawnCounter.Increment(chosen.Name)))
-                        break;
-
-                    // MaxPerRun
-                    if (!config.PassesMaxPerRunConstraint())
-                        break;
+                    if (maxInstances > 0)
+                        remainingInstances--;
                 }
             }
 
-            if (WalkArea != null && nameList.Count > 0)
-            {
-                var poly = new Polygon(WalkArea.Polygon.Vertices, -30);
+            if (spawnedNames.Count == 0)
+                return;
 
-                var spawnPoints = GetSpawnPoints(poly.BoundingRectangle, nameList.Count, 18);
-                for (var i = 0; i < spawnPoints.Count; i++)
-                {
-                    var instance = CreateRuntimeThingCloneCore(nameList[i]);
-                    instance.Position = spawnPoints[i];
-                    Children.Add(instance);
-                }
+            // 4) Spawn positions
+            var poly = new Polygon(WalkArea.Polygon.Vertices, -30);
+            var points = GetSpawnPoints(poly.BoundingRectangle, spawnedNames.Count, 18);
+
+            for (int i = 0; i < points.Count; i++)
+            {
+                var instance = CreateRuntimeThingCloneCore(spawnedNames[i]);
+                instance.Position = points[i];
+                Children.Add(instance);
             }
         }
 

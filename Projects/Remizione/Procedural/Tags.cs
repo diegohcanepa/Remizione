@@ -12,6 +12,7 @@ namespace Remizione
         private static readonly HashSet<string> allowedTags =
         [
             "ceiling",
+            "expendingMachine",
             "flip",
             "floor",
             "pottery",

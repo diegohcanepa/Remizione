@@ -19,17 +19,29 @@ namespace Engendro
         }
 
         // Add
-        public void Add(string value, float weight, int amount = 1, object? context = null)
+        public void Add(string name, float weight, int amount = 1, object? context = null)
         {
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(name))
                 return;
 
             CodeContract.GreaterThanZero(weight, nameof(weight));
-            items.Add(new(value, amount, weight, context));
+            items.Add(new(name, amount, weight, context));
         }
 
         // Count
         public int Count => items.Count;
+
+        // Find
+        public ChanceTableItem? Find(string name)
+        {
+            for (var i = 0; i < items.Count; i++)
+            {
+                if (items[i].Name == name)
+                    return items[i];
+            }
+
+            return null;
+        }
 
         // GetValue
         public ChanceTableItem? GetValue() => GetValue(random);
@@ -108,6 +120,18 @@ namespace Engendro
 
         // Nothing
         public const string Nothing = "<Nothing>";
+
+        // Remove
+        public bool Remove(string name)
+        {
+            if (Find(name) is ChanceTableItem item)
+            {
+                items.Remove(item);
+                return true;
+            }
+
+            return false;   
+        }
 
         // SetSeed
         public void SetSeed(int seed) => random = new Random(seed);

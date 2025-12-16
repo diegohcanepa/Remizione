@@ -8,7 +8,7 @@ namespace Remizione
     public sealed class Placeholder : INamedObject
     {
         // Constructor
-        public Placeholder(string name, float fillChance, bool flipImage, string vertices, string[] allowTags, PlaceholderTarget target = PlaceholderTarget.Prop)
+        public Placeholder(string name, Ratio fillChance, bool flipImage, string vertices, string[] allowTags, PlaceholderTarget target = PlaceholderTarget.Prop)
         {
             this.Name = name;
             this.FillChance = fillChance;
@@ -22,7 +22,7 @@ namespace Remizione
         public Tags AllowTags { get; set; }
 
         // FillChance
-        public float FillChance { get; set; }
+        public Ratio FillChance { get; set; }
 
         // FlipImage    
         public bool FlipImage { get; }

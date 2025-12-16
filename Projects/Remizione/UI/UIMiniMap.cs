@@ -112,7 +112,7 @@ namespace Remizione.UI
                     image = roomImages[(int)RoomImage.MiddleNotVisited];
             }
 
-            image.Opacity = roomGraph == CurrentRoom ? opacityTween.CurrentValue : .6f;
+            image.Opacity = roomGraph == CurrentRoom ? opacityTween.CurrentValue : .8f;
             image.Position = position;
             image.Draw(gameTime);
 
