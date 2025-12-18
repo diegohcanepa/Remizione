@@ -1,0 +1,55 @@
+﻿using System.Numerics;
+
+namespace ScaryCastle
+{
+    /// <summary>
+    /// GameSettings
+    /// </summary>
+    public static class GameSettings
+    {
+        // Build
+        public const int Build = 105;
+
+        // CameraFollowSpeed
+        public const float CameraSmoothSpeed = .04f;
+
+        // ContentRootDirectory
+        public const string ContentRootDirectory = "Content";
+
+        // DefaultGlobalLightSize
+        public static readonly Vector2 DefaultGlobalLightSize = new(2.6f, 2.2f);
+
+        // DefaultTransitionDuration
+        public const int DefaultTransitionDuration = 500;
+
+        // GameFolder
+        public const string GameFolder = "ScaryCastle";
+
+        // LogFileName
+        public const string LogFileName = "ErrorLog.txt";
+
+        // CountdownMaximum
+        public const int CountdownMaximum = 120_000;
+
+        // MaximumLevel
+        public const int MaximumLevel = 100;
+
+        // PropRevealOpacity
+        public const float PropRevealOpacity = .5f;
+
+        // SteamAppID
+        public const int SteamAppID = 480;
+
+        // TimeCritical
+        public const int TimeCritical = 10_000;
+
+        // TimeWarning
+        public const int TimeWarning = 30_000;
+
+        // Title
+        public const string Title = "Scary Castle";
+
+        // UserSettingsFileName
+        public const string UserSettingsFileName = "UserSettings.cfg";
+    }
+}

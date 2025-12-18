@@ -2,7 +2,7 @@
 using Syroot.Windows.IO;
 using System.IO;
 
-namespace Remizione
+namespace ScaryCastle
 {
     /// <summary>
     /// WindowsFileSystem

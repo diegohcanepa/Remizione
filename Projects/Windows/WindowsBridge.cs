@@ -3,7 +3,7 @@ using Engendro;
 using Steamworks;
 using System.Globalization;
 
-namespace Remizione
+namespace ScaryCastle
 {
     /// <summary>
     /// WindowsBridge 
