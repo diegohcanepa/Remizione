@@ -6,42 +6,37 @@
     public sealed class RoomGraph
     {
         // Constructor
-        public RoomGraph(int id, bool isRoot, int pathIndex)
+        public RoomGraph(int index, int x, int y, RoomType roomType)
         {
-            this.Id = id;
-            this.IsRoot = isRoot;
-            this.PathIndex = pathIndex;
+            this.Index = index;
+            this.X = x;
+            this.Y = y;
+            this.RoomType = roomType;
         }
 
-        // RoomConfig
+        // Config
         public RoomConfig? Config { get; set; }
 
         // Down
         public RoomGraph? Down { get; set; }
 
-        // HasCoin
-        public bool HasCoin { get; set; }
-
-        // Id
-        public int Id { get; }
-
-        // IsSide
-        public bool IsSide => Down == null && !IsRoot;
-
-        // IsRoot
-        public bool IsRoot { get; }
+        // Index
+        public int Index { get; }
 
         // Left
         public RoomGraph? Left { get; set; }
 
-        // PathIndex
-        public int PathIndex { get; }
-
         // Realm
         public Realm Realm { get; set; }
 
+        // RideRoom
+        public RideRoom? RideRoom {get; set; }    
+
         // Right
         public RoomGraph? Right { get; set; }
+
+        // RoomType
+        public RoomType RoomType { get; set; }
 
         // SackCount
         public int SackCount { get; set; }
@@ -51,5 +46,11 @@
 
         // Visited
         public bool Visited { get; set; }
+
+        // X
+        public int X { get; }
+
+        // Y
+        public int Y { get; }
     }
 }

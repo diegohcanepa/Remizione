@@ -1,20 +1,80 @@
 ﻿using Engendro;
-using Remizione.Procedural.Graphs;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Remizione
+namespace Remizione.Procedural
 {
     /// <summary>
     /// RunManager
     /// </summary>
     public static class RunManager
     {
-        #region Private fields
+        private static readonly List<RoomGraph> rooms = [];
 
-        private static readonly List<RideRoom> entryRooms = [];
-        private static readonly List<RideRoom> rooms = [];
-        private static RunGraph? runGraph;
+        #region Private members
+
+        // AssignRoomConfigs
+        private static void AssignRoomConfigs(List<RoomConfig> configList)
+        {
+            var candidates = new List<RoomConfig>();
+
+            // Rooms
+            foreach (var room in rooms)
+            {
+                candidates.Clear();
+
+                foreach (var config in configList)
+                {
+                    if (!config.PassesMaxPerRunConstraint())
+                        continue;
+
+                    candidates.Add(config);
+                }
+
+                // Pick
+                var chanceTable = new ChanceTable();
+                foreach (var candidate in candidates)
+                {
+                    chanceTable.Add(candidate.Name, candidate.Weight, 1, candidate);
+                }
+
+                var item = chanceTable.GetValue();
+                if (item != null && item.Context is RoomConfig chosenConfig)
+                {
+                    SpawnCounter.Increment(chosenConfig.Name);
+                    room.Config = chosenConfig;
+                }
+            }
+        }
+
+        // GetAvailableConfigs
+        private static List<RoomConfig> GetAvailableConfigs(GameSession session, Tags pools)
+        {
+            var outList = new List<RoomConfig>();
+
+            foreach (var roomConfig in RoomConfig.All)
+            {
+                // Test unlocked
+                if (!session.UnlockedPool.IsUnlocked(roomConfig.Name))
+                    continue;
+
+                // Run constraints
+                if (!roomConfig.PassesRunConstraints(session))
+                    continue;
+
+                // Pools
+                if (pools.Count > 0)
+                {
+                    if (!Utils.Intersects(pools, roomConfig.Pools))
+                        continue;
+                }
+
+                // Passed all checks
+                outList.Add(roomConfig);
+            }
+
+            return outList;
+        }
 
         #endregion
 
@@ -23,59 +83,40 @@ namespace Remizione
         {
             foreach (var room in rooms)
             {
-                room.Children.Clear();
+                room.RideRoom?.Children.Clear();
             }
 
-            runGraph = null;
-            entryRooms.Clear();
             rooms.Clear();
             SpawnCounter.Reset();
             HasContent = false;
         }
 
-        // EntryRooms
-        public static ReadOnlyCollection<RideRoom> EntryRooms { get; } = entryRooms.AsReadOnly();
-
         // Generate
-        public static void Generate(GameSession session)
+        public static void Generate(GameSession session, Tags pools)
         {
             HasContent = true;
+            rooms.Clear();
+            rooms.AddRange(RunGraphGenerator.Generate(session.Seed, 12));
 
-            // Create run graph
-            var settings = new RunGraphGeneratorSettings()
+            // Get available configs
+            var availableConfigs = GetAvailableConfigs(session, pools);
+
+            // Assign configs to rooms
+            AssignRoomConfigs(availableConfigs);
+
+            // Create ride rooms
+            foreach (var room in rooms)
             {
-                //MinLength = 4,
-                MaxLength = 3,
-                Seed = session.Seed
-            };
-
-            runGraph = RunGraphGenerator.Generate(session, settings);
-
-            // Create procedural rooms
-            for (var i = 0; i < runGraph.EntryRooms.Count; i++)
-            {
-                var isFirstRoom = true;
-
-                foreach (var roomGraph in runGraph.GetRooms(i))
-                {
-                    var room = RideRoom.CreateInstance(session, roomGraph);
-
-                    if (isFirstRoom)
-                    {
-                        entryRooms.Add(room);
-                        isFirstRoom = false;
-                    }
-
-                    rooms.Add(room);
-                }
+                room.RideRoom = RideRoom.CreateInstance(session, room);
             }
 
             foreach (var room in rooms)
             {
-                room.Load();
+                room.RideRoom?.Load();
             }
         }
 
+        /*
         // GetRoom
         public static RideRoom? GetRoom(int id)
         {
@@ -87,12 +128,13 @@ namespace Remizione
 
             return null;
         }
+        */
 
         // HasContent
         public static bool HasContent { get; private set; }
 
         // Rooms
-        public static ReadOnlyCollection<RideRoom> Rooms { get; } = rooms.AsReadOnly();
+        public static ReadOnlyCollection<RoomGraph> Rooms { get; } = rooms.AsReadOnly();
 
         // SpawnCounter
         public static NamedCounter SpawnCounter { get; } = new();

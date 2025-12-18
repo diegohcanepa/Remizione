@@ -117,10 +117,12 @@ namespace Remizione
             {
                 if (Room is ProceduralRoom procRoom)
                 {
+                    /*
                     if (isCoin)
                         procRoom.RoomGraph.HasCoin = false;
                     else
                         procRoom.RoomGraph.SackCount--;
+                    */
                 }
 
                 Session.Player?.Animate(AnimationNames.PickUp);

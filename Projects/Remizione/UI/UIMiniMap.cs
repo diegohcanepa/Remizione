@@ -83,8 +83,8 @@ namespace Remizione.UI
         // DrawRoom
         private void DrawRoom(GameTime gameTime, RoomGraph roomGraph, Vector2 position)
         {
+            /*
             ImageSprite image;
-
             // Current
             if (roomGraph == CurrentRoom)
             {
@@ -168,6 +168,7 @@ namespace Remizione.UI
                     DrawRoom(gameTime, roomGraph.Up, position - new Vector2(0, image.BoundingBox.Height));
                 }
             }
+            */
         }
 
         #endregion
@@ -187,6 +188,7 @@ namespace Remizione.UI
             container.Draw(gameTime);
             var pos = containerCenter;
 
+            /*
             if (CurrentRoom.IsSide)
             {
                 if (CurrentRoom.Right != null)
@@ -194,6 +196,7 @@ namespace Remizione.UI
                 else
                     pos.X += roomImages[0].BoundingBox.Width;
             }
+            */
 
             DrawRoom(gameTime, CurrentRoom, pos);
             Game.SpriteBatch.End();

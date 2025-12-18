@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using Remizione.Procedural;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace Remizione
             this.LightingSystem = true;
             this.UnloadMode = Adberration.UnloadMode.Manual;
 
-            int salt = roomGraph.Id;
+            int salt = roomGraph.Index;
             this.randomSeed = RandomHelper.GetSeed(Session.Seed, salt);
             this.Placeholders = new(placeholders);
             this.Random = new Random(randomSeed);
@@ -56,7 +57,7 @@ namespace Remizione
         // CreateRuntimeThingCloneCore
         private GameThing CreateRuntimeThingCloneCore(string staticName)
         {
-            if (Session.CreateRuntimeThingClone(staticName, $"{staticName}*{RoomGraph.Id}_{Name}_{instanceCount}") is not GameThing result)
+            if (Session.CreateRuntimeThingClone(staticName, $"{staticName}*{RoomGraph.Index}_{Name}_{instanceCount}") is not GameThing result)
                 throw new InvalidOperationException($"Failed to create runtime clone from'{staticName}'.");
 
             instanceCount++;
@@ -73,9 +74,6 @@ namespace Remizione
             foreach (var config in configList)
             {
                 if (!Session.UnlockedPool.IsUnlocked(config.Name))
-                    continue;
-
-                if (config.SideRoomOnly && !RoomGraph.IsSide)
                     continue;
 
                 var thing = Session.GetStaticThing(config.Name) ?? throw new InvalidOperationException($"There is no static thing named '{config.Name}'. ");
@@ -423,7 +421,7 @@ namespace Remizione
         // ToString
         public override string ToString()
         {
-            return $"{GetType().Name}_{RoomGraph.Id}";
+            return $"{GetType().Name}_{RoomGraph.Index}";
         }
     }
 }

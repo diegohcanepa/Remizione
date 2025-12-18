@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using Remizione.Procedural;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace Remizione
         // PopulateDoors
         private void PopulateDoors()
         {
+            /*
             // Up
             if (RoomGraph.Up != null && CreateRuntimeClone("RideDoorUp") is RideDoor upDoor)
             {
@@ -66,6 +68,7 @@ namespace Remizione
                         downDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Down.Id);
                 }
             }
+            */
         }
 
         // Register
@@ -98,7 +101,7 @@ namespace Remizione
 
             var dropPosition = WalkArea != null ? WalkArea.Polygon.BoundingRectangleF.Center : BoundingBox.Center;
 
-            if (RoomGraph.HasCoin)
+            if (RoomGraph.RoomType == RoomType.Coin)
             {
                 if (MetaItem.Find(MetaItem.CoinItemName) is MetaItem metaItem)
                     Session.ObjectPools.Pickups.Get()?.Drop(this, dropPosition, metaItem);
@@ -122,7 +125,7 @@ namespace Remizione
         {
             RoomGraph.Visited = true;
 
-            Session.HUD.MiniMap.CurrentRoom = RoomGraph;
+            //Session.HUD.MiniMap.CurrentRoom = RoomGraph;
 
             if (EnemyCount > 0)
             {
@@ -206,6 +209,7 @@ namespace Remizione
         {
             targetDoor = null;
 
+            /*
             foreach (var thing in Children)
             {
                 if (thing is RideDoor door)
@@ -224,6 +228,7 @@ namespace Remizione
                         return door.GetAbsolutePoint(door.ApproachPosition);
                 }
             }
+            */
 
             return Vector2.Zero;
         }

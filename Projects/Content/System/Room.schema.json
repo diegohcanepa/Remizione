@@ -44,20 +44,6 @@
                     "minimum": -1,
                     "description": "Número máximo de veces que este elemento puede aparecer por 'room'."
                 },
-                "placement": {
-                    "type": "string",
-                    "enum": [
-                        "Any",
-                        "Left",
-                        "Right",
-                        "LeftOrRight",
-                        "Middle",
-                        "MiddleOrLeft",
-                        "MiddleOrRight"
-                    ],
-                    "default": "Any",
-                    "description": "Lugares donde puede ser spawneado el room."
-                },
                 "template": {
                     "type": "string",
                     "description": "Nombre del template de room a instanciar."

@@ -31,10 +31,6 @@ namespace Remizione
             if (element.TryGetProperty("maxProps", out JsonElement maxPropsElement))
                 MaxProps = maxPropsElement.GetInt32();
 
-            // Placement
-            if (element.TryGetProperty("placement", out JsonElement placementElement))
-                Placement = Enum.Parse<RoomPlacement>(placementElement.GetString() ?? string.Empty);
-
             // Scope
             var allowPools = ConfigHelper.GetTags(element, "allowPools");
             var denyPools = ConfigHelper.GetTags(element, "denyPools");
@@ -129,34 +125,8 @@ namespace Remizione
         // MaxProps
         public int MaxProps { get; }
 
-        // PassesPlacementConstraint
-        public bool PassesPlacementConstraint(RoomGraph roomGraph)
-        {
-            if (Placement == RoomPlacement.Any)
-                return true;
-
-            if (roomGraph.IsSide)
-            {
-                if (roomGraph.Right != null)
-                    return Placement is RoomPlacement.Left or RoomPlacement.MiddleOrLeft or RoomPlacement.LeftOrRight;
-
-                else if (roomGraph.Left != null)
-                    return Placement is RoomPlacement.Right or RoomPlacement.MiddleOrRight or RoomPlacement.LeftOrRight;
-
-                else
-                    return false;
-            }
-            else
-            {
-                return Placement == RoomPlacement.Middle;
-            }
-        }
-
         // PlaceholderOverrides
         public ReadOnlyCollection<PlaceholderOverride> PlaceholderOverrides { get; }
-
-        // Placement
-        public RoomPlacement Placement { get; }
 
         // Scope
         public ScopeRules Scope { get; }

@@ -102,8 +102,8 @@ namespace Remizione
     // RenderLayer
     public enum RenderLayer { BehindBackground, Background, OverBackground, Default, Foreground, ForegroundNoLight }
 
-    // RoomPlacement
-    public enum RoomPlacement { Any, Left, Right, LeftOrRight, Middle, MiddleOrLeft, MiddleOrRight }
+    // RoomType
+    public enum RoomType { Normal, Start, Entrance, Coin }
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }

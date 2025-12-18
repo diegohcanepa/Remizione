@@ -3,6 +3,7 @@ using Adberration.Scripting;
 using Adberration.Scripting.Core;
 using Engendro;
 using Microsoft.Xna.Framework;
+using Remizione.Procedural;
 using Remizione.Scripting;
 using System;
 using System.Collections.Generic;
@@ -466,7 +467,7 @@ namespace Remizione
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            RunManager.Generate(this);
+            RunManager.Generate(this, Tags.EmptyList);
         }
 
         // CancelRun

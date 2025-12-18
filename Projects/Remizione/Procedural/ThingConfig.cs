@@ -60,10 +60,6 @@ namespace Remizione
             if (MinSpawnAmount > MaxSpawnAmount)
                 throw new InvalidOperationException($"[{Name}]: {nameof(MinSpawnAmount)} cannot be greater than MaxSpawnAmount.");
 
-            // SideRoomOnly
-            if (element.TryGetProperty("sideRoomOnly", out JsonElement sideRoomOnlyElement))
-                SideRoomOnly = sideRoomOnlyElement.GetBoolean();
-
             // SpawnChance
             SpawnChance = 1;
             if (element.TryGetProperty("spawnChance", out JsonElement spawnChanceElement))
@@ -135,9 +131,6 @@ namespace Remizione
         {
             return MaxPerRoom == 0 || instanceCount < MaxPerRoom;
         }
-
-        // SideRoomOnly
-        public bool SideRoomOnly { get; }
 
         // SpawnChance
         public Ratio SpawnChance { get; }

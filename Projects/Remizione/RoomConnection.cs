@@ -1,4 +1,5 @@
 ﻿using Adberration.Scripting;
+using Remizione.Procedural;
 
 namespace Remizione
 {
@@ -17,6 +18,7 @@ namespace Remizione
         [ScriptMethod(CodingContext.Execution)]
         public bool Connect()
         {
+            /*
             if (NextRoom == null)
                 return false;
 
@@ -34,6 +36,7 @@ namespace Remizione
 
             Session.EnterRoom(nextRoom);
 
+                        */
             //OnConnected(NextRoom);
 
             return true;
