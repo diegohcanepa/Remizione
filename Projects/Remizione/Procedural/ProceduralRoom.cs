@@ -192,8 +192,8 @@ namespace Remizione
         private void PopulateEnemies()
         {
             var configList = FilterByScope<Enemy>(ThingConfig.All, Config.Scope);
-            SpawnInPlaceholders(configList, Config.MaxEnemies, PlaceholderTarget.Enemy);
-            SpawnInWalkArea(configList, Config.MaxEnemies);
+            //SpawnInPlaceholders(configList, Config.MaxEnemies, PlaceholderTarget.Enemy);
+            //SpawnInWalkArea(configList, Config.MaxEnemies);
         }
 
         // PopulateProps

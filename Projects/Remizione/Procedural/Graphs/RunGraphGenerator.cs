@@ -10,13 +10,33 @@ namespace Remizione
     {
         #region Private members
 
+        // CountNeighbors
+        private static int CountNeighbors((int x, int y) c, Dictionary<(int x, int y), RoomGraph> map)
+        {
+            int count = 0;
+
+            if (map.ContainsKey((c.x, c.y + 1)))
+                count++;
+            
+            if (map.ContainsKey((c.x, c.y - 1)))
+                count++;
+
+            if (map.ContainsKey((c.x - 1, c.y)))
+                count++;
+
+            if (map.ContainsKey((c.x + 1, c.y)))
+                count++;
+            
+            return count;
+        }
+
         // GetCoords
         private static (int, int) GetCoords(int x, int y, int dir) => dir switch
         {
-            0 => (x, y + 1), // Up
-            1 => (x, y - 1), // Down
-            2 => (x - 1, y), // Left
-            3 => (x + 1, y), // Right
+            0 => (x, y + 1),
+            1 => (x, y - 1),
+            2 => (x - 1, y),
+            3 => (x + 1, y),
             _ => (x, y)
         };
 
@@ -37,25 +57,22 @@ namespace Remizione
         {
             Queue<RoomGraph> q = new();
             Dictionary<RoomGraph, int> dists = new();
-
-            q.Enqueue(start);
-            dists.Add(start, 0);
-
+            q.Enqueue(start); dists.Add(start, 0);
             RoomGraph furthest = start;
             int maxD = 0;
 
             while (q.Count > 0)
             {
-                RoomGraph curr = q.Dequeue();
+                var curr = q.Dequeue();
                 int d = dists[curr];
-
                 if (d > maxD) { maxD = d; furthest = curr; }
-
-                // Solo navegamos hacia habitaciones que no sean la Entrance para buscar el Boss
-                TryVisit(curr.Up, d + 1, q, dists);
-                TryVisit(curr.Down, d + 1, q, dists);
-                TryVisit(curr.Left, d + 1, q, dists);
-                TryVisit(curr.Right, d + 1, q, dists);
+                foreach (var n in new[] { curr.Up, curr.Down, curr.Left, curr.Right })
+                {
+                    if (n != null && n.RoomType != RoomType.Entrance && !dists.ContainsKey(n))
+                    {
+                        dists.Add(n, d + 1); q.Enqueue(n);
+                    }
+                }
             }
             return furthest;
         }
@@ -72,57 +89,64 @@ namespace Remizione
 
         #endregion
 
-        // Generate
         public static List<RoomGraph> Generate(int seed, int roomCount)
         {
-            if (roomCount <= 0)
-                return [];
+            if (roomCount <= 0) return [];
 
             Random rng = new(seed);
-            Dictionary<(int x, int y), RoomGraph> occupied = [];
-            List<RoomGraph> proceduralRooms = [];
+            Dictionary<(int x, int y), RoomGraph> occupied = new();
+            List<RoomGraph> rooms = [];
 
-            // 1. Configuración de Entrada y Inicio
+            // 1. Configuración de entrada (Fija)
             RoomGraph entrance = new(-1, 0, -1, RoomType.Entrance);
-            RoomGraph start = new(proceduralRooms.Count, 0, 0, RoomType.Start)
-            {
-                // Forzamos conexión: Start abajo va a Entrance / Entrance arriba va a Start
-                Down = entrance
-            };
+            RoomGraph start = new(rooms.Count, 0, 0, RoomType.Start);
+
+            start.Down = entrance;
             entrance.Up = start;
 
             occupied.Add((0, -1), entrance);
             occupied.Add((0, 0), start);
-            proceduralRooms.Add(start);
+            rooms.Add(start);
 
-            // 2. Bucle de expansión (estilo Isaac / Árbol)
-            while (proceduralRooms.Count < roomCount)
+            int attempts = 0;
+            // 2. Crecimiento controlado
+            while (rooms.Count < roomCount && attempts < 1000)
             {
-                // Elegimos un padre de los procedurales (nunca de la entrada)
-                RoomGraph parent = proceduralRooms[rng.Next(proceduralRooms.Count)];
-                int direction = rng.Next(4);
-                (int x, int y) coords = GetCoords(parent.X, parent.Y, direction);
+                attempts++;
+                RoomGraph parent = rooms[rng.Next(rooms.Count)];
 
-                if (!occupied.ContainsKey(coords))
+                // SESGO HORIZONTAL: 0: Up, 1: Down, 2-3: Left, 4-5: Right
+                // Esto le da el doble de probabilidad a los lados que a arriba/abajo
+                int rawDir = rng.Next(6);
+                int dir = rawDir switch
                 {
-                    RoomGraph newRoom = new(proceduralRooms.Count, coords.x, coords.y, RoomType.Normal);
-                    Link(parent, newRoom, direction);
+                    0 => 0,
+                    1 => 1,
+                    2 or 3 => 2,
+                    _ => 3
+                };
 
-                    occupied.Add(coords, newRoom);
-                    proceduralRooms.Add(newRoom);
+                (int x, int y) target = GetCoords(parent.X, parent.Y, dir);
+
+                if (!occupied.ContainsKey(target))
+                {
+                    // REGLA DE ORO: Solo se permite si el único vecino es el padre
+                    if (CountNeighbors(target, occupied) == 1)
+                    {
+                        RoomGraph newRoom = new(rooms.Count, target.x, target.y, RoomType.Normal);
+                        Link(parent, newRoom, dir);
+                        occupied.Add(target, newRoom);
+                        rooms.Add(newRoom);
+                    }
                 }
             }
 
-            // 3. Asignar Boss Room (la más lejana al Start)
-            RoomGraph bossRoom = FindFurthest(start);
-            if (bossRoom != start)
-                bossRoom.RoomType = RoomType.Coin;
+            // 3. Boss / Habitación especial
+            RoomGraph furthest = FindFurthest(start);
+            if (furthest != start) furthest.RoomType = RoomType.Coin;
 
-            // 4. Consolidar lista final
-            // Agregamos la entrada a la lista para devolver el grafo completo
-            proceduralRooms.Add(entrance);
-
-            return proceduralRooms;
+            rooms.Add(entrance);
+            return rooms;
         }
     }
 }

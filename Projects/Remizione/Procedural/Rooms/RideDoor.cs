@@ -208,16 +208,16 @@ namespace Remizione
         {
             if (TargetRoom != null)
             {
-                var pos = Vector2.Zero;
                 int roomId = 0;
                 if (Room is RideRoom rideRoom)
                     roomId = rideRoom.RoomGraph.Index;
 
-                pos = TargetRoom.GetPlayerPosition(roomId, out RideDoor? door);
+                var pos = TargetRoom.GetPlayerPosition(roomId, out RideDoor? door);
                 door?.PropState = PropState.Open;
 
                 ConnectCore(TargetRoom, pos);
             }
+            
             else if (Room is RideRoom rideRoom && rideRoom.HubDoor != null)
             {
                 BackToHub(rideRoom.HubDoor);
@@ -240,18 +240,10 @@ namespace Remizione
             string prefix;
 
             // Hub, uses common room style
-            //if (Room is not RideRoom rideRoom || TargetRoom?.Config is not RoomConfig config)
+            if (Room is not RideRoom rideRoom)
                 prefix = $"{nameof(CommonRoom)}";
-
-            /*
-            // Side rooms uses its own style
-            else if (rideRoom.RoomGraph.IsSide)
-                prefix = $"{rideRoom.Config.Template}";
-
-            // Root rooms uses target room style
             else
-                prefix = $"{config.Template}";
-            */
+                prefix = $"{rideRoom.Config.Template}";
 
             prefix = $"{prefix}Door{DoorDirection}";
 

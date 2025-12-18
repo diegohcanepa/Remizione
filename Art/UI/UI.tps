@@ -517,9 +517,9 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MiniMap-assets/UIMiniMapRoom0.png</key>
-            <key type="filename">MiniMap-assets/UIMiniMapRoom1.png</key>
-            <key type="filename">MiniMap-assets/UIMiniMapRoom2.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapRoomCurrent.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapRoomNotVisited.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapRoomVisited.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -528,29 +528,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,2,3,5</rect>
+                <rect>2,2,5,4</rect>
                 <key>scale9Paddings</key>
-                <rect>2,2,3,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">MiniMap-assets/UIMiniMapRoom3.png</key>
-            <key type="filename">MiniMap-assets/UIMiniMapRoom4.png</key>
-            <key type="filename">MiniMap-assets/UIMiniMapRoom5.png</key>
-            <key type="filename">MiniMap-assets/UIMiniMapRoom6.png</key>
-            <key type="filename">MiniMap-assets/UIMiniMapRoom7.png</key>
-            <key type="filename">MiniMap-assets/UIMiniMapRoom8.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,4,3</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,4,3</rect>
+                <rect>2,2,5,4</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

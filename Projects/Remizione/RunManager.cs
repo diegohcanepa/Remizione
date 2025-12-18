@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -13,8 +14,8 @@ namespace Remizione.Procedural
 
         #region Private members
 
-        // AssignRoomConfigs
-        private static void AssignRoomConfigs(List<RoomConfig> configList)
+        // ApplyConfigs
+        private static void ApplyConfigs(List<RoomConfig> configList)
         {
             var candidates = new List<RoomConfig>();
 
@@ -95,14 +96,15 @@ namespace Remizione.Procedural
         public static void Generate(GameSession session, Tags pools)
         {
             HasContent = true;
+            
             rooms.Clear();
             rooms.AddRange(RunGraphGenerator.Generate(session.Seed, 12));
 
             // Get available configs
-            var availableConfigs = GetAvailableConfigs(session, pools);
+            var configs = GetAvailableConfigs(session, pools);
 
-            // Assign configs to rooms
-            AssignRoomConfigs(availableConfigs);
+            // Assign configs
+            ApplyConfigs(configs);
 
             // Create ride rooms
             foreach (var room in rooms)
@@ -110,25 +112,18 @@ namespace Remizione.Procedural
                 room.RideRoom = RideRoom.CreateInstance(session, room);
             }
 
+            // Load rooms
             foreach (var room in rooms)
             {
+                if (room.Config == null)
+                    throw new InvalidOperationException($"Room [{room}] has no config.");
+
+                if (room.RideRoom == null)
+                    throw new InvalidOperationException($"Room [{room}] has no procedural room.");
+
                 room.RideRoom?.Load();
             }
         }
-
-        /*
-        // GetRoom
-        public static RideRoom? GetRoom(int id)
-        {
-            foreach (var room in rooms)
-            {
-                if (room.RoomGraph.Id == id)
-                    return room;
-            }
-
-            return null;
-        }
-        */
 
         // HasContent
         public static bool HasContent { get; private set; }

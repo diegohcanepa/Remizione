@@ -28,14 +28,13 @@ namespace Remizione
         // PopulateDoors
         private void PopulateDoors()
         {
-            /*
             // Up
             if (RoomGraph.Up != null && CreateRuntimeClone("RideDoorUp") is RideDoor upDoor)
             {
                 doors.Add(upDoor);
                 Children.Add(upDoor);
                 upDoor.Position = DoorAnchorUp;
-                upDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Up.Id);
+                upDoor.TargetRoom = RoomGraph.Up.RideRoom;
             }
 
             // Left
@@ -44,7 +43,7 @@ namespace Remizione
                 doors.Add(leftDoor);
                 Children.Add(leftDoor);
                 leftDoor.Position = DoorAnchorLeft;
-                leftDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Left.Id);
+                leftDoor.TargetRoom = RoomGraph.Left.RideRoom;
             }
 
             // Right
@@ -53,22 +52,17 @@ namespace Remizione
                 doors.Add(rightDoor);
                 Children.Add(rightDoor);
                 rightDoor.Position = DoorAnchorRight;
-                rightDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Right.Id);
+                rightDoor.TargetRoom = RoomGraph.Right.RideRoom;
             }
 
             // Down
-            if (RoomGraph.IsRoot || RoomGraph.Down != null)
+            if (RoomGraph.Down != null && CreateRuntimeClone("RideDoorDown") is RideDoor downDoor)
             {
-                if (CreateRuntimeClone("RideDoorDown") is RideDoor downDoor)
-                {
-                    doors.Add(downDoor);
-                    Children.Add(downDoor);
-                    downDoor.Position = DoorAnchorDown;
-                    if (RoomGraph.Down != null)
-                        downDoor.TargetRoom = RunManager.GetRoom(RoomGraph.Down.Id);
-                }
+                doors.Add(downDoor);
+                Children.Add(downDoor);
+                downDoor.Position = DoorAnchorDown;
+                downDoor.TargetRoom = RoomGraph.Down.RideRoom;
             }
-            */
         }
 
         // Register
@@ -125,7 +119,7 @@ namespace Remizione
         {
             RoomGraph.Visited = true;
 
-            //Session.HUD.MiniMap.CurrentRoom = RoomGraph;
+            Session.HUD.MiniMap.CurrentRoom = RoomGraph;
 
             if (EnemyCount > 0)
             {
@@ -139,6 +133,11 @@ namespace Remizione
         // OnLoad
         protected override void OnLoad()
         {
+            // Check door anchors
+            if (DoorAnchorLeft == Vector2.Zero || DoorAnchorDown == Vector2.Zero ||
+                DoorAnchorRight == Vector2.Zero || DoorAnchorUp == Vector2.Zero)
+                throw new InvalidOperationException($"One or more door acnhor points are missing in room [{RoomGraph}].");
+
             base.OnLoad();
 
             foreach (var door in doors)
@@ -205,30 +204,25 @@ namespace Remizione
         }
 
         // GetPlayerPosition
-        public Vector2 GetPlayerPosition(int previousRoomId, out RideDoor? targetDoor)
+        public Vector2 GetPlayerPosition(int previousRoomIndex, out RideDoor? targetDoor)
         {
             targetDoor = null;
 
-            /*
-            foreach (var thing in Children)
+            foreach (var door in Children.OfType<RideDoor>())
             {
-                if (thing is RideDoor door)
+                if (door.TargetRoom == null)
                 {
-                    if (door.TargetRoom == null)
-                    {
-                        if (previousRoomId == 0)
-                            targetDoor = door;
-                    }
-                    else if (door.TargetRoom.RoomGraph.Id == previousRoomId)
-                    {
+                    if (previousRoomIndex == 0)
                         targetDoor = door;
-                    }
-
-                    if (targetDoor != null)
-                        return door.GetAbsolutePoint(door.ApproachPosition);
                 }
+                else if (door.TargetRoom.RoomGraph.Index == previousRoomIndex)
+                {
+                    targetDoor = door;
+                }
+
+                if (targetDoor != null)
+                    return door.GetAbsolutePoint(door.ApproachPosition);
             }
-            */
 
             return Vector2.Zero;
         }

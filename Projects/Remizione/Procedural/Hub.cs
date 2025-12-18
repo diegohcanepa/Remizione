@@ -36,7 +36,7 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-           //LinkPathDoors();
+            LinkGate();
         }
 
         #endregion

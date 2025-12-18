@@ -23,6 +23,16 @@
         // Index
         public int Index { get; }
 
+        // IsDeadEnd
+        public bool IsDeadEnd
+        {
+            get
+            {
+                return (Up == null ? 1 : 0) + (Down == null ? 1 : 0) +
+                       (Left == null ? 1 : 0) + (Right == null ? 1 : 0) >= 3;
+            }
+        }
+
         // Left
         public RoomGraph? Left { get; set; }
 
@@ -30,7 +40,7 @@
         public Realm Realm { get; set; }
 
         // RideRoom
-        public RideRoom? RideRoom {get; set; }    
+        public RideRoom? RideRoom { get; set; }
 
         // Right
         public RoomGraph? Right { get; set; }
@@ -40,6 +50,12 @@
 
         // SackCount
         public int SackCount { get; set; }
+
+        // ToString
+        public override string ToString()
+        {
+            return $"[Room_{RoomType}_{Index}]";
+        }
 
         // Up
         public RoomGraph? Up { get; set; }

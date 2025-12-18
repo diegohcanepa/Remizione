@@ -107,7 +107,7 @@ namespace Remizione
                         tween.Start(TweenStyle.Linear, field, value, duration);
 
                     field = value;
-                    valueText.Text = "$" + field.ToString(CultureInfo.InvariantCulture);
+                    valueText.Text = field.ToString(CultureInfo.InvariantCulture);
 
                     if (Progressive)
                         isInitializing = false;

@@ -12,17 +12,15 @@ namespace Remizione.UI
     {
         #region Private fields
 
-        private enum RoomImage { MiddleCurrent, MiddleVisited, MiddleNotVisited, LeftCurrent, LeftVisited, LeftNotVisited, RightCurrent, RightVisited, RightNotVisited };
+        private enum RoomImage { Current, Visited, NotVisited };
         private readonly ImageSprite container;
         private readonly Vector2 containerCenter;
-        private int downLimit;
         private readonly HashSet<RoomGraph> drawnRooms = [];
-        private readonly ImageSprite endMarker;
         private readonly ImageSprite looMarker;
         private readonly FloatTween opacityTween = new();
         private readonly ImageSprite[] roomImages;
         private readonly ImageSprite startMarker;
-        private int upLimit;
+        private readonly RectangleF visibleArea;
 
         #endregion
 
@@ -40,13 +38,8 @@ namespace Remizione.UI
             };
 
             containerCenter = container.BoundingBox.Center - (Vector2.UnitY * .5f);
-
-            // End marker
-            endMarker = new ImageSprite(game, Atlases.UI.GetImageNotNull("UIMiniMapEndMarker"))
-            {
-                PivotOrigin = RectanglePoint.Center,
-                Scale = ScaleInfo.UIElement.Tiny
-            };
+            visibleArea = container.BoundingBox;
+            visibleArea.Inflate(-1, -1);
 
             // Loot marker
             looMarker = new ImageSprite(game, Atlases.UI.GetImageNotNull("UIMiniMapMarker"))
@@ -63,13 +56,13 @@ namespace Remizione.UI
             };
 
             // Room images
-            roomImages = new ImageSprite[9];
+            roomImages = new ImageSprite[3];
             for (var i = 0; i < roomImages.Length; i++)
             {
                 roomImages[i] = new(game, Atlases.UI.GetImageNotNull($"UIMiniMapRoom{i}"))
                 {
                     PivotOrigin = RectanglePoint.Center,
-                    Scale = ScaleInfo.UIElement.Tiny
+                    Scale = new(.4f)
                 };
             }
 
@@ -83,39 +76,32 @@ namespace Remizione.UI
         // DrawRoom
         private void DrawRoom(GameTime gameTime, RoomGraph roomGraph, Vector2 position)
         {
-            /*
+            if (roomGraph.RoomType == RoomType.Entrance)
+                return;
+
             ImageSprite image;
+         
             // Current
             if (roomGraph == CurrentRoom)
-            {
-                if (roomGraph.IsSide)
-                    image = roomGraph.Right != null ? roomImages[(int)RoomImage.LeftCurrent] : roomImages[(int)RoomImage.RightCurrent];
-                else
-                    image = roomImages[(int)RoomImage.MiddleCurrent];
-            }
+                image = roomImages[(int)RoomImage.Current];
 
             // Visited
             else if (roomGraph.Visited)
-            {
-                if (roomGraph.IsSide)
-                    image = roomGraph.Right != null ? roomImages[(int)RoomImage.LeftVisited] : roomImages[(int)RoomImage.RightVisited];
-                else
-                    image = roomImages[(int)RoomImage.MiddleVisited];
-            }
+                image = roomImages[(int)RoomImage.Visited];
 
             // Not visited
             else
-            {
-                if (roomGraph.IsSide)
-                    image = roomGraph.Right != null ? roomImages[(int)RoomImage.LeftNotVisited] : roomImages[(int)RoomImage.RightNotVisited];
-                else
-                    image = roomImages[(int)RoomImage.MiddleNotVisited];
-            }
+                image = roomImages[(int)RoomImage.NotVisited];
 
             image.Opacity = roomGraph == CurrentRoom ? opacityTween.CurrentValue : .8f;
             image.Position = position;
+
+            if (RectangleF.Intersects(image.BoundingBox, visibleArea) != image.BoundingBox)
+                return;
+
             image.Draw(gameTime);
 
+            /*
             if (roomGraph.SackCount > 0 || roomGraph.HasCoin)
             {
                 looMarker.Position = image.BoundingBox.Center;
@@ -131,28 +117,19 @@ namespace Remizione.UI
 
                 looMarker.Draw(gameTime);
             }
+            */
 
-            if (roomGraph.IsRoot)
+            // Draw start marker
+            if (roomGraph.RoomType == RoomType.Start)
             {
                 startMarker.Position = image.BoundingBox.GetPoint(RectanglePoint.Bottom, -.25f, 0);
                 startMarker.Draw(gameTime);
-            }
-            else if (roomGraph.Up == null && !roomGraph.IsSide)
-            {
-                endMarker.Position = image.BoundingBox.GetPoint(RectanglePoint.Top, -.25f, 0);
-                endMarker.Draw(gameTime);
             }
 
             drawnRooms.Add(roomGraph);
 
             if (roomGraph.Down != null && (roomGraph == CurrentRoom || roomGraph.Visited) && !drawnRooms.Contains(roomGraph.Down))
-            {
-                if (downLimit < 2)
-                {
-                    downLimit++;
-                    DrawRoom(gameTime, roomGraph.Down, position + new Vector2(0, image.BoundingBox.Height));
-                }
-            }
+                DrawRoom(gameTime, roomGraph.Down, position + new Vector2(0, image.BoundingBox.Height));
 
             if (roomGraph.Left != null && (roomGraph == CurrentRoom || roomGraph.Visited) && !drawnRooms.Contains(roomGraph.Left))
                 DrawRoom(gameTime, roomGraph.Left, position - new Vector2(image.BoundingBox.Width, 0));
@@ -161,14 +138,7 @@ namespace Remizione.UI
                 DrawRoom(gameTime, roomGraph.Right, position + new Vector2(image.BoundingBox.Width, 0));
 
             if (roomGraph.Up != null && (roomGraph == CurrentRoom || roomGraph.Visited) && !drawnRooms.Contains(roomGraph.Up))
-            {
-                if (upLimit < 2)
-                {
-                    upLimit++;
-                    DrawRoom(gameTime, roomGraph.Up, position - new Vector2(0, image.BoundingBox.Height));
-                }
-            }
-            */
+                DrawRoom(gameTime, roomGraph.Up, position - new Vector2(0, image.BoundingBox.Height));
         }
 
         #endregion
@@ -181,23 +151,10 @@ namespace Remizione.UI
             if (CurrentRoom == null)
                 return;
 
-            downLimit = 0;
-            upLimit = 0;
             drawnRooms.Clear();
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             container.Draw(gameTime);
             var pos = containerCenter;
-
-            /*
-            if (CurrentRoom.IsSide)
-            {
-                if (CurrentRoom.Right != null)
-                    pos.X -= roomImages[0].BoundingBox.Width;
-                else
-                    pos.X += roomImages[0].BoundingBox.Width;
-            }
-            */
-
             DrawRoom(gameTime, CurrentRoom, pos);
             Game.SpriteBatch.End();
         }
