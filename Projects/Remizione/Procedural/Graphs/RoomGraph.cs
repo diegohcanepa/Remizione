@@ -17,6 +17,9 @@
         // Config
         public RoomConfig? Config { get; set; }
 
+        // DistanceFromStart
+        public int DistanceFromStart { get; set; }
+
         // Down
         public RoomGraph? Down { get; set; }
 

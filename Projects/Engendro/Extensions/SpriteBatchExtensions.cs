@@ -22,13 +22,13 @@ namespace Engendro
         // Begin
         public static void Begin(this SpriteBatch spriteBatch, Camera camera, SamplerState samplerState, Effect? effect)
         {
-            Begin(spriteBatch, camera, samplerState, BlendState.AlphaBlend, effect);
+            Begin(spriteBatch, camera, samplerState, BlendState.AlphaBlend, effect, null);
         }
 
         // Begin
-        public static void Begin(this SpriteBatch spriteBatch, Camera camera, SamplerState samplerState, BlendState blendState, Effect? effect)
+        public static void Begin(this SpriteBatch spriteBatch, Camera camera, SamplerState samplerState, BlendState? blendState, Effect? effect, RasterizerState? rasterizerState = null)
         {
-            spriteBatch.Begin(SpriteSortMode.Deferred, blendState: blendState, samplerState: samplerState, transformMatrix: camera.GetTransformationMatrix(), effect: effect);
+            spriteBatch.Begin(SpriteSortMode.Deferred, blendState: blendState, samplerState: samplerState, transformMatrix: camera.GetTransformationMatrix(), effect: effect, rasterizerState: rasterizerState);
         }
     }
 }

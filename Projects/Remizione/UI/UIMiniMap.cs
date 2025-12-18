@@ -18,9 +18,10 @@ namespace Remizione.UI
         private readonly HashSet<RoomGraph> drawnRooms = [];
         private readonly ImageSprite looMarker;
         private readonly FloatTween opacityTween = new();
+        private readonly RasterizerState rasterizerState;
+        private readonly Rectangle screenScissorRect;
         private readonly ImageSprite[] roomImages;
         private readonly ImageSprite startMarker;
-        private readonly RectangleF visibleArea;
 
         #endregion
 
@@ -30,6 +31,8 @@ namespace Remizione.UI
         public UIMiniMap(EngendroGame game)
             : base(game)
         {
+            rasterizerState = new RasterizerState { ScissorTestEnable = true };
+
             // Container
             container = new ImageSprite(game, Atlases.UI.GetImageNotNull("UIMiniMapContainer"))
             {
@@ -37,9 +40,22 @@ namespace Remizione.UI
                 Position = new(234, 2)
             };
 
-            containerCenter = container.BoundingBox.Center - (Vector2.UnitY * .5f);
-            visibleArea = container.BoundingBox;
-            visibleArea.Inflate(-1, -1);
+            containerCenter = container.BoundingBox.Center;
+
+            float scaleX = (float)Game.GraphicsDevice.Viewport.Width / Screen.NativeWidth;
+            float scaleY = (float)Game.GraphicsDevice.Viewport.Height / Screen.NativeHeight;
+
+            // 1. Rectángulo en tu escala pequeña (240x135)
+            Rectangle virtualMapRect = container.BoundingBox.ToRectangle();
+            virtualMapRect.Inflate(-1, -1);
+
+            // 2. Convert to current screen resolution
+            screenScissorRect = new(
+                (int)(virtualMapRect.X * scaleX),
+                (int)(virtualMapRect.Y * scaleY),
+                (int)(virtualMapRect.Width * scaleX),
+                (int)(virtualMapRect.Height * scaleY)
+            );
 
             // Loot marker
             looMarker = new ImageSprite(game, Atlases.UI.GetImageNotNull("UIMiniMapMarker"))
@@ -62,7 +78,7 @@ namespace Remizione.UI
                 roomImages[i] = new(game, Atlases.UI.GetImageNotNull($"UIMiniMapRoom{i}"))
                 {
                     PivotOrigin = RectanglePoint.Center,
-                    Scale = new(.4f)
+                    Scale = new(.5f)
                 };
             }
 
@@ -96,8 +112,8 @@ namespace Remizione.UI
             image.Opacity = roomGraph == CurrentRoom ? opacityTween.CurrentValue : .8f;
             image.Position = position;
 
-            if (RectangleF.Intersects(image.BoundingBox, visibleArea) != image.BoundingBox)
-                return;
+            //if (RectangleF.Intersects(image.BoundingBox, visibleArea) != image.BoundingBox)
+              //  return;
 
             image.Draw(gameTime);
 
@@ -150,13 +166,17 @@ namespace Remizione.UI
         {
             if (CurrentRoom == null)
                 return;
+            
+            var oldRect = Game.GraphicsDevice.ScissorRectangle;
+            Game.GraphicsDevice.ScissorRectangle = screenScissorRect;
 
             drawnRooms.Clear();
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, null, null, rasterizerState);
             container.Draw(gameTime);
             var pos = containerCenter;
             DrawRoom(gameTime, CurrentRoom, pos);
             Game.SpriteBatch.End();
+            Game.SpriteBatch.GraphicsDevice.ScissorRectangle = oldRect;
         }
 
         // OnUpdate
