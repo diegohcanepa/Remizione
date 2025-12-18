@@ -37,6 +37,10 @@ namespace Remizione
             if (element.TryGetProperty("requiredRuns", out JsonElement requiredRunsElement))
                 RequiredRuns = requiredRunsElement.GetInt32();
 
+            // RequiresDeadEnd
+            if (element.TryGetProperty("requiresDeadEnd", out JsonElement requiresDeadEndElement))
+                RequiresDeadEnd = requiresDeadEndElement.GetBoolean();
+
             // Tags
             Tags = ConfigHelper.GetTags(element, "tags");
 
@@ -151,6 +155,9 @@ namespace Remizione
 
         // RequiredRuns
         public int RequiredRuns { get; }
+
+        // RequiresDeadEnd
+        public bool RequiresDeadEnd { get; }
 
         // Tags
         public Tags Tags { get; }

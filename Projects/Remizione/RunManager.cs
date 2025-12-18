@@ -26,6 +26,9 @@ namespace Remizione.Procedural
 
                 foreach (var config in configList)
                 {
+                    if (config.RequiresDeadEnd && !room.IsDeadEnd)
+                        continue;
+
                     if (!config.PassesMaxPerRunConstraint())
                         continue;
 

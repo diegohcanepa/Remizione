@@ -94,6 +94,7 @@ namespace Remizione
 
         #endregion
 
+        // Generate
         public static List<RoomGraph> Generate(int seed, int roomCount)
         {
             if (roomCount <= 0)
@@ -105,8 +106,10 @@ namespace Remizione
 
             // 1. Setup
             RoomGraph entrance = new(-1, 0, -1, RoomType.Entrance);
-            RoomGraph start = new(rooms.Count, 0, 0, RoomType.Start);
-            start.Down = entrance;
+            RoomGraph start = new(rooms.Count, 0, 0, RoomType.Start)
+            {
+                Down = entrance
+            };
             entrance.Up = start;
 
             occupied.Add((0, -1), entrance);

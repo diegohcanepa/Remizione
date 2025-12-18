@@ -23,18 +23,24 @@
         // Down
         public RoomGraph? Down { get; set; }
 
+        // GetConnectionCount
+        public int GetConnectionCount()
+        {
+            var result = 0;
+            
+            if (Up != null) result++;
+            if (Down != null) result++;
+            if (Left != null) result++;
+            if (Right != null) result++;
+            
+            return result;
+        }
+
         // Index
         public int Index { get; }
 
         // IsDeadEnd
-        public bool IsDeadEnd
-        {
-            get
-            {
-                return (Up == null ? 1 : 0) + (Down == null ? 1 : 0) +
-                       (Left == null ? 1 : 0) + (Right == null ? 1 : 0) >= 3;
-            }
-        }
+        public bool IsDeadEnd => GetConnectionCount() == 1;
 
         // Left
         public RoomGraph? Left { get; set; }
