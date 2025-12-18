@@ -75,6 +75,9 @@ namespace Remizione
                 if (!Session.UnlockedPool.IsUnlocked(config.Name))
                     continue;
 
+                if (config.SideRoomOnly && !RoomGraph.IsSide)
+                    continue;
+
                 var thing = Session.GetStaticThing(config.Name) ?? throw new InvalidOperationException($"There is no static thing named '{config.Name}'. ");
 
                 // Is expected type?
@@ -209,6 +212,9 @@ namespace Remizione
         // SpawnInPlaceholders
         private void SpawnInPlaceholders(IList<ThingConfig> configList, int maxInstances, PlaceholderTarget target)
         {
+            if (Placeholders.Count == 0 || maxInstances == 0)
+                return;
+
             // 1) Shuffle placeholders
             var placeholders = new List<Placeholder>(Placeholders);
             placeholders.Shuffle(Random);
@@ -295,7 +301,7 @@ namespace Remizione
         // SpawnInWalkArea
         private void SpawnInWalkArea(IList<ThingConfig> configList, int maxInstances)
         {
-            if (WalkArea == null)
+            if (WalkArea == null || maxInstances == 0)
                 return;
 
             // 1) Collect candidates

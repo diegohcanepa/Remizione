@@ -56,7 +56,7 @@
 	<FX Name="Lightning" MaxInstances="4" />
 	<FX Name="LockOpen" MaxInstances="3" />
 	<FX Name="LootCoin" MaxInstances="2" />
-	<FX Name="LootSack" MaxInstances="2" />
+	<FX Name="LootSack" MaxInstances="4" />
 	<FX Name="MetalPropBreak" MaxInstances="4" />
 	<FX Name="NumberSixA" />
 	<FX Name="NumberSixB" />

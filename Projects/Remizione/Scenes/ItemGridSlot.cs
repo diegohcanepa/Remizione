@@ -17,7 +17,6 @@ namespace Remizione
         private readonly ImageSprite icon;
         private readonly ImageSprite selectedSlotImage;
         private readonly ImageSprite slotImage;
-        private readonly ImageSprite stateIcon;
 
         #endregion
 
@@ -41,13 +40,6 @@ namespace Remizione
 
             // Selected slot image
             this.selectedSlotImage = new(Game, Atlases.UI.ItemGridSlotSelected);
-
-            // State icon image
-            this.stateIcon = new(Game)
-            {
-                PivotOrigin = RectanglePoint.Center,
-                Opacity = .4f,
-            };
 
             // Amount text
             amountText = new TextSprite(Game, Fonts.CommonOutline)
@@ -79,12 +71,7 @@ namespace Remizione
             else
                 slotImage.Draw(gameTime);
 
-            if (Item == null)
-            {
-                if (Index > Inventory.MaximumSize - 1)
-                    stateIcon.Draw(gameTime);
-            }
-            else
+            if (Item != null)
                 icon.Draw(gameTime);
 
             amountText.Draw(gameTime);
@@ -179,7 +166,6 @@ namespace Remizione
                 slotImage.Position = value;
                 selectedSlotImage.Position = value;
                 icon.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Center, 0, -1);
-                stateIcon.Position = icon.Position;
                 amountText.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1.5f);
                 checkMark.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -5);
             }

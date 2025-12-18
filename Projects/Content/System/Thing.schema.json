@@ -49,13 +49,17 @@
           "minimum": 1,
           "description": "Número mínimo de veces que este elemento se spawnea en el 'room'."
         },
+        "sideRomOnly": {
+          "type": "boolean",
+          "description": "Solo puede spawnear en side rooms."
+        },
         "spawnChance": {
-          "type":"number",
+          "type": "number",
           "default": 1,
           "minimum": 0,
           "maximum": 1,
           "description": "Chances de spawn."
-        },       
+        },
         "ticketRewardAmount": {
           "type": "integer",
           "default": 0,
@@ -63,16 +67,16 @@
           "description": "Máximo de tickets que puede dropear."
         },
         "ticketRewardChance": {
-          "type":"number",
+          "type": "number",
           "default": 0,
           "minimum": 0,
           "maximum": 1,
           "description": "Chances de dropear tickets."
-        },       
+        },
         "usePlaceholder": {
-          "type":"boolean",
+          "type": "boolean",
           "description": "Indica si tiene que ser spawneado en un placeholder del room."
-        }        
+        }
       }
     }
   ]

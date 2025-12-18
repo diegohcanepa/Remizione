@@ -126,6 +126,18 @@ namespace Remizione
 
         #endregion
 
+        // DrawSackSlot
+        public void DrawSackSlot(GameTime gameTime)
+        {
+            sackSlot.Draw(gameTime);
+        }
+
+        // DrawTicketMeter
+        public void DrawTicketMeter(GameTime gameTime)
+        {
+            ticketMeter.Draw(gameTime);
+        }
+
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {

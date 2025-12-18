@@ -3,7 +3,8 @@
   "data": [
     {
       "name": "ExpendingMachine",
-      "maxPerRun": 1,
+      "maxPerRun": 100,
+      "sideRoomOnly": true,
       "tags": "floor",
       "unlocked": true,
       "usePlaceholder": true

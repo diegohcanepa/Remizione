@@ -49,9 +49,10 @@ namespace Remizione
         {
             int NewLine(RectangleF bbox)
             {
+                var vOffset = (int)bbox.Height.Round(0);
                 Width = (int)MathHelper.Max(Width, bbox.Width).Round(0);
-                Height += (int)bbox.Height.Round(0) - 1;
-                return (int)bbox.Height.Round(0) - 1;
+                Height += vOffset;
+                return vOffset;
             }
 
             Height = 0;
@@ -63,7 +64,7 @@ namespace Remizione
                 var option = optionList[i];
                 option.IsSelected = false;
                 option.Position = pos;
-                pos.Y += NewLine(option.BoundingBox);
+                pos.Y += NewLine(option.BoundingBox) + OptionSpacing;
             }
 
             BoundingBox = new RectangleF(Position.X, Position.Y, Width, Height);
@@ -116,7 +117,6 @@ namespace Remizione
             stick.Stick = GamePadThumbStick.Left;
             stick.Update(gameTime);
             optionSelector.Update(gameTime);
-            optionSelector.Color = OptionSelectedColor;
 
             for (var i = 0; i < optionList.Count; i++)
             {
@@ -234,6 +234,9 @@ namespace Remizione
             get => optionSelector.Image;
             set => optionSelector.Image = value;
         }
+
+        // OptionSpacing
+        public float OptionSpacing { get; set; }
 
         // OptionTextScale
         public Vector2 OptionTextScale

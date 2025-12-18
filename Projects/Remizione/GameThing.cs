@@ -254,9 +254,9 @@ namespace Remizione
             if (Session.Room is not ProceduralRoom room)
                 return;
 
-            if (config.TicketRewardAmount > 0 && Random.Shared.NextDouble() < config.TicketRewardChance)
+            if (config.TicketRewardAmount > 0 && config.TicketRewardChance.Roll())
             {
-                var tickets = Random.Shared.Next(config.TicketRewardAmount + 1);
+                var tickets = Random.Shared.Next(1, config.TicketRewardAmount + 1);
                 if (tickets > 0 && Session.Player != null)
                 {
                     for (var i = 0; i < tickets; i++)

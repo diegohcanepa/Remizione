@@ -27,6 +27,7 @@
   <String Key="HUDMessageKind.InventoryFull">No puedes llevar más objetos.</String>
   <String Key="HUDMessageKind.NotEnoughFaith">Estás falto de Fé.</String>
   <String Key="InputBinding.Back">Atrás</String>
+  <String Key="InputBinding.BuyItem">Comprar</String>
   <String Key="InputBinding.Close">Cerrar</String>
   <String Key="InputBinding.ConsumeItem">Consumir</String>
   <String Key="InputBinding.Continue">Continuar</String>

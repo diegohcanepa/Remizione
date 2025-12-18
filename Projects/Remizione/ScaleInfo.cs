@@ -11,7 +11,7 @@ namespace Remizione
         internal static class ContextMenu
         {
             internal static Vector2 Icon { get; } = new(.5f);
-            internal static Vector2 Option { get; } = new(.11f);
+            internal static Vector2 Option { get; } = new(.1f);
             internal static Vector2 Title { get; } = new(.11f);
         }
 

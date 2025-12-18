@@ -50,6 +50,7 @@
                         "Any",
                         "Left",
                         "Right",
+                        "LeftOrRight",
                         "Middle",
                         "MiddleOrLeft",
                         "MiddleOrRight"

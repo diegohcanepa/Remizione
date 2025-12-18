@@ -37,6 +37,8 @@ namespace Remizione
 
             this.menu = new UIContextMenu<string>(Game, Fonts.CommonOutline)
             {
+                OptionColor = ColorPalette.Text.TerraLight,
+                OptionSelectedColor = ColorPalette.Text.Yellow,
                 OptionTextScale = ScaleInfo.ContextMenu.Option,
                 SelectInputBinding = InputBindings.SelectDialogOption
             };
@@ -113,8 +115,8 @@ namespace Remizione
         // Layout
         private void Layout()
         {
-            menu.X = 5;
-            menu.Y = Screen.HUDArea.Bottom - menu.BoundingBox.Height - 2;
+            menu.X = 8;
+            menu.Y = Screen.HUDArea.Bottom - menu.BoundingBox.Height - 5;
 
             if (dialogBlock.AllowQuit)
             {
@@ -165,7 +167,7 @@ namespace Remizione
 
             /*
             Game.SpriteBatch.Begin(Game.Camera);
-            Game.Shapes.DrawRectangle(new RectangleF(0, menu.Y - 4, 240, 135 - menu.Y + 4), Color.Black * .5f);
+            Game.Shapes.DrawRectangle(new RectangleF(0, menu.Y - 4, 240, 135 - menu.Y + 4), Color.Black);
             Game.SpriteBatch.End();
             */
 

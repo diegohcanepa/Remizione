@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:10361bcbe2bbb64e33f8f0d4ff81881a:ddaf8b51f9ba21b544cc78afe6afce18:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:872222f83f8ce949d4acd5909b142c22:60beaaf88f18de7bcccb367c9a5dec6f:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -31,7 +31,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="ContextMenuOptionSelector.png" x="506" y="36" w="4" h="5"/>
     <sprite n="CreditsBar.png" x="2" y="2" w="480" h="67"/>
     <sprite n="Cross.png" x="474" y="179" w="20" h="20"/>
-    <sprite n="DialogArrowLarge.png" x="348" y="71" w="7" h="5"/>
+    <sprite n="DialogArrowLarge.png" x="357" y="71" w="7" h="5"/>
     <sprite n="DialogOptionBullet.png" x="506" y="43" w="4" h="4"/>
     <sprite n="Duck.png" x="474" y="201" w="20" h="20"/>
     <sprite n="EdmundIcon.png" x="216" y="212" w="11" h="10"/>
@@ -79,8 +79,9 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MessageContainer.png" x="2" y="147" w="251" h="27"/>
     <sprite n="MissingItem.png" x="88" y="186" w="20" h="20"/>
     <sprite n="MouseCursorArrow.png" x="330" y="71" w="7" h="7"/>
-    <sprite n="PickupShadow.png" x="357" y="71" w="7" h="3"/>
+    <sprite n="PickupShadow.png" x="366" y="71" w="7" h="3"/>
     <sprite n="Pixel.png" x="507" y="27" w="1" h="1"/>
+    <sprite n="PointingHand.png" x="348" y="71" w="7" h="6"/>
     <sprite n="PopupContainer.png" x="2" y="71" w="264" h="74"/>
     <sprite n="PopupContainerShadow.png" x="268" y="135" w="114" h="60"/>
     <sprite n="RottenApple.png" x="110" y="186" w="20" h="20"/>
@@ -88,7 +89,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="SackSlot.png" x="154" y="198" w="17" h="16"/>
     <sprite n="SavingIcon.png" x="44" y="219" w="16" h="16"/>
     <sprite n="SpeechBubbleCloseArrow.png" x="507" y="2" w="3" h="2"/>
-    <sprite n="SpeechBubblePipe.png" x="366" y="71" w="5" h="3"/>
+    <sprite n="SpeechBubblePipe.png" x="375" y="71" w="5" h="3"/>
     <sprite n="SteelLockpick.png" x="2" y="187" w="20" h="20"/>
     <sprite n="TicketIcon.png" x="24" y="187" w="20" h="14"/>
     <sprite n="TicketSlot.png" x="62" y="219" w="15" h="15"/>
@@ -100,7 +101,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="UIControlContainerEdgeRightLarge.png" x="31" y="240" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeRightSmall.png" x="13" y="258" w="5" h="10"/>
     <sprite n="UIMiniMapContainer.png" x="484" y="2" w="21" h="32"/>
-    <sprite n="UIMiniMapEndMarker.png" x="357" y="76" w="5" h="1"/>
+    <sprite n="UIMiniMapEndMarker.png" x="366" y="76" w="5" h="1"/>
     <sprite n="UIMiniMapMarker.png" x="507" y="10" w="2" h="2"/>
     <sprite n="UIMiniMapRoom0.png" x="154" y="186" w="9" h="10"/>
     <sprite n="UIMiniMapRoom1.png" x="40" y="237" w="9" h="10"/>
@@ -111,7 +112,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="UIMiniMapRoom6.png" x="2" y="256" w="9" h="8"/>
     <sprite n="UIMiniMapRoom7.png" x="20" y="250" w="9" h="8"/>
     <sprite n="UIMiniMapRoom8.png" x="2" y="266" w="9" h="8"/>
-    <sprite n="UIMiniMapStartMarker.png" x="364" y="76" w="5" h="1"/>
+    <sprite n="UIMiniMapStartMarker.png" x="373" y="76" w="5" h="1"/>
     <sprite n="XboxA.png" x="102" y="208" w="14" h="14"/>
     <sprite n="XboxB.png" x="118" y="208" w="14" h="14"/>
     <sprite n="XboxGadgetsSlot.png" x="231" y="198" w="12" h="12"/>

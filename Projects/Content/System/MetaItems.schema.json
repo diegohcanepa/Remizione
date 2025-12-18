@@ -84,6 +84,11 @@
           "type": "boolean",
           "description": "Indica si se previene el descarte del item."
         },
+        "price": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Precio de compra."
+        },
         "quality": {
           "type": "integer",
           "minimum": 0,

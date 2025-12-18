@@ -138,10 +138,10 @@ namespace Remizione
             if (roomGraph.IsSide)
             {
                 if (roomGraph.Right != null)
-                    return Placement is RoomPlacement.Left or RoomPlacement.MiddleOrLeft;
+                    return Placement is RoomPlacement.Left or RoomPlacement.MiddleOrLeft or RoomPlacement.LeftOrRight;
 
                 else if (roomGraph.Left != null)
-                    return Placement is RoomPlacement.Right or RoomPlacement.MiddleOrRight;
+                    return Placement is RoomPlacement.Right or RoomPlacement.MiddleOrRight or RoomPlacement.LeftOrRight;
 
                 else
                     return false;

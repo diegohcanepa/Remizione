@@ -33,6 +33,7 @@ namespace Remizione
             MessageContainer = this[nameof(MessageContainer)];
             MouseCursorArrow = this[nameof(MouseCursorArrow)];
             Pixel = this[nameof(Pixel)];
+            PointingHand = this[nameof(PointingHand)];
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
             SackSlot = this[nameof(SackSlot)];
@@ -110,6 +111,9 @@ namespace Remizione
 
         // Pixel
         public AtlasImage Pixel { get; }
+
+        // PointingHand
+        public AtlasImage PointingHand { get; }
 
         // PopupContainer
         public AtlasImage PopupContainer { get; }

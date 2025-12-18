@@ -94,6 +94,10 @@ namespace Remizione
             if (element.TryGetProperty("preventDiscard", out JsonElement preventDiscardElement))
                 PreventDiscard = preventDiscardElement.GetBoolean();
 
+            // Price
+            if (element.TryGetProperty("price", out JsonElement priceElement))
+                Price = priceElement.GetInt32();
+
             // Quality
             if (element.TryGetProperty("quality", out JsonElement qualityElement))
                 Quality = qualityElement.GetInt32();
@@ -255,6 +259,9 @@ namespace Remizione
 
         // PreventDiscard
         public bool PreventDiscard { get; }
+
+        // Price
+        public int Price { get; }   
 
         // Quality
         public int Quality { get; }
