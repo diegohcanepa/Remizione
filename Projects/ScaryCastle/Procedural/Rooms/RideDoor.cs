@@ -15,6 +15,8 @@ namespace ScaryCastle
         private readonly Vector2Tween scaleTween = new();
         private readonly FloatTween xTween = new();
 
+        #region Constructor
+
         // Constructor
         public RideDoor(GameSession session, string name)
             : base(session, name)
@@ -49,6 +51,8 @@ namespace ScaryCastle
 
             InitializeState(PropState.Closed);
         }
+
+        #endregion
 
         #region Private members
 
@@ -208,16 +212,11 @@ namespace ScaryCastle
         {
             if (TargetRoom != null)
             {
-                int roomId = 0;
-                if (Room is RideRoom rideRoom)
-                    roomId = rideRoom.RoomGraph.Index;
-
-                var pos = TargetRoom.GetPlayerPosition(roomId, out RideDoor? door);
+                int roomIndex = Room is RideRoom rideRoom ? rideRoom.RoomGraph.Index : -1;
+                var pos = TargetRoom.GetPlayerPosition(roomIndex, out RideDoor? door);
                 door?.PropState = PropState.Open;
-
                 ConnectCore(TargetRoom, pos);
             }
-            
             else if (Room is RideRoom rideRoom && rideRoom.HubDoor != null)
             {
                 BackToHub(rideRoom.HubDoor);

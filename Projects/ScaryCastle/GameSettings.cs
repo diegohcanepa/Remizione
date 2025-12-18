@@ -23,7 +23,7 @@ namespace ScaryCastle
         public const int DefaultTransitionDuration = 500;
 
         // GameFolder
-        public const string GameFolder = "ScaryCastle";
+        public const string GameFolder = "Scary Castle";
 
         // LogFileName
         public const string LogFileName = "ErrorLog.txt";

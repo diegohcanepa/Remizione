@@ -67,8 +67,9 @@ namespace ScaryCastle.UI
             // Start marker
             startMarker = new ImageSprite(game, Atlases.UI.GetImageNotNull("UIMiniMapStartMarker"))
             {
+                Opacity = .7f,
                 PivotOrigin = RectanglePoint.Center,
-                Scale = ScaleInfo.UIElement.Tiny
+                Scale = ScaleInfo.UIElement.Small
             };
 
             // Room images
@@ -92,9 +93,6 @@ namespace ScaryCastle.UI
         // DrawRoom
         private void DrawRoom(GameTime gameTime, RoomGraph roomGraph, Vector2 position)
         {
-            if (roomGraph.RoomType == RoomType.Entrance)
-                return;
-
             ImageSprite image;
          
             // Current
@@ -111,9 +109,6 @@ namespace ScaryCastle.UI
 
             image.Opacity = roomGraph == CurrentRoom ? opacityTween.CurrentValue : .8f;
             image.Position = position;
-
-            //if (RectangleF.Intersects(image.BoundingBox, visibleArea) != image.BoundingBox)
-              //  return;
 
             image.Draw(gameTime);
 
@@ -138,7 +133,7 @@ namespace ScaryCastle.UI
             // Draw start marker
             if (roomGraph.RoomType == RoomType.Start)
             {
-                startMarker.Position = image.BoundingBox.GetPoint(RectanglePoint.Bottom, -.25f, 0);
+                startMarker.Position = image.BoundingBox.GetPoint(RectanglePoint.Bottom, -.25f, .25f);
                 startMarker.Draw(gameTime);
             }
 

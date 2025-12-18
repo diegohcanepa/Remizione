@@ -421,7 +421,7 @@ namespace ScaryCastle
         // ToString
         public override string ToString()
         {
-            return $"{GetType().Name}_{RoomGraph.Index}";
+            return RoomGraph.ToString();
         }
     }
 }

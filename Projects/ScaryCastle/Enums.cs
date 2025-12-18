@@ -103,7 +103,7 @@ namespace ScaryCastle
     public enum RenderLayer { BehindBackground, Background, OverBackground, Default, Foreground, ForegroundNoLight }
 
     // RoomType
-    public enum RoomType { Normal, Start, Entrance, Coin }
+    public enum RoomType { Normal, Start, Coin }
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }

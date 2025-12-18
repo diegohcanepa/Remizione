@@ -56,12 +56,17 @@ namespace ScaryCastle
             }
 
             // Down
-            if (RoomGraph.Down != null && CreateRuntimeClone("RideDoorDown") is RideDoor downDoor)
+            if (RoomGraph.Down != null || RoomGraph.RoomType == RoomType.Start)
             {
-                doors.Add(downDoor);
-                Children.Add(downDoor);
-                downDoor.Position = DoorAnchorDown;
-                downDoor.TargetRoom = RoomGraph.Down.RideRoom;
+                if (CreateRuntimeClone("RideDoorDown") is RideDoor downDoor)
+                {
+                    doors.Add(downDoor);
+                    Children.Add(downDoor);
+                    downDoor.Position = DoorAnchorDown;
+
+                    if (RoomGraph.Down != null)
+                        downDoor.TargetRoom = RoomGraph.Down.RideRoom;
+                }
             }
         }
 
@@ -210,18 +215,12 @@ namespace ScaryCastle
 
             foreach (var door in Children.OfType<RideDoor>())
             {
-                if (door.TargetRoom == null)
-                {
-                    if (previousRoomIndex == 0)
-                        targetDoor = door;
-                }
-                else if (door.TargetRoom.RoomGraph.Index == previousRoomIndex)
+                if ((previousRoomIndex == -1 && door.DoorDirection == RideDoorDirection.Down) ||
+                     door.TargetRoom?.RoomGraph.Index == previousRoomIndex)
                 {
                     targetDoor = door;
-                }
-
-                if (targetDoor != null)
                     return door.GetAbsolutePoint(door.ApproachPosition);
+                }
             }
 
             return Vector2.Zero;
