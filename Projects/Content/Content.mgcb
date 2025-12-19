@@ -875,6 +875,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/UISelectPlayer.wav;Audio/FX/UISelectPlayer
 
+#begin Audio/FX/VentBlower.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/VentBlower.wav;Audio/FX/VentBlower
+
 #begin Audio/FX/WhooshA.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

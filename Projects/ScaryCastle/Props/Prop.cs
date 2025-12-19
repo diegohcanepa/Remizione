@@ -130,7 +130,9 @@ namespace ScaryCastle
                     PropState = successState;
             }
             else
+            {
                 Sound.Play(SoundNames.TestSkillFail);
+            }
 
             return success;
         }

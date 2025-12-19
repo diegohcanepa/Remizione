@@ -1,6 +1,6 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
-using ScaryCastle.Procedural;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -122,6 +122,9 @@ namespace ScaryCastle
         // OnEntering
         protected override void OnEntering()
         {
+            if (RoomGraph.RoomType == RoomType.Start)
+                AudioManager.Music.PlayTag("Run", 3000);
+
             RoomGraph.Visited = true;
 
             Session.HUD.MiniMap.CurrentRoom = RoomGraph;
@@ -130,7 +133,8 @@ namespace ScaryCastle
             {
                 for (var i = 0; i < doors.Count; i++)
                 {
-                    doors[i].SwitchStateCooldown = (int)RandomHelper.Next(Random, 500, 1000);
+                    if (EnemyCount > 0)
+                        doors[i].SwitchStateCooldown = (int)RandomHelper.Next(Random, 500, 900);
                 }
             }
         }

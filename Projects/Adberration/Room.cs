@@ -305,9 +305,6 @@ namespace Adberration
         [ScriptProperty]
         public bool IsCurrentRoom => Session.Room == this;
 
-        // IsEntering
-        public bool IsEntering => Session.IsEnteringRoom(this);
-
         // IsPreviousRoom
         [ScriptProperty]
         public bool IsPreviousRoom => Session.PreviousRoom == this;
