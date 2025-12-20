@@ -263,7 +263,6 @@ Bla bla bla</String>
   <String Key="Prop.Door">Door</String>
   <String Key="Prop.EnergyBolt">Energy bolt</String>
   <String Key="Prop.ExitTower">Exit tower</String>
-  <String Key="Prop.ExpendingMachine">Expending machine</String>
   <String Key="Prop.FoodStall">Food stall</String>
   <String Key="Prop.PilgrimSack">Pilgrim's Sack</String>
   <String Key="Prop.PortableToilet">Little purgatory</String>
@@ -277,6 +276,7 @@ Bla bla bla</String>
   <String Key="Prop.Tower">Tower</String>
   <String Key="Prop.Trunk">Trunk</String>
   <String Key="Prop.UnderRideEntrance">Under ride</String>
+  <String Key="Prop.VendingMachine">Vending machine</String>
   <String Key="Prop.WC">W.C.</String>
   <String Key="Verb.Enter">Enter</String>
   <String Key="Verb.Exit">Exit</String>

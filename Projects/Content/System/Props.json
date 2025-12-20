@@ -2,14 +2,6 @@
   "$schema": "./ThingData.schema.json",
   "data": [
     {
-      "name": "ExpendingMachine",
-      "maxPerRun": 100,
-      "sideRoomOnly": true,
-      "tags": "floor",
-      "unlocked": true,
-      "usePlaceholder": true
-    },
-    {
       "name": "PotteryA",
       "tags": "floor",
       "killGoal": 10,
@@ -19,6 +11,14 @@
     },
     {
       "name": "PotteryB",
+      "tags": "floor",
+      "unlocked": true,
+      "usePlaceholder": true
+    },
+    {
+      "name": "VendingMachine",
+      "maxPerRun": 100,
+      "sideRoomOnly": true,
       "tags": "floor",
       "unlocked": true,
       "usePlaceholder": true

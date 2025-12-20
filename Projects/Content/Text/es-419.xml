@@ -263,7 +263,6 @@ Bla bla bla</String>
   <String Key="Prop.Door">Puerta</String>
   <String Key="Prop.EnergyBolt">Chispa</String>
   <String Key="Prop.ExitTower">Torre de salida</String>
-  <String Key="Prop.ExpendingMachine">Máquina expendedora</String>
   <String Key="Prop.FoodStall">Puesto de comida</String>
   <String Key="Prop.PilgrimSack">Saco del Peregrino</String>
   <String Key="Prop.PortableToilet">Pequeño purgatorio</String>
@@ -277,6 +276,7 @@ Bla bla bla</String>
   <String Key="Prop.Tower">Torre</String>
   <String Key="Prop.Trunk">Baúl</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
+  <String Key="Prop.VendingMachine">Máquina expendedora</String>
   <String Key="Prop.WC">Inodoro</String>
   <String Key="Verb.Enter">Entrar</String>
   <String Key="Verb.Exit">Salir</String>

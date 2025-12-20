@@ -94,7 +94,9 @@ namespace ScaryCastle
         public bool Discard()
         {
             if (MetaItem.PreventDiscard)
+            {
                 return false;
+            }
             else
             {
                 Remove();

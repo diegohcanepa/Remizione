@@ -179,6 +179,10 @@ namespace ScaryCastle
         // ValidateAllConfigurations
         public static void ValidateAllConfigurations()
         {
+            // TODO: Hay que validar que los nombres en los configs existan como static things o los templates de los rooms
+            // que esten en el registry. Sino puede pasar como con expending machine que ahora es vending machine y al
+            // cambiar el nombre y no haber actualizado el config, esa prop nunca aparece graficamente.
+
             foreach (var config in configs.Values)
             {
                 config.Validate();

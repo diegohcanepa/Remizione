@@ -128,10 +128,9 @@ namespace ScaryCastle
                 Unlocked = unlockedElement.GetBoolean();
 
             // Weight
+            Weight = 1;
             if (element.TryGetProperty("weight", out JsonElement weightElement))
                 Weight = weightElement.GetSingle();
-            else
-                Weight = 1;
 
             // Effect
             this.Effect = new($"<{Name} Effect>")

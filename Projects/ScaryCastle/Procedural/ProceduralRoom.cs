@@ -191,7 +191,7 @@ namespace ScaryCastle
             }
             else
             {
-                drop = Loot.Get(Session, Config);
+                drop = Loot.Get(Session, Config, null, null);
             }
 
             if (drop != null)

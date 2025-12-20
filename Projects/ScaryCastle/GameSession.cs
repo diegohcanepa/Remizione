@@ -48,6 +48,7 @@ namespace ScaryCastle
             this.HUD = new HUD(this);
             this.StaticThings = new(staticThings);
             this.IsMouseVisible = false;
+            this.Random = new Random(Seed);
 
             ObjectPools = new ObjectPools(this);
             ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(game), 100);
@@ -142,7 +143,7 @@ namespace ScaryCastle
             scriptRegistry.RegisterEntity(typeof(CloseUpRoom));
             scriptRegistry.RegisterEntity(typeof(CreditsRoom));
             scriptRegistry.RegisterEntity(typeof(DepositMachine));
-            scriptRegistry.RegisterEntity(typeof(ExpendingMachine));
+            scriptRegistry.RegisterEntity(typeof(VendingMachine));
             scriptRegistry.RegisterEntity(typeof(GameRoom));
             scriptRegistry.RegisterEntity(typeof(HellGoat));
             scriptRegistry.RegisterEntity(typeof(Hub));
@@ -635,6 +636,9 @@ namespace ScaryCastle
         [ScriptProperty]
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
 
+        // Random
+        public Random Random { get; private set; }
+
         // RemovePlayer
         public void RemovePlayer(Actor actor)
         {
@@ -651,7 +655,18 @@ namespace ScaryCastle
 
         // Seed
         [ScriptProperty]
-        public int Seed { get; set; }
+        public int Seed
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    Random = new Random(field);
+                }
+            }
+        }
 
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)

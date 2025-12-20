@@ -18,7 +18,6 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly Blinker<bool> blinker = new(false, true);
-        private readonly ThingConfig? config;
         private readonly Polygon holePoly = new();
         private Vector2Tween? hurtShakeTween;
         private FloatTween? hurtTween;
@@ -44,7 +43,7 @@ namespace ScaryCastle
             this.Session = session;
             this.ResistanceTableName = StaticName;
 
-            config = ThingConfig.Find(StaticName);
+            Config = ThingConfig.Find(StaticName);
         }
 
         #endregion
@@ -250,10 +249,10 @@ namespace ScaryCastle
             if (Room is not ProceduralRoom room)
                 return;
 
-            if (config == null)
+            if (Config == null)
                 return;
 
-            Ratio lootChance = config.Difficulty switch
+            Ratio lootChance = Config.Difficulty switch
             {
                 Difficulty.Easy => .05f,   // 5%
                 Difficulty.Normal => .15f, // 15%
@@ -267,7 +266,7 @@ namespace ScaryCastle
             if (!lootChance.Roll())
                 return;
 
-            MetaItem? drop = Loot.Get(Session, room.Config);
+            MetaItem? drop = Loot.Get(Session, room.Config, null, null);
             if (drop != null)
             {
                 Session.ObjectPools.Pickups.Get()?.Drop(room, Position, drop);
@@ -278,13 +277,13 @@ namespace ScaryCastle
         // DropTickets
         protected void DropTickets()
         {
-            if (config == null)
+            if (Config == null)
                 return;
 
             if (Session.Room is not ProceduralRoom room)
                 return;
 
-            var tickets = Loot.RollTickets(Session, room.Config, config);
+            var tickets = Loot.RollTickets(Session, room.Config, Config);
             if (tickets > 0)
             {
                 for (var i = 0; i < tickets; i++)
@@ -546,6 +545,9 @@ namespace ScaryCastle
         [ScriptProperty]
         public int CollisionHeight { get; set; }
 
+        // Config
+        public ThingConfig? Config { get; }
+
         // ContactDamagePolygon
         public TestPolygon ContactDamagePolygon { get; set; } = TestPolygon.Collider;
 
@@ -583,13 +585,13 @@ namespace ScaryCastle
             DropLoot();
             DropTickets();
 
-            if (config?.KillGoal > 0)
+            if (Config?.KillGoal > 0)
             {
-                if (Session.KillCounter.Increment(StaticName) >= config.KillGoal)
+                if (Session.KillCounter.Increment(StaticName) >= Config.KillGoal)
                 {
-                    for (var i = 0; i < config.KillGoalReward.Count; i++)
+                    for (var i = 0; i < Config.KillGoalReward.Count; i++)
                     {
-                        Session.UnlockedPool.Unlock(config.KillGoalReward[i]);
+                        Session.UnlockedPool.Unlock(Config.KillGoalReward[i]);
                     }
                 }
             }

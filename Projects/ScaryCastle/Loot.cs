@@ -31,10 +31,13 @@ namespace ScaryCastle
         #endregion
 
         // Get
-        internal static MetaItem? Get(GameSession session, RoomConfig roomConfig)
+        internal static MetaItem? Get(GameSession session, RoomConfig roomConfig, Realm? lootRealm, ItemCategory? lootCategory)
         {
             var candidates = new List<MetaItem>();
             int maxQ = ((int)roomConfig.Difficulty * 2) + 1; // Tu escala 0-5
+
+            lootRealm ??= roomConfig.PreferredLootRealm;
+            lootCategory ??= roomConfig.PreferredLootCategory;
 
             foreach (var metaItem in MetaItem.AllItems)
             {
@@ -45,11 +48,11 @@ namespace ScaryCastle
                     continue;
 
                 // Realm scope?
-                if (roomConfig.PreferredLootRealm != null && metaItem.Realm != roomConfig.PreferredLootRealm)
+                if (lootRealm != null && metaItem.Realm != lootRealm)
                     continue;
 
                 // Category scope?
-                if (roomConfig.PreferredLootCategory != null && metaItem.Category != roomConfig.PreferredLootCategory)
+                if (lootCategory != null && metaItem.Category != lootCategory)
                     continue;
 
                 // Discard gadgets already in inventory
@@ -70,36 +73,78 @@ namespace ScaryCastle
             return table.GetValue()?.Context as MetaItem;
         }
 
+        // GetForVending
+        internal static MetaItem GetForVending(GameSession session, RoomConfig roomConfig, Realm? lootRealm, ItemCategory? lootCategory)
+        {
+            // 1. Intentamos obtener el ítem ideal para esta habitación
+            if (Get(session, roomConfig, lootRealm, lootCategory) is MetaItem result)
+                return result;
+
+            // 2. PLAN B: Si no hay nada que cumpla los filtros, 
+            // buscamos cualquier item de calidad 0-1 que esté desbloqueado.
+            var fallbackCandidates = new List<MetaItem>();
+
+            foreach (var metaItem in MetaItem.AllItems)
+            {
+                // Solo items que el jugador ya puede ver
+                if (!session.UnlockedPool.IsUnlocked(metaItem.Name))
+                    continue;
+
+                // Solo calidad baja para que sea un "item de relleno" seguro
+                if (metaItem.Quality > 1)
+                    continue;
+
+                fallbackCandidates.Add(metaItem);
+            }
+
+            // Si por alguna razón bizarra no hay candidatos (muy raro), 
+            // devolvemos un item básico por nombre que sepamos que existe.
+            if (fallbackCandidates.Count == 0)
+                throw new InvalidOperationException("Unable to find meta item.");
+
+            // Devolvemos uno al azar de los básicos
+            return fallbackCandidates[session.Random.Next(fallbackCandidates.Count)];
+        }
+
         // RollTickets
         internal static int RollTickets(GameSession session, RoomConfig roomConfig, ThingConfig entityConfig)
         {
-            // A. Probabilidad (Roll de si cae o no)
-            Ratio baseChance = entityConfig.Difficulty switch
+            // 1. CHANCE BASE (Depende de la entidad y la suerte del pasivo)
+            Ratio ticketChance = entityConfig.Difficulty switch
             {
-                Difficulty.Easy => 0.15f,   // 15% chance
-                Difficulty.Normal => 0.30f, // 30% chance
-                Difficulty.Hard => 0.50f,   // 50% chance
-                _ => 0.10f
+                Difficulty.Easy => 0.20f,
+                Difficulty.Normal => 0.40f,
+                Difficulty.Hard => 0.60f,
+                _ => 0.15f
             };
 
             if (session.Inventory.Gadget is Item gadget)
-                baseChance += gadget.MetaItem.Effect.LuckBonus;
+                ticketChance += gadget.MetaItem.Effect.LuckBonus;
 
-            if (!baseChance.Roll())
+            if (!ticketChance.Roll())
                 return 0;
 
-            // B. Cantidad (Isaac Style: 1, 2 o 3)
+            // 2. CANTIDAD BASE (Basada en la dificultad intrínseca del enemigo)
             int amount = entityConfig.Difficulty switch
             {
-                Difficulty.Easy => 1,
-                Difficulty.Normal => 2,
-                Difficulty.Hard => 3,
+                Difficulty.Easy => 1,   // Una moneda
+                Difficulty.Normal => 2, // Dos monedas
+                Difficulty.Hard => 3,   // Tres monedas
                 _ => 1
             };
 
-            // Opcional: Pequeña chance de que un enemigo Hard suelte un "bonus" de +1
-            if (entityConfig.Difficulty == Difficulty.Hard && Random.Shared.NextDouble() < 0.2f)
-                amount += 1;
+            // 3. EL FACTOR ROOM (AQUÍ usamos RoomConfig)
+            // Si la habitación es 'Hard', hay una chance bizarra de duplicar el drop
+            // Esto hace que en zonas avanzadas sea más fácil llegar a los 15 tickets
+            if (roomConfig.Difficulty == Difficulty.Hard && session.Random.NextDouble() < 0.4f)
+            {
+                amount += 1; // Bonus por estar en una zona peligrosa
+            }
+            else if (roomConfig.Difficulty == Difficulty.Easy && amount > 2)
+            {
+                // Opcional: En zonas iniciales, limitamos el drop para evitar inflación temprana
+                amount = 2;
+            }
 
             return amount;
         }

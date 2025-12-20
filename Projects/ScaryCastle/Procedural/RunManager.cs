@@ -129,7 +129,7 @@ namespace ScaryCastle.Procedural
             HasContent = true;
 
             rooms.Clear();
-            var result = RunGraphGenerator.Generate(session.Seed, roomCount);
+            var result = RunGraphGenerator.Generate(session.Random, roomCount);
             rooms.AddRange(result.Item1);
 
             // Get available configs
