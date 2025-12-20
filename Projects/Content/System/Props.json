@@ -12,10 +12,6 @@
     {
       "name": "PotteryA",
       "tags": "floor",
-      "loot": [
-        [ "RottenApple", 70 ],
-        [ "RustyLockpick", 25 ]
-      ],
       "killGoal": 10,
       "killGoalReward": "MasterLockpick",
       "unlocked": true,

@@ -88,10 +88,10 @@ namespace ScaryCastle
         #endregion
 
         // Generate
-        public static List<RoomGraph> Generate(int seed, int roomCount)
+        public static (List<RoomGraph>, int) Generate(int seed, int roomCount)
         {
             if (roomCount <= 0)
-                return [];
+                return ([], 0);
 
             Random rng = new(seed);
             Dictionary<(int x, int y), RoomGraph> occupied = new();
@@ -142,7 +142,9 @@ namespace ScaryCastle
             if (coinRoom != start)
                 coinRoom.RoomType = RoomType.Coin;
 
-            return rooms;
+            // Devolvemos el maxDist (la distancia a la moneda) para los cálculos de fases
+            int maxDist = coinRoom.DistanceFromStart;
+            return (rooms, maxDist);
         }
     }
 }

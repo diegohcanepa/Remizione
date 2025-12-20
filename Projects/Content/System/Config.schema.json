@@ -8,6 +8,15 @@
       "type": "string",
       "description": "Nombre único de la configuración. (Requerido)"
     },
+    "difficulty": {
+      "type": "string",
+      "description": "Nivel de dificultad.",
+      "enum": [
+        "Easy",
+        "Normal",
+        "Hard"
+      ]
+    },
     "maxPerRun": {
       "type": "integer",
       "default": 0,
@@ -18,11 +27,25 @@
       "type": "string",
       "description": "Lista de etiquetas a las que pertenece esta configuración (Tags)."
     },
-    "requiredCompletedRuns": {
-      "type": "integer",
-      "default": 0,
-      "minimum": 0,
-      "description": "Número de 'runs' completadas requeridas para que esta configuración sea elegible."
+    "preferredLootCategory": {
+      "type": "string",
+      "description": "Categoría preferida para el loot.",
+      "enum": [
+        "LeftHand",
+        "RightHand",
+        "Consumable",
+        "Gadget",
+        "KeyItem"
+      ]
+    },
+    "preferredLootRealm": {
+      "type": "string",
+      "description": "Reino preferido para el loot.",
+      "enum": [
+        "Earthly",
+        "Infernal",
+        "Celestial"
+      ]
     },
     "requiredRuns": {
       "type": "integer",

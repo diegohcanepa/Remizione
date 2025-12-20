@@ -98,25 +98,15 @@ namespace ScaryCastle
             if (lootDropped)
                 return;
 
-            var dropPosition = WalkArea != null ? WalkArea.Polygon.BoundingRectangleF.Center : BoundingBox.Center;
+            DropLoot();
 
-            if (RoomGraph.RoomType == RoomType.Coin)
-            {
-                if (MetaItem.Find(MetaItem.CoinItemName) is MetaItem metaItem)
-                    Session.ObjectPools.Pickups.Get()?.Drop(this, dropPosition, metaItem);
-            }
-            else
-            {
-                if (Loot.TryDropLoot(this, Config.LootTable, dropPosition, out _))
-                    RoomGraph.SackCount++;
-            }
+            lootDropped = true;
 
+            // Open all doors
             for (var i = 0; i < doors.Count; i++)
             {
                 doors[i].SwitchStateCooldown = (int)RandomHelper.Next(Random, 700, 1500);
             }
-
-            lootDropped = true;
         }
 
         // OnEntering
@@ -145,7 +135,7 @@ namespace ScaryCastle
             // Check door anchors
             if (DoorAnchorLeft == Vector2.Zero || DoorAnchorDown == Vector2.Zero ||
                 DoorAnchorRight == Vector2.Zero || DoorAnchorUp == Vector2.Zero)
-                throw new InvalidOperationException($"One or more door acnhor points are missing in room [{RoomGraph}].");
+                throw new InvalidOperationException($"One or more door anchor points are missing in room [{RoomGraph}].");
 
             base.OnLoad();
 

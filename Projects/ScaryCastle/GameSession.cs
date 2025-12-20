@@ -467,7 +467,7 @@ namespace ScaryCastle
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            RunManager.Generate(this, Tags.EmptyList);
+            RunManager.Generate(this, Tags.EmptyList, 12);
         }
 
         // CancelRun

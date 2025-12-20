@@ -15,17 +15,29 @@ namespace ScaryCastle.Procedural
         #region Private members
 
         // ApplyConfigs
-        private static void ApplyConfigs(List<RoomConfig> configList)
+        private static void ApplyConfigs(List<RoomConfig> configList, int maxDistance)
         {
+            float threshold = maxDistance / 3f;
+
             var candidates = new List<RoomConfig>();
 
             // Rooms
             foreach (var room in rooms)
             {
-                candidates.Clear();
+                // Determinamos la fase según la distancia del room
+                var targetDiff = Difficulty.Easy;
+                if (room.DistanceFromStart >= threshold * 2)
+                    targetDiff = Difficulty.Hard;
+                else if (room.DistanceFromStart >= threshold)
+                    targetDiff = Difficulty.Normal;
 
+                candidates.Clear();
                 foreach (var config in configList)
                 {
+                    // Match difficulty
+                    if ((int)config.Difficulty != (int)targetDiff)
+                        continue;
+
                     if (config.RequiresDeadEnd && !room.IsDeadEnd)
                         continue;
 
@@ -33,6 +45,22 @@ namespace ScaryCastle.Procedural
                         continue;
 
                     candidates.Add(config);
+                }
+
+                // FALLBACK: Si no hay configs específicas para esa fase, buscamos una inferior
+                if (candidates.Count == 0 && targetDiff > Difficulty.Easy)
+                {
+                    foreach (var config in configList)
+                    {
+                        if (config.Difficulty < targetDiff)
+                        {
+                            if (config.RequiresDeadEnd && !room.IsDeadEnd)
+                                continue;
+                            
+                            if (config.PassesMaxPerRunConstraint())
+                                candidates.Add(config);
+                        }
+                    }
                 }
 
                 // Pick
@@ -96,18 +124,19 @@ namespace ScaryCastle.Procedural
         }
 
         // Generate
-        public static void Generate(GameSession session, Tags pools)
+        public static void Generate(GameSession session, Tags pools, int roomCount)
         {
             HasContent = true;
             
             rooms.Clear();
-            rooms.AddRange(RunGraphGenerator.Generate(session.Seed, 12));
+            var result = RunGraphGenerator.Generate(session.Seed, roomCount);
+            rooms.AddRange(result.Item1);
 
             // Get available configs
             var configs = GetAvailableConfigs(session, pools);
 
             // Assign configs
-            ApplyConfigs(configs);
+            ApplyConfigs(configs, result.Item2);
 
             // Create ride rooms
             foreach (var room in rooms)

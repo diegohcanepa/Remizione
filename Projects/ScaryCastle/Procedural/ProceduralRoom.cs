@@ -54,6 +54,25 @@ namespace ScaryCastle
 
         #region Private members
 
+        // AdjustWeightByDifficulty
+        private static float AdjustWeightByDifficulty(Difficulty roomDifficulty, Difficulty thingDifficulty, float thingWeight)
+        {
+            float finalWeight = thingWeight;
+
+            // Si el cuarto es Difícil, bajamos la chance de los "Flojitos"
+            if (roomDifficulty == Difficulty.Hard && thingDifficulty == Difficulty.Easy)
+            {
+                finalWeight *= .2f; // El multiplicador bizarro
+            }
+            // Si el cuarto es Difícil y el enemigo también, lo potenciamos
+            else if (roomDifficulty == Difficulty.Hard && thingDifficulty == Difficulty.Hard)
+            {
+                finalWeight *= 2.5f;
+            }
+
+            return finalWeight;
+        }
+
         // CreateRuntimeThingCloneCore
         private GameThing CreateRuntimeThingCloneCore(string staticName)
         {
@@ -73,6 +92,10 @@ namespace ScaryCastle
 
             foreach (var config in configList)
             {
+                // Filtro Techo: No permitimos que aparezcan cosas más difíciles que el cuarto
+                if (config.Difficulty > Config.Difficulty)
+                    continue;
+
                 if (!Session.UnlockedPool.IsUnlocked(config.Name))
                     continue;
 
@@ -158,6 +181,27 @@ namespace ScaryCastle
             }
         }
 
+        // DropLoot
+        protected void DropLoot()
+        {
+            MetaItem? drop;
+            if (RoomGraph.RoomType == RoomType.Coin)
+            {
+                drop = MetaItem.Find(MetaItem.CoinItemName);
+            }
+            else
+            {
+                drop = Loot.Get(Session, Config.Difficulty, Config.PreferredLootRealm, Config.PreferredLootCategory);
+            }
+
+            if (drop != null)
+            {
+                var dropPosition = WalkArea != null ? WalkArea.Polygon.BoundingRectangleF.Center : BoundingBox.Center;
+                Session.ObjectPools.Pickups.Get()?.Drop(this, dropPosition, drop);
+                RoomGraph.SackCount++;
+            }
+        }
+
         // OnLoad
         protected override void OnLoad()
         {
@@ -192,8 +236,8 @@ namespace ScaryCastle
         private void PopulateEnemies()
         {
             var configList = FilterByScope<Enemy>(ThingConfig.All, Config.Scope);
-            //SpawnInPlaceholders(configList, Config.MaxEnemies, PlaceholderTarget.Enemy);
-            //SpawnInWalkArea(configList, Config.MaxEnemies);
+            SpawnInPlaceholders(configList, Config.MaxEnemies, PlaceholderTarget.Enemy);
+            SpawnInWalkArea(configList, Config.MaxEnemies);
         }
 
         // PopulateProps
@@ -257,10 +301,6 @@ namespace ScaryCastle
                     if (!config.PassesMaxPerRunConstraint())
                         continue;
 
-                    // SpawnChance
-                    if (!config.SpawnChance.Roll(Random))
-                        continue;
-
                     candidates.Add(config);
                 }
 
@@ -269,9 +309,10 @@ namespace ScaryCastle
 
                 // Pick
                 var chanceTable = new ChanceTable();
-                foreach (var candidate in candidates)
+                foreach (var c in candidates)
                 {
-                    chanceTable.Add(candidate.Name, candidate.Weight);
+                    var finalWeight = AdjustWeightByDifficulty(Config.Difficulty, c.Difficulty, c.Weight);
+                    chanceTable.Add(c.Name, finalWeight);
                 }
 
                 if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
@@ -315,9 +356,6 @@ namespace ScaryCastle
                 if (!config.PassesMaxPerRunConstraint())
                     continue;
 
-                if (!config.SpawnChance.Roll(Random))
-                    continue;
-
                 candidates.Add(config);
             }
 
@@ -328,7 +366,8 @@ namespace ScaryCastle
             var table = new ChanceTable();
             foreach (var c in candidates)
             {
-                table.Add(c.Name, c.Weight);
+                var finalWeight = AdjustWeightByDifficulty(Config.Difficulty, c.Difficulty, c.Weight);
+                table.Add(c.Name, finalWeight);
             }
 
             var spawnedNames = new List<string>();

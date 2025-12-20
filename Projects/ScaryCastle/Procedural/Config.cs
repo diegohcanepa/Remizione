@@ -20,18 +20,21 @@ namespace ScaryCastle
             // Name
             this.Name = element.GetProperty("name").GetString() ?? throw new InvalidDataException("Name not found.");
 
-            // Weight
-            Weight = 1;
-            if (element.TryGetProperty("weight", out JsonElement weightElement))
-                Weight = weightElement.GetSingle();
+            // Difficulty
+            if (element.TryGetProperty("difficulty", out JsonElement difficultyElement))
+                Difficulty = Enum.Parse<Difficulty>(difficultyElement.GetString() ?? "");
 
             // MaxPerRun
             if (element.TryGetProperty("maxPerRun", out JsonElement maxPerRunElement))
                 MaxPerRun = Math.Max(MaxPerRun, maxPerRunElement.GetInt32());
 
-            // RequiredCompletedRuns
-            if (element.TryGetProperty("requiredCompletedRuns", out JsonElement requiredCompletedRunsElement))
-                RequiredCompletedRuns = requiredCompletedRunsElement.GetInt32();
+            // PreferredLootCategory
+            if (element.TryGetProperty("preferredLootCategory", out JsonElement preferredLootCategoryElement))
+                PreferredLootCategory = Enum.Parse<ItemCategory>(preferredLootCategoryElement.GetString() ?? "");
+
+            // PreferredLootRealm
+            if (element.TryGetProperty("preferredLootRealm", out JsonElement preferredLootRealmElement))
+                PreferredLootRealm = Enum.Parse<Realm>(preferredLootRealmElement.GetString() ?? "");
 
             // RequiredRuns
             if (element.TryGetProperty("requiredRuns", out JsonElement requiredRunsElement))
@@ -44,15 +47,17 @@ namespace ScaryCastle
             // Tags
             Tags = ConfigHelper.GetTags(element, "tags");
 
-            // LootTable
-            LootTable = ConfigHelper.GetLootTable(element);
-
             // Pools
             Pools = ConfigHelper.GetTags(element, "pools");
 
             // Unlocked
             if (element.TryGetProperty("unlocked", out JsonElement unlockedElement))
                 Unlocked = unlockedElement.GetBoolean();
+
+            // Weight
+            Weight = 1;
+            if (element.TryGetProperty("weight", out JsonElement weightElement))
+                Weight = weightElement.GetSingle();
         }
 
         #region Protected members
@@ -69,8 +74,8 @@ namespace ScaryCastle
 
         #endregion
 
-        // LootTable
-        public ChanceTable LootTable { get; }
+        // Difficulty
+        public Difficulty Difficulty { get; }
 
         // MaxPerRun
         public int MaxPerRun { get; }
@@ -95,13 +100,6 @@ namespace ScaryCastle
             if (RequiredRuns > 0)
             {
                 if (session.TotalRuns < RequiredRuns)
-                    return false;
-            }
-
-            // RequiredCompletedRuns
-            if (RequiredCompletedRuns > 0)
-            {
-                if (session.CompletedRuns < RequiredCompletedRuns)
                     return false;
             }
 
@@ -150,8 +148,11 @@ namespace ScaryCastle
         // Pools
         public Tags Pools { get; }
 
-        // RequiredCompletedRuns
-        public int RequiredCompletedRuns { get; }
+        // PreferredLootCategory
+        public ItemCategory? PreferredLootCategory { get; }
+
+        // PreferredLootRealm
+        public Realm? PreferredLootRealm { get; }
 
         // RequiredRuns
         public int RequiredRuns { get; }

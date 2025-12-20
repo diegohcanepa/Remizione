@@ -17,6 +17,9 @@ namespace ScaryCastle
     // DamageType
     public enum DamageType { None, Physical, Acid, Explosive, Fire, Ice, Lightning, Poison }
 
+    // Difficulty
+    public enum Difficulty { Easy, Normal, Hard }
+
     // RideDoorDirection
     public enum RideDoorDirection { Up, Right, Down, Left }
 
