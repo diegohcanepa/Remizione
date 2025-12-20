@@ -31,11 +31,17 @@
           "default": "0",
           "description": "Lista elementos que desbloquea el kill goal (items, rooms, actors, props)."
         },
+        "lootChance": {
+          "type": "number",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Chances de dropear loot."
+        },
         "maxPerRoom": {
           "type": "integer",
-          "default": 0,
-          "description": "Número maximo de veces que este elemento puede aparecer por 'room'.",
-          "minimum": 0
+          "default": -1,
+          "description": "Número maximo de veces que este elemento puede aparecer por 'room'."
         },
         "maxSpawnAmount": {
           "type": "integer",

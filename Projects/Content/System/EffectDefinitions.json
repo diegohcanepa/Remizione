@@ -1,5 +1,5 @@
 {
-	"$schema": "./EffectDefinitions.schema.json",
+	"$schema": "./EffectDefinition.schema.json",
 	"data": [
 		{
 			"name": "LightningDamage",

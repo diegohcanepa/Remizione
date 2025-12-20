@@ -105,7 +105,7 @@ namespace ScaryCastle
             CleanUp();
 
             color = splashColor;
-            int count = BurstSize.RandomValue(Random.Shared);
+            int count = BurstSize.GetRandomValue(Random.Shared);
 
             for (int i = 0; i < count; i++)
             {

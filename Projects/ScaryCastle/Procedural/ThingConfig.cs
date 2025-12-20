@@ -42,8 +42,12 @@ namespace ScaryCastle
                     KillGoalReward = new(killGoalRewardValue.Split(','));
             }
 
+            // LootChance
+            if (element.TryGetProperty("lootChance", out JsonElement lootChanceElement))
+                LootChance = lootChanceElement.GetSingle();
+
             // MaxPerRoom
-            MaxPerRoom = 0;
+            MaxPerRoom = -1;
             if (element.TryGetProperty("maxPerRoom", out JsonElement maxPerRoomElement))
                 MaxPerRoom = Math.Max(MaxPerRoom, maxPerRoomElement.GetInt32());
 
@@ -112,6 +116,9 @@ namespace ScaryCastle
         // KillGoalReward
         public ReadOnlyCollection<string> KillGoalReward { get; } = [];
 
+        // LootChance
+        public Ratio LootChance { get; set; }
+
         // MaxPerRoom
         public int MaxPerRoom { get; }
 
@@ -124,7 +131,7 @@ namespace ScaryCastle
         // PassesMaxPerRoomConstraint
         public bool PassesMaxPerRoomConstraint(int instanceCount)
         {
-            return MaxPerRoom == 0 || instanceCount < MaxPerRoom;
+            return MaxPerRoom == -1 || instanceCount < MaxPerRoom;
         }
 
         // TicketRewardAmount

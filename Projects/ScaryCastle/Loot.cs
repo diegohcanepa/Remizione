@@ -13,10 +13,10 @@ namespace ScaryCastle
         #region Private members
 
         // AdjustWeightByQuality
-        private static float AdjustWeightByQuality(Difficulty roomDiff, int itemQuality, float baseWeight)
+        private static float AdjustWeightByQuality(Difficulty difficulty, int itemQuality, float baseWeight)
         {
             float finalWeight = baseWeight;
-            int roomVal = (int)roomDiff; // 0, 1, 2
+            int roomVal = (int)difficulty; // 0, 1, 2
 
             // Si el item es de calidad baja para una sala de nivel alto
             if (roomVal == 2 && itemQuality <= 1)
@@ -32,10 +32,10 @@ namespace ScaryCastle
         #endregion
 
         // Get
-        internal static MetaItem? Get(GameSession session, Difficulty difficulty, Realm? preferredRealm, ItemCategory? preferredCategory)
+        internal static MetaItem? Get(GameSession session, RoomConfig roomConfig)
         {
             var candidates = new List<MetaItem>();
-            int maxQ = ((int)difficulty * 2) + 1; // Tu escala 0-5
+            int maxQ = ((int)roomConfig.Difficulty * 2) + 1; // Tu escala 0-5
 
             foreach (var metaItem in MetaItem.AllItems)
             {
@@ -46,11 +46,11 @@ namespace ScaryCastle
                     continue;
 
                 // Realm scope?
-                if (preferredRealm != null && metaItem.Realm != preferredRealm)
+                if (roomConfig.PreferredLootRealm != null && metaItem.Realm != roomConfig.PreferredLootRealm)
                     continue;
 
                 // Category scope?
-                if (preferredCategory != null && metaItem.Category != preferredCategory)
+                if (roomConfig.PreferredLootCategory != null && metaItem.Category != roomConfig.PreferredLootCategory)
                     continue;
 
                 // Discard gadgets already in inventory
@@ -64,7 +64,7 @@ namespace ScaryCastle
             var table = new ChanceTable();
             foreach (var c in candidates)
             {
-                float weight = AdjustWeightByQuality(difficulty, c.Quality, c.Weight);
+                float weight = AdjustWeightByQuality(roomConfig.Difficulty, c.Quality, c.Weight);
                 table.Add(c.Name, weight, 1, c);
             }
 

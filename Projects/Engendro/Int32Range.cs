@@ -67,6 +67,9 @@ namespace Engendro
         // GetHashCode
         public override int GetHashCode() => Minimum ^ Maximum;
 
+        // GetRandomValue
+        public int GetRandomValue(Random random) => random.Next(Minimum, Maximum + 1);
+
         // IsEmpty
         public bool IsEmpty => Minimum == 0 && Maximum == 0;
 
@@ -81,9 +84,6 @@ namespace Engendro
         {
             return TryParse(value, out var range) ? range : throw new FormatException(nameof(value));
         }
-
-        // RandomValue
-        public int RandomValue(Random random) => random.Next(Minimum, Maximum + 1);
 
         // Separator
         public static readonly string Separator = "|";

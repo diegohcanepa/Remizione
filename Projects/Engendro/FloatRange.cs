@@ -76,6 +76,12 @@ namespace Engendro
             return (Minimum.GetHashCode() * 397) ^ Maximum.GetHashCode();
         }
 
+        // GetRandomValue
+        public float GetRandomValue(Random random)
+        {
+            return RandomHelper.Next(random, Minimum, Maximum);
+        }
+
         // IsEmpty
         public bool IsEmpty => Minimum == 0 && Maximum == 0;
 
@@ -89,12 +95,6 @@ namespace Engendro
         public static FloatRange Parse(string value)
         {
             return TryParse(value, out var range) ? range : throw new FormatException(nameof(value));
-        }
-
-        // RandomValue
-        public float RandomValue(Random random)
-        {
-            return RandomHelper.Next(random, Minimum, Maximum);
         }
 
         // Separator

@@ -191,7 +191,7 @@ namespace ScaryCastle
             }
             else
             {
-                drop = Loot.Get(Session, Config.Difficulty, Config.PreferredLootRealm, Config.PreferredLootCategory);
+                drop = Loot.Get(Session, Config);
             }
 
             if (drop != null)

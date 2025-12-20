@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "EffectDefinitions.schema.json",
+  "$id": "EffectDefinition.schema.json",
   "title": "EffectDefinition Data File (Validado con Enums)",
   "type": "object",
   "properties": {
@@ -24,11 +24,6 @@
           "type": "string",
           "description": "El nombre único del item. (Requerido)"
         },
-        "criticalChance": {
-          "type": "integer",
-          "minimum": 0,
-          "description": "La probabilidad de golpe crítico (valor por defecto: 1)."
-        },
         "damage": {
           "type": "string",
           "description": "Expresión de dado para el dado (ej: '1d6+2')."
@@ -50,6 +45,13 @@
         "knockback": {
           "type": "string",
           "description": "Fuerza de empuje (Vector2) representada como 'X, Y' (ej: '100, 50')."
+        },
+        "luckBonus": {
+          "type": "number",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Bonus de suerte."
         },
         "sound": {
           "type": "string",

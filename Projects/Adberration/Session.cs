@@ -920,7 +920,7 @@ namespace Adberration
         // GenerateRandomNumber
         public int GenerateRandomNumber(string name, Int32Range range)
         {
-            var result = range.RandomValue(Random.Shared);
+            var result = range.GetRandomValue(Random.Shared);
             randomNumbers[name] = result;
             return result;
         }

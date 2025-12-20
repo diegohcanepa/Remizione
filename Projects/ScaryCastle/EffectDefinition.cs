@@ -26,12 +26,6 @@ namespace ScaryCastle
 
             Utils.AssertName(Name, this);
 
-            // CriticalChance
-            if (element.TryGetProperty("criticalChance", out JsonElement criticalChanceElement))
-                CriticalChance = criticalChanceElement.GetInt32();
-            else
-                CriticalChance = 1;
-
             // Damage
             if (element.TryGetProperty("damage", out JsonElement damageElement) && damageElement.GetString() is string damageValue)
                 Damage = new(damageValue);
@@ -51,6 +45,10 @@ namespace ScaryCastle
             // Knockback
             if (element.TryGetProperty("knockback", out JsonElement knockbackElement) && knockbackElement.GetString() is string knockbackValue)
                 Knockback = DataConverter.ToVector2(knockbackValue);
+
+            // LuckBonus
+            if (element.TryGetProperty("luckBonus", out JsonElement luckBonusElement))
+                LuckBonus = luckBonusElement.GetSingle();
 
             // Sound
             if (element.TryGetProperty("sound", out JsonElement soundElement) && soundElement.GetString() is string soundValue)
@@ -106,9 +104,6 @@ namespace ScaryCastle
             return true;
         }
 
-        // CriticalChance
-        public int CriticalChance { get; init; }
-
         // Damage
         public DiceExpression? Damage { get; init; }
 
@@ -123,6 +118,9 @@ namespace ScaryCastle
 
         // Knockback
         public Vector2 Knockback { get; init; }
+
+        // LuckBonus
+        public Ratio LuckBonus { get; init; }
 
         // Name
         public string Name { get; }

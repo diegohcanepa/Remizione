@@ -42,7 +42,6 @@ namespace ScaryCastle
 
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
-            this.LootTableName = StaticName;
             this.ResistanceTableName = StaticName;
 
             config = ThingConfig.Find(StaticName);
@@ -247,6 +246,30 @@ namespace ScaryCastle
 
         // DropLoot
         protected void DropLoot()
+        {
+            if (Room is not ProceduralRoom room)
+                return;
+
+            if (config == null)
+                return;
+
+            Ratio lootChance = config.LootChance;
+            if (Session.Inventory.Gadget is Item item)
+                lootChance += item.MetaItem.Effect.LuckBonus;
+
+            if (!lootChance.Roll())
+                return;
+
+            MetaItem? drop = Loot.Get(Session, room.Config);
+            if (drop != null)
+            {
+                Session.ObjectPools.Pickups.Get()?.Drop(room, Position, drop);
+                room.RoomGraph.SackCount++;
+            }
+        }
+
+        // DropTickets
+        protected void DropTickets()
         {
             if (config == null)
                 return;
@@ -554,6 +577,7 @@ namespace ScaryCastle
             OnDie();
             Room?.RecountEnemies();
             DropLoot();
+            DropTickets();
 
             if (config?.KillGoal > 0)
             {
@@ -942,10 +966,6 @@ namespace ScaryCastle
         // LocalizedDisplayName
         public string LocalizedDisplayName { get; private set; } = string.Empty;
 
-        // LootTableName
-        [ScriptProperty]
-        public string LootTableName { get; set; }
-
         // MaxHP
         [ScriptProperty]
         public int MaxHP
@@ -1077,8 +1097,6 @@ namespace ScaryCastle
 
             if (MaxHP == 0)
                 return;
-
-            var critical = DiceExpression.Dice100.Roll() <= effect.CriticalChance;
 
             amount = (int)(amount * GetResistanceModifier(effect.DamageType));
             if (amount > HP)

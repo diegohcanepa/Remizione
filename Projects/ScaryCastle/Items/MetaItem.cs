@@ -44,11 +44,6 @@ namespace ScaryCastle
             if (element.TryGetProperty("category", out JsonElement categoryElement) && categoryElement.GetString() is string categoryValue)
                 Category = Enum.Parse<ItemCategory>(categoryValue);
 
-            // CriticalChance
-            var criticalChance = 1;
-            if (element.TryGetProperty("criticalChance", out JsonElement criticalChanceElement))
-                criticalChance = criticalChanceElement.GetInt32();
-
             // Damage
             DiceExpression? damage = null;
             if (element.TryGetProperty("damage", out JsonElement damageElement) && damageElement.GetString() is string damageValue)
@@ -81,6 +76,11 @@ namespace ScaryCastle
             var knockback = Vector2.Zero;
             if (element.TryGetProperty("knockback", out JsonElement knockbackElement) && knockbackElement.GetString() is string knockbackValue)
                 knockback = DataConverter.ToVector2(knockbackValue);
+
+            // LuckBonus
+            Ratio luckBonus = 0;
+            if (element.TryGetProperty("luckBonus", out JsonElement luckBonusElement))
+                luckBonus = luckBonusElement.GetSingle();
 
             // PassiveEffectCooldown
             if (element.TryGetProperty("passiveEffectCooldown", out JsonElement passiveEffectCooldownElement))
@@ -136,12 +136,12 @@ namespace ScaryCastle
             // Effect
             this.Effect = new($"<{Name} Effect>")
             {
-                CriticalChance = criticalChance,
                 Damage = damage,
                 DamageType = damageType,
                 HP = hp,
                 ImpactWord = impactWord,
                 Knockback = knockback,
+                LuckBonus = luckBonus,
                 Sound = sound
             };
 

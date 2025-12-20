@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "MetaItems.schema.json",
+  "$id": "MetaItem.schema.json",
   "title": "MetaItem Data File (Validado con Enums)",
   "description": "Schema para el archivo que contiene la lista de MetaItems, con validación estricta de tipos de datos y valores de Enums.",
   "type": "object",
@@ -28,17 +28,30 @@
         "action": {
           "type": "string",
           "description": "La acción asociada al item (Enum ItemAction).",
-          "enum": [ "None", "Place", "Throw" ]
+          "enum": [
+            "None",
+            "Place",
+            "Throw"
+          ]
         },
         "category": {
           "type": "string",
           "description": "La categoría del item (Enum ItemCategory).",
-          "enum": [ "None", "LeftHand", "RightHand", "Consumable", "Gadget", "KeyItem" ]
+          "enum": [
+            "None",
+            "LeftHand",
+            "RightHand",
+            "Consumable",
+            "Gadget",
+            "KeyItem"
+          ]
         },
         "criticalChance": {
-          "type": "integer",
+          "type": "number",
+          "default": 0,
           "minimum": 0,
-          "description": "La probabilidad de golpe crítico (valor por defecto: 1)."
+          "maximum": 1,
+          "description": "Chance de golpe crítico."
         },
         "damage": {
           "type": "string",
@@ -47,7 +60,16 @@
         "damageType": {
           "type": "string",
           "description": "El tipo de dado del item (Enum DamageType).",
-          "enum": [ "None", "Physical", "Acid", "Explosive", "Fire", "Ice", "Lightning", "Poison" ]
+          "enum": [
+            "None",
+            "Physical",
+            "Acid",
+            "Explosive",
+            "Fire",
+            "Ice",
+            "Lightning",
+            "Poison"
+          ]
         },
         "durability": {
           "type": "integer",
@@ -61,7 +83,28 @@
         "impactWord": {
           "type": "string",
           "description": "La palabra de impacto asociada (Enum ImpactWordName).",
-          "enum": [ "None", "AghGreen", "AghRed", "BoomPurple", "BoomRed", "BangBlue", "BangRed", "CrackBlue", "CrackYellow", "CuackPurple", "CuackYellow", "Kapow", "KapowStrong", "OuchBlue", "OuchGreen", "PlopRed", "PlopYellow", "SlapBlue", "SlapRed", "Zap" ]
+          "enum": [
+            "None",
+            "AghGreen",
+            "AghRed",
+            "BoomPurple",
+            "BoomRed",
+            "BangBlue",
+            "BangRed",
+            "CrackBlue",
+            "CrackYellow",
+            "CuackPurple",
+            "CuackYellow",
+            "Kapow",
+            "KapowStrong",
+            "OuchBlue",
+            "OuchGreen",
+            "PlopRed",
+            "PlopYellow",
+            "SlapBlue",
+            "SlapRed",
+            "Zap"
+          ]
         },
         "isStackable": {
           "type": "boolean",
@@ -102,7 +145,11 @@
         "realm": {
           "type": "string",
           "description": "El reino o ámbito del item (Enum Realm).",
-          "enum": [ "Earthly", "Infernal", "Celestial" ]
+          "enum": [
+            "Earthly",
+            "Infernal",
+            "Celestial"
+          ]
         },
         "skillChance": {
           "type": "integer",
@@ -116,7 +163,11 @@
         "stackMode": {
           "type": "string",
           "description": "Modo de apilamiento (Enum StackMode).",
-          "enum": [ "None", "Persistent", "Disposable" ]
+          "enum": [
+            "None",
+            "Persistent",
+            "Disposable"
+          ]
         },
         "unlocked": {
           "type": "boolean",

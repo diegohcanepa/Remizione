@@ -20,7 +20,7 @@ namespace Adberration.Scripting
         {
             if (Session.ScriptEnvironment.GetCounter(Body.Clauses[0]) is Counter counter)
             {
-                counter.Value = Parser.ParseInt32Range(this, 2).RandomValue(Random.Shared);
+                counter.Value = Parser.ParseInt32Range(this, 2).GetRandomValue(Random.Shared);
             }
         }
     }
