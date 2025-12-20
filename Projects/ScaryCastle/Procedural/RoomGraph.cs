@@ -28,12 +28,12 @@
         public int GetConnectionCount()
         {
             var result = 0;
-            
+
             if (Up != null) result++;
             if (Down != null) result++;
             if (Left != null) result++;
             if (Right != null) result++;
-            
+
             return result;
         }
 

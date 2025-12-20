@@ -242,7 +242,7 @@ namespace ScaryCastle
                 SceneController.Pop();
 
                 if (SelectedItem != null)
-                    OnUse(SelectedItem);    
+                    OnUse(SelectedItem);
 
                 return HandleInputResult.Handled;
             }

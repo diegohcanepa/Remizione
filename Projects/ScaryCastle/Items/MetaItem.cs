@@ -261,7 +261,7 @@ namespace ScaryCastle
         public bool PreventDiscard { get; }
 
         // Price
-        public int Price { get; }   
+        public int Price { get; }
 
         // Quality
         public int Quality { get; }

@@ -94,7 +94,7 @@ namespace ScaryCastle.UI
         private void DrawRoom(GameTime gameTime, RoomGraph roomGraph, Vector2 position)
         {
             ImageSprite image;
-         
+
             // Current
             if (roomGraph == CurrentRoom)
                 image = roomImages[(int)RoomImage.Current];
@@ -161,7 +161,7 @@ namespace ScaryCastle.UI
         {
             if (CurrentRoom == null)
                 return;
-            
+
             var oldRect = Game.GraphicsDevice.ScissorRectangle;
             Game.GraphicsDevice.ScissorRectangle = screenScissorRect;
 

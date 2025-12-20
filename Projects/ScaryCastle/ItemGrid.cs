@@ -14,7 +14,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        const int slotSize = 20;
+        private const int slotSize = 20;
         private readonly int columns;
         private Vector2 position;
         private readonly int rows;

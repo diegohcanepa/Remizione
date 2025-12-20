@@ -19,7 +19,7 @@ namespace ScaryCastle
                 return 7.5625f * t * t;
             if (t < 2f / 2.75f)
                 return (7.5625f * (t -= 1.5f / 2.75f) * t) + 0.75f;
-            
+
             if (t < 2.5f / 2.75f)
                 return (7.5625f * (t -= 2.25f / 2.75f) * t) + 0.9375f;
 

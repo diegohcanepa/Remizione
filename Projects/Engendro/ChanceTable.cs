@@ -130,7 +130,7 @@ namespace Engendro
                 return true;
             }
 
-            return false;   
+            return false;
         }
 
         // SetSeed

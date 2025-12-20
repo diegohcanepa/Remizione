@@ -56,7 +56,7 @@ namespace ScaryCastle.Procedural
                         {
                             if (config.RequiresDeadEnd && !room.IsDeadEnd)
                                 continue;
-                            
+
                             if (config.PassesMaxPerRunConstraint())
                                 candidates.Add(config);
                         }
@@ -127,7 +127,7 @@ namespace ScaryCastle.Procedural
         public static void Generate(GameSession session, Tags pools, int roomCount)
         {
             HasContent = true;
-            
+
             rooms.Clear();
             var result = RunGraphGenerator.Generate(session.Seed, roomCount);
             rooms.AddRange(result.Item1);

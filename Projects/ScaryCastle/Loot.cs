@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
@@ -72,43 +71,37 @@ namespace ScaryCastle
         }
 
         // RollTickets
-        internal static int RollTickets(GameSession session, RoomConfig roomConfig, ThingConfig thingConfig)
+        internal static int RollTickets(GameSession session, RoomConfig roomConfig, ThingConfig entityConfig)
         {
-            // --- A. CHANCE DINÁMICA ---
-            // Definimos la probabilidad base según la dificultad de la criatura/prop
-            Ratio baseChance = thingConfig.Difficulty switch
+            // A. Probabilidad (Roll de si cae o no)
+            Ratio baseChance = entityConfig.Difficulty switch
             {
-                Difficulty.Easy => .2f,   // 20%
-                Difficulty.Normal => .4f, // 40%
-                Difficulty.Hard => .6f,   // 60%
-                _ => .1f
+                Difficulty.Easy => 0.15f,   // 15% chance
+                Difficulty.Normal => 0.30f, // 30% chance
+                Difficulty.Hard => 0.50f,   // 50% chance
+                _ => 0.10f
             };
 
-            // Sumamos el bono de suerte del item pasivo
             if (session.Inventory.Gadget is Item gadget)
                 baseChance += gadget.MetaItem.Effect.LuckBonus;
 
             if (!baseChance.Roll())
                 return 0;
 
-            // --- B. CANTIDAD DINÁMICA ---
-            // Valor base de tickets según el "Tier" de la entidad
-            float baseAmount = thingConfig.Difficulty switch
+            // B. Cantidad (Isaac Style: 1, 2 o 3)
+            int amount = entityConfig.Difficulty switch
             {
-                Difficulty.Easy => 1,    //
-                Difficulty.Normal => 2, //
-                Difficulty.Hard => 3,   //
+                Difficulty.Easy => 1,
+                Difficulty.Normal => 2,
+                Difficulty.Hard => 3,
                 _ => 1
             };
 
-            // Multiplicador de zona: ¿Qué tan lejos estamos en el run?
-            // Easy (0) -> x1.0 | Normal (1) -> x1.5 | Hard (2) -> x2.0
-            float zoneMultiplier = ((int)roomConfig.Difficulty * 0.5f) + 1.0f;
+            // Opcional: Pequeña chance de que un enemigo Hard suelte un "bonus" de +1
+            if (entityConfig.Difficulty == Difficulty.Hard && Random.Shared.NextDouble() < 0.2f)
+                amount += 1;
 
-            // Variación bizarra final (±20%)
-            float variance = (float)(Random.Shared.NextDouble() * 0.4 + 0.8);
-
-            return (int)(baseAmount * zoneMultiplier * variance);
+            return amount;
         }
     }
 }
