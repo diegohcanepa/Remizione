@@ -70,5 +70,45 @@ namespace ScaryCastle
 
             return table.GetValue()?.Context as MetaItem;
         }
+
+        // RollTickets
+        internal static int RollTickets(GameSession session, RoomConfig roomConfig, ThingConfig thingConfig)
+        {
+            // --- A. CHANCE DINÁMICA ---
+            // Definimos la probabilidad base según la dificultad de la criatura/prop
+            Ratio baseChance = thingConfig.Difficulty switch
+            {
+                Difficulty.Easy => .2f,   // 20%
+                Difficulty.Normal => .4f, // 40%
+                Difficulty.Hard => .6f,   // 60%
+                _ => .1f
+            };
+
+            // Sumamos el bono de suerte del item pasivo
+            if (session.Inventory.Gadget is Item gadget)
+                baseChance += gadget.MetaItem.Effect.LuckBonus;
+
+            if (!baseChance.Roll())
+                return 0;
+
+            // --- B. CANTIDAD DINÁMICA ---
+            // Valor base de tickets según el "Tier" de la entidad
+            float baseAmount = thingConfig.Difficulty switch
+            {
+                Difficulty.Easy => 1,    //
+                Difficulty.Normal => 2, //
+                Difficulty.Hard => 3,   //
+                _ => 1
+            };
+
+            // Multiplicador de zona: ¿Qué tan lejos estamos en el run?
+            // Easy (0) -> x1.0 | Normal (1) -> x1.5 | Hard (2) -> x2.0
+            float zoneMultiplier = ((int)roomConfig.Difficulty * 0.5f) + 1.0f;
+
+            // Variación bizarra final (±20%)
+            float variance = (float)(Random.Shared.NextDouble() * 0.4 + 0.8);
+
+            return (int)(baseAmount * zoneMultiplier * variance);
+        }
     }
 }

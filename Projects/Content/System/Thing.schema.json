@@ -59,19 +59,6 @@
           "type": "boolean",
           "description": "Solo puede spawnear en side rooms."
         },
-        "ticketRewardAmount": {
-          "type": "integer",
-          "default": 0,
-          "minimum": 0,
-          "description": "Máximo de tickets que puede dropear."
-        },
-        "ticketRewardChance": {
-          "type": "number",
-          "default": 0,
-          "minimum": 0,
-          "maximum": 1,
-          "description": "Chances de dropear tickets."
-        },
         "usePlaceholder": {
           "type": "boolean",
           "description": "Indica si tiene que ser spawneado en un placeholder del room."

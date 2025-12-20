@@ -12,6 +12,7 @@
             this.X = x;
             this.Y = y;
             this.RoomType = roomType;
+            this.HasCoin = roomType == RoomType.Coin;
         }
 
         // Config
@@ -35,6 +36,9 @@
             
             return result;
         }
+
+        // HasCoin
+        public bool HasCoin { get; set; }
 
         // Index
         public int Index { get; }

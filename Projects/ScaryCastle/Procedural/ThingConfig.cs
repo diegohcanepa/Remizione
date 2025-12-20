@@ -64,14 +64,6 @@ namespace ScaryCastle
             if (MinSpawnAmount > MaxSpawnAmount)
                 throw new InvalidOperationException($"[{Name}]: {nameof(MinSpawnAmount)} cannot be greater than MaxSpawnAmount.");
 
-            // TicketRewardAmount
-            if (element.TryGetProperty("ticketRewardAmount", out JsonElement ticketRewardAmountElement))
-                TicketRewardAmount = ticketRewardAmountElement.GetInt32();
-
-            // TicketRewardChance
-            if (element.TryGetProperty("ticketRewardChance", out JsonElement ticketRewardChanceElement))
-                TicketRewardChance = ticketRewardChanceElement.GetSingle();
-
             // UsePlaceholder
             if (element.TryGetProperty("usePlaceholder", out JsonElement usePlaceholderElement))
                 UsePlaceholder = usePlaceholderElement.GetBoolean();
@@ -133,12 +125,6 @@ namespace ScaryCastle
         {
             return MaxPerRoom == -1 || instanceCount < MaxPerRoom;
         }
-
-        // TicketRewardAmount
-        public int TicketRewardAmount { get; }
-
-        // TicketRewardChance
-        public Ratio TicketRewardChance { get; }
 
         // UsePlaceholder
         public bool UsePlaceholder { get; }

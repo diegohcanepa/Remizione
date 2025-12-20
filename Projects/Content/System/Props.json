@@ -20,10 +20,6 @@
     {
       "name": "PotteryB",
       "tags": "floor",
-      "loot": [
-        [ "RottenApple", 70 ],
-        [ "RustyLockpick", 25 ]
-      ],
       "unlocked": true,
       "usePlaceholder": true
     }

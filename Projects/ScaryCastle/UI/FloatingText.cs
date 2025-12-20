@@ -97,10 +97,9 @@ namespace ScaryCastle
         }
 
         // ShowDamage
-        public void ShowDamage(Vector2 origin, string value, bool critical)
+        public void ShowDamage(Vector2 origin, string value)
         {
-            var color = critical ? ColorPalette.Text.Highlight : ColorPalette.Text.Default;
-            ShowCore(origin, value, color, new(0, -6), defaultScale, 700);
+            ShowCore(origin, value, ColorPalette.Text.Default, new(0, -6), defaultScale, 700);
         }
     }
 }

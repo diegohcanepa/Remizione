@@ -21,12 +21,6 @@ namespace ScaryCastle
         public void Use()
         {
             AllowInteraction = false;
-            if (Room is GameRoom room)
-            {
-                room.Session.ObjectPools.Pickups.Get()?.Drop(room, BoundingBox.GetPoint(RectanglePoint.Bottom), MetaItem.FindNotNull("Apple"), BoundingBox.Bottom + Random.Shared.Next(10), 0);
-                room.Session.ObjectPools.Pickups.Get()?.Drop(room, BoundingBox.GetPoint(RectanglePoint.Bottom), MetaItem.FindNotNull("RottenApple"), BoundingBox.Bottom + Random.Shared.Next(10), 400);
-                room.Session.ObjectPools.Pickups.Get()?.Drop(room, BoundingBox.GetPoint(RectanglePoint.Bottom), MetaItem.FindNotNull("Firecracker"), BoundingBox.Bottom + Random.Shared.Next(20), 800);
-            }
         }
     }
 }
