@@ -42,10 +42,6 @@ namespace ScaryCastle
                     KillGoalReward = new(killGoalRewardValue.Split(','));
             }
 
-            // LootChance
-            if (element.TryGetProperty("lootChance", out JsonElement lootChanceElement))
-                LootChance = lootChanceElement.GetSingle();
-
             // MaxPerRoom
             MaxPerRoom = -1;
             if (element.TryGetProperty("maxPerRoom", out JsonElement maxPerRoomElement))
@@ -107,9 +103,6 @@ namespace ScaryCastle
 
         // KillGoalReward
         public ReadOnlyCollection<string> KillGoalReward { get; } = [];
-
-        // LootChance
-        public Ratio LootChance { get; set; }
 
         // MaxPerRoom
         public int MaxPerRoom { get; }

@@ -31,13 +31,6 @@
           "default": "0",
           "description": "Lista elementos que desbloquea el kill goal (items, rooms, actors, props)."
         },
-        "lootChance": {
-          "type": "number",
-          "default": 0,
-          "minimum": 0,
-          "maximum": 1,
-          "description": "Chances de dropear loot."
-        },
         "maxPerRoom": {
           "type": "integer",
           "default": -1,

@@ -253,7 +253,14 @@ namespace ScaryCastle
             if (config == null)
                 return;
 
-            Ratio lootChance = config.LootChance;
+            Ratio lootChance = config.Difficulty switch
+            {
+                Difficulty.Easy => .05f,   // 5%
+                Difficulty.Normal => .15f, // 15%
+                Difficulty.Hard => .30f,   // 30%
+                _ => .02f
+            };
+
             if (Session.Inventory.Gadget is Item item)
                 lootChance += item.MetaItem.Effect.LuckBonus;
 
