@@ -12,8 +12,6 @@ namespace ScaryCastle
     public class RideDoor : Prop
     {
         private readonly ImageSprite lockImage;
-        private readonly Vector2Tween scaleTween = new();
-        private readonly FloatTween xTween = new();
 
         #region Constructor
 
@@ -70,15 +68,8 @@ namespace ScaryCastle
         {
             if (CloseSound != null)
                 PlaySound(CloseSound);
-
             SyncAnimation();
-
-            scaleTween.Start(TweenStyle.QuadraticInOut, Scale, new Vector2(1f, .96f), 100, 2);
-            xTween.Start(TweenStyle.QuadraticInOut, X, X - 1, 50, 4);
-
-            Tweens.ScaleTween = scaleTween;
-            Tweens.XTween = xTween;
-
+            Bounce();
             return true;
         }
 
@@ -120,12 +111,7 @@ namespace ScaryCastle
                 PlaySound(OpenSound);
 
             SyncAnimation();
-
-            scaleTween.Start(TweenStyle.QuadraticInOut, Scale, new Vector2(1f, .96f), 100, 2);
-            xTween.Start(TweenStyle.QuadraticInOut, X, X - 1, 50, 4);
-
-            Tweens.ScaleTween = scaleTween;
-            Tweens.XTween = xTween;
+            Bounce();
 
             return true;
         }

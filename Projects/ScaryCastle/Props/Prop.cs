@@ -14,7 +14,9 @@ namespace ScaryCastle
     {
         private readonly Dictionary<PropState, Func<bool>?> handlers = [];
         private PropState propState;
+        private readonly Vector2Tween bounceScaleTween = new();
         private readonly ImageSprite shadow;
+        private readonly FloatTween xTween = new();
 
         #region Constructor
 
@@ -75,6 +77,24 @@ namespace ScaryCastle
             shadow?.MatchTransform(Sprite);
         }
 
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            base.OnUpdate(gameTime);
+
+            if (bounceScaleTween.IsRunning)
+            {
+                bounceScaleTween.Update(gameTime);
+                Scale = bounceScaleTween.CurrentValue;
+            }
+
+            if (xTween.IsRunning)
+            {
+                xTween.Update(gameTime);
+                X = xTween.CurrentValue;
+            }
+        }
+
         // SetStateHandler
         protected void SetStateHandler(PropState s, Func<bool>? handler)
         {
@@ -82,6 +102,14 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // Bounce
+        [ScriptMethod]
+        public void Bounce()
+        {
+            bounceScaleTween.Start(TweenStyle.QuadraticInOut, Scale, new Vector2(1f, .96f), 100, 2);
+            xTween.Start(TweenStyle.QuadraticInOut, X, X - 1, 50, 4);
+        }
 
         // PropState
         [ScriptProperty]

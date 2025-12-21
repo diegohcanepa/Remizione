@@ -322,6 +322,7 @@
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryRightHand.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryRightHandContent.png</key>
             <key type="filename">UI-assets/EdmundIcon.png</key>
+            <key type="filename">UI-assets/SackIcon.png</key>
             <key type="filename">UIIcons-assets/HeartHalfIconWithShadow.png</key>
             <key type="filename">UIIcons-assets/HeartIconWithShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -389,9 +390,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>3,1,6,1</rect>
+                <rect>2,1,3,1</rect>
                 <key>scale9Paddings</key>
-                <rect>3,1,6,1</rect>
+                <rect>2,1,3,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -745,6 +746,21 @@
                 <rect>5,3,9,6</rect>
                 <key>scale9Paddings</key>
                 <rect>5,3,9,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UI-assets/TicketPriceIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,4,10,7</rect>
+                <key>scale9Paddings</key>
+                <rect>5,4,10,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

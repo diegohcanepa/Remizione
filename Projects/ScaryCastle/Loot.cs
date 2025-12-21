@@ -106,6 +106,19 @@ namespace ScaryCastle
             return fallbackCandidates[session.Random.Next(fallbackCandidates.Count)];
         }
 
+        // GetPrice
+        internal static int GetPrice(MetaItem item)
+        {
+            // Mapeamos la Quality (0-5) a tus precios simples (5, 10, 15)
+            return item.Quality switch
+            {
+                0 or 1 => 5,  // Items básicos o consumibles
+                2 or 3 => 10, // Herramientas y gadgets de nivel medio
+                4 or 5 => 15, // Items poderosos o de alta calidad
+                _ => 5
+            };
+        }
+
         // RollTickets
         internal static int RollTickets(GameSession session, RoomConfig roomConfig, ThingConfig entityConfig)
         {

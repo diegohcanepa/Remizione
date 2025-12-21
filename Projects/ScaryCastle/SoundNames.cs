@@ -15,6 +15,7 @@
         internal const string GutsMedium = nameof(GutsMedium);
         internal const string GutsSmall = nameof(GutsSmall);
         internal const string ImpactA = nameof(ImpactA);
+        internal const string ItemAdded = nameof(ItemAdded);
         internal const string ItemDiscard = nameof(ItemDiscard);
         internal const string ItemEquip = nameof(ItemEquip);
         internal const string ItemPop = nameof(ItemPop);
@@ -43,6 +44,7 @@
         internal const string UISelectA = nameof(UISelectA);
         internal const string UISelectB = nameof(UISelectB);
         internal const string UISelectPlayer = nameof(UISelectPlayer);
+        internal const string VendingMachine = nameof(VendingMachine);
         internal const string WoodDebris = nameof(WoodDebris);
     }
 }

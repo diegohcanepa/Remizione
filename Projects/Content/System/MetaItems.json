@@ -5,7 +5,6 @@
 			"name": "Apple",
 			"category": "Consumable",
 			"hp": "2",
-			"price": 3,
 			"sound": "AppleBite",
 			"unlocked": true
 		},
@@ -37,7 +36,6 @@
 			"damage": "10",
 			"damageType": "Explosive",
 			"impactWord": "KapowStrong",
-			"price": 10,
 			"range": 20,
 			"sound": "Firecracker",
 			"stackMode": "Disposable"
@@ -55,7 +53,6 @@
 			"name": "RottenApple",
 			"category": "Consumable",
 			"hp": "1",
-			"price": 2,
 			"sound": "AppleBite",
 			"unlocked": true
 		},

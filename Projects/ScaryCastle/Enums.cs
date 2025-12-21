@@ -20,9 +20,6 @@ namespace ScaryCastle
     // Difficulty
     public enum Difficulty { Easy, Normal, Hard }
 
-    // RideDoorDirection
-    public enum RideDoorDirection { Up, Right, Down, Left }
-
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
 
@@ -69,7 +66,7 @@ namespace ScaryCastle
     public enum LockType { None, Padlock }
 
     // LogVerb
-    public enum LogVerb { Lost, PickedUp, ItemRequired }
+    public enum LogVerb { Bought, Lost, PickedUp, Requires }
 
     // LootTag
     public enum LootTag { Heal, Weapoon }
@@ -104,6 +101,9 @@ namespace ScaryCastle
 
     // RenderLayer
     public enum RenderLayer { BehindBackground, Background, OverBackground, Default, Foreground, ForegroundNoLight }
+
+    // RideDoorDirection
+    public enum RideDoorDirection { Up, Right, Down, Left }
 
     // RoomType
     public enum RoomType { Normal, Start, Coin }

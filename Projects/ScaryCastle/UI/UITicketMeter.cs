@@ -10,6 +10,9 @@ namespace ScaryCastle
     public class UITicketMeter : GameObject
     {
         private readonly ImageSprite icon;
+        private readonly Vector2 iconScale = ScaleInfo.UIElement.Tiny;
+        private readonly FloatTween rotationTween = new();
+        private readonly Vector2Tween scaleTween = new();
         private readonly UIScore score;
         private readonly ImageSprite slot;
 
@@ -21,15 +24,15 @@ namespace ScaryCastle
             this.slot = new ImageSprite(Game, Atlases.UI.TicketSlot)
             {
                 PivotOrigin = RectanglePoint.Top,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 205, 111)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 205, 110)
             };
 
             // Icon
             this.icon = new ImageSprite(Game, Atlases.UI.TicketIcon)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Position = slot.BoundingBox.GetPoint(RectanglePoint.Center),
-                Scale = ScaleInfo.UIElement.Tiny
+                Position = slot.BoundingBox.GetPoint(RectanglePoint.Center, 0, -.5f),
+                Scale = iconScale
             };
 
             // Score
@@ -55,6 +58,7 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            icon.Update(gameTime);
             score.Update(gameTime);
         }
 
@@ -70,7 +74,19 @@ namespace ScaryCastle
         public int Value
         {
             get => score.Value;
-            set => score.Value = value;
+            set
+            {
+                if (value != score.Value)
+                {
+                    score.Value = value;
+
+                    rotationTween.Start(TweenStyle.QuadraticInOut, 0, 15, 50, 6);
+                    icon.Tweens.RotationTween = rotationTween;
+
+                    scaleTween.Start(TweenStyle.QuadraticInOut, iconScale, iconScale * 1.3f, 150, 2);
+                    icon.Tweens.ScaleTween = scaleTween;
+                }
+            }
         }
     }
 }

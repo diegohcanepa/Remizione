@@ -66,7 +66,7 @@
   <String Key="Item.MagneticCard.Name">Magnetic card</String>
   <String Key="Item.MasterLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.MasterLockpick.Name">Master lockpick</String>
-  <String Key="Item.PieceOfWood.Description" />
+  <String Key="Item.PieceOfWood.Description"></String>
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
@@ -92,9 +92,10 @@
   <String Key="Languages.es-es">Español (España)</String>
   <String Key="Languages.fr-fr">Français</String>
   <String Key="Languages.ru-ru">Русский</String>
-  <String Key="LogVerb.ItemRequired">You need</String>
+  <String Key="LogVerb.Bought">Bought</String>
   <String Key="LogVerb.Lost">Lost</String>
   <String Key="LogVerb.PickedUp">Picked up</String>
+  <String Key="LogVerb.Requires">Requires</String>
   <String Key="Menu.Controls.Keyboard.Interact">Interact</String>
   <String Key="Menu.Controls.Keyboard.Inventory">Inventory</String>
   <String Key="Menu.Controls.Keyboard.Kick">Kick (when available)</String>
@@ -264,7 +265,6 @@ Bla bla bla</String>
   <String Key="Prop.EnergyBolt">Energy bolt</String>
   <String Key="Prop.ExitTower">Exit tower</String>
   <String Key="Prop.FoodStall">Food stall</String>
-  <String Key="Prop.PilgrimSack">Pilgrim's Sack</String>
   <String Key="Prop.PortableToilet">Little purgatory</String>
   <String Key="Prop.PostClock">Tyrant time</String>
   <String Key="Prop.Pottery">Clay pot</String>

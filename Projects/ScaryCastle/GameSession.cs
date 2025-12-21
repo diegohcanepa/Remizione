@@ -557,6 +557,16 @@ namespace ScaryCastle
         // Inventory
         public Inventory Inventory { get; }
 
+        // InventoryFull
+        [ScriptProperty]
+        public bool InventoryFull
+        {
+            get
+            {
+                return Inventory.IsFull;
+            }
+        }
+
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
 

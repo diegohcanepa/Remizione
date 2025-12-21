@@ -2,13 +2,14 @@
 using Adberration.Scripting;
 using Engendro;
 using Microsoft.Xna.Framework;
+using System.Globalization;
 
 namespace ScaryCastle
 {
     /// <summary>
     /// VendingMachine
     /// </summary>
-    public sealed class VendingMachine : Prop
+    public sealed class VendingMachine : Prop, IBuyable
     {
         private readonly ImageSprite glass;
         private readonly ImageSprite icon;
@@ -20,18 +21,25 @@ namespace ScaryCastle
             this.HighlightInteraction = false;
 
             // Icon
-            icon = new ImageSprite(session.Game)
+            icon = new(Game)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Scale = new(.4f)
             };
 
             // Glass
-            glass = new ImageSprite(session.Game, Atlases.Environment.GetImage($"{nameof(VendingMachine)}Glass"))
+            glass = new(Game, Atlases.Environment.GetImage($"{nameof(VendingMachine)}Glass"))
             {
-                Opacity = .25f
+                Opacity = .15f
             };
         }
+
+        #region IBuyable explicit members
+
+        // Price
+        int IBuyable.Price => MetaItem == null ? 0 : MetaItem.Price;
+
+        #endregion
 
         #region Protected members
 
@@ -64,7 +72,33 @@ namespace ScaryCastle
             }
         }
 
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            base.OnUpdate(gameTime);
+            icon.Update(gameTime);
+        }
+
         #endregion
+
+        // EnoughTickets
+        [ScriptProperty]
+        public bool EnoughTickets
+        {
+            get
+            {
+                return MetaItem == null ? false : Session.Tickets >= MetaItem.Price;
+            }
+        }
+
+        // GetInteractPrompt
+        public override string? GetInteractPrompt()
+        {
+            if (MetaItem != null)
+                return MetaItem.LocalizedDisplayName;
+            else
+                return null;
+        }
 
         // MetaItem
         public MetaItem? MetaItem
@@ -79,9 +113,20 @@ namespace ScaryCastle
 
         // Use
         [ScriptMethod]
-        public void Use()
+        public bool Use()
         {
+            if (MetaItem == null || !EnoughTickets)
+                return false;
+
             AllowInteraction = false;
+            PlaySound(SoundNames.VendingMachine);
+            Bounce();
+            icon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, icon.Scale, Vector2.Zero, 150);
+            Session.Inventory.Add(MetaItem, 1);
+            Session.HUD.Log.Show(LogVerb.Bought, MetaItem);
+            Session.HUD.SackSlot.AddItem(MetaItem, icon.Position);
+
+            return true;
         }
     }
 }

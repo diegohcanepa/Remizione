@@ -820,6 +820,12 @@ namespace ScaryCastle
                 return RectangleF.Empty;
         }
 
+        // GetInteractPrompt
+        public virtual string? GetInteractPrompt()
+        {
+            return null;
+        }
+
         // GetOverheadPosition
         public Vector2 GetOverheadPosition()
         {

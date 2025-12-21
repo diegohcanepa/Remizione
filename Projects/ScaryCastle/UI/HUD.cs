@@ -17,7 +17,6 @@ namespace ScaryCastle
         private readonly UIHealthMeter healthMeter;
         private readonly LeftHandSlot leftHandSlot;
         private readonly RightHandSlot rightHandSlot;
-        private readonly SackSlot sackSlot;
         private readonly GameSession session;
         private readonly UITicketMeter ticketMeter;
 
@@ -47,7 +46,7 @@ namespace ScaryCastle
             this.gadgetSlot = new(session);
 
             // Sack slot
-            this.sackSlot = new(session);
+            this.SackSlot = new(session);
 
             // Ticket meter
             this.ticketMeter = new(Game);
@@ -66,7 +65,7 @@ namespace ScaryCastle
             if (session.IsCurrentScene)
             {
                 ticketMeter.Draw(gameTime);
-                sackSlot.Draw(gameTime);
+                SackSlot.Draw(gameTime);
                 if (RunManager.HasContent)
                     TargetMeter.Draw(gameTime);
                 Log.Draw(gameTime);
@@ -108,7 +107,7 @@ namespace ScaryCastle
             if (session.GameplayMode == GameplayMode.Action)
             {
                 TargetMeter.Update(gameTime);
-                sackSlot.Update(gameTime);
+                SackSlot.Update(gameTime);
                 leftHandSlot.Update(gameTime);
                 rightHandSlot.Update(gameTime);
                 gadgetSlot.Update(gameTime);
@@ -126,18 +125,6 @@ namespace ScaryCastle
         }
 
         #endregion
-
-        // DrawSackSlot
-        public void DrawSackSlot(GameTime gameTime)
-        {
-            sackSlot.Draw(gameTime);
-        }
-
-        // DrawTicketMeter
-        public void DrawTicketMeter(GameTime gameTime)
-        {
-            ticketMeter.Draw(gameTime);
-        }
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
@@ -161,7 +148,7 @@ namespace ScaryCastle
                 if (rightHandSlot.HandleInput(gameTime) == HandleInputResult.Handled)
                     return HandleInputResult.Handled;
 
-                if (sackSlot.HandleInput(gameTime) == HandleInputResult.Handled)
+                if (SackSlot.HandleInput(gameTime) == HandleInputResult.Handled)
                     return HandleInputResult.Handled;
             }
 
@@ -186,6 +173,9 @@ namespace ScaryCastle
             healthMeter.Actor = session.Player;
             PlayerSelector.Invalidate();
         }
+
+        // SackSlot
+        public UISackSlot SackSlot { get; }
 
         // TargetMeter
         public UITargetMeter TargetMeter { get; }

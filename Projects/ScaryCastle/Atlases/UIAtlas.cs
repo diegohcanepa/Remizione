@@ -32,15 +32,18 @@ namespace ScaryCastle
             ItemGridSlotSelected = this[nameof(ItemGridSlotSelected)];
             MessageContainer = this[nameof(MessageContainer)];
             MouseCursorArrow = this[nameof(MouseCursorArrow)];
+            PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
             PointingHand = this[nameof(PointingHand)];
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
+            SackIcon = this[nameof(SackIcon)];
             SackSlot = this[nameof(SackSlot)];
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
             TicketIcon = this[nameof(TicketIcon)];
+            TicketPriceIcon = this[nameof(TicketPriceIcon)];
             TicketSlot = this[nameof(TicketSlot)];
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
@@ -109,6 +112,9 @@ namespace ScaryCastle
         // ItemGridSlotSelected
         public AtlasImage ItemGridSlotSelected { get; }
 
+        // PickupShadow
+        public AtlasImage PickupShadow { get; }
+
         // Pixel
         public AtlasImage Pixel { get; }
 
@@ -120,6 +126,9 @@ namespace ScaryCastle
 
         // PopupContainerShadow
         public AtlasImage PopupContainerShadow { get; }
+
+        // SackIcon
+        public AtlasImage SackIcon { get; }
 
         // SackSlot
         public AtlasImage SackSlot { get; }
@@ -135,6 +144,9 @@ namespace ScaryCastle
 
         // TicketIcon
         public AtlasImage TicketIcon { get; }
+
+        // TicketpriceIcon
+        public AtlasImage TicketPriceIcon { get; }
 
         // TicketSlot
         public AtlasImage TicketSlot { get; }
