@@ -13,6 +13,7 @@ namespace ScaryCastle
 
         private float angularVelocity;
         private const float bounceFactor = .8f;
+        private bool collected;
         private float delayTimer;
         private const float gravity = 700;
         private float groundY;
@@ -20,6 +21,7 @@ namespace ScaryCastle
         private float launchDelay;
         private bool launched;
         private float life = 2;
+        private Vector2Tween scaleTween = new();
         private Vector2 velocity;
 
         #endregion
@@ -45,6 +47,13 @@ namespace ScaryCastle
         private static float RandomBetween(float min, float max)
         {
             return (float)((Random.Shared.NextDouble() * (max - min)) + min);
+        }
+
+        // Release
+        private void Release()
+        {
+            Unparent();
+            Session.ObjectPools.Tickets.Return(this);
         }
 
         #endregion
@@ -99,12 +108,16 @@ namespace ScaryCastle
 
             image.Update(gameTime);
 
-            if (Session.Player?.DistanceTo(image.Position) <= 5)
+            if (!collected)
             {
-                Session.Player.PlaySound(SoundNames.PickupTicket);
-                Session.Tickets++;
-                Unparent();
-                Session.ObjectPools.Tickets.Return(this);
+                if (Session.Player?.DistanceTo(image.Position) <= 3)
+                {
+                    collected = true;
+                    Session.Player.PlaySound(SoundNames.PickupTicket);
+                    Session.Tickets++;
+                    scaleTween.Start(TweenStyle.Linear, image.Scale, Vector2.Zero, 100, Release);
+                    image.Tweens.ScaleTween = scaleTween;
+                }
             }
         }
 
@@ -116,11 +129,12 @@ namespace ScaryCastle
             float yOffset = RandomBetween(-4f, 2f);
 
             image.Position = new(RandomBetween(origin.X - 15, origin.X + 15f), origin.Y + yOffset);
-
             groundY = origin.Y + Random.Shared.Next(-5, 4);
             launchDelay = RandomBetween(0, .1f);
             delayTimer = 0;
             launched = false;
+            collected = false;
+
             room.Children.Add(this);
         }
     }

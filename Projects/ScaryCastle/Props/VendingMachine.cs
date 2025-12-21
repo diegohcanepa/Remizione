@@ -124,7 +124,8 @@ namespace ScaryCastle
             icon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, icon.Scale, Vector2.Zero, 150);
             Session.Inventory.Add(MetaItem, 1);
             Session.HUD.Log.Show(LogVerb.Bought, MetaItem);
-            Session.HUD.SackSlot.AddItem(MetaItem, icon.Position);
+            Session.HUD.SackSlot.AnimateItem(MetaItem, icon.Position);
+            Session.Tickets -= MetaItem.Price;
 
             return true;
         }

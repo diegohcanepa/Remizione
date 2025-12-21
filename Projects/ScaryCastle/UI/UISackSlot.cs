@@ -13,10 +13,10 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly TextSprite amountText;
+        private readonly ImageSprite flyingIcon;
         private readonly ImageSprite icon;
         private readonly Vector2 iconScale = Vector2.One;
         private int lastKnownCount;
-        private readonly ImageSprite newItemIcon;
         private readonly FloatTween rotationTween = new();
         private readonly Vector2Tween scaleTween = new();
         private readonly GameSession session;
@@ -56,8 +56,8 @@ namespace ScaryCastle
                 Spacing = -5
             };
 
-            // New item icon
-            this.newItemIcon = new(Game)
+            // Flying icon
+            this.flyingIcon = new(Game)
             {
                 PivotOrigin = RectanglePoint.Center,
             };
@@ -88,7 +88,7 @@ namespace ScaryCastle
         {
             Game.SpriteBatch.Begin(Game.Camera);
             slotImage.Draw(gameTime);
-            newItemIcon.Draw(gameTime);
+            flyingIcon.Draw(gameTime);
             icon.Draw(gameTime);
             amountText.Draw(gameTime);
             Game.SpriteBatch.End();
@@ -98,7 +98,7 @@ namespace ScaryCastle
         protected override void OnUpdate(GameTime gameTime)
         {
             slotImage.Update(gameTime);
-            newItemIcon.Update(gameTime);
+            flyingIcon.Update(gameTime);
             icon.Update(gameTime);
 
             if (lastKnownCount != session.Inventory.Count)
@@ -111,17 +111,17 @@ namespace ScaryCastle
 
         #endregion
 
-        // AddItem
-        public void AddItem(MetaItem metaItem, Vector2 startPosition)
+        // AnimateItem
+        public void AnimateItem(MetaItem metaItem, Vector2 startPosition)
         {
             if (metaItem.Image is null)
                 return;
 
-            newItemIcon.Image = metaItem.Image;
-            newItemIcon.Position = startPosition - Game.Camera.Offset;
-            newItemIcon.Scale = ScaleInfo.UIElement.Tiny;
-            newItemIcon.Tweens.PositionTween = Vector2Tween.Create(TweenStyle.CubicInOut, startPosition, icon.BoundingBox.Center, 1000);
-            newItemIcon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, icon.Scale * .3f, ScaleInfo.UIElement.Large, 400, 2, EatItem);
+            flyingIcon.Image = metaItem.Image;
+            flyingIcon.Position = startPosition - Game.Camera.Offset;
+            flyingIcon.Scale = ScaleInfo.UIElement.Tiny;
+            flyingIcon.Tweens.PositionTween = Vector2Tween.Create(TweenStyle.CubicInOut, startPosition, icon.BoundingBox.Center, 1000);
+            flyingIcon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, icon.Scale * .3f, ScaleInfo.UIElement.Large, 400, 2, EatItem);
         }
 
         // BoundingBox

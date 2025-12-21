@@ -4,7 +4,6 @@ using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
-
 namespace ScaryCastle
 {
     /// <summary>
@@ -16,7 +15,6 @@ namespace ScaryCastle
 
         private readonly BounceScaleEffect bounceScaleEffect = new();
         private int delayCoolDown;
-        private readonly FloatTween yTween = new();
         private bool isCoin;
         private MetaItem? metaItem;
         private readonly ImageSprite shadow;
@@ -32,8 +30,9 @@ namespace ScaryCastle
             this.CollisionDetection = false;
             this.DepthOffset = -1;
             this.HighlightInteraction = false;
-            this.Hotspot = new("16,8;16,14;4,14;4,8");
+            this.HotspotPlacement = PlacementMode.Absolute;
             this.IgnoreWalkArea = false;
+            this.FloatingForce = 1;
 
             this.shadow = new(Game, Atlases.UI.PickupShadow)
             {
@@ -47,12 +46,10 @@ namespace ScaryCastle
         // Pop
         private void Pop()
         {
-            bounceScaleEffect.Play(ScaleInfo.UIElement.Tiny.X, .75f);
+            bounceScaleEffect.Play(ScaleInfo.UIElement.VeryTiny.X, .75f);
 
             if (Sound.Find(isCoin ? SoundNames.LootCoin : SoundNames.LootSack)?.PopInstance() is SoundInstance soundInstance)
                 soundInstance.PlayDelayed(300);
-
-            yTween.Start(TweenStyle.Linear, 0, -1, 200, -1);
 
             this.shadowScaleTween.Start(TweenStyle.CubicIn, Vector2.Zero, ScaleInfo.UIElement.Medium, 300);
             this.shadow.Tweens.ScaleTween = shadowScaleTween;
@@ -66,10 +63,7 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             shadow.Draw(gameTime);
-            
-            Y += yTween.CurrentValue;
             base.OnDraw(gameTime);
-            Y -= yTween.CurrentValue;
         }
 
         // OnUnload
@@ -85,8 +79,9 @@ namespace ScaryCastle
             if (metaItem == null)
                 return;
 
-            yTween.Update(gameTime);
             shadow.Update(gameTime);
+
+            base.OnUpdate(gameTime);
 
             if (delayCoolDown >= 0)
             {
@@ -97,8 +92,6 @@ namespace ScaryCastle
 
                 return;
             }
-
-            base.OnUpdate(gameTime);
 
             if (bounceScaleEffect.IsPlaying)
             {
@@ -128,7 +121,7 @@ namespace ScaryCastle
             Session.Inventory.Add(metaItem, 1);
             Session.HUD.Log.Show(LogVerb.PickedUp, metaItem);
             Session.ObjectPools.Pickups.Return(this);
-            Session.HUD.SackSlot.AddItem(metaItem, Position);
+            Session.HUD.SackSlot.AnimateItem(metaItem, Position);
             Unparent();
         }
 
@@ -141,14 +134,12 @@ namespace ScaryCastle
             this.delayCoolDown = 300;
             this.shadow.Position = origin - Vector2.UnitY;
             this.shadow.Scale = Vector2.Zero;
-            this.yTween.Stop();
-
-            Sprite.ClearAnimations();
-            
             this.DefaultImageName = metaItem.Name;
             this.isCoin = metaItem.Name == MetaItem.CoinItemName;
-            this.Scale = Vector2.Zero;
             this.DisplayNameKey = $"Item.{metaItem.Name}.Name";
+            this.Scale = ScaleInfo.UIElement.VeryTiny;
+            this.Hotspot = new Polygon(BoundingBox.GetPoints());
+            this.Scale = Vector2.Zero;
         }
     }
 }

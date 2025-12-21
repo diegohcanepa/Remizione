@@ -13,9 +13,9 @@ namespace ScaryCastle
     {
         private readonly UIButton button;
         private readonly TextSprite priceText;
-        private readonly ImageSprite ticketIcon;
         private readonly GameSession session;
         private GameThing? target;
+        private readonly ImageSprite ticketIcon;
 
         // Constructor
         public UIInteractPrompt(GameSession session)
@@ -31,10 +31,10 @@ namespace ScaryCastle
             };
 
             // PriceText
-            this.priceText = new(Game, Fonts.Common)
+            this.priceText = new(Game, Fonts.CommonOutline)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Scale = ScaleInfo.Text.VeryLarge
+                Scale = ScaleInfo.Text.Large
             };
 
             // TicketIcon
@@ -76,10 +76,10 @@ namespace ScaryCastle
 
                     if (target is IBuyable buyable && buyable.Price > 0)
                     {
-                        ticketIcon.Position = button.BoundingBox.GetPoint(RectanglePoint.Right, -1, .8f);
+                        ticketIcon.Position = button.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0);
                         priceText.Color = ColorPalette.Text.Default;
                         priceText.Text = buyable.Price.ToString(CultureInfo.InvariantCulture);
-                        priceText.Position = ticketIcon.BoundingBox.GetPoint(RectanglePoint.Center, .25f, 0);
+                        priceText.Position = ticketIcon.BoundingBox.GetPoint(RectanglePoint.Center, .25f, .2f);
                     }
                     else
                     {
