@@ -5,21 +5,24 @@
     /// </summary>
     public static class StringExtensions
     {
-        // CountWords
-        public static int CountWords(this string text)
+        extension(string text)
         {
-            var index = 0;
-            var result = 1;
-
-            while (index <= text.Length - 1)
+            // CountWords
+            public int CountWords()
             {
-                if (text[index] is ' ' or '\n' or '\t')
-                    result++;
+                var index = 0;
+                var result = 1;
 
-                index++;
+                while (index <= text.Length - 1)
+                {
+                    if (text[index] is ' ' or '\n' or '\t')
+                        result++;
+
+                    index++;
+                }
+
+                return result;
             }
-
-            return result;
         }
     }
 }

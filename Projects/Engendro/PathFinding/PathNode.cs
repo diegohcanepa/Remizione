@@ -84,6 +84,9 @@ namespace Engendro.PathFinding
         }
 
         // ToString
-        public override string ToString() => Position.ToString();
+        public override string ToString()
+        {
+            return Position.ToString();
+        }
     }
 }

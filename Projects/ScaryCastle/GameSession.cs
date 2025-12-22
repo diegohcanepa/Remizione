@@ -22,6 +22,8 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly ScriptConsole? console;
+        private readonly List<GameThing> declaredThings = [];
+        private readonly Dictionary<string, GameThing> declaredThingsDict = [];
         private readonly EchoScene echoScene;
         private readonly Dictionary<string, MetaItem[]> friendlyItems = [];
         private readonly UIInteractPrompt interactPrompt;
@@ -29,8 +31,6 @@ namespace ScaryCastle
         private Vector2? playerPosition;
         private readonly List<Actor> players = [];
         private readonly RoomEditor? roomEditor;
-        private readonly List<GameThing> staticThings = [];
-        private readonly Dictionary<string, GameThing> staticThingsDict = [];
         private readonly UseKeyItemScene useKeyItemScene;
 
         #endregion
@@ -46,7 +46,7 @@ namespace ScaryCastle
             this.Inventory = new(this);
             this.Environment = new Environment(this);
             this.HUD = new HUD(this);
-            this.StaticThings = new(staticThings);
+            this.DeclaredThings = new(declaredThings);
             this.IsMouseVisible = false;
             this.Random = new Random(Seed);
 
@@ -100,7 +100,7 @@ namespace ScaryCastle
             if (!RunManager.HasContent)
                 return;
 
-            if (GetEntity<Hub>(nameof(Hub)) is Hub hubRoom)
+            if (FindEntity<Hub>(nameof(Hub)) is Hub hubRoom)
                 hubRoom.Unload();
 
             IsHUDVisible = false;
@@ -255,7 +255,7 @@ namespace ScaryCastle
         }
 
         // OnOutcomeCompleted
-        protected override void OnOutcomeCompleted(Thing thing)
+        protected override void OnOutcomeCompleted(Thing target)
         {
             Player?.SuspendInteraction(250);
         }
@@ -282,7 +282,7 @@ namespace ScaryCastle
 
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
-                Player = GetEntity<Actor>(player);
+                Player = FindEntity<Actor>(player);
 
             // Player position
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
@@ -342,22 +342,22 @@ namespace ScaryCastle
                 if (entity is not GameThing thing)
                     continue;
 
-                if (thing.InstanceKind == InstanceKind.Static)
+                if (thing.InstanceKind == InstanceKind.Declared)
                 {
-                    staticThings.Add(thing);
-                    staticThingsDict.Add(thing.StaticName, thing);
+                    declaredThings.Add(thing);
+                    declaredThingsDict.Add(thing.DeclaredName, thing);
 
                     // Collect friendly items
                     metaItems.Clear();
                     for (var i = 0; i < keyItems.Count; i++)
                     {
-                        var routineName = $"{thing.StaticName}-With-{keyItems[i].Name}";
-                        if (ScriptLibrary.GetRoutine(routineName) != null)
+                        var routineName = $"{thing.DeclaredName}-With-{keyItems[i].Name}";
+                        if (ScriptLibrary.FindRoutine(routineName) != null)
                             metaItems.Add(keyItems[i]);
                     }
 
                     if (metaItems.Count > 0)
-                        this.friendlyItems[thing.StaticName] = metaItems.ToArray();
+                        this.friendlyItems[thing.DeclaredName] = metaItems.ToArray();
                 }
             }
 
@@ -440,7 +440,7 @@ namespace ScaryCastle
         // AddPlayer
         public void AddPlayer(string actorName)
         {
-            if (GetEntity<Actor>(actorName) is Actor actor)
+            if (FindEntity<Actor>(actorName) is Actor actor)
                 AddPlayer(actor);
         }
 
@@ -509,6 +509,9 @@ namespace ScaryCastle
         [ScriptProperty]
         public int CompletedRuns { get; set; }
 
+        // DeclaredThings
+        public NamedObjectReadOnlyCollection<GameThing> DeclaredThings { get; }
+
         // DialogOptionId
         [ScriptProperty]
         public int DialogOptionId { get; set; }
@@ -520,6 +523,12 @@ namespace ScaryCastle
         [ScriptProperty]
         public int FailedRuns { get; set; }
 
+        // FindDeclaredThing
+        public GameThing? FindDeclaredThing(string name)
+        {
+            return declaredThingsDict.TryGetValue(name, out var result) ? result : null;
+        }
+
         // Game
         public new ScaryCastleGame Game { get; }
 
@@ -528,24 +537,15 @@ namespace ScaryCastle
         public GameplayMode GameplayMode { get; private set; }
 
         // GetFriendlyItems
-        public MetaItem[] GetFriendlyItems(string staticName)
+        public MetaItem[] GetFriendlyItems(string declaredName)
         {
-            if (friendlyItems.TryGetValue(staticName, out var items))
-                return items;
-            else
-                return [];
-        }
-
-        // GetStaticThing
-        public GameThing? GetStaticThing(string name)
-        {
-            return staticThingsDict.TryGetValue(name, out var result) ? result : null;
+            return friendlyItems.TryGetValue(declaredName, out var items) ? items : [];
         }
 
         // HasFriendlyItems
-        public bool HasFriendlyItems(string staticName)
+        public bool HasFriendlyItems(string declaredName)
         {
-            return friendlyItems.ContainsKey(staticName);
+            return friendlyItems.ContainsKey(declaredName);
         }
 
         // HUD
@@ -559,13 +559,7 @@ namespace ScaryCastle
 
         // InventoryFull
         [ScriptProperty]
-        public bool InventoryFull
-        {
-            get
-            {
-                return Inventory.IsFull;
-            }
-        }
+        public bool InventoryFull => Inventory.IsFull;
 
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
@@ -712,9 +706,6 @@ namespace ScaryCastle
 
             inventoryScene.SceneController.Push();
         }
-
-        // StaticThings
-        public NamedObjectReadOnlyCollection<GameThing> StaticThings { get; }
 
         // Tickets
         [ScriptProperty]

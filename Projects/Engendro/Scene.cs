@@ -137,7 +137,10 @@ namespace Engendro
         #region Internal members
 
         // Activate
-        internal void Activate() => OnActivate();
+        internal void Activate()
+        {
+            OnActivate();
+        }
 
         // ContinuousUpdate
         internal void ContinuousUpdate(GameTime gameTime)
@@ -146,7 +149,10 @@ namespace Engendro
         }
 
         // Deactivate
-        internal void Deactivate() => OnDeactivate();
+        internal void Deactivate()
+        {
+            OnDeactivate();
+        }
 
         #endregion
 
@@ -187,10 +193,16 @@ namespace Engendro
         }
 
         // Initialize
-        public void Initialize() => OnInitialize();
+        public void Initialize()
+        {
+            OnInitialize();
+        }
 
         // Invalidate
-        public void Invalidate() => OnInvalidate();
+        public void Invalidate()
+        {
+            OnInvalidate();
+        }
 
         // IsContentLoaded
         public bool IsContentLoaded { get; private set; }

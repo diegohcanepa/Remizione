@@ -47,7 +47,7 @@ namespace Adberration.Scripting
             thing.StopMoving();
 
             // Animation
-            if (Body.Args.GetArg(AnimationArg)?.Value is string animationName)
+            if (Body.Args.FindArg(AnimationArg)?.Value is string animationName)
                 thing.AnimationPlayer.Play(animationName, true);
 
             // At

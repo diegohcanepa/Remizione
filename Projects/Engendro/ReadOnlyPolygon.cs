@@ -329,7 +329,10 @@ namespace Engendro
         }
 
         // GetVertices
-        public Vector2[] GetVertices() => vertices.ToArray();
+        public Vector2[] GetVertices()
+        {
+            return vertices.ToArray();
+        }
 
         // GetVertices
         public Vector2[] GetVertices(Vector2 offset)
@@ -431,7 +434,10 @@ namespace Engendro
         }
 
         // RandomPoint
-        public Vector2 RandomPoint(Vector2 origin, float radius) => RandomPoint(origin, 0, radius);
+        public Vector2 RandomPoint(Vector2 origin, float radius)
+        {
+            return RandomPoint(origin, 0, radius);
+        }
 
         // RandomPoint
         public Vector2 RandomPoint(Vector2 origin, float minimumRadius, float maximumRadius)

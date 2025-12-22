@@ -19,8 +19,8 @@ namespace ScaryCastle
         // FloatingTexts
         public ObjectPool<FloatingText> FloatingTexts { get; } = new ObjectPool<FloatingText>(() => new FloatingText(session), 30);
 
-        // GetPlacedItem
-        public PlacedItem? GetPlacedItem(string itemName)
+        // FindPlacedItem
+        public PlacedItem? FindPlacedItem(string itemName)
         {
             if (itemName == "Firecracker")
                 return Firecrackers.Get();
@@ -28,8 +28,8 @@ namespace ScaryCastle
             return null;
         }
 
-        // GetThrownItem
-        public ThrownItem? GetThrownItem(string itemName)
+        // FindThrownItem
+        public ThrownItem? FindThrownItem(string itemName)
         {
             if (itemName == "Duck")
                 return Ducks.Get();

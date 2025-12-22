@@ -62,8 +62,8 @@ namespace Engendro
 
         #region Private members
 
-        // GetImageCore
-        private AtlasImage? GetImageCore(string imageName, LanguagePackage? languagePackage, string separator)
+        // FindImageCore
+        private AtlasImage? FindImageCore(string imageName, LanguagePackage? languagePackage, string separator)
         {
             CodeContract.NotEmpty(imageName, nameof(imageName));
 
@@ -202,30 +202,30 @@ namespace Engendro
             return list.Count;
         }
 
-        // GetImage
-        public AtlasImage? GetImage(string imageName)
+        // FindImage
+        public AtlasImage? FindImage(string imageName)
         {
-            return GetImageCore(imageName, null, string.Empty);
+            return FindImageCore(imageName, null, string.Empty);
         }
 
-        // GetImageNoNull
-        public AtlasImage GetImageNotNull(string imageName)
-        {
-            return GetImageCore(imageName, null, string.Empty) ?? throw new KeyNotFoundException($"Image '{imageName}' not found in atlas '{Name}'.");
-        }
-
-        // GetInstance
-        public static Atlas? GetInstance(string name)
+        // FindInstance
+        public static Atlas? FindInstance(string name)
         {
             CodeContract.NotEmpty(name, nameof(name));
             instancesByName.TryGetValue(name, out var result);
             return result;
         }
 
-        // GetLocalizedImage
-        public AtlasImage? GetLocalizedImage(string imageName, LanguagePackage languagePackage, string separator = "-")
+        // FindLocalizedImage
+        public AtlasImage? FindLocalizedImage(string imageName, LanguagePackage languagePackage, string separator = "-")
         {
-            return GetImageCore(imageName, languagePackage, separator);
+            return FindImageCore(imageName, languagePackage, separator);
+        }
+
+        // GetImage
+        public AtlasImage GetImage(string imageName)
+        {
+            return FindImageCore(imageName, null, string.Empty) ?? throw new KeyNotFoundException($"Image '{imageName}' not found in atlas '{Name}'.");
         }
 
         // Index

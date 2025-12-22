@@ -162,10 +162,16 @@ namespace ScaryCastle
         #endregion
 
         // Blink
-        public void Blink(int interval, int count) => blinker.Start(new Int32Range(interval), count);
+        public void Blink(int interval, int count)
+        {
+            blinker.Start(new Int32Range(interval), count);
+        }
 
         // Blink
-        public void Blink(Int32Range interval, int count) => blinker.Start(interval, count);
+        public void Blink(Int32Range interval, int count)
+        {
+            blinker.Start(interval, count);
+        }
 
         // BoundingBox
         public RectangleF BoundingBox => lightSprite.BoundingBox;
@@ -185,13 +191,22 @@ namespace ScaryCastle
         }
 
         // Flash
-        public void Flash() => Flash(66, 6);
+        public void Flash()
+        {
+            Flash(66, 6);
+        }
 
         // Flash
-        public void Flash(int interval, int count) => flashBlinker.Start(new Int32Range(interval), count);
+        public void Flash(int interval, int count)
+        {
+            flashBlinker.Start(new Int32Range(interval), count);
+        }
 
         // Flash
-        public void Flash(Int32Range interval, int count) => flashBlinker.Start(interval, count);
+        public void Flash(Int32Range interval, int count)
+        {
+            flashBlinker.Start(interval, count);
+        }
 
         // ImageName
         public string? ImageName { get; set; }
@@ -256,7 +271,7 @@ namespace ScaryCastle
         public void Prepare(Atlas atlas)
         {
             lightSprite.Image = Atlases.Environment.DefaultLight;
-            if (!string.IsNullOrWhiteSpace(ImageName) && atlas.GetImage(ImageName) is AtlasImage image)
+            if (!string.IsNullOrWhiteSpace(ImageName) && atlas.FindImage(ImageName) is AtlasImage image)
                 lightSprite.Image = image;
         }
 
@@ -281,10 +296,16 @@ namespace ScaryCastle
         }
 
         // ToString
-        public override string ToString() => Name;
+        public override string ToString()
+        {
+            return Name;
+        }
 
         // TurnOff
-        public void TurnOff() => TurnOff(false);
+        public void TurnOff()
+        {
+            TurnOff(false);
+        }
 
         // TurnOff
         public void TurnOff(bool immediate)
@@ -302,10 +323,16 @@ namespace ScaryCastle
         }
 
         // TurnOn
-        public void TurnOn() => TurnOn(false);
+        public void TurnOn()
+        {
+            TurnOn(false);
+        }
 
         // TurnOn
-        public void TurnOn(bool immediate) => TurnOn(immediate, 0);
+        public void TurnOn(bool immediate)
+        {
+            TurnOn(immediate, 0);
+        }
 
         // TurnOn
         public void TurnOn(bool immediate, int duration)

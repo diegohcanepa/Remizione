@@ -66,7 +66,10 @@ namespace ScaryCastle
         public RectangleF TextBoundingBox => textSprite.BoundingBox;
 
         // ToString
-        public override string ToString() => textSprite.ToString();
+        public override string ToString()
+        {
+            return textSprite.ToString();
+        }
 
         // Update
         public void Update(GameTime gameTime)

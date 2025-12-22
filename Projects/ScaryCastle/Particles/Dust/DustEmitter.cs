@@ -20,7 +20,10 @@ namespace ScaryCastle
         #region Protected members
 
         // CreateNewParticle
-        protected override Particle CreateNewParticle() => new DustParticle(Game);
+        protected override Particle CreateNewParticle()
+        {
+            return new DustParticle(Game);
+        }
 
         #endregion
 

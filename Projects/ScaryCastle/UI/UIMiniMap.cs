@@ -16,7 +16,6 @@ namespace ScaryCastle.UI
         private readonly ImageSprite container;
         private readonly Vector2 containerCenter;
         private readonly HashSet<RoomGraph> drawnRooms = [];
-        private readonly ImageSprite looMarker;
         private readonly FloatTween opacityTween = new();
         private readonly RasterizerState rasterizerState;
         private readonly Rectangle screenScissorRect;
@@ -34,7 +33,7 @@ namespace ScaryCastle.UI
             rasterizerState = new RasterizerState { ScissorTestEnable = true };
 
             // Container
-            container = new ImageSprite(game, Atlases.UI.GetImageNotNull("UIMiniMapContainer"))
+            container = new ImageSprite(game, Atlases.UI.GetImage("UIMiniMapContainer"))
             {
                 PivotOrigin = RectanglePoint.RightTop,
                 Position = new(234, 2)
@@ -57,15 +56,8 @@ namespace ScaryCastle.UI
                 (int)(virtualMapRect.Height * scaleY)
             );
 
-            // Loot marker
-            looMarker = new ImageSprite(game, Atlases.UI.GetImageNotNull("UIMiniMapMarker"))
-            {
-                PivotOrigin = RectanglePoint.Center,
-                Scale = ScaleInfo.UIElement.Tiny
-            };
-
             // Start marker
-            startMarker = new ImageSprite(game, Atlases.UI.GetImageNotNull("UIMiniMapStartMarker"))
+            startMarker = new ImageSprite(game, Atlases.UI.GetImage("UIMiniMapMarkerStart"))
             {
                 Opacity = .7f,
                 PivotOrigin = RectanglePoint.Center,
@@ -76,14 +68,14 @@ namespace ScaryCastle.UI
             roomImages = new ImageSprite[3];
             for (var i = 0; i < roomImages.Length; i++)
             {
-                roomImages[i] = new(game, Atlases.UI.GetImageNotNull($"UIMiniMapRoom{i}"))
+                roomImages[i] = new(game, Atlases.UI.GetImage($"UIMiniMapRoom{i}"))
                 {
                     PivotOrigin = RectanglePoint.Center,
-                    Scale = new(.5f)
+                    Scale = ScaleInfo.UIElement.Tiny
                 };
             }
 
-            opacityTween.Start(TweenStyle.CubicInOut, 1, .6f, 300, -1);
+            opacityTween.Start(TweenStyle.CubicInOut, .8f, .6f, 300, -1);
         }
 
         #endregion
@@ -111,24 +103,6 @@ namespace ScaryCastle.UI
             image.Position = position;
 
             image.Draw(gameTime);
-
-            /*
-            if (roomGraph.SackCount > 0 || roomGraph.HasCoin)
-            {
-                looMarker.Position = image.BoundingBox.Center;
-
-                if (roomGraph.IsSide)
-                {
-                    if (roomGraph.Right != null)
-                        looMarker.X -= .25f;
-
-                    else if (roomGraph.Left != null)
-                        looMarker.X += .25f;
-                }
-
-                looMarker.Draw(gameTime);
-            }
-            */
 
             // Draw start marker
             if (roomGraph.RoomType == RoomType.Start)

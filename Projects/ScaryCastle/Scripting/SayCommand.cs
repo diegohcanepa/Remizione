@@ -49,7 +49,10 @@ namespace ScaryCastle.Scripting
         #endregion
 
         // GetTextEmitterName
-        protected override string GetTextEmitterName() => Body.Clauses[0];
+        protected override string GetTextEmitterName()
+        {
+            return Body.Clauses[0];
+        }
 
         // IsAwaiting
         public override bool IsAwaiting => actor != null && actor.HasSpeechBubble;

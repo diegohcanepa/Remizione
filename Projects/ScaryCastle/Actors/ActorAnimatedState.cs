@@ -19,7 +19,10 @@
         #region Protected members
 
         // GetAnimationName
-        protected virtual string GetAnimationName() => Name;
+        protected virtual string GetAnimationName()
+        {
+            return Name;
+        }
 
         // PlayAnimation
         protected void PlayAnimation()

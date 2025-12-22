@@ -73,8 +73,8 @@ namespace ScaryCastle
 
         #region Private members
 
-        // GetInputBindingImage
-        private static AtlasImage? GetInputBindingImage(string? sourceImageName, InputBinding? inputBinding)
+        // FindInputBindingImage
+        private static AtlasImage? FindInputBindingImage(string? sourceImageName, InputBinding? inputBinding)
         {
             const string KeyboardPrefix = "Keyboard";
 
@@ -105,14 +105,14 @@ namespace ScaryCastle
                     imageName = KeyboardPrefix + imageName;
             }
 
-            return string.IsNullOrWhiteSpace(imageName) ? null : atlas.GetImage(imageName);
+            return string.IsNullOrWhiteSpace(imageName) ? null : atlas.FindImage(imageName);
         }
 
         // Invalidate
         private void Invalidate()
         {
             // Image
-            image.Image = GetInputBindingImage(ImageName, InputBinding);
+            image.Image = FindInputBindingImage(ImageName, InputBinding);
             image.PivotOrigin = PivotOrigin;
             image.Position = Position;
 

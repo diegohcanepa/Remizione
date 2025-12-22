@@ -20,7 +20,7 @@ namespace Adberration.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            if (SoundInstance.GetRunningInstance(Parser.ParseName(this, 0)) is SoundInstance soundInstance)
+            if (SoundInstance.FindRunningInstance(Parser.ParseName(this, 0)) is SoundInstance soundInstance)
             {
                 var finalVolume = Parser.ParseFloat(this, 2);
 

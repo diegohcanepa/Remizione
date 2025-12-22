@@ -44,7 +44,7 @@ namespace ScaryCastle
             this.session = session;
 
             this.Atlas = Atlases.Actors;
-            this.DisplayNameKey = $"Actor.{StaticName}";
+            this.DisplayNameKey = $"Actor.{DeclaredName}";
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
             this.shadowSpot = new ShadowSpot(this);
@@ -89,14 +89,14 @@ namespace ScaryCastle
 
             this.AIStateMachine = new(this);
 
-            if (Atlas?.GetImage(Sprite.ImagePath + "Gut0") != null)
+            if (Atlas?.FindImage(Sprite.ImagePath + "Gut0") != null)
             {
                 var index = 0;
                 customGuts = [];
 
                 while (true)
                 {
-                    if (Atlas.GetImage(Sprite.ImagePath + $"Gut{index}") is AtlasImage image)
+                    if (Atlas.FindImage(Sprite.ImagePath + $"Gut{index}") is AtlasImage image)
                         customGuts.Add(image);
                     else
                         break;
@@ -212,7 +212,7 @@ namespace ScaryCastle
         // PlaceItem
         private void PlaceItem(Item item)
         {
-            if (Session.ObjectPools.GetPlacedItem(item.Name) is PlacedItem placedItem)
+            if (Session.ObjectPools.FindPlacedItem(item.Name) is PlacedItem placedItem)
                 placedItem.Place(this, item, Position);
         }
 
@@ -523,7 +523,7 @@ namespace ScaryCastle
         public SpriteAnimation? Animate(string animationName, bool loop, AnimationDirection direction, bool preserve)
         {
             var result = AnimationPlayer.Play(animationName, loop, direction);
-            if (result != null && StateMachine.GetState(ActorStateNames.Animate) is ActorAnimateState animateState)
+            if (result != null && StateMachine.FindState(ActorStateNames.Animate) is ActorAnimateState animateState)
             {
                 animateState.Preserve = preserve;
                 StateMachine.ChangeState(animateState.Name, true);
@@ -768,7 +768,7 @@ namespace ScaryCastle
         // UseEquippedItem
         public void UseEquippedItem(ItemCategory category)
         {
-            if (session.Inventory.GetEquippedItem(category) is not Item item)
+            if (session.Inventory.FindEquippedItem(category) is not Item item)
                 return;
 
             if (item.Count <= 0)

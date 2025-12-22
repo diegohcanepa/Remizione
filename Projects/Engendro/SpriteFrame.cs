@@ -30,7 +30,7 @@ namespace Engendro
         // InvalidateImage
         internal void InvalidateImage()
         {
-            Image = Animation.Sprite.Atlas?.GetImage(Animation.Sprite.ImagePath + ImageName);
+            Image = Animation.Sprite.Atlas?.FindImage(Animation.Sprite.ImagePath + ImageName);
         }
 
         #endregion

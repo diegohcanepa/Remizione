@@ -49,7 +49,7 @@ namespace ScaryCastle
             {
                 if (frame.IsEvent && Item.Count > 0)
                 {
-                    if (Owner.Session.ObjectPools.GetThrownItem(Item.Name) is ThrownItem throwable)
+                    if (Owner.Session.ObjectPools.FindThrownItem(Item.Name) is ThrownItem throwable)
                     {
                         if (Owner.WhooshSound != null)
                             Owner.PlaySound(Owner.WhooshSound);

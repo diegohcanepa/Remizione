@@ -32,10 +32,10 @@ namespace ScaryCastle
                 MaxProps = maxPropsElement.GetInt32();
 
             // Scope
-            var allowPools = ConfigHelper.GetTags(element, "allowPools");
-            var denyPools = ConfigHelper.GetTags(element, "denyPools");
-            var allowTags = ConfigHelper.GetTags(element, "allowTags");
-            var denyTags = ConfigHelper.GetTags(element, "denyTags");
+            var allowPools = Tags.FromJson(element, "allowPools");
+            var denyPools = Tags.FromJson(element, "denyPools");
+            var allowTags = Tags.FromJson(element, "allowTags");
+            var denyTags = Tags.FromJson(element, "denyTags");
 
             this.Scope = new ScopeRules(allowPools, denyPools, allowTags, denyTags);
 
@@ -71,17 +71,17 @@ namespace ScaryCastle
                     PlaceholderTarget? phTarget = null;
                     if (placeholderElement.TryGetProperty("target", out JsonElement targetElement))
                     {
-                        if (Enum.TryParse<PlaceholderTarget>(targetElement.GetString(), out PlaceholderTarget placeholderTarget))
+                        if (Enum.TryParse(targetElement.GetString(), out PlaceholderTarget placeholderTarget))
                             phTarget = placeholderTarget;
                     }
 
                     // AllowTags
-                    Tags? phAllowTags = ConfigHelper.GetTags(placeholderElement, "allowTags");
+                    Tags? phAllowTags = Tags.FromJson(placeholderElement, "allowTags");
                     if (phAllowTags.Count == 0)
                         phAllowTags = null;
 
                     // 4. Crear la instancia de Placeholder
-                    placeholdersList.Add(new PlaceholderOverride(phName, phFillChance, allowTags, phTarget));
+                    placeholdersList.Add(new PlaceholderOverride(phName, phFillChance, phAllowTags, phTarget));
                 }
             }
 
@@ -111,7 +111,7 @@ namespace ScaryCastle
         // Load
         public static void Load(string fileName)
         {
-            Utils.LoadJsonData<RoomConfig>(fileName, (JsonElement element) => new RoomConfig(element));
+            Utils.LoadJsonData(fileName, element => new RoomConfig(element));
         }
 
         #endregion

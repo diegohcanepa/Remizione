@@ -10,13 +10,16 @@ namespace Engendro
     {
         private static readonly Random random = new();
 
-        // AngleBetween
-        public static double AngleBetween(this Vector2 vector1, Vector2 vector2)
+        extension(Vector2 vector1)
         {
-            double sin = (vector1.X * vector2.Y) - (vector2.X * vector1.Y);
-            double cos = (vector1.X * vector2.X) + (vector1.Y * vector2.Y);
+            // AngleBetween
+            public double AngleBetween(Vector2 vector2)
+            {
+                double sin = (vector1.X * vector2.Y) - (vector2.X * vector1.Y);
+                double cos = (vector1.X * vector2.X) + (vector1.Y * vector2.Y);
 
-            return Math.Atan2(sin, cos) * (180 / Math.PI);
+                return Math.Atan2(sin, cos) * (180 / Math.PI);
+            }
         }
 
         // Random

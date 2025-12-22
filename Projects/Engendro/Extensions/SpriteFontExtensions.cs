@@ -7,18 +7,21 @@ namespace Engendro
     /// </summary>
     public static class SpriteFontExtensions
     {
-        // GetGlyphIndex
-        public static int GetGlyphIndex(this SpriteFont font, char character)
+        extension(SpriteFont font)
         {
-            for (var i = 0; i < font.Glyphs.Length; i++)
+            // GetGlyphIndex
+            public int GetGlyphIndex(char character)
             {
-                if (font.Glyphs[i].Character == character)
+                for (var i = 0; i < font.Glyphs.Length; i++)
                 {
-                    return i;
+                    if (font.Glyphs[i].Character == character)
+                    {
+                        return i;
+                    }
                 }
-            }
 
-            return -1;
+                return -1;
+            }
         }
     }
 }

@@ -71,7 +71,10 @@ namespace ScaryCastle
         }
 
         // Contains
-        public bool Contains(Vector2 point) => Polygon.Contains(point);
+        public bool Contains(Vector2 point)
+        {
+            return Polygon.Contains(point);
+        }
 
         // InLineOfSight
         public bool InLineOfSight(Vector2 start, Vector2 end)

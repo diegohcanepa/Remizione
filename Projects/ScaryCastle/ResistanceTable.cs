@@ -23,7 +23,10 @@ namespace ScaryCastle
         #region Static members
 
         // Find
-        public static ResistanceTable? Find(string name) => tables.TryGetValue(name, out var result) ? result : null;
+        public static ResistanceTable? Find(string name)
+        {
+            return tables.TryGetValue(name, out var result) ? result : null;
+        }
 
         // Register
         public static ResistanceTable Register(string name, float defaultModifier = 1)

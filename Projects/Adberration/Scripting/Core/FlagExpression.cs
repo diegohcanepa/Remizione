@@ -24,6 +24,9 @@
         public bool Negate { get; }
 
         // ToString
-        public override string ToString() => Negate ? "!" + FlagName : FlagName;
+        public override string ToString()
+        {
+            return Negate ? "!" + FlagName : FlagName;
+        }
     }
 }

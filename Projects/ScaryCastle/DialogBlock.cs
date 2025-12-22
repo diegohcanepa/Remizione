@@ -72,11 +72,8 @@ namespace ScaryCastle
         // AvailableOptions
         public ReadOnlyCollection<DialogOption> AvailableOptions { get; private set; }
 
-        // Instance
-        public static DialogBlock? Instance { get; set; }
-
-        // GetOption
-        public DialogOption? GetOption(int id)
+        // FindOption
+        public DialogOption? FindOption(int id)
         {
             for (int i = 0; i < Count; i++)
             {
@@ -87,10 +84,13 @@ namespace ScaryCastle
             return null;
         }
 
+        // Instance
+        public static DialogBlock? Instance { get; set; }
+
         // IndexOf
         public int IndexOf(int id)
         {
-            var option = GetOption(id);
+            var option = FindOption(id);
             return option == null ? -1 : IndexOf(option);
         }
 

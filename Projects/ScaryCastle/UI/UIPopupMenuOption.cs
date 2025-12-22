@@ -89,7 +89,10 @@ namespace ScaryCastle
         }
 
         // Execute
-        public void Execute() => action?.Invoke();
+        public void Execute()
+        {
+            action?.Invoke();
+        }
 
         // IconImage
         public AtlasImage? IconImage
@@ -142,7 +145,10 @@ namespace ScaryCastle
         public RectangleF TextBoundingBox => nameText.BoundingBox;
 
         // ToString
-        public override string ToString() => nameText.ToString();
+        public override string ToString()
+        {
+            return nameText.ToString();
+        }
 
         // Update
         public void Update(GameTime gameTime)

@@ -49,7 +49,7 @@ namespace Adberration
         // SetAchievement
         public bool SetAchievement(string id)
         {
-            if (AchievementManager.GetAchievement(id) is Achievement achievement)
+            if (AchievementManager.FindAchievement(id) is Achievement achievement)
             {
                 return OnSetAchievement(achievement);
             }

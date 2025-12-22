@@ -19,7 +19,10 @@ namespace Engendro.Input
         #region Internal members
 
         // Update
-        internal void Update(GameTime gameTime) => OnUpdate(gameTime);
+        internal void Update(GameTime gameTime)
+        {
+            OnUpdate(gameTime);
+        }
 
         #endregion
 

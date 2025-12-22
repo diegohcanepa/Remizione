@@ -89,6 +89,9 @@ namespace ScaryCastle
         }
 
         // Shake
-        public void Shake() => shakeTween.Start(TweenStyle.CubicInOut, 0, 1, 50, 4);
+        public void Shake()
+        {
+            shakeTween.Start(TweenStyle.CubicInOut, 0, 1, 50, 4);
+        }
     }
 }

@@ -125,13 +125,7 @@ namespace ScaryCastle
         }
 
         // BoundingBox
-        public RectangleF BoundingBox
-        {
-            get
-            {
-                return slotImage.BoundingBox;
-            }
-        }
+        public RectangleF BoundingBox => slotImage.BoundingBox;
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)

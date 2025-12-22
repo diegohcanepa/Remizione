@@ -9,7 +9,10 @@ namespace Engendro
     public class CircleEmitterType(float radius) : IEmitterType
     {
         // GetParticleDirection
-        public Vector2 GetParticleDirection() => Vector2.Zero;
+        public Vector2 GetParticleDirection()
+        {
+            return Vector2.Zero;
+        }
 
         // GetParticlePosition
         public Vector2 GetParticlePosition(Vector2 emitterPosition)

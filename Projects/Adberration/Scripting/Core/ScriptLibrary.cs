@@ -217,24 +217,24 @@ namespace Adberration.Scripting
             }
         }
 
-        // GetDeclaration
-        internal Script? GetDeclaration(string entityStaticName)
+        // FindDeclaration
+        internal Script? FindDeclaration(string entityStaticName)
         {
             return declarations.TryGetValue(entityStaticName, out var result) ? result : null;
         }
 
-        // GetScript
-        internal Script? GetScript(string name)
+        // FindScript
+        internal Script? FindScript(string name)
         {
             return scripts.TryGetValue(name, out var result) ? result : null;
         }
 
-        // GetScript
-        internal Script? GetScript(ScriptType scriptType, string name)
+        // FindScript
+        internal Script? FindScript(ScriptType scriptType, string name)
         {
             CodeContract.NotEmpty(name, nameof(name));
             var scriptName = Script.EncodeScriptName(scriptType, name);
-            return GetScript(scriptName);
+            return FindScript(scriptName);
         }
 
         // Load
@@ -249,28 +249,28 @@ namespace Adberration.Scripting
         // AllScripts
         public IEnumerable<Script> AllScripts => scripts.Values;
 
-        // GetCompoundOutcome
-        public Script? GetCompoundOutcome(string name1, string name2)
+        // FindCompoundOutcome
+        public Script? FindCompoundOutcome(string name1, string name2)
         {
             CodeContract.NotEmpty(name1, nameof(name1));
             CodeContract.NotEmpty(name2, nameof(name2));
 
             var scriptName = name1 + ScriptSyntax.ScriptCompoundSeparator + name2;
 
-            return GetScript(ScriptType.Outcome, scriptName);
+            return FindScript(ScriptType.Outcome, scriptName);
         }
 
-        // GetOutcome
-        public Script? GetOutcome(string name)
+        // FindOutcome
+        public Script? FindOutcome(string name)
         {
             CodeContract.NotEmpty(name, nameof(name));
-            return GetScript(ScriptType.Outcome, name);
+            return FindScript(ScriptType.Outcome, name);
         }
 
-        // GetRoutine
-        public Script? GetRoutine(string name)
+        // FindRoutine
+        public Script? FindRoutine(string name)
         {
-            return GetScript(ScriptType.Routine, name);
+            return FindScript(ScriptType.Routine, name);
         }
 
         // IsDeclared

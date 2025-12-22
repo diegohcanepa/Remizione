@@ -21,7 +21,7 @@ namespace ScaryCastle
         private float launchDelay;
         private bool launched;
         private float life = 2;
-        private Vector2Tween scaleTween = new();
+        private readonly Vector2Tween scaleTween = new();
         private Vector2 velocity;
 
         #endregion

@@ -15,7 +15,7 @@
         // OnExecute
         protected override void OnExecute()
         {
-            if (Session.ScriptEnvironment.GetFlag(Body.Clauses[0]) is Flag flag)
+            if (Session.ScriptEnvironment.FindFlag(Body.Clauses[0]) is Flag flag)
             {
                 flag.Value = !flag.Value;
             }

@@ -28,13 +28,13 @@ namespace Engendro.Audio
 
         #region Private members
 
-        // GetSoundInstance
-        private static SoundInstance? GetSoundInstance(string soundName)
+        // FindSoundInstance
+        private static SoundInstance? FindSoundInstance(string soundName)
         {
             if (string.IsNullOrWhiteSpace(soundName))
                 return null;
 
-            SoundInstance? result = SoundInstance.GetRunningInstance(soundName);
+            SoundInstance? result = SoundInstance.FindRunningInstance(soundName);
             if (result == null)
                 result = Sound.Find(soundName)?.PopInstance();
             else
@@ -49,8 +49,8 @@ namespace Engendro.Audio
             return null;
         }
 
-        // GetSoundInstanceByTag
-        private static SoundInstance? GetSoundInstanceByTag(string tag)
+        // FindSoundInstanceByTag
+        private static SoundInstance? FindSoundInstanceByTag(string tag)
         {
             if (!Sound.AvailableTags.Contains(tag))
                 return null;
@@ -71,7 +71,7 @@ namespace Engendro.Audio
         // PlayTagCore
         private bool PlayTagCore(string tag, int fadeIn)
         {
-            if (GetSoundInstanceByTag(tag) is SoundInstance newSoundInstance)
+            if (FindSoundInstanceByTag(tag) is SoundInstance newSoundInstance)
             {
                 PlaySoundCore(newSoundInstance, false, fadeIn, 1, 0);
                 return true;
@@ -152,13 +152,22 @@ namespace Engendro.Audio
         public bool IsLooped { get; set; }
 
         // Play
-        public bool Play(string soundName, bool looped) => Play(soundName, looped, 0);
+        public bool Play(string soundName, bool looped)
+        {
+            return Play(soundName, looped, 0);
+        }
 
         // Play
-        public bool Play(string soundName, bool looped, int fadeIn) => Play(soundName, looped, fadeIn, 1);
+        public bool Play(string soundName, bool looped, int fadeIn)
+        {
+            return Play(soundName, looped, fadeIn, 1);
+        }
 
         // Play
-        public bool Play(string soundName, bool looped, int fadeIn, float volume) => Play(soundName, looped, fadeIn, volume, 0);
+        public bool Play(string soundName, bool looped, int fadeIn, float volume)
+        {
+            return Play(soundName, looped, fadeIn, volume, 0);
+        }
 
         // Play
         public bool Play(string soundName, bool looped, int fadeIn, float volume, float pitch)
@@ -166,7 +175,7 @@ namespace Engendro.Audio
             if (string.IsNullOrWhiteSpace(soundName) || soundName == CurrentSoundName)
                 return false;
 
-            if (GetSoundInstance(soundName) is SoundInstance newSoundInstance)
+            if (FindSoundInstance(soundName) is SoundInstance newSoundInstance)
             {
                 if (newSoundInstance.Sound.Category != AudioManager.MusicCategory)
                     throw new ArgumentException("Not a music sound.", nameof(soundName));
@@ -178,7 +187,10 @@ namespace Engendro.Audio
         }
 
         // PlayTag
-        public void PlayTag(string tag) => PlayTag(tag, 0);
+        public void PlayTag(string tag)
+        {
+            PlayTag(tag, 0);
+        }
 
         // PlayTag
         public bool PlayTag(string tag, int fadeIn)
@@ -205,7 +217,10 @@ namespace Engendro.Audio
         public SoundState State => soundInstance == null ? SoundState.Stopped : soundInstance.State;
 
         // Stop
-        public bool Stop() => Stop(0);
+        public bool Stop()
+        {
+            return Stop(0);
+        }
 
         // Stop
         public bool Stop(int fadeOut)

@@ -54,8 +54,8 @@ namespace Adberration.Scripting
         // EqualityOp
         public const string EqualityOp = "==";
 
-        // GetStaticName
-        public static string GetStaticName(string name)
+        // GetDeclaredName
+        public static string GetDeclaredName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
                 return name;
@@ -82,7 +82,10 @@ namespace Adberration.Scripting
         public const string InequalityOp = "!=";
 
         // IsClonedName
-        public static bool IsClonedName(string name) => name.Contains(CloneSuffix);
+        public static bool IsClonedName(string name)
+        {
+            return name.Contains(CloneSuffix);
+        }
 
         // IsDeclarationReservedWord
         public static bool IsDeclarationReservedWord(string value)
@@ -91,13 +94,19 @@ namespace Adberration.Scripting
         }
 
         // IsNumericType
-        public static bool IsNumericType(Type type) => SupportedNumericTypes.Contains(type);
+        public static bool IsNumericType(Type type)
+        {
+            return SupportedNumericTypes.Contains(type);
+        }
 
         // IsOp
         public const string IsOp = "is";
 
         // IsRuntimeName
-        public static bool IsRuntimeName(string name) => name.Contains(RuntimeNameSuffix);
+        public static bool IsRuntimeName(string name)
+        {
+            return name.Contains(RuntimeNameSuffix);
+        }
 
         // IsSessionMemberReference
         public static bool IsSessionMemberReference(string value)

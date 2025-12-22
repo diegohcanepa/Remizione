@@ -29,7 +29,10 @@ namespace ScaryCastle
         #region Protected members
 
         // OnReset
-        protected override void OnReset() => triggered = false;
+        protected override void OnReset()
+        {
+            triggered = false;
+        }
 
         #endregion
 

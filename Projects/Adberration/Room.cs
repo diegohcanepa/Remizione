@@ -31,7 +31,7 @@ namespace Adberration
         protected Room(Session session, string name)
             : base(session, name)
         {
-            AtlasName = StaticName;
+            AtlasName = DeclaredName;
             CustomHeight = Session.Game.ViewportAdapter.VirtualHeight;
             CustomWidth = Session.Game.ViewportAdapter.VirtualWidth;
             CulledThings = new ReadOnlyCollection<Thing>(culledThings);
@@ -40,11 +40,11 @@ namespace Adberration
             // Cache scripts
             if (InstanceKind != InstanceKind.Anonymous)
             {
-                enteringScript = session.ScriptLibrary.GetScript(ScriptType.Entering, Name);
-                enteringScript ??= session.ScriptLibrary.GetScript(ScriptType.Entering, StaticName);
+                enteringScript = session.ScriptLibrary.FindScript(ScriptType.Entering, Name);
+                enteringScript ??= session.ScriptLibrary.FindScript(ScriptType.Entering, DeclaredName);
 
-                exitingScript = session.ScriptLibrary.GetScript(ScriptType.Exiting, Name);
-                exitingScript ??= session.ScriptLibrary.GetScript(ScriptType.Exiting, StaticName);
+                exitingScript = session.ScriptLibrary.FindScript(ScriptType.Exiting, Name);
+                exitingScript ??= session.ScriptLibrary.FindScript(ScriptType.Exiting, DeclaredName);
             }
         }
 
@@ -122,7 +122,7 @@ namespace Adberration
             if (Atlas == null && !string.IsNullOrWhiteSpace(AtlasName))
             {
                 var atlasEncodedName = ScriptSyntax.RuntimeRoomNamePrefix + AtlasName;
-                this.Atlas = Atlas.GetInstance(atlasEncodedName);
+                this.Atlas = Atlas.FindInstance(atlasEncodedName);
                 this.Atlas ??= new Atlas(Content, atlasEncodedName, GetAtlasPath(), false);
             }
 
@@ -413,13 +413,19 @@ namespace Adberration
             public ReadOnlyPolygon Polygon { get; }
 
             // Reset
-            public void Reset() => OnReset();
+            public void Reset()
+            {
+                OnReset();
+            }
 
             // Room
             public Room Room { get; }
 
             // Test
-            public bool Test() => IsEnabled && (Condition == null || Condition.Evaluate());
+            public bool Test()
+            {
+                return IsEnabled && (Condition == null || Condition.Evaluate());
+            }
 
             // ToString
             public override string ToString()

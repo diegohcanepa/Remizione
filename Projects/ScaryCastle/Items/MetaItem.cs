@@ -146,7 +146,7 @@ namespace ScaryCastle
 
             this.LocalizedDescription = Localization.GetItemDescription(this);
             this.LocalizedDisplayName = Localization.GetItemName(this);
-            this.Image = Atlases.UI.GetImage(Name);
+            this.Image = Atlases.UI.FindImage(Name);
             this.Price = Quality switch
             {
                 0 or 1 => 5,  // Items básicos o consumibles
@@ -168,10 +168,7 @@ namespace ScaryCastle
         // Find
         public static MetaItem? Find(string name)
         {
-            if (metaItems.TryGetValue(name, out var result))
-                return result;
-            else
-                return null;
+            return metaItems.TryGetValue(name, out var result) ? result : null;
         }
 
         // FindNotNull
@@ -214,7 +211,7 @@ namespace ScaryCastle
             if (loaded)
                 throw new InvalidOperationException("Data is already loaded.");
 
-            Utils.LoadJsonData(fileName, (JsonElement element) => new MetaItem(element));
+            Utils.LoadJsonData(fileName, element => new MetaItem(element));
 
             loaded = true;
         }

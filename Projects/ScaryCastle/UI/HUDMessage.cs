@@ -52,7 +52,10 @@ namespace ScaryCastle
         #endregion
 
         // Hide
-        public void Hide() => fadeTween.Stop();
+        public void Hide()
+        {
+            fadeTween.Stop();
+        }
 
         // Show
         public void Show(HUDMessageKind message)

@@ -189,7 +189,6 @@
                 <false/>
             </struct>
             <key type="filename">Inventory-assets/InventoryCategoryNotEmpty.png</key>
-            <key type="filename">MiniMap-assets/UIMiniMapMarker.png</key>
             <key type="filename">UI-assets/SpeechBubbleCloseArrow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -502,38 +501,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MiniMap-assets/UIMiniMapRoom0.png</key>
-            <key type="filename">MiniMap-assets/UIMiniMapRoom1.png</key>
-            <key type="filename">MiniMap-assets/UIMiniMapRoom2.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,5,4</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,5,4</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">MiniMap-assets/UIMiniMapStartMarker.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,0,3,1</rect>
-                <key>scale9Paddings</key>
-                <rect>2,0,3,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
+            <key type="filename">MiniMap-assets/UIMiniMapMarkerCoin.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>
             <key type="filename">UI-assets/PointingHand.png</key>
@@ -548,6 +516,53 @@
                 <rect>2,2,3,3</rect>
                 <key>scale9Paddings</key>
                 <rect>2,2,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MiniMap-assets/UIMiniMapMarkerLoot.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,2,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,2,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MiniMap-assets/UIMiniMapMarkerStart.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,0,3,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,0,3,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MiniMap-assets/UIMiniMapRoom0.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapRoom1.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapRoom2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,5,4</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,5,4</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

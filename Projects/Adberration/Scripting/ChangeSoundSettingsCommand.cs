@@ -20,10 +20,10 @@ namespace Adberration.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            if (SoundInstance.GetRunningInstance(Parser.ParseName(this, 0)) is SoundInstance soundInstance)
+            if (SoundInstance.FindRunningInstance(Parser.ParseName(this, 0)) is SoundInstance soundInstance)
             {
                 // Emitter
-                if (Body.Args.GetArg(EmitterArg)?.Value is string emitter)
+                if (Body.Args.FindArg(EmitterArg)?.Value is string emitter)
                 {
                     soundInstance.Emitter = Parser.ParseEntity<Thing>(this, emitter);
                 }

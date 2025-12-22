@@ -49,7 +49,7 @@ namespace Adberration.Scripting
             IsCreatingClone = true;
 
             // Get declaration script from library
-            var declarationScript = session.ScriptLibrary.GetScript(ScriptType.Thing, staticName) ?? throw new InvalidOperationException($"'{staticName}' cannot be cloned. Use the Clonable keyword.");
+            var declarationScript = session.ScriptLibrary.FindScript(ScriptType.Thing, staticName) ?? throw new InvalidOperationException($"'{staticName}' cannot be cloned. Use the Clonable keyword.");
 
             // Check if thing is cloneable
             if (!declarationScript.Cloneable)
@@ -77,7 +77,7 @@ namespace Adberration.Scripting
             while (true)
             {
                 var result = typeName + ScriptSyntax.CloneSuffix + counter.ToString(CultureInfo.InvariantCulture) + ScriptSyntax.RuntimeNameSuffix;
-                if (session.GetEntity(result) == null)
+                if (session.FindEntity(result) == null)
                     return result;
 
                 counter++;
@@ -246,16 +246,19 @@ namespace Adberration.Scripting
         }
 
         // GetConstantValue
-        internal string GetConstantValue(string name) => constants[name];
+        internal string GetConstantValue(string name)
+        {
+            return constants[name];
+        }
 
-        // GetCounter
-        internal Counter? GetCounter(string name) => counters.TryGetValue(name, out var value) ? value : null;
+        // FindCounter
+        internal Counter? FindCounter(string name)
+        {
+            return counters.TryGetValue(name, out var value) ? value : null;
+        }
 
-        // GetCounters
-        internal Counter[] GetCounters() => counters.Values.ToArray();
-
-        // GetEntityType
-        internal Type? GetEntityType(string name)
+        // FindEntityType
+        internal Type? FindEntityType(string name)
         {
             foreach (var keyValue in entities)
             {
@@ -266,35 +269,32 @@ namespace Adberration.Scripting
             return null;
         }
 
-        // GetFlag
-        internal Flag? GetFlag(string name)
+        // FindFlag
+        internal Flag? FindFlag(string name)
         {
             return flags.TryGetValue(name, out var value) ? value : null;
         }
 
-        // GetFlags
-        internal Flag[] GetFlags() => flags.Values.ToArray();
-
-        // GetMethod
-        internal ScriptMethod? GetMethod(Type type, string name)
+        // FindMethod
+        internal ScriptMethod? FindMethod(Type type, string name)
         {
             if (type == session.GetType())
-                return GetSessionMethod(name);
+                return FindSessionMethod(name);
             else
                 return entities.TryGetValue(type, out var value) ? value.GetMethod(name) : null;
         }
 
-        // GetProperty
-        internal ScriptProperty? GetProperty(Type type, string name)
+        // FindProperty
+        internal ScriptProperty? FindProperty(Type type, string name)
         {
             if (type == session.GetType())
-                return GetSessionProperty(name);
+                return FindSessionProperty(name);
             else
                 return entities.TryGetValue(type, out var value) ? value.GetProperty(name) : null;
         }
 
-        // GetScriptEntity
-        internal ScriptEntity? GetScriptEntity(string name)
+        // FindScriptEntity
+        internal ScriptEntity? FindScriptEntity(string name)
         {
             foreach (var item in entities.Values)
             {
@@ -305,16 +305,28 @@ namespace Adberration.Scripting
             return null;
         }
 
-        // GetSessionMethod
-        internal ScriptMethod? GetSessionMethod(string name)
+        // FindSessionMethod
+        internal ScriptMethod? FindSessionMethod(string name)
         {
             return sessionMethods.TryGetValue(name, out var value) ? value : null;
         }
 
-        // GetSessionProperty
-        internal ScriptProperty? GetSessionProperty(string name)
+        // FindSessionProperty
+        internal ScriptProperty? FindSessionProperty(string name)
         {
             return sessionProperties.TryGetValue(name, out var value) ? value : null;
+        }
+
+        // GetCounters
+        internal Counter[] GetCounters()
+        {
+            return counters.Values.ToArray();
+        }
+
+        // GetFlags
+        internal Flag[] GetFlags()
+        {
+            return flags.Values.ToArray();
         }
 
         // IsActive
@@ -327,7 +339,10 @@ namespace Adberration.Scripting
         }
 
         // IsConstantDeclared
-        internal bool IsConstantDeclared(string name) => constants.ContainsKey(name);
+        internal bool IsConstantDeclared(string name)
+        {
+            return constants.ContainsKey(name);
+        }
 
         // IsCreatingClone
         internal bool IsCreatingClone { get; private set; }
@@ -345,10 +360,16 @@ namespace Adberration.Scripting
         }
 
         // IsFlagDeclared
-        internal bool IsFlagDeclared(string name) => flags.ContainsKey(name);
+        internal bool IsFlagDeclared(string name)
+        {
+            return flags.ContainsKey(name);
+        }
 
         // IsReservedWord
-        internal static bool IsReservedWord(string value) => Enum.IsDefined(typeof(ScriptType), value);
+        internal static bool IsReservedWord(string value)
+        {
+            return Enum.IsDefined(typeof(ScriptType), value);
+        }
 
         // ScriptRegistry
         internal ScriptRegistry ScriptRegistry { get; } = new ScriptRegistry();

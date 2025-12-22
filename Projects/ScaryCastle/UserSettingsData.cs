@@ -44,7 +44,7 @@ namespace ScaryCastle
             // Language
             if (!string.IsNullOrEmpty(data.LanguageTag))
             {
-                if (LanguagePackage.GetPackage(data.LanguageTag) is LanguagePackage languagePackage)
+                if (LanguagePackage.FindPackage(data.LanguageTag) is LanguagePackage languagePackage)
                     TextRepository.Load(languagePackage);
             }
 
@@ -60,7 +60,7 @@ namespace ScaryCastle
         // FromDefaultValues
         public static UserSettingsData FromDefaultValues()
         {
-            LanguagePackage? languagePackage = LanguagePackage.GetPackage(CultureInfo.CurrentCulture.Name, true);
+            LanguagePackage? languagePackage = LanguagePackage.FindPackage(CultureInfo.CurrentCulture.Name, true);
             var ltag = languagePackage == null ? LocalizationManager.English : languagePackage.LanguageTag;
 
             UserSettingsData result = new()

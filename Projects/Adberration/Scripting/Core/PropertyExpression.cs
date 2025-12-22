@@ -53,15 +53,15 @@ namespace Adberration.Scripting
             if (tokens[0] == ScriptSyntax.SessionKeyword && tokens.Length == 2)
             {
                 Instance = statement.Script.Session;
-                property = statement.Script.Session.ScriptEnvironment.GetSessionProperty(tokens[1]);
+                property = statement.Script.Session.ScriptEnvironment.FindSessionProperty(tokens[1]);
             }
 
             // Session.Entity.Property
             else if (tokens[0] == ScriptSyntax.SessionKeyword && tokens.Length == 3)
             {
-                if (statement.Script.Session.ScriptEnvironment.GetSessionProperty(tokens[1]) is ScriptProperty entityProperty)
+                if (statement.Script.Session.ScriptEnvironment.FindSessionProperty(tokens[1]) is ScriptProperty entityProperty)
                 {
-                    property = statement.Script.Session.ScriptEnvironment.GetProperty(entityProperty.PropertyType, tokens[2]);
+                    property = statement.Script.Session.ScriptEnvironment.FindProperty(entityProperty.PropertyType, tokens[2]);
                     Instance = entityProperty.GetValue(statement.Script.Session);
                 }
             }
@@ -69,10 +69,10 @@ namespace Adberration.Scripting
             // Entity.Property
             else
             {
-                if (statement.Script.Session.GetEntity<Entity>(tokens[0]) is Entity entity)
+                if (statement.Script.Session.FindEntity<Entity>(tokens[0]) is Entity entity)
                 {
                     Instance = entity;
-                    property = statement.Script.Session.ScriptEnvironment.GetProperty(Instance.GetType(), tokens[1]);
+                    property = statement.Script.Session.ScriptEnvironment.FindProperty(Instance.GetType(), tokens[1]);
                 }
             }
 

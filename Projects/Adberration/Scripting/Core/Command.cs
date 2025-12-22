@@ -66,12 +66,6 @@ namespace Adberration.Scripting
 
         #endregion
 
-        // GetAssetFiles
-        public virtual string[]? GetAssetFiles()
-        {
-            return null;
-        }
-
         // IsExecuted
         public bool IsExecuted { get; private set; }
     }

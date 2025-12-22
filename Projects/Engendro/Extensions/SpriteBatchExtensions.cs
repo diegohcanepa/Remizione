@@ -7,28 +7,31 @@ namespace Engendro
     /// </summary>
     public static class SpriteBatchExtensions
     {
-        // Begin
-        public static void Begin(this SpriteBatch spriteBatch, Camera camera)
+        extension(SpriteBatch spriteBatch)
         {
-            Begin(spriteBatch, camera, SamplerState.PointClamp, null);
-        }
+            // Begin
+            public void Begin(Camera camera)
+            {
+                Begin(spriteBatch, camera, SamplerState.PointClamp, null);
+            }
 
-        // Begin
-        public static void Begin(this SpriteBatch spriteBatch, Camera camera, SamplerState samplerState)
-        {
-            Begin(spriteBatch, camera, samplerState, null);
-        }
+            // Begin
+            public void Begin(Camera camera, SamplerState samplerState)
+            {
+                Begin(spriteBatch, camera, samplerState, null);
+            }
 
-        // Begin
-        public static void Begin(this SpriteBatch spriteBatch, Camera camera, SamplerState samplerState, Effect? effect)
-        {
-            Begin(spriteBatch, camera, samplerState, BlendState.AlphaBlend, effect, null);
-        }
+            // Begin
+            public void Begin(Camera camera, SamplerState samplerState, Effect? effect)
+            {
+                Begin(spriteBatch, camera, samplerState, BlendState.AlphaBlend, effect, null);
+            }
 
-        // Begin
-        public static void Begin(this SpriteBatch spriteBatch, Camera camera, SamplerState samplerState, BlendState? blendState, Effect? effect, RasterizerState? rasterizerState = null)
-        {
-            spriteBatch.Begin(SpriteSortMode.Deferred, blendState: blendState, samplerState: samplerState, transformMatrix: camera.GetTransformationMatrix(), effect: effect, rasterizerState: rasterizerState);
+            // Begin
+            public void Begin(Camera camera, SamplerState samplerState, BlendState? blendState, Effect? effect, RasterizerState? rasterizerState = null)
+            {
+                spriteBatch.Begin(SpriteSortMode.Deferred, blendState: blendState, samplerState: samplerState, transformMatrix: camera.GetTransformationMatrix(), effect: effect, rasterizerState: rasterizerState);
+            }
         }
     }
 }

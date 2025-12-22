@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text.Json;
 
 namespace ScaryCastle
 {
@@ -39,5 +40,15 @@ namespace ScaryCastle
 
         // EmptyList
         public static Tags EmptyList { get; } = new Tags([]);
+
+        // FromJson
+        public static Tags FromJson(JsonElement element, string propertyName)
+        {
+            if (element.TryGetProperty(propertyName, out JsonElement tagsElement))
+                return new(tagsElement.GetString());
+            else
+                return EmptyList;
+        }
+
     }
 }

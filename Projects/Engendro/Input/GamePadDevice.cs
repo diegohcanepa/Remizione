@@ -212,7 +212,10 @@ namespace Engendro.Input
         public static GamePadStyle Style { get; set; }
 
         // SuspendVibration
-        public void SuspendVibration(int duration) => suspendVibrationInterval = duration;
+        public void SuspendVibration(int duration)
+        {
+            suspendVibrationInterval = duration;
+        }
 
         // Vibrate
         public bool Vibrate(GamePadVibrationSettings settings)

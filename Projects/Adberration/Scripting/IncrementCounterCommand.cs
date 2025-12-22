@@ -16,7 +16,7 @@
         // OnExecute
         protected override void OnExecute()
         {
-            if (Session.ScriptEnvironment.GetCounter(Body.Clauses[0]) is Counter counter)
+            if (Session.ScriptEnvironment.FindCounter(Body.Clauses[0]) is Counter counter)
             {
                 counter.Value += Parser.ParseInt32(this, 2);
             }

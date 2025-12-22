@@ -26,10 +26,16 @@ namespace ScaryCastle.Effects
         }
 
         // SetColor
-        public void SetColor(float value) => SetColor(value, value, value, value);
+        public void SetColor(float value)
+        {
+            SetColor(value, value, value, value);
+        }
 
         // SetColor
-        public void SetColor(Vector4 value) => SetColor(value.X, value.Y, value.Z, value.W);
+        public void SetColor(Vector4 value)
+        {
+            SetColor(value.X, value.Y, value.Z, value.W);
+        }
 
         // SetColor
         public void SetColor(float r, float g, float b, float a)

@@ -8,11 +8,14 @@ namespace Engendro
     /// </summary>
     public static class PointExtensions
     {
-        // Distance
-        public static float Distance(this Point value, Point value2)
+        extension(Point value)
         {
-            float v1 = value.X - value2.X, v2 = value.Y - value2.Y;
-            return (float)Math.Sqrt((v1 * v1) + (v2 * v2));
+            // Distance
+            public float Distance(Point value2)
+            {
+                float v1 = value.X - value2.X, v2 = value.Y - value2.Y;
+                return (float)Math.Sqrt((v1 * v1) + (v2 * v2));
+            }
         }
     }
 }

@@ -7,7 +7,7 @@
     public enum FacingDirection { Right, Left }
 
     // InstanceKind
-    public enum InstanceKind { Static, ScriptClone, RuntimeClone, Anonymous }
+    public enum InstanceKind { Declared, ScriptClone, RuntimeClone, Anonymous }
 
     // LifetimeScope
     public enum LifetimeScope { Session, Room }

@@ -165,13 +165,19 @@ namespace Engendro
         }
 
         // Contains
-        public bool Contains(Scene scene) => scenes.Contains(scene);
+        public bool Contains(Scene scene)
+        {
+            return scenes.Contains(scene);
+        }
 
         // CurrentScene
         public Scene? CurrentScene => scenes.Count == 0 ? null : scenes[0];
 
         // GetScenes
-        public Scene[] GetScenes() => scenes.ToArray();
+        public Scene[] GetScenes()
+        {
+            return scenes.ToArray();
+        }
 
         // Pop
         public Scene Pop()

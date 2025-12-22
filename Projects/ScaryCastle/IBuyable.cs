@@ -1,6 +1,4 @@
-﻿using Engendro;
-
-namespace ScaryCastle
+﻿namespace ScaryCastle
 {
     /// <summary>
     /// IBuyable

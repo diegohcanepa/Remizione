@@ -56,7 +56,7 @@ namespace ScaryCastle
             UserSettingsData userSettings = UserSettingsData.Load(game);
 
             // TODO: UNCOMMENT DURING DEV ONLY
-            if (LanguagePackage.GetPackage(SpanishLatinAmerica) is LanguagePackage languagePackage)
+            if (LanguagePackage.FindPackage(SpanishLatinAmerica) is LanguagePackage languagePackage)
                 TextRepository.Load(languagePackage);
         }
     }

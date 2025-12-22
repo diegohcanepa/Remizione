@@ -18,6 +18,9 @@ namespace ScaryCastle
         #endregion
 
         // CreateNewParticle
-        protected override Particle CreateNewParticle() => new FireflyParticle(Game);
+        protected override Particle CreateNewParticle()
+        {
+            return new FireflyParticle(Game);
+        }
     }
 }

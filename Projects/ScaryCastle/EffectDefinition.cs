@@ -86,7 +86,7 @@ namespace ScaryCastle
             if (loaded)
                 throw new InvalidOperationException("Data is already loaded.");
 
-            Utils.LoadJsonData(fileName, (JsonElement element) => new EffectDefinition(element));
+            Utils.LoadJsonData(fileName, element => new EffectDefinition(element));
 
             loaded = true;
         }

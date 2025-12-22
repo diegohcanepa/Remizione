@@ -14,7 +14,10 @@ namespace ScaryCastle
         internal static string FormatPlayTime(TimeSpan value)
         {
             // GetPlaytime
-            static string GetPlaytime(string key) => "@Playtime." + key.ToString();
+            static string GetPlaytime(string key)
+            {
+                return "@Playtime." + key.ToString();
+            }
 
             // Less than a minute
             if (value.TotalMilliseconds <= 60000)
@@ -67,6 +70,9 @@ namespace ScaryCastle
         }
 
         // GetValue
-        internal static string GetValue(InputBinding binding) => TextRepository.GetValue($"InputBinding.{binding.Name}");
+        internal static string GetValue(InputBinding binding)
+        {
+            return TextRepository.GetValue($"InputBinding.{binding.Name}");
+        }
     }
 }

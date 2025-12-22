@@ -56,32 +56,32 @@ namespace Adberration
             // Static
             else
             {
-                InstanceKind = InstanceKind.Static;
+                InstanceKind = InstanceKind.Declared;
             }
 
             this.Name = name;
-            this.StaticName = InstanceKind == InstanceKind.Anonymous ? GetType().Name : ScriptSyntax.GetStaticName(Name);
+            this.DeclaredName = InstanceKind == InstanceKind.Anonymous ? GetType().Name : ScriptSyntax.GetDeclaredName(Name);
 
             if (InstanceKind != InstanceKind.Anonymous)
                 session.RegisterEntity(this);
 
             Sprite = new EntitySprite(Game, this);
 
-            DefaultImageName = StaticName;
-            var index = StaticName.LastIndexOf('-');
+            DefaultImageName = DeclaredName;
+            var index = DeclaredName.LastIndexOf('-');
             if (index != -1)
-                DefaultImageName = StaticName.Substring(index + 1);
+                DefaultImageName = DeclaredName.Substring(index + 1);
 
             // Cache load script
             if (InstanceKind != InstanceKind.Anonymous)
             {
                 // Load script
-                loadScript = session.ScriptLibrary.GetScript(ScriptType.Load, Name);
-                loadScript ??= session.ScriptLibrary.GetScript(ScriptType.Load, StaticName);
+                loadScript = session.ScriptLibrary.FindScript(ScriptType.Load, Name);
+                loadScript ??= session.ScriptLibrary.FindScript(ScriptType.Load, DeclaredName);
 
                 // Unload script
-                unloadScript = session.ScriptLibrary.GetScript(ScriptType.Unload, Name);
-                unloadScript ??= session.ScriptLibrary.GetScript(ScriptType.Unload, StaticName);
+                unloadScript = session.ScriptLibrary.FindScript(ScriptType.Unload, Name);
+                unloadScript ??= session.ScriptLibrary.FindScript(ScriptType.Unload, DeclaredName);
             }
         }
 
@@ -109,7 +109,7 @@ namespace Adberration
 
             if (Atlas != null)
             {
-                var defaultFolder = string.IsNullOrWhiteSpace(Name) ? GetType().Name : StaticName;
+                var defaultFolder = string.IsNullOrWhiteSpace(Name) ? GetType().Name : DeclaredName;
                 var redefinesAtlasFolder = !string.IsNullOrWhiteSpace(AtlasFolder);
 
                 if (Atlas.UseFolderNames)
@@ -167,10 +167,10 @@ namespace Adberration
             {
                 const char separator = '-';
 
-                var result = StaticName;
-                var index = StaticName.LastIndexOf(separator);
+                var result = DeclaredName;
+                var index = DeclaredName.LastIndexOf(separator);
                 if (index != -1)
-                    result = StaticName.Substring(index + 1);
+                    result = DeclaredName.Substring(index + 1);
 
                 return result;
             }
@@ -423,6 +423,10 @@ namespace Adberration
             set => Sprite.Color = value;
         }
 
+        // DeclaredName
+        [ScriptProperty]
+        public string DeclaredName { get; }
+
         // DefaultImageName
         [ScriptProperty]
         public string DefaultImageName
@@ -472,7 +476,10 @@ namespace Adberration
         public long EntityId { get; }
 
         // FlipHorizontally
-        public void FlipHorizontally() => Sprite.FlipHorizontally();
+        public void FlipHorizontally()
+        {
+            Sprite.FlipHorizontally();
+        }
 
         // HasChildren
         [ScriptProperty]
@@ -769,12 +776,11 @@ namespace Adberration
         // Session
         public virtual Session Session { get; }
 
-        // StaticName
-        [ScriptProperty]
-        public string StaticName { get; }
-
         // ToString
-        public override string ToString() => Name;
+        public override string ToString()
+        {
+            return Name;
+        }
 
         // Tweens
         public TweenManager Tweens => Sprite.Tweens;
@@ -871,12 +877,18 @@ namespace Adberration
             #region IEnumerable explicit implementation
 
             // GetEnumerator
-            IEnumerator IEnumerable.GetEnumerator() => items.GetEnumerator();
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return items.GetEnumerator();
+            }
 
             #endregion
 
             // Add
-            public void Add(Thing item) => Insert(items.Count, item);
+            public void Add(Thing item)
+            {
+                Insert(items.Count, item);
+            }
 
             // Clear
             public void Clear()
@@ -890,16 +902,25 @@ namespace Adberration
             }
 
             // Contains
-            public bool Contains(string name) => Find(name) != null;
+            public bool Contains(string name)
+            {
+                return Find(name) != null;
+            }
 
             // Contains
-            public bool Contains(Thing item) => items.Contains(item);
+            public bool Contains(Thing item)
+            {
+                return items.Contains(item);
+            }
 
             // Count
             public int Count => items.Count;
 
             // CopyTo
-            public void CopyTo(Thing[] array, int arrayIndex) => items.CopyTo(array, arrayIndex);
+            public void CopyTo(Thing[] array, int arrayIndex)
+            {
+                items.CopyTo(array, arrayIndex);
+            }
 
             // Find
             public Thing? Find(string name)
@@ -914,10 +935,16 @@ namespace Adberration
             }
 
             // GetEnumerator
-            public IEnumerator<Thing> GetEnumerator() => items.GetEnumerator();
+            public IEnumerator<Thing> GetEnumerator()
+            {
+                return items.GetEnumerator();
+            }
 
             // IndexOf
-            public int IndexOf(Thing item) => items.IndexOf(item);
+            public int IndexOf(Thing item)
+            {
+                return items.IndexOf(item);
+            }
 
             // Insert
             public void Insert(int index, Thing item)
@@ -965,7 +992,10 @@ namespace Adberration
             }
 
             // RemoveAt
-            public void RemoveAt(int index) => items.RemoveAt(index);
+            public void RemoveAt(int index)
+            {
+                items.RemoveAt(index);
+            }
 
             // RemoveRange
             public void RemoveRange(IList<Thing> list)
@@ -977,22 +1007,40 @@ namespace Adberration
             }
 
             // Sort
-            public void Sort(IComparer<Thing> comparer) => items.Sort(comparer);
+            public void Sort(IComparer<Thing> comparer)
+            {
+                items.Sort(comparer);
+            }
 
             // Swap
-            public void Swap(Thing item1, Thing item2) => items.Swap(item1, item2);
+            public void Swap(Thing item1, Thing item2)
+            {
+                items.Swap(item1, item2);
+            }
 
             // Swap
-            public void Swap(int indexA, int indexB) => items.Swap(indexA, indexB);
+            public void Swap(int indexA, int indexB)
+            {
+                items.Swap(indexA, indexB);
+            }
 
             // SwapNext
-            public bool SwapNext(Thing item) => items.SwapToNext(item);
+            public bool SwapNext(Thing item)
+            {
+                return items.SwapToNext(item);
+            }
 
             // SwapPrevious
-            public bool SwapPrevious(Thing item) => items.SwapToPrevious(item);
+            public bool SwapPrevious(Thing item)
+            {
+                return items.SwapToPrevious(item);
+            }
 
             // ToArray
-            public Thing[] ToArray() => items.ToArray();
+            public Thing[] ToArray()
+            {
+                return items.ToArray();
+            }
         }
 
         /// <summary>

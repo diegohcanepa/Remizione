@@ -11,13 +11,22 @@ namespace Engendro
         #region Operators
 
         // == operator
-        public static bool operator ==(Size left, Size right) => left.Equals(right);
+        public static bool operator ==(Size left, Size right)
+        {
+            return left.Equals(right);
+        }
 
         // != operator
-        public static bool operator !=(Size left, Size right) => !left.Equals(right);
+        public static bool operator !=(Size left, Size right)
+        {
+            return !left.Equals(right);
+        }
 
         // + operator
-        public override string ToString() => $"{Width} × {Height}";
+        public override string ToString()
+        {
+            return $"{Width} × {Height}";
+        }
 
         #endregion
 
@@ -28,13 +37,22 @@ namespace Engendro
         public int Height { get; } = height;
 
         // Equals
-        public bool Equals(Size other) => Width == other.Width && Height == other.Height;
+        public bool Equals(Size other)
+        {
+            return Width == other.Width && Height == other.Height;
+        }
 
         // Equals
-        public override bool Equals(object? obj) => obj is Size other && Equals(other);
+        public override bool Equals(object? obj)
+        {
+            return obj is Size other && Equals(other);
+        }
 
         // GetHashCode
-        public override int GetHashCode() => HashCode.Combine(Width, Height);
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Width, Height);
+        }
 
         // Unit
         public static Size Unit { get; } = new(1, 1);

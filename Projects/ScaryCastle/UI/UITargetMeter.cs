@@ -43,7 +43,10 @@ namespace ScaryCastle
         #region Private members
 
         // ResetCooldown
-        private void ResetCooldown() => cooldown = 3000;
+        private void ResetCooldown()
+        {
+            cooldown = 3000;
+        }
 
         #endregion
 

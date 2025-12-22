@@ -22,7 +22,10 @@ namespace ScaryCastle
         #region Protected members
 
         // OnDie
-        protected override void OnDie() => Break();
+        protected override void OnDie()
+        {
+            Break();
+        }
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
@@ -48,7 +51,7 @@ namespace ScaryCastle
                 var index = 1;
                 while (true)
                 {
-                    if (Atlas?.GetImage($"{StaticName}Piece{index}") is AtlasImage image)
+                    if (Atlas?.FindImage($"{DeclaredName}Piece{index}") is AtlasImage image)
                     {
                         pieces.Add(new(Session.Game, image, Vector2.One));
                         index++;

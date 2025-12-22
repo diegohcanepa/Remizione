@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Globalization;
@@ -53,7 +52,7 @@ namespace ScaryCastle
             if (session.IsCurrentScene && target != null)
             {
                 button.Draw(gameTime);
-                
+
                 if (!priceText.IsEmpty)
                 {
                     Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);

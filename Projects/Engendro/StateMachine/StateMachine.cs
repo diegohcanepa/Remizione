@@ -49,14 +49,20 @@ namespace Engendro
         // CurrentState
         public TState CurrentState { get; private set; }
 
-        // GetState
-        public TState? GetState(string name) => states.TryGetValue(name, out TState? state) ? state : null;
+        // FindState
+        public TState? FindState(string name)
+        {
+            return states.TryGetValue(name, out TState? state) ? state : null;
+        }
 
         // Owner
         public TOwner Owner { get; }
 
         // RegisterState
-        public void RegisterState(TState state) => RegisterState(state, false);
+        public void RegisterState(TState state)
+        {
+            RegisterState(state, false);
+        }
 
         // RegisterState
         public void RegisterState(TState state, bool replaceExisting)

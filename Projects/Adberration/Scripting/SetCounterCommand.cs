@@ -18,7 +18,7 @@ namespace Adberration.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            if (Session.ScriptEnvironment.GetCounter(Body.Clauses[0]) is Counter counter)
+            if (Session.ScriptEnvironment.FindCounter(Body.Clauses[0]) is Counter counter)
             {
                 counter.Value = Parser.ParseInt32Range(this, 2).GetRandomValue(Random.Shared);
             }

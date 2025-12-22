@@ -43,7 +43,7 @@ namespace Adberration.Scripting
             }
             else
             {
-                parsedValue = Atlas.GetInstance(value);
+                parsedValue = Atlas.FindInstance(value);
                 if (parsedValue is null)
                 {
                     throw ScriptExceptionBuilder.AssetNotFound(statement, value);
@@ -214,7 +214,7 @@ namespace Adberration.Scripting
             }
             else
             {
-                var room = Session.GetEntity<Room>(value) ?? throw ScriptExceptionBuilder.RoomNotFound(statement, value);
+                var room = Session.FindEntity<Room>(value) ?? throw ScriptExceptionBuilder.RoomNotFound(statement, value);
                 if (instance != null)
                     PropertyInfo.SetValue(instance, room);
             }
@@ -232,7 +232,7 @@ namespace Adberration.Scripting
             }
             else
             {
-                var routine = Session.ScriptLibrary.GetRoutine(value) ?? throw ScriptExceptionBuilder.ScriptNotFound(statement, value);
+                var routine = Session.ScriptLibrary.FindRoutine(value) ?? throw ScriptExceptionBuilder.ScriptNotFound(statement, value);
                 if (instance != null)
                     PropertyInfo.SetValue(instance, routine);
             }
@@ -281,7 +281,7 @@ namespace Adberration.Scripting
                     throw new ScriptException(statement, "Dynamic entities cannot be assigned during initialization.");
                 }
 
-                var thing = Session.GetEntity<Thing>(value) ?? throw ScriptExceptionBuilder.ThingNotFound(statement, value);
+                var thing = Session.FindEntity<Thing>(value) ?? throw ScriptExceptionBuilder.ThingNotFound(statement, value);
                 if (instance != null)
                     PropertyInfo.SetValue(instance, thing);
             }

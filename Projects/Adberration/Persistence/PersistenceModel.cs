@@ -36,7 +36,7 @@ namespace Adberration
             var t = obj.GetType();
             while (true)
             {
-                if (GetMappedType(t) is PersistentType persistentType)
+                if (FindMappedType(t) is PersistentType persistentType)
                 {
                     stack.Push(persistentType);
                     if (persistentType.PersistenceScope == PersistentTypeScope.DeclaredOnly)
@@ -86,8 +86,8 @@ namespace Adberration
 
         #endregion
 
-        // GetMappedType
-        public PersistentType? GetMappedType(Type type)
+        // FindMappedType
+        public PersistentType? FindMappedType(Type type)
         {
             for (var i = 0; i < mappedTypes.Count; i++)
             {
@@ -183,7 +183,7 @@ namespace Adberration
         // MapType
         public PersistentType MapType(Type type, PersistentTypeScope persistenceScope)
         {
-            if (GetMappedType(type) != null)
+            if (FindMappedType(type) != null)
             {
                 throw new ArgumentException("Type already mapped.", nameof(type));
             }

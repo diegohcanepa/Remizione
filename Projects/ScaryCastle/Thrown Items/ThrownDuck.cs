@@ -15,7 +15,7 @@ namespace ScaryCastle
             const string basePrefix = "ThrowableDuck";
 
             ImpactSound = Sound.Find(basePrefix);
-            Shadow.Image = Atlas?.GetImage(basePrefix + "Shadow");
+            Shadow.Image = Atlas?.FindImage(basePrefix + "Shadow");
 
             var animation = AddAnimation(AnimationNames.Default);
             animation.AddFrame(basePrefix, 1000);

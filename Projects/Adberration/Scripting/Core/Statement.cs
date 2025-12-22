@@ -186,7 +186,7 @@ namespace Adberration.Scripting
         // AssertCounter
         protected Counter AssertCounter(string name)
         {
-            return Session.ScriptEnvironment.GetCounter(name) ?? throw new ScriptException($"Undeclared counter '{name}'.");
+            return Session.ScriptEnvironment.FindCounter(name) ?? throw new ScriptException($"Undeclared counter '{name}'.");
         }
 
         // AssertEntity
@@ -217,7 +217,7 @@ namespace Adberration.Scripting
         // AssertEntityType
         protected Type AssertEntityClass(string className)
         {
-            var type = Session.ScriptEnvironment.GetEntityType(className) ?? throw new ScriptException(this, $"'{className}' is not a valid registered entity type.");
+            var type = Session.ScriptEnvironment.FindEntityType(className) ?? throw new ScriptException(this, $"'{className}' is not a valid registered entity type.");
             return type;
         }
 
@@ -263,7 +263,7 @@ namespace Adberration.Scripting
         // CheckFlag
         protected Flag CheckFlag(string name)
         {
-            return Session.ScriptEnvironment.GetFlag(name) ?? throw new ScriptException($"Undeclared flag '{name}'.");
+            return Session.ScriptEnvironment.FindFlag(name) ?? throw new ScriptException($"Undeclared flag '{name}'.");
         }
 
         // ClauseValidation
@@ -287,7 +287,10 @@ namespace Adberration.Scripting
         public EngendroGame Game => Script.Session.Game;
 
         // HasArg
-        public bool HasArg(string argName) => Body.Args.Contains(argName);
+        public bool HasArg(string argName)
+        {
+            return Body.Args.Contains(argName);
+        }
 
         // HasArgs
         public bool HasArgs => Body.Args.Count > 0;

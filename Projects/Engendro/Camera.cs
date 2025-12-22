@@ -483,13 +483,22 @@ namespace Engendro
         public float SmoothSpeed { get; set; } = .01f;
 
         // StopFollowing
-        public void StopFollowing() => Target = null;
+        public void StopFollowing()
+        {
+            Target = null;
+        }
 
         // StopMoving
-        public void StopMoving() => moveTween.Stop();
+        public void StopMoving()
+        {
+            moveTween.Stop();
+        }
 
         // StopRotating
-        public void StopRotating() => rotationTween.Stop();
+        public void StopRotating()
+        {
+            rotationTween.Stop();
+        }
 
         // StopShaking
         public void StopShaking()
@@ -499,13 +508,19 @@ namespace Engendro
         }
 
         // StopZooming
-        public void StopZooming() => zoomTween.Stop();
+        public void StopZooming()
+        {
+            zoomTween.Stop();
+        }
 
         // Target
         public ITransform? Target { get; private set; }
 
         // ToString
-        public override string ToString() => Name;
+        public override string ToString()
+        {
+            return Name;
+        }
 
         // Update
         public void Update(GameTime gameTime)

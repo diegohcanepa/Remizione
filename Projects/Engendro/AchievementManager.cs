@@ -13,7 +13,7 @@ namespace Engendro
         // Add
         public static Achievement Add(string id)
         {
-            if (GetAchievement(id) != null)
+            if (FindAchievement(id) != null)
             {
                 throw new InvalidOperationException($"Duplicates are not allowed: {id}.");
             }
@@ -26,8 +26,8 @@ namespace Engendro
         // Count
         public static int Count => achievements.Count;
 
-        // GetAchievement
-        public static Achievement? GetAchievement(string name)
+        // FindAchievement
+        public static Achievement? FindAchievement(string name)
         {
             return achievements.TryGetValue(name, out var value) ? value : null;
         }

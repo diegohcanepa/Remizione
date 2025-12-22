@@ -90,10 +90,16 @@ namespace Engendro
         }
 
         // Clear
-        public static void Clear() => texts.Clear();
+        public static void Clear()
+        {
+            texts.Clear();
+        }
 
         // ContainsKey
-        public static bool ContainsKey(string key) => texts.ContainsKey(key);
+        public static bool ContainsKey(string key)
+        {
+            return texts.ContainsKey(key);
+        }
 
         // FileName
         public static string FileName { get; private set; } = string.Empty;
@@ -177,7 +183,10 @@ namespace Engendro
         }
 
         // Load
-        public static void Load(string fileName) => LoadCore(fileName, null);
+        public static void Load(string fileName)
+        {
+            LoadCore(fileName, null);
+        }
 
         // LoadCount
         public static int LoadCount { get; private set; }

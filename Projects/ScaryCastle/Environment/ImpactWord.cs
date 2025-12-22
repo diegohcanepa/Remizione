@@ -72,7 +72,7 @@ namespace ScaryCastle
         {
             sprite.Tweens.Reset();
             endingPhaseCooldown = 200;
-            sprite.Image = Atlases.Environment.GetImage(kind.ToString());
+            sprite.Image = Atlases.Environment.FindImage(kind.ToString());
             sprite.Opacity = 1;
             sprite.Position = position;
             sprite.Rotation = RandomHelper.Next(Random.Shared, -.5f, .5f);

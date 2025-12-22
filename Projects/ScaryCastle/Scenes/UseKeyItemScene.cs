@@ -270,8 +270,8 @@ namespace ScaryCastle
 
                 if (itemName != null && Inventory.Session.KeyItemTarget != null)
                 {
-                    var scriptName = $"{Inventory.Session.KeyItemTarget.StaticName}-With-{itemName}";
-                    if (Inventory.Session.ScriptLibrary.GetRoutine(scriptName) is Script script)
+                    var scriptName = $"{Inventory.Session.KeyItemTarget.DeclaredName}-With-{itemName}";
+                    if (Inventory.Session.ScriptLibrary.FindRoutine(scriptName) is Script script)
                         Inventory.Session.AwaitScript(script);
                 }
 
@@ -335,7 +335,7 @@ namespace ScaryCastle
             {
                 visualItems.Clear();
 
-                var friendlyItems = Inventory.Session.GetFriendlyItems(target.StaticName);
+                var friendlyItems = Inventory.Session.GetFriendlyItems(target.DeclaredName);
 
                 for (var i = 0; i < friendlyItems.Length; i++)
                 {

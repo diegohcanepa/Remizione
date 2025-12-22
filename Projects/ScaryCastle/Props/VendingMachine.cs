@@ -2,7 +2,6 @@
 using Adberration.Scripting;
 using Engendro;
 using Microsoft.Xna.Framework;
-using System.Globalization;
 
 namespace ScaryCastle
 {
@@ -28,7 +27,7 @@ namespace ScaryCastle
             };
 
             // Glass
-            glass = new(Game, Atlases.Environment.GetImage($"{nameof(VendingMachine)}Glass"))
+            glass = new(Game, Atlases.Environment.FindImage($"{nameof(VendingMachine)}Glass"))
             {
                 Opacity = .15f
             };
@@ -83,13 +82,7 @@ namespace ScaryCastle
 
         // EnoughTickets
         [ScriptProperty]
-        public bool EnoughTickets
-        {
-            get
-            {
-                return MetaItem == null ? false : Session.Tickets >= MetaItem.Price;
-            }
-        }
+        public bool EnoughTickets => MetaItem == null ? false : Session.Tickets >= MetaItem.Price;
 
         // GetInteractPrompt
         public override string? GetInteractPrompt()

@@ -19,7 +19,10 @@ namespace Engendro.Input
         #region Private members
 
         // CanTestInput
-        private static bool CanTestInput() => EngendroGame.Instance != null && EngendroGame.Instance.IsActive && !InputManager.IsSuspended;
+        private static bool CanTestInput()
+        {
+            return EngendroGame.Instance != null && EngendroGame.Instance.IsActive && !InputManager.IsSuspended;
+        }
 
         #endregion
 
@@ -177,6 +180,9 @@ namespace Engendro.Input
         public bool RequiresShift { get; set; }
 
         // ToString
-        public override string ToString() => Name;
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

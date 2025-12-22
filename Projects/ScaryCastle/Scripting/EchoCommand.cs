@@ -31,7 +31,10 @@ namespace ScaryCastle.Scripting
         #endregion
 
         // GetTextEmitterName
-        protected override string GetTextEmitterName() => "(UI Message)";
+        protected override string GetTextEmitterName()
+        {
+            return "(UI Message)";
+        }
 
         // IsAwaiting
         public override bool IsAwaiting => Game.SceneManager.CurrentScene is EchoScene;

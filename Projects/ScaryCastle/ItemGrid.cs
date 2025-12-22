@@ -194,8 +194,8 @@ namespace ScaryCastle
             }
         }
 
-        // GetSlot
-        public ItemGridSlot? GetSlot(Item item)
+        // FindSlot
+        public ItemGridSlot? FindSlot(Item item)
         {
             for (var i = 0; i < slots.Count; i++)
             {
@@ -206,14 +206,14 @@ namespace ScaryCastle
             return null;
         }
 
-        // GetSlotAt
-        public ItemGridSlot? GetSlotAt(Vector2 position)
+        // FindSlotAt
+        public ItemGridSlot? FindSlotAt(Vector2 position)
         {
-            return GetSlotAt((int)position.X, (int)position.Y);
+            return FindSlotAt((int)position.X, (int)position.Y);
         }
 
-        // GetSlotAt
-        public ItemGridSlot? GetSlotAt(int x, int y)
+        // FindSlotAt
+        public ItemGridSlot? FindSlotAt(int x, int y)
         {
             if (!BoundingBox.Contains(x, y))
                 return null;
@@ -281,7 +281,7 @@ namespace ScaryCastle
         {
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
             {
-                if (GetSlotAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is ItemGridSlot slot)
+                if (FindSlotAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is ItemGridSlot slot)
                 {
                     MouseCursor.Instance.AnimateClick();
 
@@ -334,7 +334,7 @@ namespace ScaryCastle
         // SelectSlot
         public void SelectSlot(Vector2 position)
         {
-            if (GetSlotAt(position) is ItemGridSlot slot)
+            if (FindSlotAt(position) is ItemGridSlot slot)
                 SelectSlot(slot);
         }
 

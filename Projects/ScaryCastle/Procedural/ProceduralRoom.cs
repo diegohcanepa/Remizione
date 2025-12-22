@@ -99,7 +99,7 @@ namespace ScaryCastle
                 if (!Session.UnlockedPool.IsUnlocked(config.Name))
                     continue;
 
-                var thing = Session.GetStaticThing(config.Name) ?? throw new InvalidOperationException($"There is no static thing named '{config.Name}'. ");
+                var thing = Session.FindDeclaredThing(config.Name) ?? throw new InvalidOperationException($"There is no static thing named '{config.Name}'. ");
 
                 // Is expected type?
                 if (thing is not T)
@@ -211,7 +211,7 @@ namespace ScaryCastle
             {
                 var dropPosition = WalkArea != null ? WalkArea.Polygon.BoundingRectangleF.Center : BoundingBox.Center;
                 Session.ObjectPools.Pickups.Get()?.Drop(this, dropPosition, drop);
-                RoomGraph.SackCount++;
+                RoomGraph.LootCount++;
             }
         }
 

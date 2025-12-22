@@ -89,20 +89,20 @@ namespace ScaryCastle
             return result;
         }
 
-        // GetRandomMetaItem
-        public MetaItem? GetRandomMetaItem()
+        // FindRandomMetaItem
+        public MetaItem? FindRandomMetaItem()
         {
             return GetMetaItems().GetRandomItem();
         }
 
-        // GetRandomMetaItem
-        public MetaItem? GetRandomMetaItem(ItemCategory category)
+        // FindRandomMetaItem
+        public MetaItem? FindRandomMetaItem(ItemCategory category)
         {
             return GetMetaItems(category).GetRandomItem();
         }
 
-        // GetRandomMetaItem
-        public MetaItem? GetRandomMetaItem(Realm realm)
+        // FindRandomMetaItem
+        public MetaItem? FindRandomMetaItem(Realm realm)
         {
             return GetMetaItems(realm).GetRandomItem();
         }
@@ -163,7 +163,7 @@ namespace ScaryCastle
             }
 
             // Actor / Prop
-            else if (session.GetEntity<GameThing>(name) is GameThing thing)
+            else if (session.FindEntity<GameThing>(name) is GameThing thing)
             {
                 if (thing is Actor or Prop)
                 {

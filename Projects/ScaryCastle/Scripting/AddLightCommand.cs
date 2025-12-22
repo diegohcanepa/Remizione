@@ -32,7 +32,7 @@ namespace ScaryCastle.Scripting
             result.LightKind = Parser.ParseEnumArgument(this, KindArg, LightKind.Default);
 
             // Image
-            if (body.Args.GetArg(ImageArg) is StatementArg imageFlag)
+            if (body.Args.FindArg(ImageArg) is StatementArg imageFlag)
                 result.ImageName = imageFlag.Value;
 
             // Passes

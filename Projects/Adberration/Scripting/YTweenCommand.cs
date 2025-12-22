@@ -13,10 +13,16 @@ namespace Adberration.Scripting
         }
 
         // GetEndValue
-        protected override float GetEndValue(Entity entity, float value) => HasArg(RelativeArg) ? entity.Y + value : value;
+        protected override float GetEndValue(Entity entity, float value)
+        {
+            return HasArg(RelativeArg) ? entity.Y + value : value;
+        }
 
         // GetStartValue
-        protected override float GetStartValue(Entity entity) => entity.Y;
+        protected override float GetStartValue(Entity entity)
+        {
+            return entity.Y;
+        }
 
         // SetTween
         protected override void SetTween(Entity entity, FloatTween tween)

@@ -57,7 +57,7 @@ namespace ScaryCastle
                 icons[i].Opacity = session.Players[i].IsPlayer ? 1.4f : .8f;
                 icons[i].Scale = session.Players[i].IsPlayer ? ScaleInfo.UIElement.Large : ScaleInfo.UIElement.Medium;
                 icons[i].Position = pos;
-                icons[i].Image = Atlases.UI.GetImage(session.Players[i].Name + "Icon");
+                icons[i].Image = Atlases.UI.FindImage(session.Players[i].Name + "Icon");
                 pos.X += icons[i].BoundingBox.Width;
                 return pos;
             }

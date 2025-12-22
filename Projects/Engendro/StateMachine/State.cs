@@ -43,7 +43,10 @@ namespace Engendro
         }
 
         // HandleInput
-        public HandleInputResult HandleInput(GameTime gameTime) => HandleInputResult.Unhandled;
+        public HandleInputResult HandleInput(GameTime gameTime)
+        {
+            return HandleInputResult.Unhandled;
+        }
 
         // Name
         public string Name { get; }

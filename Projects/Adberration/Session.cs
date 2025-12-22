@@ -82,7 +82,7 @@ namespace Adberration
 
             if (!string.IsNullOrEmpty(Room.Name))
             {
-                if (ScriptLibrary.GetScript(ScriptType.Enter, Room.Name) is Script script)
+                if (ScriptLibrary.FindScript(ScriptType.Enter, Room.Name) is Script script)
                 {
                     AwaitScript(script);
                     busyRooms.Push(Room);
@@ -97,7 +97,7 @@ namespace Adberration
             var names = value.Split(';');
             foreach (var name in names)
             {
-                if (GetEntity(name) is Entity entity)
+                if (FindEntity(name) is Entity entity)
                     yield return entity;
             }
         }
@@ -160,7 +160,7 @@ namespace Adberration
                     var name = values[0];
                     var value = XmlConvert.ToInt32(values[1]);
 
-                    if (ScriptEnvironment.GetCounter(name) is Counter counter)
+                    if (ScriptEnvironment.FindCounter(name) is Counter counter)
                         counter.Value = value;
                 }
             }
@@ -175,7 +175,7 @@ namespace Adberration
                     var name = values[0];
                     var value = XmlConvert.ToBoolean(values[1]);
 
-                    if (ScriptEnvironment.GetFlag(name) is Flag flag)
+                    if (ScriptEnvironment.FindFlag(name) is Flag flag)
                         flag.Value = value;
                 }
             }
@@ -187,7 +187,7 @@ namespace Adberration
             // Current Room
             Room? result = null;
             if (sessionNode.Attributes[GameSessionPersistenceAttributeName.Room.ToString()]?.Value is string roomName)
-                result = GetEntity<Room>(roomName);
+                result = FindEntity<Room>(roomName);
 
             if (result == null)
                 throw new InvalidOperationException("Save file has an undefined room.");
@@ -206,7 +206,7 @@ namespace Adberration
 
             // Previous Room
             if (sessionNode.Attributes[GameSessionPersistenceAttributeName.PreviousRoom.ToString()]?.Value is string previousRoomValue)
-                PreviousRoom = GetEntity<Room>(previousRoomValue);
+                PreviousRoom = FindEntity<Room>(previousRoomValue);
 
             // PlayTime
             if (sessionNode.Attributes[GameSessionPersistenceAttributeName.PlayTime.ToString()]?.Value is string playTimeValue)
@@ -244,7 +244,7 @@ namespace Adberration
                     var children = attributes[ChildrenAttribute]?.Value;
 
                     // If entity is declared...
-                    if (GetEntity(name) is Entity targetEntity)
+                    if (FindEntity(name) is Entity targetEntity)
                     {
                         existingEntities.Add(targetEntity);
                         if (children != null)
@@ -266,7 +266,7 @@ namespace Adberration
             // Step 3: Recreate Parent-Child relationship
             foreach (var keyValue in childrenInfo)
             {
-                var parent = GetEntity(keyValue.Key);
+                var parent = FindEntity(keyValue.Key);
 
                 if (parent != null)
                 {
@@ -283,7 +283,7 @@ namespace Adberration
             {
                 if (entityElement?.Attributes?[NameAttribute]?.Value is string name)
                 {
-                    if (GetEntity(name) is Entity targetEntity)
+                    if (FindEntity(name) is Entity targetEntity)
                     {
                         // Properties
                         if (targetEntity.Persistent)
@@ -697,7 +697,10 @@ namespace Adberration
         #region Internal members
 
         // NextEntityId
-        internal long NextEntityId() => ++nextEntityId;
+        internal long NextEntityId()
+        {
+            return ++nextEntityId;
+        }
 
         // RegisterEntity
         internal void RegisterEntity(Entity entity)
@@ -729,7 +732,7 @@ namespace Adberration
         // AwaitRoutine
         public bool AwaitRoutine(string name)
         {
-            if (ScriptLibrary.GetRoutine(name) is Script script)
+            if (ScriptLibrary.FindRoutine(name) is Script script)
             {
                 AwaitScript(script);
                 return true;
@@ -845,7 +848,7 @@ namespace Adberration
                 var negate = flags[i].StartsWith(ScriptSyntax.LogicalNegation, StringComparison.Ordinal);
                 var flagName = negate ? flags[i].Substring(1) : flags[i];
 
-                if (ScriptEnvironment.GetFlag(flagName) is Flag flag)
+                if (ScriptEnvironment.FindFlag(flagName) is Flag flag)
                     expressions.Add(new FlagExpression(flag, negate));
                 else
                     throw new InvalidOperationException("Flag not found during evaluation.");
@@ -895,7 +898,7 @@ namespace Adberration
             this.Room = nextRoom;
 
             // EnterRoom event (Global)
-            if (ScriptLibrary.GetScript(ScriptType.EnterRoom.ToString()) is Script script)
+            if (ScriptLibrary.FindScript(ScriptType.EnterRoom.ToString()) is Script script)
                 ScriptProcessor.RunScript(script);
 
             nextRoom.Load();
@@ -914,19 +917,8 @@ namespace Adberration
         // Entities
         public NamedObjectReadOnlyCollection<Entity> Entities { get; }
 
-        // Game
-        public new AdventureGame Game { get; }
-
-        // GenerateRandomNumber
-        public int GenerateRandomNumber(string name, Int32Range range)
-        {
-            var result = range.GetRandomValue(Random.Shared);
-            randomNumbers[name] = result;
-            return result;
-        }
-
-        // GetEntity
-        public Entity? GetEntity(string name)
+        // FindEntity
+        public Entity? FindEntity(string name)
         {
             AssertInitialized();
             CodeContract.NotDisposed(nameof(Session), IsDisposed);
@@ -939,33 +931,46 @@ namespace Adberration
                 return null;
         }
 
-        // GetEntity
-        public T? GetEntity<T>(string name) where T : Entity
+        // FindEntity
+        public T? FindEntity<T>(string name) where T : Entity
         {
-            return GetEntity(name) as T;
+            return FindEntity(name) as T;
         }
 
-        // GetEntityNotNull
-        public Entity GetEntityNotNull(string name)
+        // Game
+        public new AdventureGame Game { get; }
+
+        // GenerateRandomNumber
+        public int GenerateRandomNumber(string name, Int32Range range)
         {
-            var result = GetEntity(name);
+            var result = range.GetRandomValue(Random.Shared);
+            randomNumbers[name] = result;
+            return result;
+        }
+
+        // GetEntity
+        public Entity GetEntity(string name)
+        {
+            var result = FindEntity(name);
             if (result == null)
                 throw new InvalidOperationException($"Entity '{name}' does not exist.");
             else
                 return result;
         }
 
-        // GetEntityNotNull
-        public T GetEntityNotNull<T>(string name) where T : Entity
+        // GetEntity
+        public T GetEntity<T>(string name) where T : Entity
         {
-            if (GetEntity(name) is not T result)
+            if (FindEntity(name) is not T result)
                 throw new InvalidOperationException($"Entity '{name}' does not exist.");
             else
                 return result;
         }
-
         // GetRandomNumber
-        public int GetRandomNumber(string name) => randomNumbers[name];
+        public int GetRandomNumber(string name)
+        {
+            return randomNumbers[name];
+        }
 
         // IsAwaiting
         [ScriptProperty]
@@ -974,10 +979,7 @@ namespace Adberration
         // IsAwaitingScript
         public bool IsAwaitingScript(Script script)
         {
-            if (awaitingScripts.Count == 0)
-                return false;
-
-            return awaitingScripts.Contains(script);
+            return awaitingScripts.Count != 0 && awaitingScripts.Contains(script);
         }
 
         // IsDemo
@@ -988,7 +990,10 @@ namespace Adberration
         public bool IsDisposed { get; private set; }
 
         // IsEnteringRoom
-        public bool IsEnteringRoom(Room room) => busyRooms.Contains(room);
+        public bool IsEnteringRoom(Room room)
+        {
+            return busyRooms.Contains(room);
+        }
 
         // IsFirstRoomSinceLoad
         [ScriptProperty]
@@ -1082,7 +1087,7 @@ namespace Adberration
             if (IsNewSession)
             {
                 // New session script
-                if (ScriptLibrary.GetScript(ScriptType.NewSession.ToString()) is Script newSessionScript)
+                if (ScriptLibrary.FindScript(ScriptType.NewSession.ToString()) is Script newSessionScript)
                     AwaitScript(newSessionScript);
                 else
                     throw new InvalidOperationException("Undefined 'NewSession' script.");
@@ -1173,10 +1178,8 @@ namespace Adberration
                 {
                     using (stm)
                     {
-                        using (var input = !XOREncryptor.IsEncryptedXml(stm) ? stm : XOREncryptor.AsStream(stm, XOREncryptor.EncryptionKey))
-                        {
-                            startingRoom = ReadCore(input);
-                        }
+                        using var input = !XOREncryptor.IsEncryptedXml(stm) ? stm : XOREncryptor.AsStream(stm, XOREncryptor.EncryptionKey);
+                        startingRoom = ReadCore(input);
                     }
                 }
 
@@ -1226,7 +1229,7 @@ namespace Adberration
                 if (name2 == null)
                     return 1;
 
-                return name1.CompareTo(name2);
+                return name1.CompareTo(name2, StringComparison.InvariantCulture);
             }
         }
     }

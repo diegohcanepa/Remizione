@@ -17,12 +17,18 @@ namespace Engendro
         #endregion
 
         // IsTriggered
-        public virtual bool IsTriggered() => false;
+        public virtual bool IsTriggered()
+        {
+            return false;
+        }
 
         // Owner
         public T Owner { get; } = owner;
 
         // Update
-        public void Update(GameTime gameTime) => OnUpdate(gameTime);
+        public void Update(GameTime gameTime)
+        {
+            OnUpdate(gameTime);
+        }
     }
 }

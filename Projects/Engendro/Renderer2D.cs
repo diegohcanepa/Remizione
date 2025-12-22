@@ -79,7 +79,10 @@ namespace Engendro
         public RenderTarget2D PreviousTarget => index == 0 ? renderTargets[1] : renderTargets[0];
 
         // Swap
-        public RenderTarget2D Swap() => Swap(false);
+        public RenderTarget2D Swap()
+        {
+            return Swap(false);
+        }
 
         // Swap
         public RenderTarget2D Swap(bool clear)

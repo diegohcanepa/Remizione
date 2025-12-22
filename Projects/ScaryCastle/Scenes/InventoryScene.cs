@@ -77,7 +77,7 @@ namespace ScaryCastle
                 ImageSprite image;
                 if (categories[i] == null)
                 {
-                    image = new(Game, Atlases.UI.GetImage("InventoryCategoryAll"))
+                    image = new(Game, Atlases.UI.FindImage("InventoryCategoryAll"))
                     {
                         PivotOrigin = RectanglePoint.Center,
                         Scale = ScaleInfo.UIElement.Medium
@@ -85,7 +85,7 @@ namespace ScaryCastle
                 }
                 else
                 {
-                    image = new(Game, Atlases.UI.GetImage($"InventoryCategory{categories[i]}"))
+                    image = new(Game, Atlases.UI.FindImage($"InventoryCategory{categories[i]}"))
                     {
                         PivotOrigin = RectanglePoint.Center,
                         Scale = ScaleInfo.UIElement.Medium

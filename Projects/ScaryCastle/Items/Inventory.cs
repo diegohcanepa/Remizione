@@ -105,7 +105,7 @@ namespace ScaryCastle
             if (items.Count == 0)
                 return null;
 
-            var currentItem = GetEquippedItem(category);
+            var currentItem = FindEquippedItem(category);
             var index = currentItem == null ? -1 : items.IndexOf(currentItem);
 
             for (var i = 1; i <= items.Count; i++)
@@ -129,7 +129,7 @@ namespace ScaryCastle
             if (items.Count == 0)
                 return null;
 
-            var currentItem = GetEquippedItem(category);
+            var currentItem = FindEquippedItem(category);
             var index = currentItem == null ? items.Count : items.IndexOf(currentItem);
 
             for (var i = 1; i <= items.Count; i++)
@@ -159,17 +159,8 @@ namespace ScaryCastle
             return null;
         }
 
-        // FindNotNull
-        public Item FindNotNull(string name)
-        {
-            return Find(name) ?? throw new InvalidOperationException($"Item '{name}' not found.");
-        }
-
-        // Gadget
-        public Item? Gadget { get; private set; }
-
-        // GetEquippedItem
-        public Item? GetEquippedItem(ItemCategory category)
+        // FindEquippedItem
+        public Item? FindEquippedItem(ItemCategory category)
         {
             return category switch
             {
@@ -178,6 +169,15 @@ namespace ScaryCastle
                 ItemCategory.Gadget => Gadget,
                 _ => null,
             };
+        }
+
+        // Gadget
+        public Item? Gadget { get; private set; }
+
+        // GetItem
+        public Item GetItem(string name)
+        {
+            return Find(name) ?? throw new InvalidOperationException($"Item '{name}' not found.");
         }
 
         // GetItems

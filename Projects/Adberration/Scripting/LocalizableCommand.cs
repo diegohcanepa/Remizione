@@ -21,7 +21,7 @@ namespace Adberration.Scripting
         {
             var result = 0;
 
-            var value = Body.Args.GetArg(LocalizationIdArg)?.Value;
+            var value = Body.Args.FindArg(LocalizationIdArg)?.Value;
             if (value != null)
             {
                 if (value.Trim() == "?")
@@ -57,18 +57,18 @@ namespace Adberration.Scripting
         // EncodeTextKey
         internal string EncodeTextKey()
         {
-            var value = Body.Args.GetArg(LocalizationIdArg)?.Value;
+            var value = Body.Args.FindArg(LocalizationIdArg)?.Value;
             return value == null ? string.Empty : (ScriptSyntax.RootLocalizationImportsKey + "." + Script.Name + "." + value);
         }
 
         // GetDisplayText
-        internal protected string GetDisplayText()
+        protected internal string GetDisplayText()
         {
             return GetDisplayText(Session.LocalizationSource);
         }
 
         // GetDisplayText
-        internal protected string GetDisplayText(LocalizationSource textSource)
+        protected internal string GetDisplayText(LocalizationSource textSource)
         {
             var result = Parser.ParseQuotedString(this, TextClauseIndex);
 

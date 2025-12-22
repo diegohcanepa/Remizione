@@ -7,14 +7,17 @@ namespace Engendro
     /// </summary>
     public static class Vector3Extensions
     {
-        // Round
-        public static Vector3 Round(this Vector3 value, int decimals)
+        extension(Vector3 value)
         {
-            value.X = value.X.Round(decimals);
-            value.Y = value.Y.Round(decimals);
-            value.Z = value.Z.Round(decimals);
+            // Round
+            public Vector3 Round(int decimals)
+            {
+                value.X = value.X.Round(decimals);
+                value.Y = value.Y.Round(decimals);
+                value.Z = value.Z.Round(decimals);
 
-            return value;
+                return value;
+            }
         }
     }
 }

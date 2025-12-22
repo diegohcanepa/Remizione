@@ -34,7 +34,7 @@ namespace Adberration
             // Entity
             if (typeof(Entity).IsAssignableFrom(propertyInfo.PropertyType))
             {
-                var entityValue = value == null ? null : entity.Session.GetEntity(value);
+                var entityValue = value == null ? null : entity.Session.FindEntity(value);
                 propertyInfo.SetValue(entity, entityValue);
                 return;
             }

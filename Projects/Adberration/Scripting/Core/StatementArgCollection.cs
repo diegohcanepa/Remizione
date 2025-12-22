@@ -18,11 +18,11 @@ namespace Adberration.Scripting
         // Contains
         public bool Contains(string name)
         {
-            return GetArg(name) != null;
+            return FindArg(name) != null;
         }
 
-        // GetArg
-        public StatementArg? GetArg(string name)
+        // FindArg
+        public StatementArg? FindArg(string name)
         {
             for (var i = 0; i < Count; i++)
             {
@@ -36,6 +36,6 @@ namespace Adberration.Scripting
         }
 
         // Index
-        public StatementArg this[string name] => GetArg(name) ?? throw new ArgumentException("Name not found in the collection.", nameof(name));
+        public StatementArg this[string name] => FindArg(name) ?? throw new ArgumentException("Name not found in the collection.", nameof(name));
     }
 }

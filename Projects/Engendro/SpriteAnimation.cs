@@ -110,14 +110,8 @@ namespace Engendro
         // Duration
         public int Duration { get; private set; }
 
-        // FrameCount
-        public int FrameCount => frameList.Count;
-
-        // GetFrame
-        public SpriteFrame GetFrame(int index) => frameList[index];
-
-        // GetFrame
-        public SpriteFrame? GetFrame(string label)
+        // FindFrame
+        public SpriteFrame? FindFrame(string label)
         {
             if (string.IsNullOrWhiteSpace(label))
                 return null;
@@ -131,8 +125,20 @@ namespace Engendro
             return null;
         }
 
+        // FrameCount
+        public int FrameCount => frameList.Count;
+
+        // GetFrame
+        public SpriteFrame GetFrame(int index)
+        {
+            return frameList[index];
+        }
+
         // GetFrames
-        public SpriteFrame[] GetFrames() => frameList.ToArray();
+        public SpriteFrame[] GetFrames()
+        {
+            return frameList.ToArray();
+        }
 
         // Name
         public string Name { get; }
@@ -141,6 +147,9 @@ namespace Engendro
         public AnimatedSprite Sprite { get; }
 
         // ToString
-        public override string ToString() => Name;
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

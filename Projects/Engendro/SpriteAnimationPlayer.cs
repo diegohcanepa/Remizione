@@ -205,7 +205,7 @@ namespace Engendro
         // GoTo
         public bool GoTo(string label)
         {
-            if (Animation?.GetFrame(label) is SpriteFrame frame)
+            if (Animation?.FindFrame(label) is SpriteFrame frame)
             {
                 GoTo(frame.Index);
                 return true;

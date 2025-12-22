@@ -5,16 +5,19 @@
     /// </summary>
     public static class IntExtensions
     {
-        // IsBetween
-        public static bool IsBetween(this int value, int min, int max)
+        extension(int value)
         {
-            return value >= min && value <= max;
-        }
+            // IsBetween
+            public bool IsBetween(int min, int max)
+            {
+                return value >= min && value <= max;
+            }
 
-        // IsOddNumber
-        public static bool IsOddNumber(this int value)
-        {
-            return value != 0 && value % 2 != 0;
+            // IsOddNumber
+            public bool IsOddNumber()
+            {
+                return value != 0 && value % 2 != 0;
+            }
         }
     }
 }

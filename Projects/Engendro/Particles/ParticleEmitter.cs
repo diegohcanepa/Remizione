@@ -163,7 +163,10 @@ namespace Engendro
         public int BurstInterval { get; set; }
 
         // Deactivate
-        public void Deactivate() => IsActive = false;
+        public void Deactivate()
+        {
+            IsActive = false;
+        }
 
         // Duration
         public int Duration { get; set; }

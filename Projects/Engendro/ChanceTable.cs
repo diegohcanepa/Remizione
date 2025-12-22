@@ -44,7 +44,10 @@ namespace Engendro
         }
 
         // GetValue
-        public ChanceTableItem? GetValue() => GetValue(random);
+        public ChanceTableItem? GetValue()
+        {
+            return GetValue(random);
+        }
 
         // GetValue
         public ChanceTableItem? GetValue(Random random)
@@ -134,6 +137,9 @@ namespace Engendro
         }
 
         // SetSeed
-        public void SetSeed(int seed) => random = new Random(seed);
+        public void SetSeed(int seed)
+        {
+            random = new Random(seed);
+        }
     }
 }

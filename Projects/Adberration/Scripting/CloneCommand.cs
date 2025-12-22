@@ -22,7 +22,7 @@
         private void AssertEntityClassCreation(string staticName)
         {
             // Check if declaration script exists
-            var declarationScript = Session.ScriptLibrary.GetDeclaration(staticName) ?? throw new ScriptException(this, $"The entity class '{staticName}' is not declared.");
+            var declarationScript = Session.ScriptLibrary.FindDeclaration(staticName) ?? throw new ScriptException(this, $"The entity class '{staticName}' is not declared.");
 
             // Check if entity is cloneable
             if (!declarationScript.Cloneable)
@@ -39,12 +39,12 @@
         // CreateCloneInstance
         private void CreateCloneInstance(string name)
         {
-            var staticName = ScriptSyntax.GetStaticName(name);
+            var staticName = ScriptSyntax.GetDeclaredName(name);
             var instanceName = name == staticName ? string.Empty : name;
             var thing = Session.ScriptEnvironment.CreateRuntimeThingClone(staticName, instanceName, HasArg(PersistentArg));
 
             // Parent (assign parent at last place to ensure correct values before the controller starts)
-            var flag = Body.Args.GetArg(ParentArg);
+            var flag = Body.Args.FindArg(ParentArg);
             if (flag?.Value != null)
             {
                 if (AssertEntity<Entity>(flag.Value) is Entity parent)
@@ -58,7 +58,7 @@
         // ExecuteCore
         private void ExecuteCore()
         {
-            AssertEntityClassCreation(ScriptSyntax.GetStaticName(Body.Clauses[0]));
+            AssertEntityClassCreation(ScriptSyntax.GetDeclaredName(Body.Clauses[0]));
 
             if (HasArg(RangeArg))
             {

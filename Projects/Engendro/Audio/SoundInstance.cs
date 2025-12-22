@@ -190,14 +190,8 @@ namespace Engendro.Audio
             }
         }
 
-        // GetEffectiveVolume
-        public float GetEffectiveVolume()
-        {
-            return Sound.Volume * Volume.Master * Sound.Category.Volume.Master;
-        }
-
-        // GetRunningInstance
-        public static SoundInstance? GetRunningInstance(string name)
+        // FindRunningInstance
+        public static SoundInstance? FindRunningInstance(string name)
         {
             for (var i = 0; i < runningInstances.Count; i++)
             {
@@ -206,6 +200,12 @@ namespace Engendro.Audio
             }
 
             return null;
+        }
+
+        // GetEffectiveVolume
+        public float GetEffectiveVolume()
+        {
+            return Sound.Volume * Volume.Master * Sound.Category.Volume.Master;
         }
 
         // GetRunningInstances
@@ -270,7 +270,10 @@ namespace Engendro.Audio
         }
 
         // Play
-        public void Play() => Play(0);
+        public void Play()
+        {
+            Play(0);
+        }
 
         // Play
         public void Play(int fadeIn)
@@ -296,7 +299,10 @@ namespace Engendro.Audio
         }
 
         // PlayDelayed
-        public void PlayDelayed(int delay) => PlayDelayed(delay, 0);
+        public void PlayDelayed(int delay)
+        {
+            PlayDelayed(delay, 0);
+        }
 
         // PlayDelayed
         public void PlayDelayed(int delay, int fadeIn)
@@ -378,7 +384,10 @@ namespace Engendro.Audio
         }
 
         // Stop
-        public void Stop() => Stop(0);
+        public void Stop()
+        {
+            Stop(0);
+        }
 
         // Stop
         public void Stop(int fadeOut)
@@ -394,7 +403,10 @@ namespace Engendro.Audio
         }
 
         // ToString
-        public override string ToString() => Sound.ToString();
+        public override string ToString()
+        {
+            return Sound.ToString();
+        }
 
         // TransitionAware
         public bool TransitionAware { get; set; } = true;

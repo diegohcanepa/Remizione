@@ -81,7 +81,7 @@ namespace ScaryCastle
         // InvalidateItem
         private void InvalidateItem()
         {
-            lastKnownItem = session.Inventory.GetEquippedItem(ItemCategory);
+            lastKnownItem = session.Inventory.FindEquippedItem(ItemCategory);
 
             if (lastKnownItem != null)
             {
@@ -93,7 +93,7 @@ namespace ScaryCastle
             else
             {
                 lastKnownCount = 0;
-                itemImage.Image = Atlases.UI.GetImage($"InventoryCategory{ItemCategory}");
+                itemImage.Image = Atlases.UI.FindImage($"InventoryCategory{ItemCategory}");
                 itemImage.Opacity = .2f;
                 itemImage.Scale = ScaleInfo.UIElement.Medium;
                 itemImageScaleTween.Stop();
@@ -136,7 +136,7 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (lastKnownItem != session.Inventory.GetEquippedItem(ItemCategory))
+            if (lastKnownItem != session.Inventory.FindEquippedItem(ItemCategory))
                 InvalidateItem();
             else
                 InvalidateItemAmount(false);
@@ -164,7 +164,9 @@ namespace ScaryCastle
                         Sound.Play(SoundNames.UIHover);
                 }
                 else
+                {
                     session.Player.UseEquippedItem(ItemCategory);
+                }
 
                 return HandleInputResult.Handled;
             }

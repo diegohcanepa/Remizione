@@ -39,7 +39,10 @@ namespace ScaryCastle
         #endregion
 
         // GetSpriteFont
-        public static SpriteFont GetSpriteFont(string assetName) => assets[assetName];
+        public static SpriteFont GetSpriteFont(string assetName)
+        {
+            return assets[assetName];
+        }
 
         // Initialize
         public static void Initialize(ContentManager content)

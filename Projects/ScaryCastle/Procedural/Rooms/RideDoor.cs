@@ -40,7 +40,7 @@ namespace ScaryCastle
             CloseSound = Sound.Find("DoorClose");
             OpenSound = Sound.Find("DoorOpen");
 
-            this.lockImage = new(Game, Atlas.GetImage($"{StaticName}Lock"));
+            this.lockImage = new(Game, Atlas.FindImage($"{DeclaredName}Lock"));
 
             SetStateHandler(PropState.Closed, Close);
             SetStateHandler(PropState.Locked, Lock);
@@ -57,7 +57,7 @@ namespace ScaryCastle
         // BackToHub
         private void BackToHub(RideDoor hubDoor)
         {
-            if (Session.GetEntity<Hub>("Hub") is not Hub hubRoom)
+            if (Session.FindEntity<Hub>("Hub") is not Hub hubRoom)
                 return;
 
             ConnectCore(hubRoom, hubDoor.BoundingBox.GetPoint(RectanglePoint.Bottom));

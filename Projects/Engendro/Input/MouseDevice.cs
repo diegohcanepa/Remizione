@@ -66,7 +66,10 @@ namespace Engendro.Input
         #endregion
 
         // HasInput
-        public override bool HasInput() => state != previousState;
+        public override bool HasInput()
+        {
+            return state != previousState;
+        }
 
         // IsLeftButtonDown
         public bool IsLeftButtonDown()
@@ -111,7 +114,10 @@ namespace Engendro.Input
         public MouseState PreviousState => previousState;
 
         // Reset
-        public override void Reset() => previousState = state;
+        public override void Reset()
+        {
+            previousState = state;
+        }
 
         // Tag
         public object? Tag { get; set; }
@@ -120,7 +126,10 @@ namespace Engendro.Input
         public Vector2 VirtualPosition => EngendroGame.Instance.ViewportAdapter.ToVirtual(Position);
 
         // WorldPosition
-        public Vector2 WorldPosition(Camera camera) => (VirtualPosition / camera.Zoom) + camera.Offset;
+        public Vector2 WorldPosition(Camera camera)
+        {
+            return (VirtualPosition / camera.Zoom) + camera.Offset;
+        }
 
         // X
         public int X => state.X;

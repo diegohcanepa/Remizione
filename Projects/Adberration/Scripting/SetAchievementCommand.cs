@@ -11,7 +11,7 @@ namespace Adberration.Scripting
             : base(script, source, body, 1)
         {
             var achievementId = body.Clauses[0];
-            if (AchievementManager.GetAchievement(achievementId) == null)
+            if (AchievementManager.FindAchievement(achievementId) == null)
                 throw new ScriptException(this, $"Achievement not found: '{achievementId}'.");
         }
 

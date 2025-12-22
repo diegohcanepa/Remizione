@@ -356,10 +356,16 @@ namespace Engendro.Audio
         public float Pitch { get; }
 
         // Play
-        public SoundInstance? Play() => Play(false, null);
+        public SoundInstance? Play()
+        {
+            return Play(false, null);
+        }
 
         // Play
-        public SoundInstance? Play(bool looped) => Play(looped, null);
+        public SoundInstance? Play(bool looped)
+        {
+            return Play(looped, null);
+        }
 
         // Play
         public SoundInstance? Play(bool looped, ISoundEmitter? emitter)
@@ -378,7 +384,10 @@ namespace Engendro.Audio
         }
 
         // Play
-        public static SoundInstance? Play(string name, bool looped = false) => Play(name, looped, true);
+        public static SoundInstance? Play(string name, bool looped = false)
+        {
+            return Play(name, looped, true);
+        }
 
         // Play
         public static SoundInstance? Play(string name, bool looped, bool transitionAware)
@@ -398,7 +407,10 @@ namespace Engendro.Audio
         public SoundPopMode PopMode { get; }
 
         // PopInstance
-        public SoundInstance? PopInstance() => PopInstance(-1);
+        public SoundInstance? PopInstance()
+        {
+            return PopInstance(-1);
+        }
 
         // PopInstance
         public SoundInstance? PopInstance(int index)
@@ -480,7 +492,10 @@ namespace Engendro.Audio
         public static NamedObjectReadOnlyCollection<Sound> Sounds { get; }
 
         // Stop
-        public void Stop() => Stop(0);
+        public void Stop()
+        {
+            Stop(0);
+        }
 
         // Stop
         public void Stop(int fadeOut)
@@ -501,7 +516,10 @@ namespace Engendro.Audio
         public ReadOnlyCollection<string> Tags { get; }
 
         // ToString
-        public override string ToString() => Name;
+        public override string ToString()
+        {
+            return Name;
+        }
 
         // TransitionAware
         public bool TransitionAware { get; }

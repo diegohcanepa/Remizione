@@ -49,6 +49,9 @@
         // Left
         public RoomGraph? Left { get; set; }
 
+        // LootCount
+        public int LootCount { get; set; }
+
         // Realm
         public Realm Realm { get; set; }
 
@@ -60,9 +63,6 @@
 
         // RoomType
         public RoomType RoomType { get; set; }
-
-        // SackCount
-        public int SackCount { get; set; }
 
         // ToString
         public override string ToString()

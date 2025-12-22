@@ -43,15 +43,15 @@ namespace Adberration.Scripting
             if (tokens[0] == ScriptSyntax.SessionKeyword && tokens.Length == 2)
             {
                 Instance = script.Session;
-                method = script.Session.ScriptEnvironment.GetSessionMethod(tokens[1]);
+                method = script.Session.ScriptEnvironment.FindSessionMethod(tokens[1]);
             }
 
             // Session.Entity.Method
             else if (tokens[0] == ScriptSyntax.SessionKeyword && tokens.Length == 3)
             {
-                if (script.Session.ScriptEnvironment.GetSessionProperty(tokens[1]) is ScriptProperty entityProperty)
+                if (script.Session.ScriptEnvironment.FindSessionProperty(tokens[1]) is ScriptProperty entityProperty)
                 {
-                    method = script.Session.ScriptEnvironment.GetMethod(entityProperty.PropertyType, tokens[2]);
+                    method = script.Session.ScriptEnvironment.FindMethod(entityProperty.PropertyType, tokens[2]);
                     Instance = entityProperty.GetValue(script.Session);
                 }
             }
@@ -59,10 +59,10 @@ namespace Adberration.Scripting
             // Entity.Method
             else
             {
-                if (script.Session.GetEntity<Entity>(tokens[0]) is Entity entity)
+                if (script.Session.FindEntity<Entity>(tokens[0]) is Entity entity)
                 {
                     Instance = entity;
-                    method = script.Session.ScriptEnvironment.GetMethod(Instance.GetType(), tokens[1]);
+                    method = script.Session.ScriptEnvironment.FindMethod(Instance.GetType(), tokens[1]);
                 }
             }
 

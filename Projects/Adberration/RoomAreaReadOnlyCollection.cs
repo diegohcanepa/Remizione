@@ -18,23 +18,23 @@ namespace Adberration
         // Contains
         public bool Contains(float x, float y)
         {
-            return GetAreaAt(x, y) != null;
+            return FindAreaAt(x, y) != null;
         }
 
         // Contains
         public bool Contains(Vector2 position)
         {
-            return GetAreaAt(position) != null;
+            return FindAreaAt(position) != null;
         }
 
-        // GetAreaAt
-        public T? GetAreaAt(float x, float y)
+        // FindAreaAt
+        public T? FindAreaAt(float x, float y)
         {
-            return GetAreaAt(new Vector2(x, y));
+            return FindAreaAt(new Vector2(x, y));
         }
 
-        // GetAreaAt
-        public T? GetAreaAt(Vector2 position)
+        // FindAreaAt
+        public T? FindAreaAt(Vector2 position)
         {
             for (var i = 0; i < Count; i++)
             {

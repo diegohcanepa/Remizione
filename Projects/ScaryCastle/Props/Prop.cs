@@ -37,7 +37,10 @@ namespace ScaryCastle
         #region Private members
 
         // InvalidateShadowImage
-        private void InvalidateShadowImage() => shadow.Image = Atlas?.GetImage(GetDefaultImageName() + "Shadow");
+        private void InvalidateShadowImage()
+        {
+            shadow.Image = Atlas?.FindImage(GetDefaultImageName() + "Shadow");
+        }
 
         #endregion
 
@@ -51,7 +54,10 @@ namespace ScaryCastle
         }
 
         // OnDrawShadow
-        protected override void OnDrawShadow(GameTime gameTime) => shadow.Draw(gameTime);
+        protected override void OnDrawShadow(GameTime gameTime)
+        {
+            shadow.Draw(gameTime);
+        }
 
         // OnInitializeState
         protected virtual void OnInitializeState(PropState state)

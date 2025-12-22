@@ -29,9 +29,9 @@ namespace Adberration
             //if (InstanceKind != InstanceKind.Anonymous)
             {
                 if (!string.IsNullOrWhiteSpace(name))
-                    OutcomeScript = session.ScriptLibrary.GetOutcome(name);
+                    OutcomeScript = session.ScriptLibrary.FindOutcome(name);
 
-                OutcomeScript ??= session.ScriptLibrary.GetOutcome(StaticName);
+                OutcomeScript ??= session.ScriptLibrary.FindOutcome(DeclaredName);
             }
         }
 
@@ -50,7 +50,10 @@ namespace Adberration
         #region Protected members
 
         // CalculateSpeed
-        protected virtual float CalculateSpeed() => Speed;
+        protected virtual float CalculateSpeed()
+        {
+            return Speed;
+        }
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)

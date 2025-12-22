@@ -19,7 +19,10 @@ namespace ScaryCastle.Scripting
         }
 
         // GetTextEmitterName()
-        protected override string GetTextEmitterName() => "Player";
+        protected override string GetTextEmitterName()
+        {
+            return "Player";
+        }
 
         // OnExecute
         protected override void OnExecute()

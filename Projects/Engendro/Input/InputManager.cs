@@ -87,11 +87,14 @@ namespace Engendro.Input
         // DefaultPlayer
         public static PlayerInputManager DefaultPlayer => playerInputManagers[0];
 
-        // GetBinding
-        public static InputBinding? GetBinding(string name) => bindings.TryGetValue(name, out var value) ? value : null;
+        // FindBinding
+        public static InputBinding? FindBinding(string name)
+        {
+            return bindings.TryGetValue(name, out var value) ? value : null;
+        }
 
-        // GetBindingNotNull
-        public static InputBinding GetBindingNotNull(string name)
+        // GetBinding
+        public static InputBinding GetBinding(string name)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -122,7 +125,10 @@ namespace Engendro.Input
         public static ReadOnlyCollection<PlayerInputManager> Players { get; }
 
         // Reset
-        public static void Reset() => Suspend(50);
+        public static void Reset()
+        {
+            Suspend(50);
+        }
 
         // Suspend
         public static void Suspend(int duration)

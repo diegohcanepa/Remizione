@@ -49,7 +49,10 @@ namespace Engendro
         }
 
         // GetSpeedFactor
-        protected virtual float GetSpeedFactor() => 1;
+        protected virtual float GetSpeedFactor()
+        {
+            return 1;
+        }
 
         // InternalImage
         protected AtlasImage? InternalImage

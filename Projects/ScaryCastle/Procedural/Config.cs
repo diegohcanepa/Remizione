@@ -44,10 +44,10 @@ namespace ScaryCastle
                 RequiresDeadEnd = requiresDeadEndElement.GetBoolean();
 
             // Tags
-            Tags = ConfigHelper.GetTags(element, "tags");
+            Tags = Tags.FromJson(element, "tags");
 
             // Pools
-            Pools = ConfigHelper.GetTags(element, "pools");
+            Pools = Tags.FromJson(element, "pools");
 
             // Unlocked
             if (element.TryGetProperty("unlocked", out JsonElement unlockedElement))

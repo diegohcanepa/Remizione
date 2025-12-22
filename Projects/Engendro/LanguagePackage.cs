@@ -36,7 +36,7 @@ namespace Engendro
         // Add
         public static LanguagePackage Add(string languageTag, string path)
         {
-            if (GetPackage(languageTag) != null)
+            if (FindPackage(languageTag) != null)
             {
                 throw new InvalidOperationException("A package with the same language tag already exists.");
             }
@@ -52,21 +52,21 @@ namespace Engendro
         // FileExtension
         public static string FileExtension => "lpkg";
 
-        // GetPackage
-        public static LanguagePackage? GetPackage(string languageTag)
+        // FindPackage
+        public static LanguagePackage? FindPackage(string languageTag)
         {
-            return GetPackage(languageTag, false);
+            return FindPackage(languageTag, false);
         }
 
-        // GetPackage
-        public static LanguagePackage? GetPackage(string languageTag, bool closestMatch)
+        // FindPackage
+        public static LanguagePackage? FindPackage(string languageTag, bool closestMatch)
         {
             CodeContract.NotEmpty(languageTag, nameof(languageTag));
 
             // Try exact match
             for (var i = 0; i < packageList.Count; i++)
             {
-                if (string.Compare(packageList[i].LanguageTag, languageTag, true) == 0)
+                if (string.Equals(packageList[i].LanguageTag, languageTag, StringComparison.CurrentCultureIgnoreCase))
                 {
                     return packageList[i];
                 }

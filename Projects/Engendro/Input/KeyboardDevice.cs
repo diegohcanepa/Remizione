@@ -33,10 +33,16 @@ namespace Engendro.Input
         #endregion
 
         // GetPressedKeys
-        public Keys[] GetPressedKeys() => state.GetPressedKeys();
+        public Keys[] GetPressedKeys()
+        {
+            return state.GetPressedKeys();
+        }
 
         // HasInput
-        public override bool HasInput() => state.GetPressedKeys().Length > 0;
+        public override bool HasInput()
+        {
+            return state.GetPressedKeys().Length > 0;
+        }
 
         // IsAltDown
         public bool IsAltDown()

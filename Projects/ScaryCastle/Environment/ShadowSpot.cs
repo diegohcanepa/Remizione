@@ -80,7 +80,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-                    spotImage.Image = Atlases.Environment.GetImage($"{nameof(ShadowSpot)}{value}");
+                    spotImage.Image = Atlases.Environment.FindImage($"{nameof(ShadowSpot)}{value}");
                 }
             }
         }

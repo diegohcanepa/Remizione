@@ -7,22 +7,21 @@ namespace Engendro
     /// </summary>
     public static class ArrayExtensions
     {
-        // Concatenate
-        public static T[] Concatenate<T>(this T[] first, T[] second)
+        extension<T>(T[] first)
         {
-            if (first == null)
+            // Concatenate
+            public T[] Concatenate(T[] second)
             {
-                return second;
+                if (first == null)
+                    return second;
+
+                if (second == null)
+                    return first;
+
+                List<T> result = [.. first, .. second];
+
+                return result.ToArray();
             }
-
-            if (second == null)
-            {
-                return first;
-            }
-
-            List<T> result = [.. first, .. second];
-
-            return result.ToArray();
         }
     }
 }

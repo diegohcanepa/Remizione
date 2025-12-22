@@ -63,10 +63,10 @@ namespace Adberration.Scripting
         // AssertCompoundOutcome
         private void AssertCompoundOutcome(string leftContext, string rightContext)
         {
-            if (Session.GetEntity<Thing>(leftContext) == null)
+            if (Session.FindEntity<Thing>(leftContext) == null)
                 throw new ScriptException(this, sourceLines[0], $"There is no thing named '{leftContext}'.");
 
-            if (!string.IsNullOrWhiteSpace(rightContext) && rightContext != ScriptSyntax.AnyEntityOp && Session.GetEntity<Thing>(rightContext) == null)
+            if (!string.IsNullOrWhiteSpace(rightContext) && rightContext != ScriptSyntax.AnyEntityOp && Session.FindEntity<Thing>(rightContext) == null)
                 throw new ScriptException(this, sourceLines[0], $"There is no thing named '{rightContext}'.");
         }
 
@@ -80,20 +80,20 @@ namespace Adberration.Scripting
             {
                 // Enter
                 case ScriptType.Enter:
-                    if (Session.GetEntity<Room>(EntityName) == null)
+                    if (Session.FindEntity<Room>(EntityName) == null)
                         throw new ScriptException(this, sourceLines[0], $"There is no room named '{EntityName}'.");
                     break;
 
                 // Load / Unload
                 case ScriptType.Load:
                 case ScriptType.Unload:
-                    if (Session.GetEntity<Entity>(EntityName) == null)
+                    if (Session.FindEntity<Entity>(EntityName) == null)
                         throw new ScriptException(this, sourceLines[0], $"There is no entity named '{EntityName}'.");
                     break;
 
                 // Outcome
                 case ScriptType.Outcome:
-                    if (Session.GetEntity<Thing>(EntityName) == null)
+                    if (Session.FindEntity<Thing>(EntityName) == null)
                         throw new ScriptException(this, sourceLines[0], $"There is no thing named '{EntityName}'.");
 
                     // Try Compound Outcome
@@ -201,7 +201,7 @@ namespace Adberration.Scripting
                 ClassName = ParseParameterizedToken(tokens[2], ScriptSyntax.ClassKeyword);
                 if (ClassName != null)
                 {
-                    var entityType = Session.ScriptEnvironment.GetEntityType(ClassName);
+                    var entityType = Session.ScriptEnvironment.FindEntityType(ClassName);
 
                     if (entityType == null)
                     {
@@ -458,7 +458,7 @@ namespace Adberration.Scripting
                 throw new InvalidOperationException();
 
             var entityName = EntityName;
-            var className = ScriptSyntax.GetStaticName(ClassName);
+            var className = ScriptSyntax.GetDeclaredName(ClassName);
 
             var result = Session.ScriptEnvironment.CreateEntity(className, entityName) ?? throw new InvalidOperationException("Cannot create entity.");
 
@@ -671,7 +671,10 @@ namespace Adberration.Scripting
         public IEnumerable<Statement> Statements => statements;
 
         // ToString
-        public override string ToString() => Signature;
+        public override string ToString()
+        {
+            return Signature;
+        }
 
         /// <summary>
         /// RuntimeScript

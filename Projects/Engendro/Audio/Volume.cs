@@ -54,7 +54,10 @@ namespace Engendro.Audio
         public float Effective => Master * Current;
 
         // FadeIn
-        public void FadeIn(int duration) => FadeIn(duration, 1);
+        public void FadeIn(int duration)
+        {
+            FadeIn(duration, 1);
+        }
 
         // FadeIn
         public void FadeIn(int duration, float finalVolume)
@@ -72,7 +75,10 @@ namespace Engendro.Audio
         }
 
         // FadeOut
-        public void FadeOut(int duration) => FadeOut(duration, 0);
+        public void FadeOut(int duration)
+        {
+            FadeOut(duration, 0);
+        }
 
         // FadeOut
         public void FadeOut(int duration, float finalVolume)

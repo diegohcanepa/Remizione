@@ -17,7 +17,10 @@ namespace Engendro.Audio
         #region Internal members
 
         // Update
-        internal void Update(GameTime gameTime) => Volume.Update(gameTime);
+        internal void Update(GameTime gameTime)
+        {
+            Volume.Update(gameTime);
+        }
 
         #endregion
 
@@ -31,6 +34,9 @@ namespace Engendro.Audio
         public Volume Volume { get; }
 
         // ToString
-        public override string ToString() => Name;
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

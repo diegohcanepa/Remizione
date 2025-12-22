@@ -10,7 +10,7 @@ namespace ScaryCastle.Scripting
         internal PlaceRuntimePropCommand(Script script, string source, StatementBody body)
             : base(script, source, body, 1)
         {
-            if (Session.GetEntity<Prop>(Body.Clauses[0]) == null)
+            if (Session.FindEntity<Prop>(Body.Clauses[0]) == null)
                 throw new ScriptException(this, $"The prop {Body.Clauses[0]} does not exist.");
         }
 

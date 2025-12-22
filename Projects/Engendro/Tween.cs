@@ -196,10 +196,16 @@ namespace Engendro
         public float Progress => CurrentTime / Duration;
 
         // RandomizeTime
-        public void RandomizeTime() => CurrentTime = Random.Shared.Next(0, Duration + 1);
+        public void RandomizeTime()
+        {
+            CurrentTime = Random.Shared.Next(0, Duration + 1);
+        }
 
         // Restart
-        public void Restart() => Start(Style, StartValue, EndValue, Duration, MaximumBounces);
+        public void Restart()
+        {
+            Start(Style, StartValue, EndValue, Duration, MaximumBounces);
+        }
 
         // Resume
         public void Resume()

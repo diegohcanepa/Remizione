@@ -21,7 +21,7 @@ namespace ScaryCastle
             this.HitTestPolygon = TestPolygon.Hotspot;
             this.PropState = PropState.Locked;
 
-            this.eyes = new ImageSprite(Game, Atlas?.GetImage($"{StaticName}Eyes"));
+            this.eyes = new ImageSprite(Game, Atlas?.FindImage($"{DeclaredName}Eyes"));
 
             eyes.Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, 1, .7f, 70, -1);
 

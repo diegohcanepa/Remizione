@@ -41,9 +41,9 @@ namespace ScaryCastle
 
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
-            this.ResistanceTableName = StaticName;
+            this.ResistanceTableName = DeclaredName;
 
-            Config = ThingConfig.Find(StaticName);
+            Config = ThingConfig.Find(DeclaredName);
         }
 
         #endregion
@@ -270,7 +270,7 @@ namespace ScaryCastle
             if (drop != null)
             {
                 Session.ObjectPools.Pickups.Get()?.Drop(room, Position, drop);
-                room.RoomGraph.SackCount++;
+                room.RoomGraph.LootCount++;
             }
         }
 
@@ -464,7 +464,7 @@ namespace ScaryCastle
                 if (Session.Player == null)
                     return false;
 
-                var friendlyItems = Session.GetFriendlyItems(StaticName);
+                var friendlyItems = Session.GetFriendlyItems(DeclaredName);
                 for (var i = 0; i < friendlyItems.Length; i++)
                 {
                     if (Session.Inventory.Find(friendlyItems[i].Name) != null)
@@ -587,7 +587,7 @@ namespace ScaryCastle
 
             if (Config?.KillGoal > 0)
             {
-                if (Session.KillCounter.Increment(StaticName) >= Config.KillGoal)
+                if (Session.KillCounter.Increment(DeclaredName) >= Config.KillGoal)
                 {
                     for (var i = 0; i < Config.KillGoalReward.Count; i++)
                     {

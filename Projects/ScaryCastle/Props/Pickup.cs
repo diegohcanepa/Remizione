@@ -114,7 +114,7 @@ namespace ScaryCastle
                 if (isCoin)
                     procRoom.RoomGraph.HasCoin = false;
                 else
-                    procRoom.RoomGraph.SackCount--;
+                    procRoom.RoomGraph.LootCount--;
             }
 
             Session.Player?.Animate(AnimationNames.PickUp);

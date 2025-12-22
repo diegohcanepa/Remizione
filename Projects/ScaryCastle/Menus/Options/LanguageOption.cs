@@ -40,7 +40,7 @@ namespace ScaryCastle.Menus
         // OnValueChanged
         protected override void OnValueChanged(LanguageMenuOptionValue newValue)
         {
-            if (LanguagePackage.GetPackage(newValue.LanguageTag) is LanguagePackage languagePackage)
+            if (LanguagePackage.FindPackage(newValue.LanguageTag) is LanguagePackage languagePackage)
             {
                 TextRepository.Load(languagePackage);
             }

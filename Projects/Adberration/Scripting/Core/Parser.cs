@@ -31,7 +31,7 @@ namespace Adberration.Scripting
         {
             string? result = null;
 
-            if (statement.Body.Args.GetArg(argName) is StatementArg arg)
+            if (statement.Body.Args.FindArg(argName) is StatementArg arg)
             {
                 if (string.IsNullOrWhiteSpace(arg.Value))
                     throw new ScriptException(statement, ScriptException.GetMissingArgValueMessage(argName));
@@ -207,7 +207,7 @@ namespace Adberration.Scripting
         {
             var result = defaultValue;
 
-            if (statement.Body.Args.GetArg(argName) is StatementArg arg && arg.Value != null)
+            if (statement.Body.Args.FindArg(argName) is StatementArg arg && arg.Value != null)
             {
                 if (!arg.HasValue)
                     throw new ScriptException(statement, ScriptException.GetMissingArgValueMessage(argName));
@@ -240,7 +240,7 @@ namespace Adberration.Scripting
                 if (!statement.Script.HasCapability(ScriptCapability.EntityContext))
                     throw new ScriptException($"The '{ScriptSyntax.ThisKeyword}' keyword is not valid in this context.");
 
-                return statement.Session.GetEntity<T>(statement.Script.EntityName);
+                return statement.Session.FindEntity<T>(statement.Script.EntityName);
             }
 
             // $Property
@@ -252,7 +252,7 @@ namespace Adberration.Scripting
             {
                 name = name.Substring(sessionPrefix.Length);
 
-                if (statement.Session.ScriptEnvironment.GetSessionProperty(name) is ScriptProperty sessionProperty)
+                if (statement.Session.ScriptEnvironment.FindSessionProperty(name) is ScriptProperty sessionProperty)
                 {
                     if (!typeof(Entity).IsAssignableFrom(sessionProperty.PropertyType))
                         throw new ScriptException($"'{name}' must be an entity type.");
@@ -265,7 +265,7 @@ namespace Adberration.Scripting
                 }
             }
 
-            var result = statement.Session.GetEntity<T>(name) ?? throw ScriptExceptionBuilder.UnrecognizedEntity(statement, name);
+            var result = statement.Session.FindEntity<T>(name) ?? throw ScriptExceptionBuilder.UnrecognizedEntity(statement, name);
             return result;
         }
 
@@ -274,7 +274,7 @@ namespace Adberration.Scripting
         {
             var result = defaultValue;
 
-            if (statement.Body.Args.GetArg(argName) is StatementArg arg && arg.Value != null)
+            if (statement.Body.Args.FindArg(argName) is StatementArg arg && arg.Value != null)
             {
                 if (!arg.HasValue)
                     throw new ScriptException(statement, ScriptException.GetMissingArgValueMessage(argName));
@@ -479,12 +479,12 @@ namespace Adberration.Scripting
         {
             AtlasImage? result = null;
 
-            if (statement.Body.Args.GetArg(argName) is StatementArg arg && arg.Value != null)
+            if (statement.Body.Args.FindArg(argName) is StatementArg arg && arg.Value != null)
             {
                 if (!arg.HasValue)
                     throw new ScriptException(statement, ScriptException.GetMissingArgValueMessage(argName));
 
-                result = atlas.GetImage(arg.Value);
+                result = atlas.FindImage(arg.Value);
 
                 if (result == null)
                     throw ScriptExceptionBuilder.AssetNotFound(statement, arg.Value);
@@ -503,7 +503,7 @@ namespace Adberration.Scripting
         // ParseInputBinding
         public static InputBinding ParseInputBinding(Statement statement, string value)
         {
-            var result = InputManager.GetBinding(value) ?? throw ScriptExceptionBuilder.ValueParseError(statement, value, typeof(InputBinding));
+            var result = InputManager.FindBinding(value) ?? throw ScriptExceptionBuilder.ValueParseError(statement, value, typeof(InputBinding));
             return result;
         }
 
@@ -669,7 +669,7 @@ namespace Adberration.Scripting
 
             string[]? result = null;
 
-            if (statement.Body.Args.GetArg(argName) is StatementArg arg && arg.Value != null)
+            if (statement.Body.Args.FindArg(argName) is StatementArg arg && arg.Value != null)
             {
                 if (!arg.HasValue)
                     throw new ScriptException(statement, ScriptException.GetMissingArgValueMessage(argName));
@@ -860,7 +860,7 @@ namespace Adberration.Scripting
             ParseName(statement, name);
 
             // Get script
-            if (statement.Session.ScriptLibrary.GetRoutine(name) is not Script routine)
+            if (statement.Session.ScriptLibrary.FindRoutine(name) is not Script routine)
                 throw new ScriptException(statement, $"Unrecognized routine '{name}'.");
 
             return routine;
@@ -914,7 +914,7 @@ namespace Adberration.Scripting
         {
             var result = defaultValue;
 
-            if (statement.Body.Args.GetArg(argName) is StatementArg arg && arg.Value != null)
+            if (statement.Body.Args.FindArg(argName) is StatementArg arg && arg.Value != null)
             {
                 if (!arg.HasValue)
                     throw new ScriptException(statement, ScriptException.GetMissingArgValueMessage(argName));

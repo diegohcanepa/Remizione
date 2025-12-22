@@ -42,7 +42,7 @@ namespace ScaryCastle
                 {
                     for (int i = 0; i < RequiredOptions.Count; i++)
                     {
-                        if (Dialog.GetOption(RequiredOptions[i]) != null)
+                        if (Dialog.FindOption(RequiredOptions[i]) != null)
                             return false;
                     }
                 }

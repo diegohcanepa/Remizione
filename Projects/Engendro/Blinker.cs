@@ -97,7 +97,10 @@ namespace Engendro
         }
 
         // Stop
-        public void Stop() => Reset();
+        public void Stop()
+        {
+            Reset();
+        }
 
         // Update
         public void Update(GameTime gameTime)

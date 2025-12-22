@@ -16,15 +16,27 @@ namespace Engendro
         }
 
         // Contains
-        public bool Contains(string name) => NamedObjectCollectionHelper.Contains(this, name);
+        public bool Contains(string name)
+        {
+            return NamedObjectCollectionHelper.Contains(this, name);
+        }
 
         // Find
-        public T? Find(string name) => NamedObjectCollectionHelper.Find(this, name);
+        public T? Find(string name)
+        {
+            return NamedObjectCollectionHelper.Find(this, name);
+        }
 
         // IndexOf
-        public int IndexOf(string name) => NamedObjectCollectionHelper.IndexOf(this, name);
+        public int IndexOf(string name)
+        {
+            return NamedObjectCollectionHelper.IndexOf(this, name);
+        }
 
         // ToArray
-        public T[] ToArray() => Items.ToArray();
+        public T[] ToArray()
+        {
+            return Items.ToArray();
+        }
     }
 }

@@ -28,6 +28,9 @@
         public bool Value { get; set; }
 
         // ToString
-        public override string ToString() => $"{Name}={Value}";
+        public override string ToString()
+        {
+            return $"{Name}={Value}";
+        }
     }
 }

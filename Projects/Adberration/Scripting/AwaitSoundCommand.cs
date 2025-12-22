@@ -21,7 +21,7 @@ namespace Adberration.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            soundInstance = SoundInstance.GetRunningInstance(Body.Clauses[0]);
+            soundInstance = SoundInstance.FindRunningInstance(Body.Clauses[0]);
         }
 
         #endregion

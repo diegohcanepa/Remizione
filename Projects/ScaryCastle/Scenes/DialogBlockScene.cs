@@ -106,7 +106,7 @@ namespace ScaryCastle
             foreach (var option in dialogBlock.AvailableOptions)
             {
                 var optionText = option.Text;
-                menu.AddOption(option.Id.ToString(), optionText, Atlases.UI.GetImage("DialogOptionBullet"));
+                menu.AddOption(option.Id.ToString(), optionText, Atlases.UI.FindImage("DialogOptionBullet"));
             }
 
             Layout();
@@ -134,7 +134,7 @@ namespace ScaryCastle
         {
             if (menu.SelectedOption is UIContextMenuOption<string> menuOption)
             {
-                RunningOption = dialogBlock.GetOption(int.Parse(menuOption.Key));
+                RunningOption = dialogBlock.FindOption(int.Parse(menuOption.Key));
 
                 if (RunningOption != null)
                 {
@@ -253,6 +253,9 @@ namespace ScaryCastle
         public DialogOption? RunningOption { get; private set; }
 
         // Terminate
-        public void Terminate() => terminate = true;
+        public void Terminate()
+        {
+            terminate = true;
+        }
     }
 }
