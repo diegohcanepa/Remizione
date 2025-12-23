@@ -194,7 +194,7 @@ namespace ScaryCastle
             {
                 // 1. Roll de probabilidad: ¿Esta sala da premio?
                 // 50% de base es un buen número para empezar.
-                Ratio dropChance = .5f;
+                Ratio dropChance = .2f;
 
                 // Sumamos la suerte del jugador si tiene un gadget/pasivo
                 if (Session.Inventory.Gadget is Item gadget)

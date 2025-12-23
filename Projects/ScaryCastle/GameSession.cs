@@ -142,7 +142,6 @@ namespace ScaryCastle
             scriptRegistry.RegisterEntity(typeof(BreakableProp));
             scriptRegistry.RegisterEntity(typeof(CloseUpRoom));
             scriptRegistry.RegisterEntity(typeof(CreditsRoom));
-            scriptRegistry.RegisterEntity(typeof(DepositMachine));
             scriptRegistry.RegisterEntity(typeof(VendingMachine));
             scriptRegistry.RegisterEntity(typeof(GameRoom));
             scriptRegistry.RegisterEntity(typeof(HellGoat));

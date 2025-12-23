@@ -3,6 +3,7 @@ using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace ScaryCastle
@@ -12,7 +13,14 @@ namespace ScaryCastle
     /// </summary>
     public abstract class RideRoom : ProceduralRoom
     {
-        private static readonly Dictionary<string, (Type, string[])> derivedTypes = [];
+        private struct RegisteredRoom
+        {
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+            public Type Type;
+            public string[] Placeholders;
+        }
+
+        private static readonly Dictionary<string, RegisteredRoom> derivedTypes = [];
         private readonly List<RideDoor> doors = [];
         private bool lootDropped;
 
@@ -71,9 +79,11 @@ namespace ScaryCastle
         }
 
         // Register
-        private static void Register(Type type, string[] placeholderNames)
+        private static void Register(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type type,
+            string[] placeholderNames)
         {
-            derivedTypes.Add(type.Name, (type, placeholderNames));
+            derivedTypes.Add(type.Name, new RegisteredRoom { Type = type, Placeholders = placeholderNames });
         }
 
         #endregion
@@ -197,8 +207,13 @@ namespace ScaryCastle
             if (graph.Config == null)
                 throw new InvalidOperationException($"Missing config in room graph.");
 
-            var type = derivedTypes[graph.Config.Template].Item1;
-            var result = Activator.CreateInstance(type, session, graph) as RideRoom ?? throw new InvalidOperationException($"Cannot create instance [{graph.Config.Name}]");
+            // Ahora accedemos a .Type del struct registrado
+            var registered = derivedTypes[graph.Config.Template];
+
+            // El compilador ya no dará error aquí porque registered.Type está anotado
+            var result = Activator.CreateInstance(registered.Type, session, graph) as RideRoom
+                ?? throw new InvalidOperationException($"Cannot create instance [{graph.Config.Name}]");
+
             return result;
         }
 
@@ -225,9 +240,9 @@ namespace ScaryCastle
         {
             if (derivedTypes.TryGetValue(typeName, out var result))
             {
-                for (var i = 0; i < result.Item2.Length; i++)
+                for (var i = 0; i < result.Placeholders.Length; i++)
                 {
-                    if (string.Compare(placeholderName, result.Item2[i], StringComparison.InvariantCulture) == 0)
+                    if (string.Compare(placeholderName, result.Placeholders[i], StringComparison.InvariantCulture) == 0)
                         return true;
                 }
             }

@@ -323,7 +323,7 @@ namespace Adberration
         public UnloadMode UnloadMode { get; set; }
 
         // Unparent
-        public override sealed void Unparent()
+        public sealed override void Unparent()
         {
         }
 

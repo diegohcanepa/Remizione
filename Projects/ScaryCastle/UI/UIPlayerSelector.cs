@@ -88,17 +88,20 @@ namespace ScaryCastle
         {
             if (session.Player != null && session.Players.Count > 1)
             {
-                if (InputBindings.PreviousPlayer.IsPressed(PlayerIndex.One))
+                if (!InputManager.DefaultPlayer.Keyboard.IsShiftDown())
                 {
-                    session.Player = session.Players.NextItem(session.Player);
-                    Sound.Play(SoundNames.UISelectPlayer);
-                    return HandleInputResult.Handled;
-                }
-                else if (InputBindings.NextPlayer.IsPressed(PlayerIndex.One))
-                {
-                    session.Player = session.Players.PreviousItem(session.Player);
-                    Sound.Play(SoundNames.UISelectPlayer);
-                    return HandleInputResult.Handled;
+                    if (InputBindings.PreviousPlayer.IsPressed(PlayerIndex.One))
+                    {
+                        session.Player = session.Players.NextItem(session.Player);
+                        Sound.Play(SoundNames.UISelectPlayer);
+                        return HandleInputResult.Handled;
+                    }
+                    else if (InputBindings.NextPlayer.IsPressed(PlayerIndex.One))
+                    {
+                        session.Player = session.Players.PreviousItem(session.Player);
+                        Sound.Play(SoundNames.UISelectPlayer);
+                        return HandleInputResult.Handled;
+                    }
                 }
             }
 

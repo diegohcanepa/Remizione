@@ -54,7 +54,7 @@ namespace ScaryCastle
             this.itemImage = new ImageSprite(Game)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Center, 0, -1),
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Center),
                 Scale = ScaleInfo.UIElement.Tiny
             };
 

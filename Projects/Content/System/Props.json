@@ -19,7 +19,7 @@
       "name": "VendingMachine",
       "maxPerRun": 100,
       "sideRoomOnly": true,
-      "tags": "floor",
+      "tags": "vendingMachine",
       "unlocked": true,
       "usePlaceholder": true
     }

@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 
 namespace ScaryCastle.UI
@@ -8,7 +9,7 @@ namespace ScaryCastle.UI
     /// <summary>
     /// UIMiniMap
     /// </summary>
-    public sealed class UIMiniMap : GameObject
+    public sealed class UIMiniMap : GameObject, IDisposable
     {
         #region Private fields
 
@@ -71,7 +72,7 @@ namespace ScaryCastle.UI
                 roomImages[i] = new(game, Atlases.UI.GetImage($"UIMiniMapRoom{i}"))
                 {
                     PivotOrigin = RectanglePoint.Center,
-                    Scale = ScaleInfo.UIElement.Tiny
+                    Scale = ScaleInfo.UIElement.Medium
                 };
             }
 
@@ -158,5 +159,11 @@ namespace ScaryCastle.UI
 
         // CurrentRoom
         public RoomGraph? CurrentRoom { get; set; }
+
+        // Dispose
+        public void Dispose()
+        {
+            rasterizerState.Dispose();
+        }
     }
 }

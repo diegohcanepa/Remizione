@@ -8,7 +8,7 @@ namespace ScaryCastle
     public sealed class Placeholder : INamedObject
     {
         // Constructor
-        public Placeholder(string name, Ratio fillChance, bool flipImage, string vertices, string[] allowTags, PlaceholderTarget target = PlaceholderTarget.Prop)
+        public Placeholder(string name, Ratio fillChance, bool flipImage, string vertices, string allowTags, PlaceholderTarget target = PlaceholderTarget.Prop)
         {
             this.Name = name;
             this.FillChance = fillChance;
