@@ -84,25 +84,11 @@ namespace ScaryCastle
             {
                 if (value != field)
                 {
-                    field = Math.Clamp(value, MetaItem.StackMode == StackMode.Persistent ? 0 : 1, 999);
+                    field = value;
                     isDisplayTextDiry = true;
                 }
             }
         } = 1;
-
-        // Discard
-        public bool Discard()
-        {
-            if (MetaItem.PreventDiscard)
-            {
-                return false;
-            }
-            else
-            {
-                Remove();
-                return true;
-            }
-        }
 
         // DisplayText
         public string DisplayText
@@ -135,10 +121,7 @@ namespace ScaryCastle
         // GetDisplayAmount
         public string GetDisplayAmount()
         {
-            if (MetaItem.StackMode != StackMode.None)
-                return Count.ToString(CultureInfo.InvariantCulture);
-            else
-                return string.Empty;
+            return Count.ToString(CultureInfo.InvariantCulture);
         }
 
         // GetDisplayStat
@@ -245,10 +228,9 @@ namespace ScaryCastle
 
             if (!MetaItem.IsPassive && Count > 0)
             {
-                if (Count == 1 && MetaItem.StackMode != StackMode.Persistent)
+                Count--;
+                if (Count == 0)
                     Inventory.Remove(this);
-                else
-                    Count--;
             }
 
             InvalidateDisplayText();

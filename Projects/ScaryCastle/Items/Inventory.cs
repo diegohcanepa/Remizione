@@ -28,7 +28,7 @@ namespace ScaryCastle
         // Add
         public Item? Add(MetaItem metaItem, int amount)
         {
-            var item = metaItem.StackMode != StackMode.None ? Find(metaItem.Name) : null;
+            var item = Find(metaItem.Name);
 
             if (item == null)
             {
@@ -240,14 +240,8 @@ namespace ScaryCastle
         // IsEmpty
         public bool IsEmpty => items.Count == 0;
 
-        // IsFull
-        public bool IsFull => items.Count >= MaximumSize;
-
         // LeftHand
         public Item? LeftHand { get; private set; }
-
-        // MaximumSize
-        public const int MaximumSize = 12;
 
         // Remove
         public bool Remove(string name)

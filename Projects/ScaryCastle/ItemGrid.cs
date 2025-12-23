@@ -185,6 +185,7 @@ namespace ScaryCastle
         // DiscardSelectedItem
         public void DiscardSelectedItem()
         {
+            /*
             if (SelectedItem is Item item)
             {
                 SelectedSlot.Item = null;
@@ -192,6 +193,7 @@ namespace ScaryCastle
                 if (Inventory.SelectedItem != null)
                     SelectSlot(Inventory.SelectedItem.Name);
             }
+            */
         }
 
         // FindSlot

@@ -129,7 +129,7 @@ namespace ScaryCastle
                 if (collectCooldown < 0)
                     collectCooldown = 0;
             }
-            else if (scaleTween.IsRunning || DistanceTo(owner) <= 10)
+            else if (scaleTween.IsRunning || DistanceTo(owner) <= 6)
             {
                 if (!scaleTween.IsRunning)
                 {

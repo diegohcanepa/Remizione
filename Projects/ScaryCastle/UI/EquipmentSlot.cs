@@ -125,12 +125,9 @@ namespace ScaryCastle
             itemImage.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            if (lastKnownItem?.MetaItem.StackMode != StackMode.None)
-            {
-                Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
-                amountText.Draw(gameTime);
-                Game.SpriteBatch.End();
-            }
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
+            amountText.Draw(gameTime);
+            Game.SpriteBatch.End();
         }
 
         // OnUpdate

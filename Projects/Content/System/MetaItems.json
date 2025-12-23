@@ -11,8 +11,7 @@
 		{
 			"name": "Coin",
 			"category": "KeyItem",
-			"pickupSound": "PickupCoin",
-			"preventDiscard": true
+			"pickupSound": "PickupCoin"
 		},
 		{
 			"name": "Cross",
@@ -25,9 +24,7 @@
 			"damage": "1d2",
 			"impactWord": "CuackYellow",
 			"knockback": "4,0",
-			"preventDiscard": true,
-			"sound": "ThrowableDuck",
-			"stackMode": "Persistent"
+			"sound": "ThrowableDuck"
 		},
 		{
 			"name": "Firecracker",
@@ -37,8 +34,7 @@
 			"damageType": "Explosive",
 			"impactWord": "KapowStrong",
 			"range": 20,
-			"sound": "Firecracker",
-			"stackMode": "Disposable"
+			"sound": "Firecracker"
 		},
 		{
 			"name": "Lantern",

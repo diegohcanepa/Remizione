@@ -46,13 +46,6 @@
             "KeyItem"
           ]
         },
-        "criticalChance": {
-          "type": "number",
-          "default": 0,
-          "minimum": 0,
-          "maximum": 1,
-          "description": "Chance de golpe crítico."
-        },
         "damage": {
           "type": "string",
           "description": "Expresión de dado para el dado (ej: '1d6+2')."
@@ -106,10 +99,10 @@
             "Zap"
           ]
         },
-        "isStackable": {
+        "keepIfEmpty": {
           "type": "boolean",
-          "description": "Indica si el item puede ser apilado."
-        },
+          "description": "Persiste en el inventario aunque este sin elementos."
+        },        
         "knockback": {
           "type": "string",
           "description": "Fuerza de empuje (Vector2) representada como 'X, Y' (ej: '100, 50')."
@@ -122,10 +115,6 @@
         "pickupSound": {
           "type": "string",
           "description": "Nombre del sonido al recoger el item (se busca en Sound.FindNotNull)."
-        },
-        "preventDiscard": {
-          "type": "boolean",
-          "description": "Indica si se previene el descarte del item."
         },
         "quality": {
           "type": "integer",
@@ -154,15 +143,6 @@
         "sound": {
           "type": "string",
           "description": "Nombre del sonido principal al usar el item (se busca en Sound.FindNotNull)."
-        },
-        "stackMode": {
-          "type": "string",
-          "description": "Modo de apilamiento (Enum StackMode).",
-          "enum": [
-            "None",
-            "Persistent",
-            "Disposable"
-          ]
         },
         "unlocked": {
           "type": "boolean",

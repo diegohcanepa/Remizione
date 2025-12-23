@@ -199,16 +199,6 @@ namespace ScaryCastle
             pendingPathNodes.RemoveAt(0);
         }
 
-        // ConsumeItem
-        private bool ConsumeItem(Item item)
-        {
-            Stand();
-            consumeState.Item = item;
-            StateMachine.ChangeState(consumeState.Name);
-
-            return true;
-        }
-
         // PlaceItem
         private void PlaceItem(Item item)
         {
@@ -545,6 +535,16 @@ namespace ScaryCastle
 
                 return StateMachine.CurrentState is ActorStandState or ActorMoveState;
             }
+        }
+
+        // ConsumeItem
+        public bool ConsumeItem(Item item)
+        {
+            Stand();
+            item.Use(this);
+            consumeState.Item = item;
+            StateMachine.ChangeState(consumeState.Name);
+            return true;
         }
 
         // FastMove

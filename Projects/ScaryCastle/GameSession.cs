@@ -83,7 +83,7 @@ namespace ScaryCastle
             LocalizationSource = LocalizationSource.Script;
 
             this.UnlockedPool = new(this);
-            this.inventoryScene = new InventoryScene(Inventory);
+            this.inventoryScene = new InventoryScene(this);
             this.useKeyItemScene = new UseKeyItemScene(Inventory);
 
             // Prompt
@@ -556,10 +556,6 @@ namespace ScaryCastle
         // Inventory
         public Inventory Inventory { get; }
 
-        // InventoryFull
-        [ScriptProperty]
-        public bool InventoryFull => Inventory.IsFull;
-
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
 
@@ -700,9 +696,6 @@ namespace ScaryCastle
                 return;
 
             Player.Stand();
-            if (Camera.Target == Player)
-                Camera.FocusTarget();
-
             inventoryScene.SceneController.Push();
         }
 

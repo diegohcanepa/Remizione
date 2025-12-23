@@ -68,10 +68,6 @@ namespace ScaryCastle
             if (element.TryGetProperty("impactWord", out JsonElement impactWordElement) && impactWordElement.GetString() is string impactWordValue)
                 impactWord = Enum.Parse<ImpactWordName>(impactWordValue);
 
-            // IsStackable
-            if (element.TryGetProperty("isStackable", out JsonElement isStackableElement))
-                IsStackable = isStackableElement.GetBoolean();
-
             // Knockback
             var knockback = Vector2.Zero;
             if (element.TryGetProperty("knockback", out JsonElement knockbackElement) && knockbackElement.GetString() is string knockbackValue)
@@ -89,10 +85,6 @@ namespace ScaryCastle
             // PickupSound
             if (element.TryGetProperty("pickupSound", out JsonElement pickupSoundElement) && pickupSoundElement.GetString() is string pickupSoundValue)
                 PickupSound = Sound.FindNotNull(pickupSoundValue);
-
-            // PreventDiscard
-            if (element.TryGetProperty("preventDiscard", out JsonElement preventDiscardElement))
-                PreventDiscard = preventDiscardElement.GetBoolean();
 
             // Price
             if (element.TryGetProperty("price", out JsonElement priceElement))
@@ -118,10 +110,6 @@ namespace ScaryCastle
             Sound? sound = null;
             if (element.TryGetProperty("sound", out JsonElement soundElement) && soundElement.GetString() is string soundValue)
                 sound = Sound.FindNotNull(soundValue);
-
-            // StackMode
-            if (element.TryGetProperty("stackMode", out JsonElement stackModeElement) && stackModeElement.GetString() is string stackModeValue)
-                StackMode = Enum.Parse<StackMode>(stackModeValue);
 
             // Unlocked
             if (element.TryGetProperty("unlocked", out JsonElement unlockedElement))
@@ -236,14 +224,14 @@ namespace ScaryCastle
         // Image
         public AtlasImage? Image { get; }
 
+        // IsConsumable
+        public bool IsConsumable => Category is ItemCategory.Consumable;
+
         // IsEquipment
         public bool IsEquipment => Category is ItemCategory.LeftHand or ItemCategory.RightHand or ItemCategory.Gadget;
 
         // IsPassive
         public bool IsPassive => PassiveEffectCooldown > 0;
-
-        // IsStackable
-        public bool IsStackable { get; }
 
         // LocalizedDescription
         public string LocalizedDescription { get; }
@@ -260,9 +248,6 @@ namespace ScaryCastle
         // PickupSound
         public Sound? PickupSound { get; }
 
-        // PreventDiscard
-        public bool PreventDiscard { get; }
-
         // Price
         public int Price { get; }
 
@@ -277,9 +262,6 @@ namespace ScaryCastle
 
         // SkillChance
         public int SkillChance { get; }
-
-        // StackMode
-        public StackMode StackMode { get; }
 
         // ToString
         public override string ToString()

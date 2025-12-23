@@ -45,7 +45,7 @@ namespace ScaryCastle
     public enum ImpactWordName { None, AghGreen, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
 
     // InventoryVerb
-    public enum InventoryVerb { TakeOff, Equip }
+    public enum InventoryVerb { TakeOff, Equip, Use }
 
     // ItemAction
     public enum ItemAction { None, Place, Throw }
@@ -110,9 +110,6 @@ namespace ScaryCastle
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }
-
-    // StackMode
-    public enum StackMode { None, Persistent, Disposable }
 
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }

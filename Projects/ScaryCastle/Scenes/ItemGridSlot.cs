@@ -177,12 +177,7 @@ namespace ScaryCastle
             if (Item != null)
             {
                 amountText.Color = ColorPalette.Text.Default;
-
-                if (Item.MetaItem.StackMode != StackMode.None)
-                    amountText.Text = $"{Item.Count}";
-                else
-                    amountText.Text = string.Empty;
-
+                amountText.Text = $"{Item.Count}";
                 icon.Opacity = Item.Count == 0 ? .3f : 1;
             }
             else

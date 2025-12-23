@@ -50,8 +50,6 @@ namespace ScaryCastle
             {
                 if (frame.IsEvent)
                 {
-                    Item.Use(Owner);
-
                     if (Item.MetaItem.Effect.Sound is Sound sound)
                         Owner.PlaySound(sound);
 

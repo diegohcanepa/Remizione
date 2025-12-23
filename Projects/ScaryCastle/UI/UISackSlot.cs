@@ -104,8 +104,7 @@ namespace ScaryCastle
             if (lastKnownCount != session.Inventory.Count)
             {
                 lastKnownCount = session.Inventory.Count;
-                amountText.Color = session.InventoryFull ? ColorPalette.Text.Orange : ColorPalette.Text.Default;
-                amountText.Text = $"{session.Inventory.Count}/{Inventory.MaximumSize}";
+                amountText.Text = $"{session.Inventory.Count}";
             }
         }
 

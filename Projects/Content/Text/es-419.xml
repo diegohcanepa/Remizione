@@ -41,7 +41,8 @@
   <String Key="InputBinding.UseFriendlyItem">Usar</String>
   <String Key="InputBinding.UseItem">Usar</String>
   <String Key="InventoryVerb.Equip">Equipar</String>
-  <String Key="InventoryVerb.Take off">Quitar</String>
+  <String Key="InventoryVerb.TakeOff">Quitar</String>
+  <String Key="InventoryVerb.Use">Usar</String>
   <String Key="Item.Apple.Description">Una apetitoza manzana en su punto justo.</String>
   <String Key="Item.Apple.Name">Manzana</String>
   <String Key="Item.Battery.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
