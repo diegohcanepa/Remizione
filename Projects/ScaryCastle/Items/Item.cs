@@ -85,6 +85,10 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
+
+                    if (Count > 0 && MetaItem.IsUnique)
+                        Count = 1;
+
                     isDisplayTextDiry = true;
                 }
             }

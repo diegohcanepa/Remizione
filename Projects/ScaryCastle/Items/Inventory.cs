@@ -43,7 +43,7 @@ namespace ScaryCastle
                     Equip(item);
                 }
             }
-            else
+            else if (!metaItem.IsUnique)
                 item.Count += amount;
 
             return item;

@@ -54,12 +54,9 @@ namespace ScaryCastle
             this.itemImage = new ImageSprite(Game)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Center),
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Center, 0, -.5f),
                 Scale = ScaleInfo.UIElement.Tiny
             };
-
-            if (itemCategory == ItemCategory.Gadget)
-                itemImage.X -= .5f;
 
             // Amount
             this.amountText = new TextSprite(Game, Fonts.CommonOutline)
@@ -93,8 +90,16 @@ namespace ScaryCastle
             else
             {
                 lastKnownCount = 0;
-                itemImage.Image = Atlases.UI.FindImage($"InventoryCategory{ItemCategory}");
-                itemImage.Opacity = .2f;
+                
+                itemImage.Image = ItemCategory switch
+                {
+                    ItemCategory.LeftHand => Atlases.UI.InventoryCategoryLeftHand,
+                    ItemCategory.RightHand => Atlases.UI.InventoryCategoryRightHand,
+                    ItemCategory.Gadget => Atlases.UI.InventoryCategoryGadget,
+                    _ => null
+                };
+
+                itemImage.Opacity = .3f;
                 itemImage.Scale = ScaleInfo.UIElement.Medium;
                 itemImageScaleTween.Stop();
             }

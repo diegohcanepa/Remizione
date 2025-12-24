@@ -99,9 +99,9 @@
             "Zap"
           ]
         },
-        "keepIfEmpty": {
+        "isUnique": {
           "type": "boolean",
-          "description": "Persiste en el inventario aunque este sin elementos."
+          "description": "Solo se puede llevar 1."
         },        
         "knockback": {
           "type": "string",

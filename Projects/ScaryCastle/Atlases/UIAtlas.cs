@@ -20,10 +20,10 @@ namespace ScaryCastle
             EquipmentSlot = this[nameof(EquipmentSlot)];
             HeartEmptyIcon = this[nameof(HeartEmptyIcon)];
             HeartHalfIcon = this[nameof(HeartHalfIcon)];
-            HeartHalfIconWithShadow = this[nameof(HeartHalfIconWithShadow)];
             HeartIcon = this[nameof(HeartIcon)];
-            HeartIconWithShadow = this[nameof(HeartIconWithShadow)];
-            InventoryCategoryNotEmpty = this[nameof(InventoryCategoryNotEmpty)];
+            InventoryCategoryGadget = this[nameof(InventoryCategoryGadget)];
+            InventoryCategoryLeftHand = this[nameof(InventoryCategoryLeftHand)];
+            InventoryCategoryRightHand = this[nameof(InventoryCategoryRightHand)];
             InventoryGridContainer = this[nameof(InventoryGridContainer)];
             InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
             InventoryInfoTitleContainer = this[nameof(InventoryInfoTitleContainer)];
@@ -70,8 +70,14 @@ namespace ScaryCastle
         // EquipmentSlot
         public AtlasImage EquipmentSlot { get; }
 
-        // InventoryCategoryNotEmpty
-        public AtlasImage InventoryCategoryNotEmpty { get; }
+        // InventoryCategoryGadget
+        public AtlasImage InventoryCategoryGadget { get; }
+
+        // inventoryCategoryLeftHand
+        public AtlasImage InventoryCategoryLeftHand { get; }
+
+        // inventoryCategoryRightHand
+        public AtlasImage InventoryCategoryRightHand { get; }
 
         // InventoryGridContainer
         public AtlasImage InventoryGridContainer { get; }
@@ -91,14 +97,8 @@ namespace ScaryCastle
         // HeartHalfIcon
         public AtlasImage HeartHalfIcon { get; }
 
-        // HeartHalfIconWithShadow
-        public AtlasImage HeartHalfIconWithShadow { get; }
-
         // HeartIcon
         public AtlasImage HeartIcon { get; }
-
-        // HeartIconWithShadow
-        public AtlasImage HeartIconWithShadow { get; }
 
         // MessageContainer
         public AtlasImage MessageContainer { get; }

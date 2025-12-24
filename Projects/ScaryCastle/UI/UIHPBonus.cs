@@ -23,7 +23,7 @@ namespace ScaryCastle
 
             for (var i = 0; i < hearts.Length; i++)
             {
-                hearts[i] = new(Game, Atlases.UI.HeartIconWithShadow)
+                hearts[i] = new(Game, Atlases.UI.HeartIcon)
                 {
                     Scale = ScaleInfo.UIElement.Medium,
                     Position = pos
@@ -48,17 +48,17 @@ namespace ScaryCastle
 
             if (fullHearts == 0 && hasHalfHeart)
             {
-                hearts[0].Image = Atlases.UI.HeartHalfIconWithShadow;
+                hearts[0].Image = Atlases.UI.HeartHalfIcon;
             }
             else
             {
                 for (int i = 0; i < fullHearts; i++)
                 {
                     if (i < fullHearts)
-                        hearts[i].Image = Atlases.UI.HeartIconWithShadow;
+                        hearts[i].Image = Atlases.UI.HeartIcon;
 
                     else if (i == fullHearts && hasHalfHeart)
-                        hearts[i].Image = Atlases.UI.HeartHalfIconWithShadow;
+                        hearts[i].Image = Atlases.UI.HeartHalfIcon;
                 }
             }
 

@@ -16,9 +16,10 @@ namespace ScaryCastle
 
         private readonly TextSprite amountText;
         private const float animationSpeed = 14;
-        private readonly ImageSprite bottomGradient;
         private readonly UIButton buttonAction;
         private readonly UIButton buttonClose;
+        private readonly UIButton buttonInfo;
+        private readonly ImageSprite itemCategoryIcon;
         private readonly TextSprite itemNameText;
         private int selectedIndex;
         private readonly GameSession session;
@@ -27,7 +28,6 @@ namespace ScaryCastle
         private const int spaceBetweenIcons = 15;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 150 };
         private readonly TextSprite title;
-        private const int visibleRange = 13;
         private float visualIndex;
         private readonly List<VisualItem> visualItems = [];
 
@@ -37,18 +37,9 @@ namespace ScaryCastle
 
         // Constructor
         public InventoryScene(GameSession session)
-            : base(session.Game)
+            : base(session.Game, SceneSettings.PausePreviousScenes)
         {
             this.session = session;
-
-            // Bottom gradient
-            bottomGradient = new ImageSprite(Game, Atlases.UI.BottomGradient)
-            {
-                Opacity = .6f,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
-                Scale = new Vector2(1, 1.2f)
-            };
 
             // SlotImage
             this.slotImage = new(Game, Atlases.UI.ItemGridSlot)
@@ -58,7 +49,7 @@ namespace ScaryCastle
             };
 
             // Item name
-            itemNameText = new TextSprite(Game, Fonts.CommonOutline)
+            itemNameText = new(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Bottom,
@@ -66,8 +57,16 @@ namespace ScaryCastle
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
+            // Item category icon
+            itemCategoryIcon = new(Game)
+            {
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Top, 0, -7),
+                Scale = ScaleInfo.UIElement.Medium
+            };
+
             // Amount text
-            amountText = new TextSprite(Game, Fonts.Common)
+            amountText = new(Game, Fonts.Common)
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Top,
@@ -76,14 +75,21 @@ namespace ScaryCastle
             };
 
             // Close button
-            buttonClose = new UIButton(Game, InputBindings.Close)
+            buttonClose = new(Game, InputBindings.Close)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -2),
             };
 
+            // Info button
+            buttonInfo = new(Game, InputBindings.Info)
+            {
+                PivotOrigin = RectanglePoint.RightBottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -13),
+            };
+
             // Title
-            title = new TextSprite(Game, Fonts.CommonOutline)
+            title = new(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Bottom,
@@ -91,11 +97,11 @@ namespace ScaryCastle
                 Scale = ScaleInfo.Text.Huge
             };
 
-            // Use button
-            buttonAction = new UIButton(Game, InputBindings.UseFriendlyItem)
+            // Action button
+            buttonAction = new(Game, InputBindings.UseFriendlyItem)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -12),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -24),
                 Sound = Sound.Find(SoundNames.UISelectB)
             };
         }
@@ -107,25 +113,33 @@ namespace ScaryCastle
         // DrawItems
         private void DrawItems(GameTime gameTime)
         {
-            for (int i = -visibleRange; i <= visibleRange; i++)
+            // Limitar el rango a 5
+            const int currentVisibleRange = 5;
+
+            for (int i = -currentVisibleRange; i <= currentVisibleRange; i++)
             {
                 int index = (int)visualIndex + i;
                 if (index < 0 || index >= visualItems.Count)
                     continue;
 
-                // desplazamiento relativo animado
                 float offset = i - (visualIndex - (int)visualIndex);
                 visualItems[index].Position = slotPosition + new Vector2(offset * spaceBetweenIcons, 0);
 
-                // Escala y opacidad basadas en distancia
                 float distance = MathF.Abs(offset);
-                float scale = MathF.Max(.6f, .8f - (distance * .2f)); // escala mínima 0.6
-                float alpha = MathF.Max(.3f, 1 - (distance * .3f)); // transparencia mínima 0.3
+
+                // RESTAURADO: Tu escala original (Base 0.8, Min 0.6)
+                float scale = MathF.Max(.6f, .8f - (distance * .2f));
+
+                // AJUSTADO: El alpha ahora llega a 0 exactamente en la distancia 5
+                // (1 / 5 = 0.2) para que el desvanecimiento sea proporcional al nuevo rango
+                float alpha = MathF.Max(0f, 1f - (distance * 0.2f));
 
                 visualItems[index].Opacity = alpha;
                 visualItems[index].Scale = new(scale);
 
-                visualItems[index].Draw(gameTime);
+                // Solo dibujamos si es mínimamente visible para ahorrar procesos
+                if (alpha > 0.01f)
+                    visualItems[index].Draw(gameTime);
             }
         }
 
@@ -166,7 +180,9 @@ namespace ScaryCastle
         // InvalidateSlot
         private void InvalidateSlot()
         {
-            amountText.Text = selectedIndex < 0 ? null : SelectedItem?.Item.GetDisplayAmount();
+            amountText.Text = selectedIndex < 0 || SelectedItem?.Item.MetaItem.IsUnique == true ? null : SelectedItem?.Item.GetDisplayAmount();
+            itemCategoryIcon.Image = null;
+
             buttonAction.Text = null;
 
             if (SelectedItem?.Item is Item item)
@@ -175,10 +191,20 @@ namespace ScaryCastle
                 {
                     if (item.MetaItem.Category == ItemCategory.Gadget)
                     {
+                        itemCategoryIcon.Image = Atlases.UI.InventoryCategoryGadget;
                         buttonAction.Text = Localization.GetValue(item.IsEquipped ? InventoryVerb.TakeOff : InventoryVerb.Equip);
                     }
                     else
                     {
+                        if (item.MetaItem.Category == ItemCategory.LeftHand)
+                        {
+                            itemCategoryIcon.Image = Atlases.UI.InventoryCategoryLeftHand;
+                        }
+                        else if (item.MetaItem.Category == ItemCategory.RightHand)
+                        {
+                            itemCategoryIcon.Image = Atlases.UI.InventoryCategoryRightHand;
+                        }
+
                         buttonAction.Text = Localization.GetValue(InventoryVerb.Equip);
                     }
                 }
@@ -187,6 +213,7 @@ namespace ScaryCastle
                     buttonAction.Text = Localization.GetValue(InventoryVerb.Use);
                 }
             }
+
         }
 
         // PerformAction
@@ -207,17 +234,8 @@ namespace ScaryCastle
                 }
                 else if (item.MetaItem.IsConsumable)
                 {
+                    SceneController.Pop();
                     session.Player?.ConsumeItem(item);
-                    if (item.Count <= 0)
-                    {
-                        visualItems.Remove(SelectedItem);
-                        if (selectedIndex == 0)
-                            Select(visualItems.NextIndex(selectedIndex));
-                        else
-                            Select(visualItems.PreviousIndex(selectedIndex));
-                    }
-
-                    InvalidateSlot();
                 }
 
                 return true;
@@ -251,11 +269,6 @@ namespace ScaryCastle
             if (!IsCurrentScene || session.IsOutcomeInProgress)
                 return;
 
-            // Gradient
-            //Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-            //bottomGradient.Draw(gameTime);
-            //Game.SpriteBatch.End();
-
             session.Inventory.Session.HUD.Draw(gameTime);
 
             Game.SpriteBatch.Begin(Game.Camera);
@@ -264,9 +277,11 @@ namespace ScaryCastle
             slotImage.Draw(gameTime);
             amountText.Draw(gameTime);
             DrawItems(gameTime);
+            itemCategoryIcon.Draw(gameTime);
             Game.SpriteBatch.End();
 
             buttonClose.Draw(gameTime);
+            buttonInfo.Draw(gameTime);
 
             if (buttonAction.Text != null)
                 buttonAction.Draw(gameTime);
@@ -359,7 +374,6 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            bottomGradient.Update(gameTime);
             stick.Update(gameTime);
 
             var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -368,6 +382,7 @@ namespace ScaryCastle
             base.OnUpdate(gameTime);
 
             buttonClose.Update(gameTime);
+            buttonInfo.Update(gameTime);
             buttonAction.Update(gameTime);
         }
 

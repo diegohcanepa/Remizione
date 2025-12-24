@@ -312,18 +312,13 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryAll.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryConsumable.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryGadget.png</key>
-            <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryKeyItem.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryLeftHand.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryLeftHandContent.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryRightHand.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryRightHandContent.png</key>
             <key type="filename">UI-assets/EdmundIcon.png</key>
             <key type="filename">UI-assets/SackIcon.png</key>
-            <key type="filename">UIIcons-assets/HeartHalfIconWithShadow.png</key>
-            <key type="filename">UIIcons-assets/HeartIconWithShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

@@ -68,6 +68,11 @@ namespace ScaryCastle
             if (element.TryGetProperty("impactWord", out JsonElement impactWordElement) && impactWordElement.GetString() is string impactWordValue)
                 impactWord = Enum.Parse<ImpactWordName>(impactWordValue);
 
+            // IsUnique
+            IsUnique = Category == ItemCategory.Gadget || Name == CoinItemName;
+            if (element.TryGetProperty("isUnique", out JsonElement isUniqueElement))
+                IsUnique = isUniqueElement.GetBoolean();
+
             // Knockback
             var knockback = Vector2.Zero;
             if (element.TryGetProperty("knockback", out JsonElement knockbackElement) && knockbackElement.GetString() is string knockbackValue)
@@ -232,6 +237,9 @@ namespace ScaryCastle
 
         // IsPassive
         public bool IsPassive => PassiveEffectCooldown > 0;
+
+        // IsUnique
+        public bool IsUnique { get; }
 
         // LocalizedDescription
         public string LocalizedDescription { get; }

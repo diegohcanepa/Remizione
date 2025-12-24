@@ -36,6 +36,7 @@ namespace ScaryCastle
         internal static readonly InputBinding Discard = InputManager.AddBinding(nameof(Discard), Buttons.Y, Keys.Delete);
         internal static readonly InputBinding EquipItem = InputManager.AddBinding(nameof(EquipItem), Buttons.A, Keys.E);
         internal static readonly InputBinding Exit = InputManager.AddBinding(nameof(Exit), GetButtonB(), Keys.Escape);
+        internal static readonly InputBinding Info = InputManager.AddBinding(nameof(Info), Buttons.Y, Keys.I);
         internal static readonly InputBinding Interact = InputManager.AddBinding(nameof(Interact), Buttons.A, Keys.E, Keys.Enter);
         internal static readonly InputBinding Inventory = InputManager.AddBinding(nameof(Inventory), Buttons.Y, Keys.I);
         internal static readonly InputBinding Select = InputManager.AddBinding(nameof(Select), GetButtonA(), Keys.E, Keys.Enter);
