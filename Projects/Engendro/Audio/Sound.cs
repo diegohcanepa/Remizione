@@ -269,16 +269,6 @@ namespace Engendro.Audio
             return instancesByName.TryGetValue(name, out var result) ? result : null;
         }
 
-        // FindNotNull
-        public static Sound FindNotNull(string name)
-        {
-            var result = Find(name);
-            if (result == null)
-                throw new InvalidOperationException($"The sound '{name}' does not exist.");
-            else
-                return result;
-        }
-
         // FindByTag
         public static IEnumerable<Sound> FindByTag(string tag)
         {
@@ -287,6 +277,16 @@ namespace Engendro.Audio
                 if (instanceList[i].Tags.Contains(tag))
                     yield return instanceList[i];
             }
+        }
+
+        // Get
+        public static Sound Get(string name)
+        {
+            var result = Find(name);
+            if (result == null)
+                throw new InvalidOperationException($"The sound '{name}' does not exist.");
+            else
+                return result;
         }
 
         // IsDisposed

@@ -89,7 +89,7 @@ namespace ScaryCastle
 
             // PickupSound
             if (element.TryGetProperty("pickupSound", out JsonElement pickupSoundElement) && pickupSoundElement.GetString() is string pickupSoundValue)
-                PickupSound = Sound.FindNotNull(pickupSoundValue);
+                PickupSound = Sound.Get(pickupSoundValue);
 
             // Price
             if (element.TryGetProperty("price", out JsonElement priceElement))
@@ -114,7 +114,7 @@ namespace ScaryCastle
             // Sound
             Sound? sound = null;
             if (element.TryGetProperty("sound", out JsonElement soundElement) && soundElement.GetString() is string soundValue)
-                sound = Sound.FindNotNull(soundValue);
+                sound = Sound.Get(soundValue);
 
             // Unlocked
             if (element.TryGetProperty("unlocked", out JsonElement unlockedElement))
@@ -164,8 +164,8 @@ namespace ScaryCastle
             return metaItems.TryGetValue(name, out var result) ? result : null;
         }
 
-        // FindNotNull
-        public static MetaItem FindNotNull(string name)
+        // Get
+        public static MetaItem Get(string name)
         {
             return Find(name) ?? throw new InvalidOperationException($"{nameof(MetaItem)} '{name}' not found.");
         }

@@ -25,7 +25,7 @@ namespace ScaryCastle
             {
                 hearts[i] = new(Game, Atlases.UI.Heart)
                 {
-                    Scale = ScaleInfo.UIElement.Medium,
+                    Scale = ScaleInfo.UIElement.Large,
                     Position = pos
                 };
 

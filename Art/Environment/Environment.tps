@@ -392,6 +392,25 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Environment-assets/ShadowSpot4.png</key>
+            <key type="filename">Guts-assets/Gut10.png</key>
+            <key type="filename">Guts-assets/Gut12.png</key>
+            <key type="filename">Guts-assets/Gut4.png</key>
+            <key type="filename">Guts-assets/Gut9.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,2,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,2,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Environment-assets/ShadowSpot5.png</key>
             <key type="filename">TombstoneD-assets/TombstoneDPiece2.png</key>
             <key type="filename">Trunk-assets/TrunkPiece3.png</key>
@@ -573,24 +592,6 @@
                 <rect>2,1,3,2</rect>
                 <key>scale9Paddings</key>
                 <rect>2,1,3,2</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Guts-assets/Gut10.png</key>
-            <key type="filename">Guts-assets/Gut12.png</key>
-            <key type="filename">Guts-assets/Gut4.png</key>
-            <key type="filename">Guts-assets/Gut9.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,2,1</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,2,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

@@ -31,7 +31,7 @@ namespace ScaryCastle
         #endregion
 
         // Get
-        internal static MetaItem? Get(GameSession session, RoomConfig roomConfig, Realm? lootRealm, ItemCategory? lootCategory)
+        internal static MetaItem? Get(GameSession session, RoomConfig roomConfig, Realm? lootRealm, ItemCategory? lootCategory, ItemCategory[]? denyCategories = null)
         {
             var candidates = new List<MetaItem>();
             int maxQ = ((int)roomConfig.Difficulty * 2) + 1; // Tu escala 0-5
@@ -42,6 +42,9 @@ namespace ScaryCastle
             foreach (var metaItem in MetaItem.AllItems)
             {
                 if (!session.UnlockedPool.IsUnlocked(metaItem.Name))
+                    continue;
+
+                if (denyCategories.Contains(metaItem.Category))
                     continue;
 
                 if (metaItem.Quality > maxQ)
@@ -77,7 +80,7 @@ namespace ScaryCastle
         internal static MetaItem GetForVending(GameSession session, RoomConfig roomConfig, Realm? lootRealm, ItemCategory? lootCategory)
         {
             // 1. Intentamos obtener el ítem ideal para esta habitación
-            if (Get(session, roomConfig, lootRealm, lootCategory) is MetaItem result)
+            if (Get(session, roomConfig, lootRealm, lootCategory, [ItemCategory.Pickup]) is MetaItem result)
                 return result;
 
             // 2. PLAN B: Si no hay nada que cumpla los filtros, 

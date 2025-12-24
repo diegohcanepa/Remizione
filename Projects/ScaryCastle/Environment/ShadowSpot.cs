@@ -10,18 +10,18 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly Actor actor;
         private readonly ImageSprite spotImage;
+        private readonly GameThing thing;
 
         #endregion
 
         #region Constructor
 
         // Constructor
-        public ShadowSpot(Actor actor)
-            : base(actor.Game)
+        public ShadowSpot(GameThing thing)
+            : base(thing.Game)
         {
-            this.actor = actor;
+            this.thing = thing;
             this.spotImage = new ImageSprite(Game)
             {
                 Color = ColorPalette.ShadowSpot,
@@ -53,14 +53,14 @@ namespace ScaryCastle
         {
             if (!spotImage.IsEmpty)
             {
-                spotImage.Effects = actor.Effects;
-                spotImage.Opacity = GetCurrentOpacity() * actor.Opacity;
-                var x = actor.IsFlippedHorizontally ? -Offset.X : Offset.X;
+                spotImage.Effects = thing.Effects;
+                spotImage.Opacity = GetCurrentOpacity() * thing.Opacity;
+                var x = thing.IsFlippedHorizontally ? -Offset.X : Offset.X;
                 var y = Offset.Y;
-                spotImage.Position = actor.BoundingBox.GetPoint(RectanglePoint.Bottom, x, y);
+                spotImage.Position = thing.BoundingBox.GetPoint(RectanglePoint.Bottom, x, y);
 
-                if (actor.Altitude > 0)
-                    spotImage.Y += actor.Altitude;
+                if (thing.Altitude > 0)
+                    spotImage.Y += thing.Altitude;
 
                 spotImage.Draw(gameTime);
             }

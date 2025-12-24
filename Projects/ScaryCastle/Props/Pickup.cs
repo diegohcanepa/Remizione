@@ -15,12 +15,11 @@ namespace ScaryCastle
 
         private readonly BounceScaleEffect bounceScaleEffect = new();
         private bool collected;
-        private readonly Vector2 defaultScale = ScaleInfo.UIElement.Large; 
+        private readonly Vector2 defaultScale = ScaleInfo.UIElement.Medium; 
         private int delayCoolDown;
         private MetaItem? metaItem;
         private ProceduralRoom? room;
-        private readonly ImageSprite shadow;
-        private readonly Vector2Tween shadowScaleTween = new();
+        private readonly ShadowSpot shadowSpot;
 
         #endregion
 
@@ -35,11 +34,10 @@ namespace ScaryCastle
             this.HotspotPlacement = PlacementMode.Absolute;
             this.IgnoreWalkArea = false;
             this.FloatingForce = 1;
-
-            this.shadow = new(Game, Atlases.UI.PickupShadow)
+            this.shadowSpot = new ShadowSpot(this)
             {
-                Opacity = ColorPalette.ShadowOpacity,
-                PivotOrigin = RectanglePoint.Center
+                Size = 4,
+                Offset = new(0, -1)
             };
         }
 
@@ -55,6 +53,7 @@ namespace ScaryCastle
             {
                 Session.Player.Animate(AnimationNames.PickUp);
                 metaItem.Effect.ApplyHP(Session.Player);
+                metaItem.PickupSound?.Play();
             }
             Session.ObjectPools.Pickups.Return(this);
             
@@ -72,20 +71,16 @@ namespace ScaryCastle
             // TODO: Check old LootSack sound
             if (Sound.Find(SoundNames.LootSack)?.PopInstance() is SoundInstance soundInstance)
                 soundInstance.PlayDelayed(300);
-
-            this.shadowScaleTween.Start(TweenStyle.CubicIn, Vector2.Zero, ScaleInfo.UIElement.Medium, 300);
-            this.shadow.Tweens.ScaleTween = shadowScaleTween;
         }
 
         #endregion
 
         #region Protected members
 
-        // OnDraw
-        protected override void OnDraw(GameTime gameTime)
+        // OnDrawShadow
+        protected override void OnDrawShadow(GameTime gameTime)
         {
-            shadow.Draw(gameTime);
-            base.OnDraw(gameTime);
+            shadowSpot.Draw(gameTime);
         }
 
         // OnUnload
@@ -101,7 +96,7 @@ namespace ScaryCastle
             if (metaItem == null)
                 return;
 
-            shadow.Update(gameTime);
+            shadowSpot.Update(gameTime);
 
             base.OnUpdate(gameTime);
 
@@ -139,7 +134,7 @@ namespace ScaryCastle
         // Drop
         public bool Drop(ProceduralRoom room, Vector2 origin, MetaItem metaItem)
         {
-            if (metaItem.Category != ItemCategory.Life)
+            if (metaItem.Category != ItemCategory.Pickup)
                 return false;
 
             this.room = room;
@@ -150,8 +145,6 @@ namespace ScaryCastle
             this.Position = origin;
             this.metaItem = metaItem;
             this.delayCoolDown = 300;
-            this.shadow.Position = origin - Vector2.UnitY;
-            this.shadow.Scale = Vector2.Zero;
             this.DefaultImageName = metaItem.Name;
             this.DisplayNameKey = $"Item.{metaItem.Name}.Name";
             this.Scale = defaultScale;

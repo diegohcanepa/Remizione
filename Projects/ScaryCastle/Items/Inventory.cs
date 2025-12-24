@@ -19,14 +19,14 @@ namespace ScaryCastle
         }
 
         // Add
-        public Item? Add(string name, int amount)
+        public Item? Add(string name, int amount = 1)
         {
             var metaItem = MetaItem.Find(name) ?? throw new InvalidOperationException("Meta item not found.");
             return Add(metaItem, amount);
         }
 
         // Add
-        public Item? Add(MetaItem metaItem, int amount)
+        public Item? Add(MetaItem metaItem, int amount = 1)
         {
             var item = Find(metaItem.Name);
 

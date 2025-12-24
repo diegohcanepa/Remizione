@@ -4,6 +4,7 @@ using Engendro.Input;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace ScaryCastle
 {
@@ -19,6 +20,7 @@ namespace ScaryCastle
         private readonly UIButton buttonAction;
         private readonly UIButton buttonClose;
         private readonly UIButton buttonInfo;
+        private readonly ItemInfoScene infoScene;
         private readonly ImageSprite itemCategoryIcon;
         private readonly TextSprite itemNameText;
         private int selectedIndex;
@@ -86,6 +88,7 @@ namespace ScaryCastle
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -13),
+                AllowPressEffect = false
             };
 
             // Title
@@ -104,6 +107,8 @@ namespace ScaryCastle
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -24),
                 Sound = Sound.Find(SoundNames.UISelectB)
             };
+
+            this.infoScene = new(Game);
         }
 
         #endregion
@@ -305,6 +310,14 @@ namespace ScaryCastle
             if (buttonClose.TestPressed(PlayerIndex.One))
             {
                 SceneController.Pop();
+                return HandleInputResult.Handled;
+            }
+
+            // Info
+            if (SelectedItem?.Item != null && buttonInfo.TestPressed(PlayerIndex.One))
+            {
+                infoScene.Item = SelectedItem.Item;
+                infoScene.SceneController.Push();
                 return HandleInputResult.Handled;
             }
 

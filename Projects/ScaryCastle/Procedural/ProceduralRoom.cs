@@ -30,7 +30,7 @@ namespace ScaryCastle
             if (roomGraph.Config == null)
                 throw new InvalidOperationException("RoomGraph has no room config assigned.");
 
-            this.Config = RoomConfig.FindNotNull(roomGraph.Config.Name);
+            this.Config = RoomConfig.Get(roomGraph.Config.Name);
             this.RoomGraph = roomGraph;
 
             this.AllowGlobalLight = true;
@@ -193,7 +193,7 @@ namespace ScaryCastle
             {
                 // 1. Roll de probabilidad: ¿Esta sala da premio?
                 // 50% de base es un buen número para empezar.
-                Ratio dropChance = .9f;
+                Ratio dropChance = .2f;
 
                 // Sumamos la suerte del jugador si tiene un gadget/pasivo
                 if (Session.Inventory.Gadget is Item gadget)
@@ -203,16 +203,20 @@ namespace ScaryCastle
                 if (!dropChance.Roll())
                     return;
 
-                drop = Loot.Get(Session, Config, null, ItemCategory.Life);
+                drop = Loot.Get(Session, Config, null, ItemCategory.Pickup);
                 RoomGraph.HeartCount++;
             }
 
             if (drop != null)
-            {
-                var dropPosition = WalkArea != null ? WalkArea.Polygon.BoundingRectangleF.Center : BoundingBox.Center;
-                Session.ObjectPools.Pickups.Get()?.Drop(this, dropPosition, drop);
-            }
+                Session.ObjectPools.Pickups.Get()?.Drop(this, GetDropLootPosition(), drop);
         }
+
+        // GetDropLootPosition
+        protected Vector2 GetDropLootPosition()
+        {
+            return WalkArea != null ? WalkArea.Polygon.BoundingRectangleF.Center : BoundingBox.Center;
+        }
+
 
         // OnLoad
         protected override void OnLoad()

@@ -52,7 +52,7 @@ namespace ScaryCastle
 
             // Sound
             if (element.TryGetProperty("sound", out JsonElement soundElement) && soundElement.GetString() is string soundValue)
-                Sound = Sound.FindNotNull(soundValue);
+                Sound = Sound.Get(soundValue);
 
             effects.Add(Name, this);
         }
@@ -74,8 +74,8 @@ namespace ScaryCastle
             return effects.TryGetValue(name, out var result) ? result : null;
         }
 
-        // FindNotNull
-        public static EffectDefinition FindNotNull(string name)
+        // Get
+        public static EffectDefinition Get(string name)
         {
             return Find(name) ?? throw new InvalidOperationException($"{nameof(EffectDefinition)} '{name}' not found.");
         }

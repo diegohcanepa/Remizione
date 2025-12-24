@@ -65,6 +65,7 @@
 	<FX Name="PickupBag" MaxInstances="2" />
 	<FX Name="PickupCoin" MaxInstances="2" />
 	<FX Name="PickupGeneric" MaxInstances="2" />
+	<FX Name="PickupHeart" MaxInstances="2" />
 	<FX Name="PickupTicket" MaxInstances="12" />
 	<FX Name="PlayerDamage" MaxInstances="4" />
 	<FX Name="PneumaticDoor" MaxInstances="2" />

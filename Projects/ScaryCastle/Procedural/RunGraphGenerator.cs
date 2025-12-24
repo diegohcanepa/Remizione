@@ -139,7 +139,10 @@ namespace ScaryCastle
             // 3. Procesar Distancias y marcar la Moneda
             RoomGraph coinRoom = ProcessMapData(start);
             if (coinRoom != start)
+            {
                 coinRoom.RoomType = RoomType.Coin;
+                coinRoom.HasCoin = true;
+            }
 
             // Devolvemos el maxDist (la distancia a la moneda) para los cálculos de fases
             int maxDist = coinRoom.DistanceFromStart;

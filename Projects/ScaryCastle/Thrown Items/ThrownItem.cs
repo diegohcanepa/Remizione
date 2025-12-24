@@ -113,7 +113,7 @@ namespace ScaryCastle
             {
                 Unparent();
                 Session.ObjectPools.ReturnThrownItem(this);
-                Session.Inventory.Add(item.Name, 1);
+                Session.Inventory.Add(item.Name);
             }
         }
 

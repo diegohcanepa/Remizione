@@ -110,6 +110,15 @@ namespace ScaryCastle
 
             DropLoot();
 
+            if (RoomGraph.HasCoin && MetaItem.Find(MetaItem.CoinItemName) is MetaItem coin)
+            {
+                Session.Inventory.Add(coin);
+                Session.HUD.SackSlot.AnimateItem(coin, GetDropLootPosition());
+                Session.HUD.Log.Show(LogVerb.PickedUp, coin);
+                coin.PickupSound?.Play();
+                RoomGraph.HasCoin = false;
+            }
+
             lootDropped = true;
 
             // Open all doors

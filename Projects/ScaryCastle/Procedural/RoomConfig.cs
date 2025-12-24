@@ -102,8 +102,8 @@ namespace ScaryCastle
             return data.TryGetValue(name, out var roomConfig) ? roomConfig : null;
         }
 
-        // FindNotNull
-        public static RoomConfig FindNotNull(string name)
+        // Get
+        public static RoomConfig Get(string name)
         {
             return data[name];
         }

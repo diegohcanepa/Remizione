@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -113,7 +114,7 @@ namespace ScaryCastle
                 if (Session.Player?.DistanceTo(image.Position) <= 3)
                 {
                     collected = true;
-                    Session.Player.PlaySound(SoundNames.PickupTicket);
+                    Sound.Play(SoundNames.PickupTicket);
                     Session.Tickets++;
                     scaleTween.Start(TweenStyle.Linear, image.Scale, Vector2.Zero, 100, Release);
                     image.Tweens.ScaleTween = scaleTween;

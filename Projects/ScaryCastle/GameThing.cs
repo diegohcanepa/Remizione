@@ -265,10 +265,6 @@ namespace ScaryCastle
 
             if (!lootChance.Roll())
                 return;
-
-            MetaItem? drop = Loot.Get(Session, room.Config, null, null);
-            if (drop != null)
-                Session.ObjectPools.Pickups.Get()?.Drop(room, Position, drop);
         }
 
         // DropTickets

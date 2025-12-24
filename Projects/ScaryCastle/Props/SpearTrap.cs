@@ -17,7 +17,7 @@ namespace ScaryCastle
         private bool damageApplied;
         private int cooldown;
         private int cooldownInterval;
-        private static readonly EffectDefinition effect = EffectDefinition.FindNotNull(nameof(SpearTrap));
+        private static readonly EffectDefinition effect = EffectDefinition.Get(nameof(SpearTrap));
         private int upCooldown;
         private SpearState state;
 

@@ -12,7 +12,6 @@
             this.X = x;
             this.Y = y;
             this.RoomType = roomType;
-            this.HasCoin = roomType == RoomType.Coin;
         }
 
         // Config

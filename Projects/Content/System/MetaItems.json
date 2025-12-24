@@ -38,9 +38,9 @@
 		},
 		{
 			"name": "Heart",
-			"category": "Life",
+			"category": "Pickup",
 			"hp": "2",
-			"sound": "AppleBite",
+			"pickupSound": "PickupHeart",
 			"unlocked": true
 		},
 		{
