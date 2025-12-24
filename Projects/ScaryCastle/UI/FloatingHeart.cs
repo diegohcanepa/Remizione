@@ -63,7 +63,7 @@ namespace ScaryCastle
 
             var duration = Random.Shared.Next(1000, 2500);
 
-            image.Image = half ? Atlases.UI.HeartHalfIcon : Atlases.UI.HeartIcon;
+            image.Image = half ? Atlases.UI.HeartHalf : Atlases.UI.Heart;
 
             yTween.Start(TweenStyle.CubicOut, origin.Y, origin.Y + distance.Y, duration * 2);
             xTween.Start(TweenStyle.CubicOut, origin.X, origin.X + distance.X, duration);

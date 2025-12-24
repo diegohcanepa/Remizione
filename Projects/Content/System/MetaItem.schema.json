@@ -43,7 +43,8 @@
             "RightHand",
             "Consumable",
             "Gadget",
-            "KeyItem"
+            "KeyItem",
+            "Life"
           ]
         },
         "damage": {

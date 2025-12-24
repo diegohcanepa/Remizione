@@ -55,8 +55,8 @@ namespace ScaryCastle
                 if (lootCategory != null && metaItem.Category != lootCategory)
                     continue;
 
-                // Discard gadgets already in inventory
-                if (metaItem.Category == ItemCategory.Gadget && session.Inventory.Find(metaItem.Name) != null)
+                // Discard unique items
+                if (metaItem.IsUnique && session.Inventory.Find(metaItem.Name) != null)
                     continue;
 
                 candidates.Add(metaItem);

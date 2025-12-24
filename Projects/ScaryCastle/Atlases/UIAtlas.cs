@@ -18,9 +18,9 @@ namespace ScaryCastle
             CreditsBar = this[nameof(CreditsBar)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             EquipmentSlot = this[nameof(EquipmentSlot)];
-            HeartEmptyIcon = this[nameof(HeartEmptyIcon)];
-            HeartHalfIcon = this[nameof(HeartHalfIcon)];
-            HeartIcon = this[nameof(HeartIcon)];
+            HeartEmpty = this[nameof(HeartEmpty)];
+            HeartHalf = this[nameof(HeartHalf)];
+            Heart = this[nameof(Heart)];
             InventoryCategoryGadget = this[nameof(InventoryCategoryGadget)];
             InventoryCategoryLeftHand = this[nameof(InventoryCategoryLeftHand)];
             InventoryCategoryRightHand = this[nameof(InventoryCategoryRightHand)];
@@ -91,14 +91,14 @@ namespace ScaryCastle
         // InventoryNavigationBar
         public AtlasImage InventoryNavigationBar { get; }
 
-        // HeartEmptyIcon
-        public AtlasImage HeartEmptyIcon { get; }
+        // HeartEmpty
+        public AtlasImage HeartEmpty { get; }
 
-        // HeartHalfIcon
-        public AtlasImage HeartHalfIcon { get; }
+        // HeartHalf
+        public AtlasImage HeartHalf { get; }
 
-        // HeartIcon
-        public AtlasImage HeartIcon { get; }
+        // Heart
+        public AtlasImage Heart { get; }
 
         // MessageContainer
         public AtlasImage MessageContainer { get; }

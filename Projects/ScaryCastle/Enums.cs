@@ -51,7 +51,7 @@ namespace ScaryCastle
     public enum ItemAction { None, Place, Throw }
 
     // ItemCategory
-    public enum ItemCategory { LeftHand, RightHand, Consumable, Gadget, KeyItem }
+    public enum ItemCategory { LeftHand, RightHand, Consumable, Gadget, KeyItem, Life }
 
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }

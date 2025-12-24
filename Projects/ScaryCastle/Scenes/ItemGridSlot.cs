@@ -11,8 +11,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly TextSprite amountText;
-        private readonly ImageSprite checkMark;
         private readonly ItemGrid grid;
         private readonly ImageSprite icon;
         private readonly ImageSprite selectedSlotImage;
@@ -40,21 +38,6 @@ namespace ScaryCastle
 
             // Selected slot image
             this.selectedSlotImage = new(Game, Atlases.UI.ItemGridSlotSelected);
-
-            // Amount text
-            amountText = new TextSprite(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Bottom,
-                Scale = ScaleInfo.Text.Large
-            };
-
-            // Checkmark
-            this.checkMark = new(Game, Atlases.UI.CheckMark)
-            {
-                PivotOrigin = RectanglePoint.RightTop,
-                Scale = ScaleInfo.UIElement.Medium
-            };
         }
 
         #endregion
@@ -74,22 +57,12 @@ namespace ScaryCastle
             if (Item != null)
                 icon.Draw(gameTime);
 
-            amountText.Draw(gameTime);
-
-            if (Item?.IsEquipped == true)
-                checkMark.Draw(gameTime);
-
             Game.SpriteBatch.End();
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (Item != null && Item.Count == 0)
-                icon.Opacity = .5f;
-            else
-                icon.Opacity = 1;
-
             icon.Update(gameTime);
         }
 
@@ -134,26 +107,7 @@ namespace ScaryCastle
                 {
                     field = value;
                     icon.Image = field?.MetaItem.Image;
-                    Refresh();
                 }
-            }
-        }
-
-        // PerformDefaultAction
-        public void PerformDefaultAction()
-        {
-            if (Item == null)
-                return;
-
-            if (Item.MetaItem.Category == ItemCategory.Consumable)
-            {
-                Item.MetaItem.Effect.Sound?.Play();
-                Item.Use(grid.Inventory.Session.Player);
-                if (Item.Index < 0)
-                    Item = null;
-                Refresh();
-                icon.Scale = ScaleInfo.UIElement.Medium;
-                icon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, icon.Scale, icon.Scale * 1.2f, 100, 2);
             }
         }
 
@@ -166,23 +120,6 @@ namespace ScaryCastle
                 slotImage.Position = value;
                 selectedSlotImage.Position = value;
                 icon.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Center, 0, -1);
-                amountText.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1.5f);
-                checkMark.Position = slotImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -5);
-            }
-        }
-
-        // Refresh
-        public void Refresh()
-        {
-            if (Item != null)
-            {
-                amountText.Color = ColorPalette.Text.Default;
-                amountText.Text = $"{Item.Count}";
-                icon.Opacity = Item.Count == 0 ? .3f : 1;
-            }
-            else
-            {
-                amountText.Clear();
             }
         }
     }

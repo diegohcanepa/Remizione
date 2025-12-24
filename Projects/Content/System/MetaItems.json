@@ -37,6 +37,13 @@
 			"sound": "Firecracker"
 		},
 		{
+			"name": "Heart",
+			"category": "Life",
+			"hp": "2",
+			"sound": "AppleBite",
+			"unlocked": true
+		},
+		{
 			"name": "Lantern",
 			"category": "Gadget"
 		},

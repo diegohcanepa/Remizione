@@ -334,20 +334,6 @@
                 <false/>
             </struct>
             <key type="filename">Items-assets/Apple.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,4,7,7</rect>
-                <key>scale9Paddings</key>
-                <rect>3,4,7,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Items-assets/Battery.png</key>
             <key type="filename">Items-assets/Chili.png</key>
             <key type="filename">Items-assets/Coin.png</key>
@@ -500,6 +486,9 @@
             <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>
             <key type="filename">UI-assets/PointingHand.png</key>
+            <key type="filename">UIIcons-assets/Heart.png</key>
+            <key type="filename">UIIcons-assets/HeartEmpty.png</key>
+            <key type="filename">UIIcons-assets/HeartHalf.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -511,6 +500,21 @@
                 <rect>2,2,3,3</rect>
                 <key>scale9Paddings</key>
                 <rect>2,2,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MiniMap-assets/UIMiniMapMarkerHeart.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,3,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -562,9 +566,6 @@
                 <false/>
             </struct>
             <key type="filename">UI-assets/BertaIcon.png</key>
-            <key type="filename">UIIcons-assets/HeartEmptyIcon.png</key>
-            <key type="filename">UIIcons-assets/HeartHalfIcon.png</key>
-            <key type="filename">UIIcons-assets/HeartIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

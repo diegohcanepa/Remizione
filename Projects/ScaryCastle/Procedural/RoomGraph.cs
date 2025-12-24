@@ -40,6 +40,9 @@
         // HasCoin
         public bool HasCoin { get; set; }
 
+        // HeartCount
+        public int HeartCount { get; set; }
+
         // Index
         public int Index { get; }
 
@@ -48,9 +51,6 @@
 
         // Left
         public RoomGraph? Left { get; set; }
-
-        // LootCount
-        public int LootCount { get; set; }
 
         // Realm
         public Realm Realm { get; set; }

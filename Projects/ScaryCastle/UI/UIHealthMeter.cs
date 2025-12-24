@@ -24,7 +24,7 @@ namespace ScaryCastle
 
             for (var i = 0; i < hearts.Length; i++)
             {
-                hearts[i] = new(Game, Atlases.UI.HeartIcon)
+                hearts[i] = new(Game, Atlases.UI.Heart)
                 {
                     Scale = ScaleInfo.UIElement.Large,
                     Position = pos
@@ -49,13 +49,13 @@ namespace ScaryCastle
             for (int i = 0; i < totalHearts; i++)
             {
                 if (i < fullHearts)
-                    hearts[i].Image = Atlases.UI.HeartIcon;
+                    hearts[i].Image = Atlases.UI.Heart;
 
                 else if (i == fullHearts && hasHalfHeart)
-                    hearts[i].Image = Atlases.UI.HeartHalfIcon;
+                    hearts[i].Image = Atlases.UI.HeartHalf;
 
                 else
-                    hearts[i].Image = Atlases.UI.HeartEmptyIcon;
+                    hearts[i].Image = Atlases.UI.HeartEmpty;
             }
 
             lastKnownValue = Actor.HP;

@@ -14,9 +14,11 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly BounceScaleEffect bounceScaleEffect = new();
+        private bool collected;
+        private readonly Vector2 defaultScale = ScaleInfo.UIElement.Large; 
         private int delayCoolDown;
-        private bool isCoin;
         private MetaItem? metaItem;
+        private ProceduralRoom? room;
         private readonly ImageSprite shadow;
         private readonly Vector2Tween shadowScaleTween = new();
 
@@ -43,12 +45,32 @@ namespace ScaryCastle
 
         #region Private members
 
+        // Collect
+        private void Collect()
+        {
+            if (metaItem == null)
+                return;
+
+            if (Session.Player != null)
+            {
+                Session.Player.Animate(AnimationNames.PickUp);
+                metaItem.Effect.ApplyHP(Session.Player);
+            }
+            Session.ObjectPools.Pickups.Return(this);
+            
+            if (room != null)
+                room.RoomGraph.HeartCount--;
+
+            Unparent();
+        }
+
         // Pop
         private void Pop()
         {
-            bounceScaleEffect.Play(ScaleInfo.UIElement.VeryTiny.X, .75f);
+            bounceScaleEffect.Play(defaultScale.X, .75f);
 
-            if (Sound.Find(isCoin ? SoundNames.LootCoin : SoundNames.LootSack)?.PopInstance() is SoundInstance soundInstance)
+            // TODO: Check old LootSack sound
+            if (Sound.Find(SoundNames.LootSack)?.PopInstance() is SoundInstance soundInstance)
                 soundInstance.PlayDelayed(300);
 
             this.shadowScaleTween.Start(TweenStyle.CubicIn, Vector2.Zero, ScaleInfo.UIElement.Medium, 300);
@@ -98,48 +120,45 @@ namespace ScaryCastle
                 bounceScaleEffect.Update(gameTime);
                 Scale = new(bounceScaleEffect.Value);
             }
+
+            if (Session.Player != null && Session.Player.HP < Session.Player.MaxHP)
+            {
+                if (!collected)
+                {
+                    if (Session.Player.DistanceTo(Position) <= 3)
+                    {
+                        collected = true;
+                        Collect();
+                    }
+                }
+            }
         }
 
         #endregion
 
-        // Collect
-        [ScriptMethod]
-        public void Collect()
-        {
-            if (metaItem == null)
-                return;
-
-            if (Room is ProceduralRoom procRoom)
-            {
-                if (isCoin)
-                    procRoom.RoomGraph.HasCoin = false;
-                else
-                    procRoom.RoomGraph.LootCount--;
-            }
-
-            Session.Player?.Animate(AnimationNames.PickUp);
-            Session.Inventory.Add(metaItem, 1);
-            Session.HUD.Log.Show(LogVerb.PickedUp, metaItem);
-            Session.ObjectPools.Pickups.Return(this);
-            Session.HUD.SackSlot.AnimateItem(metaItem, Position);
-            Unparent();
-        }
-
         // Drop
-        public void Drop(Room room, Vector2 origin, MetaItem metaItem)
+        public bool Drop(ProceduralRoom room, Vector2 origin, MetaItem metaItem)
         {
+            if (metaItem.Category != ItemCategory.Life)
+                return false;
+
+            this.room = room;
+
             room.Children.Add(this);
+            
+            this.collected = false;
             this.Position = origin;
             this.metaItem = metaItem;
             this.delayCoolDown = 300;
             this.shadow.Position = origin - Vector2.UnitY;
             this.shadow.Scale = Vector2.Zero;
             this.DefaultImageName = metaItem.Name;
-            this.isCoin = metaItem.Name == MetaItem.CoinItemName;
             this.DisplayNameKey = $"Item.{metaItem.Name}.Name";
-            this.Scale = ScaleInfo.UIElement.VeryTiny;
+            this.Scale = defaultScale;
             this.Hotspot = new Polygon(BoundingBox.GetPoints());
             this.Scale = Vector2.Zero;
+
+            return true;
         }
     }
 }

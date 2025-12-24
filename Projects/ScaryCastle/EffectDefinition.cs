@@ -104,6 +104,17 @@ namespace ScaryCastle
             return true;
         }
 
+        // ApplyHP
+        public bool ApplyHP(GameThing target)
+        {
+            if (HP == null)
+                return false;
+
+            target.HP += HP.Roll();
+
+            return true;
+        }
+
         // Damage
         public DiceExpression? Damage { get; init; }
 
