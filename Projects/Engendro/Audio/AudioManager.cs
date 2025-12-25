@@ -182,7 +182,8 @@ namespace Engendro.Audio
                 SoundCategoryName.Ambience => AmbienceCategory,
                 SoundCategoryName.Music => MusicCategory,
                 SoundCategoryName.Voice => VoiceCategory,
-                _ => FXCategory
+                SoundCategoryName.FX => FXCategory,
+                _ => throw new NotImplementedException(),
             };
         }
 

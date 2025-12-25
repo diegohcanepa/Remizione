@@ -31,7 +31,9 @@
                 ComparisonOperator.LessThanOrEqual => leftOperand <= rightOperand,
 
                 // Equality
-                _ => leftOperand == rightOperand,
+                ComparisonOperator.Equality => leftOperand == rightOperand,
+                
+                _ => throw new System.NotImplementedException(),
             };
         }
     }

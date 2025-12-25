@@ -33,6 +33,19 @@ namespace ScaryCastle
 
         #region Private members
 
+        // DropCoin
+        private void DropCoin()
+        {
+            if (RoomGraph.HasCoin && MetaItem.Find(MetaItem.CoinItemName) is MetaItem coin)
+            {
+                Session.Inventory.Add(coin);
+                Session.HUD.SackSlot.AnimateItem(coin, GetDropLootPosition());
+                Session.HUD.Log.Show(LogVerb.PickedUp, coin);
+                coin.PickupSound?.Play();
+                RoomGraph.HasCoin = false;
+            }
+        }
+
         // PopulateDoors
         private void PopulateDoors()
         {
@@ -110,14 +123,7 @@ namespace ScaryCastle
 
             DropLoot();
 
-            if (RoomGraph.HasCoin && MetaItem.Find(MetaItem.CoinItemName) is MetaItem coin)
-            {
-                Session.Inventory.Add(coin);
-                Session.HUD.SackSlot.AnimateItem(coin, GetDropLootPosition());
-                Session.HUD.Log.Show(LogVerb.PickedUp, coin);
-                coin.PickupSound?.Play();
-                RoomGraph.HasCoin = false;
-            }
+            DropCoin();
 
             lootDropped = true;
 
@@ -146,6 +152,9 @@ namespace ScaryCastle
                         doors[i].SwitchStateCooldown = (int)RandomHelper.Next(Random, 500, 900);
                 }
             }
+
+            if (EnemyCount == 0)
+                DropCoin();
         }
 
         // OnLoad
@@ -154,7 +163,9 @@ namespace ScaryCastle
             // Check door anchors
             if (DoorAnchorLeft == Vector2.Zero || DoorAnchorDown == Vector2.Zero ||
                 DoorAnchorRight == Vector2.Zero || DoorAnchorUp == Vector2.Zero)
+            {
                 throw new InvalidOperationException($"One or more door anchor points are missing in room [{RoomGraph}].");
+            }
 
             base.OnLoad();
 
@@ -251,7 +262,7 @@ namespace ScaryCastle
             {
                 for (var i = 0; i < result.Placeholders.Length; i++)
                 {
-                    if (string.Compare(placeholderName, result.Placeholders[i], StringComparison.InvariantCulture) == 0)
+                    if (string.Equals(placeholderName, result.Placeholders[i], StringComparison.Ordinal))
                         return true;
                 }
             }

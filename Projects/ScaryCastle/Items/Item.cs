@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using System;
 using System.Globalization;
 
 namespace ScaryCastle
@@ -87,7 +86,7 @@ namespace ScaryCastle
                     field = value;
 
                     if (Count > 0 && MetaItem.IsUnique)
-                        Count = 1;
+                        field = 1;
 
                     isDisplayTextDiry = true;
                 }

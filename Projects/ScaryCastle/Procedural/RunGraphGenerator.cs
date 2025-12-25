@@ -50,7 +50,7 @@ namespace ScaryCastle
         private static RoomGraph ProcessMapData(RoomGraph start)
         {
             Queue<RoomGraph> queue = new();
-            Dictionary<RoomGraph, int> visited = new();
+            Dictionary<RoomGraph, int> visited = [];
 
             queue.Enqueue(start);
             visited.Add(start, 0);
@@ -93,7 +93,7 @@ namespace ScaryCastle
             if (roomCount <= 0)
                 return ([], 0);
 
-            Dictionary<(int x, int y), RoomGraph> occupied = new();
+            Dictionary<(int x, int y), RoomGraph> occupied = [];
             List<RoomGraph> rooms = [];
 
             // 1. Setup Start

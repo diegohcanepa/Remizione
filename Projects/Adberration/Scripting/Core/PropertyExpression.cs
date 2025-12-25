@@ -19,7 +19,7 @@ namespace Adberration.Scripting
             }
 
             // $
-            if (value.StartsWith(ScriptSyntax.SessionPropertyAlias))
+            if (value.StartsWith(ScriptSyntax.SessionPropertyAlias, StringComparison.Ordinal))
             {
                 value = value.Replace(ScriptSyntax.SessionPropertyAlias, ScriptSyntax.SessionKeyword + ".");
             }
@@ -31,14 +31,14 @@ namespace Adberration.Scripting
                 {
                     value = statement.Script.EntityName + ScriptSyntax.MemberSeparator + value;
                 }
-                else if (value.StartsWith(ScriptSyntax.ThisKeyword + ScriptSyntax.MemberSeparator))
+                else if (value.StartsWith(ScriptSyntax.ThisKeyword + ScriptSyntax.MemberSeparator, StringComparison.Ordinal))
                 {
                     value = value.Substring(ScriptSyntax.ThisKeyword.Length);
                     value = statement.Script.EntityName + value;
                 }
             }
 
-            var isSessionProperty = value.StartsWith(ScriptSyntax.SessionKeyword + ".");
+            var isSessionProperty = value.StartsWith(ScriptSyntax.SessionKeyword + ".", StringComparison.Ordinal);
 
             if (isSessionProperty)
             {

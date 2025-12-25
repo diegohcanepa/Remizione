@@ -384,7 +384,9 @@ namespace ScaryCastle
         protected override void OnMoveToCompleted()
         {
             if (pendingPathNodes.Count > 0)
+            {
                 MoveToNextPathNode();
+            }
             else
             {
                 StopMoving();
@@ -614,7 +616,9 @@ namespace ScaryCastle
                 return true;
             }
             else
+            {
                 return false;
+            }
         }
 
         // InteractiveTarget

@@ -66,7 +66,7 @@ namespace Engendro
             // Try exact match
             for (var i = 0; i < packageList.Count; i++)
             {
-                if (string.Equals(packageList[i].LanguageTag, languageTag, StringComparison.CurrentCultureIgnoreCase))
+                if (string.Equals(packageList[i].LanguageTag, languageTag, StringComparison.Ordinal))
                 {
                     return packageList[i];
                 }
@@ -79,7 +79,7 @@ namespace Engendro
                 var countryRegion = languageTag.Split('-');
                 foreach (var package in packageList)
                 {
-                    if (string.Compare(package.LanguageTag.Split('-')[0], countryRegion[0], true) == 0)
+                    if (string.Equals(package.LanguageTag.Split('-')[0], countryRegion[0], StringComparison.Ordinal))
                     {
                         return package;
                     }

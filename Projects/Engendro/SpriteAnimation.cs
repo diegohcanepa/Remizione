@@ -137,7 +137,7 @@ namespace Engendro
         // GetFrames
         public SpriteFrame[] GetFrames()
         {
-            return frameList.ToArray();
+            return [.. frameList];
         }
 
         // Name

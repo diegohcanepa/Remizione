@@ -114,7 +114,7 @@ namespace Engendro.Audio
 
                 paths.Add(name);
 
-                name = Path.Combine(paths.ToArray());
+                name = Path.Combine([.. paths]);
             }
 
             return name;
@@ -346,7 +346,7 @@ namespace Engendro.Audio
                 }
             }
 
-            return result.ToArray();
+            return [.. result];
         }
 
         // PauseAware
@@ -380,7 +380,9 @@ namespace Engendro.Audio
                 return instance;
             }
             else
+            {
                 return null;
+            }
         }
 
         // Play
@@ -400,7 +402,9 @@ namespace Engendro.Audio
                 return instance;
             }
             else
+            {
                 return null;
+            }
         }
 
         // PopMode

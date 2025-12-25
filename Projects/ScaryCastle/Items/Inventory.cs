@@ -183,7 +183,7 @@ namespace ScaryCastle
         // GetItems
         public Item[] GetItems()
         {
-            return items.ToArray();
+            return [.. items];
         }
 
         // GetItems
@@ -197,7 +197,7 @@ namespace ScaryCastle
                     result.Add(items[i]);
             }
 
-            return result.ToArray();
+            return [.. result];
         }
 
         // GetSerializationData

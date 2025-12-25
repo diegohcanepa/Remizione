@@ -162,7 +162,7 @@ namespace Engendro
         protected void SetVerticesCore(string value, float inflate)
         {
             var vertices = GetVertices(value);
-            SetVerticesCore(vertices, 0);
+            SetVerticesCore(vertices, inflate);
         }
 
         // SetVerticesCore
@@ -331,7 +331,7 @@ namespace Engendro
         // GetVertices
         public Vector2[] GetVertices()
         {
-            return vertices.ToArray();
+            return [.. vertices];
         }
 
         // GetVertices

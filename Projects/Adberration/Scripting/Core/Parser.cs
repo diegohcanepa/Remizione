@@ -159,12 +159,10 @@ namespace Adberration.Scripting
         // ParseDiceExpression
         public static DiceExpression ParseDiceExpression(Statement statement, string expression)
         {
-            DiceExpression.TryParse(expression, out var diceExpression);
-
-            if (diceExpression == null)
-                throw new ScriptException(statement, $"'{diceExpression}' is not a valid dice expression.");
-            else
+            if (DiceExpression.TryParse(expression, out var diceExpression) && diceExpression != null)
                 return diceExpression;
+            else
+                throw new ScriptException(statement, $"'{diceExpression}' is not a valid dice expression.");
         }
 
         // ParseDiceExpressionArgument
@@ -199,7 +197,7 @@ namespace Adberration.Scripting
                     result.Add(entity);
             }
 
-            return result.ToArray();
+            return [.. result];
         }
 
         // ParseEntitiesArgument
@@ -244,11 +242,11 @@ namespace Adberration.Scripting
             }
 
             // $Property
-            if (name.StartsWith(ScriptSyntax.SessionPropertyAlias))
+            if (name.StartsWith(ScriptSyntax.SessionPropertyAlias, StringComparison.Ordinal))
                 name = name.Replace(ScriptSyntax.SessionPropertyAlias, sessionPrefix);
 
             // Session property
-            if (name.StartsWith(sessionPrefix))
+            if (name.StartsWith(sessionPrefix, StringComparison.Ordinal))
             {
                 name = name.Substring(sessionPrefix.Length);
 
@@ -677,7 +675,7 @@ namespace Adberration.Scripting
                 result = ParseNames(statement, arg.Value);
             }
 
-            return result == null || result.Length == 0 ? new string[] { defaultValue } : result;
+            return result == null || result.Length == 0 ? [defaultValue] : result;
         }
 
         // ParseQuotedString

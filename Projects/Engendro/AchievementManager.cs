@@ -35,7 +35,7 @@ namespace Engendro
         // GetAchievements
         public static Achievement[] GetAchievements()
         {
-            return new List<Achievement>(achievements.Values).ToArray();
+            return [.. achievements.Values];
         }
     }
 }

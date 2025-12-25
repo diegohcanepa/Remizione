@@ -1039,7 +1039,7 @@ namespace Adberration
             // ToArray
             public Thing[] ToArray()
             {
-                return items.ToArray();
+                return [.. items];
             }
         }
 

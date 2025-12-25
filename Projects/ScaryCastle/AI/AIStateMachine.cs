@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace ScaryCastle
@@ -34,7 +35,7 @@ namespace ScaryCastle
         public void RegisterState(AIState state)
         {
             if (states.ContainsKey(state.Name))
-                throw new System.Exception($"State {state.Name} is already registered in the AIStateMachine.");
+                throw new InvalidOperationException($"State {state.Name} is already registered in the AIStateMachine.");
 
             states[state.Name] = state;
         }

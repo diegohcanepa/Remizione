@@ -30,7 +30,7 @@ namespace Engendro
         }
 
         // Available
-        public T[] Available => pool.ToArray();
+        public T[] Available => [.. pool];
 
         // Get
         public T Get()

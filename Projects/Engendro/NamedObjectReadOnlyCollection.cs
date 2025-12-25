@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace Engendro
 {
@@ -36,7 +35,7 @@ namespace Engendro
         // ToArray
         public T[] ToArray()
         {
-            return Items.ToArray();
+            return [.. Items];
         }
     }
 }

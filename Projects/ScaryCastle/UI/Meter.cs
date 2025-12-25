@@ -193,7 +193,6 @@ namespace ScaryCastle
                     if (value < field)
                     {
                         float prevWidth = fore.ScaleX;
-                        float diff = Math.Abs(prevWidth - newWidth);
                         previousValue1.ScaleX = tween.IsRunning ? tween.CurrentValue : prevWidth;
                         tween.Start(TweenStyle.CubicIn, previousValue1.ScaleX, newWidth, 1000);
                     }

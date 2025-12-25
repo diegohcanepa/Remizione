@@ -102,7 +102,7 @@ namespace Adberration.Scripting
         }
 
         // GetTextEmitterName
-        internal protected virtual string GetTextEmitterName()
+        protected internal virtual string GetTextEmitterName()
         {
             return string.Empty;
         }

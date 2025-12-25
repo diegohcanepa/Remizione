@@ -257,7 +257,7 @@ namespace Adberration.Scripting
 
                 sourceLines.Add(line);
 
-                if (line.StartsWith(ScriptSyntax.CloneKeyword + " ") && lines[0] == ScriptSyntax.CodeBlockStart)
+                if (line.StartsWith(ScriptSyntax.CloneKeyword + " ", StringComparison.Ordinal) && lines[0] == ScriptSyntax.CodeBlockStart)
                 {
                     var tokens = Tokenize(line);
                     if (tokens.Length < 2)
@@ -278,7 +278,7 @@ namespace Adberration.Scripting
                 // Get line
                 var line = lines[0];
 
-                if (line.StartsWith(ScriptSyntax.CloneKeyword + " "))
+                if (line.StartsWith(ScriptSyntax.CloneKeyword + " ", StringComparison.Ordinal))
                     throw new InvalidOperationException($"The '{ScriptSyntax.CloneKeyword}' keyword is not valid in this context.");
 
                 lines.RemoveAt(0);
@@ -297,7 +297,7 @@ namespace Adberration.Scripting
                 if (line == ScriptSyntax.CodeBlockEnd)
                     break;
 
-                var referenceOp = line.EndsWith("()") ? ScriptSyntax.MethodReference : ScriptSyntax.ProperyReference;
+                var referenceOp = line.EndsWith("()", StringComparison.Ordinal) ? ScriptSyntax.MethodReference : ScriptSyntax.ProperyReference;
                 line = $"{referenceOp} {newEntityName}.{line}";
                 sourceLines.Add(line);
             }
@@ -638,7 +638,7 @@ namespace Adberration.Scripting
         {
             get
             {
-                var index = Name.IndexOf(ScriptSyntax.ScriptCompoundSeparator);
+                var index = Name.IndexOf(ScriptSyntax.ScriptCompoundSeparator, StringComparison.Ordinal);
                 if (index == -1)
                     return Name;
                 else

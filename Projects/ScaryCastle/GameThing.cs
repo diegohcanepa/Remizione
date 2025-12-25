@@ -246,7 +246,7 @@ namespace ScaryCastle
         // DropLoot
         protected void DropLoot()
         {
-            if (Room is not ProceduralRoom room)
+            if (Room is not ProceduralRoom)
                 return;
 
             if (Config == null)

@@ -16,7 +16,7 @@ namespace Adberration.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            List<Entity?> list = new(Parser.ParseEntities<Entity>(this, 0));
+            List<Entity?> list = [.. Parser.ParseEntities<Entity>(this, 0)];
 
             for (var i = 0; i < list.Count; i++)
             {

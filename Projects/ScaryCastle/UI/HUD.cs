@@ -180,6 +180,6 @@ namespace ScaryCastle
         public UITargetMeter TargetMeter { get; }
 
         // TicketMeter
-        public UITicketMeter TicketMeter;
+        public UITicketMeter TicketMeter { get; }
     }
 }

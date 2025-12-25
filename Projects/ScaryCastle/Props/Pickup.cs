@@ -1,6 +1,4 @@
-﻿using Adberration;
-using Adberration.Scripting;
-using Engendro;
+﻿using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
@@ -15,7 +13,7 @@ namespace ScaryCastle
 
         private readonly BounceScaleEffect bounceScaleEffect = new();
         private bool collected;
-        private readonly Vector2 defaultScale = ScaleInfo.UIElement.Medium; 
+        private readonly Vector2 defaultScale = ScaleInfo.UIElement.Medium;
         private int delayCoolDown;
         private MetaItem? metaItem;
         private ProceduralRoom? room;
@@ -56,7 +54,7 @@ namespace ScaryCastle
                 metaItem.PickupSound?.Play();
             }
             Session.ObjectPools.Pickups.Return(this);
-            
+
             if (room != null)
                 room.RoomGraph.HeartCount--;
 
@@ -140,7 +138,7 @@ namespace ScaryCastle
             this.room = room;
 
             room.Children.Add(this);
-            
+
             this.collected = false;
             this.Position = origin;
             this.metaItem = metaItem;

@@ -85,7 +85,7 @@ namespace ScaryCastle
         {
             for (var i = 0; i < fileNames.Length; i++)
             {
-                Utils.LoadJsonData<ThingConfig>(fileNames[i], (JsonElement element) => new ThingConfig(element));
+                Utils.LoadJsonData<ThingConfig>(fileNames[i], element => new ThingConfig(element));
             }
         }
 

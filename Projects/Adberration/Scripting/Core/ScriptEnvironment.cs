@@ -3,7 +3,6 @@ using Engendro;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
 
 namespace Adberration.Scripting
@@ -320,13 +319,13 @@ namespace Adberration.Scripting
         // GetCounters
         internal Counter[] GetCounters()
         {
-            return counters.Values.ToArray();
+            return [.. counters.Values];
         }
 
         // GetFlags
         internal Flag[] GetFlags()
         {
-            return flags.Values.ToArray();
+            return [.. flags.Values];
         }
 
         // IsActive

@@ -52,7 +52,7 @@ namespace Adberration
                 }
             }
 
-            return stack.ToArray();
+            return [.. stack];
         }
 
         #endregion

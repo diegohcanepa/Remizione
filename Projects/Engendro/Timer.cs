@@ -72,14 +72,6 @@ namespace Engendro
             IsRunning = true;
         }
 
-        // StartNew
-        public static Timer StartNew(int duration)
-        {
-            Timer result = new();
-            result.Start(duration);
-            return result;
-        }
-
         // Stop
         public void Stop()
         {

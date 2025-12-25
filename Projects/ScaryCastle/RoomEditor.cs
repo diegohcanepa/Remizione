@@ -50,7 +50,7 @@ namespace ScaryCastle
             editorInfoText.Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -4, 0);
             DrawText(gameTime, editorInfoText, Utils.GetVersion(), ColorPalette.TextWhite);
             DrawText(gameTime, editorInfoText, $"Entities: {session.Entities.Count}", ColorPalette.TextWhite);
-            DrawText(gameTime, editorInfoText, $"Play time: {session.PlayTime.ToString(@"hh\:mm\:ss")}", ColorPalette.TextWhite);
+            DrawText(gameTime, editorInfoText, $"Play time: {session.PlayTime:hh\\:mm\\:ss}", ColorPalette.TextWhite);
             DrawText(gameTime, editorInfoText, $"FPS: {EngendroGame.FPS}", ColorPalette.TextWhite);
 
             NewLine(editorInfoText);
@@ -326,7 +326,7 @@ namespace ScaryCastle
         }
 
         // Invalidate
-        private void Invalidate()
+        private static void Invalidate()
         {
             if (SelectedThing?.Parent == null)
                 SelectedThing = null;

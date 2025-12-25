@@ -65,7 +65,7 @@ namespace Engendro.PathFinding
 
                 path.Reverse();
 
-                return path.ToArray();
+                return [.. path];
             }
 
             return null;

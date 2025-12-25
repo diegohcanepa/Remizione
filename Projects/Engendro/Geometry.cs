@@ -77,7 +77,7 @@ namespace Engendro
         public static List<Vector2> SimplifyPolygon(Vector2[] polygon)
         {
             if (polygon.Length < 3)
-                return new List<Vector2>(polygon);
+                return [.. polygon];
 
             var result = new List<Vector2>();
 

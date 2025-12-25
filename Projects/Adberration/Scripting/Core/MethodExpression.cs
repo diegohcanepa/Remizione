@@ -16,7 +16,7 @@ namespace Adberration.Scripting
             if (string.IsNullOrWhiteSpace(value))
                 return;
 
-            if (value.StartsWith(ScriptSyntax.SessionPropertyAlias))
+            if (value.StartsWith(ScriptSyntax.SessionPropertyAlias, StringComparison.Ordinal))
                 value = value.Replace(ScriptSyntax.SessionPropertyAlias, "Session.");
 
             value = value.Replace("()", string.Empty);

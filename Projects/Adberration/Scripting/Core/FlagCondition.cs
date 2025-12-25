@@ -21,14 +21,14 @@ namespace Adberration.Scripting
             {
                 if (Expressions[i].Negate)
                 {
-                    if (!Expressions[i].FlagValue == false)
+                    if (Expressions[i].FlagValue)
                     {
                         return false;
                     }
                 }
                 else
                 {
-                    if (Expressions[i].FlagValue == false)
+                    if (!Expressions[i].FlagValue)
                     {
                         return false;
                     }

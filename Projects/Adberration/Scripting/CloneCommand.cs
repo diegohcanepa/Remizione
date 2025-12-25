@@ -1,4 +1,6 @@
-﻿namespace Adberration.Scripting
+﻿using System.Globalization;
+
+namespace Adberration.Scripting
 {
     // CloneCommand
     // Arguments: {CloneName} [#at:Vector2] [#parent:Entity] [#persistent] [#range:Int32Range]
@@ -65,7 +67,7 @@
                 var range = Parser.ParseInt32RangeArgument(this, RangeArg);
                 for (var i = range.Minimum; i <= range.Maximum; i++)
                 {
-                    CreateCloneInstance(Body.Clauses[0] + i.ToString());
+                    CreateCloneInstance(Body.Clauses[0] + i.ToString(CultureInfo.InvariantCulture));
                 }
             }
             else

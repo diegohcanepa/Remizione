@@ -120,7 +120,7 @@ namespace ScaryCastle
             flyingIcon.Position = startPosition - Game.Camera.Offset;
             flyingIcon.Scale = ScaleInfo.UIElement.Tiny;
             flyingIcon.Tweens.PositionTween = Vector2Tween.Create(TweenStyle.CubicInOut, startPosition, icon.BoundingBox.Center, 1400);
-            flyingIcon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, icon.Scale * .3f, ScaleInfo.UIElement.Large, 400, 2, EatItem);
+            flyingIcon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, flyingIcon.Scale, ScaleInfo.UIElement.Large, 600, 2, EatItem);
         }
 
         // BoundingBox

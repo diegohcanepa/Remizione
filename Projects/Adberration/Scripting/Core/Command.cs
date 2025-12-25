@@ -40,7 +40,7 @@ namespace Adberration.Scripting
         #region Internal members
 
         // CanBeginExecution
-        internal protected virtual bool CanBeginExecution()
+        protected internal virtual bool CanBeginExecution()
         {
             return true;
         }

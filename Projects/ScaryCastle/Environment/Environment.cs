@@ -8,12 +8,9 @@ namespace ScaryCastle
     /// </summary>
     public sealed class Environment
     {
-        private readonly GameSession session;
-
         // Constructor
         public Environment(GameSession session)
         {
-            this.session = session;
             this.Lightning = new(session);
 
             // Global light
@@ -41,11 +38,6 @@ namespace ScaryCastle
         }
 
         #endregion
-
-        // ExitRoom
-        public void ExitRoom()
-        {
-        }
 
         // Lightning
         public Lightning Lightning { get; }

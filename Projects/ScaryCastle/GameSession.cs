@@ -236,7 +236,6 @@ namespace ScaryCastle
         // OnExitRoom
         protected override void OnExitRoom(Room currentRoom, Room nextRoom)
         {
-            Environment.ExitRoom();
             HUD.Reset();
         }
 
@@ -356,7 +355,7 @@ namespace ScaryCastle
                     }
 
                     if (metaItems.Count > 0)
-                        this.friendlyItems[thing.DeclaredName] = metaItems.ToArray();
+                        this.friendlyItems[thing.DeclaredName] = [.. metaItems];
                 }
             }
 

@@ -106,7 +106,7 @@ namespace ScaryCastle.Menus
                 menu.AddItem(MenuItemName.Yes, () => SelectOption(MessageBoxOptions.Yes), null);
                 if (defaultOption == MessageBoxOptions.Yes)
                 {
-                    defaultItem = menu.Items[menu.Items.Count - 1];
+                    defaultItem = menu.Items[^1];
                 }
             }
 
@@ -116,7 +116,7 @@ namespace ScaryCastle.Menus
                 menu.AddItem(MenuItemName.No, () => SelectOption(MessageBoxOptions.No), null);
                 if (defaultOption == MessageBoxOptions.No)
                 {
-                    defaultItem = menu.Items[menu.Items.Count - 1];
+                    defaultItem = menu.Items[^1];
                 }
             }
 
@@ -126,7 +126,7 @@ namespace ScaryCastle.Menus
                 menu.AddItem(MenuItemName.Cancel, () => SelectOption(MessageBoxOptions.Cancel), null);
                 if (defaultOption == MessageBoxOptions.Cancel)
                 {
-                    defaultItem = menu.Items[menu.Items.Count - 1];
+                    defaultItem = menu.Items[^1];
                 }
             }
 

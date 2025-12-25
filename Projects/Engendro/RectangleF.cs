@@ -106,7 +106,7 @@ namespace Engendro
         }
 
         // Height
-        public float Height { get; private set; }
+        public float Height { get; set; }
 
         // GetHashCode
         public override readonly int GetHashCode()
@@ -156,7 +156,9 @@ namespace Engendro
                 RectanglePoint.RightTop => new Vector2(Right + xOffset, Top + yOffset),
 
                 // Middle
-                _ => new Vector2(Center.X + xOffset, Center.Y + yOffset),
+                RectanglePoint.Center => new Vector2(Center.X + xOffset, Center.Y + yOffset),
+
+                _ => throw new NotImplementedException(),
             };
         }
 
@@ -179,25 +181,19 @@ namespace Engendro
 
             if (Width > 0)
             {
-                result.X = RandomHelper.Next(System.Random.Shared, Left, Right);
+                result.X = RandomHelper.Next(Random.Shared, Left, Right);
             }
 
             if (Height > 0)
             {
-                result.Y = RandomHelper.Next(System.Random.Shared, Top, Bottom);
+                result.Y = RandomHelper.Next(Random.Shared, Top, Bottom);
             }
 
             return result;
         }
 
         // GetVertices
-        public readonly Vector2[] GetVertices()
-        {
-            return GetVertices(0);
-        }
-
-        // GetVertices
-        public readonly Vector2[] GetVertices(float inflate)
+        public readonly Vector2[] GetVertices(float inflate = 0)
         {
             return [ GetPoint(RectanglePoint.LeftTop, -inflate, -inflate),
                      GetPoint(RectanglePoint.RightTop, inflate, -inflate),
@@ -266,9 +262,10 @@ namespace Engendro
         public readonly bool Intersects(Vector2 start, Vector2 end)
         {
             if (IsEmpty)
-            {
                 return false;
-            }
+
+            if (Contains(start) || Contains(end))
+                return true;
 
             // Upper segment
             if (Geometry.LineSegmentsCross(start, end, GetPoint(RectanglePoint.LeftTop), GetPoint(RectanglePoint.RightTop)))
@@ -313,12 +310,6 @@ namespace Engendro
                 Y = value.Y;
             }
         }
-
-        // Min
-        public readonly Vector2 Min => new(Left, Bottom);
-
-        // Max
-        public readonly Vector2 Max => new(Right, Top);
 
         // Offset
         public void Offset(Vector2 amount)
@@ -413,7 +404,7 @@ namespace Engendro
         }
 
         // Width
-        public float Width { get; private set; }
+        public float Width { get; set; }
 
         // X
         public float X { get; set; }

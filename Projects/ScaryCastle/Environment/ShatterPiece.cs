@@ -19,7 +19,6 @@ namespace ScaryCastle
         private readonly ImageSprite image;
         private float launchDelay;
         private bool launched;
-        private float life = 2;
         private GameRoom? room;
         private static readonly Color shadowColor = Color.Black * .3f;
         private static readonly Vector2 shadowOffset = new(.5f);
@@ -108,9 +107,6 @@ namespace ScaryCastle
             }
 
             CheckWalkAreaCollision();
-
-            life -= dt;
-
 
             image.Update(gameTime);
         }

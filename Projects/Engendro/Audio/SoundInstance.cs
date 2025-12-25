@@ -59,7 +59,9 @@ namespace Engendro.Audio
                     instance.Volume = Volume.Current;
                 }
                 else
+                {
                     Stop();
+                }
             }
 
             var scene = EngendroGame.Instance?.SceneManager.CurrentScene;
@@ -137,7 +139,9 @@ namespace Engendro.Audio
                     StopCore();
             }
             else
+            {
                 InvalidateVolume();
+            }
         }
 
         #endregion
@@ -393,8 +397,9 @@ namespace Engendro.Audio
         public void Stop(int fadeOut)
         {
             if (fadeOut <= 0)
+            {
                 StopCore();
-
+            }
             else if (!stopTween.IsRunning || stopTween.EndValue > stopTween.StartValue)
             {
                 RemainingTime = fadeOut;

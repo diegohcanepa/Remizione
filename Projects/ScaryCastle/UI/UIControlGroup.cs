@@ -88,11 +88,11 @@ namespace ScaryCastle
         {
             if (LayoutStyle == UIControlGroupLayoutStyle.Vertically)
             {
-                Utils.LayoutControlsVertically(controlList.ToArray(), Spacing);
+                Utils.LayoutControlsVertically([.. controlList], Spacing);
             }
             else
             {
-                Utils.LayoutControlsHorizontally(controlList.ToArray(), Spacing);
+                Utils.LayoutControlsHorizontally([.. controlList], Spacing);
             }
         }
 

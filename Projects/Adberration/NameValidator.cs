@@ -66,7 +66,9 @@ namespace Adberration
 
                 NameValidationError.ReservedWord => $"The name is a reserved word",
 
-                _ => null,
+                NameValidationError.None => null,
+
+                _ => throw new NotImplementedException(),
             };
         }
     }

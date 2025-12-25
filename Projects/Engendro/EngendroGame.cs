@@ -152,7 +152,7 @@ namespace Engendro
         }
 
         // Draw
-        protected override sealed void Draw(GameTime gameTime)
+        protected sealed override void Draw(GameTime gameTime)
         {
             if (!IsActive)
                 return;
@@ -168,7 +168,7 @@ namespace Engendro
         protected GraphicsDeviceManager Graphics { get; }
 
         // Initialize
-        protected override sealed void Initialize()
+        protected sealed override void Initialize()
         {
             base.Initialize();
             SpriteBatch = new SpriteBatch(GraphicsDevice);
@@ -210,7 +210,7 @@ namespace Engendro
         }
 
         // Update
-        protected override sealed void Update(GameTime gameTime)
+        protected sealed override void Update(GameTime gameTime)
         {
             if (!IsActive)
                 return;

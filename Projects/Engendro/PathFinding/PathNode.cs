@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace Engendro.PathFinding
 {
@@ -57,7 +57,7 @@ namespace Engendro.PathFinding
         public int HeapIndex { get; set; }
 
         // Links
-        public Collection<int> Links { get; } = [];
+        public List<int> Links { get; } = [];
 
         // Parent
         public PathNode? Parent { get; set; }

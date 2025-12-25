@@ -128,7 +128,7 @@ namespace Engendro
                 }
             }
 
-            return result.ToArray();
+            return [.. result];
         }
 
         // GetValue

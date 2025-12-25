@@ -339,7 +339,7 @@ namespace Adberration
         }
 
         // Unparent
-        public override sealed void Unparent()
+        public sealed override void Unparent()
         {
             Parent?.Children.Remove(this);
         }

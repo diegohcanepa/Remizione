@@ -92,7 +92,7 @@ namespace Engendro
         // SetVertices
         public void SetVertices(string value, float inflate)
         {
-            SetVerticesCore(value, 0);
+            SetVerticesCore(value, inflate);
         }
 
         // SetVertices

@@ -48,7 +48,7 @@ namespace ScaryCastle.Menus
         {
             base.OnLoadContent();
             minDuration = 3000;
-            loadTask = Task.Run(() => LoadCore());
+            loadTask = Task.Run(LoadCore);
         }
 
         // OnUpdate

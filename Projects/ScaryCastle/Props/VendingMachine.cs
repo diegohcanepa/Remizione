@@ -66,8 +66,8 @@ namespace ScaryCastle
 
             if (change == TransformChange.Position)
             {
-                icon.Position = BoundingBox.GetPoint(RectanglePoint.LeftTop, 10, 12.5f);
-                glass.Position = BoundingBox.GetPoint(RectanglePoint.LeftTop, 6, 8);
+                icon.Position = BoundingBox.GetPoint(RectanglePoint.LeftTop, 10.5f, 12.5f);
+                glass.Position = BoundingBox.GetPoint(RectanglePoint.LeftTop, 7, 9);
             }
         }
 
@@ -82,7 +82,7 @@ namespace ScaryCastle
 
         // EnoughTickets
         [ScriptProperty]
-        public bool EnoughTickets => MetaItem == null ? false : Session.Tickets >= MetaItem.Price;
+        public bool EnoughTickets => MetaItem != null && Session.Tickets >= MetaItem.Price;
 
         // GetInteractPrompt
         public override string? GetInteractPrompt()

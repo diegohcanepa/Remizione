@@ -63,7 +63,9 @@ namespace Engendro.Input
                 }
             }
             else if (InputManager.AutoAssignGamepad)
+            {
                 AssignAvailableGamepad();
+            }
 
             // Mouse & Keyboard
             if (PlayerNumber == 0)

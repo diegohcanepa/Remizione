@@ -26,7 +26,7 @@ namespace Engendro
         // IsValidName
         public static bool IsValidName(string name)
         {
-            if (string.IsNullOrWhiteSpace(name) || Regex.Matches(name, @"[0-9a-zA-Z-_]").Count < name.Length)
+            if (string.IsNullOrWhiteSpace(name) || Regex.Count(name, @"[0-9a-zA-Z-_]") < name.Length)
                 return false;
             else
                 return true;

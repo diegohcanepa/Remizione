@@ -42,7 +42,7 @@ namespace Engendro
                 }
             }
 
-            return result.ToArray();
+            return [.. result];
         }
 
         // SpriteFont

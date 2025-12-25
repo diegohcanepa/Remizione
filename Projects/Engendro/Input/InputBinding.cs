@@ -125,7 +125,9 @@ namespace Engendro.Input
         public bool IsPressed(PlayerIndex playerIndex)
         {
             if (!CanTestInput())
+            {
                 return false;
+            }
             else
             {
                 // Gamepad

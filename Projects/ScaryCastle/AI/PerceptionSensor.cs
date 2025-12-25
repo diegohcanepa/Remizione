@@ -39,7 +39,7 @@ namespace ScaryCastle
         }
 
         // CurrentTarget
-        public GameThing? CurrentTarget { get; private set; } = null;
+        public GameThing? CurrentTarget { get; private set; }
 
         // DefaultRefreshRate
         public const int DefaultRefreshRate = 500;

@@ -176,7 +176,7 @@ namespace Engendro
         // GetScenes
         public Scene[] GetScenes()
         {
-            return scenes.ToArray();
+            return [.. scenes];
         }
 
         // Pop

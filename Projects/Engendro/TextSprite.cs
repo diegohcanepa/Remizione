@@ -291,7 +291,7 @@ namespace Engendro
                     }
                     else
                     {
-                        return result.ToArray();
+                        return [.. result];
                     }
                 }
             }
@@ -301,7 +301,7 @@ namespace Engendro
                 result.Add(line);
             }
 
-            return result.ToArray();
+            return [.. result];
         }
 
         // WrapAsianLines
@@ -325,7 +325,7 @@ namespace Engendro
                 }
             }
 
-            return result.ToArray();
+            return [.. result];
         }
 
         // WrapText

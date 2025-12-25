@@ -125,7 +125,7 @@ namespace ScaryCastle
                 if (dialogBlock.AllowQuit)
                     buttons.Add(buttonQuit);
 
-                Utils.LayoutControlsVertically(buttons.ToArray(), 1);
+                Utils.LayoutControlsVertically([.. buttons], 1);
             }
         }
 

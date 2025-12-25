@@ -111,7 +111,7 @@ namespace Adberration.Scripting
         // IsSessionMemberReference
         public static bool IsSessionMemberReference(string value)
         {
-            return value.StartsWith(SessionPropertyAlias) || value.StartsWith("Session.");
+            return value.StartsWith(SessionPropertyAlias, StringComparison.Ordinal) || value.StartsWith("Session.", StringComparison.Ordinal);
         }
 
         // LessOp

@@ -138,31 +138,25 @@ namespace Adberration.Scripting
 
             if (HasArg(PlainArg))
             {
-                using (MemoryStream stm = new())
-                {
-                    using (StreamWriter w = new(stm))
-                    {
-                        var fileName = Path.Combine(Session.Game.PlatformBridge.FileSystem.TargetDirectory, "PlainTexts.txt");
-                        ExportAsPlainText(w, scriptLibrary.AllScripts);
-                        stm.Position = 0;
-                        scriptLibrary.Session.Game.PlatformBridge.FileSystem.WriteFile(fileName, stm);
-                    }
-                }
+                using MemoryStream stm = new();
+                using StreamWriter w = new(stm);
+
+                var fileName = Path.Combine(Session.Game.PlatformBridge.FileSystem.TargetDirectory, "PlainTexts.txt");
+                ExportAsPlainText(w, scriptLibrary.AllScripts);
+                stm.Position = 0;
+                scriptLibrary.Session.Game.PlatformBridge.FileSystem.WriteFile(fileName, stm);
             }
             else
             {
-                using (MemoryStream stm = new())
-                {
-                    using (XmlWriter w = XmlWriter.Create(stm))
-                    {
-                        var fileName = Path.Combine(Session.Game.PlatformBridge.FileSystem.TargetDirectory, "LocalizableTexts.xml");
-                        ExportCore(w, Session.ScriptLibrary.AllScripts);
-                        w.Flush();
-                        stm.Flush();
-                        stm.Position = 0;
-                        Session.ScriptLibrary.Session.Game.PlatformBridge.FileSystem.WriteFile(fileName, stm);
-                    }
-                }
+                using MemoryStream stm = new();
+                using XmlWriter w = XmlWriter.Create(stm);
+
+                var fileName = Path.Combine(Session.Game.PlatformBridge.FileSystem.TargetDirectory, "LocalizableTexts.xml");
+                ExportCore(w, Session.ScriptLibrary.AllScripts);
+                w.Flush();
+                stm.Flush();
+                stm.Position = 0;
+                Session.ScriptLibrary.Session.Game.PlatformBridge.FileSystem.WriteFile(fileName, stm);
             }
         }
     }

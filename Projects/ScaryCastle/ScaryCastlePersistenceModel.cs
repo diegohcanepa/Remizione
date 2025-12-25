@@ -1,5 +1,6 @@
 ﻿using Adberration;
 using Adberration.Persistence;
+using System.Globalization;
 
 namespace ScaryCastle
 {
@@ -10,7 +11,7 @@ namespace ScaryCastle
     {
         // Constructor
         internal ScaryCastlePersistenceModel()
-            : base(GameSettings.Build.ToString())
+            : base(GameSettings.Build.ToString(CultureInfo.InvariantCulture))
         {
             PersistentType persistentType;
 

@@ -15,7 +15,7 @@ namespace Engendro
             #region Private members
 
             // ShuffleCore
-            private void ShuffleCore(Random? randomObj)
+            public void ShuffleCore(Random? randomObj)
             {
                 randomObj ??= random;
 
@@ -113,9 +113,7 @@ namespace Engendro
             // Swap
             public void Swap(int indexA, int indexB)
             {
-                var tmp = list[indexA];
-                list[indexA] = list[indexB];
-                list[indexB] = tmp;
+                (list[indexB], list[indexA]) = (list[indexA], list[indexB]);
             }
         }
 
@@ -126,7 +124,7 @@ namespace Engendro
             // GetRandomItem
             public T? GetRandomItem(Random? random = null)
             {
-                TryGetRandomItem(list, out var result);
+                TryGetRandomItem(list, out var result, random);
                 return result;
             }
 
@@ -187,7 +185,7 @@ namespace Engendro
 
                 random ??= Random.Shared;
 
-                var index = Random.Shared.Next(list.Count);
+                var index = random.Next(list.Count);
                 item = list[index];
 
                 return true;

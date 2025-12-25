@@ -90,7 +90,7 @@ namespace ScaryCastle
             else
             {
                 lastKnownCount = 0;
-                
+
                 itemImage.Image = ItemCategory switch
                 {
                     ItemCategory.LeftHand => Atlases.UI.InventoryCategoryLeftHand,

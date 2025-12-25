@@ -51,8 +51,10 @@ namespace Engendro
                     // RightTop
                     RectanglePoint.RightTop => new Vector2(rectangle.Right + xOffset, rectangle.Top + yOffset),
 
-                    // Middle
-                    _ => new Vector2(rectangle.Center.X + xOffset, rectangle.Center.Y + yOffset),
+                    // Center
+                    RectanglePoint.Center => new Vector2(rectangle.Center.X + xOffset, rectangle.Center.Y + yOffset),
+
+                    _ => throw new NotImplementedException()
                 };
             }
 

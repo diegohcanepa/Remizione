@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Engendro
@@ -27,7 +28,9 @@ namespace Engendro
                 Modifier = modifier;
             }
             else
+            {
                 throw new ArgumentException($"Invalid dice expression: {expression}");
+            }
         }
 
         #endregion
@@ -46,14 +49,11 @@ namespace Engendro
             if (!match.Success)
                 throw new ArgumentException("Invalid dice expression. Use formats like '2d6+1' or 'd8-2'.");
 
-            diceCount = string.IsNullOrEmpty(match.Groups[1].Value) ? 1 : int.Parse(match.Groups[1].Value);
-            diceSides = int.Parse(match.Groups[2].Value);
-            modifier = match.Groups[3].Success ? int.Parse(match.Groups[3].Value) : 0;
+            diceCount = string.IsNullOrEmpty(match.Groups[1].Value) ? 1 : int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
+            diceSides = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+            modifier = match.Groups[3].Success ? int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture) : 0;
 
-            if (diceCount <= 0 || diceSides <= 0)
-                return false;
-
-            return true;
+            return diceCount > 0 && diceSides > 0;
         }
 
         #endregion
@@ -130,7 +130,7 @@ namespace Engendro
         public override string ToString()
         {
             if (IsFixedValue)
-                return FixedValue.ToString();
+                return FixedValue.ToString(CultureInfo.InvariantCulture);
             else
                 return $"{DiceCount}d{DiceSides}{(Modifier >= 0 ? "+" : "")}{Modifier}";
         }
@@ -138,7 +138,7 @@ namespace Engendro
         // TryParse
         public static bool TryParse(string expression, out DiceExpression? diceRoll)
         {
-            if (int.TryParse(expression, out int value))
+            if (int.TryParse(expression, out _))
             {
                 diceRoll = new DiceExpression(expression);
                 return true;

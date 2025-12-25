@@ -20,7 +20,7 @@ namespace Engendro
 
                 List<T> result = [.. first, .. second];
 
-                return result.ToArray();
+                return [.. result];
             }
         }
     }

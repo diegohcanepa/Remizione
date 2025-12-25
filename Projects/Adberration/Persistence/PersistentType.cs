@@ -13,7 +13,7 @@ namespace Adberration.Persistence
         private readonly NamedObjectCollection<PersistentProperty> mappedProperties = [];
 
         // Constructor
-        internal PersistentType(Type type, PersistentTypeScope persistenceScope)
+        internal PersistentType([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] Type type, PersistentTypeScope persistenceScope)
         {
             this.Type = type;
             this.PersistenceScope = persistenceScope;

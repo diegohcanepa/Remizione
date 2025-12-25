@@ -25,7 +25,7 @@ namespace Engendro
             if (values.Length < 2)
                 throw new InvalidOperationException("You must specify at least two values.");
 
-            this.values = new(values);
+            this.values = [.. values];
         }
 
         // Count

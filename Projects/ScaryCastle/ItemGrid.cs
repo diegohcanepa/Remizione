@@ -182,20 +182,6 @@ namespace ScaryCastle
             }
         }
 
-        // DiscardSelectedItem
-        public void DiscardSelectedItem()
-        {
-            /*
-            if (SelectedItem is Item item)
-            {
-                SelectedSlot.Item = null;
-                item.Discard();
-                if (Inventory.SelectedItem != null)
-                    SelectSlot(Inventory.SelectedItem.Name);
-            }
-            */
-        }
-
         // FindSlot
         public ItemGridSlot? FindSlot(Item item)
         {

@@ -89,7 +89,7 @@ namespace ScaryCastle
                     break;
             }
 
-            return list.ToArray();
+            return [.. list];
         }
 
         #endregion
