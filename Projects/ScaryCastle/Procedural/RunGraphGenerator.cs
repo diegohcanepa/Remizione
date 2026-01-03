@@ -14,10 +14,19 @@ namespace ScaryCastle
         private static int CountNeighbors((int x, int y) c, Dictionary<(int x, int y), RoomGraph> map)
         {
             int count = 0;
-            if (map.ContainsKey((c.x, c.y + 1))) count++;
-            if (map.ContainsKey((c.x, c.y - 1))) count++;
-            if (map.ContainsKey((c.x - 1, c.y))) count++;
-            if (map.ContainsKey((c.x + 1, c.y))) count++;
+            
+            if (map.ContainsKey((c.x, c.y + 1)))
+                count++;
+
+            if (map.ContainsKey((c.x, c.y - 1)))
+                count++;
+
+            if (map.ContainsKey((c.x - 1, c.y)))
+                count++;
+
+            if (map.ContainsKey((c.x + 1, c.y)))
+                count++;
+            
             return count;
         }
 

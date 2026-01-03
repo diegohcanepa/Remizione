@@ -1,4 +1,6 @@
-﻿namespace ScaryCastle
+﻿using Adberration.Scripting;
+
+namespace ScaryCastle
 {
     /// <summary>
     /// RideCar
@@ -10,6 +12,22 @@
             : base(session, name)
         {
             HitEffect = HitEffect.Shake;
+        }
+
+        // GetOutRider
+        [ScriptMethod]
+        public void GetOutRider()
+        {
+            if (Session.Player != null)
+                AnimationPlayer.Play("GetOut" + Session.Player.Name);
+        }
+
+        // SyncRider
+        [ScriptMethod]
+        public void SyncRider()
+        {
+            if (Session.Player != null)
+                AnimationPlayer.Play(Session.Player.Name);
         }
     }
 }

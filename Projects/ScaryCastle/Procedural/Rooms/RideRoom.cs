@@ -50,40 +50,40 @@ namespace ScaryCastle
         private void PopulateDoors()
         {
             // Up
-            if (RoomGraph.Up != null && CreateRuntimeClone("RideDoorUp") is RideDoor upDoor)
+            if (RoomGraph.Up != null && DoorAnchorUp != null && CreateRuntimeClone("RideDoorUp") is RideDoor upDoor)
             {
                 doors.Add(upDoor);
                 Children.Add(upDoor);
-                upDoor.Position = DoorAnchorUp;
+                upDoor.Position = DoorAnchorUp.Value;
                 upDoor.TargetRoom = RoomGraph.Up.RideRoom;
             }
 
             // Left
-            if (RoomGraph.Left != null && CreateRuntimeClone("RideDoorLeft") is RideDoor leftDoor)
+            if (RoomGraph.Left != null && DoorAnchorLeft != null && CreateRuntimeClone("RideDoorLeft") is RideDoor leftDoor)
             {
                 doors.Add(leftDoor);
                 Children.Add(leftDoor);
-                leftDoor.Position = DoorAnchorLeft;
+                leftDoor.Position = DoorAnchorLeft.Value;
                 leftDoor.TargetRoom = RoomGraph.Left.RideRoom;
             }
 
             // Right
-            if (RoomGraph.Right != null && CreateRuntimeClone("RideDoorRight") is RideDoor rightDoor)
+            if (RoomGraph.Right != null && DoorAnchorRight != null && CreateRuntimeClone("RideDoorRight") is RideDoor rightDoor)
             {
                 doors.Add(rightDoor);
                 Children.Add(rightDoor);
-                rightDoor.Position = DoorAnchorRight;
+                rightDoor.Position = DoorAnchorRight.Value;
                 rightDoor.TargetRoom = RoomGraph.Right.RideRoom;
             }
 
             // Down
             if (RoomGraph.Down != null || RoomGraph.RoomType == RoomType.Start)
             {
-                if (CreateRuntimeClone("RideDoorDown") is RideDoor downDoor)
+                if (DoorAnchorDown != null && CreateRuntimeClone("RideDoorDown") is RideDoor downDoor)
                 {
                     doors.Add(downDoor);
                     Children.Add(downDoor);
-                    downDoor.Position = DoorAnchorDown;
+                    downDoor.Position = DoorAnchorDown.Value;
 
                     if (RoomGraph.Down != null)
                         downDoor.TargetRoom = RoomGraph.Down.RideRoom;
@@ -104,16 +104,46 @@ namespace ScaryCastle
         #region Protected members
 
         // DoorAnchorDown
-        protected Vector2 DoorAnchorDown { get; set; }
+        protected Vector2? DoorAnchorDown { get; set; }
 
         // DoorAnchorLeft
-        protected Vector2 DoorAnchorLeft { get; set; }
+        protected Vector2? DoorAnchorLeft { get; set; }
 
         // DoorAnchorRight
-        protected Vector2 DoorAnchorRight { get; set; }
+        protected Vector2? DoorAnchorRight { get; set; }
 
         // DoorAnchorUp
-        protected Vector2 DoorAnchorUp { get; set; }
+        protected Vector2? DoorAnchorUp { get; set; }
+
+        // DropLoot
+        protected override void DropLoot()
+        {
+            MetaItem? drop;
+            if (RoomGraph.RoomType == RoomType.Coin)
+            {
+                drop = MetaItem.Find(MetaItem.CoinItemName);
+            }
+            else
+            {
+                // 1. Roll de probabilidad: ¿Esta sala da premio?
+                // 20% de base es un buen número para empezar.
+                Ratio dropChance = .2f;
+
+                // Sumamos la suerte del jugador si tiene un gadget/pasivo
+                if (Session.Inventory.Gadget is Item gadget)
+                    dropChance += gadget.MetaItem.Effect.LuckBonus;
+
+                // Si el roll falla (el número es mayor a la chance), salimos sin spawnear nada
+                if (!dropChance.Roll())
+                    return;
+
+                drop = Loot.Get(Session, Config, null, ItemCategory.Pickup);
+                RoomGraph.HeartCount++;
+            }
+
+            if (drop != null)
+                Session.ObjectPools.Pickups.Get()?.Drop(this, GetDropLootPosition(), drop);
+        }
 
         // OnEnemiesCleared
         protected override void OnEnemiesCleared()

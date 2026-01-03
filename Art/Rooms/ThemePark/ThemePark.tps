@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.10.0</string>
+        <string>7.11.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -252,7 +252,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">ThemePark-assets/RemizioneLight.png</key>
+            <key type="filename">ThemePark-assets/RideLight.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

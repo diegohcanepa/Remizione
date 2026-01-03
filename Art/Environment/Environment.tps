@@ -1146,21 +1146,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">RideCarStopper-assets/RideCarStopper.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,3,3,6</rect>
-                <key>scale9Paddings</key>
-                <rect>2,3,3,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">RideDoorDown-assets/CommonRoomDoorDownClosed.png</key>
             <key type="filename">RideDoorDown-assets/CommonRoomDoorDownOpen.png</key>
             <struct type="IndividualSpriteSettings">
@@ -1562,7 +1547,6 @@
                     <filename>RideDoorRight-assets</filename>
                     <filename>RideDoorDown-assets</filename>
                     <filename>NumberSix-assets</filename>
-                    <filename>RideCarStopper-assets</filename>
                     <filename>VendingMachine-assets</filename>
                 </array>
             </struct>

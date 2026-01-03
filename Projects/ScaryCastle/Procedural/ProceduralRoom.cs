@@ -182,33 +182,8 @@ namespace ScaryCastle
         }
 
         // DropLoot
-        protected void DropLoot()
+        protected virtual void DropLoot()
         {
-            MetaItem? drop;
-            if (RoomGraph.RoomType == RoomType.Coin)
-            {
-                drop = MetaItem.Find(MetaItem.CoinItemName);
-            }
-            else
-            {
-                // 1. Roll de probabilidad: ¿Esta sala da premio?
-                // 50% de base es un buen número para empezar.
-                Ratio dropChance = .2f;
-
-                // Sumamos la suerte del jugador si tiene un gadget/pasivo
-                if (Session.Inventory.Gadget is Item gadget)
-                    dropChance += gadget.MetaItem.Effect.LuckBonus;
-
-                // Si el roll falla (el número es mayor a la chance), salimos sin spawnear nada
-                if (!dropChance.Roll())
-                    return;
-
-                drop = Loot.Get(Session, Config, null, ItemCategory.Pickup);
-                RoomGraph.HeartCount++;
-            }
-
-            if (drop != null)
-                Session.ObjectPools.Pickups.Get()?.Drop(this, GetDropLootPosition(), drop);
         }
 
         // GetDropLootPosition
@@ -216,7 +191,6 @@ namespace ScaryCastle
         {
             return WalkArea != null ? WalkArea.Polygon.BoundingRectangleF.Center : BoundingBox.Center;
         }
-
 
         // OnLoad
         protected override void OnLoad()
