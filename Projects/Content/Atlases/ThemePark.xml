@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:8a2b27f346ef40d85e295f533bed931a:59f9d03d9e79d3c70dcdb5f33b4c6425:391f3728ce36fa87ff02aadce74a4a71$ -->
+<!-- $TexturePacker:SmartUpdate:38ed531d80be6373a9cded641b96016c:9f7a44903b43e0d16106caa89eb5ea14:391f3728ce36fa87ff02aadce74a4a71$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,23 +20,24 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="ThemePark.png" width="512" height="512">
-    <sprite n="ATM01.png" x="429" y="263" w="39" h="44"/>
-    <sprite n="ATM02.png" x="470" y="263" w="39" h="44"/>
-    <sprite n="Foreground01.png" x="2" y="139" w="307" h="135"/>
-    <sprite n="Foreground02.png" x="2" y="276" w="307" h="135"/>
-    <sprite n="ForegroundBushes.png" x="311" y="293" w="95" h="14"/>
-    <sprite n="FrontHouse.png" x="449" y="167" w="51" h="94"/>
+    <sprite n="ATM01.png" x="436" y="293" w="39" h="44"/>
+    <sprite n="ATM02.png" x="339" y="303" w="39" h="44"/>
+    <sprite n="Foreground01.png" x="2" y="197" w="307" h="135"/>
+    <sprite n="Foreground02.png" x="2" y="334" w="307" h="135"/>
+    <sprite n="ForegroundBushes.png" x="339" y="287" w="95" h="14"/>
+    <sprite n="FrontHouse.png" x="457" y="197" w="51" h="94"/>
     <sprite n="RideCar01.png" x="484" y="2" w="25" h="21"/>
     <sprite n="RideCar02.png" x="484" y="25" w="25" h="21"/>
     <sprite n="RideCar03.png" x="484" y="48" w="25" h="21"/>
-    <sprite n="RideLight.png" x="311" y="203" w="116" h="88"/>
-    <sprite n="RightTunnelPatch.png" x="449" y="139" w="59" h="26"/>
+    <sprite n="RideLight.png" x="339" y="197" w="116" h="88"/>
+    <sprite n="RightTunnelPatch.png" x="278" y="471" w="59" h="26"/>
+    <sprite n="Sky.png" x="2" y="139" w="480" h="56"/>
     <sprite n="Star1.png" x="484" y="71" w="5" h="5"/>
     <sprite n="Star2.png" x="491" y="71" w="5" h="5"/>
     <sprite n="Star3.png" x="498" y="71" w="5" h="5"/>
     <sprite n="Star4.png" x="498" y="71" w="5" h="5"/>
     <sprite n="Star5.png" x="491" y="71" w="5" h="5"/>
     <sprite n="ThemePark.png" x="2" y="2" w="480" h="135"/>
-    <sprite n="Tombstones01.png" x="311" y="139" w="136" h="30"/>
-    <sprite n="Tombstones02.png" x="311" y="171" w="136" h="30"/>
+    <sprite n="Tombstones01.png" x="2" y="471" w="136" h="30"/>
+    <sprite n="Tombstones02.png" x="140" y="471" w="136" h="30"/>
 </TextureAtlas>
