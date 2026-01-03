@@ -41,13 +41,6 @@ namespace ScaryCastle
             this.randomSeed = RandomHelper.GetSeed(Session.Seed, salt);
             this.Placeholders = new(placeholders);
             this.Random = new Random(randomSeed);
-
-            // Apply placeholder overrides
-            foreach (var phOverride in Config.PlaceholderOverrides)
-            {
-                if (GetPlaceholder(phOverride.Name) is Placeholder placeholder)
-                    phOverride.Apply(placeholder);
-            }
         }
 
         #endregion
@@ -118,18 +111,6 @@ namespace ScaryCastle
             }
 
             return outList;
-        }
-
-        // GetPlaceholder
-        private Placeholder? GetPlaceholder(string name)
-        {
-            for (var i = 0; i < placeholders.Count; i++)
-            {
-                if (placeholders[i].Name == name)
-                    return placeholders[i];
-            }
-
-            return null;
         }
 
         // GetSpawnPoints

@@ -49,44 +49,6 @@ namespace ScaryCastle
             if (!RideRoom.IsRegistered(Template))
                 throw new InvalidOperationException($"Template '{Template}' is not valid.");
 
-            // Placeholders override
-            var placeholdersList = new List<PlaceholderOverride>();
-            if (element.TryGetProperty("placeholders", out JsonElement placeholdersElement) && placeholdersElement.ValueKind == JsonValueKind.Array)
-            {
-                foreach (JsonElement placeholderElement in placeholdersElement.EnumerateArray())
-                {
-                    // Name
-                    var phName = placeholderElement.GetProperty("name").GetString() ?? throw new InvalidOperationException("Placeholder must have a name.");
-
-                    // Check if template has a placeholder
-                    if (!RideRoom.HasPlaceholder(Template, phName))
-                        throw new InvalidOperationException($"There is no {phName} placeholder defined in template [{Template}]");
-
-                    // Fill chance
-                    float? phFillChance = null;
-                    if (element.TryGetProperty("fillChance", out JsonElement fillChanceElement))
-                        phFillChance = fillChanceElement.GetSingle();
-
-                    // Target
-                    PlaceholderTarget? phTarget = null;
-                    if (placeholderElement.TryGetProperty("target", out JsonElement targetElement))
-                    {
-                        if (Enum.TryParse(targetElement.GetString(), out PlaceholderTarget placeholderTarget))
-                            phTarget = placeholderTarget;
-                    }
-
-                    // AllowTags
-                    Tags? phAllowTags = Tags.FromJson(placeholderElement, "allowTags");
-                    if (phAllowTags.Count == 0)
-                        phAllowTags = null;
-
-                    // 4. Crear la instancia de Placeholder
-                    placeholdersList.Add(new PlaceholderOverride(phName, phFillChance, phAllowTags, phTarget));
-                }
-            }
-
-            this.PlaceholderOverrides = new ReadOnlyCollection<PlaceholderOverride>(placeholdersList);
-
             data.Add(Name, this);
             dataList.Add(this);
         }
@@ -124,9 +86,6 @@ namespace ScaryCastle
 
         // MaxProps
         public int MaxProps { get; }
-
-        // PlaceholderOverrides
-        public ReadOnlyCollection<PlaceholderOverride> PlaceholderOverrides { get; }
 
         // Scope
         public ScopeRules Scope { get; }

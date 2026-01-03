@@ -47,13 +47,6 @@
                 "template": {
                     "type": "string",
                     "description": "Nombre del template de room a instanciar."
-                },
-                "placeholders": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "./Placeholder.schema.json"
-                    },
-                    "description": "Lista de placeholders definidos para este room."
                 }
             },
             "required": [
