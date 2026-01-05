@@ -4,6 +4,7 @@ namespace Adberration.Scripting
 {
     // AnimateOpacityCommand
     // Arguments: {Entity} to {Opacity:ratio} duration {Integer} [#style:TweenStyle]
+    [ScriptStatement(CodingContext.Execution)]
     public sealed class AnimateOpacityCommand : AwaitableCommand
     {
         // Constructor

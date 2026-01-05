@@ -5,6 +5,7 @@ namespace ScaryCastle.Scripting
     // UseKeyItemCommand
     // Arguments: {"Action"}
     [ForceAwait]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class UseKeyItemCommand : LocalizableCommand
     {
         // Constructor

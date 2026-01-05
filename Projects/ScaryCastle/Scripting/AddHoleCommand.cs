@@ -4,6 +4,7 @@ namespace ScaryCastle.Scripting
 {
     // AddHoleCommand
     // Arguments: {Name} to {WalkAreaName} polygon {Polygon} #condition:FlagCondition
+    [ScriptStatement(CodingContext.EntityDeclaration)]
     internal sealed class AddHoleCommand : NonAwaitableCommand
     {
         // Constructor

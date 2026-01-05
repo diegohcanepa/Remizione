@@ -4,6 +4,7 @@ namespace Adberration.Scripting
 {
     // AwaitShakeCommand
     [ForceAwait]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitShakeCommand : AwaitableCommand
     {
         // Constructor

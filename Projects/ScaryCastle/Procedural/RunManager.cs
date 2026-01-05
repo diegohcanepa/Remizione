@@ -38,7 +38,7 @@ namespace ScaryCastle.Procedural
                     if ((int)config.Difficulty != (int)targetDiff)
                         continue;
 
-                    if (config.RequiresDeadEnd && !room.IsDeadEnd)
+                    if (room.GetConnectionCount() > config.MaxConnections)
                         continue;
 
                     if (!config.PassesMaxPerRunConstraint())
@@ -54,7 +54,7 @@ namespace ScaryCastle.Procedural
                     {
                         if (config.Difficulty < targetDiff)
                         {
-                            if (config.RequiresDeadEnd && !room.IsDeadEnd)
+                            if (room.GetConnectionCount() > config.MaxConnections)
                                 continue;
 
                             if (config.PassesMaxPerRunConstraint())

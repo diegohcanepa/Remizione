@@ -5,6 +5,7 @@ namespace ScaryCastle.Scripting
 {
     // SetLightCommand
     // Arguments: {Room} {Name:String} {SwitchState} [#immediate]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class SetLightCommand : NonAwaitableCommand
     {
         // Constructor

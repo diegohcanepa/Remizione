@@ -20,12 +20,6 @@
   <String Key="DurabilityState.Used">Used</String>
   <String Key="DurabilityState.Worn">Worn</String>
   <String Key="HitType.Critical">Critical!</String>
-  <String Key="HUDMessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
-  <String Key="HUDMessageKind.CoinRequired">You need gold coins.</String>
-  <String Key="HUDMessageKind.EnoughOfThat">You already have enough of that.</String>
-  <String Key="HUDMessageKind.ExtraTime">Extra time!</String>
-  <String Key="HUDMessageKind.InventoryFull">You cannot carry more items.</String>
-  <String Key="HUDMessageKind.NotEnoughFaith">Not enough Faith.</String>
   <String Key="InputBinding.Back">Back</String>
   <String Key="InputBinding.BuyItem">Buy</String>
   <String Key="InputBinding.Close">Close</String>
@@ -67,7 +61,7 @@
   <String Key="Item.MagneticCard.Name">Magnetic card</String>
   <String Key="Item.MasterLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.MasterLockpick.Name">Master lockpick</String>
-  <String Key="Item.PieceOfWood.Description"></String>
+  <String Key="Item.PieceOfWood.Description" />
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
@@ -93,10 +87,10 @@
   <String Key="Languages.es-es">Español (España)</String>
   <String Key="Languages.fr-fr">Français</String>
   <String Key="Languages.ru-ru">Русский</String>
-  <String Key="LogVerb.Bought">Bought</String>
-  <String Key="LogVerb.Lost">Lost</String>
-  <String Key="LogVerb.PickedUp">Picked up</String>
-  <String Key="LogVerb.Requires">Requires</String>
+  <String Key="LogVerb.Bought">BOUGHT</String>
+  <String Key="LogVerb.Found">FOUND</String>
+  <String Key="LogVerb.Needs">NEEDS</String>
+  <String Key="LogVerb.Used">USED</String>
   <String Key="Menu.Controls.Keyboard.Interact">Interact</String>
   <String Key="Menu.Controls.Keyboard.Inventory">Inventory</String>
   <String Key="Menu.Controls.Keyboard.Kick">Kick (when available)</String>
@@ -186,6 +180,8 @@
   <String Key="MessageBox.QuitToMenu">Quit to main menu?</String>
   <String Key="MessageBox.SlotDeleted">The slot has been deleted.</String>
   <String Key="MessageBox.Warning">Warning!</String>
+  <String Key="MessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
+  <String Key="MessageKind.NotEnoughTickets">Not enough tickets.</String>
   <String Key="Misc.All">All</String>
   <String Key="Misc.And">and</String>
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—</String>

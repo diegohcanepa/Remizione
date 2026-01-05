@@ -6,15 +6,12 @@ namespace Adberration.Scripting
     /// ScriptMethodAttribute
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public sealed class ScriptMethodAttribute : Attribute
+    public sealed class ScriptMethodAttribute : CodingContextAttribute
     {
         // Constructor
         public ScriptMethodAttribute(CodingContext context = CodingContext.Any)
+            : base(context)
         {
-            this.Context = context;
         }
-
-        // Context
-        public CodingContext Context { get; }
     }
 }

@@ -5,6 +5,7 @@ namespace ScaryCastle.Scripting
     // SayCommand
     // Arguments: {Actor} {"Text"} [#condition:Flag[...,Flag]] [#literal] [#no-await] [#title:"String"] [#lid:Integer]
     [ForceAwait]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class SayCommand : LocalizableCommand
     {
         private Actor? actor;

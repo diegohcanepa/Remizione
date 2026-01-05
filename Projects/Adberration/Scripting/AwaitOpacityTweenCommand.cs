@@ -3,6 +3,7 @@
     // AwaitOpacityTweenCommand
     // Arguments: {Entity}
     [ForceAwait]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitOpacityTweenCommand : AwaitableCommand
     {
         private Entity? entity;

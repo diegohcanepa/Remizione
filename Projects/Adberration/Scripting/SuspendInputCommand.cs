@@ -4,6 +4,7 @@ namespace Adberration.Scripting
 {
     // SuspendInputCommand
     // Arguments: {Duration:Integer}
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class SuspendInputCommand : NonAwaitableCommand
     {
         // Constructor

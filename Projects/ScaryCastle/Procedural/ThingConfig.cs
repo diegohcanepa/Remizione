@@ -59,6 +59,10 @@ namespace ScaryCastle
             if (MinSpawnAmount > MaxSpawnAmount)
                 throw new InvalidOperationException($"[{Name}]: {nameof(MinSpawnAmount)} cannot be greater than MaxSpawnAmount.");
 
+            // RequiresDeadEnd
+            if (element.TryGetProperty("requiresDeadEnd", out JsonElement requiresDeadEndElement))
+                RequiresDeadEnd = requiresDeadEndElement.GetBoolean();
+
             // UsePlaceholder
             if (element.TryGetProperty("usePlaceholder", out JsonElement usePlaceholderElement))
                 UsePlaceholder = usePlaceholderElement.GetBoolean();
@@ -118,14 +122,22 @@ namespace ScaryCastle
             return MaxPerRoom == -1 || instanceCount < MaxPerRoom;
         }
 
+        // RequiresDeadEnd
+        public bool RequiresDeadEnd { get; }
+
         // UsePlaceholder
         public bool UsePlaceholder { get; }
 
         // Validate
-        public override void Validate()
+        public override void Validate(GameSession session)
         {
-            ValidateNames(nameof(InteractionGoalReward), InteractionGoalReward);
-            ValidateNames(nameof(InteractionGoalReward), KillGoalReward);
+            base.Validate(session);
+
+            if (session.FindDeclaredThing(Name) == null)
+                throw new InvalidOperationException($"[{Name}] has no script declaration.");
+
+            ValidateNameReferences(nameof(InteractionGoalReward), InteractionGoalReward);
+            ValidateNameReferences(nameof(InteractionGoalReward), KillGoalReward);
         }
     }
 }

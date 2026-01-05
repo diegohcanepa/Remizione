@@ -116,11 +116,11 @@ namespace ScaryCastle
         // Show
         public void Show(LogVerb verb, MetaItem metaItem)
         {
-            var isWarning = verb is LogVerb.Lost or LogVerb.Requires;
+            var isWarning = verb is LogVerb.Used or LogVerb.Needs;
 
             ShowCore(Localization.GetValue(verb), metaItem.LocalizedDisplayName, isWarning, metaItem.Image);
 
-            if (verb == LogVerb.PickedUp)
+            if (verb == LogVerb.Found)
             {
                 if (metaItem.PickupSound != null)
                     metaItem.PickupSound.Play();
@@ -128,7 +128,7 @@ namespace ScaryCastle
                     Sound.Play(SoundNames.PickupGeneric);
             }
 
-            else if (verb == LogVerb.Requires)
+            else if (verb == LogVerb.Needs)
                 Sound.Play(SoundNames.Error);
         }
     }

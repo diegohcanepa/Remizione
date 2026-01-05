@@ -45,9 +45,6 @@
         // Index
         public int Index { get; }
 
-        // IsDeadEnd
-        public bool IsDeadEnd => GetConnectionCount() == 1;
-
         // Left
         public RoomGraph? Left { get; set; }
 

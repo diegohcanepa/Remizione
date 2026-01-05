@@ -2,6 +2,7 @@
 {
     // ConstantCommand
     // Arguments: %{Name} = {Value}
+    [ScriptStatement(CodingContext.Declaration)]
     internal sealed class ConstCommand : NonAwaitableCommand
     {
         // Constructor

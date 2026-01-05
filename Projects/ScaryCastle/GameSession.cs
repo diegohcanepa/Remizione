@@ -1,6 +1,5 @@
 ﻿using Adberration;
 using Adberration.Scripting;
-using Adberration.Scripting.Core;
 using Engendro;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Procedural;
@@ -34,6 +33,12 @@ namespace ScaryCastle
         private readonly UseKeyItemScene useKeyItemScene;
 
         #endregion
+
+        // Static constructor
+        static GameSession()
+        {
+            RegisterAotTypes();
+        }
 
         #region Constructor
 
@@ -113,6 +118,69 @@ namespace ScaryCastle
             Save();
         }
 
+        // RegisterAotTypes
+        private static void RegisterAotTypes()
+        {
+            AotTypeRegistry.Register(typeof(Actor));
+            AotTypeRegistry.Register(typeof(ArenaRoom));
+            AotTypeRegistry.Register(typeof(Zabul));
+            AotTypeRegistry.Register(typeof(BloodyEye));
+            AotTypeRegistry.Register(typeof(BreakableProp));
+            AotTypeRegistry.Register(typeof(CloseUpRoom));
+            AotTypeRegistry.Register(typeof(CreditsRoom));
+            AotTypeRegistry.Register(typeof(VendingMachine));
+            AotTypeRegistry.Register(typeof(GameRoom));
+            AotTypeRegistry.Register(typeof(HellGoat));
+            AotTypeRegistry.Register(typeof(Hub));
+            AotTypeRegistry.Register(typeof(Monitor));
+            AotTypeRegistry.Register(typeof(EnviousEye));
+            AotTypeRegistry.Register(typeof(NumberSix));
+            AotTypeRegistry.Register(typeof(Pickup));
+            AotTypeRegistry.Register(typeof(PostClock));
+            AotTypeRegistry.Register(typeof(Pottery));
+            AotTypeRegistry.Register(typeof(Prop));
+            AotTypeRegistry.Register(typeof(RideCar));
+            AotTypeRegistry.Register(typeof(RideDoor));
+            AotTypeRegistry.Register(typeof(SaintPeregrine));
+            AotTypeRegistry.Register(typeof(SpearTrap));
+            AotTypeRegistry.Register(typeof(Tombstone));
+            AotTypeRegistry.Register(typeof(Trunk));
+            AotTypeRegistry.Register(typeof(WaterPuddle));
+
+            AotTypeRegistry.Register("add-dialog-option", typeof(AddDialogOptionCommand));
+            AotTypeRegistry.Register("add-hole", typeof(AddHoleCommand));
+            AotTypeRegistry.Register("add-item", typeof(AddItemCommand));
+            AotTypeRegistry.Register("add-light", typeof(AddLightCommand));
+            AotTypeRegistry.Register("add-resistance", typeof(AddResistanceCommand));
+            AotTypeRegistry.Register("add-trigger-area", typeof(AddTriggerAreaCommand));
+            AotTypeRegistry.Register("add-walk-area", typeof(AddWalkAreaCommand));
+            AotTypeRegistry.Register("animate-actor", typeof(AnimateActorCommand));
+            AotTypeRegistry.Register("attach-light", typeof(AttachLightCommand));
+            AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
+            AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
+            AotTypeRegistry.Register("await-player-approach", typeof(AwaitPlayerApproachCommand));
+            AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
+            AotTypeRegistry.Register("begin-resistance-table", typeof(BeginResistanceTableCommand));
+            AotTypeRegistry.Register("create-dialog-block", typeof(CreateDialogBlockCommand));
+            AotTypeRegistry.Register("echo", typeof(EchoCommand));
+            AotTypeRegistry.Register("empty-pilgrim-sack", typeof(EmptyPilgrimSackCommand));
+            AotTypeRegistry.Register("end-resistance-table", typeof(EndResistanceTableCommand));
+            AotTypeRegistry.Register("ensure-session-scene", typeof(EnsureSessionSceneCommand));
+            AotTypeRegistry.Register("exit-session", typeof(ExitSessionCommand));
+            AotTypeRegistry.Register("say", typeof(SayCommand));
+            AotTypeRegistry.Register("select-walk-area", typeof(SelectWalkAreaCommand));
+            AotTypeRegistry.Register("set-light", typeof(SetLightCommand));
+            AotTypeRegistry.Register("show-log-message", typeof(ShowLogMessageCommand));
+            AotTypeRegistry.Register("show-message", typeof(ShowMessageCommand));
+            AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
+            AotTypeRegistry.Register("test-skill-chance", typeof(TestSkillChanceCommand));
+            AotTypeRegistry.Register("use-key-item", typeof(UseKeyItemCommand));
+            AotTypeRegistry.Register("use-item", typeof(UseItemCommand));
+            AotTypeRegistry.Register("vibrate", typeof(VibrateCommand));
+            AotTypeRegistry.Register("x-tween", typeof(XTweenCommand));
+            AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));
+        }
+
         #endregion
 
         #region Protected members
@@ -130,69 +198,6 @@ namespace ScaryCastle
 
                 return base.CanHandleRoomInput;
             }
-        }
-
-        // ExtendScriptRegistry
-        protected override void ExtendScriptRegistry(ScriptRegistry scriptRegistry)
-        {
-            scriptRegistry.RegisterEntity(typeof(Actor));
-            scriptRegistry.RegisterEntity(typeof(ArenaRoom));
-            scriptRegistry.RegisterEntity(typeof(Zabul));
-            scriptRegistry.RegisterEntity(typeof(BloodyEye));
-            scriptRegistry.RegisterEntity(typeof(BreakableProp));
-            scriptRegistry.RegisterEntity(typeof(CloseUpRoom));
-            scriptRegistry.RegisterEntity(typeof(CreditsRoom));
-            scriptRegistry.RegisterEntity(typeof(VendingMachine));
-            scriptRegistry.RegisterEntity(typeof(GameRoom));
-            scriptRegistry.RegisterEntity(typeof(HellGoat));
-            scriptRegistry.RegisterEntity(typeof(Hub));
-            scriptRegistry.RegisterEntity(typeof(Monitor));
-            scriptRegistry.RegisterEntity(typeof(EnviousEye));
-            scriptRegistry.RegisterEntity(typeof(NumberSix));
-            scriptRegistry.RegisterEntity(typeof(Pickup));
-            scriptRegistry.RegisterEntity(typeof(PostClock));
-            scriptRegistry.RegisterEntity(typeof(Pottery));
-            scriptRegistry.RegisterEntity(typeof(Prop));
-            scriptRegistry.RegisterEntity(typeof(RideCar));
-            scriptRegistry.RegisterEntity(typeof(RideDoor));
-            scriptRegistry.RegisterEntity(typeof(SaintPeregrine));
-            scriptRegistry.RegisterEntity(typeof(SpearTrap));
-            scriptRegistry.RegisterEntity(typeof(Tombstone));
-            scriptRegistry.RegisterEntity(typeof(Trunk));
-            scriptRegistry.RegisterEntity(typeof(WaterPuddle));
-
-            scriptRegistry.RegisterStatement("add-dialog-option", typeof(AddDialogOptionCommand));
-            scriptRegistry.RegisterStatement("add-hole", typeof(AddHoleCommand), CodingContext.EntityDeclaration);
-            scriptRegistry.RegisterStatement("add-item", typeof(AddItemCommand), CodingContext.Any);
-            scriptRegistry.RegisterStatement("add-light", typeof(AddLightCommand), CodingContext.EntityDeclaration);
-            scriptRegistry.RegisterStatement("add-resistance", typeof(AddResistanceCommand), CodingContext.Initialization);
-            scriptRegistry.RegisterStatement("add-trigger-area", typeof(AddTriggerAreaCommand), CodingContext.EntityDeclaration);
-            scriptRegistry.RegisterStatement("add-walk-area", typeof(AddWalkAreaCommand), CodingContext.EntityDeclaration);
-            scriptRegistry.RegisterStatement("animate-actor", typeof(AnimateActorCommand));
-            scriptRegistry.RegisterStatement("attach-light", typeof(AttachLightCommand), CodingContext.EntityDeclaration);
-            scriptRegistry.RegisterStatement("await-credits", typeof(AwaitCreditsCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("await-dialog-block", typeof(AwaitDialogBlockCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("await-player-approach", typeof(AwaitPlayerApproachCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("await-popup", typeof(AwaitPopupCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("begin-resistance-table", typeof(BeginResistanceTableCommand), CodingContext.Initialization);
-            scriptRegistry.RegisterStatement("create-dialog-block", typeof(CreateDialogBlockCommand));
-            scriptRegistry.RegisterStatement("echo", typeof(EchoCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("empty-pilgrim-sack", typeof(EmptyPilgrimSackCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("end-resistance-table", typeof(EndResistanceTableCommand), CodingContext.Initialization);
-            scriptRegistry.RegisterStatement("ensure-session-scene", typeof(EnsureSessionSceneCommand));
-            scriptRegistry.RegisterStatement("exit-session", typeof(ExitSessionCommand));
-            scriptRegistry.RegisterStatement("say", typeof(SayCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("select-walk-area", typeof(SelectWalkAreaCommand));
-            scriptRegistry.RegisterStatement("set-light", typeof(SetLightCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("show-log-message", typeof(ShowLogMessageCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("show-message", typeof(ShowMessageCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
-            scriptRegistry.RegisterStatement("test-skill-chance", typeof(TestSkillChanceCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("use-key-item", typeof(UseKeyItemCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("use-item", typeof(UseItemCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("vibrate", typeof(VibrateCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("x-tween", typeof(XTweenCommand), CodingContext.Execution);
-            scriptRegistry.RegisterStatement("y-tween", typeof(YTweenCommand), CodingContext.Execution);
         }
 
         // OnDraw
@@ -329,9 +334,11 @@ namespace ScaryCastle
             }
         }
 
-        // OnStart
-        protected override void OnStart()
+        // OnStarted
+        protected override void OnStarted()
         {
+            Config.ValidateConfigurations(this);
+
             var keyItems = MetaItem.GetItems(ItemCategory.KeyItem);
 
             var metaItems = new List<MetaItem>();

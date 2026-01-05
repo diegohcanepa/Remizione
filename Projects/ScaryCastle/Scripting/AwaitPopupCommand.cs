@@ -5,6 +5,7 @@ namespace ScaryCastle.Scripting
     // AwaitPopupCommand
     // Syntax: {"Title"} {"Text"}
     [ForceAwait]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitPopupCommand : AwaitableCommand
     {
         private PopupScene? scene;

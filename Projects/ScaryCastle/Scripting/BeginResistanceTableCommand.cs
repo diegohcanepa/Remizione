@@ -4,6 +4,7 @@ namespace ScaryCastle.Scripting
 {
     // BeginResistanceTableCommand
     // Arguments: {Name} [#modifier:Integer]
+    [ScriptStatement(CodingContext.Initialization)]
     internal sealed class BeginResistanceTableCommand : NonAwaitableCommand
     {
         // Constructor

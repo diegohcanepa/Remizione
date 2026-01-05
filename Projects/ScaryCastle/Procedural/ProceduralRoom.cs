@@ -66,19 +66,8 @@ namespace ScaryCastle
             return finalWeight;
         }
 
-        // CreateRuntimeThingCloneCore
-        private GameThing CreateRuntimeThingCloneCore(string staticName)
-        {
-            if (Session.CreateRuntimeThingClone(staticName, $"{staticName}*{RoomGraph.Index}_{Name}_{instanceCount}") is not GameThing result)
-                throw new InvalidOperationException($"Failed to create runtime clone from'{staticName}'.");
-
-            instanceCount++;
-
-            return result;
-        }
-
-        // FilterByScope
-        private List<ThingConfig> FilterByScope<T>(IList<ThingConfig> configList, ScopeRules scope)
+        // ApplyPrimaryFilter
+        private List<ThingConfig> ApplyPrimaryFilter<T>(IList<ThingConfig> configList)
             where T : GameThing
         {
             var outList = new List<ThingConfig>();
@@ -87,6 +76,10 @@ namespace ScaryCastle
             {
                 // Filtro Techo: No permitimos que aparezcan cosas más difíciles que el cuarto
                 if (config.Difficulty > Config.Difficulty)
+                    continue;
+
+                // Thing requires a dead end room
+                if (config.RequiresDeadEnd && RoomGraph.GetConnectionCount() > 1)
                     continue;
 
                 if (!Session.UnlockedPool.IsUnlocked(config.Name))
@@ -103,7 +96,7 @@ namespace ScaryCastle
                     continue;
 
                 // Scope rules
-                if (!config.PassesScope(scope))
+                if (!config.PassesScope(Config.Scope))
                     continue;
 
                 // Passed all checks
@@ -111,6 +104,17 @@ namespace ScaryCastle
             }
 
             return outList;
+        }
+
+        // CreateRuntimeThingCloneCore
+        private GameThing CreateRuntimeThingCloneCore(string staticName)
+        {
+            if (Session.CreateRuntimeThingClone(staticName, $"{staticName}*{RoomGraph.Index}_{Name}_{instanceCount}") is not GameThing result)
+                throw new InvalidOperationException($"Failed to create runtime clone from'{staticName}'.");
+
+            instanceCount++;
+
+            return result;
         }
 
         // GetSpawnPoints
@@ -206,7 +210,7 @@ namespace ScaryCastle
         // PopulateEnemies
         private void PopulateEnemies()
         {
-            var configList = FilterByScope<Enemy>(ThingConfig.All, Config.Scope);
+            var configList = ApplyPrimaryFilter<Enemy>(ThingConfig.All);
             SpawnInPlaceholders(configList, Config.MaxEnemies, PlaceholderTarget.Enemy);
             SpawnInWalkArea(configList, Config.MaxEnemies);
         }
@@ -214,7 +218,7 @@ namespace ScaryCastle
         // PopulateProps
         private void PopulateProps()
         {
-            var configList = FilterByScope<Prop>(ThingConfig.All, Config.Scope);
+            var configList = ApplyPrimaryFilter<Prop>(ThingConfig.All);
             SpawnInPlaceholders(configList, Config.MaxProps, PlaceholderTarget.Prop);
             SpawnInWalkArea(configList, Config.MaxProps);
         }

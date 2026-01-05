@@ -13,7 +13,7 @@ namespace ScaryCastle
         private static readonly HashSet<string> allowedTags =
         [
             "ceiling",
-            "expendingMachine",
+            "vendingMachine",
             "flip",
             "floor",
             "pottery",

@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
@@ -13,14 +14,6 @@ namespace ScaryCastle
     /// </summary>
     public abstract class RideRoom : ProceduralRoom
     {
-        private struct RegisteredRoom
-        {
-            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
-            public Type Type;
-            public string[] Placeholders;
-        }
-
-        private static readonly Dictionary<string, RegisteredRoom> derivedTypes = [];
         private readonly List<RideDoor> doors = [];
         private bool lootDropped;
 
@@ -40,7 +33,7 @@ namespace ScaryCastle
             {
                 Session.Inventory.Add(coin);
                 Session.HUD.SackSlot.AnimateItem(coin, GetDropLootPosition());
-                Session.HUD.Log.Show(LogVerb.PickedUp, coin);
+                Session.HUD.Log.Show(LogVerb.Found, coin);
                 coin.PickupSound?.Play();
                 RoomGraph.HasCoin = false;
             }
@@ -89,14 +82,6 @@ namespace ScaryCastle
                         downDoor.TargetRoom = RoomGraph.Down.RideRoom;
                 }
             }
-        }
-
-        // Register
-        private static void Register(
-            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type type,
-            string[] placeholderNames)
-        {
-            derivedTypes.Add(type.Name, new RegisteredRoom { Type = type, Placeholders = placeholderNames });
         }
 
         #endregion
@@ -201,13 +186,13 @@ namespace ScaryCastle
 
             foreach (var door in doors)
             {
-                if (door.DoorDirection is RideDoorDirection.Left or RideDoorDirection.Right)
+                if (door.DoorDirection is RideDoorDirection.Left or RideDoorDirection.Right or RideDoorDirection.Up)
                 {
                     if (door.TargetRoom?.Config.LockType != LockType.None)
                         door.PropState = PropState.Locked;
                 }
-
-                door.PropState = PropState.Open;
+                else
+                    door.PropState = PropState.Open;
             }
         }
 
@@ -258,10 +243,10 @@ namespace ScaryCastle
                 throw new InvalidOperationException($"Missing config in room graph.");
 
             // Ahora accedemos a .Type del struct registrado
-            var registered = derivedTypes[graph.Config.Template];
+            var entityInfo = AotTypeRegistry.Get(graph.Config.Template);
 
             // El compilador ya no dará error aquí porque registered.Type está anotado
-            var result = Activator.CreateInstance(registered.Type, session, graph) as RideRoom
+            var result = Activator.CreateInstance(entityInfo.Type, session, graph) as RideRoom
                 ?? throw new InvalidOperationException($"Cannot create instance [{graph.Config.Name}]");
 
             return result;
@@ -285,34 +270,13 @@ namespace ScaryCastle
             return Vector2.Zero;
         }
 
-        // HasPlaceholder
-        public static bool HasPlaceholder(string typeName, string placeholderName)
-        {
-            if (derivedTypes.TryGetValue(typeName, out var result))
-            {
-                for (var i = 0; i < result.Placeholders.Length; i++)
-                {
-                    if (string.Equals(placeholderName, result.Placeholders[i], StringComparison.Ordinal))
-                        return true;
-                }
-            }
-
-            return false;
-        }
-
         // HubDoor
         public RideDoor? HubDoor { get; set; }
-
-        // IsRegistered
-        public static bool IsRegistered(string typeName)
-        {
-            return derivedTypes.ContainsKey(typeName);
-        }
 
         // RegisterTemplates
         public static void RegisterTemplates()
         {
-            Register(typeof(CommonRoom), CommonRoom.GetPlaceholderNames());
+            AotTypeRegistry.Register(typeof(CommonRoom));
         }
     }
 }

@@ -4,6 +4,7 @@ namespace ScaryCastle.Scripting
 {
     // ShowLogMessageCommand
     // Arguments: {LogVerb} {MetaItem}
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class ShowLogMessageCommand : NonAwaitableCommand
     {
         // Constructor

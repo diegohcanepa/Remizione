@@ -17,8 +17,8 @@
     },
     {
       "name": "VendingMachine",
-      "maxPerRun": 100,
-      "sideRoomOnly": true,
+      "maxPerRun": 10,
+      "leafRoomOnly": false,
       "tags": "vendingMachine",
       "unlocked": true,
       "usePlaceholder": true

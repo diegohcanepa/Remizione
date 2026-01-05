@@ -35,9 +35,6 @@ namespace ScaryCastle
     // HitEffect
     public enum HitEffect { None, Shake, Blink }
 
-    // HUDMessageKind
-    public enum HUDMessageKind { CannotPlaceItem, EnoughOfThat, ExtraTime, InventoryFull, CoinRequired }
-
     // ImpactType
     public enum ImpactType { Low, Medium, High }
 
@@ -66,7 +63,7 @@ namespace ScaryCastle
     public enum LockType { None, Padlock }
 
     // LogVerb
-    public enum LogVerb { Bought, Lost, PickedUp, Requires }
+    public enum LogVerb { Bought, Found, Needs, Used }
 
     // LootTag
     public enum LootTag { Heal, Weapoon }
@@ -86,6 +83,9 @@ namespace ScaryCastle
         Cancel = 4,
         Accept = 8
     }
+
+    // MessageKind
+    public enum MessageKind { CannotPlaceItem, NotEnoughTickets }
 
     // PlaceholderTarget
     public enum PlaceholderTarget { Prop, Enemy, Any }

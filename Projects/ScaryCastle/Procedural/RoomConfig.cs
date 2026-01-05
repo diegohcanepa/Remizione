@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Adberration;
+using Engendro;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
@@ -20,6 +22,11 @@ namespace ScaryCastle
             // LockType
             if (element.TryGetProperty("lockType", out JsonElement lockTypeElement))
                 LockType = Enum.Parse<LockType>(lockTypeElement.GetString() ?? string.Empty);
+
+            // MaxConnections
+            MaxConnections = 1;
+            if (element.TryGetProperty("maxConnections", out JsonElement maxConnectionsElement))
+                MaxConnections = maxConnectionsElement.GetInt32();
 
             // MaxEnemies
             MaxEnemies = -1;
@@ -46,7 +53,7 @@ namespace ScaryCastle
             if (string.IsNullOrWhiteSpace(Template))
                 throw new InvalidOperationException($"Missing template in room config [{Name}].");
 
-            if (!RideRoom.IsRegistered(Template))
+            if (AotTypeRegistry.Find(Template) == null)
                 throw new InvalidOperationException($"Template '{Template}' is not valid.");
 
             data.Add(Name, this);
@@ -80,6 +87,9 @@ namespace ScaryCastle
 
         // LockType
         public LockType LockType { get; }
+
+        // MaxConnections
+        public int MaxConnections { get; }
 
         // MaxEnemies
         public int MaxEnemies { get; }

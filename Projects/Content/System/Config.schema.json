@@ -53,11 +53,6 @@
       "minimum": 0,
       "description": "Número total de 'runs' jugadas requeridas para que esta configuración sea elegible."
     },
-    "requiresDeadEnd": {
-      "type": "boolean",
-      "default": false,
-      "description": "El elemento solo estará disponible cuando halla un dead end."
-    },
     "tags": {
       "type": "string",
       "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."

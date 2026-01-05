@@ -4,6 +4,7 @@ namespace Adberration.Scripting
 {
     // MoveCommand
     // Arguments: {Thing} to {Vector2} [#face:FacingDirection] [#follow] [#relative]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class MoveCommand : AwaitableCommand
     {
         private Thing? thing;

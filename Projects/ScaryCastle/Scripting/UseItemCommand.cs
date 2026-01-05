@@ -4,6 +4,7 @@ namespace ScaryCastle.Scripting
 {
     // UseItemCommand
     // Arguments: {ItemName}
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class UseItemCommand : NonAwaitableCommand
     {
         // Constructor

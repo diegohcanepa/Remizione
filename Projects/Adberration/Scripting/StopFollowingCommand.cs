@@ -1,6 +1,7 @@
 ﻿namespace Adberration.Scripting
 {
     // StopFollowingCommand
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class StopFollowingCommand : NonAwaitableCommand
     {
         // Constructor

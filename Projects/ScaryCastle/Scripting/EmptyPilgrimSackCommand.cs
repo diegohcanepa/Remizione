@@ -3,6 +3,7 @@
 namespace ScaryCastle.Scripting
 {
     // EmptyPilgrimSackCommand
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class EmptyPilgrimSackCommand : NonAwaitableCommand
     {
         // Constructor

@@ -4,6 +4,7 @@ namespace Adberration.Scripting
 {
     // FocusXYCommand
     // Arguments: {Vector2} [#duration:Integer] [#tween:TweenStyle]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class FocusXYCommand : AwaitableCommand
     {
         // Constructor

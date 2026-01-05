@@ -4,6 +4,7 @@ namespace ScaryCastle.Scripting
 {
     // TestSkillChanceCommand
     // Arguments: {Prop} {MetaItem} [#success-state:PropState]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class TestSkillChanceCommand : NonAwaitableCommand
     {
         // Constructor

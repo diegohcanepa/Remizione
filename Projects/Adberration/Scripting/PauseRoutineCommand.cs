@@ -2,6 +2,7 @@
 {
     // PauseRoutineCommand
     // Arguments: {Routine}
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class PauseRoutineCommand : NonAwaitableCommand
     {
         // Constructor

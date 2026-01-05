@@ -5,6 +5,7 @@ namespace Adberration.Scripting
 {
     // IfStatement
     // Syntax: {PropertyExpression}] {== | != | > | < | <= | >=} {bool|number|enum|PropertyExpression}
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class IfCoreStatement : ConditionalStatement
     {
         // Constructor

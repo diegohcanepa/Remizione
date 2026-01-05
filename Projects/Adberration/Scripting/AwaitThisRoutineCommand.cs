@@ -2,6 +2,7 @@
 {
     // AwaitThisRoutineCommand
     [ForceAwait]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitThisRountineCommand : AwaitableCommand
     {
         // Constructor

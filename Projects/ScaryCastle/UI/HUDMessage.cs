@@ -24,7 +24,7 @@ namespace ScaryCastle
                 Color = ColorPalette.Text.Highlight,
                 MaximumWidth = (int)(Screen.HUDArea.Width * .7f),
                 PivotOrigin = RectanglePoint.Center,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 15)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5)
             };
         }
 
@@ -58,19 +58,16 @@ namespace ScaryCastle
         }
 
         // Show
-        public void Show(HUDMessageKind message)
+        public void Show(MessageKind message)
         {
+            messageText.Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5);
             messageText.Text = Localization.GetValue(message);
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 200);
 
-            if (message == HUDMessageKind.CoinRequired)
+            if (message == MessageKind.NotEnoughTickets)
             {
                 messageText.Color = ColorPalette.Text.Orange;
                 Sound.Play(SoundNames.Error);
-            }
-            else if (message == HUDMessageKind.ExtraTime)
-            {
-                messageText.Color = ColorPalette.Text.Orange;
             }
             else
             {

@@ -31,6 +31,10 @@
           "default": "0",
           "description": "Lista elementos que desbloquea el kill goal (items, rooms, actors, props)."
         },
+        "requiresDeadEnd": {
+          "type": "boolean",
+          "description": "Solo puede spawnear en rooms que son callejones sin salida."
+        },
         "maxPerRoom": {
           "type": "integer",
           "default": -1,
@@ -47,10 +51,6 @@
           "default": 1,
           "minimum": 1,
           "description": "Número mínimo de veces que este elemento se spawnea en el 'room'."
-        },
-        "sideRomOnly": {
-          "type": "boolean",
-          "description": "Solo puede spawnear en side rooms."
         },
         "usePlaceholder": {
           "type": "boolean",

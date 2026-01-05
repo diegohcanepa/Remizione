@@ -282,6 +282,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">ThemePark-assets/Sky.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>120,14,240,28</rect>
+                <key>scale9Paddings</key>
+                <rect>120,14,240,28</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">ThemePark-assets/Star1.png</key>
             <key type="filename">ThemePark-assets/Star2.png</key>
             <key type="filename">ThemePark-assets/Star3.png</key>

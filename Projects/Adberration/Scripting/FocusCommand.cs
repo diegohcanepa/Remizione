@@ -5,6 +5,7 @@ namespace Adberration.Scripting
 {
     // FocusCommand
     // Arguments: {Thing} [#duration:Integer] [#follow] [#tween:TweenStyle]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class FocusCommand : AwaitableCommand
     {
         private Thing? thing;

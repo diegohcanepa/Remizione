@@ -2,6 +2,7 @@
 {
     // IfCounterStatement
     // Arguments: {Counter} {==|!=|<|<=|>|>=} {Integer}
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class IfCounterStatement : SelectionStatement
     {
         // Constructor

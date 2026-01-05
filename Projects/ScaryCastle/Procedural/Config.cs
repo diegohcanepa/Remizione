@@ -39,10 +39,6 @@ namespace ScaryCastle
             if (element.TryGetProperty("requiredRuns", out JsonElement requiredRunsElement))
                 RequiredRuns = requiredRunsElement.GetInt32();
 
-            // RequiresDeadEnd
-            if (element.TryGetProperty("requiresDeadEnd", out JsonElement requiresDeadEndElement))
-                RequiresDeadEnd = requiresDeadEndElement.GetBoolean();
-
             // Tags
             Tags = Tags.FromJson(element, "tags");
 
@@ -61,8 +57,8 @@ namespace ScaryCastle
 
         #region Protected members
 
-        // ValidateNames
-        protected void ValidateNames(string properyName, IList<string> names)
+        // ValidateNameReferences
+        protected void ValidateNameReferences(string properyName, IList<string> names)
         {
             for (var i = 0; i < names.Count; i++)
             {
@@ -156,9 +152,6 @@ namespace ScaryCastle
         // RequiredRuns
         public int RequiredRuns { get; }
 
-        // RequiresDeadEnd
-        public bool RequiresDeadEnd { get; }
-
         // Tags
         public Tags Tags { get; }
 
@@ -172,12 +165,12 @@ namespace ScaryCastle
         public bool Unlocked { get; }
 
         // Validate
-        public virtual void Validate()
+        public virtual void Validate(GameSession session)
         {
         }
 
-        // ValidateAllConfigurations
-        public static void ValidateAllConfigurations()
+        // ValidateConfigurations
+        public static void ValidateConfigurations(GameSession session)
         {
             // TODO: Hay que validar que los nombres en los configs existan como static things o los templates de los rooms
             // que esten en el registry. Sino puede pasar como con expending machine que ahora es vending machine y al
@@ -185,7 +178,7 @@ namespace ScaryCastle
 
             foreach (var config in configs.Values)
             {
-                config.Validate();
+                config.Validate(session);
             }
         }
 

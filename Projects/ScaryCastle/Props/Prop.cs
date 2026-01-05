@@ -152,7 +152,7 @@ namespace ScaryCastle
 
             item.Use(actor);
 
-            Session.HUD.Log.Show(LogVerb.Lost, item.MetaItem);
+            Session.HUD.Log.Show(LogVerb.Used, item.MetaItem);
 
             var text = TextRepository.GetValue(success ? "Misc.Success" : "Misc.Failed");
 

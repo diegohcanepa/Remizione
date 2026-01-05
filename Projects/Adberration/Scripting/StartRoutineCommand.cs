@@ -2,6 +2,7 @@
 {
     // StartRoutineCommand
     // Arguments: {Routine} [#scope:LifetimeScope]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class StartRoutineCommand : AwaitableCommand
     {
         private Script? routine;

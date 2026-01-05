@@ -21,8 +21,10 @@ namespace ScaryCastle
 
         // Constructor
         public ItemInfoScene(EngendroGame game)
-            : base(game, SceneSettings.PausePreviousScenes | SceneSettings.ExclusiveDraw)
+            : base(game, SceneSettings.PausePreviousScenes)
         {
+            BackgroundColor = Color.Transparent;
+
             // Heart bonus
             this.hpBonus = new(Game);
 
@@ -113,7 +115,7 @@ namespace ScaryCastle
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera);
-            Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.ShadowSpot);
+            Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade);
             infoContainer.Draw(gameTime);
             infoTitleContainer.Draw(gameTime);
             itemName.Draw(gameTime);

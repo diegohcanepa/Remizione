@@ -4,6 +4,7 @@ namespace Adberration.Scripting
 {
     // AnimationCommand
     // Arguments: {Name} [#prefix:String] [#zero-padding:Int32]
+    [ScriptStatement(CodingContext.EntityDeclaration)]
     internal sealed class AnimationCommand : NonAwaitableCommand
     {
         // Constructor

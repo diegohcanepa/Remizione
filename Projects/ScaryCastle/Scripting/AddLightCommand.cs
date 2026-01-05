@@ -6,6 +6,7 @@ namespace ScaryCastle.Scripting
 {
     // AddLightCommand
     // Arguments: {Name} at {Vector2} [#color:Color] [#kind:LightKind] [#image:String] [#off] [#passes:Integer] [#pivot:RectanglePoint] [#scale:Vector2]
+    [ScriptStatement(CodingContext.EntityDeclaration)]
     internal sealed class AddLightCommand : NonAwaitableCommand
     {
         private const string FlashIntervalArg = "#flash-interval";

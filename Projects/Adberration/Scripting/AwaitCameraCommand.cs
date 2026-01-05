@@ -2,6 +2,7 @@
 {
     // AwaitCameraCommand
     [ForceAwait]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitCameraCommand : AwaitableCommand
     {
         // Constructor

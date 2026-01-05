@@ -4,6 +4,7 @@ namespace ScaryCastle.Scripting
 {
     // AddWalkAreaCommand
     // Arguments: {Name:String} polygon {Polygon}
+    [ScriptStatement(CodingContext.EntityDeclaration)]
     internal sealed class AddWalkAreaCommand : NonAwaitableCommand
     {
         // Constructor

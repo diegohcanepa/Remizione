@@ -5,6 +5,7 @@ namespace ScaryCastle.Scripting
 {
     // VibrateCommand
     // Arguments: {Duration:Integer} [#left:float] [#right:float] [#left-trigger:float] [#right-trigger:float]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class VibrateCommand : NonAwaitableCommand
     {
         // Constructor

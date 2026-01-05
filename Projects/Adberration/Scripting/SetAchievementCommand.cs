@@ -4,6 +4,7 @@ namespace Adberration.Scripting
 {
     // SetAchievementCommand
     // Arguments: {Id:String}
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class SetAchievementCommand : NonAwaitableCommand
     {
         // Constructor

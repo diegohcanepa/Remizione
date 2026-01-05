@@ -1,5 +1,4 @@
-﻿using Adberration.Scripting.Core;
-using Engendro;
+﻿using Engendro;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -126,16 +125,30 @@ namespace Adberration.Scripting
             IsActive = true;
 
             // Statements
-            foreach (var statement in ScriptRegistry.Statements)
+            var statementType = typeof(Statement);
+            foreach (var typeInfo in AotTypeRegistry.Types)
             {
-                var instance = new ScriptStatement(session, statement.Name, statement.Type, statement.Context);
-                statements.Add(statement.Name, instance);
+                // Check if type is an entity
+                if (!statementType.IsAssignableFrom(typeInfo.Type))
+                    continue;
+
+                var context = CodingContext.Any;
+                if (typeInfo.Type.GetCustomAttribute<ScriptStatementAttribute>() is ScriptStatementAttribute attr)
+                    context = attr.Context;
+
+                var instance = new ScriptStatement(session, typeInfo.KeyName, typeInfo.Type, context);
+                statements.Add(typeInfo.KeyName, instance);
             }
 
             // Entities
-            foreach (var entity in ScriptRegistry.Entities)
+            var entityType = typeof(Entity);
+            foreach (var typeInfo in AotTypeRegistry.Types)
             {
-                var instance = new ScriptEntity(session, entity.Type);
+                // Check if type is an entity
+                if (!entityType.IsAssignableFrom(typeInfo.Type))
+                    continue;
+
+                var instance = new ScriptEntity(session, typeInfo.Type);
                 entities.Add(instance.Type, instance);
             }
 
@@ -369,9 +382,6 @@ namespace Adberration.Scripting
         {
             return Enum.IsDefined(typeof(ScriptType), value);
         }
-
-        // ScriptRegistry
-        internal ScriptRegistry ScriptRegistry { get; } = new ScriptRegistry();
 
         #endregion
     }

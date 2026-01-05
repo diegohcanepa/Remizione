@@ -3,14 +3,15 @@
 namespace ScaryCastle.Scripting
 {
     // ShowMessageCommand
-    // Arguments: {HUDMessageKind}
+    // Arguments: {MessageKind}
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class ShowMessageCommand : NonAwaitableCommand
     {
         // Constructor
         public ShowMessageCommand(Script script, string source, StatementBody body)
             : base(script, source, body, 1)
         {
-            Parser.ParseEnum<HUDMessageKind>(this, 0);
+            Parser.ParseEnum<MessageKind>(this, 0);
         }
 
         #region Protected members
@@ -20,7 +21,7 @@ namespace ScaryCastle.Scripting
         {
             if (Session is GameSession session)
             {
-                var value = Parser.ParseEnum<HUDMessageKind>(this, 0);
+                var value = Parser.ParseEnum<MessageKind>(this, 0);
                 session.HUD.Message.Show(value);
             }
         }

@@ -4,6 +4,7 @@ namespace Adberration.Scripting
 {
     // SuspendVibrationCommand
     // Arguments: {Duration:Integer}
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class SuspendVibrationCommand : NonAwaitableCommand
     {
         // Constructor

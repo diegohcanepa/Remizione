@@ -7,6 +7,7 @@ namespace ScaryCastle.Scripting
     // AwaitPlayerApproachCommand
     // Syntax: [#face:] [#fast] [#target:CommonThing]
     [ForceAwait]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitPlayerApproachCommand : AwaitableCommand
     {
         private Actor? player;

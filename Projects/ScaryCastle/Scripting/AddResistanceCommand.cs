@@ -4,6 +4,7 @@ namespace ScaryCastle.Scripting
 {
     // AddResistanceCommand
     // Arguments: {DamageType} {float}
+    [ScriptStatement(CodingContext.Initialization)]
     internal sealed class AddResistanceCommand : NonAwaitableCommand
     {
         // Constructor

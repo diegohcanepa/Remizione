@@ -3,6 +3,7 @@
     // AwaitRoutineCommand
     // Arguments: {Name}
     [ForceAwait]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitRoutineCommand : AwaitableCommand
     {
         private readonly Script routine;

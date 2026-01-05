@@ -3,6 +3,7 @@
     // AwaitOutcomeCommand
     // Arguments: {Thing}
     [ForceAwait]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitOutcomeCommand : AwaitableCommand
     {
         private Script? script;

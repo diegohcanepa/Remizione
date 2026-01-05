@@ -34,6 +34,11 @@
                     ],
                     "description": "Tipo de lock."
                 },
+                "maxConnections": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "Máximo de conexiones requeridas."
+                },
                 "maxEnemies": {
                     "type": "integer",
                     "minimum": -1,

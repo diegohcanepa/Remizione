@@ -4,6 +4,7 @@ namespace Adberration.Scripting
 {
     // CloneCommand
     // Arguments: {CloneName} [#at:Vector2] [#parent:Entity] [#persistent] [#range:Int32Range]
+    [ScriptStatement(CodingContext.Instantiation)]
     internal sealed class CloneCommand : NonAwaitableCommand
     {
         // Constructor

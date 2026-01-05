@@ -3,6 +3,7 @@
     // AwaitEnterRoomCommand
     // Syntax: {Room}
     [ForceAwait]
+    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitEnterRoomCommand : AwaitableCommand
     {
         private Room? room;
