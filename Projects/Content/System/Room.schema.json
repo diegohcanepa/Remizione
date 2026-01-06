@@ -34,10 +34,9 @@
                     ],
                     "description": "Tipo de lock."
                 },
-                "maxConnections": {
-                    "type": "integer",
-                    "minimum": 1,
-                    "description": "Máximo de conexiones requeridas."
+                "requiresDeadEnd": {
+                    "type": "boolean",
+                    "description": "Solo puede spawnear en rooms que son callejones sin salida."
                 },
                 "maxEnemies": {
                     "type": "integer",

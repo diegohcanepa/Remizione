@@ -1,5 +1,4 @@
-﻿using Adberration;
-using Engendro;
+﻿using Engendro;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,11 +22,6 @@ namespace ScaryCastle
             if (element.TryGetProperty("lockType", out JsonElement lockTypeElement))
                 LockType = Enum.Parse<LockType>(lockTypeElement.GetString() ?? string.Empty);
 
-            // MaxConnections
-            MaxConnections = 1;
-            if (element.TryGetProperty("maxConnections", out JsonElement maxConnectionsElement))
-                MaxConnections = maxConnectionsElement.GetInt32();
-
             // MaxEnemies
             MaxEnemies = -1;
             if (element.TryGetProperty("maxEnemies", out JsonElement maxEnemiesElement))
@@ -37,6 +31,10 @@ namespace ScaryCastle
             MaxProps = -1;
             if (element.TryGetProperty("maxProps", out JsonElement maxPropsElement))
                 MaxProps = maxPropsElement.GetInt32();
+
+            // RequiresDeadEnd
+            if (element.TryGetProperty("requiresDeadEnd", out JsonElement requiresDeadEndElement))
+                RequiresDeadEnd = requiresDeadEndElement.GetBoolean();
 
             // Scope
             var allowPools = Tags.FromJson(element, "allowPools");
@@ -88,14 +86,14 @@ namespace ScaryCastle
         // LockType
         public LockType LockType { get; }
 
-        // MaxConnections
-        public int MaxConnections { get; }
-
         // MaxEnemies
         public int MaxEnemies { get; }
 
         // MaxProps
         public int MaxProps { get; }
+
+        // RequiresDeadEnd
+        public bool RequiresDeadEnd { get; }
 
         // Scope
         public ScopeRules Scope { get; }

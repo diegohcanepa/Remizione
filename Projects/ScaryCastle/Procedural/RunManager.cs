@@ -38,7 +38,7 @@ namespace ScaryCastle.Procedural
                     if ((int)config.Difficulty != (int)targetDiff)
                         continue;
 
-                    if (room.GetConnectionCount() > config.MaxConnections)
+                    if (config.RequiresDeadEnd && room.GetConnectionCount() > 1)
                         continue;
 
                     if (!config.PassesMaxPerRunConstraint())
@@ -54,7 +54,7 @@ namespace ScaryCastle.Procedural
                     {
                         if (config.Difficulty < targetDiff)
                         {
-                            if (room.GetConnectionCount() > config.MaxConnections)
+                            if (config.RequiresDeadEnd && room.GetConnectionCount() > 1)
                                 continue;
 
                             if (config.PassesMaxPerRunConstraint())
@@ -70,8 +70,7 @@ namespace ScaryCastle.Procedural
                     chanceTable.Add(candidate.Name, candidate.Weight, 1, candidate);
                 }
 
-                var item = chanceTable.GetValue();
-                if (item != null && item.Context is RoomConfig chosenConfig)
+                if (chanceTable.GetValue()?.Context is RoomConfig chosenConfig)
                 {
                     SpawnCounter.Increment(chosenConfig.Name);
                     room.Config = chosenConfig;

@@ -2,6 +2,7 @@
 using Adberration.Scripting;
 using Engendro;
 using Microsoft.Xna.Framework;
+using System.Globalization;
 
 namespace ScaryCastle
 {
@@ -12,6 +13,8 @@ namespace ScaryCastle
     {
         private readonly ImageSprite glass;
         private readonly ImageSprite icon;
+        private readonly ImageSprite led;
+        private readonly TextSprite priceText;
 
         // Constructor
         public VendingMachine(GameSession session, string name)
@@ -31,6 +34,19 @@ namespace ScaryCastle
             {
                 Opacity = .15f
             };
+
+            // Led
+            led = new(Game, Atlases.Environment.FindImage($"{nameof(VendingMachine)}Led"))
+            {
+            };
+
+            // PriceText
+            this.priceText = new(Game, Fonts.Common)
+            {
+                Color = Color.Black * .5f,
+                PivotOrigin = RectanglePoint.Center,
+                Scale = ScaleInfo.Text.Large
+            };
         }
 
         #region IBuyable explicit members
@@ -46,8 +62,11 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             base.OnDraw(gameTime);
+            
             icon.Draw(gameTime);
             glass.Draw(gameTime);
+            led.Draw(gameTime);
+            priceText.Draw(gameTime);
         }
 
         // OnParentChanged
@@ -68,6 +87,8 @@ namespace ScaryCastle
             {
                 icon.Position = BoundingBox.GetPoint(RectanglePoint.LeftTop, 10.5f, 12.5f);
                 glass.Position = BoundingBox.GetPoint(RectanglePoint.LeftTop, 7, 9);
+                led.Position = BoundingBox.GetPoint(RectanglePoint.LeftTop, 16, 4);
+                priceText.Position = BoundingBox.GetPoint(RectanglePoint.Top, 0, 4.5f);
             }
         }
 
@@ -101,6 +122,8 @@ namespace ScaryCastle
             {
                 field = value;
                 icon.Image = field?.Image;
+                led.Color = field == null ? Color.Red : Color.Green;
+                priceText.Text = field?.Price.ToString(CultureInfo.InvariantCulture);
             }
         }
 

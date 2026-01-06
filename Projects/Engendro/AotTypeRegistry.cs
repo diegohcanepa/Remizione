@@ -9,25 +9,22 @@ namespace Engendro
     /// </summary>
     public static class AotTypeRegistry
     {
-        private static readonly Dictionary<string, RegisteredType> types = [];
+        private static readonly Dictionary<string, AotTypeEntry> types = [];
 
         // Find
-        public static RegisteredType? Find(string keyName)
+        public static AotTypeEntry? Find(string keyName)
         {
-            if (types.TryGetValue(keyName, out var result))
-                return result;
-            else
-                return null;
+            return types.TryGetValue(keyName, out var result) ? result : null;
         }
 
         // Get
-        public static RegisteredType Get(string keyName)
+        public static AotTypeEntry Get(string keyName)
         {
             return types[keyName];
         }
 
         // Register
-        public static void Register(Type type)
+        public static void Register([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] Type type)
         {
             Register(type.Name, type);
         }
@@ -38,30 +35,10 @@ namespace Engendro
             if (types.ContainsKey(keyName))
                 return;
 
-            types.Add(keyName, new RegisteredType(keyName, type));
+            types.Add(keyName, new AotTypeEntry(keyName, type));
         }
 
         // Types
-        public static IEnumerable<RegisteredType> Types => types.Values;
-
-        /// <summary>
-        /// RegisteredType
-        /// </summary>
-        public sealed class RegisteredType
-        {
-            // Constructor
-            internal RegisteredType(string keyName, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] Type type)
-            {
-                this.Type = type;
-                this.KeyName = keyName;
-            }
-
-            // KeyName
-            public string KeyName { get; }
-
-            // Type
-            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
-            public Type Type { get; }
-        }
+        public static IEnumerable<AotTypeEntry> Types => types.Values;
     }
 }

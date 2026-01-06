@@ -292,6 +292,7 @@
             <key type="filename">Throwables-assets/ThrowableChiliShadow.png</key>
             <key type="filename">Throwables-assets/ThrowableDuck.png</key>
             <key type="filename">Throwables-assets/ThrowableDuckShadow.png</key>
+            <key type="filename">VendingMachine-assets/VendingMachineLed.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

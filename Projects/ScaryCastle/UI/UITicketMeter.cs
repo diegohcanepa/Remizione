@@ -23,14 +23,14 @@ namespace ScaryCastle
             this.slot = new ImageSprite(Game, Atlases.UI.TicketSlot)
             {
                 PivotOrigin = RectanglePoint.Top,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 205, 111)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 205, 110)
             };
 
             // Icon
             this.icon = new ImageSprite(Game, Atlases.UI.TicketIcon)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Position = slot.BoundingBox.GetPoint(RectanglePoint.Center, 0, -.5f),
+                Position = slot.BoundingBox.GetPoint(RectanglePoint.Center),
                 Scale = iconScale
             };
 

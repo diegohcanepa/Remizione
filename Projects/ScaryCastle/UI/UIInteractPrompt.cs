@@ -11,10 +11,8 @@ namespace ScaryCastle
     public sealed class UIInteractPrompt : GameObject
     {
         private readonly UIButton button;
-        private readonly TextSprite priceText;
         private readonly GameSession session;
         private GameThing? target;
-        private readonly ImageSprite ticketIcon;
 
         // Constructor
         public UIInteractPrompt(GameSession session)
@@ -28,20 +26,6 @@ namespace ScaryCastle
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -4)
             };
-
-            // PriceText
-            this.priceText = new(Game, Fonts.CommonOutline)
-            {
-                PivotOrigin = RectanglePoint.Center,
-                Scale = ScaleInfo.Text.Large
-            };
-
-            // TicketIcon
-            ticketIcon = new(Game, Atlases.UI.TicketPriceIcon)
-            {
-                PivotOrigin = RectanglePoint.Left,
-                Scale = new(.65f)
-            };
         }
 
         #region Protected members
@@ -50,17 +34,7 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             if (session.IsCurrentScene && target != null)
-            {
                 button.Draw(gameTime);
-
-                if (!priceText.IsEmpty)
-                {
-                    Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
-                    ticketIcon.Draw(gameTime);
-                    priceText.Draw(gameTime);
-                    Game.SpriteBatch.End();
-                }
-            }
         }
 
         // OnUpdate
@@ -72,19 +46,6 @@ namespace ScaryCastle
                 {
                     target = currentTarget;
                     button.Text = currentTarget.GetInteractPrompt() ?? currentTarget.LocalizedDisplayName;
-
-                    if (target is IBuyable buyable && buyable.Price > 0)
-                    {
-                        ticketIcon.Position = button.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0);
-                        priceText.Color = ColorPalette.Text.Default;
-                        priceText.Text = buyable.Price.ToString(CultureInfo.InvariantCulture);
-                        priceText.Position = ticketIcon.BoundingBox.GetPoint(RectanglePoint.Center, .25f, .2f);
-                    }
-                    else
-                    {
-                        priceText.Text = null;
-                    }
-
                     //Sound.Play(SoundNames.UIPrompt);
                 }
             }

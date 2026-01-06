@@ -32,7 +32,7 @@
 
                 // Equality
                 ComparisonOperator.Equality => leftOperand == rightOperand,
-                
+
                 _ => throw new System.NotImplementedException(),
             };
         }

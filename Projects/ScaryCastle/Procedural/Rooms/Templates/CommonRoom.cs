@@ -48,7 +48,7 @@ namespace ScaryCastle
             [
                 new("Floor1", .5f, false, "41,32;56,32;56,47;41,47", "floor"),
                 new("Floor2", .5f, false, "64,34;79,34;79,49;64,49", "floor,vendingMachine"),
-                new("Floor3", .5f, false, "4170,34;185,34;185,49;170,49", "floor,vendingMachine"),
+                new("Floor3", .5f, false, "170,34;185,34;185,49;170,49", "floor,vendingMachine"),
                 new("Floor4", .5f, false, "189,32;204,32;204,47;189,47", "floor"),
                 new("Floor5", .5f, false, "219,92;234,92;234,107;219,107", "floor"),
                 new("Floor6", .5f, false, "8,92;23,92;23,107;8,107", "floor"),

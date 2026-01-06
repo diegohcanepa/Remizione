@@ -1,10 +1,8 @@
-﻿using Adberration;
-using Engendro;
+﻿using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace ScaryCastle
@@ -22,6 +20,7 @@ namespace ScaryCastle
             : base(session, string.Empty, graph)
         {
             AllowGlobalLight = true;
+            Zoom = 1.2f;
         }
 
         #region Private members
