@@ -10,7 +10,7 @@ namespace ScaryCastle
     /// </summary>
     public sealed class UILog : GameObject
     {
-        private readonly FloatTween fadeTween = new() { StartDelay = 2000 };
+        private readonly FloatTween fadeTween = new() { StartDelay = 2600 };
         private readonly ImageSprite icon;
         private readonly TextSprite nounText;
         private readonly TextSprite verbText;
@@ -116,7 +116,7 @@ namespace ScaryCastle
         // Show
         public void Show(LogVerb verb, MetaItem metaItem)
         {
-            var isWarning = verb is LogVerb.Used or LogVerb.Needs;
+            var isWarning = verb is LogVerb.Used or LogVerb.Requires;
 
             ShowCore(Localization.GetValue(verb), metaItem.LocalizedDisplayName, isWarning, metaItem.Image);
 
@@ -128,7 +128,7 @@ namespace ScaryCastle
                     Sound.Play(SoundNames.PickupGeneric);
             }
 
-            else if (verb == LogVerb.Needs)
+            else if (verb == LogVerb.Requires)
                 Sound.Play(SoundNames.Error);
         }
     }

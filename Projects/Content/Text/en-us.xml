@@ -61,7 +61,7 @@
   <String Key="Item.MagneticCard.Name">Magnetic card</String>
   <String Key="Item.MasterLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.MasterLockpick.Name">Master lockpick</String>
-  <String Key="Item.PieceOfWood.Description" />
+  <String Key="Item.PieceOfWood.Description"></String>
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
@@ -87,10 +87,10 @@
   <String Key="Languages.es-es">Español (España)</String>
   <String Key="Languages.fr-fr">Français</String>
   <String Key="Languages.ru-ru">Русский</String>
-  <String Key="LogVerb.Bought">BOUGHT</String>
-  <String Key="LogVerb.Found">FOUND</String>
-  <String Key="LogVerb.Needs">NEEDS</String>
-  <String Key="LogVerb.Used">USED</String>
+  <String Key="LogVerb.Bought">Bought</String>
+  <String Key="LogVerb.Found">Found</String>
+  <String Key="LogVerb.Requires">Requires</String>
+  <String Key="LogVerb.Used">Used</String>
   <String Key="Menu.Controls.Keyboard.Interact">Interact</String>
   <String Key="Menu.Controls.Keyboard.Inventory">Inventory</String>
   <String Key="Menu.Controls.Keyboard.Kick">Kick (when available)</String>

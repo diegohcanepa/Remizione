@@ -6,23 +6,23 @@
       "tags": "floor",
       "killGoal": 10,
       "killGoalReward": "MasterLockpick",
-      "unlocked": true,
-      "usePlaceholder": true
+      "placements": ["Floor", "WalkArea"],
+      "unlocked": true
     },
     {
       "name": "PotteryB",
       "tags": "floor",
-      "unlocked": true,
-      "usePlaceholder": true
+      "unlocked": true
     },
     {
       "name": "VendingMachine",
       "maxPerRoom": 1,
-      "maxPerRun": 10,
+      "maxPerRun": 5,
       "leafRoomOnly": false,
+      "placements": ["WallFrontBase"],
+      "preferredLootCategory": "Consumable",
       "tags": "vendingMachine",
-      "unlocked": true,
-      "usePlaceholder": true
+      "unlocked": true
     }
   ]
 }

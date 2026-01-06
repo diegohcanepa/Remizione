@@ -52,9 +52,24 @@
           "minimum": 1,
           "description": "Número mínimo de veces que este elemento se spawnea en el 'room'."
         },
-        "usePlaceholder": {
-          "type": "boolean",
-          "description": "Indica si tiene que ser spawneado en un placeholder del room."
+        "placements": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "Floor",
+              "WallFrontBase",
+              "WallFrontHang",
+              "WallLeftBase",
+              "WallLeftHang",
+              "WallRightBase",
+              "WallRightHang",
+              "Ceiling",
+              "WalkArea"
+            ]
+          },
+          "default": [],
+          "description": "Lista de superficies donde puede spawnear. Si está vacío, se spawnea en el WalkArea."
         }
       }
     }

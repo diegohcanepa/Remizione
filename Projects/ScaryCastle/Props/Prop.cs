@@ -113,8 +113,8 @@ namespace ScaryCastle
         [ScriptMethod]
         public void Bounce()
         {
-            bounceScaleTween.Start(TweenStyle.QuadraticInOut, Scale, new Vector2(1f, .96f), 100, 2);
-            xTween.Start(TweenStyle.QuadraticInOut, X, X - 1, 50, 4);
+            bounceScaleTween.Start(TweenStyle.QuadraticInOut, Scale, new Vector2(1f, .95f), 100, 2);
+            xTween.Start(TweenStyle.QuadraticInOut, X, X - 1, 40, 6);
         }
 
         // PropState

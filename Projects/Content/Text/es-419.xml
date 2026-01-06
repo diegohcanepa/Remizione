@@ -87,10 +87,10 @@
   <String Key="Languages.es-es">Español (España)</String>
   <String Key="Languages.fr-fr">Français</String>
   <String Key="Languages.ru-ru">Русский</String>
-  <String Key="LogVerb.Bought">COMPRASTE</String>
-  <String Key="LogVerb.Found">CONSEGUISTE</String>
-  <String Key="LogVerb.Needs">NECESITAS</String>
-  <String Key="LogVerb.Used">USASTE</String>
+  <String Key="LogVerb.Bought">Compraste</String>
+  <String Key="LogVerb.Found">Conseguiste</String>
+  <String Key="LogVerb.Requires">Necesitas</String>
+  <String Key="LogVerb.Used">Usaste</String>
   <String Key="Menu.Controls.Keyboard.Interact">Interactuar</String>
   <String Key="Menu.Controls.Keyboard.Inventory">Inventario</String>
   <String Key="Menu.Controls.Keyboard.Kick">Patear (cuando esté disponible)</String>

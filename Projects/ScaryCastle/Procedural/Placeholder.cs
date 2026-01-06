@@ -1,25 +1,22 @@
 ﻿using Engendro;
+using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
 {
     /// <summary>
     /// Placeholder
     /// </summary>
-    public sealed class Placeholder : INamedObject
+    public sealed class Placeholder
     {
         // Constructor
-        public Placeholder(string name, Ratio fillChance, bool flipImage, string vertices, string allowTags, PlaceholderTarget target = PlaceholderTarget.Prop)
+        public Placeholder(int x, int y, PlacementType placement, Ratio fillChance, PlaceholderTarget target = PlaceholderTarget.Prop)
         {
-            this.Name = name;
+            this.Placement = placement;
             this.FillChance = fillChance;
-            this.FlipImage = flipImage;
-            this.Polygon = new ReadOnlyPolygon(vertices);
-            this.AllowTags = new(allowTags);
+            this.FlipImage = placement is PlacementType.WallRightBase or PlacementType.WallRightHang;
+            this.Position = new(x, y);
             this.Target = target;
         }
-
-        // AllowTags
-        public Tags AllowTags { get; set; }
 
         // FillChance
         public Ratio FillChance { get; set; }
@@ -27,11 +24,11 @@ namespace ScaryCastle
         // FlipImage    
         public bool FlipImage { get; }
 
-        // Name
-        public string Name { get; }
+        // Placement
+        public PlacementType Placement { get; }
 
-        // Polygon
-        public ReadOnlyPolygon Polygon { get; }
+        // Position
+        public Vector2 Position { get; }
 
         // Target
         public PlaceholderTarget Target { get; set; }

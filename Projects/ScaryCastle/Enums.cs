@@ -63,7 +63,7 @@ namespace ScaryCastle
     public enum LockType { None, Padlock }
 
     // LogVerb
-    public enum LogVerb { Bought, Found, Needs, Used }
+    public enum LogVerb { Bought, Found, Requires, Used }
 
     // LootTag
     public enum LootTag { Heal, Weapoon }
@@ -88,7 +88,22 @@ namespace ScaryCastle
     public enum MessageKind { CannotPlaceItem, NotEnoughTickets }
 
     // PlaceholderTarget
+    // TODO: Quiza no sirve mas
     public enum PlaceholderTarget { Prop, Enemy, Any }
+
+    // PlacementType
+    public enum PlacementType
+    {
+        Floor,          // Suelo libre (lejos de paredes)
+        WallFrontBase,  // Apoyado contra la pared de arriba (Vending Machine)
+        WallFrontHang,  // Colgado en la pared de arriba (Cuadros, Antorchas)
+        WallLeftBase,   // Apoyado contra la pared izquierda
+        WallLeftHang,   // Colgado en la pared izquierda
+        WallRightBase,  // Apoyado contra la pared derecha
+        WallRightHang,  // Colgado en la pared derecha
+        Ceiling,        // Techo (lámparas, telarañas)
+        WalkArea        // Cualquier lugar del suelo navegable
+    }
 
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }

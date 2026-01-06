@@ -20,7 +20,7 @@ namespace ScaryCastle
             : base(session, string.Empty, graph)
         {
             AllowGlobalLight = true;
-            Zoom = 1.2f;
+            Zoom = 1.1f;
         }
 
         #region Private members
@@ -185,13 +185,13 @@ namespace ScaryCastle
 
             foreach (var door in doors)
             {
+                door.PropState = PropState.Open;
+
                 if (door.DoorDirection is RideDoorDirection.Left or RideDoorDirection.Right or RideDoorDirection.Up)
                 {
                     if (door.TargetRoom?.Config.LockType != LockType.None)
                         door.PropState = PropState.Locked;
                 }
-                else
-                    door.PropState = PropState.Open;
             }
         }
 

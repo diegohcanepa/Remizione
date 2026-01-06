@@ -335,6 +335,7 @@
             </struct>
             <key type="filename">Items-assets/Apple.png</key>
             <key type="filename">Items-assets/Battery.png</key>
+            <key type="filename">Items-assets/Burger.png</key>
             <key type="filename">Items-assets/Chili.png</key>
             <key type="filename">Items-assets/Coin.png</key>
             <key type="filename">Items-assets/Cross.png</key>

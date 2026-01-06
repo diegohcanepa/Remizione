@@ -41,12 +41,12 @@
                 "maxEnemies": {
                     "type": "integer",
                     "minimum": -1,
-                    "description": "Número máximo de veces que este elemento puede aparecer por 'room'."
+                    "description": "Máximo de enemigos."
                 },
                 "maxProps": {
                     "type": "integer",
                     "minimum": -1,
-                    "description": "Número máximo de veces que este elemento puede aparecer por 'room'."
+                    "description": "Máximo de props."
                 },
                 "template": {
                     "type": "string",

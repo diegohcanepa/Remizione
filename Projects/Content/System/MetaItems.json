@@ -9,6 +9,13 @@
 			"unlocked": true
 		},
 		{
+			"name": "Burger",
+			"category": "Consumable",
+			"hp": "8",
+			"sound": "AppleBite",
+			"unlocked": true
+		},
+		{
 			"name": "Coin",
 			"category": "KeyItem",
 			"pickupSound": "PickupCoin"

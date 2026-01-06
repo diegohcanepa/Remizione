@@ -12,6 +12,7 @@ namespace ScaryCastle
     {
         private static readonly Dictionary<string, ThingConfig> data = [];
         private static readonly List<ThingConfig> dataList = [];
+        private readonly List<PlacementType> placements = [];
 
         #region Constructor
 
@@ -59,13 +60,25 @@ namespace ScaryCastle
             if (MinSpawnAmount > MaxSpawnAmount)
                 throw new InvalidOperationException($"[{Name}]: {nameof(MinSpawnAmount)} cannot be greater than MaxSpawnAmount.");
 
+            // Placements
+            if (element.TryGetProperty("placements", out JsonElement placementsElement))
+            {
+                foreach (var item in placementsElement.EnumerateArray())
+                {
+                    if (Enum.TryParse<PlacementType>(item.GetString(), out var value))
+                    {
+                        placements.Add(value);
+                    }
+                    else
+                        throw new InvalidOperationException($"Cannot parse placement value.");
+                }
+            }
+
             // RequiresDeadEnd
             if (element.TryGetProperty("requiresDeadEnd", out JsonElement requiresDeadEndElement))
                 RequiresDeadEnd = requiresDeadEndElement.GetBoolean();
 
-            // UsePlaceholder
-            if (element.TryGetProperty("usePlaceholder", out JsonElement usePlaceholderElement))
-                UsePlaceholder = usePlaceholderElement.GetBoolean();
+            this.Placements = placements.AsReadOnly();
 
             data.Add(Name, this);
             dataList.Add(this);
@@ -122,11 +135,11 @@ namespace ScaryCastle
             return MaxPerRoom == -1 || instanceCount < MaxPerRoom;
         }
 
+        // Placements
+        public ReadOnlyCollection<PlacementType> Placements { get; }
+
         // RequiresDeadEnd
         public bool RequiresDeadEnd { get; }
-
-        // UsePlaceholder
-        public bool UsePlaceholder { get; }
 
         // Validate
         public override void Validate(GameSession session)

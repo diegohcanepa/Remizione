@@ -75,7 +75,7 @@ namespace ScaryCastle
                 Sound.Play(SoundNames.Error);
             }
 
-            scaleTween.Start(TweenStyle.CubicIn, ScaleInfo.Text.ExtraLarge * .8f, ScaleInfo.Text.ExtraLarge, 50);
+            scaleTween.Start(TweenStyle.CubicIn, ScaleInfo.Text.Huge * .8f, ScaleInfo.Text.Huge, 50);
             messageText.Tweens.ScaleTween = scaleTween;
         }
     }

@@ -474,6 +474,8 @@ namespace ScaryCastle
                 Seed = System.Environment.TickCount;
 
             RunManager.Generate(this, Tags.EmptyList, 12);
+
+            Player?.Reheal();
         }
 
         // CancelRun

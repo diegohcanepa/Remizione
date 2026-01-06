@@ -43,7 +43,8 @@ namespace ScaryCastle
             // PriceText
             this.priceText = new(Game, Fonts.Common)
             {
-                Color = Color.Black * .5f,
+                Color = Color.Red,
+                Opacity = .9f,
                 PivotOrigin = RectanglePoint.Center,
                 Scale = ScaleInfo.Text.Large
             };
@@ -62,7 +63,6 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             base.OnDraw(gameTime);
-            
             icon.Draw(gameTime);
             glass.Draw(gameTime);
             led.Draw(gameTime);
@@ -108,10 +108,7 @@ namespace ScaryCastle
         // GetInteractPrompt
         public override string? GetInteractPrompt()
         {
-            if (MetaItem != null)
-                return MetaItem.LocalizedDisplayName;
-            else
-                return null;
+            return MetaItem?.LocalizedDisplayName;
         }
 
         // MetaItem
@@ -123,7 +120,8 @@ namespace ScaryCastle
                 field = value;
                 icon.Image = field?.Image;
                 led.Color = field == null ? Color.Red : Color.Green;
-                priceText.Text = field?.Price.ToString(CultureInfo.InvariantCulture);
+                priceText.Color = led.Color;
+                priceText.Text = field == null ? "-" : field?.Price.ToString(CultureInfo.InvariantCulture);
             }
         }
 
@@ -142,6 +140,7 @@ namespace ScaryCastle
             Session.HUD.Log.Show(LogVerb.Bought, MetaItem);
             Session.HUD.SackSlot.AnimateItem(MetaItem, icon.Position);
             Session.Tickets -= MetaItem.Price;
+            MetaItem = null;
 
             return true;
         }

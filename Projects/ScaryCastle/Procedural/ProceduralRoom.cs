@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using ScaryCastle.Procedural;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace ScaryCastle
@@ -14,10 +15,11 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private readonly NamedCounter enemiesSpawnCounter = new();
         private int instanceCount;
-        private readonly NamedObjectCollection<Placeholder> placeholders = [];
+        private readonly List<Placeholder> placeholders = [];
+        private readonly NamedCounter propsSpawnCounter = new();
         private readonly int randomSeed;
-        private readonly NamedCounter spawnCounter = new();
 
         #endregion
 
@@ -39,8 +41,8 @@ namespace ScaryCastle
 
             int salt = roomGraph.Index;
             this.randomSeed = RandomHelper.GetSeed(Session.Seed, salt);
-            this.Placeholders = new(placeholders);
             this.Random = new Random(randomSeed);
+            this.Placeholders = placeholders.AsReadOnly();
         }
 
         #endregion
@@ -153,53 +155,6 @@ namespace ScaryCastle
             return cells;
         }
 
-        #endregion
-
-        #region Protected members
-
-        // AddPlaceholders
-        protected void AddPlaceholders(IList<Placeholder> list)
-        {
-            for (var i = 0; i < list.Count; i++)
-            {
-                placeholders.Add(list[i]);
-            }
-        }
-
-        // DropLoot
-        protected virtual void DropLoot()
-        {
-        }
-
-        // GetDropLootPosition
-        protected Vector2 GetDropLootPosition()
-        {
-            return WalkArea != null ? WalkArea.Polygon.BoundingRectangleF.Center : BoundingBox.Center;
-        }
-
-        // OnLoad
-        protected override void OnLoad()
-        {
-            base.OnLoad();
-
-            CustomWidth = (int)BoundingBox.Width;
-            CustomHeight = (int)BoundingBox.Height;
-
-            OnPopulating();
-            Populate();
-            OnPopulated();
-        }
-
-        // OnPopulating
-        protected virtual void OnPopulating()
-        {
-        }
-
-        // OnPopulated
-        protected virtual void OnPopulated()
-        {
-        }
-
         // Populate
         private void Populate()
         {
@@ -211,23 +166,20 @@ namespace ScaryCastle
         private void PopulateEnemies()
         {
             var configList = ApplyPrimaryFilter<Enemy>(ThingConfig.All);
-            SpawnInPlaceholders(configList, Config.MaxEnemies, PlaceholderTarget.Enemy);
-            SpawnInWalkArea(configList, Config.MaxEnemies);
+            SpawnInPlaceholders(configList, Config.MaxEnemies, enemiesSpawnCounter, PlaceholderTarget.Enemy);
+            SpawnInWalkArea(configList, Config.MaxEnemies, enemiesSpawnCounter);
         }
 
         // PopulateProps
         private void PopulateProps()
         {
             var configList = ApplyPrimaryFilter<Prop>(ThingConfig.All);
-            SpawnInPlaceholders(configList, Config.MaxProps, PlaceholderTarget.Prop);
-            SpawnInWalkArea(configList, Config.MaxProps);
+            SpawnInPlaceholders(configList, Config.MaxProps, propsSpawnCounter, PlaceholderTarget.Prop);
+            SpawnInWalkArea(configList, Config.MaxProps, propsSpawnCounter);
         }
 
-        // Random
-        protected Random Random { get; }
-
         // SpawnInPlaceholders
-        private void SpawnInPlaceholders(IList<ThingConfig> configList, int maxInstances, PlaceholderTarget target)
+        private void SpawnInPlaceholders(IList<ThingConfig> configList, int maxInstances, NamedCounter spawnCounter, PlaceholderTarget target)
         {
             if (Placeholders.Count == 0 || maxInstances == 0)
                 return;
@@ -243,12 +195,9 @@ namespace ScaryCastle
                 if (placeholder.Used)
                     continue;
 
-                // Test placeholder target
-                if (placeholder.Target != PlaceholderTarget.Any)
-                {
-                    if (placeholder.Target != target)
-                        continue;
-                }
+                // Functional filter (Prop vs Enemy)
+                if (placeholder.Target != PlaceholderTarget.Any && placeholder.Target != target)
+                    continue;
 
                 // Roll fillChance
                 if (!placeholder.FillChance.Roll(Random))
@@ -258,15 +207,9 @@ namespace ScaryCastle
                 var candidates = new List<ThingConfig>();
                 foreach (var config in configList)
                 {
-                    if (!config.UsePlaceholder)
+                    // Is compatible with placehokder placement?
+                    if (!config.Placements.Contains(placeholder.Placement))
                         continue;
-
-                    // Allow tags
-                    if (placeholder.AllowTags.Count > 0)
-                    {
-                        if (!Utils.Intersects(placeholder.AllowTags, config.Tags))
-                            continue;
-                    }
 
                     // MaxPerRoom
                     if (!config.PassesMaxPerRoomConstraint(spawnCounter.GetCount(config.Name)))
@@ -298,12 +241,13 @@ namespace ScaryCastle
 
                 // Log spawn in run
                 RunManager.SpawnCounter.Increment(chosen.Name);
+                spawnCounter.Increment(chosen.Name);
 
                 // Flag placeholder as used
                 placeholder.Used = true;
 
                 var instance = CreateRuntimeThingCloneCore(chosen.Name);
-                instance.Position = placeholder.Polygon.BoundingRectangleF.GetPoint(RectanglePoint.Bottom);
+                instance.Position = placeholder.Position;
                 Children.Add(instance);
 
                 // Max per room
@@ -313,7 +257,7 @@ namespace ScaryCastle
         }
 
         // SpawnInWalkArea
-        private void SpawnInWalkArea(IList<ThingConfig> configList, int maxInstances)
+        private void SpawnInWalkArea(IList<ThingConfig> configList, int maxInstances, NamedCounter spawnCounter)
         {
             if (WalkArea == null || maxInstances == 0)
                 return;
@@ -322,7 +266,10 @@ namespace ScaryCastle
             var candidates = new List<ThingConfig>();
             foreach (var config in configList)
             {
-                if (config.UsePlaceholder)
+                // Allowed if list is empty or contains WalkAea enum value
+                var canSpawnHere = config.Placements.Count == 0 || config.Placements.Contains(PlacementType.WalkArea);
+
+                if (!canSpawnHere)
                     continue;
 
                 if (!config.PassesMaxPerRoomConstraint(spawnCounter.GetCount(config.Name)))
@@ -414,6 +361,53 @@ namespace ScaryCastle
 
         #endregion
 
+        #region Protected members
+
+        // AddPlaceholder
+        protected void AddPlaceholder(int x, int y, PlacementType placement, Ratio fillChance, PlaceholderTarget target = PlaceholderTarget.Prop)
+        {
+            placeholders.Add(new(x, y, placement, fillChance, target));
+        }
+
+        // DropLoot
+        protected virtual void DropLoot()
+        {
+        }
+
+        // GetDropLootPosition
+        protected Vector2 GetDropLootPosition()
+        {
+            return WalkArea != null ? WalkArea.Polygon.BoundingRectangleF.Center : BoundingBox.Center;
+        }
+
+        // OnLoad
+        protected override void OnLoad()
+        {
+            base.OnLoad();
+
+            CustomWidth = (int)BoundingBox.Width;
+            CustomHeight = (int)BoundingBox.Height;
+
+            OnPopulating();
+            Populate();
+            OnPopulated();
+        }
+
+        // OnPopulating
+        protected virtual void OnPopulating()
+        {
+        }
+
+        // OnPopulated
+        protected virtual void OnPopulated()
+        {
+        }
+
+        // Random
+        protected Random Random { get; }
+
+        #endregion
+
         // Config
         public RoomConfig Config { get; }
 
@@ -427,7 +421,7 @@ namespace ScaryCastle
         public override bool IsProcedural => true;
 
         // Placeholders
-        public NamedObjectReadOnlyCollection<Placeholder> Placeholders { get; }
+        public ReadOnlyCollection<Placeholder> Placeholders { get; }
 
         // RoomGraph
         public RoomGraph RoomGraph { get; }
