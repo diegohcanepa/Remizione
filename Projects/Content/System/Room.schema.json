@@ -25,6 +25,22 @@
                     "type": "string",
                     "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
                 },
+                "doorDown": {
+                    "type": "string",
+                    "description": "Posicion de la puerta de abajo."
+                },
+                "doorLeft": {
+                    "type": "string",
+                    "description": "Posicion de la puerta izquierda."
+                },
+                "doorRight": {
+                    "type": "string",
+                    "description": "Posicion de la puerta de derecha."
+                },
+                "doorUp": {
+                    "type": "string",
+                    "description": "Posicion de la puerta de arriba."
+                },
                 "lockType": {
                     "type": "string",
                     "default": "None",
@@ -48,13 +64,68 @@
                     "minimum": -1,
                     "description": "Máximo de props."
                 },
-                "template": {
+                "placeholders": {
+                    "type": "array",
+                    "description": "Lista de puntos de spawn predefinidos para este room.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "position": {
+                                "type": "string"
+                            },
+                            "placement": {
+                                "type": "string",
+                                "enum": [
+                                    "Floor",
+                                    "WallFrontBase",
+                                    "WallFrontHang",
+                                    "WallLeftBase",
+                                    "WallLeftHang",
+                                    "WallRightBase",
+                                    "WallRightHang",
+                                    "Ceiling",
+                                    "WalkArea"
+                                ],
+                                "description": "Ubicación física del placeholder."
+                            },
+                            "fillChance": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1,
+                                "default": 1.0,
+                                "description": "Probabilidad (Ratio) de que este punto se llene (0.0 a 1.0)."
+                            },
+                            "target": {
+                                "type": "string",
+                                "default": "Prop",
+                                "enum": [
+                                    "Prop",
+                                    "Enemy",
+                                    "Any"
+                                ],
+                                "description": "¿Qué tipo de objeto puede spawnear aquí?"
+                            }
+                        },
+                        "required": [
+                            "position",
+                            "placement"
+                        ]
+                    }
+                },
+                "walkArea": {
                     "type": "string",
-                    "description": "Nombre del template de room a instanciar."
+                    "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
+                },
+                "walls": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Lista de paredes definidas para este room."
                 }
             },
             "required": [
-                "template"
+                "walkArea"
             ]
         }
     ]

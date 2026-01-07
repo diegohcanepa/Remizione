@@ -10,17 +10,42 @@ namespace ScaryCastle
     /// <summary>
     /// RideRoom
     /// </summary>
-    public abstract class RideRoom : ProceduralRoom
+    public sealed class RideRoom : ProceduralRoom
     {
         private readonly List<RideDoor> doors = [];
         private bool lootDropped;
 
         // Constructor
-        protected RideRoom(GameSession session, RoomGraph graph)
+        public RideRoom(GameSession session, RoomGraph graph)
             : base(session, string.Empty, graph)
         {
+            if (graph.Config is not RoomConfig config)
+                throw new InvalidOperationException();
+
             AllowGlobalLight = true;
             Zoom = 1.1f;
+
+            AtlasName = graph.Config?.Name ?? string.Empty;
+            DefaultImageName = AtlasName;
+
+            AddWalkArea("WalkArea", config.WalkArea);
+
+            DoorDown = config.DoorDown;
+            DoorLeft = config.DoorLeft;
+            DoorRight = config.DoorRight;
+            DoorUp = config.DoorUp;
+
+            // Add placeholders
+            foreach (var placeholder in config.Placeholders)
+            {
+                AddPlaceholder(placeholder);
+            }
+
+            // Add walls
+            foreach (var wall in config.Walls)
+            {
+                AddWall(wall);
+            }
         }
 
         #region Private members
@@ -42,40 +67,40 @@ namespace ScaryCastle
         private void PopulateDoors()
         {
             // Up
-            if (RoomGraph.Up != null && DoorAnchorUp != null && CreateRuntimeClone("RideDoorUp") is RideDoor upDoor)
+            if (RoomGraph.Up != null && DoorUp != null && CreateRuntimeClone("RideDoorUp") is RideDoor upDoor)
             {
                 doors.Add(upDoor);
                 Children.Add(upDoor);
-                upDoor.Position = DoorAnchorUp.Value;
+                upDoor.Position = DoorUp.Value;
                 upDoor.TargetRoom = RoomGraph.Up.RideRoom;
             }
 
             // Left
-            if (RoomGraph.Left != null && DoorAnchorLeft != null && CreateRuntimeClone("RideDoorLeft") is RideDoor leftDoor)
+            if (RoomGraph.Left != null && DoorLeft != null && CreateRuntimeClone("RideDoorLeft") is RideDoor leftDoor)
             {
                 doors.Add(leftDoor);
                 Children.Add(leftDoor);
-                leftDoor.Position = DoorAnchorLeft.Value;
+                leftDoor.Position = DoorLeft.Value;
                 leftDoor.TargetRoom = RoomGraph.Left.RideRoom;
             }
 
             // Right
-            if (RoomGraph.Right != null && DoorAnchorRight != null && CreateRuntimeClone("RideDoorRight") is RideDoor rightDoor)
+            if (RoomGraph.Right != null && DoorRight != null && CreateRuntimeClone("RideDoorRight") is RideDoor rightDoor)
             {
                 doors.Add(rightDoor);
                 Children.Add(rightDoor);
-                rightDoor.Position = DoorAnchorRight.Value;
+                rightDoor.Position = DoorRight.Value;
                 rightDoor.TargetRoom = RoomGraph.Right.RideRoom;
             }
 
             // Down
             if (RoomGraph.Down != null || RoomGraph.RoomType == RoomType.Start)
             {
-                if (DoorAnchorDown != null && CreateRuntimeClone("RideDoorDown") is RideDoor downDoor)
+                if (DoorDown != null && CreateRuntimeClone("RideDoorDown") is RideDoor downDoor)
                 {
                     doors.Add(downDoor);
                     Children.Add(downDoor);
-                    downDoor.Position = DoorAnchorDown.Value;
+                    downDoor.Position = DoorDown.Value;
 
                     if (RoomGraph.Down != null)
                         downDoor.TargetRoom = RoomGraph.Down.RideRoom;
@@ -87,17 +112,17 @@ namespace ScaryCastle
 
         #region Protected members
 
-        // DoorAnchorDown
-        protected Vector2? DoorAnchorDown { get; set; }
+        // DoorDown
+        private Vector2? DoorDown { get; set; }
 
-        // DoorAnchorLeft
-        protected Vector2? DoorAnchorLeft { get; set; }
+        // DoorLeft
+        private Vector2? DoorLeft { get; set; }
 
-        // DoorAnchorRight
-        protected Vector2? DoorAnchorRight { get; set; }
+        // DoorRight
+        private Vector2? DoorRight { get; set; }
 
-        // DoorAnchorUp
-        protected Vector2? DoorAnchorUp { get; set; }
+        // DoorUp
+        private Vector2? DoorUp { get; set; }
 
         // DropLoot
         protected override void DropLoot()
@@ -175,8 +200,8 @@ namespace ScaryCastle
         protected override void OnLoad()
         {
             // Check door anchors
-            if (DoorAnchorLeft == Vector2.Zero || DoorAnchorDown == Vector2.Zero ||
-                DoorAnchorRight == Vector2.Zero || DoorAnchorUp == Vector2.Zero)
+            if (DoorLeft == Vector2.Zero || DoorDown == Vector2.Zero ||
+                DoorRight == Vector2.Zero || DoorUp == Vector2.Zero)
             {
                 throw new InvalidOperationException($"One or more door anchor points are missing in room [{RoomGraph}].");
             }
@@ -241,12 +266,10 @@ namespace ScaryCastle
             if (graph.Config == null)
                 throw new InvalidOperationException($"Missing config in room graph.");
 
-            // Ahora accedemos a .Type del struct registrado
-            var entityInfo = AotTypeRegistry.Get(graph.Config.Template);
-
-            // El compilador ya no dará error aquí porque registered.Type está anotado
-            var result = Activator.CreateInstance(entityInfo.Type, session, graph) as RideRoom
-                ?? throw new InvalidOperationException($"Cannot create instance [{graph.Config.Name}]");
+            // Get type from AOT registry
+            var result = Activator.CreateInstance(typeof(RideRoom), session, graph) as RideRoom;
+            if (result == null)
+                throw new InvalidOperationException($"Cannot create instance [{graph.Config.Name}]");
 
             return result;
         }
@@ -271,11 +294,5 @@ namespace ScaryCastle
 
         // HubDoor
         public RideDoor? HubDoor { get; set; }
-
-        // RegisterTemplates
-        public static void RegisterTemplates()
-        {
-            AotTypeRegistry.Register(typeof(CommonRoom));
-        }
     }
 }

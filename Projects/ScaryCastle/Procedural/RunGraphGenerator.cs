@@ -122,7 +122,7 @@ namespace ScaryCastle
                 RoomGraph parent = rooms[rng.Next(rooms.Count)];
 
                 // Sesgo horizontal para mejor visibilidad (Izquierda/Derecha son más probables)
-                int dir = rng.Next(6) switch
+                int direction = rng.Next(6) switch
                 {
                     0 => 0,
                     1 => 1,
@@ -131,15 +131,16 @@ namespace ScaryCastle
                 };
 
                 // Evitar que el Start intente conectar hacia abajo
-                if (parent.RoomType == RoomType.Start && dir == 1) continue;
+                if (parent.RoomType == RoomType.Start && direction == 1)
+                    continue;
 
-                (int x, int y) target = GetCoords(parent.X, parent.Y, dir);
+                (int x, int y) target = GetCoords(parent.X, parent.Y, direction);
 
-                // Regla de Isaac: No se puede tocar con habitaciones que no sean el padre
+                // No se puede tocar con habitaciones que no sean el padre
                 if (!occupied.ContainsKey(target) && CountNeighbors(target, occupied) == 1)
                 {
                     RoomGraph newRoom = new(rooms.Count, target.x, target.y, RoomType.Normal);
-                    Link(parent, newRoom, dir);
+                    Link(parent, newRoom, direction);
                     occupied.Add(target, newRoom);
                     rooms.Add(newRoom);
                 }

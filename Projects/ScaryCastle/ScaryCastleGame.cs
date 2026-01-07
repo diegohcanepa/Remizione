@@ -52,8 +52,6 @@ namespace ScaryCastle
         // InitializeProceduralContent
         private void InitializeProceduralContent()
         {
-            RideRoom.RegisterTemplates();
-
             EffectDefinition.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "EffectDefinitions.json"));
             MetaItem.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "MetaItems.json"));
             RoomConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));

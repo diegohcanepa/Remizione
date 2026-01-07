@@ -9,12 +9,12 @@ namespace ScaryCastle
     public sealed class Placeholder
     {
         // Constructor
-        public Placeholder(int x, int y, PlacementType placement, Ratio fillChance, PlaceholderTarget target = PlaceholderTarget.Prop)
+        public Placeholder(Vector2 position, PlacementType placement, Ratio fillChance, PlaceholderTarget target = PlaceholderTarget.Prop)
         {
+            this.Position = position;
             this.Placement = placement;
             this.FillChance = fillChance;
             this.FlipImage = placement is PlacementType.WallRightBase or PlacementType.WallRightHang;
-            this.Position = new(x, y);
             this.Target = target;
         }
 

@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.10.0</string>
+        <string>7.11.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -124,7 +124,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../Projects/Content/Atlases/CommonRoom.xml</filename>
+                <filename>../../../../Projects/Content/Atlases/Castle_Std_Full_Common_01.xml</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -173,7 +173,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">CommonRoom-assets/CommonRoom.png</key>
+            <key type="filename">Castle_Std_Full_Common_01-assets/Castle_Std_Full_Common_01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -195,7 +195,7 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>CommonRoom-assets</filename>
+                    <filename>Castle_Std_Full_Common_01-assets</filename>
                 </array>
             </struct>
         </map>

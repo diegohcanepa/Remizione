@@ -35,7 +35,7 @@ namespace ScaryCastle.Procedural
                 foreach (var config in configList)
                 {
                     // Match difficulty
-                    if ((int)config.Difficulty != (int)targetDiff)
+                    if (config.Difficulty != targetDiff)
                         continue;
 
                     if (config.RequiresDeadEnd && room.GetConnectionCount() > 1)
@@ -75,13 +75,15 @@ namespace ScaryCastle.Procedural
                     SpawnCounter.Increment(chosenConfig.Name);
                     room.Config = chosenConfig;
                 }
+                else
+                    throw new InvalidOperationException("Failed to apply room config.");
             }
         }
 
-        // GetAvailableConfigs
-        private static List<RoomConfig> GetAvailableConfigs(GameSession session, Tags pools)
+        // GetAvailableRoomConfigs
+        private static List<RoomConfig> GetAvailableRoomConfigs(GameSession session, Tags pools)
         {
-            var outList = new List<RoomConfig>();
+            var result = new List<RoomConfig>();
 
             foreach (var roomConfig in RoomConfig.All)
             {
@@ -101,10 +103,10 @@ namespace ScaryCastle.Procedural
                 }
 
                 // Passed all checks
-                outList.Add(roomConfig);
+                result.Add(roomConfig);
             }
 
-            return outList;
+            return result;
         }
 
         #endregion
@@ -132,7 +134,7 @@ namespace ScaryCastle.Procedural
             rooms.AddRange(result.Item1);
 
             // Get available room configs
-            var configs = GetAvailableConfigs(session, pools);
+            var configs = GetAvailableRoomConfigs(session, pools);
 
             // Assign configs
             ApplyConfigs(configs, result.Item2);
@@ -163,6 +165,6 @@ namespace ScaryCastle.Procedural
         public static ReadOnlyCollection<RoomGraph> Rooms { get; } = rooms.AsReadOnly();
 
         // SpawnCounter
-        public static NamedCounter SpawnCounter { get; } = new();
+        public static MultiCounter SpawnCounter { get; } = new();
     }
 }

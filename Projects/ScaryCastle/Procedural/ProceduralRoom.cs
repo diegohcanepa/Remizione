@@ -15,10 +15,10 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly NamedCounter enemiesSpawnCounter = new();
+        private readonly MultiCounter enemiesSpawnCounter = new();
         private int instanceCount;
         private readonly List<Placeholder> placeholders = [];
-        private readonly NamedCounter propsSpawnCounter = new();
+        private readonly MultiCounter propsSpawnCounter = new();
         private readonly int randomSeed;
 
         #endregion
@@ -179,7 +179,7 @@ namespace ScaryCastle
         }
 
         // SpawnInPlaceholders
-        private void SpawnInPlaceholders(IList<ThingConfig> configList, int maxInstances, NamedCounter spawnCounter, PlaceholderTarget target)
+        private void SpawnInPlaceholders(IList<ThingConfig> configList, int maxInstances, MultiCounter spawnCounter, PlaceholderTarget target)
         {
             if (Placeholders.Count == 0 || maxInstances == 0)
                 return;
@@ -257,7 +257,7 @@ namespace ScaryCastle
         }
 
         // SpawnInWalkArea
-        private void SpawnInWalkArea(IList<ThingConfig> configList, int maxInstances, NamedCounter spawnCounter)
+        private void SpawnInWalkArea(IList<ThingConfig> configList, int maxInstances, MultiCounter spawnCounter)
         {
             if (WalkArea == null || maxInstances == 0)
                 return;
@@ -364,9 +364,9 @@ namespace ScaryCastle
         #region Protected members
 
         // AddPlaceholder
-        protected void AddPlaceholder(int x, int y, PlacementType placement, Ratio fillChance, PlaceholderTarget target = PlaceholderTarget.Prop)
+        protected void AddPlaceholder(Placeholder placeholder)
         {
-            placeholders.Add(new(x, y, placement, fillChance, target));
+            placeholders.Add(placeholder);
         }
 
         // DropLoot

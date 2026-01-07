@@ -542,7 +542,7 @@ namespace ScaryCastle
         public Prop? KeyItemTarget { get; set; }
 
         // KillCounter
-        public NamedCounter KillCounter { get; } = new();
+        public MultiCounter KillCounter { get; } = new();
 
         // KillEnemies
         [ScriptMethod]

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace Engendro
 {
     /// <summary>
-    /// NamedCounter
+    /// MultiCounter
     /// </summary>
-    public sealed class NamedCounter
+    public sealed class MultiCounter
     {
         private readonly Dictionary<string, int> data = [];
 

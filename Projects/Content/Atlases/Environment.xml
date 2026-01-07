@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:b3f7d94b522da84cd3b9c4523cda54f6:bd92d5e0ca466aa270ebdc9aceae9a31:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:c3861428c65529e0c5937d380df8abb2:472da27ef220502c4389b014ae0d47f2:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -26,18 +26,18 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="BangRed.png" x="269" y="338" w="30" h="13"/>
     <sprite n="BoomPurple.png" x="196" y="496" w="30" h="14"/>
     <sprite n="BoomRed.png" x="228" y="496" w="30" h="14"/>
+    <sprite n="CastleDoorDownClosed.png" x="155" y="321" w="32" h="36"/>
+    <sprite n="CastleDoorDownOpen.png" x="167" y="384" w="32" h="36"/>
+    <sprite n="CastleDoorLeftClosed.png" x="2" y="346" w="16" h="54"/>
+    <sprite n="CastleDoorLeftOpen.png" x="2" y="402" w="16" h="54"/>
+    <sprite n="CastleDoorRightClosed.png" x="20" y="346" w="16" h="54"/>
+    <sprite n="CastleDoorRightOpen.png" x="20" y="402" w="16" h="54"/>
+    <sprite n="CastleDoorUpClosed.png" x="137" y="283" w="33" h="36"/>
+    <sprite n="CastleDoorUpOpen.png" x="132" y="384" w="33" h="36"/>
     <sprite n="Coin01.png" x="205" y="187" w="11" h="9"/>
     <sprite n="Coin02.png" x="218" y="187" w="11" h="9"/>
     <sprite n="Coin03.png" x="231" y="186" w="11" h="9"/>
     <sprite n="Coin04.png" x="244" y="186" w="11" h="9"/>
-    <sprite n="CommonRoomDoorDownClosed.png" x="155" y="321" w="32" h="36"/>
-    <sprite n="CommonRoomDoorDownOpen.png" x="167" y="384" w="32" h="36"/>
-    <sprite n="CommonRoomDoorLeftClosed.png" x="2" y="346" w="16" h="54"/>
-    <sprite n="CommonRoomDoorLeftOpen.png" x="2" y="402" w="16" h="54"/>
-    <sprite n="CommonRoomDoorRightClosed.png" x="20" y="346" w="16" h="54"/>
-    <sprite n="CommonRoomDoorRightOpen.png" x="20" y="402" w="16" h="54"/>
-    <sprite n="CommonRoomDoorUpClosed.png" x="137" y="283" w="33" h="36"/>
-    <sprite n="CommonRoomDoorUpOpen.png" x="132" y="384" w="33" h="36"/>
     <sprite n="CrackBlue.png" x="165" y="225" w="33" h="13"/>
     <sprite n="CrackYellow.png" x="213" y="223" w="33" h="13"/>
     <sprite n="CraftingMark.png" x="183" y="450" w="7" h="6"/>

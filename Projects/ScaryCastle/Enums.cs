@@ -88,7 +88,6 @@ namespace ScaryCastle
     public enum MessageKind { CannotPlaceItem, NotEnoughTickets }
 
     // PlaceholderTarget
-    // TODO: Quiza no sirve mas
     public enum PlaceholderTarget { Prop, Enemy, Any }
 
     // PlacementType

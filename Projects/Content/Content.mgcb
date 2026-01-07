@@ -44,7 +44,7 @@
 #begin Atlases/Arena1.xml
 /copy:Atlases/Arena1.xml
 
-#begin Atlases/CommonRoom.png
+#begin Atlases/Castle_Std_Full_Common_01.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -54,10 +54,10 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Atlases/CommonRoom.png
+/build:Atlases/Castle_Std_Full_Common_01.png
 
-#begin Atlases/CommonRoom.xml
-/copy:Atlases/CommonRoom.xml
+#begin Atlases/Castle_Std_Full_Common_01.xml
+/copy:Atlases/Castle_Std_Full_Common_01.xml
 
 #begin Atlases/Environment.png
 /importer:TextureImporter

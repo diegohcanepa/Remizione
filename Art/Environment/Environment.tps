@@ -1147,8 +1147,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">RideDoorDown-assets/CommonRoomDoorDownClosed.png</key>
-            <key type="filename">RideDoorDown-assets/CommonRoomDoorDownOpen.png</key>
+            <key type="filename">RideDoorDown-assets/CastleDoorDownClosed.png</key>
+            <key type="filename">RideDoorDown-assets/CastleDoorDownOpen.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1163,11 +1163,11 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">RideDoorLeft-assets/CommonRoomDoorLeftClosed.png</key>
-            <key type="filename">RideDoorLeft-assets/CommonRoomDoorLeftOpen.png</key>
+            <key type="filename">RideDoorLeft-assets/CastleDoorLeftClosed.png</key>
+            <key type="filename">RideDoorLeft-assets/CastleDoorLeftOpen.png</key>
             <key type="filename">RideDoorLeft-assets/RideDoorLeftLock.png</key>
-            <key type="filename">RideDoorRight-assets/CommonRoomDoorRightClosed.png</key>
-            <key type="filename">RideDoorRight-assets/CommonRoomDoorRightOpen.png</key>
+            <key type="filename">RideDoorRight-assets/CastleDoorRightClosed.png</key>
+            <key type="filename">RideDoorRight-assets/CastleDoorRightOpen.png</key>
             <key type="filename">RideDoorRight-assets/RideDoorRightLock.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1183,8 +1183,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">RideDoorUp-assets/CommonRoomDoorUpClosed.png</key>
-            <key type="filename">RideDoorUp-assets/CommonRoomDoorUpOpen.png</key>
+            <key type="filename">RideDoorUp-assets/CastleDoorUpClosed.png</key>
+            <key type="filename">RideDoorUp-assets/CastleDoorUpOpen.png</key>
             <key type="filename">RideDoorUp-assets/RideDoorUpLock.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

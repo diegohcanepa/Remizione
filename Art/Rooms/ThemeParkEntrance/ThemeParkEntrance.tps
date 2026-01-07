@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.9.0</string>
+        <string>7.11.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -173,8 +173,8 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Door-assets/Door01.png</key>
-            <key type="filename">Door-assets/Door02.png</key>
+            <key type="filename">Gate-assets/Gate01.png</key>
+            <key type="filename">Gate-assets/Gate02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -218,21 +218,6 @@
                 <rect>2,2,3,4</rect>
                 <key>scale9Paddings</key>
                 <rect>2,2,3,4</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ThemeParkEntrance-assets/Day.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>60,34,120,67</rect>
-                <key>scale9Paddings</key>
-                <rect>60,34,120,67</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -397,7 +382,7 @@
                 <array>
                     <filename>ThemeParkEntrance-assets</filename>
                     <filename>Raven-assets</filename>
-                    <filename>Door-assets</filename>
+                    <filename>Gate-assets</filename>
                 </array>
             </struct>
         </map>

@@ -226,9 +226,9 @@ namespace ScaryCastle
 
             // Hub, uses common room style
             if (Room is not RideRoom rideRoom)
-                prefix = $"{nameof(CommonRoom)}";
+                prefix = "Castle";
             else
-                prefix = $"{rideRoom.Config.Template}";
+                prefix = rideRoom.Config.Name.Split("_")[0];
 
             prefix = $"{prefix}Door{DoorDirection}";
 

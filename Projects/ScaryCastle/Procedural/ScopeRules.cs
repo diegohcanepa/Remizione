@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json;
 
 namespace ScaryCastle
 {
@@ -28,5 +29,16 @@ namespace ScaryCastle
 
         // DenyTags
         public Tags DenyTags { get; }
+
+        // FromJson
+        public static ScopeRules FromJson(JsonElement element)
+        {
+            var allowPools = Tags.FromJson(element, "allowPools");
+            var denyPools = Tags.FromJson(element, "denyPools");
+            var allowTags = Tags.FromJson(element, "allowTags");
+            var denyTags = Tags.FromJson(element, "denyTags");
+
+            return new ScopeRules(allowPools, denyPools, allowTags, denyTags);
+        }
     }
 }
