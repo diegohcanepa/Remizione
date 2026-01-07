@@ -28,7 +28,6 @@ namespace ScaryCastle
         private readonly UIInteractPrompt interactPrompt;
         private readonly InventoryScene inventoryScene;
         private Vector2? playerPosition;
-        private readonly List<Actor> players = [];
         private readonly RoomEditor? roomEditor;
         private readonly UseKeyItemScene useKeyItemScene;
 
@@ -47,7 +46,6 @@ namespace ScaryCastle
             : base(game, new ScaryCastlePersistenceModel(), ContentManagerExtension.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
-            this.Players = new(players);
             this.Inventory = new(this);
             this.Environment = new Environment(this);
             this.HUD = new HUD(this);
@@ -291,10 +289,6 @@ namespace ScaryCastle
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
                 playerPosition = DataConverter.ToVector2(playerPositionValue);
 
-            // AllowPlayerSelector
-            if (sessionNode.Attributes[nameof(AllowPlayerSelector)]?.Value is string allowPlayerSelector)
-                this.AllowPlayerSelector = XmlConvert.ToBoolean(allowPlayerSelector);
-
             // CompletedRuns
             if (sessionNode.Attributes[nameof(CompletedRuns)]?.Value is string completedRuns)
                 this.CompletedRuns = XmlConvert.ToInt32(completedRuns);
@@ -366,9 +360,6 @@ namespace ScaryCastle
                 }
             }
 
-            AddPlayer("Edmund");
-            AddPlayer("Berta");
-
             if (IsNewSession)
                 UnlockedPool.InitializeDefaults();
         }
@@ -417,9 +408,6 @@ namespace ScaryCastle
             if (playerPosition.HasValue)
                 output.WriteAttributeString(nameof(playerPosition), DataConverter.ToString(playerPosition.Value));
 
-            // AllowPlayerSelector
-            output.WriteAttributeString(nameof(AllowPlayerSelector), XmlConvert.ToString(AllowPlayerSelector));
-
             // CompletedRuns
             output.WriteAttributeString(nameof(CompletedRuns), XmlConvert.ToString(CompletedRuns));
 
@@ -442,28 +430,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // AddPlayer
-        public void AddPlayer(string actorName)
-        {
-            if (FindEntity<Actor>(actorName) is Actor actor)
-                AddPlayer(actor);
-        }
-
-        // AddPlayer
-        public void AddPlayer(Actor actor)
-        {
-            if (!players.Contains(actor))
-            {
-                players.Add(actor);
-                HUD.PlayerSelector.Invalidate();
-            }
-        }
-
-        // AllowPlayerSelector
-        [ScriptProperty]
-        public bool AllowPlayerSelector { get; set; }
-
-        // BeginRun
         [ScriptMethod]
         public void BeginRun()
         {
@@ -636,21 +602,12 @@ namespace ScaryCastle
             }
         }
 
-        // Players
-        public ReadOnlyCollection<Actor> Players { get; }
-
         // PreviousRoom
         [ScriptProperty]
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
 
         // Random
         public Random Random { get; private set; }
-
-        // RemovePlayer
-        public void RemovePlayer(Actor actor)
-        {
-            players.Remove(actor);
-        }
 
         // RideDoor
         [ScriptProperty]

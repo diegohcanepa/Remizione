@@ -31,9 +31,9 @@ namespace ScaryCastle
         }
 
         // GetCoords
-        private static (int, int) GetCoords(int x, int y, int dir)
+        private static (int, int) GetCoords(int x, int y, int direction)
         {
-            return dir switch
+            return direction switch
             {
                 0 => (x, y + 1),
                 1 => (x, y - 1),
@@ -44,9 +44,9 @@ namespace ScaryCastle
         }
 
         // Link
-        private static void Link(RoomGraph p, RoomGraph c, int dir)
+        private static void Link(RoomGraph p, RoomGraph c, int direction)
         {
-            switch (dir)
+            switch (direction)
             {
                 case 0: p.Up = c; c.Down = p; break;
                 case 1: p.Down = c; c.Up = p; break;

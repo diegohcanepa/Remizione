@@ -32,7 +32,6 @@ namespace ScaryCastle
             this.healthMeter = new(session.Game);
             this.Log = new(Game);
             this.Message = new(Game);
-            this.PlayerSelector = new(session);
             this.TargetMeter = new(Game);
 
             // Left hand slot
@@ -83,8 +82,6 @@ namespace ScaryCastle
         // DrawForAdventureMode
         private void DrawForAdventureMode(GameTime gameTime)
         {
-            if (session.AllowPlayerSelector)
-                PlayerSelector.Draw(gameTime);
         }
 
         #endregion
@@ -134,12 +131,7 @@ namespace ScaryCastle
             if (session.IsConsoleVisible)
                 return HandleInputResult.Unhandled;
 
-            if (session.GameplayMode == GameplayMode.Adventure)
-            {
-                if (session.AllowPlayerSelector)
-                    return PlayerSelector.HandleInput(gameTime);
-            }
-            else
+            if (session.GameplayMode == GameplayMode.Action)
             {
                 if (leftHandSlot.HandleInput(gameTime) == HandleInputResult.Handled)
                     return HandleInputResult.Handled;
@@ -163,14 +155,10 @@ namespace ScaryCastle
         // Message
         public HUDMessage Message { get; }
 
-        // PlayerSelector
-        public UIPlayerSelector PlayerSelector { get; }
-
         // Reset
         public void Reset()
         {
             healthMeter.Actor = session.Player;
-            PlayerSelector.Invalidate();
         }
 
         // SackSlot
