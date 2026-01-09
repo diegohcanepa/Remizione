@@ -577,17 +577,6 @@ namespace ScaryCastle
             Room?.RecountEnemies();
             DropLoot();
             DropTickets();
-
-            if (Config?.KillGoal > 0)
-            {
-                if (Session.KillCounter.Increment(DeclaredName) >= Config.KillGoal)
-                {
-                    for (var i = 0; i < Config.KillGoalReward.Count; i++)
-                    {
-                        Session.UnlockedPool.Unlock(Config.KillGoalReward[i]);
-                    }
-                }
-            }
         }
 
 #if DEBUG

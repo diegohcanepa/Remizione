@@ -20,28 +20,6 @@ namespace ScaryCastle
         public ThingConfig(JsonElement element)
             : base(element)
         {
-            // InteractionGoal
-            if (element.TryGetProperty("interactionGoal", out JsonElement interactionGoalElement))
-                InteractionGoal = interactionGoalElement.GetInt32();
-
-            // InteractionGoalReward
-            if (element.TryGetProperty("interactionGoalReward", out JsonElement interactionGoalRewardElement))
-            {
-                if (interactionGoalRewardElement.GetString() is string interactionGoalRewardValue)
-                    InteractionGoalReward = new(interactionGoalRewardValue.Split(','));
-            }
-
-            // KillGoal
-            if (element.TryGetProperty("killGoal", out JsonElement killGoalElement))
-                KillGoal = killGoalElement.GetInt32();
-
-            // KillGoalReward
-            if (element.TryGetProperty("killGoalReward", out JsonElement killGoalRewardElement))
-            {
-                if (killGoalRewardElement.GetString() is string killGoalRewardValue)
-                    KillGoalReward = new(killGoalRewardValue.Split(','));
-            }
-
             // MaxPerRoom
             MaxPerRoom = -1;
             if (element.TryGetProperty("maxPerRoom", out JsonElement maxPerRoomElement))
@@ -108,18 +86,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // InteractionGoal
-        public int InteractionGoal { get; }
-
-        // InteractionGoalReward
-        public ReadOnlyCollection<string> InteractionGoalReward { get; } = [];
-
-        // KillGoal
-        public int KillGoal { get; }
-
-        // KillGoalReward
-        public ReadOnlyCollection<string> KillGoalReward { get; } = [];
-
         // MaxPerRoom
         public int MaxPerRoom { get; }
 
@@ -148,9 +114,6 @@ namespace ScaryCastle
 
             if (session.FindDeclaredThing(Name) == null)
                 throw new InvalidOperationException($"[{Name}] has no script declaration.");
-
-            ValidateNameReferences(nameof(InteractionGoalReward), InteractionGoalReward);
-            ValidateNameReferences(nameof(InteractionGoalReward), KillGoalReward);
         }
     }
 }

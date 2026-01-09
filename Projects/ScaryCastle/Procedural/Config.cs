@@ -45,10 +45,6 @@ namespace ScaryCastle
             // Pools
             Pools = Tags.FromJson(element, "pools");
 
-            // Unlocked
-            if (element.TryGetProperty("unlocked", out JsonElement unlockedElement))
-                Unlocked = unlockedElement.GetBoolean();
-
             // Weight
             Weight = 1;
             if (element.TryGetProperty("weight", out JsonElement weightElement))
@@ -160,9 +156,6 @@ namespace ScaryCastle
         {
             return Name;
         }
-
-        // Unlocked
-        public bool Unlocked { get; }
 
         // Validate
         public virtual void Validate(GameSession session)

@@ -87,10 +87,6 @@ namespace ScaryCastle.Procedural
 
             foreach (var roomConfig in RoomConfig.All)
             {
-                // Test unlocked
-                if (!session.UnlockedPool.IsUnlocked(roomConfig.Name))
-                    continue;
-
                 // Run constraints
                 if (!roomConfig.PassesRunConstraints(session))
                     continue;

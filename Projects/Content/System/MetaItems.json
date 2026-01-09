@@ -6,14 +6,12 @@
 			"category": "Consumable",
 			"hp": "2",
 			"sound": "AppleBite",
-			"unlocked": true
 		},
 		{
 			"name": "Burger",
 			"category": "Consumable",
 			"hp": "8",
 			"sound": "AppleBite",
-			"unlocked": true
 		},
 		{
 			"name": "Coin",
@@ -48,7 +46,6 @@
 			"category": "Pickup",
 			"hp": "2",
 			"pickupSound": "PickupHeart",
-			"unlocked": true
 		},
 		{
 			"name": "Lantern",
@@ -64,7 +61,6 @@
 			"category": "Consumable",
 			"hp": "1",
 			"sound": "AppleBite",
-			"unlocked": true
 		},
 		{
 			"name": "RustyLockpick",

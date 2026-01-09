@@ -145,10 +145,6 @@
           "type": "string",
           "description": "Nombre del sonido principal al usar el item (se busca en Sound.FindNotNull)."
         },
-        "unlocked": {
-          "type": "boolean",
-          "description": "Indica si el item está desbloqueado."
-        },
         "weight": {
           "type": "number",
           "minimum": 0,

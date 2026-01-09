@@ -41,9 +41,6 @@ namespace ScaryCastle
 
             foreach (var metaItem in MetaItem.AllItems)
             {
-                if (!session.UnlockedPool.IsUnlocked(metaItem.Name))
-                    continue;
-
                 if (denyCategories.Contains(metaItem.Category))
                     continue;
 
@@ -89,10 +86,6 @@ namespace ScaryCastle
 
             foreach (var metaItem in MetaItem.AllItems)
             {
-                // Solo items que el jugador ya puede ver
-                if (!session.UnlockedPool.IsUnlocked(metaItem.Name))
-                    continue;
-
                 // Solo calidad baja para que sea un "item de relleno" seguro
                 if (metaItem.Quality > 1)
                     continue;

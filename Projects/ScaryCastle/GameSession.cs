@@ -85,7 +85,6 @@ namespace ScaryCastle
 
             LocalizationSource = LocalizationSource.Script;
 
-            this.UnlockedPool = new(this);
             this.inventoryScene = new InventoryScene(this);
             this.useKeyItemScene = new UseKeyItemScene(Inventory);
 
@@ -301,14 +300,6 @@ namespace ScaryCastle
             if (sessionNode.Attributes[nameof(Tickets)]?.Value is string tickets)
                 this.Tickets = XmlConvert.ToInt32(tickets);
 
-            // KillCounter
-            if (sessionNode.Attributes[nameof(KillCounter)]?.Value is string killCounterData)
-                KillCounter.Deserialize(killCounterData);
-
-            // MetaItemPool
-            if (sessionNode.Attributes[nameof(UnlockedPool)]?.Value is string metaItemPoolData)
-                UnlockedPool.Deserialize(metaItemPoolData);
-
             // Inventory
             if (sessionNode.Attributes[nameof(Inventory)]?.Value is string inventoryData)
                 Inventory.SetSerializationData(inventoryData);
@@ -359,9 +350,6 @@ namespace ScaryCastle
                         this.friendlyItems[thing.DeclaredName] = [.. metaItems];
                 }
             }
-
-            if (IsNewSession)
-                UnlockedPool.InitializeDefaults();
         }
 
         // OnUpdate
@@ -416,12 +404,6 @@ namespace ScaryCastle
 
             // Tickets
             output.WriteAttributeString(nameof(Tickets), XmlConvert.ToString(Tickets));
-
-            // KillCounter
-            output.WriteAttributeString(nameof(KillCounter), KillCounter.Serialize());
-
-            // MetaItemPool
-            output.WriteAttributeString(nameof(UnlockedPool), UnlockedPool.Serialize());
 
             // Inventory
             if (Inventory.GetSerializationData() is string inventoryData)
@@ -540,9 +522,6 @@ namespace ScaryCastle
         // KeyItemTarget
         [ScriptProperty]
         public Prop? KeyItemTarget { get; set; }
-
-        // KillCounter
-        public MultiCounter KillCounter { get; } = new();
 
         // KillEnemies
         [ScriptMethod]
@@ -671,8 +650,5 @@ namespace ScaryCastle
         // TotalRuns
         [ScriptProperty]
         public int TotalRuns => CompletedRuns + FailedRuns;
-
-        // UnlockedPool
-        public UnlockedPool UnlockedPool { get; }
     }
 }

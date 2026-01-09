@@ -9,28 +9,6 @@
     {
       "type": "object",
       "properties": {
-        "interactionGoal": {
-          "type": "integer",
-          "default": 0,
-          "minimum": 0,
-          "description": "Objetivo de interacciones para esta configuración."
-        },
-        "interactionGoalReward": {
-          "type": "string",
-          "default": "0",
-          "description": "Lista elementos que desbloquea el interaction goal (items, rooms, actors, props)."
-        },
-        "killGoal": {
-          "type": "integer",
-          "default": 0,
-          "minimum": 0,
-          "description": "Objetivo de muertes para esta configuración."
-        },
-        "killGoalReward": {
-          "type": "string",
-          "default": "0",
-          "description": "Lista elementos que desbloquea el kill goal (items, rooms, actors, props)."
-        },
         "requiresDeadEnd": {
           "type": "boolean",
           "description": "Solo puede spawnear en rooms que son callejones sin salida."

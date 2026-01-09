@@ -84,9 +84,6 @@ namespace ScaryCastle
                 if (config.RequiresDeadEnd && RoomGraph.GetConnectionCount() > 1)
                     continue;
 
-                if (!Session.UnlockedPool.IsUnlocked(config.Name))
-                    continue;
-
                 var thing = Session.FindDeclaredThing(config.Name) ?? throw new InvalidOperationException($"There is no static thing named '{config.Name}'. ");
 
                 // Is expected type?

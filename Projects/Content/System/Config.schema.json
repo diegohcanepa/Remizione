@@ -57,11 +57,6 @@
       "type": "string",
       "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
     },
-    "unlocked": {
-      "type": "boolean",
-      "default": false,
-      "description": "El elemento está desbloqueado por default."
-    },
     "weight": {
       "type": "number",
       "format": "float",

@@ -116,10 +116,6 @@ namespace ScaryCastle
             if (element.TryGetProperty("sound", out JsonElement soundElement) && soundElement.GetString() is string soundValue)
                 sound = Sound.Get(soundValue);
 
-            // Unlocked
-            if (element.TryGetProperty("unlocked", out JsonElement unlockedElement))
-                Unlocked = unlockedElement.GetBoolean();
-
             // Weight
             Weight = 1;
             if (element.TryGetProperty("weight", out JsonElement weightElement))
@@ -276,9 +272,6 @@ namespace ScaryCastle
         {
             return Name;
         }
-
-        // Unlocked
-        public bool Unlocked { get; }
 
         // Weight
         public float Weight { get; }
