@@ -63,7 +63,7 @@ namespace Adberration
             this.ScriptLibrary = new ScriptLibrary(this, scriptLibraryPath);
             this.ScriptEnvironment = new ScriptEnvironment(this);
             this.Entities = new NamedObjectReadOnlyCollection<Entity>(entityList);
-            this.Camera = new Camera(game, "Room") { CullingBoxScale = new Vector2(1.4f) };
+            this.Camera = new Camera(game, "Room") { CullingBoxScale = new Vector2(4) };
             this.PersistenceModel = persistenceModel;
             this.SaveFileName = saveFileNumber >= 0 ? SaveFile.EncodeName(saveFileNumber) : string.Empty;
         }

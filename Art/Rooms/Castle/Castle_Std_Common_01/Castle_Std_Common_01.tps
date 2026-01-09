@@ -124,7 +124,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../../Projects/Content/Atlases/Castle_Std_Full_Common_01.xml</filename>
+                <filename>../../../../Projects/Content/Atlases/Castle_Std_Common_01.xml</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -173,7 +173,11 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Castle_Std_Full_Common_01-assets/Castle_Std_Full_Common_01.png</key>
+            <key type="filename">Castle_Std_Common_01-assets/View1.png</key>
+            <key type="filename">Castle_Std_Common_01-assets/View2.png</key>
+            <key type="filename">Castle_Std_Common_01-assets/View3.png</key>
+            <key type="filename">Castle_Std_Common_01-assets/View4.png</key>
+            <key type="filename">Castle_Std_Common_01-assets/View5.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -195,7 +199,7 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>Castle_Std_Full_Common_01-assets</filename>
+                    <filename>Castle_Std_Common_01-assets</filename>
                 </array>
             </struct>
         </map>

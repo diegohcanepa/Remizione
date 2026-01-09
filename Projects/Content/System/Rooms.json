@@ -2,7 +2,7 @@
   "$schema": "./RoomData.schema.json",
   "data": [
     {
-      "name": "Castle_Std_Full_Common_01",
+      "name": "Castle_Std_Common_01",
       "unlocked": true,
       "doorUp": "126,41",
       "doorLeft": "21,80",
@@ -10,12 +10,12 @@
       "doorDown": "152,145",
       "placeholders": [
         {
-          "position": "49,44",
+          "position": "46,44",
           "placement": "Floor",
           "fillChance": 0.5
         },
         {
-          "position": "196,44",
+          "position": "193,44",
           "placement": "Floor",
           "fillChance": 0.5
         },
@@ -30,31 +30,104 @@
           "fillChance": 0.5
         },
         {
-          "position": "71,46",
+          "position": "68,46",
           "placement": "WallFrontBase",
           "fillChance": 0.5
         },
         {
-          "position": "177,46",
+          "position": "170,46",
           "placement": "WallFrontBase",
           "fillChance": 0.5
         },
         {
-          "position": "71,17",
+          "position": "69,17",
           "placement": "WallFrontHang",
           "fillChance": 0.5
         },
         {
-          "position": "177,17",
+          "position": "170,17",
           "placement": "WallFrontHang",
           "fillChance": 0.5
         }
       ],
-      "walkArea": "207,46;237,109;5,109;36,46;83,46;88,44;164,44;170,46",
+      "walkArea": "204,43;237,109;5,109;37,44;54,44;59,47;78,47;84,44;156,44;162,47;179,47;184,43",
       "walls": [
         "36,0;36,46;5,111;0,111;0,0",
         "206,0;206,46;237,111;240,111;240,0"
       ]
-    }
+    },
+    {
+      "name": "Castle_Std_Common_02",
+      "unlocked": true,
+      "doorUp": "150,54",
+      "doorLeft": "21,126",
+      "doorRight": "206,98",
+      "doorDown": "165,190",
+      "placeholders": [
+        {
+          "position": "67,92",
+          "placement": "Floor",
+          "fillChance": 0.5
+        },
+        {
+          "position": "115,56",
+          "placement": "Floor",
+          "fillChance": 0.5
+        },
+        {
+          "position": "188,56",
+          "placement": "Floor",
+          "fillChance": 0.5
+        },
+        {
+          "position": "227,140",
+          "placement": "Floor",
+          "fillChance": 0.5
+        }
+      ],
+      "walkArea": "238,157;4,156;36,91;93,91;111,56;192,57",
+      "walls": [
+        "36,0;36,90;4,155;0,155;0,0",
+        "109,0;110,59;93,92;89,88;89,0",
+        "191,0;191,54;240,159;240,0"
+      ]
+    },
+    {
+      "name": "Castle_Wide_Common_01",
+      "unlocked": true,
+      "doorUp": "126,41",
+      "doorLeft": "21,80",
+      "doorRight": "220,80",
+      "doorDown": "152,145",
+      "placeholders": [
+        {
+          "position": "67,92",
+          "placement": "Floor",
+          "fillChance": 0.5
+        },
+        {
+          "position": "115,56",
+          "placement": "Floor",
+          "fillChance": 0.5
+        },
+        {
+          "position": "188,56",
+          "placement": "Floor",
+          "fillChance": 0.5
+        },
+        {
+          "position": "227,140",
+          "placement": "Floor",
+          "fillChance": 0.5
+        }
+      ],
+      "walkArea": "258,58;269,58;295,110;7,110;31,57;44,57;50,45;251,45",
+      "walls": [
+        "29,0;29,55;0,113;0,0",
+        "47,0;47,42;41,54;40,0",
+        "253,0;253,42;259,54;260,0",
+        "273,0;273,58;300,110;300,0"
+      ]
+    }            
   ]
 }

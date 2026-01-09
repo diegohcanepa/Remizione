@@ -44,7 +44,7 @@
 #begin Atlases/Arena1.xml
 /copy:Atlases/Arena1.xml
 
-#begin Atlases/Castle_Std_Full_Common_01.png
+#begin Atlases/Castle_Std_Common_01.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -54,10 +54,40 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Atlases/Castle_Std_Full_Common_01.png
+/build:Atlases/Castle_Std_Common_01.png
 
-#begin Atlases/Castle_Std_Full_Common_01.xml
-/copy:Atlases/Castle_Std_Full_Common_01.xml
+#begin Atlases/Castle_Std_Common_01.xml
+/copy:Atlases/Castle_Std_Common_01.xml
+
+#begin Atlases/Castle_Std_Common_02.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Atlases/Castle_Std_Common_02.png
+
+#begin Atlases/Castle_Std_Common_02.xml
+/copy:Atlases/Castle_Std_Common_02.xml
+
+#begin Atlases/Castle_Wide_Common_01.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Atlases/Castle_Wide_Common_01.png
+
+#begin Atlases/Castle_Wide_Common_01.xml
+/copy:Atlases/Castle_Wide_Common_01.xml
 
 #begin Atlases/Environment.png
 /importer:TextureImporter

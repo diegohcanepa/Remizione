@@ -22,11 +22,12 @@ namespace ScaryCastle
             if (graph.Config is not RoomConfig config)
                 throw new InvalidOperationException();
 
-            AllowGlobalLight = true;
             Zoom = 1.1f;
 
             AtlasName = graph.Config?.Name ?? string.Empty;
             DefaultImageName = AtlasName;
+            LightMapColor = new(30, 30, 30);
+            LightingSystem = true;
 
             AddWalkArea("WalkArea", config.WalkArea);
 
@@ -207,6 +208,21 @@ namespace ScaryCastle
             }
 
             base.OnLoad();
+
+            var index = 0;
+            while (true)
+            {
+                if (Atlas?.FindImage($"View{index + 1}") == null)
+                    break;
+                else
+                    index++;
+            }
+
+            if (index > 0)
+            {
+                var animation = AddAnimation("View");
+                animation.AddFrame($"View{Random.Shared.Next(1, index + 1)}", 10000);
+            }
 
             foreach (var door in doors)
             {
