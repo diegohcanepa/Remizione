@@ -31,7 +31,6 @@ namespace ScaryCastle
         private Vector2? lastKnownPlayerPosition;
         private readonly List<TriggerArea> triggerAreas = [];
         private readonly List<WalkArea> walkAreas = [];
-        private readonly List<ReadOnlyPolygon> walls = [];
 
         #endregion
 
@@ -44,11 +43,9 @@ namespace ScaryCastle
             Utils.AssertName(name, this);
 
             this.Session = session;
-            this.GlobalLightSize = GameSettings.DefaultGlobalLightSize;
             this.Lights = new NamedObjectReadOnlyCollection<Light>(lights);
             this.TriggerAreas = new RoomAreaReadOnlyCollection<TriggerArea>(triggerAreas);
             this.WalkAreas = new RoomAreaReadOnlyCollection<WalkArea>(walkAreas);
-            this.Walls = new(walls);
 
             dustEmitter ??= new DustEmitter(session, 6, 1000, 35);
             fireflyEmitter ??= new FireflyEmitter(session, 1, 500, 20);
@@ -410,6 +407,8 @@ namespace ScaryCastle
         {
             base.OnLoad();
 
+            Session.Environment.GlobalLight.Scale = GlobalLightSize;
+
             if (DustParticleKind != DustParticleKind.None)
                 dustEmitter?.Activate();
 
@@ -521,12 +520,6 @@ namespace ScaryCastle
                 WalkArea = WalkAreas[0];
 
             return result;
-        }
-
-        // AddWall
-        protected void AddWall(string vertices)
-        {
-            walls.Add(new ReadOnlyPolygon(vertices));
         }
 
         // AllowFireflyParticles
@@ -667,8 +660,5 @@ namespace ScaryCastle
 
         // WalkAreas
         public RoomAreaReadOnlyCollection<WalkArea> WalkAreas { get; }
-
-        // Walls
-        public ReadOnlyCollection<ReadOnlyPolygon> Walls { get; }
     }
 }

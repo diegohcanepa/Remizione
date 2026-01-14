@@ -24,12 +24,6 @@ namespace ScaryCastle
 
         #region Protected members
 
-        // CanInteractCore
-        protected override bool CanInteractCore(Actor requester)
-        {
-            return PropState != PropState.Open && base.CanInteractCore(requester);
-        }
-
         // OnLoad
         protected override void OnLoad()
         {
@@ -76,5 +70,11 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // CanInteract
+        public override bool CanInteract(Actor requester)
+        {
+            return PropState != PropState.Open && base.CanInteract(requester);
+        }
     }
 }

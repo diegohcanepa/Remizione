@@ -5,7 +5,6 @@
 			"name": "LightningDamage",
             "damage": "1",
 			"hp": "2",
-            "knockback": "8,0",
 			"impactWord": "Zap",
 			"sound": "ShockZap"
 		},
@@ -13,13 +12,11 @@
 			"name": "PhysicalDamage",
             "damage": "1",
 			"impactWord": "AghRed",
-			"knockback": "8,0",
 			"sound": "AppleBite"
 		},		
 		{
 			"name": "SpearTrap",
             "damage": "2",
-			"knockback": "8,0",
 			"impactWord": "Kapow"
 		}		
 	]

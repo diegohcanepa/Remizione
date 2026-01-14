@@ -3,10 +3,12 @@
   "data": [
     {
       "name": "EnviousEye",
+      "placements": ["WalkArea"]
     },
     {
-      "name": "Zabul",
-      "maxSpawnAmount": 3
+      "name": "Zabul",   
+      "maxSpawnAmount": 3,
+      "placements": ["WalkArea"]
     }
   ]
 }

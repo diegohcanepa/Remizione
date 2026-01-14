@@ -52,7 +52,7 @@ namespace ScaryCastle
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Top,
                 Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2),
-                Scale = ScaleInfo.Text.Large,
+                Scale = ScaleInfo.Text.ExtraLarge,
                 Spacing = -5
             };
 

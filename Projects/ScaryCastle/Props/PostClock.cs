@@ -17,7 +17,6 @@ namespace ScaryCastle
             HitTestPolygon = TestPolygon.Hotspot;
             HurtSound = Sound.Find(SoundNames.ImpactA);
             MaxHP = 6;
-            PreventKnockback = true;
         }
 
         #region Protected members

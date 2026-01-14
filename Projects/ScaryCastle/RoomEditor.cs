@@ -447,8 +447,6 @@ namespace ScaryCastle
                 {
                     field = value;
 
-                    session.IsMouseVisible = IsActive;
-
                     if (field)
                     {
                         if (session.Player != null && session.Player.InCurrentRoom)

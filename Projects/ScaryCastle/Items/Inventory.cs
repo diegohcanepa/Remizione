@@ -34,14 +34,6 @@ namespace ScaryCastle
             {
                 item = new Item(this, metaItem) { Count = amount };
                 items.Add(item);
-
-                var category = item.MetaItem.Category;
-
-                if ((category == ItemCategory.RightHand && RightHand == null) ||
-                    (category == ItemCategory.LeftHand && LeftHand == null))
-                {
-                    Equip(item);
-                }
             }
             else if (!metaItem.IsUnique)
                 item.Count += amount;
@@ -53,9 +45,6 @@ namespace ScaryCastle
         public void Clear()
         {
             SelectedItem = null;
-            LeftHand = null;
-            RightHand = null;
-            Gadget = null;
             items.Clear();
         }
 
@@ -74,79 +63,6 @@ namespace ScaryCastle
         // Count
         public int Count => items.Count;
 
-        // Equip
-        public void Equip(Item item)
-        {
-            if (!item.MetaItem.IsEquipment)
-                return;
-
-            switch (item.MetaItem.Category)
-            {
-                // Left hand
-                case ItemCategory.LeftHand:
-                    LeftHand = item;
-                    break;
-
-                // Right hand
-                case ItemCategory.RightHand:
-                    RightHand = item;
-                    break;
-
-                // Gadget
-                case ItemCategory.Gadget:
-                    Gadget = item;
-                    break;
-            }
-        }
-
-        // EquipNext
-        public Item? EquipNext(ItemCategory category)
-        {
-            if (items.Count == 0)
-                return null;
-
-            var currentItem = FindEquippedItem(category);
-            var index = currentItem == null ? -1 : items.IndexOf(currentItem);
-
-            for (var i = 1; i <= items.Count; i++)
-            {
-                var nextIndex = (index + i) % items.Count;
-                var nextItem = items[nextIndex];
-
-                if (nextItem.MetaItem.Category == category)
-                {
-                    Equip(nextItem);
-                    return nextItem;
-                }
-            }
-
-            return null;
-        }
-
-        // EquipPrevious
-        public Item? EquipPrevious(ItemCategory category)
-        {
-            if (items.Count == 0)
-                return null;
-
-            var currentItem = FindEquippedItem(category);
-            var index = currentItem == null ? items.Count : items.IndexOf(currentItem);
-
-            for (var i = 1; i <= items.Count; i++)
-            {
-                var prevIndex = (index - i + items.Count) % items.Count;
-                var prevItem = items[prevIndex];
-
-                if (prevItem.MetaItem.Category == category)
-                {
-                    Equip(prevItem);
-                    return prevItem;
-                }
-            }
-
-            return null;
-        }
-
         // Find
         public Item? Find(string name)
         {
@@ -158,21 +74,6 @@ namespace ScaryCastle
 
             return null;
         }
-
-        // FindEquippedItem
-        public Item? FindEquippedItem(ItemCategory category)
-        {
-            return category switch
-            {
-                ItemCategory.RightHand => RightHand,
-                ItemCategory.LeftHand => LeftHand,
-                ItemCategory.Gadget => Gadget,
-                _ => null,
-            };
-        }
-
-        // Gadget
-        public Item? Gadget { get; private set; }
 
         // GetItem
         public Item GetItem(string name)
@@ -240,9 +141,6 @@ namespace ScaryCastle
         // IsEmpty
         public bool IsEmpty => items.Count == 0;
 
-        // LeftHand
-        public Item? LeftHand { get; private set; }
-
         // Remove
         public bool Remove(string name)
         {
@@ -258,15 +156,6 @@ namespace ScaryCastle
             var itemIndex = items.IndexOf(item);
             if (items.Remove(item))
             {
-                if (LeftHand == item)
-                    LeftHand = null;
-
-                if (RightHand == item)
-                    RightHand = null;
-
-                if (Gadget == item)
-                    Gadget = null;
-
                 if (SelectedItem == item)
                 {
                     if (itemIndex > 0)
@@ -277,16 +166,11 @@ namespace ScaryCastle
                         SelectedItem = null;
                 }
 
-                EquipNext(item.MetaItem.Category);
-
                 return true;
             }
             else
                 return false;
         }
-
-        // RightHand
-        public Item? RightHand { get; private set; }
 
         // Select
         public bool Select(string name)
@@ -410,30 +294,5 @@ namespace ScaryCastle
 
         // Session
         public GameSession Session { get; }
-
-        // Unequip
-        public void Unequip(Item item)
-        {
-            if (!item.MetaItem.IsEquipment)
-                return;
-
-            switch (item.MetaItem.Category)
-            {
-                // Gadgets
-                case ItemCategory.Gadget:
-                    Gadget = null;
-                    break;
-
-                // Left hand
-                case ItemCategory.LeftHand:
-                    LeftHand = null;
-                    break;
-
-                // Right hand
-                case ItemCategory.RightHand:
-                    RightHand = null;
-                    break;
-            }
-        }
     }
 }

@@ -36,9 +36,6 @@
             return result;
         }
 
-        // HasCoin
-        public bool HasCoin { get; set; }
-
         // HeartCount
         public int HeartCount { get; set; }
 

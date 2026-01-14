@@ -18,7 +18,6 @@ namespace ScaryCastle
 
             _ = new EnviousEyeDecideState(AIStateMachine);
             _ = new EnviousEyePatrolState(AIStateMachine);
-            _ = new EnviousEyeChargeState(AIStateMachine);
         }
 
         #region Protected members
@@ -30,9 +29,9 @@ namespace ScaryCastle
         }
 
         // OnTakeDamage
-        protected override void OnTakeDamage(GameThing attacker, int damage, DamageType damageType, Vector2 knockback)
+        protected override void OnTakeDamage(GameThing attacker, int damage, DamageType damageType)
         {
-            base.OnTakeDamage(attacker, damage, damageType, knockback);
+            base.OnTakeDamage(attacker, damage, damageType);
             AIStateMachine.ChangeState(AIStateName.Decide);
         }
 

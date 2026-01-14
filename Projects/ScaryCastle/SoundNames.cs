@@ -24,8 +24,8 @@
         internal const string LootCoin = nameof(LootCoin);
         internal const string LootSack = nameof(LootSack);
         internal const string MetalPropBreak = nameof(MetalPropBreak);
+        internal const string PickupCoin = nameof(PickupCoin);
         internal const string PickupGeneric = nameof(PickupGeneric);
-        internal const string PickupTicket = nameof(PickupTicket);
         internal const string PotteryBreak = nameof(PotteryBreak);
         internal const string PowerRestored = nameof(PowerRestored);
         internal const string Redemption = nameof(Redemption);

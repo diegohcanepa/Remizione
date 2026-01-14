@@ -1,30 +1,29 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Globalization;
 
 namespace ScaryCastle
 {
     /// <summary>
-    /// UIInteractPrompt
+    /// UISentence
     /// </summary>
-    public sealed class UIInteractPrompt : GameObject
+    public sealed class UISentence : GameObject
     {
-        private readonly UIButton button;
+        private readonly TextSprite sentence;
         private readonly GameSession session;
         private GameThing? target;
 
         // Constructor
-        public UIInteractPrompt(GameSession session)
+        public UISentence(GameSession session)
             : base(session.Game)
         {
             this.session = session;
 
-            // Button
-            this.button = new(Game, InputBindings.Interact)
+            this.sentence = new(Game, Fonts.CommonOutline)
             {
+                Color = ColorPalette.Text.OrangeLight,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -4)
+                Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -6),
+                Scale = ScaleInfo.Text.ExtraGiant
             };
         }
 
@@ -34,7 +33,11 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             if (session.IsCurrentScene && target != null)
-                button.Draw(gameTime);
+            {
+                Game.SpriteBatch.Begin(Game.Camera);
+                sentence.Draw(gameTime);
+                Game.SpriteBatch.End();
+            }
         }
 
         // OnUpdate
@@ -45,17 +48,16 @@ namespace ScaryCastle
                 if (currentTarget != target)
                 {
                     target = currentTarget;
-                    button.Text = currentTarget.GetInteractPrompt() ?? currentTarget.LocalizedDisplayName;
-                    //Sound.Play(SoundNames.UIPrompt);
+                    sentence.Text = currentTarget.GetInteractPrompt() ?? currentTarget.LocalizedDisplayName;
                 }
             }
             else
             {
-                button.Text = null;
+                sentence.Text = null;
                 target = null;
             }
 
-            button.Update(gameTime);
+            sentence.Update(gameTime);
         }
 
         #endregion

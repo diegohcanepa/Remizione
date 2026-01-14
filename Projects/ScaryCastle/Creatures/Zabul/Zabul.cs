@@ -18,18 +18,13 @@ namespace ScaryCastle
             FloatingForce = 1;
             ShadowSpotSize = 5;
 
-            PerceptionSensor.ViewDistance = 200;
-            PerceptionSensor.ViewAngle = 360;
-
-            _ = new ChargeState(AIStateMachine);
             _ = new ZabulDecideState(AIStateMachine);
         }
 
         // OnStart
         protected override void OnStart()
         {
-            PerceptionSensor.RefreshRate = Random.Shared.Next(PerceptionSensor.DefaultRefreshRate / 2, PerceptionSensor.DefaultRefreshRate + 1);
-            AIStateMachine.ChangeState(AIStateName.Decide);
+            //AIStateMachine.ChangeState(AIStateName.Decide);
         }
     }
 }

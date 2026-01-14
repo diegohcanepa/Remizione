@@ -34,6 +34,10 @@ namespace ScaryCastle.Procedural
                 candidates.Clear();
                 foreach (var config in configList)
                 {
+                    // Match room type?
+                    if (config.RoomType != room.RoomType)
+                        continue;
+
                     // Match difficulty
                     if (config.Difficulty != targetDiff)
                         continue;
@@ -76,7 +80,7 @@ namespace ScaryCastle.Procedural
                     room.Config = chosenConfig;
                 }
                 else
-                    throw new InvalidOperationException("Failed to apply room config.");
+                    throw new InvalidOperationException("Failed to apply room config. No match found.");
             }
         }
 
@@ -88,7 +92,7 @@ namespace ScaryCastle.Procedural
             foreach (var roomConfig in RoomConfig.All)
             {
                 // Run constraints
-                if (!roomConfig.PassesRunConstraints(session))
+                if (!roomConfig.PassesFloorConstraints(session))
                     continue;
 
                 // Pools

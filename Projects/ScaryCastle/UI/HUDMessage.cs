@@ -64,7 +64,7 @@ namespace ScaryCastle
             messageText.Text = Localization.GetValue(message);
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 200);
 
-            if (message == MessageKind.NotEnoughTickets)
+            if (message == MessageKind.NotEnoughCoins)
             {
                 messageText.Color = ColorPalette.Text.Orange;
                 Sound.Play(SoundNames.Error);

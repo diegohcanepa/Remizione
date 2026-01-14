@@ -54,15 +54,6 @@ namespace ScaryCastle
 
         #region Private members
 
-        // BackToHub
-        private void BackToHub(RideDoor hubDoor)
-        {
-            if (Session.FindEntity<Hub>("Hub") is not Hub hubRoom)
-                return;
-
-            ConnectCore(hubRoom, hubDoor.BoundingBox.GetPoint(RectanglePoint.Bottom));
-        }
-
         // Close
         private bool Close()
         {
@@ -138,15 +129,6 @@ namespace ScaryCastle
 
         #region Protected members
 
-        // CanInteractCore
-        protected override bool CanInteractCore(Actor requester)
-        {
-            if (SwitchStateCooldown > 0 || Room?.EnemyCount > 0)
-                return false;
-            else
-                return base.CanInteractCore(requester);
-        }
-
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
@@ -188,6 +170,15 @@ namespace ScaryCastle
 
         #endregion
 
+        // CanInteract
+        public override bool CanInteract(Actor requester)
+        {
+            if (SwitchStateCooldown > 0 || Room?.EnemyCount > 0)
+                return false;
+            else
+                return base.CanInteract(requester);
+        }
+
         // CloseSound
         [ScriptProperty]
         public Sound? CloseSound { get; set; }
@@ -202,10 +193,6 @@ namespace ScaryCastle
                 var pos = TargetRoom.GetPlayerPosition(roomIndex, out RideDoor? door);
                 door?.PropState = PropState.Open;
                 ConnectCore(TargetRoom, pos);
-            }
-            else if (Room is RideRoom rideRoom && rideRoom.HubDoor != null)
-            {
-                BackToHub(rideRoom.HubDoor);
             }
         }
 
@@ -222,21 +209,17 @@ namespace ScaryCastle
         {
             Sprite.ClearAnimations();
 
-            string prefix;
+            if (Room is RideRoom rideRoom)
+            {
+                var prefix = rideRoom.Config.Name.Split("_")[0];
+                prefix = $"{prefix}Door{DoorDirection}";
 
-            // Hub, uses common room style
-            if (Room is not RideRoom rideRoom)
-                prefix = "Castle";
-            else
-                prefix = rideRoom.Config.Name.Split("_")[0];
+                var animation = AddAnimation("Closed");
+                animation.AddFrame(prefix + animation.Name, 1000);
 
-            prefix = $"{prefix}Door{DoorDirection}";
-
-            var animation = AddAnimation("Closed");
-            animation.AddFrame(prefix + animation.Name, 1000);
-
-            animation = AddAnimation("Open");
-            animation.AddFrame(prefix + animation.Name, 1000);
+                animation = AddAnimation("Open");
+                animation.AddFrame(prefix + animation.Name, 1000);
+            }
         }
 
         // SwitchStateCooldown

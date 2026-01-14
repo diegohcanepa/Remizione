@@ -32,6 +32,9 @@ namespace ScaryCastle
             ItemGridSlotSelected = this[nameof(ItemGridSlotSelected)];
             MessageContainer = this[nameof(MessageContainer)];
             MouseCursorArrow = this[nameof(MouseCursorArrow)];
+            MouseCursorCross = this[nameof(MouseCursorCross)];
+            MouseCursorCrossOn = this[nameof(MouseCursorCrossOn)];
+            MouseCursorWait = this[nameof(MouseCursorWait)];
             PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
             PointingHand = this[nameof(PointingHand)];
@@ -42,9 +45,7 @@ namespace ScaryCastle
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
-            TicketIcon = this[nameof(TicketIcon)];
-            TicketPriceIcon = this[nameof(TicketPriceIcon)];
-            TicketSlot = this[nameof(TicketSlot)];
+            CoinSlot = this[nameof(CoinSlot)];
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
@@ -57,6 +58,9 @@ namespace ScaryCastle
 
         // CoinIcon
         public AtlasImage CoinIcon { get; }
+
+        // CoinSlot
+        public AtlasImage CoinSlot { get; }
 
         // ContextMenuOptionSelector
         public AtlasImage ContextMenuOptionSelector { get; }
@@ -106,6 +110,15 @@ namespace ScaryCastle
         // MouseCursorArrow
         public AtlasImage MouseCursorArrow { get; }
 
+        // MouseCursorCross
+        public AtlasImage MouseCursorCross { get; }
+
+        // MouseCursorCrossOn
+        public AtlasImage MouseCursorCrossOn { get; }
+
+        // MouseCursorWait
+        public AtlasImage MouseCursorWait { get; }
+
         // ItemGridSlot
         public AtlasImage ItemGridSlot { get; }
 
@@ -141,15 +154,6 @@ namespace ScaryCastle
 
         // SpeechBubblePipe
         public AtlasImage SpeechBubblePipe { get; }
-
-        // TicketIcon
-        public AtlasImage TicketIcon { get; }
-
-        // TicketpriceIcon
-        public AtlasImage TicketPriceIcon { get; }
-
-        // TicketSlot
-        public AtlasImage TicketSlot { get; }
 
         // UIButtonContainerEdge
         public AtlasImage UIButtonContainerEdge { get; }

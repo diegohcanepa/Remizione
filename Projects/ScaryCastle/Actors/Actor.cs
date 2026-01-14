@@ -25,13 +25,12 @@ namespace ScaryCastle
         private readonly FloatTween headTween = new();
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
+        private GameThing? pendingInteractiveTarget;
         private readonly List<Vector2> pendingPathNodes = [];
         private readonly GameSession session;
-        private readonly ShadowSpot shadowSpot;
         private SpeechBubble? speechBubble;
         private readonly ActorStandState standState;
         private int suspendInteractionCooldown;
-        private readonly ActorThrowItemState throwItemState;
 
         #endregion
 
@@ -47,8 +46,6 @@ namespace ScaryCastle
             this.DisplayNameKey = $"Actor.{DeclaredName}";
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
-            this.shadowSpot = new ShadowSpot(this);
-            this.PerceptionSensor = new PerceptionSensor(this);
 
             headSprite = new AnimatedSprite(Game)
             {
@@ -77,9 +74,6 @@ namespace ScaryCastle
             this.StateMachine.RegisterState(new ActorHurtState(this));
             this.StateMachine.RegisterState(new ActorMoveState(this));
             this.StateMachine.RegisterState(closeAttackState);
-
-            throwItemState = new ActorThrowItemState(this);
-            this.StateMachine.RegisterState(throwItemState);
 
             consumeState = new ActorConsumeState(this);
             this.StateMachine.RegisterState(consumeState);
@@ -180,16 +174,33 @@ namespace ScaryCastle
             if (session.IsAwaiting || SpeechBubble.ModalInstance != null || !session.IsCurrentScene || Room == null)
                 return null;
 
+            var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera);
+
             for (int i = Room.CulledThings.Count - 1; i >= 0; i--)
             {
                 if (Room.CulledThings[i] == this)
                     continue;
 
-                if (Room.CulledThings[i] is GameThing target && target.CanInteract(this))
+                if (Room.CulledThings[i] is GameThing target && target.CanInteract(this) && target.RuntimeHotspot.Contains(mousePos))
                     return target;
             }
 
             return null;
+        }
+
+        // HandlePendingInteraction
+        private void HandlePendingInteraction()
+        {
+            if (!IsPlayer)
+                return;
+
+            if (pendingInteractiveTarget != null)
+            {
+                FaceTo(pendingInteractiveTarget);
+                Interact(pendingInteractiveTarget);
+            }
+
+            pendingInteractiveTarget = null;
         }
 
         // MoveToNextPathNode
@@ -197,13 +208,6 @@ namespace ScaryCastle
         {
             base.MoveTo(pendingPathNodes[0]);
             pendingPathNodes.RemoveAt(0);
-        }
-
-        // PlaceItem
-        private void PlaceItem(Item item)
-        {
-            if (Session.ObjectPools.FindPlacedItem(item.Name) is PlacedItem placedItem)
-                placedItem.Place(this, item, Position);
         }
 
         // ResetHeadTween
@@ -222,14 +226,6 @@ namespace ScaryCastle
                 if (headSprite.Animations.Find(StateMachine.CurrentState.Name) != null)
                     headSprite.Player.Play(StateMachine.CurrentState.Name);
             }
-        }
-
-        // ThrowItem
-        private void ThrowItem(Item item)
-        {
-            //Stand();
-            throwItemState.Item = item;
-            StateMachine.ChangeState(throwItemState.Name);
         }
 
         // UpdateDirection
@@ -366,12 +362,6 @@ namespace ScaryCastle
             footstepEffect?.Draw(gameTime);
         }
 
-        // OnDrawShadow
-        protected override void OnDrawShadow(GameTime gameTime)
-        {
-            shadowSpot.Draw(gameTime);
-        }
-
         // OnLoad
         protected override void OnLoad()
         {
@@ -391,6 +381,7 @@ namespace ScaryCastle
             {
                 StopMoving();
                 IsFollowingPath = false;
+                HandlePendingInteraction();
             }
         }
 
@@ -420,7 +411,7 @@ namespace ScaryCastle
         }
 
         // OnTakeDamage
-        protected override void OnTakeDamage(GameThing attacker, int damage, DamageType damageType, Vector2 knockback)
+        protected override void OnTakeDamage(GameThing attacker, int damage, DamageType damageType)
         {
             if (IsPlayer)
             {
@@ -431,14 +422,13 @@ namespace ScaryCastle
 
                 for (var i = 0; i < fullHearts; i++)
                 {
-                    Session.ObjectPools.FloatingHearts.Get()?.Show(GetFloatingTextPosition(knockback), false);
+                    Session.ObjectPools.FloatingHearts.Get()?.Show(GetFloatingTextPosition(), false);
                 }
 
                 if (hasHalfHeart)
-                    Session.ObjectPools.FloatingHearts.Get()?.Show(GetFloatingTextPosition(knockback), true);
+                    Session.ObjectPools.FloatingHearts.Get()?.Show(GetFloatingTextPosition(), true);
             }
 
-            LastKnownAttacker = attacker;
             FaceTo(attacker);
 
             /*
@@ -454,7 +444,6 @@ namespace ScaryCastle
         protected override void OnUnload()
         {
             InteractiveTarget = null;
-            LastKnownAttacker = null;
             base.OnUnload();
         }
 
@@ -477,17 +466,12 @@ namespace ScaryCastle
             if (AnimationSettings.DetachedHead)
                 headSprite.Update(gameTime);
 
-            shadowSpot.Update(gameTime);
             speechBubble?.Update(gameTime);
             moveVerticalTween.Update(gameTime);
             moveBalancingTween.Update(gameTime);
             UpdateDirection();
             UpdateFootstep();
             footstepEffect?.Update(gameTime);
-
-            if (AIStateMachine.CurrentState != null)
-                PerceptionSensor.Update(gameTime);
-
             AIStateMachine.Update(gameTime);
             StateMachine.Update(gameTime);
         }
@@ -520,6 +504,22 @@ namespace ScaryCastle
                 animateState.Preserve = preserve;
                 StateMachine.ChangeState(animateState.Name, true);
             }
+
+            return result;
+        }
+
+        // ApproachAndInteract
+        public bool ApproachAndInteract(GameThing target)
+        {
+            if (!IsPlayer)
+                return false;
+
+            var destination = target.IsWalkAreaHole ? (target as IHoleArea).Polygon.GetClosestPointOnEdge(Position) : target.GetApproachPosition(this, true);
+            var result = MoveTo(destination);
+            this.pendingInteractiveTarget = target;
+
+            if (!result)
+                HandlePendingInteraction();
 
             return result;
         }
@@ -591,10 +591,6 @@ namespace ScaryCastle
             }
         }
 
-        // HotspotDetectorArea
-        [ScriptProperty]
-        public Rectangle HotspotDetectorArea { get; set; }
-
         // Interact
         public bool Interact(GameThing? target = null)
         {
@@ -637,12 +633,11 @@ namespace ScaryCastle
         // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;
 
-        // LastKnownAttacker
-        public GameThing? LastKnownAttacker { get; set; }
-
         // MoveTo
         public override bool MoveTo(Vector2 destination)
         {
+            pendingInteractiveTarget = null;
+
             // No path needed
             if (WalkArea == null || IgnoreWalkArea)
                 return base.MoveTo(destination);
@@ -681,9 +676,6 @@ namespace ScaryCastle
             return true;
         }
 
-        // PerceptionSensor
-        public PerceptionSensor PerceptionSensor { get; }
-
         // PlayerNumber
         [ScriptProperty]
         public PlayerNumber PlayerNumber
@@ -707,22 +699,6 @@ namespace ScaryCastle
         {
             speechBubble ??= new SpeechBubble(this);
             speechBubble.Show(LocalizedDisplayName, text, awaitInput);
-        }
-
-        // ShadowOffset
-        [ScriptProperty]
-        public Vector2 ShadowOffset
-        {
-            get => shadowSpot.Offset;
-            set => shadowSpot.Offset = value;
-        }
-
-        // ShadowSpotSize
-        [ScriptProperty]
-        public int ShadowSpotSize
-        {
-            get => shadowSpot.Size;
-            set => shadowSpot.Size = value;
         }
 
         // ShowFloatingText
@@ -768,31 +744,6 @@ namespace ScaryCastle
             suspendInteractionCooldown = duration;
             InteractiveTarget = null;
         }
-
-        // UseEquippedItem
-        public void UseEquippedItem(ItemCategory category)
-        {
-            if (session.Inventory.FindEquippedItem(category) is not Item item)
-                return;
-
-            if (item.Count <= 0)
-                return;
-
-            if (!CanChangeState)
-                return;
-
-            // Place
-            if (item.MetaItem.Action == ItemAction.Place)
-                PlaceItem(item);
-
-            // Throwable
-            else if (item.MetaItem.Action == ItemAction.Throw)
-                ThrowItem(item);
-        }
-
-        // WhooshSound
-        [ScriptProperty]
-        public Sound? WhooshSound { get; set; }
 
         /// <summary>
         /// ActorStateMachine

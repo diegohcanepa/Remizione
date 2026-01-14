@@ -115,11 +115,11 @@ namespace ScaryCastle
             };
         }
 
-        // RollTickets
-        internal static int RollTickets(GameSession session, RoomConfig roomConfig, ThingConfig entityConfig)
+        // RollCoins
+        internal static int RollCoins(GameSession session, RoomConfig roomConfig, ThingConfig entityConfig)
         {
             // 1. CHANCE BASE (Depende de la entidad y la suerte del pasivo)
-            Ratio ticketChance = entityConfig.Difficulty switch
+            Ratio coinChance = entityConfig.Difficulty switch
             {
                 Difficulty.Easy => 0.20f,
                 Difficulty.Normal => 0.40f,
@@ -127,10 +127,13 @@ namespace ScaryCastle
                 _ => 0.15f
             };
 
-            if (session.Inventory.Gadget is Item gadget)
-                ticketChance += gadget.MetaItem.Effect.LuckBonus;
+            // TODO: Reimplement
+            /*
+            if (session.Inventory.PassiveItem is Item gadget)
+                coinChance += gadget.MetaItem.Effect.LuckBonus;
+            */
 
-            if (!ticketChance.Roll())
+            if (!coinChance.Roll())
                 return 0;
 
             // 2. CANTIDAD BASE (Basada en la dificultad intrínseca del enemigo)
@@ -144,7 +147,7 @@ namespace ScaryCastle
 
             // 3. EL FACTOR ROOM (AQUÍ usamos RoomConfig)
             // Si la habitación es 'Hard', hay una chance bizarra de duplicar el drop
-            // Esto hace que en zonas avanzadas sea más fácil llegar a los 15 tickets
+            // Esto hace que en zonas avanzadas sea más fácil llegar a los 15 coins
             if (roomConfig.Difficulty == Difficulty.Hard && session.Random.NextDouble() < 0.4f)
             {
                 amount += 1; // Bonus por estar en una zona peligrosa

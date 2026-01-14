@@ -17,7 +17,7 @@ namespace ScaryCastle
         public const string ContentRootDirectory = "Content";
 
         // DefaultGlobalLightSize
-        public static readonly Vector2 DefaultGlobalLightSize = new(1.3f);
+        public static readonly Vector2 DefaultGlobalLightSize = new(1.5f, 2);
 
         // DefaultTransitionDuration
         public const int DefaultTransitionDuration = 500;

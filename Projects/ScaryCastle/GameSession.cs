@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Procedural;
 using ScaryCastle.Scripting;
@@ -25,10 +26,10 @@ namespace ScaryCastle
         private readonly Dictionary<string, GameThing> declaredThingsDict = [];
         private readonly EchoScene echoScene;
         private readonly Dictionary<string, MetaItem[]> friendlyItems = [];
-        private readonly UIInteractPrompt interactPrompt;
         private readonly InventoryScene inventoryScene;
         private Vector2? playerPosition;
         private readonly RoomEditor? roomEditor;
+        private readonly UISentence sentence;
         private readonly UseKeyItemScene useKeyItemScene;
 
         #endregion
@@ -50,7 +51,6 @@ namespace ScaryCastle
             this.Environment = new Environment(this);
             this.HUD = new HUD(this);
             this.DeclaredThings = new(declaredThings);
-            this.IsMouseVisible = false;
             this.Random = new Random(Seed);
 
             ObjectPools = new ObjectPools(this);
@@ -87,9 +87,7 @@ namespace ScaryCastle
 
             this.inventoryScene = new InventoryScene(this);
             this.useKeyItemScene = new UseKeyItemScene(Inventory);
-
-            // Prompt
-            this.interactPrompt = new(this);
+            this.sentence = new(this);
         }
 
         #endregion
@@ -107,12 +105,32 @@ namespace ScaryCastle
 
             IsHUDVisible = false;
             Inventory.Clear();
-            Tickets = 0;
+            Coins = 0;
             Player?.Reheal();
             RunManager.Clear();
             CleanUpRuntimeEntities();
             Seed = 0;
             Save();
+        }
+
+        // GetRoomCountForFloor
+        private int GetRoomCount(int floorIndex)
+        {
+            const int MAX_FLOORS = 666;
+            const int MIN_ROOMS = 5;
+            const int MAX_ROOMS = 60;
+            const float CURVE = 1.5f; // Controla qué tan rápido crece el mapa
+
+            // f entre 0.0 y 1.0
+            float f = (float)(floorIndex - 1) / (MAX_FLOORS - 1);
+
+            // Aplicar la potencia para crecimiento tardío
+            float curvedProgress = (float)Math.Pow(f, CURVE);
+
+            // Interpolación lineal
+            int count = (int)Math.Round(MIN_ROOMS + (MAX_ROOMS - MIN_ROOMS) * curvedProgress);
+
+            return count;
         }
 
         // RegisterAotTypes
@@ -141,6 +159,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(SaintPeregrine));
             AotTypeRegistry.Register(typeof(SpearTrap));
             AotTypeRegistry.Register(typeof(Tombstone));
+            AotTypeRegistry.Register(typeof(Torch));
             AotTypeRegistry.Register(typeof(Trunk));
             AotTypeRegistry.Register(typeof(WaterPuddle));
 
@@ -178,6 +197,17 @@ namespace ScaryCastle
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));
         }
 
+        // UpdateMouseCursor
+        private void UpdateMouseCursor()
+        {
+            if (MouseCursor.Instance.State != MouseCursorState.CustomImage)
+                MouseCursor.Instance.State = Player?.InteractiveTarget == null ? MouseCursorState.Cross : MouseCursorState.CrossOn;
+
+            // No active player
+            if (IsAwaiting && Player?.HasSpeechBubble == false)
+                MouseCursor.Instance.State = MouseCursorState.Wait;
+        }
+
         #endregion
 
         #region Protected members
@@ -208,14 +238,16 @@ namespace ScaryCastle
                 HUD.Draw(gameTime);
 
             if (!IsAwaiting)
-                interactPrompt.Draw(gameTime);
+                sentence.Draw(gameTime);
 
+            /*
             if (IsPaused)
             {
                 Game.SpriteBatch.Begin(Game.Camera);
                 Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade);
                 Game.SpriteBatch.End();
             }
+            */
 
             console?.Draw(gameTime);
             roomEditor?.Draw(gameTime);
@@ -280,25 +312,21 @@ namespace ScaryCastle
             if (sessionNode == null || sessionNode.Attributes == null)
                 throw new InvalidOperationException("Session node attributes not found");
 
+            // FloorIndex
+            if (sessionNode.Attributes[nameof(FloorIndex)]?.Value is string floorIndex)
+                FloorIndex = XmlConvert.ToInt32(floorIndex);
+
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
                 Player = FindEntity<Actor>(player);
 
             // Player position
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
-                playerPosition = DataConverter.ToVector2(playerPositionValue);
+                playerPosition = DataConvert.ToVector2(playerPositionValue);
 
-            // CompletedRuns
-            if (sessionNode.Attributes[nameof(CompletedRuns)]?.Value is string completedRuns)
-                this.CompletedRuns = XmlConvert.ToInt32(completedRuns);
-
-            // FailedRuns
-            if (sessionNode.Attributes[nameof(FailedRuns)]?.Value is string failedRuns)
-                this.FailedRuns = XmlConvert.ToInt32(failedRuns);
-
-            // Tickets
-            if (sessionNode.Attributes[nameof(Tickets)]?.Value is string tickets)
-                this.Tickets = XmlConvert.ToInt32(tickets);
+            // Coins
+            if (sessionNode.Attributes[nameof(Coins)]?.Value is string coins)
+                this.Coins = XmlConvert.ToInt32(coins);
 
             // Inventory
             if (sessionNode.Attributes[nameof(Inventory)]?.Value is string inventoryData)
@@ -357,6 +385,9 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
+            if (IsCurrentScene)
+                UpdateMouseCursor();
+
             if (console != null)
             {
                 if (console.IsActive && roomEditor != null)
@@ -366,7 +397,7 @@ namespace ScaryCastle
             }
 
             Environment.Update(gameTime);
-            interactPrompt.Update(gameTime);
+            sentence.Update(gameTime);
 
             if (GameplayMode == GameplayMode.Action && IsHUDVisible)
                 HUD.Update(gameTime);
@@ -377,10 +408,7 @@ namespace ScaryCastle
                 if (!IsAwaiting)
                 {
                     if (Player?.IsDead == true)
-                    {
-                        FailedRuns++;
                         AwaitRoutine(RoutineNames.GameOver);
-                    }
                 }
             }
         }
@@ -388,22 +416,18 @@ namespace ScaryCastle
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
+            output.WriteAttributeString(nameof(FloorIndex), XmlConvert.ToString(FloorIndex));
+
             // Player
             if (Player != null)
                 output.WriteAttributeString(nameof(Player), Player.Name);
 
             // PlayerPosition
             if (playerPosition.HasValue)
-                output.WriteAttributeString(nameof(playerPosition), DataConverter.ToString(playerPosition.Value));
+                output.WriteAttributeString(nameof(playerPosition), DataConvert.ToString(playerPosition.Value));
 
-            // CompletedRuns
-            output.WriteAttributeString(nameof(CompletedRuns), XmlConvert.ToString(CompletedRuns));
-
-            // FailedRuns
-            output.WriteAttributeString(nameof(FailedRuns), XmlConvert.ToString(FailedRuns));
-
-            // Tickets
-            output.WriteAttributeString(nameof(Tickets), XmlConvert.ToString(Tickets));
+            // Coins
+            output.WriteAttributeString(nameof(Coins), XmlConvert.ToString(Coins));
 
             // Inventory
             if (Inventory.GetSerializationData() is string inventoryData)
@@ -421,16 +445,25 @@ namespace ScaryCastle
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            RunManager.Generate(this, Tags.EmptyList, 12);
+            var roomCount = GetRoomCount(FloorIndex);
 
-            Player?.Reheal();
+            RunManager.Generate(this, Tags.EmptyList, roomCount);
+
+            if (Player != null && RunManager.Rooms[0].RideRoom is RideRoom rideRoom)
+            {
+                IsHUDVisible = true;
+                rideRoom.Children.Add(Player);
+                if (rideRoom.WalkArea != null)
+                    Player.Position = rideRoom.WalkArea.Polygon.BoundingRectangleF.Center;
+                Camera.FollowTarget(Player, true);
+                EnterRoom(rideRoom);
+            }
         }
 
         // CancelRun
         [ScriptMethod]
         public void CancelRun()
         {
-            FailedRuns++;
             EndRun();
         }
 
@@ -441,6 +474,7 @@ namespace ScaryCastle
                 return false;
 
             Player.Stand();
+            
             if (OutcomeTarget is Prop prop)
             {
                 KeyItemTarget = prop;
@@ -452,17 +486,16 @@ namespace ScaryCastle
             return false;
         }
 
+        // Coins
+        [ScriptProperty]
+        public int Coins { get; set; }
+
         // CompleteRun
         [ScriptMethod]
         public void CompleteRun()
         {
-            CompletedRuns++;
             EndRun();
         }
-
-        // CompletedRuns
-        [ScriptProperty]
-        public int CompletedRuns { get; set; }
 
         // DeclaredThings
         public NamedObjectReadOnlyCollection<GameThing> DeclaredThings { get; }
@@ -474,15 +507,15 @@ namespace ScaryCastle
         // Environment
         public Environment Environment { get; }
 
-        // FailedRuns
-        [ScriptProperty]
-        public int FailedRuns { get; set; }
-
         // FindDeclaredThing
         public GameThing? FindDeclaredThing(string name)
         {
             return declaredThingsDict.TryGetValue(name, out var result) ? result : null;
         }
+
+        // FloorIndex
+        [ScriptProperty]
+        public int FloorIndex { get; set; } = 0;
 
         // Game
         public new ScaryCastleGame Game { get; }
@@ -517,7 +550,7 @@ namespace ScaryCastle
 
         // IsHUDVisible
         [ScriptProperty]
-        public bool IsHUDVisible { get; set; } = true;
+        public bool IsHUDVisible { get; set; }
 
         // KeyItemTarget
         [ScriptProperty]
@@ -636,19 +669,11 @@ namespace ScaryCastle
         [ScriptMethod]
         public void ShowInventory()
         {
-            if (Player == null)
+            if (Player == null || Inventory.Count == 0)
                 return;
 
             Player.Stand();
             inventoryScene.SceneController.Push();
         }
-
-        // Tickets
-        [ScriptProperty]
-        public int Tickets { get; set; }
-
-        // TotalRuns
-        [ScriptProperty]
-        public int TotalRuns => CompletedRuns + FailedRuns;
     }
 }

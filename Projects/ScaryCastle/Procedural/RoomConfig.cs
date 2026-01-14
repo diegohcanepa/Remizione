@@ -15,7 +15,6 @@ namespace ScaryCastle
         private static readonly Dictionary<string, RoomConfig> data = [];
         private static readonly List<RoomConfig> dataList = [];
         private readonly List<Placeholder> placeholders = [];
-        private readonly List<string> walls = [];
 
         // Constructor
         private RoomConfig(JsonElement element)
@@ -23,19 +22,19 @@ namespace ScaryCastle
         {
             // DoorDown
             if (element.TryGetProperty("doorDown", out JsonElement doorDownElement))
-                DoorDown = DataConverter.ToVector2(doorDownElement.GetString() ?? string.Empty);
+                DoorDown = DataConvert.ToVector2(doorDownElement.GetString() ?? string.Empty);
 
             // DoorLeft
             if (element.TryGetProperty("doorLeft", out JsonElement doorLeftElement))
-                DoorLeft = DataConverter.ToVector2(doorLeftElement.GetString() ?? string.Empty);
+                DoorLeft = DataConvert.ToVector2(doorLeftElement.GetString() ?? string.Empty);
 
             // DoorRight
             if (element.TryGetProperty("doorRight", out JsonElement doorRightElement))
-                DoorRight = DataConverter.ToVector2(doorRightElement.GetString() ?? string.Empty);
+                DoorRight = DataConvert.ToVector2(doorRightElement.GetString() ?? string.Empty);
 
             // DoorUp
             if (element.TryGetProperty("doorUp", out JsonElement doorUpElement))
-                DoorUp = DataConverter.ToVector2(doorUpElement.GetString() ?? string.Empty);
+                DoorUp = DataConvert.ToVector2(doorUpElement.GetString() ?? string.Empty);
 
             // LockType
             if (element.TryGetProperty("lockType", out JsonElement lockTypeElement))
@@ -56,7 +55,7 @@ namespace ScaryCastle
             {
                 foreach (var item in placeholdersElement.EnumerateArray())
                 {
-                    var position = DataConverter.ToVector2(item.GetProperty("position").GetString() ?? string.Empty);
+                    var position = DataConvert.ToVector2(item.GetProperty("position").GetString() ?? string.Empty);
 
                     // Enum Placement
                     var placementStr = item.GetProperty("placement").GetString() ?? string.Empty;
@@ -82,6 +81,11 @@ namespace ScaryCastle
             if (element.TryGetProperty("requiresDeadEnd", out JsonElement requiresDeadEndElement))
                 RequiresDeadEnd = requiresDeadEndElement.GetBoolean();
 
+            // RoomType
+            RoomType = RoomType.Connector;
+            if (element.TryGetProperty("roomType", out JsonElement roomTypeElement))
+                RoomType = Enum.Parse<RoomType>(roomTypeElement.GetString() ?? string.Empty);
+
             // Scope
             this.Scope =  ScopeRules.FromJson(element);
 
@@ -93,19 +97,7 @@ namespace ScaryCastle
                 ReadOnlyPolygon.GetVertices(WalkArea);
             }
 
-            // Walls
-            if (element.TryGetProperty("walls", out JsonElement wallsElement))
-            {
-                foreach (var item in wallsElement.EnumerateArray())
-                {
-                    var value = item.GetString() ?? string.Empty;
-                    ReadOnlyPolygon.GetVertices(value);
-                    walls.Add(value);
-                }
-            }
-
             Placeholders = placeholders.AsReadOnly();
-            Walls = walls.AsReadOnly();
 
             data.Add(Name, this);
             dataList.Add(this);
@@ -163,13 +155,13 @@ namespace ScaryCastle
         // RequiresDeadEnd
         public bool RequiresDeadEnd { get; }
 
+        // RoomType
+        public RoomType RoomType { get; }
+
         // Scope
         public ScopeRules Scope { get; }
 
         // WalkArea
         public string WalkArea { get; }
-
-        // Walls
-        public ReadOnlyCollection<string> Walls { get; }
     }
 }

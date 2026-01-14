@@ -10,7 +10,6 @@
             : base(session, name)
         {
             AnimationSettings.SupressAll();
-            PreventKnockback = true;
         }
 
         // OnLoad

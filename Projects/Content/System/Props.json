@@ -3,14 +3,15 @@
   "data": [
     {
       "name": "PotteryA",
-      "tags": "floor",
-      "killGoal": 10,
-      "killGoalReward": "MasterLockpick",
-      "placements": ["Floor", "WalkArea"]
+      "placements": ["Floor"]
     },
     {
       "name": "PotteryB",
-      "tags": "floor"
+      "minFloor": 10
+    },
+    {
+      "name": "Torch",
+      "placements": ["WallFrontHang"]
     },
     {
       "name": "VendingMachine",

@@ -14,7 +14,6 @@ namespace ScaryCastle.UI
         #region Private fields
 
         private enum RoomImage { Current, Visited, NotVisited };
-        private readonly ImageSprite coinMarker;
         private readonly ImageSprite container;
         private readonly Vector2 containerCenter;
         private readonly HashSet<RoomGraph> drawnRooms = [];
@@ -23,7 +22,6 @@ namespace ScaryCastle.UI
         private readonly RasterizerState rasterizerState;
         private readonly Rectangle screenScissorRect;
         private readonly ImageSprite[] roomImages;
-        private readonly ImageSprite startMarker;
 
         #endregion
 
@@ -58,20 +56,6 @@ namespace ScaryCastle.UI
                 (int)(virtualMapRect.Width * scaleX),
                 (int)(virtualMapRect.Height * scaleY)
             );
-
-            // Start marker
-            startMarker = new ImageSprite(game, Atlases.UI.GetImage("UIMiniMapMarkerStart"))
-            {
-                PivotOrigin = RectanglePoint.Center,
-                Scale = ScaleInfo.UIElement.Small
-            };
-
-            // Coin marker
-            coinMarker = new ImageSprite(game, Atlases.UI.GetImage("UIMiniMapMarkerCoin"))
-            {
-                PivotOrigin = RectanglePoint.Center,
-                Scale = ScaleInfo.UIElement.Small
-            };
 
             // Heart marker
             heartMarker = new ImageSprite(game, Atlases.UI.GetImage("UIMiniMapMarkerHeart"))
@@ -120,21 +104,9 @@ namespace ScaryCastle.UI
 
             image.Draw(gameTime);
 
-            // Draw start marker
-            if (roomGraph.RoomType == RoomType.Start)
-            {
-                startMarker.Position = image.BoundingBox.GetPoint(RectanglePoint.Bottom, -.25f, .25f);
-                startMarker.Draw(gameTime);
-            }
-
             if (roomGraph != CurrentRoom)
             {
-                if (roomGraph.HasCoin)
-                {
-                    coinMarker.Position = image.BoundingBox.Center;
-                    coinMarker.Draw(gameTime);
-                }
-                else if (roomGraph.HeartCount > 0)
+                if (roomGraph.HeartCount > 0)
                 {
                     heartMarker.Position = image.BoundingBox.GetPoint(RectanglePoint.Center, -.25f, -.25f);
                     heartMarker.Draw(gameTime);

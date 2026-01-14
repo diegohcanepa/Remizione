@@ -91,7 +91,7 @@ namespace ScaryCastle
                     continue;
 
                 // Run constraints
-                if (!config.PassesRunConstraints(Session))
+                if (!config.PassesFloorConstraints(Session))
                     continue;
 
                 // Scope rules
@@ -264,9 +264,7 @@ namespace ScaryCastle
             foreach (var config in configList)
             {
                 // Allowed if list is empty or contains WalkAea enum value
-                var canSpawnHere = config.Placements.Count == 0 || config.Placements.Contains(PlacementType.WalkArea);
-
-                if (!canSpawnHere)
+                if (!config.Placements.Contains(PlacementType.WalkArea))
                     continue;
 
                 if (!config.PassesMaxPerRoomConstraint(spawnCounter.GetCount(config.Name)))

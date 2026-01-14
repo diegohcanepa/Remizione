@@ -20,7 +20,6 @@ namespace ScaryCastle
         private readonly UIButton buttonClose;
         private readonly UIButton buttonInfo;
         private readonly ItemInfoScene infoScene;
-        private readonly ImageSprite itemCategoryIcon;
         private readonly TextSprite itemNameText;
         private int selectedIndex;
         private readonly GameSession session;
@@ -38,7 +37,7 @@ namespace ScaryCastle
 
         // Constructor
         public InventoryScene(GameSession session)
-            : base(session.Game, SceneSettings.PausePreviousScenes)
+            : base(session.Game)
         {
             this.session = session;
 
@@ -52,18 +51,10 @@ namespace ScaryCastle
             // Item name
             itemNameText = new(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Default,
+                Color = ColorPalette.Text.OrangeLight,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Top),
-                Scale = ScaleInfo.Text.VeryLarge
-            };
-
-            // Item category icon
-            itemCategoryIcon = new(Game)
-            {
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Top, 0, -7),
-                Scale = ScaleInfo.UIElement.Medium
+                Scale = ScaleInfo.Text.Giant
             };
 
             // Amount text
@@ -117,8 +108,8 @@ namespace ScaryCastle
         // DrawItems
         private void DrawItems(GameTime gameTime)
         {
-            // Limitar el rango a 5
-            const int currentVisibleRange = 5;
+            // Limitar el rango a 7
+            const int currentVisibleRange = 7;
 
             for (int i = -currentVisibleRange; i <= currentVisibleRange; i++)
             {
@@ -185,67 +176,17 @@ namespace ScaryCastle
         private void InvalidateSlot()
         {
             amountText.Text = selectedIndex < 0 || SelectedItem?.Item.MetaItem.IsUnique == true ? null : SelectedItem?.Item.GetDisplayAmount();
-            itemCategoryIcon.Image = null;
 
             buttonAction.Text = null;
 
             if (SelectedItem?.Item is Item item)
             {
-                if (item.MetaItem.IsEquipment)
-                {
-                    if (item.MetaItem.Category == ItemCategory.Gadget)
-                    {
-                        itemCategoryIcon.Image = Atlases.UI.InventoryCategoryGadget;
-                        buttonAction.Text = Localization.GetValue(item.IsEquipped ? InventoryVerb.TakeOff : InventoryVerb.Equip);
-                    }
-                    else
-                    {
-                        if (item.MetaItem.Category == ItemCategory.LeftHand)
-                        {
-                            itemCategoryIcon.Image = Atlases.UI.InventoryCategoryLeftHand;
-                        }
-                        else if (item.MetaItem.Category == ItemCategory.RightHand)
-                        {
-                            itemCategoryIcon.Image = Atlases.UI.InventoryCategoryRightHand;
-                        }
-
-                        buttonAction.Text = Localization.GetValue(InventoryVerb.Equip);
-                    }
-                }
-                else if (SelectedItem.Item.MetaItem.Category == ItemCategory.Consumable)
+                if (SelectedItem.Item.MetaItem.Category == ItemCategory.Consumable)
                 {
                     buttonAction.Text = Localization.GetValue(InventoryVerb.Use);
                 }
             }
 
-        }
-
-        // PerformAction
-        private bool PerformAction()
-        {
-            if (SelectedItem?.Item is not Item item)
-                return false;
-
-            // Action
-            if (buttonAction.Text != null && buttonAction.TestPressed(PlayerIndex.One))
-            {
-                if (item.MetaItem.IsEquipment)
-                {
-                    if (item.IsEquipped)
-                        session.Inventory.Unequip(item);
-                    else
-                        session.Inventory.Equip(item);
-                }
-                else if (item.MetaItem.IsConsumable)
-                {
-                    SceneController.Pop();
-                    session.Player?.ConsumeItem(item);
-                }
-
-                return true;
-            }
-
-            return false;
         }
 
         // Select
@@ -281,7 +222,6 @@ namespace ScaryCastle
             slotImage.Draw(gameTime);
             amountText.Draw(gameTime);
             DrawItems(gameTime);
-            itemCategoryIcon.Draw(gameTime);
             Game.SpriteBatch.End();
 
             buttonClose.Draw(gameTime);
@@ -300,10 +240,6 @@ namespace ScaryCastle
                 if (HandleMouseInput())
                     return HandleInputResult.Handled;
             }
-
-            // Action
-            if (PerformAction())
-                return HandleInputResult.Handled;
 
             // Close
             if (buttonClose.TestPressed(PlayerIndex.One))

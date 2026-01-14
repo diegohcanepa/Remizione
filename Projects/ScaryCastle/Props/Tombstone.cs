@@ -17,7 +17,6 @@ namespace ScaryCastle
             HurtSound = Sound.Find(SoundNames.ImpactA);
             MaxHP = 8;
             ResistanceTableName = "ExplosiveOnly";
-            PreventKnockback = true;
         }
     }
 }

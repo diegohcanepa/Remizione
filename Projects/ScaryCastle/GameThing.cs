@@ -24,9 +24,9 @@ namespace ScaryCastle
         private FloatTween? floatingTween;
         private bool isCollisionDirty;
         private bool isHotspotDirty = true;
-        private readonly Vector2Tween knockbackTween = new();
         private PathNode[]? pathNodes;
         private int renderLayerDepth;
+        private readonly ShadowSpot shadowSpot;
         private bool shouldClampToWalkablePosition;
 
         #endregion
@@ -42,6 +42,7 @@ namespace ScaryCastle
             this.RenderLayer = RenderLayer.Default;
             this.Session = session;
             this.ResistanceTableName = DeclaredName;
+            this.shadowSpot = new ShadowSpot(this);
 
             Config = ThingConfig.Find(DeclaredName);
         }
@@ -231,18 +232,6 @@ namespace ScaryCastle
             return CollisionDetection;
         }
 
-        // CanInteractCore
-        protected virtual bool CanInteractCore(Actor requester)
-        {
-            if (requester == this || !AllowInteraction)
-                return false;
-
-            if (IsDead || string.IsNullOrWhiteSpace(LocalizedDisplayName))
-                return false;
-
-            return true;
-        }
-
         // DropLoot
         protected void DropLoot()
         {
@@ -260,15 +249,18 @@ namespace ScaryCastle
                 _ => .02f
             };
 
-            if (Session.Inventory.Gadget is Item item)
+            // TODO: Re-implement luck
+            /*
+            if (Session.Inventory.PassiveItem is Item item)
                 lootChance += item.MetaItem.Effect.LuckBonus;
+            */
 
             if (!lootChance.Roll())
                 return;
         }
 
-        // DropTickets
-        protected void DropTickets()
+        // DropCoins
+        protected void DropCoins()
         {
             if (Config == null)
                 return;
@@ -276,12 +268,12 @@ namespace ScaryCastle
             if (Session.Room is not ProceduralRoom room)
                 return;
 
-            var tickets = Loot.RollTickets(Session, room.Config, Config);
-            if (tickets > 0)
+            var coins = Loot.RollCoins(Session, room.Config, Config);
+            if (coins > 0)
             {
-                for (var i = 0; i < tickets; i++)
+                for (var i = 0; i < coins; i++)
                 {
-                    Session.ObjectPools.Tickets.Get()?.Drop(room, Position);
+                    Session.ObjectPools.Coins.Get()?.Drop(room, Position);
                 }
             }
         }
@@ -337,6 +329,7 @@ namespace ScaryCastle
         // OnDrawShadow
         protected virtual void OnDrawShadow(GameTime gameTime)
         {
+            shadowSpot.Draw(gameTime);
         }
 
         // OnHPChanged
@@ -355,7 +348,7 @@ namespace ScaryCastle
         }
 
         // OnTakeDamage
-        protected virtual void OnTakeDamage(GameThing attacker, int damage, DamageType damageType, Vector2 knockback)
+        protected virtual void OnTakeDamage(GameThing attacker, int damage, DamageType damageType)
         {
         }
 
@@ -387,14 +380,7 @@ namespace ScaryCastle
             floatingTween?.Update(gameTime);
             hurtTween?.Update(gameTime);
             hurtShakeTween?.Update(gameTime);
-
-            if (knockbackTween.IsRunning)
-            {
-                knockbackTween.Update(gameTime);
-                Position = knockbackTween.CurrentValue;
-                if (!knockbackTween.IsRunning && IsDead)
-                    Die();
-            }
+            shadowSpot.Update(gameTime);
 
             base.OnUpdate(gameTime);
 
@@ -432,20 +418,16 @@ namespace ScaryCastle
         // AttachedLightPosition
         public Vector2 AttachedLightPosition { get; set; }
 
-        // AttackRange
-        [ScriptProperty]
-        public int AttackRange { get; set; } = -1;
-
         // CanInteract
-        public bool CanInteract(Actor requester)
+        public virtual bool CanInteract(Actor requester)
         {
-            if (!CanInteractCore(requester))
+            if (requester == this || !AllowInteraction)
                 return false;
 
-            if (InteractionPolygon == TestPolygon.Collider)
-                return RuntimeCollider.BoundingRectangleF.Intersects(requester.GetAbsoluteBounds(requester.HotspotDetectorArea));
-            else
-                return RuntimeHotspot.BoundingRectangleF.Intersects(requester.GetAbsoluteBounds(requester.HotspotDetectorArea));
+            if (IsDead || string.IsNullOrWhiteSpace(LocalizedDisplayName))
+                return false;
+
+            return true;
         }
 
         // CanInteractWithKeyItem
@@ -576,7 +558,7 @@ namespace ScaryCastle
             OnDie();
             Room?.RecountEnemies();
             DropLoot();
-            DropTickets();
+            DropCoins();
         }
 
 #if DEBUG
@@ -728,7 +710,12 @@ namespace ScaryCastle
         public Vector2 GetApproachPosition(GameThing requester, bool inFront)
         {
             if (ApproachPosition != Vector2.Zero)
-                return this.GetAbsolutePoint(ApproachPosition);
+            {
+                if (HotspotPlacement == PlacementMode.Absolute)
+                    return ApproachPosition;
+                else
+                    return this.GetAbsolutePoint(ApproachPosition);
+            }
 
             var box = RuntimeHotspot.BoundingRectangleF;
             if (box.IsEmpty)
@@ -763,21 +750,16 @@ namespace ScaryCastle
         }
 
         // GetFloatingTextPosition
-        public Vector2 GetFloatingTextPosition(Vector2 knockback)
+        public Vector2 GetFloatingTextPosition()
         {
-            return GetFloatingTextPosition(knockback, 0, 0);
+            return GetFloatingTextPosition(0, 0);
         }
 
         // GetFloatingTextPosition
-        public Vector2 GetFloatingTextPosition(Vector2 knockback, int xOffset, int yOffset)
+        public Vector2 GetFloatingTextPosition(int xOffset, int yOffset)
         {
             var result = GetOverheadPosition();
-
-            if (Direction == FacingDirection.Right)
-                result.X -= Math.Abs(knockback.X);
-            else
-                result.X += Math.Abs(knockback.X);
-
+            
             result.X += xOffset;
             result.Y += yOffset;
 
@@ -831,12 +813,6 @@ namespace ScaryCastle
                 return table.GetModifier(damageType);
 
             return 1;
-        }
-
-        // GetThrowableSpawnPosition
-        public Vector2 GetThrowableSpawnPosition()
-        {
-            return this.GetAbsolutePoint(ThrowableSpawnPosition);
         }
 
         // HighlightInteraction
@@ -906,17 +882,9 @@ namespace ScaryCastle
         [ScriptProperty]
         public bool IgnoreAttachedLight { get; set; }
 
-        // IgnoreThrowables
-        [ScriptProperty]
-        public bool IgnoreThrowables { get; set; }
-
         // IgnoreWalkArea
         [ScriptProperty]
         public bool IgnoreWalkArea { get; set; } = true;
-
-        // InteractionPolygon
-        [ScriptProperty]
-        public TestPolygon InteractionPolygon { get; set; } = TestPolygon.Hotspot;
 
         // IsBehind
         public bool IsBehind(GameThing thing)
@@ -953,10 +921,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public virtual bool IsWalkAreaHole => !Collider.IsEmpty;
 
-        // LightDamageResistance
-        [ScriptProperty]
-        public bool LightDamageResistance { get; set; }
-
         // LocalizedDisplayName
         public string LocalizedDisplayName { get; private set; } = string.Empty;
 
@@ -978,10 +942,6 @@ namespace ScaryCastle
         // OverheadOrigin
         [ScriptProperty]
         public Vector2 OverheadOrigin { get; set; }
-
-        // PreventKnockback
-        [ScriptProperty]
-        public bool PreventKnockback { get; set; }
 
         // Reheal
         [ScriptMethod]
@@ -1054,12 +1014,24 @@ namespace ScaryCastle
             }
         } = new();
 
-        // ScoreValue
-        [ScriptProperty]
-        public int ScoreValue { get; set; }
-
         // Session
         public new GameSession Session { get; }
+
+        // ShadowOffset
+        [ScriptProperty]
+        public Vector2 ShadowOffset
+        {
+            get => shadowSpot.Offset;
+            set => shadowSpot.Offset = value;
+        }
+
+        // ShadowSpotSize
+        [ScriptProperty]
+        public int ShadowSpotSize
+        {
+            get => shadowSpot.Size;
+            set => shadowSpot.Size = value;
+        }
 
         // TakeDamage
         public void TakeDamage(GameThing attacker, EffectDefinition effect)
@@ -1070,8 +1042,6 @@ namespace ScaryCastle
             var amount = effect.Damage.Roll();
             if (amount <= 0 || !CanTakeDamage(attacker))
                 return;
-
-            var knockback = PreventKnockback ? Vector2.Zero : effect.Knockback;
 
             if (HurtSound != null)
                 PlaySound(HurtSound);
@@ -1098,7 +1068,7 @@ namespace ScaryCastle
 
             HP -= amount;
 
-            if ((knockback == Vector2.Zero || Session.Player != this) && HP <= 0)
+            if (Session.Player != this && HP <= 0)
             {
                 Die();
             }
@@ -1106,23 +1076,8 @@ namespace ScaryCastle
             {
                 var destination = Position;
 
-                if (X > attacker.X)
-                    destination.X += knockback.X;
-                else
-                    destination.X -= knockback.X;
-
                 var bottomDistance = Math.Abs(Y - attacker.Y);
                 var topDistance = Math.Abs(Y - attacker.BoundingBox.Top);
-
-                if (knockback != Vector2.Zero)
-                {
-                    if (bottomDistance < topDistance)
-                        destination.Y += knockback.Y;
-                    else
-                        destination.Y -= knockback.Y;
-
-                    knockbackTween.Start(TweenStyle.CubicOut, Position, destination, 400, 0);
-                }
 
                 hurtTween ??= new();
                 hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
@@ -1144,7 +1099,7 @@ namespace ScaryCastle
                 */
 
                 if (amount > 0)
-                    OnTakeDamage(attacker, amount, effect.DamageType, effect.Knockback);
+                    OnTakeDamage(attacker, amount, effect.DamageType);
             }
         }
 
@@ -1155,10 +1110,6 @@ namespace ScaryCastle
         // TerrainSound
         [ScriptProperty]
         public Sound? TerrainSound { get; set; }
-
-        // ThrowableSpawnPosition
-        [ScriptProperty]
-        public Vector2 ThrowableSpawnPosition { get; set; }
 
         // WalkArea
         public WalkArea? WalkArea { get => field ?? Room?.WalkArea; private set; }

@@ -23,6 +23,12 @@
       "minimum": 0,
       "description": "Número máximo de veces que este elemento puede aparecer por 'run'."
     },
+    "minFloor": {
+      "type": "integer",
+      "default": 0,
+      "minimum": 0,
+      "description": "Mínimo de piso requerido para que esta configuración sea elegible."
+    },
     "pools": {
       "type": "string",
       "description": "Lista de etiquetas a las que pertenece esta configuración (Tags)."
@@ -46,12 +52,6 @@
         "Infernal",
         "Celestial"
       ]
-    },
-    "requiredRuns": {
-      "type": "integer",
-      "default": 0,
-      "minimum": 0,
-      "description": "Número total de 'runs' jugadas requeridas para que esta configuración sea elegible."
     },
     "tags": {
       "type": "string",

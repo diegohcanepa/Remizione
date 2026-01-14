@@ -27,7 +27,6 @@ namespace ScaryCastle
         {
             Atlas = Atlases.Environment;
             CollisionDetection = false;
-            IgnoreThrowables = true;
 
             DepthOffset = -5;
 

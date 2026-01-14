@@ -48,7 +48,7 @@ namespace ScaryCastle
     public enum ItemAction { None, Place, Throw }
 
     // ItemCategory
-    public enum ItemCategory { LeftHand, RightHand, Consumable, Gadget, KeyItem, Pickup }
+    public enum ItemCategory { Active, Consumable, Passive, KeyItem, Pickup }
 
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }
@@ -85,7 +85,10 @@ namespace ScaryCastle
     }
 
     // MessageKind
-    public enum MessageKind { CannotPlaceItem, NotEnoughTickets }
+    public enum MessageKind { CannotPlaceItem, NotEnoughCoins }
+
+    // MouseCursorState
+    public enum MouseCursorState { None, Arrow, Cross, CrossOn, CustomImage, Wait }
 
     // PlaceholderTarget
     public enum PlaceholderTarget { Prop, Enemy, Any }
@@ -120,7 +123,7 @@ namespace ScaryCastle
     public enum RideDoorDirection { Up, Right, Down, Left }
 
     // RoomType
-    public enum RoomType { Normal, Start, Coin }
+    public enum RoomType { Connector, Start, Exit }
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }

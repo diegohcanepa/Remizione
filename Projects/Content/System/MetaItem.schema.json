@@ -39,10 +39,9 @@
           "description": "La categoría del item (Enum ItemCategory).",
           "enum": [
             "None",
-            "LeftHand",
-            "RightHand",
+            "Active",
             "Consumable",
-            "Gadget",
+            "Passive",
             "KeyItem",
             "Pickup"
           ]

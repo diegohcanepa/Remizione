@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     /// <summary>
-    /// UITicketMeter
+    /// UICoinMeter
     /// </summary>
-    public class UITicketMeter : GameObject
+    public class UICoinMeter : GameObject
     {
         private readonly ImageSprite icon;
         private readonly Vector2 iconScale = ScaleInfo.UIElement.Tiny;
@@ -16,18 +16,18 @@ namespace ScaryCastle
         private readonly ImageSprite slot;
 
         // Constructor
-        public UITicketMeter(EngendroGame game)
+        public UICoinMeter(EngendroGame game)
             : base(game)
         {
             // Slot
-            this.slot = new ImageSprite(Game, Atlases.UI.TicketSlot)
+            this.slot = new ImageSprite(Game, Atlases.UI.CoinSlot)
             {
                 PivotOrigin = RectanglePoint.Top,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 205, 110)
             };
 
             // Icon
-            this.icon = new ImageSprite(Game, Atlases.UI.TicketIcon)
+            this.icon = new ImageSprite(Game, Atlases.UI.CoinIcon)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Position = slot.BoundingBox.GetPoint(RectanglePoint.Center),
@@ -35,7 +35,7 @@ namespace ScaryCastle
             };
 
             // Score
-            this.score = new UIScore(game, ColorPalette.Text.Default, ScaleInfo.Text.Large, false)
+            this.score = new UIScore(game, ColorPalette.Text.Default, ScaleInfo.Text.ExtraLarge, false)
             {
                 PivotOrigin = RectanglePoint.Top,
                 Position = icon.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1)

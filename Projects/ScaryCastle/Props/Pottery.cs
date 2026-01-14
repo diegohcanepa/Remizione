@@ -14,13 +14,12 @@ namespace ScaryCastle
             AllowInteraction = false;
             Atlas = Atlases.Environment;
             DeathSound = Sound.Find(SoundNames.PotteryBreak);
-            DepthOffset = -4;
+            DepthOffset = -2;
             DisplayNameKey = "Prop.Pottery";
             HitEffect = HitEffect.Shake;
             HitTestPolygon = TestPolygon.Hotspot;
             HurtSound = Sound.Find(SoundNames.ImpactA);
             MaxHP = 5;
-            PreventKnockback = true;
         }
     }
 }

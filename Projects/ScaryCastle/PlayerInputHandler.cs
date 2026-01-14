@@ -18,8 +18,8 @@ namespace ScaryCastle
 
         #region Private members
 
-        // HandleGamePadInput
-        private HandleInputResult HandleGamePadInput()
+        // HandleInput
+        private HandleInputResult HandleInput()
         {
             // Interaction
             if (Actor.InteractiveTarget != null && InputBindings.Interact.IsPressed(PlayerIndex.One))
@@ -28,35 +28,52 @@ namespace ScaryCastle
                 return HandleInputResult.Handled;
             }
 
-            // Movement
-            var direction = GetDirectionVectorFromLeftStick();
-            if (direction == Vector2.Zero && InputManager.AllowKeyboard)
-                direction = GetDirectionVectorFromKeyboard(InputBindings.KeyboardMoveLeft, InputBindings.KeyboardMoveUp, InputBindings.KeyboardMoveRight, InputBindings.KeyboardMoveDown);
-
-            if (direction != Vector2.Zero)
-            {
-                Actor.Move(direction);
-            }
-            else if (Actor.IsMoving)
-            {
-                Actor.Stand();
-            }
-
             return HandleInputResult.Unhandled;
         }
 
         // HandleMouseInput
         private HandleInputResult HandleMouseInput()
         {
-            if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() && !InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
-                return HandleInputResult.Unhandled;
+            // Left button
+            if (TestMouseLeftButtonClick())
+                return HandleInputResult.Handled;
 
-            if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
-                Actor.UseEquippedItem(ItemCategory.LeftHand);
-            else
-                Actor.UseEquippedItem(ItemCategory.RightHand);
+            // Right button
+            if (TestMouseRightButtonClick())
+                return HandleInputResult.Handled;
 
             return HandleInputResult.Unhandled;
+        }
+
+        // TestMouseLeftButtonClick
+        private bool TestMouseLeftButtonClick()
+        {
+            if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
+                return false;
+
+            MouseCursor.Instance.AnimateClick();
+
+            if (Actor.InteractiveTarget != null)
+            {
+                Actor.ApproachAndInteract(Actor.InteractiveTarget);
+                return true;
+            }
+            else
+            {
+                MouseCursor.Instance.State = MouseCursorState.None;
+                var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
+                Actor.MoveTo(destination);
+                return true;
+            }
+        }
+
+        // TestMouseRightButtonClick
+        private bool TestMouseRightButtonClick()
+        {
+            if (!InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
+                return false;
+
+            return false;
         }
 
         #endregion
@@ -70,7 +87,7 @@ namespace ScaryCastle
             if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
                 return HandleMouseInput();
             else
-                return HandleGamePadInput();
+                return HandleInput();
         }
     }
 }

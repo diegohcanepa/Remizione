@@ -112,16 +112,19 @@
                         ]
                     }
                 },
+                "roomType": {
+                    "type": "string",
+                    "default": "Connector",
+                    "enum": [
+                        "Connector",
+                        "Start",
+                        "Exit"
+                    ],
+                    "description": "Tipo de room."
+                },               
                 "walkArea": {
                     "type": "string",
                     "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
-                },
-                "walls": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": "Lista de paredes definidas para este room."
                 }
             },
             "required": [

@@ -139,20 +139,17 @@ namespace ScaryCastle
                 // No se puede tocar con habitaciones que no sean el padre
                 if (!occupied.ContainsKey(target) && CountNeighbors(target, occupied) == 1)
                 {
-                    RoomGraph newRoom = new(rooms.Count, target.x, target.y, RoomType.Normal);
+                    var newRoom = new RoomGraph(rooms.Count, target.x, target.y, RoomType.Connector);
                     Link(parent, newRoom, direction);
                     occupied.Add(target, newRoom);
                     rooms.Add(newRoom);
                 }
             }
 
-            // 3. Procesar Distancias y marcar la Moneda
+            // 3. Procesar Distancias y marcar el exit
             RoomGraph coinRoom = ProcessMapData(start);
             if (coinRoom != start)
-            {
-                coinRoom.RoomType = RoomType.Coin;
-                coinRoom.HasCoin = true;
-            }
+                coinRoom.RoomType = RoomType.Exit;
 
             // Devolvemos el maxDist (la distancia a la moneda) para los cálculos de fases
             int maxDist = coinRoom.DistanceFromStart;

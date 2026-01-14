@@ -56,7 +56,10 @@ namespace ScaryCastle
         // OnDrawShadow
         protected override void OnDrawShadow(GameTime gameTime)
         {
-            shadow.Draw(gameTime);
+            if (shadow.IsEmpty)
+                base.OnDrawShadow(gameTime);
+            else
+                shadow.Draw(gameTime);
         }
 
         // OnInitializeState

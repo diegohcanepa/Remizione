@@ -101,9 +101,9 @@ namespace ScaryCastle
 
         #endregion
 
-        // EnoughTickets
+        // EnoughCoins
         [ScriptProperty]
-        public bool EnoughTickets => MetaItem != null && Session.Tickets >= MetaItem.Price;
+        public bool EnoughCoins => MetaItem != null && Session.Coins >= MetaItem.Price;
 
         // GetInteractPrompt
         public override string? GetInteractPrompt()
@@ -129,7 +129,7 @@ namespace ScaryCastle
         [ScriptMethod]
         public bool Use()
         {
-            if (MetaItem == null || !EnoughTickets)
+            if (MetaItem == null || !EnoughCoins)
                 return false;
 
             AllowInteraction = false;
@@ -139,7 +139,7 @@ namespace ScaryCastle
             Session.Inventory.Add(MetaItem);
             Session.HUD.Log.Show(LogVerb.Bought, MetaItem);
             Session.HUD.SackSlot.AnimateItem(MetaItem, icon.Position);
-            Session.Tickets -= MetaItem.Price;
+            Session.Coins -= MetaItem.Price;
             MetaItem = null;
 
             return true;

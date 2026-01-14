@@ -1,4 +1,6 @@
-﻿namespace ScaryCastle
+﻿using Microsoft.Xna.Framework;
+
+namespace ScaryCastle
 {
     /// <summary>
     /// Enemy
@@ -9,7 +11,6 @@
         public Enemy(GameSession session, string name)
             : base(session, name)
         {
-            AllowInteraction = false;
             ContactDamageType = DamageType.Physical;
             Faction = Faction.Evil;
         }

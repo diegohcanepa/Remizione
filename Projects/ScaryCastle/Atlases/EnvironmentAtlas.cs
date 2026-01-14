@@ -21,8 +21,11 @@ namespace ScaryCastle
             GlobalLight = this[nameof(GlobalLight)];
             LightningLight = this[nameof(LightningLight)];
             Sack = this[nameof(Sack)];
-            Ticket = this[nameof(Ticket)];
+            Coin = this[nameof(Coin)];
         }
+
+        // Coin
+        public AtlasImage Coin { get; }
 
         // CraftingMark
         public AtlasImage CraftingMark { get; }
@@ -50,8 +53,5 @@ namespace ScaryCastle
 
         // Sack
         public AtlasImage Sack { get; }
-
-        // Ticket
-        public AtlasImage Ticket { get; }
     }
 }

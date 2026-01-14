@@ -5,13 +5,13 @@
 			"name": "Apple",
 			"category": "Consumable",
 			"hp": "2",
-			"sound": "AppleBite",
+			"sound": "AppleBite"
 		},
 		{
 			"name": "Burger",
 			"category": "Consumable",
 			"hp": "8",
-			"sound": "AppleBite",
+			"sound": "AppleBite"
 		},
 		{
 			"name": "Coin",
@@ -20,11 +20,11 @@
 		},
 		{
 			"name": "Cross",
-			"category": "Gadget"
+			"category": "Passive"
 		},
 		{
 			"name": "Duck",
-			"category": "LeftHand",
+			"category": "Active",
 			"action": "Throw",
 			"damage": "1d2",
 			"impactWord": "CuackYellow",
@@ -33,7 +33,7 @@
 		},
 		{
 			"name": "Firecracker",
-			"category": "RightHand",
+			"category": "Active",
 			"action": "Place",
 			"damage": "10",
 			"damageType": "Explosive",
@@ -45,11 +45,11 @@
 			"name": "Heart",
 			"category": "Pickup",
 			"hp": "2",
-			"pickupSound": "PickupHeart",
+			"pickupSound": "PickupHeart"
 		},
 		{
 			"name": "Lantern",
-			"category": "Gadget"
+			"category": "Passive"
 		},
 		{
 			"name": "MasterLockpick",
@@ -60,7 +60,7 @@
 			"name": "RottenApple",
 			"category": "Consumable",
 			"hp": "1",
-			"sound": "AppleBite",
+			"sound": "AppleBite"
 		},
 		{
 			"name": "RustyLockpick",

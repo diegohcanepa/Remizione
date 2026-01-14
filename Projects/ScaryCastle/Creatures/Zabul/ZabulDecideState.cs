@@ -18,12 +18,6 @@ namespace ScaryCastle
         {
             if (Owner.Session.IsAwaiting)
                 return;
-
-            if (Owner.PerceptionSensor.CurrentTarget is not GameThing target)
-                return;
-
-            if (target != null)
-                StateMachine.ChangeState(AIStateName.Charge);
         }
     }
 }

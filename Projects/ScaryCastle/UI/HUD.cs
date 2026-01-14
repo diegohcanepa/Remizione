@@ -13,10 +13,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly GadgetSlot gadgetSlot;
         private readonly UIHealthMeter healthMeter;
-        private readonly LeftHandSlot leftHandSlot;
-        private readonly RightHandSlot rightHandSlot;
         private readonly GameSession session;
 
         #endregion
@@ -34,20 +31,11 @@ namespace ScaryCastle
             this.Message = new(Game);
             this.TargetMeter = new(Game);
 
-            // Left hand slot
-            this.leftHandSlot = new(session);
-
-            // Right hand slot
-            this.rightHandSlot = new(session);
-
-            // Gadget slot
-            this.gadgetSlot = new(session);
-
             // Sack slot
             this.SackSlot = new(session);
 
-            // Ticket meter
-            this.TicketMeter = new(Game);
+            // Coin meter 
+            this.CoinMeter = new(Game);
 
             // Mini map
             this.MiniMap = new(Game);
@@ -62,7 +50,7 @@ namespace ScaryCastle
         {
             if (session.IsCurrentScene)
             {
-                TicketMeter.Draw(gameTime);
+                CoinMeter.Draw(gameTime);
                 SackSlot.Draw(gameTime);
                 if (RunManager.HasContent)
                     TargetMeter.Draw(gameTime);
@@ -73,9 +61,6 @@ namespace ScaryCastle
                     MiniMap.Draw(gameTime);
             }
 
-            leftHandSlot.Draw(gameTime);
-            rightHandSlot.Draw(gameTime);
-            gadgetSlot.Draw(gameTime);
             healthMeter.Draw(gameTime);
         }
 
@@ -104,9 +89,6 @@ namespace ScaryCastle
             {
                 TargetMeter.Update(gameTime);
                 SackSlot.Update(gameTime);
-                leftHandSlot.Update(gameTime);
-                rightHandSlot.Update(gameTime);
-                gadgetSlot.Update(gameTime);
                 healthMeter.Update(gameTime);
                 MiniMap.Update(gameTime);
                 Log.Update(gameTime);
@@ -114,13 +96,16 @@ namespace ScaryCastle
 
                 if (session.Player != null)
                 {
-                    TicketMeter.Value = session.Tickets;
-                    TicketMeter.Update(gameTime);
+                    CoinMeter.Value = session.Coins;
+                    CoinMeter.Update(gameTime);
                 }
             }
         }
 
         #endregion
+
+        // CoinMeter
+        public UICoinMeter CoinMeter { get; }
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
@@ -133,12 +118,6 @@ namespace ScaryCastle
 
             if (session.GameplayMode == GameplayMode.Action)
             {
-                if (leftHandSlot.HandleInput(gameTime) == HandleInputResult.Handled)
-                    return HandleInputResult.Handled;
-
-                if (rightHandSlot.HandleInput(gameTime) == HandleInputResult.Handled)
-                    return HandleInputResult.Handled;
-
                 if (SackSlot.HandleInput(gameTime) == HandleInputResult.Handled)
                     return HandleInputResult.Handled;
             }
@@ -166,8 +145,5 @@ namespace ScaryCastle
 
         // TargetMeter
         public UITargetMeter TargetMeter { get; }
-
-        // TicketMeter
-        public UITicketMeter TicketMeter { get; }
     }
 }

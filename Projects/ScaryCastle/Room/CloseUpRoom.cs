@@ -9,8 +9,6 @@ namespace ScaryCastle
     /// </summary>
     public class CloseUpRoom : GameRoom
     {
-        private bool mouseWasVisible;
-
         // Constructor
         public CloseUpRoom(GameSession session, string name)
             : base(session, name)
@@ -60,16 +58,8 @@ namespace ScaryCastle
         protected override void OnLoad()
         {
             base.OnLoad();
-            mouseWasVisible = Session.IsMouseVisible;
             Session.IsMouseVisible = true;
             IsClosed = false;
-        }
-
-        // OnUnload
-        protected override void OnUnload()
-        {
-            base.OnUnload();
-            Session.IsMouseVisible = mouseWasVisible;
         }
 
         // OnUpdate

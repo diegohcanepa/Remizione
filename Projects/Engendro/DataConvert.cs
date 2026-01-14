@@ -7,9 +7,9 @@ using System.Globalization;
 namespace Engendro
 {
     /// <summary>
-    /// DataConverter
+    /// DataConvert
     /// </summary>
-    public static class DataConverter
+    public static class DataConvert
     {
         // ToColor
         public static Color ToColor(string value)

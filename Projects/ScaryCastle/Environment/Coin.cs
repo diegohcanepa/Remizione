@@ -6,9 +6,9 @@ using System;
 namespace ScaryCastle
 {
     /// <summary>
-    /// Ticket
+    /// Coin
     /// </summary>
-    public class Ticket : Prop
+    public class Coin : Prop
     {
         #region Private fields
 
@@ -30,10 +30,10 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public Ticket(GameSession session)
+        public Coin(GameSession session)
             : base(session, string.Empty)
         {
-            this.image = new(Game, Atlases.Environment.Ticket)
+            this.image = new(Game, Atlases.Environment.Coin)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Scale = new(.75f)
@@ -54,7 +54,7 @@ namespace ScaryCastle
         private void Release()
         {
             Unparent();
-            Session.ObjectPools.Tickets.Return(this);
+            Session.ObjectPools.Coins.Return(this);
         }
 
         #endregion
@@ -114,8 +114,8 @@ namespace ScaryCastle
                 if (Session.Player?.DistanceTo(image.Position) <= 3)
                 {
                     collected = true;
-                    Sound.Play(SoundNames.PickupTicket);
-                    Session.Tickets++;
+                    Sound.Play(SoundNames.PickupCoin);
+                    Session.Coins++;
                     scaleTween.Start(TweenStyle.Linear, image.Scale, Vector2.Zero, 100, Release);
                     image.Tweens.ScaleTween = scaleTween;
                 }

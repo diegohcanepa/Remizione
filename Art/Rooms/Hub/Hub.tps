@@ -173,23 +173,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Hub-assets/FlashingLights01.png</key>
-            <key type="filename">Hub-assets/FlashingLights02.png</key>
-            <key type="filename">Hub-assets/FlashingLights03.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>9,6,17,12</rect>
-                <key>scale9Paddings</key>
-                <rect>9,6,17,12</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Hub-assets/Foreground.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -202,6 +185,36 @@
                 <rect>78,13,156,25</rect>
                 <key>scale9Paddings</key>
                 <rect>78,13,156,25</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Hub-assets/Gate.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,11,15,23</rect>
+                <key>scale9Paddings</key>
+                <rect>8,11,15,23</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Hub-assets/GateBack.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,10,17,21</rect>
+                <key>scale9Paddings</key>
+                <rect>8,10,17,21</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -266,7 +279,6 @@
                 <false/>
             </struct>
             <key type="filename">Hub-assets/LeftSign.png</key>
-            <key type="filename">Hub-assets/RightSign.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -296,7 +308,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Hub-assets/RightGateClosed.png</key>
+            <key type="filename">Hub-assets/Numbers.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -305,54 +317,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>4,16,7,31</rect>
+                <rect>17,8,33,17</rect>
                 <key>scale9Paddings</key>
-                <rect>4,16,7,31</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Hub-assets/RightGateOpenBack.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,13,6,25</rect>
-                <key>scale9Paddings</key>
-                <rect>3,13,6,25</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Hub-assets/RightGateOpenFront.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,16,9,31</rect>
-                <key>scale9Paddings</key>
-                <rect>4,16,9,31</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Hub-assets/RightGatePatch.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,11,9,23</rect>
-                <key>scale9Paddings</key>
-                <rect>4,11,9,23</rect>
+                <rect>17,8,33,17</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

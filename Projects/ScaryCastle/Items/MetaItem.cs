@@ -69,14 +69,14 @@ namespace ScaryCastle
                 impactWord = Enum.Parse<ImpactWordName>(impactWordValue);
 
             // IsUnique
-            IsUnique = Category == ItemCategory.Gadget || Name == CoinItemName;
+            IsUnique = Category == ItemCategory.Passive;
             if (element.TryGetProperty("isUnique", out JsonElement isUniqueElement))
                 IsUnique = isUniqueElement.GetBoolean();
 
             // Knockback
             var knockback = Vector2.Zero;
             if (element.TryGetProperty("knockback", out JsonElement knockbackElement) && knockbackElement.GetString() is string knockbackValue)
-                knockback = DataConverter.ToVector2(knockbackValue);
+                knockback = DataConvert.ToVector2(knockbackValue);
 
             // LuckBonus
             Ratio luckBonus = 0;
@@ -128,7 +128,6 @@ namespace ScaryCastle
                 DamageType = damageType,
                 HP = hp,
                 ImpactWord = impactWord,
-                Knockback = knockback,
                 LuckBonus = luckBonus,
                 Sound = sound
             };
@@ -213,9 +212,6 @@ namespace ScaryCastle
         // Category
         public ItemCategory Category { get; }
 
-        // CoinItemName
-        public const string CoinItemName = "Coin";
-
         // Durability
         public int Durability { get; }
 
@@ -227,9 +223,6 @@ namespace ScaryCastle
 
         // IsConsumable
         public bool IsConsumable => Category is ItemCategory.Consumable;
-
-        // IsEquipment
-        public bool IsEquipment => Category is ItemCategory.LeftHand or ItemCategory.RightHand or ItemCategory.Gadget;
 
         // IsPassive
         public bool IsPassive => PassiveEffectCooldown > 0;

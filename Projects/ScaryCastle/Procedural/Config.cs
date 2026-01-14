@@ -27,6 +27,10 @@ namespace ScaryCastle
             if (element.TryGetProperty("maxPerRun", out JsonElement maxPerRunElement))
                 MaxPerRun = Math.Max(MaxPerRun, maxPerRunElement.GetInt32());
 
+            // MinFloor
+            if (element.TryGetProperty("minFloor", out JsonElement minFloorElement))
+                MinFloor = minFloorElement.GetInt32();
+
             // PreferredLootCategory
             if (element.TryGetProperty("preferredLootCategory", out JsonElement preferredLootCategoryElement))
                 PreferredLootCategory = Enum.Parse<ItemCategory>(preferredLootCategoryElement.GetString() ?? "");
@@ -34,10 +38,6 @@ namespace ScaryCastle
             // PreferredLootRealm
             if (element.TryGetProperty("preferredLootRealm", out JsonElement preferredLootRealmElement))
                 PreferredLootRealm = Enum.Parse<Realm>(preferredLootRealmElement.GetString() ?? "");
-
-            // RequiredRuns
-            if (element.TryGetProperty("requiredRuns", out JsonElement requiredRunsElement))
-                RequiredRuns = requiredRunsElement.GetInt32();
 
             // Tags
             Tags = Tags.FromJson(element, "tags");
@@ -71,30 +71,30 @@ namespace ScaryCastle
         // MaxPerRun
         public int MaxPerRun { get; }
 
+        // MinFloor
+        public int MinFloor { get; }
+
         // Name
         public string Name { get; }
 
-        // PassesMaxPerRunConstraint
-        public bool PassesMaxPerRunConstraint()
-        {
-            return MaxPerRun == 0 || RunManager.SpawnCounter.GetCount(Name) < MaxPerRun;
-        }
-
-        // PassesRunConstraints
-        public bool PassesRunConstraints(GameSession session)
+        // PassesFloorConstraints
+        public bool PassesFloorConstraints(GameSession session)
         {
             // MaxPerRun
             if (MaxPerRun > 0 && RunManager.SpawnCounter.GetCount(Name) >= MaxPerRun)
                 return false;
 
-            // RequiredRuns
-            if (RequiredRuns > 0)
-            {
-                if (session.TotalRuns < RequiredRuns)
-                    return false;
-            }
+            // Min floor
+            if (session.FloorIndex < MinFloor)
+                return false;
 
             return true;
+        }
+
+        // PassesMaxPerRunConstraint
+        public bool PassesMaxPerRunConstraint()
+        {
+            return MaxPerRun == 0 || RunManager.SpawnCounter.GetCount(Name) < MaxPerRun;
         }
 
         // PassesScope
@@ -144,9 +144,6 @@ namespace ScaryCastle
 
         // PreferredLootRealm
         public Realm? PreferredLootRealm { get; }
-
-        // RequiredRuns
-        public int RequiredRuns { get; }
 
         // Tags
         public Tags Tags { get; }

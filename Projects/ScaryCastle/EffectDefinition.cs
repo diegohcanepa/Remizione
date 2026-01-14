@@ -42,10 +42,6 @@ namespace ScaryCastle
             if (element.TryGetProperty("impactWord", out JsonElement impactWordElement) && impactWordElement.GetString() is string impactWordValue)
                 ImpactWord = Enum.Parse<ImpactWordName>(impactWordValue);
 
-            // Knockback
-            if (element.TryGetProperty("knockback", out JsonElement knockbackElement) && knockbackElement.GetString() is string knockbackValue)
-                Knockback = DataConverter.ToVector2(knockbackValue);
-
             // LuckBonus
             if (element.TryGetProperty("luckBonus", out JsonElement luckBonusElement))
                 LuckBonus = luckBonusElement.GetSingle();
@@ -126,9 +122,6 @@ namespace ScaryCastle
 
         // ImpactWord
         public ImpactWordName ImpactWord { get; init; }
-
-        // Knockback
-        public Vector2 Knockback { get; init; }
 
         // LuckBonus
         public Ratio LuckBonus { get; init; }

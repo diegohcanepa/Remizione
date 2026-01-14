@@ -149,14 +149,8 @@ namespace ScaryCastle
         // Inventory
         public Inventory Inventory { get; private set; }
 
-        // IsEquipped
-        public bool IsEquipped => Inventory.FindEquippedItem(MetaItem.Category) == this;
-
         // IsSelected
         public bool IsSelected => Inventory.SelectedItem == this;
-
-        // Knockback
-        public Vector2 Knockback => MetaItem.Effect.Knockback;
 
         // MetaItem
         public MetaItem MetaItem { get; }

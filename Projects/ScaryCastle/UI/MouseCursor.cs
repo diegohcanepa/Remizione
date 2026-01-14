@@ -12,6 +12,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private readonly Vector2Tween attackTween = Vector2Tween.Create(TweenStyle.CubicInOut, ScaleInfo.UIElement.Medium, ScaleInfo.UIElement.Medium * .8f, 130, -1);
         private readonly ImageSprite cursorImage;
         private Vector2 position;
         private readonly Vector2Tween scaleTween = new();
@@ -30,7 +31,33 @@ namespace ScaryCastle
             else
                 Instance = this;
 
-            this.cursorImage = new ImageSprite(game) { Scale = ScaleInfo.UIElement.Medium };
+            this.cursorImage = new ImageSprite(game) { PivotOrigin = RectanglePoint.Center, Scale = ScaleInfo.UIElement.Medium };
+        }
+
+        #endregion
+
+        #region Private members
+
+        // Invalidate
+        private void Invalidate()
+        {
+            if (State == MouseCursorState.Arrow)
+                cursorImage.Image = Atlases.UI.MouseCursorArrow;
+
+            else if (State == MouseCursorState.Cross)
+                cursorImage.Image = Atlases.UI.MouseCursorCross;
+
+            else if (State == MouseCursorState.CrossOn)
+                cursorImage.Image = Atlases.UI.MouseCursorCrossOn;
+
+            else if (State == MouseCursorState.CustomImage)
+                cursorImage.Image = CustomImage;
+
+            else if (State == MouseCursorState.Wait)
+                cursorImage.Image = Atlases.UI.MouseCursorWait;
+
+            cursorImage.Scale = ScaleInfo.UIElement.Medium;
+            cursorImage.PivotOrigin = State == MouseCursorState.Arrow ? RectanglePoint.LeftTop : RectanglePoint.Center;
         }
 
         #endregion
@@ -40,6 +67,9 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            if (State == MouseCursorState.None)
+                return;
+
             Game.SpriteBatch.Begin(Game.Camera);
             cursorImage.X += shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             cursorImage.Draw(gameTime);
@@ -50,11 +80,15 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (cursorImage.Image == null)
-                cursorImage.Image = Atlases.UI.MouseCursorArrow;
+            attackTween.Update(gameTime);
 
             this.Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
+
+            if (cursorImage.Image == null)
+                Invalidate();
+
             cursorImage.Update(gameTime);
+
             shakeTween.Update(gameTime);
         }
 
@@ -74,6 +108,9 @@ namespace ScaryCastle
             cursorImage.Tweens.ScaleTween = scaleTween;
         }
 
+        // CustomImage
+        public AtlasImage? CustomImage { get; set; }
+
         // Instance
         public static MouseCursor Instance { get; private set; } = null!;
 
@@ -92,6 +129,20 @@ namespace ScaryCastle
         public void Shake()
         {
             shakeTween.Start(TweenStyle.CubicInOut, 0, 1, 50, 4);
+        }
+
+        // State
+        public MouseCursorState State
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    Invalidate();
+                }
+            }
         }
     }
 }

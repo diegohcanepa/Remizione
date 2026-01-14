@@ -22,11 +22,12 @@ namespace ScaryCastle
             if (graph.Config is not RoomConfig config)
                 throw new InvalidOperationException();
 
-            Zoom = 1.1f;
+            //Zoom = 1.15f;
 
             AtlasName = graph.Config?.Name ?? string.Empty;
             DefaultImageName = AtlasName;
-            LightMapColor = new(30, 30, 30);
+            //GlobalLightSize = new(2.2f);
+            LightMapColor = new(50, 50, 50);
             LightingSystem = true;
 
             AddWalkArea("WalkArea", config.WalkArea);
@@ -41,28 +42,9 @@ namespace ScaryCastle
             {
                 AddPlaceholder(placeholder);
             }
-
-            // Add walls
-            foreach (var wall in config.Walls)
-            {
-                AddWall(wall);
-            }
         }
 
         #region Private members
-
-        // DropCoin
-        private void DropCoin()
-        {
-            if (RoomGraph.HasCoin && MetaItem.Find(MetaItem.CoinItemName) is MetaItem coin)
-            {
-                Session.Inventory.Add(coin);
-                Session.HUD.SackSlot.AnimateItem(coin, GetDropLootPosition());
-                Session.HUD.Log.Show(LogVerb.Found, coin);
-                coin.PickupSound?.Play();
-                RoomGraph.HasCoin = false;
-            }
-        }
 
         // PopulateDoors
         private void PopulateDoors()
@@ -95,7 +77,7 @@ namespace ScaryCastle
             }
 
             // Down
-            if (RoomGraph.Down != null || RoomGraph.RoomType == RoomType.Start)
+            if (RoomGraph.Down != null)
             {
                 if (DoorDown != null && CreateRuntimeClone("RideDoorDown") is RideDoor downDoor)
                 {
@@ -128,28 +110,23 @@ namespace ScaryCastle
         // DropLoot
         protected override void DropLoot()
         {
-            MetaItem? drop;
-            if (RoomGraph.RoomType == RoomType.Coin)
-            {
-                drop = MetaItem.Find(MetaItem.CoinItemName);
-            }
-            else
-            {
-                // 1. Roll de probabilidad: ¿Esta sala da premio?
-                // 20% de base es un buen número para empezar.
-                Ratio dropChance = .2f;
+            // 1. Roll de probabilidad: ¿Esta sala da premio?
+            // 20% de base es un buen número para empezar.
+            Ratio dropChance = .2f;
 
-                // Sumamos la suerte del jugador si tiene un gadget/pasivo
-                if (Session.Inventory.Gadget is Item gadget)
-                    dropChance += gadget.MetaItem.Effect.LuckBonus;
+            // Sumamos la suerte del jugador si tiene un gadget/pasivo
+            // TODO: Reimplement
+            /*
+            if (Session.Inventory.PassiveItem is Item gadget)
+                dropChance += gadget.MetaItem.Effect.LuckBonus;
+            */
 
-                // Si el roll falla (el número es mayor a la chance), salimos sin spawnear nada
-                if (!dropChance.Roll())
-                    return;
+            // Si el roll falla (el número es mayor a la chance), salimos sin spawnear nada
+            if (!dropChance.Roll())
+                return;
 
-                drop = Loot.Get(Session, Config, null, ItemCategory.Pickup);
-                RoomGraph.HeartCount++;
-            }
+            var drop = Loot.Get(Session, Config, null, ItemCategory.Pickup);
+            RoomGraph.HeartCount++;
 
             if (drop != null)
                 Session.ObjectPools.Pickups.Get()?.Drop(this, GetDropLootPosition(), drop);
@@ -163,8 +140,6 @@ namespace ScaryCastle
 
             DropLoot();
 
-            DropCoin();
-
             lootDropped = true;
 
             // Open all doors
@@ -177,8 +152,9 @@ namespace ScaryCastle
         // OnEntering
         protected override void OnEntering()
         {
-            if (RoomGraph.RoomType == RoomType.Start)
-                AudioManager.Music.PlayTag("Run", 3000);
+            // TODO: Check
+            //if (RoomGraph.RoomType == RoomType.Start)
+            //    AudioManager.Music.PlayTag("Run", 3000);
 
             RoomGraph.Visited = true;
 
@@ -192,9 +168,6 @@ namespace ScaryCastle
                         doors[i].SwitchStateCooldown = (int)RandomHelper.Next(Random, 500, 900);
                 }
             }
-
-            if (EnemyCount == 0)
-                DropCoin();
         }
 
         // OnLoad
