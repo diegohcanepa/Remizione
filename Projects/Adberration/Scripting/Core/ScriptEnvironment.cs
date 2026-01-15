@@ -104,7 +104,7 @@ namespace Adberration.Scripting
 
                 // Execution
                 CodingContext.Execution => scriptType is ScriptType.EnterRoom or ScriptType.Enter or ScriptType.Outcome or
-                                           ScriptType.Routine or ScriptType.NewSession or ScriptType.Load or
+                                           ScriptType.Routine or ScriptType.NewSession or ScriptType.Load or ScriptType.Entering or
                                            ScriptType.Unload or ScriptType.Initialization,
                 // Default
                 _ => false,

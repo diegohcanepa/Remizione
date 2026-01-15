@@ -357,6 +357,9 @@ namespace ScaryCastle
                         this.friendlyItems[thing.DeclaredName] = [.. metaItems];
                 }
             }
+
+            if (FloorIndex > 0)
+                BeginRun();
         }
 
         // OnUpdate
@@ -430,6 +433,7 @@ namespace ScaryCastle
 
             if (Player != null && RunManager.Rooms[0].RideRoom is RideRoom rideRoom)
             {
+                Player.Reheal();
                 IsHUDVisible = true;
                 rideRoom.Children.Add(Player);
                 if (rideRoom.WalkArea != null)
@@ -489,11 +493,9 @@ namespace ScaryCastle
             IsHUDVisible = false;
             Inventory.Clear();
             Coins = 0;
-            Player?.Reheal();
             RunManager.Clear();
             CleanUpRuntimeEntities();
             Seed = 0;
-            Save();
 
             // 1. Force an immediate collection of all generations (0, 1, and 2).
             // 'Forced' tells the GC to ignore its internal heuristics and run immediately.

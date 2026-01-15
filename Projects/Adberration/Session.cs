@@ -194,8 +194,8 @@ namespace Adberration
             if (sessionNode.Attributes[GameSessionPersistenceAttributeName.Room.ToString()]?.Value is string roomName)
                 result = FindEntity<Room>(roomName);
 
-            if (result == null)
-                throw new InvalidOperationException("Save file has an undefined room.");
+            //if (result == null)
+            //    throw new InvalidOperationException("Save file has an undefined room.");
 
             // MusicSoundName
             if (sessionNode.Attributes[GameSessionPersistenceAttributeName.MusicSoundName.ToString()]?.Value is string musicSoundNameString)
@@ -509,8 +509,9 @@ namespace Adberration
             // AllowSaving
             output.WriteAttributeString(GameSessionPersistenceAttributeName.AllowSaving.ToString(), XmlConvert.ToString(AllowSaving));
 
-            // Current Room
-            output.WriteAttributeString(GameSessionPersistenceAttributeName.Room.ToString(), Room.Name);
+            // Room
+            if (Room.InstanceKind != InstanceKind.Anonymous)
+                output.WriteAttributeString(GameSessionPersistenceAttributeName.Room.ToString(), Room.Name);
 
             // Previous Room
             if (PreviousRoom != null)
@@ -1180,8 +1181,8 @@ namespace Adberration
             if (IsRunning)
                 throw new InvalidOperationException("Game session is already running.");
 
-            if (startingRoom == null && !IsNewSession)
-                throw new InvalidOperationException("There is no starting room.");
+           // if (startingRoom == null && !IsNewSession)
+            //    throw new InvalidOperationException("There is no starting room.");
 
             IsRunning = true;
 
