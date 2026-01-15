@@ -12,7 +12,6 @@ namespace ScaryCastle
     public sealed class RideRoom : ProceduralRoom
     {
         private readonly List<RideDoor> doors = [];
-        private bool lootDropped;
 
         // Constructor
         public RideRoom(GameSession session, RoomGraph graph)
@@ -131,23 +130,6 @@ namespace ScaryCastle
                 Session.ObjectPools.Pickups.Get()?.Drop(this, GetDropLootPosition(), drop);
         }
 
-        // OnEnemiesCleared
-        protected override void OnEnemiesCleared()
-        {
-            if (lootDropped)
-                return;
-
-            DropLoot();
-
-            lootDropped = true;
-
-            // Open all doors
-            for (var i = 0; i < doors.Count; i++)
-            {
-                doors[i].SwitchStateCooldown = (int)RandomHelper.Next(Random, 700, 1500);
-            }
-        }
-
         // OnEntering
         protected override void OnEntering()
         {
@@ -156,17 +138,7 @@ namespace ScaryCastle
             //    AudioManager.Music.PlayTag("Run", 3000);
 
             RoomGraph.Visited = true;
-
             Session.HUD.MiniMap.CurrentRoom = RoomGraph;
-
-            if (EnemyCount > 0)
-            {
-                for (var i = 0; i < doors.Count; i++)
-                {
-                    if (EnemyCount > 0)
-                        doors[i].SwitchStateCooldown = (int)RandomHelper.Next(Random, 500, 900);
-                }
-            }
         }
 
         // OnLoad

@@ -194,9 +194,6 @@ namespace Adberration
             if (sessionNode.Attributes[GameSessionPersistenceAttributeName.Room.ToString()]?.Value is string roomName)
                 result = FindEntity<Room>(roomName);
 
-            //if (result == null)
-            //    throw new InvalidOperationException("Save file has an undefined room.");
-
             // MusicSoundName
             if (sessionNode.Attributes[GameSessionPersistenceAttributeName.MusicSoundName.ToString()]?.Value is string musicSoundNameString)
                 musicSoundName = musicSoundNameString;
@@ -510,7 +507,7 @@ namespace Adberration
             output.WriteAttributeString(GameSessionPersistenceAttributeName.AllowSaving.ToString(), XmlConvert.ToString(AllowSaving));
 
             // Room
-            if (Room.InstanceKind != InstanceKind.Anonymous)
+            if (!string.IsNullOrWhiteSpace(Room.Name))
                 output.WriteAttributeString(GameSessionPersistenceAttributeName.Room.ToString(), Room.Name);
 
             // Previous Room

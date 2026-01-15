@@ -300,20 +300,6 @@ namespace ScaryCastle
             return ContentManagerExtension.EncodePath(ContentFolder.Atlases, AtlasName);
         }
 
-        // OnChildAdded
-        protected override void OnChildAdded(Entity child)
-        {
-            base.OnChildAdded(child);
-            RecountEnemies();
-        }
-
-        // OnChildRemoved
-        protected override void OnChildRemoved(Entity child)
-        {
-            base.OnChildRemoved(child);
-            RecountEnemies();
-        }
-
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
@@ -384,11 +370,6 @@ namespace ScaryCastle
 #if DEBUG
             DrawDebugBoxes();
 #endif
-        }
-
-        // OnEnemiesCleared
-        protected virtual void OnEnemiesCleared()
-        {
         }
 
         // OnHandleInput
@@ -554,10 +535,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public DustParticleKind DustParticleKind { get; set; } = DustParticleKind.Ash;
 
-        // EnemyCount
-        [ScriptProperty]
-        public int EnemyCount { get; private set; }
-
         // GlobalLightSize
         [ScriptProperty]
         public Vector2 GlobalLightSize
@@ -595,25 +572,6 @@ namespace ScaryCastle
             }
 
             lastKnownMusicTag = AudioManager.Music.CurrentTag;
-        }
-
-        // RecountEnemies
-        public void RecountEnemies()
-        {
-            var count = 0;
-
-            for (int i = 0; i < Children.Count; i++)
-            {
-                if (Children[i] is GameThing thing && thing.Faction == Faction.Evil)
-                    count++;
-            }
-
-            if (EnemyCount != count)
-            {
-                EnemyCount = count;
-                if (count == 0)
-                    OnEnemiesCleared();
-            }
         }
 
         // RestoreAfterGateway

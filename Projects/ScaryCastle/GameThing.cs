@@ -556,7 +556,6 @@ namespace ScaryCastle
             }
 
             OnDie();
-            Room?.RecountEnemies();
             DropLoot();
             DropCoins();
         }
@@ -669,18 +668,7 @@ namespace ScaryCastle
 
         // Faction
         [ScriptProperty]
-        public Faction Faction
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    Room?.RecountEnemies();
-                }
-            }
-        }
+        public Faction Faction { get; set; }
 
         // FloatingForce
         [ScriptProperty]

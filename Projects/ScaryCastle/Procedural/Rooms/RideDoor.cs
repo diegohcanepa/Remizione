@@ -119,9 +119,7 @@ namespace ScaryCastle
         // Unlock
         private bool Unlock()
         {
-            SwitchStateCooldown = 500;
             Sound.Play(SoundNames.LockOpen);
-
             return true;
         }
 
@@ -144,40 +142,7 @@ namespace ScaryCastle
             lockImage?.MatchTransform(this.Sprite);
         }
 
-        // OnUpdate
-        protected override void OnUpdate(GameTime gameTime)
-        {
-            base.OnUpdate(gameTime);
-
-            if (SwitchStateCooldown > 0)
-            {
-                SwitchStateCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-
-                if (SwitchStateCooldown <= 0)
-                {
-                    SwitchStateCooldown = 0;
-
-                    if (PropState != PropState.Locked)
-                    {
-                        if (PropState == PropState.Open)
-                            PropState = PropState.Closed;
-                        else
-                            PropState = PropState.Open;
-                    }
-                }
-            }
-        }
-
         #endregion
-
-        // CanInteract
-        public override bool CanInteract(Actor requester)
-        {
-            if (SwitchStateCooldown > 0 || Room?.EnemyCount > 0)
-                return false;
-            else
-                return base.CanInteract(requester);
-        }
 
         // CloseSound
         [ScriptProperty]
@@ -221,9 +186,6 @@ namespace ScaryCastle
                 animation.AddFrame(prefix + animation.Name, 1000);
             }
         }
-
-        // SwitchStateCooldown
-        public int SwitchStateCooldown { get; set; }
 
         // TargetRoom
         public RideRoom? TargetRoom { get; set; }
