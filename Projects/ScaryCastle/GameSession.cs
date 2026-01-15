@@ -1,13 +1,11 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
-using Engendro.Input;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Procedural;
 using ScaryCastle.Scripting;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 
@@ -94,25 +92,6 @@ namespace ScaryCastle
 
         #region Private members
 
-        // EndRun
-        private void EndRun()
-        {
-            if (!RunManager.HasContent)
-                return;
-
-            if (FindEntity<Hub>(nameof(Hub)) is Hub hubRoom)
-                hubRoom.Unload();
-
-            IsHUDVisible = false;
-            Inventory.Clear();
-            Coins = 0;
-            Player?.Reheal();
-            RunManager.Clear();
-            CleanUpRuntimeEntities();
-            Seed = 0;
-            Save();
-        }
-
         // GetRoomCountForFloor
         private int GetRoomCount(int floorIndex)
         {
@@ -128,7 +107,7 @@ namespace ScaryCastle
             float curvedProgress = (float)Math.Pow(f, CURVE);
 
             // Interpolación lineal
-            int count = (int)Math.Round(MIN_ROOMS + (MAX_ROOMS - MIN_ROOMS) * curvedProgress);
+            int count = (int)Math.Round(MIN_ROOMS + ((MAX_ROOMS - MIN_ROOMS) * curvedProgress));
 
             return count;
         }
@@ -460,13 +439,6 @@ namespace ScaryCastle
             }
         }
 
-        // CancelRun
-        [ScriptMethod]
-        public void CancelRun()
-        {
-            EndRun();
-        }
-
         // ChooseKeyItem
         public bool ChooseKeyItem(string text)
         {
@@ -474,7 +446,7 @@ namespace ScaryCastle
                 return false;
 
             Player.Stand();
-            
+
             if (OutcomeTarget is Prop prop)
             {
                 KeyItemTarget = prop;
@@ -503,6 +475,39 @@ namespace ScaryCastle
         // DialogOptionId
         [ScriptProperty]
         public int DialogOptionId { get; set; }
+
+        // EndRun
+        [ScriptMethod]
+        public void EndRun()
+        {
+            if (!RunManager.HasContent)
+                return;
+
+            if (FindEntity<Hub>(nameof(Hub)) is Hub hubRoom)
+                hubRoom.Unload();
+
+            IsHUDVisible = false;
+            Inventory.Clear();
+            Coins = 0;
+            Player?.Reheal();
+            RunManager.Clear();
+            CleanUpRuntimeEntities();
+            Seed = 0;
+            Save();
+
+            // 1. Force an immediate collection of all generations (0, 1, and 2).
+            // 'Forced' tells the GC to ignore its internal heuristics and run immediately.
+            // 'true' makes the call blocking (execution halts until the GC finishes).
+            GC.Collect(2, GCCollectionMode.Forced, true);
+
+            // 2. Wait for objects with finalizers (destructors) to finish their cleanup logic.
+            GC.WaitForPendingFinalizers();
+
+            // 3. Collect again.
+            // This is necessary because objects finalized in step 2 are now officially
+            // marked as "garbage" and can finally be released from memory in this pass.
+            GC.Collect(2, GCCollectionMode.Forced, true);
+        }
 
         // Environment
         public Environment Environment { get; }

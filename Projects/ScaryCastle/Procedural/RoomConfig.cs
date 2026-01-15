@@ -87,7 +87,7 @@ namespace ScaryCastle
                 RoomType = Enum.Parse<RoomType>(roomTypeElement.GetString() ?? string.Empty);
 
             // Scope
-            this.Scope =  ScopeRules.FromJson(element);
+            this.Scope = ScopeRules.FromJson(element);
 
             // WalkArea
             WalkArea = string.Empty;

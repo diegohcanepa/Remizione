@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -256,8 +255,7 @@ namespace ScaryCastle
                 throw new InvalidOperationException($"Missing config in room graph.");
 
             // Get type from AOT registry
-            var result = Activator.CreateInstance(typeof(RideRoom), session, graph) as RideRoom;
-            if (result == null)
+            if (Activator.CreateInstance(typeof(RideRoom), session, graph) is not RideRoom result)
                 throw new InvalidOperationException($"Cannot create instance [{graph.Config.Name}]");
 
             return result;

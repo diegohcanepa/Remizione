@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ScaryCastle
+﻿namespace ScaryCastle
 {
     /// <summary>
     /// Zabul

@@ -759,7 +759,7 @@ namespace ScaryCastle
         public Vector2 GetFloatingTextPosition(int xOffset, int yOffset)
         {
             var result = GetOverheadPosition();
-            
+
             result.X += xOffset;
             result.Y += yOffset;
 
@@ -1068,7 +1068,7 @@ namespace ScaryCastle
 
             HP -= amount;
 
-            if (Session.Player != this && HP <= 0)
+            if (HP <= 0)
             {
                 Die();
             }
