@@ -170,8 +170,6 @@ namespace ScaryCastle
 
             foreach (var door in doors)
             {
-                door.PropState = PropState.Open;
-
                 if (door.DoorDirection is RideDoorDirection.Left or RideDoorDirection.Right or RideDoorDirection.Up)
                 {
                     if (door.TargetRoom?.Config.LockType != LockType.None)

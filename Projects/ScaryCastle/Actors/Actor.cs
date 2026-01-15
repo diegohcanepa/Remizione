@@ -196,6 +196,7 @@ namespace ScaryCastle
 
             if (pendingInteractiveTarget != null)
             {
+                session.Inventory.HeldItem = null;
                 FaceTo(pendingInteractiveTarget);
                 Interact(pendingInteractiveTarget);
             }

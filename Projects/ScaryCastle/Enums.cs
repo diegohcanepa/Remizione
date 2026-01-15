@@ -88,7 +88,7 @@ namespace ScaryCastle
     public enum MessageKind { CannotPlaceItem, NotEnoughCoins }
 
     // MouseCursorState
-    public enum MouseCursorState { None, Arrow, Cross, CrossOn, CustomImage, Wait }
+    public enum MouseCursorState { None, Arrow, Cross, CrossOn, Wait }
 
     // PlaceholderTarget
     public enum PlaceholderTarget { Prop, Enemy, Any }
@@ -136,6 +136,9 @@ namespace ScaryCastle
 
     // UIControlGroupLayoutStyle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
+
+    // Verb
+    public enum Verb { Enter, Exit, Use }
 
     // VolumeCategory
     public enum VolumeCategory { Ambient, FX, Music, Voice, Master }

@@ -92,6 +92,8 @@
 	<FX Name="UIPrompt" MaxInstances="4" Volume=".1" />
 	<FX Name="UISelectA" MaxInstances="4" />
 	<FX Name="UISelectB" MaxInstances="4" />
+	<FX Name="UISelectC" MaxInstances="4" />
+	<FX Name="UISelectD" MaxInstances="4" />
 	<FX Name="UISelectPlayer" MaxInstances="4" />
 	<FX Name="VendingMachine" MaxInstances="2" />
 	<FX Name="VentBlower" MaxInstances="2" PauseAware="false" />

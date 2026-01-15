@@ -127,7 +127,7 @@ namespace ScaryCastle
 
                 // AJUSTADO: El alpha ahora llega a 0 exactamente en la distancia 5
                 // (1 / 5 = 0.2) para que el desvanecimiento sea proporcional al nuevo rango
-                float alpha = MathF.Max(0f, 1f - (distance * 0.2f));
+                float alpha = MathF.Max(0, 1 - (distance * .05f));
 
                 visualItems[index].Opacity = alpha;
                 visualItems[index].Scale = new(scale);
@@ -155,6 +155,15 @@ namespace ScaryCastle
         {
             if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
+                if (GetInventoryItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is VisualItem grabbedtem)
+                {
+                    if (grabbedtem.Item.MetaItem.Image != null)
+                    {
+                        Sound.Play(SoundNames.UISelectC);
+                        session.Inventory.HeldItem = grabbedtem.Item;
+                    }
+                }
+                
                 SceneController.Pop();
                 return true;
             }

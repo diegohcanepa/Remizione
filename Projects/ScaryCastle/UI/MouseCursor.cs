@@ -1,6 +1,8 @@
 ﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ScaryCastle.Effects;
 using System;
 
 namespace ScaryCastle
@@ -13,8 +15,8 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly Vector2Tween attackTween = Vector2Tween.Create(TweenStyle.CubicInOut, ScaleInfo.UIElement.Medium, ScaleInfo.UIElement.Medium * .8f, 130, -1);
-        private readonly ImageSprite cursorImage;
-        private Vector2 position;
+        private readonly ImageSprite cursorSprite;
+        private readonly ImageSprite customCursorSprite;
         private readonly Vector2Tween scaleTween = new();
         private readonly FloatTween shakeTween = new();
 
@@ -31,33 +33,37 @@ namespace ScaryCastle
             else
                 Instance = this;
 
-            this.cursorImage = new ImageSprite(game) { PivotOrigin = RectanglePoint.Center, Scale = ScaleInfo.UIElement.Medium };
+            this.customCursorSprite = new ImageSprite(game) { PivotOrigin = RectanglePoint.Center, Scale = ScaleInfo.UIElement.Medium };
+            this.cursorSprite = new ImageSprite(game) { PivotOrigin = RectanglePoint.Center, Scale = ScaleInfo.UIElement.Medium };
         }
 
         #endregion
 
         #region Private members
 
+        // GetActiveCursor
+        private ImageSprite GetActiveCursor()
+        { 
+            return customCursorSprite.IsEmpty? cursorSprite : customCursorSprite;
+        }
+
         // Invalidate
         private void Invalidate()
         {
             if (State == MouseCursorState.Arrow)
-                cursorImage.Image = Atlases.UI.MouseCursorArrow;
+                cursorSprite.Image = Atlases.UI.MouseCursorArrow;
 
             else if (State == MouseCursorState.Cross)
-                cursorImage.Image = Atlases.UI.MouseCursorCross;
+                cursorSprite.Image = Atlases.UI.MouseCursorCross;
 
             else if (State == MouseCursorState.CrossOn)
-                cursorImage.Image = Atlases.UI.MouseCursorCrossOn;
-
-            else if (State == MouseCursorState.CustomImage)
-                cursorImage.Image = CustomImage;
+                cursorSprite.Image = Atlases.UI.MouseCursorCrossOn;
 
             else if (State == MouseCursorState.Wait)
-                cursorImage.Image = Atlases.UI.MouseCursorWait;
+                cursorSprite.Image = Atlases.UI.MouseCursorWait;
 
-            cursorImage.Scale = ScaleInfo.UIElement.Medium;
-            cursorImage.PivotOrigin = State == MouseCursorState.Arrow ? RectanglePoint.LeftTop : RectanglePoint.Center;
+            cursorSprite.Scale = ScaleInfo.UIElement.Medium;
+            cursorSprite.PivotOrigin = State == MouseCursorState.Arrow ? RectanglePoint.LeftTop : RectanglePoint.Center;
         }
 
         #endregion
@@ -70,10 +76,20 @@ namespace ScaryCastle
             if (State == MouseCursorState.None)
                 return;
 
-            Game.SpriteBatch.Begin(Game.Camera);
-            cursorImage.X += shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
-            cursorImage.Draw(gameTime);
-            cursorImage.X -= shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
+            var sprite = GetActiveCursor();
+            OutlineEffect? effect = Highlight ? ScaryCastleGame.Effects.Outline : null;
+
+            if (effect != null && sprite.Image?.Atlas != null)
+            {
+                effect.Color.SetValue(ColorPalette.MouseCursorOutline);
+                effect.TextureSize.SetValue(new Vector2(sprite.Image.Atlas.Texture.Width, sprite.Image.Atlas.Texture.Height));
+                effect.Thickness.SetValue(1);
+            }
+
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, effect?.Effect);
+            sprite.X += shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
+            sprite.Draw(gameTime);
+            sprite.X -= shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             Game.SpriteBatch.End();
         }
 
@@ -82,12 +98,12 @@ namespace ScaryCastle
         {
             attackTween.Update(gameTime);
 
-            this.Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
+            GetActiveCursor().Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
 
-            if (cursorImage.Image == null)
+            if (cursorSprite.Image == null)
                 Invalidate();
 
-            cursorImage.Update(gameTime);
+            cursorSprite.Update(gameTime);
 
             shakeTween.Update(gameTime);
         }
@@ -98,37 +114,44 @@ namespace ScaryCastle
         public void AnimateClick()
         {
             scaleTween.Start(TweenStyle.QuadraticIn, ScaleInfo.UIElement.Small, ScaleInfo.UIElement.Medium, 150);
-            cursorImage.Tweens.ScaleTween = scaleTween;
+            cursorSprite.Tweens.ScaleTween = scaleTween;
         }
 
         // AnimateSwitch
         public void AnimateSwitch()
         {
             scaleTween.Start(TweenStyle.QuadraticIn, new(.2f), ScaleInfo.UIElement.Medium, 100);
-            cursorImage.Tweens.ScaleTween = scaleTween;
+            cursorSprite.Tweens.ScaleTween = scaleTween;
         }
 
-        // CustomImage
-        public AtlasImage? CustomImage { get; set; }
+        // CustomImageTag
+        public object? CustomImageTag { get; private set; }
+
+        // Highlight
+        public bool Highlight { get; set; }
 
         // Instance
         public static MouseCursor Instance { get; private set; } = null!;
 
-        // Position
-        public Vector2 Position
+        // Reset
+        public void Reset()
         {
-            get => position;
-            set
-            {
-                this.position = value;
-                cursorImage.Position = value;
-            }
+            Highlight = false;
+            customCursorSprite.Image = null;
+            CustomImageTag = null;
         }
 
         // Shake
         public void Shake()
         {
             shakeTween.Start(TweenStyle.CubicInOut, 0, 1, 50, 4);
+        }
+
+        // SetCustomImage
+        public void SetCustomImage(AtlasImage image, object? tag)
+        {
+            customCursorSprite.Image = image;
+            CustomImageTag = tag;
         }
 
         // State

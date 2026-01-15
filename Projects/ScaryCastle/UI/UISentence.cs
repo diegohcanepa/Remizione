@@ -11,19 +11,23 @@ namespace ScaryCastle
         private readonly TextSprite sentence;
         private readonly GameSession session;
         private GameThing? target;
+        private readonly string useVerb;
+        private readonly string withPreposition;
 
         // Constructor
         public UISentence(GameSession session)
             : base(session.Game)
         {
             this.session = session;
+            this.useVerb = Localization.GetValue(Verb.Use);
+            this.withPreposition = TextRepository.GetValue("Misc.WithPreposition");
 
             this.sentence = new(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.OrangeLight,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -6),
-                Scale = ScaleInfo.Text.ExtraGiant
+                Scale = ScaleInfo.UISentence
             };
         }
 
@@ -48,11 +52,23 @@ namespace ScaryCastle
                 if (currentTarget != target)
                 {
                     target = currentTarget;
-                    sentence.Text = currentTarget.GetInteractPrompt() ?? currentTarget.LocalizedDisplayName;
+                    var targetText = currentTarget.GetInteractPrompt() ?? currentTarget.LocalizedDisplayName;
+
+                    if (session.Inventory.HeldItem == null)
+                    {
+                        MouseCursor.Instance.Highlight = false;
+                        sentence.Text = targetText;
+                    }
+                    else
+                    {
+                        MouseCursor.Instance.Highlight = true;
+                        sentence.Text = $"{useVerb} {session.Inventory.HeldItem.MetaItem.LocalizedDisplayName} {withPreposition} {targetText}";
+                    }
                 }
             }
             else
             {
+                MouseCursor.Instance.Highlight = false;
                 sentence.Text = null;
                 target = null;
             }

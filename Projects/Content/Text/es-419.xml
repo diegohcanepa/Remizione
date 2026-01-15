@@ -219,6 +219,7 @@ Bla bla bla</String>
   <String Key="Misc.Success">¡Éxito!</String>
   <String Key="Misc.Threshold">Umbral</String>
   <String Key="Misc.Unknown">???</String>
+  <String Key="Misc.WithPreposition">con</String>
   <String Key="Misc.Yes">Sí</String>
   <String Key="Misc.YouAreDead">ESTÁS MUERTO.</String>
   <String Key="Platform.NintendoSwitch.Messages.ControllerDisconnected">Por favor vuelve a conectar el mando para continuar.</String>
@@ -278,4 +279,5 @@ Bla bla bla</String>
   <String Key="Prop.WC">Inodoro</String>
   <String Key="Verb.Enter">Entrar</String>
   <String Key="Verb.Exit">Salir</String>
+  <String Key="Verb.Use">Usar</String>
 </Strings>

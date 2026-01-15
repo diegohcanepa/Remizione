@@ -36,7 +36,7 @@ namespace ScaryCastle
 
             Atlas = Atlases.Environment;
             CollisionDetection = false;
-            DisplayNameKey = "Verb.Enter";
+            DisplayNameKey = "Prop.Door";
             CloseSound = Sound.Find("DoorClose");
             OpenSound = Sound.Find("DoorOpen");
 
@@ -161,7 +161,8 @@ namespace ScaryCastle
             }
         }
 
-        // Direction
+        // DoorDirection
+        [ScriptProperty]
         public RideDoorDirection DoorDirection { get; }
 
         // OpenSound

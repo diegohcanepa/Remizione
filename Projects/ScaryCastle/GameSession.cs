@@ -23,12 +23,10 @@ namespace ScaryCastle
         private readonly List<GameThing> declaredThings = [];
         private readonly Dictionary<string, GameThing> declaredThingsDict = [];
         private readonly EchoScene echoScene;
-        private readonly Dictionary<string, MetaItem[]> friendlyItems = [];
         private readonly InventoryScene inventoryScene;
         private Vector2? playerPosition;
         private readonly RoomEditor? roomEditor;
         private readonly UISentence sentence;
-        private readonly UseKeyItemScene useKeyItemScene;
 
         #endregion
 
@@ -84,7 +82,6 @@ namespace ScaryCastle
             LocalizationSource = LocalizationSource.Script;
 
             this.inventoryScene = new InventoryScene(this);
-            this.useKeyItemScene = new UseKeyItemScene(Inventory);
             this.sentence = new(this);
         }
 
@@ -169,7 +166,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("show-message", typeof(ShowMessageCommand));
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
             AotTypeRegistry.Register("test-skill-chance", typeof(TestSkillChanceCommand));
-            AotTypeRegistry.Register("use-key-item", typeof(UseKeyItemCommand));
             AotTypeRegistry.Register("use-item", typeof(UseItemCommand));
             AotTypeRegistry.Register("vibrate", typeof(VibrateCommand));
             AotTypeRegistry.Register("x-tween", typeof(XTweenCommand));
@@ -179,7 +175,7 @@ namespace ScaryCastle
         // UpdateMouseCursor
         private void UpdateMouseCursor()
         {
-            if (MouseCursor.Instance.State != MouseCursorState.CustomImage)
+            if (MouseCursor.Instance.CustomImageTag == null)
                 MouseCursor.Instance.State = Player?.InteractiveTarget == null ? MouseCursorState.Cross : MouseCursorState.CrossOn;
 
             // No active player
@@ -343,18 +339,6 @@ namespace ScaryCastle
                 {
                     declaredThings.Add(thing);
                     declaredThingsDict.Add(thing.DeclaredName, thing);
-
-                    // Collect friendly items
-                    metaItems.Clear();
-                    for (var i = 0; i < keyItems.Count; i++)
-                    {
-                        var routineName = $"{thing.DeclaredName}-With-{keyItems[i].Name}";
-                        if (ScriptLibrary.FindRoutine(routineName) != null)
-                            metaItems.Add(keyItems[i]);
-                    }
-
-                    if (metaItems.Count > 0)
-                        this.friendlyItems[thing.DeclaredName] = [.. metaItems];
                 }
             }
 
@@ -443,25 +427,6 @@ namespace ScaryCastle
             }
         }
 
-        // ChooseKeyItem
-        public bool ChooseKeyItem(string text)
-        {
-            if (Player == null)
-                return false;
-
-            Player.Stand();
-
-            if (OutcomeTarget is Prop prop)
-            {
-                KeyItemTarget = prop;
-                useKeyItemScene.Text = text;
-                useKeyItemScene.SceneController.Push();
-                return true;
-            }
-
-            return false;
-        }
-
         // Coins
         [ScriptProperty]
         public int Coins { get; set; }
@@ -531,18 +496,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public GameplayMode GameplayMode { get; private set; }
 
-        // GetFriendlyItems
-        public MetaItem[] GetFriendlyItems(string declaredName)
-        {
-            return friendlyItems.TryGetValue(declaredName, out var items) ? items : [];
-        }
-
-        // HasFriendlyItems
-        public bool HasFriendlyItems(string declaredName)
-        {
-            return friendlyItems.ContainsKey(declaredName);
-        }
-
         // HUD
         public HUD HUD { get; }
 
@@ -558,10 +511,6 @@ namespace ScaryCastle
         // IsHUDVisible
         [ScriptProperty]
         public bool IsHUDVisible { get; set; }
-
-        // KeyItemTarget
-        [ScriptProperty]
-        public Prop? KeyItemTarget { get; set; }
 
         // KillEnemies
         [ScriptMethod]
@@ -679,6 +628,7 @@ namespace ScaryCastle
             if (Player == null || Inventory.Count == 0)
                 return;
 
+            Inventory.HeldItem = null;
             Player.Stand();
             inventoryScene.SceneController.Push();
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engendro;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -127,6 +128,25 @@ namespace ScaryCastle
             }
 
             return false;
+        }
+
+        // HeldItem
+        public Item? HeldItem
+        {
+            get;
+            set
+            {
+                if (value == null)
+                {
+                    MouseCursor.Instance.Reset();
+                }
+                else if (value.MetaItem.Image is AtlasImage image)
+                {
+                    MouseCursor.Instance.SetCustomImage(image, field);
+                }
+
+                field = value;
+            }
         }
 
         // IndexOf

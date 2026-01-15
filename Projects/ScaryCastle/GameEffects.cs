@@ -14,6 +14,7 @@ namespace ScaryCastle
             ColorReduction = new ColorReductionEffect(game);
             ColorSaturation = new ColorSaturationEffect(game);
             Lighting = new LightingEffect(game);
+            Outline = new OutlineEffect(game);
         }
 
         // ColorReduction
@@ -27,5 +28,8 @@ namespace ScaryCastle
 
         // Lighting
         public LightingEffect Lighting { get; }
+
+        // Outline
+        public OutlineEffect Outline { get; }
     }
 }

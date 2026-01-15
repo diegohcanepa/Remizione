@@ -43,6 +43,8 @@
         internal const string UIPrompt = nameof(UIPrompt);
         internal const string UISelectA = nameof(UISelectA);
         internal const string UISelectB = nameof(UISelectB);
+        internal const string UISelectC = nameof(UISelectC);
+        internal const string UISelectD = nameof(UISelectD);
         internal const string UISelectPlayer = nameof(UISelectPlayer);
         internal const string VendingMachine = nameof(VendingMachine);
         internal const string WoodDebris = nameof(WoodDebris);

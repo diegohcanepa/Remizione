@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 
@@ -60,7 +61,7 @@ namespace ScaryCastle
             }
             else
             {
-                MouseCursor.Instance.State = MouseCursorState.None;
+                Actor.Session.Inventory.HeldItem = null;
                 var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
                 Actor.MoveTo(destination);
                 return true;
@@ -73,7 +74,15 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
                 return false;
 
-            return false;
+            if (Actor.Session.Inventory.HeldItem == null)
+                Actor.Session.ShowInventory();
+            else
+            {
+                Sound.Play(SoundNames.UISelectD);
+                Actor.Session.Inventory.HeldItem = null;
+            }
+
+            return true;
         }
 
         #endregion

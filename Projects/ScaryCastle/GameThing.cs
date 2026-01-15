@@ -430,26 +430,6 @@ namespace ScaryCastle
             return true;
         }
 
-        // CanInteractWithKeyItem
-        [ScriptProperty]
-        public bool CanInteractWithKeyItem
-        {
-            get
-            {
-                if (Session.Player == null)
-                    return false;
-
-                var friendlyItems = Session.GetFriendlyItems(DeclaredName);
-                for (var i = 0; i < friendlyItems.Length; i++)
-                {
-                    if (Session.Inventory.Find(friendlyItems[i].Name) != null)
-                        return true;
-                }
-
-                return false;
-            }
-        }
-
         // CanTakeDamage
         public bool CanTakeDamage(GameThing attacker)
         {

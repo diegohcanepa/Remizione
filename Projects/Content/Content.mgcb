@@ -920,6 +920,18 @@
 /processorParam:Quality=Best
 /build:Audio/FX/UISelectB.wav;Audio/FX/UISelectB
 
+#begin Audio/FX/UISelectC.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/UISelectC.wav;Audio/FX/UISelectC
+
+#begin Audio/FX/UISelectD.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/UISelectD.wav;Audio/FX/UISelectD
+
 #begin Audio/FX/UISelectPlayer.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -1045,6 +1057,12 @@
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
 /build:Effects/Lighting.fx
+
+#begin Effects/Outline.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/Outline.fx
 
 #begin Effects/PlaneDeformation.fx
 /importer:EffectImporter

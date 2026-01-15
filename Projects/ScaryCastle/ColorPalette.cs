@@ -19,32 +19,11 @@ namespace ScaryCastle
             internal static Color SceneShade { get; } = Color.Black * .6f;
         }
 
-        // Cycle
-        internal static class Cycle
-        {
-            internal static Color Indulgence { get; } = new(104, 111, 153);
-            internal static Color Penance { get; } = new(157, 81, 81);
-            internal static Color PenanceActive { get; } = new(180, 67, 67);
-        }
-
         // CreditHeading
         internal static Color CreditHeading { get; } = new Color(230, 190, 90);
 
         // CreditLine
         internal static Color CreditLine { get; } = new Color(230, 230, 212);
-
-        // DestinationMark
-        internal static Color DestinationMark { get; } = new(143, 77, 87);
-
-        // EnergyBolt
-        internal static Color EnergyBolt { get; } = new(240, 181, 65);
-
-        // FaithMeter
-        internal static class FaithMeter
-        {
-            internal static Color Back { get; } = new(20, 24, 46);
-            internal static Color Fore { get; } = new(82, 51, 63);
-        }
 
         // GlobalLight
         internal static class GlobalLight
@@ -59,9 +38,6 @@ namespace ScaryCastle
         // HUDMessage
         internal static Color HUDMessage { get; } = new Color(227, 213, 200);
 
-        // InteractiveTargetOutline
-        internal static Vector4 InteractiveTargetOutline { get; } = (Color.LightCyan * .4f).ToVector4();
-
         // MenuItemTextActive
         internal static Color MenuItemTextActive { get; } = new Color(240, 240, 240);
 
@@ -73,6 +49,9 @@ namespace ScaryCastle
 
         // MessageBoxRedText
         internal static Color MessageBoxRedText { get; } = new Color(224, 144, 144);
+
+        // MouseCursorOutline
+        internal static Vector4 MouseCursorOutline { get; } = (Text.Default * .7f).ToVector4();
 
         // OutdoorLight
         internal static Color OutdoorLight { get; } = new Color(75, 95, 220);
@@ -129,11 +108,5 @@ namespace ScaryCastle
 
         // TextStandardMenuTitle
         internal static Color TextStandardMenuTitle { get; } = new Color(227, 213, 200);
-
-        // TextShadow
-        internal static Color TextShadow { get; } = Color.Black * .5f;
-
-        // UIControlShadow
-        internal static Color UIControlShadow { get; } = Color.Black * .5f;
     }
 }
