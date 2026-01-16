@@ -52,7 +52,6 @@ namespace ScaryCastle
         // InitializeProceduralContent
         private void InitializeProceduralContent()
         {
-            EffectDefinition.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "EffectDefinitions.json"));
             MetaItem.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "MetaItems.json"));
             RoomConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
             ThingConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"),

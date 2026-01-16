@@ -26,6 +26,25 @@ namespace ScaryCastle
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
 
+    // EffectType
+    public enum EffectType
+    {
+        None,
+        Damage,         // Dañar HP
+        Heal,           // Curar HP
+        AddCondition,   // Agregar estado (Veneno, Maldición, Stun)
+        RemoveCondition,// Quitar estado
+        GainEnergy,     // Ganar maná/energía (para cartas)
+    }
+
+    // EffectTarget
+    public enum EffectTarget
+    {
+        Target, // Al que apunto (Enemigo o Jugador si es trampa)
+        Self,   // A mí mismo (Consumible o Buff)
+        All     // A todos (Area of Effect)
+    }
+
     // Faction
     public enum Faction { Neutral, Good, Evil }
 

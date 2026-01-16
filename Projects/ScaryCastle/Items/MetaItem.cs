@@ -2,6 +2,7 @@
 using Engendro.Audio;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 
@@ -12,6 +13,7 @@ namespace ScaryCastle
     /// </summary>
     public sealed class MetaItem
     {
+        private readonly List<EffectDefinition> effects = [];
         private static bool loaded;
         private static readonly Dictionary<string, MetaItem> metaItems = [];
 
@@ -91,17 +93,6 @@ namespace ScaryCastle
             // SpawnWeight
             SpawnWeight = element.GetFloat("spawnWeight", 1);
 
-            // Effect
-            this.Effect = new($"<{Name} Effect>")
-            {
-                Damage = damage,
-                DamageType = damageType,
-                HP = hp,
-                ImpactWord = impactWord,
-                LuckBonus = luckBonus,
-                Sound = sound
-            };
-
             this.LocalizedDescription = Localization.GetItemDescription(this);
             this.LocalizedDisplayName = Localization.GetItemName(this);
             this.Image = Atlases.UI.FindImage(Name);
@@ -114,7 +105,17 @@ namespace ScaryCastle
                 _ => 5
             };
 
+            if (element.TryGetProperty("effects", out JsonElement effectsArray))
+            {
+                foreach (var effectJson in effectsArray.EnumerateArray())
+                {
+                    effects.Add(new(effectJson));
+                }
+            }
+
             metaItems.Add(Name, this);
+
+            Effects = effects.AsReadOnly();
         }
 
         #endregion
@@ -192,8 +193,8 @@ namespace ScaryCastle
         // DurabilityCost
         public float DurabilityCost { get; }
 
-        // Effect
-        public EffectDefinition Effect { get; }
+        // Effects
+        public ReadOnlyCollection<EffectDefinition> Effects { get; }
 
         // Image
         public AtlasImage? Image { get; }

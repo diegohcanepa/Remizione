@@ -65,16 +65,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // ApplyDamage
-        public void ApplyDamage(GameThing attacker, GameThing target)
-        {
-            if (MetaItem.Effect.ApplyDamage(attacker, target))
-            {
-                if (MetaItem.Durability > 0 && Durability > 0)
-                    Durability -= 1;
-            }
-        }
-
         // ConsumptionCooldown
         public int ConsumptionCooldown { get; set; }
 
@@ -132,6 +122,7 @@ namespace ScaryCastle
         {
             string value = string.Empty;
 
+            /*
             // Health
             if (property == ItemProperty.Health && MetaItem.Effect.HP is DiceExpression exp)
                 value = exp.GetValueRangeAsString();
@@ -139,6 +130,8 @@ namespace ScaryCastle
             // Chance
             else if (property == ItemProperty.Chance)
                 value = MetaItem.SkillChance.ToString(CultureInfo.InvariantCulture) + "%";
+
+                        */
 
             return $"{Localization.GetValue(property)}: {value}";
         }
@@ -193,6 +186,7 @@ namespace ScaryCastle
         // Use
         public bool Use(GameThing? owner)
         {
+            /*
             if (owner != null && MetaItem.Effect.HP != null)
                 owner.HP += MetaItem.Effect.HP.Roll();
 
@@ -221,6 +215,7 @@ namespace ScaryCastle
             }
 
             InvalidateDisplayText();
+            */
 
             return true;
         }

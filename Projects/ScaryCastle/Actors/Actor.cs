@@ -15,8 +15,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly ActorCloseAttackState closeAttackState;
-        private readonly ActorConsumeState consumeState;
         private readonly ActorContactDamageState contactDamageState;
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
@@ -66,17 +64,12 @@ namespace ScaryCastle
             headTween.RandomizeTime();
 
             this.standState = new ActorStandState(this);
-            this.closeAttackState = new ActorCloseAttackState(this);
 
             this.StateMachine = new ActorStateMachine(this, standState);
             this.StateMachine.RegisterState(new ActorAnimateState(this));
             this.StateMachine.RegisterState(new ActorDeathState(this));
             this.StateMachine.RegisterState(new ActorHurtState(this));
             this.StateMachine.RegisterState(new ActorMoveState(this));
-            this.StateMachine.RegisterState(closeAttackState);
-
-            consumeState = new ActorConsumeState(this);
-            this.StateMachine.RegisterState(consumeState);
 
             contactDamageState = new ActorContactDamageState(this);
             this.StateMachine.RegisterState(contactDamageState);
@@ -104,35 +97,10 @@ namespace ScaryCastle
 
         #region Private members
 
-        // ApplyContactDamage
-        private void ApplyContactDamage(GameThing attacker)
-        {
-            if (session.IsAwaiting || !CanChangeState || attacker.ContactDamageType == DamageType.None)
-                return;
-
-            if (!CanTakeDamage(attacker))
-                return;
-
-            if (attacker.ContactDamageEffect == null)
-                return;
-
-            Stand();
-
-            attacker.ContactDamageEffect.ApplyDamage(attacker, this);
-
-            StateMachine.ChangeState(contactDamageState.Name);
-        }
-
         // InflictContactDamage
         private bool InflictContactDamage()
         {
-            if (session.IsAwaiting)
-                return false;
-
-            if (ContactDamageType == DamageType.None)
-                return false;
-
-            if (Room == null)
+            if (Room == null || session.IsAwaiting || Config == null || Config.Effects.Count == 0)
                 return false;
 
             for (int i = 0; i < Room.CulledThings.Count; i++)
@@ -153,13 +121,13 @@ namespace ScaryCastle
                     {
                         if (RuntimeCollider.Contains(actor.Position))
                         {
-                            actor.ApplyContactDamage(this);
+                            EffectResolver.Apply(Config.Effects, this, actor);
                             return true;
                         }
                     }
                     else if (RuntimeHotspot.ContainsVertex(actor.RuntimeHotspot))
                     {
-                        actor.ApplyContactDamage(this);
+                        EffectResolver.Apply(Config.Effects, this, actor);
                         return true;
                     }
                 }
@@ -412,14 +380,14 @@ namespace ScaryCastle
         }
 
         // OnTakeDamage
-        protected override void OnTakeDamage(GameThing attacker, int damage, DamageType damageType)
+        protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
         {
             if (IsPlayer)
             {
                 Game.SceneManager.PopUntil(Session);
 
-                var fullHearts = damage / 2;
-                var hasHalfHeart = damage % 2 == 1;
+                var fullHearts = amount / 2;
+                var hasHalfHeart = amount % 2 == 1;
 
                 for (var i = 0; i < fullHearts; i++)
                 {
@@ -538,16 +506,6 @@ namespace ScaryCastle
 
                 return StateMachine.CurrentState is ActorStandState or ActorMoveState;
             }
-        }
-
-        // ConsumeItem
-        public bool ConsumeItem(Item item)
-        {
-            Stand();
-            item.Use(this);
-            consumeState.Item = item;
-            StateMachine.ChangeState(consumeState.Name);
-            return true;
         }
 
         // FastMove

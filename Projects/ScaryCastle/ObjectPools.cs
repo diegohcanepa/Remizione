@@ -15,8 +15,5 @@ namespace ScaryCastle
 
         // FloatingTexts
         public ObjectPool<FloatingText> FloatingTexts { get; } = new ObjectPool<FloatingText>(() => new FloatingText(session), 30);
-
-        // Pickups
-        public ObjectPool<Pickup> Pickups { get; } = new ObjectPool<Pickup>(() => new Pickup(session, string.Empty), 30);
     }
 }

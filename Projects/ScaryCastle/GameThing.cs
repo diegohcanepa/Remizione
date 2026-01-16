@@ -431,15 +431,9 @@ namespace ScaryCastle
         }
 
         // CanTakeDamage
-        public bool CanTakeDamage(GameThing attacker)
+        public bool CanTakeDamage()
         {
-            if (IsDead || attacker.Faction == Faction)
-                return false;
-
-            if (blinker.IsRunning)
-                return false;
-
-            return true;
+            return !IsDead && !blinker.IsRunning;
         }
 
         // Collider
@@ -505,23 +499,6 @@ namespace ScaryCastle
 
         // ContactDamagePolygon
         public TestPolygon ContactDamagePolygon { get; set; } = TestPolygon.Collider;
-
-        // ContactDamageType
-        public DamageType ContactDamageType
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    ContactDamageEffect = EffectDefinition.Find(field.ToString() + "Damage");
-                }
-            }
-        }
-
-        // ContactDamageMetaItem
-        public EffectDefinition? ContactDamageEffect { get; private set; }
 
         // Die
         [ScriptMethod]
@@ -1002,13 +979,9 @@ namespace ScaryCastle
         }
 
         // TakeDamage
-        public void TakeDamage(GameThing attacker, EffectDefinition effect)
+        public void TakeDamage(GameThing attacker, int amount, DamageType damageType, ImpactWordName impactWordName)
         {
-            if (effect.Damage == null)
-                return;
-
-            var amount = effect.Damage.Roll();
-            if (amount <= 0 || !CanTakeDamage(attacker))
+            if (amount <= 0 || !CanTakeDamage())
                 return;
 
             if (HurtSound != null)
@@ -1024,13 +997,13 @@ namespace ScaryCastle
             }
 
             // Impact word
-            if (MaxHP > 0 && effect.ImpactWord != ImpactWordName.None && GetImpactWordPosition() is Vector2 wordPos)
-                Session.ImpactWordPool.Get()?.Show(effect.ImpactWord, wordPos);
+            if (MaxHP > 0 && impactWordName != ImpactWordName.None && GetImpactWordPosition() is Vector2 wordPos)
+                Session.ImpactWordPool.Get()?.Show(impactWordName, wordPos);
 
             if (MaxHP == 0)
                 return;
 
-            amount = (int)(amount * GetResistanceModifier(effect.DamageType));
+            amount = (int)(amount * GetResistanceModifier(damageType));
             if (amount > HP)
                 amount = HP;
 
@@ -1042,11 +1015,6 @@ namespace ScaryCastle
             }
             else
             {
-                var destination = Position;
-
-                var bottomDistance = Math.Abs(Y - attacker.Y);
-                var topDistance = Math.Abs(Y - attacker.BoundingBox.Top);
-
                 hurtTween ??= new();
                 hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
 
@@ -1055,19 +1023,8 @@ namespace ScaryCastle
                 else
                     blinker.Stop();
 
-                /*
-                if (amount > 0 && this != Session.Player)
-                    Session.ObjectPools.FloatingTexts.Get()?.ShowDamage(GetFloatingTextPosition(knockback), amount.ToString(CultureInfo.InvariantCulture), critical);
-
-                if (Session.Player == attacker)
-                    Session.HUD.TargetMeter.Target = this;
-
-                else if (Session.Player == this)
-                    Session.HUD.TargetMeter.Target = attacker;
-                */
-
                 if (amount > 0)
-                    OnTakeDamage(attacker, amount, effect.DamageType);
+                    OnTakeDamage(attacker, amount, damageType);
             }
         }
 

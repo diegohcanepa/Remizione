@@ -12,129 +12,29 @@ namespace ScaryCastle
     /// </summary>
     public sealed class EffectDefinition
     {
-        private static readonly Dictionary<string, EffectDefinition> effects = [];
-        private static bool loaded;
-
-        // Constructor
-        private EffectDefinition(JsonElement element)
+        // Constructor privado
+        public EffectDefinition(JsonElement element)
         {
-            // Name
-            this.Name = element.GetProperty("name").GetString() ?? throw new InvalidDataException("Name not found.");
-
-            CodeContract.ValidName(this.Name, string.Empty);
-
-            Utils.AssertName(Name, this);
-
-            // Damage
-            if (element.TryGetProperty("damage", out JsonElement damageElement) && damageElement.GetString() is string damageValue)
-                Damage = new(damageValue);
-
-            // DamageType
-            if (element.TryGetProperty("damageType", out JsonElement damageTypeElement) && damageTypeElement.GetString() is string damageTypeValue)
-                DamageType = Enum.Parse<DamageType>(damageTypeValue);
-
-            // HP
-            if (element.TryGetProperty("hp", out JsonElement hpElement) && hpElement.GetString() is string hpValue)
-                HP = new(hpValue);
-
-            // ImpactWord
-            if (element.TryGetProperty("impactWord", out JsonElement impactWordElement) && impactWordElement.GetString() is string impactWordValue)
-                ImpactWord = Enum.Parse<ImpactWordName>(impactWordValue);
-
-            // LuckBonus
-            if (element.TryGetProperty("luckBonus", out JsonElement luckBonusElement))
-                LuckBonus = luckBonusElement.GetSingle();
-
-            // Sound
-            if (element.TryGetProperty("sound", out JsonElement soundElement) && soundElement.GetString() is string soundValue)
-                Sound = Sound.Get(soundValue);
-
-            effects.Add(Name, this);
+            Amount = element.GetObject("amount", v => new DiceExpression(v));
+            DamageType = element.GetEnum("damageType", DamageType.None);
+            EffectType = element.GetEnum("effectType", EffectType.None);
+            Sound = element.GetObject("sound", Sound.Get);
+            Target = element.GetEnum("target", EffectTarget.Target);
         }
 
-        // Constructor
-        public EffectDefinition(string name)
-        {
-            this.Name = name;
-        }
-
-        #region Static members
-
-        // All
-        public static IEnumerable<EffectDefinition> All => effects.Values;
-
-        // Find
-        public static EffectDefinition? Find(string name)
-        {
-            return effects.TryGetValue(name, out var result) ? result : null;
-        }
-
-        // Get
-        public static EffectDefinition Get(string name)
-        {
-            return Find(name) ?? throw new InvalidOperationException($"{nameof(EffectDefinition)} '{name}' not found.");
-        }
-
-        // Load
-        public static void Load(string fileName)
-        {
-            if (loaded)
-                throw new InvalidOperationException("Data is already loaded.");
-
-            Utils.LoadJsonData(fileName, element => new EffectDefinition(element));
-
-            loaded = true;
-        }
-
-        #endregion
-
-        // ApplyDamage
-        public bool ApplyDamage(GameThing attacker, GameThing target)
-        {
-            if (Damage == null)
-                return false;
-
-            target.TakeDamage(attacker, this);
-
-            return true;
-        }
-
-        // ApplyHP
-        public bool ApplyHP(GameThing target)
-        {
-            if (HP == null)
-                return false;
-
-            target.HP += HP.Roll();
-
-            return true;
-        }
-
-        // Damage
-        public DiceExpression? Damage { get; init; }
+        // Amount
+        public DiceExpression? Amount { get; }
 
         // DamageType
-        public DamageType DamageType { get; init; }
+        public DamageType DamageType { get; }
 
-        // HP
-        public DiceExpression? HP { get; init; }
-
-        // ImpactWord
-        public ImpactWordName ImpactWord { get; init; }
-
-        // LuckBonus
-        public Ratio LuckBonus { get; init; }
-
-        // Name
-        public string Name { get; }
+        // EffectType
+        public EffectType EffectType { get; }
 
         // Sound
-        public Sound? Sound { get; init; }
+        public Sound? Sound { get; }
 
-        // ToString
-        public override string ToString()
-        {
-            return Name;
-        }
+        // Target
+        public EffectTarget Target { get; }
     }
 }

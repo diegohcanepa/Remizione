@@ -12,6 +12,7 @@ namespace ScaryCastle
     {
         private static readonly Dictionary<string, ThingConfig> data = [];
         private static readonly List<ThingConfig> dataList = [];
+        private readonly List<EffectDefinition> effects = [];
         private readonly List<PlacementType> placements = [];
 
         #region Constructor
@@ -58,6 +59,16 @@ namespace ScaryCastle
 
             this.Placements = placements.AsReadOnly();
 
+            if (element.TryGetProperty("effects", out JsonElement effectsArray))
+            {
+                foreach (var effectJson in effectsArray.EnumerateArray())
+                {
+                    effects.Add(new(effectJson));
+                }
+            }
+
+            Effects = effects.AsReadOnly();
+
             data.Add(Name, this);
             dataList.Add(this);
         }
@@ -85,6 +96,9 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // Effects
+        public ReadOnlyCollection<EffectDefinition> Effects { get; }
 
         // MaxPerRoom
         public int MaxPerRoom { get; }

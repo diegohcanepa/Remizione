@@ -17,7 +17,6 @@ namespace ScaryCastle
         private bool damageApplied;
         private int cooldown;
         private int cooldownInterval;
-        private static readonly EffectDefinition effect = EffectDefinition.Get(nameof(SpearTrap));
         private int upCooldown;
         private SpearState state;
 
@@ -115,7 +114,8 @@ namespace ScaryCastle
                 else if (!damageApplied && Session.Player != null && RuntimeHotspot.BoundingRectangleF.Intersects(Session.Player.RuntimeCollider.BoundingRectangleF))
                 {
                     damageApplied = true;
-                    effect.ApplyDamage(this, Session.Player);
+                    if (Config != null)
+                        EffectResolver.Apply(Config.Effects, this, Session.Player);
                 }
             }
 

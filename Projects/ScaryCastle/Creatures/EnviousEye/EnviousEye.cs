@@ -28,13 +28,6 @@ namespace ScaryCastle
             AIStateMachine.ChangeState(AIStateName.Decide);
         }
 
-        // OnTakeDamage
-        protected override void OnTakeDamage(GameThing attacker, int damage, DamageType damageType)
-        {
-            base.OnTakeDamage(attacker, damage, damageType);
-            AIStateMachine.ChangeState(AIStateName.Decide);
-        }
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {

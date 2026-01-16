@@ -18,7 +18,6 @@ namespace ScaryCastle
         private const float animationSpeed = 14;
         private readonly UIButton buttonClose;
         private readonly UIButton buttonInfo;
-        private readonly ItemInfoScene infoScene;
         private readonly TextSprite itemNameText;
         private int selectedIndex;
         private readonly GameSession session;
@@ -88,8 +87,6 @@ namespace ScaryCastle
                 Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -25),
                 Scale = ScaleInfo.Text.Huge
             };
-
-            this.infoScene = new(Game);
         }
 
         #endregion
@@ -231,14 +228,6 @@ namespace ScaryCastle
             if (buttonClose.TestPressed(PlayerIndex.One))
             {
                 SceneController.Pop();
-                return HandleInputResult.Handled;
-            }
-
-            // Info
-            if (SelectedItem?.Item != null && buttonInfo.TestPressed(PlayerIndex.One))
-            {
-                infoScene.Item = SelectedItem.Item;
-                infoScene.SceneController.Push();
                 return HandleInputResult.Handled;
             }
 

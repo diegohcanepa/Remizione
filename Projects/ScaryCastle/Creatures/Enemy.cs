@@ -9,7 +9,6 @@
         public Enemy(GameSession session, string name)
             : base(session, name)
         {
-            ContactDamageType = DamageType.Physical;
             Faction = Faction.Evil;
         }
     }

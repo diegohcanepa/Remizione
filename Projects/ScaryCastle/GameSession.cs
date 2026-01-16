@@ -126,7 +126,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(Monitor));
             AotTypeRegistry.Register(typeof(EnviousEye));
             AotTypeRegistry.Register(typeof(NumberSix));
-            AotTypeRegistry.Register(typeof(Pickup));
             AotTypeRegistry.Register(typeof(PostClock));
             AotTypeRegistry.Register(typeof(Pottery));
             AotTypeRegistry.Register(typeof(Prop));
@@ -545,10 +544,6 @@ namespace ScaryCastle
 
         // ObjectPools
         public ObjectPools ObjectPools { get; }
-
-        // Pickup
-        [ScriptProperty]
-        public Pickup? Pickup => OutcomeTarget as Pickup;
 
         // Player
         [ScriptProperty]
