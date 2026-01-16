@@ -14,6 +14,9 @@ namespace ScaryCastle
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }
 
+    // ConsumptionType
+    public enum ConsumptionType { Quantity, Durability, None }
+
     // DamageType
     public enum DamageType { None, Physical, Acid, Explosive, Fire, Ice, Lightning, Poison }
 
@@ -41,14 +44,8 @@ namespace ScaryCastle
     // ImpactWordName
     public enum ImpactWordName { None, AghGreen, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
 
-    // InventoryVerb
-    public enum InventoryVerb { TakeOff, Equip, Use }
-
-    // ItemAction
-    public enum ItemAction { None, Place, Throw }
-
     // ItemCategory
-    public enum ItemCategory { Active, Consumable, Passive, KeyItem, Pickup }
+    public enum ItemCategory { Explosive, Food, Luck, Medicine, Misc }
 
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }

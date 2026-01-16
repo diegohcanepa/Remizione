@@ -132,9 +132,6 @@ namespace ScaryCastle
         // Drop
         public bool Drop(ProceduralRoom room, Vector2 origin, MetaItem metaItem)
         {
-            if (metaItem.Category != ItemCategory.Pickup)
-                return false;
-
             this.room = room;
 
             room.Children.Add(this);

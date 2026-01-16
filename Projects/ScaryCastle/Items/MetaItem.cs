@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Engendro.Audio;
-using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,13 +35,17 @@ namespace ScaryCastle
             if (Enum.IsDefined(typeof(ItemCategory), Name))
                 throw new InvalidOperationException($"The name '{Name}' cannot be used because it is an item category.");
 
-            // Action
-            if (element.TryGetProperty("action", out JsonElement actionElement) && actionElement.GetString() is string actionValue)
-                Action = Enum.Parse<ItemAction>(actionValue);
-
             // Category
             if (element.TryGetProperty("category", out JsonElement categoryElement) && categoryElement.GetString() is string categoryValue)
                 Category = Enum.Parse<ItemCategory>(categoryValue);
+
+            // ConsumptionInterval
+            if (element.TryGetProperty("consumptionInterval", out JsonElement consumptionIntervalElement))
+                ConsumptionInterval = int.Clamp(consumptionIntervalElement.GetInt32(), 0, consumptionIntervalElement.GetInt32());
+
+            // ConsumptionType
+            if (element.TryGetProperty("consumptionType", out JsonElement consumptionTypeElement) && consumptionTypeElement.GetString() is string consumptionTypeValue)
+                ConsumptionType = Enum.Parse<ConsumptionType>(consumptionTypeValue);
 
             // Damage
             DiceExpression? damage = null;
@@ -56,7 +59,11 @@ namespace ScaryCastle
 
             // Durability
             if (element.TryGetProperty("durability", out JsonElement durabilityElement))
-                Durability = durabilityElement.GetInt32();
+                Durability = durabilityElement.GetSingle();
+
+            // DurabilityCost
+            if (element.TryGetProperty("durabilityCost", out JsonElement durabilityCostElement))
+                DurabilityCost = durabilityCostElement.GetSingle();
 
             // HP
             DiceExpression? hp = null;
@@ -68,24 +75,14 @@ namespace ScaryCastle
             if (element.TryGetProperty("impactWord", out JsonElement impactWordElement) && impactWordElement.GetString() is string impactWordValue)
                 impactWord = Enum.Parse<ImpactWordName>(impactWordValue);
 
-            // IsUnique
-            IsUnique = Category == ItemCategory.Passive;
-            if (element.TryGetProperty("isUnique", out JsonElement isUniqueElement))
-                IsUnique = isUniqueElement.GetBoolean();
-
-            // Knockback
-            var knockback = Vector2.Zero;
-            if (element.TryGetProperty("knockback", out JsonElement knockbackElement) && knockbackElement.GetString() is string knockbackValue)
-                knockback = DataConvert.ToVector2(knockbackValue);
+            // IsStackable
+            if (element.TryGetProperty("isStackable", out JsonElement isStackableElement))
+                IsStackable = isStackableElement.GetBoolean();
 
             // LuckBonus
             Ratio luckBonus = 0;
             if (element.TryGetProperty("luckBonus", out JsonElement luckBonusElement))
                 luckBonus = luckBonusElement.GetSingle();
-
-            // PassiveEffectCooldown
-            if (element.TryGetProperty("passiveEffectCooldown", out JsonElement passiveEffectCooldownElement))
-                PassiveEffectCooldown = passiveEffectCooldownElement.GetInt32();
 
             // PickupSound
             if (element.TryGetProperty("pickupSound", out JsonElement pickupSoundElement) && pickupSoundElement.GetString() is string pickupSoundValue)
@@ -116,10 +113,10 @@ namespace ScaryCastle
             if (element.TryGetProperty("sound", out JsonElement soundElement) && soundElement.GetString() is string soundValue)
                 sound = Sound.Get(soundValue);
 
-            // Weight
-            Weight = 1;
-            if (element.TryGetProperty("weight", out JsonElement weightElement))
-                Weight = weightElement.GetSingle();
+            // SpawnWeight
+            SpawnWeight = 1;
+            if (element.TryGetProperty("spawnWeight", out JsonElement spawnWeightElement))
+                SpawnWeight = spawnWeightElement.GetSingle();
 
             // Effect
             this.Effect = new($"<{Name} Effect>")
@@ -206,14 +203,20 @@ namespace ScaryCastle
 
         #endregion
 
-        // Action
-        public ItemAction Action { get; }
-
         // Category
         public ItemCategory Category { get; }
 
+        // ConsumptionInterval
+        public int ConsumptionInterval { get; }
+
+        // ConsumptionType
+        public ConsumptionType ConsumptionType { get; } 
+
         // Durability
-        public int Durability { get; }
+        public Ratio Durability { get; }
+
+        // DurabilityCost
+        public float DurabilityCost { get; }
 
         // Effect
         public EffectDefinition Effect { get; }
@@ -221,14 +224,8 @@ namespace ScaryCastle
         // Image
         public AtlasImage? Image { get; }
 
-        // IsConsumable
-        public bool IsConsumable => Category is ItemCategory.Consumable;
-
-        // IsPassive
-        public bool IsPassive => PassiveEffectCooldown > 0;
-
-        // IsUnique
-        public bool IsUnique { get; }
+        // IsStackable
+        public bool IsStackable { get; }
 
         // LocalizedDescription
         public string LocalizedDescription { get; }
@@ -238,9 +235,6 @@ namespace ScaryCastle
 
         // Name
         public string Name { get; }
-
-        // PassiveEffectCooldown
-        public int PassiveEffectCooldown { get; }
 
         // PickupSound
         public Sound? PickupSound { get; }
@@ -260,13 +254,13 @@ namespace ScaryCastle
         // SkillChance
         public int SkillChance { get; }
 
+        // SpawnWeight
+        public float SpawnWeight { get; }
+
         // ToString
         public override string ToString()
         {
             return Name;
         }
-
-        // Weight
-        public float Weight { get; }
     }
 }

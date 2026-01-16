@@ -4,11 +4,6 @@
     {
       "name": "EnviousEye",
       "placements": ["WalkArea"]
-    },
-    {
-      "name": "Zabul",   
-      "maxSpawnAmount": 3,
-      "placements": ["WalkArea"]
     }
   ]
 }

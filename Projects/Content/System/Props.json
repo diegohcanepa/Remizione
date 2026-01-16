@@ -19,7 +19,7 @@
       "maxPerRun": 5,
       "leafRoomOnly": false,
       "placements": ["WallFrontBase"],
-      "preferredLootCategory": "Consumable",
+      "preferredLootCategory": "Food",
       "tags": "vendingMachine"
     }
   ]

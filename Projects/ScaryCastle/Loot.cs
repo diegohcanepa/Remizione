@@ -56,7 +56,8 @@ namespace ScaryCastle
                     continue;
 
                 // Discard unique items
-                if (metaItem.IsUnique && session.Inventory.Find(metaItem.Name) != null)
+                // TODO: Must check inventory and all room bags
+                if (!metaItem.IsStackable && session.Inventory.Find(metaItem.Name) != null)
                     continue;
 
                 candidates.Add(metaItem);
@@ -66,7 +67,7 @@ namespace ScaryCastle
             var table = new ChanceTable();
             foreach (var c in candidates)
             {
-                float weight = AdjustWeightByQuality(roomConfig.Difficulty, c.Quality, c.Weight);
+                float weight = AdjustWeightByQuality(roomConfig.Difficulty, c.Quality, c.SpawnWeight);
                 table.Add(c.Name, weight, 1, c);
             }
 
@@ -76,9 +77,11 @@ namespace ScaryCastle
         // GetForVending
         internal static MetaItem GetForVending(GameSession session, RoomConfig roomConfig, Realm? lootRealm, ItemCategory? lootCategory)
         {
+            /*
             // 1. Intentamos obtener el ítem ideal para esta habitación
             if (Get(session, roomConfig, lootRealm, lootCategory, [ItemCategory.Pickup]) is MetaItem result)
                 return result;
+            */
 
             // 2. PLAN B: Si no hay nada que cumpla los filtros, 
             // buscamos cualquier item de calidad 0-1 que esté desbloqueado.

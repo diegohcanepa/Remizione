@@ -20,11 +20,11 @@ namespace ScaryCastle
             if (graph.Config is not RoomConfig config)
                 throw new InvalidOperationException();
 
-            //Zoom = 1.15f;
+            Zoom = 1.1f;
 
             AtlasName = graph.Config?.Name ?? string.Empty;
             DefaultImageName = AtlasName;
-            //GlobalLightSize = new(2.2f);
+            GlobalLightSize = new(2.2f, 2);
             LightMapColor = new(50, 50, 50);
             LightingSystem = true;
 
@@ -123,11 +123,13 @@ namespace ScaryCastle
             if (!dropChance.Roll())
                 return;
 
+            /*
             var drop = Loot.Get(Session, Config, null, ItemCategory.Pickup);
             RoomGraph.HeartCount++;
 
             if (drop != null)
                 Session.ObjectPools.Pickups.Get()?.Drop(this, GetDropLootPosition(), drop);
+            */
         }
 
         // OnEntering

@@ -11,7 +11,7 @@ namespace ScaryCastle
         public const int Build = 105;
 
         // CameraFollowSpeed
-        public const float CameraSmoothSpeed = .04f;
+        public const float CameraSmoothSpeed = 2;
 
         // ContentRootDirectory
         public const string ContentRootDirectory = "Content";

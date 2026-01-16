@@ -18,11 +18,11 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public Item(Inventory pilgrimSack, MetaItem metaItem)
+        public Item(Inventory inventory, MetaItem metaItem)
         {
-            this.Inventory = pilgrimSack;
+            this.Inventory = inventory;
             this.MetaItem = metaItem;
-            this.PassiveEffectCooldown = metaItem.PassiveEffectCooldown;
+            this.ConsumptionCooldown = metaItem.ConsumptionInterval;
         }
 
         #endregion
@@ -75,6 +75,9 @@ namespace ScaryCastle
             }
         }
 
+        // ConsumptionCooldown
+        public int ConsumptionCooldown { get; set; }
+
         // Count
         public int Count
         {
@@ -83,15 +86,11 @@ namespace ScaryCastle
             {
                 if (value != field)
                 {
-                    field = value;
-
-                    if (Count > 0 && MetaItem.IsUnique)
-                        field = 1;
-
+                    field = int.Clamp(value, 0, MetaItem.IsStackable ? 99 : 1);
                     isDisplayTextDiry = true;
                 }
             }
-        } = 1;
+        }
 
         // DisplayText
         public string DisplayText
@@ -108,12 +107,13 @@ namespace ScaryCastle
         } = string.Empty;
 
         // Durability
-        public int Durability
+        public Ratio Durability
         {
             get;
             set
             {
                 field = value;
+                
                 if (field < 0)
                     field = 0;
 
@@ -138,7 +138,7 @@ namespace ScaryCastle
 
             // Chance
             else if (property == ItemProperty.Chance)
-                value = SkillChance.ToString(CultureInfo.InvariantCulture) + "%";
+                value = MetaItem.SkillChance.ToString(CultureInfo.InvariantCulture) + "%";
 
             return $"{Localization.GetValue(property)}: {value}";
         }
@@ -147,35 +147,13 @@ namespace ScaryCastle
         public int Index => Inventory.IndexOf(this);
 
         // Inventory
-        public Inventory Inventory { get; private set; }
-
-        // IsSelected
-        public bool IsSelected => Inventory.SelectedItem == this;
+        public Inventory Inventory { get; }
 
         // MetaItem
         public MetaItem MetaItem { get; }
 
         // Name
         public string Name => MetaItem.Name;
-
-        // PassiveEffectCooldown
-        public int PassiveEffectCooldown { get; set; }
-
-        /*
-        // Update
-        public void Update(GameTime gameTime)
-        {
-            if (MetaItem.PassiveEffectCooldown > 0)
-            {
-                PassiveEffectCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                if (PassiveEffectCooldown <= 0)
-                {
-                    PassiveEffectCooldown = MetaItem.PassiveEffectCooldown;
-                    Use();
-                }
-            }
-        }
-        */
 
         // Range
         public int Range => MetaItem.Range;
@@ -192,9 +170,6 @@ namespace ScaryCastle
             Inventory.Select(this);
         }
 
-        // SkillChance
-        public int SkillChance => MetaItem.SkillChance;
-
         // ToString
         public override string ToString()
         {
@@ -204,17 +179,15 @@ namespace ScaryCastle
         // Update
         public void Update(GameTime gameTime)
         {
-            /*
-            if (MetaItem.PassiveEffectCooldown > 0 && PassiveEffectCooldown <= 0)
+            if (MetaItem.ConsumptionInterval > 0)
             {
-                PassiveEffectCooldown = MetaItem.PassiveEffectCooldown;
-                Use();
+                ConsumptionCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+                if (ConsumptionCooldown <= 0)
+                {
+                    ConsumptionCooldown = MetaItem.ConsumptionInterval;
+                    Use(null);
+                }
             }
-            else if (PassiveEffectCooldown > 0)
-            {
-                PassiveEffectCooldown -= 1; // Assuming this is called every frame, adjust as necessary
-            }
-            */
         }
 
         // Use
@@ -223,11 +196,28 @@ namespace ScaryCastle
             if (owner != null && MetaItem.Effect.HP != null)
                 owner.HP += MetaItem.Effect.HP.Roll();
 
-            if (!MetaItem.IsPassive && Count > 0)
+            switch (MetaItem.ConsumptionType)
             {
-                Count--;
-                if (Count == 0)
-                    Inventory.Remove(this);
+                // Quantity
+                case ConsumptionType.Quantity:
+                    Count--;
+                    if (Count <= 0)
+                        Inventory.Remove(this);
+                    break;
+
+                // Durability
+                case ConsumptionType.Durability:
+                    Durability -= MetaItem.DurabilityCost;
+                    if (Durability <= 0)
+                        Inventory.Remove(this);
+                    break;
+
+                // None
+                case ConsumptionType.None:
+                    break;
+
+                default:
+                    break;
             }
 
             InvalidateDisplayText();

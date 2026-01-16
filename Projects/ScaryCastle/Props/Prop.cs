@@ -150,7 +150,7 @@ namespace ScaryCastle
         public bool TestSkillChance(Actor actor, Item item, PropState successState)
         {
             var roll = DiceExpression.Dice100.Roll();
-            var successChance = item.SkillChance - SkillChancePenalty;
+            var successChance = item.MetaItem.SkillChance - SkillChancePenalty;
             var success = roll <= successChance;
 
             item.Use(actor);

@@ -327,8 +327,6 @@ namespace ScaryCastle
         {
             Config.ValidateConfigurations(this);
 
-            var keyItems = MetaItem.GetItems(ItemCategory.KeyItem);
-
             var metaItems = new List<MetaItem>();
             foreach (var entity in Entities)
             {

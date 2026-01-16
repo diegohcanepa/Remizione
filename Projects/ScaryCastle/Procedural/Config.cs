@@ -33,11 +33,11 @@ namespace ScaryCastle
 
             // PreferredLootCategory
             if (element.TryGetProperty("preferredLootCategory", out JsonElement preferredLootCategoryElement))
-                PreferredLootCategory = Enum.Parse<ItemCategory>(preferredLootCategoryElement.GetString() ?? "");
+                PreferredLootCategory = Enum.Parse<ItemCategory>(preferredLootCategoryElement.GetString() ?? string.Empty);
 
             // PreferredLootRealm
             if (element.TryGetProperty("preferredLootRealm", out JsonElement preferredLootRealmElement))
-                PreferredLootRealm = Enum.Parse<Realm>(preferredLootRealmElement.GetString() ?? "");
+                PreferredLootRealm = Enum.Parse<Realm>(preferredLootRealmElement.GetString() ?? string.Empty);
 
             // Tags
             Tags = Tags.FromJson(element, "tags");

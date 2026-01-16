@@ -16,7 +16,6 @@ namespace ScaryCastle
 
         private readonly TextSprite amountText;
         private const float animationSpeed = 14;
-        private readonly UIButton buttonAction;
         private readonly UIButton buttonClose;
         private readonly UIButton buttonInfo;
         private readonly ItemInfoScene infoScene;
@@ -88,14 +87,6 @@ namespace ScaryCastle
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -25),
                 Scale = ScaleInfo.Text.Huge
-            };
-
-            // Action button
-            buttonAction = new(Game, InputBindings.UseFriendlyItem)
-            {
-                PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -24),
-                Sound = Sound.Find(SoundNames.UISelectB)
             };
 
             this.infoScene = new(Game);
@@ -184,18 +175,7 @@ namespace ScaryCastle
         // InvalidateSlot
         private void InvalidateSlot()
         {
-            amountText.Text = selectedIndex < 0 || SelectedItem?.Item.MetaItem.IsUnique == true ? null : SelectedItem?.Item.GetDisplayAmount();
-
-            buttonAction.Text = null;
-
-            if (SelectedItem?.Item is Item item)
-            {
-                if (SelectedItem.Item.MetaItem.Category == ItemCategory.Consumable)
-                {
-                    buttonAction.Text = Localization.GetValue(InventoryVerb.Use);
-                }
-            }
-
+            amountText.Text = selectedIndex < 0 || SelectedItem?.Item.MetaItem.IsStackable == false ? null : SelectedItem?.Item.GetDisplayAmount();
         }
 
         // Select
@@ -235,9 +215,6 @@ namespace ScaryCastle
 
             buttonClose.Draw(gameTime);
             buttonInfo.Draw(gameTime);
-
-            if (buttonAction.Text != null)
-                buttonAction.Draw(gameTime);
         }
 
         // OnHandleInput
@@ -340,7 +317,6 @@ namespace ScaryCastle
 
             buttonClose.Update(gameTime);
             buttonInfo.Update(gameTime);
-            buttonAction.Update(gameTime);
         }
 
         #endregion

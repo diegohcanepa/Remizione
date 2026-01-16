@@ -83,7 +83,7 @@ namespace ScaryCastle
             {
                 effect.Color.SetValue(ColorPalette.MouseCursorOutline);
                 effect.TextureSize.SetValue(new Vector2(sprite.Image.Atlas.Texture.Width, sprite.Image.Atlas.Texture.Height));
-                effect.Thickness.SetValue(1);
+                effect.Thickness.SetValue(1.2f);
             }
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, effect?.Effect);

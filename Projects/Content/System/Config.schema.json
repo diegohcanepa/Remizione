@@ -37,11 +37,11 @@
       "type": "string",
       "description": "Categoría preferida para el loot.",
       "enum": [
-        "LeftHand",
-        "RightHand",
-        "Consumable",
-        "Gadget",
-        "KeyItem"
+        "Explosive",
+        "Food",
+        "Luck",
+        "Medicine",
+        "Misc"
       ]
     },
     "preferredLootRealm": {

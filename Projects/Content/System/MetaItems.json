@@ -3,38 +3,25 @@
 	"data": [
 		{
 			"name": "Apple",
-			"category": "Consumable",
+			"category": "Food",
 			"hp": "2",
+			"isStackable": true,
 			"sound": "AppleBite"
 		},
 		{
 			"name": "Burger",
-			"category": "Consumable",
+			"category": "Food",
 			"hp": "8",
 			"sound": "AppleBite"
 		},
 		{
-			"name": "Coin",
-			"category": "KeyItem",
-			"pickupSound": "PickupCoin"
-		},
-		{
 			"name": "Cross",
-			"category": "Passive"
-		},
-		{
-			"name": "Duck",
-			"category": "Active",
-			"action": "Throw",
-			"damage": "1d2",
-			"impactWord": "CuackYellow",
-			"knockback": "4,0",
-			"sound": "ThrowableDuck"
+			"category": "Luck",
+			"consumptionType": "None"
 		},
 		{
 			"name": "Firecracker",
-			"category": "Active",
-			"action": "Place",
+			"category": "Explosive",
 			"damage": "10",
 			"damageType": "Explosive",
 			"impactWord": "KapowStrong",
@@ -42,29 +29,27 @@
 			"sound": "Firecracker"
 		},
 		{
-			"name": "Heart",
-			"category": "Pickup",
-			"hp": "2",
-			"pickupSound": "PickupHeart"
-		},
-		{
 			"name": "Lantern",
-			"category": "Passive"
+			"category": "Misc",
+			"consumptionInterval": 10000,
+			"consumptionType": "Durability",
+			"durability": 1,
+			"durabilityCost": 0.1
 		},
 		{
 			"name": "MasterLockpick",
-			"category": "KeyItem",
+			"category": "Misc",
 			"skillChance": 75
 		},
 		{
 			"name": "RottenApple",
-			"category": "Consumable",
+			"category": "Food",
 			"hp": "1",
 			"sound": "AppleBite"
 		},
 		{
 			"name": "RustyLockpick",
-			"category": "KeyItem",
+			"category": "Misc",
 			"skillChance": 30
 		}
 	]

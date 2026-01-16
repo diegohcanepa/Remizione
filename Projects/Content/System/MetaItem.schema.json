@@ -25,28 +25,31 @@
           "type": "string",
           "description": "El nombre único del item. (Requerido)"
         },
-        "action": {
-          "type": "string",
-          "description": "La acción asociada al item (Enum ItemAction).",
-          "enum": [
-            "None",
-            "Place",
-            "Throw"
-          ]
-        },
         "category": {
           "type": "string",
           "description": "La categoría del item (Enum ItemCategory).",
           "enum": [
-            "None",
-            "Active",
-            "Consumable",
-            "Passive",
-            "KeyItem",
-            "Pickup"
+            "Explosive",
+            "Food",
+            "Luck",
+            "Medicine",
+            "Misc"
           ]
         },
-        "damage": {
+        "consumptionInterval": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Intervalo de tiempo en que se va consumiendo."
+        },
+        "consumptionType": {
+          "type": "string",
+          "description": "Como se consume el item al usarlo.",
+          "enum": [
+            "Quantity",
+            "Durability",
+            "None"
+          ]
+        },        "damage": {
           "type": "string",
           "description": "Expresión de dado para el dado (ej: '1d6+2')."
         },
@@ -65,9 +68,14 @@
           ]
         },
         "durability": {
-          "type": "integer",
+          "type": "number",
           "minimum": 0,
           "description": "Durabilidad del item."
+        },
+        "durabilityCost": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Desgaste al usarlo."
         },
         "hp": {
           "type": "string",
@@ -99,19 +107,10 @@
             "Zap"
           ]
         },
-        "isUnique": {
+        "isStackable": {
           "type": "boolean",
-          "description": "Solo se puede llevar 1."
+          "description": "Permite llevar mas de uno."
         },        
-        "knockback": {
-          "type": "string",
-          "description": "Fuerza de empuje (Vector2) representada como 'X, Y' (ej: '100, 50')."
-        },
-        "passiveEffectCooldown": {
-          "type": "integer",
-          "minimum": 0,
-          "description": "Tiempo de enfriamiento para el efecto pasivo (ms o ticks)."
-        },
         "pickupSound": {
           "type": "string",
           "description": "Nombre del sonido al recoger el item (se busca en Sound.FindNotNull)."
@@ -139,16 +138,16 @@
           "type": "integer",
           "minimum": 0,
           "description": "Probabilidad de habilidad asociada."
-        },
+        },      
         "sound": {
           "type": "string",
           "description": "Nombre del sonido principal al usar el item (se busca en Sound.FindNotNull)."
         },
-        "weight": {
+        "spawnWeight": {
           "type": "number",
           "minimum": 0,
-          "description": "Peso del item (valor por defecto: 1)."
-        }
+          "description": "Probabilidad de habilidad asociada."
+        }        
       },
       "required": [
         "name"

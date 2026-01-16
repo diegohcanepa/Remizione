@@ -66,18 +66,35 @@ namespace Engendro
         #region Private members
 
         // Approach
-        private void Approach(Vector2 targetPosition)
+        private void Approach(Vector2 targetPosition, GameTime gameTime)
         {
+            // 1. Si ya estamos en el objetivo (dentro de la tolerancia), no hacemos nada.
             if (IsTargetFocused)
                 return;
 
-            // Calculates the difference between the current camera position and the target
-            var difference = targetPosition - Position;
+            // 2. Ajuste por Zoom
+            // Cuanto más Zoom (cerca), más lento debe ser el seguimiento visualmente.
+            // Usamos Math.Max(Zoom, 1f) para que si el zoom es menor a 1 (alejado), no se acelere extrañamente.
+            float zoomFactor = Math.Max(Zoom, 1f);
 
-            // Apply interpolation to get closer to the target
-            Position += difference * SmoothSpeed;
+            // 3. Cálculo del factor de interpolación (t)
+            // Multiplicamos por TotalSeconds para independencia de FPS.
+            // IMPORTANTE: Al multiplicar por segundos (que es un número pequeño, ej 0.016),
+            // tu SmoothSpeed actual deberá ser mucho más alta (ej. pasar de 0.1 a 5.0).
+            float timeFactor = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            // Limits the camera position within the edges of the scene
+            // Combinamos velocidad, zoom y tiempo.
+            // El "Lerp" necesita un valor entre 0 y 1.
+            float t = (SmoothSpeed / zoomFactor) * timeFactor;
+
+            // Aseguramos que t nunca sea mayor a 1 (para evitar saltos instantáneos o errores)
+            t = MathHelper.Clamp(t, 0f, 1f);
+
+            // 4. Aplicamos el movimiento usando Lerp (Linear Interpolation)
+            // Lerp te lleva de A a B en un porcentaje t.
+            Position = Vector2.Lerp(Position, targetPosition, t);
+
+            // 5. Restricciones de bordes
             ClampToSceneBounds();
         }
 
@@ -560,7 +577,7 @@ namespace Engendro
             else if (Target != null)
             {
                 if (CanScrollHorizontally || CanScrollVertically)
-                    Approach(Target.Position);
+                    Approach(Target.Position, gameTime);
             }
         }
 

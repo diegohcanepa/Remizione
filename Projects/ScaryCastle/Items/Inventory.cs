@@ -36,8 +36,10 @@ namespace ScaryCastle
                 item = new Item(this, metaItem) { Count = amount };
                 items.Add(item);
             }
-            else if (!metaItem.IsUnique)
+            else
+            {
                 item.Count += amount;
+            }
 
             return item;
         }
