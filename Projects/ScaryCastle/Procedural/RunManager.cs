@@ -71,7 +71,7 @@ namespace ScaryCastle.Procedural
                 var chanceTable = new ChanceTable();
                 foreach (var candidate in candidates)
                 {
-                    chanceTable.Add(candidate.Name, candidate.Weight, 1, candidate);
+                    chanceTable.Add(candidate.Name, candidate.SpawnWeight, 1, candidate);
                 }
 
                 if (chanceTable.GetValue()?.Context is RoomDefinition chosenDefinition)

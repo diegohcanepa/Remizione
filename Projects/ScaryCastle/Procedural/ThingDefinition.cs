@@ -12,7 +12,7 @@ namespace ScaryCastle
     {
         private static readonly Dictionary<string, ThingDefinition> data = [];
         private static readonly List<ThingDefinition> dataList = [];
-        private readonly List<EffectDefinition> effects = [];
+        private readonly List<EffectDescriptor> effects = [];
         private readonly List<PlacementType> placements = [];
 
         #region Constructor
@@ -98,7 +98,7 @@ namespace ScaryCastle
         #endregion
 
         // Effects
-        public ReadOnlyCollection<EffectDefinition> Effects { get; }
+        public ReadOnlyCollection<EffectDescriptor> Effects { get; }
 
         // MaxPerRoom
         public int MaxPerRoom { get; }

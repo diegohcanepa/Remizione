@@ -1,19 +1,16 @@
 ﻿using Engendro;
 using Engendro.Audio;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 
 namespace ScaryCastle
 {
     /// <summary>
-    /// EffectDefinition
+    /// EffectDescriptor
     /// </summary>
-    public sealed class EffectDefinition
+    public sealed class EffectDescriptor
     {
         // Constructor privado
-        public EffectDefinition(JsonElement element)
+        public EffectDescriptor(JsonElement element)
         {
             Amount = element.GetObject("amount", v => new DiceExpression(v));
             DamageType = element.GetEnum("damageType", DamageType.None);

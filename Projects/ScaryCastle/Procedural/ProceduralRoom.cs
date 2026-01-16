@@ -226,7 +226,7 @@ namespace ScaryCastle
                 var chanceTable = new ChanceTable();
                 foreach (var c in candidates)
                 {
-                    var finalWeight = AdjustWeightByDifficulty(Definition.Difficulty, c.Difficulty, c.Weight);
+                    var finalWeight = AdjustWeightByDifficulty(Definition.Difficulty, c.Difficulty, c.SpawnWeight);
                     chanceTable.Add(c.Name, finalWeight);
                 }
 
@@ -283,7 +283,7 @@ namespace ScaryCastle
             var table = new ChanceTable();
             foreach (var c in candidates)
             {
-                var finalWeight = AdjustWeightByDifficulty(Definition.Difficulty, c.Difficulty, c.Weight);
+                var finalWeight = AdjustWeightByDifficulty(Definition.Difficulty, c.Difficulty, c.SpawnWeight);
                 table.Add(c.Name, finalWeight);
             }
 

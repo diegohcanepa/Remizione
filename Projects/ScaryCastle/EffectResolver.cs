@@ -8,7 +8,7 @@ namespace ScaryCastle
     public static class EffectResolver
     {
         // Apply
-        public static void Apply(IList<EffectDefinition> effects, GameThing source, GameThing target)
+        public static void Apply(IList<EffectDescriptor> effects, GameThing source, GameThing target)
         {
             if (effects.Count == 0)
                 return;

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "Definition.schema.json",
+  "title": "Definition Base",
+  "type": "object",
+  "description": "Clase base para definiciones con nombre y peso de aparición.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "El nombre único de la definición. (Requerido)"
+    },
+    "spawnWeight": {
+      "type": "number",
+      "format": "float",
+      "default": 1.0,
+      "maximum": 1.0,
+      "minimum": 0,
+      "description": "Peso o probabilidad asociada a esta configuración. Por defecto es 1."
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

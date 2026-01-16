@@ -11,32 +11,18 @@ namespace ScaryCastle
     /// <summary>
     /// ItemDefinition
     /// </summary>
-    public sealed class ItemDefinition
+    public sealed class ItemDefinition : Definition 
     {
         private static readonly Dictionary<string, ItemDefinition> data = [];
-        private readonly List<EffectDefinition> effects = [];
+        private readonly List<EffectDescriptor> effects = [];
         private static bool loaded;
 
         #region Constructor
 
         // Constructor
         private ItemDefinition(JsonElement element)
+            : base(element)
         {
-            // Name
-            this.Name = element.GetProperty("name").GetString() ?? throw new InvalidDataException("Name not found.");
-
-            CodeContract.ValidName(this.Name, string.Empty);
-
-            Utils.AssertName(Name, this);
-
-            // Name cannot be a realm 
-            if (Enum.IsDefined(typeof(Realm), Name))
-                throw new InvalidOperationException($"The name '{Name}' cannot be used because it is an item realm.");
-
-            // Name cannot be a category
-            if (Enum.IsDefined(typeof(ItemCategory), Name))
-                throw new InvalidOperationException($"The name '{Name}' cannot be used because it is an item category.");
-
             // Category
             Category = element.GetEnum("category", ItemCategory.Misc);
 
@@ -89,9 +75,6 @@ namespace ScaryCastle
 
             // Sound
             Sound? sound = element.GetObject("sound", Sound.Get);
-
-            // SpawnWeight
-            SpawnWeight = element.GetFloat("spawnWeight", 1);
 
             this.LocalizedDescription = Localization.GetItemDescription(this);
             this.LocalizedDisplayName = Localization.GetItemName(this);
@@ -194,7 +177,7 @@ namespace ScaryCastle
         public float DurabilityCost { get; }
 
         // Effects
-        public ReadOnlyCollection<EffectDefinition> Effects { get; }
+        public ReadOnlyCollection<EffectDescriptor> Effects { get; }
 
         // Image
         public AtlasImage? Image { get; }
@@ -207,9 +190,6 @@ namespace ScaryCastle
 
         // LocalizedDisplayName
         public string LocalizedDisplayName { get; }
-
-        // Name
-        public string Name { get; }
 
         // PickupSound
         public Sound? PickupSound { get; }
@@ -228,14 +208,5 @@ namespace ScaryCastle
 
         // SkillChance
         public int SkillChance { get; }
-
-        // SpawnWeight
-        public float SpawnWeight { get; }
-
-        // ToString
-        public override string ToString()
-        {
-            return Name;
-        }
     }
 }

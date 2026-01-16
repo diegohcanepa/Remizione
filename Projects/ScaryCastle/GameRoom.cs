@@ -38,8 +38,6 @@ namespace ScaryCastle
         public GameRoom(GameSession session, string name)
             : base(session, name)
         {
-            Utils.AssertName(name, this);
-
             this.Session = session;
             this.Lights = new NamedObjectReadOnlyCollection<Light>(lights);
             this.TriggerAreas = new RoomAreaReadOnlyCollection<TriggerArea>(triggerAreas);

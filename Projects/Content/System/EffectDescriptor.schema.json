@@ -1,12 +1,12 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "Effect.schema.json",
-  "title": "Effect Data File (Validado con Enums)",
+  "$id": "EffectDescriptor.schema.json",
+  "title": "Effect Descriptor Data File",
   "type": "object",
   "properties": {
     "data": {
       "type": "array",
-      "description": "Una lista de objetos Effect.",
+      "description": "Una lista de EffectDescriptor.",
       "items": {
         "$ref": "#/$defs/Effect"
       }

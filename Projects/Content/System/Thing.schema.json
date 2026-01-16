@@ -4,7 +4,7 @@
   "title": "Thing schema",
   "allOf": [
     {
-      "$ref": "./Core.schema.json"
+      "$ref": "./Entity.schema.json"
     },
     {
       "type": "object",

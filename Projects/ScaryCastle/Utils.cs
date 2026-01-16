@@ -70,25 +70,6 @@ namespace ScaryCastle
             instance.Volume.Current = volume * effectiveVolume;
         }
 
-        // AssertName
-        internal static void AssertName(string name, object sender)
-        {
-            // Name cannot be a definition
-            if (sender is not ItemDefinition)
-            {
-                if (ItemDefinition.Find(name) != null)
-                    throw new InvalidOperationException($"The name '{name}' is already taken by a definition.");
-            }
-
-            // Name cannot be a realm 
-            if (Enum.IsDefined(typeof(Realm), name))
-                throw new InvalidOperationException($"The name '{name}' cannot be used because it is an item realm.");
-
-            // Name cannot be a category
-            if (Enum.IsDefined(typeof(ItemCategory), name))
-                throw new InvalidOperationException($"The name '{name}' cannot be used because it is an item category.");
-        }
-
         // CreateVersionLabel
         internal static TextSprite CreateVersionLabel(EngendroGame game)
         {

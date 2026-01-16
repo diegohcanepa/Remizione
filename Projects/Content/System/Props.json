@@ -1,5 +1,5 @@
 {
-  "$schema": "./ThingData.schema.json",
+  "$schema": "./Prop.schema.json",
   "data": [
     {
       "name": "PotteryA",

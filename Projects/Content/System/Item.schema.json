@@ -16,141 +16,137 @@
   ],
   "$defs": {
     "Item": {
-      "type": "object",
-      "description": "Definición de las propiedades de un Item.",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "El nombre único del item. (Requerido)"
+      "description": "Definición de las propiedades de un Item (Hereda de Definition).",
+      "allOf": [
+        {
+          "$ref": "Definition.schema.json"
         },
-        "category": {
-          "type": "string",
-          "description": "La categoría del item (Enum ItemCategory).",
-          "enum": [
-            "Explosive",
-            "Food",
-            "Luck",
-            "Medicine",
-            "Misc"
-          ]
-        },
-        "consumptionInterval": {
-          "type": "integer",
-          "minimum": 0,
-          "description": "Intervalo de tiempo en que se va consumiendo."
-        },
-        "consumptionType": {
-          "type": "string",
-          "description": "Como se consume el item al usarlo.",
-          "enum": [
-            "Quantity",
-            "Durability",
-            "None"
-          ]
-        },        "damage": {
-          "type": "string",
-          "description": "Expresión de dado para el dado (ej: '1d6+2')."
-        },
-        "damageType": {
-          "type": "string",
-          "description": "El tipo de dado del item (Enum DamageType).",
-          "enum": [
-            "None",
-            "Physical",
-            "Acid",
-            "Explosive",
-            "Fire",
-            "Ice",
-            "Lightning",
-            "Poison"
-          ]
-        },
-        "durability": {
-          "type": "number",
-          "minimum": 0,
-          "description": "Durabilidad del item."
-        },
-        "durabilityCost": {
-          "type": "number",
-          "minimum": 0,
-          "description": "Desgaste al usarlo."
-        },
-        "hp": {
-          "type": "string",
-          "description": "Expresión de dado para los puntos de vida que otorga (ej: '1d4')."
-        },
-        "impactWord": {
-          "type": "string",
-          "description": "La palabra de impacto asociada (Enum ImpactWordName).",
-          "enum": [
-            "None",
-            "AghGreen",
-            "AghRed",
-            "BoomPurple",
-            "BoomRed",
-            "BangBlue",
-            "BangRed",
-            "CrackBlue",
-            "CrackYellow",
-            "CuackPurple",
-            "CuackYellow",
-            "Kapow",
-            "KapowStrong",
-            "OuchBlue",
-            "OuchGreen",
-            "PlopRed",
-            "PlopYellow",
-            "SlapBlue",
-            "SlapRed",
-            "Zap"
-          ]
-        },
-        "isStackable": {
-          "type": "boolean",
-          "description": "Permite llevar mas de uno."
-        },        
-        "pickupSound": {
-          "type": "string",
-          "description": "Nombre del sonido al recoger el item (se busca en Sound.FindNotNull)."
-        },
-        "quality": {
-          "type": "integer",
-          "minimum": 0,
-          "description": "Calidad del item."
-        },
-        "range": {
-          "type": "integer",
-          "minimum": 0,
-          "description": "Rango de ataque o uso del item."
-        },
-        "realm": {
-          "type": "string",
-          "description": "El reino o ámbito del item (Enum Realm).",
-          "enum": [
-            "Earthly",
-            "Infernal",
-            "Celestial"
-          ]
-        },
-        "skillChance": {
-          "type": "integer",
-          "minimum": 0,
-          "description": "Probabilidad de habilidad asociada."
-        },      
-        "sound": {
-          "type": "string",
-          "description": "Nombre del sonido principal al usar el item (se busca en Sound.FindNotNull)."
-        },
-        "spawnWeight": {
-          "type": "number",
-          "minimum": 0,
-          "description": "Probabilidad de habilidad asociada."
-        }        
-      },
-      "required": [
-        "name"
-      ],
-      "additionalProperties": false
+        {
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string",
+              "description": "La categoría del item (Enum ItemCategory).",
+              "enum": [
+                "Explosive",
+                "Food",
+                "Luck",
+                "Medicine",
+                "Misc"
+              ]
+            },
+            "consumptionInterval": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Intervalo de tiempo en que se va consumiendo."
+            },
+            "consumptionType": {
+              "type": "string",
+              "description": "Como se consume el item al usarlo.",
+              "enum": [
+                "Quantity",
+                "Durability",
+                "None"
+              ]
+            },
+            "damage": {
+              "type": "string",
+              "description": "Expresión de dado para el daño (ej: '1d6+2')."
+            },
+            "damageType": {
+              "type": "string",
+              "description": "El tipo de daño del item (Enum DamageType).",
+              "enum": [
+                "None",
+                "Physical",
+                "Acid",
+                "Explosive",
+                "Fire",
+                "Ice",
+                "Lightning",
+                "Poison"
+              ]
+            },
+            "durability": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Durabilidad del item."
+            },
+            "durabilityCost": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Desgaste al usarlo."
+            },
+            "hp": {
+              "type": "string",
+              "description": "Expresión de dado para los puntos de vida que otorga (ej: '1d4')."
+            },
+            "impactWord": {
+              "type": "string",
+              "description": "La palabra de impacto asociada (Enum ImpactWordName).",
+              "enum": [
+                "None",
+                "AghGreen",
+                "AghRed",
+                "BoomPurple",
+                "BoomRed",
+                "BangBlue",
+                "BangRed",
+                "CrackBlue",
+                "CrackYellow",
+                "CuackPurple",
+                "CuackYellow",
+                "Kapow",
+                "KapowStrong",
+                "OuchBlue",
+                "OuchGreen",
+                "PlopRed",
+                "PlopYellow",
+                "SlapBlue",
+                "SlapRed",
+                "Zap"
+              ]
+            },
+            "isStackable": {
+              "type": "boolean",
+              "description": "Permite llevar más de uno."
+            },
+            "pickupSound": {
+              "type": "string",
+              "description": "Nombre del sonido al recoger el item (se busca en Sound.FindNotNull)."
+            },
+            "quality": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Calidad del item."
+            },
+            "range": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Rango de ataque o uso del item."
+            },
+            "realm": {
+              "type": "string",
+              "description": "El reino o ámbito del item (Enum Realm).",
+              "enum": [
+                "Earthly",
+                "Infernal",
+                "Celestial"
+              ]
+            },
+            "skillChance": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Probabilidad de habilidad asociada."
+            },
+            "sound": {
+              "type": "string",
+              "description": "Nombre del sonido principal al usar el item (se busca en Sound.FindNotNull)."
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
     }
   }
 }

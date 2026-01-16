@@ -1,7 +1,6 @@
 ﻿using ScaryCastle.Procedural;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 
 namespace ScaryCastle
@@ -9,16 +8,16 @@ namespace ScaryCastle
     /// <summary>
     /// EntityDefinition
     /// </summary>
-    public abstract class EntityDefinition
+    public abstract class EntityDefinition : Definition
     {
         private static readonly Dictionary<string, EntityDefinition> definitions = [];
 
+        #region Constructor
+
         // Constructor
         protected EntityDefinition(JsonElement element)
+            : base(element)
         {
-            // Name
-            this.Name = element.GetProperty("name").GetString() ?? throw new InvalidDataException("Name not found.");
-
             // Difficulty
             if (element.TryGetProperty("difficulty", out JsonElement difficultyElement))
                 Difficulty = Enum.Parse<Difficulty>(difficultyElement.GetString() ?? "");
@@ -44,12 +43,9 @@ namespace ScaryCastle
 
             // Pools
             Pools = Tags.FromJson(element, "pools");
-
-            // Weight
-            Weight = 1;
-            if (element.TryGetProperty("weight", out JsonElement weightElement))
-                Weight = weightElement.GetSingle();
         }
+
+        #endregion
 
         #region Protected members
 
@@ -73,9 +69,6 @@ namespace ScaryCastle
 
         // MinFloor
         public int MinFloor { get; }
-
-        // Name
-        public string Name { get; }
 
         // PassesFloorConstraints
         public bool PassesFloorConstraints(GameSession session)
@@ -171,8 +164,5 @@ namespace ScaryCastle
                 def.Validate(session);
             }
         }
-
-        // Weight
-        public float Weight { get; }
     }
 }

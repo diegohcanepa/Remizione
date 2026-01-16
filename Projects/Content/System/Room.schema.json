@@ -1,135 +1,148 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "Room.schema.json",
-    "title": "Room schema",
-    "allOf": [
-        {
-            "$ref": "./Core.schema.json"
-        },
-        {
-            "type": "object",
-            "properties": {
-                "allowPools": {
-                    "type": "string",
-                    "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
+    "title": "Room Data File",
+    "type": "object",
+    "properties": {
+        "data": {
+            "type": "array",
+            "description": "Lista de definiciones de Rooms.",
+            "items": {
+                "$ref": "#/$defs/Room"
+            }
+        }
+    },
+    "required": [
+        "data"
+    ],
+    "$defs": {
+        "Room": {
+            "description": "Definición completa de un Room.",
+            "allOf": [
+                {
+                    "$ref": "./Entity.schema.json"
                 },
-                "allowTags": {
-                    "type": "string",
-                    "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
-                },
-                "denyPools": {
-                    "type": "string",
-                    "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
-                },
-                "denyTags": {
-                    "type": "string",
-                    "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
-                },
-                "doorDown": {
-                    "type": "string",
-                    "description": "Posicion de la puerta de abajo."
-                },
-                "doorLeft": {
-                    "type": "string",
-                    "description": "Posicion de la puerta izquierda."
-                },
-                "doorRight": {
-                    "type": "string",
-                    "description": "Posicion de la puerta de derecha."
-                },
-                "doorUp": {
-                    "type": "string",
-                    "description": "Posicion de la puerta de arriba."
-                },
-                "lockType": {
-                    "type": "string",
-                    "default": "None",
-                    "enum": [
-                        "None",
-                        "Padlock"
-                    ],
-                    "description": "Tipo de lock."
-                },
-                "requiresDeadEnd": {
-                    "type": "boolean",
-                    "description": "Solo puede spawnear en rooms que son callejones sin salida."
-                },
-                "maxEnemies": {
-                    "type": "integer",
-                    "minimum": -1,
-                    "description": "Máximo de enemigos."
-                },
-                "maxProps": {
-                    "type": "integer",
-                    "minimum": -1,
-                    "description": "Máximo de props."
-                },
-                "placeholders": {
-                    "type": "array",
-                    "description": "Lista de puntos de spawn predefinidos para este room.",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "position": {
-                                "type": "string"
-                            },
-                            "placement": {
-                                "type": "string",
-                                "enum": [
-                                    "Floor",
-                                    "WallFrontBase",
-                                    "WallFrontHang",
-                                    "WallLeftBase",
-                                    "WallLeftHang",
-                                    "WallRightBase",
-                                    "WallRightHang",
-                                    "Ceiling",
-                                    "WalkArea"
-                                ],
-                                "description": "Ubicación física del placeholder."
-                            },
-                            "fillChance": {
-                                "type": "number",
-                                "minimum": 0,
-                                "maximum": 1,
-                                "default": 1.0,
-                                "description": "Probabilidad (Ratio) de que este punto se llene (0.0 a 1.0)."
-                            },
-                            "target": {
-                                "type": "string",
-                                "default": "Prop",
-                                "enum": [
-                                    "Prop",
-                                    "Enemy",
-                                    "Any"
-                                ],
-                                "description": "¿Qué tipo de objeto puede spawnear aquí?"
+                {
+                    "type": "object",
+                    "properties": {
+                        "allowPools": {
+                            "type": "string",
+                            "description": "Tags permitidos (Scope)."
+                        },
+                        "allowTags": {
+                            "type": "string",
+                            "description": "Tags permitidos (Scope)."
+                        },
+                        "denyPools": {
+                            "type": "string",
+                            "description": "Tags denegados (Scope)."
+                        },
+                        "denyTags": {
+                            "type": "string",
+                            "description": "Tags denegados (Scope)."
+                        },
+                        "doorDown": {
+                            "type": "string",
+                            "description": "Posicion puerta abajo."
+                        },
+                        "doorLeft": {
+                            "type": "string",
+                            "description": "Posicion puerta izquierda."
+                        },
+                        "doorRight": {
+                            "type": "string",
+                            "description": "Posicion puerta derecha."
+                        },
+                        "doorUp": {
+                            "type": "string",
+                            "description": "Posicion puerta arriba."
+                        },
+                        "lockType": {
+                            "type": "string",
+                            "default": "None",
+                            "enum": [
+                                "None",
+                                "Padlock"
+                            ],
+                            "description": "Tipo de lock."
+                        },
+                        "requiresDeadEnd": {
+                            "type": "boolean",
+                            "description": "Solo spawn en dead ends."
+                        },
+                        "maxEnemies": {
+                            "type": "integer",
+                            "minimum": -1,
+                            "description": "Max enemigos."
+                        },
+                        "maxProps": {
+                            "type": "integer",
+                            "minimum": -1,
+                            "description": "Max props."
+                        },
+                        "placeholders": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "position": {
+                                        "type": "string"
+                                    },
+                                    "placement": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Floor",
+                                            "WallFrontBase",
+                                            "WallFrontHang",
+                                            "WallLeftBase",
+                                            "WallLeftHang",
+                                            "WallRightBase",
+                                            "WallRightHang",
+                                            "Ceiling",
+                                            "WalkArea"
+                                        ]
+                                    },
+                                    "fillChance": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 1,
+                                        "default": 1.0
+                                    },
+                                    "target": {
+                                        "type": "string",
+                                        "default": "Prop",
+                                        "enum": [
+                                            "Prop",
+                                            "Enemy",
+                                            "Any"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "position",
+                                    "placement"
+                                ]
                             }
                         },
-                        "required": [
-                            "position",
-                            "placement"
-                        ]
-                    }
-                },
-                "roomType": {
-                    "type": "string",
-                    "default": "Connector",
-                    "enum": [
-                        "Connector",
-                        "Start",
-                        "Exit"
-                    ],
-                    "description": "Tipo de room."
-                },               
-                "walkArea": {
-                    "type": "string",
-                    "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
+                        "roomType": {
+                            "type": "string",
+                            "default": "Connector",
+                            "enum": [
+                                "Connector",
+                                "Start",
+                                "Exit"
+                            ]
+                        },
+                        "walkArea": {
+                            "type": "string",
+                            "description": "Polígono del área caminable."
+                        }
+                    },
+                    "required": [
+                        "walkArea"
+                    ]
                 }
-            },
-            "required": [
-                "walkArea"
             ]
         }
-    ]
+    }
 }

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "Actor.schema.json",
+  "title": "Actor Data File",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "description": "Lista de definiciones de Actores.",
+      "items": {
+        "$ref": "#/$defs/Actor"
+      }
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "$defs": {
+    "Actor": {
+      "description": "Un Actor hereda todo de Thing (y Core) pero se define aquí para validación específica.",
+      "allOf": [
+        {
+          "$ref": "./Thing.schema.json"
+        }
+      ]
+    }
+  }
+}
