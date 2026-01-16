@@ -6,7 +6,6 @@
   "properties": {
     "data": {
       "type": "array",
-      "description": "Lista de definiciones de Props.",
       "items": {
         "$ref": "#/$defs/Prop"
       }
@@ -17,12 +16,13 @@
   ],
   "$defs": {
     "Prop": {
-      "description": "Un Prop hereda todo de Thing (y Core) pero se define aquí para validación específica.",
+      "type": "object",
       "allOf": [
         {
           "$ref": "./Thing.schema.json"
         }
-      ]
+      ],
+      "unevaluatedProperties": false
     }
   }
 }

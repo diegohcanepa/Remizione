@@ -143,8 +143,7 @@
               "type": "string",
               "description": "Nombre del sonido principal al usar el item (se busca en Sound.FindNotNull)."
             }
-          },
-          "additionalProperties": false
+          }
         }
       ]
     }

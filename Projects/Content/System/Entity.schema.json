@@ -8,7 +8,6 @@
       "$ref": "Definition.schema.json"
     },
     {
-      "type": "object",
       "properties": {
         "difficulty": {
           "type": "string",
@@ -22,22 +21,18 @@
         "maxPerRun": {
           "type": "integer",
           "default": 0,
-          "minimum": 0,
-          "description": "Número máximo de veces que este elemento puede aparecer por 'run'."
+          "minimum": 0
         },
         "minFloor": {
           "type": "integer",
           "default": 0,
-          "minimum": 0,
-          "description": "Mínimo de piso requerido para que esta configuración sea elegible."
+          "minimum": 0
         },
         "pools": {
-          "type": "string",
-          "description": "Lista de etiquetas a las que pertenece esta configuración (Tags)."
+          "type": "string"
         },
         "preferredLootCategory": {
           "type": "string",
-          "description": "Categoría preferida para el loot.",
           "enum": [
             "Explosive",
             "Food",
@@ -48,7 +43,6 @@
         },
         "preferredLootRealm": {
           "type": "string",
-          "description": "Reino preferido para el loot.",
           "enum": [
             "Earthly",
             "Infernal",
@@ -56,11 +50,9 @@
           ]
         },
         "tags": {
-          "type": "string",
-          "description": "Lista de etiquetas usadas para aplicar restricciones de 'scope' (Tags)."
+          "type": "string"
         }
-      },
-      "additionalProperties": false
+      }
     }
   ]
 }

@@ -2,6 +2,7 @@
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 
@@ -16,16 +17,17 @@ namespace ScaryCastle
 
         private readonly TextSprite amountText;
         private const float animationSpeed = 14;
+        private readonly ImageSprite bottomGradient;
         private readonly UIButton buttonClose;
         private readonly UIButton buttonInfo;
+        private readonly TextSprite itemDescription;
         private readonly TextSprite itemNameText;
         private int selectedIndex;
         private readonly GameSession session;
         private readonly ImageSprite slotImage;
-        private static readonly Vector2 slotPosition = new(Screen.Center.X, Screen.HUDArea.Bottom - 16);
+        private static readonly Vector2 slotPosition = new(Screen.Center.X, Screen.HUDArea.Bottom - 30);
         private const int spaceBetweenIcons = 15;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 150 };
-        private readonly TextSprite title;
         private float visualIndex;
         private readonly List<VisualItem> visualItems = [];
 
@@ -38,6 +40,15 @@ namespace ScaryCastle
             : base(session.Game)
         {
             this.session = session;
+
+            // Bottom gradient
+            bottomGradient = new ImageSprite(Game, Atlases.UI.BottomGradient)
+            {
+                Opacity = .8f,
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
+                Scale = new Vector2(1, 1.2f)
+            };
 
             // SlotImage
             this.slotImage = new(Game, Atlases.UI.ItemGridSlot)
@@ -52,15 +63,26 @@ namespace ScaryCastle
                 Color = ColorPalette.Text.OrangeLight,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Top),
-                Scale = ScaleInfo.Text.Giant
+                Scale = ScaleInfo.Text.ExtraLarge
+            };
+
+            // Item description
+            itemDescription = new(Game, Fonts.Common)
+            {
+                Color = ColorPalette.Text.Default,
+                Opacity = .8f,
+                MaximumWidth = 140,
+                PivotOrigin = RectanglePoint.Top,
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 5),
+                Scale = ScaleInfo.Text.VeryLarge
             };
 
             // Amount text
-            amountText = new(Game, Fonts.Common)
+            amountText = new(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Default,
+                Color = ColorPalette.Text.Terra,
                 PivotOrigin = RectanglePoint.Top,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -3),
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -4),
                 Scale = ScaleInfo.Text.ExtraLarge
             };
 
@@ -77,15 +99,6 @@ namespace ScaryCastle
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -13),
                 AllowPressEffect = false
-            };
-
-            // Title
-            title = new(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Highlight,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -25),
-                Scale = ScaleInfo.Text.Huge
             };
         }
 
@@ -172,7 +185,7 @@ namespace ScaryCastle
         // InvalidateSlot
         private void InvalidateSlot()
         {
-            amountText.Text = selectedIndex < 0 || SelectedItem?.Item.Definition.IsStackable == false ? null : SelectedItem?.Item.GetDisplayAmount();
+            amountText.Text = selectedIndex < 0 || SelectedItem?.Item.Definition.IsStackable == false || SelectedItem?.Item.Count < 2 ? null : SelectedItem?.Item.GetDisplayAmount();
         }
 
         // Select
@@ -184,6 +197,23 @@ namespace ScaryCastle
             selectedIndex = index;
             var item = visualItems[index].Item;
             itemNameText.Text = index < 0 ? null : item.DisplayText;
+            
+            if (index < 0)
+            {
+                itemDescription.Text = null;
+            }
+            else
+            {
+                if (item.Definition.LocalizedDescription.Length > 120)
+                {
+                    itemDescription.Text = item.Definition.LocalizedDescription.Substring(0, 120) + "...";
+                }
+                else
+                {
+                    itemDescription.Text = item.Definition.LocalizedDescription;
+                }
+            }
+            
             InvalidateSlot();
         }
 
@@ -200,14 +230,19 @@ namespace ScaryCastle
             if (!IsCurrentScene || session.IsOutcomeInProgress)
                 return;
 
+            // Gradient
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            bottomGradient.Draw(gameTime);
+            Game.SpriteBatch.End();
+
             session.Inventory.Session.HUD.Draw(gameTime);
 
             Game.SpriteBatch.Begin(Game.Camera);
-            title.Draw(gameTime);
             itemNameText.Draw(gameTime);
             slotImage.Draw(gameTime);
             amountText.Draw(gameTime);
             DrawItems(gameTime);
+            itemDescription.Draw(gameTime);
             Game.SpriteBatch.End();
 
             buttonClose.Draw(gameTime);
@@ -309,12 +344,5 @@ namespace ScaryCastle
         }
 
         #endregion
-
-        // Text
-        public string? Text
-        {
-            get => title.Text;
-            set => title.Text = value;
-        }
     }
 }

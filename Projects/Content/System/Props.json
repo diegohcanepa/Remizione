@@ -13,5 +13,6 @@
       "name": "Torch",
       "placements": ["WallFrontHang"]
     }
-  ]
+  ],
+  "unevaluatedProperties": false
 }

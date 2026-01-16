@@ -39,7 +39,8 @@
 		{
 			"name": "MasterLockpick",
 			"category": "Misc",
-			"skillChance": 75
+			"skillChance": 75,
+			"isStackable": true
 		},
 		{
 			"name": "RottenApple",

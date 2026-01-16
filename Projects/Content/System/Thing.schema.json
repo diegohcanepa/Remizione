@@ -2,33 +2,29 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "Thing.schema.json",
   "title": "Thing schema",
+  "type": "object",
   "allOf": [
     {
       "$ref": "./Entity.schema.json"
     },
     {
-      "type": "object",
       "properties": {
         "requiresDeadEnd": {
-          "type": "boolean",
-          "description": "Solo puede spawnear en rooms que son callejones sin salida."
+          "type": "boolean"
         },
         "maxPerRoom": {
           "type": "integer",
-          "default": -1,
-          "description": "Número maximo de veces que este elemento puede aparecer por 'room'."
+          "default": -1
         },
         "maxSpawnAmount": {
           "type": "integer",
           "default": 1,
-          "minimum": 1,
-          "description": "Número maximo de veces que este elemento se spawnea en el 'room'."
+          "minimum": 1
         },
         "minSpawnAmount": {
           "type": "integer",
           "default": 1,
-          "minimum": 1,
-          "description": "Número mínimo de veces que este elemento se spawnea en el 'room'."
+          "minimum": 1
         },
         "placements": {
           "type": "array",
@@ -45,9 +41,7 @@
               "Ceiling",
               "WalkArea"
             ]
-          },
-          "default": [],
-          "description": "Lista de superficies donde puede spawnear. Si está vacío, se spawnea en el WalkArea."
+          }
         }
       }
     }

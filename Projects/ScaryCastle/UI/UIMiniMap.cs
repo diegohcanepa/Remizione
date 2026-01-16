@@ -15,6 +15,7 @@ namespace ScaryCastle.UI
 
         private enum RoomImage { Current, Visited, NotVisited };
         private readonly ImageSprite container;
+        private readonly ImageSprite containerBorder;
         private readonly Vector2 containerCenter;
         private readonly HashSet<RoomGraph> drawnRooms = [];
         private readonly ImageSprite heartMarker;
@@ -40,6 +41,13 @@ namespace ScaryCastle.UI
                 Position = new(234, 2)
             };
 
+            // ContainerBorder
+            containerBorder = new ImageSprite(game, Atlases.UI.GetImage("UIMiniMapContainerBorder"))
+            {
+                PivotOrigin = RectanglePoint.RightTop,
+                Position = new(234, 2)
+            };
+
             containerCenter = container.BoundingBox.Center;
 
             float scaleX = (float)Game.GraphicsDevice.Viewport.Width / Screen.NativeWidth;
@@ -47,7 +55,7 @@ namespace ScaryCastle.UI
 
             // 1. Rectángulo en tu escala pequeña (240x135)
             Rectangle virtualMapRect = container.BoundingBox.ToRectangle();
-            virtualMapRect.Inflate(-1, -1);
+            //virtualMapRect.Inflate(-1, -1);
 
             // 2. Convert to current screen resolution
             screenScissorRect = new(
@@ -146,6 +154,7 @@ namespace ScaryCastle.UI
             container.Draw(gameTime);
             var pos = containerCenter;
             DrawRoom(gameTime, CurrentRoom, pos);
+            containerBorder.Draw(gameTime);
             Game.SpriteBatch.End();
             Game.SpriteBatch.GraphicsDevice.ScissorRectangle = oldRect;
         }
