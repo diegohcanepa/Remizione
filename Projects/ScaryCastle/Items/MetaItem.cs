@@ -36,87 +36,60 @@ namespace ScaryCastle
                 throw new InvalidOperationException($"The name '{Name}' cannot be used because it is an item category.");
 
             // Category
-            if (element.TryGetProperty("category", out JsonElement categoryElement) && categoryElement.GetString() is string categoryValue)
-                Category = Enum.Parse<ItemCategory>(categoryValue);
+            Category = element.GetEnum("category", ItemCategory.Misc);
 
             // ConsumptionInterval
-            if (element.TryGetProperty("consumptionInterval", out JsonElement consumptionIntervalElement))
-                ConsumptionInterval = int.Clamp(consumptionIntervalElement.GetInt32(), 0, consumptionIntervalElement.GetInt32());
+            ConsumptionInterval = element.GetInt32("consumptionInterval", 0);
+            if (ConsumptionInterval < 0)
+                ConsumptionInterval = 0;
 
             // ConsumptionType
-            if (element.TryGetProperty("consumptionType", out JsonElement consumptionTypeElement) && consumptionTypeElement.GetString() is string consumptionTypeValue)
-                ConsumptionType = Enum.Parse<ConsumptionType>(consumptionTypeValue);
-
+            ConsumptionType = element.GetEnum("consumptionType", ConsumptionType.None);
+            
             // Damage
-            DiceExpression? damage = null;
-            if (element.TryGetProperty("damage", out JsonElement damageElement) && damageElement.GetString() is string damageValue)
-                damage = new(damageValue);
+            DiceExpression? damage = element.GetObject("hp", value => new DiceExpression(value));
 
             // DamageType
-            var damageType = DamageType.None;
-            if (element.TryGetProperty("damageType", out JsonElement damageTypeElement) && damageTypeElement.GetString() is string damageTypeValue)
-                damageType = Enum.Parse<DamageType>(damageTypeValue);
+            var damageType = element.GetEnum<DamageType>("damageType", DamageType.None);
 
             // Durability
-            if (element.TryGetProperty("durability", out JsonElement durabilityElement))
-                Durability = durabilityElement.GetSingle();
+            Durability = element.GetFloat("durability", 0);
 
             // DurabilityCost
-            if (element.TryGetProperty("durabilityCost", out JsonElement durabilityCostElement))
-                DurabilityCost = durabilityCostElement.GetSingle();
+            DurabilityCost = element.GetFloat("durabilityCost", 0);
 
             // HP
-            DiceExpression? hp = null;
-            if (element.TryGetProperty("hp", out JsonElement hpElement) && hpElement.GetString() is string hpValue)
-                hp = new(hpValue);
+            DiceExpression? hp = element.GetObject("hp", value => new DiceExpression(value));
 
             // ImpactWord
-            var impactWord = ImpactWordName.None;
-            if (element.TryGetProperty("impactWord", out JsonElement impactWordElement) && impactWordElement.GetString() is string impactWordValue)
-                impactWord = Enum.Parse<ImpactWordName>(impactWordValue);
+            var impactWord = element.GetEnum("impactWord", ImpactWordName.None);
 
             // IsStackable
-            if (element.TryGetProperty("isStackable", out JsonElement isStackableElement))
-                IsStackable = isStackableElement.GetBoolean();
+            IsStackable = element.GetBool("isStackable", false);
 
             // LuckBonus
-            Ratio luckBonus = 0;
-            if (element.TryGetProperty("luckBonus", out JsonElement luckBonusElement))
-                luckBonus = luckBonusElement.GetSingle();
+            Ratio luckBonus = element.GetFloat("luckBonus", 0);
 
             // PickupSound
-            if (element.TryGetProperty("pickupSound", out JsonElement pickupSoundElement) && pickupSoundElement.GetString() is string pickupSoundValue)
-                PickupSound = Sound.Get(pickupSoundValue);
-
-            // Price
-            if (element.TryGetProperty("price", out JsonElement priceElement))
-                Price = priceElement.GetInt32();
+            PickupSound = element.GetObject("pickupSound", Sound.Get);
 
             // Quality
-            if (element.TryGetProperty("quality", out JsonElement qualityElement))
-                Quality = qualityElement.GetInt32();
+            Quality = element.GetInt32("quality", 0);
 
             // Range
-            if (element.TryGetProperty("range", out JsonElement rangeElement))
-                Range = rangeElement.GetInt32();
+            Range = element.GetInt32("range", 0);
 
             // Realm
-            if (element.TryGetProperty("realm", out JsonElement realmElement) && realmElement.GetString() is string realmValue)
-                Realm = Enum.Parse<Realm>(realmValue);
+            Realm = element.GetEnum("realm", Realm.Earthly);
 
             // SkillChance
-            if (element.TryGetProperty("skillChance", out JsonElement skillChanceElement))
-                SkillChance = skillChanceElement.GetInt32();
+            SkillChance = element.GetInt32("skillChance", 0);
 
             // Sound
-            Sound? sound = null;
-            if (element.TryGetProperty("sound", out JsonElement soundElement) && soundElement.GetString() is string soundValue)
-                sound = Sound.Get(soundValue);
+            Sound? sound = element.GetObject("sound", Sound.Get);
 
             // SpawnWeight
-            SpawnWeight = 1;
-            if (element.TryGetProperty("spawnWeight", out JsonElement spawnWeightElement))
-                SpawnWeight = spawnWeightElement.GetSingle();
+            SpawnWeight = element.GetFloat("spawnWeight", 1);
 
             // Effect
             this.Effect = new($"<{Name} Effect>")
@@ -132,6 +105,7 @@ namespace ScaryCastle
             this.LocalizedDescription = Localization.GetItemDescription(this);
             this.LocalizedDisplayName = Localization.GetItemName(this);
             this.Image = Atlases.UI.FindImage(Name);
+            
             this.Price = Quality switch
             {
                 0 or 1 => 5,  // Items básicos o consumibles
@@ -210,7 +184,7 @@ namespace ScaryCastle
         public int ConsumptionInterval { get; }
 
         // ConsumptionType
-        public ConsumptionType ConsumptionType { get; } 
+        public ConsumptionType ConsumptionType { get; }
 
         // Durability
         public Ratio Durability { get; }

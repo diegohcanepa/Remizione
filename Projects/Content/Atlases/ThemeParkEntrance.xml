@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:6af99ca4afd64fd306312de7e9b92446:0c20d64c93ec87daac5f7852c38813dd:d18da10aadaa3e03b294d4b47f956c75$ -->
+<!-- $TexturePacker:SmartUpdate:e070bb647f14b53666bf4de0ba81bf7f:63f72df99e161b91c19a5ad4338ab6e5:d18da10aadaa3e03b294d4b47f956c75$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -27,13 +27,13 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Gate02.png" x="94" y="222" w="27" h="30"/>
     <sprite n="LampPost.png" x="244" y="2" w="10" h="32"/>
     <sprite n="LampPostLight.png" x="2" y="230" w="19" h="19"/>
-    <sprite n="LeftFencePatch.png" x="99" y="139" w="27" h="29"/>
     <sprite n="LeftForegroundBushes.png" x="23" y="230" w="69" h="18"/>
+    <sprite n="LeftGatePatch.png" x="99" y="139" w="27" h="29"/>
     <sprite n="Raven01.png" x="244" y="36" w="9" h="9"/>
     <sprite n="Raven02.png" x="244" y="47" w="9" h="9"/>
     <sprite n="Raven03.png" x="244" y="58" w="9" h="9"/>
     <sprite n="Raven04.png" x="244" y="69" w="9" h="9"/>
-    <sprite n="RightFencePatch.png" x="51" y="190" w="19" h="33"/>
+    <sprite n="RightGatePatch.png" x="51" y="190" w="19" h="33"/>
     <sprite n="Star1.png" x="244" y="80" w="5" h="5"/>
     <sprite n="Star2.png" x="244" y="87" w="5" h="5"/>
     <sprite n="Star3.png" x="244" y="94" w="5" h="5"/>

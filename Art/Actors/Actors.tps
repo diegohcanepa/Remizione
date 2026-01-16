@@ -327,6 +327,7 @@
             <key type="filename">Designer-assets/StandHead01.png</key>
             <key type="filename">Designer-assets/StandHead02.png</key>
             <key type="filename">Designer-assets/TalkHead01.png</key>
+            <key type="filename">Father-assets/Move04.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -376,6 +377,84 @@
                 <rect>6,3,13,5</rect>
                 <key>scale9Paddings</key>
                 <rect>6,3,13,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Father-assets/Move01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,4,5,9</rect>
+                <key>scale9Paddings</key>
+                <rect>2,4,5,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Father-assets/Move02.png</key>
+            <key type="filename">Father-assets/Move03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,4,4,9</rect>
+                <key>scale9Paddings</key>
+                <rect>2,4,4,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Father-assets/Stand01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,3,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,3,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Father-assets/StandHead01.png</key>
+            <key type="filename">Father-assets/StandHead02.png</key>
+            <key type="filename">Father-assets/TalkHead01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,4,4</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,4,4</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Father-assets/TalkHead02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,4,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,4,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -589,6 +668,7 @@
                     <filename>Designer-assets</filename>
                     <filename>Mandinga-assets</filename>
                     <filename>EnviousEye-assets</filename>
+                    <filename>Father-assets</filename>
                 </array>
             </struct>
         </map>
