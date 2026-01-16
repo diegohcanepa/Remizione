@@ -73,11 +73,11 @@ namespace ScaryCastle
         // AssertName
         internal static void AssertName(string name, object sender)
         {
-            // Name cannot be a meta item
-            if (sender is not MetaItem)
+            // Name cannot be a definition
+            if (sender is not ItemDefinition)
             {
-                if (MetaItem.Find(name) != null)
-                    throw new InvalidOperationException($"The name '{name}' is already taken by a MetaItem.");
+                if (ItemDefinition.Find(name) != null)
+                    throw new InvalidOperationException($"The name '{name}' is already taken by a definition.");
             }
 
             // Name cannot be a realm 

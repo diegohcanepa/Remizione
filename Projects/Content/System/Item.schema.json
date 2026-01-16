@@ -1,15 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "MetaItem.schema.json",
-  "title": "MetaItem Data File (Validado con Enums)",
-  "description": "Schema para el archivo que contiene la lista de MetaItems, con validación estricta de tipos de datos y valores de Enums.",
+  "$id": "Item.schema.json",
+  "title": "Item Definition.",
   "type": "object",
   "properties": {
     "data": {
       "type": "array",
-      "description": "Una lista de objetos MetaItem.",
       "items": {
-        "$ref": "#/$defs/MetaItem"
+        "$ref": "#/$defs/Item"
       }
     }
   },
@@ -17,9 +15,9 @@
     "data"
   ],
   "$defs": {
-    "MetaItem": {
+    "Item": {
       "type": "object",
-      "description": "Definición de las propiedades de un MetaItem.",
+      "description": "Definición de las propiedades de un Item.",
       "properties": {
         "name": {
           "type": "string",

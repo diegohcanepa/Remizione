@@ -9,18 +9,18 @@ using System.Text.Json;
 namespace ScaryCastle
 {
     /// <summary>
-    /// MetaItem
+    /// ItemDefinition
     /// </summary>
-    public sealed class MetaItem
+    public sealed class ItemDefinition
     {
+        private static readonly Dictionary<string, ItemDefinition> data = [];
         private readonly List<EffectDefinition> effects = [];
         private static bool loaded;
-        private static readonly Dictionary<string, MetaItem> metaItems = [];
 
         #region Constructor
 
         // Constructor
-        private MetaItem(JsonElement element)
+        private ItemDefinition(JsonElement element)
         {
             // Name
             this.Name = element.GetProperty("name").GetString() ?? throw new InvalidDataException("Name not found.");
@@ -113,7 +113,7 @@ namespace ScaryCastle
                 }
             }
 
-            metaItems.Add(Name, this);
+            data.Add(Name, this);
 
             Effects = effects.AsReadOnly();
         }
@@ -122,27 +122,27 @@ namespace ScaryCastle
 
         #region Static members
 
-        // AllItems
-        public static IEnumerable<MetaItem> AllItems => metaItems.Values;
+        // All
+        public static IEnumerable<ItemDefinition> All => data.Values;
 
         // Find
-        public static MetaItem? Find(string name)
+        public static ItemDefinition? Find(string name)
         {
-            return metaItems.TryGetValue(name, out var result) ? result : null;
+            return data.TryGetValue(name, out var result) ? result : null;
         }
 
         // Get
-        public static MetaItem Get(string name)
+        public static ItemDefinition Get(string name)
         {
-            return Find(name) ?? throw new InvalidOperationException($"{nameof(MetaItem)} '{name}' not found.");
+            return Find(name) ?? throw new InvalidOperationException($"{nameof(ItemDefinition)} '{name}' not found.");
         }
 
         // GetItems
-        public static List<MetaItem> GetItems(ItemCategory category)
+        public static List<ItemDefinition> GetItems(ItemCategory category)
         {
-            var result = new List<MetaItem>();
+            var result = new List<ItemDefinition>();
 
-            foreach (var item in metaItems.Values)
+            foreach (var item in data.Values)
             {
                 if (item.Category == category)
                     result.Add(item);
@@ -152,11 +152,11 @@ namespace ScaryCastle
         }
 
         // GetItems
-        public static List<MetaItem> GetItems(Realm realm)
+        public static List<ItemDefinition> GetItems(Realm realm)
         {
-            var result = new List<MetaItem>();
+            var result = new List<ItemDefinition>();
 
-            foreach (var item in metaItems.Values)
+            foreach (var item in data.Values)
             {
                 if (item.Realm == realm)
                     result.Add(item);
@@ -171,7 +171,7 @@ namespace ScaryCastle
             if (loaded)
                 throw new InvalidOperationException("Data is already loaded.");
 
-            Utils.LoadJsonData(fileName, element => new MetaItem(element));
+            Utils.LoadJsonData(fileName, element => new ItemDefinition(element));
 
             loaded = true;
         }

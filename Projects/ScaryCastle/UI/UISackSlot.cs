@@ -111,12 +111,12 @@ namespace ScaryCastle
         #endregion
 
         // AnimateItem
-        public void AnimateItem(MetaItem metaItem, Vector2 startPosition)
+        public void AnimateItem(ItemDefinition definition, Vector2 startPosition)
         {
-            if (metaItem.Image is null)
+            if (definition.Image is null)
                 return;
 
-            flyingIcon.Image = metaItem.Image;
+            flyingIcon.Image = definition.Image;
             flyingIcon.Position = startPosition - Game.Camera.Offset;
             flyingIcon.Scale = ScaleInfo.UIElement.Tiny;
             flyingIcon.Tweens.PositionTween = Vector2Tween.Create(TweenStyle.CubicInOut, startPosition, icon.BoundingBox.Center, 1400);

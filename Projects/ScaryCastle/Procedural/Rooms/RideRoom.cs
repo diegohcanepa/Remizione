@@ -17,26 +17,26 @@ namespace ScaryCastle
         public RideRoom(GameSession session, RoomGraph graph)
             : base(session, string.Empty, graph)
         {
-            if (graph.Config is not RoomConfig config)
+            if (graph.Definition is not RoomDefinition definition)
                 throw new InvalidOperationException();
 
             Zoom = 1.1f;
 
-            AtlasName = graph.Config?.Name ?? string.Empty;
+            AtlasName = graph.Definition?.Name ?? string.Empty;
             DefaultImageName = AtlasName;
             GlobalLightSize = new(2.2f, 2);
             LightMapColor = new(50, 50, 50);
             LightingSystem = true;
 
-            AddWalkArea("WalkArea", config.WalkArea);
+            AddWalkArea("WalkArea", definition.WalkArea);
 
-            DoorDown = config.DoorDown;
-            DoorLeft = config.DoorLeft;
-            DoorRight = config.DoorRight;
-            DoorUp = config.DoorUp;
+            DoorDown = definition.DoorDown;
+            DoorLeft = definition.DoorLeft;
+            DoorRight = definition.DoorRight;
+            DoorUp = definition.DoorUp;
 
             // Add placeholders
-            foreach (var placeholder in config.Placeholders)
+            foreach (var placeholder in definition.Placeholders)
             {
                 AddPlaceholder(placeholder);
             }
@@ -174,7 +174,7 @@ namespace ScaryCastle
             {
                 if (door.DoorDirection is RideDoorDirection.Left or RideDoorDirection.Right or RideDoorDirection.Up)
                 {
-                    if (door.TargetRoom?.Config.LockType != LockType.None)
+                    if (door.TargetRoom?.Definition.LockType != LockType.None)
                         door.PropState = PropState.Locked;
                 }
             }
@@ -223,12 +223,12 @@ namespace ScaryCastle
         // CreateInstance
         public static RideRoom CreateInstance(GameSession session, RoomGraph graph)
         {
-            if (graph.Config == null)
-                throw new InvalidOperationException($"Missing config in room graph.");
+            if (graph.Definition == null)
+                throw new InvalidOperationException($"Missing definition in room graph.");
 
             // Get type from AOT registry
             if (Activator.CreateInstance(typeof(RideRoom), session, graph) is not RideRoom result)
-                throw new InvalidOperationException($"Cannot create instance [{graph.Config.Name}]");
+                throw new InvalidOperationException($"Cannot create instance [{graph.Definition.Name}]");
 
             return result;
         }

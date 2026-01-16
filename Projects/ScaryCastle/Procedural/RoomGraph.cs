@@ -14,8 +14,8 @@
             this.RoomType = roomType;
         }
 
-        // Config
-        public RoomConfig? Config { get; set; }
+        // Definition
+        public RoomDefinition? Definition { get; set; }
 
         // DistanceFromStart
         public int DistanceFromStart { get; set; }

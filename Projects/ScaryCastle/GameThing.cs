@@ -44,7 +44,7 @@ namespace ScaryCastle
             this.ResistanceTableName = DeclaredName;
             this.shadowSpot = new ShadowSpot(this);
 
-            Config = ThingConfig.Find(DeclaredName);
+            Definition = ThingDefinition.Find(DeclaredName);
         }
 
         #endregion
@@ -238,10 +238,10 @@ namespace ScaryCastle
             if (Room is not ProceduralRoom)
                 return;
 
-            if (Config == null)
+            if (Definition == null)
                 return;
 
-            Ratio lootChance = Config.Difficulty switch
+            Ratio lootChance = Definition.Difficulty switch
             {
                 Difficulty.Easy => .05f,   // 5%
                 Difficulty.Normal => .15f, // 15%
@@ -252,7 +252,7 @@ namespace ScaryCastle
             // TODO: Re-implement luck
             /*
             if (Session.Inventory.PassiveItem is Item item)
-                lootChance += item.MetaItem.Effect.LuckBonus;
+                lootChance += item.Config.Effect.LuckBonus;
             */
 
             if (!lootChance.Roll())
@@ -262,13 +262,13 @@ namespace ScaryCastle
         // DropCoins
         protected void DropCoins()
         {
-            if (Config == null)
+            if (Definition == null)
                 return;
 
             if (Session.Room is not ProceduralRoom room)
                 return;
 
-            var coins = Loot.RollCoins(Session, room.Config, Config);
+            var coins = Loot.RollCoins(Session, room.Definition, Definition);
             if (coins > 0)
             {
                 for (var i = 0; i < coins; i++)
@@ -494,11 +494,11 @@ namespace ScaryCastle
         [ScriptProperty]
         public int CollisionHeight { get; set; }
 
-        // Config
-        public ThingConfig? Config { get; }
-
         // ContactDamagePolygon
         public TestPolygon ContactDamagePolygon { get; set; } = TestPolygon.Collider;
+
+        // Definition
+        public ThingDefinition? Definition { get; }
 
         // Die
         [ScriptMethod]

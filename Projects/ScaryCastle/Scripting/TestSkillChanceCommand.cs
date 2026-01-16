@@ -3,7 +3,7 @@
 namespace ScaryCastle.Scripting
 {
     // TestSkillChanceCommand
-    // Arguments: {Prop} {MetaItem} [#success-state:PropState]
+    // Arguments: {Prop} {ItemDefinition} [#success-state:PropState]
     [ScriptStatement(CodingContext.Execution)]
     internal sealed class TestSkillChanceCommand : NonAwaitableCommand
     {
@@ -13,8 +13,8 @@ namespace ScaryCastle.Scripting
         {
             AssertEntity<Prop>(0);
 
-            if (MetaItem.Find(Body.Clauses[1]) == null)
-                throw new ScriptException(this, $"MetaItem '{Body.Clauses[1]}' does not exist.");
+            if (ItemDefinition.Find(Body.Clauses[1]) == null)
+                throw new ScriptException(this, $"Definition '{Body.Clauses[1]}' does not exist.");
 
             Parser.ParseEnumArgument<PropState>(this, SuccessStateArg);
         }

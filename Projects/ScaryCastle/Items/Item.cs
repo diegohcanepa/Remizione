@@ -18,11 +18,11 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public Item(Inventory inventory, MetaItem metaItem)
+        public Item(Inventory inventory, ItemDefinition definition)
         {
             this.Inventory = inventory;
-            this.MetaItem = metaItem;
-            this.ConsumptionCooldown = metaItem.ConsumptionInterval;
+            this.Definition = definition;
+            this.ConsumptionCooldown = definition.ConsumptionInterval;
         }
 
         #endregion
@@ -35,12 +35,12 @@ namespace ScaryCastle
             if (!isDisplayTextDiry)
                 return;
 
-            var text = MetaItem.LocalizedDisplayName;
+            var text = Definition.LocalizedDisplayName;
 
             // Durability state
-            if (MetaItem.Durability > 0)
+            if (Definition.Durability > 0)
             {
-                var ratio = Durability / MetaItem.Durability;
+                var ratio = Durability / Definition.Durability;
 
                 if (ratio >= .85f)
                     text += $" ({TextRepository.GetValue("@DurabilityState.Sturdy")})";
@@ -76,11 +76,14 @@ namespace ScaryCastle
             {
                 if (value != field)
                 {
-                    field = int.Clamp(value, 0, MetaItem.IsStackable ? 99 : 1);
+                    field = int.Clamp(value, 0, Definition.IsStackable ? 99 : 1);
                     isDisplayTextDiry = true;
                 }
             }
         }
+
+        // Definition
+        public ItemDefinition Definition { get; }
 
         // DisplayText
         public string DisplayText
@@ -142,14 +145,11 @@ namespace ScaryCastle
         // Inventory
         public Inventory Inventory { get; }
 
-        // MetaItem
-        public MetaItem MetaItem { get; }
-
         // Name
-        public string Name => MetaItem.Name;
+        public string Name => Definition.Name;
 
         // Range
-        public int Range => MetaItem.Range;
+        public int Range => Definition.Range;
 
         // Remove
         public void Remove()
@@ -172,12 +172,12 @@ namespace ScaryCastle
         // Update
         public void Update(GameTime gameTime)
         {
-            if (MetaItem.ConsumptionInterval > 0)
+            if (Definition.ConsumptionInterval > 0)
             {
                 ConsumptionCooldown -= gameTime.ElapsedGameTime.Milliseconds;
                 if (ConsumptionCooldown <= 0)
                 {
-                    ConsumptionCooldown = MetaItem.ConsumptionInterval;
+                    ConsumptionCooldown = Definition.ConsumptionInterval;
                     Use(null);
                 }
             }

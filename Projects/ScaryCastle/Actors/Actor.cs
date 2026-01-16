@@ -100,7 +100,7 @@ namespace ScaryCastle
         // InflictContactDamage
         private bool InflictContactDamage()
         {
-            if (Room == null || session.IsAwaiting || Config == null || Config.Effects.Count == 0)
+            if (Room == null || session.IsAwaiting || Definition == null || Definition.Effects.Count == 0)
                 return false;
 
             for (int i = 0; i < Room.CulledThings.Count; i++)
@@ -121,13 +121,13 @@ namespace ScaryCastle
                     {
                         if (RuntimeCollider.Contains(actor.Position))
                         {
-                            EffectResolver.Apply(Config.Effects, this, actor);
+                            EffectResolver.Apply(Definition.Effects, this, actor);
                             return true;
                         }
                     }
                     else if (RuntimeHotspot.ContainsVertex(actor.RuntimeHotspot))
                     {
-                        EffectResolver.Apply(Config.Effects, this, actor);
+                        EffectResolver.Apply(Definition.Effects, this, actor);
                         return true;
                     }
                 }

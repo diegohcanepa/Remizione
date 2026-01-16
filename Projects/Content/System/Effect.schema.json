@@ -1,14 +1,14 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "EffectDefinition.schema.json",
-  "title": "EffectDefinition Data File (Validado con Enums)",
+  "$id": "Effect.schema.json",
+  "title": "Effect Data File (Validado con Enums)",
   "type": "object",
   "properties": {
     "data": {
       "type": "array",
-      "description": "Una lista de objetos EffectDefinition.",
+      "description": "Una lista de objetos Effect.",
       "items": {
-        "$ref": "#/$defs/EffectDefinition"
+        "$ref": "#/$defs/Effect"
       }
     }
   },

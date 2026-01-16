@@ -7,14 +7,14 @@ using System.Text.Json;
 namespace ScaryCastle
 {
     /// <summary>
-    /// Config
+    /// EntityDefinition
     /// </summary>
-    public abstract class Config
+    public abstract class EntityDefinition
     {
-        private static readonly Dictionary<string, Config> configs = [];
+        private static readonly Dictionary<string, EntityDefinition> definitions = [];
 
         // Constructor
-        protected Config(JsonElement element)
+        protected EntityDefinition(JsonElement element)
         {
             // Name
             this.Name = element.GetProperty("name").GetString() ?? throw new InvalidDataException("Name not found.");
@@ -58,7 +58,7 @@ namespace ScaryCastle
         {
             for (var i = 0; i < names.Count; i++)
             {
-                if (!configs.ContainsKey(names[i]))
+                if (!definitions.ContainsKey(names[i]))
                     throw new InvalidOperationException($"'{names[i]}' listed in [{Name}.{properyName}] does not exist.");
             }
         }
@@ -159,16 +159,16 @@ namespace ScaryCastle
         {
         }
 
-        // ValidateConfigurations
-        public static void ValidateConfigurations(GameSession session)
+        // ValidateIntegrity
+        public static void ValidateIntegrity(GameSession session)
         {
             // TODO: Hay que validar que los nombres en los configs existan como static things o los templates de los rooms
             // que esten en el registry. Sino puede pasar como con expending machine que ahora es vending machine y al
             // cambiar el nombre y no haber actualizado el config, esa prop nunca aparece graficamente.
 
-            foreach (var config in configs.Values)
+            foreach (var def in definitions.Values)
             {
-                config.Validate(session);
+                def.Validate(session);
             }
         }
 

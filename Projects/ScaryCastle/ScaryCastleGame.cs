@@ -52,9 +52,9 @@ namespace ScaryCastle
         // InitializeProceduralContent
         private void InitializeProceduralContent()
         {
-            MetaItem.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "MetaItems.json"));
-            RoomConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
-            ThingConfig.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"),
+            ItemDefinition.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Items.json"));
+            RoomDefinition.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
+            ThingDefinition.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"),
                              ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"));
         }
 

@@ -106,7 +106,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-                    icon.Image = field?.MetaItem.Image;
+                    icon.Image = field?.Definition.Image;
                 }
             }
         }

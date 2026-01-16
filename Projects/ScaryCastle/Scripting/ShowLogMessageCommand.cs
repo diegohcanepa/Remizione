@@ -13,7 +13,7 @@ namespace ScaryCastle.Scripting
         {
             Parser.ParseEnum<LogVerb>(this, 0);
 
-            if (MetaItem.Find(Body.Clauses[1]) == null)
+            if (ItemDefinition.Find(Body.Clauses[1]) == null)
                 throw new ScriptException(this, $"Item '{Body.Clauses[1]}' not defined.");
         }
 
@@ -25,8 +25,8 @@ namespace ScaryCastle.Scripting
             if (Session is GameSession session)
             {
                 var verb = Parser.ParseEnum<LogVerb>(this, 0);
-                if (MetaItem.Find(Body.Clauses[1]) is MetaItem metaItem)
-                    session.HUD.Log.Show(verb, metaItem);
+                if (ItemDefinition.Find(Body.Clauses[1]) is ItemDefinition definition)
+                    session.HUD.Log.Show(verb, definition);
             }
         }
 

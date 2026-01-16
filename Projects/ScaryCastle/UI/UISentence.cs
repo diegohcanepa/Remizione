@@ -62,7 +62,7 @@ namespace ScaryCastle
                     else
                     {
                         MouseCursor.Instance.Highlight = true;
-                        sentence.Text = $"{useVerb} {session.Inventory.HeldItem.MetaItem.LocalizedDisplayName} {withPreposition} {targetText}";
+                        sentence.Text = $"{useVerb} {session.Inventory.HeldItem.Definition.LocalizedDisplayName} {withPreposition} {targetText}";
                     }
                 }
             }

@@ -8,16 +8,16 @@ using System.Text.Json;
 namespace ScaryCastle
 {
     /// <summary>
-    /// RoomConfig
+    /// RoomDefinition
     /// </summary>
-    public sealed class RoomConfig : Config
+    public sealed class RoomDefinition : EntityDefinition
     {
-        private static readonly Dictionary<string, RoomConfig> data = [];
-        private static readonly List<RoomConfig> dataList = [];
+        private static readonly Dictionary<string, RoomDefinition> data = [];
+        private static readonly List<RoomDefinition> dataList = [];
         private readonly List<Placeholder> placeholders = [];
 
         // Constructor
-        private RoomConfig(JsonElement element)
+        private RoomDefinition(JsonElement element)
             : base(element)
         {
             // DoorDown
@@ -106,16 +106,16 @@ namespace ScaryCastle
         #region Static members
 
         // All
-        public static ReadOnlyCollection<RoomConfig> All { get; } = new(dataList);
+        public static ReadOnlyCollection<RoomDefinition> All { get; } = new(dataList);
 
         // Find
-        public static RoomConfig? Find(string name)
+        public static RoomDefinition? Find(string name)
         {
-            return data.TryGetValue(name, out var roomConfig) ? roomConfig : null;
+            return data.TryGetValue(name, out var definition) ? definition : null;
         }
 
         // Get
-        public static RoomConfig Get(string name)
+        public static RoomDefinition Get(string name)
         {
             return data[name];
         }
@@ -123,7 +123,7 @@ namespace ScaryCastle
         // Load
         public static void Load(string fileName)
         {
-            Utils.LoadJsonData(fileName, element => new RoomConfig(element));
+            Utils.LoadJsonData(fileName, element => new RoomDefinition(element));
         }
 
         #endregion

@@ -114,8 +114,8 @@ namespace ScaryCastle
                 else if (!damageApplied && Session.Player != null && RuntimeHotspot.BoundingRectangleF.Intersects(Session.Player.RuntimeCollider.BoundingRectangleF))
                 {
                     damageApplied = true;
-                    if (Config != null)
-                        EffectResolver.Apply(Config.Effects, this, Session.Player);
+                    if (Definition != null)
+                        EffectResolver.Apply(Definition.Effects, this, Session.Player);
                 }
             }
 

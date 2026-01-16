@@ -29,10 +29,10 @@ namespace ScaryCastle
         protected ProceduralRoom(GameSession session, string name, RoomGraph roomGraph)
             : base(session, name)
         {
-            if (roomGraph.Config == null)
-                throw new InvalidOperationException("RoomGraph has no room config assigned.");
+            if (roomGraph.Definition == null)
+                throw new InvalidOperationException("RoomGraph has no room definition assigned.");
 
-            this.Config = RoomConfig.Get(roomGraph.Config.Name);
+            this.Definition = RoomDefinition.Get(roomGraph.Definition.Name);
             this.RoomGraph = roomGraph;
 
             this.AllowGlobalLight = true;
@@ -69,37 +69,37 @@ namespace ScaryCastle
         }
 
         // ApplyPrimaryFilter
-        private List<ThingConfig> ApplyPrimaryFilter<T>(IList<ThingConfig> configList)
+        private List<ThingDefinition> ApplyPrimaryFilter<T>(IList<ThingDefinition> definitions)
             where T : GameThing
         {
-            var outList = new List<ThingConfig>();
+            var outList = new List<ThingDefinition>();
 
-            foreach (var config in configList)
+            foreach (var definition in definitions)
             {
                 // Filtro Techo: No permitimos que aparezcan cosas más difíciles que el cuarto
-                if (config.Difficulty > Config.Difficulty)
+                if (definition.Difficulty > Definition.Difficulty)
                     continue;
 
                 // Thing requires a dead end room
-                if (config.RequiresDeadEnd && RoomGraph.GetConnectionCount() > 1)
+                if (definition.RequiresDeadEnd && RoomGraph.GetConnectionCount() > 1)
                     continue;
 
-                var thing = Session.FindDeclaredThing(config.Name) ?? throw new InvalidOperationException($"There is no static thing named '{config.Name}'. ");
+                var thing = Session.FindDeclaredThing(definition.Name) ?? throw new InvalidOperationException($"There is no static thing named '{definition.Name}'. ");
 
                 // Is expected type?
                 if (thing is not T)
                     continue;
 
                 // Run constraints
-                if (!config.PassesFloorConstraints(Session))
+                if (!definition.PassesFloorConstraints(Session))
                     continue;
 
                 // Scope rules
-                if (!config.PassesScope(Config.Scope))
+                if (!definition.PassesScope(Definition.Scope))
                     continue;
 
                 // Passed all checks
-                outList.Add(config);
+                outList.Add(definition);
             }
 
             return outList;
@@ -162,21 +162,21 @@ namespace ScaryCastle
         // PopulateEnemies
         private void PopulateEnemies()
         {
-            var configList = ApplyPrimaryFilter<Enemy>(ThingConfig.All);
-            SpawnInPlaceholders(configList, Config.MaxEnemies, enemiesSpawnCounter, PlaceholderTarget.Enemy);
-            SpawnInWalkArea(configList, Config.MaxEnemies, enemiesSpawnCounter);
+            var definitions = ApplyPrimaryFilter<Enemy>(ThingDefinition.All);
+            SpawnInPlaceholders(definitions, Definition.MaxEnemies, enemiesSpawnCounter, PlaceholderTarget.Enemy);
+            SpawnInWalkArea(definitions, Definition.MaxEnemies, enemiesSpawnCounter);
         }
 
         // PopulateProps
         private void PopulateProps()
         {
-            var configList = ApplyPrimaryFilter<Prop>(ThingConfig.All);
-            SpawnInPlaceholders(configList, Config.MaxProps, propsSpawnCounter, PlaceholderTarget.Prop);
-            SpawnInWalkArea(configList, Config.MaxProps, propsSpawnCounter);
+            var definitions = ApplyPrimaryFilter<Prop>(ThingDefinition.All);
+            SpawnInPlaceholders(definitions, Definition.MaxProps, propsSpawnCounter, PlaceholderTarget.Prop);
+            SpawnInWalkArea(definitions, Definition.MaxProps, propsSpawnCounter);
         }
 
         // SpawnInPlaceholders
-        private void SpawnInPlaceholders(IList<ThingConfig> configList, int maxInstances, MultiCounter spawnCounter, PlaceholderTarget target)
+        private void SpawnInPlaceholders(IList<ThingDefinition> definitions, int maxInstances, MultiCounter spawnCounter, PlaceholderTarget target)
         {
             if (Placeholders.Count == 0 || maxInstances == 0)
                 return;
@@ -201,22 +201,22 @@ namespace ScaryCastle
                     continue;
 
                 // Collect candidates
-                var candidates = new List<ThingConfig>();
-                foreach (var config in configList)
+                var candidates = new List<ThingDefinition>();
+                foreach (var definition in definitions)
                 {
                     // Is compatible with placehokder placement?
-                    if (!config.Placements.Contains(placeholder.Placement))
+                    if (!definition.Placements.Contains(placeholder.Placement))
                         continue;
 
                     // MaxPerRoom
-                    if (!config.PassesMaxPerRoomConstraint(spawnCounter.GetCount(config.Name)))
+                    if (!definition.PassesMaxPerRoomConstraint(spawnCounter.GetCount(definition.Name)))
                         continue;
 
                     // MaxPerRun
-                    if (!config.PassesMaxPerRunConstraint())
+                    if (!definition.PassesMaxPerRunConstraint())
                         continue;
 
-                    candidates.Add(config);
+                    candidates.Add(definition);
                 }
 
                 if (candidates.Count == 0)
@@ -226,14 +226,14 @@ namespace ScaryCastle
                 var chanceTable = new ChanceTable();
                 foreach (var c in candidates)
                 {
-                    var finalWeight = AdjustWeightByDifficulty(Config.Difficulty, c.Difficulty, c.Weight);
+                    var finalWeight = AdjustWeightByDifficulty(Definition.Difficulty, c.Difficulty, c.Weight);
                     chanceTable.Add(c.Name, finalWeight);
                 }
 
                 if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
                     continue;
 
-                if (ThingConfig.Find(chanceTableItem.Name) is not ThingConfig chosen)
+                if (ThingDefinition.Find(chanceTableItem.Name) is not ThingDefinition chosen)
                     continue;
 
                 // Log spawn in run
@@ -254,26 +254,26 @@ namespace ScaryCastle
         }
 
         // SpawnInWalkArea
-        private void SpawnInWalkArea(IList<ThingConfig> configList, int maxInstances, MultiCounter spawnCounter)
+        private void SpawnInWalkArea(IList<ThingDefinition> definitions, int maxInstances, MultiCounter spawnCounter)
         {
             if (WalkArea == null || maxInstances == 0)
                 return;
 
             // 1) Collect candidates
-            var candidates = new List<ThingConfig>();
-            foreach (var config in configList)
+            var candidates = new List<ThingDefinition>();
+            foreach (var definition in definitions)
             {
                 // Allowed if list is empty or contains WalkAea enum value
-                if (!config.Placements.Contains(PlacementType.WalkArea))
+                if (!definition.Placements.Contains(PlacementType.WalkArea))
                     continue;
 
-                if (!config.PassesMaxPerRoomConstraint(spawnCounter.GetCount(config.Name)))
+                if (!definition.PassesMaxPerRoomConstraint(spawnCounter.GetCount(definition.Name)))
                     continue;
 
-                if (!config.PassesMaxPerRunConstraint())
+                if (!definition.PassesMaxPerRunConstraint())
                     continue;
 
-                candidates.Add(config);
+                candidates.Add(definition);
             }
 
             if (candidates.Count == 0)
@@ -283,7 +283,7 @@ namespace ScaryCastle
             var table = new ChanceTable();
             foreach (var c in candidates)
             {
-                var finalWeight = AdjustWeightByDifficulty(Config.Difficulty, c.Difficulty, c.Weight);
+                var finalWeight = AdjustWeightByDifficulty(Definition.Difficulty, c.Difficulty, c.Weight);
                 table.Add(c.Name, finalWeight);
             }
 
@@ -317,7 +317,7 @@ namespace ScaryCastle
 
                 table.Remove(item.Name);
 
-                if (ThingConfig.Find(item.Name) is not ThingConfig chosen)
+                if (ThingDefinition.Find(item.Name) is not ThingDefinition chosen)
                     continue;
 
                 int min = Math.Max(1, chosen.MinSpawnAmount);
@@ -403,14 +403,14 @@ namespace ScaryCastle
 
         #endregion
 
-        // Config
-        public RoomConfig Config { get; }
-
         // CreateRuntimeClone
         public GameThing? CreateRuntimeClone(string staticName)
         {
             return CreateRuntimeThingCloneCore(staticName);
         }
+
+        // Definition
+        public RoomDefinition Definition { get; }
 
         // IsProcedural
         public override bool IsProcedural => true;

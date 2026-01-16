@@ -17,7 +17,7 @@ namespace ScaryCastle
             this.Item = item;
 
             // Image
-            this.image = new(Game, item.MetaItem.Image)
+            this.image = new(Game, item.Definition.Image)
             {
                 PivotOrigin = RectanglePoint.Center
             };

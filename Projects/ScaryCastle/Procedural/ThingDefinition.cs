@@ -6,19 +6,19 @@ using System.Text.Json;
 namespace ScaryCastle
 {
     /// <summary>
-    /// ThingConfig
+    /// ThingDefinition
     /// </summary>
-    public sealed class ThingConfig : Config
+    public sealed class ThingDefinition : EntityDefinition
     {
-        private static readonly Dictionary<string, ThingConfig> data = [];
-        private static readonly List<ThingConfig> dataList = [];
+        private static readonly Dictionary<string, ThingDefinition> data = [];
+        private static readonly List<ThingDefinition> dataList = [];
         private readonly List<EffectDefinition> effects = [];
         private readonly List<PlacementType> placements = [];
 
         #region Constructor
 
         // Constructor
-        public ThingConfig(JsonElement element)
+        public ThingDefinition(JsonElement element)
             : base(element)
         {
             // MaxPerRoom
@@ -78,12 +78,12 @@ namespace ScaryCastle
         #region Static members
 
         // All
-        public static ReadOnlyCollection<ThingConfig> All { get; } = new(dataList);
+        public static ReadOnlyCollection<ThingDefinition> All { get; } = new(dataList);
 
         // Find
-        public static ThingConfig? Find(string name)
+        public static ThingDefinition? Find(string name)
         {
-            return data.TryGetValue(name, out ThingConfig? config) ? config : null;
+            return data.TryGetValue(name, out ThingDefinition? definition) ? definition : null;
         }
 
         // Load
@@ -91,7 +91,7 @@ namespace ScaryCastle
         {
             for (var i = 0; i < fileNames.Length; i++)
             {
-                Utils.LoadJsonData<ThingConfig>(fileNames[i], element => new ThingConfig(element));
+                Utils.LoadJsonData<ThingDefinition>(fileNames[i], element => new ThingDefinition(element));
             }
         }
 

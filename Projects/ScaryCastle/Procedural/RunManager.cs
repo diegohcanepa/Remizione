@@ -14,12 +14,12 @@ namespace ScaryCastle.Procedural
 
         #region Private members
 
-        // ApplyConfigs
-        private static void ApplyConfigs(List<RoomConfig> configList, int maxDistance)
+        // ApplyDefinitions
+        private static void ApplyDefinitions(List<RoomDefinition> definitions, int maxDistance)
         {
             float threshold = maxDistance / 3f;
 
-            var candidates = new List<RoomConfig>();
+            var candidates = new List<RoomDefinition>();
 
             // Rooms
             foreach (var room in rooms)
@@ -32,37 +32,37 @@ namespace ScaryCastle.Procedural
                     targetDiff = Difficulty.Normal;
 
                 candidates.Clear();
-                foreach (var config in configList)
+                foreach (var definition in definitions)
                 {
                     // Match room type?
-                    if (config.RoomType != room.RoomType)
+                    if (definition.RoomType != room.RoomType)
                         continue;
 
                     // Match difficulty
-                    if (config.Difficulty != targetDiff)
+                    if (definition.Difficulty != targetDiff)
                         continue;
 
-                    if (config.RequiresDeadEnd && room.GetConnectionCount() > 1)
+                    if (definition.RequiresDeadEnd && room.GetConnectionCount() > 1)
                         continue;
 
-                    if (!config.PassesMaxPerRunConstraint())
+                    if (!definition.PassesMaxPerRunConstraint())
                         continue;
 
-                    candidates.Add(config);
+                    candidates.Add(definition);
                 }
 
-                // FALLBACK: Si no hay configs específicas para esa fase, buscamos una inferior
+                // FALLBACK: Si no hay definitions específicas para esa fase, buscamos una inferior
                 if (candidates.Count == 0 && targetDiff > Difficulty.Easy)
                 {
-                    foreach (var config in configList)
+                    foreach (var definition in definitions)
                     {
-                        if (config.Difficulty < targetDiff)
+                        if (definition.Difficulty < targetDiff)
                         {
-                            if (config.RequiresDeadEnd && room.GetConnectionCount() > 1)
+                            if (definition.RequiresDeadEnd && room.GetConnectionCount() > 1)
                                 continue;
 
-                            if (config.PassesMaxPerRunConstraint())
-                                candidates.Add(config);
+                            if (definition.PassesMaxPerRunConstraint())
+                                candidates.Add(definition);
                         }
                     }
                 }
@@ -74,36 +74,36 @@ namespace ScaryCastle.Procedural
                     chanceTable.Add(candidate.Name, candidate.Weight, 1, candidate);
                 }
 
-                if (chanceTable.GetValue()?.Context is RoomConfig chosenConfig)
+                if (chanceTable.GetValue()?.Context is RoomDefinition chosenDefinition)
                 {
-                    SpawnCounter.Increment(chosenConfig.Name);
-                    room.Config = chosenConfig;
+                    SpawnCounter.Increment(chosenDefinition.Name);
+                    room.Definition = chosenDefinition;
                 }
                 else
-                    throw new InvalidOperationException("Failed to apply room config. No match found.");
+                    throw new InvalidOperationException("Failed to apply room definition. No match found.");
             }
         }
 
-        // GetAvailableRoomConfigs
-        private static List<RoomConfig> GetAvailableRoomConfigs(GameSession session, Tags pools)
+        // GetAvailableDefinitions
+        private static List<RoomDefinition> GetAvailableDefinitions(GameSession session, Tags pools)
         {
-            var result = new List<RoomConfig>();
+            var result = new List<RoomDefinition>();
 
-            foreach (var roomConfig in RoomConfig.All)
+            foreach (var definition in RoomDefinition.All)
             {
                 // Run constraints
-                if (!roomConfig.PassesFloorConstraints(session))
+                if (!definition.PassesFloorConstraints(session))
                     continue;
 
                 // Pools
                 if (pools.Count > 0)
                 {
-                    if (!Utils.Intersects(pools, roomConfig.Pools))
+                    if (!Utils.Intersects(pools, definition.Pools))
                         continue;
                 }
 
                 // Passed all checks
-                result.Add(roomConfig);
+                result.Add(definition);
             }
 
             return result;
@@ -133,11 +133,11 @@ namespace ScaryCastle.Procedural
             var result = RunGraphGenerator.Generate(session.Random, roomCount);
             rooms.AddRange(result.Item1);
 
-            // Get available room configs
-            var configs = GetAvailableRoomConfigs(session, pools);
+            // Get available room definitions
+            var definitions = GetAvailableDefinitions(session, pools);
 
-            // Assign configs
-            ApplyConfigs(configs, result.Item2);
+            // Assign definitions
+            ApplyDefinitions(definitions, result.Item2);
 
             // Create ride rooms
             foreach (var room in rooms)
@@ -148,8 +148,8 @@ namespace ScaryCastle.Procedural
             // Load rooms
             foreach (var room in rooms)
             {
-                if (room.Config == null)
-                    throw new InvalidOperationException($"Room [{room}] has no config.");
+                if (room.Definition == null)
+                    throw new InvalidOperationException($"Room [{room}] has no definition.");
 
                 if (room.RideRoom == null)
                     throw new InvalidOperationException($"Room [{room}] has no procedural room.");

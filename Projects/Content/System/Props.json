@@ -12,15 +12,6 @@
     {
       "name": "Torch",
       "placements": ["WallFrontHang"]
-    },
-    {
-      "name": "VendingMachine",
-      "maxPerRoom": 1,
-      "maxPerRun": 5,
-      "leafRoomOnly": false,
-      "placements": ["WallFrontBase"],
-      "preferredLootCategory": "Food",
-      "tags": "vendingMachine"
     }
   ]
 }

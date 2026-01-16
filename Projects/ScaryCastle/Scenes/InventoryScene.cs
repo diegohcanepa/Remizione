@@ -145,7 +145,7 @@ namespace ScaryCastle
             {
                 if (GetInventoryItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is VisualItem grabbedtem)
                 {
-                    if (grabbedtem.Item.MetaItem.Image != null)
+                    if (grabbedtem.Item.Definition.Image != null)
                     {
                         Sound.Play(SoundNames.UISelectC);
                         session.Inventory.HeldItem = grabbedtem.Item;
@@ -172,7 +172,7 @@ namespace ScaryCastle
         // InvalidateSlot
         private void InvalidateSlot()
         {
-            amountText.Text = selectedIndex < 0 || SelectedItem?.Item.MetaItem.IsStackable == false ? null : SelectedItem?.Item.GetDisplayAmount();
+            amountText.Text = selectedIndex < 0 || SelectedItem?.Item.Definition.IsStackable == false ? null : SelectedItem?.Item.GetDisplayAmount();
         }
 
         // Select

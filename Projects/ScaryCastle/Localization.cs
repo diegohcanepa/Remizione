@@ -52,13 +52,13 @@ namespace ScaryCastle
         }
 
         // GetItemDescription
-        internal static string GetItemDescription(MetaItem item)
+        internal static string GetItemDescription(ItemDefinition item)
         {
             return TextRepository.GetValue($"Item.{item.Name}.Description");
         }
 
         // GetItemName
-        internal static string GetItemName(MetaItem item)
+        internal static string GetItemName(ItemDefinition item)
         {
             return TextRepository.GetValue($"Item.{item.Name}.Name");
         }

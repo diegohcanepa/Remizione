@@ -119,7 +119,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(BreakableProp));
             AotTypeRegistry.Register(typeof(CloseUpRoom));
             AotTypeRegistry.Register(typeof(CreditsRoom));
-            AotTypeRegistry.Register(typeof(VendingMachine));
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(HellGoat));
             AotTypeRegistry.Register(typeof(Hub));
@@ -324,9 +323,8 @@ namespace ScaryCastle
         // OnStarted
         protected override void OnStarted()
         {
-            Config.ValidateConfigurations(this);
+            EntityDefinition.ValidateIntegrity(this);
 
-            var metaItems = new List<MetaItem>();
             foreach (var entity in Entities)
             {
                 if (entity is not GameThing thing)

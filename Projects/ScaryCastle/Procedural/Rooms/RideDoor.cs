@@ -177,7 +177,7 @@ namespace ScaryCastle
 
             if (Room is RideRoom rideRoom)
             {
-                var prefix = rideRoom.Config.Name.Split("_")[0];
+                var prefix = rideRoom.Definition.Name.Split("_")[0];
                 prefix = $"{prefix}Door{DoorDirection}";
 
                 var animation = AddAnimation("Closed");

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "Config.schema.json",
-  "title": "Config base",
+  "$id": "Core.schema.json",
+  "title": "Core definition",
   "type": "object",
   "properties": {
     "name": {

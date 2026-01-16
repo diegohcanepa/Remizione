@@ -22,18 +22,18 @@ namespace ScaryCastle
         // Add
         public Item? Add(string name, int amount = 1)
         {
-            var metaItem = MetaItem.Find(name) ?? throw new InvalidOperationException("Meta item not found.");
-            return Add(metaItem, amount);
+            var definition = ItemDefinition.Find(name) ?? throw new InvalidOperationException("Item definition not found.");
+            return Add(definition, amount);
         }
 
         // Add
-        public Item? Add(MetaItem metaItem, int amount = 1)
+        public Item? Add(ItemDefinition definition, int amount = 1)
         {
-            var item = Find(metaItem.Name);
+            var item = Find(definition.Name);
 
             if (item == null)
             {
-                item = new Item(this, metaItem) { Count = amount };
+                item = new Item(this, definition) { Count = amount };
                 items.Add(item);
             }
             else
@@ -97,7 +97,7 @@ namespace ScaryCastle
 
             for (var i = 0; i < items.Count; i++)
             {
-                if (category == null || items[i].MetaItem.Category == category)
+                if (category == null || items[i].Definition.Category == category)
                     result.Add(items[i]);
             }
 
@@ -125,7 +125,7 @@ namespace ScaryCastle
         {
             for (var i = 0; i < items.Count; i++)
             {
-                if (items[i].MetaItem.Category == category)
+                if (items[i].Definition.Category == category)
                     return true;
             }
 
@@ -142,7 +142,7 @@ namespace ScaryCastle
                 {
                     MouseCursor.Instance.Reset();
                 }
-                else if (value.MetaItem.Image is AtlasImage image)
+                else if (value.Definition.Image is AtlasImage image)
                 {
                     MouseCursor.Instance.SetCustomImage(image, field);
                 }
@@ -308,7 +308,7 @@ namespace ScaryCastle
                 {
                     var itemData = itemList[i].Split(':');
 
-                    if (MetaItem.Find(itemData[0]) != null)
+                    if (ItemDefinition.Find(itemData[0]) != null)
                         Add(itemData[0], int.Parse(itemData[1], CultureInfo.InvariantCulture));
                 }
             }
