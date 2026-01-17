@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Procedural;
 using ScaryCastle.Scripting;
@@ -23,7 +24,6 @@ namespace ScaryCastle
         private readonly List<GameThing> declaredThings = [];
         private readonly Dictionary<string, GameThing> declaredThingsDict = [];
         private readonly EchoScene echoScene;
-        private readonly InventoryScene inventoryScene;
         private Vector2? playerPosition;
         private readonly RoomEditor? roomEditor;
         private readonly UISentence sentence;
@@ -81,7 +81,6 @@ namespace ScaryCastle
 
             LocalizationSource = LocalizationSource.Script;
 
-            this.inventoryScene = new InventoryScene(this);
             this.sentence = new(this);
         }
 
@@ -205,9 +204,7 @@ namespace ScaryCastle
         {
             base.OnDraw(gameTime);
 
-            if (GameplayMode == GameplayMode.Adventure)
-                HUD.Draw(gameTime);
-            else if (IsHUDVisible && IsCurrentScene)
+            if (IsHUDVisible && IsCurrentScene)
                 HUD.Draw(gameTime);
 
             if (!IsAwaiting)
@@ -229,8 +226,6 @@ namespace ScaryCastle
         // OnEnterRoom
         protected override void OnEnterRoom(Room room)
         {
-            GameplayMode = room is ProceduralRoom or Hub ? GameplayMode.Action : GameplayMode.Adventure;
-
             var width = room.Width == 0 ? room.CustomWidth : room.Width;
             var height = room.Height == 0 ? room.CustomHeight : room.Height;
             Camera.Setup(width, height, room.ScrollLock, room.Zoom);
@@ -360,12 +355,10 @@ namespace ScaryCastle
             Environment.Update(gameTime);
             sentence.Update(gameTime);
 
-            if (GameplayMode == GameplayMode.Action && IsHUDVisible)
+            if (IsHUDVisible)
+            { 
                 HUD.Update(gameTime);
-
-            // Check game over condition
-            if (GameplayMode == GameplayMode.Action)
-            {
+             
                 if (!IsAwaiting)
                 {
                     if (Player?.IsDead == true)
@@ -486,10 +479,6 @@ namespace ScaryCastle
 
         // Game
         public new ScaryCastleGame Game { get; }
-
-        // GameplayMode
-        [ScriptProperty]
-        public GameplayMode GameplayMode { get; private set; }
 
         // HUD
         public HUD HUD { get; }
@@ -624,7 +613,7 @@ namespace ScaryCastle
 
             Inventory.HeldItem = null;
             Player.Stand();
-            inventoryScene.SceneController.Push();
+            HUD.Inventory.IsVisible = true;
         }
     }
 }

@@ -48,9 +48,6 @@ namespace ScaryCastle
     // Faction
     public enum Faction { Neutral, Good, Evil }
 
-    // GameplayMode
-    public enum GameplayMode { Adventure, Action }
-
     // GridMeasureType
     public enum GridMeasureType { BoundingBox, Collider, Hotspot }
 

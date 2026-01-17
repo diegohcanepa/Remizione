@@ -425,6 +425,15 @@ namespace ScaryCastle
             if (IsMoving || IsDead || string.IsNullOrWhiteSpace(LocalizedDisplayName))
                 return false;
 
+            if (Session.Inventory.HeldItem != null && !CanInteractWithItem())
+                return false;
+
+            return true;
+        }
+
+        // CanInteractWithItem
+        public virtual bool CanInteractWithItem()
+        {
             return true;
         }
 

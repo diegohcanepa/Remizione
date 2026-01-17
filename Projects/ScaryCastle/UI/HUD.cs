@@ -32,6 +32,9 @@ namespace ScaryCastle
             // Coin meter 
             this.CoinMeter = new(Game);
 
+            // Inventory
+            this.Inventory = new(session.Inventory);
+
             // Sack meter
             this.SackMeter = new(session);
 
@@ -41,13 +44,14 @@ namespace ScaryCastle
 
         #endregion
 
-        #region Private members
+        #region Protected members
 
-        // DrawForActionMode
-        private void DrawForActionMode(GameTime gameTime)
+        // OnDraw
+        protected override void OnDraw(GameTime gameTime)
         {
             if (session.IsCurrentScene)
             {
+                Inventory.Draw(gameTime);
                 CoinMeter.Draw(gameTime);
                 SackMeter.Draw(gameTime);
                 Log.Draw(gameTime);
@@ -60,40 +64,20 @@ namespace ScaryCastle
             healthMeter.Draw(gameTime);
         }
 
-        // DrawForAdventureMode
-        private void DrawForAdventureMode(GameTime gameTime)
-        {
-        }
-
-        #endregion
-
-        #region Protected members
-
-        // OnDraw
-        protected override void OnDraw(GameTime gameTime)
-        {
-            if (session.GameplayMode == GameplayMode.Adventure)
-                DrawForAdventureMode(gameTime);
-            else
-                DrawForActionMode(gameTime);
-        }
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (session.GameplayMode == GameplayMode.Action)
-            {
-                SackMeter.Update(gameTime);
-                healthMeter.Update(gameTime);
-                MiniMap.Update(gameTime);
-                Log.Update(gameTime);
-                Message.Update(gameTime);
+            Inventory.Update(gameTime);
+            SackMeter.Update(gameTime);
+            healthMeter.Update(gameTime);
+            MiniMap.Update(gameTime);
+            Log.Update(gameTime);
+            Message.Update(gameTime);
 
-                if (session.Player != null)
-                {
-                    CoinMeter.Value = session.Coins;
-                    CoinMeter.Update(gameTime);
-                }
+            if (session.Player != null)
+            {
+                CoinMeter.Value = session.Coins;
+                CoinMeter.Update(gameTime);
             }
         }
 
@@ -111,8 +95,14 @@ namespace ScaryCastle
             if (session.IsConsoleVisible)
                 return HandleInputResult.Unhandled;
 
+            if (Inventory.HandleInput(gameTime) == HandleInputResult.Handled)
+                return HandleInputResult.Handled;
+
             return HandleInputResult.Unhandled;
         }
+
+        // Inventory
+        public UIInventory Inventory { get; }
 
         // Log
         public UILog Log { get; }

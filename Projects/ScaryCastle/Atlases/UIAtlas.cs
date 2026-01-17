@@ -27,6 +27,7 @@ namespace ScaryCastle
             InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
             InventoryInfoTitleContainer = this[nameof(InventoryInfoTitleContainer)];
             InventoryNavigationBar = this[nameof(InventoryNavigationBar)];
+            InventorySlot = this[nameof(InventorySlot)];
             ItemGridSlot = this[nameof(ItemGridSlot)];
             ItemGridSlotSelected = this[nameof(ItemGridSlotSelected)];
             MessageContainer = this[nameof(MessageContainer)];
@@ -90,6 +91,15 @@ namespace ScaryCastle
         // InventoryNavigationBar
         public AtlasImage InventoryNavigationBar { get; }
 
+        // InventorySlot
+        public AtlasImage InventorySlot { get; }
+
+        // ItemGridSlot
+        public AtlasImage ItemGridSlot { get; }
+
+        // ItemGridSlotSelected
+        public AtlasImage ItemGridSlotSelected { get; }
+
         // HeartEmpty
         public AtlasImage HeartEmpty { get; }
 
@@ -125,12 +135,6 @@ namespace ScaryCastle
 
         // MouseCursorWait
         public AtlasImage MouseCursorWait { get; }
-
-        // ItemGridSlot
-        public AtlasImage ItemGridSlot { get; }
-
-        // ItemGridSlotSelected
-        public AtlasImage ItemGridSlotSelected { get; }
 
         // PickupShadow
         public AtlasImage PickupShadow { get; }

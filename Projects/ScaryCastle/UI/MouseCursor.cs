@@ -19,6 +19,7 @@ namespace ScaryCastle
         private static readonly ImageSprite customCursorSprite;
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
+        private static readonly TextSprite textSprite;
 
         #endregion
 
@@ -39,6 +40,13 @@ namespace ScaryCastle
                 var imageName = $"{prefix}{names[i]}";
                 cursorImages[i] = Atlases.UI.GetImage(imageName);
             }
+
+            textSprite = new(EngendroGame.Instance, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.OrangeLight,
+                PivotOrigin = RectanglePoint.LeftTop,
+                Scale = ScaleInfo.UISentence
+            };
         }
 
         #endregion
@@ -75,6 +83,9 @@ namespace ScaryCastle
             cursorSprite.Tweens.ScaleTween = scaleTween;
         }
 
+        // BoundingBox
+        public static RectangleF BoundingBox => GetActiveCursor().BoundingBox;
+
         // CustomImageTag
         public static object? CustomImageTag { get; private set; }
 
@@ -95,6 +106,11 @@ namespace ScaryCastle
             sprite.X += shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             sprite.Draw(gameTime);
             sprite.X -= shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
+            EngendroGame.Instance.SpriteBatch.End();
+
+            EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera);
+            if (State == MouseCursorState.CrossOn)
+                textSprite.Draw(gameTime);
             EngendroGame.Instance.SpriteBatch.End();
         }
 
@@ -136,11 +152,31 @@ namespace ScaryCastle
             }
         }
 
+        // Text
+        public static string? Text
+        {
+            get => textSprite.Text;
+            set => textSprite.Text = value;
+        }
+
         // Update
         public static void Update(GameTime gameTime)
         {
             GetActiveCursor().Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
             GetActiveCursor().Update(gameTime);
+
+            if (!textSprite.IsEmpty && State == MouseCursorState.CrossOn)
+            {
+                textSprite.PivotOrigin = RectanglePoint.LeftTop;
+                textSprite.Position = BoundingBox.GetPoint(RectanglePoint.RightBottom, -2, -2);
+
+                if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
+                {
+                    textSprite.PivotOrigin = RectanglePoint.RightTop;
+                    textSprite.Position = BoundingBox.GetPoint(RectanglePoint.LeftBottom, 2, -2);
+                }
+            }
+
             shakeTween.Update(gameTime);
         }
     }

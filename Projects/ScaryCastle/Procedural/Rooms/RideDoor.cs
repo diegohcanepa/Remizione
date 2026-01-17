@@ -153,6 +153,12 @@ namespace ScaryCastle
 
         #endregion
 
+        // CanInteractWithItem
+        public override bool CanInteractWithItem()
+        {
+            return PropState == PropState.Closed;
+        }
+
         // CloseSound
         [ScriptProperty]
         public Sound? CloseSound { get; set; }

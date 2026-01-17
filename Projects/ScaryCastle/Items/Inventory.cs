@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿
+using Engendro;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -45,7 +46,7 @@ namespace ScaryCastle
         }
 
         // Capacity
-        public int Capacity { get; set; } = 10;
+        public int Capacity { get; set; } = 6;
 
         // Clear
         public void Clear()

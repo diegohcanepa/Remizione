@@ -61,9 +61,17 @@ namespace ScaryCastle
             }
             else
             {
-                Actor.Session.Inventory.HeldItem = null;
-                var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
-                Actor.MoveTo(destination);
+                if (Actor.Session.Inventory.HeldItem != null)
+                {
+                    Actor.Session.Inventory.HeldItem = null;
+                    Sound.Play(SoundNames.UISelectD);
+                }
+                else
+                {
+                    var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
+                    Actor.MoveTo(destination);
+                }
+
                 return true;
             }
         }
@@ -75,7 +83,9 @@ namespace ScaryCastle
                 return false;
 
             if (Actor.Session.Inventory.HeldItem == null)
+            {
                 Actor.Session.ShowInventory();
+            }
             else
             {
                 Sound.Play(SoundNames.UISelectD);

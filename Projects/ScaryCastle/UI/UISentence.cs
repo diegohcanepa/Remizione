@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
@@ -24,9 +25,9 @@ namespace ScaryCastle
 
             this.sentence = new(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.HighlightedText,
+                Color = ColorPalette.Text.OrangeLight,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -12),
+                Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -10),
                 Scale = ScaleInfo.UISentence
             };
         }
@@ -39,7 +40,7 @@ namespace ScaryCastle
             if (session.IsCurrentScene && target != null)
             {
                 Game.SpriteBatch.Begin(Game.Camera);
-                sentence.Draw(gameTime);
+                //sentence.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
         }
@@ -64,10 +65,13 @@ namespace ScaryCastle
                         MouseCursor.Highlight = true;
                         sentence.Text = $"{useVerb} {session.Inventory.HeldItem.Definition.LocalizedDisplayName} {withPreposition} {targetText}";
                     }
+
+                    MouseCursor.Text = sentence.Text;
                 }
             }
             else
             {
+                MouseCursor.Text = null;
                 MouseCursor.Highlight = false;
                 sentence.Text = null;
                 target = null;

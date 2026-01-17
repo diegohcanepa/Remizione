@@ -297,6 +297,13 @@ namespace Engendro
         // IsEmpty
         public readonly bool IsEmpty => Width <= 0 || Height <= 0;
 
+        // IsInside
+        public readonly bool IsInside(RectangleF other)
+        {
+            return (X >= other.X) && (Right <= other.Right) &&
+                   (Y >= other.Y) && (Bottom <= other.Bottom);
+        }
+
         // Left
         public readonly float Left => X;
 
