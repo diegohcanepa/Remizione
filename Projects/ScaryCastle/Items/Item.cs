@@ -157,12 +157,6 @@ namespace ScaryCastle
             Inventory.Remove(this);
         }
 
-        // Select
-        public void Select()
-        {
-            Inventory.Select(this);
-        }
-
         // ToString
         public override string ToString()
         {

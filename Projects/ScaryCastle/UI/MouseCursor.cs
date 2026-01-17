@@ -175,6 +175,9 @@ namespace ScaryCastle
                     textSprite.PivotOrigin = RectanglePoint.RightTop;
                     textSprite.Position = BoundingBox.GetPoint(RectanglePoint.LeftBottom, 2, -2);
                 }
+
+                if (textSprite.BoundingBox.Bottom >= Screen.NativeHeight)
+                    textSprite.Y -= 10;
             }
 
             shakeTween.Update(gameTime);

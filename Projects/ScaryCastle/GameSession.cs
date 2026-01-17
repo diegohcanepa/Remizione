@@ -611,7 +611,6 @@ namespace ScaryCastle
             if (Player == null || Inventory.Count == 0)
                 return;
 
-            Inventory.HeldItem = null;
             Player.Stand();
             HUD.Inventory.IsVisible = true;
         }

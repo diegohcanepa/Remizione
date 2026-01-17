@@ -25,7 +25,7 @@ namespace ScaryCastle
         // OnStart
         protected override void OnStart()
         {
-            AIStateMachine.ChangeState(AIStateName.Decide);
+           // AIStateMachine.ChangeState(AIStateName.Decide);
         }
 
         // OnUpdate

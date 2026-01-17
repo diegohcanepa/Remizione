@@ -14,6 +14,8 @@ namespace ScaryCastle
         private readonly TextSprite[] amounts;
         private readonly ImageSprite[] icons;
         private readonly Inventory inventory;
+        private readonly TextSprite itemName;
+        private int lastSeenInventoryVersion;
         private readonly ImageSprite[] slots;
 
         #region Constructor
@@ -52,6 +54,15 @@ namespace ScaryCastle
                 };
             }
 
+            // Item name
+            this.itemName = new(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.OrangeLight,
+                PivotOrigin = RectanglePoint.Bottom,
+                Y = slots[0].BoundingBox.Top - 2,
+                Scale = ScaleInfo.UISentence
+            };
+
             Layout();
         }
 
@@ -59,24 +70,15 @@ namespace ScaryCastle
 
         #region Private members
 
-        // GetInventoryItemAt
-        private Item? GetInventoryItemAt(Vector2 position)
-        {
-            for (int i = 0; i < slots.Length; i++)
-            {
-                if (slots[i].BoundingBox.Contains(position))
-                    return i < inventory.Count ? inventory[i] : null;
-            }
-
-            return null;
-        }
-
         // HandleMouseInput
         private bool HandleMouseInput()
         {
+            if (!IsVisible)
+                return false;
+
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
             {
-                if (GetInventoryItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item grabbedItem)
+                if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item grabbedItem)
                 {
                     if (grabbedItem.Definition.Image != null)
                     {
@@ -93,6 +95,7 @@ namespace ScaryCastle
                 if (inventory.HeldItem != null)
                 {
                     inventory.HeldItem = null;
+                    Sound.Play(SoundNames.UISelectD);
                 }
                 else
                 {
@@ -108,22 +111,17 @@ namespace ScaryCastle
         // Layout
         private void Layout()
         {
-            float anchoPantalla = Screen.NativeWidth;
-            int cantidadRects = inventory.Capacity;
-            float anchoRect = slots[0].BoundingBox.Width;
-            float separacion = 2;
+            float screenWidth = Screen.NativeWidth;
+            int slotCount = inventory.Capacity;
+            float slotWidth = slots[0].BoundingBox.Width;
+            float spacing = 2;
 
-            // 2. Calcular el ancho total de la fila
-            // (Cantidad * ancho) + (Espacios intermedios * separacion)
-            float anchoTotalFila = (cantidadRects * anchoRect) + ((cantidadRects - 1) * separacion);
+            float rowWidth = (slotCount * slotWidth) + ((slotCount - 1) * spacing);
+            float startingX = (screenWidth - rowWidth) / 2;
 
-            // 3. Calcular el punto de inicio (X) para que quede centrado
-            float xInicial = (anchoPantalla - anchoTotalFila) / 2;
-
-            for (int i = 0; i < cantidadRects; i++)
+            for (int i = 0; i < slotCount; i++)
             {
-                // La posición X es el inicio + el desplazamiento de los rectángulos previos y sus espacios
-                slots[i].X = xInicial + (i * (anchoRect + separacion));
+                slots[i].X = startingX + (i * (slotWidth + spacing));
 
                 if (i < inventory.Count)
                 {
@@ -133,6 +131,20 @@ namespace ScaryCastle
                     amounts[i].X = icons[i].X;
                     amounts[i].Text = inventory[i].Count < 2 ? null : inventory[i].Count.ToString(CultureInfo.InvariantCulture);
                 }
+            }
+
+            var lt = slots[0].BoundingBox.GetPoint(RectanglePoint.LeftTop);
+            var rb = slots[inventory.Capacity-1].BoundingBox.GetPoint(RectanglePoint.RightBottom);
+
+            BoundingBox = new RectangleF(lt.X, lt.Y, rb.X-lt.X, rb.Y-lt.Y);
+
+            if (inventory.HeldItem == null)
+            {
+                MouseCursor.Reset();
+            }
+            else if (inventory.HeldItem.Definition.Image is AtlasImage image)
+            {
+                MouseCursor.SetCustomImage(image, inventory.HeldItem.Definition.Image);
             }
         }
 
@@ -146,6 +158,12 @@ namespace ScaryCastle
             if (!IsVisible)
                 return;
 
+            if (inventory.Session.Player?.InteractiveTarget != null)
+            {
+                if (BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
+                    return;
+            }
+
             Game.SpriteBatch.Begin(Game.Camera);
             for (var i = 0; i < inventory.Capacity; i++)
             {
@@ -157,19 +175,67 @@ namespace ScaryCastle
                 icons[i].Draw(gameTime);
                 amounts[i].Draw(gameTime);
             }
+
+            itemName.Draw(gameTime);
+
             Game.SpriteBatch.End();
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            base.OnUpdate(gameTime);
+            if (IsVisible)
+            {
+                if (lastSeenInventoryVersion != inventory.ContentVersion)
+                {
+                    lastSeenInventoryVersion = inventory.ContentVersion;
+                    Layout();
+                }
 
-            // TODO: Must be called only when inventory changes
-            Layout();
+                for (var i = 0; i < inventory.Count; i++)
+                {
+                    icons[i].Scale = ScaleInfo.UIElement.Medium;
+                }
+
+                if (inventory.HeldItem == null && GetSelectedItem() is Item item)
+                {
+                    itemName.Text = item.Definition.LocalizedDisplayName;
+                    itemName.X = slots[item.Index].X;
+                    icons[item.Index].Scale = ScaleInfo.UIElement.Medium * 1.2f;
+                }
+                else
+                {
+                    itemName.Text = null;
+                }
+            }
+            else
+            {
+                itemName.Text = null;
+            }
         }
 
         #endregion
+
+        // BoundingBox
+        public RectangleF BoundingBox { get; private set; }
+
+        // GetItemAt
+        public Item? GetItemAt(Vector2 position)
+        {
+            for (int i = 0; i < inventory.Count; i++)
+            {
+                if (slots[i].BoundingBox.Contains(position))
+                    return i < inventory.Count ? inventory[i] : null;
+            }
+
+            return null;
+        }
+
+        // GetSelectedItem
+        public Item? GetSelectedItem()
+        {
+            return GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition);
+        }
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)

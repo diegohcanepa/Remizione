@@ -1,5 +1,4 @@
-﻿
-using Engendro;
+﻿using Engendro;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,7 +11,6 @@ namespace ScaryCastle
     public sealed class Inventory
     {
         private readonly List<Item> items = [];
-        private const string NoneValue = "[None]";
 
         // Constructor
         public Inventory(GameSession session)
@@ -34,6 +32,9 @@ namespace ScaryCastle
 
             if (item == null)
             {
+                if (IsFull)
+                    return null;
+
                 item = new Item(this, definition) { Count = amount };
                 items.Add(item);
             }
@@ -42,23 +43,30 @@ namespace ScaryCastle
                 item.Count += amount;
             }
 
+            unchecked { ContentVersion++; }
+
             return item;
         }
 
         // Capacity
-        public int Capacity { get; set; } = 6;
+        public int Capacity
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    unchecked { ContentVersion++; }
+                }
+            }
+        } = 6;
 
         // Clear
         public void Clear()
         {
-            SelectedItem = null;
             items.Clear();
-        }
-
-        // ClearSelection
-        public void ClearSelection()
-        {
-            SelectedItem = null;
+            unchecked { ContentVersion++; }
         }
 
         // Contains
@@ -66,6 +74,9 @@ namespace ScaryCastle
         {
             return items.Contains(item);
         }
+
+        // ContentVersion
+        public int ContentVersion { get; private set; }
 
         // Count
         public int Count => items.Count;
@@ -111,10 +122,7 @@ namespace ScaryCastle
         // GetSerializationData
         public string GetSerializationData()
         {
-            var result = new List<string>
-            {
-                SelectedItem is null ? NoneValue : SelectedItem.Name
-            };
+            var result = new List<string>();
 
             foreach (var item in items)
             {
@@ -124,34 +132,17 @@ namespace ScaryCastle
             return string.Join(";", result);
         }
 
-        // HasItems
-        public bool HasItems(ItemCategory category)
-        {
-            for (var i = 0; i < items.Count; i++)
-            {
-                if (items[i].Definition.Category == category)
-                    return true;
-            }
-
-            return false;
-        }
-
         // HeldItem
         public Item? HeldItem
         {
             get;
             set
             {
-                if (value == null)
+                if (value != field)
                 {
-                    MouseCursor.Reset();
+                    field = value;
+                    unchecked { ContentVersion++; }
                 }
-                else if (value.Definition.Image is AtlasImage image)
-                {
-                    MouseCursor.SetCustomImage(image, field);
-                }
-
-                field = value;
             }
         }
 
@@ -167,129 +158,27 @@ namespace ScaryCastle
         // IsEmpty
         public bool IsEmpty => items.Count == 0;
 
+        // IsFull
+        public bool IsFull => items.Count >= Capacity;
+
         // Remove
         public bool Remove(string name)
         {
-            if (Find(name) is Item item)
-                return Remove(item);
-            else
-                return false;
+            return Find(name) is Item item && Remove(item);
         }
 
         // Remove
         public bool Remove(Item item)
         {
-            var itemIndex = items.IndexOf(item);
             if (items.Remove(item))
             {
-                if (SelectedItem == item)
-                {
-                    if (itemIndex > 0)
-                        Select(items[itemIndex - 1]);
-                    else if (itemIndex < items.Count - 1)
-                        Select(items[itemIndex + 1]);
-                    else
-                        SelectedItem = null;
-                }
-
+                unchecked { ContentVersion++; }
                 return true;
             }
             else
+            {
                 return false;
-        }
-
-        // Select
-        public bool Select(string name)
-        {
-            if (Find(name) is Item item)
-                return Select(item);
-            else
-                return false;
-        }
-
-        // Select
-        public bool Select(Item item)
-        {
-            if (items.Contains(item))
-            {
-                SelectedItem = item;
-                return true;
             }
-            else
-                return false;
-        }
-
-        // SelectFirst
-        public Item? SelectFirst()
-        {
-            if (items.Count > 0)
-            {
-                Select(items[0]);
-                return SelectedItem;
-            }
-
-            return null;
-        }
-
-        // SelectedItem
-        public Item? SelectedItem { get; private set; }
-
-        // SelectLast
-        public Item? SelectLast()
-        {
-            if (items.Count > 0)
-            {
-                Select(items[^1]);
-                return SelectedItem;
-            }
-
-            return null;
-        }
-
-        // SelectNext
-        public Item? SelectNext()
-        {
-            if (items.Count == 0)
-                return null;
-
-            if (SelectedItem == null)
-            {
-                if (items.Count > 0)
-                    Select(items[0]);
-            }
-            else if (items.Count > 1)
-            {
-                var index = items.IndexOf(SelectedItem);
-                if (index == items.Count - 1)
-                    Select(items[0]);
-                else
-                    Select(items[index + 1]);
-            }
-
-            return SelectedItem;
-        }
-
-        // SelectPrevious
-        public Item? SelectPrevious()
-        {
-            if (items.Count == 0)
-                return null;
-
-            if (SelectedItem == null)
-            {
-                if (items.Count > 0)
-                    Select(items[^1]);
-            }
-            else if (items.Count > 1)
-            {
-                var index = items.IndexOf(SelectedItem);
-                if (index == 0)
-                    Select(items[^1]);
-                else
-                    Select(items[index - 1]);
-            }
-
-            return SelectedItem;
         }
 
         // SetSerializationData
@@ -304,17 +193,10 @@ namespace ScaryCastle
 
             for (var i = 0; i < itemList.Length; i++)
             {
-                if (i == 0)
-                {
-                    SelectedItem = Find(itemList[i]);
-                }
-                else
-                {
-                    var itemData = itemList[i].Split(':');
+                var itemData = itemList[i].Split(':');
 
-                    if (ItemDefinition.Find(itemData[0]) != null)
-                        Add(itemData[0], int.Parse(itemData[1], CultureInfo.InvariantCulture));
-                }
+                if (ItemDefinition.Find(itemData[0]) != null)
+                    Add(itemData[0], int.Parse(itemData[1], CultureInfo.InvariantCulture));
             }
         }
 
