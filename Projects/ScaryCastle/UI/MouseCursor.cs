@@ -59,6 +59,18 @@ namespace ScaryCastle
             else if (State == MouseCursorState.CrossOn)
                 cursorSprite.Image = Atlases.UI.MouseCursorCrossOn;
 
+            else if (State == MouseCursorState.Down)
+                cursorSprite.Image = Atlases.UI.MouseCursorDown;
+
+            else if (State == MouseCursorState.Left)
+                cursorSprite.Image = Atlases.UI.MouseCursorLeft;
+
+            else if (State == MouseCursorState.Right)
+                cursorSprite.Image = Atlases.UI.MouseCursorRight;
+
+            else if (State == MouseCursorState.Up)
+                cursorSprite.Image = Atlases.UI.MouseCursorUp;
+
             else if (State == MouseCursorState.Wait)
                 cursorSprite.Image = Atlases.UI.MouseCursorWait;
 

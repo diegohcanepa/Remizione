@@ -548,6 +548,12 @@ namespace ScaryCastle
         public static bool ShowHotspots { get; set; }
 #endif
 
+        // GetMouseCursorState
+        public virtual MouseCursorState GetMouseCursorState()
+        {
+            return Session.Player?.InteractiveTarget == this ? MouseCursorState.CrossOn : MouseCursorState.Cross;
+        }
+
         // HitEffect
         [ScriptProperty]
         public HitEffect HitEffect { get; set; }

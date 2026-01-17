@@ -34,6 +34,10 @@ namespace ScaryCastle
             MouseCursorArrow = this[nameof(MouseCursorArrow)];
             MouseCursorCross = this[nameof(MouseCursorCross)];
             MouseCursorCrossOn = this[nameof(MouseCursorCrossOn)];
+            MouseCursorDown = this[nameof(MouseCursorDown)];
+            MouseCursorLeft = this[nameof(MouseCursorLeft)];
+            MouseCursorRight = this[nameof(MouseCursorRight)];
+            MouseCursorUp = this[nameof(MouseCursorUp)];
             MouseCursorWait = this[nameof(MouseCursorWait)];
             PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
@@ -115,6 +119,18 @@ namespace ScaryCastle
 
         // MouseCursorCrossOn
         public AtlasImage MouseCursorCrossOn { get; }
+
+        // MouseCursorDown
+        public AtlasImage MouseCursorDown { get; }
+
+        // MouseCursorLeft
+        public AtlasImage MouseCursorLeft { get; }
+
+        // MouseCursorRight
+        public AtlasImage MouseCursorRight { get; }
+
+        // MouseCursorUp
+        public AtlasImage MouseCursorUp { get; }
 
         // MouseCursorWait
         public AtlasImage MouseCursorWait { get; }

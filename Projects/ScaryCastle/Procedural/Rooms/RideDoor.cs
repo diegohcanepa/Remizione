@@ -11,6 +11,7 @@ namespace ScaryCastle
     /// </summary>
     public class RideDoor : Prop
     {
+        private readonly MouseCursorState arrowCursor;
         private readonly ImageSprite lockImage;
 
         #region Constructor
@@ -20,17 +21,25 @@ namespace ScaryCastle
             : base(session, name)
         {
             if (name.StartsWith("RideDoorUp", StringComparison.OrdinalIgnoreCase))
+            {
                 DoorDirection = RideDoorDirection.Up;
-
+                arrowCursor = MouseCursorState.Up;
+            }
             else if (name.StartsWith("RideDoorDown", StringComparison.OrdinalIgnoreCase))
+            {
                 DoorDirection = RideDoorDirection.Down;
-
+                arrowCursor = MouseCursorState.Down;
+            }
             else if (name.StartsWith("RideDoorLeft", StringComparison.OrdinalIgnoreCase))
+            {
                 DoorDirection = RideDoorDirection.Left;
-
+                arrowCursor = MouseCursorState.Left;
+            }
             else if (name.StartsWith("RideDoorRight", StringComparison.OrdinalIgnoreCase))
+            {
                 DoorDirection = RideDoorDirection.Right;
-
+                arrowCursor = MouseCursorState.Right;
+            }
             else
                 throw new InvalidOperationException("Cannot infere door direction from entity name.");
 
@@ -164,6 +173,15 @@ namespace ScaryCastle
         // DoorDirection
         [ScriptProperty]
         public RideDoorDirection DoorDirection { get; }
+
+        // GetMouseCursorState
+        public override MouseCursorState GetMouseCursorState()
+        {
+            if (Session.Player?.InteractiveTarget == this && PropState == PropState.Open)
+                return arrowCursor;
+            else
+                return base.GetMouseCursorState();
+        }
 
         // OpenSound
         [ScriptProperty]

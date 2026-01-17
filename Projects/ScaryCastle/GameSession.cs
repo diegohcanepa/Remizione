@@ -174,7 +174,7 @@ namespace ScaryCastle
         private void UpdateMouseCursor()
         {
             if (MouseCursor.Instance.CustomImageTag == null)
-                MouseCursor.Instance.State = Player?.InteractiveTarget == null ? MouseCursorState.Cross : MouseCursorState.CrossOn;
+                MouseCursor.Instance.State = Player?.InteractiveTarget == null ? MouseCursorState.Cross : Player.InteractiveTarget.GetMouseCursorState();
 
             // No active player
             if (IsAwaiting && Player?.HasSpeechBubble == false)
