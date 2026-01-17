@@ -19,8 +19,6 @@ namespace ScaryCastle
         public ScaryCastleGame(RunningPlatform platform, PlatformBridge platformBridge)
             : base(GameSettings.Title, GameSettings.ContentRootDirectory, Screen.NativeWidth, Screen.NativeHeight, platform, platformBridge)
         {
-            this.MouseCursor = new MouseCursor(this);
-
             AudioManager.AmbienceCategory.ContentPath = ContentManagerExtension.EncodeAudioPath(ContentFolder.Ambience);
             AudioManager.MusicCategory.ContentPath = ContentManagerExtension.EncodeAudioPath(ContentFolder.Music);
             AudioManager.FXCategory.ContentPath = ContentManagerExtension.EncodeAudioPath(ContentFolder.FX);
@@ -105,9 +103,8 @@ namespace ScaryCastle
             SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, effect: Effects.ColorReduction.Effect);
             SpriteBatch.Draw(RenderTargets.CurrentTarget, ViewportAdapter.DestinationRectangle, Color.White);
             SpriteBatch.End();
-
-            if (InputManager.AllowMouse && SceneManager.CurrentScene?.IsMouseVisible == true)
-                MouseCursor.Draw(gameTime);
+            
+            MouseCursor.Draw(gameTime);
         }
 
         // OnInitialize
@@ -144,8 +141,7 @@ namespace ScaryCastle
         // OUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (InputManager.AllowMouse)
-                MouseCursor.Update(gameTime);
+            MouseCursor.Update(gameTime);
 
             //?
             /*
@@ -214,9 +210,6 @@ namespace ScaryCastle
 
         // Effects
         public static GameEffects Effects { get; private set; } = null!;
-
-        // MouseCursor
-        public MouseCursor MouseCursor { get; }
 
         // Play
         public void Play(int slotNumber)

@@ -58,7 +58,6 @@ namespace ScaryCastle
         protected override void OnLoad()
         {
             base.OnLoad();
-            Session.IsMouseVisible = true;
             IsClosed = false;
         }
 

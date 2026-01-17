@@ -140,11 +140,11 @@ namespace ScaryCastle
             {
                 if (value == null)
                 {
-                    MouseCursor.Instance.Reset();
+                    MouseCursor.Reset();
                 }
                 else if (value.Definition.Image is AtlasImage image)
                 {
-                    MouseCursor.Instance.SetCustomImage(image, field);
+                    MouseCursor.SetCustomImage(image, field);
                 }
 
                 field = value;

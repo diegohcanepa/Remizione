@@ -29,7 +29,6 @@ namespace ScaryCastle
             this.healthMeter = new(session.Game);
             this.Log = new(Game);
             this.Message = new(Game);
-            this.TargetMeter = new(Game);
 
             // Sack slot
             this.SackSlot = new(session);
@@ -52,8 +51,6 @@ namespace ScaryCastle
             {
                 CoinMeter.Draw(gameTime);
                 SackSlot.Draw(gameTime);
-                if (RunManager.HasContent)
-                    TargetMeter.Draw(gameTime);
                 Log.Draw(gameTime);
                 Message.Draw(gameTime);
 
@@ -87,7 +84,6 @@ namespace ScaryCastle
         {
             if (session.GameplayMode == GameplayMode.Action)
             {
-                TargetMeter.Update(gameTime);
                 SackSlot.Update(gameTime);
                 healthMeter.Update(gameTime);
                 MiniMap.Update(gameTime);
@@ -142,8 +138,5 @@ namespace ScaryCastle
 
         // SackSlot
         public UISackSlot SackSlot { get; }
-
-        // TargetMeter
-        public UITargetMeter TargetMeter { get; }
     }
 }

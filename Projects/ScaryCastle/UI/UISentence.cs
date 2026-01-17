@@ -56,19 +56,19 @@ namespace ScaryCastle
 
                     if (session.Inventory.HeldItem == null)
                     {
-                        MouseCursor.Instance.Highlight = false;
+                        MouseCursor.Highlight = false;
                         sentence.Text = targetText;
                     }
                     else
                     {
-                        MouseCursor.Instance.Highlight = true;
+                        MouseCursor.Highlight = true;
                         sentence.Text = $"{useVerb} {session.Inventory.HeldItem.Definition.LocalizedDisplayName} {withPreposition} {targetText}";
                     }
                 }
             }
             else
             {
-                MouseCursor.Instance.Highlight = false;
+                MouseCursor.Highlight = false;
                 sentence.Text = null;
                 target = null;
             }

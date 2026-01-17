@@ -10,31 +10,36 @@ namespace ScaryCastle
     /// <summary>
     /// MouseCursor
     /// </summary>
-    public sealed class MouseCursor : GameObject
+    public static class MouseCursor
     {
         #region Private fields
 
-        private readonly Vector2Tween attackTween = Vector2Tween.Create(TweenStyle.CubicInOut, ScaleInfo.UIElement.Medium, ScaleInfo.UIElement.Medium * .8f, 130, -1);
-        private readonly ImageSprite cursorSprite;
-        private readonly ImageSprite customCursorSprite;
-        private readonly Vector2Tween scaleTween = new();
-        private readonly FloatTween shakeTween = new();
+        private static readonly Vector2Tween attackTween = Vector2Tween.Create(TweenStyle.CubicInOut, ScaleInfo.UIElement.Medium, ScaleInfo.UIElement.Medium * .8f, 130, -1);
+        private static readonly AtlasImage[] cursorImages;
+        private static readonly ImageSprite cursorSprite;
+        private static readonly ImageSprite customCursorSprite;
+        private static readonly Vector2Tween scaleTween = new();
+        private static readonly FloatTween shakeTween = new();
 
         #endregion
 
         #region Constructor
 
         // Constructor
-        public MouseCursor(EngendroGame game)
-            : base(game)
+        static MouseCursor()
         {
-            if (Instance != null)
-                throw new InvalidOperationException("This class cannot be instantiated twice.");
-            else
-                Instance = this;
+            customCursorSprite = new ImageSprite(EngendroGame.Instance) { PivotOrigin = RectanglePoint.Center, Scale = ScaleInfo.UIElement.Medium };
+            cursorSprite = new ImageSprite(EngendroGame.Instance) { PivotOrigin = RectanglePoint.Center, Scale = ScaleInfo.UIElement.Medium };
 
-            this.customCursorSprite = new ImageSprite(game) { PivotOrigin = RectanglePoint.Center, Scale = ScaleInfo.UIElement.Medium };
-            this.cursorSprite = new ImageSprite(game) { PivotOrigin = RectanglePoint.Center, Scale = ScaleInfo.UIElement.Medium };
+            const string prefix = "MouseCursor";
+            var names = Enum.GetNames<MouseCursorState>();
+
+            cursorImages = new AtlasImage[names.Length];
+            for (var i = 0; i < cursorImages.Length; i++)
+            {
+                var imageName = $"{prefix}{names[i]}";
+                cursorImages[i] = Atlases.UI.GetImage(imageName);
+            }
         }
 
         #endregion
@@ -42,52 +47,41 @@ namespace ScaryCastle
         #region Private members
 
         // GetActiveCursor
-        private ImageSprite GetActiveCursor()
-        { 
-            return customCursorSprite.IsEmpty? cursorSprite : customCursorSprite;
+        private static ImageSprite GetActiveCursor()
+        {
+            return customCursorSprite.IsEmpty ? cursorSprite : customCursorSprite;
         }
 
         // Invalidate
-        private void Invalidate()
+        private static void Invalidate()
         {
-            if (State == MouseCursorState.Arrow)
-                cursorSprite.Image = Atlases.UI.MouseCursorArrow;
-
-            else if (State == MouseCursorState.Cross)
-                cursorSprite.Image = Atlases.UI.MouseCursorCross;
-
-            else if (State == MouseCursorState.CrossOn)
-                cursorSprite.Image = Atlases.UI.MouseCursorCrossOn;
-
-            else if (State == MouseCursorState.Down)
-                cursorSprite.Image = Atlases.UI.MouseCursorDown;
-
-            else if (State == MouseCursorState.Left)
-                cursorSprite.Image = Atlases.UI.MouseCursorLeft;
-
-            else if (State == MouseCursorState.Right)
-                cursorSprite.Image = Atlases.UI.MouseCursorRight;
-
-            else if (State == MouseCursorState.Up)
-                cursorSprite.Image = Atlases.UI.MouseCursorUp;
-
-            else if (State == MouseCursorState.Wait)
-                cursorSprite.Image = Atlases.UI.MouseCursorWait;
-
+            cursorSprite.Image = cursorImages[(int)State];
             cursorSprite.Scale = ScaleInfo.UIElement.Medium;
             cursorSprite.PivotOrigin = State == MouseCursorState.Arrow ? RectanglePoint.LeftTop : RectanglePoint.Center;
         }
 
         #endregion
 
-        #region Protected members
-
-        // OnDraw
-        protected override void OnDraw(GameTime gameTime)
+        // AnimateClick
+        public static void AnimateClick()
         {
-            if (State == MouseCursorState.None)
-                return;
+            scaleTween.Start(TweenStyle.QuadraticIn, ScaleInfo.UIElement.Small, ScaleInfo.UIElement.Medium, 150);
+            cursorSprite.Tweens.ScaleTween = scaleTween;
+        }
 
+        // AnimateSwitch
+        public static void AnimateSwitch()
+        {
+            scaleTween.Start(TweenStyle.QuadraticIn, new(.2f), ScaleInfo.UIElement.Medium, 100);
+            cursorSprite.Tweens.ScaleTween = scaleTween;
+        }
+
+        // CustomImageTag
+        public static object? CustomImageTag { get; private set; }
+
+        // Draw
+        public static void Draw(GameTime gameTime)
+        {
             var sprite = GetActiveCursor();
             OutlineEffect? effect = Highlight ? ScaryCastleGame.Effects.Outline : null;
 
@@ -98,55 +92,18 @@ namespace ScaryCastle
                 effect.Thickness.SetValue(1.2f);
             }
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, effect?.Effect);
+            EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera, SamplerState.PointClamp, effect?.Effect);
             sprite.X += shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             sprite.Draw(gameTime);
             sprite.X -= shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
-            Game.SpriteBatch.End();
+            EngendroGame.Instance.SpriteBatch.End();
         }
-
-        // OnUpdate
-        protected override void OnUpdate(GameTime gameTime)
-        {
-            attackTween.Update(gameTime);
-
-            GetActiveCursor().Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
-
-            if (cursorSprite.Image == null)
-                Invalidate();
-
-            cursorSprite.Update(gameTime);
-
-            shakeTween.Update(gameTime);
-        }
-
-        #endregion
-
-        // AnimateClick
-        public void AnimateClick()
-        {
-            scaleTween.Start(TweenStyle.QuadraticIn, ScaleInfo.UIElement.Small, ScaleInfo.UIElement.Medium, 150);
-            cursorSprite.Tweens.ScaleTween = scaleTween;
-        }
-
-        // AnimateSwitch
-        public void AnimateSwitch()
-        {
-            scaleTween.Start(TweenStyle.QuadraticIn, new(.2f), ScaleInfo.UIElement.Medium, 100);
-            cursorSprite.Tweens.ScaleTween = scaleTween;
-        }
-
-        // CustomImageTag
-        public object? CustomImageTag { get; private set; }
 
         // Highlight
-        public bool Highlight { get; set; }
-
-        // Instance
-        public static MouseCursor Instance { get; private set; } = null!;
+        public static bool Highlight { get; set; }
 
         // Reset
-        public void Reset()
+        public static void Reset()
         {
             Highlight = false;
             customCursorSprite.Image = null;
@@ -154,20 +111,20 @@ namespace ScaryCastle
         }
 
         // Shake
-        public void Shake()
+        public static void Shake()
         {
             shakeTween.Start(TweenStyle.CubicInOut, 0, 1, 50, 4);
         }
 
         // SetCustomImage
-        public void SetCustomImage(AtlasImage image, object? tag)
+        public static void SetCustomImage(AtlasImage image, object? tag)
         {
             customCursorSprite.Image = image;
             CustomImageTag = tag;
         }
 
         // State
-        public MouseCursorState State
+        public static MouseCursorState State
         {
             get;
             set
@@ -178,6 +135,15 @@ namespace ScaryCastle
                     Invalidate();
                 }
             }
+        }
+
+        // Update
+        public static void Update(GameTime gameTime)
+        {
+            attackTween.Update(gameTime);
+            GetActiveCursor().Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
+            GetActiveCursor().Update(gameTime);
+            shakeTween.Update(gameTime);
         }
     }
 }

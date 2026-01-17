@@ -210,9 +210,6 @@ namespace Engendro
         // IsCurrentScene
         public bool IsCurrentScene => Game.SceneManager.CurrentScene == this;
 
-        // IsMouseVisible
-        public bool IsMouseVisible { get; set; } = true;
-
         // IsPaused
         public bool IsPaused => pauseCount > 0;
 

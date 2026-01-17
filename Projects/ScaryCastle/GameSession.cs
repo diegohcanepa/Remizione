@@ -173,12 +173,12 @@ namespace ScaryCastle
         // UpdateMouseCursor
         private void UpdateMouseCursor()
         {
-            if (MouseCursor.Instance.CustomImageTag == null)
-                MouseCursor.Instance.State = Player?.InteractiveTarget == null ? MouseCursorState.Cross : Player.InteractiveTarget.GetMouseCursorState();
+            if (MouseCursor.CustomImageTag == null)
+                MouseCursor.State = Player?.InteractiveTarget == null ? MouseCursorState.Cross : Player.InteractiveTarget.GetMouseCursorState();
 
             // No active player
             if (IsAwaiting && Player?.HasSpeechBubble == false)
-                MouseCursor.Instance.State = MouseCursorState.Wait;
+                MouseCursor.State = MouseCursorState.Wait;
         }
 
         #endregion
@@ -496,6 +496,9 @@ namespace ScaryCastle
 
         // ImpactWordPool
         public ObjectPool<ImpactWord> ImpactWordPool { get; }
+
+        // InteractiveTarget
+        public GameThing? InteractiveTarget { get; private set; }
 
         // Inventory
         public Inventory Inventory { get; }

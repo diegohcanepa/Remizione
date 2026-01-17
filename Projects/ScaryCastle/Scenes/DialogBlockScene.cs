@@ -86,7 +86,7 @@ namespace ScaryCastle
             {
                 if (menu.GetOptionAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) != null)
                 {
-                    MouseCursor.Instance.AnimateClick();
+                    MouseCursor.AnimateClick();
                     Sound.Play(SoundNames.UISelectA);
                     runSelectedOptionCooldown = 500;
                     return true;

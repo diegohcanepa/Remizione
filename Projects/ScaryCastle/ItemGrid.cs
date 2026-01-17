@@ -271,7 +271,7 @@ namespace ScaryCastle
             {
                 if (FindSlotAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is ItemGridSlot slot)
                 {
-                    MouseCursor.Instance.AnimateClick();
+                    MouseCursor.AnimateClick();
 
                     if (slot.Item == null)
                     {

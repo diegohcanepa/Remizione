@@ -175,7 +175,7 @@ namespace ScaryCastle
             if (GetInventoryItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is VisualItem item)
             {
                 Select(visualItems.IndexOf(item));
-                MouseCursor.Instance.AnimateClick();
+                MouseCursor.AnimateClick();
                 Sound.Play(SoundNames.UIHover);
             }
 

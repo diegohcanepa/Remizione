@@ -52,7 +52,7 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
 
-            MouseCursor.Instance.AnimateClick();
+            MouseCursor.AnimateClick();
 
             if (Actor.InteractiveTarget != null)
             {
