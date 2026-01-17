@@ -3,7 +3,6 @@ using Engendro.Audio;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Text.Json;
 
 namespace ScaryCastle
@@ -11,7 +10,7 @@ namespace ScaryCastle
     /// <summary>
     /// ItemDefinition
     /// </summary>
-    public sealed class ItemDefinition : Definition 
+    public sealed class ItemDefinition : Definition
     {
         private static readonly Dictionary<string, ItemDefinition> data = [];
         private readonly List<EffectDescriptor> effects = [];
@@ -33,7 +32,7 @@ namespace ScaryCastle
 
             // ConsumptionType
             ConsumptionType = element.GetEnum("consumptionType", ConsumptionType.None);
-            
+
             // Damage
             DiceExpression? damage = element.GetObject("hp", value => new DiceExpression(value));
 
@@ -79,7 +78,7 @@ namespace ScaryCastle
             this.LocalizedDescription = Localization.GetItemDescription(this);
             this.LocalizedDisplayName = Localization.GetItemName(this);
             this.Image = Atlases.UI.FindImage(Name);
-            
+
             this.Price = Quality switch
             {
                 0 or 1 => 5,  // Items básicos o consumibles

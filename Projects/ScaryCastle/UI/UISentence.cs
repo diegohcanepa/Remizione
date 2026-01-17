@@ -24,9 +24,9 @@ namespace ScaryCastle
 
             this.sentence = new(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.OrangeLight,
+                Color = ColorPalette.HighlightedText,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -6),
+                Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -12),
                 Scale = ScaleInfo.UISentence
             };
         }

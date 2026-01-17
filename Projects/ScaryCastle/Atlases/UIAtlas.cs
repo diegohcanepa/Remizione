@@ -13,11 +13,10 @@ namespace ScaryCastle
         {
             BottomGradient = this[nameof(BottomGradient)];
             CheckMark = this[nameof(CheckMark)];
-            CoinIcon = this[nameof(CoinIcon)];
+            Coin = this[nameof(Coin)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
-            EquipmentSlot = this[nameof(EquipmentSlot)];
             HeartEmpty = this[nameof(HeartEmpty)];
             HeartHalf = this[nameof(HeartHalf)];
             Heart = this[nameof(Heart)];
@@ -44,12 +43,10 @@ namespace ScaryCastle
             PointingHand = this[nameof(PointingHand)];
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
-            SackIcon = this[nameof(SackIcon)];
-            SackSlot = this[nameof(SackSlot)];
+            Sack = this[nameof(Sack)];
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
-            CoinSlot = this[nameof(CoinSlot)];
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
@@ -60,11 +57,8 @@ namespace ScaryCastle
         // CheckMark
         public AtlasImage CheckMark { get; }
 
-        // CoinIcon
-        public AtlasImage CoinIcon { get; }
-
-        // CoinSlot
-        public AtlasImage CoinSlot { get; }
+        // Coin
+        public AtlasImage Coin { get; }
 
         // ContextMenuOptionSelector
         public AtlasImage ContextMenuOptionSelector { get; }
@@ -74,9 +68,6 @@ namespace ScaryCastle
 
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
-
-        // EquipmentSlot
-        public AtlasImage EquipmentSlot { get; }
 
         // InventoryCategoryGadget
         public AtlasImage InventoryCategoryGadget { get; }
@@ -157,10 +148,7 @@ namespace ScaryCastle
         public AtlasImage PopupContainerShadow { get; }
 
         // SackIcon
-        public AtlasImage SackIcon { get; }
-
-        // SackSlot
-        public AtlasImage SackSlot { get; }
+        public AtlasImage Sack { get; }
 
         // SavingIcon
         public AtlasImage SavingIcon { get; }

@@ -85,7 +85,7 @@ namespace Engendro
 
             // Combinamos velocidad, zoom y tiempo.
             // El "Lerp" necesita un valor entre 0 y 1.
-            float t = (SmoothSpeed / zoomFactor) * timeFactor;
+            float t = SmoothSpeed / zoomFactor * timeFactor;
 
             // Aseguramos que t nunca sea mayor a 1 (para evitar saltos instantáneos o errores)
             t = MathHelper.Clamp(t, 0f, 1f);

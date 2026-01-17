@@ -595,7 +595,7 @@ namespace Engendro
                             position.X = sprite.Width;
                             position.Y = 0;
                             break;
-                        
+
                         default:
                             break;
                     }

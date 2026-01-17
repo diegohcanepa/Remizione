@@ -102,6 +102,6 @@ namespace ScaryCastle
         }
 
         // UISentence
-        internal static Vector2 UISentence { get; } = new Vector2(.13f);
+        internal static Vector2 UISentence { get; } = new Vector2(.12f);
     }
 }

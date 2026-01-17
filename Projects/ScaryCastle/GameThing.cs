@@ -422,7 +422,7 @@ namespace ScaryCastle
             if (requester == this || !AllowInteraction)
                 return false;
 
-            if (IsDead || string.IsNullOrWhiteSpace(LocalizedDisplayName))
+            if (IsMoving || IsDead || string.IsNullOrWhiteSpace(LocalizedDisplayName))
                 return false;
 
             return true;

@@ -19,13 +19,12 @@ namespace ScaryCastle
         private const float animationSpeed = 14;
         private readonly ImageSprite bottomGradient;
         private readonly UIButton buttonClose;
-        private readonly UIButton buttonInfo;
-        private readonly TextSprite itemDescription;
+        private readonly UIButton buttonDrop;
         private readonly TextSprite itemNameText;
         private int selectedIndex;
         private readonly GameSession session;
         private readonly ImageSprite slotImage;
-        private static readonly Vector2 slotPosition = new(Screen.Center.X, Screen.HUDArea.Bottom - 30);
+        private static readonly Vector2 slotPosition = new(Screen.Center.X, Screen.HUDArea.Bottom - 18);
         private const int spaceBetweenIcons = 15;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 150 };
         private float visualIndex;
@@ -62,19 +61,8 @@ namespace ScaryCastle
             {
                 Color = ColorPalette.Text.OrangeLight,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Top),
+                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Top, 0, -2),
                 Scale = ScaleInfo.Text.ExtraLarge
-            };
-
-            // Item description
-            itemDescription = new(Game, Fonts.Common)
-            {
-                Color = ColorPalette.Text.Default,
-                Opacity = .8f,
-                MaximumWidth = 140,
-                PivotOrigin = RectanglePoint.Top,
-                Position = slotImage.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 5),
-                Scale = ScaleInfo.Text.VeryLarge
             };
 
             // Amount text
@@ -93,8 +81,8 @@ namespace ScaryCastle
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -2),
             };
 
-            // Info button
-            buttonInfo = new(Game, InputBindings.Info)
+            // Drop button
+            buttonDrop = new(Game, InputBindings.Drop)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -13),
@@ -164,7 +152,7 @@ namespace ScaryCastle
                         session.Inventory.HeldItem = grabbedtem.Item;
                     }
                 }
-                
+
                 SceneController.Pop();
                 return true;
             }
@@ -197,23 +185,6 @@ namespace ScaryCastle
             selectedIndex = index;
             var item = visualItems[index].Item;
             itemNameText.Text = index < 0 ? null : item.DisplayText;
-            
-            if (index < 0)
-            {
-                itemDescription.Text = null;
-            }
-            else
-            {
-                if (item.Definition.LocalizedDescription.Length > 120)
-                {
-                    itemDescription.Text = item.Definition.LocalizedDescription.Substring(0, 120) + "...";
-                }
-                else
-                {
-                    itemDescription.Text = item.Definition.LocalizedDescription;
-                }
-            }
-            
             InvalidateSlot();
         }
 
@@ -242,11 +213,10 @@ namespace ScaryCastle
             slotImage.Draw(gameTime);
             amountText.Draw(gameTime);
             DrawItems(gameTime);
-            itemDescription.Draw(gameTime);
             Game.SpriteBatch.End();
 
             buttonClose.Draw(gameTime);
-            buttonInfo.Draw(gameTime);
+            buttonDrop.Draw(gameTime);
         }
 
         // OnHandleInput
@@ -340,7 +310,7 @@ namespace ScaryCastle
             base.OnUpdate(gameTime);
 
             buttonClose.Update(gameTime);
-            buttonInfo.Update(gameTime);
+            buttonDrop.Update(gameTime);
         }
 
         #endregion

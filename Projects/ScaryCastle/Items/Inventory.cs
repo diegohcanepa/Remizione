@@ -44,6 +44,9 @@ namespace ScaryCastle
             return item;
         }
 
+        // Capacity
+        public int Capacity { get; set; } = 10;
+
         // Clear
         public void Clear()
         {

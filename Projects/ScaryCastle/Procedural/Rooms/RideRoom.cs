@@ -20,7 +20,7 @@ namespace ScaryCastle
             if (graph.Definition is not RoomDefinition definition)
                 throw new InvalidOperationException();
 
-            Zoom = 1.1f;
+            Zoom = 1.2f;
 
             AtlasName = graph.Definition?.Name ?? string.Empty;
             DefaultImageName = AtlasName;

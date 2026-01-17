@@ -9,36 +9,27 @@ namespace ScaryCastle
     public class UICoinMeter : GameObject
     {
         private readonly ImageSprite icon;
-        private readonly Vector2 iconScale = ScaleInfo.UIElement.Tiny;
+        private readonly Vector2 iconScale = ScaleInfo.UIElement.Medium;
         private readonly FloatTween rotationTween = new();
         private readonly Vector2Tween scaleTween = new();
         private readonly UIScore score;
-        private readonly ImageSprite slot;
 
         // Constructor
         public UICoinMeter(EngendroGame game)
             : base(game)
         {
-            // Slot
-            this.slot = new ImageSprite(Game, Atlases.UI.CoinSlot)
-            {
-                PivotOrigin = RectanglePoint.Top,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 205, 110)
-            };
-
             // Icon
-            this.icon = new ImageSprite(Game, Atlases.UI.CoinIcon)
+            this.icon = new ImageSprite(Game, Atlases.UI.Coin)
             {
-                PivotOrigin = RectanglePoint.Center,
-                Position = slot.BoundingBox.GetPoint(RectanglePoint.Center),
-                Scale = iconScale
+                PivotOrigin = RectanglePoint.RightBottom,
+                Position = Screen.Area.GetPoint(RectanglePoint.RightBottom, -7, -13),
             };
 
             // Score
             this.score = new UIScore(game, ColorPalette.Text.Default, ScaleInfo.Text.ExtraLarge, false)
             {
-                PivotOrigin = RectanglePoint.Top,
-                Position = icon.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1)
+                PivotOrigin = RectanglePoint.Right,
+                Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, 0, 1)
             };
         }
 
@@ -48,7 +39,6 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
-            slot.Draw(gameTime);
             icon.Draw(gameTime);
             score.Draw(gameTime);
             Game.SpriteBatch.End();

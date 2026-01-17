@@ -1,7 +1,6 @@
 ﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using ScaryCastle.Procedural;
 using ScaryCastle.UI;
 
 namespace ScaryCastle
@@ -30,11 +29,11 @@ namespace ScaryCastle
             this.Log = new(Game);
             this.Message = new(Game);
 
-            // Sack slot
-            this.SackSlot = new(session);
-
             // Coin meter 
             this.CoinMeter = new(Game);
+
+            // Sack meter
+            this.SackMeter = new(session);
 
             // Mini map
             this.MiniMap = new(Game);
@@ -50,7 +49,7 @@ namespace ScaryCastle
             if (session.IsCurrentScene)
             {
                 CoinMeter.Draw(gameTime);
-                SackSlot.Draw(gameTime);
+                SackMeter.Draw(gameTime);
                 Log.Draw(gameTime);
                 Message.Draw(gameTime);
 
@@ -84,7 +83,7 @@ namespace ScaryCastle
         {
             if (session.GameplayMode == GameplayMode.Action)
             {
-                SackSlot.Update(gameTime);
+                SackMeter.Update(gameTime);
                 healthMeter.Update(gameTime);
                 MiniMap.Update(gameTime);
                 Log.Update(gameTime);
@@ -112,12 +111,6 @@ namespace ScaryCastle
             if (session.IsConsoleVisible)
                 return HandleInputResult.Unhandled;
 
-            if (session.GameplayMode == GameplayMode.Action)
-            {
-                if (SackSlot.HandleInput(gameTime) == HandleInputResult.Handled)
-                    return HandleInputResult.Handled;
-            }
-
             return HandleInputResult.Unhandled;
         }
 
@@ -136,7 +129,7 @@ namespace ScaryCastle
             healthMeter.Actor = session.Player;
         }
 
-        // SackSlot
-        public UISackSlot SackSlot { get; }
+        // SackMeter
+        public UISackMeter SackMeter { get; }
     }
 }

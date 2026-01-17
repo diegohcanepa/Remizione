@@ -26,6 +26,7 @@
   <String Key="InputBinding.ConsumeItem">Consumir</String>
   <String Key="InputBinding.Continue">Continuar</String>
   <String Key="InputBinding.Discard">Descartar</String>
+  <String Key="InputBinding.Drop">Soltar</String>
   <String Key="InputBinding.EquipItem">Equipar</String>
   <String Key="InputBinding.Exit">Salir</String>
   <String Key="InputBinding.Info">Info</String>

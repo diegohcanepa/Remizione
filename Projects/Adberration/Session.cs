@@ -1178,7 +1178,7 @@ namespace Adberration
             if (IsRunning)
                 throw new InvalidOperationException("Game session is already running.");
 
-           // if (startingRoom == null && !IsNewSession)
+            // if (startingRoom == null && !IsNewSession)
             //    throw new InvalidOperationException("There is no starting room.");
 
             IsRunning = true;

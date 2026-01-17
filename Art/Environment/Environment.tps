@@ -287,8 +287,6 @@
             <key type="filename">Guts-assets/Gut5.png</key>
             <key type="filename">Guts-assets/Gut6.png</key>
             <key type="filename">Guts-assets/Gut8.png</key>
-            <key type="filename">Pickups-assets/Duck.png</key>
-            <key type="filename">Pickups-assets/DuckShadow.png</key>
             <key type="filename">Throwables-assets/ThrowableChili.png</key>
             <key type="filename">Throwables-assets/ThrowableChiliShadow.png</key>
             <key type="filename">Throwables-assets/ThrowableDuck.png</key>
@@ -1515,7 +1513,6 @@
                     <filename>SmallRockA-assets</filename>
                     <filename>SmallRockB-assets</filename>
                     <filename>SinnerCross-assets</filename>
-                    <filename>Pickups-assets</filename>
                     <filename>ImpactWords-assets</filename>
                     <filename>Throwables-assets</filename>
                     <filename>Lightning-assets</filename>

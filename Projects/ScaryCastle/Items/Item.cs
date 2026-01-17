@@ -106,7 +106,7 @@ namespace ScaryCastle
             set
             {
                 field = value;
-                
+
                 if (field < 0)
                     field = 0;
 

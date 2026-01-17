@@ -14,7 +14,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private static readonly Vector2Tween attackTween = Vector2Tween.Create(TweenStyle.CubicInOut, ScaleInfo.UIElement.Medium, ScaleInfo.UIElement.Medium * .8f, 130, -1);
         private static readonly AtlasImage[] cursorImages;
         private static readonly ImageSprite cursorSprite;
         private static readonly ImageSprite customCursorSprite;
@@ -140,7 +139,6 @@ namespace ScaryCastle
         // Update
         public static void Update(GameTime gameTime)
         {
-            attackTween.Update(gameTime);
             GetActiveCursor().Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
             GetActiveCursor().Update(gameTime);
             shakeTween.Update(gameTime);

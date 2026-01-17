@@ -1,7 +1,6 @@
 ﻿using Adberration;
 using Engendro;
 using Engendro.Audio;
-using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ScaryCastle.Menus;
@@ -103,7 +102,7 @@ namespace ScaryCastle
             SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, effect: Effects.ColorReduction.Effect);
             SpriteBatch.Draw(RenderTargets.CurrentTarget, ViewportAdapter.DestinationRectangle, Color.White);
             SpriteBatch.End();
-            
+
             MouseCursor.Draw(gameTime);
         }
 
