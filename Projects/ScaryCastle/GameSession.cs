@@ -492,6 +492,14 @@ namespace ScaryCastle
         // ObjectPools
         public ObjectPools ObjectPools { get; }
 
+        // OutcomeProp
+        [ScriptProperty]
+        public Prop? OutcomeProp => OutcomeTarget as Prop;
+
+        // OutcomeDoor
+        [ScriptProperty]
+        public RideDoor? OutcomeDoor => OutcomeTarget as RideDoor;
+
         // Player
         [ScriptProperty]
         public Actor? Player
@@ -514,12 +522,10 @@ namespace ScaryCastle
         [ScriptProperty]
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
 
+
+
         // Random
         public Random Random { get; private set; }
-
-        // RideDoor
-        [ScriptProperty]
-        public RideDoor? RideDoor => OutcomeTarget as RideDoor;
 
         // Room
         [ScriptProperty]

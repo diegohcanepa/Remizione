@@ -17,6 +17,7 @@ namespace ScaryCastle
 
         private static readonly AtlasImage?[] cursorImages;
         private static readonly ImageSprite cursorSprite;
+        private static readonly Vector2 defaultScale = ScaleInfo.UIElement.Medium;
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
         private static readonly TextSprite textSprite;
@@ -33,8 +34,8 @@ namespace ScaryCastle
             // Cursor sprite
             cursorSprite = new ImageSprite(EngendroGame.Instance)
             { 
-                PivotOrigin = RectanglePoint.Center, 
-                Scale = ScaleInfo.UIElement.Medium
+                PivotOrigin = RectanglePoint.Center,
+                Scale = defaultScale
             };
 
             const string prefix = "MouseCursor";
@@ -90,7 +91,7 @@ namespace ScaryCastle
             else
                 cursorSprite.Image = cursorImages[(int)State];
 
-            cursorSprite.Scale = ScaleInfo.UIElement.Medium;
+            cursorSprite.Scale = defaultScale;
             cursorSprite.PivotOrigin = State == MouseCursorState.Arrow ? RectanglePoint.LeftTop : RectanglePoint.Center;
         }
 
@@ -116,14 +117,6 @@ namespace ScaryCastle
             {
                 textSprite.Text = $"{useVerb} {Item.Definition.LocalizedDisplayName} {withPreposition} {sentence}";
             }
-        }
-
-        // Reset
-        private static void Reset()
-        {
-            Item = null;
-            Target = null;
-            UseWithScript = null;
         }
 
         // ScanForTarget
@@ -152,7 +145,7 @@ namespace ScaryCastle
         // AnimateClick
         public static void AnimateClick()
         {
-            scaleTween.Start(TweenStyle.QuadraticIn, ScaleInfo.UIElement.Small, ScaleInfo.UIElement.Medium, 150);
+            scaleTween.Start(TweenStyle.QuadraticIn, ScaleInfo.UIElement.Small, defaultScale, 150);
             cursorSprite.Tweens.ScaleTween = scaleTween;
         }
 

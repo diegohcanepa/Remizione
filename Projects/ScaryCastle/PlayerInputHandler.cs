@@ -60,7 +60,7 @@ namespace ScaryCastle
                 if (MouseCursor.UseWithScript is Script script)
                 {
                     MouseCursor.Item = null;
-                    Actor.Session.AwaitScript(script);
+                    Actor.Session.BeginOutcome(script, MouseCursor.Target);
                 }
                 else
                 {

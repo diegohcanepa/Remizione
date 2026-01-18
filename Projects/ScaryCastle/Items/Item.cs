@@ -179,36 +179,33 @@ namespace ScaryCastle
         }
 
         // Use
-        public bool Use(GameThing source, GameThing target)
+        public bool Use()
         {
-            switch (Definition.ConsumptionType)
+            // Quantity
+            if (Definition.ConsumptionType == ConsumptionType.Quantity)
             {
-                // Quantity
-                case ConsumptionType.Quantity:
-                    Count--;
-                    if (Count <= 0)
-                        Inventory.Remove(this);
-                    break;
-
-                // Durability
-                case ConsumptionType.Durability:
-                    Durability -= Definition.DurabilityCost;
-                    if (Durability <= 0)
-                        Inventory.Remove(this);
-                    break;
-
-                // None
-                case ConsumptionType.None:
-                    break;
-
-                default:
-                    break;
+                Count--;
+                if (Count <= 0)
+                    Inventory.Remove(this);
             }
-
-            EffectDescriptor.Apply(Definition.EffectDescriptors, source, target);
+            else if (Definition.ConsumptionType == ConsumptionType.Durability)
+            {
+                Durability -= Definition.DurabilityCost;
+                if (Durability <= 0)
+                    Inventory.Remove(this);
+            }
 
             InvalidateDisplayText();
 
+            return true;
+        }
+
+        // Use
+        public bool Use(GameThing source, GameThing target)
+        {
+            EffectDescriptor.Apply(Definition.EffectDescriptors, source, target);
+            Use();
+            
             return true;
         }
     }

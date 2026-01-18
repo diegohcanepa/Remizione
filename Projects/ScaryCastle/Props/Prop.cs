@@ -153,10 +153,7 @@ namespace ScaryCastle
             var successChance = item.Definition.SkillChance - SkillChancePenalty;
             var success = roll <= successChance;
 
-            // TODO: Check
-            //item.Use(actor);
-
-            Session.HUD.Log.Show(LogVerb.Used, item.Definition);
+            item.Use();
 
             var text = TextRepository.GetValue(success ? "Misc.Success" : "Misc.Failed");
 
