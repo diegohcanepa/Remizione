@@ -24,7 +24,8 @@ namespace ScaryCastle
         private FloatTween? hurtTween;
         private bool isCollisionDirty;
         private bool isHotspotDirty = true;
-        private readonly Vector2Tween knockbackTween = new();
+        private Vector2 _knockbackVelocity;
+        private const float KnockbackFriction = 0.90f; // Ajustá este valor (0.8 - 0.95)
         private PathNode[]? pathNodes;
         private int renderLayerDepth;
         private readonly ShadowSpot shadowSpot;
@@ -153,6 +154,8 @@ namespace ScaryCastle
         // GetImpactWordPosition
         private Vector2? GetImpactWordPosition()
         {
+            return GetOverheadPosition();
+
             if (HitTestPolygon == TestPolygon.Collider && !Collider.IsEmpty)
             {
                 return this.GetAbsolutePoint(Collider.BoundingRectangleF.GetPoint(RectanglePoint.Top));
@@ -381,11 +384,22 @@ namespace ScaryCastle
             hurtShakeTween?.Update(gameTime);
             shadowSpot.Update(gameTime);
 
-            if (knockbackTween.IsRunning)
+            if (_knockbackVelocity != Vector2.Zero)
             {
-                knockbackTween.Update(gameTime);
-                Position = knockbackTween.CurrentValue;
-                if (!knockbackTween.IsRunning && IsDead)
+                float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                // 1. Aplicar movimiento
+                Position += _knockbackVelocity * dt;
+
+                // 2. Aplicar fricción (decaimiento)
+                _knockbackVelocity *= KnockbackFriction;
+
+                // 3. Limpiar valores residuales muy chicos
+                if (_knockbackVelocity.LengthSquared() < 100f) // Ajustá según tu escala de píxeles
+                    _knockbackVelocity = Vector2.Zero;
+
+                // Si murió por el golpe, chequear acá si paró para llamar a Die() visualmente
+                if (_knockbackVelocity == Vector2.Zero && IsDead)
                     Die();
             }
 
@@ -525,6 +539,9 @@ namespace ScaryCastle
                 deathSoundInstance.Play();
             }
 
+            if (Session.Player == this && GetImpactWordPosition() is Vector2 wordPos)
+                Session.ImpactWordPool.Get()?.Show(ImpactWordName.PlopRed, wordPos);
+
             OnDie();
             DropLoot();
             DropCoins();
@@ -566,9 +583,6 @@ namespace ScaryCastle
         // HitEffect
         [ScriptProperty]
         public HitEffect HitEffect { get; set; }
-
-        // InvulnerabilityPeriod
-        public bool InvulnerabilityPeriod => blinker.IsRunning;
 
         // IsBlinking
         public bool IsBlinking => blinker.IsRunning && blinker.CurrentValue;
@@ -994,7 +1008,7 @@ namespace ScaryCastle
         }
 
         // TakeDamage
-        public void TakeDamage(GameThing attacker, int amount, DamageType damageType, ImpactWordName impactWordName, Vector2 knockback)
+        public void TakeDamage(GameThing attacker, int amount, DamageType damageType, ImpactWordName impactWordName, Vector2 knockbackForce)
         {
             if (amount <= 0 || !CanTakeDamage())
                 return;
@@ -1011,10 +1025,6 @@ namespace ScaryCastle
                 hurtShakeTween.Start(TweenStyle.Linear, Vector2.Zero, HurtShake, 40, 4);
             }
 
-            // Impact word
-            if (MaxHP > 0 && impactWordName != ImpactWordName.None && GetImpactWordPosition() is Vector2 wordPos)
-                Session.ImpactWordPool.Get()?.Show(impactWordName, wordPos);
-
             if (MaxHP == 0)
                 return;
 
@@ -1024,43 +1034,38 @@ namespace ScaryCastle
 
             HP -= amount;
 
-            if ((knockback == Vector2.Zero || Session.Player != this) && HP <= 0)
+            // Lógica nueva de empuje
+            if (knockbackForce != Vector2.Zero)
             {
-                Die();
+                // Vector dirección desde el atacante hacia mí
+                Vector2 pushDirection = Position - attacker.Position;
+
+                // Normalizamos para tener solo dirección
+                if (pushDirection != Vector2.Zero)
+                    pushDirection.Normalize();
+                else
+                    pushDirection = new Vector2(1, 0); // Fallback si están en el mismo pixel
+
+                // APLICAMOS LA FUERZA INSTANTÁNEA
+                // Nota: knockbackForce.X o Y suelen ser valores como 100, 200, etc.
+                // Si en tu editor pasas una distancia, usala como magnitud.
+                _knockbackVelocity = pushDirection * knockbackForce.Length() * 5f; // Ese *5f es un multiplicador mágico para ajustar el "pum!" inicial.
             }
+
+            hurtTween ??= new();
+            hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
+
+            if (HitEffect == HitEffect.Blink)
+                blinker.Start(40, 15);
             else
-            {
-                var destination = Position;
+                blinker.Stop();
 
-                if (X > attacker.X)
-                    destination.X += knockback.X;
-                else
-                    destination.X -= knockback.X;
+            if (amount > 0)
+                OnTakeDamage(attacker, amount, damageType, Vector2.Zero);
 
-                var bottomDistance = Math.Abs(Y - attacker.Y);
-                var topDistance = Math.Abs(Y - attacker.BoundingBox.Top);
-
-                if (knockback != Vector2.Zero)
-                {
-                    if (bottomDistance < topDistance)
-                        destination.Y += knockback.Y;
-                    else
-                        destination.Y -= knockback.Y;
-
-                    knockbackTween.Start(TweenStyle.CubicOut, Position, destination, 400, 0);
-                }
-
-                hurtTween ??= new();
-                hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
-
-                if (HitEffect == HitEffect.Blink)
-                    blinker.Start(40, Session.Player == this ? 15 : 4);
-                else
-                    blinker.Stop();
-
-                if (amount > 0)
-                    OnTakeDamage(attacker, amount, damageType, knockback);
-            }
+            // Impact word
+            if (!IsDead && MaxHP > 0 && impactWordName != ImpactWordName.None && GetImpactWordPosition() is Vector2 wordPos)
+                Session.ImpactWordPool.Get()?.Show(impactWordName, wordPos);
         }
 
         // TerrainParticleColor

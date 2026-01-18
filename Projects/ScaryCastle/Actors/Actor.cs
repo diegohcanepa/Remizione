@@ -318,10 +318,9 @@ namespace ScaryCastle
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType, Vector2 knockback)
         {
+            /*
             if (IsPlayer)
             {
-                Game.SceneManager.PopUntil(Session);
-
                 var fullHearts = amount / 2;
                 var hasHalfHeart = amount % 2 == 1;
 
@@ -333,6 +332,7 @@ namespace ScaryCastle
                 if (hasHalfHeart)
                     Session.ObjectPools.FloatingHearts.Get()?.Show(GetFloatingTextPosition(knockback), true);
             }
+            */
 
             FaceTo(attacker);
 

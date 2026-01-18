@@ -49,7 +49,7 @@ namespace ScaryCastle
                 endingPhaseCooldown -= gameTime.ElapsedGameTime.Milliseconds;
                 if (endingPhaseCooldown <= 0)
                 {
-                    opacityTween.Start(TweenStyle.CubicOut, 1, 0, 600);
+                    opacityTween.Start(TweenStyle.CubicOut, 1, 0, 1500);
                     xTween.Start(TweenStyle.Linear, sprite.X, sprite.X + 1, 30, -1);
                     yTween.Start(TweenStyle.Linear, sprite.Y, sprite.Y + 1, 300);
 
