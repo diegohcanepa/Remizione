@@ -46,13 +46,6 @@
                 "Durability"
               ]
             },
-            "effects": {
-              "type": "array",
-              "description": "Lista de efectos que provoca este item.",
-              "items": {
-                "$ref": "./EffectDescriptor.schema.json"
-              }
-            },
             "isStackable": {
               "type": "boolean"
             },

@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 
@@ -12,6 +13,7 @@ namespace ScaryCastle
     public abstract class Definition : INamedObject
     {
         private static readonly HashSet<string> definitions = [];
+        private readonly List<EffectDescriptor> effects = [];
 
         // Constructor
         protected Definition(JsonElement element)
@@ -35,7 +37,21 @@ namespace ScaryCastle
 
             // SpawnWeight
             SpawnWeight = element.GetFloat("spawnWeight", 1);
+
+            // Effects
+            if (element.TryGetProperty("effects", out JsonElement effectsArray))
+            {
+                foreach (var effectJson in effectsArray.EnumerateArray())
+                {
+                    effects.Add(new(effectJson));
+                }
+            }
+
+            Effects = effects.AsReadOnly();
         }
+
+        // Effects
+        public ReadOnlyCollection<EffectDescriptor> Effects { get; }
 
         // Name
         public string Name { get; }

@@ -9,6 +9,13 @@
       "type": "string",
       "description": "El nombre único de la definición. (Requerido)"
     },
+    "effects": {
+      "type": "array",
+      "description": "Lista de efectos que provoca este item.",
+      "items": {
+        "$ref": "./EffectDescriptor.schema.json"
+      }
+    },
     "spawnWeight": {
       "type": "number",
       "format": "float",

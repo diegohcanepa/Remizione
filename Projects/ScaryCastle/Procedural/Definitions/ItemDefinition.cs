@@ -13,7 +13,6 @@ namespace ScaryCastle
     public sealed class ItemDefinition : Definition
     {
         private static readonly Dictionary<string, ItemDefinition> data = [];
-        private readonly List<EffectDescriptor> effects = [];
         private static bool loaded;
 
         #region Constructor
@@ -87,17 +86,7 @@ namespace ScaryCastle
                 _ => 5
             };
 
-            if (element.TryGetProperty("effects", out JsonElement effectsArray))
-            {
-                foreach (var effectJson in effectsArray.EnumerateArray())
-                {
-                    effects.Add(new(effectJson));
-                }
-            }
-
             data.Add(Name, this);
-
-            Effects = effects.AsReadOnly();
         }
 
         #endregion
@@ -174,9 +163,6 @@ namespace ScaryCastle
 
         // DurabilityCost
         public float DurabilityCost { get; }
-
-        // Effects
-        public ReadOnlyCollection<EffectDescriptor> Effects { get; }
 
         // Image
         public AtlasImage? Image { get; }
