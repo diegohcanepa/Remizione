@@ -1,63 +1,34 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "EffectDescriptor.schema.json",
-  "title": "Effect Descriptor Data File",
+  "title": "Effect Descriptor",
   "type": "object",
   "properties": {
-    "data": {
-      "type": "array",
-      "description": "Una lista de EffectDescriptor.",
-      "items": {
-        "$ref": "#/$defs/Effect"
-      }
+    "effectType": {
+      "type": "string",
+      "description": "El tipo de acción a ejecutar.",
+      "enum": [ "None", "Damage", "Heal", "AddCondition", "RemoveCondition" ] 
+    },
+    "amount": {
+      "type": "string",
+      "description": "Cantidad o expresión de dados (ej: '1d6', '5')."
+    },
+    "damageType": {
+      "type": "string",
+      "description": "Si es daño, qué tipo es.",
+      "enum": [ "None", "Physical", "Acid", "Explosive", "Fire", "Ice", "Lightning", "Poison" ],
+      "default": "None"
+    },
+    "target": {
+      "type": "string",
+      "description": "A quién se aplica el efecto.",
+      "enum": [ "Self", "Target", "All" ],
+      "default": "Target"
+    },
+    "sound": {
+      "type": "string",
+      "description": "Nombre del archivo de sonido a reproducir."
     }
   },
-  "required": [
-    "data"
-  ],
-  "$defs": {
-    "EffectDefinition": {
-      "type": "object",
-      "description": "Definición de las propiedades de un MetaItem.",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "El nombre único del item. (Requerido)"
-        },
-        "damage": {
-          "type": "string",
-          "description": "Expresión de dado para el dado (ej: '1d6+2')."
-        },
-        "damageType": {
-          "type": "string",
-          "description": "El tipo de dado del item (Enum DamageType).",
-          "enum": [ "None", "Physical", "Acid", "Explosive", "Fire", "Ice", "Lightning", "Poison" ]
-        },
-        "hp": {
-          "type": "string",
-          "description": "Expresión de dado para los puntos de vida que otorga (ej: '1d4')."
-        },
-        "impactWord": {
-          "type": "string",
-          "description": "La palabra de impacto asociada (Enum ImpactWordName).",
-          "enum": [ "None", "AghGreen", "AghRed", "BoomPurple", "BoomRed", "BangBlue", "BangRed", "CrackBlue", "CrackYellow", "CuackPurple", "CuackYellow", "Kapow", "KapowStrong", "OuchBlue", "OuchGreen", "PlopRed", "PlopYellow", "SlapBlue", "SlapRed", "Zap" ]
-        },
-        "luckBonus": {
-          "type": "number",
-          "default": 0,
-          "minimum": 0,
-          "maximum": 1,
-          "description": "Bonus de suerte."
-        },
-        "sound": {
-          "type": "string",
-          "description": "Nombre del sonido principal al usar el item (se busca en Sound.FindNotNull)."
-        }
-      },
-      "required": [
-        "name"
-      ],
-      "additionalProperties": false
-    }
-  }
+  "required": [ "effectType" ]
 }

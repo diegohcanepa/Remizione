@@ -109,6 +109,26 @@ namespace ScaryCastle.Procedural
             return result;
         }
 
+        // GetRoomCountForFloor
+        private static int GetRoomCount(int floorIndex)
+        {
+            const int MAX_FLOORS = 666;
+            const int MIN_ROOMS = 5;
+            const int MAX_ROOMS = 60;
+            const float CURVE = 1.5f; // Controla qué tan rápido crece el mapa
+
+            // f entre 0.0 y 1.0
+            float f = (float)(floorIndex - 1) / (MAX_FLOORS - 1);
+
+            // Aplicar la potencia para crecimiento tardío
+            float curvedProgress = (float)Math.Pow(f, CURVE);
+
+            // Interpolación lineal
+            int count = (int)Math.Round(MIN_ROOMS + ((MAX_ROOMS - MIN_ROOMS) * curvedProgress));
+
+            return count;
+        }
+
         #endregion
 
         // Clear
@@ -125,12 +145,12 @@ namespace ScaryCastle.Procedural
         }
 
         // Generate
-        public static void Generate(GameSession session, Tags pools, int roomCount)
+        public static void Generate(GameSession session, Tags pools, int floorIndex)
         {
             HasContent = true;
 
             rooms.Clear();
-            var result = RunGraphGenerator.Generate(session.Random, roomCount);
+            var result = RunGraphGenerator.Generate(session.Random, GetRoomCount(floorIndex));
             rooms.AddRange(result.Item1);
 
             // Get available room definitions

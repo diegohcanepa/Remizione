@@ -31,7 +31,7 @@ namespace ScaryCastle
                 ConsumptionInterval = 0;
 
             // ConsumptionType
-            ConsumptionType = element.GetEnum("consumptionType", ConsumptionType.None);
+            ConsumptionType = element.GetEnum("consumptionType", ConsumptionType.Quantity);
 
             // Damage
             DiceExpression? damage = element.GetObject("hp", value => new DiceExpression(value));

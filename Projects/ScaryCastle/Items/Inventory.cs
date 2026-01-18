@@ -1,5 +1,4 @@
-﻿using Engendro;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -43,7 +42,7 @@ namespace ScaryCastle
                 item.Count += amount;
             }
 
-            unchecked { ContentVersion++; }
+            Invalidate();
 
             return item;
         }
@@ -57,7 +56,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-                    unchecked { ContentVersion++; }
+                    Invalidate();
                 }
             }
         } = 9;
@@ -66,7 +65,7 @@ namespace ScaryCastle
         public void Clear()
         {
             items.Clear();
-            unchecked { ContentVersion++; }
+            Invalidate();
         }
 
         // Contains
@@ -147,6 +146,12 @@ namespace ScaryCastle
         // IsFull
         public bool IsFull => items.Count >= Capacity;
 
+        // Invalidate
+        public void Invalidate()
+        {
+            unchecked { ContentVersion++; }
+        }
+
         // Remove
         public bool Remove(string name)
         {
@@ -158,7 +163,7 @@ namespace ScaryCastle
         {
             if (items.Remove(item))
             {
-                unchecked { ContentVersion++; }
+                Invalidate();
                 return true;
             }
             else
@@ -185,7 +190,7 @@ namespace ScaryCastle
                 {
                     if (Add(itemData[0], int.Parse(itemData[1], CultureInfo.InvariantCulture)) is Item addedItem)
                     {
-                        addedItem.Durability = float.Parse(itemData[2]);
+                        addedItem.Durability = float.Parse(itemData[2], CultureInfo.InvariantCulture);
                     }
                 }
             }

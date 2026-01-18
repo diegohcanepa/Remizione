@@ -41,7 +41,9 @@ namespace ScaryCastle
                 arrowCursor = MouseCursorState.Right;
             }
             else
+            {
                 throw new InvalidOperationException("Cannot infere door direction from entity name.");
+            }
 
             Atlas = Atlases.Environment;
             CollisionDetection = false;
@@ -180,16 +182,14 @@ namespace ScaryCastle
         [ScriptProperty]
         public RideDoorDirection DoorDirection { get; }
 
-        /*
         // GetMouseCursorState
-        public override MouseCursorState GetMouseCursorState()
+        public override MouseCursorState? GetMouseCursorState()
         {
-            if (Session.Player?.InteractiveTarget == this && PropState == PropState.Open)
+            if (MouseCursor.Target == this && PropState == PropState.Open)
                 return arrowCursor;
             else
                 return base.GetMouseCursorState();
         }
-        */
 
         // OpenSound
         [ScriptProperty]

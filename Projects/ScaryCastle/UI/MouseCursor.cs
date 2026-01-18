@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration.Scripting;
+using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -29,7 +30,12 @@ namespace ScaryCastle
         // Constructor
         static MouseCursor()
         {
-            cursorSprite = new ImageSprite(EngendroGame.Instance) { PivotOrigin = RectanglePoint.Center, Scale = ScaleInfo.UIElement.Medium };
+            // Cursor sprite
+            cursorSprite = new ImageSprite(EngendroGame.Instance)
+            { 
+                PivotOrigin = RectanglePoint.Center, 
+                Scale = ScaleInfo.UIElement.Medium
+            };
 
             const string prefix = "MouseCursor";
             var names = Enum.GetNames<MouseCursorState>();
@@ -112,6 +118,14 @@ namespace ScaryCastle
             }
         }
 
+        // Reset
+        private static void Reset()
+        {
+            Item = null;
+            Target = null;
+            UseWithScript = null;
+        }
+
         // ScanForTarget
         private static GameThing? ScanForTarget()
         {
@@ -145,11 +159,19 @@ namespace ScaryCastle
         // Draw
         public static void Draw(GameTime gameTime)
         {
-            OutlineEffect? effect = Item != null && Target != null ? ScaryCastleGame.Effects.Outline : null;
+            OutlineEffect? effect = Item != null && Target != null && State == MouseCursorState.Item ? ScaryCastleGame.Effects.Outline : null;
 
             if (effect != null && cursorSprite.Image?.Atlas != null)
             {
-                effect.Color.SetValue(ColorPalette.MouseCursorOutline);
+                if (Target != null && Item != null && UseWithScript == null)
+                {
+                    effect.Color.SetValue(ColorPalette.MouseCursorRedOutline);
+                }
+                else
+                {
+                    effect.Color.SetValue(ColorPalette.MouseCursorOutline);
+                }
+
                 effect.TextureSize.SetValue(new Vector2(cursorSprite.Image.Atlas.Texture.Width, cursorSprite.Image.Atlas.Texture.Height));
                 effect.Thickness.SetValue(1.2f);
             }
@@ -161,7 +183,7 @@ namespace ScaryCastle
             EngendroGame.Instance.SpriteBatch.End();
 
             EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera);
-            if (State == MouseCursorState.CrossOn | State == MouseCursorState.Item)
+            if (State is MouseCursorState.CrossOn or MouseCursorState.Item)
                 textSprite.Draw(gameTime);
             EngendroGame.Instance.SpriteBatch.End();
         }
@@ -180,6 +202,7 @@ namespace ScaryCastle
                     field = value;
                     Item = null;
                     Target = null;
+                    UseWithScript = null;
                 }
             }
         }
@@ -213,6 +236,12 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
+
+                    UseWithScript = null;
+                    
+                    if (field != null && Item != null)
+                        UseWithScript = field.Session.ScriptLibrary.FindRoutine($"{field.DeclaredName}-With-{Item.Name}");
+
                     InvalidateText();
                 }
             }
@@ -224,6 +253,13 @@ namespace ScaryCastle
         // Update
         public static void Update(GameTime gameTime)
         {
+            if (Item?.Count == 0)
+                Item = null;
+
+            cursorSprite.Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
+            cursorSprite.Update(gameTime);
+            shakeTween.Update(gameTime);
+
             // No room, no session. 
             if (Room == null)
             {
@@ -242,8 +278,6 @@ namespace ScaryCastle
                 return;
             }
 
-            cursorSprite.Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
-
             if (SpeechBubble.ModalInstance == null)
                 Target = ScanForTarget();
 
@@ -252,9 +286,9 @@ namespace ScaryCastle
             {
                 State = MouseCursorState.Cross;
             }
-            else if (Item == null)
+            else if (Target != null && Item == null)
             {
-                State = MouseCursorState.CrossOn;
+                State = Target.GetMouseCursorState() ?? MouseCursorState.CrossOn;
             }
             else
             {
@@ -262,9 +296,9 @@ namespace ScaryCastle
             }
 
             ClampTextToScreen();
-
-            cursorSprite.Update(gameTime);
-            shakeTween.Update(gameTime);
         }
+
+        // UseWithScript
+        public static Script? UseWithScript { get; private set; }
     }
 }

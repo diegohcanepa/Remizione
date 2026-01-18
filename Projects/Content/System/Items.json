@@ -4,9 +4,15 @@
 		{
 			"name": "Apple",
 			"category": "Food",
-			"hp": "2",
 			"isStackable": true,
-			"sound": "AppleBite"
+			"effects": [
+				{
+					"effectType": "Heal",
+					"amount": "2",
+					"target": "Self",
+					"sound": "AppleBite"
+				}
+			]
 		},
 		{
 			"name": "Burger",

@@ -78,6 +78,7 @@ namespace ScaryCastle
                 {
                     field = int.Clamp(value, 0, Definition.IsStackable ? 99 : 1);
                     isDisplayTextDiry = true;
+                    Inventory.Invalidate();
                 }
             }
         }
@@ -172,19 +173,15 @@ namespace ScaryCastle
                 if (ConsumptionCooldown <= 0)
                 {
                     ConsumptionCooldown = Definition.ConsumptionInterval;
-                    Use(null);
+                    //Use( );
                 }
             }
         }
 
         // Use
-        public bool Use(GameThing? owner)
+        public bool Use(GameThing source, GameThing target)
         {
-            /*
-            if (owner != null && MetaItem.Effect.HP != null)
-                owner.HP += MetaItem.Effect.HP.Roll();
-
-            switch (MetaItem.ConsumptionType)
+            switch (Definition.ConsumptionType)
             {
                 // Quantity
                 case ConsumptionType.Quantity:
@@ -195,7 +192,7 @@ namespace ScaryCastle
 
                 // Durability
                 case ConsumptionType.Durability:
-                    Durability -= MetaItem.DurabilityCost;
+                    Durability -= Definition.DurabilityCost;
                     if (Durability <= 0)
                         Inventory.Remove(this);
                     break;
@@ -208,8 +205,9 @@ namespace ScaryCastle
                     break;
             }
 
+            EffectResolver.Apply(Definition.Effects, source, target);
+
             InvalidateDisplayText();
-            */
 
             return true;
         }

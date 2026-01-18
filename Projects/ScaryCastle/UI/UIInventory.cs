@@ -126,6 +126,8 @@ namespace ScaryCastle
             for (int i = 0; i < slotCount; i++)
             {
                 slots[i].X = startingX + (i * (slotWidth + spacing));
+                icons[i].Image = null;  
+                amounts[i].Text = null;
 
                 if (i < inventory.Count)
                 {
@@ -133,17 +135,16 @@ namespace ScaryCastle
                     icons[i].Image = inventory[i].Definition.Image;
 
                     amounts[i].X = icons[i].X;
-                    amounts[i].Text = inventory[i].Count < 2 ? null : inventory[i].Count.ToString(CultureInfo.InvariantCulture);
+                    amounts[i].Text = inventory[i].Definition.IsStackable ? inventory[i].Count.ToString(CultureInfo.InvariantCulture) : null;
                 }
             }
 
             var lt = slots[0].BoundingBox.GetPoint(RectanglePoint.LeftTop);
-            var rb = slots[inventory.Capacity-1].BoundingBox.GetPoint(RectanglePoint.RightBottom);
+            var rb = slots[inventory.Capacity - 1].BoundingBox.GetPoint(RectanglePoint.RightBottom);
 
-            BoundingBox = new RectangleF(lt.X, lt.Y, rb.X-lt.X, rb.Y-lt.Y);
+            BoundingBox = new RectangleF(lt.X, lt.Y, rb.X - lt.X, rb.Y - lt.Y);
 
             MouseCursor.Item = MouseCursor.Item;
-
         }
 
         #endregion
@@ -168,7 +169,10 @@ namespace ScaryCastle
                 slots[i].Draw(gameTime);
 
                 if (MouseCursor.Item?.Index == i)
-                    continue;
+                {
+                    if (!inventory[i].Definition.IsStackable)
+                       continue;
+                }
 
                 icons[i].Draw(gameTime);
                 amounts[i].Draw(gameTime);

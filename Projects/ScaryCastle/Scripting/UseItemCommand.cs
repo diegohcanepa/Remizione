@@ -25,7 +25,7 @@ namespace ScaryCastle.Scripting
                 return;
 
             if (session.Inventory.Find(Body.Clauses[0]) is Item item)
-                item.Use(session.Player);
+                item.Use(session.Player, session.Player);
         }
     }
 }

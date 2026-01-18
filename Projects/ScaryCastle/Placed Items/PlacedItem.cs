@@ -39,7 +39,7 @@ namespace ScaryCastle
         public void Place(GameThing owner, Item item, Vector2 position)
         {
             this.Owner = owner;
-            item.Use(owner);
+            item.Use(owner, owner);
             this.Item = item;
             this.Position = position;
 

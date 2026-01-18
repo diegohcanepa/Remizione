@@ -346,7 +346,7 @@ namespace ScaryCastle
         }
 
         // OnTakeDamage
-        protected virtual void OnTakeDamage(GameThing attacker, int damage, DamageType damageType)
+        protected virtual void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
         {
         }
 
@@ -727,17 +727,14 @@ namespace ScaryCastle
             return null;
         }
 
-        // GetFrameSubArea
-        public RectangleF GetFrameSubArea()
-        {
-            if (AnimationPlayer.Frame != null)
-                return this.GetAbsoluteBounds(AnimationPlayer.Frame.SubArea);
-            else
-                return RectangleF.Empty;
-        }
-
         // GetInteractPrompt
         public virtual string? GetInteractPrompt()
+        {
+            return null;
+        }
+
+        // GetMouseCursorState
+        public virtual MouseCursorState? GetMouseCursorState()
         {
             return null;
         }

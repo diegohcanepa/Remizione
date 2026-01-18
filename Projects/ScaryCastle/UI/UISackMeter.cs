@@ -1,6 +1,4 @@
 ﻿using Engendro;
-using Engendro.Audio;
-using Engendro.Input;
 using Microsoft.Xna.Framework;
 
 namespace ScaryCastle

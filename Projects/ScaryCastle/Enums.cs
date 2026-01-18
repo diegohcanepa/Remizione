@@ -34,7 +34,6 @@ namespace ScaryCastle
         Heal,           // Curar HP
         AddCondition,   // Agregar estado (Veneno, Maldición, Stun)
         RemoveCondition,// Quitar estado
-        GainEnergy,     // Ganar maná/energía (para cartas)
     }
 
     // EffectTarget

@@ -2,7 +2,6 @@
 using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
-using Engendro.Input;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Procedural;
 using ScaryCastle.Scripting;
@@ -85,26 +84,6 @@ namespace ScaryCastle
         #endregion
 
         #region Private members
-
-        // GetRoomCountForFloor
-        private int GetRoomCount(int floorIndex)
-        {
-            const int MAX_FLOORS = 666;
-            const int MIN_ROOMS = 5;
-            const int MAX_ROOMS = 60;
-            const float CURVE = 1.5f; // Controla qué tan rápido crece el mapa
-
-            // f entre 0.0 y 1.0
-            float f = (float)(floorIndex - 1) / (MAX_FLOORS - 1);
-
-            // Aplicar la potencia para crecimiento tardío
-            float curvedProgress = (float)Math.Pow(f, CURVE);
-
-            // Interpolación lineal
-            int count = (int)Math.Round(MIN_ROOMS + ((MAX_ROOMS - MIN_ROOMS) * curvedProgress));
-
-            return count;
-        }
 
         // RegisterAotTypes
         private static void RegisterAotTypes()
@@ -191,7 +170,7 @@ namespace ScaryCastle
         {
             base.OnDraw(gameTime);
 
-            if (IsHUDVisible && IsCurrentScene)
+            if (HUDVisible && IsCurrentScene)
                 HUD.Draw(gameTime);
 
             /*
@@ -335,10 +314,10 @@ namespace ScaryCastle
 
             Environment.Update(gameTime);
 
-            if (IsHUDVisible)
-            { 
+            if (HUDVisible)
+            {
                 HUD.Update(gameTime);
-             
+
                 if (!IsAwaiting)
                 {
                     if (Player?.IsDead == true)
@@ -379,14 +358,12 @@ namespace ScaryCastle
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            var roomCount = GetRoomCount(FloorIndex);
-
-            RunManager.Generate(this, Tags.EmptyList, roomCount);
+            RunManager.Generate(this, Tags.EmptyList, FloorIndex);
 
             if (Player != null && RunManager.Rooms[0].RideRoom is RideRoom rideRoom)
             {
                 Player.Reheal();
-                IsHUDVisible = true;
+                HUDVisible = true;
                 rideRoom.Children.Add(Player);
                 if (rideRoom.WalkArea != null)
                     Player.Position = rideRoom.WalkArea.Polygon.BoundingRectangleF.Center;
@@ -423,7 +400,7 @@ namespace ScaryCastle
             if (FindEntity<Hub>(nameof(Hub)) is Hub hubRoom)
                 hubRoom.Unload();
 
-            IsHUDVisible = false;
+            HUDVisible = false;
             Inventory.Clear();
             Coins = 0;
             RunManager.Clear();
@@ -463,6 +440,10 @@ namespace ScaryCastle
         // HUD
         public HUD HUD { get; }
 
+        // HUDVisible
+        [ScriptProperty]
+        public bool HUDVisible { get; set; }
+
         // ImpactWordPool
         public ObjectPool<ImpactWord> ImpactWordPool { get; }
 
@@ -474,10 +455,6 @@ namespace ScaryCastle
 
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
-
-        // IsHUDVisible
-        [ScriptProperty]
-        public bool IsHUDVisible { get; set; }
 
         // KillEnemies
         [ScriptMethod]

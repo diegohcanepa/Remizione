@@ -171,7 +171,7 @@ namespace ScaryCastle
         }
 
         // DrawThings
-        private void DrawThings(GameTime gameTime, RenderLayer renderLayer, GameThing? interactiveTarget)
+        private void DrawThings(GameTime gameTime, RenderLayer renderLayer)
         {
             var depth = (int)renderLayer;
 
@@ -194,7 +194,7 @@ namespace ScaryCastle
 
                         effect = ScaryCastleGame.Effects.ColorReduction;
                     }
-                    else if (interactiveTarget == thing && thing.HighlightInteraction && thing.Opacity == 1)
+                    else if (!Session.IsAwaiting && MouseCursor.Target == thing && thing.HighlightInteraction && thing.Opacity == 1)
                     {
                         ScaryCastleGame.Effects.ColorSaturation.SetColor(.8f, .8f, .8f, 0);
                         effect = ScaryCastleGame.Effects.ColorSaturation;
@@ -312,11 +312,8 @@ namespace ScaryCastle
 
             currentDrawIndex = 0;
 
-            // Hightlighted target
-            var interactiveTarget = MouseCursor.Target;
-
             // BehindBackground (layer)
-            DrawThings(gameTime, RenderLayer.BehindBackground, interactiveTarget);
+            DrawThings(gameTime, RenderLayer.BehindBackground);
 
             // Background
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
@@ -324,22 +321,22 @@ namespace ScaryCastle
             Game.SpriteBatch.End();
 
             // Background (layer)
-            DrawThings(gameTime, RenderLayer.Background, interactiveTarget);
+            DrawThings(gameTime, RenderLayer.Background);
 
             // OverBackground (layer)
-            DrawThings(gameTime, RenderLayer.OverBackground, interactiveTarget);
+            DrawThings(gameTime, RenderLayer.OverBackground);
 
             // Shadows
             DrawShadows(gameTime);
 
             // Default (layer)
-            DrawThings(gameTime, RenderLayer.Default, interactiveTarget);
+            DrawThings(gameTime, RenderLayer.Default);
 
             // Environment particles
             DrawEnvironmentParticles(gameTime);
 
             // Foreround (layer)
-            DrawThings(gameTime, RenderLayer.Foreground, interactiveTarget);
+            DrawThings(gameTime, RenderLayer.Foreground);
 
             Session.Environment.Lightning.Draw(gameTime);
 
@@ -351,7 +348,7 @@ namespace ScaryCastle
             }
 
             // Foreround (layer)
-            DrawThings(gameTime, RenderLayer.ForegroundNoLight, interactiveTarget);
+            DrawThings(gameTime, RenderLayer.ForegroundNoLight);
 
             // Draw hearts
             DrawFloatingHearts(gameTime);

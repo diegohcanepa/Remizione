@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration.Scripting;
+using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
@@ -56,22 +57,22 @@ namespace ScaryCastle
 
             if (MouseCursor.Target != null)
             {
-                Actor.ApproachAndInteract(MouseCursor.Target);
+                if (MouseCursor.UseWithScript is Script script)
+                {
+                    MouseCursor.Item = null;
+                    Actor.Session.AwaitScript(script);
+                }
+                else
+                {
+                    Actor.ApproachAndInteract(MouseCursor.Target);
+                }
+
                 return true;
             }
             else
             {
-                if (MouseCursor.Item != null)
-                {
-                    MouseCursor.Item = null;
-                    Sound.Play(SoundNames.UISelectD);
-                }
-                else
-                {
-                    var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
-                    Actor.MoveTo(destination);
-                }
-
+                var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
+                Actor.MoveTo(destination);
                 return true;
             }
         }
