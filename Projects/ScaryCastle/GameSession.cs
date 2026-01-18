@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Procedural;
@@ -26,7 +27,6 @@ namespace ScaryCastle
         private readonly EchoScene echoScene;
         private Vector2? playerPosition;
         private readonly RoomEditor? roomEditor;
-        private readonly UISentence sentence;
 
         #endregion
 
@@ -43,6 +43,7 @@ namespace ScaryCastle
             : base(game, new ScaryCastlePersistenceModel(), ContentManagerExtension.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
+            this.Sentence = new(this);
             this.Inventory = new(this);
             this.Environment = new Environment(this);
             this.HUD = new HUD(this);
@@ -80,8 +81,6 @@ namespace ScaryCastle
             this.echoScene = new(Game);
 
             LocalizationSource = LocalizationSource.Script;
-
-            this.sentence = new(this);
         }
 
         #endregion
@@ -172,12 +171,15 @@ namespace ScaryCastle
         // UpdateMouseCursor
         private void UpdateMouseCursor()
         {
-            if (MouseCursor.CustomImageTag == null)
-                MouseCursor.State = Player?.InteractiveTarget == null ? MouseCursorState.Cross : Player.InteractiveTarget.GetMouseCursorState();
-
             // No active player
             if (IsAwaiting && Player?.HasSpeechBubble == false)
+            {
                 MouseCursor.State = MouseCursorState.Wait;
+            }
+            else if (Inventory.HeldItem == null)
+            {
+                MouseCursor.State = Player?.InteractiveTarget == null ? MouseCursorState.Cross : Player.InteractiveTarget.GetMouseCursorState();
+            }
         }
 
         #endregion
@@ -206,9 +208,6 @@ namespace ScaryCastle
 
             if (IsHUDVisible && IsCurrentScene)
                 HUD.Draw(gameTime);
-
-            if (!IsAwaiting)
-                sentence.Draw(gameTime);
 
             /*
             if (IsPaused)
@@ -342,7 +341,10 @@ namespace ScaryCastle
             base.OnUpdate(gameTime);
 
             if (IsCurrentScene)
+            {
+                Sentence.Refresh();
                 UpdateMouseCursor();
+            }
 
             if (console != null)
             {
@@ -353,7 +355,6 @@ namespace ScaryCastle
             }
 
             Environment.Update(gameTime);
-            sentence.Update(gameTime);
 
             if (IsHUDVisible)
             { 
@@ -583,6 +584,9 @@ namespace ScaryCastle
             }
         }
 
+        // Sentence
+        public Sentence Sentence { get; }
+
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)
         {
@@ -612,6 +616,7 @@ namespace ScaryCastle
                 return;
 
             Player.Stand();
+            Sound.Play(SoundNames.UIInventoryOpen);
             HUD.Inventory.IsVisible = true;
         }
     }

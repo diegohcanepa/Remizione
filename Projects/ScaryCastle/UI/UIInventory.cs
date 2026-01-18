@@ -11,12 +11,16 @@ namespace ScaryCastle
     /// </summary>
     public sealed class UIInventory : GameObject, IInputHandler
     {
+        #region Private fields
+
         private readonly TextSprite[] amounts;
         private readonly ImageSprite[] icons;
         private readonly Inventory inventory;
         private readonly TextSprite itemName;
         private int lastSeenInventoryVersion;
         private readonly ImageSprite[] slots;
+
+        #endregion
 
         #region Constructor
 
@@ -63,7 +67,7 @@ namespace ScaryCastle
                 Scale = ScaleInfo.UISentence
             };
 
-            Layout();
+            RefreshUI();
         }
 
         #endregion
@@ -108,13 +112,13 @@ namespace ScaryCastle
             return false;
         }
 
-        // Layout
-        private void Layout()
+        // RefreshUI
+        private void RefreshUI()
         {
             float screenWidth = Screen.NativeWidth;
             int slotCount = inventory.Capacity;
             float slotWidth = slots[0].BoundingBox.Width;
-            float spacing = 2;
+            float spacing = 1;
 
             float rowWidth = (slotCount * slotWidth) + ((slotCount - 1) * spacing);
             float startingX = (screenWidth - rowWidth) / 2;
@@ -138,14 +142,10 @@ namespace ScaryCastle
 
             BoundingBox = new RectangleF(lt.X, lt.Y, rb.X-lt.X, rb.Y-lt.Y);
 
-            if (inventory.HeldItem == null)
-            {
-                MouseCursor.Reset();
-            }
-            else if (inventory.HeldItem.Definition.Image is AtlasImage image)
-            {
-                MouseCursor.SetCustomImage(image, inventory.HeldItem.Definition.Image);
-            }
+            MouseCursor.Text = null;
+            MouseCursor.Item = inventory.HeldItem;
+            inventory.Session.Sentence.ForceRefresh = true;
+
         }
 
         #endregion
@@ -189,7 +189,7 @@ namespace ScaryCastle
                 if (lastSeenInventoryVersion != inventory.ContentVersion)
                 {
                     lastSeenInventoryVersion = inventory.ContentVersion;
-                    Layout();
+                    RefreshUI();
                 }
 
                 for (var i = 0; i < inventory.Count; i++)

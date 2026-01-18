@@ -60,7 +60,7 @@ namespace ScaryCastle
                     unchecked { ContentVersion++; }
                 }
             }
-        } = 6;
+        } = 9;
 
         // Clear
         public void Clear()
@@ -196,7 +196,12 @@ namespace ScaryCastle
                 var itemData = itemList[i].Split(':');
 
                 if (ItemDefinition.Find(itemData[0]) != null)
-                    Add(itemData[0], int.Parse(itemData[1], CultureInfo.InvariantCulture));
+                {
+                    if (Add(itemData[0], int.Parse(itemData[1], CultureInfo.InvariantCulture)) is Item addedItem)
+                    {
+                        addedItem.Durability = float.Parse(itemData[2]);
+                    }
+                }
             }
         }
 

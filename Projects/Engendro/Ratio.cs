@@ -39,6 +39,12 @@ namespace Engendro
             return random.NextDouble() <= Value;
         }
 
+        // ToString
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
+
         // Value
         public float Value { get; }
     }
