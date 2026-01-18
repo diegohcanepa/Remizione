@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:38ed531d80be6373a9cded641b96016c:9f7a44903b43e0d16106caa89eb5ea14:391f3728ce36fa87ff02aadce74a4a71$ -->
+<!-- $TexturePacker:SmartUpdate:d0881f6fd38c4497f0af05c553381113:6107a3a882a756209791db11eeaeb374:391f3728ce36fa87ff02aadce74a4a71$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -28,15 +28,14 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="FrontHouse.png" x="457" y="197" w="51" h="94"/>
     <sprite n="RideCar01.png" x="484" y="2" w="25" h="21"/>
     <sprite n="RideCar02.png" x="484" y="25" w="25" h="21"/>
-    <sprite n="RideCar03.png" x="484" y="48" w="25" h="21"/>
     <sprite n="RideLight.png" x="339" y="197" w="116" h="88"/>
     <sprite n="RightTunnelPatch.png" x="278" y="471" w="59" h="26"/>
     <sprite n="Sky.png" x="2" y="139" w="480" h="56"/>
-    <sprite n="Star1.png" x="484" y="71" w="5" h="5"/>
-    <sprite n="Star2.png" x="491" y="71" w="5" h="5"/>
-    <sprite n="Star3.png" x="498" y="71" w="5" h="5"/>
-    <sprite n="Star4.png" x="498" y="71" w="5" h="5"/>
-    <sprite n="Star5.png" x="491" y="71" w="5" h="5"/>
+    <sprite n="Star1.png" x="484" y="48" w="5" h="5"/>
+    <sprite n="Star2.png" x="491" y="48" w="5" h="5"/>
+    <sprite n="Star3.png" x="498" y="48" w="5" h="5"/>
+    <sprite n="Star4.png" x="498" y="48" w="5" h="5"/>
+    <sprite n="Star5.png" x="491" y="48" w="5" h="5"/>
     <sprite n="ThemePark.png" x="2" y="2" w="480" h="135"/>
     <sprite n="Tombstones01.png" x="2" y="471" w="136" h="30"/>
     <sprite n="Tombstones02.png" x="140" y="471" w="136" h="30"/>

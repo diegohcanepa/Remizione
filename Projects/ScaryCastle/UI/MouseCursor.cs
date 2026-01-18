@@ -19,6 +19,8 @@ namespace ScaryCastle
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
         private static readonly TextSprite textSprite;
+        private static readonly string useVerb;
+        private static readonly string withPreposition;
 
         #endregion
 
@@ -45,14 +47,37 @@ namespace ScaryCastle
                 PivotOrigin = RectanglePoint.LeftTop,
                 Scale = ScaleInfo.UISentence
             };
+
+            // Cargamos los textos de localización una sola vez
+            useVerb = Localization.GetValue(Verb.Use);
+            withPreposition = TextRepository.GetValue("Misc.WithPreposition");
         }
 
         #endregion
 
         #region Private members
 
-        // Invalidate
-        private static void Invalidate()
+        // ClampTextToScreen
+        private static void ClampTextToScreen()
+        {
+            if (!textSprite.IsEmpty)
+            {
+                textSprite.PivotOrigin = RectanglePoint.LeftTop;
+                textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, -2, -2);
+
+                if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
+                {
+                    textSprite.PivotOrigin = RectanglePoint.RightTop;
+                    textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 2, -2);
+                }
+
+                if (textSprite.BoundingBox.Bottom >= Screen.NativeHeight)
+                    textSprite.Y -= 10;
+            }
+        }
+
+        // InvalidateCursorImage
+        private static void InvalidateCursorImage()
         {
             if (State == MouseCursorState.Item)
                 cursorSprite.Image = Item?.Definition.Image;
@@ -61,6 +86,51 @@ namespace ScaryCastle
 
             cursorSprite.Scale = ScaleInfo.UIElement.Medium;
             cursorSprite.PivotOrigin = State == MouseCursorState.Arrow ? RectanglePoint.LeftTop : RectanglePoint.Center;
+        }
+
+        // InvalidateText
+        private static void InvalidateText()
+        {
+            // No target
+            if (Target == null)
+            {
+                textSprite.Text = null;
+                return;
+            }
+
+            // Get sentence
+            var sentence = Target.GetInteractPrompt() ?? Target.LocalizedDisplayName;
+
+            // Compose text
+            if (Item == null)
+            {
+                textSprite.Text = sentence;
+            }
+            else
+            {
+                textSprite.Text = $"{useVerb} {Item.Definition.LocalizedDisplayName} {withPreposition} {sentence}";
+            }
+        }
+
+        // ScanForTarget
+        private static GameThing? ScanForTarget()
+        {
+            if (Room == null)
+                return null;
+
+            var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(Room.Session.Camera);
+
+            for (int i = Room.CulledThings.Count - 1; i >= 0; i--)
+            {
+                // Player exclusion when holding no item
+                if (Room.CulledThings[i] == Room.Session.Player && Item == null)
+                    continue;
+
+                if (Room.CulledThings[i] is GameThing target && target.CanInteract() && target.RuntimeHotspot.Contains(mousePos))
+                    return target;
+            }
+
+            return null;
         }
 
         #endregion
@@ -72,13 +142,10 @@ namespace ScaryCastle
             cursorSprite.Tweens.ScaleTween = scaleTween;
         }
 
-        // BoundingBox
-        public static RectangleF BoundingBox => cursorSprite.BoundingBox;
-
         // Draw
         public static void Draw(GameTime gameTime)
         {
-            OutlineEffect? effect = Highlight ? ScaryCastleGame.Effects.Outline : null;
+            OutlineEffect? effect = Item != null && Target != null ? ScaryCastleGame.Effects.Outline : null;
 
             if (effect != null && cursorSprite.Image?.Atlas != null)
             {
@@ -99,11 +166,11 @@ namespace ScaryCastle
             EngendroGame.Instance.SpriteBatch.End();
         }
 
-        // Highlight
-        public static bool Highlight { get; set; }
-
         // Item
-        public static Item? Item
+        public static Item? Item { get; set; }
+
+        // Room
+        public static GameRoom? Room
         {
             get;
             set
@@ -111,14 +178,8 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-
-                    if (field == null)
-                        Highlight = false;
-
-                    if (State == MouseCursorState.Item)
-                        Invalidate();
-                    else
-                        State = MouseCursorState.Item;
+                    Item = null;
+                    Target = null;
                 }
             }
         }
@@ -133,44 +194,76 @@ namespace ScaryCastle
         public static MouseCursorState State
         {
             get;
-            set
+            private set
             {
                 if (value != field)
                 {
                     field = value;
-                    Invalidate();
+                    InvalidateCursorImage();
+                }
+            }
+        }
+
+        // Target
+        public static GameThing? Target
+        {
+            get;
+            private set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    InvalidateText();
                 }
             }
         }
 
         // Text
-        public static string? Text
-        {
-            get => textSprite.Text;
-            set => textSprite.Text = value;
-        }
+        public static string? Text => textSprite.Text;
 
         // Update
         public static void Update(GameTime gameTime)
         {
-            cursorSprite.Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
-            cursorSprite.Update(gameTime);
-
-            if (!textSprite.IsEmpty && (State == MouseCursorState.CrossOn || State == MouseCursorState.Item))
+            // No room, no session. 
+            if (Room == null)
             {
-                textSprite.PivotOrigin = RectanglePoint.LeftTop;
-                textSprite.Position = BoundingBox.GetPoint(RectanglePoint.RightBottom, -2, -2);
-
-                if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
-                {
-                    textSprite.PivotOrigin = RectanglePoint.RightTop;
-                    textSprite.Position = BoundingBox.GetPoint(RectanglePoint.LeftBottom, 2, -2);
-                }
-
-                if (textSprite.BoundingBox.Bottom >= Screen.NativeHeight)
-                    textSprite.Y -= 10;
+                State = MouseCursorState.Arrow;
+                return;
             }
 
+            // Session is awaiting
+            if (Room.Session.IsAwaiting)
+            {
+                if (Room.Session.Player?.HasSpeechBubble == false)
+                    State = MouseCursorState.Wait;
+                else
+                    State = MouseCursorState.Arrow;
+
+                return;
+            }
+
+            cursorSprite.Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
+
+            if (SpeechBubble.ModalInstance == null)
+                Target = ScanForTarget();
+
+            // Set cursor state
+            if (Target == null && Item == null)
+            {
+                State = MouseCursorState.Cross;
+            }
+            else if (Item == null)
+            {
+                State = MouseCursorState.CrossOn;
+            }
+            else
+            {
+                State = MouseCursorState.Item;
+            }
+
+            ClampTextToScreen();
+
+            cursorSprite.Update(gameTime);
             shakeTween.Update(gameTime);
         }
     }

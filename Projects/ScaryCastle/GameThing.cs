@@ -417,15 +417,15 @@ namespace ScaryCastle
         public Vector2 AttachedLightPosition { get; set; }
 
         // CanInteract
-        public virtual bool CanInteract(Actor requester)
+        public virtual bool CanInteract()
         {
-            if (requester == this || !AllowInteraction)
+            if (!AllowInteraction)
                 return false;
 
             if (IsMoving || IsDead || string.IsNullOrWhiteSpace(LocalizedDisplayName))
                 return false;
 
-            if (Session.Inventory.HeldItem != null && !CanInteractWithItem())
+            if (MouseCursor.Item != null && !CanInteractWithItem())
                 return false;
 
             return true;
@@ -556,12 +556,6 @@ namespace ScaryCastle
         // ShowHotspots
         public static bool ShowHotspots { get; set; }
 #endif
-
-        // GetMouseCursorState
-        public virtual MouseCursorState GetMouseCursorState()
-        {
-            return Session.Player?.InteractiveTarget == this ? MouseCursorState.CrossOn : MouseCursorState.Cross;
-        }
 
         // HitEffect
         [ScriptProperty]

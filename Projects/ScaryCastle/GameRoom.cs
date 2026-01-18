@@ -313,7 +313,7 @@ namespace ScaryCastle
             currentDrawIndex = 0;
 
             // Hightlighted target
-            var interactiveTarget = Session.Player?.InteractiveTarget;
+            var interactiveTarget = MouseCursor.Target;
 
             // BehindBackground (layer)
             DrawThings(gameTime, RenderLayer.BehindBackground, interactiveTarget);

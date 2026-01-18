@@ -180,6 +180,7 @@ namespace ScaryCastle
         [ScriptProperty]
         public RideDoorDirection DoorDirection { get; }
 
+        /*
         // GetMouseCursorState
         public override MouseCursorState GetMouseCursorState()
         {
@@ -188,6 +189,7 @@ namespace ScaryCastle
             else
                 return base.GetMouseCursorState();
         }
+        */
 
         // OpenSound
         [ScriptProperty]

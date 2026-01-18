@@ -88,7 +88,7 @@ namespace ScaryCastle
                     {
                         MouseCursor.AnimateClick();
                         Sound.Play(SoundNames.UISelectC);
-                        inventory.HeldItem = grabbedItem;
+                        MouseCursor.Item = grabbedItem;
                         return true;
                     }
                 }
@@ -96,9 +96,9 @@ namespace ScaryCastle
 
             if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed() && IsVisible)
             {
-                if (inventory.HeldItem != null)
+                if (MouseCursor.Item != null)
                 {
-                    inventory.HeldItem = null;
+                    MouseCursor.Item = null;
                     Sound.Play(SoundNames.UISelectD);
                 }
                 else
@@ -142,9 +142,7 @@ namespace ScaryCastle
 
             BoundingBox = new RectangleF(lt.X, lt.Y, rb.X-lt.X, rb.Y-lt.Y);
 
-            MouseCursor.Text = null;
-            MouseCursor.Item = inventory.HeldItem;
-            inventory.Session.Sentence.ForceRefresh = true;
+            MouseCursor.Item = MouseCursor.Item;
 
         }
 
@@ -158,7 +156,7 @@ namespace ScaryCastle
             if (!IsVisible)
                 return;
 
-            if (inventory.Session.Player?.InteractiveTarget != null)
+            if (MouseCursor.Target != null)
             {
                 if (BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
                     return;
@@ -169,7 +167,7 @@ namespace ScaryCastle
             {
                 slots[i].Draw(gameTime);
 
-                if (inventory.HeldItem?.Index == i)
+                if (MouseCursor.Item?.Index == i)
                     continue;
 
                 icons[i].Draw(gameTime);
@@ -197,7 +195,7 @@ namespace ScaryCastle
                     icons[i].Scale = ScaleInfo.UIElement.Medium;
                 }
 
-                if (inventory.HeldItem == null && GetSelectedItem() is Item item)
+                if (MouseCursor.Item == null && GetSelectedItem() is Item item)
                 {
                     itemName.Text = item.Definition.LocalizedDisplayName;
                     itemName.X = slots[item.Index].X;

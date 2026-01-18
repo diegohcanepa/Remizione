@@ -23,7 +23,7 @@ namespace ScaryCastle
         private HandleInputResult HandleInput()
         {
             // Interaction
-            if (Actor.InteractiveTarget != null && InputBindings.Interact.IsPressed(PlayerIndex.One))
+            if (MouseCursor.Target != null && InputBindings.Interact.IsPressed(PlayerIndex.One))
             {
                 Actor.Interact();
                 return HandleInputResult.Handled;
@@ -54,16 +54,16 @@ namespace ScaryCastle
 
             MouseCursor.AnimateClick();
 
-            if (Actor.InteractiveTarget != null)
+            if (MouseCursor.Target != null)
             {
-                Actor.ApproachAndInteract(Actor.InteractiveTarget);
+                Actor.ApproachAndInteract(MouseCursor.Target);
                 return true;
             }
             else
             {
-                if (Actor.Session.Inventory.HeldItem != null)
+                if (MouseCursor.Item != null)
                 {
-                    Actor.Session.Inventory.HeldItem = null;
+                    MouseCursor.Item = null;
                     Sound.Play(SoundNames.UISelectD);
                 }
                 else
@@ -82,14 +82,14 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
                 return false;
 
-            if (Actor.Session.Inventory.HeldItem == null)
+            if (MouseCursor.Item == null)
             {
                 Actor.Session.ShowInventory();
             }
             else
             {
                 Sound.Play(SoundNames.UISelectD);
-                Actor.Session.Inventory.HeldItem = null;
+                MouseCursor.Item = null;
             }
 
             return true;

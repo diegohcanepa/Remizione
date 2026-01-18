@@ -28,7 +28,6 @@ namespace ScaryCastle
         private readonly GameSession session;
         private SpeechBubble? speechBubble;
         private readonly ActorStandState standState;
-        private int suspendInteractionCooldown;
 
         #endregion
 
@@ -136,26 +135,6 @@ namespace ScaryCastle
             return false;
         }
 
-        // FindInteractiveTarget
-        private GameThing? FindInteractiveTarget()
-        {
-            if (session.IsAwaiting || SpeechBubble.ModalInstance != null || !session.IsCurrentScene || Room == null)
-                return null;
-
-            var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera);
-
-            for (int i = Room.CulledThings.Count - 1; i >= 0; i--)
-            {
-                if (Room.CulledThings[i] == this)
-                    continue;
-
-                if (Room.CulledThings[i] is GameThing target && target.CanInteract(this) && target.RuntimeHotspot.Contains(mousePos))
-                    return target;
-            }
-
-            return null;
-        }
-
         // HandlePendingInteraction
         private void HandlePendingInteraction()
         {
@@ -164,7 +143,7 @@ namespace ScaryCastle
 
             if (pendingInteractiveTarget != null)
             {
-                session.Inventory.HeldItem = null;
+                MouseCursor.Item = null;
                 FaceTo(pendingInteractiveTarget);
                 Interact(pendingInteractiveTarget);
             }
@@ -409,24 +388,10 @@ namespace ScaryCastle
             */
         }
 
-        // OnUnload
-        protected override void OnUnload()
-        {
-            InteractiveTarget = null;
-            base.OnUnload();
-        }
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-
-            if (suspendInteractionCooldown > 0 && !session.IsAwaiting)
-                suspendInteractionCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-
-            this.InteractiveTarget = null;
-            if (IsPlayer && suspendInteractionCooldown <= 0 && !session.IsAwaiting)
-                this.InteractiveTarget = FindInteractiveTarget();
 
             headTween.Update(gameTime);
 
@@ -553,9 +518,7 @@ namespace ScaryCastle
         // Interact
         public bool Interact(GameThing? target = null)
         {
-            target ??= InteractiveTarget;
-
-            if (target == null || !InCurrentRoom || suspendInteractionCooldown > 0)
+            if (target == null || !InCurrentRoom)
                 return false;
 
             // Session is busy
@@ -575,9 +538,6 @@ namespace ScaryCastle
                 return false;
             }
         }
-
-        // InteractiveTarget
-        public GameThing? InteractiveTarget { get; private set; }
 
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }
@@ -694,14 +654,6 @@ namespace ScaryCastle
                 headSprite.Player.Play(StateMachine.CurrentState.Name, true);
             else
                 Stand(true);
-        }
-
-        // SuspendInteraction
-        public void SuspendInteraction(int duration)
-        {
-            CodeContract.GreaterThanZero(duration, nameof(duration));
-            suspendInteractionCooldown = duration;
-            InteractiveTarget = null;
         }
 
         /// <summary>

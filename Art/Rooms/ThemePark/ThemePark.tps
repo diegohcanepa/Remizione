@@ -191,7 +191,6 @@
             </struct>
             <key type="filename">RideCar-assets/RideCar01.png</key>
             <key type="filename">RideCar-assets/RideCar02.png</key>
-            <key type="filename">RideCar-assets/RideCar03.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

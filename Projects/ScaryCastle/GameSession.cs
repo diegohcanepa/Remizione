@@ -43,7 +43,6 @@ namespace ScaryCastle
             : base(game, new ScaryCastlePersistenceModel(), ContentManagerExtension.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
-            this.Sentence = new(this);
             this.Inventory = new(this);
             this.Environment = new Environment(this);
             this.HUD = new HUD(this);
@@ -168,20 +167,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));
         }
 
-        // UpdateMouseCursor
-        private void UpdateMouseCursor()
-        {
-            // No active player
-            if (IsAwaiting && Player?.HasSpeechBubble == false)
-            {
-                MouseCursor.State = MouseCursorState.Wait;
-            }
-            else if (Inventory.HeldItem == null)
-            {
-                MouseCursor.State = Player?.InteractiveTarget == null ? MouseCursorState.Cross : Player.InteractiveTarget.GetMouseCursorState();
-            }
-        }
-
         #endregion
 
         #region Protected members
@@ -234,6 +219,12 @@ namespace ScaryCastle
                 Camera.FollowTarget(Player, true);
         }
 
+        // OnEnterRoomCompleted
+        protected override void OnEnterRoomCompleted(Room room)
+        {
+            MouseCursor.Room = room as GameRoom;
+        }
+
         // OnExitRoom
         protected override void OnExitRoom(Room currentRoom, Room nextRoom)
         {
@@ -251,12 +242,6 @@ namespace ScaryCastle
 
             else
                 return base.OnHandleInput(gameTime);
-        }
-
-        // OnOutcomeCompleted
-        protected override void OnOutcomeCompleted(Thing target)
-        {
-            Player?.SuspendInteraction(250);
         }
 
         // OnPause
@@ -339,12 +324,6 @@ namespace ScaryCastle
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-
-            if (IsCurrentScene)
-            {
-                Sentence.Refresh();
-                UpdateMouseCursor();
-            }
 
             if (console != null)
             {
@@ -583,9 +562,6 @@ namespace ScaryCastle
                 }
             }
         }
-
-        // Sentence
-        public Sentence Sentence { get; }
 
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)

@@ -72,9 +72,9 @@ namespace ScaryCastle
         #endregion
 
         // CanInteract
-        public override bool CanInteract(Actor requester)
+        public override bool CanInteract()
         {
-            return PropState != PropState.Open && base.CanInteract(requester);
+            return PropState != PropState.Open && base.CanInteract();
         }
     }
 }

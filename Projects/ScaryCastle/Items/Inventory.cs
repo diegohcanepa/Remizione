@@ -132,20 +132,6 @@ namespace ScaryCastle
             return string.Join(";", result);
         }
 
-        // HeldItem
-        public Item? HeldItem
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    unchecked { ContentVersion++; }
-                }
-            }
-        }
-
         // IndexOf
         public int IndexOf(Item item)
         {
