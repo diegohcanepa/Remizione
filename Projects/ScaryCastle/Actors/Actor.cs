@@ -15,7 +15,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly ActorContactDamageState contactDamageState;
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -70,9 +69,6 @@ namespace ScaryCastle
             this.StateMachine.RegisterState(new ActorHurtState(this));
             this.StateMachine.RegisterState(new ActorMoveState(this));
 
-            contactDamageState = new ActorContactDamageState(this);
-            this.StateMachine.RegisterState(contactDamageState);
-
             this.AIStateMachine = new(this);
 
             if (Atlas?.FindImage(Sprite.ImagePath + "Gut0") != null)
@@ -95,45 +91,6 @@ namespace ScaryCastle
         #endregion
 
         #region Private members
-
-        // InflictContactDamage
-        private bool InflictContactDamage()
-        {
-            if (Room == null || session.IsAwaiting || Definition == null || Definition.Effects.Count == 0)
-                return false;
-
-            for (int i = 0; i < Room.CulledThings.Count; i++)
-            {
-                // Skip if it is the same thing
-                if (Room.CulledThings[i] == this)
-                    continue;
-
-                if (Room.CulledThings[i] is Actor actor)
-                {
-                    if (actor.IsDead)
-                        continue;
-
-                    if (!IsEnemy(actor))
-                        continue;
-
-                    if (ContactDamagePolygon == TestPolygon.Collider)
-                    {
-                        if (RuntimeCollider.Contains(actor.Position))
-                        {
-                            EffectResolver.Apply(Definition.Effects, this, actor);
-                            return true;
-                        }
-                    }
-                    else if (RuntimeHotspot.ContainsVertex(actor.RuntimeHotspot))
-                    {
-                        EffectResolver.Apply(Definition.Effects, this, actor);
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
 
         // HandlePendingInteraction
         private void HandlePendingInteraction()
@@ -359,7 +316,7 @@ namespace ScaryCastle
         }
 
         // OnTakeDamage
-        protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
+        protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType, Vector2 knockback)
         {
             if (IsPlayer)
             {
@@ -370,22 +327,20 @@ namespace ScaryCastle
 
                 for (var i = 0; i < fullHearts; i++)
                 {
-                    Session.ObjectPools.FloatingHearts.Get()?.Show(GetFloatingTextPosition(), false);
+                    Session.ObjectPools.FloatingHearts.Get()?.Show(GetFloatingTextPosition(knockback), false);
                 }
 
                 if (hasHalfHeart)
-                    Session.ObjectPools.FloatingHearts.Get()?.Show(GetFloatingTextPosition(), true);
+                    Session.ObjectPools.FloatingHearts.Get()?.Show(GetFloatingTextPosition(knockback), true);
             }
 
             FaceTo(attacker);
 
-            /*
             if (Sprite.Animations.Contains(ActorStateNames.Hurt))
             {
                 Stand();
                 StateMachine.ChangeState(ActorStateNames.Hurt);
             }
-            */
         }
 
         // OnUpdate
@@ -394,8 +349,6 @@ namespace ScaryCastle
             base.OnUpdate(gameTime);
 
             headTween.Update(gameTime);
-
-            InflictContactDamage();
 
             if (AnimationSettings.DetachedHead)
                 headSprite.Update(gameTime);

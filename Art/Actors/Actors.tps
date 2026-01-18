@@ -231,8 +231,6 @@
             <key type="filename">Edmund-assets/Consume02.png</key>
             <key type="filename">Edmund-assets/Consume03.png</key>
             <key type="filename">Edmund-assets/Consume04.png</key>
-            <key type="filename">Edmund-assets/ContactDamage01.png</key>
-            <key type="filename">Edmund-assets/ContactDamage02.png</key>
             <key type="filename">Edmund-assets/Hurt01.png</key>
             <key type="filename">Edmund-assets/Hurt02.png</key>
             <key type="filename">Edmund-assets/InsertCoin01.png</key>

@@ -248,30 +248,6 @@
 /processorParam:Quality=Best
 /build:Audio/FX/AppleBite.wav
 
-#begin Audio/FX/BertaHurt1.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/BertaHurt1.wav;Audio/FX/BertaHurt1
-
-#begin Audio/FX/BertaHurt2.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/BertaHurt2.wav;Audio/FX/BertaHurt2
-
-#begin Audio/FX/BertaHurt3.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/BertaHurt3.wav;Audio/FX/BertaHurt3
-
-#begin Audio/FX/BertaHurt4.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/BertaHurt4.wav;Audio/FX/BertaHurt4
-
 #begin Audio/FX/BlipA1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

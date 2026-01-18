@@ -13,7 +13,7 @@ namespace ScaryCastle
     public abstract class Definition : INamedObject
     {
         private static readonly HashSet<string> definitions = [];
-        private readonly List<EffectDescriptor> effects = [];
+        private readonly List<EffectDescriptor> effectDescriptors = [];
 
         // Constructor
         protected Definition(JsonElement element)
@@ -43,15 +43,15 @@ namespace ScaryCastle
             {
                 foreach (var effectJson in effectsArray.EnumerateArray())
                 {
-                    effects.Add(new(effectJson));
+                    effectDescriptors.Add(new(effectJson));
                 }
             }
 
-            Effects = effects.AsReadOnly();
+            EffectDescriptors = effectDescriptors.AsReadOnly();
         }
 
-        // Effects
-        public ReadOnlyCollection<EffectDescriptor> Effects { get; }
+        // EffectDescriptors
+        public ReadOnlyCollection<EffectDescriptor> EffectDescriptors { get; }
 
         // Name
         public string Name { get; }

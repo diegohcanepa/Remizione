@@ -26,8 +26,8 @@ namespace ScaryCastle
         {
             Atlas = Atlases.Environment;
             CollisionDetection = false;
-
             DepthOffset = -5;
+            ShadowSpotSize = 0;
 
             var animation = AddAnimation(PreparedAnimationName);
             animation.AddFrame("SpearTrap01", 1000);
@@ -115,7 +115,7 @@ namespace ScaryCastle
                 {
                     damageApplied = true;
                     if (Definition != null)
-                        EffectResolver.Apply(Definition.Effects, this, Session.Player);
+                        EffectDescriptor.Apply(Definition.Effects, this, Session.Player);
                 }
             }
 

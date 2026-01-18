@@ -3,7 +3,9 @@
   "data": [
     {
       "name": "PotteryA",
-      "placements": ["Floor"]
+      "placements": [
+        "Floor"
+      ]
     },
     {
       "name": "PotteryB",
@@ -11,7 +13,24 @@
     },
     {
       "name": "Torch",
-      "placements": ["WallFrontHang"]
+      "placements": [
+        "WallFrontHang"
+      ]
+    },
+    {
+      "name": "SpearTrap",
+      "placements": [
+        "WalkArea"
+      ],
+      "effects": [
+        {
+          "effectType": "Damage",
+          "damageType": "Physical",
+          "amount": "2",
+          "impactWord": "AghRed",
+          "knockback": "5,5"
+        }
+      ]
     }
   ],
   "unevaluatedProperties": false

@@ -11,15 +11,8 @@ namespace ScaryCastle
 
         // Constructor
         public ActorHurtState(Actor owner)
-            : base(owner, ActorStateNames.Hurt, false)
+            : base(owner, ActorStateNames.Hurt, true)
         {
-        }
-
-        // Enter
-        public override void Enter()
-        {
-            base.Enter();
-            cooldown = 600;
         }
 
         // CheckTransitions
@@ -27,19 +20,21 @@ namespace ScaryCastle
         {
             if (cooldown <= 0)
                 return ActorStateNames.Stand;
-
-            else if (Owner.AnimationPlayer.Animation != null && !Owner.AnimationPlayer.IsPlaying)
-                return ActorStateNames.Stand;
-
             else
                 return base.CheckTransitions();
+        }
+
+        // Enter
+        public override void Enter()
+        {
+            base.Enter();
+            cooldown = 300;
         }
 
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (cooldown >= 0)
-                cooldown -= gameTime.ElapsedGameTime.Milliseconds;
+            cooldown -= gameTime.ElapsedGameTime.Milliseconds;
         }
     }
 }

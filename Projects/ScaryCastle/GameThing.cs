@@ -18,12 +18,13 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly Blinker<bool> blinker = new(false, true);
+        private FloatTween? floatingTween;
         private readonly Polygon holePoly = new();
         private Vector2Tween? hurtShakeTween;
         private FloatTween? hurtTween;
-        private FloatTween? floatingTween;
         private bool isCollisionDirty;
         private bool isHotspotDirty = true;
+        private readonly Vector2Tween knockbackTween = new();
         private PathNode[]? pathNodes;
         private int renderLayerDepth;
         private readonly ShadowSpot shadowSpot;
@@ -346,7 +347,7 @@ namespace ScaryCastle
         }
 
         // OnTakeDamage
-        protected virtual void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
+        protected virtual void OnTakeDamage(GameThing attacker, int amount, DamageType damageType, Vector2 knockback)
         {
         }
 
@@ -379,6 +380,14 @@ namespace ScaryCastle
             hurtTween?.Update(gameTime);
             hurtShakeTween?.Update(gameTime);
             shadowSpot.Update(gameTime);
+
+            if (knockbackTween.IsRunning)
+            {
+                knockbackTween.Update(gameTime);
+                Position = knockbackTween.CurrentValue;
+                if (!knockbackTween.IsRunning && IsDead)
+                    Die();
+            }
 
             base.OnUpdate(gameTime);
 
@@ -500,9 +509,6 @@ namespace ScaryCastle
         // CollisionHeight
         [ScriptProperty]
         public int CollisionHeight { get; set; }
-
-        // ContactDamagePolygon
-        public TestPolygon ContactDamagePolygon { get; set; } = TestPolygon.Collider;
 
         // Definition
         public ThingDefinition? Definition { get; }
@@ -702,15 +708,20 @@ namespace ScaryCastle
         }
 
         // GetFloatingTextPosition
-        public Vector2 GetFloatingTextPosition()
+        public Vector2 GetFloatingTextPosition(Vector2 knockback)
         {
-            return GetFloatingTextPosition(0, 0);
+            return GetFloatingTextPosition(knockback, 0, 0);
         }
 
         // GetFloatingTextPosition
-        public Vector2 GetFloatingTextPosition(int xOffset, int yOffset)
+        public Vector2 GetFloatingTextPosition(Vector2 knockback, int xOffset, int yOffset)
         {
             var result = GetOverheadPosition();
+
+            if (Direction == FacingDirection.Right)
+                result.X -= Math.Abs(knockback.X);
+            else
+                result.X += Math.Abs(knockback.X);
 
             result.X += xOffset;
             result.Y += yOffset;
@@ -983,7 +994,7 @@ namespace ScaryCastle
         }
 
         // TakeDamage
-        public void TakeDamage(GameThing attacker, int amount, DamageType damageType, ImpactWordName impactWordName)
+        public void TakeDamage(GameThing attacker, int amount, DamageType damageType, ImpactWordName impactWordName, Vector2 knockback)
         {
             if (amount <= 0 || !CanTakeDamage())
                 return;
@@ -1013,12 +1024,32 @@ namespace ScaryCastle
 
             HP -= amount;
 
-            if (HP <= 0)
+            if ((knockback == Vector2.Zero || Session.Player != this) && HP <= 0)
             {
                 Die();
             }
             else
             {
+                var destination = Position;
+
+                if (X > attacker.X)
+                    destination.X += knockback.X;
+                else
+                    destination.X -= knockback.X;
+
+                var bottomDistance = Math.Abs(Y - attacker.Y);
+                var topDistance = Math.Abs(Y - attacker.BoundingBox.Top);
+
+                if (knockback != Vector2.Zero)
+                {
+                    if (bottomDistance < topDistance)
+                        destination.Y += knockback.Y;
+                    else
+                        destination.Y -= knockback.Y;
+
+                    knockbackTween.Start(TweenStyle.CubicOut, Position, destination, 400, 0);
+                }
+
                 hurtTween ??= new();
                 hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
 
@@ -1028,7 +1059,7 @@ namespace ScaryCastle
                     blinker.Stop();
 
                 if (amount > 0)
-                    OnTakeDamage(attacker, amount, damageType);
+                    OnTakeDamage(attacker, amount, damageType, knockback);
             }
         }
 

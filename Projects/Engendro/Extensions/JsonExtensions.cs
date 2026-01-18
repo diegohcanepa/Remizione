@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Text.Json;
 
 namespace Engendro
@@ -65,6 +66,15 @@ namespace Engendro
                     return prop.GetString() ?? defaultValue;
 
                 return defaultValue;
+            }
+
+            // GetVector2
+            public Vector2 GetVector2(string propertyName)
+            {
+                if (element.TryGetProperty(propertyName, out JsonElement prop) && prop.GetString() is string value)
+                    return DataConvert.ToVector2(value);
+
+                return Vector2.Zero;
             }
         }
     }

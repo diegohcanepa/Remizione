@@ -205,7 +205,7 @@ namespace ScaryCastle
                     break;
             }
 
-            EffectResolver.Apply(Definition.Effects, source, target);
+            EffectDescriptor.Apply(Definition.EffectDescriptors, source, target);
 
             InvalidateDisplayText();
 
