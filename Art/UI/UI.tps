@@ -330,8 +330,6 @@
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryLeftHandContent.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryRightHand.png</key>
             <key type="filename">InventoryCategoryIcons-assets/InventoryCategoryRightHandContent.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorAttack.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorAttackOn.png</key>
             <key type="filename">UI-assets/EdmundIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

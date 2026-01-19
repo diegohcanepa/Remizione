@@ -27,7 +27,6 @@
           "effectType": "Damage",
           "damageType": "Physical",
           "amount": "2",
-          "impactWord": "AghRed",
           "knockback": "15,5"
         }
       ]

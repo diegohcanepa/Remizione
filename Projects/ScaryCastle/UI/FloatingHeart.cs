@@ -27,7 +27,6 @@ namespace ScaryCastle
             this.image = new(Game)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Scale = ScaleInfo.UIElement.Large
             };
         }
 
@@ -74,7 +73,7 @@ namespace ScaryCastle
             var r = Random.Shared.Next(6, 11);
             rotationTween.Start(TweenStyle.Linear, -r, r, 100, -1);
 
-            scaleTween.Start(TweenStyle.Linear, Vector2.Zero, ScaleInfo.UIElement.Large, Random.Shared.Next(100, 300));
+            scaleTween.Start(TweenStyle.Linear, Vector2.Zero, ScaleInfo.UIElement.Medium, Random.Shared.Next(100, 300));
 
             image.Tweens.ScaleTween = scaleTween;
             image.Tweens.XTween = xTween;

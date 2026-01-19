@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle.Scripting
 {
     // AwaitPlayerApproachCommand
-    // Syntax: [#face:] [#fast] [#target:CommonThing]
+    // Syntax: [#face:] [#fast] [#target:GameThing]
     [ForceAwait]
     [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitPlayerApproachCommand : AwaitableCommand

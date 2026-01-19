@@ -14,19 +14,10 @@ namespace ScaryCastle
         private static int CountNeighbors((int x, int y) c, Dictionary<(int x, int y), RoomGraph> map)
         {
             int count = 0;
-
-            if (map.ContainsKey((c.x, c.y + 1)))
-                count++;
-
-            if (map.ContainsKey((c.x, c.y - 1)))
-                count++;
-
-            if (map.ContainsKey((c.x - 1, c.y)))
-                count++;
-
-            if (map.ContainsKey((c.x + 1, c.y)))
-                count++;
-
+            if (map.ContainsKey((c.x, c.y + 1))) count++;
+            if (map.ContainsKey((c.x, c.y - 1))) count++;
+            if (map.ContainsKey((c.x - 1, c.y))) count++;
+            if (map.ContainsKey((c.x + 1, c.y))) count++;
             return count;
         }
 
@@ -35,15 +26,16 @@ namespace ScaryCastle
         {
             return direction switch
             {
-                0 => (x, y + 1),
-                1 => (x, y - 1),
-                2 => (x - 1, y),
-                3 => (x + 1, y),
+                0 => (x, y + 1), // Up
+                1 => (x, y - 1), // Down
+                2 => (x - 1, y), // Left
+                3 => (x + 1, y), // Right
                 _ => (x, y)
             };
         }
 
         // Link
+        // Conecta 'p' con 'c' usando la dirección 'direction' desde la perspectiva de 'p'
         private static void Link(RoomGraph p, RoomGraph c, int direction)
         {
             switch (direction)
@@ -55,7 +47,25 @@ namespace ScaryCastle
             }
         }
 
-        // ProcessMapData
+        // NUEVO: Conecta la habitación a TODOS sus vecinos existentes
+        private static void ConnectToExistingNeighbors(RoomGraph room, Dictionary<(int x, int y), RoomGraph> map)
+        {
+            // Direcciones: 0:Up, 1:Down, 2:Left, 3:Right
+            for (int dir = 0; dir < 4; dir++)
+            {
+                (int nx, int ny) = GetCoords(room.X, room.Y, dir);
+
+                // Si hay una habitación válida en esa dirección...
+                if (map.TryGetValue((nx, ny), out RoomGraph? neighbor) && neighbor != null)
+                {
+                    // ...las conectamos. 
+                    // Link conecta 'room' hacia 'neighbor' en dirección 'dir'
+                    Link(room, neighbor, dir);
+                }
+            }
+        }
+
+        // ProcessMapData (BFS para calcular distancias)
         private static RoomGraph ProcessMapData(RoomGraph start)
         {
             Queue<RoomGraph> queue = new();
@@ -110,18 +120,21 @@ namespace ScaryCastle
             occupied.Add((0, 0), start);
             rooms.Add(start);
 
-            // Bloqueamos la coordenada de abajo para que nada se genere ahí
-            // y el Start.Down permanezca siempre null.
+            // Bloqueamos la coordenada de abajo
             occupied.Add((0, -1), null!);
+
+            // CONFIGURACIÓN: Probabilidad de cerrar un loop (crear habitaciones que se tocan)
+            // 0.5f = 50% de probabilidad de rellenar un hueco si hay más de 1 vecino
+            float loopChance = 0.5f;
 
             // 2. Bucle de Generación
             int attempts = 0;
-            while (rooms.Count < roomCount && attempts < 2000)
+            // Aumentamos un poco el límite de intentos por si se encierra
+            while (rooms.Count < roomCount && attempts < 5000)
             {
                 attempts++;
                 RoomGraph parent = rooms[rng.Next(rooms.Count)];
 
-                // Sesgo horizontal para mejor visibilidad (Izquierda/Derecha son más probables)
                 int direction = rng.Next(6) switch
                 {
                     0 => 0,
@@ -130,28 +143,45 @@ namespace ScaryCastle
                     _ => 3
                 };
 
-                // Evitar que el Start intente conectar hacia abajo
+                // Evitar conectar Start hacia abajo
                 if (parent.RoomType == RoomType.Start && direction == 1)
                     continue;
 
                 (int x, int y) target = GetCoords(parent.X, parent.Y, direction);
 
-                // No se puede tocar con habitaciones que no sean el padre
-                if (!occupied.ContainsKey(target) && CountNeighbors(target, occupied) == 1)
+                // --- LÓGICA MODIFICADA PARA LOOPS ---
+
+                // Si la casilla ya está ocupada, no hacemos nada
+                if (occupied.ContainsKey(target))
+                    continue;
+
+                int neighborsCount = CountNeighbors(target, occupied);
+
+                // Condición de colocación:
+                // A) Solo tiene 1 vecino (el padre) -> Comportamiento clásico
+                // B) Tiene >1 vecinos Y el azar lo permite -> Creamos un cruce/loop
+                bool allowPlacement = neighborsCount == 1 || (neighborsCount > 1 && rng.NextDouble() < loopChance);
+
+                if (allowPlacement)
                 {
                     var newRoom = new RoomGraph(rooms.Count, target.x, target.y, RoomType.Connector);
-                    Link(parent, newRoom, direction);
+
+                    // Importante: Agregar al diccionario ANTES de conectar
                     occupied.Add(target, newRoom);
                     rooms.Add(newRoom);
+
+                    // Conectamos con el padre Y con cualquier otro vecino adyacente
+                    ConnectToExistingNeighbors(newRoom, occupied);
                 }
             }
 
             // 3. Procesar Distancias y marcar el exit
+            // El BFS funciona perfectamente con loops y encontrará el camino más corto
             RoomGraph coinRoom = ProcessMapData(start);
+
             if (coinRoom != start)
                 coinRoom.RoomType = RoomType.Exit;
 
-            // Devolvemos el maxDist (la distancia a la moneda) para los cálculos de fases
             int maxDist = coinRoom.DistanceFromStart;
             return (rooms, maxDist);
         }

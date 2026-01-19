@@ -15,10 +15,7 @@
         internal const string GutsMedium = nameof(GutsMedium);
         internal const string GutsSmall = nameof(GutsSmall);
         internal const string ImpactA = nameof(ImpactA);
-        internal const string ItemAdded = nameof(ItemAdded);
         internal const string ItemDiscard = nameof(ItemDiscard);
-        internal const string ItemEquip = nameof(ItemEquip);
-        internal const string ItemPop = nameof(ItemPop);
         internal const string Lightning = nameof(Lightning);
         internal const string LockOpen = nameof(LockOpen);
         internal const string LootCoin = nameof(LootCoin);
