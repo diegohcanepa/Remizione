@@ -16,6 +16,8 @@ namespace ScaryCastle
         public EffectDescriptor(JsonElement element)
         {
             Amount = element.GetObject("amount", v => new DiceExpression(v));
+            AttackType = element.GetEnum("attackType", AttackType.None);
+            Chance = element.GetFloat("chance", 1);
             DamageType = element.GetEnum("damageType", DamageType.None);
             EffectType = element.GetEnum("effectType", EffectType.None);
             ImpactWord = element.GetEnum("impactWord", ImpactWordName.None);
@@ -31,13 +33,21 @@ namespace ScaryCastle
         public DiceExpression? Amount { get; }
 
         // Apply
-        public static void Apply(IList<EffectDescriptor> effects, GameThing source, GameThing target)
+        public static void Apply(IList<EffectDescriptor> effects, GameThing source, GameThing target, AttackType attackType)
         {
             if (effects.Count == 0)
                 return;
 
             foreach (var effect in effects)
             {
+                if (!effect.Chance.Roll())
+                    continue;
+
+                if (effect.AttackType != AttackType.None && effect.AttackType != attackType)
+                    continue;
+
+                var realTarget = effect.Target == EffectTarget.Self ? source : target;
+
                 // Play sound
                 if (effect.Sound != null)
                     source.PlaySound(effect.Sound);
@@ -50,16 +60,22 @@ namespace ScaryCastle
                 {
                     // Heal
                     case EffectType.Heal:
-                        target.HP += amount;
+                        realTarget.HP += amount;
                         break;
 
                     // Damage
                     case EffectType.Damage:
-                        target.TakeDamage(source, amount, effect.DamageType, effect.ImpactWord, effect.Knockback);
+                        realTarget.TakeDamage(source, effect.AttackType, effect.DamageType, amount, effect.ImpactWord, effect.Knockback);
                         break;
                 }
             }
         }
+
+        // AttackType
+        public AttackType AttackType { get; }
+
+        // Chance
+        public Ratio Chance { get; }
 
         // DamageType
         public DamageType DamageType { get; }

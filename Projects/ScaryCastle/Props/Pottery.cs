@@ -1,4 +1,5 @@
 ﻿using Engendro.Audio;
+using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
 {
@@ -19,6 +20,13 @@ namespace ScaryCastle
             HitTestPolygon = TestPolygon.Hotspot;
             HurtSound = Sound.Find(SoundNames.ImpactA);
             MaxHP = 5;
+        }
+        
+        // OnDie
+        protected override void OnDie()
+        {
+            base.OnDie();
+            ShowImpactWord(ImpactWordName.CrackBlue);
         }
     }
 }

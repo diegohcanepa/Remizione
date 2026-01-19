@@ -13,6 +13,20 @@
       "type": "string",
       "description": "Cantidad o expresión de dados (ej: '1d6', '5')."
     },
+    "attackType": {
+      "type": "string",
+      "description": "Tipo de ataque.",
+      "enum": [ "None", "Melee", "Ranged", "Magic", "Contact" ],
+      "default": "None"
+    },
+    "chance": {
+      "type": "number",
+      "format": "float",
+      "default": 1.0,
+      "maximum": 1.0,
+      "minimum": 0,
+      "description": "Probabilidad de que el efecto se aplique."
+    },    
     "damageType": {
       "type": "string",
       "description": "Si es daño, qué tipo es.",

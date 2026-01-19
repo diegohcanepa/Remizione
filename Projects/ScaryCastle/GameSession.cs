@@ -138,6 +138,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("set-light", typeof(SetLightCommand));
             AotTypeRegistry.Register("show-log-message", typeof(ShowLogMessageCommand));
             AotTypeRegistry.Register("show-message", typeof(ShowMessageCommand));
+            AotTypeRegistry.Register("take-damage", typeof(TakeDamageCommand));
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
             AotTypeRegistry.Register("test-skill-chance", typeof(TestSkillChanceCommand));
             AotTypeRegistry.Register("use-item", typeof(UseItemCommand));
@@ -467,17 +468,6 @@ namespace ScaryCastle
             {
                 if (Room.Children[i] is Actor actor && !actor.IsDead && actor != Player)
                     actor.Die();
-            }
-        }
-
-        // KillPlayer
-        [ScriptMethod]
-        public void KillPlayer()
-        {
-            if (Player != null && !Player.IsDead)
-            {
-                Environment.Lightning.Show(Player.Position);
-                Player.Die();
             }
         }
 

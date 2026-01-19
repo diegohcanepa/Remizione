@@ -133,7 +133,8 @@
 			<Word>stop-routine</Word>
 			<Word>false</Word>
 			<Word>null</Word>
-			<Word>save-game</Word>			
+			<Word>save-game</Word>
+			<Word>take-damage</Word>
 			<Word>true</Word>
 			<Word>this</Word>
 			<Word>use-key-item</Word>

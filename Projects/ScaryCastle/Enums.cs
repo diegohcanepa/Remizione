@@ -11,6 +11,9 @@ namespace ScaryCastle
     // AIStateName
     public enum AIStateName { Attack, Charge, Chase, CloseAttack, Decide, Idle, Move, Patrol, RangeAttack }
 
+    // AttackType
+    public enum AttackType { None, Melee, Ranged, Magic, Contact }
+
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }
 

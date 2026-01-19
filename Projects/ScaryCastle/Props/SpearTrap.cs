@@ -116,7 +116,7 @@ namespace ScaryCastle
                 {
                     damageApplied = true;
                     if (Definition != null)
-                        EffectDescriptor.Apply(Definition.Effects, this, Session.Player);
+                        EffectDescriptor.Apply(Definition.Effects, this, Session.Player, AttackType.Contact);
                 }
             }
 

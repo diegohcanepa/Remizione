@@ -18,6 +18,7 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly Blinker<bool> blinker = new(false, true);
+        private bool dieCalled;
         private FloatTween? floatingTween;
         private readonly Polygon holePoly = new();
         private Vector2Tween? hurtShakeTween;
@@ -148,25 +149,6 @@ namespace ScaryCastle
                         }
                     }
                 }
-            }
-        }
-
-        // GetImpactWordPosition
-        private Vector2? GetImpactWordPosition()
-        {
-            return GetOverheadPosition();
-
-            if (HitTestPolygon == TestPolygon.Collider && !Collider.IsEmpty)
-            {
-                return this.GetAbsolutePoint(Collider.BoundingRectangleF.GetPoint(RectanglePoint.Top));
-            }
-            else if (HitTestPolygon == TestPolygon.Hotspot && RuntimeHotspot != null)
-            {
-                return RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top);
-            }
-            else
-            {
-                return null;
             }
         }
 
@@ -402,6 +384,11 @@ namespace ScaryCastle
                 if (_knockbackVelocity == Vector2.Zero && IsDead)
                     Die();
             }
+            else if (IsDead && !dieCalled)
+            {
+                dieCalled = true;
+                Die();
+            }
 
             base.OnUpdate(gameTime);
 
@@ -539,8 +526,8 @@ namespace ScaryCastle
                 deathSoundInstance.Play();
             }
 
-            if (Session.Player == this && GetImpactWordPosition() is Vector2 wordPos)
-                Session.ImpactWordPool.Get()?.Show(ImpactWordName.PlopRed, wordPos);
+            if (Session.Player == this)
+                ShowImpactWord(ImpactWordName.PlopRed);
 
             OnDie();
             DropLoot();
@@ -835,6 +822,10 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = Math.Min(value, MaxHP);
+
+                    if (field > 0)
+                        dieCalled = false;
+
                     OnHPChanged();
                 }
             }
@@ -1007,8 +998,15 @@ namespace ScaryCastle
             set => shadowSpot.Size = value;
         }
 
+        // ShowImpactWord
+        public void ShowImpactWord(ImpactWordName impactWordName)
+        {
+           if (GetOverheadPosition() is Vector2 wordPos)
+                Session.ImpactWordPool.Get()?.Show(impactWordName, wordPos);
+        }
+
         // TakeDamage
-        public void TakeDamage(GameThing attacker, int amount, DamageType damageType, ImpactWordName impactWordName, Vector2 knockbackForce)
+        public void TakeDamage(GameThing attacker, AttackType attackType, DamageType damageType, int amount, ImpactWordName impactWordName, Vector2 knockbackForce)
         {
             if (amount <= 0 || !CanTakeDamage())
                 return;
@@ -1064,8 +1062,11 @@ namespace ScaryCastle
                 OnTakeDamage(attacker, amount, damageType, Vector2.Zero);
 
             // Impact word
-            if (!IsDead && MaxHP > 0 && impactWordName != ImpactWordName.None && GetImpactWordPosition() is Vector2 wordPos)
-                Session.ImpactWordPool.Get()?.Show(impactWordName, wordPos);
+            if (!IsDead && MaxHP > 0 && impactWordName != ImpactWordName.None)
+                ShowImpactWord(impactWordName);
+
+            if (Definition?.EffectDescriptors != null)
+                EffectDescriptor.Apply(Definition.EffectDescriptors, this, attacker, attackType);
         }
 
         // TerrainParticleColor
