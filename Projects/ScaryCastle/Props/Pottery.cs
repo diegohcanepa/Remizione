@@ -19,14 +19,13 @@ namespace ScaryCastle
             HitEffect = HitEffect.Shake;
             HitTestPolygon = TestPolygon.Hotspot;
             HurtSound = Sound.Find(SoundNames.ImpactA);
-            MaxHP = 5;
         }
         
         // OnDie
         protected override void OnDie()
         {
             base.OnDie();
-            ShowImpactWord(ImpactWordName.CrackBlue);
+            ShowImpactWord(ImpactWordName.CrackYellow);
         }
     }
 }

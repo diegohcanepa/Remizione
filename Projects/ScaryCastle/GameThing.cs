@@ -386,7 +386,6 @@ namespace ScaryCastle
             }
             else if (IsDead && !dieCalled)
             {
-                dieCalled = true;
                 Die();
             }
 
@@ -518,6 +517,8 @@ namespace ScaryCastle
         [ScriptMethod]
         public void Die()
         {
+            dieCalled = true;
+
             HP = int.MinValue;
 
             if (DeathSound?.PopInstance() is SoundInstance deathSoundInstance)
@@ -1008,65 +1009,108 @@ namespace ScaryCastle
         // TakeDamage
         public void TakeDamage(GameThing attacker, AttackType attackType, DamageType damageType, int amount, ImpactWordName impactWordName, Vector2 knockbackForce)
         {
-            if (amount <= 0 || !CanTakeDamage())
+            // ---------------------------------------------------------
+            // 1. FILTROS DE SALIDA (Gatekeepers)
+            // ---------------------------------------------------------
+
+            // Si la cantidad es 0 o negativa, no hay interacción de daño.
+            if (amount <= 0)
                 return;
 
+            // Si ya está muerto o está en frames de invencibilidad, ignoramos todo.
+            if (!CanTakeDamage())
+                return;
+
+            // ---------------------------------------------------------
+            // 2. FEEDBACK INICIAL (Juice)
+            // ---------------------------------------------------------
+            // Esto ocurre SIEMPRE que hay un impacto válido, aunque sea indestructible.
+
+            // Sonido de dolor o impacto
             if (HurtSound != null)
                 PlaySound(HurtSound);
 
             if (HurtImpactSound != null)
                 PlaySound(HurtImpactSound);
 
+            // Shake: El objeto tiembla por el golpe (incluso una pared dura puede vibrar)
             if (HitEffect == HitEffect.Shake)
             {
                 hurtShakeTween ??= new();
                 hurtShakeTween.Start(TweenStyle.Linear, Vector2.Zero, HurtShake, 40, 4);
             }
 
-            if (MaxHP == 0)
-                return;
-
-            amount = (int)(amount * GetResistanceModifier(damageType));
-            if (amount > HP)
-                amount = HP;
-
-            HP -= amount;
-
-            // Lógica nueva de empuje
-            if (knockbackForce != Vector2.Zero)
-            {
-                // Vector dirección desde el atacante hacia mí
-                Vector2 pushDirection = Position - attacker.Position;
-
-                // Normalizamos para tener solo dirección
-                if (pushDirection != Vector2.Zero)
-                    pushDirection.Normalize();
-                else
-                    pushDirection = new Vector2(1, 0); // Fallback si están en el mismo pixel
-
-                // APLICAMOS LA FUERZA INSTANTÁNEA
-                // Nota: knockbackForce.X o Y suelen ser valores como 100, 200, etc.
-                // Si en tu editor pasas una distancia, usala como magnitud.
-                _knockbackVelocity = pushDirection * knockbackForce.Length() * 5f; // Ese *5f es un multiplicador mágico para ajustar el "pum!" inicial.
-            }
-
-            hurtTween ??= new();
-            hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
-
-            if (HitEffect == HitEffect.Blink)
-                blinker.Start(40, 15);
-            else
-                blinker.Stop();
-
-            if (amount > 0)
-                OnTakeDamage(attacker, amount, damageType, Vector2.Zero);
-
-            // Impact word
-            if (!IsDead && MaxHP > 0 && impactWordName != ImpactWordName.None)
-                ShowImpactWord(impactWordName);
+            // ---------------------------------------------------------
+            // 3. REACCIÓN DE EFECTOS (Espinas / Rebote) - CRÍTICO
+            // ---------------------------------------------------------
+            // Hacemos esto ANTES de calcular si muere o recibe daño real. 
+            // Si golpeo una pared de pinchos (MaxHP=0), igual quiero que mis efectos se activen.
 
             if (Definition?.EffectDescriptors != null)
+            {
+                // "source" es el atacante, "target" soy yo.
                 EffectDescriptor.Apply(Definition.EffectDescriptors, this, attacker, attackType);
+            }
+
+            // ---------------------------------------------------------
+            // 4. LÓGICA DE SALUD (Solo si es Destructible)
+            // ---------------------------------------------------------
+
+            // Aquí es donde manejamos el MaxHP == 0
+            if (MaxHP > 0)
+            {
+                // Aplicar resistencias
+                int finalDamage = (int)(amount * GetResistanceModifier(damageType));
+
+                // Clamp para no restar más de lo que tiene
+                if (finalDamage > HP) finalDamage = HP;
+
+                // Si después de la resistencia el daño es 0, salimos de la lógica de HP
+                if (finalDamage > 0)
+                {
+                    HP -= finalDamage;
+
+                    // Feedback de Daño Real (Parpadeo Rojo / Blanco)
+                    // Solo parpadeamos si realmente perdimos vida
+                    hurtTween ??= new();
+                    hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
+
+                    if (HitEffect == HitEffect.Blink)
+                        blinker.Start(40, 15); // Invulnerabilidad post-daño
+                    else
+                        blinker.Stop();
+
+                    // Evento específico para lógicas custom
+                    OnTakeDamage(attacker, finalDamage, damageType, Vector2.Zero);
+
+                    // Impact Word (Solo mostramos "Pow!" si hubo daño real)
+                    if (impactWordName != ImpactWordName.None)
+                        ShowImpactWord(impactWordName);
+                }
+            }
+            else
+            {
+                // Lógica para Indestructibles (MaxHP == 0)
+                // Opcional: Sonido de "Metal/Rebote" o palabra "BLOCK"
+                // ShowImpactWord(ImpactWordName.Clink); 
+            }
+
+
+            // ---------------------------------------------------------
+            // 5. FÍSICAS (Knockback)
+            // ---------------------------------------------------------
+            // El empuje se aplica independientemente de la vida. 
+            // Una caja de metal indestructible (MaxHP=0) debería poder ser empujada.
+
+            if (knockbackForce != Vector2.Zero)
+            {
+                Vector2 pushDirection = Position - attacker.Position;
+                if (pushDirection != Vector2.Zero) pushDirection.Normalize();
+                else pushDirection = new Vector2(1, 0);
+
+                // Aplicamos la fuerza
+                _knockbackVelocity = pushDirection * knockbackForce.Length() * 5f;
+            }
         }
 
         // TerrainParticleColor

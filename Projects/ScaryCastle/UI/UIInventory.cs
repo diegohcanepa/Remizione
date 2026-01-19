@@ -51,7 +51,7 @@ namespace ScaryCastle
                 // Amount text
                 amounts[i] = new(Game, Fonts.CommonOutline)
                 {
-                    Color = ColorPalette.Text.Default,
+                    Color = ColorPalette.Text.Highlight,
                     PivotOrigin = RectanglePoint.Top,
                     Y = slots[i].BoundingBox.Center.Y + 4,
                     Scale = ScaleInfo.Text.ExtraLarge
@@ -61,7 +61,7 @@ namespace ScaryCastle
             // Item name
             this.itemName = new(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.OrangeLight,
+                Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Bottom,
                 Y = slots[0].BoundingBox.Top - 2,
                 Scale = ScaleInfo.UISentence
@@ -82,13 +82,14 @@ namespace ScaryCastle
 
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
             {
-                if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item grabbedItem)
+                if (MouseCursor.Item == null && GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item grabbedItem)
                 {
                     if (grabbedItem.Definition.Image != null)
                     {
-                        MouseCursor.AnimateClick();
+                        inventory.Session.Player?.Stand();
                         Sound.Play(SoundNames.UISelectC);
                         MouseCursor.Item = grabbedItem;
+                        MouseCursor.AnimateClick();
                         return true;
                     }
                 }
@@ -203,7 +204,7 @@ namespace ScaryCastle
                 {
                     itemName.Text = item.Definition.LocalizedDisplayName;
                     itemName.X = slots[item.Index].X;
-                    icons[item.Index].Scale = ScaleInfo.UIElement.Medium * 1.2f;
+                    icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;
                 }
                 else
                 {

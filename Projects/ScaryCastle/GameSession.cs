@@ -24,6 +24,7 @@ namespace ScaryCastle
         private readonly List<GameThing> declaredThings = [];
         private readonly Dictionary<string, GameThing> declaredThingsDict = [];
         private readonly EchoScene echoScene;
+        private int playerHPBeforeOutcome;
         private Vector2? playerPosition;
         private readonly RoomEditor? roomEditor;
 
@@ -164,6 +165,12 @@ namespace ScaryCastle
 
                 return base.CanHandleRoomInput;
             }
+        }
+
+        // OnOutcome
+        protected override void OnOutcome(Thing target)
+        {
+            playerHPBeforeOutcome = Player?.HP ?? 0;
         }
 
         // OnDraw
@@ -508,11 +515,13 @@ namespace ScaryCastle
             }
         }
 
+        // PlayerTookDamage
+        [ScriptProperty]
+        public bool PlayerTookDamage => Player != null && Player.HP < playerHPBeforeOutcome;
+
         // PreviousRoom
         [ScriptProperty]
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
-
-
 
         // Random
         public Random Random { get; private set; }

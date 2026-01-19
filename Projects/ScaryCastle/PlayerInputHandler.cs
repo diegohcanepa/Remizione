@@ -59,12 +59,18 @@ namespace ScaryCastle
             {
                 if (MouseCursor.UseWithScript is Script script)
                 {
+                    Sound.Play(SoundNames.UISelectC);
                     MouseCursor.Item = null;
                     Actor.Session.BeginOutcome(script, MouseCursor.Target);
                 }
                 else
                 {
-                    Actor.ApproachAndInteract(MouseCursor.Target);
+                    if (MouseCursor.Item != null)
+                    {
+                        Actor.Session.AwaitRoutine(RoutineNames.UseWithFailOutcome);
+                    }
+                    else
+                        Actor.ApproachAndInteract(MouseCursor.Target);
                 }
 
                 return true;

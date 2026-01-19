@@ -34,6 +34,9 @@ namespace ScaryCastle
             internal static Vector2 Title { get; } = new(.1f);
         }
 
+        // InventoryHeldItem
+        internal static Vector2 InventoryHeldItem { get; } = UIElement.Medium * 1.2f;
+
         // MenuItemTextActive
         internal static Vector2 MenuItemTextActive { get; } = new Vector2(.14f);
 
@@ -102,6 +105,6 @@ namespace ScaryCastle
         }
 
         // UISentence
-        internal static Vector2 UISentence { get; } = new Vector2(.1f);
+        internal static Vector2 UISentence { get; } = new Vector2(.11f);
     }
 }

@@ -7,7 +7,7 @@
     "effectType": {
       "type": "string",
       "description": "El tipo de acción a ejecutar.",
-      "enum": [ "None", "Damage", "Heal", "AddCondition", "RemoveCondition" ] 
+      "enum": [ "None", "Damage", "Death", "Heal", "AddCondition", "RemoveCondition" ] 
     },
     "amount": {
       "type": "string",
@@ -46,7 +46,7 @@
     "target": {
       "type": "string",
       "description": "A quién se aplica el efecto.",
-      "enum": [ "Self", "Target", "All" ],
+      "enum": [ "Self", "Target" ],
       "default": "Target"
     },
     "sound": {

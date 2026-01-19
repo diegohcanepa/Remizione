@@ -36,7 +36,7 @@ namespace ScaryCastle
             // Amount
             this.amountText = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Default,
+                Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Right,
                 Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, 0, 1),
                 Scale = ScaleInfo.Text.ExtraLarge,

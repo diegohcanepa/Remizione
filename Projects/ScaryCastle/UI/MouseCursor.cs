@@ -17,7 +17,6 @@ namespace ScaryCastle
 
         private static readonly AtlasImage?[] cursorImages;
         private static readonly ImageSprite cursorSprite;
-        private static readonly Vector2 defaultScale = ScaleInfo.UIElement.Medium;
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
         private static readonly TextSprite textSprite;
@@ -35,7 +34,7 @@ namespace ScaryCastle
             cursorSprite = new ImageSprite(EngendroGame.Instance)
             { 
                 PivotOrigin = RectanglePoint.Center,
-                Scale = defaultScale
+                Scale = GetCurrentScale()
             };
 
             const string prefix = "MouseCursor";
@@ -50,7 +49,7 @@ namespace ScaryCastle
 
             textSprite = new(EngendroGame.Instance, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.OrangeLight,
+                Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.LeftTop,
                 Scale = ScaleInfo.UISentence
             };
@@ -67,21 +66,26 @@ namespace ScaryCastle
         // ClampTextToScreen
         private static void ClampTextToScreen()
         {
+            var offset = Item == null ? 4 : 2;
+
             if (!textSprite.IsEmpty)
             {
                 textSprite.PivotOrigin = RectanglePoint.LeftTop;
-                textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, -2, -2);
+                textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, -offset, -offset);
 
                 if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
                 {
                     textSprite.PivotOrigin = RectanglePoint.RightTop;
-                    textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 2, -2);
+                    textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, offset, -offset);
                 }
 
                 if (textSprite.BoundingBox.Bottom >= Screen.NativeHeight)
                     textSprite.Y -= 10;
             }
         }
+
+        // GetCurrentScale
+        private static Vector2 GetCurrentScale() => Item != null ? ScaleInfo.InventoryHeldItem : ScaleInfo.UIElement.Large;
 
         // InvalidateCursorImage
         private static void InvalidateCursorImage()
@@ -91,7 +95,7 @@ namespace ScaryCastle
             else
                 cursorSprite.Image = cursorImages[(int)State];
 
-            cursorSprite.Scale = defaultScale;
+            cursorSprite.Scale = GetCurrentScale(); 
             cursorSprite.PivotOrigin = State == MouseCursorState.Arrow ? RectanglePoint.LeftTop : RectanglePoint.Center;
         }
 
@@ -145,7 +149,7 @@ namespace ScaryCastle
         // AnimateClick
         public static void AnimateClick()
         {
-            scaleTween.Start(TweenStyle.QuadraticIn, ScaleInfo.UIElement.Small, defaultScale, 150);
+            scaleTween.Start(TweenStyle.QuadraticIn, ScaleInfo.UIElement.Small, GetCurrentScale(), 150);
             cursorSprite.Tweens.ScaleTween = scaleTween;
         }
 

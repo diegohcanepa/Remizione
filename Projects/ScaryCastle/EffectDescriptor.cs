@@ -67,6 +67,11 @@ namespace ScaryCastle
                     case EffectType.Damage:
                         realTarget.TakeDamage(source, effect.AttackType, effect.DamageType, amount, effect.ImpactWord, effect.Knockback);
                         break;
+
+                    // Death
+                    case EffectType.Death:
+                        realTarget.Die();
+                        break;
                 }
             }
         }

@@ -26,7 +26,7 @@ namespace ScaryCastle
             };
 
             // Score
-            this.score = new UIScore(game, ColorPalette.Text.Default, ScaleInfo.Text.ExtraLarge, false)
+            this.score = new UIScore(game, ColorPalette.Text.Highlight, ScaleInfo.Text.ExtraLarge, false)
             {
                 PivotOrigin = RectanglePoint.Right,
                 Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, 0, 1)
