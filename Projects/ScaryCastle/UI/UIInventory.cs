@@ -256,7 +256,22 @@ namespace ScaryCastle
         protected override void OnUpdate(GameTime gameTime)
         {
             if (!IsVisible)
-                return;
+            {
+                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
+                {
+                    IsVisible = true;
+                    MouseCursor.Item = null;
+                    return;
+                }
+            }
+            else
+            {
+                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y < 90)
+                {
+                    IsVisible = false;
+                    return;
+                }
+            }
 
             if (lastSeenInventoryVersion != session.Inventory.ContentVersion)
             {
@@ -292,7 +307,7 @@ namespace ScaryCastle
                 itemDescription.Text = null;
             }
 
-            var cursorOverDeckIcon = deckIcon.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);   
+            var cursorOverDeckIcon = deckIcon.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);
 
             if (cursorOverDeckIcon)
             {

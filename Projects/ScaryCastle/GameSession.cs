@@ -2,6 +2,7 @@
 using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Procedural;
 using ScaryCastle.Scripting;
