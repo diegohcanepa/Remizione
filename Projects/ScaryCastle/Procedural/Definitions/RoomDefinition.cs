@@ -20,35 +20,15 @@ namespace ScaryCastle
         private RoomDefinition(JsonElement element)
             : base(element)
         {
-            // DoorDown
-            if (element.TryGetProperty("doorDown", out JsonElement doorDownElement))
-                DoorDown = DataConvert.ToVector2(doorDownElement.GetString() ?? string.Empty);
-
-            // DoorLeft
-            if (element.TryGetProperty("doorLeft", out JsonElement doorLeftElement))
-                DoorLeft = DataConvert.ToVector2(doorLeftElement.GetString() ?? string.Empty);
-
-            // DoorRight
-            if (element.TryGetProperty("doorRight", out JsonElement doorRightElement))
-                DoorRight = DataConvert.ToVector2(doorRightElement.GetString() ?? string.Empty);
-
-            // DoorUp
-            if (element.TryGetProperty("doorUp", out JsonElement doorUpElement))
-                DoorUp = DataConvert.ToVector2(doorUpElement.GetString() ?? string.Empty);
-
-            // LockType
-            if (element.TryGetProperty("lockType", out JsonElement lockTypeElement))
-                LockType = Enum.Parse<LockType>(lockTypeElement.GetString() ?? string.Empty);
-
-            // MaxEnemies
-            MaxEnemies = -1;
-            if (element.TryGetProperty("maxEnemies", out JsonElement maxEnemiesElement))
-                MaxEnemies = maxEnemiesElement.GetInt32();
-
-            // MaxProps
-            MaxProps = -1;
-            if (element.TryGetProperty("maxProps", out JsonElement maxPropsElement))
-                MaxProps = maxPropsElement.GetInt32();
+            DoorDown = element.GetVector2("doorDown");
+            DoorLeft = element.GetVector2("doorLeft");
+            DoorRight = element.GetVector2("doorRight");
+            DoorUp = element.GetVector2("doorUp");
+            LockType = element.GetEnum<LockType>("lockType", LockType.None);
+            MaxEnemies = element.GetInt32("maxEnemies", -1);
+            MaxProps = element.GetInt32("maxProps", -1);
+            RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
+            RoomType = element.GetEnum<RoomType>("roomType", RoomType.Connector);
 
             // Placeholders
             if (element.TryGetProperty("placeholders", out JsonElement placeholdersElement))
@@ -76,15 +56,6 @@ namespace ScaryCastle
                     placeholders.Add(new Placeholder(position, placement, fillChance, target));
                 }
             }
-
-            // RequiresDeadEnd
-            if (element.TryGetProperty("requiresDeadEnd", out JsonElement requiresDeadEndElement))
-                RequiresDeadEnd = requiresDeadEndElement.GetBoolean();
-
-            // RoomType
-            RoomType = RoomType.Connector;
-            if (element.TryGetProperty("roomType", out JsonElement roomTypeElement))
-                RoomType = Enum.Parse<RoomType>(roomTypeElement.GetString() ?? string.Empty);
 
             // Scope
             this.Scope = ScopeRules.FromJson(element);

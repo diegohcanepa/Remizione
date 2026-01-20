@@ -860,12 +860,6 @@
 /processorParam:Quality=Best
 /build:Audio/FX/UIHover.wav;Audio/FX/UIHover
 
-#begin Audio/FX/UIInventoryOpen.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/UIInventoryOpen.wav;Audio/FX/UIInventoryOpen
-
 #begin Audio/FX/UIPrompt.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

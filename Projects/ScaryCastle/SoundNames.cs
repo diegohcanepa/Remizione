@@ -36,7 +36,6 @@
         internal const string Thunder = nameof(Thunder);
         internal const string TrunkOpen = nameof(TrunkOpen);
         internal const string UIHover = nameof(UIHover);
-        internal const string UIInventoryOpen = nameof(UIInventoryOpen);
         internal const string UIPrompt = nameof(UIPrompt);
         internal const string UISelectA = nameof(UISelectA);
         internal const string UISelectB = nameof(UISelectB);

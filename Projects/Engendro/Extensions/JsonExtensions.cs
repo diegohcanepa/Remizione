@@ -21,6 +21,15 @@ namespace Engendro
             }
 
             // GetEnum
+            public TEnum? GetEnum<TEnum>(string propertyName) where TEnum : struct, Enum
+            {
+                if (element.TryGetProperty(propertyName, out JsonElement prop) && prop.GetString() is string value)
+                    return Enum.Parse<TEnum>(value);
+
+                return null;
+            }
+
+            // GetEnum
             public TEnum GetEnum<TEnum>(string propertyName, TEnum defaultValue) where TEnum : struct, Enum
             {
                 if (element.TryGetProperty(propertyName, out JsonElement prop) && prop.GetString() is string value)

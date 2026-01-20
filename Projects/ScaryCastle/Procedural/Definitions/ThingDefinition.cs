@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engendro;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
@@ -10,10 +11,14 @@ namespace ScaryCastle
     /// </summary>
     public sealed class ThingDefinition : EntityDefinition
     {
+        #region Private fields
+
         private static readonly Dictionary<string, ThingDefinition> data = [];
         private static readonly List<ThingDefinition> dataList = [];
         private readonly List<EffectDescriptor> effects = [];
         private readonly List<PlacementType> placements = [];
+
+        #endregion
 
         #region Constructor
 
@@ -22,22 +27,24 @@ namespace ScaryCastle
             : base(element)
         {
             // MaxPerRoom
-            MaxPerRoom = -1;
-            if (element.TryGetProperty("maxPerRoom", out JsonElement maxPerRoomElement))
-                MaxPerRoom = Math.Max(MaxPerRoom, maxPerRoomElement.GetInt32());
+            MaxPerRoom = element.GetInt32("maxPerRoom", -1);
+            if (MaxPerRoom < 0)
+                MaxPerRoom = -1;
 
             // MaxSpawnAmount
-            MaxSpawnAmount = 1;
-            if (element.TryGetProperty("maxSpawnAmount", out JsonElement maxSpawnAmountElement))
-                MaxSpawnAmount = Math.Max(1, maxSpawnAmountElement.GetInt32());
+            MaxSpawnAmount = element.GetInt32("maxSpawnAmount", 1);
+            if (MaxSpawnAmount < 0)
+                MaxSpawnAmount = 1;
 
             // MinSpawnAmount
-            MinSpawnAmount = 1;
-            if (element.TryGetProperty("minSpawnAmount", out JsonElement minSpawnAmountElement))
-                MinSpawnAmount = Math.Max(1, minSpawnAmountElement.GetInt32());
+            MinSpawnAmount = element.GetInt32("minSpawnAmount", 1);
+            if (MinSpawnAmount < 0)
+                MinSpawnAmount = 1;
 
             if (MinSpawnAmount > MaxSpawnAmount)
                 throw new InvalidOperationException($"[{Name}]: {nameof(MinSpawnAmount)} cannot be greater than MaxSpawnAmount.");
+
+            RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
 
             // Placements
             if (element.TryGetProperty("placements", out JsonElement placementsElement))
@@ -49,13 +56,11 @@ namespace ScaryCastle
                         placements.Add(value);
                     }
                     else
+                    {
                         throw new InvalidOperationException($"Cannot parse placement value.");
+                    }
                 }
             }
-
-            // RequiresDeadEnd
-            if (element.TryGetProperty("requiresDeadEnd", out JsonElement requiresDeadEndElement))
-                RequiresDeadEnd = requiresDeadEndElement.GetBoolean();
 
             this.Placements = placements.AsReadOnly();
 

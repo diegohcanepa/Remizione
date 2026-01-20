@@ -38,12 +38,11 @@ namespace ScaryCastle
             this.slots = new ImageSprite[Inventory.MaxCapacity];
 
             // Bottom gradient
-            bottomGradient = new ImageSprite(Game, Atlases.UI.BottomGradient)
+            bottomGradient = new ImageSprite(Game, Atlases.UI.GetImage("InventoryContainer"))
             {
-                Opacity = .6f,
+                Opacity = .8f,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
-                Scale = new Vector2(1, 1.2f)
             };
 
             for (var i = 0; i < slots.Length; i++)
@@ -51,7 +50,7 @@ namespace ScaryCastle
                 slots[i] = new(Game, Atlases.UI.InventorySlot)
                 {
                     PivotOrigin = RectanglePoint.Bottom,
-                    Y = Screen.Area.Bottom - 22
+                    Y = Screen.Area.Bottom - 8
                 };
 
                 icons[i] = new(Game)
@@ -76,7 +75,7 @@ namespace ScaryCastle
                     Color = ColorPalette.Text.Highlight,
                     PivotOrigin = RectanglePoint.Top,
                     Y = slots[i].BoundingBox.Center.Y + 4,
-                    Scale = ScaleInfo.Text.ExtraLarge
+                    Scale = ScaleInfo.Text.Large
                 };
             }
 
@@ -217,7 +216,7 @@ namespace ScaryCastle
             }
 
             itemName.Draw(gameTime);
-            itemDescription.Draw(gameTime);
+            //itemDescription.Draw(gameTime);
 
             Game.SpriteBatch.End();
         }

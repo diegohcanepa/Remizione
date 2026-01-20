@@ -16,13 +16,11 @@ namespace ScaryCastle
             Coin = this[nameof(Coin)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
+            Deck = this[nameof(Deck)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             HeartEmpty = this[nameof(HeartEmpty)];
             HeartHalf = this[nameof(HeartHalf)];
             Heart = this[nameof(Heart)];
-            InventoryCategoryGadget = this[nameof(InventoryCategoryGadget)];
-            InventoryCategoryLeftHand = this[nameof(InventoryCategoryLeftHand)];
-            InventoryCategoryRightHand = this[nameof(InventoryCategoryRightHand)];
             InventoryGridContainer = this[nameof(InventoryGridContainer)];
             InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
             InventoryInfoTitleContainer = this[nameof(InventoryInfoTitleContainer)];
@@ -59,17 +57,11 @@ namespace ScaryCastle
         // CreditsBar
         public AtlasImage CreditsBar { get; }
 
+        // Deck
+        public AtlasImage Deck { get; }
+
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
-
-        // InventoryCategoryGadget
-        public AtlasImage InventoryCategoryGadget { get; }
-
-        // inventoryCategoryLeftHand
-        public AtlasImage InventoryCategoryLeftHand { get; }
-
-        // inventoryCategoryRightHand
-        public AtlasImage InventoryCategoryRightHand { get; }
 
         // InventoryGridContainer
         public AtlasImage InventoryGridContainer { get; }
