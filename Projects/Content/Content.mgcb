@@ -1055,6 +1055,9 @@
 #begin System/Actors.json
 /copy:System/Actors.json
 
+#begin System/Cards.json
+/copy:System/Cards.json
+
 #begin System/Items.json
 /copy:System/Items.json
 

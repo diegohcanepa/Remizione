@@ -1,0 +1,16 @@
+{
+	"$schema": "./Card.schema.json",
+	"data": [
+		{
+			"name": "CardTest",
+			"effects": [
+				{
+					"effectType": "Heal",
+					"amount": "2",
+					"target": "Self",
+					"sound": "AppleBite"
+				}
+			]
+		}
+	]
+}

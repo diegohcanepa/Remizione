@@ -91,9 +91,18 @@ namespace ScaryCastle
             return data.TryGetValue(name, out ThingDefinition? definition) ? definition : null;
         }
 
+        // Get
+        public static ThingDefinition Get(string name)
+        {
+            return data[name];
+        }
+
         // Load
         public static void Load(params string[] fileNames)
         {
+            if (data.Count > 0)
+                throw new InvalidOperationException("Data already loaded.");
+
             for (var i = 0; i < fileNames.Length; i++)
             {
                 Utils.LoadJsonData<ThingDefinition>(fileNames[i], element => new ThingDefinition(element));

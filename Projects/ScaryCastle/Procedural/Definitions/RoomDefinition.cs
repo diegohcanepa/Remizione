@@ -98,6 +98,9 @@ namespace ScaryCastle
         // Load
         public static void Load(string fileName)
         {
+            if (data.Count > 0)
+                throw new InvalidOperationException("Data already loaded.");
+
             Utils.LoadJsonData(fileName, element => new RoomDefinition(element));
         }
 

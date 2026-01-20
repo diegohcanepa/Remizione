@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "Card.schema.json",
+  "title": "Card Definition",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Card"
+      }
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "$defs": {
+    "Card": {
+      "description": "Definición de las propiedades de una carta.",
+      "allOf": [
+        {
+          "$ref": "./Definition.schema.json"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "realm": {
+              "type": "string",
+              "enum": [
+                "Earthly",
+                "Infernal",
+                "Celestial"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

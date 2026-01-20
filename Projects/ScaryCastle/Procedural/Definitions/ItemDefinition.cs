@@ -13,7 +13,7 @@ namespace ScaryCastle
     public sealed class ItemDefinition : Definition
     {
         private static readonly Dictionary<string, ItemDefinition> data = [];
-        private static bool loaded;
+        private static readonly List<ItemDefinition> dataList = [];
 
         #region Constructor
 
@@ -87,6 +87,7 @@ namespace ScaryCastle
             };
 
             data.Add(Name, this);
+            dataList.Add(this);
         }
 
         #endregion
@@ -94,7 +95,7 @@ namespace ScaryCastle
         #region Static members
 
         // All
-        public static IEnumerable<ItemDefinition> All => data.Values;
+        public static ReadOnlyCollection<ItemDefinition> All { get; } = new(dataList);
 
         // Find
         public static ItemDefinition? Find(string name)
@@ -113,10 +114,10 @@ namespace ScaryCastle
         {
             var result = new List<ItemDefinition>();
 
-            foreach (var item in data.Values)
+            for (var i = 0; i < dataList.Count; i++)
             {
-                if (item.Category == category)
-                    result.Add(item);
+                if (dataList[i].Category == category)
+                    result.Add(dataList[i]);
             }
 
             return result;
@@ -127,10 +128,10 @@ namespace ScaryCastle
         {
             var result = new List<ItemDefinition>();
 
-            foreach (var item in data.Values)
+            for (var i = 0; i < dataList.Count; i++)
             {
-                if (item.Realm == realm)
-                    result.Add(item);
+                if (dataList[i].Realm == realm)
+                    result.Add(dataList[i]);
             }
 
             return result;
@@ -139,12 +140,10 @@ namespace ScaryCastle
         // Load
         public static void Load(string fileName)
         {
-            if (loaded)
-                throw new InvalidOperationException("Data is already loaded.");
+            if (data.Count > 0)
+                throw new InvalidOperationException("Data already loaded.");
 
             Utils.LoadJsonData(fileName, element => new ItemDefinition(element));
-
-            loaded = true;
         }
 
         #endregion
