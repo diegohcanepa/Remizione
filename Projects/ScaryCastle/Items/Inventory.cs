@@ -55,11 +55,11 @@ namespace ScaryCastle
             {
                 if (value != field)
                 {
-                    field = value;
+                    field = int.Clamp(value, 3, MaxCapacity);
                     Invalidate();
                 }
             }
-        } = 9;
+        } = 7;
 
         // Clear
         public void Clear()
@@ -151,6 +151,9 @@ namespace ScaryCastle
         {
             unchecked { ContentVersion++; }
         }
+
+        // MaxCapacity
+        public const int MaxCapacity = 10;
 
         // Remove
         public bool Remove(string name)

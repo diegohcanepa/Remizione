@@ -16,9 +16,10 @@ namespace ScaryCastle
         private readonly TextSprite[] amounts;
         private readonly ImageSprite bottomGradient;
         private readonly ImageSprite[] icons;
-        private readonly Inventory inventory;
+        private readonly TextSprite itemDescription;
         private readonly TextSprite itemName;
         private int lastSeenInventoryVersion;
+        private readonly GameSession session;
         private readonly ImageSprite[] shadows;
         private readonly ImageSprite[] slots;
 
@@ -27,14 +28,14 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public UIInventory(Inventory inventory)
-            : base(inventory.Session.Game)
+        public UIInventory(GameSession session)
+            : base(session.Game)
         {
-            this.inventory = inventory;
-            this.amounts = new TextSprite[GameSettings.MaxInventoryCapacity];
-            this.icons = new ImageSprite[GameSettings.MaxInventoryCapacity];
-            this.shadows = new ImageSprite[GameSettings.MaxInventoryCapacity];
-            this.slots = new ImageSprite[GameSettings.MaxInventoryCapacity];
+            this.session = session;
+            this.amounts = new TextSprite[Inventory.MaxCapacity];
+            this.icons = new ImageSprite[Inventory.MaxCapacity];
+            this.shadows = new ImageSprite[Inventory.MaxCapacity];
+            this.slots = new ImageSprite[Inventory.MaxCapacity];
 
             // Bottom gradient
             bottomGradient = new ImageSprite(Game, Atlases.UI.BottomGradient)
@@ -50,7 +51,7 @@ namespace ScaryCastle
                 slots[i] = new(Game, Atlases.UI.InventorySlot)
                 {
                     PivotOrigin = RectanglePoint.Bottom,
-                    Y = Screen.Area.Bottom - 7
+                    Y = Screen.Area.Bottom - 22
                 };
 
                 icons[i] = new(Game)
@@ -88,7 +89,18 @@ namespace ScaryCastle
                 Scale = ScaleInfo.UISentence
             };
 
-            RefreshUI();
+            // Item description
+            this.itemDescription = new(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Highlight,
+                PivotOrigin = RectanglePoint.Bottom,
+                MaximumLines = 2,
+                MaximumWidth = 140,
+                Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -5),
+                Scale = ScaleInfo.Text.Large
+            };
+
+            Refresh();
         }
 
         #endregion
@@ -107,7 +119,7 @@ namespace ScaryCastle
                 {
                     if (grabbedItem.Definition.Image != null)
                     {
-                        inventory.Session.Player?.Stand();
+                        session.Player?.Stand();
                         Sound.Play(SoundNames.UISelectC);
                         MouseCursor.Item = grabbedItem;
                         MouseCursor.AnimateClick();
@@ -140,11 +152,11 @@ namespace ScaryCastle
             return false;
         }
 
-        // RefreshUI
-        private void RefreshUI()
+        // Refresh
+        private void Refresh()
         {
             float screenWidth = Screen.NativeWidth;
-            int slotCount = inventory.Capacity;
+            int slotCount = session.Inventory.Capacity;
             float slotWidth = slots[0].BoundingBox.Width;
             float spacing = 1;
 
@@ -158,21 +170,18 @@ namespace ScaryCastle
                 shadows[i].Image = null;
                 amounts[i].Text = null;
 
-                if (i < inventory.Count)
+                if (i < session.Inventory.Count)
                 {
                     icons[i].X = slots[i].BoundingBox.Center.X;
-                    icons[i].Image = inventory[i].Definition.Image;
+                    icons[i].Image = session.Inventory[i].Definition.Image;
 
                     shadows[i].X = icons[i].X - 1;
-                    shadows[i].Image = inventory[i].Definition.Image;
+                    shadows[i].Image = session.Inventory[i].Definition.Image;
 
                     amounts[i].X = icons[i].X;
-                    amounts[i].Text = inventory[i].Definition.IsStackable ? inventory[i].Count.ToString(CultureInfo.InvariantCulture) : null;
+                    amounts[i].Text = session.Inventory[i].Definition.IsStackable ? session.Inventory[i].Count.ToString(CultureInfo.InvariantCulture) : null;
                 }
             }
-
-            var lt = slots[0].BoundingBox.GetPoint(RectanglePoint.LeftTop);
-            var rb = slots[inventory.Capacity - 1].BoundingBox.GetPoint(RectanglePoint.RightBottom);
 
             MouseCursor.Item = MouseCursor.Item;
         }
@@ -192,14 +201,14 @@ namespace ScaryCastle
             // Gradient
             bottomGradient.Draw(gameTime);
 
-            for (var i = 0; i < inventory.Capacity; i++)
+            for (var i = 0; i < session.Inventory.Capacity; i++)
             {
                 slots[i].Draw(gameTime);
 
                 if (MouseCursor.Item?.Index == i)
                 {
-                    if (!inventory[i].Definition.IsStackable)
-                       continue;
+                    if (!session.Inventory[i].Definition.IsStackable)
+                        continue;
                 }
 
                 shadows[i].Draw(gameTime);
@@ -208,6 +217,7 @@ namespace ScaryCastle
             }
 
             itemName.Draw(gameTime);
+            itemDescription.Draw(gameTime);
 
             Game.SpriteBatch.End();
         }
@@ -215,33 +225,33 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (IsVisible)
+            if (!IsVisible)
+                return;
+
+            if (lastSeenInventoryVersion != session.Inventory.ContentVersion)
             {
-                if (lastSeenInventoryVersion != inventory.ContentVersion)
-                {
-                    lastSeenInventoryVersion = inventory.ContentVersion;
-                    RefreshUI();
-                }
+                lastSeenInventoryVersion = session.Inventory.ContentVersion;
+                Refresh();
+            }
 
-                for (var i = 0; i < inventory.Count; i++)
-                {
-                    icons[i].Scale = ScaleInfo.UIElement.Medium;
-                }
+            for (var i = 0; i < session.Inventory.Count; i++)
+            {
+                icons[i].Scale = ScaleInfo.UIElement.Medium;
+            }
 
-                if (MouseCursor.Item == null && GetSelectedItem() is Item item)
-                {
-                    itemName.Text = item.Definition.LocalizedDisplayName;
-                    itemName.X = slots[item.Index].X;
-                    icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;
-                }
-                else
-                {
-                    itemName.Text = null;
-                }
+            if (MouseCursor.Item == null && GetSelectedItem() is Item item)
+            {
+                itemName.Text = item.Definition.LocalizedDisplayName;
+                itemName.X = slots[item.Index].X;
+
+                itemDescription.Text = item.Definition.LocalizedDescription;
+
+                icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;
             }
             else
             {
                 itemName.Text = null;
+                itemDescription.Text = null;
             }
         }
 
@@ -250,10 +260,10 @@ namespace ScaryCastle
         // GetItemAt
         public Item? GetItemAt(Vector2 position)
         {
-            for (int i = 0; i < inventory.Count; i++)
+            for (int i = 0; i < session.Inventory.Count; i++)
             {
                 if (slots[i].BoundingBox.Contains(position))
-                    return i < inventory.Count ? inventory[i] : null;
+                    return i < session.Inventory.Count ? session.Inventory[i] : null;
             }
 
             return null;
@@ -279,6 +289,18 @@ namespace ScaryCastle
         }
 
         // IsVisible
-        public bool IsVisible { get; set; }
+        public bool IsVisible
+        {
+            get;
+            set
+            {
+                if (field != value)
+                {
+                    field = value;
+                    itemName.Text = null;
+                    itemDescription.Text = null;
+                }
+            }
+        }
     }
 }

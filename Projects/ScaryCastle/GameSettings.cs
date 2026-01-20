@@ -31,9 +31,6 @@ namespace ScaryCastle
         // CountdownMaximum
         public const int CountdownMaximum = 120_000;
 
-        // MaxInventoryCapacity
-        public const int MaxInventoryCapacity = 16;
-
         // PropRevealOpacity
         public const float PropRevealOpacity = .5f;
 

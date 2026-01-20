@@ -17,20 +17,21 @@ namespace Engendro
         #region Private fields
 
         private const string asianPunctuationSymbols = "。，？！”；：、）—》";
-        private List<char>? characters;
+        private string formattedText = string.Empty;
         private bool customSpacing;
-        private string displayTextCopy = string.Empty;
         private const string ellipsesValue = "...";
         private bool hasTypingSoundControl;
         private string lastWord = string.Empty;
         private int previousLineSpacing;
         private float previousSpacing;
+        private readonly StringBuilder _renderBuffer = new();
         private const string space = " ";
         private static readonly StringBuilder stringBuilder = new();
         private string? text;
         private int textRepositoryLoadCount;
         private Vector2 textSize;
         private Timer? textTimer;
+        private int _typingIndex;
         private SoundInstance? typingSound;
         private float typingSoundVolume;
 
@@ -75,36 +76,62 @@ namespace Engendro
             if (VisualParent != null)
                 pos = GetAbsolutePosition();
 
-            Game.SpriteBatch.DrawString(font, DisplayText, pos, Color * Opacity * OpacityFactor, Rotation, Pivot.Position, Scale, SpriteEffects.None, 0);
+            // OPTIMIZACIÓN: Pasamos el StringBuilder directamente al SpriteBatch
+            Game.SpriteBatch.DrawString(font, _renderBuffer, pos, Color * Opacity * OpacityFactor, Rotation, Pivot.Position, Scale, SpriteEffects.None, 0);
         }
 
         // Invalidate
         private void Invalidate()
         {
+            // Bloque de seguridad: Si el texto es nulo, reseteamos todo.
             if (text == null)
             {
                 LineCount = 0;
                 textSize = Vector2.Zero;
-                DisplayText = null;
+                formattedText = string.Empty;
+                _renderBuffer.Clear();
                 return;
             }
 
+            // 1. Calculamos el texto final con el wrapping aplicado
+            string? processedText;
             if (MaximumWidth == 0)
             {
-                DisplayText = text;
+                processedText = text;
                 LineCount = 1;
             }
             else
             {
-                DisplayText = WrapText(text);
+                processedText = WrapText(text);
             }
 
-            if (DisplayText != null && HideEndingPeriod && DisplayText.EndsWith('.'))
+            // Ajuste del punto final si es necesario
+            if (processedText != null && HideEndingPeriod && processedText.EndsWith('.'))
             {
-                DisplayText = DisplayText.Substring(0, DisplayText.Length - 1);
+                processedText = processedText.Substring(0, processedText.Length - 1);
             }
 
-            textSize = DisplayText == null || Font?.SpriteFont == null ? Vector2.Zero : Font.SpriteFont.MeasureString(DisplayText);
+            // FIX: Null Coalescing para asegurar que _formattedText nunca sea null
+            formattedText = processedText ?? string.Empty;
+
+            // 2. Medimos el tamaño total basado en el texto completo (para evitar saltos del Pivot)
+            if (Font?.SpriteFont != null)
+            {
+                textSize = Font.SpriteFont.MeasureString(formattedText);
+            }
+            else
+            {
+                textSize = Vector2.Zero;
+            }
+
+            // 3. Si NO estamos escribiendo, mostramos todo inmediatamente
+            if (TypingState == RunningState.Stopped)
+            {
+                _renderBuffer.Clear();
+                _renderBuffer.Append(formattedText);
+                _typingIndex = formattedText.Length;
+            }
+            // Si estamos escribiendo, el Update se encargará de llenar el buffer
 
             IsBoundingBoxDirty = true;
         }
@@ -139,105 +166,92 @@ namespace Engendro
             return Font?.SpriteFont == null ? Vector2.Zero : Font.SpriteFont.MeasureString(text) * Scale;
         }
 
-        // TryTypeText
-        private bool TryTypeText(out string text, out int duration)
+        // TryTypeText - OPTIMIZADO y SEGURO
+        private bool TryTypeText(out int duration)
         {
-            text = string.Empty;
             duration = 0;
 
-            // No remaining characters
-            if (characters == null || characters.Count == 0)
+            // GUARDIA: Verificamos nulidad (aunque Invalidate lo previene) y límites
+            if (string.IsNullOrEmpty(formattedText) || _typingIndex >= formattedText.Length)
             {
                 return false;
             }
 
-            var isFirstCharacter = displayTextCopy.Length - characters.Count == 0;
-            text = characters[0].ToString(CultureInfo.InvariantCulture);
-            characters.RemoveAt(0);
+            // Obtenemos caracter actual
+            char currentChar = formattedText[_typingIndex];
 
-            // No more characters
-            if (characters.Count == 0)
+            // Avanzamos índice y añadimos al buffer visual
+            _typingIndex++;
+            _renderBuffer.Append(currentChar);
+
+            // --- Lógica de Pausas y Palabras ---
+
+            bool isFirstCharacter = _typingIndex == 1;
+            string charStr = currentChar.ToString();
+
+            if (charStr != space)
+            {
+                lastWord += charStr;
+            }
+            else
+            {
+                lastWord = string.Empty;
+            }
+
+            // Si terminamos después de este caracter
+            if (_typingIndex >= formattedText.Length)
             {
                 duration = TypingSpeed;
                 return true;
             }
 
-            if (text != space)
-            {
-                lastWord += text;
-            }
-            else
-            {
-                lastWord = string.Empty;
-            }
-
             // Colon
-            if (text == ":" && !isFirstCharacter)
+            if (currentChar == ':' && !isFirstCharacter)
             {
                 duration = PauseOnPunctuationMarks ? TextTypingSettings.ColonPauseDuration : 0;
             }
-
             // Semicolon
-            else if (text == ";" && !isFirstCharacter)
+            else if (currentChar == ';' && !isFirstCharacter)
             {
                 duration = PauseOnPunctuationMarks ? TextTypingSettings.SemicolonPauseDuration : 0;
             }
-
             // Dot
-            else if (text == ".")
+            else if (currentChar == '.')
             {
                 if (Abbreviations.Contains(lastWord))
                 {
                     lastWord = string.Empty;
+                    duration = 0; // No pausa en abreviaciones
                 }
                 else
                 {
-                    // Remove repeating characters
-                    var dotCount = 0;
-                    while (characters.Count > 0)
-                    {
-                        if (!char.IsLetter(characters[0]) && characters[0] != '¿' && characters[0] != '¡')
-                        {
-                            if (characters[0] == '.')
-                            {
-                                dotCount++;
-                            }
+                    // Lógica de Elipsis (Look-ahead sin crear basura)
+                    int dotCount = 1;
+                    int lookAhead = _typingIndex;
 
-                            text += characters[0].ToString(CultureInfo.InvariantCulture);
-                            characters.RemoveAt(0);
-                        }
-                        else
-                        {
-                            break;
-                        }
+                    // Miramos hacia adelante en el string original para ver si hay más puntos
+                    while (lookAhead < formattedText.Length && formattedText[lookAhead] == '.')
+                    {
+                        // Agregamos los puntos extra inmediatamente al buffer visual para que aparezcan juntos
+                        _renderBuffer.Append('.');
+                        lookAhead++;
+                        _typingIndex++; // Sincronizamos el índice principal
+                        dotCount++;
                     }
 
-                    if (characters.Count > 0 && !isFirstCharacter)
+                    if (dotCount >= 2) // Asumiendo que 2 o más puntos pausan más
                     {
-                        if (dotCount >= 2)
-                        {
-                            duration = PauseOnPunctuationMarks ? TextTypingSettings.EllipsisPauseDuration : 0;
-                        }
-                        else
-                        {
-                            duration = PauseOnPunctuationMarks ? TextTypingSettings.DotPauseDuration : 0;
-                        }
+                        duration = PauseOnPunctuationMarks ? TextTypingSettings.EllipsisPauseDuration : 0;
                     }
                     else
                     {
-                        duration = 0;
+                        duration = PauseOnPunctuationMarks ? TextTypingSettings.DotPauseDuration : 0;
                     }
                 }
             }
-
             else
             {
                 duration = TypingSpeed;
-            }
-
-            if (characters.Count == 0)
-            {
-                lastWord = string.Empty;
             }
 
             return true;
@@ -346,13 +360,26 @@ namespace Engendro
             var ellipses = false;
             var spaceWidth = MeasureScaledString(space).X;
 
-            // Asian text
+            // ---------------------------------------------------------
+            // 1. Lógica para Texto Asiático
+            // ---------------------------------------------------------
             if (Multiline && ContainsAsianSymbols(text))
             {
                 var wrappedLines = WrapAsianLines(lines);
-                LineCount = wrappedLines.Length;
 
-                for (var i = 0; i < wrappedLines.Length; i++)
+                // Determinamos cuántas líneas vamos a mostrar realmente
+                int limit = wrappedLines.Length;
+                bool truncated = false;
+
+                if (MaximumLines > 0 && limit > MaximumLines)
+                {
+                    limit = MaximumLines;
+                    truncated = true;
+                }
+
+                LineCount = limit;
+
+                for (var i = 0; i < limit; i++)
                 {
                     if (string.IsNullOrEmpty(wrappedLines[i]))
                     {
@@ -360,8 +387,18 @@ namespace Engendro
                     }
                     else
                     {
-                        stringBuilder.Append(wrappedLines[i]);
-                        if (i < wrappedLines.Length - 1)
+                        // Si es la última línea permitida y hubo truncamiento, agregamos '...'
+                        if (truncated && i == limit - 1)
+                        {
+                            stringBuilder.Append(wrappedLines[i] + ellipsesValue);
+                        }
+                        else
+                        {
+                            stringBuilder.Append(wrappedLines[i]);
+                        }
+
+                        // Agregamos salto de línea solo si NO es la última línea
+                        if (i < limit - 1)
                         {
                             stringBuilder.Append(Environment.NewLine);
                         }
@@ -371,6 +408,9 @@ namespace Engendro
                 return stringBuilder.ToString();
             }
 
+            // ---------------------------------------------------------
+            // 2. Lógica para Texto Occidental (por palabras)
+            // ---------------------------------------------------------
             for (var j = 0; j < lines.Length; j++)
             {
                 float lineWidth = 0;
@@ -380,11 +420,9 @@ namespace Engendro
                 {
                     var word = words[i];
                     var size = MeasureScaledString(word);
-
-                    //size.X += (font.Spacing * -1) * Scale.X * word.Length;
-
                     var addSpace = !(i == words.Length - 1);
 
+                    // Verifica si la palabra cabe en la línea actual
                     if (lineWidth + size.X <= MaximumWidth)
                     {
                         stringBuilder.Append(word + (addSpace ? space : string.Empty));
@@ -392,35 +430,43 @@ namespace Engendro
                     }
                     else
                     {
-                        if (Multiline)
-                        {
-                            stringBuilder.Append(Environment.NewLine + word + (addSpace ? space : string.Empty));
-                            lineWidth = size.X + spaceWidth;
-                            LineCount++;
-                        }
-                        else
+                        // La palabra NO cabe, necesitamos una nueva línea.
+
+                        // CASO A: Estamos en el límite de líneas permitido (o no es multilinea)
+                        if (!Multiline || (MaximumLines > 0 && LineCount >= MaximumLines))
                         {
                             stringBuilder.Append(ellipsesValue);
-                            ellipses = true;
+                            ellipses = true; // Forzamos la salida del bucle de palabras
                             break;
                         }
+
+                        // CASO B: Aún tenemos espacio para más líneas
+                        stringBuilder.Append(Environment.NewLine + word + (addSpace ? space : string.Empty));
+                        lineWidth = size.X + spaceWidth;
+                        LineCount++;
                     }
                 }
 
-                if (!ellipses && j < lines.Length - 1)
-                {
-                    stringBuilder.AppendLine();
-                }
-
+                // Si ya cortamos con elipsis, salimos del bucle de parrafos también
                 if (ellipses)
                 {
                     break;
                 }
-            }
 
-            if (Multiline && LineCount < lines.Length)
-            {
-                LineCount = lines.Length;
+                // Si no es el último párrafo original y aún no alcanzamos el límite de líneas
+                if (j < lines.Length - 1)
+                {
+                    if (MaximumLines > 0 && LineCount >= MaximumLines)
+                    {
+                        // Si agregar el salto de línea del párrafo nos pasaría del límite,
+                        // agregamos elipsis al final de la línea actual y salimos.
+                        stringBuilder.Append(ellipsesValue);
+                        break;
+                    }
+
+                    stringBuilder.AppendLine();
+                    LineCount++;
+                }
             }
 
             return stringBuilder.ToString();
@@ -459,7 +505,9 @@ namespace Engendro
                 var currentPosition = Position;
                 Color = ShadowColor;
                 Position += ShadowOffset;
+
                 DrawCore(Font.SpriteFont);
+
                 Color = currentColor;
                 Position = currentPosition;
             }
@@ -496,10 +544,9 @@ namespace Engendro
 
                 if (!textTimer.IsRunning)
                 {
-                    if (TryTypeText(out var text, out var duration))
+                    // Lógica principal de tipeo optimizada
+                    if (TryTypeText(out var duration))
                     {
-                        DisplayText += text;
-
                         if (duration == this.TypingSpeed)
                         {
                             if (typingSound != null && typingSound.State == SoundState.Stopped && hasTypingSoundControl)
@@ -539,7 +586,7 @@ namespace Engendro
         }
 
         // DisplayText
-        public string? DisplayText { get; private set; }
+        public string? DisplayText => _renderBuffer.ToString();
 
         // Font
         public Font? Font
@@ -590,6 +637,20 @@ namespace Engendro
         // LocalizedTextChanged
         public event EventHandler? LocalizedTextChanged;
 
+        // MaximumLines
+        public int MaximumLines
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    Invalidate();
+                }
+            }
+        }
+
         // MaximumWidth
         public int MaximumWidth
         {
@@ -607,7 +668,8 @@ namespace Engendro
         // MeasureDisplayText
         public Vector2 MeasureDisplayText()
         {
-            return DisplayText == null ? Vector2.Zero : MeasureScaledString(DisplayText);
+            // Medimos el buffer actual (lo que se ve en pantalla)
+            return _renderBuffer.Length == 0 ? Vector2.Zero : MeasureScaledString(_renderBuffer.ToString());
         }
 
         // Multiline
@@ -659,7 +721,8 @@ namespace Engendro
         // StartTyping
         public void StartTyping(SoundInstance? sound)
         {
-            if (IsEmpty || string.IsNullOrWhiteSpace(DisplayText) || TypingSpeed == 0)
+            // Checkeo de _formattedText para evitar arrancar con nada o basura
+            if (IsEmpty || string.IsNullOrWhiteSpace(formattedText) || TypingSpeed == 0)
             {
                 return;
             }
@@ -672,15 +735,10 @@ namespace Engendro
             lastWord = string.Empty;
 
             this.typingSound = sound;
-            //typingSound?.Volume.Reset();
 
-            if (characters == null)
-                characters = [];
-
-            characters.Clear();
-            characters.AddRange(DisplayText.ToCharArray());
-            displayTextCopy = DisplayText;
-            DisplayText = string.Empty;
+            // REINICIO: Limpiamos buffer y cursor
+            _renderBuffer.Clear();
+            _typingIndex = 0;
 
             if (textTimer == null)
             {
@@ -703,8 +761,11 @@ namespace Engendro
         {
             if (TypingState != RunningState.Stopped)
             {
-                characters?.Clear();
-                DisplayText = displayTextCopy;
+                // Mostramos todo el texto restante
+                _renderBuffer.Clear();
+                _renderBuffer.Append(formattedText);
+                _typingIndex = formattedText.Length;
+
                 textTimer?.Stop();
                 typingSound?.Stop();
                 TypingState = RunningState.Stopped;

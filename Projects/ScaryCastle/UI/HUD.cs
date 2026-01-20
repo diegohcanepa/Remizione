@@ -33,7 +33,7 @@ namespace ScaryCastle
             this.CoinMeter = new(Game);
 
             // Inventory
-            this.Inventory = new(session.Inventory);
+            this.Inventory = new(session);
 
             // Sack meter
             this.SackMeter = new(session);
