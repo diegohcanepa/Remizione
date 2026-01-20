@@ -31,14 +31,6 @@ namespace ScaryCastle
             ItemGridSlot = this[nameof(ItemGridSlot)];
             ItemGridSlotSelected = this[nameof(ItemGridSlotSelected)];
             MessageContainer = this[nameof(MessageContainer)];
-            MouseCursorArrow = this[nameof(MouseCursorArrow)];
-            MouseCursorCross = this[nameof(MouseCursorCross)];
-            MouseCursorCrossOn = this[nameof(MouseCursorCrossOn)];
-            MouseCursorDown = this[nameof(MouseCursorDown)];
-            MouseCursorLeft = this[nameof(MouseCursorLeft)];
-            MouseCursorRight = this[nameof(MouseCursorRight)];
-            MouseCursorUp = this[nameof(MouseCursorUp)];
-            MouseCursorWait = this[nameof(MouseCursorWait)];
             PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
             PointingHand = this[nameof(PointingHand)];
@@ -111,30 +103,6 @@ namespace ScaryCastle
 
         // MessageContainer
         public AtlasImage MessageContainer { get; }
-
-        // MouseCursorArrow
-        public AtlasImage MouseCursorArrow { get; }
-
-        // MouseCursorCross
-        public AtlasImage MouseCursorCross { get; }
-
-        // MouseCursorCrossOn
-        public AtlasImage MouseCursorCrossOn { get; }
-
-        // MouseCursorDown
-        public AtlasImage MouseCursorDown { get; }
-
-        // MouseCursorLeft
-        public AtlasImage MouseCursorLeft { get; }
-
-        // MouseCursorRight
-        public AtlasImage MouseCursorRight { get; }
-
-        // MouseCursorUp
-        public AtlasImage MouseCursorUp { get; }
-
-        // MouseCursorWait
-        public AtlasImage MouseCursorWait { get; }
 
         // PickupShadow
         public AtlasImage PickupShadow { get; }

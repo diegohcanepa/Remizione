@@ -149,7 +149,7 @@ namespace ScaryCastle
         // AnimateClick
         public static void AnimateClick()
         {
-            scaleTween.Start(TweenStyle.QuadraticIn, ScaleInfo.UIElement.Small, GetCurrentScale(), 150);
+            scaleTween.Start(TweenStyle.QuadraticIn, GetCurrentScale() * .9f, GetCurrentScale(), 150);
             cursorSprite.Tweens.ScaleTween = scaleTween;
         }
 
@@ -180,7 +180,7 @@ namespace ScaryCastle
             EngendroGame.Instance.SpriteBatch.End();
 
             EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera);
-            if (State is MouseCursorState.CrossOn or MouseCursorState.Item)
+            if (State == MouseCursorState.Cross || State == MouseCursorState.Item)
                 textSprite.Draw(gameTime);
             EngendroGame.Instance.SpriteBatch.End();
         }
@@ -275,22 +275,19 @@ namespace ScaryCastle
                 return;
             }
 
+            if (Room.Session.HUD.Inventory.IsVisible)
+            {
+                State = MouseCursorState.Hand;
+                return;
+            }
+
             if (SpeechBubble.ModalInstance == null)
                 Target = ScanForTarget();
 
-            // Set cursor state
-            if (Target == null && Item == null)
-            {
-                State = MouseCursorState.Cross;
-            }
-            else if (Target != null && Item == null)
-            {
-                State = Target.GetMouseCursorState() ?? MouseCursorState.CrossOn;
-            }
-            else
-            {
+            if (Item != null)
                 State = MouseCursorState.Item;
-            }
+            else
+                State = Target?.GetMouseCursorState() ?? MouseCursorState.Cross;
 
             ClampTextToScreen();
         }

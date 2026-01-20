@@ -50,6 +50,9 @@ namespace ScaryCastle
         // TestMouseLeftButtonClick
         private bool TestMouseLeftButtonClick()
         {
+            if (MouseCursor.State == MouseCursorState.Hand)
+                return false;
+
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
 
@@ -59,7 +62,6 @@ namespace ScaryCastle
             {
                 if (MouseCursor.UseWithScript is Script script)
                 {
-                    Sound.Play(SoundNames.UISelectC);
                     MouseCursor.Item = null;
                     Actor.Session.BeginOutcome(script, MouseCursor.Target);
                 }
@@ -70,8 +72,12 @@ namespace ScaryCastle
                         Actor.Session.AwaitRoutine(RoutineNames.UseWithFailOutcome);
                     }
                     else
+                    {
                         Actor.ApproachAndInteract(MouseCursor.Target);
+                    }
                 }
+
+                Sound.Play(SoundNames.UISelectC);
 
                 return true;
             }

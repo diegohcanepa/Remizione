@@ -269,6 +269,8 @@
             <key type="filename">Edmund-assets/TalkHead02.png</key>
             <key type="filename">Edmund-assets/ThrowItem01.png</key>
             <key type="filename">Edmund-assets/ThrowItem02.png</key>
+            <key type="filename">Edmund-assets/TouchHead01.png</key>
+            <key type="filename">Edmund-assets/TouchHead02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

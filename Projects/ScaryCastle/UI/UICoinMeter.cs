@@ -22,14 +22,14 @@ namespace ScaryCastle
             this.icon = new ImageSprite(Game, Atlases.UI.Coin)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.RightBottom, -7, -15),
+                Position = Screen.Area.GetPoint(RectanglePoint.RightBottom, -7, -16),
             };
 
             // Score
             this.score = new UIScore(game, ColorPalette.Text.Highlight, ScaleInfo.Text.ExtraLarge, false)
             {
                 PivotOrigin = RectanglePoint.Right,
-                Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, 0, 1)
+                Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, -1, 1)
             };
         }
 

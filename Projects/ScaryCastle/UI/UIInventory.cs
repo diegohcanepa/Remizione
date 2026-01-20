@@ -14,10 +14,12 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly TextSprite[] amounts;
+        private readonly ImageSprite bottomGradient;
         private readonly ImageSprite[] icons;
         private readonly Inventory inventory;
         private readonly TextSprite itemName;
         private int lastSeenInventoryVersion;
+        private readonly ImageSprite[] shadows;
         private readonly ImageSprite[] slots;
 
         #endregion
@@ -31,7 +33,17 @@ namespace ScaryCastle
             this.inventory = inventory;
             this.amounts = new TextSprite[GameSettings.MaxInventoryCapacity];
             this.icons = new ImageSprite[GameSettings.MaxInventoryCapacity];
+            this.shadows = new ImageSprite[GameSettings.MaxInventoryCapacity];
             this.slots = new ImageSprite[GameSettings.MaxInventoryCapacity];
+
+            // Bottom gradient
+            bottomGradient = new ImageSprite(Game, Atlases.UI.BottomGradient)
+            {
+                Opacity = .6f,
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
+                Scale = new Vector2(1, 1.2f)
+            };
 
             for (var i = 0; i < slots.Length; i++)
             {
@@ -46,6 +58,15 @@ namespace ScaryCastle
                     PivotOrigin = RectanglePoint.Center,
                     Scale = ScaleInfo.UIElement.Medium,
                     Y = slots[i].BoundingBox.Center.Y
+                };
+
+                shadows[i] = new(Game)
+                {
+                    Color = Color.Black,
+                    Opacity = ColorPalette.ShadowOpacity,
+                    PivotOrigin = RectanglePoint.Center,
+                    Scale = ScaleInfo.UIElement.Medium,
+                    Y = slots[i].BoundingBox.Center.Y + 1
                 };
 
                 // Amount text
@@ -90,8 +111,14 @@ namespace ScaryCastle
                         Sound.Play(SoundNames.UISelectC);
                         MouseCursor.Item = grabbedItem;
                         MouseCursor.AnimateClick();
+                        IsVisible = false;
                         return true;
                     }
+                }
+                else
+                {
+                    MouseCursor.Shake();
+                    Sound.Play(SoundNames.Error);
                 }
             }
 
@@ -127,13 +154,17 @@ namespace ScaryCastle
             for (int i = 0; i < slotCount; i++)
             {
                 slots[i].X = startingX + (i * (slotWidth + spacing));
-                icons[i].Image = null;  
+                icons[i].Image = null;
+                shadows[i].Image = null;
                 amounts[i].Text = null;
 
                 if (i < inventory.Count)
                 {
                     icons[i].X = slots[i].BoundingBox.Center.X;
                     icons[i].Image = inventory[i].Definition.Image;
+
+                    shadows[i].X = icons[i].X - 1;
+                    shadows[i].Image = inventory[i].Definition.Image;
 
                     amounts[i].X = icons[i].X;
                     amounts[i].Text = inventory[i].Definition.IsStackable ? inventory[i].Count.ToString(CultureInfo.InvariantCulture) : null;
@@ -142,8 +173,6 @@ namespace ScaryCastle
 
             var lt = slots[0].BoundingBox.GetPoint(RectanglePoint.LeftTop);
             var rb = slots[inventory.Capacity - 1].BoundingBox.GetPoint(RectanglePoint.RightBottom);
-
-            BoundingBox = new RectangleF(lt.X, lt.Y, rb.X - lt.X, rb.Y - lt.Y);
 
             MouseCursor.Item = MouseCursor.Item;
         }
@@ -158,13 +187,11 @@ namespace ScaryCastle
             if (!IsVisible)
                 return;
 
-            if (MouseCursor.Target != null)
-            {
-                if (BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
-                    return;
-            }
-
             Game.SpriteBatch.Begin(Game.Camera);
+
+            // Gradient
+            bottomGradient.Draw(gameTime);
+
             for (var i = 0; i < inventory.Capacity; i++)
             {
                 slots[i].Draw(gameTime);
@@ -175,6 +202,7 @@ namespace ScaryCastle
                        continue;
                 }
 
+                shadows[i].Draw(gameTime);
                 icons[i].Draw(gameTime);
                 amounts[i].Draw(gameTime);
             }
@@ -218,9 +246,6 @@ namespace ScaryCastle
         }
 
         #endregion
-
-        // BoundingBox
-        public RectangleF BoundingBox { get; private set; }
 
         // GetItemAt
         public Item? GetItemAt(Vector2 position)
