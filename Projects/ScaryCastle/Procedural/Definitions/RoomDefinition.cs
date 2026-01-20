@@ -16,6 +16,8 @@ namespace ScaryCastle
         private static readonly List<RoomDefinition> dataList = [];
         private readonly List<Placeholder> placeholders = [];
 
+        #region Constructor
+
         // Constructor
         private RoomDefinition(JsonElement element)
             : base(element)
@@ -73,6 +75,8 @@ namespace ScaryCastle
             data.Add(Name, this);
             dataList.Add(this);
         }
+
+        #endregion
 
         #region Static members
 

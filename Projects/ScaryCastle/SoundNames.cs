@@ -5,9 +5,8 @@
     /// </summary>
     internal static class SoundNames
     {
-        internal const string EnergyBolt = nameof(EnergyBolt);
+        internal const string CardFlap = nameof(CardFlap);
         internal const string Error = nameof(Error);
-        internal const string ExitAlarm = nameof(ExitAlarm);
         internal const string FootstepA = nameof(FootstepA);
         internal const string FootstepWater = nameof(FootstepWater);
         internal const string FuseHissing = nameof(FuseHissing);

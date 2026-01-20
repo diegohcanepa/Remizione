@@ -15,10 +15,15 @@ namespace ScaryCastle
 
         private readonly TextSprite[] amounts;
         private readonly ImageSprite bottomGradient;
+        private readonly TextSprite deckAmountText;
+        private readonly ImageSprite deckIcon;
+        private readonly Vector2 deckIconOriginalScale = Vector2.One;
+        private readonly Vector2 deckIconSelectedScale = Vector2.One * 1.1f;
         private readonly ImageSprite[] icons;
         private readonly TextSprite itemDescription;
         private readonly TextSprite itemName;
-        private int lastSeenInventoryVersion;
+        private int lastSeenDeckVersion = -1;
+        private int lastSeenInventoryVersion = -1;
         private readonly GameSession session;
         private readonly ImageSprite[] shadows;
         private readonly ImageSprite[] slots;
@@ -45,6 +50,24 @@ namespace ScaryCastle
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
             };
 
+            // Deck icon
+            this.deckIcon = new(Game, Atlases.UI.Deck)
+            {
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, 7, -9),
+            };
+
+            // Deck amount
+            this.deckAmountText = new TextSprite(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Highlight,
+                PivotOrigin = RectanglePoint.Top,
+                Position = deckIcon.BoundingBox.GetPoint(RectanglePoint.Bottom),
+                Scale = ScaleInfo.Text.Large,
+                Spacing = -6
+            };
+
+            // Slots
             for (var i = 0; i < slots.Length; i++)
             {
                 slots[i] = new(Game, Atlases.UI.InventorySlot)
@@ -98,8 +121,6 @@ namespace ScaryCastle
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -5),
                 Scale = ScaleInfo.Text.Large
             };
-
-            Refresh();
         }
 
         #endregion
@@ -185,6 +206,13 @@ namespace ScaryCastle
             MouseCursor.Item = MouseCursor.Item;
         }
 
+        // RefreshDeck
+        private void RefreshDeck()
+        {
+            lastSeenDeckVersion = session.Deck.Count;
+            deckAmountText.Text = $"{session.Deck.Count}/{session.Deck.Capacity}";
+        }
+
         #endregion
 
         #region Protected members
@@ -199,6 +227,9 @@ namespace ScaryCastle
 
             // Gradient
             bottomGradient.Draw(gameTime);
+
+            deckIcon.Draw(gameTime);
+            deckAmountText.Draw(gameTime);
 
             for (var i = 0; i < session.Inventory.Capacity; i++)
             {
@@ -233,12 +264,20 @@ namespace ScaryCastle
                 Refresh();
             }
 
+            if (lastSeenDeckVersion != session.Deck.ContentVersion)
+            {
+                lastSeenDeckVersion = session.Deck.ContentVersion;
+                RefreshDeck();
+            }
+
+            deckIcon.Update(gameTime);
+
             for (var i = 0; i < session.Inventory.Count; i++)
             {
                 icons[i].Scale = ScaleInfo.UIElement.Medium;
             }
 
-            if (MouseCursor.Item == null && GetSelectedItem() is Item item)
+            if (GetSelectedItem() is Item item)
             {
                 itemName.Text = item.Definition.LocalizedDisplayName;
                 itemName.X = slots[item.Index].X;
@@ -251,6 +290,21 @@ namespace ScaryCastle
             {
                 itemName.Text = null;
                 itemDescription.Text = null;
+            }
+
+            var cursorOverDeckIcon = deckIcon.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);   
+
+            if (cursorOverDeckIcon)
+            {
+                if (deckIcon.Scale != deckIconSelectedScale)
+                {
+                    Sound.Play(SoundNames.CardFlap);
+                    deckIcon.Scale = deckIconSelectedScale;
+                }
+            }
+            else if (deckIcon.Scale == deckIconSelectedScale)
+            {
+                deckIcon.Scale = deckIconOriginalScale;
             }
         }
 

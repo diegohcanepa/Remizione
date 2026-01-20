@@ -9,5 +9,17 @@ namespace ScaryCastle
     /// </summary>
     public sealed class Card
     {
+        // Constructor
+        public Card(Deck deck, CardDefinition cardDefinition)
+        {
+            this.Deck = deck;
+            this.CardDefinition = cardDefinition;
+        }
+
+        // Deck
+        public Deck Deck { get; }
+
+        // Definition
+        public CardDefinition CardDefinition { get; }
     }
 }
