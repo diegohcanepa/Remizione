@@ -98,6 +98,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(BreakableProp));
             AotTypeRegistry.Register(typeof(CloseUpRoom));
             AotTypeRegistry.Register(typeof(CreditsRoom));
+            AotTypeRegistry.Register(typeof(Dice));
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(HellGoat));
             AotTypeRegistry.Register(typeof(Hub));
