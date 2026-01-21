@@ -43,26 +43,26 @@ namespace Adberration
                 if (session.State is GameSessionState.Uninitialized or GameSessionState.LoadingScripts)
                     throw new InvalidOperationException("Cannot create anonymous entities until session is fully initialized.");
 
-                InstanceKind = InstanceKind.Anonymous;
+                InstanceKind = EntityInstanceKind.Anonymous;
                 name = string.Empty;
             }
 
             // Clone
             else if (name.Contains(ScriptSyntax.CloneSuffix))
             {
-                InstanceKind = Session.State == GameSessionState.LoadingScripts ? InstanceKind.ScriptClone : InstanceKind.RuntimeClone;
+                InstanceKind = Session.State == GameSessionState.LoadingScripts ? EntityInstanceKind.ScriptClone : EntityInstanceKind.RuntimeClone;
             }
 
-            // Static
+            // Declared
             else
             {
-                InstanceKind = InstanceKind.Declared;
+                InstanceKind = EntityInstanceKind.Declared;
             }
 
             this.Name = name;
-            this.DeclaredName = InstanceKind == InstanceKind.Anonymous ? GetType().Name : ScriptSyntax.GetDeclaredName(Name);
+            this.DeclaredName = InstanceKind == EntityInstanceKind.Anonymous ? GetType().Name : ScriptSyntax.GetDeclaredName(Name);
 
-            if (InstanceKind != InstanceKind.Anonymous)
+            if (InstanceKind != EntityInstanceKind.Anonymous)
                 session.RegisterEntity(this);
 
             Sprite = new EntitySprite(Game, this);
@@ -73,7 +73,7 @@ namespace Adberration
                 DefaultImageName = DeclaredName.Substring(index + 1);
 
             // Cache load script
-            if (InstanceKind != InstanceKind.Anonymous)
+            if (InstanceKind != EntityInstanceKind.Anonymous)
             {
                 // Load script
                 loadScript = session.ScriptLibrary.FindScript(ScriptType.Load, Name);
@@ -299,7 +299,7 @@ namespace Adberration
         // RunScript
         protected void RunScript(Script script)
         {
-            if (InstanceKind == InstanceKind.Anonymous)
+            if (InstanceKind == EntityInstanceKind.Anonymous)
                 return;
 
             if (script.HasCapability(ScriptCapability.SetTargetEntity))
@@ -496,7 +496,7 @@ namespace Adberration
         public string ImagePath => Sprite.ImagePath;
 
         // InstanceKind
-        public InstanceKind InstanceKind { get; }
+        public EntityInstanceKind InstanceKind { get; }
 
         // Invalidate
         public void Invalidate()
@@ -623,7 +623,7 @@ namespace Adberration
             get;
             internal set
             {
-                if (InstanceKind == InstanceKind.Anonymous || Session.State != GameSessionState.LoadingScripts)
+                if (InstanceKind == EntityInstanceKind.Anonymous || Session.State != GameSessionState.LoadingScripts)
                     throw new InvalidOperationException();
 
                 field = value;

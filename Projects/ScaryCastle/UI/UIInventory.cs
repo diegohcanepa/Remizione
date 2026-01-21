@@ -37,10 +37,10 @@ namespace ScaryCastle
             : base(session.Game)
         {
             this.session = session;
-            this.amounts = new TextSprite[Inventory.MaxCapacity];
-            this.icons = new ImageSprite[Inventory.MaxCapacity];
-            this.shadows = new ImageSprite[Inventory.MaxCapacity];
-            this.slots = new ImageSprite[Inventory.MaxCapacity];
+            this.amounts = new TextSprite[Inventory.MaximumCapacity];
+            this.icons = new ImageSprite[Inventory.MaximumCapacity];
+            this.shadows = new ImageSprite[Inventory.MaximumCapacity];
+            this.slots = new ImageSprite[Inventory.MaximumCapacity];
 
             // Bottom gradient
             bottomGradient = new ImageSprite(Game, Atlases.UI.GetImage("InventoryContainer"))
@@ -154,19 +154,12 @@ namespace ScaryCastle
                 }
             }
 
-            if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed() && IsVisible)
+            if (MouseCursor.Item == null && InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
-                if (MouseCursor.Item != null)
+                if (session.Player != null && GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item itemToDrop)
                 {
-                    MouseCursor.Item = null;
-                    Sound.Play(SoundNames.UISelectD);
+                    session.Inventory.DropItem(itemToDrop, session.Player.Position);
                 }
-                else
-                {
-                    IsVisible = false;
-                }
-
-                return true;
             }
 
             return false;
@@ -259,6 +252,7 @@ namespace ScaryCastle
             {
                 if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
                 {
+                    session.Player?.Stand();    
                     IsVisible = true;
                     MouseCursor.Item = null;
                     return;
@@ -266,12 +260,15 @@ namespace ScaryCastle
             }
             else
             {
-                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y < 90)
+                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y < 105)
                 {
                     IsVisible = false;
                     return;
                 }
             }
+
+            if (!IsVisible)
+                return;
 
             if (lastSeenInventoryVersion != session.Inventory.ContentVersion)
             {
@@ -360,7 +357,7 @@ namespace ScaryCastle
         public bool IsVisible
         {
             get;
-            set
+            private set
             {
                 if (field != value)
                 {

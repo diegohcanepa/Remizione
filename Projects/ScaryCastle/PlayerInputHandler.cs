@@ -95,11 +95,7 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
                 return false;
 
-            if (MouseCursor.Item == null)
-            {
-                Actor.Session.ShowInventory();
-            }
-            else
+            if (MouseCursor.Item != null)
             {
                 Sound.Play(SoundNames.UISelectD);
                 MouseCursor.Item = null;

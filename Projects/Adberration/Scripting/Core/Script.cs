@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Engendro;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,16 +61,6 @@ namespace Adberration.Scripting
 
         #region Private members
 
-        // AssertCompoundOutcome
-        private void AssertCompoundOutcome(string leftContext, string rightContext)
-        {
-            if (Session.FindEntity<Thing>(leftContext) == null)
-                throw new ScriptException(this, sourceLines[0], $"There is no thing named '{leftContext}'.");
-
-            if (!string.IsNullOrWhiteSpace(rightContext) && rightContext != ScriptSyntax.AnyEntityOp && Session.FindEntity<Thing>(rightContext) == null)
-                throw new ScriptException(this, sourceLines[0], $"There is no thing named '{rightContext}'.");
-        }
-
         // CheckEntity
         private void CheckEntity()
         {
@@ -95,25 +86,8 @@ namespace Adberration.Scripting
                 case ScriptType.Outcome:
                     if (Session.FindEntity<Thing>(EntityName) == null)
                         throw new ScriptException(this, sourceLines[0], $"There is no thing named '{EntityName}'.");
-
-                    // Try Compound Outcome
-                    var index = Name.IndexOf(ScriptSyntax.ScriptCompoundSeparator, StringComparison.Ordinal);
-                    if (index != -1)
-                    {
-                        var leftContext = Name.Substring(0, index);
-                        var rightContext = Name.Substring(index + 1);
-                        AssertCompoundOutcome(leftContext, rightContext);
-                    }
-
                     break;
             }
-        }
-
-        // ComposeEntityName
-        private static string ComposeEntityName(string value)
-        {
-            var index = value.IndexOf(ScriptSyntax.ScriptCompoundSeparator, StringComparison.Ordinal);
-            return index != -1 ? value.Substring(0, index) : value;
         }
 
         // JumpToNextSelectionStatementBlock
@@ -185,10 +159,7 @@ namespace Adberration.Scripting
             // Assign Entity Name
             if (HasCapability(ScriptCapability.EntityContext))
             {
-                if (ScriptType != ScriptType.Outcome && tokens[1].Contains(ScriptSyntax.ScriptCompoundSeparator))
-                    ThrowScriptSyntaxError(this, signature, "Compound operator is only valid for outcomes.");
-
-                EntityName = ComposeEntityName(tokens[1]);
+                EntityName = tokens[1];
             }
 
             name = signature.Substring(signature.IndexOf(headerSeparator, StringComparison.Ordinal) + 1);
@@ -508,6 +479,8 @@ namespace Adberration.Scripting
         // SetTargetEntity
         internal void SetTargetEntity(string entityName)
         {
+            CodeContract.NotEmpty(entityName, nameof(entityName));
+
             if (!HasCapability(ScriptCapability.SetTargetEntity))
                 throw new InvalidOperationException();
 
@@ -632,19 +605,6 @@ namespace Adberration.Scripting
 
         // IsPaused
         public bool IsPaused { get; internal set; }
-
-        // LeftName
-        public string LeftName
-        {
-            get
-            {
-                var index = Name.IndexOf(ScriptSyntax.ScriptCompoundSeparator, StringComparison.Ordinal);
-                if (index == -1)
-                    return Name;
-                else
-                    return Name.Substring(0, index);
-            }
-        }
 
         // Name
         public string Name { get; }

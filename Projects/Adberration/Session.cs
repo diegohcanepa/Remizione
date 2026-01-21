@@ -410,7 +410,7 @@ namespace Adberration
 
             for (var i = 0; i < things.Count; i++)
             {
-                if (things[i].Persistent && things[i].InstanceKind != InstanceKind.Anonymous)
+                if (things[i].Persistent && things[i].InstanceKind != EntityInstanceKind.Anonymous)
                     list.Add(things[i].Name);
             }
 
@@ -904,7 +904,7 @@ namespace Adberration
 
             OnOutcome(OutcomeTarget);
 
-            if (outcomeScript.HasCapability(ScriptCapability.SetTargetEntity))
+            if (outcomeScript.HasCapability(ScriptCapability.SetTargetEntity) && !string.IsNullOrWhiteSpace(OutcomeTarget.Name))
                 outcomeScript.SetTargetEntity(OutcomeTarget.Name);
 
             AwaitScript(outcomeScript);
@@ -927,7 +927,7 @@ namespace Adberration
 
             for (var i = 0; i < entityList.Count; i++)
             {
-                if (entityList[i].InstanceKind == InstanceKind.RuntimeClone)
+                if (entityList[i].InstanceKind == EntityInstanceKind.RuntimeClone)
                     runtimeEntities.Add(entityList[i]);
             }
 

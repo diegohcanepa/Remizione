@@ -3,11 +3,11 @@
     // Direction
     public enum Direction { Left, Up, Right, Down }
 
+    // EntityInstanceKind
+    public enum EntityInstanceKind { Declared, ScriptClone, RuntimeClone, Anonymous }
+
     // FacingDirection
     public enum FacingDirection { Right, Left }
-
-    // InstanceKind
-    public enum InstanceKind { Declared, ScriptClone, RuntimeClone, Anonymous }
 
     // LifetimeScope
     public enum LifetimeScope { Session, Room }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -55,11 +56,11 @@ namespace ScaryCastle
             {
                 if (value != field)
                 {
-                    field = int.Clamp(value, 3, MaxCapacity);
+                    field = int.Clamp(value, 3, MaximumCapacity);
                     Invalidate();
                 }
             }
-        } = 7;
+        } = 9;
 
         // Clear
         public void Clear()
@@ -79,6 +80,20 @@ namespace ScaryCastle
 
         // Count
         public int Count => items.Count;
+
+        // DropItem
+        public void DropItem(Item item, Vector2 position)
+        {
+            if (Session.Room != null && Remove(item))
+            {
+                if (Session.ObjectPools.Sacks.Get() is Sack sack)
+                {
+                    sack.Position = position;
+                    sack.Item = item;
+                    Session.Room.Children.Add(sack);
+                }
+            }
+        }
 
         // Find
         public Item? Find(string name)
@@ -152,8 +167,8 @@ namespace ScaryCastle
             unchecked { ContentVersion++; }
         }
 
-        // MaxCapacity
-        public const int MaxCapacity = 10;
+        // MaximumCapacity
+        public const int MaximumCapacity = 10;
 
         // Remove
         public bool Remove(string name)

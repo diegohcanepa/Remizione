@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Procedural;
 using System;
@@ -358,6 +359,24 @@ namespace ScaryCastle
 
         #region Protected members
 
+        // OnChildAdded
+        protected override void OnChildAdded(Entity child)
+        {
+            base.OnChildAdded(child);
+            
+            if (child is Sack)
+                SackCount++;
+        }
+
+        // OnChildRemoved
+        protected override void OnChildRemoved(Entity child)
+        {
+            base.OnChildAdded(child);
+            
+            if (child is Sack)
+                SackCount--;
+        }
+
         // AddPlaceholder
         protected void AddPlaceholder(Placeholder placeholder)
         {
@@ -420,6 +439,9 @@ namespace ScaryCastle
 
         // RoomGraph
         public RoomGraph RoomGraph { get; }
+
+        // SackCount
+        public int SackCount { get; private set; }
 
         // ToString
         public override string ToString()

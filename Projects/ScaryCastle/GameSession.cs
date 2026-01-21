@@ -109,6 +109,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(Prop));
             AotTypeRegistry.Register(typeof(RideCar));
             AotTypeRegistry.Register(typeof(RideDoor));
+            AotTypeRegistry.Register(typeof(Sack));
             AotTypeRegistry.Register(typeof(SaintPeregrine));
             AotTypeRegistry.Register(typeof(SpearTrap));
             AotTypeRegistry.Register(typeof(Tombstone));
@@ -298,7 +299,7 @@ namespace ScaryCastle
                 if (entity is not GameThing thing)
                     continue;
 
-                if (thing.InstanceKind == InstanceKind.Declared)
+                if (thing.InstanceKind == EntityInstanceKind.Declared)
                 {
                     declaredThings.Add(thing);
                     declaredThingsDict.Add(thing.DeclaredName, thing);
@@ -569,17 +570,6 @@ namespace ScaryCastle
         {
             echoScene.Text = text;
             Game.SceneManager.Push(echoScene);
-        }
-
-        // ShowInventory
-        [ScriptMethod]
-        public void ShowInventory()
-        {
-            if (Player == null || Inventory.Count == 0)
-                return;
-
-            Player.Stand();
-            HUD.Inventory.IsVisible = true;
         }
     }
 }

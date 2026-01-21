@@ -38,7 +38,7 @@ namespace Adberration
             Areas = new ReadOnlyCollection<Area>(areas);
 
             // Cache scripts
-            if (InstanceKind != InstanceKind.Anonymous)
+            if (InstanceKind != EntityInstanceKind.Anonymous)
             {
                 enteringScript = session.ScriptLibrary.FindScript(ScriptType.Entering, Name);
                 enteringScript ??= session.ScriptLibrary.FindScript(ScriptType.Entering, DeclaredName);

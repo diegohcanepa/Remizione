@@ -249,17 +249,6 @@ namespace Adberration.Scripting
         // AllScripts
         public IEnumerable<Script> AllScripts => scripts.Values;
 
-        // FindCompoundOutcome
-        public Script? FindCompoundOutcome(string name1, string name2)
-        {
-            CodeContract.NotEmpty(name1, nameof(name1));
-            CodeContract.NotEmpty(name2, nameof(name2));
-
-            var scriptName = name1 + ScriptSyntax.ScriptCompoundSeparator + name2;
-
-            return FindScript(ScriptType.Outcome, scriptName);
-        }
-
         // FindOutcome
         public Script? FindOutcome(string name)
         {

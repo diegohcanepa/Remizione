@@ -12,11 +12,15 @@ namespace ScaryCastle
     /// </summary>
     public class Prop : GameThing
     {
+        #region Private fields
+
         private readonly Dictionary<PropState, Func<bool>?> handlers = [];
         private PropState propState;
         private readonly Vector2Tween bounceScaleTween = new();
         private readonly ImageSprite shadow;
         private readonly FloatTween xTween = new();
+        
+        #endregion
 
         #region Constructor
 
