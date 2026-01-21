@@ -960,9 +960,9 @@ namespace Adberration
 
 
         // CreateRuntimeThingClone
-        public Thing CreateRuntimeThingClone(string staticName, string instanceName)
+        public Thing CreateRuntimeThingClone(string declaredName, string instanceName)
         {
-            return ScriptEnvironment.CreateRuntimeThingClone(staticName, instanceName, false);
+            return ScriptEnvironment.CreateRuntimeThingClone(declaredName, instanceName, false);
         }
 
         // CurrentMusicName

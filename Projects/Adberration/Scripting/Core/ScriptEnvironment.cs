@@ -37,7 +37,7 @@ namespace Adberration.Scripting
         #region Private members
 
         // CreateRuntimeThingCloneCore
-        private Thing? CreateRuntimeThingCloneCore(string staticName, string instanceName)
+        private Thing? CreateRuntimeThingCloneCore(string declaredName, string instanceName)
         {
             CodeContract.NotDisposed(nameof(Session), session.IsDisposed);
 
@@ -47,11 +47,11 @@ namespace Adberration.Scripting
             IsCreatingClone = true;
 
             // Get declaration script from library
-            var declarationScript = session.ScriptLibrary.FindScript(ScriptType.Thing, staticName) ?? throw new InvalidOperationException($"'{staticName}' cannot be cloned. Use the Clonable keyword.");
+            var declarationScript = session.ScriptLibrary.FindScript(ScriptType.Thing, declaredName) ?? throw new InvalidOperationException($"'{declaredName}' cannot be cloned. Use the Clonable keyword.");
 
             // Check if thing is cloneable
             if (!declarationScript.Cloneable)
-                throw new InvalidOperationException($"'{staticName}' is not cloneable.");
+                throw new InvalidOperationException($"'{declaredName}' is not cloneable.");
 
             if (declarationScript.Persistent && ScriptSyntax.IsRuntimeName(instanceName))
                 throw new InvalidOperationException($"Cannot create persistent entities at runtime.");
@@ -186,7 +186,7 @@ namespace Adberration.Scripting
         }
 
         // CreateRuntimeThingClone
-        internal Thing CreateRuntimeThingClone(string staticName, string instanceName, bool persistent)
+        internal Thing CreateRuntimeThingClone(string declaredName, string instanceName, bool persistent)
         {
             if (session.State == GameSessionState.Uninitialized)
                 throw new InvalidOperationException("Game session not initialized.");
@@ -195,9 +195,9 @@ namespace Adberration.Scripting
                 throw new InvalidOperationException("Invalid session state.");
 
             if (string.IsNullOrWhiteSpace(instanceName))
-                instanceName = CreateRuntimeCloneName(staticName);
+                instanceName = CreateRuntimeCloneName(declaredName);
 
-            var result = CreateRuntimeThingCloneCore(staticName, instanceName) ?? throw new InvalidOperationException("Unable to clone entity.");
+            var result = CreateRuntimeThingCloneCore(declaredName, instanceName) ?? throw new InvalidOperationException("Unable to clone entity.");
 
             if (persistent)
                 result.Persistent = persistent;

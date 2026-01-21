@@ -218,9 +218,9 @@ namespace Adberration.Scripting
         }
 
         // FindDeclaration
-        internal Script? FindDeclaration(string entityStaticName)
+        internal Script? FindDeclaration(string name)
         {
-            return declarations.TryGetValue(entityStaticName, out var result) ? result : null;
+            return declarations.TryGetValue(name, out var result) ? result : null;
         }
 
         // FindScript
@@ -263,10 +263,10 @@ namespace Adberration.Scripting
         }
 
         // IsDeclared
-        public bool IsDeclared(string entityStaticName)
+        public bool IsDeclared(string entityName)
         {
-            CodeContract.NotEmpty(entityStaticName, nameof(entityStaticName));
-            return declarations.ContainsKey(entityStaticName);
+            CodeContract.NotEmpty(entityName, nameof(entityName));
+            return declarations.ContainsKey(entityName);
         }
 
         // Path

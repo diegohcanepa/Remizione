@@ -3,7 +3,7 @@
 namespace ScaryCastle.Scripting
 {
     // PlaceRuntimePropCommand
-    // Syntax: {StaticName}
+    // Syntax: {DeclaredName}
     internal sealed class PlaceRuntimePropCommand : NonAwaitableCommand
     {
         // Constructor

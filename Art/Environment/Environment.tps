@@ -281,6 +281,26 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Dice-assets/Dice01.png</key>
+            <key type="filename">Dice-assets/Dice02.png</key>
+            <key type="filename">Dice-assets/Dice03.png</key>
+            <key type="filename">Dice-assets/Dice04.png</key>
+            <key type="filename">Dice-assets/Dice05.png</key>
+            <key type="filename">Dice-assets/Dice06.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,5,11,10</rect>
+                <key>scale9Paddings</key>
+                <rect>5,5,11,10</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">DustParticles-assets/DustParticle1.png</key>
             <key type="filename">FireflyParticles-assets/FireflyParticle1.png</key>
             <key type="filename">Guts-assets/Gut2.png</key>
@@ -1544,6 +1564,7 @@
                     <filename>NumberSix-assets</filename>
                     <filename>VendingMachine-assets</filename>
                     <filename>Torch-assets</filename>
+                    <filename>Dice-assets</filename>
                 </array>
             </struct>
         </map>

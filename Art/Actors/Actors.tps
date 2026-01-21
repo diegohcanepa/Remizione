@@ -251,6 +251,8 @@
             <key type="filename">Edmund-assets/Move03.png</key>
             <key type="filename">Edmund-assets/Move04.png</key>
             <key type="filename">Edmund-assets/PickUp01.png</key>
+            <key type="filename">Edmund-assets/PickUp02.png</key>
+            <key type="filename">Edmund-assets/PickUp03.png</key>
             <key type="filename">Edmund-assets/Pray01.png</key>
             <key type="filename">Edmund-assets/Pray02.png</key>
             <key type="filename">Edmund-assets/Pray03.png</key>

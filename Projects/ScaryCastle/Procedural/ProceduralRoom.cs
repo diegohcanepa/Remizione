@@ -107,10 +107,10 @@ namespace ScaryCastle
         }
 
         // CreateRuntimeThingCloneCore
-        private GameThing CreateRuntimeThingCloneCore(string staticName)
+        private GameThing CreateRuntimeThingCloneCore(string declaredName)
         {
-            if (Session.CreateRuntimeThingClone(staticName, $"{staticName}*{RoomGraph.Index}_{Name}_{instanceCount}") is not GameThing result)
-                throw new InvalidOperationException($"Failed to create runtime clone from'{staticName}'.");
+            if (Session.CreateRuntimeThingClone(declaredName, $"{declaredName}*{RoomGraph.Index}_{Name}_{instanceCount}") is not GameThing result)
+                throw new InvalidOperationException($"Failed to create runtime clone from'{declaredName}'.");
 
             instanceCount++;
 
@@ -423,9 +423,9 @@ namespace ScaryCastle
         #endregion
 
         // CreateRuntimeClone
-        public GameThing? CreateRuntimeClone(string staticName)
+        public GameThing? CreateRuntimeClone(string declaredName)
         {
-            return CreateRuntimeThingCloneCore(staticName);
+            return CreateRuntimeThingCloneCore(declaredName);
         }
 
         // Definition
