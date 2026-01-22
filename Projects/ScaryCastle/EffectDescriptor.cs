@@ -20,8 +20,10 @@ namespace ScaryCastle
             Chance = element.GetFloat("chance", 1);
             DamageType = element.GetEnum("damageType", DamageType.None);
             EffectType = element.GetEnum("effectType", EffectType.None);
+            Factor = element.GetFloat("factor", 1);
             ImpactWord = element.GetEnum("impactWord", ImpactWordName.None);
-            Knockback = element.GetVector2("knockback");
+            Knockback = element.GetVector2("knockback", Vector2.Zero);
+            IsPassive = element.GetBool("isPassive", false);
             Sound = element.GetObject("sound", Sound.Get);
             Target = element.GetEnum("target", EffectTarget.Target);
 
@@ -88,8 +90,14 @@ namespace ScaryCastle
         // EffectType
         public EffectType EffectType { get; }
 
+        // Factor
+        public float Factor { get; }
+
         // ImpactWord
         public ImpactWordName ImpactWord { get; }
+
+        // IsPassive
+        public bool IsPassive { get; }
 
         // Knockback
         public Vector2 Knockback { get; }

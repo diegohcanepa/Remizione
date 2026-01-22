@@ -50,12 +50,24 @@ namespace ScaryCastle
             }
 
             EffectDescriptors = effectDescriptors.AsReadOnly();
+
+            // Calculate LuckFactor
+            for (var i = 0; i < effectDescriptors.Count; i++)
+            {
+                if (effectDescriptors[i].EffectType == EffectType.Luck)
+                    LuckFactor += effectDescriptors[i].Factor;
+            }
+
+            LuckFactor = Math.Max(0, LuckFactor);
         }
 
         #endregion
 
         // EffectDescriptors
         public ReadOnlyCollection<EffectDescriptor> EffectDescriptors { get; }
+
+        // LuckFactor
+        public float LuckFactor { get; } = 1;
 
         // Name
         public string Name { get; }

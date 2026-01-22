@@ -53,9 +53,6 @@ namespace ScaryCastle
             // IsStackable
             IsStackable = element.GetBool("isStackable", false);
 
-            // LuckBonus
-            Ratio luckBonus = element.GetFloat("luckBonus", 0);
-
             // PickupSound
             PickupSound = element.GetObject("pickupSound", Sound.Get);
 
@@ -85,6 +82,17 @@ namespace ScaryCastle
                 4 or 5 => 15, // Items poderosos o de alta calidad
                 _ => 5
             };
+
+            IsPassive = EffectDescriptors.Count > 0;
+
+            for (var i = 0; i < EffectDescriptors.Count; i++)
+            {
+                if (!EffectDescriptors[i].IsPassive)
+                {
+                    IsPassive = false;
+                    break;
+                }
+            }
 
             data.Add(Name, this);
             dataList.Add(this);
@@ -165,6 +173,9 @@ namespace ScaryCastle
 
         // Image
         public AtlasImage? Image { get; }
+
+        // IsPassive
+        public bool IsPassive { get; }
 
         // IsStackable
         public bool IsStackable { get; }

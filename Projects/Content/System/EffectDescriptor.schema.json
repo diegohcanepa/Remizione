@@ -7,7 +7,7 @@
     "effectType": {
       "type": "string",
       "description": "El tipo de acción a ejecutar.",
-      "enum": [ "None", "Damage", "Death", "Heal", "AddCondition", "RemoveCondition" ] 
+      "enum": [ "None", "Damage", "Death", "Heal", "Luck", "AddCondition", "RemoveCondition" ] 
     },
     "amount": {
       "type": "string",
@@ -33,6 +33,13 @@
       "enum": [ "None", "Physical", "Acid", "Explosive", "Fire", "Ice", "Lightning", "Poison" ],
       "default": "None"
     },
+    "factor": {
+      "type": "number",
+      "format": "float",
+      "default": 1.0,
+      "minimum": 0,
+      "description": "Multiplier."
+    },      
     "impactWord": {
       "type": "string",
       "description": "Nombre de la Onomatopella a mostrar.",
@@ -43,6 +50,10 @@
       "type": "string",
       "description": "Fuerza del knockback."
     },
+    "isPassive": {
+      "type": "boolean",
+      "description": "Indica si el efecto es pasivo."
+    },    
     "target": {
       "type": "string",
       "description": "A quién se aplica el efecto.",

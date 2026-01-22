@@ -22,10 +22,10 @@ namespace ScaryCastle
         private RoomDefinition(JsonElement element)
             : base(element)
         {
-            DoorDown = element.GetVector2("doorDown");
-            DoorLeft = element.GetVector2("doorLeft");
-            DoorRight = element.GetVector2("doorRight");
-            DoorUp = element.GetVector2("doorUp");
+            DoorDown = element.GetVector2("doorDown", Vector2.Zero);
+            DoorLeft = element.GetVector2("doorLeft", Vector2.Zero);
+            DoorRight = element.GetVector2("doorRight", Vector2.Zero);
+            DoorUp = element.GetVector2("doorUp", Vector2.Zero);
             LockType = element.GetEnum<LockType>("lockType", LockType.None);
             MaxEnemies = element.GetInt32("maxEnemies", -1);
             MaxProps = element.GetInt32("maxProps", -1);

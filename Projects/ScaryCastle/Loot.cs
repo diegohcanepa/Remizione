@@ -124,20 +124,16 @@ namespace ScaryCastle
             // 1. CHANCE BASE (Depende de la entidad y la suerte del pasivo)
             Ratio coinChance = thingDefinition.Difficulty switch
             {
-                Difficulty.Easy => 0.20f,
-                Difficulty.Normal => 0.40f,
-                Difficulty.Hard => 0.60f,
+                Difficulty.Easy => 0.2f,
+                Difficulty.Normal => 0.4f,
+                Difficulty.Hard => 0.6f,
                 _ => 0.15f
             };
 
-            // TODO: Reimplement
-            /*
-            if (session.Inventory.PassiveItem is Item gadget)
-                coinChance += gadget.MetaItem.Effect.LuckBonus;
-            */
+            coinChance += session.Inventory.GetLuckFactor();
 
             if (!coinChance.Roll())
-                return 5;
+                return 0;
 
             // 2. CANTIDAD BASE (Basada en la dificultad intrínseca del enemigo)
             int amount = thingDefinition.Difficulty switch

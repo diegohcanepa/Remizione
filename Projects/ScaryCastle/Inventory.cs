@@ -133,6 +133,19 @@ namespace ScaryCastle
             return [.. result];
         }
 
+        // GetLuckFactor
+        public float GetLuckFactor()
+        {
+            float result = 0;
+
+            for (var i = 0; i < items.Count; i++)
+            {
+                result += items[i].Definition.LuckFactor;
+            }
+
+            return result;
+        }
+
         // GetSerializationData
         public string GetSerializationData()
         {

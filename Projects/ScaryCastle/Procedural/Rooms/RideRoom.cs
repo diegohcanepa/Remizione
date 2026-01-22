@@ -113,11 +113,7 @@ namespace ScaryCastle
             Ratio dropChance = .2f;
 
             // Sumamos la suerte del jugador si tiene un gadget/pasivo
-            // TODO: Reimplement
-            /*
-            if (Session.Inventory.PassiveItem is Item gadget)
-                dropChance += gadget.MetaItem.Effect.LuckBonus;
-            */
+            dropChance += Session.Inventory.GetLuckFactor();
 
             // Si el roll falla (el número es mayor a la chance), salimos sin spawnear nada
             if (!dropChance.Roll())

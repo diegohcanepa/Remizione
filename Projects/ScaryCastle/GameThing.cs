@@ -233,11 +233,7 @@ namespace ScaryCastle
                 _ => .02f
             };
 
-            // TODO: Re-implement luck
-            /*
-            if (Session.Inventory.PassiveItem is Item item)
-                lootChance += item.Config.Effect.LuckBonus;
-            */
+            lootChance += Session.Inventory.GetLuckFactor();
 
             if (!lootChance.Roll())
                 return;

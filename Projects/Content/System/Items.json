@@ -23,7 +23,14 @@
 		{
 			"name": "Cross",
 			"category": "Luck",
-			"consumptionType": "None"
+			"effects": [
+				{
+					"effectType": "Luck",
+					"factor":0.2,
+					"isPassive": true,
+					"target": "Self"
+				}
+			]
 		},
 		{
 			"name": "Firecracker",

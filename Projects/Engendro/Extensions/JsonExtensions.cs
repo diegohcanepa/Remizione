@@ -12,7 +12,16 @@ namespace Engendro
         extension(JsonElement element)
         {
             // GetBool
-            public bool GetBool(string propertyName, bool defaultValue = false)
+            public bool? GetBool(string propertyName)
+            {
+                if (element.TryGetProperty(propertyName, out JsonElement prop))
+                    return prop.GetBoolean();
+
+                return null;
+            }
+
+            // GetBool
+            public bool GetBool(string propertyName, bool defaultValue)
             {
                 if (element.TryGetProperty(propertyName, out JsonElement prop))
                     return prop.GetBoolean();
@@ -42,7 +51,16 @@ namespace Engendro
             }
 
             // GetFloat
-            public float GetFloat(string propertyName, float defaultValue = 0)
+            public float? GetFloat(string propertyName)
+            {
+                if (element.TryGetProperty(propertyName, out JsonElement prop))
+                    return prop.GetSingle();
+                else
+                    return null;
+            }
+
+            // GetFloat
+            public float GetFloat(string propertyName, float defaultValue)
             {
                 if (element.TryGetProperty(propertyName, out JsonElement prop))
                     return prop.GetSingle();
@@ -51,7 +69,16 @@ namespace Engendro
             }
 
             // GetInt32
-            public int GetInt32(string propertyName, int defaultValue = 0)
+            public int? GetInt32(string propertyName)
+            {
+                if (element.TryGetProperty(propertyName, out JsonElement prop))
+                    return prop.GetInt32();
+                else
+                    return null;
+            }
+
+            // GetInt32
+            public int GetInt32(string propertyName, int defaultValue)
             {
                 if (element.TryGetProperty(propertyName, out JsonElement prop))
                     return prop.GetInt32();
@@ -78,12 +105,21 @@ namespace Engendro
             }
 
             // GetVector2
-            public Vector2 GetVector2(string propertyName)
+            public Vector2? GetVector2(string propertyName)            
+            {
+                if (element.TryGetProperty(propertyName, out JsonElement prop) && prop.GetString() is string value)
+                    return DataConvert.ToVector2(value);
+                else
+                    return null;
+            }
+
+            // GetVector2
+            public Vector2 GetVector2(string propertyName, Vector2 defaultValue)
             {
                 if (element.TryGetProperty(propertyName, out JsonElement prop) && prop.GetString() is string value)
                     return DataConvert.ToVector2(value);
 
-                return Vector2.Zero;
+                return defaultValue;
             }
         }
     }

@@ -30,15 +30,7 @@ namespace ScaryCastle
     public enum DustParticleKind { None, Dust, Ash }
 
     // EffectType
-    public enum EffectType
-    {
-        None,
-        Damage,         // Dañar HP
-        Death,          // Instant kill 
-        Heal,           // Curar HP
-        AddCondition,   // Agregar estado (Veneno, Maldición, Stun)
-        RemoveCondition,// Quitar estado
-    }
+    public enum EffectType { None, Damage, Death, Heal, Luck, AddCondition, RemoveCondition }
 
     // EffectTarget
     public enum EffectTarget
