@@ -264,7 +264,7 @@ namespace ScaryCastle
                 else if (AwaitInput && (InputBindings.SpeechBubble.IsPressed(0) || InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed()) && inputCooldown <= 0)
                 {
                     if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
-                        MouseCursor.AnimateClick();
+                        MouseCursor.PerformClick();
 
                     State = SpeechBubbleState.Idle;
                     text.StopTyping();
@@ -287,7 +287,7 @@ namespace ScaryCastle
                 else if (AwaitInput && (InputBindings.SpeechBubble.IsPressed(0) || InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed()))
                 {
                     if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
-                        MouseCursor.AnimateClick();
+                        MouseCursor.PerformClick();
 
                     Hide();
                 }

@@ -22,7 +22,6 @@ namespace ScaryCastle
         private readonly Vector2 diceIconOriginalScale = Vector2.One;
         private readonly Vector2 diceIconSelectedScale = Vector2.One * 1.1f;
         private readonly ImageSprite[] icons;
-        private readonly TextSprite itemDescription;
         private readonly TextSprite itemName;
         private int lastSeenDiceBagVersion = -1;
         private int lastSeenInventoryVersion = -1;
@@ -107,21 +106,10 @@ namespace ScaryCastle
             // Item name
             this.itemName = new(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Highlight,
+                Color = ColorPalette.Text.Sentence,
                 PivotOrigin = RectanglePoint.Bottom,
                 Y = slots[0].BoundingBox.Top - 3,
                 Scale = ScaleInfo.UISentence
-            };
-
-            // Item description
-            this.itemDescription = new(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Highlight,
-                PivotOrigin = RectanglePoint.Bottom,
-                MaximumLines = 2,
-                MaximumWidth = 140,
-                Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -5),
-                Scale = ScaleInfo.Text.Large
             };
         }
 
@@ -142,9 +130,8 @@ namespace ScaryCastle
                     if (grabbedItem.Definition.Image != null)
                     {
                         session.Player?.Stand();
-                        Sound.Play(SoundNames.Interact);
                         MouseCursor.Item = grabbedItem;
-                        MouseCursor.AnimateClick();
+                        MouseCursor.PerformClick();
                         IsVisible = false;
                         return true;
                     }
@@ -156,11 +143,21 @@ namespace ScaryCastle
                 }
             }
 
+            /*
             if (MouseCursor.Item == null && InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
                 if (session.Player != null && GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item itemToDrop)
                 {
                     session.Inventory.DropItem(itemToDrop, session.Player.Position);
+                }
+            }
+            */
+
+            if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
+            {
+                if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
+                {
+                    session.ShowEcho(item.Definition.LocalizedDescription, item.Definition.Image);
                 }
             }
 
@@ -215,6 +212,9 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            if (!session.IsCurrentScene)
+                return;
+
             if (!IsVisible)
                 return;
 
@@ -240,12 +240,14 @@ namespace ScaryCastle
             }
 
             itemName.Draw(gameTime);
-            //itemDescription.Draw(gameTime);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            if (!session.IsCurrentScene)
+                return;
+
             if (!IsVisible)
             {
                 if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
@@ -293,9 +295,6 @@ namespace ScaryCastle
             {
                 itemName.Text = item.Definition.LocalizedDisplayName;
                 itemName.X = slots[item.Index].BoundingBox.Center.X;
-
-                itemDescription.Text = item.Definition.LocalizedDescription;
-
                 icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;
             }
             else if (cursorOverDeckIcon)
@@ -310,7 +309,6 @@ namespace ScaryCastle
             else
             {
                 itemName.Text = null;
-                itemDescription.Text = null;
             }
 
             if (cursorOverDeckIcon)
@@ -349,6 +347,9 @@ namespace ScaryCastle
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
+            if (!session.IsCurrentScene)
+                return HandleInputResult.Unhandled;
+
             // Mouse input
             if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
             {
@@ -369,7 +370,6 @@ namespace ScaryCastle
                 {
                     field = value;
                     itemName.Text = null;
-                    itemDescription.Text = null;
                 }
             }
         }

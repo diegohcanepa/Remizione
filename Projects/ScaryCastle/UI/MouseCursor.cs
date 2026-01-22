@@ -1,5 +1,6 @@
 ﻿using Adberration.Scripting;
 using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -49,7 +50,7 @@ namespace ScaryCastle
 
             textSprite = new(EngendroGame.Instance, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Highlight,
+                Color = ColorPalette.Text.Sentence,
                 PivotOrigin = RectanglePoint.LeftTop,
                 Scale = ScaleInfo.UISentence
             };
@@ -187,6 +188,13 @@ namespace ScaryCastle
 
         // Item
         public static Item? Item { get; set; }
+
+        // PerformClick
+        public static void PerformClick()
+        {
+            AnimateClick();
+            Sound.Play(SoundNames.Interact);
+        }
 
         // Room
         public static GameRoom? Room

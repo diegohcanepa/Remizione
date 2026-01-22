@@ -836,6 +836,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/TestSkillFail.wav;Audio/FX/TestSkillFail
 
+#begin Audio/FX/Text.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Text.wav;Audio/FX/Text
+
 #begin Audio/FX/ThrowableDuck1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

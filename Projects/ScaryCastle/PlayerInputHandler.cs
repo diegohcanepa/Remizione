@@ -56,8 +56,6 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
 
-            MouseCursor.AnimateClick();
-
             if (MouseCursor.Target != null)
             {
                 if (MouseCursor.UseWithScript is Script script)
@@ -77,12 +75,13 @@ namespace ScaryCastle
                     }
                 }
 
-                Sound.Play(SoundNames.Interact);
+                MouseCursor.PerformClick();
 
                 return true;
             }
             else
             {
+                MouseCursor.AnimateClick();
                 var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
                 Actor.MoveTo(destination);
                 return true;

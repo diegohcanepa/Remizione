@@ -31,11 +31,15 @@ namespace ScaryCastle
 
         #endregion
 
+        #region Static constructor
+
         // Static constructor
         static GameSession()
         {
             RegisterAotTypes();
         }
+
+        #endregion
 
         #region Constructor
 
@@ -567,9 +571,9 @@ namespace ScaryCastle
         }
 
         // ShowEcho
-        public void ShowEcho(string text)
+        public void ShowEcho(string text, AtlasImage? image = null)
         {
-            echoScene.Text = text;
+            echoScene.Show(text, image);
             Game.SceneManager.Push(echoScene);
         }
     }

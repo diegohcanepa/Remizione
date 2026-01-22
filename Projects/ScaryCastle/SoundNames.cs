@@ -31,6 +31,7 @@
         internal const string ShockZap = nameof(ShockZap);
         internal const string SpearTrap = nameof(SpearTrap);
         internal const string TestSkillFail = nameof(TestSkillFail);
+        internal const string Text = nameof(Text);
         internal const string TowerDoorClose = nameof(TowerDoorClose);
         internal const string ThrowablePickup = nameof(ThrowablePickup);
         internal const string Thunder = nameof(Thunder);

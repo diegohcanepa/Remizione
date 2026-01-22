@@ -23,7 +23,7 @@ namespace ScaryCastle.Scripting
             string text = GetDisplayText();
 
             if (Session is GameSession session)
-                session.ShowEcho(text);
+                session.ShowEcho(text, null);
         }
 
         // TextClauseIndex

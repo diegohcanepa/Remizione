@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,6 +13,7 @@ namespace ScaryCastle
     {
         private readonly ImageSprite arrow;
         private readonly ImageSprite gradient;
+        private readonly ImageSprite image;
         private readonly FloatTween opacityTween = new();
         private readonly TextSprite textSprite;
 
@@ -35,12 +37,19 @@ namespace ScaryCastle
             // Text sprite
             this.textSprite = new TextSprite(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Default,
+                Color = ColorPalette.Text.Sentence,
                 MaximumWidth = (int)(Screen.NativeWidth * .8f),
                 PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -15),
-                Scale = ScaleInfo.Text.VeryLarge
+                Scale = ScaleInfo.Text.VeryLarge,
+                TypingSpeed = 20
+            };
+
+            // Image
+            this.image = new(game)
+            {
+                PivotOrigin = RectanglePoint.Left
             };
 
             // Gradient
@@ -64,6 +73,8 @@ namespace ScaryCastle
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() ||
                 InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
+                MouseCursor.PerformClick();
+
                 if (textSprite.IsTyping)
                     textSprite.StopTyping();
                 else
@@ -83,6 +94,7 @@ namespace ScaryCastle
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             gradient.Draw(gameTime);
+            image.Draw(gameTime);
             textSprite.Draw(gameTime);
             Game.SpriteBatch.End();
 
@@ -125,24 +137,22 @@ namespace ScaryCastle
         {
             arrow.Update(gameTime);
             textSprite.Update(gameTime);
+            image.Opacity = textSprite.Opacity;
         }
 
         #endregion
 
         // Show
-        public void Show(string text)
+        public void Show(string text, AtlasImage? image = null)
         {
             textSprite.Text = text;
             opacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);
             textSprite.Tweens.OpacityTween = opacityTween;
             textSprite.StartTyping();
-        }
 
-        // Text
-        public string? Text
-        {
-            get => textSprite.Text;
-            set => textSprite.Text = value;
+            this.image.Image = image;
+            this.image.X = 5;
+            this.image.Y = textSprite.BoundingBox.Top;
         }
     }
 }
