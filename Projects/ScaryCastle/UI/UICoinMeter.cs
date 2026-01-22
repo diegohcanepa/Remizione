@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
@@ -8,16 +9,21 @@ namespace ScaryCastle
     /// </summary>
     public class UICoinMeter : GameObject
     {
+        private bool isInitialized;
         private readonly ImageSprite icon;
-        private readonly Vector2 iconScale = ScaleInfo.UIElement.Medium;
+        private readonly Vector2 iconScale = Vector2.One;
+        private int lastKnownValue = -1;
         private readonly FloatTween rotationTween = new();
         private readonly Vector2Tween scaleTween = new();
-        private readonly UIScore score;
+        private readonly GameSession session;
+        private readonly TextSprite valueText;
 
         // Constructor
-        public UICoinMeter(EngendroGame game)
-            : base(game)
+        public UICoinMeter(GameSession session)
+            : base(session.Game)
         {
+            this.session = session;
+
             // Icon
             this.icon = new ImageSprite(Game, Atlases.UI.Coin)
             {
@@ -25,11 +31,13 @@ namespace ScaryCastle
                 Position = Screen.Area.GetPoint(RectanglePoint.RightBottom, -7, -16),
             };
 
-            // Score
-            this.score = new UIScore(game, ColorPalette.Text.Highlight, ScaleInfo.Text.ExtraLarge, false)
+            // Score text
+            this.valueText = new TextSprite(Game, Fonts.CommonOutline)
             {
+                Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Right,
-                Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, -1, 1)
+                Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, -1, 1),
+                Scale = ScaleInfo.Text.ExtraLarge
             };
         }
 
@@ -39,36 +47,29 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
+            for (var i = 0; i < session.ObjectPools.Coins.InUse.Count; i++)
+            {
+                session.ObjectPools.Coins.InUse[i].Draw(gameTime);
+            }
             icon.Draw(gameTime);
-            score.Draw(gameTime);
+            valueText.Draw(gameTime);
             Game.SpriteBatch.End();
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            icon.Update(gameTime);
-            score.Update(gameTime);
-        }
-
-        #endregion
-
-        // SetInitialValue
-        public void SetInitialValue(int value)
-        {
-            score.SetInitialValue(value);
-        }
-
-        // Value
-        public int Value
-        {
-            get => score.Value;
-            set
+            if (lastKnownValue != session.Coins)
             {
-                if (value != score.Value)
-                {
-                    score.Value = value;
+                if (isInitialized)
+                    Sound.Play(SoundNames.CollectCoin);
 
+                isInitialized = true;   
+                lastKnownValue = session.Coins;
+                valueText.Text = $"{session.Coins}";
+
+                if (!icon.Tweens.IsTweening)
+                {
                     rotationTween.Start(TweenStyle.QuadraticInOut, 0, 15, 50, 6);
                     icon.Tweens.RotationTween = rotationTween;
 
@@ -76,6 +77,18 @@ namespace ScaryCastle
                     icon.Tweens.ScaleTween = scaleTween;
                 }
             }
+
+            icon.Update(gameTime);
+
+            for (var i = session.ObjectPools.Coins.InUse.Count-1; i >= 0; i--)
+            {
+                session.ObjectPools.Coins.InUse[i].Update(gameTime);
+            }
         }
+
+        #endregion
+
+        // IconBoundingBox
+        public RectangleF IconBoundingBox => icon.BoundingBox;
     }
 }

@@ -326,7 +326,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Environment-assets/Coin.png</key>
+            <key type="filename">Environment-assets/Coin01.png</key>
             <key type="filename">PotteryB-assets/PotteryBPiece1.png</key>
             <key type="filename">PotteryB-assets/PotteryBPiece2.png</key>
             <key type="filename">PotteryD-assets/PotteryDPiece1.png</key>

@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -8,116 +7,71 @@ namespace ScaryCastle
     /// <summary>
     /// Coin
     /// </summary>
-    public class Coin : Prop
+    public sealed class Coin : GameObject
     {
-        #region Private fields
+        private bool dropped = false;
 
-        private float angularVelocity;
-        private const float bounceFactor = .8f;
-        private bool collected;
-        private float delayTimer;
-        private const float gravity = 700;
-        private float groundY;
-        private readonly ImageSprite image;
-        private float launchDelay;
-        private bool launched;
-        private float life = 2;
+        // Usamos FloatTween para controlar el progreso (0.0 a 1.0) de la curva
+        private readonly FloatTween curveTween = new();
         private readonly Vector2Tween scaleTween = new();
-        private Vector2 velocity;
 
-        #endregion
+        private readonly GameSession session;
+        private readonly ImageSprite sprite;
 
-        #region Constructor
+        // Puntos para la curva de Bézier
+        private Vector2 p0; // Origen (Pantalla)
+        private Vector2 p1; // Punto de control (Curvatura)
+        private Vector2 p2; // Destino (HUD)
 
         // Constructor
         public Coin(GameSession session)
-            : base(session, string.Empty)
+            : base(session.Game)
         {
-            this.image = new(Game, Atlases.Environment.Coin)
+            this.session = session;
+
+            this.sprite = new ImageSprite(session.Game, Atlases.Environment.Coin)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Scale = new(.75f)
             };
         }
-
-        #endregion
-
-        #region Private members
-
-        // RandomBetween
-        private static float RandomBetween(float min, float max)
-        {
-            return (float)((Random.Shared.NextDouble() * (max - min)) + min);
-        }
-
-        // Release
-        private void Release()
-        {
-            Unparent();
-            Session.ObjectPools.Coins.Return(this);
-        }
-
-        #endregion
 
         #region Protected members
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (launched)
-                image.Draw(gameTime);
+            if (!curveTween.IsDelayed)
+                sprite.Draw(gameTime);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            sprite.Update(gameTime);
 
-            if (!launched)
+            if (dropped)
             {
-                delayTimer += dt;
+                // Actualizamos el tween de tiempo
+                curveTween.Update(gameTime);
 
-                if (delayTimer >= launchDelay)
+                // Si el tween está corriendo, calculamos la posición en la curva
+                if (curveTween.IsRunning)
                 {
-                    velocity = new(RandomBetween(-115, 115), RandomBetween(-30f, 20f));
-                    angularVelocity = RandomBetween(-5, 5);
-                    launched = true;
+                    float t = curveTween.CurrentValue;
+
+                    // Cálculo de la Curva de Bézier Cuadrática
+                    // Llevamos la moneda de P0 a P2, curvándose hacia P1.
+                    Vector2 a = Vector2.Lerp(p0, p1, t);
+                    Vector2 b = Vector2.Lerp(p1, p2, t);
+                    sprite.Position = Vector2.Lerp(a, b, t);
                 }
 
-                return;
-            }
-
-            velocity.Y += gravity * dt;
-
-            image.X += velocity.X * dt;
-            image.Y += velocity.Y * dt;
-
-            image.Rotation += angularVelocity * dt;
-
-            if (image.Y >= groundY)
-            {
-                image.Y = groundY;
-                velocity.Y *= -bounceFactor;
-                velocity.X *= .7f;
-                angularVelocity *= .7f;
-
-                if (Math.Abs(velocity.Y) < 6f)
-                    velocity.Y = 0;
-            }
-
-            life -= dt;
-
-            image.Update(gameTime);
-
-            if (!collected)
-            {
-                if (Session.Player?.DistanceTo(image.Position) <= 3)
+                // Verificamos si terminó la animación
+                if (!curveTween.IsRunning && !curveTween.IsDelayed)
                 {
-                    collected = true;
-                    Sound.Play(SoundNames.PickupCoin);
-                    Session.Coins++;
-                    scaleTween.Start(TweenStyle.Linear, image.Scale, Vector2.Zero, 100, Release);
-                    image.Tweens.ScaleTween = scaleTween;
+                    dropped = false;
+                    session.Coins++;
+                    session.ObjectPools.Coins.Return(this);
                 }
             }
         }
@@ -125,18 +79,52 @@ namespace ScaryCastle
         #endregion
 
         // Drop
-        public void Drop(GameRoom room, Vector2 origin)
+        public void Drop(GameRoom room, Vector2 origin, int delay)
         {
-            float yOffset = RandomBetween(-4f, 2f);
+            // 1. P0: Posición de inicio convertida a Coordenadas de Pantalla (Screen Space)
+            // Restamos el Offset de la cámara del nivel y multiplicamos por su Zoom.
+            p0 = (origin - session.Camera.Offset) * session.Camera.Zoom;
 
-            image.Position = new(RandomBetween(origin.X - 15, origin.X + 15f), origin.Y + yOffset);
-            groundY = origin.Y + Random.Shared.Next(-5, 4);
-            launchDelay = RandomBetween(0, .1f);
-            delayTimer = 0;
-            launched = false;
-            collected = false;
+            // 2. P2: Posición final (El ícono en el HUD ya está en coordenadas de pantalla)
+            p2 = session.HUD.CoinMeter.IconBoundingBox.Center;
 
-            room.Children.Add(this);
+            // 3. P1: Punto de control para la curva sutil
+            // Calculamos la distancia y el punto medio
+            float distance = Vector2.Distance(p0, p2);
+            Vector2 midPoint = (p0 + p2) / 2;
+
+            // Calculamos vector perpendicular para dar la "panza" a la curva
+            Vector2 direction = p2 - p0;
+            Vector2 perpendicular = new Vector2(-direction.Y, direction.X);
+            if (perpendicular != Vector2.Zero) perpendicular.Normalize();
+
+            // Factor de curvatura: 10% a 20% de la distancia total (Sutil)
+            float curvatureFactor = (Random.Shared.NextSingle() * 0.1f) + 0.1f;
+
+            // Aleatoriedad: A veces curva a la izquierda, a veces a la derecha
+            if (Random.Shared.Next(2) == 0) curvatureFactor *= -1;
+
+            // Definimos el punto de control
+            p1 = midPoint + (perpendicular * (distance * curvatureFactor));
+
+            // Configuramos la duración basada en la distancia
+            var tweenDuration = (int)(distance * 2.5f);
+            if (tweenDuration < 300) tweenDuration = 300;
+
+            // Posicionamos el sprite inicialmente
+            sprite.Position = p0;
+
+            // Iniciamos el Tween de la curva (0f -> 1f)
+            // Usamos SineIn para que empiece lento y acelere hacia el HUD
+            curveTween.StartDelay = delay;
+            curveTween.Start(TweenStyle.SineIn, 0f, 1f, tweenDuration);
+
+            // Tween de escala (efecto "pop" al aparecer)
+            scaleTween.StartDelay = delay;
+            scaleTween.Start(TweenStyle.QuadraticIn, ScaleInfo.UIElement.Tiny, Vector2.One, 200);
+            sprite.Tweens.ScaleTween = scaleTween;
+
+            dropped = true;
         }
     }
 }

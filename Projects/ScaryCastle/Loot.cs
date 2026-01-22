@@ -137,7 +137,7 @@ namespace ScaryCastle
             */
 
             if (!coinChance.Roll())
-                return 0;
+                return 5;
 
             // 2. CANTIDAD BASE (Basada en la dificultad intrínseca del enemigo)
             int amount = thingDefinition.Difficulty switch

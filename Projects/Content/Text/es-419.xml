@@ -256,6 +256,7 @@ Bla bla bla</String>
   <String Key="Playtime.Minutes">minutos</String>
   <String Key="Prop.ATM">Cajero automático</String>
   <String Key="Prop.Bag">Bolsa</String>
+  <String Key="Prop.Coin">Moneda</String>
   <String Key="Prop.Cross">Cruz</String>
   <String Key="Prop.CrucifiedMan">Hombre crucificado</String>
   <String Key="Prop.DepositMachine">Máquina de depósito</String>

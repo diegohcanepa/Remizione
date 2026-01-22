@@ -6,6 +6,8 @@
     internal static class SoundNames
     {
         internal const string CardFlap = nameof(CardFlap);
+        internal const string CollectCoin = nameof(CollectCoin);
+        internal const string Dice = nameof(Dice);
         internal const string Error = nameof(Error);
         internal const string FootstepA = nameof(FootstepA);
         internal const string FootstepWater = nameof(FootstepWater);
@@ -14,13 +16,12 @@
         internal const string GutsMedium = nameof(GutsMedium);
         internal const string GutsSmall = nameof(GutsSmall);
         internal const string ImpactA = nameof(ImpactA);
+        internal const string Interact = nameof(Interact);
         internal const string ItemDiscard = nameof(ItemDiscard);
         internal const string Lightning = nameof(Lightning);
         internal const string LockOpen = nameof(LockOpen);
-        internal const string LootCoin = nameof(LootCoin);
         internal const string LootSack = nameof(LootSack);
         internal const string MetalPropBreak = nameof(MetalPropBreak);
-        internal const string PickupCoin = nameof(PickupCoin);
         internal const string PickupGeneric = nameof(PickupGeneric);
         internal const string PotteryBreak = nameof(PotteryBreak);
         internal const string PowerRestored = nameof(PowerRestored);
@@ -42,6 +43,7 @@
         internal const string UISelectD = nameof(UISelectD);
         internal const string UISelectPlayer = nameof(UISelectPlayer);
         internal const string VendingMachine = nameof(VendingMachine);
+        internal const string WhooshA = nameof(WhooshA);
         internal const string WoodDebris = nameof(WoodDebris);
     }
 }

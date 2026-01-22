@@ -253,11 +253,15 @@ namespace ScaryCastle
                 return;
 
             var coins = Loot.RollCoins(Session, room.Definition, Definition);
+
             if (coins > 0)
             {
+                var tweenDuration = 500;
+
                 for (var i = 0; i < coins; i++)
                 {
-                    Session.ObjectPools.Coins.Get()?.Drop(room, Position);
+                    Session.ObjectPools.Coins.Get()?.Drop(room, Position, tweenDuration);
+                    tweenDuration += 200;
                 }
             }
         }

@@ -302,6 +302,30 @@
 /processorParam:Quality=Best
 /build:Audio/FX/CardFlap.wav;Audio/FX/CardFlap
 
+#begin Audio/FX/CollectCoin.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/CollectCoin.wav;Audio/FX/CollectCoin
+
+#begin Audio/FX/Dice1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Dice1.wav;Audio/FX/Dice1
+
+#begin Audio/FX/Dice2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Dice2.wav;Audio/FX/Dice2
+
+#begin Audio/FX/Dice3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Dice3.wav;Audio/FX/Dice3
+
 #begin Audio/FX/DoodleDoo.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -566,6 +590,30 @@
 /processorParam:Quality=Best
 /build:Audio/FX/InsertCoin.wav;Audio/FX/InsertCoin
 
+#begin Audio/FX/Interact1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Interact1.wav;Audio/FX/Interact1
+
+#begin Audio/FX/Interact2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Interact2.wav;Audio/FX/Interact2
+
+#begin Audio/FX/Interact3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Interact3.wav;Audio/FX/Interact3
+
+#begin Audio/FX/Interact4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Interact4.wav;Audio/FX/Interact4
+
 #begin Audio/FX/ItemDiscard.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -583,12 +631,6 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/LockOpen.wav;Audio/FX/LockOpen
-
-#begin Audio/FX/LootCoin.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/LootCoin.wav;Audio/FX/LootCoin
 
 #begin Audio/FX/LootSack.wav
 /importer:WavImporter

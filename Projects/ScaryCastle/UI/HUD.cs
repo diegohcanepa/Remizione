@@ -30,7 +30,7 @@ namespace ScaryCastle
             this.Message = new(Game);
 
             // Coin meter 
-            this.CoinMeter = new(Game);
+            this.CoinMeter = new(session);
 
             // Inventory
             this.Inventory = new(session);
@@ -73,12 +73,7 @@ namespace ScaryCastle
             MiniMap.Update(gameTime);
             Log.Update(gameTime);
             Message.Update(gameTime);
-
-            if (session.Player != null)
-            {
-                CoinMeter.Value = session.Coins;
-                CoinMeter.Update(gameTime);
-            }
+            CoinMeter.Update(gameTime);
         }
 
         #endregion

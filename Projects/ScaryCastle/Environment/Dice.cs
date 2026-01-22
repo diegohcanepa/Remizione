@@ -1,5 +1,6 @@
 ﻿using Adberration.Scripting;
 using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,6 @@ namespace ScaryCastle
         private bool isGrounded;
         private readonly int maxBounces = 3;    // gravedad base
         private GameThing? owner;
-        private readonly float radius;      // "tamaño" del objeto en píxeles
         private Vector2 velocity;
         private readonly float weight;      // Masa relativa (afecta la gravedad)
 
@@ -36,14 +36,13 @@ namespace ScaryCastle
         {
             Atlas = Atlases.Environment;
             Scale = new(.5f);
-            ShadowOffset = new(0, -2);
-            ShadowSpotSize = 9;
+            //ShadowOffset = new(0, -2);
+            ShadowSpotSize = 0;
             
             this.initialVelocity = new Vector2(110, -50);
             this.weight = .8f;
             this.bounciness = .6f;
             this.gravity = 500;
-            this.radius = 10;
         }
 
         #region Private members
@@ -59,6 +58,8 @@ namespace ScaryCastle
                 {
                     // Rebote vertical
                     velocity = new Vector2(velocity.X * horizontalDamping, -velocity.Y * bounciness);
+                    if (bounceCount == 0)
+                        Sound.Play(SoundNames.Dice);
                     bounceCount++;
                 }
                 else
@@ -108,6 +109,9 @@ namespace ScaryCastle
 
         #endregion
 
+        // Depth
+        public override float Depth => depth;
+
         // IsRolling
         public bool IsRolling { get; private set; }
 
@@ -123,11 +127,15 @@ namespace ScaryCastle
             this.isGrounded = false;
             this.velocity = initialVelocity;
             this.X = owner.X;
-            this.Y = owner.Y - owner.Height / 2 - this.radius;
+            this.Y = owner.Y - 4;
             this.floorY = owner.Y;
+            this.depth = owner.Depth - .1f;
+            this.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, new Vector2(.2f), new Vector2(.5f), 150);
 
             if (owner.IsFlippedHorizontally)
                 velocity.X *= -1;
+
+            Sound.Play(SoundNames.WhooshA);
 
             owner.Room?.Children.Add(this);
             AnimationPlayer.Play("Roll", true, owner.Direction == Adberration.FacingDirection.Right ? AnimationDirection.Reverse : AnimationDirection.Forward);

@@ -77,7 +77,7 @@ namespace ScaryCastle
                     }
                 }
 
-                Sound.Play(SoundNames.UISelectC);
+                Sound.Play(SoundNames.Interact);
 
                 return true;
             }

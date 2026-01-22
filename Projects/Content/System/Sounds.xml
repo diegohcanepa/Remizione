@@ -24,6 +24,8 @@
 	<FX Name="BlipMandinga" MaxInstances="4" />
 	<FX Name="BodyFallMedium" MaxInstances="8" Sounds="1..1" />
 	<FX Name="CardFlap" />
+	<FX Name="CollectCoin" MaxInstances="8" />
+	<FX Name="Dice" MaxInstances="6" Sounds="1..3" />
 	<FX Name="DoodleDoo" />
 	<FX Name="DoorClose" MaxInstances="4" Sounds="1..2" />
 	<FX Name="DoorOpen" MaxInstances="4" Sounds="1..2" />
@@ -50,17 +52,17 @@
 	<FX Name="ImpactA" MaxInstances="6" />
 	<FX Name="ImpactB" MaxInstances="6" />
 	<FX Name="InsertCoin" />
+	<FX Name="Interact" MaxInstances="8" Sounds="1..4" />
 	<FX Name="ItemDiscard" MaxInstances="4" />	
 	<FX Name="Lightning" MaxInstances="4" />
 	<FX Name="LockOpen" MaxInstances="3" />
-	<FX Name="LootCoin" MaxInstances="2" />
 	<FX Name="LootSack" MaxInstances="4" />
 	<FX Name="MetalPropBreak" MaxInstances="4" />
 	<FX Name="NumberSixA" />
 	<FX Name="NumberSixB" />
 	<FX Name="NumberSixC" />
 	<FX Name="PickupBag" MaxInstances="2" />
-	<FX Name="PickupCoin" MaxInstances="8" />
+	<FX Name="PickupCoin" MaxInstances="2" />
 	<FX Name="PickupGeneric" MaxInstances="2" />
 	<FX Name="PickupHeart" MaxInstances="2" />
 	<FX Name="PlayerDamage" MaxInstances="4" />

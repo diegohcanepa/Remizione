@@ -12,6 +12,7 @@ namespace ScaryCastle
         public EnvironmentAtlas(EngendroGame game)
             : base(game.Content, "Environment", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "Environment"), false)
         {
+            Coin = this[nameof(Coin)];
             CraftingMark = this[nameof(CraftingMark)];
             DefaultLight = this[nameof(DefaultLight)];
             DustParticles = CreateReadOnlyCollection("DustParticle", 1, 1);
@@ -21,7 +22,6 @@ namespace ScaryCastle
             GlobalLight = this[nameof(GlobalLight)];
             LightningLight = this[nameof(LightningLight)];
             Sack = this[nameof(Sack)];
-            Coin = this[nameof(Coin)];
         }
 
         // Coin

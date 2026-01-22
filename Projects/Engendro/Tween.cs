@@ -179,6 +179,9 @@ namespace Engendro
         // EndValue
         public T EndValue { get; private set; }
 
+        // IsDelayed
+        public bool IsDelayed => startDelayCooldown > 0;
+
         // IsRunning
         public bool IsRunning => State == RunningState.Running;
 
