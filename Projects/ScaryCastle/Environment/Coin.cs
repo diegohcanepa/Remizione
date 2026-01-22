@@ -13,7 +13,7 @@ namespace ScaryCastle
 
         // Usamos FloatTween para controlar el progreso (0.0 a 1.0) de la curva
         private readonly FloatTween curveTween = new();
-        private readonly Vector2Tween scaleTween = new();
+        private readonly FloatTween opacityTween = new();
 
         private readonly GameSession session;
         private readonly ImageSprite sprite;
@@ -102,14 +102,16 @@ namespace ScaryCastle
             float curvatureFactor = (Random.Shared.NextSingle() * 0.1f) + 0.1f;
 
             // Aleatoriedad: A veces curva a la izquierda, a veces a la derecha
-            if (Random.Shared.Next(2) == 0) curvatureFactor *= -1;
+            if (Random.Shared.Next(2) == 0)
+                curvatureFactor *= -1;
 
             // Definimos el punto de control
             p1 = midPoint + (perpendicular * (distance * curvatureFactor));
 
             // Configuramos la duración basada en la distancia
             var tweenDuration = (int)(distance * 2.5f);
-            if (tweenDuration < 300) tweenDuration = 300;
+            if (tweenDuration < 300)
+                tweenDuration = 300;
 
             // Posicionamos el sprite inicialmente
             sprite.Position = p0;
@@ -120,9 +122,9 @@ namespace ScaryCastle
             curveTween.Start(TweenStyle.SineIn, 0f, 1f, tweenDuration);
 
             // Tween de escala (efecto "pop" al aparecer)
-            scaleTween.StartDelay = delay;
-            scaleTween.Start(TweenStyle.QuadraticIn, ScaleInfo.UIElement.Tiny, Vector2.One, 200);
-            sprite.Tweens.ScaleTween = scaleTween;
+            opacityTween.StartDelay = delay;
+            opacityTween.Start(TweenStyle.CubicIn, 0, 1, 200);
+            sprite.Tweens.OpacityTween = opacityTween;
 
             dropped = true;
         }

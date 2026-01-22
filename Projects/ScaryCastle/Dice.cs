@@ -5,19 +5,19 @@ using System.Text;
 namespace ScaryCastle
 {
     /// <summary>
-    /// Card
+    /// DiceInfo
     /// </summary>
-    public sealed class Card
+    public sealed class DiceInfo
     {
         // Constructor
-        public Card(Deck deck, CardDefinition cardDefinition)
+        public DiceInfo(DiceBag diceBag, CardDefinition cardDefinition)
         {
-            this.Deck = deck;
+            this.DiceBag = diceBag;
             this.CardDefinition = cardDefinition;
         }
 
-        // Deck
-        public Deck Deck { get; }
+        // DiceBag
+        public DiceBag DiceBag { get; }
 
         // Definition
         public CardDefinition CardDefinition { get; }

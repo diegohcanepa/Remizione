@@ -44,7 +44,7 @@ namespace ScaryCastle
             : base(game, new ScaryCastlePersistenceModel(), ContentManagerExtension.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
-            this.Deck = new Deck(this);
+            this.Deck = new DiceBag(this);
             this.Inventory = new(this);
             this.Environment = new Environment(this);
             this.HUD = new HUD(this);
@@ -396,7 +396,7 @@ namespace ScaryCastle
         }
 
         // Deck
-        public Deck Deck { get; }
+        public DiceBag Deck { get; }
 
         // DeclaredThings
         public NamedObjectReadOnlyCollection<GameThing> DeclaredThings { get; }

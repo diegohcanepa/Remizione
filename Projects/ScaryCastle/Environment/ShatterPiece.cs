@@ -19,6 +19,10 @@ namespace ScaryCastle
         private readonly ImageSprite image;
         private float launchDelay;
         private bool launched;
+
+        // OPTIMIZACIÓN: Flag para saber si ya se detuvo
+        private bool isStopped;
+
         private GameRoom? room;
         private static readonly Color shadowColor = Color.Black * .3f;
         private static readonly Vector2 shadowOffset = new(.5f);
@@ -28,7 +32,6 @@ namespace ScaryCastle
 
         #region Constructor
 
-        // Constructor
         public ShatterPiece(ScaryCastleGame game, AtlasImage image, Vector2 scale)
             : base(game)
         {
@@ -41,19 +44,8 @@ namespace ScaryCastle
 
         #endregion
 
-        #region Private members
-
-        // RandomBetween
-        private static float RandomBetween(float min, float max)
-        {
-            return (float)((Random.Shared.NextDouble() * (max - min)) + min);
-        }
-
-        #endregion
-
         #region Protected members
 
-        // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
             if (launched)
@@ -70,9 +62,11 @@ namespace ScaryCastle
             }
         }
 
-        // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            // OPTIMIZACIÓN: Si ya se detuvo, no calculamos nada más.
+            if (isStopped) return;
+
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (!launched)
@@ -80,35 +74,58 @@ namespace ScaryCastle
                 delayTimer += dt;
                 if (delayTimer >= launchDelay)
                 {
-                    velocity = new(RandomBetween(-35f, 35f), RandomBetween(-20f, 10f));
-                    angularVelocity = RandomBetween(-5f, 5f);
+                    velocity = new(Random.Shared.Next(-35f, 35f), Random.Shared.Next(-20f, 10f));
+                    angularVelocity = Random.Shared.Next(-5f, 5f);
                     launched = true;
                 }
-
                 return;
             }
 
             velocity.Y += gravity * dt;
+
+            // Guardamos X anterior para evitar tunneling (el fix anterior)
+            float previousX = image.X;
 
             image.X += velocity.X * dt;
             image.Y += velocity.Y * dt;
 
             image.Rotation += angularVelocity * dt;
 
+            // Lógica de suelo y detención
             if (image.Y >= groundY)
             {
                 image.Y = groundY;
                 velocity.Y *= -bounceFactor;
-                velocity.X *= .7f;
-                angularVelocity *= .7f;
+                velocity.X *= .7f;      // Fricción del suelo
+                angularVelocity *= .7f; // Fricción de rotación
 
+                // Si el rebote vertical es muy pequeño, lo anulamos
                 if (Math.Abs(velocity.Y) < 6f)
+                {
                     velocity.Y = 0;
+                }
+
+                // OPTIMIZACIÓN: Chequeo de detención total
+                // Si no rebota en Y, y la velocidad en X es casi nula (menor a 1 pixel/segundo)
+                if (velocity.Y == 0 && Math.Abs(velocity.X) < 1f)
+                {
+                    velocity = Vector2.Zero;
+                    angularVelocity = 0;
+                    isStopped = true; // Dejamos de actualizar desde el próximo frame
+                }
             }
 
-            CheckWalkAreaCollision();
+            // Chequeo de WalkArea (solo si no se ha detenido aún)
+            if (!isStopped && CheckWalkAreaCollision())
+            {
+                image.X = previousX;
+            }
 
-            image.Update(gameTime);
+            // Solo actualizamos el sprite si se mueve o anima
+            if (!isStopped)
+            {
+                image.Update(gameTime);
+            }
         }
 
         #endregion
@@ -124,7 +141,6 @@ namespace ScaryCastle
                     return true;
                 }
             }
-
             return false;
         }
 
@@ -132,26 +148,28 @@ namespace ScaryCastle
         public void Launch(GameThing owner)
         {
             var bounds = owner.BoundingBox;
-            float yOffset = RandomBetween(-4f, 2f);
+            float yOffset = Random.Shared.Next(-4f, 2f);
 
-            image.Position = new(RandomBetween(bounds.Left + 5f, bounds.Right - 5f),
-                                RandomBetween(bounds.Top, bounds.Bottom) + yOffset);
+            image.Position = new(Random.Shared.Next(bounds.Left + 5f, bounds.Right - 5f),
+                                Random.Shared.Next(bounds.Top, bounds.Bottom) + yOffset);
 
             groundY = owner.Y + Random.Shared.Next(-3, 4);
-            launchDelay = RandomBetween(0, .1f);
+            launchDelay = Random.Shared.Next(0, .1f);
             delayTimer = 0;
             room = owner.Session.Room;
             launched = false;
+
+            // Reiniciamos el estado para que pueda volver a moverse si se relanza
+            isStopped = false;
         }
 
-        // Opacity
+        // Propiedades...
         public float Opacity
         {
             get => image.Opacity;
             set => image.Opacity = value;
         }
 
-        // Scale
         public Vector2 Scale
         {
             get => image.Scale;
