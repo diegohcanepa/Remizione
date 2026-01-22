@@ -57,11 +57,9 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Game.Camera);
             flyingIcon.Draw(gameTime);
             icon.Draw(gameTime);
             amountText.Draw(gameTime);
-            Game.SpriteBatch.End();
         }
 
         // OnUpdate

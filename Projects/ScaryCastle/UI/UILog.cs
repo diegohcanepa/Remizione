@@ -74,14 +74,9 @@ namespace ScaryCastle
             if (!fadeTween.IsRunning)
                 return;
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             verbText.Draw(gameTime);
             nounText.Draw(gameTime);
-            Game.SpriteBatch.End();
-
-            Game.SpriteBatch.Begin(Game.Camera);
             icon.Draw(gameTime);
-            Game.SpriteBatch.End();
         }
 
         // OnUpdate

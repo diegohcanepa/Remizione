@@ -46,14 +46,12 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Game.Camera);
             for (var i = 0; i < session.ObjectPools.Coins.InUse.Count; i++)
             {
                 session.ObjectPools.Coins.InUse[i].Draw(gameTime);
             }
             icon.Draw(gameTime);
             valueText.Draw(gameTime);
-            Game.SpriteBatch.End();
         }
 
         // OnUpdate

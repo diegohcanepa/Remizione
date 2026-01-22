@@ -53,18 +53,19 @@ namespace ScaryCastle
         {
             if (session.IsCurrentScene)
             {
+                Game.SpriteBatch.Begin(Game.Camera);
+                healthMeter.Draw(gameTime);
                 passiveItemMeter.Draw(gameTime);
                 Inventory.Draw(gameTime);
                 CoinMeter.Draw(gameTime);
                 SackMeter.Draw(gameTime);
                 Log.Draw(gameTime);
                 Message.Draw(gameTime);
+                Game.SpriteBatch.End();
 
                 if (session.Room is ProceduralRoom)
                     MiniMap.Draw(gameTime);
             }
-
-            healthMeter.Draw(gameTime);
         }
 
         // OnUpdate

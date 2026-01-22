@@ -2,6 +2,7 @@
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using System;
 using System.Globalization;
 
 namespace ScaryCastle
@@ -17,6 +18,7 @@ namespace ScaryCastle
         private readonly ImageSprite bottomGradient;
         private readonly TextSprite diceAmountText;
         private readonly ImageSprite diceIcon;
+        private readonly string diceOptionName = TextRepository.GetValue("Misc.Dice");
         private readonly Vector2 diceIconOriginalScale = Vector2.One;
         private readonly Vector2 diceIconSelectedScale = Vector2.One * 1.1f;
         private readonly ImageSprite[] icons;
@@ -54,7 +56,7 @@ namespace ScaryCastle
             this.diceIcon = new(Game, Atlases.UI.Dice)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, 7, -12),
+                Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, 7, -11),
             };
 
             // Dice amount
@@ -62,7 +64,7 @@ namespace ScaryCastle
             {
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Top,
-                Position = diceIcon.BoundingBox.GetPoint(RectanglePoint.Bottom),
+                Position = diceIcon.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -1),
                 Scale = ScaleInfo.Text.ExtraLarge,
                 Spacing = -6
             };
@@ -72,8 +74,8 @@ namespace ScaryCastle
             {
                 slots[i] = new(Game, Atlases.UI.InventorySlot)
                 {
-                    PivotOrigin = RectanglePoint.Bottom,
-                    Y = Screen.Area.Bottom - 8
+                    PivotOrigin = RectanglePoint.LeftBottom,
+                    Y = Screen.Area.Bottom - 10
                 };
 
                 icons[i] = new(Game)
@@ -107,7 +109,7 @@ namespace ScaryCastle
             {
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Bottom,
-                Y = slots[0].BoundingBox.Top - 2,
+                Y = slots[0].BoundingBox.Top - 3,
                 Scale = ScaleInfo.UISentence
             };
 
@@ -140,7 +142,7 @@ namespace ScaryCastle
                     if (grabbedItem.Definition.Image != null)
                     {
                         session.Player?.Stand();
-                        Sound.Play(SoundNames.UISelectC);
+                        Sound.Play(SoundNames.Interact);
                         MouseCursor.Item = grabbedItem;
                         MouseCursor.AnimateClick();
                         IsVisible = false;
@@ -216,8 +218,6 @@ namespace ScaryCastle
             if (!IsVisible)
                 return;
 
-            Game.SpriteBatch.Begin(Game.Camera);
-
             // Gradient
             bottomGradient.Draw(gameTime);
 
@@ -241,8 +241,6 @@ namespace ScaryCastle
 
             itemName.Draw(gameTime);
             //itemDescription.Draw(gameTime);
-
-            Game.SpriteBatch.End();
         }
 
         // OnUpdate
@@ -289,14 +287,25 @@ namespace ScaryCastle
                 icons[i].Scale = ScaleInfo.UIElement.Medium;
             }
 
+            var cursorOverDeckIcon = diceIcon.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);
+
             if (GetSelectedItem() is Item item)
             {
                 itemName.Text = item.Definition.LocalizedDisplayName;
-                itemName.X = slots[item.Index].X;
+                itemName.X = slots[item.Index].BoundingBox.Center.X;
 
                 itemDescription.Text = item.Definition.LocalizedDescription;
 
                 icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;
+            }
+            else if (cursorOverDeckIcon)
+            {
+                itemName.X = diceIcon.BoundingBox.GetPoint(RectanglePoint.Top).X;
+                itemName.Text = diceOptionName;
+
+                if (itemName.BoundingBox.Left < 0)
+                    itemName.X += Math.Abs(itemName.BoundingBox.Left) + 4;
+
             }
             else
             {
@@ -304,13 +313,10 @@ namespace ScaryCastle
                 itemDescription.Text = null;
             }
 
-            var cursorOverDeckIcon = diceIcon.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);
-
             if (cursorOverDeckIcon)
             {
                 if (diceIcon.Scale != diceIconSelectedScale)
                 {
-                    Sound.Play(SoundNames.CardFlap);
                     diceIcon.Scale = diceIconSelectedScale;
                 }
             }

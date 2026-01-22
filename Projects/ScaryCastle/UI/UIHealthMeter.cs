@@ -71,12 +71,10 @@ namespace ScaryCastle
             if (Actor == null)
                 return;
 
-            Game.SpriteBatch.Begin(Game.Camera);
             for (var i = 0; i < totalHearts; i++)
             {
                 hearts[i].Draw(gameTime);
             }
-            Game.SpriteBatch.End();
         }
 
         // OnUpdate

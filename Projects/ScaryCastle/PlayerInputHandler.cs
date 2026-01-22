@@ -97,7 +97,7 @@ namespace ScaryCastle
 
             if (MouseCursor.Item != null)
             {
-                Sound.Play(SoundNames.UISelectD);
+                Sound.Play(SoundNames.Interact);
                 MouseCursor.Item = null;
             }
 
