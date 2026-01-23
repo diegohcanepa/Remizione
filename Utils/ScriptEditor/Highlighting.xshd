@@ -92,6 +92,7 @@
 			<Word>await-enter-room</Word>			
 			<Word>await-input</Word>
 			<Word>await-message</Word>
+			<Word>await-monitor-text</Word>
 			<Word>await-move</Word>
 			<Word>await-music</Word>
 			<Word>await-opacity-tween</Word>
@@ -171,9 +172,11 @@
 			<Word>flashback-effect-in</Word>
 			<Word>flashback-effect-out</Word>
 			<Word>pan-sound</Word>
+			<Word>pause-sound</Word>
 			<Word>play-music-tag</Word>
 			<Word>play-music</Word>
 			<Word>play-sound</Word>
+			<Word>resume-sound</Word>
 			<Word>set-playing-music-pan</Word>
 			<Word>set-music-tag</Word>
 			<Word>set-playing-music-volume</Word>

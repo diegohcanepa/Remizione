@@ -363,6 +363,7 @@ namespace Adberration
             AotTypeRegistry.Register("move", typeof(MoveCommand));
             AotTypeRegistry.Register("opacity-tween", typeof(OpacityTweenCommand));
             AotTypeRegistry.Register("pause-routine", typeof(PauseRoutineCommand));
+            AotTypeRegistry.Register("pause-sound", typeof(PauseSoundCommand));
             AotTypeRegistry.Register("play-animation", typeof(PlayAnimationCommand));
             AotTypeRegistry.Register("play-music", typeof(PlayMusicCommand));
             AotTypeRegistry.Register("play-sound", typeof(PlaySoundCommand));
@@ -376,6 +377,7 @@ namespace Adberration
             AotTypeRegistry.Register("reset-camera", typeof(ResetCameraCommand));
             AotTypeRegistry.Register("reset-tweens", typeof(ResetTweensCommand));
             AotTypeRegistry.Register("resume-routine", typeof(ResumeRoutineCommand));
+            AotTypeRegistry.Register("resume-sound", typeof(ResumeSoundCommand));
             AotTypeRegistry.Register("rotation-tween", typeof(RotationTweenCommand));
             AotTypeRegistry.Register("save-game", typeof(SaveGameCommand));
             AotTypeRegistry.Register("scale-tween", typeof(ScaleTweenCommand));

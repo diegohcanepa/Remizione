@@ -302,6 +302,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/CardFlap.wav;Audio/FX/CardFlap
 
+#begin Audio/FX/ChatMessage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/ChatMessage.wav;Audio/FX/ChatMessage
+
 #begin Audio/FX/CollectCoin.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -619,6 +625,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/ItemDiscard.wav;Audio/FX/ItemDiscard
+
+#begin Audio/FX/Keyboard.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Keyboard.wav;Audio/FX/Keyboard
 
 #begin Audio/FX/Lightning.wav
 /importer:WavImporter
@@ -1099,6 +1111,15 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Color
 /build:Fonts/CommonOutline.bmp
+
+#begin Fonts/Computer.bmp
+/importer:LocalizedFontTextureImporter
+/processor:LocalizedFontTextureProcessor
+/processorParam:DefaultCharacter=?
+/processorParam:FirstCharacter=
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Color
+/build:Fonts/Computer.bmp
 
 #begin System/Actors.json
 /copy:System/Actors.json
