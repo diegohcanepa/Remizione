@@ -6,18 +6,18 @@ using System.Text;
 namespace ScaryCastle
 {
     /// <summary>
-    /// DiceBag
+    /// Deck
     /// </summary>
-    public sealed class DiceBag
+    public sealed class Deck
     {
-        private readonly List<Dice> dice = [];
+        private readonly List<Card> cards = [];
         private readonly GameSession session;
 
         // Constructor
-        public DiceBag(GameSession session)
+        public Deck(GameSession session)
         {
             this.session = session;
-            this.Cards = dice.AsReadOnly();
+            this.Cards = cards.AsReadOnly();
         }
 
         // ContentVersion
@@ -36,6 +36,6 @@ namespace ScaryCastle
         public int Capacity { get; set; } = 5;
 
         // Cards
-        public ReadOnlyCollection<Dice> Cards { get; }
+        public ReadOnlyCollection<Card> Cards { get; }
     }
 }

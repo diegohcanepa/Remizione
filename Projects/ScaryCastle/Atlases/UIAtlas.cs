@@ -16,7 +16,7 @@ namespace ScaryCastle
             Coin = this[nameof(Coin)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
-            Dice = this[nameof(Dice)];
+            Deck = this[nameof(Deck)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             HeartEmpty = this[nameof(HeartEmpty)];
             HeartHalf = this[nameof(HeartHalf)];
@@ -57,8 +57,8 @@ namespace ScaryCastle
         // CreditsBar
         public AtlasImage CreditsBar { get; }
 
-        // Dice
-        public AtlasImage Dice { get; }
+        // Deck
+        public AtlasImage Deck { get; }
 
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }

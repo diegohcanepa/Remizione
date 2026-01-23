@@ -48,7 +48,7 @@ namespace ScaryCastle
             : base(game, new ScaryCastlePersistenceModel(), ContentManagerExtension.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
-            this.Deck = new DiceBag(this);
+            this.Deck = new Deck(this);
             this.Inventory = new(this);
             this.Environment = new Environment(this);
             this.HUD = new HUD(this);
@@ -103,7 +103,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(CloseUpRoom));
             AotTypeRegistry.Register(typeof(Coin));
             AotTypeRegistry.Register(typeof(CreditsRoom));
-            AotTypeRegistry.Register(typeof(Dice));
+            AotTypeRegistry.Register(typeof(Card));
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(HellGoat));
             AotTypeRegistry.Register(typeof(Hub));
@@ -399,7 +399,7 @@ namespace ScaryCastle
         }
 
         // Deck
-        public DiceBag Deck { get; }
+        public Deck Deck { get; }
 
         // DeclaredThings
         public NamedObjectReadOnlyCollection<GameThing> DeclaredThings { get; }
