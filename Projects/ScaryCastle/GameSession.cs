@@ -134,6 +134,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("attach-light", typeof(AttachLightCommand));
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
+            AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
             AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
             AotTypeRegistry.Register("await-player-approach", typeof(AwaitPlayerApproachCommand));
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));

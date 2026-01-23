@@ -5,6 +5,7 @@ using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ScaryCastle.Effects;
+using ScaryCastle.Scripting;
 using System;
 
 namespace ScaryCastle
@@ -275,10 +276,14 @@ namespace ScaryCastle
             // Session is awaiting
             if (Room.Session.IsAwaiting)
             {
-                if (Room.Session.Player?.HasSpeechBubble == false)
-                    State = MouseCursorState.Wait;
-                else
+                if (Room.Session.Player?.HasSpeechBubble == true)
                     State = MouseCursorState.Arrow;
+
+                else if (Room.Session.AwaitingScript?.CurrentStatement is AwaitInputCommand)
+                    State = MouseCursorState.Hand;
+
+                else
+                    State = MouseCursorState.Wait;
 
                 return;
             }

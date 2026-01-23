@@ -10,6 +10,7 @@ namespace Engendro.Audio
     /// <summary>
     /// Sound
     /// </summary>
+    // TODO: Hay un bug cuando un sonido toca loopeado y te vas con el cursor al otro monitor y queda loopeando.
     public sealed partial class Sound : IDisposable, INamedObject
     {
         #region Private fields

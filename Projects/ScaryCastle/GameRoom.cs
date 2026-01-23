@@ -365,6 +365,12 @@ namespace ScaryCastle
 #if DEBUG
             DrawDebugBoxes();
 #endif
+            // TODO: Remove
+            Game.SpriteBatch.Begin(Game.Camera);
+            Session.Deck[0].IsFaceVisible = true;
+            Session.Deck[0].Position = Screen.Center;
+            Session.Deck[0].Draw(gameTime);
+            Game.SpriteBatch.End();
         }
 
         // OnHandleInput

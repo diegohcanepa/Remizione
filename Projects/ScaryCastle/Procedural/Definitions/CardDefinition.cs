@@ -3,6 +3,7 @@ using ScaryCastle.Procedural;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text.Json;
 
 namespace ScaryCastle
@@ -21,6 +22,22 @@ namespace ScaryCastle
         public CardDefinition(JsonElement element)
             : base(element)
         {
+            // Action
+            if (element.GetEnum<CardAction>("action") is not CardAction action)
+                throw new InvalidDataException("Missing card action.");
+            else
+                this.Action = action;
+
+            // Category
+            if (element.GetEnum<CardCategory>("category") is not CardCategory category)
+                throw new InvalidDataException("Missing card category.");
+            else
+                this.Category = category;
+
+            BackImage = Atlases.UI.GetImage($"CardBack");
+            FrontImage = Atlases.UI.GetImage($"Card{Category}");
+            CategoryImage = Atlases.UI.GetImage($"CardCategory{category}");
+
             data.Add(Name, this);
             dataList.Add(this);
         }
@@ -54,6 +71,21 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // Action
+        public CardAction Action { get; }
+
+        // BackImage
+        public AtlasImage BackImage { get; }
+
+        // Category
+        public CardCategory Category { get; }
+
+        // CategoryImage
+        public AtlasImage CategoryImage { get; }
+
+        // FrontImage
+        public AtlasImage FrontImage { get; }
 
         // ToString
         public override string ToString()

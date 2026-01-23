@@ -225,7 +225,7 @@ Bla bla bla</String>
   <String Key="Misc.Yes">Yes</String>
   <String Key="Misc.YouAreDead">YOU'RE DEAD.</String>
   <String Key="Monitor.Subtitle">63K RAM SYSTEM   37911 BASIC BYTES FREE</String>
-  <String Key="Monitor.Title">**** KOMMANDER 63 BASIC V2 *****</String>
+  <String Key="Monitor.Title">*** KOMMANDER 63 BASIC V2 ***</String>
   <String Key="Platform.NintendoSwitch.Messages.ControllerDisconnected">Please reconnect your Joy-Con™ to continue.</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyButton">Press any button to continue</String>
   <String Key="Platform.NintendoSwitch.Messages.PressAnyKeyOrButton">Press any key or button to continue</String>

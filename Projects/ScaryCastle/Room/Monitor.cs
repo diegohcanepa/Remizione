@@ -45,7 +45,6 @@ namespace ScaryCastle
                 MaximumWidth = 163,
                 Scale = ScaleInfo.Text.ExtraLarge,
                 Text = text,
-                TypingSpeed = 60,
                 X = 33
             };
         }
@@ -134,8 +133,8 @@ namespace ScaryCastle
             lines[lineIndex].Color = color ? Color.LightBlue : Color.White;
             lines[lineIndex].Text = text;
 
-            if (!fast)
-                lines[lineIndex].StartTyping();
+            lines[lineIndex].TypingSpeed = fast ? 10 : 60;
+            lines[lineIndex].StartTyping();
         }
     }
 }

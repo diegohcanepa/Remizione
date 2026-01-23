@@ -16,7 +16,7 @@
   ],
   "$defs": {
     "Card": {
-      "description": "Definición de las propiedades de una carta.",
+      "description": "Definicion de las propiedades de una carta.",
       "allOf": [
         {
           "$ref": "./Definition.schema.json"
@@ -24,12 +24,23 @@
         {
           "type": "object",
           "properties": {
-            "realm": {
+            "action": {
               "type": "string",
               "enum": [
-                "Earthly",
-                "Infernal",
-                "Celestial"
+                "Damage",
+                "Shield",
+                "Heal",
+                "Escape"
+              ]
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "Attack",
+                "Defense",
+                "Healing",
+                "Prayer",
+                "Status"
               ]
             }
           }

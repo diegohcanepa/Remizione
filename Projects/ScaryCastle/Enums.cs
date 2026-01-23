@@ -14,6 +14,21 @@ namespace ScaryCastle
     // AttackType
     public enum AttackType { None, Melee, Ranged, Magic, Contact }
 
+    // CardAction
+    public enum CardAction
+    {
+        Damage,         // Aplica daño (Icono: Corazón Negro 🖤)
+        Shield,         // Aplica escudo temporal (Icono: Corazón Azul 💙)
+        Heal,           // Recupera vida (Icono: Corazón Rojo ❤️)
+        ApplyEffect,    // Para la categoría Status (Icono: Calavera/Espiral 💀)
+        Escape,         // Intenta huir (Icono: Salida >>)
+        ModifyDice,     // Buff al dado (Icono: Dado Brillante ✨)
+        DrawCards       // Robar cartas (Icono: Cartas 🃏)
+    }
+
+    // CardCategory
+    public enum CardCategory { Attack, Defense, Healing, Prayer, Status }
+
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }
 

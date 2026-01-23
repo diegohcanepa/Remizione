@@ -83,7 +83,7 @@
 	<FX Name="SpearTrap" MaxInstances="4" />
 	<FX Name="SummonA" MaxInstances="4" />
 	<FX Name="TestSkillFail" MaxInstances="4" />
-	<FX Name="Text" MaxInstances="4" />
+	<FX Name="Text" MaxInstances="4" Volume=".4" />
 	<FX Name="TowerDoorClose" MaxInstances="4" />
 	<FX Name="Thunder" MaxInstances="4" Sounds="1..4" />
 	<FX Name="ThrowableDuck" MaxInstances="8" Sounds="1..3" Volume=".4"/>
