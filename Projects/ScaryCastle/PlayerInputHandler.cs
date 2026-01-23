@@ -20,19 +20,6 @@ namespace ScaryCastle
 
         #region Private members
 
-        // HandleInput
-        private HandleInputResult HandleInput()
-        {
-            // Interaction
-            if (MouseCursor.Target != null && InputBindings.Interact.IsPressed(PlayerIndex.One))
-            {
-                Actor.Interact();
-                return HandleInputResult.Handled;
-            }
-
-            return HandleInputResult.Unhandled;
-        }
-
         // HandleMouseInput
         private HandleInputResult HandleMouseInput()
         {
@@ -111,10 +98,7 @@ namespace ScaryCastle
         // HandleInput
         public override HandleInputResult HandleInput(GameTime gameTime)
         {
-            if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
-                return HandleMouseInput();
-            else
-                return HandleInput();
+            return HandleMouseInput();
         }
     }
 }

@@ -29,24 +29,30 @@ namespace Engendro
         }
 
         // Random
-        public static Vector2 Random(this Vector2 origin, Vector2 minimumRadius, Vector2 maximumRadius)
+        public static Vector2 Random(this Vector2 origin, Vector2 minRadius, Vector2 maxRadius)
         {
-            if (minimumRadius.X < 0 || minimumRadius.Y < 0)
-                throw new ArgumentOutOfRangeException(nameof(minimumRadius), "Value must be greater than zero.");
+            // En C# moderno (.NET 6+), usamos Random.Shared para thread-safety y eficiencia.
+            var rng = System.Random.Shared;
 
-            if (maximumRadius.X < 0 || maximumRadius.Y < 0)
-                throw new ArgumentOutOfRangeException(nameof(maximumRadius), "Value must be greater than zero.");
+            // 1. Generamos un ángulo aleatorio entre 0 y 2*PI
+            // MathHelper.TwoPi es la constante de MonoGame para 360 grados en radianes
+            float angle = (float)(rng.NextDouble() * MathHelper.TwoPi);
 
-            if (minimumRadius.X > maximumRadius.X || minimumRadius.Y > maximumRadius.Y)
-                throw new ArgumentOutOfRangeException(nameof(minimumRadius), "Minimum radius cannot be greater than the maximum radius.");
+            // 2. Calculamos seno y coseno.
+            // System.Math devuelve double, así que hacemos cast a (float) para Vector2
+            float cos = (float)Math.Cos(angle);
+            float sin = (float)Math.Sin(angle);
 
-            var angle = random.NextDouble() * Math.PI * 2;
-            var xRadius = RandomHelper.Next(System.Random.Shared, minimumRadius.X, maximumRadius.X);
-            var yRadius = RandomHelper.Next(System.Random.Shared, minimumRadius.Y, maximumRadius.Y);
-            var x = origin.X + (xRadius * Math.Cos(angle));
-            var y = origin.Y + (yRadius * Math.Sin(angle));
+            // 3. Obtenemos un factor 't' entre 0 y 1 para la interpolación
+            float t = (float)rng.NextDouble();
 
-            return new Vector2((float)x, (float)y);
+            // 4. Interpolamos (Lerp) el radio mínimo y máximo
+            // MathHelper.Lerp es el equivalente directo en MonoGame
+            float xRadius = MathHelper.Lerp(minRadius.X, maxRadius.X, t);
+            float yRadius = MathHelper.Lerp(minRadius.Y, maxRadius.Y, t);
+
+            // 5. Construimos el vector final
+            return origin + new Vector2(cos * xRadius, sin * yRadius);
         }
 
         // Round

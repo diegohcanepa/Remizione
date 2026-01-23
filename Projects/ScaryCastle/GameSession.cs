@@ -101,6 +101,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(BloodyEye));
             AotTypeRegistry.Register(typeof(BreakableProp));
             AotTypeRegistry.Register(typeof(CloseUpRoom));
+            AotTypeRegistry.Register(typeof(Coin));
             AotTypeRegistry.Register(typeof(CreditsRoom));
             AotTypeRegistry.Register(typeof(Dice));
             AotTypeRegistry.Register(typeof(GameRoom));

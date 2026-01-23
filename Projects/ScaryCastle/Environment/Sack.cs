@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,14 @@ namespace ScaryCastle
             DepthOffset = -2;
             DisplayNameKey = "Prop.Sack";
             Hotspot =  new Polygon("0,0;7,0;7,7;0,7");
+        }
+
+        // OnParentChanged
+        protected override void OnParentChanged(Entity? previousParent)
+        {
+            base.OnParentChanged(previousParent);
+            if (Parent == null)
+                Session.ObjectPools.Sacks.Return(this);
         }
 
         // Item

@@ -144,8 +144,12 @@ namespace ScaryCastle
                     {
                         if (thing is IHoleArea holeArea && holeArea.Contains(Position))
                         {
-                            Position = holeArea.ClampOutside(Position);
-                            OnCollision(thing);
+                            OnCollisioning(thing, out var handled);
+                            if (!handled)
+                            {
+                                Position = holeArea.ClampOutside(Position);
+                                OnCollision(thing);
+                            }
                         }
                     }
                 }
@@ -251,13 +255,14 @@ namespace ScaryCastle
             var coins = Loot.RollCoins(Session, room.Definition, Definition);
 
             if (coins > 0)
-            {
-                var tweenDuration = 500;
-
+            { 
                 for (var i = 0; i < coins; i++)
                 {
-                    Session.ObjectPools.Coins.Get()?.Drop(room, Position, tweenDuration);
-                    tweenDuration += 200;
+                    if (Session.ObjectPools.Coins.Get() is Coin coin)
+                    {
+                        coin.Position = Position;
+                        room.Children.Add(coin);
+                    }
                 }
             }
         }
@@ -274,6 +279,12 @@ namespace ScaryCastle
         // OnCollision
         protected virtual void OnCollision(GameThing thing)
         {
+        }
+
+        // OnCollisioning
+        protected virtual void OnCollisioning(GameThing thing, out bool handled)
+        {
+            handled = false;
         }
 
         // OnDie

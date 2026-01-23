@@ -24,7 +24,7 @@ namespace ScaryCastle
 
             subtitle = CreateText(TextRepository.GetValue("Monitor.Subtitle"));
             subtitle.PivotOrigin = RectanglePoint.Top;
-            subtitle.Position = title.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 2);
+            subtitle.Position = title.BoundingBox.GetPoint(RectanglePoint.Bottom);
 
             lines = new TextSprite[6];
             for (int i = 0; i < lines.Length; i++)
@@ -38,14 +38,14 @@ namespace ScaryCastle
         // CreateText
         private TextSprite CreateText(string? text = null)
         {
-            return new(Game, Fonts.Computer)
+            return new(Game, Fonts.Common)
             {
                 Color = Color.White,
-                Opacity = .6f,
+                Opacity = .9f,
                 MaximumWidth = 163,
-                Scale = ScaleInfo.Text.Tiny,
+                Scale = ScaleInfo.Text.ExtraLarge,
                 Text = text,
-                TypingSpeed = 40,
+                TypingSpeed = 60,
                 X = 33
             };
         }
@@ -53,11 +53,11 @@ namespace ScaryCastle
         // Layout
         private void Layout()
         {
-            var y = subtitle.BoundingBox.Bottom + 7;
+            var y = subtitle.BoundingBox.Bottom + 5;
             for (int i = 0; i < lines.Length; i++)
             {
                 lines[i].Y = y;
-                y += lines[i].BoundingBox.Height + 3;
+                y += lines[i].BoundingBox.Height + 4;
             }
         }
 
@@ -112,7 +112,7 @@ namespace ScaryCastle
             if (!pushText)
             {
                 lineIndex++;
-                if (lineIndex == lines.Length)
+                if (lineIndex == lines.Length - 3)
                 {
                     pushText = true;
                     lineIndex--;
@@ -131,7 +131,7 @@ namespace ScaryCastle
 
             Layout();
 
-            lines[lineIndex].Color = color ? Color.LightSkyBlue : Color.White;
+            lines[lineIndex].Color = color ? Color.LightBlue : Color.White;
             lines[lineIndex].Text = text;
 
             if (!fast)

@@ -109,7 +109,7 @@ namespace ScaryCastle
             if (PropState == PropState.Locked)
                 return false;
 
-            if (OpenSound != null)
+            if (OpenSound != null && Room?.IsCurrentRoom == true)
                 PlaySound(OpenSound);
 
             SyncAnimation();

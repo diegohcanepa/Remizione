@@ -194,6 +194,12 @@ namespace ScaryCastle
         // InputHandler
         protected InputHandler? InputHandler { get; set; }
 
+        // OnCollisioning
+        protected override void OnCollisioning(GameThing thing, out bool handled)
+        {
+            handled = thing is Coin;
+        }
+
         // OnDie
         protected override void OnDie()
         {

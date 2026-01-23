@@ -350,8 +350,25 @@ namespace ScaryCastle
         // RandomWalkablePoint
         public Vector2 RandomWalkablePoint(Vector2 origin, float minimumRadius, float maximumRadius)
         {
-            var pt = Polygon.RandomPoint(origin, minimumRadius, maximumRadius);
-            return GetWalkablePoint(pt);
+            // Intentamos X veces encontrar un punto que caiga en zona válida por azar.
+            // Esto preserva la distribución y el radio que pediste.
+            int attempts = 10;
+            for (int i = 0; i < attempts; i++)
+            {
+                var pt = Polygon.RandomPoint(origin, minimumRadius, maximumRadius);
+
+                // Si el punto es caminable tal cual salió, lo usamos.
+                if (IsWalkableAt(pt))
+                {
+                    return pt;
+                }
+            }
+
+            // FALLBACK: Si tras 10 intentos no encontramos nada (ej: el jugador está
+            // arrinconado contra una pared), tenemos dos opciones:
+
+            // Opción A: Devolver el origen (el personaje no se mueve).
+            return origin;
         }
     }
 }

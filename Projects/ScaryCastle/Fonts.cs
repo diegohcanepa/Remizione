@@ -34,10 +34,6 @@ namespace ScaryCastle
             CommonOutline.SpriteFont = assets[CommonOutlineAssetName];
             CommonOutline.SpriteFont.LineSpacing += 2;
             CommonOutline.SpriteFont.Spacing = -5;
-
-            Computer.SpriteFont = assets[ComputerAssetName];
-            Computer.SpriteFont.LineSpacing += 29;
-            Computer.SpriteFont.Spacing = 12;
         }
 
         #endregion
@@ -53,7 +49,6 @@ namespace ScaryCastle
         {
             assets[CommonAssetName] = LoadFont(content, CommonAssetName);
             assets[CommonOutlineAssetName] = LoadFont(content, CommonOutlineAssetName);
-            assets[ComputerAssetName] = LoadFont(content, ComputerAssetName);
 
             TextRepository.Loaded += OnTextRepositoryLoaded;
         }
@@ -71,12 +66,5 @@ namespace ScaryCastle
 
         // CommonOutlineAssetName
         public const string CommonOutlineAssetName = "CommonOutline";
-
-        // Computer
-        // Kommodore, Regular, 48
-        public static Font Computer { get; } = new Font();
-
-        // ComputerAssetName
-        public const string ComputerAssetName = "Computer";
     }
 }
