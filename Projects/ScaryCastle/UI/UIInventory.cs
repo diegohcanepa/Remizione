@@ -55,7 +55,7 @@ namespace ScaryCastle
             this.deckIcon = new(Game, Atlases.UI.Deck)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, 7, -11),
+                Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, 7, -9),
             };
 
             // Card amount
@@ -63,7 +63,7 @@ namespace ScaryCastle
             {
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Top,
-                Position = deckIcon.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -1),
+                Position = deckIcon.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1),
                 Scale = ScaleInfo.Text.ExtraLarge,
                 Spacing = -6
             };
@@ -106,7 +106,7 @@ namespace ScaryCastle
             // Item name
             this.itemName = new(Game, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Sentence,
+                Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Bottom,
                 Y = slots[0].BoundingBox.Top - 3,
                 Scale = ScaleInfo.UISentence
