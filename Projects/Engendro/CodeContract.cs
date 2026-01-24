@@ -16,10 +16,18 @@ namespace Engendro
                 throw new ArgumentOutOfRangeException(paramName, "Value must be equal or greater than zero.");
         }
 
+        // EnsureLoaded
+        public static void EnsureLoaded(string objectName, bool isLoaded)
+        {
+            NotEmpty(objectName, nameof(objectName));
+            if (!isLoaded)
+                throw new InvalidOperationException($"The {objectName} object is not loaded.");
+        }
+
         // GreaterThanZero
         public static void GreaterThanZero(float value, string paramName)
         {
-            if (value < 1)
+            if (value <= 0)
                 throw new ArgumentOutOfRangeException(paramName, "Value must be greater than zero.");
         }
 
@@ -60,14 +68,6 @@ namespace Engendro
         {
             if (string.IsNullOrWhiteSpace(value))
                 throw new ArgumentException("Value cannot be null, empty or contain only whitespaces.", paramName);
-        }
-
-        // NotLoaded
-        public static void NotLoaded(string objectName, bool isLoaded)
-        {
-            NotEmpty(objectName, nameof(objectName));
-            if (!isLoaded)
-                throw new InvalidOperationException($"The {objectName} object is not loaded.");
         }
 
         // ThrowDuplicatedNameException

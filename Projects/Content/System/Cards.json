@@ -3,8 +3,11 @@
 	"data": [
 		{
 			"name": "CardTest",
-			"category": "Status",
-			"action": "Damage"
+			"baseValue": 1,
+			"category": "Attack",
+			"action": "Damage",
+			"diceThreshold": 2,
+			"bonusValue": 2
 		}
 	]
 }

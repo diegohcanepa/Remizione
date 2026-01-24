@@ -8,8 +8,16 @@ namespace ScaryCastle
     /// </summary>
     public sealed class Card : GameObject
     {
+        private readonly ImageSprite actionIcon;
+        private readonly Countdown actionIconEffectCountdown = new() { DefaultDuration = 1500 };
+        private readonly ImageSprite bonusValueIcon;
         private readonly ImageSprite categoryIcon;
         private readonly ImageSprite cardContainer;
+        private readonly ImageSprite diceIcon;
+        private readonly Countdown diceIconEffectCountdown = new() { DefaultDuration = 3500 };
+        private readonly ImageSprite diceThresholdNumber;
+        private readonly Vector2Tween diceTween = new();
+        private readonly Vector2Tween heartTween = new();
 
         #region Constructors
 
@@ -31,11 +39,44 @@ namespace ScaryCastle
             {
             };
 
+            // Action icon
+            this.actionIcon = new(Game, Definition.ActionImage)
+            {
+                PivotOrigin = RectanglePoint.Center
+            };
+
+            // Bonus value number image
+            this.bonusValueIcon = new(Game, Definition.BonusValueImage)
+            {
+                PivotOrigin = RectanglePoint.RightBottom,
+                Scale = new(.65f)
+            };
+
             // Category icon
             this.categoryIcon = new(Game, Definition.CategoryImage)
             {
                 PivotOrigin = RectanglePoint.Center
             };
+
+            // Dice icon
+            this.diceIcon = new(Game, Atlases.UI.GetImage("CardDice"))
+            {
+                PivotOrigin = RectanglePoint.RightTop,
+                Scale = new(.65f)
+            };
+
+            // Dice threshold number image
+            this.diceThresholdNumber = new(Game, Definition.DiceThresholdImage)
+            {
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Scale = new(.65f)
+            };
+
+            if (Definition.Action == CardAction.Damage)
+                actionIconEffectCountdown.Start();
+
+            if (Definition.HasBonus)
+                diceIconEffectCountdown.Start();
 
             Refresh();
         }
@@ -52,7 +93,14 @@ namespace ScaryCastle
             if (!IsFaceVisible)
                 return;
 
-            categoryIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 1);
+            actionIcon.Tweens.Reset();
+            diceIcon.Tweens.Reset();
+
+            actionIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Center, -.5f, -1f);
+            categoryIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Top, -.5f, 1);
+            diceIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.RightTop, -2, 2);
+            diceThresholdNumber.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 3, -3f);
+            bonusValueIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.RightBottom, -2.5f, -3f);
         }
 
         #endregion
@@ -64,12 +112,44 @@ namespace ScaryCastle
         {
             cardContainer.Draw(gameTime);
             categoryIcon.Draw(gameTime);
+            actionIcon.Draw(gameTime);
+            diceIcon.Draw(gameTime);
+            diceThresholdNumber.Draw(gameTime);
+            bonusValueIcon.Draw(gameTime);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            actionIcon.Update(gameTime);
+            diceIcon.Update(gameTime);
             cardContainer.Update(gameTime);
+
+            if (actionIconEffectCountdown.IsRunning)
+            {
+                actionIconEffectCountdown.Update(gameTime);
+                if (!actionIconEffectCountdown.IsRunning)
+                {
+                    if (Definition.Action is CardAction.Damage or CardAction.Heal)
+                    {
+                        heartTween.Start(TweenStyle.CubicInOut, Vector2.One, Vector2.One * 1.1f, 100, 4);
+                        actionIcon.Tweens.ScaleTween = heartTween;
+                    }
+
+                    actionIconEffectCountdown.Restart();
+                }
+            }
+
+            if (diceIconEffectCountdown.IsRunning)
+            {
+                diceIconEffectCountdown.Update(gameTime);
+                if (!diceIconEffectCountdown.IsRunning)
+                {
+                    diceTween.Start(TweenStyle.Linear, diceIcon.Position, diceIcon.Position - new Vector2(.25f), 30, 4);
+                    diceIcon.Tweens.PositionTween = diceTween;
+                    diceIconEffectCountdown.Restart();
+                }
+            }
         }
 
         #endregion

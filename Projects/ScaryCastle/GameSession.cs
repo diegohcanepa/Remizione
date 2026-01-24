@@ -276,6 +276,10 @@ namespace ScaryCastle
             if (sessionNode.Attributes[nameof(Coins)]?.Value is string coins)
                 this.Coins = XmlConvert.ToInt32(coins);
 
+            // Deck
+            if (sessionNode.Attributes[nameof(Deck)]?.Value is string deckData)
+                Inventory.LoadState(deckData);
+
             // Inventory
             if (sessionNode.Attributes[nameof(Inventory)]?.Value is string inventoryData)
                 Inventory.LoadState(inventoryData);
@@ -358,6 +362,10 @@ namespace ScaryCastle
 
             // Coins
             output.WriteAttributeString(nameof(Coins), XmlConvert.ToString(Coins));
+
+            // Deck
+            if (Deck.SaveState() is string deckData)
+                output.WriteAttributeString(nameof(Deck), deckData);
 
             // Inventory
             if (Inventory.SaveState() is string inventoryData)

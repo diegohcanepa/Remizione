@@ -14,6 +14,8 @@ namespace ScaryCastle
         private readonly List<Card> discardPile = [];
         private readonly List<Card> drawPile = [];
 
+        #region Contructor
+
         // Constructor
         public Deck(GameSession session)
             : base()
@@ -23,6 +25,8 @@ namespace ScaryCastle
             this.DrawPile = drawPile.AsReadOnly();
             Add(new Card(session.Game, "CardTest"));
         }
+
+        #endregion
 
         #region Protected members
 

@@ -174,11 +174,25 @@
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">Deck-assets/CardAttack.png</key>
-            <key type="filename">Deck-assets/CardBack.png</key>
             <key type="filename">Deck-assets/CardDefense.png</key>
             <key type="filename">Deck-assets/CardHealing.png</key>
             <key type="filename">Deck-assets/CardPrayer.png</key>
             <key type="filename">Deck-assets/CardStatus.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,8,11,16</rect>
+                <key>scale9Paddings</key>
+                <rect>6,8,11,16</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Deck-assets/CardBack.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -196,7 +210,6 @@
             <key type="filename">Deck-assets/CardCategoryAttack.png</key>
             <key type="filename">Deck-assets/CardCategoryHealing.png</key>
             <key type="filename">Deck-assets/CardCategoryPrayer.png</key>
-            <key type="filename">Deck-assets/CardCategoryStatus.png</key>
             <key type="filename">Deck-assets/CardDice.png</key>
             <key type="filename">UIIcons-assets/Sack.png</key>
             <struct type="IndividualSpriteSettings">
@@ -228,9 +241,12 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Deck-assets/HeartRed.png</key>
+            <key type="filename">Deck-assets/CardCategoryStatus.png</key>
+            <key type="filename">Deck-assets/HeartBlueFull.png</key>
+            <key type="filename">Deck-assets/HeartBlueHalf.png</key>
+            <key type="filename">Deck-assets/HeartRedFull.png</key>
             <key type="filename">Deck-assets/HeartRedHalf.png</key>
-            <key type="filename">Inventory-assets/InventorySlotLockIcon.png</key>
+            <key type="filename">UI-assets/ProhibitionIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -239,15 +255,18 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,2,3,4</rect>
+                <rect>2,2,5,5</rect>
                 <key>scale9Paddings</key>
-                <rect>2,2,3,4</rect>
+                <rect>2,2,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Deck-assets/HeartRedSmall.png</key>
-            <key type="filename">Deck-assets/HeartRedSmallHalf.png</key>
-            <key type="filename">MiniMap-assets/UIMiniMapMarkerHeart.png</key>
+            <key type="filename">Deck-assets/CardNumber1.png</key>
+            <key type="filename">Deck-assets/CardNumber2.png</key>
+            <key type="filename">Deck-assets/CardNumber3.png</key>
+            <key type="filename">Deck-assets/CardNumber4.png</key>
+            <key type="filename">Deck-assets/CardNumber5.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapMarkerLoot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -256,9 +275,32 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>1,1,3,3</rect>
+                <rect>1,2,3,3</rect>
                 <key>scale9Paddings</key>
-                <rect>1,1,3,3</rect>
+                <rect>1,2,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Deck-assets/HeartBlackFull.png</key>
+            <key type="filename">Deck-assets/HeartBlackHalf.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapMarkerCoin.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
+            <key type="filename">UI-assets/CheckMark.png</key>
+            <key type="filename">UI-assets/PointingHand.png</key>
+            <key type="filename">UIIcons-assets/Heart.png</key>
+            <key type="filename">UIIcons-assets/HeartEmpty.png</key>
+            <key type="filename">UIIcons-assets/HeartHalf.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,3,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -380,6 +422,21 @@
                 <rect>4,4,7,8</rect>
                 <key>scale9Paddings</key>
                 <rect>4,4,7,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Inventory-assets/InventorySlotLockIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,3,4</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,3,4</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -578,13 +635,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MiniMap-assets/UIMiniMapMarkerCoin.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
-            <key type="filename">UI-assets/CheckMark.png</key>
-            <key type="filename">UI-assets/PointingHand.png</key>
-            <key type="filename">UIIcons-assets/Heart.png</key>
-            <key type="filename">UIIcons-assets/HeartEmpty.png</key>
-            <key type="filename">UIIcons-assets/HeartHalf.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapMarkerHeart.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -593,24 +644,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,2,3,3</rect>
+                <rect>1,1,3,3</rect>
                 <key>scale9Paddings</key>
-                <rect>2,2,3,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">MiniMap-assets/UIMiniMapMarkerLoot.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,2,3,3</rect>
-                <key>scale9Paddings</key>
-                <rect>1,2,3,3</rect>
+                <rect>1,1,3,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -856,21 +892,6 @@
                 <rect>29,15,57,30</rect>
                 <key>scale9Paddings</key>
                 <rect>29,15,57,30</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UI-assets/ProhibitionIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

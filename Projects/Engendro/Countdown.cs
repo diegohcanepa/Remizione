@@ -10,6 +10,9 @@ namespace Engendro
     {
         private int restartDuration;
 
+        // DefaultDuration
+        public int DefaultDuration { get; set; } = 1000;
+
         // IsRunning
         public bool IsRunning => TimeLeft > 0;
 
@@ -20,6 +23,12 @@ namespace Engendro
             {
                 Start(restartDuration);
             }
+        }
+
+        // Start
+        public void Start()
+        {
+            Start(DefaultDuration);
         }
 
         // Start

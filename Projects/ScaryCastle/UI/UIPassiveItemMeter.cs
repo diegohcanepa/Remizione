@@ -29,7 +29,7 @@ namespace ScaryCastle
                 icons[i] = new(Game)
                 {
                     PivotOrigin = RectanglePoint.LeftTop,
-                    Scale = ScaleInfo.UIElement.VeryTiny
+                    Scale = ScaleInfo.UIElement.Tiny
                 };
             }
         }

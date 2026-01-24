@@ -424,7 +424,7 @@ namespace Engendro.Audio
                 LoadCore(AudioManager.DefaultContent);
 
             CodeContract.NotDisposed(nameof(Sound), IsDisposed);
-            CodeContract.NotLoaded(nameof(Sound), IsLoaded);
+            CodeContract.EnsureLoaded(nameof(Sound), IsLoaded);
 
             // Pick next sound name
             var name = NextSoundName(index);
