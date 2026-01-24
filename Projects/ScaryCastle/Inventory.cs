@@ -114,12 +114,6 @@ namespace ScaryCastle
         }
 
         // GetItems
-        public Item[] GetItems()
-        {
-            return [.. items];
-        }
-
-        // GetItems
         public Item[] GetItems(ItemCategory? category)
         {
             var result = new List<Item>();

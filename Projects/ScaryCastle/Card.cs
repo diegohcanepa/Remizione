@@ -11,11 +11,19 @@ namespace ScaryCastle
         private readonly ImageSprite categoryIcon;
         private readonly ImageSprite cardContainer;
 
+        #region Constructors
+
         // Constructor
-        public Card(Deck deck, CardDefinition definition)
-            : base(deck.Session.Game)
+        public Card(EngendroGame game, string cardName)
+            : this(game, CardDefinition.Get(cardName))
         {
-            this.Deck = deck;
+
+        }
+
+        // Constructor
+        public Card(EngendroGame game, CardDefinition definition)
+            : base(game)
+        {
             this.Definition = definition;
 
             // Card container
@@ -31,6 +39,8 @@ namespace ScaryCastle
 
             Refresh();
         }
+
+        #endregion
 
         #region Private members
 
@@ -63,9 +73,6 @@ namespace ScaryCastle
         }
 
         #endregion
-
-        // Deck
-        public Deck Deck { get; }
 
         // Definition
         public CardDefinition Definition { get; }
