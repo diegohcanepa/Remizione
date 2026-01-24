@@ -278,7 +278,7 @@ namespace ScaryCastle
 
             // Inventory
             if (sessionNode.Attributes[nameof(Inventory)]?.Value is string inventoryData)
-                Inventory.SetSerializationData(inventoryData);
+                Inventory.LoadState(inventoryData);
         }
 
         // OnResume
@@ -360,7 +360,7 @@ namespace ScaryCastle
             output.WriteAttributeString(nameof(Coins), XmlConvert.ToString(Coins));
 
             // Inventory
-            if (Inventory.GetSerializationData() is string inventoryData)
+            if (Inventory.SaveState() is string inventoryData)
                 output.WriteAttributeString(nameof(Inventory), inventoryData);
         }
 

@@ -3,7 +3,7 @@
 	"data": [
 		{
 			"name": "CardTest",
-			"category": "Attack",
+			"category": "Status",
 			"action": "Damage"
 		}
 	]

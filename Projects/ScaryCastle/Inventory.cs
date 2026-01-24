@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 
 namespace ScaryCastle
@@ -8,25 +9,19 @@ namespace ScaryCastle
     /// <summary>
     /// Inventory
     /// </summary>
-    public sealed class Inventory
+    public sealed class Inventory : Collection<Item>
     {
-        private readonly List<Item> items = [];
-
         // Constructor
         public Inventory(GameSession session)
+            : base()
         {
             this.Session = session;
         }
 
-        // Add
-        public Item? Add(string name, int amount = 1)
-        {
-            var definition = ItemDefinition.Find(name) ?? throw new InvalidOperationException("Item definition not found.");
-            return Add(definition, amount);
-        }
+        #region Private members
 
         // Add
-        public Item? Add(ItemDefinition definition, int amount = 1)
+        private Item? Add(ItemDefinition definition, int amount = 1)
         {
             var item = Find(definition.Name);
 
@@ -36,16 +31,48 @@ namespace ScaryCastle
                     return null;
 
                 item = new Item(this, definition) { Count = amount };
-                items.Add(item);
+                Add(item);
             }
             else
             {
                 item.Count += amount;
             }
 
-            Invalidate();
-
             return item;
+        }
+
+        #endregion
+
+        #region Protected members
+
+        // ClearItems
+        protected override void ClearItems()
+        {
+            base.ClearItems();
+            Invalidate();
+        }
+
+        // InsertItem
+        protected override void InsertItem(int index, Item item)
+        {
+            base.InsertItem(index, item);
+            Invalidate();
+        }
+
+        // RemoveItem
+        protected override void RemoveItem(int index)
+        {
+            base.RemoveItem(index);
+            Invalidate();
+        }
+
+        #endregion
+
+        // Add
+        public Item? Add(string name, int amount = 1)
+        {
+            var definition = ItemDefinition.Find(name) ?? throw new InvalidOperationException("Item definition not found.");
+            return Add(definition, amount);
         }
 
         // Capacity
@@ -56,32 +83,17 @@ namespace ScaryCastle
             {
                 if (value != field)
                 {
-                    field = int.Clamp(value, 3, MaximumCapacity);
+                    field = int.Clamp(value, MinimumCapacity, MaximumCapacity);
                     Invalidate();
                 }
             }
         } = 9;
 
-        // Clear
-        public void Clear()
-        {
-            items.Clear();
-            Invalidate();
-        }
-
-        // Contains
-        public bool Contains(Item item)
-        {
-            return items.Contains(item);
-        }
-
         // ContentVersion
         public int ContentVersion { get; private set; }
 
-        // Count
-        public int Count => items.Count;
-
         // DropItem
+        // TODO: Should in other class
         public void DropItem(Item item, Vector2 position)
         {
             if (Session.Room != null && Remove(item))
@@ -98,10 +110,10 @@ namespace ScaryCastle
         // Find
         public Item? Find(string name)
         {
-            for (var i = 0; i < items.Count; i++)
+            for (var i = 0; i < Count; i++)
             {
-                if (items[i].Name == name)
-                    return items[i];
+                if (this[i].Name == name)
+                    return this[i];
             }
 
             return null;
@@ -118,10 +130,10 @@ namespace ScaryCastle
         {
             var result = new List<Item>();
 
-            for (var i = 0; i < items.Count; i++)
+            for (var i = 0; i < Count; i++)
             {
-                if (category == null || items[i].Definition.Category == category)
-                    result.Add(items[i]);
+                if (category == null || this[i].Definition.Category == category)
+                    result.Add(this[i]);
             }
 
             return [.. result];
@@ -132,41 +144,19 @@ namespace ScaryCastle
         {
             float result = 0;
 
-            for (var i = 0; i < items.Count; i++)
+            for (var i = 0; i < Count; i++)
             {
-                result += items[i].Definition.LuckFactor;
+                result += this[i].Definition.LuckFactor;
             }
 
             return result;
         }
 
-        // GetSerializationData
-        public string GetSerializationData()
-        {
-            var result = new List<string>();
-
-            foreach (var item in items)
-            {
-                result.Add($"{item.Name}:{item.Count}:{item.Durability}");
-            }
-
-            return string.Join(";", result);
-        }
-
-        // IndexOf
-        public int IndexOf(Item item)
-        {
-            return items.IndexOf(item);
-        }
-
-        // Indexer
-        public Item this[int index] => items[index];
-
         // IsEmpty
-        public bool IsEmpty => items.Count == 0;
+        public bool IsEmpty => Count == 0;
 
         // IsFull
-        public bool IsFull => items.Count >= Capacity;
+        public bool IsFull => Count == Capacity;
 
         // Invalidate
         public void Invalidate()
@@ -174,33 +164,10 @@ namespace ScaryCastle
             unchecked { ContentVersion++; }
         }
 
-        // MaximumCapacity
-        public const int MaximumCapacity = 10;
-
-        // Remove
-        public bool Remove(string name)
+        // LoadState
+        public void LoadState(string data)
         {
-            return Find(name) is Item item && Remove(item);
-        }
-
-        // Remove
-        public bool Remove(Item item)
-        {
-            if (items.Remove(item))
-            {
-                Invalidate();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        // SetSerializationData
-        public void SetSerializationData(string data)
-        {
-            items.Clear();
+            Clear();
 
             if (string.IsNullOrEmpty(data))
                 return;
@@ -219,6 +186,31 @@ namespace ScaryCastle
                     }
                 }
             }
+        }
+
+        // MaximumCapacity
+        public const int MaximumCapacity = 10;
+
+        // MinimumCapacity
+        public const int MinimumCapacity = 3;
+
+        // Remove
+        public bool Remove(string name)
+        {
+            return Find(name) is Item item && Remove(item);
+        }
+
+        // SaveState
+        public string SaveState()
+        {
+            var result = new List<string>();
+
+            foreach (var item in this)
+            {
+                result.Add($"{item.Name}:{item.Count}:{item.Durability}");
+            }
+
+            return string.Join(";", result);
         }
 
         // Session

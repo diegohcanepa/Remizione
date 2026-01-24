@@ -21,6 +21,7 @@ namespace ScaryCastle
             this.Session = session;
             this.DiscardPile = discardPile.AsReadOnly();
             this.DrawPile = drawPile.AsReadOnly();
+            Add(new Card(session.Game, "CardTest"));
         }
 
         #region Protected members
