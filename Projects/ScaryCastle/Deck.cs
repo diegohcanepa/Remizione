@@ -116,13 +116,74 @@ namespace ScaryCastle
             return Find(name) ?? throw new InvalidOperationException($"Card '{name}' not found.");
         }
 
-        // GetSerializationData
-        public string GetSerializationData()
+        // Invalidate
+        public void Invalidate()
+        {
+            unchecked { ContentVersion++; }
+        }
+
+        // IsEmpty
+        public bool IsEmpty => Count == 0;
+
+        // IsFull
+        public bool IsFull => Count == Capacity;
+
+        // LoadState
+        public void LoadState(string data)
+        {
+            void AddCards(IEnumerable<string> cardNames, IList<Card> targetList, bool linkCards)
+            {
+                targetList.Clear();
+
+                foreach (var cardName in cardNames)
+                {
+                    if (linkCards)
+                    {
+                        if (Find(cardName) is Card existingCard)
+                            targetList.Add(existingCard);
+                    }
+                    else
+                    {
+                        targetList.Add(new Card(Session.Game, cardName));
+                    }
+                }
+            }
+
+            Clear();
+
+            if (string.IsNullOrEmpty(data))
+                return;
+
+            var cardGroups = data.Split(';');
+
+            if (cardGroups.Length > 0)
+            {
+                // Deck
+                AddCards(cardGroups[0].Split(','), this, false);
+
+                // Draw pile
+                if (cardGroups.Length > 1)
+                    AddCards(cardGroups[1].Split(','), drawPile, true);
+
+                // Discard pile
+                if (cardGroups.Length > 2)
+                    AddCards(cardGroups[2].Split(','), discardPile, true);
+            }
+        }
+
+        // Remove
+        public bool Remove(string name)
+        {
+            return Find(name) is Card card && Remove(card);
+        }
+
+        // SaveState
+        public string SaveState()
         {
             string Serialize(IEnumerable<Card> cards)
             {
                 var result = new List<string>();
-                
+
                 foreach (var card in cards)
                 {
                     result.Add(card.Name);
@@ -141,61 +202,8 @@ namespace ScaryCastle
             return string.Join(";", result);
         }
 
-        // Invalidate
-        public void Invalidate()
-        {
-            unchecked { ContentVersion++; }
-        }
-
-        // IsEmpty
-        public bool IsEmpty => Count == 0;
-
-        // IsFull
-        public bool IsFull => Count == Capacity;
-
-        // Remove
-        public bool Remove(string name)
-        {
-            return Find(name) is Card card && Remove(card);
-        }
-
         // Session
         public GameSession Session { get; }
-
-        // SetSerializationData
-        public void SetSerializationData(string data)
-        {
-            void AddCards(IEnumerable<string> cardNames, IList<Card> targetList)
-            {
-                targetList.Clear();
-
-                foreach (var cardName in cardNames)
-                {
-                    targetList.Add(new Card(Session.Game, cardName));
-                }
-            }
-
-            Clear();
-
-            if (string.IsNullOrEmpty(data))
-                return;
-
-            var cardGroups = data.Split(';');
-
-            if (cardGroups.Length > 0)
-            {
-                // Deck
-                AddCards(cardGroups[0].Split(','), this);
-
-                // Draw pile
-                if (cardGroups.Length > 1)
-                    AddCards(cardGroups[1].Split(','), drawPile);
-
-                // Discard pile
-                if (cardGroups.Length > 2)
-                    AddCards(cardGroups[2].Split(','), discardPile);
-            }
-        }
 
         // Shuffle
         public void Shuffle()
