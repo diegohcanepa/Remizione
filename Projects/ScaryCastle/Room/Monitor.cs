@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
@@ -133,8 +134,8 @@ namespace ScaryCastle
             lines[lineIndex].Color = color ? Color.LightBlue : Color.White;
             lines[lineIndex].Text = text;
 
-            lines[lineIndex].TypingSpeed = fast ? 10 : 60;
-            lines[lineIndex].StartTyping();
+            if (!fast)
+                lines[lineIndex].StartTyping(Sound.Get(SoundNames.Keyboard)?.PopInstance());
         }
     }
 }

@@ -4,8 +4,8 @@
 		{
 			"name": "CardTest",
 			"baseValue": 1,
-			"category": "Attack",
-			"action": "Damage",
+			"category": "Healing",
+			"action": "Heal",
 			"diceThreshold": 2,
 			"bonusValue": 2
 		}

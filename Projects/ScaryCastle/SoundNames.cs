@@ -18,6 +18,7 @@
         internal const string ImpactA = nameof(ImpactA);
         internal const string Interact = nameof(Interact);
         internal const string ItemDiscard = nameof(ItemDiscard);
+        internal const string Keyboard = nameof(Keyboard);
         internal const string Lightning = nameof(Lightning);
         internal const string LockOpen = nameof(LockOpen);
         internal const string LootSack = nameof(LootSack);

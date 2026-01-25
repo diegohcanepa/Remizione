@@ -49,7 +49,6 @@ namespace ScaryCastle
             this.bonusValueIcon = new(Game, Definition.BonusValueImage)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
-                Scale = new(.65f)
             };
 
             // Category icon
@@ -61,18 +60,16 @@ namespace ScaryCastle
             // Dice icon
             this.diceIcon = new(Game, Atlases.UI.GetImage("CardDice"))
             {
-                PivotOrigin = RectanglePoint.RightTop,
-                Scale = new(.65f)
+                PivotOrigin = RectanglePoint.Bottom,
             };
 
             // Dice threshold number image
             this.diceThresholdNumber = new(Game, Definition.DiceThresholdImage)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Scale = new(.65f)
             };
 
-            if (Definition.Action == CardAction.Damage)
+            if (Definition.Action is CardAction.Damage or CardAction.Heal)
                 actionIconEffectCountdown.Start();
 
             if (Definition.HasBonus)
@@ -96,11 +93,20 @@ namespace ScaryCastle
             actionIcon.Tweens.Reset();
             diceIcon.Tweens.Reset();
 
-            actionIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Center, -.5f, -1f);
-            categoryIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Top, -.5f, 1);
-            diceIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.RightTop, -2, 2);
-            diceThresholdNumber.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 3, -3f);
-            bonusValueIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.RightBottom, -2.5f, -3f);
+            var scale = new Vector2(Scale);
+
+            cardContainer.Scale = scale;
+            actionIcon.Scale = scale;
+            categoryIcon.Scale = scale;
+            diceIcon.Scale = scale * .55f;
+            diceThresholdNumber.Scale = scale * .65f;
+            bonusValueIcon.Scale = scale * .65f;
+
+            actionIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Center, -.5f * actionIcon.ScaleX, -1f * actionIcon.ScaleY);
+            categoryIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 1 * categoryIcon.ScaleY);
+            diceIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -4f * diceIcon.ScaleY);
+            diceThresholdNumber.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 3.5f * diceThresholdNumber.ScaleX, -3.5f * diceThresholdNumber.ScaleY);
+            bonusValueIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3.5f * bonusValueIcon.ScaleX, -3.5f * bonusValueIcon.ScaleY);
         }
 
         #endregion
@@ -187,5 +193,19 @@ namespace ScaryCastle
                 }
             }
         }
+
+        // Scale
+        public float Scale
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    Refresh();
+                }
+            }
+        } = 1;
     }
 }
