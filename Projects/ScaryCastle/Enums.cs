@@ -11,6 +11,14 @@ namespace ScaryCastle
     // AIStateName
     public enum AIStateName { Attack, Charge, Chase, CloseAttack, Decide, Idle, Move, Patrol, RangeAttack }
 
+    // ApproachBehavior
+    public enum ApproachBehavior
+    {
+        FaceToFace,     // Cara a cara (respetando la dirección del NPC)
+        ClosestSide,    // Lado más cercano (sin cruzar al NPC)
+        InFront         // Justo encima (para items o puertas)
+    }
+
     // AttackType
     public enum AttackType { None, Melee, Ranged, Magic, Contact }
 
@@ -28,6 +36,9 @@ namespace ScaryCastle
 
     // CardCategory
     public enum CardCategory { Attack, Defense, Healing, Prayer, Status }
+
+    // ClosureState
+    public enum ClosureState { Closed, Locked, Open }
 
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }

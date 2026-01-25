@@ -961,10 +961,10 @@ namespace Adberration
         }
 
 
-        // CreateRuntimeThingClone
-        public Thing CreateRuntimeThingClone(string declaredName, string instanceName)
+        // CreateThingClone
+        public Thing CreateThingClone(string declaredName, string instanceName)
         {
-            return ScriptEnvironment.CreateRuntimeThingClone(declaredName, instanceName, false);
+            return ScriptEnvironment.CreateThingClone(declaredName, instanceName, false);
         }
 
         // CurrentMusicName

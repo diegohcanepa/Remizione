@@ -562,6 +562,7 @@ namespace Adberration.Scripting
             // SetTargetEntity
             if (value == ScriptCapability.SetTargetEntity)
                 return ScriptType is ScriptType.Room or ScriptType.Thing or
+                       ScriptType.Entering or ScriptType.Exiting or
                        ScriptType.Load or ScriptType.Unload or
                        ScriptType.Enter or ScriptType.Outcome;
 

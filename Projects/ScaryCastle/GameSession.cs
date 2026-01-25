@@ -117,7 +117,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(RideCar));
             AotTypeRegistry.Register(typeof(RideDoor));
             AotTypeRegistry.Register(typeof(Sack));
-            AotTypeRegistry.Register(typeof(SaintPeregrine));
             AotTypeRegistry.Register(typeof(SpearTrap));
             AotTypeRegistry.Register(typeof(Tombstone));
             AotTypeRegistry.Register(typeof(Torch));
@@ -211,7 +210,7 @@ namespace ScaryCastle
             Camera.Setup(width, height, room.ScrollLock, room.Zoom);
 
             // Follow player
-            if (Player != null && Player.InCurrentRoom)
+            if (Player != null && Player.IsInCurrentRoom)
                 Camera.FollowTarget(Player, true);
         }
 

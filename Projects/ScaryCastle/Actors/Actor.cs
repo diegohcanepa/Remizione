@@ -39,6 +39,7 @@ namespace ScaryCastle
             this.session = session;
 
             this.Atlas = Atlases.Actors;
+            this.ApproachBehavior = ApproachBehavior.FaceToFace;
             this.DisplayNameKey = $"Actor.{DeclaredName}";
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
@@ -394,7 +395,7 @@ namespace ScaryCastle
             if (!IsPlayer)
                 return false;
 
-            var destination = target.IsWalkAreaHole ? (target as IHoleArea).Polygon.GetClosestPointOnEdge(Position) : target.GetApproachPosition(this, true);
+            var destination = target.GetApproachPosition(this);
             var result = MoveTo(destination);
             this.pendingInteractiveTarget = target;
 
@@ -464,7 +465,7 @@ namespace ScaryCastle
         // Interact
         public bool Interact(GameThing? target = null)
         {
-            if (target == null || !InCurrentRoom)
+            if (target == null || !IsInCurrentRoom)
                 return false;
 
             // Session is busy

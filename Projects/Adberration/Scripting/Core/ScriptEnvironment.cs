@@ -36,8 +36,8 @@ namespace Adberration.Scripting
 
         #region Private members
 
-        // CreateRuntimeThingCloneCore
-        private Thing? CreateRuntimeThingCloneCore(string declaredName, string instanceName)
+        // CreateThingClone
+        private Thing? CreateThingClone(string declaredName, string instanceName)
         {
             CodeContract.NotDisposed(nameof(Session), session.IsDisposed);
 
@@ -68,8 +68,8 @@ namespace Adberration.Scripting
             return result;
         }
 
-        // CreateRuntimeCloneName
-        private string CreateRuntimeCloneName(string typeName)
+        // CreateCloneName
+        private string CreateCloneName(string typeName)
         {
             var counter = 1;
             while (true)
@@ -185,8 +185,8 @@ namespace Adberration.Scripting
                 throw new InvalidOperationException($"Coding context out of scope. The valid context for '{memberName}' is '{context}'.");
         }
 
-        // CreateRuntimeThingClone
-        internal Thing CreateRuntimeThingClone(string declaredName, string instanceName, bool persistent)
+        // CreateThingClone
+        internal Thing CreateThingClone(string declaredName, string instanceName, bool persistent)
         {
             if (session.State == GameSessionState.Uninitialized)
                 throw new InvalidOperationException("Game session not initialized.");
@@ -195,9 +195,9 @@ namespace Adberration.Scripting
                 throw new InvalidOperationException("Invalid session state.");
 
             if (string.IsNullOrWhiteSpace(instanceName))
-                instanceName = CreateRuntimeCloneName(declaredName);
+                instanceName = CreateCloneName(declaredName);
 
-            var result = CreateRuntimeThingCloneCore(declaredName, instanceName) ?? throw new InvalidOperationException("Unable to clone entity.");
+            var result = CreateThingClone(declaredName, instanceName) ?? throw new InvalidOperationException("Unable to clone entity.");
 
             if (persistent)
                 result.Persistent = persistent;

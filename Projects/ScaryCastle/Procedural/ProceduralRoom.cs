@@ -106,17 +106,6 @@ namespace ScaryCastle
             return outList;
         }
 
-        // CreateRuntimeThingCloneCore
-        private GameThing CreateRuntimeThingCloneCore(string declaredName)
-        {
-            if (Session.CreateRuntimeThingClone(declaredName, $"{declaredName}*{RoomGraph.Index}_{Name}_{instanceCount}") is not GameThing result)
-                throw new InvalidOperationException($"Failed to create runtime clone from'{declaredName}'.");
-
-            instanceCount++;
-
-            return result;
-        }
-
         // GetSpawnPoints
         private List<Vector2> GetSpawnPoints(Rectangle area, int count, int cellSize)
         {
@@ -244,7 +233,7 @@ namespace ScaryCastle
                 // Flag placeholder as used
                 placeholder.Used = true;
 
-                var instance = CreateRuntimeThingCloneCore(chosen.Name);
+                var instance = CreateThingClone(chosen.Name);
                 instance.Position = placeholder.Position;
                 Children.Add(instance);
 
@@ -349,7 +338,7 @@ namespace ScaryCastle
 
             for (int i = 0; i < points.Count; i++)
             {
-                var instance = CreateRuntimeThingCloneCore(spawnedNames[i]);
+                var instance = CreateThingClone(spawnedNames[i]);
                 instance.Position = points[i];
                 Children.Add(instance);
             }
@@ -422,10 +411,15 @@ namespace ScaryCastle
 
         #endregion
 
-        // CreateRuntimeClone
-        public GameThing? CreateRuntimeClone(string declaredName)
+        // CreateThingClone
+        public GameThing CreateThingClone(string declaredName)
         {
-            return CreateRuntimeThingCloneCore(declaredName);
+            if (Session.CreateThingClone(declaredName, $"{declaredName}*{RoomGraph.Index}_{Name}_{instanceCount}") is not GameThing result)
+                throw new InvalidOperationException($"Failed to create runtime clone from'{declaredName}'.");
+
+            instanceCount++;
+
+            return result;
         }
 
         // Definition

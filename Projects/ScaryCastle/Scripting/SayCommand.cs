@@ -25,7 +25,7 @@ namespace ScaryCastle.Scripting
         protected override void OnExecute()
         {
             actor = AssertEntity<Actor>(0);
-            if (actor == null || !actor.InCurrentRoom)
+            if (actor == null || !actor.IsInCurrentRoom)
                 return;
 
             if (HasArg(ConditionArg) && Parser.ParseFlagConditionArgument(this, ConditionArg) is FlagCondition condition)

@@ -14,8 +14,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly Dictionary<PropState, Func<bool>?> handlers = [];
-        private PropState propState;
         private readonly Vector2Tween bounceScaleTween = new();
         private readonly ImageSprite shadow;
         private readonly FloatTween xTween = new();
@@ -28,6 +26,8 @@ namespace ScaryCastle
         public Prop(GameSession session, string name)
             : base(session, name)
         {
+            this.ApproachBehavior = ApproachBehavior.InFront;
+
             // Shadow
             this.shadow = new ImageSprite(session.Game)
             {
@@ -50,13 +50,6 @@ namespace ScaryCastle
 
         #region Protected members
 
-        // InitializeState
-        protected void InitializeState(PropState initialState)
-        {
-            propState = initialState;
-            OnInitializeState(initialState);
-        }
-
         // OnDrawShadow
         protected override void OnDrawShadow(GameTime gameTime)
         {
@@ -66,21 +59,11 @@ namespace ScaryCastle
                 shadow.Draw(gameTime);
         }
 
-        // OnInitializeState
-        protected virtual void OnInitializeState(PropState state)
-        {
-        }
-
         // OnLoad
         protected override void OnLoad()
         {
             base.OnLoad();
             InvalidateShadowImage();
-        }
-
-        // OnPropStateChanged
-        protected virtual void OnPropStateChanged()
-        {
         }
 
         // OnTransform
@@ -108,12 +91,6 @@ namespace ScaryCastle
             }
         }
 
-        // SetStateHandler
-        protected void SetStateHandler(PropState s, Func<bool>? handler)
-        {
-            handlers[s] = handler;
-        }
-
         #endregion
 
         // Bounce
@@ -122,28 +99,6 @@ namespace ScaryCastle
         {
             bounceScaleTween.Start(TweenStyle.QuadraticInOut, Scale, new Vector2(1f, .95f), 100, 2);
             xTween.Start(TweenStyle.QuadraticInOut, X, X - 1, 40, 6);
-        }
-
-        // PropState
-        [ScriptProperty]
-        public PropState PropState
-        {
-            get => propState;
-            set
-            {
-                if (propState == value)
-                    return;
-
-                // Try handler
-                if (handlers.TryGetValue(value, out var handler))
-                {
-                    if (handler == null || handler())
-                    {
-                        propState = value;
-                        OnPropStateChanged();
-                    }
-                }
-            }
         }
 
         // SkillChancePenalty
@@ -165,8 +120,9 @@ namespace ScaryCastle
 
             if (success)
             {
-                if (successState != PropState.None)
-                    PropState = successState;
+                // TODO: Check
+                //if (successState != PropState.None)
+                //    PropState = successState;
             }
             else
             {

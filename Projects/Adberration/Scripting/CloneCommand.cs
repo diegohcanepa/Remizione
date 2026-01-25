@@ -44,7 +44,7 @@ namespace Adberration.Scripting
         {
             var declaredName = ScriptSyntax.GetDeclaredName(name);
             var instanceName = name == declaredName ? string.Empty : name;
-            var thing = Session.ScriptEnvironment.CreateRuntimeThingClone(declaredName, instanceName, HasArg(PersistentArg));
+            var thing = Session.ScriptEnvironment.CreateThingClone(declaredName, instanceName, HasArg(PersistentArg));
 
             // Parent (assign parent at last place to ensure correct values before the controller starts)
             var flag = Body.Args.FindArg(ParentArg);

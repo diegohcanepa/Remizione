@@ -255,10 +255,10 @@ namespace ScaryCastle
             var coins = Loot.RollCoins(Session, room.Definition, Definition);
 
             if (coins > 0)
-            { 
+            {
                 for (var i = 0; i < coins; i++)
                 {
-                    if (Session.ObjectPools.Coins.Get() is Coin coin)
+                    if (room.CreateThingClone("Coin") is Coin coin)
                     {
                         coin.Position = Position;
                         room.Children.Add(coin);
@@ -425,6 +425,10 @@ namespace ScaryCastle
         // AllowInteraction
         [ScriptProperty]
         public bool AllowInteraction { get; set; } = true;
+
+        // ApproachBehavior
+        [ScriptProperty]
+        public ApproachBehavior ApproachBehavior { get; set; }
 
         // ApproachPosition
         [ScriptProperty]
@@ -678,8 +682,15 @@ namespace ScaryCastle
         }
 
         // GetApproachPosition
-        public Vector2 GetApproachPosition(GameThing requester, bool inFront)
+        public Vector2 GetApproachPosition(GameThing requester)
         {
+            return GetApproachPosition(requester, ApproachBehavior);
+        }
+
+        // GetApproachPosition
+        public Vector2 GetApproachPosition(GameThing requester, ApproachBehavior behavior)
+        {
+            // 1. Override Manual (Prioridad absoluta del editor)
             if (ApproachPosition != Vector2.Zero)
             {
                 if (HotspotPlacement == PlacementMode.Absolute)
@@ -688,36 +699,47 @@ namespace ScaryCastle
                     return this.GetAbsolutePoint(ApproachPosition);
             }
 
-            var box = RuntimeHotspot.BoundingRectangleF;
-            if (box.IsEmpty)
-                box = BoundingBox;
+            // Datos básicos
+            var myBox = RuntimeHotspot.BoundingRectangleF;
+            if (myBox.IsEmpty)
+                myBox = BoundingBox;
 
             var requesterBox = requester.RuntimeHotspot.BoundingRectangleF;
             if (requesterBox.IsEmpty)
                 requesterBox = requester.BoundingBox;
 
-            Vector2 result;
+            // Distancia de "respeto" (Spacing)
+            // Si soy un Actor (NPC), dejo espacio para conversar. Si soy un objeto, te puedes pegar más.
+            float spacing = (this is Actor) ? requesterBox.Width + 3 : requesterBox.Width / 2;
 
-            if (inFront)
+            float targetX = X; // Default
+
+            switch (behavior)
             {
-                var offset = this is Actor ? requesterBox.Width + 3 : requesterBox.Width / 2;
-                if (Direction == FacingDirection.Left)
-                    result = box.GetPoint(RectanglePoint.LeftBottom, -offset, 0);
-                else
-                    result = box.GetPoint(RectanglePoint.RightBottom, offset, 0);
-            }
-            else
-            {
-                // Doesn't matter the enemy facing direction
-                if (requester.X <= X)
-                    result = box.GetPoint(RectanglePoint.LeftBottom, -requesterBox.Width / 2, 0);
-                else
-                    result = box.GetPoint(RectanglePoint.RightBottom, requesterBox.Width / 2, 0);
+                case ApproachBehavior.FaceToFace:
+                    // "Párate frente a mi cara"
+                    if (Direction == FacingDirection.Left)
+                        targetX = myBox.Left - spacing;  // Estoy mirando izq -> ven a mi izq
+                    else
+                        targetX = myBox.Right + spacing; // Estoy mirando der -> ven a mi der
+                    break;
+
+                case ApproachBehavior.ClosestSide:
+                    // "Párate en mi flanco más cercano a ti"
+                    if (requester.X < X)
+                        targetX = myBox.Left - (requesterBox.Width / 2);
+                    else
+                        targetX = myBox.Right + (requesterBox.Width / 2);
+                    break;
+
+                case ApproachBehavior.InFront:
+                    // "Párate en mi centro X"
+                    targetX = myBox.Center.X;
+                    break;
             }
 
-            result.Y = BoundingBox.Bottom + Altitude;
-
-            return result;
+            // Mantenemos la Y en la base del objeto (los pies)
+            return new Vector2(targetX, BoundingBox.Bottom + Altitude);
         }
 
         // GetFloatingTextPosition
@@ -1013,7 +1035,7 @@ namespace ScaryCastle
         // ShowImpactWord
         public void ShowImpactWord(ImpactWordName impactWordName)
         {
-           if (GetOverheadPosition() is Vector2 wordPos)
+            if (GetOverheadPosition() is Vector2 wordPos)
                 Session.ImpactWordPool.Get()?.Show(impactWordName, wordPos);
         }
 

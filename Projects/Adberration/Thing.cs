@@ -58,7 +58,7 @@ namespace Adberration
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (!InCurrentRoom)
+            if (!IsInCurrentRoom)
                 return;
 
             if (ParallaxDepth == 0)
@@ -182,7 +182,7 @@ namespace Adberration
         public Vector2 BottomPosition => PivotOrigin == RectanglePoint.Bottom ? Position : BoundingBox.GetPoint(RectanglePoint.Bottom);
 
         // CanMove
-        public virtual bool CanMove => InCurrentRoom && Speed > 0;
+        public virtual bool CanMove => IsInCurrentRoom && Speed > 0;
 
         // CanParent
         public override bool CanParent(Entity child)
@@ -215,19 +215,19 @@ namespace Adberration
         [ScriptProperty]
         public bool IgnoreCulling { get; set; }
 
-        // InCurrentRoom
-        [ScriptProperty]
-        public bool InCurrentRoom => Room != null && Room == Session.Room;
-
         // IsActiveInGameLoop
         public override bool IsActiveInGameLoop => IgnoreCulling || IsInCullingBox || Tweens.IsTweeningPosition || IsMoving;
 
         // IsInCullingBox
         public virtual bool IsInCullingBox => Session.Camera.CullingBox.Contains(Position) || BoundingBox.Intersects(Session.Camera.CullingBox);
 
+        // IsInCurrentRoom
+        [ScriptProperty]
+        public bool IsInCurrentRoom => Room != null && Room == Session.Room;
+
         // IsInViewport
         [ScriptProperty(CodingContext.Execution)]
-        public bool IsInViewport => InCurrentRoom && RectangleF.Intersects(BoundingBox, Session.Viewport) != RectangleF.Empty;
+        public bool IsInViewport => IsInCurrentRoom && RectangleF.Intersects(BoundingBox, Session.Viewport) != RectangleF.Empty;
 
         // IsMoving
         [ScriptProperty]

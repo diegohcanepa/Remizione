@@ -15,6 +15,7 @@ namespace ScaryCastle
         {
             Atlas = Atlases.Environment;
 
+            ApproachBehavior = ApproachBehavior.ClosestSide;
             Collider = new Polygon("0,0;5,0;5,4;0,4");
             DepthOffset = -20;
             DisplayNameKey = "Prop.Coin";
@@ -22,7 +23,7 @@ namespace ScaryCastle
             IgnoreWalkArea = false;
             RenderLayer = RenderLayer.Background;
             ShadowSpotSize = 0;
-
+            
             var animation = AddAnimation("Default");
             animation.AddFrame("Coin01", 1500);
             animation.AddFrame("Coin02", 100);
@@ -56,14 +57,6 @@ namespace ScaryCastle
                 var tweenDuration = (int)float.Clamp(distance * 100, 300, 1000);
                 Tweens.PositionTween = Vector2Tween.Create(TweenStyle.CubicOut, Position, destination, tweenDuration);
             }
-        }
-
-        // OnParentChanged
-        protected override void OnParentChanged(Entity? previousParent)
-        {
-            base.OnParentChanged(previousParent);
-            if (Parent == null)
-                Session.ObjectPools.Coins.Return(this);
         }
     }
 }

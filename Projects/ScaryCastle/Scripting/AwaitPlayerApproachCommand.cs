@@ -1,25 +1,27 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Microsoft.Xna.Framework;
+using System.Windows.Forms.Design.Behavior;
 
 namespace ScaryCastle.Scripting
 {
     // AwaitPlayerApproachCommand
-    // Syntax: [#face:] [#fast] [#target:GameThing]
+    // Syntax: [#behavior:ApproachBehavior] [#target:GameThing]
     [ForceAwait]
     [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitPlayerApproachCommand : AwaitableCommand
     {
+        private readonly ApproachBehavior behavior;
         private Actor? player;
         private int directionCooldown;
         private GameThing? target;
 
         // Constructor
         internal AwaitPlayerApproachCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 0, FaceArg, FastArg, TargetArg)
+            : base(script, source, body, 0, BehaviorArg, TargetArg)
         {
             Parser.ParseEntityArgument<GameThing>(this, TargetArg, null);
-            Parser.ParseEnumArgument<FacingDirection>(this, FaceArg);
+            behavior = Parser.ParseEnumArgument<ApproachBehavior>(this, BehaviorArg, ApproachBehavior.InFront);
         }
 
         #region Protected members
@@ -42,10 +44,10 @@ namespace ScaryCastle.Scripting
             if (target == null)
                 return;
 
-            var destination = target.GetApproachPosition(player, true);
+            var destination = target.GetApproachPosition(player, behavior);
 
             if (player.MoveTo(destination))
-                directionCooldown = 150;
+                directionCooldown = 3500;
             else
                 directionCooldown = 0;
         }
@@ -53,16 +55,16 @@ namespace ScaryCastle.Scripting
         // OnExecutionCompleted
         protected override void OnExecutionCompleted()
         {
-            base.OnExecutionCompleted();
-
             if (player == null)
                 return;
 
-            if (HasArg(FaceArg))
-                player.Direction = Parser.ParseEnumArgument<FacingDirection>(this, FaceArg);
-
+            /*
             if (target != null)
-                player.FaceTo(target);
+            {
+                if (behavior is ApproachBehavior.FaceToFace or ApproachBehavior.ClosestSide)
+                    player.FaceTo(target);
+            }
+            */
 
             player = null;
             target = null;

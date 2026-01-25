@@ -449,7 +449,7 @@ namespace ScaryCastle
 
                     if (field)
                     {
-                        if (session.Player != null && session.Player.InCurrentRoom)
+                        if (session.Player != null && session.Player.IsInCurrentRoom)
                             SelectedThing = session.Player;
                         else
                         {

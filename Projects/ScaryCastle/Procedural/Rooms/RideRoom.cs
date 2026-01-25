@@ -48,7 +48,7 @@ namespace ScaryCastle
         private void PopulateDoors()
         {
             // Up
-            if (RoomGraph.Up != null && DoorUp != null && CreateRuntimeClone("RideDoorUp") is RideDoor upDoor)
+            if (RoomGraph.Up != null && DoorUp != null && CreateThingClone("RideDoorUp") is RideDoor upDoor)
             {
                 doors.Add(upDoor);
                 Children.Add(upDoor);
@@ -57,7 +57,7 @@ namespace ScaryCastle
             }
 
             // Left
-            if (RoomGraph.Left != null && DoorLeft != null && CreateRuntimeClone("RideDoorLeft") is RideDoor leftDoor)
+            if (RoomGraph.Left != null && DoorLeft != null && CreateThingClone("RideDoorLeft") is RideDoor leftDoor)
             {
                 doors.Add(leftDoor);
                 Children.Add(leftDoor);
@@ -66,7 +66,7 @@ namespace ScaryCastle
             }
 
             // Right
-            if (RoomGraph.Right != null && DoorRight != null && CreateRuntimeClone("RideDoorRight") is RideDoor rightDoor)
+            if (RoomGraph.Right != null && DoorRight != null && CreateThingClone("RideDoorRight") is RideDoor rightDoor)
             {
                 doors.Add(rightDoor);
                 Children.Add(rightDoor);
@@ -77,7 +77,7 @@ namespace ScaryCastle
             // Down
             if (RoomGraph.Down != null)
             {
-                if (DoorDown != null && CreateRuntimeClone("RideDoorDown") is RideDoor downDoor)
+                if (DoorDown != null && CreateThingClone("RideDoorDown") is RideDoor downDoor)
                 {
                     doors.Add(downDoor);
                     Children.Add(downDoor);
@@ -171,7 +171,7 @@ namespace ScaryCastle
                 if (door.DoorDirection is RideDoorDirection.Left or RideDoorDirection.Right or RideDoorDirection.Up)
                 {
                     if (door.TargetRoom?.Definition.LockType != LockType.None)
-                        door.PropState = PropState.Locked;
+                        door.ClosureState = ClosureState.Locked;
                 }
             }
         }

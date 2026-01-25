@@ -14,6 +14,7 @@ namespace Adberration.Scripting
         protected static readonly string AmountArg = "#amount";
         protected static readonly string AnimationArg = "#animation";
         protected static readonly string AtArg = "#at";
+        protected static readonly string BehaviorArg = "#behavior";
         protected static readonly string BounceDelayArg = "#bounce-delay";
         protected static readonly string BouncesArg = "#bounces";
         protected static readonly string ChanceArg = "#chance";

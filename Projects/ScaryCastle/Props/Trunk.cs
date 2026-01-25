@@ -8,7 +8,7 @@ namespace ScaryCastle
     /// </summary>
     public class Trunk : BreakableProp
     {
-        private int breakCooldoown;
+        //private int breakCooldoown;
 
         // Constructor
         public Trunk(GameSession session, string name)
@@ -19,7 +19,7 @@ namespace ScaryCastle
             DisplayNameKey = "Prop.Trunk";
             HitEffect = HitEffect.Shake;
             HurtSound = Sound.Find(SoundNames.ImpactA);
-            PropState = PropState.Closed;
+            //PropState = PropState.Closed;
         }
 
         #region Protected members
@@ -28,7 +28,7 @@ namespace ScaryCastle
         protected override void OnLoad()
         {
             base.OnLoad();
-            breakCooldoown = 1000;
+            //breakCooldoown = 1000;
         }
 
         /*
@@ -55,6 +55,7 @@ namespace ScaryCastle
             if (IsBroken)
                 return;
 
+            /*
             if (PropState == PropState.Open)
             {
                 if (breakCooldoown > 0)
@@ -67,14 +68,9 @@ namespace ScaryCastle
                     Die();
                 }
             }
+            */
         }
 
         #endregion
-
-        // CanInteract
-        public override bool CanInteract()
-        {
-            return PropState != PropState.Open && base.CanInteract();
-        }
     }
 }

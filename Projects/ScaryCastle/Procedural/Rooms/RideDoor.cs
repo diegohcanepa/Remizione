@@ -9,7 +9,7 @@ namespace ScaryCastle
     /// <summary>
     /// RideDoor
     /// </summary>
-    public class RideDoor : Prop
+    public class RideDoor : Openable
     {
         private readonly MouseCursorState arrowCursor;
         private readonly ImageSprite lockImage;
@@ -52,28 +52,11 @@ namespace ScaryCastle
             OpenSound = Sound.Find("DoorOpen");
 
             this.lockImage = new(Game, Atlas.FindImage($"{DeclaredName}Lock"));
-
-            SetStateHandler(PropState.Closed, Close);
-            SetStateHandler(PropState.Locked, Lock);
-            SetStateHandler(PropState.Open, Open);
-            SetStateHandler(PropState.Unlocked, Unlock);
-
-            InitializeState(PropState.Closed);
         }
 
         #endregion
 
         #region Private members
-
-        // Close
-        private bool Close()
-        {
-            if (CloseSound != null)
-                PlaySound(CloseSound);
-            SyncAnimation();
-            Bounce();
-            return true;
-        }
 
         // ConnectCore
         private void ConnectCore(GameRoom targetRoom, Vector2 targetPosition)
@@ -89,60 +72,35 @@ namespace ScaryCastle
             Session.EnterRoom(targetRoom);
         }
 
-        // Lock
-        private bool Lock()
-        {
-            // Down doors cannot be locked
-            return DoorDirection != RideDoorDirection.Down;
-        }
-
-        // OnPropStateChanged
-        protected override void OnPropStateChanged()
-        {
-            base.OnPropStateChanged();
-            SyncAnimation();
-        }
-
-        // Open
-        private bool Open()
-        {
-            if (PropState == PropState.Locked)
-                return false;
-
-            if (OpenSound != null && Room?.IsCurrentRoom == true)
-                PlaySound(OpenSound);
-
-            SyncAnimation();
-            Bounce();
-
-            return true;
-        }
-
         // SyncAnimation
         private void SyncAnimation()
         {
-            if (PropState == PropState.Open)
+            if (ClosureState == ClosureState.Open)
                 Sprite.Player.Play("Open");
             else
                 Sprite.Player.Play("Closed");
-        }
-
-        // Unlock
-        private bool Unlock()
-        {
-            Sound.Play(SoundNames.LockOpen);
-            return true;
         }
 
         #endregion
 
         #region Protected members
 
+        // OnClosureStatusChanged
+        protected override void OnClosureStatusChanged(bool isAction)
+        {
+            base.OnClosureStatusChanged(isAction);
+            SyncAnimation();
+
+            if (isAction)
+                Bounce();
+        }
+
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
             base.OnDraw(gameTime);
-            if (PropState == PropState.Locked)
+            
+            if (ClosureState == ClosureState.Locked)
                 lockImage.Draw(gameTime);
         }
 
@@ -158,12 +116,8 @@ namespace ScaryCastle
         // CanInteractWithItem
         public override bool CanInteractWithItem()
         {
-            return PropState == PropState.Closed;
+            return ClosureState != ClosureState.Open;
         }
-
-        // CloseSound
-        [ScriptProperty]
-        public Sound? CloseSound { get; set; }
 
         // Connect
         [ScriptMethod(CodingContext.Execution)]
@@ -173,7 +127,7 @@ namespace ScaryCastle
             {
                 int roomIndex = Room is RideRoom rideRoom ? rideRoom.RoomGraph.Index : -1;
                 var pos = TargetRoom.GetPlayerPosition(roomIndex, out RideDoor? door);
-                door?.PropState = PropState.Open;
+                door?.ClosureState = ClosureState.Open;
                 ConnectCore(TargetRoom, pos);
             }
         }
@@ -185,24 +139,20 @@ namespace ScaryCastle
         // GetMouseCursorState
         public override MouseCursorState? GetMouseCursorState()
         {
-            if (MouseCursor.Target == this && PropState == PropState.Open)
+            if (MouseCursor.Target == this && ClosureState == ClosureState.Open)
                 return arrowCursor;
             else
                 return base.GetMouseCursorState();
         }
 
-        // OpenSound
-        [ScriptProperty]
-        public Sound? OpenSound { get; set; }
-
         // Prepare
         [ScriptMethod]
         public void Prepare()
         {
-            Sprite.ClearAnimations();
-
             if (Room is RideRoom rideRoom)
             {
+                Sprite.ClearAnimations();
+
                 var prefix = rideRoom.Definition.Name.Split("_")[0];
                 prefix = $"{prefix}Door{DoorDirection}";
 
