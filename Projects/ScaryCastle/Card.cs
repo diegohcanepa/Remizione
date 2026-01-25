@@ -13,6 +13,7 @@ namespace ScaryCastle
         private readonly ImageSprite bonusValueIcon;
         private readonly ImageSprite categoryIcon;
         private readonly ImageSprite cardContainer;
+        private readonly ImageSprite cardContainerShadow;
         private readonly ImageSprite diceIcon;
         private readonly Countdown diceIconEffectCountdown = new() { DefaultDuration = 3500 };
         private readonly ImageSprite diceThresholdNumber;
@@ -37,6 +38,13 @@ namespace ScaryCastle
             // Card container
             this.cardContainer = new(Game)
             {
+            };
+
+            // Card container shadow
+            this.cardContainerShadow = new(Game)
+            {
+                Color = Color.Black,
+                Opacity = ColorPalette.ShadowOpacity
             };
 
             // Action icon
@@ -86,7 +94,8 @@ namespace ScaryCastle
         private void Refresh()
         {
             cardContainer.Image = IsFaceVisible ? Definition.FrontImage : Definition.BackImage;
-            
+            cardContainerShadow.Image = cardContainer.Image;
+
             if (!IsFaceVisible)
                 return;
 
@@ -102,6 +111,9 @@ namespace ScaryCastle
             diceThresholdNumber.Scale = scale * .65f;
             bonusValueIcon.Scale = scale * .65f;
 
+            cardContainerShadow.MatchTransform(cardContainer);
+            cardContainerShadow.Position = cardContainer.Position + Vector2.One;
+
             actionIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Center, -.5f * actionIcon.ScaleX, -1f * actionIcon.ScaleY);
             categoryIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 1 * categoryIcon.ScaleY);
             diceIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -4f * diceIcon.ScaleY);
@@ -116,6 +128,7 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            cardContainerShadow.Draw(gameTime); 
             cardContainer.Draw(gameTime);
             categoryIcon.Draw(gameTime);
             actionIcon.Draw(gameTime);

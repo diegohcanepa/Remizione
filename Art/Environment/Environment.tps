@@ -287,6 +287,11 @@
             <key type="filename">Dice-assets/Dice04.png</key>
             <key type="filename">Dice-assets/Dice05.png</key>
             <key type="filename">Dice-assets/Dice06.png</key>
+            <key type="filename">Dice-assets/Dice07.png</key>
+            <key type="filename">Dice-assets/Dice08.png</key>
+            <key type="filename">Dice-assets/Dice09.png</key>
+            <key type="filename">Dice-assets/Dice10.png</key>
+            <key type="filename">Dice-assets/Dice11.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

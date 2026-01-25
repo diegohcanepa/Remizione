@@ -174,10 +174,7 @@
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">Deck-assets/CardAttack.png</key>
-            <key type="filename">Deck-assets/CardDefense.png</key>
             <key type="filename">Deck-assets/CardHealing.png</key>
-            <key type="filename">Deck-assets/CardPrayer.png</key>
-            <key type="filename">Deck-assets/CardStatus.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -193,6 +190,9 @@
                 <false/>
             </struct>
             <key type="filename">Deck-assets/CardBack.png</key>
+            <key type="filename">Deck-assets/CardDefense.png</key>
+            <key type="filename">Deck-assets/CardPrayer.png</key>
+            <key type="filename">Deck-assets/CardStatus.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -242,10 +242,6 @@
                 <false/>
             </struct>
             <key type="filename">Deck-assets/CardCategoryStatus.png</key>
-            <key type="filename">Deck-assets/HeartBlueFull.png</key>
-            <key type="filename">Deck-assets/HeartBlueHalf.png</key>
-            <key type="filename">Deck-assets/HeartRedFull.png</key>
-            <key type="filename">Deck-assets/HeartRedHalf.png</key>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -283,6 +279,10 @@
             </struct>
             <key type="filename">Deck-assets/HeartBlackFull.png</key>
             <key type="filename">Deck-assets/HeartBlackHalf.png</key>
+            <key type="filename">Deck-assets/HeartBlueFull.png</key>
+            <key type="filename">Deck-assets/HeartBlueHalf.png</key>
+            <key type="filename">Deck-assets/HeartRedFull.png</key>
+            <key type="filename">Deck-assets/HeartRedHalf.png</key>
             <key type="filename">MiniMap-assets/UIMiniMapMarkerCoin.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>

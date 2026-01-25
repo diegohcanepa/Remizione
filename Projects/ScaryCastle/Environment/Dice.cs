@@ -35,7 +35,7 @@ namespace ScaryCastle
             : base(session, name)
         {
             Atlas = Atlases.Environment;
-            Scale = new(.5f);
+            //Scale = new(.5f);
             //ShadowOffset = new(0, -2);
             ShadowSpotSize = 0;
             
@@ -115,13 +115,19 @@ namespace ScaryCastle
         // IsRolling
         public bool IsRolling { get; private set; }
 
+        // LastResult
+        public int LastResult { get; private set;  }
+
         // Roll
         [ScriptMethod]
-        public void Roll()
+        public int Roll()
         {
             owner = Session.Player;
             if (owner == null)
-                return;
+            { 
+                LastResult = 0;
+                return 0;
+            }
 
             this.bounceCount = 0;
             this.isGrounded = false;
@@ -130,7 +136,7 @@ namespace ScaryCastle
             this.Y = owner.Y - 4;
             this.floorY = owner.Y;
             this.depth = owner.Depth - .1f;
-            this.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, new Vector2(.2f), new Vector2(.5f), 150);
+            this.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, new Vector2(.2f), new Vector2(.6f), 150);
 
             if (owner.IsFlippedHorizontally)
                 velocity.X *= -1;
@@ -140,12 +146,18 @@ namespace ScaryCastle
             owner.Room?.Children.Add(this);
             AnimationPlayer.Play("Roll", true, owner.Direction == Adberration.FacingDirection.Right ? AnimationDirection.Reverse : AnimationDirection.Forward);
             IsRolling = true;
+
+            LastResult = DiceExpression.Dice6.Roll();
+
+            return LastResult;
         }
 
         // Stop
         public void Stop()
         {
-            AnimationPlayer.Play("Idle");
+            if (LastResult > 0)
+                AnimationPlayer.Play($"Number{LastResult}");
+
             IsRolling = false;
         }
     }
