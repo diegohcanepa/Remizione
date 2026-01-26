@@ -6,22 +6,24 @@ using System.Windows.Forms.Design.Behavior;
 namespace ScaryCastle.Scripting
 {
     // AwaitPlayerApproachCommand
-    // Syntax: [#behavior:ApproachBehavior] [#target:GameThing]
+    // Syntax: {GameThing} [#behavior:ApproachBehavior]
     [ForceAwait]
     [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitPlayerApproachCommand : AwaitableCommand
     {
-        private readonly ApproachBehavior behavior;
+        private readonly ApproachBehavior? behavior;
         private Actor? player;
         private int directionCooldown;
         private GameThing? target;
 
         // Constructor
         internal AwaitPlayerApproachCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 0, BehaviorArg, TargetArg)
+            : base(script, source, body, 1, BehaviorArg)
         {
-            Parser.ParseEntityArgument<GameThing>(this, TargetArg, null);
-            behavior = Parser.ParseEnumArgument<ApproachBehavior>(this, BehaviorArg, ApproachBehavior.InFront);
+            AssertEntity<GameThing>(0);
+
+            if (HasArg(BehaviorArg))
+                behavior = Parser.ParseEnumArgument<ApproachBehavior>(this, BehaviorArg);
         }
 
         #region Protected members
@@ -32,42 +34,30 @@ namespace ScaryCastle.Scripting
             if (Session is not GameSession session)
                 return;
 
+            target = AssertEntity<GameThing>(0);
+            if (target == null || !target.IsInCurrentRoom)
+                return;
+
             player = session.Player;
             if (player == null || !player.CanMove)
                 return;
 
-            if (HasArg(TargetArg))
-                target = Parser.ParseEntityArgument<GameThing>(this, TargetArg, null);
-            else
-                target = session.OutcomeTarget as GameThing;
-
-            if (target == null)
-                return;
-
             var destination = target.GetApproachPosition(player, behavior);
 
-            if (player.MoveTo(destination))
-                directionCooldown = 3500;
-            else
-                directionCooldown = 0;
+            directionCooldown = player.MoveTo(destination) ? 300 : 0;
         }
 
         // OnExecutionCompleted
         protected override void OnExecutionCompleted()
         {
-            if (player == null)
-                return;
-
-            /*
-            if (target != null)
+            if (player != null && target != null)
             {
                 if (behavior is ApproachBehavior.FaceToFace or ApproachBehavior.ClosestSide)
                     player.FaceTo(target);
-            }
-            */
 
-            player = null;
-            target = null;
+                player = null;
+                target = null;
+            }
         }
 
         // OnUpdate

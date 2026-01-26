@@ -3,14 +3,11 @@ using System.Collections.Generic;
 
 namespace ScaryCastle
 {
-    /// <summary>
-    /// RunGraphGenerator
-    /// </summary>
     public static class RunGraphGenerator
     {
         #region Private members
 
-        // CountNeighbors
+        // Cuenta cuántas habitaciones existen alrededor de una coordenada
         private static int CountNeighbors((int x, int y) c, Dictionary<(int x, int y), RoomGraph> map)
         {
             int count = 0;
@@ -21,7 +18,6 @@ namespace ScaryCastle
             return count;
         }
 
-        // GetCoords
         private static (int, int) GetCoords(int x, int y, int direction)
         {
             return direction switch
@@ -34,8 +30,6 @@ namespace ScaryCastle
             };
         }
 
-        // Link
-        // Conecta 'p' con 'c' usando la dirección 'direction' desde la perspectiva de 'p'
         private static void Link(RoomGraph p, RoomGraph c, int direction)
         {
             switch (direction)
@@ -47,25 +41,30 @@ namespace ScaryCastle
             }
         }
 
-        // NUEVO: Conecta la habitación a TODOS sus vecinos existentes
-        private static void ConnectToExistingNeighbors(RoomGraph room, Dictionary<(int x, int y), RoomGraph> map)
+        // Conecta la habitación nueva con su padre OBLIGATORIAMENTE.
+        // Conecta con otros vecinos solo si el azar lo permite (extraDoorChance).
+        private static void ConnectToNeighborsSmart(RoomGraph current, RoomGraph parent, Dictionary<(int x, int y), RoomGraph> map, Random rng, float extraDoorChance)
         {
-            // Direcciones: 0:Up, 1:Down, 2:Left, 3:Right
             for (int dir = 0; dir < 4; dir++)
             {
-                (int nx, int ny) = GetCoords(room.X, room.Y, dir);
+                (int nx, int ny) = GetCoords(current.X, current.Y, dir);
 
-                // Si hay una habitación válida en esa dirección...
+                // Usamos TryGetValue que es seguro y rápido para AOT
                 if (map.TryGetValue((nx, ny), out RoomGraph? neighbor) && neighbor != null)
                 {
-                    // ...las conectamos. 
-                    // Link conecta 'room' hacia 'neighbor' en dirección 'dir'
-                    Link(room, neighbor, dir);
+                    bool isParent = (neighbor == parent);
+
+                    // Si es el padre, conectamos sí o sí.
+                    // Si es un vecino accidental, tiramos el dado.
+                    if (isParent || rng.NextDouble() < extraDoorChance)
+                    {
+                        Link(current, neighbor, dir);
+                    }
                 }
             }
         }
 
-        // ProcessMapData (BFS para calcular distancias)
+        // BFS estándar usando Queue y Dictionary (Totalmente AOT safe)
         private static RoomGraph ProcessMapData(RoomGraph start)
         {
             Queue<RoomGraph> queue = new();
@@ -89,10 +88,12 @@ namespace ScaryCastle
                     furthest = current;
                 }
 
-                // Revisar conexiones existentes
-                RoomGraph?[] neighbors = [current.Up, current.Down, current.Left, current.Right];
-                foreach (var n in neighbors)
+                // Array manual en lugar de lista para evitar overhead
+                RoomGraph?[] neighbors = { current.Up, current.Down, current.Left, current.Right };
+
+                for (int i = 0; i < neighbors.Length; i++)
                 {
+                    RoomGraph? n = neighbors[i];
                     if (n != null && !visited.ContainsKey(n))
                     {
                         n.DistanceFromStart = d + 1;
@@ -110,7 +111,9 @@ namespace ScaryCastle
         public static (List<RoomGraph>, int) Generate(Random rng, int roomCount)
         {
             if (roomCount <= 0)
-                return ([], 0);
+                return (new List<RoomGraph>(), 0);
+
+            roomCount = 15;
 
             Dictionary<(int x, int y), RoomGraph> occupied = [];
             List<RoomGraph> rooms = [];
@@ -119,21 +122,52 @@ namespace ScaryCastle
             RoomGraph start = new(rooms.Count, 0, 0, RoomType.Start);
             occupied.Add((0, 0), start);
             rooms.Add(start);
-
-            // Bloqueamos la coordenada de abajo
             occupied.Add((0, -1), null!);
 
-            // CONFIGURACIÓN: Probabilidad de cerrar un loop (crear habitaciones que se tocan)
-            // 0.5f = 50% de probabilidad de rellenar un hueco si hay más de 1 vecino
-            float loopChance = 0.5f;
+            // --- CONFIGURACIÓN PARA EVITAR BLOQUES ---
+            // Probabilidad de rellenar un hueco si ya tiene vecinos (0.2 = 20%)
+            float loopChance = 0.2f;
 
-            // 2. Bucle de Generación
+            // Probabilidad de abrir pared con un vecino que NO es el padre (0.4 = 40%)
+            // Bajar esto hace que haya paredes entre habitaciones adyacentes
+            float extraDoorChance = 0.4f;
+
+            // Factor de "Serpiente": Qué porcentaje de las últimas habitaciones creadas 
+            // son candidatas preferidas para ser padres. (0.5 = la mitad más nueva)
+            float recentRoomBias = 0.5f;
+
             int attempts = 0;
-            // Aumentamos un poco el límite de intentos por si se encierra
-            while (rooms.Count < roomCount && attempts < 5000)
+            // Límite de seguridad
+            int maxAttempts = roomCount * 100;
+
+            while (rooms.Count < roomCount && attempts < maxAttempts)
             {
                 attempts++;
-                RoomGraph parent = rooms[rng.Next(rooms.Count)];
+
+                // 2. Selección del Padre (Sin LINQ)
+                RoomGraph parent;
+
+                // 75% de probabilidad de elegir una habitación "reciente" (hace que el mapa se estire)
+                // 25% de probabilidad de elegir cualquiera (hace que surjan ramas nuevas)
+                if (rng.NextDouble() < 0.75)
+                {
+                    // Calculamos el índice de inicio basado en el bias
+                    int minIndex = (int)(rooms.Count * (1.0f - recentRoomBias));
+                    // Elegimos entre minIndex y el final
+                    int index = rng.Next(minIndex, rooms.Count);
+                    parent = rooms[index];
+                }
+                else
+                {
+                    // Totalmente aleatorio
+                    parent = rooms[rng.Next(rooms.Count)];
+                }
+
+                // OPTIMIZACIÓN VISUAL:
+                // Si el padre ya tiene 4 vecinos ocupados (físicamente), no perdemos tiempo intentando crecer ahí.
+                // Esto ayuda a que el algoritmo busque bordes libres más rápido.
+                if (CountNeighbors((parent.X, parent.Y), occupied) == 4)
+                    continue;
 
                 int direction = rng.Next(6) switch
                 {
@@ -143,47 +177,57 @@ namespace ScaryCastle
                     _ => 3
                 };
 
-                // Evitar conectar Start hacia abajo
-                if (parent.RoomType == RoomType.Start && direction == 1)
-                    continue;
+                if (parent.RoomType == RoomType.Start && direction == 1) continue;
 
                 (int x, int y) target = GetCoords(parent.X, parent.Y, direction);
 
-                // --- LÓGICA MODIFICADA PARA LOOPS ---
+                if (occupied.ContainsKey(target)) continue;
 
-                // Si la casilla ya está ocupada, no hacemos nada
-                if (occupied.ContainsKey(target))
-                    continue;
-
+                // 3. Decisión de Colocación
                 int neighborsCount = CountNeighbors(target, occupied);
+                bool allowPlacement = false;
 
-                // Condición de colocación:
-                // A) Solo tiene 1 vecino (el padre) -> Comportamiento clásico
-                // B) Tiene >1 vecinos Y el azar lo permite -> Creamos un cruce/loop
-                bool allowPlacement = neighborsCount == 1 || (neighborsCount > 1 && rng.NextDouble() < loopChance);
+                if (neighborsCount == 1)
+                {
+                    // Solo toca al padre: Crecimiento natural
+                    allowPlacement = true;
+                }
+                else
+                {
+                    // Toca al padre y a otros (potencial Loop)
+
+                    // REGLA ANTI-CUADRICULADO:
+                    // Si tiene 3 o más vecinos, es un hueco muy cerrado. NO colocamos nada ahí.
+                    // Esto fuerza a dejar espacios vacíos ("patios") dentro del mapa.
+                    if (neighborsCount >= 3)
+                    {
+                        allowPlacement = false;
+                    }
+                    else
+                    {
+                        // Si tiene 2 vecinos, tiramos dado
+                        allowPlacement = rng.NextDouble() < loopChance;
+                    }
+                }
 
                 if (allowPlacement)
                 {
                     var newRoom = new RoomGraph(rooms.Count, target.x, target.y, RoomType.Connector);
-
-                    // Importante: Agregar al diccionario ANTES de conectar
                     occupied.Add(target, newRoom);
                     rooms.Add(newRoom);
 
-                    // Conectamos con el padre Y con cualquier otro vecino adyacente
-                    ConnectToExistingNeighbors(newRoom, occupied);
+                    // Conexión selectiva
+                    ConnectToNeighborsSmart(newRoom, parent, occupied, rng, extraDoorChance);
                 }
             }
 
-            // 3. Procesar Distancias y marcar el exit
-            // El BFS funciona perfectamente con loops y encontrará el camino más corto
+            // 4. Procesar Distancias
             RoomGraph coinRoom = ProcessMapData(start);
 
             if (coinRoom != start)
                 coinRoom.RoomType = RoomType.Exit;
 
-            int maxDist = coinRoom.DistanceFromStart;
-            return (rooms, maxDist);
+            return (rooms, coinRoom.DistanceFromStart);
         }
     }
 }

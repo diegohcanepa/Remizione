@@ -79,7 +79,7 @@ namespace ScaryCastle.UI
                 roomImages[i] = new(game, Atlases.UI.GetImage($"UIMiniMapRoom{i}"))
                 {
                     PivotOrigin = RectanglePoint.Center,
-                    Scale = ScaleInfo.UIElement.Medium
+                    Scale = new Vector2(.8f)
                 };
             }
 

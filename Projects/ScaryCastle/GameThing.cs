@@ -682,14 +682,11 @@ namespace ScaryCastle
         }
 
         // GetApproachPosition
-        public Vector2 GetApproachPosition(GameThing requester)
+        public Vector2 GetApproachPosition(GameThing requester, ApproachBehavior? behavior = null)
         {
-            return GetApproachPosition(requester, ApproachBehavior);
-        }
+            if (behavior == null)
+                behavior = this.ApproachBehavior;
 
-        // GetApproachPosition
-        public Vector2 GetApproachPosition(GameThing requester, ApproachBehavior behavior)
-        {
             // 1. Override Manual (Prioridad absoluta del editor)
             if (ApproachPosition != Vector2.Zero)
             {
