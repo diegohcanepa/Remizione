@@ -189,6 +189,9 @@ namespace ScaryCastle
             if (HUDVisible && IsCurrentScene)
                 HUD.Draw(gameTime);
 
+            // Draw speech bubbles
+            SpeechBubble.DrawSpeechBubbles(gameTime);
+
             /*
             if (IsPaused)
             {

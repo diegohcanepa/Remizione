@@ -113,8 +113,6 @@ namespace ScaryCastle
             if (roomCount <= 0)
                 return (new List<RoomGraph>(), 0);
 
-            roomCount = 15;
-
             Dictionary<(int x, int y), RoomGraph> occupied = [];
             List<RoomGraph> rooms = [];
 

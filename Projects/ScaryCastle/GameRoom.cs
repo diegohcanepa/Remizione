@@ -359,9 +359,6 @@ namespace ScaryCastle
             // Impact words
             DrawImpactWords(gameTime);
 
-            // Draw speech bubbles
-            SpeechBubble.DrawSpeechBubbles(gameTime);
-
 #if DEBUG
             DrawDebugBoxes();
 #endif
