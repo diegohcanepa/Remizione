@@ -49,6 +49,7 @@ namespace ScaryCastle
             this.Deck = new Deck(this);
             this.Inventory = new(this);
             this.Environment = new Environment(this);
+            this.LootGenerator = new(this);
             this.HUD = new HUD(this);
             this.DeclaredThings = new(declaredThings);
             this.Random = new Random(Seed);
@@ -503,6 +504,9 @@ namespace ScaryCastle
         // LightingSystem
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;
+
+        // LootGenerator
+        public LootGenerator LootGenerator { get; }
 
         // NextRoom
         [ScriptProperty]

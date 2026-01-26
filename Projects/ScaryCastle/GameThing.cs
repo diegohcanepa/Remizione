@@ -252,7 +252,7 @@ namespace ScaryCastle
             if (Session.Room is not ProceduralRoom room)
                 return;
 
-            var coins = Loot.RollCoins(Session, room.Definition, Definition);
+            var coins = Session.LootGenerator.RollCoins(room.Definition, Definition);
 
             if (coins > 0)
             {

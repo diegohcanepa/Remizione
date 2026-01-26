@@ -10,6 +10,7 @@ namespace ScaryCastle
     public class Trunk : Openable, ILootConatiner<ItemDefinition>
     {
         private readonly ImageSprite itemImage;
+        private readonly ImageSprite itemImageShadow;
 
         // Constructor
         public Trunk(GameSession session, string name)
@@ -26,6 +27,14 @@ namespace ScaryCastle
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.UIElement.Tiny
             };
+
+            this.itemImageShadow = new(Game)
+            {
+                Color = Color.Black,
+                Opacity = ColorPalette.ShadowOpacity,
+                PivotOrigin = RectanglePoint.Bottom,
+                Scale = ScaleInfo.UIElement.Tiny
+            };
         }
 
         #region Protected members
@@ -35,9 +44,14 @@ namespace ScaryCastle
         {
             if (ClosureState == ClosureState.Open)
             {
-                Loot = ItemDefinition.Get("Apple");
-                DisplayNameKey = $"Item.{Loot.Name}.Name";
-                itemImage.Position = BoundingBox.GetPoint(RectanglePoint.Top, 0, 14);
+                if (Session.LootGenerator.Get() is ItemDefinition loot)
+                {
+                    Loot = loot;
+                    DisplayNameKey = $"Item.{Loot.Name}.Name";
+                    itemImage.Position = BoundingBox.GetPoint(RectanglePoint.Top, 0, 14);
+                    itemImageShadow.Position = itemImage.Position;
+                    itemImageShadow.Y += 1;
+                }
             }
         }
 
@@ -45,6 +59,7 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             base.OnDraw(gameTime);
+            itemImageShadow.Draw(gameTime);
             itemImage.Draw(gameTime);
         }
 
@@ -66,6 +81,7 @@ namespace ScaryCastle
                 {
                     field = value;
                     itemImage.Image = field?.Image;
+                    itemImageShadow.Image = itemImage.Image;
                 }
             }
         }

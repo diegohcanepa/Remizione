@@ -149,9 +149,6 @@ namespace ScaryCastle
         // Name
         public string Name => Definition.Name;
 
-        // Range
-        public int Range => Definition.Range;
-
         // Remove
         public void Remove()
         {

@@ -55,9 +55,6 @@
             "quality": {
               "type": "integer"
             },
-            "range": {
-              "type": "integer"
-            },
             "realm": {
               "type": "string",
               "enum": [

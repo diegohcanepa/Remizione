@@ -5,14 +5,22 @@ using System.Collections.Generic;
 namespace ScaryCastle
 {
     /// <summary>
-    /// Loot
+    /// LootGenerator
     /// </summary>
-    internal static class Loot
+    public sealed class LootGenerator
     {
+        private readonly GameSession session;
+
+        // Constructor
+        public LootGenerator(GameSession session)
+        {
+            this.session = session;
+        }
+
         #region Private members
 
         // AdjustWeightByQuality
-        private static float AdjustWeightByQuality(Difficulty difficulty, int itemQuality, float baseWeight)
+        private float AdjustWeightByQuality(Difficulty difficulty, int itemQuality, float baseWeight)
         {
             float finalWeight = baseWeight;
             int roomVal = (int)difficulty; // 0, 1, 2
@@ -31,7 +39,22 @@ namespace ScaryCastle
         #endregion
 
         // Get
-        internal static ItemDefinition? Get(GameSession session, RoomDefinition roomDefinition, Realm? lootRealm, ItemCategory? lootCategory, ItemCategory[]? denyCategories = null)
+        public ItemDefinition? Get()
+        {
+            return Get(null, null);
+        }
+
+        // Get
+        public ItemDefinition? Get(Realm? lootRealm, ItemCategory? lootCategory, ItemCategory[]? denyCategories = null)
+        {
+            if (session.Room is not ProceduralRoom room)
+                return null;
+
+            return Get(room.Definition, lootRealm, lootCategory, denyCategories);
+        }
+
+        // Get
+        public ItemDefinition? Get(RoomDefinition roomDefinition, Realm? lootRealm, ItemCategory? lootCategory, ItemCategory[]? denyCategories = null)
         {
             var candidates = new List<ItemDefinition>();
             int maxQ = ((int)roomDefinition.Difficulty * 2) + 1; // Tu escala 0-5
@@ -41,30 +64,40 @@ namespace ScaryCastle
 
             foreach (var definition in ItemDefinition.All)
             {
-                if (denyCategories.Contains(definition.Category))
+                if (denyCategories != null && denyCategories.Contains(definition.Category))
                     continue;
 
                 if (definition.Quality > maxQ)
                     continue;
 
-                // Realm scope?
                 if (lootRealm != null && definition.Realm != lootRealm)
                     continue;
 
-                // Category scope?
                 if (lootCategory != null && definition.Category != lootCategory)
                     continue;
 
-                // Discard unique items
-                // TODO: Must check inventory and all room bags
                 if (!definition.IsStackable && session.Inventory.Find(definition.Name) != null)
                     continue;
 
                 candidates.Add(definition);
             }
 
-            // Pick con pesos y el multiplicador AdjustWeightByQuality que ya tenemos
             var table = new ChanceTable();
+
+            // --- LÓGICA DE "NADA" (EMPTY DROP) ---
+            // El peso del vacío disminuye a medida que aumenta la dificultad.
+            float emptyWeight = roomDefinition.Difficulty switch
+            {
+                Difficulty.Easy => 15.0f,   // Muy probable que no salga nada en salas fáciles
+                Difficulty.Normal => 5.0f,   // Balanceado
+                Difficulty.Hard => 1.5f,     // En salas Hard es casi seguro que algo cae
+                _ => 10.0f
+            };
+
+            // Agregamos la opción nula a la tabla. 
+            // Si sale elegida, GetValue().Context será null.
+            table.Add("<None>", emptyWeight, 1, null);
+
             foreach (var c in candidates)
             {
                 float weight = AdjustWeightByQuality(roomDefinition.Difficulty, c.Quality, c.SpawnWeight);
@@ -74,39 +107,8 @@ namespace ScaryCastle
             return table.GetValue()?.Context as ItemDefinition;
         }
 
-        // GetForVending
-        internal static ItemDefinition GetForVending(GameSession session, RoomDefinition roomDefinition, Realm? lootRealm, ItemCategory? lootCategory)
-        {
-            /*
-            // 1. Intentamos obtener el ítem ideal para esta habitación
-            if (Get(session, roomDefinition, lootRealm, lootCategory, [ItemCategory.Pickup]) is MetaItem result)
-                return result;
-            */
-
-            // 2. PLAN B: Si no hay nada que cumpla los filtros, 
-            // buscamos cualquier item de calidad 0-1 que esté desbloqueado.
-            var fallbackCandidates = new List<ItemDefinition>();
-
-            foreach (var definition in ItemDefinition.All)
-            {
-                // Solo calidad baja para que sea un "item de relleno" seguro
-                if (definition.Quality > 1)
-                    continue;
-
-                fallbackCandidates.Add(definition);
-            }
-
-            // Si por alguna razón bizarra no hay candidatos (muy raro), 
-            // devolvemos un item básico por nombre que sepamos que existe.
-            if (fallbackCandidates.Count == 0)
-                throw new InvalidOperationException("Unable to find meta item.");
-
-            // Devolvemos uno al azar de los básicos
-            return fallbackCandidates[session.Random.Next(fallbackCandidates.Count)];
-        }
-
         // GetPrice
-        internal static int GetPrice(ItemDefinition item)
+        public static int GetPrice(ItemDefinition item)
         {
             // Mapeamos la Quality (0-5) a tus precios simples (5, 10, 15)
             return item.Quality switch
@@ -119,7 +121,7 @@ namespace ScaryCastle
         }
 
         // RollCoins
-        internal static int RollCoins(GameSession session, RoomDefinition roomDefinition, ThingDefinition thingDefinition)
+        public int RollCoins(RoomDefinition roomDefinition, ThingDefinition thingDefinition)
         {
             // 1. CHANCE BASE (Depende de la entidad y la suerte del pasivo)
             Ratio coinChance = thingDefinition.Difficulty switch

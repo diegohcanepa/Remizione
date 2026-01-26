@@ -59,9 +59,6 @@ namespace ScaryCastle
             // Quality
             Quality = element.GetInt32("quality", 0);
 
-            // Range
-            Range = element.GetInt32("range", 0);
-
             // Realm
             Realm = element.GetEnum("realm", Realm.Earthly);
 
