@@ -181,6 +181,7 @@
   <String Key="MessageBox.SlotDeleted">La ranura ha sido eliminada.</String>
   <String Key="MessageBox.Warning">¡Atención!</String>
   <String Key="MessageKind.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
+  <String Key="MessageKind.InventoryFull">El inventario está lleno.</String>
   <String Key="MessageKind.NotEnoughCoins">No tienes monedas suficientes.</String>
   <String Key="Misc.All">Todo</String>
   <String Key="Misc.And">y</String>

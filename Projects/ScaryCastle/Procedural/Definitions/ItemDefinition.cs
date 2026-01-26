@@ -54,7 +54,7 @@ namespace ScaryCastle
             IsStackable = element.GetBool("isStackable", false);
 
             // PickupSound
-            PickupSound = element.GetObject("pickupSound", Sound.Get);
+            PickupSound = element.GetObject("pickupSound", Sound.Get) ?? Sound.Get(SoundNames.PickupGeneric);
 
             // Quality
             Quality = element.GetInt32("quality", 0);
@@ -187,7 +187,7 @@ namespace ScaryCastle
         public string LocalizedDisplayName { get; }
 
         // PickupSound
-        public Sound? PickupSound { get; }
+        public Sound PickupSound { get; }
 
         // Price
         public int Price { get; }

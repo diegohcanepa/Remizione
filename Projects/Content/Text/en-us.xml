@@ -181,6 +181,7 @@
   <String Key="MessageBox.SlotDeleted">The slot has been deleted.</String>
   <String Key="MessageBox.Warning">Warning!</String>
   <String Key="MessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
+  <String Key="MessageKind.InventoryFull">Inventory is full.</String>
   <String Key="MessageKind.NotEnoughCoins">Not enough coins.</String>
   <String Key="Misc.All">All</String>
   <String Key="Misc.And">and</String>

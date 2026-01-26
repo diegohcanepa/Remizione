@@ -18,31 +18,6 @@ namespace ScaryCastle
             this.Session = session;
         }
 
-        #region Private members
-
-        // Add
-        private Item? Add(ItemDefinition definition, int amount = 1)
-        {
-            var item = Find(definition.Name);
-
-            if (item == null)
-            {
-                if (IsFull)
-                    return null;
-
-                item = new Item(this, definition) { Count = amount };
-                Add(item);
-            }
-            else
-            {
-                item.Count += amount;
-            }
-
-            return item;
-        }
-
-        #endregion
-
         #region Protected members
 
         // ClearItems
@@ -73,6 +48,30 @@ namespace ScaryCastle
         {
             var definition = ItemDefinition.Find(name) ?? throw new InvalidOperationException("Item definition not found.");
             return Add(definition, amount);
+        }
+
+        // Add
+        public Item? Add(ItemDefinition definition, int amount = 1)
+        {
+            if (!HasSpace(definition))
+                return null;
+
+            var item = Find(definition.Name);
+
+            if (item == null)
+            {
+                if (IsFull)
+                    return null;
+
+                item = new Item(this, definition) { Count = amount };
+                Add(item);
+            }
+            else
+            {
+                item.Count += amount;
+            }
+
+            return item;
         }
 
         // Capacity
@@ -150,6 +149,14 @@ namespace ScaryCastle
             }
 
             return result;
+        }
+
+        // HasSpace
+        public bool HasSpace(ItemDefinition definition)
+        {
+            var item = Find(definition.Name);
+            
+            return item != null || !IsFull;
         }
 
         // IsEmpty

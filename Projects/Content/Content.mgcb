@@ -698,12 +698,6 @@
 /processorParam:Quality=Best
 /build:Audio/FX/PickupHeart.wav;Audio/FX/PickupHeart
 
-#begin Audio/FX/PlayerDamage.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/PlayerDamage.wav;Audio/FX/PlayerDamage
-
 #begin Audio/FX/PneumaticDoor.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

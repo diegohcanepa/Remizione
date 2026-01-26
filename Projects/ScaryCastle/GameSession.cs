@@ -140,6 +140,8 @@ namespace ScaryCastle
             AotTypeRegistry.Register("empty-pilgrim-sack", typeof(EmptyPilgrimSackCommand));
             AotTypeRegistry.Register("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             AotTypeRegistry.Register("exit-session", typeof(ExitSessionCommand));
+            AotTypeRegistry.Register("if-can-pickup-loot", typeof(IfCanPickUpLootStatement));
+            AotTypeRegistry.Register("pickup-loot", typeof(PickUpLootCommand));
             AotTypeRegistry.Register("say", typeof(SayCommand));
             AotTypeRegistry.Register("select-walk-area", typeof(SelectWalkAreaCommand));
             AotTypeRegistry.Register("set-light", typeof(SetLightCommand));

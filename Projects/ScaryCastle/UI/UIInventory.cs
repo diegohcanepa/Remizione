@@ -98,8 +98,8 @@ namespace ScaryCastle
                 {
                     Color = ColorPalette.Text.Highlight,
                     PivotOrigin = RectanglePoint.Top,
-                    Y = slots[i].BoundingBox.Center.Y + 4,
-                    Scale = ScaleInfo.Text.Large
+                    Y = slots[i].BoundingBox.Center.Y + 5,
+                    Scale = ScaleInfo.Text.ExtraLarge
                 };
             }
 

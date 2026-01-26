@@ -7,7 +7,7 @@ namespace ScaryCastle
     /// <summary>
     /// Trunk
     /// </summary>
-    public class Trunk : Openable
+    public class Trunk : Openable, ILootConatiner<ItemDefinition>
     {
         private readonly ImageSprite itemImage;
 
@@ -24,7 +24,7 @@ namespace ScaryCastle
             this.itemImage = new(Game)
             {
                 PivotOrigin = RectanglePoint.Bottom,
-                Scale = ScaleInfo.UIElement.Small
+                Scale = ScaleInfo.UIElement.Tiny
             };
         }
 
@@ -35,9 +35,8 @@ namespace ScaryCastle
         {
             if (ClosureState == ClosureState.Open)
             {
-                Item = ItemDefinition.Get("Apple");
-                DisplayNameKey = $"Item.{Item.Name}.Name";
-                itemImage.Image = Item.Image;
+                Loot = ItemDefinition.Get("Apple");
+                DisplayNameKey = $"Item.{Loot.Name}.Name";
                 itemImage.Position = BoundingBox.GetPoint(RectanglePoint.Top, 0, 14);
             }
         }
@@ -54,10 +53,21 @@ namespace ScaryCastle
         // CanInteract
         public override bool CanInteract()
         {
-            return (IsClosed || Item != null) && base.CanInteract();
+            return (IsClosed || Loot != null) && base.CanInteract();
         }
 
-        // Item
-        public ItemDefinition? Item { get; set; }
+        // Loot
+        public ItemDefinition? Loot
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    itemImage.Image = field?.Image;
+                }
+            }
+        }
     }
 }
