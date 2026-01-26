@@ -20,6 +20,7 @@ namespace ScaryCastle
             DeathSound = Sound.Find(SoundNames.WoodDebris);
             DisplayNameKey = "Prop.Trunk";
             HitEffect = HitEffect.Shake;
+            LockedSound = Sound.Find(SoundNames.TrunkLocked);
             OpenSound = Sound.Find(SoundNames.TrunkOpen);
 
             this.itemImage = new(Game)
@@ -44,7 +45,7 @@ namespace ScaryCastle
         {
             if (ClosureState == ClosureState.Open)
             {
-                if (Session.LootGenerator.Get() is ItemDefinition loot)
+                if (Session.LootGenerator.Get(this) is ItemDefinition loot)
                 {
                     Loot = loot;
                     DisplayNameKey = $"Item.{Loot.Name}.Name";
@@ -68,7 +69,7 @@ namespace ScaryCastle
         // CanInteract
         public override bool CanInteract()
         {
-            return (IsClosed || Loot != null) && base.CanInteract();
+            return (!IsOpen || Loot != null) && base.CanInteract();
         }
 
         // Loot

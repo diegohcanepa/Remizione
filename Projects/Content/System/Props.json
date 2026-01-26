@@ -51,6 +51,12 @@
       "placements": [
         "Floor"
       ]      
+    },
+    {
+      "name": "GoldenTrunk",
+      "placements": [
+        "Floor"
+      ]      
     }
   ],
   "unevaluatedProperties": false

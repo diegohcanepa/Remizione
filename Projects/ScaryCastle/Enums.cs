@@ -81,7 +81,7 @@ namespace ScaryCastle
     public enum ImpactWordName { None, AghGreen, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
 
     // ItemCategory
-    public enum ItemCategory { Explosive, Food, Luck, Medicine, Misc }
+    public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc }
 
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }
@@ -93,7 +93,7 @@ namespace ScaryCastle
     public enum LightState { Off, On, TurningOn, TurningOff }
 
     // LockType
-    public enum LockType { None, Padlock }
+    public enum LockType { None, GoldenKey }
 
     // LogVerb
     public enum LogVerb { Bought, Found, Requires, Used }

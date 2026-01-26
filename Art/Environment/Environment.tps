@@ -602,6 +602,24 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">GoldenTrunk-assets/GoldenTrunk01.png</key>
+            <key type="filename">GoldenTrunk-assets/GoldenTrunk02.png</key>
+            <key type="filename">GoldenTrunk-assets/GoldenTrunkShadow.png</key>
+            <key type="filename">Trunk-assets/TrunkShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,5,7,9</rect>
+                <key>scale9Paddings</key>
+                <rect>3,5,7,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Guts-assets/Gut1.png</key>
             <key type="filename">PotteryB-assets/PotteryBPiece5.png</key>
             <key type="filename">TombstoneA-assets/TombstoneAPiece3.png</key>
@@ -1395,21 +1413,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Trunk-assets/TrunkShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,5,7,9</rect>
-                <key>scale9Paddings</key>
-                <rect>3,5,7,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">VendingMachine-assets/VendingMachine.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1537,6 +1540,7 @@
                     <filename>VendingMachine-assets</filename>
                     <filename>Torch-assets</filename>
                     <filename>Dice-assets</filename>
+                    <filename>GoldenTrunk-assets</filename>
                 </array>
             </struct>
         </map>

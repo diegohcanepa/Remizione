@@ -1,5 +1,7 @@
 ﻿using Adberration.Scripting;
+using Engendro;
 using Engendro.Audio;
+using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
 {
@@ -9,6 +11,7 @@ namespace ScaryCastle
     public class Openable : Prop
     {
         private bool actionInProgress;
+        private readonly Vector2Tween shakeTween = new();
 
         // Constructor
         public Openable(GameSession session, string name)
@@ -23,9 +26,32 @@ namespace ScaryCastle
         {
         }
 
+        // OnDraw
+        protected override void OnDraw(GameTime gameTime)
+        {
+            if (shakeTween.IsRunning)
+            {
+                var pos = Position;
+                Position = shakeTween.CurrentValue;
+                base.OnDraw(gameTime);
+                Position = pos;
+            }
+            else
+            {
+                base.OnDraw(gameTime);
+            }
+        }
+
         // OnLockTypeChanged
         protected virtual void OnLockTypeChanged()
         {
+        }
+
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            base.OnUpdate(gameTime);
+            shakeTween.Update(gameTime);
         }
 
         // SyncAnimation
@@ -92,6 +118,7 @@ namespace ScaryCastle
         public Sound? LockedSound { get; set; }
 
         // LockType
+        [ScriptProperty]
         public LockType LockType
         {
             get;
@@ -114,13 +141,20 @@ namespace ScaryCastle
 
             if (LockType != LockType.None)
             {
-                if (LockedSound != null && IsInCurrentRoom)
-                    PlaySound(LockedSound);
+                if (IsInCurrentRoom)
+                {
+                    Shake();
+                    if (LockedSound != null)
+                        PlaySound(LockedSound);
+                }
                 return;
             }
 
             if (OpenSound != null)
+            {
+                Bounce();
                 PlaySound(OpenSound);
+            }
 
             actionInProgress = true;
             ClosureState = ClosureState.Open;
@@ -132,5 +166,18 @@ namespace ScaryCastle
         // OpenSound
         [ScriptProperty]
         public Sound? OpenSound { get; set; }
+
+        // Shake
+        public void Shake()
+        {
+            if (shakeTween.IsRunning)
+                return;
+            shakeTween.Start(TweenStyle.Linear, Position, Position + Vector2.One * .5f, 60, 4);
+        }
+
+        // Unlock
+        public void Unlock()
+        {
+        }
     }
 }

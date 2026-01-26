@@ -27,6 +27,7 @@
             "category": {
               "type": "string",
               "enum": [
+                "Access",
                 "Explosive",
                 "Food",
                 "Luck",

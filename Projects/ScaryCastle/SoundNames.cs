@@ -37,6 +37,7 @@
         internal const string TowerDoorClose = nameof(TowerDoorClose);
         internal const string ThrowablePickup = nameof(ThrowablePickup);
         internal const string Thunder = nameof(Thunder);
+        internal const string TrunkLocked = nameof(TrunkLocked);
         internal const string TrunkOpen = nameof(TrunkOpen);
         internal const string UIHover = nameof(UIHover);
         internal const string UIPrompt = nameof(UIPrompt);

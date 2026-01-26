@@ -48,6 +48,10 @@
             "Celestial"
           ]
         },
+        "qualityBoost": {
+          "type": "integer",
+          "minimum": 0
+        },
         "tags": {
           "type": "string"
         }

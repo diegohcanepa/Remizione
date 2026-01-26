@@ -42,6 +42,19 @@
 			"sound": "Firecracker"
 		},
 		{
+			"name": "GoldenKey",
+			"category": "Access",
+			"isStackable": true,
+			"effects": [
+				{
+					"effectType": "Heal",
+					"amount": "2",
+					"target": "Self",
+					"sound": "AppleBite"
+				}
+			]
+		},
+		{
 			"name": "Lantern",
 			"category": "Misc",
 			"consumptionInterval": 10000,
@@ -51,7 +64,7 @@
 		},
 		{
 			"name": "MasterLockpick",
-			"category": "Misc",
+			"category": "Access",
 			"skillChance": 75,
 			"isStackable": true
 		},
@@ -63,7 +76,7 @@
 		},
 		{
 			"name": "RustyLockpick",
-			"category": "Misc",
+			"category": "Access",
 			"skillChance": 30
 		}
 	]

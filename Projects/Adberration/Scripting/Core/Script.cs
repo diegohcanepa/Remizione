@@ -61,6 +61,16 @@ namespace Adberration.Scripting
 
         #region Private members
 
+        // AssertCompoundOutcome
+        private void AssertCompoundOutcome(string leftContext, string rightContext)
+        {
+            if (Session.FindEntity<Thing>(leftContext) == null)
+                throw new ScriptException(this, sourceLines[0], $"There is no thing named '{leftContext}'.");
+
+            if (!string.IsNullOrWhiteSpace(rightContext) && rightContext != ScriptSyntax.AnyEntityOp && Session.FindEntity<Thing>(rightContext) == null)
+                throw new ScriptException(this, sourceLines[0], $"There is no thing named '{rightContext}'.");
+        }
+
         // CheckEntity
         private void CheckEntity()
         {
@@ -86,8 +96,24 @@ namespace Adberration.Scripting
                 case ScriptType.Outcome:
                     if (Session.FindEntity<Thing>(EntityName) == null)
                         throw new ScriptException(this, sourceLines[0], $"There is no thing named '{EntityName}'.");
+
+                    // Try Compound Outcome
+                    var index = Name.IndexOf(ScriptSyntax.ScriptCompoundSeparator, StringComparison.Ordinal);
+                    if (index != -1)
+                    {
+                        var leftContext = Name.Substring(0, index);
+                        AssertCompoundOutcome(leftContext, string.Empty);
+                    }
+
                     break;
             }
+        }
+
+        // ComposeEntityName
+        private static string ComposeEntityName(string value)
+        {
+            var index = value.IndexOf(ScriptSyntax.ScriptCompoundSeparator, StringComparison.Ordinal);
+            return index != -1 ? value.Substring(0, index) : value;
         }
 
         // JumpToNextSelectionStatementBlock
@@ -159,7 +185,10 @@ namespace Adberration.Scripting
             // Assign Entity Name
             if (HasCapability(ScriptCapability.EntityContext))
             {
-                EntityName = tokens[1];
+                if (ScriptType != ScriptType.Outcome && tokens[1].Contains(ScriptSyntax.ScriptCompoundSeparator))
+                    ThrowScriptSyntaxError(this, signature, "Compound operator is only valid for outcomes.");
+
+                EntityName = ComposeEntityName(tokens[1]);
             }
 
             name = signature.Substring(signature.IndexOf(headerSeparator, StringComparison.Ordinal) + 1);

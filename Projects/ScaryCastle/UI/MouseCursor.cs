@@ -249,12 +249,13 @@ namespace ScaryCastle
                     UseWithScript = null;
 
                     if (field != null && Item != null)
-                        UseWithScript = field.Session.ScriptLibrary.FindRoutine($"{field.DeclaredName}-With-{Item.Name}");
+                        UseWithScript = field.Session.ScriptLibrary.FindCompoundOutcome(field.DeclaredName, Item.Name);
 
                     InvalidateText();
                 }
             }
         }
+
 
         // Text
         public static string? Text => textSprite.Text;

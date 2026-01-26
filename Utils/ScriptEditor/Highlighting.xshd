@@ -135,10 +135,8 @@
 			<Word>false</Word>
 			<Word>null</Word>
 			<Word>save-game</Word>
-			<Word>take-damage</Word>
 			<Word>true</Word>
 			<Word>this</Word>
-			<Word>use-key-item</Word>
 			<Word>use-item</Word>
 			<Word>verbs</Word>
 		</Keywords>
@@ -149,6 +147,7 @@
 			<Word>else</Word>
 			<Word>enable-area-if</Word>
 			<Word>endif</Word>
+			<Word>if-can-pickup-loot</Word>
 			<Word>if-hotspot-area</Word>
 			<Word>if-counter</Word>
 			<Word>if-entity-type</Word>
@@ -220,10 +219,8 @@
 			<Word>add-walk-area</Word>
 			<Word>atlas</Word>
 			<Word>attach-light</Word>
-			<Word>begin-rain</Word>
 			<Word>dizziness-effect</Word>
 			<Word>empty-inventory</Word>
-			<Word>end-rain</Word>
 			<Word>flashback-effect</Word>
 			<Word>flip</Word>
 			<Word>focus-xy</Word>
@@ -233,13 +230,13 @@
 			<Word>hide-dialog-box</Word>
 			<Word>hide-message</Word>
 			<Word>kill-all-creatures</Word>
+			<Word>pickup-loot</Word>
 			<Word>push-dialog</Word>
 			<Word>push-scene</Word>
 			<Word>put</Word>
 			<Word>random-position</Word>
 			<Word>reset-camera</Word>
 			<Word>select-walk-area</Word>
-			<Word>sepia-effect</Word>
 			<Word>set-brightness</Word>
 			<Word>set-chapter</Word>
 			<Word>set-color-reduction</Word>
@@ -260,7 +257,6 @@
 			<Word>stop-shaking</Word>
 			<Word>stop-vibration</Word>
 			<Word>suspend-vibration</Word>
-			<Word>test-skill-chance</Word>
 			<Word>unparent</Word>
 			<Word>vibrate</Word>
 			<Word>zoom</Word>

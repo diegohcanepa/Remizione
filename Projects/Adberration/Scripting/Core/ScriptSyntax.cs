@@ -165,6 +165,9 @@ namespace Adberration.Scripting
         // RuntimeRoomNamePrefix
         public const string RuntimeRoomNamePrefix = "<room>";
 
+        // ScriptCompoundSeparator
+        public const string ScriptCompoundSeparator = "+";
+
         // SessionKeyword
         public const string SessionKeyword = "Session";
 
