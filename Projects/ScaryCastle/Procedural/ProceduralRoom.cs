@@ -38,7 +38,7 @@ namespace ScaryCastle
 
             this.AllowGlobalLight = true;
             this.LightingSystem = true;
-            this.UnloadMode = Adberration.UnloadMode.Manual;
+            this.UnloadMode = UnloadMode.Manual;
 
             int salt = roomGraph.Index;
             this.randomSeed = RandomHelper.GetSeed(Session.Seed, salt);
@@ -352,7 +352,7 @@ namespace ScaryCastle
         protected override void OnChildAdded(Entity child)
         {
             base.OnChildAdded(child);
-            
+
             if (child is Sack)
                 SackCount++;
         }
@@ -361,7 +361,7 @@ namespace ScaryCastle
         protected override void OnChildRemoved(Entity child)
         {
             base.OnChildAdded(child);
-            
+
             if (child is Sack)
                 SackCount--;
         }

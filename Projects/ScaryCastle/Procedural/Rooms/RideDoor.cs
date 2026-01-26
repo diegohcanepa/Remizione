@@ -72,15 +72,6 @@ namespace ScaryCastle
             Session.EnterRoom(targetRoom);
         }
 
-        // SyncAnimation
-        private void SyncAnimation()
-        {
-            if (ClosureState == ClosureState.Open)
-                Sprite.Player.Play("Open");
-            else
-                Sprite.Player.Play("Closed");
-        }
-
         #endregion
 
         #region Protected members
@@ -88,9 +79,6 @@ namespace ScaryCastle
         // OnClosureStatusChanged
         protected override void OnClosureStatusChanged(bool isAction)
         {
-            base.OnClosureStatusChanged(isAction);
-            SyncAnimation();
-
             if (isAction)
                 Bounce();
         }
@@ -99,7 +87,7 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             base.OnDraw(gameTime);
-            
+
             if (ClosureState == ClosureState.Locked)
                 lockImage.Draw(gameTime);
         }

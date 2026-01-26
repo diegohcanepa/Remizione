@@ -684,8 +684,7 @@ namespace ScaryCastle
         // GetApproachPosition
         public Vector2 GetApproachPosition(GameThing requester, ApproachBehavior? behavior = null)
         {
-            if (behavior == null)
-                behavior = this.ApproachBehavior;
+            behavior ??= this.ApproachBehavior;
 
             // 1. Override Manual (Prioridad absoluta del editor)
             if (ApproachPosition != Vector2.Zero)

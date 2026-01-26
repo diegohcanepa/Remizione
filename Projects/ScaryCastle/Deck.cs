@@ -79,7 +79,7 @@ namespace ScaryCastle
             var card = drawPile[0];
             drawPile.RemoveAt(0);
             Invalidate();
-            
+
             return card;
         }
 

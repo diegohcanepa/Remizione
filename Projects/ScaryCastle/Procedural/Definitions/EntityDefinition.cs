@@ -62,7 +62,7 @@ namespace ScaryCastle
         {
             if (!PassesMaxPerRunConstraint())
                 return false;
-            
+
             return session.FloorIndex >= MinFloor;
         }
 

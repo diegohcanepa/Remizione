@@ -67,14 +67,14 @@ namespace ScaryCastle
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
-        {        
+        {
             for (var i = 0; i < icons.Length; i++)
             {
                 if (icons[i].Image == null)
                     break;
                 else
                     icons[i].Draw(gameTime);
-            }         
+            }
         }
 
         // OnUpdate

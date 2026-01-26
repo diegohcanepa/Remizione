@@ -128,7 +128,7 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            cardContainerShadow.Draw(gameTime); 
+            cardContainerShadow.Draw(gameTime);
             cardContainer.Draw(gameTime);
             categoryIcon.Draw(gameTime);
             actionIcon.Draw(gameTime);

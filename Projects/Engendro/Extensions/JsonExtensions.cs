@@ -105,7 +105,7 @@ namespace Engendro
             }
 
             // GetVector2
-            public Vector2? GetVector2(string propertyName)            
+            public Vector2? GetVector2(string propertyName)
             {
                 if (element.TryGetProperty(propertyName, out JsonElement prop) && prop.GetString() is string value)
                     return DataConvert.ToVector2(value);

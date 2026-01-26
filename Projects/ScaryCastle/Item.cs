@@ -206,7 +206,7 @@ namespace ScaryCastle
             // TODO: Check attack type
             EffectDescriptor.Apply(Definition.EffectDescriptors, source, target, AttackType.None);
             Use();
-            
+
             return true;
         }
     }

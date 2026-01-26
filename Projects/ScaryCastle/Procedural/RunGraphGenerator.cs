@@ -52,7 +52,7 @@ namespace ScaryCastle
                 // Usamos TryGetValue que es seguro y rápido para AOT
                 if (map.TryGetValue((nx, ny), out RoomGraph? neighbor) && neighbor != null)
                 {
-                    bool isParent = (neighbor == parent);
+                    bool isParent = neighbor == parent;
 
                     // Si es el padre, conectamos sí o sí.
                     // Si es un vecino accidental, tiramos el dado.
@@ -89,7 +89,7 @@ namespace ScaryCastle
                 }
 
                 // Array manual en lugar de lista para evitar overhead
-                RoomGraph?[] neighbors = { current.Up, current.Down, current.Left, current.Right };
+                RoomGraph?[] neighbors = [current.Up, current.Down, current.Left, current.Right];
 
                 for (int i = 0; i < neighbors.Length; i++)
                 {
@@ -111,7 +111,7 @@ namespace ScaryCastle
         public static (List<RoomGraph>, int) Generate(Random rng, int roomCount)
         {
             if (roomCount <= 0)
-                return (new List<RoomGraph>(), 0);
+                return ([], 0);
 
             Dictionary<(int x, int y), RoomGraph> occupied = [];
             List<RoomGraph> rooms = [];

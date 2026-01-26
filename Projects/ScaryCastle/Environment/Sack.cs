@@ -1,9 +1,5 @@
 ﻿using Adberration;
 using Engendro;
-using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ScaryCastle
 {
@@ -19,7 +15,7 @@ namespace ScaryCastle
             Atlas = Atlases.Environment;
             DepthOffset = -2;
             DisplayNameKey = "Prop.Sack";
-            Hotspot =  new Polygon("0,0;7,0;7,7;0,7");
+            Hotspot = new Polygon("0,0;7,0;7,7;0,7");
         }
 
         // OnParentChanged

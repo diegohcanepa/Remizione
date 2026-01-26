@@ -252,7 +252,7 @@ namespace ScaryCastle
             {
                 if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
                 {
-                    session.Player?.Stand();    
+                    session.Player?.Stand();
                     IsVisible = true;
                     MouseCursor.Item = null;
                     return;

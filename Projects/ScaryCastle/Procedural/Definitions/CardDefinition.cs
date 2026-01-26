@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using ScaryCastle.Procedural;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -46,17 +45,13 @@ namespace ScaryCastle
             CodeContract.ValidRange(DiceThreshold, 0, 5, nameof(DiceThreshold));
 
             BackImage = Atlases.UI.GetImage($"CardBack");
-          
-            switch (Action)
-            {
-                case CardAction.Damage:
-                case CardAction.Heal:
-                    ActionImage = GetHeartImage(Action, BaseValue);
-                    break;
 
-                default:
-                    throw new InvalidOperationException();
+            ActionImage = Action switch
+            {
+                CardAction.Damage or CardAction.Heal => GetHeartImage(Action, BaseValue),
+                _ => throw new InvalidOperationException(),
             };
+            ;
 
             // BonusValueImage
             if (BonusValue != 0)
@@ -166,13 +161,7 @@ namespace ScaryCastle
         public AtlasImage FrontImage { get; }
 
         // HasBonus
-        public bool HasBonus
-        {
-            get
-            {
-                return DiceThreshold > 0 && BonusValue > 0;
-            }
-        }
+        public bool HasBonus => DiceThreshold > 0 && BonusValue > 0;
 
         // ToString
         public override string ToString()

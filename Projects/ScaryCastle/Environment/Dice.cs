@@ -3,8 +3,6 @@ using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ScaryCastle
 {
@@ -38,7 +36,7 @@ namespace ScaryCastle
             //Scale = new(.5f);
             //ShadowOffset = new(0, -2);
             ShadowSpotSize = 0;
-            
+
             this.initialVelocity = new Vector2(110, -50);
             this.weight = .8f;
             this.bounciness = .6f;
@@ -116,7 +114,7 @@ namespace ScaryCastle
         public bool IsRolling { get; private set; }
 
         // LastResult
-        public int LastResult { get; private set;  }
+        public int LastResult { get; private set; }
 
         // Roll
         [ScriptMethod]
@@ -124,7 +122,7 @@ namespace ScaryCastle
         {
             owner = Session.Player;
             if (owner == null)
-            { 
+            {
                 LastResult = 0;
                 return 0;
             }

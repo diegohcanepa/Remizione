@@ -58,7 +58,7 @@ namespace ScaryCastle
                 if (isInitialized)
                     Sound.Play(SoundNames.CollectCoin);
 
-                isInitialized = true;   
+                isInitialized = true;
                 lastKnownValue = session.Coins;
                 valueText.Text = $"{session.Coins}";
 

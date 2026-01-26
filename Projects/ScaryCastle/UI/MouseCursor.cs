@@ -34,7 +34,7 @@ namespace ScaryCastle
         {
             // Cursor sprite
             cursorSprite = new ImageSprite(EngendroGame.Instance)
-            { 
+            {
                 PivotOrigin = RectanglePoint.Center,
                 Scale = GetCurrentScale()
             };
@@ -87,7 +87,10 @@ namespace ScaryCastle
         }
 
         // GetCurrentScale
-        private static Vector2 GetCurrentScale() => Item != null ? ScaleInfo.InventoryHeldItem : ScaleInfo.UIElement.Large;
+        private static Vector2 GetCurrentScale()
+        {
+            return Item != null ? ScaleInfo.InventoryHeldItem : ScaleInfo.UIElement.Large;
+        }
 
         // InvalidateCursorImage
         private static void InvalidateCursorImage()
@@ -97,7 +100,7 @@ namespace ScaryCastle
             else
                 cursorSprite.Image = cursorImages[(int)State];
 
-            cursorSprite.Scale = GetCurrentScale(); 
+            cursorSprite.Scale = GetCurrentScale();
             cursorSprite.PivotOrigin = State == MouseCursorState.Arrow ? RectanglePoint.LeftTop : RectanglePoint.Center;
         }
 
@@ -182,7 +185,7 @@ namespace ScaryCastle
             EngendroGame.Instance.SpriteBatch.End();
 
             EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera);
-            if (State == MouseCursorState.Cross || State == MouseCursorState.Item)
+            if (State is MouseCursorState.Cross or MouseCursorState.Item)
                 textSprite.Draw(gameTime);
             EngendroGame.Instance.SpriteBatch.End();
         }
@@ -244,7 +247,7 @@ namespace ScaryCastle
                     field = value;
 
                     UseWithScript = null;
-                    
+
                     if (field != null && Item != null)
                         UseWithScript = field.Session.ScriptLibrary.FindRoutine($"{field.DeclaredName}-With-{Item.Name}");
 

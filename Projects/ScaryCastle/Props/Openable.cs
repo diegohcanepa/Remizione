@@ -28,6 +28,15 @@ namespace ScaryCastle
         {
         }
 
+        // SyncAnimation
+        protected virtual void SyncAnimation()
+        {
+            if (ClosureState == ClosureState.Open)
+                Sprite.Player.Play("Open");
+            else
+                Sprite.Player.Play("Closed");
+        }
+
         #endregion
 
         // Close
@@ -61,9 +70,22 @@ namespace ScaryCastle
                 {
                     field = value;
                     OnClosureStatusChanged(actionInProgress);
+                    SyncAnimation();
                 }
             }
         }
+
+        // IsClosed
+        [ScriptProperty]
+        public bool IsClosed => ClosureState == ClosureState.Closed;
+
+        // IsLocked
+        [ScriptProperty]
+        public bool IsLocked => ClosureState == ClosureState.Locked;
+
+        // IsOpen
+        [ScriptProperty]
+        public bool IsOpen => ClosureState == ClosureState.Open;
 
         // LockedSound
         [ScriptProperty]

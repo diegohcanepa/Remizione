@@ -1,7 +1,5 @@
-﻿using Adberration;
-using Adberration.Scripting;
+﻿using Adberration.Scripting;
 using Microsoft.Xna.Framework;
-using System.Windows.Forms.Design.Behavior;
 
 namespace ScaryCastle.Scripting
 {

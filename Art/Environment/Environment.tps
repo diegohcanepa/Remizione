@@ -375,7 +375,6 @@
             <key type="filename">PotteryC-assets/PotteryCPiece1.png</key>
             <key type="filename">PotteryC-assets/PotteryCPiece3.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece4.png</key>
-            <key type="filename">Trunk-assets/TrunkPiece2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -457,8 +456,6 @@
             </struct>
             <key type="filename">Environment-assets/ShadowSpot5.png</key>
             <key type="filename">TombstoneD-assets/TombstoneDPiece2.png</key>
-            <key type="filename">Trunk-assets/TrunkPiece3.png</key>
-            <key type="filename">Trunk-assets/TrunkPiece5.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -609,7 +606,6 @@
             <key type="filename">PotteryB-assets/PotteryBPiece5.png</key>
             <key type="filename">TombstoneA-assets/TombstoneAPiece3.png</key>
             <key type="filename">TombstoneC-assets/TombstoneCPiece3.png</key>
-            <key type="filename">Trunk-assets/TrunkPiece4.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1399,21 +1395,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Trunk-assets/TrunkPiece1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,2,2,3</rect>
-                <key>scale9Paddings</key>
-                <rect>1,2,2,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Trunk-assets/TrunkShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1423,9 +1404,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>4,4,8,7</rect>
+                <rect>3,5,7,9</rect>
                 <key>scale9Paddings</key>
-                <rect>4,4,8,7</rect>
+                <rect>3,5,7,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

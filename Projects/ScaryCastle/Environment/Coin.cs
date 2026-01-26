@@ -1,5 +1,4 @@
-﻿using Adberration;
-using Engendro;
+﻿using Engendro;
 using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
@@ -23,7 +22,7 @@ namespace ScaryCastle
             IgnoreWalkArea = false;
             RenderLayer = RenderLayer.Background;
             ShadowSpotSize = 0;
-            
+
             var animation = AddAnimation("Default");
             animation.AddFrame("Coin01", 1500);
             animation.AddFrame("Coin02", 100);
@@ -50,8 +49,8 @@ namespace ScaryCastle
         protected override void OnLoad()
         {
             base.OnLoad();
-            
-            if (Room is GameRoom gameRoom &&  gameRoom.WalkArea?.RandomWalkablePoint(Position, 3, 15) is Vector2 destination)
+
+            if (Room is GameRoom gameRoom && gameRoom.WalkArea?.RandomWalkablePoint(Position, 3, 15) is Vector2 destination)
             {
                 var distance = Vector2.Distance(Position, destination);
                 var tweenDuration = (int)float.Clamp(distance * 100, 300, 1000);

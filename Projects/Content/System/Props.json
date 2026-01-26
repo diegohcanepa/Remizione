@@ -45,6 +45,12 @@
           "knockback": "15,5"
         }
       ]
+    },
+    {
+      "name": "Trunk",
+      "placements": [
+        "Floor"
+      ]      
     }
   ],
   "unevaluatedProperties": false

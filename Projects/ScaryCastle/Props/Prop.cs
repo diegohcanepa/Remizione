@@ -2,8 +2,6 @@
 using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
 
 namespace ScaryCastle
 {
@@ -17,7 +15,7 @@ namespace ScaryCastle
         private readonly Vector2Tween bounceScaleTween = new();
         private readonly ImageSprite shadow;
         private readonly FloatTween xTween = new();
-        
+
         #endregion
 
         #region Constructor
