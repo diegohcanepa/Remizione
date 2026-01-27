@@ -22,7 +22,7 @@ namespace ScaryCastle
         #region Protected members
 
         // OnClosureStatusChanged
-        protected virtual void OnClosureStatusChanged(bool isAction)
+        protected virtual void OnClosureStatusChanged(bool actionInProgress)
         {
         }
 
@@ -57,7 +57,7 @@ namespace ScaryCastle
         // SyncAnimation
         protected virtual void SyncAnimation()
         {
-            if (ClosureState == ClosureState.Open)
+            if (IsOpen)
                 Sprite.Player.Play("Open");
             else
                 Sprite.Player.Play("Closed");
@@ -69,13 +69,13 @@ namespace ScaryCastle
         [ScriptMethod]
         public void Close()
         {
-            if (ClosureState == ClosureState.Open)
+            if (IsOpen)
             {
                 if (CloseSound != null && IsInCurrentRoom)
                 {
                     PlaySound(CloseSound);
                     actionInProgress = true;
-                    ClosureState = ClosureState.Closed;
+                    IsOpen = false;
                     actionInProgress = false;
                 }
             }
@@ -85,33 +85,25 @@ namespace ScaryCastle
         [ScriptProperty]
         public Sound? CloseSound { get; set; }
 
-        // ClosureState
+        // IsLocked
         [ScriptProperty]
-        public ClosureState ClosureState
+        public bool IsLocked => LockType != LockType.None;
+
+        // IsOpen
+        [ScriptProperty]
+        public bool IsOpen
         {
             get;
             set
             {
                 if (value != field)
                 {
-                    field = value;
+                    field |= value;
                     OnClosureStatusChanged(actionInProgress);
                     SyncAnimation();
                 }
             }
         }
-
-        // IsClosed
-        [ScriptProperty]
-        public bool IsClosed => ClosureState == ClosureState.Closed;
-
-        // IsLocked
-        [ScriptProperty]
-        public bool IsLocked => ClosureState == ClosureState.Locked;
-
-        // IsOpen
-        [ScriptProperty]
-        public bool IsOpen => ClosureState == ClosureState.Open;
 
         // LockedSound
         [ScriptProperty]
@@ -136,7 +128,7 @@ namespace ScaryCastle
         [ScriptMethod]
         public void Open()
         {
-            if (ClosureState == ClosureState.Open)
+            if (IsOpen)
                 return;
 
             if (LockType != LockType.None)
@@ -157,7 +149,7 @@ namespace ScaryCastle
             }
 
             actionInProgress = true;
-            ClosureState = ClosureState.Open;
+            IsOpen = true;
             actionInProgress = false;
         }
 
@@ -177,14 +169,14 @@ namespace ScaryCastle
         [ScriptMethod]
         public void Unlock()
         {
-            if (ClosureState != ClosureState.Locked)
+            if (LockType == LockType.None)
                 return;
 
             if (UnlockSound != null)
                 PlaySound(UnlockSound);
 
             actionInProgress = true;
-            ClosureState = ClosureState.Open;
+            LockType = LockType.None;
             actionInProgress = false;
         }
 

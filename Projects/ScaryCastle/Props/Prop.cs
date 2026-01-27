@@ -104,7 +104,7 @@ namespace ScaryCastle
         public int SkillChancePenalty { get; set; }
 
         // TestSkillChance
-        public bool TestSkillChance(Actor actor, Item item, PropState successState)
+        public bool TestSkillChance(Actor actor, Item item)
         {
             var roll = DiceExpression.Dice100.Roll();
             var successChance = item.Definition.SkillChance - SkillChancePenalty;

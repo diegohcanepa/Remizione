@@ -65,7 +65,7 @@
 		{
 			"name": "MasterLockpick",
 			"category": "Access",
-			"skillChance": 75,
+			"skillChance": 70,
 			"isStackable": true
 		},
 		{

@@ -37,9 +37,6 @@ namespace ScaryCastle
     // CardCategory
     public enum CardCategory { Attack, Defense, Healing, Prayer, Status }
 
-    // ClosureState
-    public enum ClosureState { Closed, Locked, Open }
-
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }
 

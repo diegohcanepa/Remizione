@@ -77,9 +77,9 @@ namespace ScaryCastle
         #region Protected members
 
         // OnClosureStatusChanged
-        protected override void OnClosureStatusChanged(bool isAction)
+        protected override void OnClosureStatusChanged(bool actionInProgress)
         {
-            if (isAction)
+            if (actionInProgress)
                 Bounce();
         }
 
@@ -88,7 +88,7 @@ namespace ScaryCastle
         {
             base.OnDraw(gameTime);
 
-            if (ClosureState == ClosureState.Locked)
+            if (LockType != LockType.None)
                 lockImage.Draw(gameTime);
         }
 
@@ -104,7 +104,7 @@ namespace ScaryCastle
         // CanInteractWithItem
         public override bool CanInteractWithItem()
         {
-            return ClosureState != ClosureState.Open;
+            return !IsOpen;
         }
 
         // Connect
@@ -115,7 +115,7 @@ namespace ScaryCastle
             {
                 int roomIndex = Room is RideRoom rideRoom ? rideRoom.RoomGraph.Index : -1;
                 var pos = TargetRoom.GetPlayerPosition(roomIndex, out RideDoor? door);
-                door?.ClosureState = ClosureState.Open;
+                door?.IsOpen = true;
                 ConnectCore(TargetRoom, pos);
             }
         }
@@ -127,7 +127,7 @@ namespace ScaryCastle
         // GetMouseCursorState
         public override MouseCursorState? GetMouseCursorState()
         {
-            if (MouseCursor.Target == this && ClosureState == ClosureState.Open)
+            if (MouseCursor.Target == this && IsOpen)
                 return arrowCursor;
             else
                 return base.GetMouseCursorState();

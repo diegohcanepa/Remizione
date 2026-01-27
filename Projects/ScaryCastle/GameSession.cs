@@ -142,6 +142,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             AotTypeRegistry.Register("exit-session", typeof(ExitSessionCommand));
             AotTypeRegistry.Register("if-can-pickup-loot", typeof(IfCanPickUpLootStatement));
+            AotTypeRegistry.Register("if-test-skill", typeof(IfTestSkillStatement));
             AotTypeRegistry.Register("pickup-loot", typeof(PickUpLootCommand));
             AotTypeRegistry.Register("say", typeof(SayCommand));
             AotTypeRegistry.Register("select-walk-area", typeof(SelectWalkAreaCommand));
@@ -150,8 +151,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("show-message", typeof(ShowMessageCommand));
             AotTypeRegistry.Register("take-damage", typeof(TakeDamageCommand));
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
-            AotTypeRegistry.Register("test-skill-chance", typeof(TestSkillChanceCommand));
-            AotTypeRegistry.Register("use-item", typeof(UseItemCommand));
+AotTypeRegistry.Register("use-item", typeof(UseItemCommand));
             AotTypeRegistry.Register("vibrate", typeof(VibrateCommand));
             AotTypeRegistry.Register("x-tween", typeof(XTweenCommand));
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));

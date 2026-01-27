@@ -170,8 +170,9 @@ namespace ScaryCastle
             {
                 if (door.DoorDirection is RideDoorDirection.Left or RideDoorDirection.Right or RideDoorDirection.Up)
                 {
-                    if (door.TargetRoom?.Definition.LockType != LockType.None)
-                        door.ClosureState = ClosureState.Locked;
+                    // TODO: Check
+                    //if (door.TargetRoom?.Definition.LockType != LockType.None)
+                    //    door.LockType = door.TargetRoom.Definition.LockType;
                 }
             }
         }

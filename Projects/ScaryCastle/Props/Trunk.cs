@@ -42,9 +42,9 @@ namespace ScaryCastle
         #region Protected members
 
         // OnClosureStatusChanged
-        protected override void OnClosureStatusChanged(bool isAction)
+        protected override void OnClosureStatusChanged(bool actionInProgress)
         {
-            if (ClosureState == ClosureState.Open)
+            if (IsOpen)
             {
                 if (Session.LootGenerator.Get(this) is ItemDefinition loot)
                 {
@@ -54,6 +54,9 @@ namespace ScaryCastle
                     itemImageShadow.Position = itemImage.Position;
                     itemImageShadow.Y += 1;
                 }
+
+                if (actionInProgress)
+                    Bounce();
             }
         }
 

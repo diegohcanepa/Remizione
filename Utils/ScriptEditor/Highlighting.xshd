@@ -158,6 +158,7 @@
 			<Word>if-random-number</Word>
 			<Word>if-roll</Word>
 			<Word>if-routine-running</Word>
+			<Word>if-test-skill</Word>
 			<Word>if</Word>
 			<Word>increment-counter</Word>
 			<Word>restart</Word>
