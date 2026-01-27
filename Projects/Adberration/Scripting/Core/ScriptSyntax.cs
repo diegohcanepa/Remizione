@@ -62,9 +62,7 @@ namespace Adberration.Scripting
 
             var index = name.IndexOf(CloneSuffix, StringComparison.OrdinalIgnoreCase);
             if (index != -1)
-            {
-                name = name.Substring(0, index);
-            }
+                name = name[..index];
 
             return name;
         }
@@ -108,12 +106,6 @@ namespace Adberration.Scripting
             return name.Contains(RuntimeNameSuffix);
         }
 
-        // IsSessionMemberReference
-        public static bool IsSessionMemberReference(string value)
-        {
-            return value.StartsWith(SessionPropertyAlias, StringComparison.Ordinal) || value.StartsWith("Session.", StringComparison.Ordinal);
-        }
-
         // LessOp
         public const string LessOp = "<";
 
@@ -125,9 +117,6 @@ namespace Adberration.Scripting
 
         // LogicalNegation
         public const string LogicalNegation = "!";
-
-        // LogicalDisjunction
-        public const string LogicalDisjunction = "|";
 
         // MemberSeparator
         public const string MemberSeparator = ".";
@@ -165,8 +154,8 @@ namespace Adberration.Scripting
         // RuntimeRoomNamePrefix
         public const string RuntimeRoomNamePrefix = "<room>";
 
-        // ScriptCompoundSeparator
-        public const string ScriptCompoundSeparator = "+";
+        // ScriptOverloadSeparator
+        public const string ScriptOverloadSeparator = "+";
 
         // SessionKeyword
         public const string SessionKeyword = "Session";

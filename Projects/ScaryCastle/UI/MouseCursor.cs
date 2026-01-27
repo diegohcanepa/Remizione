@@ -175,7 +175,7 @@ namespace ScaryCastle
                 }
 
                 effect.TextureSize.SetValue(new Vector2(cursorSprite.Image.Atlas.Texture.Width, cursorSprite.Image.Atlas.Texture.Height));
-                effect.Thickness.SetValue(1.2f);
+                effect.Thickness.SetValue(1);
             }
 
             EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera, SamplerState.PointClamp, effect?.Effect);
@@ -249,7 +249,7 @@ namespace ScaryCastle
                     UseWithScript = null;
 
                     if (field != null && Item != null)
-                        UseWithScript = field.Session.ScriptLibrary.FindCompoundOutcome(field.DeclaredName, Item.Name);
+                        UseWithScript = field.Session.ScriptLibrary.FindOverload(field.DeclaredName, Item.Name);
 
                     InvalidateText();
                 }
