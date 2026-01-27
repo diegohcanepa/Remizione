@@ -12,6 +12,7 @@ namespace ScaryCastle
     public sealed class Deck : Collection<Card>
     {
         private readonly List<Card> discardPile = [];
+        private readonly List<Card> drawnCards = [];
         private readonly List<Card> drawPile = [];
 
         #region Contructor
@@ -21,9 +22,28 @@ namespace ScaryCastle
             : base()
         {
             this.Session = session;
+
             this.DiscardPile = discardPile.AsReadOnly();
             this.DrawPile = drawPile.AsReadOnly();
+            this.DrawnCards = drawnCards.AsReadOnly();
+
             Add(new Card(session.Game, "CardTest"));
+            Add(new Card(session.Game, "CardTest"));
+            Add(new Card(session.Game, "CardTest"));
+            Add(new Card(session.Game, "CardTest"));
+            Add(new Card(session.Game, "CardTest"));
+        }
+
+        #endregion
+
+        #region Private members
+
+        // RecycleDiscardToDraw
+        private void RecycleDiscardToDraw()
+        {
+            drawPile.AddRange(discardPile);
+            discardPile.Clear();
+            drawPile.Shuffle();
         }
 
         #endregion
@@ -36,6 +56,7 @@ namespace ScaryCastle
             base.ClearItems();
             discardPile.Clear();
             drawPile.Clear();
+            drawnCards.Clear();
             Invalidate();
         }
 
@@ -59,6 +80,7 @@ namespace ScaryCastle
             base.RemoveItem(index);
             discardPile.Remove(card);
             drawPile.Remove(card);
+            drawnCards.Remove(card);
             Invalidate();
         }
 
@@ -70,25 +92,33 @@ namespace ScaryCastle
         // ContentVersion
         public int ContentVersion { get; private set; }
 
-        // Draw
-        public Card? Draw()
+        // DrawCards
+        public void DrawCards(int amount)
         {
-            if (drawPile.Count == 0)
-                return null;
+            for (var i = 0; i < drawPile.Count; i++)
+            {
+                if (drawPile.Count == 0)
+                {
+                    if (discardPile.Count == 0)
+                        break;
 
-            var card = drawPile[0];
-            drawPile.RemoveAt(0);
+                    Shuffle();
+                }
+
+                var card = drawPile[0];
+                drawPile.RemoveAt(0);
+                drawnCards.Add(card);
+            }
+
             Invalidate();
-
-            return card;
         }
 
         // Discard
         public bool Discard(Card card)
         {
-            if (Contains(card) && !discardPile.Contains(card))
+            if (drawnCards.Contains(card) && !discardPile.Contains(card))
             {
-                drawPile.Remove(card);
+                drawnCards.Remove(card);
                 discardPile.Add(card);
                 Invalidate();
                 return true;
@@ -97,8 +127,57 @@ namespace ScaryCastle
             return false;
         }
 
+        // DiscardHand
+        public void DiscardHand()
+        {
+            foreach (var card in drawnCards)
+            {
+                discardPile.Add(card);
+                card.IsFaceVisible = false;
+            }
+
+            drawnCards.Clear();
+            Invalidate();
+        }
+
         // DiscardPile
         public ReadOnlyCollection<Card> DiscardPile { get; }
+
+        // DrawnCards
+        public ReadOnlyCollection<Card> DrawnCards { get; }
+
+        // DrawNewHand
+        public void DrawNewHand(int amount)
+        {
+            // Asegurarnos de que la mano anterior esté limpia (por seguridad)
+            if (drawnCards.Count > 0)
+                DiscardHand();
+
+            for (int i = 0; i < amount; i++)
+            {
+                // A. Si no quedan cartas en el mazo de robo...
+                if (drawPile.Count == 0)
+                {
+                    // Si tampoco hay en el descarte, no hay nada más que robar.
+                    if (discardPile.Count == 0) break;
+
+                    // Reciclaje: Mover descarte a robo y barajar
+                    RecycleDiscardToDraw();
+                }
+
+                // B. Robar la primera carta
+                Card card = drawPile[0];
+                drawPile.RemoveAt(0);
+
+                // C. Agregar a la mano (drawnCards)
+                drawnCards.Add(card);
+
+                // Reactivar visualmente la carta
+                card.IsFaceVisible = true;
+            }
+
+            Invalidate();
+        }
 
         // DrawPile
         public ReadOnlyCollection<Card> DrawPile { get; }
@@ -176,10 +255,26 @@ namespace ScaryCastle
             }
         }
 
+        // PlayCard
+        public void PlayCard(Card card)
+        {
+            if (drawnCards.Remove(card))
+            {
+                drawnCards.Remove(card);
+                discardPile.Add(card);
+                Invalidate();
+            }
+        }
+
         // Remove
         public bool Remove(string name)
         {
             return Find(name) is Card card && Remove(card);
+        }
+
+        // RevealCard
+        public void RevealCard()
+        {
         }
 
         // SaveState
@@ -213,10 +308,17 @@ namespace ScaryCastle
         // Shuffle
         public void Shuffle()
         {
+            drawnCards.Clear();
             discardPile.Clear();
             drawPile.Clear();
             drawPile.AddRange(this);
             drawPile.Shuffle();
+
+            foreach (var card in this)
+            {
+                card.IsFaceVisible = false;
+            }
+
             Invalidate();
         }
     }

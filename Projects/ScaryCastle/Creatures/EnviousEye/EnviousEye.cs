@@ -5,7 +5,7 @@ namespace ScaryCastle
     /// <summary>
     /// EnviousEye
     /// </summary>
-    public sealed class EnviousEye : Enemy
+    public sealed class EnviousEye : Actor
     {
         // Constructor
         public EnviousEye(GameSession session, string name)
@@ -15,18 +15,9 @@ namespace ScaryCastle
             FastMoveFactor = 3;
             Guts = 7;
             ShadowSpotSize = 0;
-
-            _ = new EnviousEyeDecideState(AIStateMachine);
-            _ = new EnviousEyePatrolState(AIStateMachine);
         }
 
         #region Protected members
-
-        // OnStart
-        protected override void OnStart()
-        {
-            // AIStateMachine.ChangeState(AIStateName.Decide);
-        }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)

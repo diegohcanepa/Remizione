@@ -71,8 +71,6 @@ namespace ScaryCastle
             this.StateMachine.RegisterState(new ActorHurtState(this));
             this.StateMachine.RegisterState(new ActorMoveState(this));
 
-            this.AIStateMachine = new(this);
-
             if (Atlas?.FindImage(Sprite.ImagePath + "Gut0") != null)
             {
                 var index = 0;
@@ -178,9 +176,6 @@ namespace ScaryCastle
         #endregion
 
         #region Protected members
-
-        // AIStateMachine
-        protected AIStateMachine AIStateMachine { get; }
 
         // CalculateSpeed
         protected override float CalculateSpeed()
@@ -355,7 +350,6 @@ namespace ScaryCastle
             UpdateDirection();
             UpdateFootstep();
             footstepEffect?.Update(gameTime);
-            AIStateMachine.Update(gameTime);
             StateMachine.Update(gameTime);
         }
 

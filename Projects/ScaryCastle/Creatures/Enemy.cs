@@ -3,13 +3,11 @@
     /// <summary>
     /// Enemy
     /// </summary>
-    public class Enemy : Actor
+    public sealed class Enemy
     {
         // Constructor
-        public Enemy(GameSession session, string name)
-            : base(session, name)
+        public Enemy()
         {
-            Faction = Faction.Evil;
         }
     }
 }

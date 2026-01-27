@@ -4,6 +4,7 @@ using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ScaryCastle.UI;
 using System;
 using System.Collections.Generic;
 
@@ -15,6 +16,9 @@ namespace ScaryCastle
     public class GameRoom : Room
     {
         #region Private fields
+
+        // TODO: Remove
+        private UIDeck uiDeck;
 
         private Color brightnessColor;
         private int currentDrawIndex;
@@ -363,14 +367,11 @@ namespace ScaryCastle
             DrawDebugBoxes();
 #endif
             // TODO: Remove
-            /*
-            Session.Deck[0].Update(gameTime);
+            uiDeck ??= new UIDeck(Session.Deck);
+            uiDeck.Update(gameTime);
             Game.SpriteBatch.Begin(Game.Camera);
-            Session.Deck[0].IsFaceVisible = true;
-            Session.Deck[0].Position = Screen.Center;
-            Session.Deck[0].Draw(gameTime);
+            uiDeck.Draw(gameTime);
             Game.SpriteBatch.End();
-            */
         }
 
         // OnHandleInput

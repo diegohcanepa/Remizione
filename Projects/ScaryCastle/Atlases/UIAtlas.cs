@@ -13,6 +13,7 @@ namespace ScaryCastle
         {
             BottomGradient = this[nameof(BottomGradient)];
             CheckMark = this[nameof(CheckMark)];
+            CardBack = this[nameof(CardBack)];
             Coin = this[nameof(Coin)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
@@ -44,6 +45,9 @@ namespace ScaryCastle
 
         // BottomGradient
         public AtlasImage BottomGradient { get; }
+
+        // CardBack
+        public AtlasImage CardBack { get; }
 
         // CheckMark
         public AtlasImage CheckMark { get; }

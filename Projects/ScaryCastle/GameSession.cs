@@ -151,7 +151,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("show-message", typeof(ShowMessageCommand));
             AotTypeRegistry.Register("take-damage", typeof(TakeDamageCommand));
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
-AotTypeRegistry.Register("use-item", typeof(UseItemCommand));
+            AotTypeRegistry.Register("use-item", typeof(UseItemCommand));
             AotTypeRegistry.Register("vibrate", typeof(VibrateCommand));
             AotTypeRegistry.Register("x-tween", typeof(XTweenCommand));
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));

@@ -274,13 +274,13 @@ namespace ScaryCastle
         private void Populate()
         {
             PopulateProps();
-            PopulateEnemies();
+            PopulateNPCs();
         }
 
-        // PopulateEnemies
-        private void PopulateEnemies()
+        // PopulateNPCs
+        private void PopulateNPCs()
         {
-            var definitions = ApplyPrimaryFilter<Enemy>(ThingDefinition.All);
+            var definitions = ApplyPrimaryFilter<Actor>(ThingDefinition.All);
             SpawnInPlaceholders(definitions, Definition.MaxEnemies, enemiesSpawnCounter, PlaceholderTarget.Enemy);
             SpawnInWalkArea(definitions, Definition.MaxEnemies, enemiesSpawnCounter);
         }

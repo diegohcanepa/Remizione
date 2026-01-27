@@ -3,7 +3,7 @@
     /// <summary>
     /// Zabul
     /// </summary>
-    public sealed class Zabul : Enemy
+    public sealed class Zabul : Actor
     {
         // Constructor
         public Zabul(GameSession session, string name)
@@ -14,14 +14,6 @@
             Guts = 0;
             FloatingForce = 1;
             ShadowSpotSize = 5;
-
-            _ = new ZabulDecideState(AIStateMachine);
-        }
-
-        // OnStart
-        protected override void OnStart()
-        {
-            //AIStateMachine.ChangeState(AIStateName.Decide);
         }
     }
 }
