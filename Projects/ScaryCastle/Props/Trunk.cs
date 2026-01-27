@@ -22,6 +22,7 @@ namespace ScaryCastle
             HitEffect = HitEffect.Shake;
             LockedSound = Sound.Find(SoundNames.TrunkLocked);
             OpenSound = Sound.Find(SoundNames.TrunkOpen);
+            UnlockSound = Sound.Find(SoundNames.LockOpen);
 
             this.itemImage = new(Game)
             {

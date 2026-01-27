@@ -159,8 +159,6 @@ namespace ScaryCastle
             actionInProgress = true;
             ClosureState = ClosureState.Open;
             actionInProgress = false;
-
-            return;
         }
 
         // OpenSound
@@ -176,8 +174,22 @@ namespace ScaryCastle
         }
 
         // Unlock
+        [ScriptMethod]
         public void Unlock()
         {
+            if (ClosureState != ClosureState.Locked)
+                return;
+
+            if (UnlockSound != null)
+                PlaySound(UnlockSound);
+
+            actionInProgress = true;
+            ClosureState = ClosureState.Open;
+            actionInProgress = false;
         }
+
+        // UnlockSound
+        [ScriptProperty]
+        public Sound? UnlockSound { get; set; }
     }
 }

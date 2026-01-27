@@ -45,22 +45,10 @@ namespace ScaryCastle
 
             if (MouseCursor.Target != null)
             {
-                if (MouseCursor.UseWithScript is Script script)
-                {
-                    MouseCursor.Item = null;
-                    Actor.Session.BeginOutcome(script, MouseCursor.Target);
-                }
+                if (MouseCursor.Item != null && MouseCursor.UseWithScript == null)
+                    Actor.Session.AwaitRoutine(RoutineNames.UseWithFailOutcome);
                 else
-                {
-                    if (MouseCursor.Item != null)
-                    {
-                        Actor.Session.AwaitRoutine(RoutineNames.UseWithFailOutcome);
-                    }
-                    else
-                    {
-                        Actor.ApproachAndInteract(MouseCursor.Target);
-                    }
-                }
+                    Actor.ApproachAndInteract(MouseCursor.Target, MouseCursor.Item);
 
                 MouseCursor.PerformClick();
 

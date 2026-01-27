@@ -23,6 +23,7 @@ namespace ScaryCastle
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private GameThing? pendingInteractiveTarget;
+        private Item? pendingInteractiveTargetItem;
         private readonly List<Vector2> pendingPathNodes = [];
         private readonly GameSession session;
         private SpeechBubble? speechBubble;
@@ -103,10 +104,11 @@ namespace ScaryCastle
             {
                 MouseCursor.Item = null;
                 FaceTo(pendingInteractiveTarget);
-                Interact(pendingInteractiveTarget);
+                Interact(pendingInteractiveTarget, pendingInteractiveTargetItem);
             }
 
             pendingInteractiveTarget = null;
+            pendingInteractiveTargetItem = null;
         }
 
         // MoveToNextPathNode
@@ -390,7 +392,7 @@ namespace ScaryCastle
         }
 
         // ApproachAndInteract
-        public bool ApproachAndInteract(GameThing target)
+        public bool ApproachAndInteract(GameThing target, Item? item)
         {
             if (!IsPlayer)
                 return false;
@@ -398,6 +400,7 @@ namespace ScaryCastle
             var destination = target.GetApproachPosition(this);
             var result = MoveTo(destination);
             this.pendingInteractiveTarget = target;
+            this.pendingInteractiveTargetItem = item;
 
             if (!result)
                 HandlePendingInteraction();
@@ -463,16 +466,16 @@ namespace ScaryCastle
         }
 
         // Interact
-        public bool Interact(GameThing? target = null)
+        public bool Interact(GameThing target, Item? item)
         {
-            if (target == null || !IsInCurrentRoom)
+            if (!IsInCurrentRoom)
                 return false;
 
             // Session is busy
             if (Session.State != GameSessionState.Idle)
                 return false;
 
-            var script = target.OutcomeScript;
+            var script = item == null ? target.OutcomeScript : session.ScriptLibrary.FindOverload(target.DeclaredName, item.Name);
 
             if (script != null)
             {
@@ -503,6 +506,7 @@ namespace ScaryCastle
         public override bool MoveTo(Vector2 destination)
         {
             pendingInteractiveTarget = null;
+            pendingInteractiveTargetItem = null;
 
             // No path needed
             if (WalkArea == null || IgnoreWalkArea)

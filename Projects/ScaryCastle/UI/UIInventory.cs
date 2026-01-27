@@ -129,7 +129,6 @@ namespace ScaryCastle
                 {
                     if (grabbedItem.Definition.Image != null)
                     {
-                        session.Player?.Stand();
                         MouseCursor.Item = grabbedItem;
                         MouseCursor.PerformClick();
                         IsVisible = false;
@@ -248,11 +247,22 @@ namespace ScaryCastle
             if (!session.IsCurrentScene)
                 return;
 
+            if (lastSeenInventoryVersion != session.Inventory.ContentVersion)
+            {
+                lastSeenInventoryVersion = session.Inventory.ContentVersion;
+                Refresh();
+            }
+
+            if (lastSeenDeckVersion != session.Deck.ContentVersion)
+            {
+                lastSeenDeckVersion = session.Deck.ContentVersion;
+                RefreshDeck();
+            }
+
             if (!IsVisible)
             {
                 if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
                 {
-                    session.Player?.Stand();
                     IsVisible = true;
                     MouseCursor.Item = null;
                     return;
@@ -269,18 +279,6 @@ namespace ScaryCastle
 
             if (!IsVisible)
                 return;
-
-            if (lastSeenInventoryVersion != session.Inventory.ContentVersion)
-            {
-                lastSeenInventoryVersion = session.Inventory.ContentVersion;
-                Refresh();
-            }
-
-            if (lastSeenDeckVersion != session.Deck.ContentVersion)
-            {
-                lastSeenDeckVersion = session.Deck.ContentVersion;
-                RefreshDeck();
-            }
 
             deckIcon.Update(gameTime);
 
