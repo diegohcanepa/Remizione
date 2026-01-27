@@ -784,17 +784,11 @@ namespace ScaryCastle
         // GetOverheadPosition
         public Vector2 GetOverheadPosition()
         {
-            return GetOverheadPosition(0, 0);
-        }
-
-        // GetOverheadPosition
-        public Vector2 GetOverheadPosition(int xOffset, int yOffset)
-        {
             // Origin
             if (OverheadOrigin == Vector2.Zero)
-                return BoundingBox.GetPoint(RectanglePoint.Top, xOffset, yOffset);
+                return BoundingBox.GetPoint(RectanglePoint.Top);
             else
-                return this.GetAbsolutePoint(OverheadOrigin, xOffset, yOffset);
+                return this.GetAbsolutePoint(OverheadOrigin);
         }
 
         // GetResistanceModifier
@@ -1026,6 +1020,13 @@ namespace ScaryCastle
         {
             get => shadowSpot.Size;
             set => shadowSpot.Size = value;
+        }
+
+        // ShowFloatingText
+        public void ShowFloatingText(string text, Color color, int duration = 1000)
+        {
+            if (Session.ObjectPools.FloatingTexts.Get() is FloatingText floatingText)
+                floatingText.Show(GetOverheadPosition(), text, color, duration);
         }
 
         // ShowImpactWord

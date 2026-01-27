@@ -16,12 +16,14 @@ namespace ScaryCastle
         public Trunk(GameSession session, string name)
             : base(session, name)
         {
+            ApproachBehavior = ApproachBehavior.ClosestSide;
             Atlas = Atlases.Environment;
             DeathSound = Sound.Find(SoundNames.WoodDebris);
             DisplayNameKey = "Prop.Trunk";
             HitEffect = HitEffect.Shake;
             LockedSound = Sound.Find(SoundNames.TrunkLocked);
             OpenSound = Sound.Find(SoundNames.TrunkOpen);
+            OverheadOrigin = new(6, 2);
             UnlockSound = Sound.Find(SoundNames.LockOpen);
 
             this.itemImage = new(Game)

@@ -571,13 +571,6 @@ namespace ScaryCastle
             speechBubble.Show(LocalizedDisplayName, text, awaitInput);
         }
 
-        // ShowFloatingText
-        public void ShowFloatingText(string text, Color color, int duration = 1000)
-        {
-            if (Session.ObjectPools.FloatingTexts.Get() is FloatingText floatingText)
-                floatingText.Show(GetOverheadPosition(), text, color, duration);
-        }
-
         // SpeechBubbleSound
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public Sound? SpeechBubbleSound { get; set; }

@@ -136,8 +136,11 @@ namespace ScaryCastle
                 if (IsInCurrentRoom)
                 {
                     Shake();
+                    
                     if (LockedSound != null)
                         PlaySound(LockedSound);
+                    
+                    ShowFloatingText(TextRepository.GetValue("FloatingText.Locked"), ColorPalette.Text.Orange);
                 }
                 return;
             }

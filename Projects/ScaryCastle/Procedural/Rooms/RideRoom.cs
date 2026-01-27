@@ -13,6 +13,8 @@ namespace ScaryCastle
     {
         private readonly List<RideDoor> doors = [];
 
+        #region Constructor
+
         // Constructor
         public RideRoom(GameSession session, RoomGraph graph)
             : base(session, string.Empty, graph)
@@ -41,6 +43,8 @@ namespace ScaryCastle
                 AddPlaceholder(placeholder);
             }
         }
+
+        #endregion
 
         #region Private members
 
@@ -104,29 +108,6 @@ namespace ScaryCastle
 
         // DoorUp
         private Vector2? DoorUp { get; set; }
-
-        // DropLoot
-        protected override void DropLoot()
-        {
-            // 1. Roll de probabilidad: ¿Esta sala da premio?
-            // 20% de base es un buen número para empezar.
-            Ratio dropChance = .2f;
-
-            // Sumamos la suerte del jugador si tiene un gadget/pasivo
-            dropChance += Session.Inventory.GetLuckFactor();
-
-            // Si el roll falla (el número es mayor a la chance), salimos sin spawnear nada
-            if (!dropChance.Roll())
-                return;
-
-            /*
-            var drop = Loot.Get(Session, Config, null, ItemCategory.Pickup);
-            RoomGraph.HeartCount++;
-
-            if (drop != null)
-                Session.ObjectPools.Pickups.Get()?.Drop(this, GetDropLootPosition(), drop);
-            */
-        }
 
         // OnEntering
         protected override void OnEntering()

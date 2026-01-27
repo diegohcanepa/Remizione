@@ -106,40 +106,168 @@ namespace ScaryCastle
             return outList;
         }
 
-        // GetSpawnPoints
-        private List<Vector2> GetSpawnPoints(Rectangle area, int count, int cellSize)
+        // GetSpawnPoints (Refactorizado)
+        // Ahora acepta ReadOnlyPolygon para validar la geometría real.
+        private List<Vector2> GetSpawnPoints(ReadOnlyPolygon polygon, int count, int cellSize)
         {
             var cells = new List<Vector2>();
 
-            for (int y = area.Y; y < area.Bottom; y += cellSize)
-            {
-                for (int x = area.X; x < area.Right; x += cellSize)
-                {
-                    // Centro de la celda
-                    var cx = x + (cellSize * 0.5f);
-                    var cy = y + (cellSize * 0.5f);
+            // Usamos el rectángulo para limitar los bucles, pero el polígono para validar
+            var area = polygon.BoundingRectangle;
 
-                    // Solo agregamos si el centro cae dentro
-                    if (cx >= area.Left && cx <= area.Right &&
-                        cy >= area.Top && cy <= area.Bottom)
+            // Iteramos sobre la rejilla
+            for (int y = area.Top; y < area.Bottom; y += cellSize)
+            {
+                for (int x = area.Left; x < area.Right; x += cellSize)
+                {
+                    // Centro teórico de la celda
+                    float cx = x + (cellSize * 0.5f);
+                    float cy = y + (cellSize * 0.5f);
+
+                    // Jitter: Agregamos variación aleatoria (-25% a +25% del tamaño de celda)
+                    // para que los enemigos no parezcan estar en una cuadrícula perfecta.
+                    float offsetRange = cellSize * 0.25f;
+                    cx += (float)(Random.NextDouble() * offsetRange * 2 - offsetRange);
+                    cy += (float)(Random.NextDouble() * offsetRange * 2 - offsetRange);
+
+                    var candidate = new Vector2(cx, cy);
+
+                    // VALIDACIÓN CRÍTICA:
+                    // polygon.Contains usa tu Ray Casting. Si el punto cae en una esquina
+                    // vacía del bounding box pero fuera del cuarto, esto devolverá false.
+                    if (polygon.Contains(candidate))
                     {
-                        cells.Add(new Vector2(cx, cy));
+                        cells.Add(candidate);
                     }
                 }
             }
 
-            // Mezclamos
+            // Shuffle (Mezcla determinista usando la seed del cuarto)
             for (int i = cells.Count - 1; i > 0; i--)
             {
                 int j = Random.Next(i + 1);
                 (cells[i], cells[j]) = (cells[j], cells[i]);
             }
 
-            // Devolvemos solo los que pidieron
+            // Devolvemos solo la cantidad solicitada (o menos si no hay espacio)
             if (cells.Count > count)
                 cells.RemoveRange(count, cells.Count - count);
 
             return cells;
+        }
+
+        // SpawnInWalkArea (Completo)
+        private void SpawnInWalkArea(IList<ThingDefinition> definitions, int maxInstances, MultiCounter spawnCounter)
+        {
+            if (WalkArea == null || maxInstances == 0)
+                return;
+
+            // 1) Collect candidates
+            var candidates = new List<ThingDefinition>();
+            foreach (var definition in definitions)
+            {
+                // Allowed if list is empty or contains WalkArea enum value
+                if (!definition.Placements.Contains(PlacementType.WalkArea))
+                    continue;
+
+                if (!definition.PassesMaxPerRoomConstraint(spawnCounter.GetCount(definition.Name)))
+                    continue;
+
+                if (!definition.PassesMaxPerRunConstraint())
+                    continue;
+
+                candidates.Add(definition);
+            }
+
+            if (candidates.Count == 0)
+                return;
+
+            // 2) Build chance table
+            var table = new ChanceTable();
+            foreach (var c in candidates)
+            {
+                var finalWeight = AdjustWeightByDifficulty(Definition.Difficulty, c.Difficulty, c.SpawnWeight);
+                table.Add(c.Name, finalWeight);
+            }
+
+            var spawnedNames = new List<string>();
+            int remainingInstances = maxInstances;
+
+            // Corte blando
+            var continueChance = 1f;
+            const float decay = 0.7f; // ajustable
+
+            // seguridad
+            int safety = candidates.Count * 2 + 10; // Un poco más de margen de seguridad
+
+            // 3) Pick groups
+            while (table.Count > 0 && safety-- > 0)
+            {
+                if (maxInstances > 0 && remainingInstances <= 0)
+                    break;
+
+                // roll de continuación (solo si es infinito, o lógica específica)
+                // Nota: Tu lógica original usaba maxInstances <= 0 para el decay, lo mantengo igual.
+                if (maxInstances <= 0)
+                {
+                    if (Random.NextDouble() > continueChance)
+                        break;
+
+                    continueChance *= decay;
+                }
+
+                if (table.GetValue() is not ChanceTableItem item)
+                    break;
+
+                // Nota: Si quieres que se puedan repetir tipos de enemigos, comenta la siguiente línea.
+                // Si la descomentas, cada tipo de enemigo aparece una sola vez por grupo.
+                table.Remove(item.Name);
+
+                if (ThingDefinition.Find(item.Name) is not ThingDefinition chosen)
+                    continue;
+
+                int min = Math.Max(1, chosen.MinSpawnAmount);
+                int max = Math.Max(min, chosen.MaxSpawnAmount);
+                int amount = Random.Next(min, max + 1);
+
+                // respetar maxInstances si existe
+                if (maxInstances > 0)
+                    amount = Math.Min(amount, remainingInstances);
+
+                for (int i = 0; i < amount; i++)
+                {
+                    spawnCounter.Increment(chosen.Name);
+                    RunManager.SpawnCounter.Increment(chosen.Name);
+                    spawnedNames.Add(chosen.Name);
+
+                    if (maxInstances > 0)
+                        remainingInstances--;
+                }
+            }
+
+            if (spawnedNames.Count == 0)
+                return;
+
+            // 4) Spawn positions
+            // Creamos un polígono "seguro" reduciendo el original en 30 unidades.
+            // Esto asegura que cualquier punto validado por 'Contains' estará
+            // al menos a 30px de la pared más cercana.
+            var safePoly = new Polygon(WalkArea.Polygon.Vertices, -30);
+
+            // CAMBIO IMPORTANTE: Aumentamos cellSize de 18 a 45.
+            // Esto reduce drásticamente la superposición de enemigos.
+            var points = GetSpawnPoints(safePoly, spawnedNames.Count, 45);
+
+            for (int i = 0; i < points.Count; i++)
+            {
+                // Si el cuarto es muy chico y no conseguimos puntos para todos los enemigos, paramos.
+                if (i >= spawnedNames.Count)
+                    break;
+
+                var instance = CreateThingClone(spawnedNames[i]);
+                instance.Position = points[i];
+                Children.Add(instance);
+            }
         }
 
         // Populate
@@ -240,107 +368,6 @@ namespace ScaryCastle
                 // Max per room
                 if (maxInstances != -1 && spawnCounter.Increment(chosen.Name) >= maxInstances)
                     return;
-            }
-        }
-
-        // SpawnInWalkArea
-        private void SpawnInWalkArea(IList<ThingDefinition> definitions, int maxInstances, MultiCounter spawnCounter)
-        {
-            if (WalkArea == null || maxInstances == 0)
-                return;
-
-            // 1) Collect candidates
-            var candidates = new List<ThingDefinition>();
-            foreach (var definition in definitions)
-            {
-                // Allowed if list is empty or contains WalkAea enum value
-                if (!definition.Placements.Contains(PlacementType.WalkArea))
-                    continue;
-
-                if (!definition.PassesMaxPerRoomConstraint(spawnCounter.GetCount(definition.Name)))
-                    continue;
-
-                if (!definition.PassesMaxPerRunConstraint())
-                    continue;
-
-                candidates.Add(definition);
-            }
-
-            if (candidates.Count == 0)
-                return;
-
-            // 2) Build chance table
-            var table = new ChanceTable();
-            foreach (var c in candidates)
-            {
-                var finalWeight = AdjustWeightByDifficulty(Definition.Difficulty, c.Difficulty, c.SpawnWeight);
-                table.Add(c.Name, finalWeight);
-            }
-
-            var spawnedNames = new List<string>();
-            int remainingInstances = maxInstances;
-
-            // Corte blando
-            var continueChance = 1f;
-            const float decay = 0.7f; // ajustable
-
-            // seguridad
-            int safety = candidates.Count;
-
-            // 3) Pick groups
-            while (table.Count > 0 && safety-- > 0)
-            {
-                if (maxInstances > 0 && remainingInstances <= 0)
-                    break;
-
-                // roll de continuación (solo si es infinito)
-                if (maxInstances <= 0)
-                {
-                    if (Random.NextDouble() > continueChance)
-                        break;
-
-                    continueChance *= decay;
-                }
-
-                if (table.GetValue() is not ChanceTableItem item)
-                    break;
-
-                table.Remove(item.Name);
-
-                if (ThingDefinition.Find(item.Name) is not ThingDefinition chosen)
-                    continue;
-
-                int min = Math.Max(1, chosen.MinSpawnAmount);
-                int max = Math.Max(min, chosen.MaxSpawnAmount);
-                int amount = Random.Next(min, max + 1);
-
-                // respetar maxInstances si existe
-                if (maxInstances > 0)
-                    amount = Math.Min(amount, remainingInstances);
-
-                for (int i = 0; i < amount; i++)
-                {
-                    spawnCounter.Increment(chosen.Name);
-                    RunManager.SpawnCounter.Increment(chosen.Name);
-                    spawnedNames.Add(chosen.Name);
-
-                    if (maxInstances > 0)
-                        remainingInstances--;
-                }
-            }
-
-            if (spawnedNames.Count == 0)
-                return;
-
-            // 4) Spawn positions
-            var poly = new Polygon(WalkArea.Polygon.Vertices, -30);
-            var points = GetSpawnPoints(poly.BoundingRectangle, spawnedNames.Count, 18);
-
-            for (int i = 0; i < points.Count; i++)
-            {
-                var instance = CreateThingClone(spawnedNames[i]);
-                instance.Position = points[i];
-                Children.Add(instance);
             }
         }
 

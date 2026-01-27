@@ -18,16 +18,5 @@ namespace ScaryCastle
             HurtSound = Sound.Find(SoundNames.ImpactA);
             MaxHP = 6;
         }
-
-        #region Protected members
-
-        // OnDie
-        protected override void OnDie()
-        {
-            base.OnDie();
-            // TODO: Trigger countdown
-        }
-
-        #endregion
     }
 }

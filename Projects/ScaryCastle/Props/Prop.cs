@@ -112,20 +112,12 @@ namespace ScaryCastle
 
             item.Use();
 
-            var text = TextRepository.GetValue(success ? "Misc.Success" : "Misc.Failed");
+            var text = TextRepository.GetValue(success ? "FloatingText.Success" : "FloatingText.Failed");
 
             actor.ShowFloatingText(text, success ? ColorPalette.Text.Green : ColorPalette.Text.Red);
 
-            if (success)
-            {
-                // TODO: Check
-                //if (successState != PropState.None)
-                //    PropState = successState;
-            }
-            else
-            {
+            if (!success)
                 Sound.Play(SoundNames.TestSkillFail);
-            }
 
             return success;
         }

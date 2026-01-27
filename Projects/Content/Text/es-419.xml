@@ -18,6 +18,9 @@
   <String Key="DurabilityState.Sturdy">Integro</String>
   <String Key="DurabilityState.Used">Usado</String>
   <String Key="DurabilityState.Worn">Gastado</String>
+  <String Key="FloatingText.Failed">¡Fallaste!</String>
+  <String Key="FloatingText.Locked">Cerrado con llave</String>
+  <String Key="FloatingText.Success">¡Éxito!</String>
   <String Key="HitType.Critical">¡Crítico!</String>
   <String Key="InputBinding.Back">Atrás</String>
   <String Key="InputBinding.BuyItem">Comprar</String>
@@ -211,7 +214,6 @@ Bla bla bla</String>
   <String Key="Misc.DisclaimerMessage">Algunas escenas e imágenes pueden herir la sensibilidad. La siguiente historia es ficticia y no representa a ninguna persona o evento real.</String>
   <String Key="Misc.DisclaimerTitle">ADVERTENCIA</String>
   <String Key="Misc.DollarSign">$</String>
-  <String Key="Misc.Failed">¡Fallaste!</String>
   <String Key="Misc.Level">Nivel</String>
   <String Key="Misc.Mute">Silencio</String>
   <String Key="Misc.No">No</String>
@@ -219,7 +221,6 @@ Bla bla bla</String>
   <String Key="Misc.Progress">Progreso</String>
   <String Key="Misc.SelectSlot">Seleccionar ranura</String>
   <String Key="Misc.Stamina">Resistencia</String>
-  <String Key="Misc.Success">¡Éxito!</String>
   <String Key="Misc.Threshold">Umbral</String>
   <String Key="Misc.Unknown">???</String>
   <String Key="Misc.WithPreposition">con</String>
