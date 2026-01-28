@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace ScaryCastle
 {
@@ -12,13 +13,13 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly ImageSprite actionIcon;
-        private readonly Countdown actionIconEffectCountdown = new() { DefaultDuration = 1500 };
+        private readonly Countdown actionIconEffectCountdown = new() { DefaultDuration = Random.Shared.Next(1500, 2500) };
         private readonly ImageSprite bonusValueIcon;
         private readonly ImageSprite categoryIcon;
         private readonly ImageSprite cardContainer;
         private readonly ImageSprite cardContainerShadow;
         private readonly ImageSprite diceIcon;
-        private readonly Countdown diceIconEffectCountdown = new() { DefaultDuration = 3500 };
+        private readonly Countdown diceIconEffectCountdown = new() { DefaultDuration = Random.Shared.Next(3000, 4000) };
         private readonly ImageSprite diceThresholdNumber;
         private readonly Vector2Tween diceTween = new();
         private readonly Vector2Tween heartTween = new();

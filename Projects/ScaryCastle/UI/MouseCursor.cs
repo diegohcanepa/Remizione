@@ -236,6 +236,9 @@ namespace ScaryCastle
             }
         }
 
+        // Text
+        public static string? Text => textSprite.Text;
+
         // Target
         public static GameThing? Target
         {
@@ -255,10 +258,6 @@ namespace ScaryCastle
                 }
             }
         }
-
-
-        // Text
-        public static string? Text => textSprite.Text;
 
         // Update
         public static void Update(GameTime gameTime)
@@ -281,13 +280,17 @@ namespace ScaryCastle
             if (Room.Session.IsAwaiting)
             {
                 if (Room.Session.Player?.HasSpeechBubble == true)
+                {
                     State = MouseCursorState.Arrow;
-
+                }
                 else if (Room.Session.AwaitingScript?.CurrentStatement is AwaitInputCommand)
+                {
                     State = MouseCursorState.Hand;
-
+                }
                 else
+                {
                     State = MouseCursorState.Wait;
+                }
 
                 return;
             }
@@ -299,7 +302,10 @@ namespace ScaryCastle
             }
 
             if (SpeechBubble.ModalInstance == null)
-                Target = ScanForTarget();
+            {
+                if (Room.Session.Enemy == null)
+                    Target = ScanForTarget();
+            }
 
             if (Item != null)
                 State = MouseCursorState.Item;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using ScaryCastle.Battle;
 
 namespace ScaryCastle
 {
@@ -12,6 +13,7 @@ namespace ScaryCastle
             : base(session, name)
         {
             AnimationSettings.SupressAll();
+            Brain = new CreatureBrain(this);
             FastMoveFactor = 3;
             Guts = 7;
             ShadowSpotSize = 0;
@@ -26,5 +28,23 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        /// <summary>
+        /// CreatureBrain
+        /// </summary>
+        public sealed class CreatureBrain : Brain
+        {
+            // Constructor
+            public CreatureBrain(Actor owner)
+                : base(owner)
+            {
+            }
+
+            // DecideIntent
+            public override Intent? DecideIntent()
+            {
+                return new(IntentType.Attack, 1);
+            }
+        }
     }
 }

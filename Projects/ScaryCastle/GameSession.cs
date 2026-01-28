@@ -210,6 +210,7 @@ namespace ScaryCastle
         protected override void OnEnterRoom(Room room)
         {
             IsInArena = room is Arena;
+            MouseCursor.Item = null;
 
             var width = room.Width == 0 ? room.CustomWidth : room.Width;
             var height = room.Height == 0 ? room.CustomHeight : room.Height;

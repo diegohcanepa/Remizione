@@ -405,6 +405,9 @@ namespace ScaryCastle
         // BodySize
         public ActorSize BodySize { get; set; } = ActorSize.Medium;
 
+        // Brain
+        public Brain? Brain { get; protected set; }
+
         // CanChangeState
         public bool CanChangeState
         {
