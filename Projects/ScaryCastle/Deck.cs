@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,11 +12,19 @@ namespace ScaryCastle
     /// </summary>
     public sealed class Deck : Collection<Card>
     {
-        private readonly List<Card> discardPile = [];
-        private readonly List<Card> drawnCards = [];
-        private readonly List<Card> drawPile = [];
+        #region Private fields
 
-        #region Contructor
+        private const float cardOffset = .75f;
+        private readonly ImageSprite cardShadow;
+        private readonly List<Card> discardPile = [];
+        private readonly List<Card?> drawnCards = [];
+        private readonly List<Card> drawPile = [];
+        private Vector2 nextDiscardPosition;
+        private readonly Vector2[] slotPositions = new Vector2[HandSize];
+
+        #endregion
+
+        #region Constructor
 
         // Constructor
         public Deck(GameSession session)
@@ -27,9 +36,21 @@ namespace ScaryCastle
             this.DrawPile = drawPile.AsReadOnly();
             this.DrawnCards = drawnCards.AsReadOnly();
 
+            // Card shadow
+            this.cardShadow = new ImageSprite(session.Game, Atlases.UI.CardBack)
+            {
+                Color = Color.Black,
+                Opacity = ColorPalette.ShadowOpacity
+            };
+
+            Add(new Card(session.Game, "CardTest3"));
             Add(new Card(session.Game, "CardTest"));
+            Add(new Card(session.Game, "CardTest3"));
             Add(new Card(session.Game, "CardTest"));
-            Add(new Card(session.Game, "CardTest"));
+            Add(new Card(session.Game, "CardTest3"));
+            Add(new Card(session.Game, "CardTest2"));
+            Add(new Card(session.Game, "CardTest2"));
+            Add(new Card(session.Game, "CardTest2"));
             Add(new Card(session.Game, "CardTest"));
             Add(new Card(session.Game, "CardTest"));
         }
@@ -44,6 +65,25 @@ namespace ScaryCastle
             drawPile.AddRange(discardPile);
             discardPile.Clear();
             drawPile.Shuffle();
+        }
+
+        // SetupSlotPositions
+        private void SetupSlotPositions()
+        {
+            // Pre-calculate drawn card positions
+            if (slotPositions[0] == Vector2.Zero)
+            {
+                float screenWidth = Screen.NativeWidth;
+                float slotWidth = this[0].BoundingBox.Width;
+                float spacing = 3;
+                float rowWidth = (HandSize * slotWidth) + ((HandSize - 1) * spacing);
+                float startingX = (screenWidth - rowWidth) / 2;
+
+                for (int i = 0; i < Deck.HandSize; i++)
+                {
+                    slotPositions[i] = new Vector2(startingX + (i * (slotWidth + spacing)), Screen.Area.Bottom - this[0].BoundingBox.Height - 5);
+                }
+            }
         }
 
         #endregion
@@ -87,7 +127,7 @@ namespace ScaryCastle
         #endregion
 
         // Capacity
-        public int Capacity { get; set; } = 5;
+        public int Capacity { get; set; } = 15;
 
         // ContentVersion
         public int ContentVersion { get; private set; }
@@ -114,14 +154,21 @@ namespace ScaryCastle
         }
 
         // Discard
-        public bool Discard(Card card)
+        public bool Discard(int index)
         {
-            if (drawnCards.Contains(card) && !discardPile.Contains(card))
+            if (drawnCards[index] is not Card card)
+                return false;
+
+            if (!discardPile.Contains(card))
             {
-                drawnCards.Remove(card);
-                discardPile.Add(card);
-                Invalidate();
-                return true;
+                if (drawnCards.Remove(card))
+                {
+                    discardPile.Add(card);
+                    card.MoveTo(nextDiscardPosition, 100, true);
+                    nextDiscardPosition.X -= cardOffset;
+                    Invalidate();
+                    return true;
+                }
             }
 
             return false;
@@ -132,8 +179,11 @@ namespace ScaryCastle
         {
             foreach (var card in drawnCards)
             {
-                discardPile.Add(card);
-                card.IsFaceVisible = false;
+                if (card != null)
+                {
+                    discardPile.Add(card);
+                    card.IsFaceVisible = false;
+                }
             }
 
             drawnCards.Clear();
@@ -143,23 +193,48 @@ namespace ScaryCastle
         // DiscardPile
         public ReadOnlyCollection<Card> DiscardPile { get; }
 
-        // DrawnCards
-        public ReadOnlyCollection<Card> DrawnCards { get; }
+        // Draw
+        public void Draw(GameTime gameTime)
+        {
+            // Draw pile (reverse)
+            for (var i = DrawPile.Count - 1; i >= 0 ; i--)
+            {
+                cardShadow.Position = new Vector2(DrawPile[i].Position.X - .25f, DrawPile[i].Position.Y);
+                cardShadow.Draw(gameTime);
+                DrawPile[i].Draw(gameTime);
+            }
 
-        // DrawNewHand
-        public void DrawNewHand(int amount)
+            // Discard pile
+            for (var i = 0; i < DiscardPile.Count; i++)
+            {
+                DiscardPile[i].Draw(gameTime);
+            }
+
+            // Drawn cards
+            for (var i = DrawnCards.Count - 1; i >= 0; i--)
+            {
+                DrawnCards[i]?.Draw(gameTime);
+            }
+        }
+
+        // DrawnCards
+        public ReadOnlyCollection<Card?> DrawnCards { get; }
+
+        // DrawHand
+        public void DrawHand()
         {
             // Asegurarnos de que la mano anterior esté limpia (por seguridad)
             if (drawnCards.Count > 0)
                 DiscardHand();
 
-            for (int i = 0; i < amount; i++)
+            for (int i = 0; i < HandSize; i++)
             {
                 // A. Si no quedan cartas en el mazo de robo...
                 if (drawPile.Count == 0)
                 {
                     // Si tampoco hay en el descarte, no hay nada más que robar.
-                    if (discardPile.Count == 0) break;
+                    if (discardPile.Count == 0)
+                        break;
 
                     // Reciclaje: Mover descarte a robo y barajar
                     RecycleDiscardToDraw();
@@ -172,8 +247,7 @@ namespace ScaryCastle
                 // C. Agregar a la mano (drawnCards)
                 drawnCards.Add(card);
 
-                // Reactivar visualmente la carta
-                card.IsFaceVisible = true;
+                card.MoveTo(slotPositions[HandSize-1-i], 500 * i + 1, true);
             }
 
             Invalidate();
@@ -199,6 +273,9 @@ namespace ScaryCastle
         {
             return Find(name) ?? throw new InvalidOperationException($"Card '{name}' not found.");
         }
+
+        // HandSize
+        public const int HandSize = 3;
 
         // Invalidate
         public void Invalidate()
@@ -272,11 +349,6 @@ namespace ScaryCastle
             return Find(name) is Card card && Remove(card);
         }
 
-        // RevealCard
-        public void RevealCard()
-        {
-        }
-
         // SaveState
         public string SaveState()
         {
@@ -308,18 +380,37 @@ namespace ScaryCastle
         // Shuffle
         public void Shuffle()
         {
+            if (Count == 0)
+                return;
+
             drawnCards.Clear();
             discardPile.Clear();
             drawPile.Clear();
             drawPile.AddRange(this);
             drawPile.Shuffle();
 
-            foreach (var card in this)
+            var offset = 0f;
+            for (var i = drawPile.Count - 1; i >= 0; i--)
             {
-                card.IsFaceVisible = false;
+                drawPile[i].IsFaceVisible = false;
+                drawPile[i].Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 5 + offset, -drawPile[i].BoundingBox.Height);
+                offset += cardOffset;
             }
 
+            nextDiscardPosition = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -5, -drawPile[0].BoundingBox.Height);
+
+            SetupSlotPositions();
+
             Invalidate();
+        }
+
+        // Update
+        public void Update(GameTime gameTime)
+        {
+            for (var i = 0; i < Count; i++)
+            {
+                this[i].Update(gameTime);
+            }
         }
     }
 }

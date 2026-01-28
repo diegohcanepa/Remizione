@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.9.1</string>
+        <string>7.11.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -124,7 +124,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../Projects/Content/Atlases/Arena1.xml</filename>
+                <filename>../../../Projects/Content/Atlases/CaveArena.xml</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -173,7 +173,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Arena1-assets/Arena1.png</key>
+            <key type="filename">CaveArena-assets/CaveArena.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -182,13 +182,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>60,34,120,67</rect>
+                <rect>60,38,120,75</rect>
                 <key>scale9Paddings</key>
-                <rect>60,34,120,67</rect>
+                <rect>60,38,120,75</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Arena1-assets/Foreground.png</key>
+            <key type="filename">CaveArena-assets/Foreground.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -203,7 +203,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Arena1-assets/Gate.png</key>
+            <key type="filename">CaveArena-assets/Gate.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -218,7 +218,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Arena1-assets/Tunnel.png</key>
+            <key type="filename">CaveArena-assets/Tunnel.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -240,7 +240,7 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>Arena1-assets</filename>
+                    <filename>CaveArena-assets</filename>
                 </array>
             </struct>
         </map>

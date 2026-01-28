@@ -1,6 +1,9 @@
-﻿using Engendro;
+﻿using Adberration;
+using Adberration.Scripting;
+using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using ScaryCastle.UI;
 
 namespace ScaryCastle
 {
@@ -16,21 +19,6 @@ namespace ScaryCastle
         }
 
         #region Private members
-
-        // PrepareEnemyTurn
-        private void PrepareEnemyTurn()
-        {
-        }
-
-        // StartBattle
-        private void StartBattle()
-        {
-            // Reset deck
-            Session.Deck.Shuffle();
-
-            PrepareEnemyTurn();
-        }
-
         #endregion
 
         #region Protected members
@@ -39,23 +27,56 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             base.OnDraw(gameTime);
+            
+            Game.SpriteBatch.Begin(Game.Camera);
+            Session.Deck.Draw(gameTime);
+            Game.SpriteBatch.End();
+        }
+
+        // OnHandleInput
+        protected override HandleInputResult OnHandleInput(GameTime gameTime)
+        {
+            return HandleInputResult.Handled;
         }
 
         // OnLoad
         protected override void OnLoad()
         {
             base.OnLoad();
-            StartBattle();
+
+            Session.Deck.Shuffle();
+            Session.Deck.DrawHand();
+
+            if (Session.Player is Actor player)
+            {
+                Children.Add(player);
+                player.Position = PlayerPosition;
+                player.Direction = FacingDirection.Right;
+            }
+
+            if (Session.Enemy is Actor enemy)
+            {
+                Children.Add(enemy);
+                enemy.Position = EnemyPosition;
+                enemy.Direction = FacingDirection.Left; 
+            }
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+            Session.Deck.Update(gameTime);
         }
 
         #endregion
 
-        public Actor? Enemy { get; set; }
+        // EnemyPosition
+        [ScriptProperty]
+        public Vector2 EnemyPosition { get; set; }
+
+        // PlayerPosition
+        [ScriptProperty]
+        public Vector2 PlayerPosition { get; set; }
     }
 }

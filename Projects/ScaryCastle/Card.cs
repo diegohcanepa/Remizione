@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
@@ -8,6 +9,8 @@ namespace ScaryCastle
     /// </summary>
     public sealed class Card : GameObject
     {
+        #region Private fields
+
         private readonly ImageSprite actionIcon;
         private readonly Countdown actionIconEffectCountdown = new() { DefaultDuration = 1500 };
         private readonly ImageSprite bonusValueIcon;
@@ -19,6 +22,9 @@ namespace ScaryCastle
         private readonly ImageSprite diceThresholdNumber;
         private readonly Vector2Tween diceTween = new();
         private readonly Vector2Tween heartTween = new();
+        private readonly Vector2Tween positionTween = new();
+
+        #endregion
 
         #region Constructors
 
@@ -90,6 +96,13 @@ namespace ScaryCastle
 
         #region Private members
 
+        // MoveTo
+        public void MoveTo(Vector2 destination, int delay, bool flip)
+        {
+            positionTween.StartDelay = delay;
+            positionTween.Start(TweenStyle.CubicIn, Position, destination, 500, flip ? Flip : null);
+        }
+
         // Refresh
         private void Refresh()
         {
@@ -130,11 +143,19 @@ namespace ScaryCastle
         {
             cardContainerShadow.Draw(gameTime);
             cardContainer.Draw(gameTime);
-            categoryIcon.Draw(gameTime);
-            actionIcon.Draw(gameTime);
-            diceIcon.Draw(gameTime);
-            diceThresholdNumber.Draw(gameTime);
-            bonusValueIcon.Draw(gameTime);
+
+            if (IsFaceVisible)
+            {
+                categoryIcon.Draw(gameTime);
+                actionIcon.Draw(gameTime);
+
+                if (Definition.HasBonus)
+                {
+                    diceIcon.Draw(gameTime);
+                    diceThresholdNumber.Draw(gameTime);
+                    bonusValueIcon.Draw(gameTime);
+                }
+            }
         }
 
         // OnUpdate
@@ -169,12 +190,28 @@ namespace ScaryCastle
                     diceIconEffectCountdown.Restart();
                 }
             }
+
+            if (IsMoving)
+            {
+                positionTween.Update(gameTime);
+                Position = positionTween.CurrentValue;
+            }
         }
 
         #endregion
 
+        // BoundingBox
+        public RectangleF BoundingBox => cardContainer.BoundingBox;
+
         // Definition
         public CardDefinition Definition { get; }
+
+        // Flip
+        public void Flip()
+        {
+            IsFaceVisible = !IsFaceVisible;
+            Sound.Play(SoundNames.CardFlap);
+        }
 
         // IsFaceVisible
         public bool IsFaceVisible
@@ -189,6 +226,9 @@ namespace ScaryCastle
                 }
             }
         }
+
+        // IsMoving
+        public bool IsMoving => positionTween.IsRunning;
 
         // Name
         public string Name => Definition.Name;

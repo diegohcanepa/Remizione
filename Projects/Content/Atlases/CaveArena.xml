@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:b67cd267af22ba9d2c765334c1dfa03f:900775d1574f1c36ddebfe8e45718516:83c34a4487f453f699e4ce1e4d7504e2$ -->
+<!-- $TexturePacker:SmartUpdate:279db2ae46345fc9dbc56cff0a0bc384:60673b86c2a22f611d14b6999ee62a87:bca45687666327500c32a10248a80125$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,9 +19,9 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Arena1.png" width="256" height="256">
-    <sprite n="Arena1.png" x="2" y="2" w="240" h="150"/>
-    <sprite n="Foreground.png" x="2" y="154" w="85" h="67"/>
-    <sprite n="Gate.png" x="89" y="154" w="31" h="45"/>
-    <sprite n="Tunnel.png" x="89" y="201" w="26" h="34"/>
+<TextureAtlas imagePath="CaveArena.png" width="256" height="256">
+    <sprite n="CaveArena.png" x="2" y="2" w="240" h="135"/>
+    <sprite n="Foreground.png" x="2" y="139" w="85" h="67"/>
+    <sprite n="Gate.png" x="2" y="208" w="31" h="45"/>
+    <sprite n="Tunnel.png" x="35" y="208" w="26" h="34"/>
 </TextureAtlas>

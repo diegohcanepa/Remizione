@@ -270,16 +270,15 @@ namespace Adberration.Scripting
             if (value == ScriptSyntax.NullValue)
             {
                 if (instance != null)
-                {
                     PropertyInfo.SetValue(instance, null);
-                }
             }
             else
             {
                 if (ScriptSyntax.IsClonedName(value) && Session.State == GameSessionState.LoadingScripts)
-                {
                     throw new ScriptException(statement, "Dynamic entities cannot be assigned during initialization.");
-                }
+
+                if (value == ScriptSyntax.ThisKeyword)
+                    value = statement.Script.EntityName;
 
                 var thing = Session.FindEntity<Thing>(value) ?? throw ScriptExceptionBuilder.ThingNotFound(statement, value);
                 if (instance != null)

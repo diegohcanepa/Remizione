@@ -95,7 +95,7 @@ namespace ScaryCastle
         private static void RegisterAotTypes()
         {
             AotTypeRegistry.Register(typeof(Actor));
-            AotTypeRegistry.Register(typeof(ArenaRoom));
+            AotTypeRegistry.Register(typeof(Arena));
             AotTypeRegistry.Register(typeof(Zabul));
             AotTypeRegistry.Register(typeof(BloodyEye));
             AotTypeRegistry.Register(typeof(BreakableProp));
@@ -187,7 +187,7 @@ namespace ScaryCastle
         {
             base.OnDraw(gameTime);
 
-            if (HUDVisible && IsCurrentScene)
+            if (HUDVisible && IsCurrentScene && !IsInArena)
                 HUD.Draw(gameTime);
 
             // Draw speech bubbles
@@ -209,6 +209,8 @@ namespace ScaryCastle
         // OnEnterRoom
         protected override void OnEnterRoom(Room room)
         {
+            IsInArena = room is Arena;
+
             var width = room.Width == 0 ? room.CustomWidth : room.Width;
             var height = room.Height == 0 ? room.CustomHeight : room.Height;
             Camera.Setup(width, height, room.ScrollLock, room.Zoom);
@@ -352,7 +354,7 @@ namespace ScaryCastle
 
             Environment.Update(gameTime);
 
-            if (HUDVisible)
+            if (HUDVisible && !IsInArena)
             {
                 HUD.Update(gameTime);
 
@@ -466,6 +468,10 @@ namespace ScaryCastle
             GC.Collect(2, GCCollectionMode.Forced, true);
         }
 
+        // Enemy
+        [ScriptProperty]
+        public Actor? Enemy { get; set; }
+
         // Environment
         public Environment Environment { get; }
 
@@ -500,6 +506,9 @@ namespace ScaryCastle
 
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
+
+        // IsInArena
+        public bool IsInArena { get; private set; }
 
         // KillEnemies
         [ScriptMethod]

@@ -17,9 +17,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        // TODO: Remove
-        private UIDeck uiDeck;
-
         private Color brightnessColor;
         private int currentDrawIndex;
         private static DustEmitter dustEmitter = null!;
@@ -366,12 +363,6 @@ namespace ScaryCastle
 #if DEBUG
             DrawDebugBoxes();
 #endif
-            // TODO: Remove
-            uiDeck ??= new UIDeck(Session.Deck);
-            uiDeck.Update(gameTime);
-            Game.SpriteBatch.Begin(Game.Camera);
-            uiDeck.Draw(gameTime);
-            Game.SpriteBatch.End();
         }
 
         // OnHandleInput
