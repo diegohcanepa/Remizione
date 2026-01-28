@@ -125,11 +125,11 @@ namespace ScaryCastle
 
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
             {
-                if (MouseCursor.Item == null && GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item grabbedItem)
+                if (session.InteractionContext.HeldItem == null && GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item grabbedItem)
                 {
                     if (grabbedItem.Definition.Image != null)
                     {
-                        MouseCursor.Item = grabbedItem;
+                        session.InteractionContext.HeldItem = grabbedItem;
                         MouseCursor.PerformClick();
                         IsVisible = false;
                         return true;
@@ -194,7 +194,7 @@ namespace ScaryCastle
                 }
             }
 
-            MouseCursor.Item = MouseCursor.Item;
+            //?session.InteractionContext.HeldItem = MouseCursor.Item;
         }
 
         // RefreshDeck
@@ -227,7 +227,7 @@ namespace ScaryCastle
             {
                 slots[i].Draw(gameTime);
 
-                if (MouseCursor.Item?.Index == i)
+                if (session.InteractionContext.HeldItem?.Index == i)
                 {
                     if (!session.Inventory[i].Definition.IsStackable)
                         continue;
@@ -264,7 +264,7 @@ namespace ScaryCastle
                 if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
                 {
                     IsVisible = true;
-                    MouseCursor.Item = null;
+                    session.InteractionContext.HeldItem = null;
                     return;
                 }
             }

@@ -100,7 +100,7 @@ namespace ScaryCastle
 
             if (pendingInteractiveTarget != null)
             {
-                MouseCursor.Item = null;
+                session.InteractionContext.HeldItem = null;
                 FaceTo(pendingInteractiveTarget);
                 Interact(pendingInteractiveTarget, pendingInteractiveTargetItem);
             }
@@ -386,20 +386,18 @@ namespace ScaryCastle
         }
 
         // ApproachAndInteract
-        public bool ApproachAndInteract(GameThing target, Item? item)
+        public void ApproachAndInteract(GameThing target, Item? item)
         {
             if (!IsPlayer)
-                return false;
+                return;
 
             var destination = target.GetApproachPosition(this);
-            var result = MoveTo(destination);
+            var result = target != this && MoveTo(destination);
             this.pendingInteractiveTarget = target;
             this.pendingInteractiveTargetItem = item;
 
             if (!result)
                 HandlePendingInteraction();
-
-            return result;
         }
 
         // BodySize

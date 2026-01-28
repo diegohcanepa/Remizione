@@ -449,7 +449,7 @@ namespace ScaryCastle
             if (IsMoving || IsDead || string.IsNullOrWhiteSpace(LocalizedDisplayName))
                 return false;
 
-            if (MouseCursor.Item != null && !CanInteractWithItem())
+            if (Session.InteractionContext.HeldItem != null && !CanInteractWithItem())
                 return false;
 
             return true;

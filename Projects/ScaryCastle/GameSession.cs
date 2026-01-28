@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Procedural;
 using ScaryCastle.Scripting;
@@ -51,6 +52,7 @@ namespace ScaryCastle
             this.Environment = new Environment(this);
             this.LootGenerator = new(this);
             this.HUD = new HUD(this);
+            this.InteractionContext = new(this);
             this.DeclaredThings = new(declaredThings);
             this.Random = new Random(Seed);
 
@@ -210,7 +212,6 @@ namespace ScaryCastle
         protected override void OnEnterRoom(Room room)
         {
             IsInArena = room is Arena;
-            MouseCursor.Item = null;
 
             var width = room.Width == 0 ? room.CustomWidth : room.Width;
             var height = room.Height == 0 ? room.CustomHeight : room.Height;
@@ -219,12 +220,6 @@ namespace ScaryCastle
             // Follow player
             if (Player != null && Player.IsInCurrentRoom)
                 Camera.FollowTarget(Player, true);
-        }
-
-        // OnEnterRoomCompleted
-        protected override void OnEnterRoomCompleted(Room room)
-        {
-            MouseCursor.Room = room as GameRoom;
         }
 
         // OnExitRoom
@@ -365,6 +360,8 @@ namespace ScaryCastle
                         AwaitRoutine(RoutineNames.GameOver);
                 }
             }
+
+            InteractionContext.Update(gameTime);
         }
 
         // OnWrite
@@ -499,8 +496,8 @@ namespace ScaryCastle
         // ImpactWordPool
         public ObjectPool<ImpactWord> ImpactWordPool { get; }
 
-        // InteractiveTarget
-        public GameThing? InteractiveTarget { get; private set; }
+        // InteractionContext
+        public InteractionContext InteractionContext { get; }
 
         // Inventory
         public Inventory Inventory { get; }

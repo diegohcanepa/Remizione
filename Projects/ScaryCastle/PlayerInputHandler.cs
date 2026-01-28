@@ -43,12 +43,12 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
 
-            if (MouseCursor.Target != null)
+            if (Actor.Session.InteractionContext.Target != null)
             {
-                if (MouseCursor.Item != null && MouseCursor.UseWithScript == null)
+                if (Actor.Session.InteractionContext.HeldItem != null && Actor.Session.InteractionContext.UseWithScript == null)
                     Actor.Session.AwaitRoutine(RoutineNames.UseWithFailOutcome);
                 else
-                    Actor.ApproachAndInteract(MouseCursor.Target, MouseCursor.Item);
+                    Actor.ApproachAndInteract(Actor.Session.InteractionContext.Target, Actor.Session.InteractionContext.HeldItem);
 
                 MouseCursor.PerformClick();
 
@@ -69,10 +69,10 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
                 return false;
 
-            if (MouseCursor.Item != null)
+            if (Actor.Session.InteractionContext.HeldItem != null)
             {
                 Sound.Play(SoundNames.Interact);
-                MouseCursor.Item = null;
+                Actor.Session.InteractionContext.HeldItem = null;
             }
 
             return true;

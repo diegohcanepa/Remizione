@@ -195,7 +195,7 @@ namespace ScaryCastle
 
                         effect = ScaryCastleGame.Effects.ColorReduction;
                     }
-                    else if (!Session.IsAwaiting && MouseCursor.Target == thing && thing.HighlightInteraction && thing.Opacity == 1)
+                    else if (!Session.IsAwaiting && Session.InteractionContext.Target == thing && thing.HighlightInteraction && thing.Opacity == 1)
                     {
                         ScaryCastleGame.Effects.ColorSaturation.SetColor(.8f, .8f, .8f, 0);
                         effect = ScaryCastleGame.Effects.ColorSaturation;

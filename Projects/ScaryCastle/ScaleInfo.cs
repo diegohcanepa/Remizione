@@ -27,15 +27,15 @@ namespace ScaryCastle
         // CreditTitle
         internal static Vector2 CreditTitle { get; } = new Vector2(.16f);
 
+        // HeldItem
+        internal static Vector2 InventoryHeldItem { get; } = UIElement.Medium * 1.2f;
+
         // InteractionMenu
         internal static class InteractionMenu
         {
             internal static Vector2 Option { get; } = new(.09f);
             internal static Vector2 Title { get; } = new(.1f);
         }
-
-        // InventoryHeldItem
-        internal static Vector2 InventoryHeldItem { get; } = UIElement.Medium * 1.2f;
 
         // MenuItemTextActive
         internal static Vector2 MenuItemTextActive { get; } = new Vector2(.14f);

@@ -127,7 +127,7 @@ namespace ScaryCastle
         // GetMouseCursorState
         public override MouseCursorState? GetMouseCursorState()
         {
-            if (MouseCursor.Target == this && IsOpen)
+            if (Session.InteractionContext.Target == this && IsOpen)
                 return arrowCursor;
             else
                 return base.GetMouseCursorState();
