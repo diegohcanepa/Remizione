@@ -83,13 +83,13 @@ namespace ScaryCastle
         // GetCurrentScale
         private static Vector2 GetCurrentScale()
         {
-            return State == MouseCursorState.Item ? ScaleInfo.InventoryHeldItem : ScaleInfo.UIElement.Large;
+            return CustomImage != null ? ScaleInfo.InventoryHeldItem : ScaleInfo.UIElement.Large;
         }
 
         // InvalidateCursorImage
         private static void InvalidateCursorImage()
         {
-            if (State == MouseCursorState.Item)
+            if (CustomImage != null)
                 cursorSprite.Image = CustomImage;
             else
                 cursorSprite.Image = cursorImages[(int)State];
@@ -124,7 +124,7 @@ namespace ScaryCastle
         // Draw
         public static void Draw(GameTime gameTime)
         {
-            OutlineEffect? effect = State == MouseCursorState.Item && OutlineColor != MouseCursorOutline.None ? ScaryCastleGame.Effects.Outline : null;
+            OutlineEffect? effect = CustomImage != null && OutlineColor != MouseCursorOutline.None ? ScaryCastleGame.Effects.Outline : null;
 
             if (effect != null && cursorSprite.Image?.Atlas != null)
             {
@@ -140,7 +140,7 @@ namespace ScaryCastle
             EngendroGame.Instance.SpriteBatch.End();
 
             EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera);
-            if (State is MouseCursorState.Cross or MouseCursorState.Item)
+            if (State is MouseCursorState.Cross || CustomImage != null)
                 textSprite.Draw(gameTime);
             EngendroGame.Instance.SpriteBatch.End();
         }
@@ -170,8 +170,6 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-                    if (field != MouseCursorState.Item)
-                        CustomImage = null;
                     InvalidateCursorImage();
                 }
             }

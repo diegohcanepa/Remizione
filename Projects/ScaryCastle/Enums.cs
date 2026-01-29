@@ -143,7 +143,7 @@ namespace ScaryCastle
     public enum MouseCursorOutline { None, Green, Red }
 
     // MouseCursorState
-    public enum MouseCursorState { Arrow, Cross, Down, Hand, Item, Left, Right, Up, Wait }
+    public enum MouseCursorState { Arrow, Cross, Down, Hand, Left, Right, Up, Wait }
 
     // PlaceholderTarget
     public enum PlaceholderTarget { Prop, Enemy, Any }

@@ -142,7 +142,6 @@ namespace ScaryCastle
 
             if (HeldItem != null)
             {
-                MouseCursor.State = MouseCursorState.Item;
                 MouseCursor.CustomImage = HeldItem.Definition.Image;
                 if (Target == null)
                     MouseCursor.OutlineColor = MouseCursorOutline.None;
