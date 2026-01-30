@@ -127,8 +127,8 @@ namespace ScaryCastle
                     // Jitter: Agregamos variación aleatoria (-25% a +25% del tamaño de celda)
                     // para que los enemigos no parezcan estar en una cuadrícula perfecta.
                     float offsetRange = cellSize * 0.25f;
-                    cx += (float)(Random.NextDouble() * offsetRange * 2 - offsetRange);
-                    cy += (float)(Random.NextDouble() * offsetRange * 2 - offsetRange);
+                    cx += (float)((Random.NextDouble() * offsetRange * 2) - offsetRange);
+                    cy += (float)((Random.NextDouble() * offsetRange * 2) - offsetRange);
 
                     var candidate = new Vector2(cx, cy);
 
@@ -198,7 +198,7 @@ namespace ScaryCastle
             const float decay = 0.7f; // ajustable
 
             // seguridad
-            int safety = candidates.Count * 2 + 10; // Un poco más de margen de seguridad
+            int safety = (candidates.Count * 2) + 10; // Un poco más de margen de seguridad
 
             // 3) Pick groups
             while (table.Count > 0 && safety-- > 0)

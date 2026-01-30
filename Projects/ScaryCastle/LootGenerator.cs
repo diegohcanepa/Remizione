@@ -121,7 +121,7 @@ namespace ScaryCastle
                 // Si es un drop con boost, los items de calidad >= 3 aparecen mucho más fácil.
                 if (qualityBoost > 0 && c.Quality >= 3)
                 {
-                    weight *= (1.5f + qualityBoost);
+                    weight *= 1.5f + qualityBoost;
                 }
 
                 table.Add(c.Name, weight, 1, c);

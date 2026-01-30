@@ -136,10 +136,10 @@ namespace ScaryCastle
                 if (IsInCurrentRoom)
                 {
                     Shake();
-                    
+
                     if (LockedSound != null)
                         PlaySound(LockedSound);
-                    
+
                     ShowFloatingText(TextRepository.GetValue("FloatingText.Locked"), ColorPalette.Text.Orange);
                 }
                 return;
@@ -165,7 +165,7 @@ namespace ScaryCastle
         {
             if (shakeTween.IsRunning)
                 return;
-            shakeTween.Start(TweenStyle.Linear, Position, Position + Vector2.One * .5f, 60, 4);
+            shakeTween.Start(TweenStyle.Linear, Position, Position + (Vector2.One * .5f), 60, 4);
         }
 
         // Unlock

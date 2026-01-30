@@ -23,6 +23,7 @@ namespace ScaryCastle
         private readonly Countdown diceIconEffectCountdown = new() { DefaultDuration = Random.Shared.Next(3000, 4000) };
         private readonly ImageSprite diceThresholdNumber;
         private readonly Vector2Tween diceTween = new();
+        private readonly FloatTween floatTween = new();
         private readonly Vector2Tween heartTween = new();
         private readonly Vector2Tween positionTween = new();
 
@@ -143,6 +144,9 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            if (Float)
+                Position += new Vector2(0, floatTween.CurrentValue);
+
             cardContainerShadow.Draw(gameTime);
             cardContainer.Draw(gameTime);
 
@@ -158,11 +162,15 @@ namespace ScaryCastle
                     bonusValueIcon.Draw(gameTime);
                 }
             }
+
+            if (Float)
+                Position -= new Vector2(0, floatTween.CurrentValue);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            floatTween.Update(gameTime);
             actionIcon.Update(gameTime);
             diceIcon.Update(gameTime);
             cardContainer.Update(gameTime);
@@ -215,6 +223,28 @@ namespace ScaryCastle
             Sound.Play(SoundNames.CardFlap);
         }
 
+        // Float
+        public bool Float
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    if (field)
+                    {
+                        if (!floatTween.IsRunning)
+                            floatTween.Start(TweenStyle.CubicInOut, 0, .75f, 400, -1);
+                    }
+                    else
+                    {
+                        floatTween.Stop();
+                    }
+                }
+            }
+        }
+
         // IsFaceVisible
         public bool IsFaceVisible
         {
@@ -228,7 +258,7 @@ namespace ScaryCastle
                 }
             }
         }
-        
+
         // IsHovered
         public bool IsHovered
         {

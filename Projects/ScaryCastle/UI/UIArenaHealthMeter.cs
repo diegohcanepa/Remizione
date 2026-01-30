@@ -6,25 +6,18 @@ using System.Collections.Generic;
 namespace ScaryCastle
 {
     /// <summary>
-    /// UIArenaHealthDisplay
+    /// UIArenaHealthMeter
     /// </summary>
-    public sealed class UIArenaHealthDisplay : GameObject
+    public sealed class UIArenaHealthMeter(EngendroGame game) : GameObject(game)
     {
         #region Private fields
 
-        private readonly List<ImageSprite> hearts = [];
         private Vector2 anchorPosition;
-        private int currentHp;
+        private readonly List<ImageSprite> hearts = [];
         private int maxHp;
         private int totalHeartCount;
 
         #endregion
-
-        // Constructor
-        public UIArenaHealthDisplay(EngendroGame game)
-            : base(game)
-        {
-        }
 
         #region Private members
 
@@ -36,15 +29,18 @@ namespace ScaryCastle
 
             // Sprites para obtener dimensiones
             var tempSprite = new ImageSprite(Game, Atlases.UI.HeartFull);
-            float w = tempSprite.BoundingBox.Width;
-            float h = tempSprite.BoundingBox.Height;
+            var w = tempSprite.BoundingBox.Width;
+            var h = tempSprite.BoundingBox.Height;
 
             // LISTA DE COLISIONES: Usamos esto para que no se superpongan demasiado
             var placedRects = new List<RectangleF>();
 
             for (int i = 0; i < totalHeartCount; i++)
             {
-                var heart = new ImageSprite(Game, Atlases.UI.HeartFull);
+                var heart = new ImageSprite(Game, Atlases.UI.HeartFull)
+                {
+                    PivotOrigin = RectanglePoint.Center
+                };
 
                 // --- ALGORITMO DE NUBE ORGANIZADA ---
 
@@ -74,6 +70,10 @@ namespace ScaryCastle
             foreach (var heart in hearts)
             {
                 heart.Tweens.YTween = FloatTween.Create(TweenStyle.CubicInOut, heart.Y, heart.Y + Random.Shared.Next(-1f, 1f), Random.Shared.Next(400, 700), -1);
+
+                var scaleTween = new Vector2Tween() { StartDelay = 400 };
+                scaleTween.Start(TweenStyle.CubicInOut, Vector2.One, Vector2.One * 1.2f, Random.Shared.Next(200, 400), 2);
+                heart.Tweens.ScaleTween = scaleTween;
             }
         }
 
@@ -168,8 +168,8 @@ namespace ScaryCastle
         // RefreshVisuals
         private void RefreshVisuals()
         {
-            int fullHeartsCount = currentHp / 2;
-            bool hasHalfHeart = (currentHp % 2) == 1;
+            int fullHeartsCount = HP / 2;
+            bool hasHalfHeart = (HP % 2) == 1;
 
             // Ordenamos visualmente el update para que se llene de abajo hacia arriba (por índice)
             for (int i = 0; i < hearts.Count; i++)
@@ -210,13 +210,13 @@ namespace ScaryCastle
         // HP
         public int HP
         {
-            get => currentHp;
+            get;
             set
             {
                 var clampedValue = MathHelper.Clamp(value, 0, maxHp);
-                if (currentHp != clampedValue)
+                if (field != clampedValue)
                 {
-                    currentHp = clampedValue;
+                    field = clampedValue;
                     RefreshVisuals();
                 }
             }
@@ -226,7 +226,7 @@ namespace ScaryCastle
         public void Prepare(Actor actor)
         {
             this.maxHp = actor.MaxHP;
-            this.currentHp = actor.HP;
+            this.HP = actor.HP;
             this.anchorPosition = actor.GetOverheadPosition();
             totalHeartCount = (maxHp + 1) / 2;
 

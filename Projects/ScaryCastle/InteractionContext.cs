@@ -1,7 +1,6 @@
 ﻿using Adberration.Scripting;
 using Engendro;
 using Engendro.Input;
-using Microsoft.Xna.Framework;
 using ScaryCastle.Scripting;
 
 namespace ScaryCastle

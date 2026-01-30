@@ -94,7 +94,7 @@ namespace ScaryCastle
         #endregion
 
         #region Private members
-        
+
         // HandlePendingInteraction
         private void HandlePendingInteraction()
         {

@@ -155,7 +155,7 @@ namespace ScaryCastle
         public bool HasSpace(ItemDefinition definition)
         {
             var item = Find(definition.Name);
-            
+
             return item != null || !IsFull;
         }
 

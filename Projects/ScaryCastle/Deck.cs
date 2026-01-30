@@ -55,9 +55,9 @@ namespace ScaryCastle
             // Draw pile amount text
             this.drawPileAmount = new TextSprite(session.Game, Fonts.Common)
             {
-                Color = ColorPalette.Text.Terra,
+                Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Center,
-                Position = drawPileAmountContainer.BoundingBox.GetPoint(RectanglePoint.Center, 0, 1),
+                Position = drawPileAmountContainer.BoundingBox.GetPoint(RectanglePoint.Center, 0, .5f),
                 Scale = ScaleInfo.Text.Giant
             };
 
@@ -185,7 +185,7 @@ namespace ScaryCastle
                 if (drawnCards.Remove(card))
                 {
                     discardPile.Add(card);
-                    
+
                     card.MoveTo(nextDiscardPosition, 100, true);
                     nextDiscardPosition.X -= cardOffset;
 
@@ -220,7 +220,7 @@ namespace ScaryCastle
         public void Draw(GameTime gameTime)
         {
             // Draw pile (reverse)
-            for (var i = DrawPile.Count - 1; i >= 0 ; i--)
+            for (var i = DrawPile.Count - 1; i >= 0; i--)
             {
                 cardShadow.Position = new Vector2(DrawPile[i].Position.X - .25f, DrawPile[i].Position.Y);
                 cardShadow.Draw(gameTime);
@@ -272,7 +272,7 @@ namespace ScaryCastle
 
                 // C. Agregar a la mano (drawnCards)
                 drawnCards.Add(card);
-                card.MoveTo(slotPositions[HandSize-1-i] - new Vector2(0, 2), 500 * i + 1, true);
+                card.MoveTo(slotPositions[HandSize - 1 - i] - new Vector2(0, 2), (500 * i) + 1, true);
             }
 
             Invalidate();
