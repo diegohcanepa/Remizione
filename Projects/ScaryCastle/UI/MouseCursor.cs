@@ -155,6 +155,15 @@ namespace ScaryCastle
             Sound.Play(SoundNames.Interact);
         }
 
+        // Reset
+        public static void Reset()
+        {
+            CustomImage = null;
+            State = MouseCursorState.Arrow;
+            OutlineColor = MouseCursorOutline.None;
+            Text = null;
+        }
+
         // Shake
         public static void Shake()
         {

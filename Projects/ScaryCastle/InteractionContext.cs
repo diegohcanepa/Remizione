@@ -9,17 +9,12 @@ namespace ScaryCastle
     /// <summary>
     /// InteractionContext
     /// </summary>
-    public sealed class InteractionContext
+    public sealed class InteractionContext(GameSession session)
     {
-        private readonly GameSession session;
+        private readonly GameSession session = session;
+        private string? text;
         private readonly string useVerb = Localization.GetValue(Verb.Use);
         private readonly string withPreposition = TextRepository.GetValue("Misc.WithPreposition");
-
-        // Constructor
-        public InteractionContext(GameSession session)
-        {
-            this.session = session;
-        }
 
         #region Private members
 
@@ -29,7 +24,7 @@ namespace ScaryCastle
             // No target
             if (Target == null)
             {
-                Text = null;
+                text = null;
                 return;
             }
 
@@ -39,11 +34,11 @@ namespace ScaryCastle
             // Compose text
             if (HeldItem == null)
             {
-                Text = sentence;
+                text = sentence;
             }
             else
             {
-                Text = $"{useVerb} {HeldItem.Definition.LocalizedDisplayName} {withPreposition} {sentence}";
+                text = $"{useVerb} {HeldItem.Definition.LocalizedDisplayName} {withPreposition} {sentence}";
             }
         }
 
@@ -73,6 +68,14 @@ namespace ScaryCastle
         // HeldItem
         public Item? HeldItem { get; set; }
 
+        // Reset
+        public void Reset()
+        {
+            HeldItem = null;
+            Target = null;
+            UseWithScript = null;
+        }
+
         // Target
         public GameThing? Target
         {
@@ -93,11 +96,8 @@ namespace ScaryCastle
             }
         }
 
-        // Text
-        public string? Text { get; private set; }
-
         // Update
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             if (HeldItem?.Count <= 0)
                 HeldItem = null;
@@ -105,10 +105,7 @@ namespace ScaryCastle
             // No room, no session. 
             if (session.Room == null)
             {
-                MouseCursor.State = MouseCursorState.Arrow;
-                HeldItem = null;
-                Target = null;
-                UseWithScript = null;
+                Reset();
                 return;
             }
 
@@ -155,7 +152,24 @@ namespace ScaryCastle
                 MouseCursor.OutlineColor = MouseCursorOutline.None;
             }
 
-            MouseCursor.Text = Text;
+            MouseCursor.Text = text;
+        }
+
+        // TryInteract
+        public bool TryInteract()
+        {
+            if (Target == null)
+                return false;
+
+            if (session.Player is not Actor player)
+                return false;
+
+            if (HeldItem != null && UseWithScript == null)
+                session.AwaitRoutine(RoutineNames.UseWithFailOutcome);
+            else
+                player.ApproachAndInteract(Target, HeldItem);
+
+            return true;
         }
 
         // UseWithScript

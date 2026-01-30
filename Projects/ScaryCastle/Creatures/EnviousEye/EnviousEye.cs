@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using ScaryCastle.Battle;
 
 namespace ScaryCastle
 {
@@ -13,10 +12,12 @@ namespace ScaryCastle
             : base(session, name)
         {
             AnimationSettings.SupressAll();
-            Brain = new CreatureBrain(this);
+            Brain = new ActorBrain(this);
             FastMoveFactor = 3;
             Guts = 7;
             ShadowSpotSize = 0;
+
+            AddCard("CardTest3");
         }
 
         #region Protected members
@@ -30,20 +31,23 @@ namespace ScaryCastle
         #endregion
 
         /// <summary>
-        /// CreatureBrain
+        /// ActorBrain
         /// </summary>
-        public sealed class CreatureBrain : Brain
+        public sealed class ActorBrain : Brain
         {
             // Constructor
-            public CreatureBrain(Actor owner)
+            public ActorBrain(Actor owner)
                 : base(owner)
             {
             }
 
-            // DecideIntent
-            public override Intent? DecideIntent()
+            // PickCard
+            public override Card? PickCard(Arena arena)
             {
-                return new(IntentType.Attack, 1);
+                if (Owner.Cards.Count == 0)
+                    return null;
+                else
+                    return Owner.Cards[0];
             }
         }
     }

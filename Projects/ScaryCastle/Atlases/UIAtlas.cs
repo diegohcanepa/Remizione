@@ -14,6 +14,7 @@ namespace ScaryCastle
             BottomGradient = this[nameof(BottomGradient)];
             CheckMark = this[nameof(CheckMark)];
             CardBack = this[nameof(CardBack)];
+            CardSlot = this[nameof(CardSlot)];
             Coin = this[nameof(Coin)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
@@ -21,7 +22,11 @@ namespace ScaryCastle
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             HeartEmpty = this[nameof(HeartEmpty)];
             HeartHalf = this[nameof(HeartHalf)];
-            Heart = this[nameof(Heart)];
+            HeartFull = this[nameof(HeartFull)];
+            HeartBlackHalf = this[nameof(HeartBlackHalf)];
+            HeartBlackFull = this[nameof(HeartBlackFull)];
+            HeartBlueHalf = this[nameof(HeartBlueHalf)];
+            HeartBlueFull = this[nameof(HeartBlueFull)];
             InventoryGridContainer = this[nameof(InventoryGridContainer)];
             InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
             InventoryInfoTitleContainer = this[nameof(InventoryInfoTitleContainer)];
@@ -48,6 +53,9 @@ namespace ScaryCastle
 
         // CardBack
         public AtlasImage CardBack { get; }
+
+        // CardSlot
+        public AtlasImage CardSlot { get; }
 
         // CheckMark
         public AtlasImage CheckMark { get; }
@@ -91,11 +99,23 @@ namespace ScaryCastle
         // HeartEmpty
         public AtlasImage HeartEmpty { get; }
 
+        // HeartBlackFull
+        public AtlasImage HeartBlackFull { get; }
+
+        // HeartBlackHalf
+        public AtlasImage HeartBlackHalf { get; }
+
+        // HeartBlueFull
+        public AtlasImage HeartBlueFull { get; }
+
+        // HeartBlueHalf
+        public AtlasImage HeartBlueHalf { get; }
+
         // HeartHalf
         public AtlasImage HeartHalf { get; }
 
-        // Heart
-        public AtlasImage Heart { get; }
+        // HeartFull
+        public AtlasImage HeartFull { get; }
 
         // MessageContainer
         public AtlasImage MessageContainer { get; }

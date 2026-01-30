@@ -23,7 +23,7 @@ namespace ScaryCastle
 
             for (var i = 0; i < hearts.Length; i++)
             {
-                hearts[i] = new(Game, Atlases.UI.Heart)
+                hearts[i] = new(Game, Atlases.UI.HeartFull)
                 {
                     Scale = ScaleInfo.UIElement.Large,
                     Position = pos
@@ -55,7 +55,7 @@ namespace ScaryCastle
                 for (int i = 0; i < fullHearts; i++)
                 {
                     if (i < fullHearts)
-                        hearts[i].Image = Atlases.UI.Heart;
+                        hearts[i].Image = Atlases.UI.HeartFull;
 
                     else if (i == fullHearts && hasHalfHeart)
                         hearts[i].Image = Atlases.UI.HeartHalf;

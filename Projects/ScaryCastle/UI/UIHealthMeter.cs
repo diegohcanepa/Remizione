@@ -8,12 +8,18 @@ namespace ScaryCastle
     /// </summary>
     public sealed class UIHealthMeter : GameObject
     {
+        #region Private fields
+
         private int fullHearts;
         private bool hasHalfHeart;
         private readonly ImageSprite[] hearts;
         private int lastKnownMaxValue;
         private int lastKnownValue;
         private int totalHearts;
+
+        #endregion
+
+        #region Constructor
 
         // Constructor
         public UIHealthMeter(EngendroGame game)
@@ -24,7 +30,7 @@ namespace ScaryCastle
 
             for (var i = 0; i < hearts.Length; i++)
             {
-                hearts[i] = new(Game, Atlases.UI.Heart)
+                hearts[i] = new(Game, Atlases.UI.HeartFull)
                 {
                     Position = pos
                 };
@@ -33,10 +39,12 @@ namespace ScaryCastle
             }
         }
 
+        #endregion
+
         #region Private members
 
-        // Invalidate
-        private void Invalidate()
+        // Refresh
+        private void Refresh()
         {
             if (Actor == null)
                 return;
@@ -48,7 +56,7 @@ namespace ScaryCastle
             for (int i = 0; i < totalHearts; i++)
             {
                 if (i < fullHearts)
-                    hearts[i].Image = Atlases.UI.Heart;
+                    hearts[i].Image = Atlases.UI.HeartFull;
 
                 else if (i == fullHearts && hasHalfHeart)
                     hearts[i].Image = Atlases.UI.HeartHalf;
@@ -83,7 +91,7 @@ namespace ScaryCastle
             if (Actor != null)
             {
                 if (lastKnownValue != Actor.HP || lastKnownMaxValue != Actor.MaxHP)
-                    Invalidate();
+                    Refresh();
             }
         }
 
@@ -105,7 +113,7 @@ namespace ScaryCastle
                         lastKnownMaxValue = int.MinValue;
                     }
 
-                    Invalidate();
+                    Refresh();
                 }
             }
         }

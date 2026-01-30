@@ -25,12 +25,14 @@ namespace ScaryCastle
     // BattleState
     public enum BattleState
     {
-        Intro,          // Animación de entrada
-        PlayerTurn,     // Esperando que el jugador use cartas
-        Resolution,     // Calculando daño y efectos
-        EnemyTurn,      // El enemigo ejecuta su acción
-        Win,            // Victoria
-        Lose            // Derrota
+        PlayEnemyCard,
+        DrawHand,
+        PlayerTurn,
+        PlayPlayerCard,
+        EnemyTurn,
+        WaitPlayerInput,
+        Win,
+        Lose
     }
 
     // CardAction
@@ -87,17 +89,6 @@ namespace ScaryCastle
 
     // ImpactWordName
     public enum ImpactWordName { None, AghGreen, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
-
-    // IntentType
-    public enum IntentType
-    {
-        Attack,
-        Defend,
-        Buff,
-        Debuff,
-        Wait,
-        Special
-    }
 
     // ItemCategory
     public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc }

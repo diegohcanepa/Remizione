@@ -5,6 +5,7 @@ using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ScaryCastle
 {
@@ -15,6 +16,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private readonly List<Card> cards = [];
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -38,12 +40,13 @@ namespace ScaryCastle
             : base(session, name)
         {
             this.session = session;
-
             this.Atlas = Atlases.Actors;
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
+            this.Brain = new(this);
             this.DisplayNameKey = $"Actor.{DeclaredName}";
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
+            this.Cards = cards.AsReadOnly();
 
             headSprite = new AnimatedSprite(Game)
             {
@@ -91,7 +94,7 @@ namespace ScaryCastle
         #endregion
 
         #region Private members
-
+        
         // HandlePendingInteraction
         private void HandlePendingInteraction()
         {
@@ -176,6 +179,14 @@ namespace ScaryCastle
         #endregion
 
         #region Protected members
+
+        // AddCard
+        protected Card AddCard(string cardName)
+        {
+            var card = new Card(Game, cardName);
+            cards.Add(card);
+            return card;
+        }
 
         // CalculateSpeed
         protected override float CalculateSpeed()
@@ -404,7 +415,7 @@ namespace ScaryCastle
         public ActorSize BodySize { get; set; } = ActorSize.Medium;
 
         // Brain
-        public Brain? Brain { get; protected set; }
+        public Brain Brain { get; init; }
 
         // CanChangeState
         public bool CanChangeState
@@ -417,6 +428,9 @@ namespace ScaryCastle
                 return StateMachine.CurrentState is ActorStandState or ActorMoveState;
             }
         }
+
+        // Cards
+        public ReadOnlyCollection<Card> Cards { get; }
 
         // FastMove
         public bool FastMove { get; set; }

@@ -212,6 +212,8 @@ namespace ScaryCastle
         protected override void OnEnterRoom(Room room)
         {
             IsInArena = room is Arena;
+            InteractionContext.Reset();
+            MouseCursor.Reset();
 
             var width = room.Width == 0 ? room.CustomWidth : room.Width;
             var height = room.Height == 0 ? room.CustomHeight : room.Height;
@@ -361,7 +363,8 @@ namespace ScaryCastle
                 }
             }
 
-            InteractionContext.Update(gameTime);
+            if (!IsInArena)
+                InteractionContext.Update();
         }
 
         // OnWrite

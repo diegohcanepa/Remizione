@@ -1,6 +1,4 @@
-﻿using ScaryCastle.Battle;
-
-namespace ScaryCastle
+﻿namespace ScaryCastle
 {
     /// <summary>
     /// Brain
@@ -13,8 +11,8 @@ namespace ScaryCastle
             this.Owner = owner;
         }
 
-        // DecideIntent
-        public virtual Intent? DecideIntent()
+        // PickCard
+        public virtual Card? PickCard(Arena arena)
         {
             return null;
         }

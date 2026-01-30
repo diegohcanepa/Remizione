@@ -16,9 +16,12 @@ namespace ScaryCastle
 
         private const float cardOffset = .75f;
         private readonly ImageSprite cardShadow;
+        private readonly TextSprite drawPileAmount;
+        private readonly ImageSprite drawPileAmountContainer;
         private readonly List<Card> discardPile = [];
         private readonly List<Card?> drawnCards = [];
         private readonly List<Card> drawPile = [];
+        private int lastDrawPileKnownAmount = -1;
         private Vector2 nextDiscardPosition;
         private readonly Vector2[] slotPositions = new Vector2[HandSize];
 
@@ -31,7 +34,6 @@ namespace ScaryCastle
             : base()
         {
             this.Session = session;
-
             this.DiscardPile = discardPile.AsReadOnly();
             this.DrawPile = drawPile.AsReadOnly();
             this.DrawnCards = drawnCards.AsReadOnly();
@@ -41,6 +43,22 @@ namespace ScaryCastle
             {
                 Color = Color.Black,
                 Opacity = ColorPalette.ShadowOpacity
+            };
+
+            // Draw pile Count container
+            this.drawPileAmountContainer = new ImageSprite(session.Game, Atlases.UI.GetImage("DeckCountContainer"))
+            {
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 4, 92)
+            };
+
+            // Draw pile amount text
+            this.drawPileAmount = new TextSprite(session.Game, Fonts.Common)
+            {
+                Color = ColorPalette.Text.Terra,
+                PivotOrigin = RectanglePoint.Center,
+                Position = drawPileAmountContainer.BoundingBox.GetPoint(RectanglePoint.Center, 0, 1),
+                Scale = ScaleInfo.Text.Giant
             };
 
             Add(new Card(session.Game, "CardTest3"));
@@ -53,6 +71,9 @@ namespace ScaryCastle
             Add(new Card(session.Game, "CardTest2"));
             Add(new Card(session.Game, "CardTest"));
             Add(new Card(session.Game, "CardTest"));
+
+
+            Shuffle();
         }
 
         #endregion
@@ -164,8 +185,10 @@ namespace ScaryCastle
                 if (drawnCards.Remove(card))
                 {
                     discardPile.Add(card);
+                    
                     card.MoveTo(nextDiscardPosition, 100, true);
                     nextDiscardPosition.X -= cardOffset;
+
                     Invalidate();
                     return true;
                 }
@@ -203,6 +226,9 @@ namespace ScaryCastle
                 cardShadow.Draw(gameTime);
                 DrawPile[i].Draw(gameTime);
             }
+
+            drawPileAmountContainer.Draw(gameTime);
+            drawPileAmount.Draw(gameTime);
 
             // Discard pile
             for (var i = 0; i < DiscardPile.Count; i++)
@@ -246,8 +272,7 @@ namespace ScaryCastle
 
                 // C. Agregar a la mano (drawnCards)
                 drawnCards.Add(card);
-
-                card.MoveTo(slotPositions[HandSize-1-i], 500 * i + 1, true);
+                card.MoveTo(slotPositions[HandSize-1-i] - new Vector2(0, 2), 500 * i + 1, true);
             }
 
             Invalidate();
@@ -274,6 +299,12 @@ namespace ScaryCastle
             return Find(name) ?? throw new InvalidOperationException($"Card '{name}' not found.");
         }
 
+        // GetSlotPosition
+        public Vector2 GetSlotPosition(int index)
+        {
+            return slotPositions[index];
+        }
+
         // HandSize
         public const int HandSize = 3;
 
@@ -281,6 +312,21 @@ namespace ScaryCastle
         public void Invalidate()
         {
             unchecked { ContentVersion++; }
+        }
+
+        // IsBusy
+        public bool IsBusy
+        {
+            get
+            {
+                for (var i = 0; i < drawnCards.Count; i++)
+                {
+                    if (drawnCards[i] is Card card && card.IsMoving)
+                        return true;
+                }
+
+                return false;
+            }
         }
 
         // IsEmpty
@@ -335,9 +381,10 @@ namespace ScaryCastle
         // PlayCard
         public void PlayCard(Card card)
         {
-            if (drawnCards.Remove(card))
+            var index = drawnCards.IndexOf(card);
+            if (index >= 0)
             {
-                drawnCards.Remove(card);
+                drawnCards[index] = null;
                 discardPile.Add(card);
                 Invalidate();
             }
@@ -393,7 +440,7 @@ namespace ScaryCastle
             for (var i = drawPile.Count - 1; i >= 0; i--)
             {
                 drawPile[i].IsFaceVisible = false;
-                drawPile[i].Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 5 + offset, -drawPile[i].BoundingBox.Height);
+                drawPile[i].Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 5 + offset, -drawPile[i].BoundingBox.Height - 3);
                 offset += cardOffset;
             }
 
@@ -410,6 +457,12 @@ namespace ScaryCastle
             for (var i = 0; i < Count; i++)
             {
                 this[i].Update(gameTime);
+            }
+
+            if (lastDrawPileKnownAmount != drawPile.Count)
+            {
+                lastDrawPileKnownAmount = drawPile.Count;
+                drawPileAmount.Text = lastDrawPileKnownAmount.ToString();
             }
         }
     }

@@ -48,14 +48,14 @@ namespace ScaryCastle
 
             ActionImage = Action switch
             {
-                CardAction.Damage or CardAction.Heal => GetHeartImage(Action, BaseValue),
+                CardAction.Damage or CardAction.Heal => GetActionImage(Action, BaseValue),
                 _ => throw new InvalidOperationException(),
             };
             ;
 
             // BonusValueImage
             if (BonusValue != 0)
-                BonusValueImage = GetHeartImage(Action, BonusValue);
+                BonusValueImage = GetActionImage(Action, BonusValue);
 
             // CategoryImage
             CategoryImage = Atlases.UI.GetImage($"CardCategory{category}");
@@ -75,19 +75,13 @@ namespace ScaryCastle
 
         #region Private members
 
-        // GetHeartImage
-        private static AtlasImage GetHeartImage(CardAction action, int value)
+        // GetActionImage
+        private static AtlasImage GetActionImage(CardAction action, int value)
         {
             var prefix = "Heart";
 
-            if (action == CardAction.Damage)
-                prefix += "Black";
-
-            else if (action == CardAction.Shield)
+            if (action == CardAction.Shield)
                 prefix += "Blue";
-
-            else if (action == CardAction.Heal)
-                prefix += "Red";
 
             if (value == 1)
                 prefix += "Half";
@@ -132,6 +126,36 @@ namespace ScaryCastle
 
         // ActionImage
         public AtlasImage ActionImage { get; }
+
+        // Apply
+        public void Apply(Actor source, Actor target, bool bonus)
+        {
+            // Aquí calculamos el valor final. 
+            // Nota: Más adelante aquí sumarías el "BonusValue" si la tirada de dados fue exitosa.
+            int finalValue = BaseValue;
+            if (bonus)
+                finalValue += BonusValue;
+
+            switch (Action)
+            {
+                // Damage
+                case CardAction.Damage:
+                    target.HP -= finalValue;
+                    break;
+
+                // Heal
+                case CardAction.Heal:
+                    // La cura siempre es al Source (a uno mismo)
+                    source.HP += finalValue;
+                    break;
+
+                case CardAction.Shield:
+                    // El escudo se aplica al Source
+                    // Asumiendo que tenés una propiedad 'Block' o 'Armor' en Actor
+                    // source.Block += finalValue; 
+                    break;
+            }
+        }
 
         // BackImage
         public AtlasImage BackImage { get; }

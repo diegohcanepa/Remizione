@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Engendro.Audio;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -130,7 +131,7 @@ namespace ScaryCastle
 
             actionIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Center, -.5f * actionIcon.ScaleX, -1f * actionIcon.ScaleY);
             categoryIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 1 * categoryIcon.ScaleY);
-            diceIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -4f * diceIcon.ScaleY);
+            diceIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Bottom, -2.5f, -4f * diceIcon.ScaleY);
             diceThresholdNumber.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 3.5f * diceThresholdNumber.ScaleX, -3.5f * diceThresholdNumber.ScaleY);
             bonusValueIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3.5f * bonusValueIcon.ScaleX, -3.5f * bonusValueIcon.ScaleY);
         }
@@ -226,6 +227,29 @@ namespace ScaryCastle
                     Refresh();
                 }
             }
+        }
+        
+        // IsHovered
+        public bool IsHovered
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    if (value)
+                        Scale = 1.05f;
+                    else
+                        Scale = 1;
+                }
+            }
+        }
+
+        // IsMouseOver
+        public bool IsMouseOver()
+        {
+            return BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.WorldPosition(Game.Camera));
         }
 
         // IsMoving

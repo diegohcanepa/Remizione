@@ -277,19 +277,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Deck-assets/HeartBlackFull.png</key>
-            <key type="filename">Deck-assets/HeartBlackHalf.png</key>
-            <key type="filename">Deck-assets/HeartBlueFull.png</key>
-            <key type="filename">Deck-assets/HeartBlueHalf.png</key>
-            <key type="filename">Deck-assets/HeartRedFull.png</key>
-            <key type="filename">Deck-assets/HeartRedHalf.png</key>
-            <key type="filename">MiniMap-assets/UIMiniMapMarkerCoin.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
-            <key type="filename">UI-assets/CheckMark.png</key>
-            <key type="filename">UI-assets/PointingHand.png</key>
-            <key type="filename">UIIcons-assets/Heart.png</key>
-            <key type="filename">UIIcons-assets/HeartEmpty.png</key>
-            <key type="filename">UIIcons-assets/HeartHalf.png</key>
+            <key type="filename">Deck-assets/CardSlot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -298,9 +286,28 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,2,3,3</rect>
+                <rect>6,8,11,17</rect>
                 <key>scale9Paddings</key>
-                <rect>2,2,3,3</rect>
+                <rect>6,8,11,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Deck-assets/DeckCountContainer.png</key>
+            <key type="filename">UIIcons-assets/Deck.png</key>
+            <key type="filename">UIIcons-assets/Dice.png</key>
+            <key type="filename">XboxControls-assets/XboxA.png</key>
+            <key type="filename">XboxControls-assets/XboxB.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,7,7</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,7,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -647,6 +654,31 @@
                 <rect>8,5,15,11</rect>
                 <key>scale9Paddings</key>
                 <rect>8,5,15,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MiniMap-assets/UIMiniMapMarkerCoin.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
+            <key type="filename">UI-assets/CheckMark.png</key>
+            <key type="filename">UI-assets/PointingHand.png</key>
+            <key type="filename">UIIcons-assets/HeartBlackFull.png</key>
+            <key type="filename">UIIcons-assets/HeartBlackHalf.png</key>
+            <key type="filename">UIIcons-assets/HeartBlueFull.png</key>
+            <key type="filename">UIIcons-assets/HeartBlueHalf.png</key>
+            <key type="filename">UIIcons-assets/HeartEmpty.png</key>
+            <key type="filename">UIIcons-assets/HeartFull.png</key>
+            <key type="filename">UIIcons-assets/HeartHalf.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,3,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1001,24 +1033,6 @@
                 <rect>2,2,4,3</rect>
                 <key>scale9Paddings</key>
                 <rect>2,2,4,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UIIcons-assets/Deck.png</key>
-            <key type="filename">UIIcons-assets/Dice.png</key>
-            <key type="filename">XboxControls-assets/XboxA.png</key>
-            <key type="filename">XboxControls-assets/XboxB.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,4,7,7</rect>
-                <key>scale9Paddings</key>
-                <rect>4,4,7,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
