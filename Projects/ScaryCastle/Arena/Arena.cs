@@ -1,7 +1,10 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ScaryCastle.UI;
 using System;
 
 namespace ScaryCastle
@@ -14,9 +17,12 @@ namespace ScaryCastle
         #region Private fields
 
         private ArenaState currentState = null!;
+        private LargeHand devilHand = null!;
         private readonly Vector2 enemyCardSlotPosition = new(122, 6);
-        private readonly UIArenaHealthMeter enemyHealthMeter;
-        private readonly UIArenaHealthMeter playerHealthMeter;
+        private UIArenaHealthMeter enemyHealthMeter = null!;
+        private LargeHand godHand = null!;
+        private readonly Vector2 playerCardSlotPosition = new(118, 6);
+        private UIArenaHealthMeter playerHealthMeter = null!;
         private FacingDirection? previousEnemyDirection;
         private Vector2? previousEnemyPosition;
         private FacingDirection? previousPlayerDirection;
@@ -30,8 +36,6 @@ namespace ScaryCastle
         public Arena(GameSession session, string name)
             : base(session, name)
         {
-            this.enemyHealthMeter = new(Game);
-            this.playerHealthMeter = new(Game);
         }
 
         #endregion
@@ -43,6 +47,9 @@ namespace ScaryCastle
         {
             Enemy = Session.Enemy ?? throw new InvalidOperationException("No enemy found for Arena.");
             Player = Session.Player ?? throw new InvalidOperationException("No player found for Arena.");
+
+            Enemy.Scale += new Vector2(.2f);
+            Player.Scale += new Vector2(.2f);
 
             Session.Deck.Shuffle();
 
@@ -56,13 +63,17 @@ namespace ScaryCastle
             Children.Add(Enemy);
             Enemy.Position = EnemyPosition;
             Enemy.Direction = FacingDirection.Left;
-            enemyHealthMeter.Prepare(Enemy);
 
             // Add player
             Children.Add(Player);
             Player.Position = PlayerPosition;
             Player.Direction = FacingDirection.Right;
-            playerHealthMeter.Prepare(Player);
+
+            enemyHealthMeter = new(Enemy);
+            playerHealthMeter = new(Player);
+
+            devilHand = new(Game, LargHandStyle.Devil, Enemy, Player, playerHealthMeter);
+            godHand = new(Game, LargHandStyle.God, Player, Enemy, enemyHealthMeter);
 
             TransitionTo(new EnemyTurnState(this));
         }
@@ -83,6 +94,9 @@ namespace ScaryCastle
                 if (previousPlayerDirection.HasValue) Player.Direction = previousPlayerDirection.Value;
                 if (previousPlayerPosition.HasValue) Player.Position = previousPlayerPosition.Value;
             }
+
+            Enemy.Scale -= new Vector2(.2f);
+            Player.Scale -= new Vector2(.2f);
         }
 
         #endregion
@@ -96,12 +110,20 @@ namespace ScaryCastle
 
             Game.SpriteBatch.Begin(Game.Camera);
 
-            enemyHealthMeter.Draw(gameTime);
-            playerHealthMeter.Draw(gameTime);
-
             Session.Deck.Draw(gameTime);
             EnemyCard?.Draw(gameTime);
 
+            if (SpeechBubble.ModalInstance?.Actor != Enemy)
+                enemyHealthMeter.Draw(gameTime);
+
+            if (SpeechBubble.ModalInstance?.Actor != Player)
+                playerHealthMeter.Draw(gameTime);
+
+            Game.SpriteBatch.End();
+
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            devilHand.Draw(gameTime);
+            godHand.Draw(gameTime);
             Game.SpriteBatch.End();
         }
 
@@ -130,14 +152,21 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
+            devilHand.Update(gameTime);
+            godHand.Update(gameTime);
+
             Session.Deck.Update(gameTime);
             EnemyCard?.Update(gameTime);
+
             enemyHealthMeter.Update(gameTime);
             playerHealthMeter.Update(gameTime);
 
             currentState?.Update(gameTime);
 
-            MouseCursor.State = currentState is PlayerInputState ? MouseCursorState.Hand : MouseCursorState.Wait;
+            if (SpeechBubble.ModalInstance != null)
+                MouseCursor.State = MouseCursorState.Arrow;
+            else
+                MouseCursor.State = currentState is PlayerInputState ? MouseCursorState.Hand : MouseCursorState.Wait;
         }
 
         #endregion
@@ -152,14 +181,25 @@ namespace ScaryCastle
         [ScriptProperty]
         public Vector2 EnemyPosition { get; set; }
 
-        // HoveredCard
-        public Card? HoveredCard { get; set; }
+        // HitEnemy
+        public void HitEnemy()
+        {
+            if (PlayerCard != null)
+                godHand.Hit(PlayerCard);
+        }
+
+        // HitPlayer
+        public void HitPlayer()
+        {
+            if (EnemyCard != null)
+                devilHand.Hit(EnemyCard);
+        }
 
         // Player
         public Actor Player { get; private set; } = null!;
 
-        // PlayerCardSlotPosition
-        public Vector2 PlayerCardSlotPosition { get; } = new(118, 6);
+        // PlayerCard
+        public Card? PlayerCard { get; set; }
 
         // PlayEnemyCard
         public void PlayEnemyCard()
@@ -168,11 +208,19 @@ namespace ScaryCastle
             {
                 this.EnemyCard = card;
 
-                EnemyCard.IsFaceVisible = false;
-                EnemyCard.Position = new Vector2(290, 80);
-                EnemyCard.MoveTo(enemyCardSlotPosition, 0, true);
+                EnemyCard.IsFaceUp = false;
+                EnemyCard.Position = Enemy.RuntimeHotspot.BoundingRectangleF.Center;
+                EnemyCard.MoveTo(enemyCardSlotPosition, 500, 0, true, true);
                 EnemyCard.Float = true;
             }
+        }
+
+        // PlayPlayerCard
+        public void PlayPlayerCard(Card card)
+        {
+            this.PlayerCard = card;
+            card.MoveTo(playerCardSlotPosition - new Vector2(card.BoundingBox.Width, 0), 400, 0, false);
+            card.Float = true;
         }
 
         // PlayerPosition

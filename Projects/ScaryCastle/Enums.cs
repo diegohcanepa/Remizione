@@ -96,6 +96,9 @@ namespace ScaryCastle
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }
 
+    // LargHandStyle
+    public enum LargHandStyle { God, Devil }
+
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, Global, MuzzleFlash, Outdoor, Player }
 

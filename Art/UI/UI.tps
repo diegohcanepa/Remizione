@@ -311,6 +311,40 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">DevilHand-assets/DevilHand01.png</key>
+            <key type="filename">DevilHand-assets/DevilHand02.png</key>
+            <key type="filename">DevilHand-assets/DevilHand03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>143,54,285,108</rect>
+                <key>scale9Paddings</key>
+                <rect>143,54,285,108</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">GodHand-assets/GodHand01.png</key>
+            <key type="filename">GodHand-assets/GodHand02.png</key>
+            <key type="filename">GodHand-assets/GodHand03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>238,102,477,203</rect>
+                <key>scale9Paddings</key>
+                <rect>238,102,477,203</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Inventory-assets/InventoryCategoryContainer.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1069,6 +1103,8 @@
                     <filename>Inventory-assets</filename>
                     <filename>MiniMap-assets</filename>
                     <filename>Deck-assets</filename>
+                    <filename>GodHand-assets</filename>
+                    <filename>DevilHand-assets</filename>
                 </array>
             </struct>
         </map>

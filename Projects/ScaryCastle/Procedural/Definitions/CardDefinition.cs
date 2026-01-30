@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -128,7 +129,7 @@ namespace ScaryCastle
         public AtlasImage ActionImage { get; }
 
         // Apply
-        public void Apply(Actor source, Actor target, bool bonus)
+        public int Apply(Actor source, Actor target, bool bonus)
         {
             // Aquí calculamos el valor final. 
             // Nota: Más adelante aquí sumarías el "BonusValue" si la tirada de dados fue exitosa.
@@ -140,7 +141,7 @@ namespace ScaryCastle
             {
                 // Damage
                 case CardAction.Damage:
-                    target.HP -= finalValue;
+                    target.TakeDamage(source, AttackType.Contact, DamageType.None, finalValue, ImpactWordName.None, Vector2.Zero);
                     break;
 
                 // Heal
@@ -155,6 +156,8 @@ namespace ScaryCastle
                     // source.Block += finalValue; 
                     break;
             }
+
+            return finalValue;
         }
 
         // BackImage

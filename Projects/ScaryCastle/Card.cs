@@ -26,6 +26,7 @@ namespace ScaryCastle
         private readonly FloatTween floatTween = new();
         private readonly Vector2Tween heartTween = new();
         private readonly Vector2Tween positionTween = new();
+        private readonly FloatTween scaleTween = new();
 
         #endregion
 
@@ -99,36 +100,49 @@ namespace ScaryCastle
 
         #region Private members
 
+        // MoveToCompleted
+        public void MoveToCompleted(bool flip)
+        {
+            if (flip)
+                Flip();
+            else
+                Sound.Play(SoundNames.CardFlap);
+        }
+
         // MoveTo
-        public void MoveTo(Vector2 destination, int delay, bool flip)
+        public void MoveTo(Vector2 destination, int duration, int delay, bool flip, bool scale = false)
         {
             positionTween.StartDelay = delay;
-            positionTween.Start(TweenStyle.CubicIn, Position, destination, 500, flip ? Flip : null);
+            positionTween.Start(TweenStyle.CubicIn, Position, destination, duration, () => MoveToCompleted(flip));
+
+            if (scale)
+            {
+                scaleTween.Start(TweenStyle.CubicIn, 0, 1, duration);
+                Scale = 0;
+            }
         }
 
         // Refresh
         private void Refresh()
         {
-            cardContainer.Image = IsFaceVisible ? Definition.FrontImage : Definition.BackImage;
+            var scale = new Vector2(Scale);
+            cardContainer.Image = IsFaceUp ? Definition.FrontImage : Definition.BackImage;
             cardContainerShadow.Image = cardContainer.Image;
+            cardContainer.Scale = scale;
+            cardContainerShadow.MatchTransform(cardContainer);
+            cardContainerShadow.Position += Vector2.One;
 
-            if (!IsFaceVisible)
+            if (!IsFaceUp)
                 return;
 
             actionIcon.Tweens.Reset();
             diceIcon.Tweens.Reset();
 
-            var scale = new Vector2(Scale);
-
-            cardContainer.Scale = scale;
             actionIcon.Scale = scale;
             categoryIcon.Scale = scale;
             diceIcon.Scale = scale * .55f;
             diceThresholdNumber.Scale = scale * .65f;
             bonusValueIcon.Scale = scale * .65f;
-
-            cardContainerShadow.MatchTransform(cardContainer);
-            cardContainerShadow.Position = cardContainer.Position + Vector2.One;
 
             actionIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Center, -.5f * actionIcon.ScaleX, -1f * actionIcon.ScaleY);
             categoryIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 1 * categoryIcon.ScaleY);
@@ -150,7 +164,7 @@ namespace ScaryCastle
             cardContainerShadow.Draw(gameTime);
             cardContainer.Draw(gameTime);
 
-            if (IsFaceVisible)
+            if (IsFaceUp)
             {
                 categoryIcon.Draw(gameTime);
                 actionIcon.Draw(gameTime);
@@ -205,6 +219,12 @@ namespace ScaryCastle
             {
                 positionTween.Update(gameTime);
                 Position = positionTween.CurrentValue;
+
+                if (scaleTween.IsRunning)
+                {
+                    scaleTween.Update(gameTime);
+                    Scale = scaleTween.CurrentValue;
+                }
             }
         }
 
@@ -219,7 +239,7 @@ namespace ScaryCastle
         // Flip
         public void Flip()
         {
-            IsFaceVisible = !IsFaceVisible;
+            IsFaceUp = !IsFaceUp;
             Sound.Play(SoundNames.CardFlap);
         }
 
@@ -245,8 +265,8 @@ namespace ScaryCastle
             }
         }
 
-        // IsFaceVisible
-        public bool IsFaceVisible
+        // IsFaceUp
+        public bool IsFaceUp
         {
             get;
             set

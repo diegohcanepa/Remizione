@@ -6,6 +6,7 @@
     internal static class SoundNames
     {
         internal const string CardFlap = nameof(CardFlap);
+        internal const string CardWhoosh = nameof(CardWhoosh);
         internal const string CollectCoin = nameof(CollectCoin);
         internal const string Dice = nameof(Dice);
         internal const string Error = nameof(Error);

@@ -16,11 +16,14 @@ namespace ScaryCastle
 
         private const float cardOffset = .75f;
         private readonly ImageSprite cardShadow;
+        private readonly TextSprite discardPileAmount;
+        private readonly ImageSprite discardPileAmountContainer;
         private readonly TextSprite drawPileAmount;
         private readonly ImageSprite drawPileAmountContainer;
         private readonly List<Card> discardPile = [];
-        private readonly List<Card?> drawnCards = [];
+        private readonly Card?[] drawnCards = [null, null, null];
         private readonly List<Card> drawPile = [];
+        private int lastDiscardPileKnownAmount = -1;
         private int lastDrawPileKnownAmount = -1;
         private Vector2 nextDiscardPosition;
         private readonly Vector2[] slotPositions = new Vector2[HandSize];
@@ -43,6 +46,22 @@ namespace ScaryCastle
             {
                 Color = Color.Black,
                 Opacity = ColorPalette.ShadowOpacity
+            };
+
+            // Discard pile Count container
+            this.discardPileAmountContainer = new ImageSprite(session.Game, Atlases.UI.GetImage("DeckCountContainer"))
+            {
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -4, 92)
+            };
+
+            // Discard pile amount text
+            this.discardPileAmount = new TextSprite(session.Game, Fonts.Common)
+            {
+                Color = ColorPalette.Text.Highlight,
+                PivotOrigin = RectanglePoint.Center,
+                Position = discardPileAmountContainer.BoundingBox.GetPoint(RectanglePoint.Center, 0, .5f),
+                Scale = ScaleInfo.Text.Giant
             };
 
             // Draw pile Count container
@@ -117,7 +136,12 @@ namespace ScaryCastle
             base.ClearItems();
             discardPile.Clear();
             drawPile.Clear();
-            drawnCards.Clear();
+
+            for (var i = 0; i < drawnCards.Length; i++)
+            {
+                drawnCards[i] = null;
+            }
+
             Invalidate();
         }
 
@@ -141,7 +165,13 @@ namespace ScaryCastle
             base.RemoveItem(index);
             discardPile.Remove(card);
             drawPile.Remove(card);
-            drawnCards.Remove(card);
+
+            for (var i = 0; i < drawnCards.Length; i++)
+            {
+                if (drawnCards[i] == card)
+                    drawnCards[i] = null;
+            }
+            
             Invalidate();
         }
 
@@ -153,40 +183,28 @@ namespace ScaryCastle
         // ContentVersion
         public int ContentVersion { get; private set; }
 
-        // DrawCards
-        public void DrawCards(int amount)
-        {
-            for (var i = 0; i < drawPile.Count; i++)
-            {
-                if (drawPile.Count == 0)
-                {
-                    if (discardPile.Count == 0)
-                        break;
-
-                    Shuffle();
-                }
-
-                var card = drawPile[0];
-                drawPile.RemoveAt(0);
-                drawnCards.Add(card);
-            }
-
-            Invalidate();
-        }
-
         // Discard
         public bool Discard(int index)
         {
-            if (drawnCards[index] is not Card card)
+            if (drawnCards[index] is Card card)
+                return Discard(card);
+            else
                 return false;
+        }
 
+        // Discard
+        public bool Discard(Card card)
+        {
             if (!discardPile.Contains(card))
             {
-                if (drawnCards.Remove(card))
-                {
-                    discardPile.Add(card);
+                var index = drawnCards.IndexOf(card);
 
-                    card.MoveTo(nextDiscardPosition, 100, true);
+                if (index >= 0)
+                {
+                    drawnCards[index] = null;
+                    discardPile.Add(card);
+                    card.Float = false;
+                    card.MoveTo(nextDiscardPosition, 300, 0, true);
                     nextDiscardPosition.X -= cardOffset;
 
                     Invalidate();
@@ -205,11 +223,15 @@ namespace ScaryCastle
                 if (card != null)
                 {
                     discardPile.Add(card);
-                    card.IsFaceVisible = false;
+                    card.IsFaceUp = false;
                 }
             }
 
-            drawnCards.Clear();
+            for (var i = 0; i < drawnCards.Length; i++)
+            {
+                drawnCards[i] = null;
+            }
+
             Invalidate();
         }
 
@@ -227,8 +249,17 @@ namespace ScaryCastle
                 DrawPile[i].Draw(gameTime);
             }
 
-            drawPileAmountContainer.Draw(gameTime);
-            drawPileAmount.Draw(gameTime);
+            if (drawPile.Count > 0)
+            {
+                drawPileAmountContainer.Draw(gameTime);
+                drawPileAmount.Draw(gameTime);
+            }
+
+            if (discardPile.Count > 0)
+            {
+                discardPileAmountContainer.Draw(gameTime);
+                discardPileAmount.Draw(gameTime);
+            }
 
             // Discard pile
             for (var i = 0; i < DiscardPile.Count; i++)
@@ -250,8 +281,8 @@ namespace ScaryCastle
         public void DrawHand()
         {
             // Asegurarnos de que la mano anterior esté limpia (por seguridad)
-            if (drawnCards.Count > 0)
-                DiscardHand();
+            //if (drawnCards.Length > 0)
+              //  DiscardHand();
 
             for (int i = 0; i < HandSize; i++)
             {
@@ -266,13 +297,13 @@ namespace ScaryCastle
                     RecycleDiscardToDraw();
                 }
 
-                // B. Robar la primera carta
-                Card card = drawPile[0];
-                drawPile.RemoveAt(0);
-
-                // C. Agregar a la mano (drawnCards)
-                drawnCards.Add(card);
-                card.MoveTo(slotPositions[HandSize - 1 - i] - new Vector2(0, 2), (500 * i) + 1, true);
+                if (drawnCards[i] == null)
+                {
+                    Card card = drawPile[0];
+                    drawPile.RemoveAt(0);
+                    drawnCards[i] = card;
+                    card.MoveTo(slotPositions[HandSize - 1 - i] - new Vector2(0, 2), 400, (500 * i) + 1, true);
+                }
             }
 
             Invalidate();
@@ -319,7 +350,7 @@ namespace ScaryCastle
         {
             get
             {
-                for (var i = 0; i < drawnCards.Count; i++)
+                for (var i = 0; i < drawnCards.Length; i++)
                 {
                     if (drawnCards[i] is Card card && card.IsMoving)
                         return true;
@@ -430,7 +461,11 @@ namespace ScaryCastle
             if (Count == 0)
                 return;
 
-            drawnCards.Clear();
+            for (var i = 0; i < drawnCards.Length; i++)
+            {
+                drawnCards[i] = null;
+            }
+
             discardPile.Clear();
             drawPile.Clear();
             drawPile.AddRange(this);
@@ -439,12 +474,12 @@ namespace ScaryCastle
             var offset = 0f;
             for (var i = drawPile.Count - 1; i >= 0; i--)
             {
-                drawPile[i].IsFaceVisible = false;
+                drawPile[i].IsFaceUp = false;
                 drawPile[i].Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 5 + offset, -drawPile[i].BoundingBox.Height - 3);
                 offset += cardOffset;
             }
 
-            nextDiscardPosition = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -5, -drawPile[0].BoundingBox.Height);
+            nextDiscardPosition = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -25, -drawPile[0].BoundingBox.Height - 3);
 
             SetupSlotPositions();
 
@@ -457,6 +492,12 @@ namespace ScaryCastle
             for (var i = 0; i < Count; i++)
             {
                 this[i].Update(gameTime);
+            }
+
+            if (lastDiscardPileKnownAmount != discardPile.Count)
+            {
+                lastDiscardPileKnownAmount = discardPile.Count;
+                discardPileAmount.Text = lastDiscardPileKnownAmount.ToString();
             }
 
             if (lastDrawPileKnownAmount != drawPile.Count)

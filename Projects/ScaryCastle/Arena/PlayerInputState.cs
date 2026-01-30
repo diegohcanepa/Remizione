@@ -10,6 +10,9 @@ namespace ScaryCastle
     /// </summary>
     public sealed class PlayerInputState(Arena arena) : ArenaState(arena)
     {
+        private bool cardPlayed;
+        private Card? hoveredCard;
+
         #region Private members
 
         // UpdateHoverLogic
@@ -29,18 +32,17 @@ namespace ScaryCastle
             }
 
             // Si cambia la carta bajo el mouse
-            if (cardUnderMouse != Arena.HoveredCard)
+            if (cardUnderMouse != hoveredCard)
             {
                 // Desmarcar anterior
-                if (Arena.HoveredCard != null)
-                    Arena.HoveredCard.IsHovered = false;
+                hoveredCard?.IsHovered = false;
 
                 // Marcar nueva
-                Arena.HoveredCard = cardUnderMouse;
+                hoveredCard = cardUnderMouse;
 
-                if (Arena.HoveredCard != null)
+                if (hoveredCard  != null)
                 {
-                    Arena.HoveredCard.IsHovered = true;
+                   hoveredCard.IsHovered = true;
                     Sound.Play(SoundNames.UISelectC);
                 }
             }
@@ -48,47 +50,47 @@ namespace ScaryCastle
 
         #endregion
 
-        // Enter
-        public override void Enter()
-        {
-            base.Enter();
-            MouseCursor.State = MouseCursorState.Hand;
-        }
-
         // Exit
         public override void Exit()
         {
-            MouseCursor.State = MouseCursorState.Wait;
-
-            // Limpiamos hover visual al salir
-            if (Arena.HoveredCard != null)
+            cardPlayed = false;
+            if (hoveredCard != null)
             {
-                Arena.HoveredCard.IsHovered = false;
-                Arena.HoveredCard = null;
+                hoveredCard.IsHovered = false;
+                hoveredCard = null;
             }
         }
 
         // HandleInput
         public override HandleInputResult HandleInput(GameTime gameTime)
         {
-            // Si el mazo se está moviendo, no permitimos input
-            if (Arena.Session.Deck.IsBusy)
+            if (cardPlayed || Arena.Session.Deck.IsBusy)
                 return HandleInputResult.Unhandled;
 
             UpdateHoverLogic();
 
-            // Detectar Click
+            // Left click
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
             {
-                if (Arena.HoveredCard != null)
+                if (hoveredCard != null)
                 {
-                    // Transición: Jugar la carta
-                    Arena.TransitionTo(new PlayerPlayCardState(Arena, Arena.HoveredCard));
+                    MouseCursor.AnimateClick();
+                    Arena.PlayPlayerCard(hoveredCard);
+                    cardPlayed = true;
                     return HandleInputResult.Handled;
                 }
             }
 
             return HandleInputResult.Unhandled;
+        }
+
+        // Update
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            if (cardPlayed && hoveredCard != null && !hoveredCard.IsMoving)
+                Arena.TransitionTo(new PlayerCardResolutionState(Arena));
         }
     }
 }

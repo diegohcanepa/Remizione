@@ -302,6 +302,42 @@
 /processorParam:Quality=Best
 /build:Audio/FX/CardFlap.wav;Audio/FX/CardFlap
 
+#begin Audio/FX/CardWhoosh1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/CardWhoosh1.wav;Audio/FX/CardWhoosh1
+
+#begin Audio/FX/CardWhoosh2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/CardWhoosh2.wav;Audio/FX/CardWhoosh2
+
+#begin Audio/FX/CardWhoosh3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/CardWhoosh3.wav;Audio/FX/CardWhoosh3
+
+#begin Audio/FX/CardWhoosh4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/CardWhoosh4.wav;Audio/FX/CardWhoosh4
+
+#begin Audio/FX/CardWhoosh5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/CardWhoosh5.wav;Audio/FX/CardWhoosh5
+
+#begin Audio/FX/CardWhoosh6.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/CardWhoosh6.wav;Audio/FX/CardWhoosh6
+
 #begin Audio/FX/ChatMessage.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

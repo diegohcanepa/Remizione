@@ -19,7 +19,7 @@ namespace ScaryCastle
         {
             base.Update(gameTime);
 
-            if (TimeInState > 1.5f)
+            if (TimeInState > 1)
                 Arena.TransitionTo(new DrawHandState(Arena));
         }
     }

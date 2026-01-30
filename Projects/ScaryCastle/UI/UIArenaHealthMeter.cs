@@ -8,16 +8,35 @@ namespace ScaryCastle
     /// <summary>
     /// UIArenaHealthMeter
     /// </summary>
-    public sealed class UIArenaHealthMeter(EngendroGame game) : GameObject(game)
+    public sealed class UIArenaHealthMeter : GameObject
     {
         #region Private fields
 
         private Vector2 anchorPosition;
         private readonly List<ImageSprite> hearts = [];
+        private int lastKnownHP;
         private int maxHp;
         private int totalHeartCount;
 
+        // Constructor
+        public UIArenaHealthMeter(Actor actor) : base(actor.Game)
+        {
+            this.Actor = actor;
+
+            this.maxHp = actor.MaxHP;
+            this.HP = actor.HP;
+            this.anchorPosition = actor.GetOverheadPosition();
+            totalHeartCount = (maxHp + 1) / 2;
+
+            hearts.Clear();
+            GenerateHearts();
+            RefreshVisuals();
+
+            lastKnownHP = actor.HP;
+        }
+
         #endregion
+
 
         #region Private members
 
@@ -190,15 +209,24 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            for (var i = 0; i < hearts.Count; i++)
+            if (!Actor.IsDead)
             {
-                hearts[i].Draw(gameTime);
+                for (var i = 0; i < hearts.Count; i++)
+                {
+                    hearts[i].Draw(gameTime);
+                }
             }
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            if (lastKnownHP != Actor.HP)
+            {
+                this.HP = Actor.HP;
+                lastKnownHP = Actor.HP;
+            }
+
             for (var i = 0; i < hearts.Count; i++)
             {
                 hearts[i].Update(gameTime);
@@ -207,11 +235,14 @@ namespace ScaryCastle
 
         #endregion
 
+        // Actor
+        public Actor Actor { get; }
+
         // HP
         public int HP
         {
             get;
-            set
+            private set
             {
                 var clampedValue = MathHelper.Clamp(value, 0, maxHp);
                 if (field != clampedValue)
@@ -220,19 +251,6 @@ namespace ScaryCastle
                     RefreshVisuals();
                 }
             }
-        }
-
-        // Prepare
-        public void Prepare(Actor actor)
-        {
-            this.maxHp = actor.MaxHP;
-            this.HP = actor.HP;
-            this.anchorPosition = actor.GetOverheadPosition();
-            totalHeartCount = (maxHp + 1) / 2;
-
-            hearts.Clear();
-            GenerateHearts();
-            RefreshVisuals();
         }
     }
 }
