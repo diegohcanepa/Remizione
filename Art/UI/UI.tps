@@ -328,6 +328,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">DevilHand-assets/DevilHand04.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>119,54,239,108</rect>
+                <key>scale9Paddings</key>
+                <rect>119,54,239,108</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">GodHand-assets/GodHand01.png</key>
             <key type="filename">GodHand-assets/GodHand02.png</key>
             <key type="filename">GodHand-assets/GodHand03.png</key>
@@ -342,6 +357,21 @@
                 <rect>238,102,477,203</rect>
                 <key>scale9Paddings</key>
                 <rect>238,102,477,203</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">GodHand-assets/GodHand04.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>119,53,239,106</rect>
+                <key>scale9Paddings</key>
+                <rect>119,53,239,106</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

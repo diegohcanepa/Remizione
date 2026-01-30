@@ -26,11 +26,11 @@ namespace Engendro
     // GamePadStyle
     public enum GamePadStyle { Xbox, XBoxOne, XBoxSeries, PlayStation, PlayStation4, PlayStation5, NintendoSwitch }
 
-    // HorizontalAlignment
-    public enum HorizontalAlignment { Left, Center, Right }
-
     // HandleInputResult
     public enum HandleInputResult { Handled, Unhandled }
+
+    // HorizontalAlignment
+    public enum HorizontalAlignment { Left, Center, Right }
 
     // InputMethod
     public enum InputMethod { None, Mouse, GamePad, Keyboard }

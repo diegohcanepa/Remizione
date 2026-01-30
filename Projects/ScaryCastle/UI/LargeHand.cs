@@ -81,7 +81,7 @@ namespace ScaryCastle.UI
                     if (source != null && target != null && card != null && targetMeter != null)
                     {
                         card.Definition.Apply(source, target, false);
-                        Game.Camera.Shake(TweenStyle.Linear, Vector2.One * 2, 30, 6);
+                        Game.Camera.Shake(TweenStyle.Linear, Vector2.One, 30, 6);
                     }
                 }
             }

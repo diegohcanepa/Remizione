@@ -185,13 +185,9 @@ namespace ScaryCastle
                 {
                     ShaderEffect? effect = null;
 
-                    if (thing.IsBlinking)
+                    if (thing.IsBlinking && thing != Session.Player)
                     {
-                        if (thing == Session.Player)
-                            ScaryCastleGame.Effects.ColorReduction.SetColor(.5f, .5f, .5f, .5f);
-                        else
-                            ScaryCastleGame.Effects.ColorReduction.SetColor(1, 0, 0, 1);
-
+                        ScaryCastleGame.Effects.ColorReduction.SetColor(1, 0, 0, 1);
                         effect = ScaryCastleGame.Effects.ColorReduction;
                     }
                     else if (!Session.IsAwaiting && Session.InteractionContext.Target == thing && thing.HighlightInteraction && thing.Opacity == 1)
