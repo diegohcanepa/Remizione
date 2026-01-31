@@ -18,7 +18,7 @@ namespace ScaryCastle
             // Discard card
             if (!handDiscarded && TimeInState > .5f)
             {
-                if (Arena.EnemyCard is Card card)
+                if (Arena.EnemyInfo.Card is Card card)
                     card.MoveTo(card.Position - new Vector2(150, 0), 300, 0, false);
                 handDiscarded = true;
             }
@@ -33,11 +33,11 @@ namespace ScaryCastle
             // Victory / Loss
             if (TimeInState > 3.0f)
             {
-                if (Arena.Player.HP <= 0)
+                if (Arena.PlayerInfo.Actor.HP <= 0)
                 {
                     Arena.TransitionTo(new DefeatState(Arena));
                 }
-                else if (Arena.Enemy.HP <= 0)
+                else if (Arena.EnemyInfo.Actor.HP <= 0)
                 {
                     Arena.TransitionTo(new VictoryState(Arena));
                 }

@@ -23,6 +23,7 @@ namespace ScaryCastle
         private bool isGrounded;
         private readonly int maxBounces = 3;    // gravedad base
         private GameThing? owner;
+        private int threshold;
         private Vector2 velocity;
         private readonly float weight;      // Masa relativa (afecta la gravedad)
 
@@ -62,10 +63,13 @@ namespace ScaryCastle
                 }
                 else
                 {
-                    // Se queda quieto después de usar sus rebotes
                     velocity = Vector2.Zero;
                     DepthOffset = 0;
                     isGrounded = true;
+
+                    if (threshold > 0)
+                        Color = LastResult <= threshold ? Color.Green * .7f : Color.Red * .7f;
+
                     Stop();
                 }
             }
@@ -117,16 +121,10 @@ namespace ScaryCastle
         public int LastResult { get; private set; }
 
         // Roll
-        [ScriptMethod]
-        public int Roll()
+        public int Roll(Actor actor, int threshold)
         {
-            owner = Session.Player;
-            if (owner == null)
-            {
-                LastResult = 0;
-                return 0;
-            }
-
+            this.owner = actor;
+            this.threshold = threshold;
             this.bounceCount = 0;
             this.isGrounded = false;
             this.velocity = initialVelocity;

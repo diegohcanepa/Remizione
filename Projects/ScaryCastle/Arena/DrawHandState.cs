@@ -20,7 +20,7 @@ namespace ScaryCastle
             base.Update(gameTime);
 
             if (!Arena.Session.Deck.IsBusy)
-                Arena.TransitionTo(new PlayerInputState(Arena));
+                Arena.TransitionTo(new PlayerTurnState(Arena));
         }
     }
 }

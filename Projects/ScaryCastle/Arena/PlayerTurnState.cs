@@ -6,9 +6,9 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     /// <summary>
-    /// PlayerInputState
+    /// PlayerTurnState
     /// </summary>
-    public sealed class PlayerInputState(Arena arena) : ArenaState(arena)
+    public sealed class PlayerTurnState(Arena arena) : ArenaState(arena)
     {
         private bool cardPlayed;
         private Card? hoveredCard;
@@ -75,7 +75,7 @@ namespace ScaryCastle
                 if (hoveredCard != null)
                 {
                     MouseCursor.AnimateClick();
-                    Arena.PlayPlayerCard(hoveredCard);
+                    Arena.PlayerInfo.PlayCard(hoveredCard);
                     cardPlayed = true;
                     return HandleInputResult.Handled;
                 }
@@ -90,7 +90,12 @@ namespace ScaryCastle
             base.Update(gameTime);
 
             if (cardPlayed && hoveredCard != null && !hoveredCard.IsMoving)
-                Arena.TransitionTo(new PlayerCardResolutionState(Arena));
+            {
+                if (hoveredCard.Definition.HasBonus)
+                    Arena.TransitionTo(new PlayerDiceRollState(Arena, hoveredCard));
+                else
+                    Arena.TransitionTo(new PlayerCardResolutionState(Arena));
+            }
         }
     }
 }

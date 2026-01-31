@@ -335,5 +335,11 @@ namespace ScaryCastle
                 }
             }
         } = 1;
+
+        // ToString
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

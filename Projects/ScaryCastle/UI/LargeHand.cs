@@ -9,24 +9,21 @@ namespace ScaryCastle.UI
     /// </summary>
     public sealed class LargeHand : GameObject
     {
-        private Card? card;
         private readonly AnimatedSprite handSprite;
         private readonly Vector2 origin;
-        private readonly Actor source;
-        private readonly Actor target;
-        private readonly UIArenaHealthMeter? targetMeter;
+        private readonly FighterInfo source;
+        private readonly FighterInfo target;
         private enum HitState { Idle, Entering, Hitting, Exiting }
         private HitState currentState;
         private readonly Vector2Tween positionTween = new();
 
         // Constructor
-        public LargeHand(EngendroGame game, LargHandStyle style, Actor source, Actor target, UIArenaHealthMeter targetMeter)
+        public LargeHand(EngendroGame game, LargHandStyle style, FighterInfo source, FighterInfo target)
             : base(game)
         {
             this.Style = style;
             this.source = source;
             this.target = target;
-            this.targetMeter = targetMeter;
 
             this.handSprite = new(Game)
             {
@@ -78,9 +75,9 @@ namespace ScaryCastle.UI
                     currentState = HitState.Exiting;
                     positionTween.Start(TweenStyle.CubicIn, handSprite.Position, origin, 400);
                     handSprite.Tweens.PositionTween = positionTween;
-                    if (source != null && target != null && card != null && targetMeter != null)
+                    if (source.Card is Card card)
                     {
-                        card.Definition.Apply(source, target, false);
+                        card.Definition.Apply(source.Actor, target.Actor, source.DiceRollResult);
                         Game.Camera.Shake(TweenStyle.Linear, Vector2.One, 30, 6);
                     }
                 }
@@ -98,13 +95,11 @@ namespace ScaryCastle.UI
         #endregion
 
         // Hit
-        public void Hit(Card card)
+        public void Hit()
         {
-            this.card = card;
-
             handSprite.Player.Play("Idle");
 
-            var targetPosition = target.RuntimeHotspot.BoundingRectangleF.Center;
+            var targetPosition = target.Actor.RuntimeHotspot.BoundingRectangleF.Center;
             targetPosition.Y -= handSprite.BoundingBox.Height * .95f;
 
             var startPos = origin;

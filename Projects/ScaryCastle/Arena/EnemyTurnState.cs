@@ -11,7 +11,7 @@ namespace ScaryCastle
         public override void Enter()
         {
             base.Enter();
-            Arena.PlayEnemyCard();
+            Arena.EnemyInfo.PlayCard();
         }
 
         // Update

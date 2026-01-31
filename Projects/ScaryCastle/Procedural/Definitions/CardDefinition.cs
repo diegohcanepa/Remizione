@@ -129,12 +129,12 @@ namespace ScaryCastle
         public AtlasImage ActionImage { get; }
 
         // Apply
-        public int Apply(Actor source, Actor target, bool bonus)
+        public int Apply(Actor source, Actor target, int diceRoll)
         {
             // Aquí calculamos el valor final. 
             // Nota: Más adelante aquí sumarías el "BonusValue" si la tirada de dados fue exitosa.
             int finalValue = BaseValue;
-            if (bonus)
+            if (diceRoll.IsBetween(1, DiceThreshold))
                 finalValue += BonusValue;
 
             switch (Action)

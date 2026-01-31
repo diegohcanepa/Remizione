@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Engendro;
+using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
 {
@@ -21,6 +22,13 @@ namespace ScaryCastle
         }
 
         #region Protected members
+
+        // OnLoad
+        protected override void OnLoad()
+        {
+            base.OnLoad();
+            this.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.One, new(1, 1.05f), 600, -1);
+        }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
