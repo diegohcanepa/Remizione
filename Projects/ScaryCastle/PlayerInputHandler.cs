@@ -36,7 +36,7 @@ namespace ScaryCastle
         // TestMouseLeftButtonClick
         private bool TestMouseLeftButtonClick()
         {
-            if (MouseCursor.State == MouseCursorState.Hand)
+            if (MouseCursor.State == MouseCursorState.Hand && MouseCursor.CustomImage == null)
                 return false;
 
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())

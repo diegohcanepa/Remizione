@@ -28,42 +28,30 @@ namespace ScaryCastle
             else
                 this.Action = action;
 
-            // BaseValue
-            this.BaseValue = element.GetInt32("baseValue", 0);
-
-            // BonusValue
-            this.BonusValue = element.GetInt32("bonusValue", 0);
-            CodeContract.ValidRange(BonusValue, 0, 5, nameof(BonusValue));
-
             // Category
             if (element.GetEnum<CardCategory>("category") is not CardCategory category)
                 throw new InvalidDataException("Missing card category.");
             else
                 this.Category = category;
 
-            // DiceThreshold
-            this.DiceThreshold = element.GetInt32("diceThreshold", 0);
-            CodeContract.ValidRange(DiceThreshold, 0, 5, nameof(DiceThreshold));
+            // EnergyCost
+            this.EnergyCost = element.GetInt32("energyCost", 0);
 
-            BackImage = Atlases.UI.GetImage($"CardBack");
+            // EnergyCostImage
+            this.EnergyCostImage = Atlases.UI.GetImage($"CardNumber{EnergyCost}");
 
+            // Value
+            this.Value = element.GetInt32("value", 0);
+
+            // Action image
             ActionImage = Action switch
             {
-                CardAction.Damage or CardAction.Heal => GetActionImage(Action, BaseValue),
+                CardAction.Damage or CardAction.Heal => GetActionImage(Action, Value),
                 _ => throw new InvalidOperationException(),
             };
-            ;
-
-            // BonusValueImage
-            if (BonusValue != 0)
-                BonusValueImage = GetActionImage(Action, BonusValue);
 
             // CategoryImage
             CategoryImage = Atlases.UI.GetImage($"CardCategory{category}");
-
-            // DiceThresholdImage
-            if (DiceThreshold != 0)
-                DiceThresholdImage = Atlases.UI.GetImage($"CardNumber{DiceThreshold}");
 
             // FrontImage
             FrontImage = Atlases.UI.GetImage($"Card{Category}");
@@ -129,25 +117,19 @@ namespace ScaryCastle
         public AtlasImage ActionImage { get; }
 
         // Apply
-        public int Apply(Actor source, Actor target, int diceRoll)
+        public int Apply(Actor source, Actor target)
         {
-            // Aquí calculamos el valor final. 
-            // Nota: Más adelante aquí sumarías el "BonusValue" si la tirada de dados fue exitosa.
-            int finalValue = BaseValue;
-            if (diceRoll.IsBetween(1, DiceThreshold))
-                finalValue += BonusValue;
-
             switch (Action)
             {
                 // Damage
                 case CardAction.Damage:
-                    target.TakeDamage(source, AttackType.Contact, DamageType.None, finalValue, ImpactWordName.None, Vector2.Zero);
+                    target.TakeDamage(source, AttackType.Contact, DamageType.None, Value, ImpactWordName.None, Vector2.Zero);
                     break;
 
                 // Heal
                 case CardAction.Heal:
                     // La cura siempre es al Source (a uno mismo)
-                    source.HP += finalValue;
+                    source.HP += Value;
                     break;
 
                 case CardAction.Shield:
@@ -157,20 +139,8 @@ namespace ScaryCastle
                     break;
             }
 
-            return finalValue;
+            return Value;
         }
-
-        // BackImage
-        public AtlasImage BackImage { get; }
-
-        // BaseValue
-        public int BaseValue { get; }
-
-        // BonusValue
-        public int BonusValue { get; set; }
-
-        // BonusValueImage
-        public AtlasImage? BonusValueImage { get; }
 
         // Category
         public CardCategory Category { get; }
@@ -178,22 +148,22 @@ namespace ScaryCastle
         // CategoryImage
         public AtlasImage CategoryImage { get; }
 
-        // DiceThreshold
-        public int DiceThreshold { get; }
+        // EnergyCost
+        public int EnergyCost { get; }
 
-        // DiceThresholdImage
-        public AtlasImage? DiceThresholdImage { get; }
+        // EnergyCostImage
+        public AtlasImage EnergyCostImage { get; }
 
         // FrontImage
         public AtlasImage FrontImage { get; }
-
-        // HasBonus
-        public bool HasBonus => DiceThreshold > 0 && BonusValue > 0;
 
         // ToString
         public override string ToString()
         {
             return Name;
         }
+
+        // Value
+        public int Value { get; }
     }
 }

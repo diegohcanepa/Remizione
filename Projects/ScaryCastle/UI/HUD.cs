@@ -13,7 +13,6 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly UIHealthMeter healthMeter;
-        private readonly UIPassiveItemMeter passiveItemMeter;
         private readonly GameSession session;
 
         #endregion
@@ -29,7 +28,6 @@ namespace ScaryCastle
             this.healthMeter = new(session.Game);
             this.Log = new(Game);
             this.Message = new(Game);
-            this.passiveItemMeter = new(session);
 
             // Coin meter 
             this.CoinMeter = new(session);
@@ -55,7 +53,6 @@ namespace ScaryCastle
             {
                 Game.SpriteBatch.Begin(Game.Camera);
                 healthMeter.Draw(gameTime);
-                passiveItemMeter.Draw(gameTime);
                 Inventory.Draw(gameTime);
                 CoinMeter.Draw(gameTime);
                 SackMeter.Draw(gameTime);
@@ -78,7 +75,6 @@ namespace ScaryCastle
             Log.Update(gameTime);
             Message.Update(gameTime);
             CoinMeter.Update(gameTime);
-            passiveItemMeter.Update(gameTime);
         }
 
         #endregion

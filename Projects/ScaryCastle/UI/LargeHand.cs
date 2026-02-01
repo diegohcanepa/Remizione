@@ -77,7 +77,7 @@ namespace ScaryCastle.UI
                     handSprite.Tweens.PositionTween = positionTween;
                     if (source.Card is Card card)
                     {
-                        card.Definition.Apply(source.Actor, target.Actor, source.DiceRollResult);
+                        card.Definition.Apply(source.Actor, target.Actor);
                         Game.Camera.Shake(TweenStyle.Linear, Vector2.One, 30, 6);
                     }
                 }

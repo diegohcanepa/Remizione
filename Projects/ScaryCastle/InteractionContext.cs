@@ -65,7 +65,19 @@ namespace ScaryCastle
         #endregion
 
         // HeldItem
-        public Item? HeldItem { get; set; }
+        public Item? HeldItem
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    if (field == null)
+                        MouseCursor.CustomImage = null;
+                }
+            }
+        }
 
         // Reset
         public void Reset()

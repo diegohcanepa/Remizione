@@ -15,14 +15,10 @@ namespace ScaryCastle
 
         private readonly ImageSprite actionIcon;
         private readonly Countdown actionIconEffectCountdown = new() { DefaultDuration = Random.Shared.Next(1500, 2500) };
-        private readonly ImageSprite bonusValueIcon;
-        private readonly ImageSprite categoryIcon;
         private readonly ImageSprite cardContainer;
         private readonly ImageSprite cardContainerShadow;
-        private readonly ImageSprite diceIcon;
-        private readonly Countdown diceIconEffectCountdown = new() { DefaultDuration = Random.Shared.Next(3000, 4000) };
-        private readonly ImageSprite diceThresholdNumber;
-        private readonly Vector2Tween diceTween = new();
+        private readonly ImageSprite categoryIcon;
+        private readonly ImageSprite energyCostNumber;
         private readonly FloatTween floatTween = new();
         private readonly Vector2Tween heartTween = new();
         private readonly Vector2Tween positionTween = new();
@@ -63,35 +59,20 @@ namespace ScaryCastle
                 PivotOrigin = RectanglePoint.Center
             };
 
-            // Bonus value number image
-            this.bonusValueIcon = new(Game, Definition.BonusValueImage)
-            {
-                PivotOrigin = RectanglePoint.RightBottom,
-            };
-
             // Category icon
             this.categoryIcon = new(Game, Definition.CategoryImage)
             {
                 PivotOrigin = RectanglePoint.Center
             };
 
-            // Dice icon
-            this.diceIcon = new(Game, Atlases.UI.GetImage("CardDice"))
+            // Energy cost number
+            this.energyCostNumber = new(Game, Definition.EnergyCostImage)
             {
-                PivotOrigin = RectanglePoint.Bottom,
-            };
-
-            // Dice threshold number image
-            this.diceThresholdNumber = new(Game, Definition.DiceThresholdImage)
-            {
-                PivotOrigin = RectanglePoint.LeftBottom,
+                PivotOrigin = RectanglePoint.RightBottom
             };
 
             if (Definition.Action is CardAction.Damage or CardAction.Heal)
                 actionIconEffectCountdown.Start();
-
-            if (Definition.HasBonus)
-                diceIconEffectCountdown.Start();
 
             Refresh();
         }
@@ -126,7 +107,7 @@ namespace ScaryCastle
         private void Refresh()
         {
             var scale = new Vector2(Scale);
-            cardContainer.Image = IsFaceUp ? Definition.FrontImage : Definition.BackImage;
+            cardContainer.Image = IsFaceUp ? Definition.FrontImage : Atlases.UI.CardBack;
             cardContainerShadow.Image = cardContainer.Image;
             cardContainer.Scale = scale;
             cardContainerShadow.MatchTransform(cardContainer);
@@ -136,19 +117,13 @@ namespace ScaryCastle
                 return;
 
             actionIcon.Tweens.Reset();
-            diceIcon.Tweens.Reset();
-
             actionIcon.Scale = scale;
             categoryIcon.Scale = scale;
-            diceIcon.Scale = scale * .55f;
-            diceThresholdNumber.Scale = scale * .65f;
-            bonusValueIcon.Scale = scale * .65f;
+            energyCostNumber.Scale = scale;
 
-            actionIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Center, -.5f * actionIcon.ScaleX, -1f * actionIcon.ScaleY);
-            categoryIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 1 * categoryIcon.ScaleY);
-            diceIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Bottom, -2.5f, -4f * diceIcon.ScaleY);
-            diceThresholdNumber.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 3.5f * diceThresholdNumber.ScaleX, -3.5f * diceThresholdNumber.ScaleY);
-            bonusValueIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.RightBottom, -3.5f * bonusValueIcon.ScaleX, -3.5f * bonusValueIcon.ScaleY);
+            categoryIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Top, 0, 2 * scale.Y);
+            actionIcon.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.Center, -.5f * scale.X, -.4f * scale.Y);
+            energyCostNumber.Position = cardContainer.BoundingBox.GetPoint(RectanglePoint.RightBottom, -1 * scale.X, -1 * scale.Y);
         }
 
         #endregion
@@ -168,13 +143,7 @@ namespace ScaryCastle
             {
                 categoryIcon.Draw(gameTime);
                 actionIcon.Draw(gameTime);
-
-                if (Definition.HasBonus)
-                {
-                    diceIcon.Draw(gameTime);
-                    diceThresholdNumber.Draw(gameTime);
-                    bonusValueIcon.Draw(gameTime);
-                }
+                energyCostNumber.Draw(gameTime);
             }
 
             if (Float)
@@ -186,7 +155,6 @@ namespace ScaryCastle
         {
             floatTween.Update(gameTime);
             actionIcon.Update(gameTime);
-            diceIcon.Update(gameTime);
             cardContainer.Update(gameTime);
 
             if (actionIconEffectCountdown.IsRunning)
@@ -201,17 +169,6 @@ namespace ScaryCastle
                     }
 
                     actionIconEffectCountdown.Restart();
-                }
-            }
-
-            if (diceIconEffectCountdown.IsRunning)
-            {
-                diceIconEffectCountdown.Update(gameTime);
-                if (!diceIconEffectCountdown.IsRunning)
-                {
-                    diceTween.Start(TweenStyle.Linear, diceIcon.Position, diceIcon.Position - new Vector2(.25f), 30, 4);
-                    diceIcon.Tweens.PositionTween = diceTween;
-                    diceIconEffectCountdown.Restart();
                 }
             }
 

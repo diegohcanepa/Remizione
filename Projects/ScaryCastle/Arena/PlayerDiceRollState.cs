@@ -15,7 +15,7 @@ namespace ScaryCastle
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
+            /*
             // Discard card
             if (!diceRolled && TimeInState > .5f)
             {
@@ -31,6 +31,7 @@ namespace ScaryCastle
                 if (dice == null || !dice.IsRolling)
                     Arena.TransitionTo(new PlayerCardResolutionState(Arena));
             }
+            */
         }
     }
 }

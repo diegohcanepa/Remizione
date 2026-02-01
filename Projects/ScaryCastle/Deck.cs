@@ -52,7 +52,7 @@ namespace ScaryCastle
             this.discardPileAmountContainer = new ImageSprite(session.Game, Atlases.UI.GetImage("DeckCountContainer"))
             {
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -4, 92)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -4, 100)
             };
 
             // Discard pile amount text
@@ -68,7 +68,7 @@ namespace ScaryCastle
             this.drawPileAmountContainer = new ImageSprite(session.Game, Atlases.UI.GetImage("DeckCountContainer"))
             {
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 4, 92)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 4, 100)
             };
 
             // Draw pile amount text

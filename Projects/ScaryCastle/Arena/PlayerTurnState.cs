@@ -90,12 +90,7 @@ namespace ScaryCastle
             base.Update(gameTime);
 
             if (cardPlayed && hoveredCard != null && !hoveredCard.IsMoving)
-            {
-                if (hoveredCard.Definition.HasBonus)
-                    Arena.TransitionTo(new PlayerDiceRollState(Arena, hoveredCard));
-                else
-                    Arena.TransitionTo(new PlayerCardResolutionState(Arena));
-            }
+               Arena.TransitionTo(new PlayerCardResolutionState(Arena));
         }
     }
 }
