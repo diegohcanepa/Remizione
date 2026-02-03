@@ -3,7 +3,6 @@
   "data": [
     {
       "name": "EnviousEye",
-      "patience": 10,
       "placements": ["WalkArea"],
 			"effects": [
 				{

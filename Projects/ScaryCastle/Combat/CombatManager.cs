@@ -13,6 +13,8 @@ namespace ScaryCastle
         private CombatManagerState currentState;
         private readonly UITargetMeter targetMeter;
 
+        #region Constructor
+
         // Constructor
         public CombatManager(Actor player, Actor enemy)
             : base(player.Game)
@@ -25,11 +27,12 @@ namespace ScaryCastle
             this.combatMask = new(Game, Atlases.UI.GetImage("CombatMask"))
             {
                 PivotOrigin = RectanglePoint.Center,
-                Scale = new(.75f)
             };
 
             combatMask.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicIn, 0, 1, 1000);
         }
+
+        #endregion
 
         #region Protected members
 
@@ -38,6 +41,7 @@ namespace ScaryCastle
         {
             combatMask.Draw(gameTime);
             targetMeter.Draw(gameTime);
+            currentState.Draw(gameTime);
         }
 
         // OnUpdate

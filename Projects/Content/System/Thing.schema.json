@@ -27,7 +27,7 @@
           "minimum": 1
         },
         "patience": {
-          "type": "integer",
+          "type": "integer",        
           "minimum": 10
         },
         "placements": {

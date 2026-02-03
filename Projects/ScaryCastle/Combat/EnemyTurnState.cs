@@ -19,22 +19,25 @@ namespace ScaryCastle
         {
         }
 
-        // Enter
-        public override void Enter()
+        #region Protected members
+
+        // OnEnter
+        protected override void OnEnter()
         {
-            base.Enter();
             attackDone = false;
         }
 
-        // Update
-        public override void Update(GameTime gameTime)
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
         {
-            base.Update(gameTime);
+            base.OnUpdate(gameTime);
 
             if (!attackDone && TimeInState > 2)
             {
                 if (Manager.Enemy.Definition != null)
                     EffectDescriptor.Apply(Manager.Enemy.Definition.Effects, Manager.Enemy, Manager.Player, AttackType.Contact);
+
+                Manager.Session.HUD.CombatFeedback.Show("Un zarpazo te desgarra la manga.", 2500);
 
                 attackDone = true;
             }
@@ -42,5 +45,7 @@ namespace ScaryCastle
             if (TimeInState > 5)
                 Manager.TransitionTo(new PlayerTurnState(Manager));
         }
+
+        #endregion
     }
 }

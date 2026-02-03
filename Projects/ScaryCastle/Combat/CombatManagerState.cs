@@ -7,10 +7,11 @@ namespace ScaryCastle
     /// <summary>
     /// CombatManagerState
     /// </summary>
-    public abstract class CombatManagerState : IInputHandler
+    public abstract class CombatManagerState : GameObject, IInputHandler
     {
         // Constructor
         protected CombatManagerState(CombatManager manager)
+            : base(manager.Session.Game)
         {
             this.Manager = manager;
         }
@@ -20,10 +21,27 @@ namespace ScaryCastle
         // Manager
         protected CombatManager Manager { get; }
 
+        // OnEnter
+        protected virtual void OnEnter()
+        {
+        }
+
+        // OnExit
+        protected virtual void OnExit()
+        {
+        }
+
         // OnHandleInput
         protected virtual HandleInputResult OnHandleInput(GameTime gameTime)
         {
             return HandleInputResult.Unhandled;
+        }
+
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            if (Manager.Session.IsCurrentScene)
+                TimeInState += (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         // TimeInState
@@ -32,27 +50,22 @@ namespace ScaryCastle
         #endregion
 
         // Enter
-        public virtual void Enter()
+        public void Enter()
         {
             TimeInState = 0;
+            OnEnter();
         }
 
         // Exit
-        public virtual void Exit()
+        public void Exit()
         {
+            OnExit();
         }
 
         // HandleInput
-        public virtual HandleInputResult HandleInput(GameTime gameTime)
+        public HandleInputResult HandleInput(GameTime gameTime)
         {
             return OnHandleInput(gameTime);
-        }
-
-        // Update
-        public virtual void Update(GameTime gameTime)
-        {
-            if (Manager.Session.IsCurrentScene)
-                TimeInState += (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
     }
 }

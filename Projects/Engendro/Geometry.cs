@@ -9,7 +9,7 @@ namespace Engendro
     /// </summary>
     public static class Geometry
     {
-        // DistanceToSegmentSquared (Optimized by ChatGPT)
+        // DistanceToSegmentSquared
         public static float DistanceToSegmentSquared(Vector2 p, Vector2 v, Vector2 w)
         {
             float dx = w.X - v.X;
@@ -33,7 +33,7 @@ namespace Engendro
             return ((p.X - projX) * (p.X - projX)) + ((p.Y - projY) * (p.Y - projY));
         }
 
-        // DistanceToSegment (Optimized by ChatGPT)
+        // DistanceToSegment
         public static float DistanceToSegment(Vector2 p, Vector2 v, Vector2 w)
         {
             return MathF.Sqrt(DistanceToSegmentSquared(p, v, w));
@@ -45,6 +45,24 @@ namespace Engendro
             var ab = b - a;
             var bc = c - b;
             return Math.Abs((ab.X * bc.Y) - (ab.Y * bc.X)) < epsilon;
+        }
+
+        // IsPointInEllipse
+        public static bool IsPointInEllipse(Vector2 point, Vector2 center, float radiusX, float radiusY)
+        {
+            // Evitamos divisiones por cero
+            if (radiusX <= 0 || radiusY <= 0)
+                return false;
+
+            float dx = point.X - center.X;
+            float dy = point.Y - center.Y;
+
+            // Ecuación optimizada: (dx^2 * ry^2) + (dy^2 * rx^2) <= (rx^2 * ry^2)
+            // Es matemáticamente equivalente a la división pero más rápida.
+            float rxSq = radiusX * radiusX;
+            float rySq = radiusY * radiusY;
+
+            return (dx * dx * rySq) + (dy * dy * rxSq) <= (rxSq * rySq);
         }
 
         // LineSegmentsCross

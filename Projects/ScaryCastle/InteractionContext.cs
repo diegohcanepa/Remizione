@@ -11,7 +11,6 @@ namespace ScaryCastle
     public sealed class InteractionContext(GameSession session)
     {
         private readonly GameSession session = session;
-        private string? text;
         private readonly string useVerb = Localization.GetValue(Verb.Use);
         private readonly string withPreposition = TextRepository.GetValue("Misc.WithPreposition");
 
@@ -23,7 +22,7 @@ namespace ScaryCastle
             // No target
             if (Target == null)
             {
-                text = null;
+                MouseCursor.Text = null;
                 return;
             }
 
@@ -33,11 +32,11 @@ namespace ScaryCastle
             // Compose text
             if (HeldItem == null)
             {
-                text = sentence;
+                MouseCursor.Text = sentence;
             }
             else
             {
-                text = $"{useVerb} {HeldItem.Definition.LocalizedDisplayName} {withPreposition} {sentence}";
+                MouseCursor.Text = $"{useVerb} {HeldItem.Definition.LocalizedDisplayName} {withPreposition} {sentence}";
             }
         }
 
@@ -170,7 +169,7 @@ namespace ScaryCastle
                 MouseCursor.OutlineColor = MouseCursorOutline.None;
             }
 
-            MouseCursor.Text = text;
+            InvalidateText();
         }
 
         // TryInteract

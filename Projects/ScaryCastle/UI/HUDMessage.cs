@@ -9,12 +9,12 @@ namespace ScaryCastle
     /// </summary>
     public sealed class HUDMessage : GameObject
     {
-        private readonly FloatTween fadeTween = new() { StartDelay = 1500 };
+        private readonly FloatTween fadeTween = new();
         private readonly TextSprite messageText;
         private readonly Vector2Tween scaleTween = new();
 
         // Constructor
-        public HUDMessage(EngendroGame game)
+        public HUDMessage(EngendroGame game, RectanglePoint pivotOrigin, Vector2 position)
             : base(game)
         {
             // Message text
@@ -22,8 +22,8 @@ namespace ScaryCastle
             {
                 Color = ColorPalette.Text.Highlight,
                 MaximumWidth = (int)(Screen.HUDArea.Width * .7f),
-                PivotOrigin = RectanglePoint.Center,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5)
+                PivotOrigin = pivotOrigin,
+                Position = position
             };
         }
 
@@ -57,21 +57,36 @@ namespace ScaryCastle
         // Show
         public void Show(MessageKind message)
         {
-            messageText.Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5);
-            messageText.Text = Localization.GetValue(message);
-            fadeTween.Start(TweenStyle.CubicIn, 1, 0, 200);
+            var text  = Localization.GetValue(message);
+            var color = ColorPalette.Text.Highlight;
 
             if (message == MessageKind.NotEnoughCoins)
             {
-                messageText.Color = ColorPalette.Text.Orange;
+                color = ColorPalette.Text.Orange;
                 Sound.Play(SoundNames.Error);
             }
             else
             {
-                messageText.Color = ColorPalette.Text.Highlight;
+                color = ColorPalette.Text.Highlight;
                 Sound.Play(SoundNames.Error);
             }
 
+            Show(text, color);
+        }
+
+        // Show
+        public void Show(string text, int duration = 1500)
+        {
+            Show(text, ColorPalette.Text.Highlight, duration);
+        }
+
+        // Show
+        public void Show(string text, Color color, int duration = 1500)
+        {
+            messageText.Color = color;
+            messageText.Text = text;
+            fadeTween.StartDelay = duration;
+            fadeTween.Start(TweenStyle.CubicIn, 1, 0, 200);
             scaleTween.Start(TweenStyle.CubicIn, ScaleInfo.Text.Huge * .8f, ScaleInfo.Text.Huge, 50);
             messageText.Tweens.ScaleTween = scaleTween;
         }

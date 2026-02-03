@@ -11,11 +11,72 @@ namespace ScaryCastle
     public sealed class PlayerTurnState : CombatManagerState
     {
         private Script? awaitingScript;
+        private readonly TextSprite tip;
+        private int tipNumber;
+        private readonly string[] tips = new string[3];
 
         // PlayerTurnState
         public PlayerTurnState(CombatManager manager)
             : base(manager)
         {
+            // Tips
+            for (var i = 0; i < tips.Length; i++)
+            {
+                tips[i] = TextRepository.GetValue($"Combat.Tip{i+1}");
+            }
+
+            // Tip
+            this.tip = new(manager.Session.Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Highlight,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 2, 12),
+                Scale = ScaleInfo.Text.Large
+            };
+        }
+
+        #region Private members
+
+        // RefreshTip
+        private void RefreshTip(int patience)
+        {
+            if (tipNumber == 3)
+                return;
+
+            float progress = TimeInState / patience;
+            var changeTip = false;
+
+            if (progress < 0.5f)
+            {
+                if (tipNumber < 1)
+                    changeTip = true;
+            }
+            else if (progress < 0.75f)
+            {
+                if (tipNumber < 2)
+                    changeTip = true;
+            }
+            else
+            {
+                if (tipNumber < 3)
+                    changeTip = true;
+            }
+
+            if (changeTip)
+            {
+                tipNumber++;
+                tip.Text = tips[tipNumber - 1];
+            }
+        }
+
+        #endregion
+
+        #region Protected members
+
+        // OnDraw
+        protected override void OnDraw(GameTime gameTime)
+        {
+            if (TimeInState > 2)
+                tip.Draw(gameTime);
         }
 
         // OnHandleInput
@@ -56,20 +117,25 @@ namespace ScaryCastle
             return HandleInputResult.Handled;
         }
 
-        // Update
-        public override void Update(GameTime gameTime)
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
         {
-            base.Update(gameTime);
+            base.OnUpdate(gameTime);
 
             if (awaitingScript != null)
             {
                 if (!Manager.Session.IsAwaitingScript(awaitingScript))
                     Manager.TransitionTo(new EnemyTurnState(Manager));
             }
-            else if (Manager.Enemy.Definition != null && TimeInState > Manager.Enemy.Definition.Patience)
+            else if (Manager.Enemy.Definition is ThingDefinition def)
             {
-                Manager.TransitionTo(new EnemyTurnState(Manager));
+                if (TimeInState > def.Patience)
+                    Manager.TransitionTo(new EnemyTurnState(Manager));
+                else
+                    RefreshTip(def.Patience);
             }
         }
+
+        #endregion
     }
 }

@@ -33,7 +33,8 @@ namespace ScaryCastle
 
             this.healthMeter = new(session.Game, new(playerIcon.BoundingBox.Width, 2));
             this.Log = new(Game);
-            this.Message = new(Game);
+            this.CombatFeedback = new(Game, RectanglePoint.Bottom, Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -10));
+            this.Message = new(Game, RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5));
 
             // Coin meter 
             this.CoinMeter = new(session);
@@ -67,6 +68,7 @@ namespace ScaryCastle
                 SackMeter.Draw(gameTime);
                 Log.Draw(gameTime);
                 Message.Draw(gameTime);
+                CombatFeedback.Draw(gameTime);
                 Game.SpriteBatch.End();
 
                 if (session.Room is ProceduralRoom)
@@ -83,6 +85,7 @@ namespace ScaryCastle
             MiniMap.Update(gameTime);
             Log.Update(gameTime);
             Message.Update(gameTime);
+            CombatFeedback.Update(gameTime);
             CoinMeter.Update(gameTime);
         }
 
@@ -90,6 +93,9 @@ namespace ScaryCastle
 
         // CoinMeter
         public UICoinMeter CoinMeter { get; }
+
+        // CombatFeedback
+        public HUDMessage CombatFeedback { get; }
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
