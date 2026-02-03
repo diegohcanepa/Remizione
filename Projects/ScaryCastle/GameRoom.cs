@@ -523,6 +523,9 @@ namespace ScaryCastle
         [ScriptProperty]
         public DustParticleKind DustParticleKind { get; set; } = DustParticleKind.Ash;
 
+        // FollowPlayer
+        public bool FollowPlayer { get; set; } = true;
+
         // GlobalLightSize
         [ScriptProperty]
         public Vector2 GlobalLightSize

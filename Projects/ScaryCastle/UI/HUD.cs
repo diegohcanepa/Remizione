@@ -33,8 +33,8 @@ namespace ScaryCastle
 
             this.healthMeter = new(session.Game, new(playerIcon.BoundingBox.Width, 2));
             this.Log = new(Game);
-            this.CombatFeedback = new(Game, RectanglePoint.Bottom, Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -10));
-            this.Message = new(Game, RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5));
+            this.CombatFeedback = new(Game, RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 25), ScaleInfo.Text.ExtraGiant);
+            this.Message = new(Game, RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
 
             // Coin meter 
             this.CoinMeter = new(session);
@@ -61,14 +61,27 @@ namespace ScaryCastle
                 Game.SpriteBatch.Begin(Game.Camera);
 
                 session.CombatManager?.Draw(gameTime);
-                playerIcon.Draw(gameTime);
-                healthMeter.Draw(gameTime);
+
+                if (!session.CombatMode)
+                {
+                    playerIcon.Draw(gameTime);
+                    healthMeter.Draw(gameTime);
+                }
+
                 Inventory.Draw(gameTime);
-                CoinMeter.Draw(gameTime);
-                SackMeter.Draw(gameTime);
-                Log.Draw(gameTime);
-                Message.Draw(gameTime);
-                CombatFeedback.Draw(gameTime);
+
+                if (session.CombatMode)
+                {
+                    CombatFeedback.Draw(gameTime);
+                }
+                else
+                {
+                    CoinMeter.Draw(gameTime);
+                    SackMeter.Draw(gameTime);
+                    Log.Draw(gameTime);
+                    Message.Draw(gameTime);
+                }
+
                 Game.SpriteBatch.End();
 
                 if (session.Room is ProceduralRoom)

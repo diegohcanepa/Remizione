@@ -4,6 +4,7 @@ using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Procedural;
+using ScaryCastle.Rooms;
 using ScaryCastle.Scripting;
 using System;
 using System.Collections.Generic;
@@ -96,6 +97,7 @@ namespace ScaryCastle
         private static void RegisterAotTypes()
         {
             AotTypeRegistry.Register(typeof(Actor));
+            AotTypeRegistry.Register(typeof(Arena));
             AotTypeRegistry.Register(typeof(Zabul));
             AotTypeRegistry.Register(typeof(BloodyEye));
             AotTypeRegistry.Register(typeof(BreakableProp));
@@ -136,6 +138,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("await-player-approach", typeof(AwaitPlayerApproachCommand));
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
             AotTypeRegistry.Register("begin-combat", typeof(BeginCombatCommand));
+            AotTypeRegistry.Register("combat-feedback", typeof(CombatFeedbackCommand));
             AotTypeRegistry.Register("create-dialog-block", typeof(CreateDialogBlockCommand));
             AotTypeRegistry.Register("echo", typeof(EchoCommand));
             AotTypeRegistry.Register("empty-pilgrim-sack", typeof(EmptyPilgrimSackCommand));
@@ -217,7 +220,7 @@ namespace ScaryCastle
             Camera.Setup(width, height, room.ScrollLock, room.Zoom);
 
             // Follow player
-            if (Player != null && Player.IsInCurrentRoom)
+            if (Player != null && Player.IsInCurrentRoom && room is GameRoom gameRoom && gameRoom.FollowPlayer)
                 Camera.FollowTarget(Player, true);
         }
 
@@ -388,9 +391,9 @@ namespace ScaryCastle
         #endregion
 
         // BeginCombat
-        public void BeginCombat(Actor enemy)
+        public void BeginCombat()
         {
-            if (CombatManager != null || Player == null || Room == null || enemy.MaxHP <= 0 || enemy.IsDead || Player.IsDead)
+            if (CombatManager != null || Player == null || OutcomeTarget is not Actor enemy || enemy.MaxHP <= 0 || enemy.IsDead || Player.IsDead)
                 return;
 
             CombatManager = new(Player, enemy);
@@ -427,6 +430,9 @@ namespace ScaryCastle
 
         // CombatManager
         public CombatManager? CombatManager { get; private set; }
+
+        // CombatMode
+        public bool CombatMode => CombatManager != null;
 
         // CompleteRun
         [ScriptMethod]

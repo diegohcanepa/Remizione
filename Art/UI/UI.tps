@@ -173,21 +173,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">CombatMask-assets/CombatMask.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>120,68,240,135</rect>
-                <key>scale9Paddings</key>
-                <rect>120,68,240,135</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Deck-assets/CardAttack.png</key>
             <key type="filename">Deck-assets/CardDefense.png</key>
             <key type="filename">Deck-assets/CardHealing.png</key>
@@ -1069,7 +1054,6 @@
                     <filename>Inventory-assets</filename>
                     <filename>MiniMap-assets</filename>
                     <filename>Deck-assets</filename>
-                    <filename>CombatMask-assets</filename>
                 </array>
             </struct>
         </map>

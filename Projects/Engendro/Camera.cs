@@ -41,19 +41,18 @@ namespace Engendro
 
         #region Constructors
 
-        // Constructor
         public Camera(EngendroGame game, string name)
             : this(game, name, 0, 0)
         {
         }
 
-        // Constructor
         public Camera(EngendroGame game, string name, int sceneWidth, int sceneHeight)
         {
             this.Game = game;
             this.Name = name;
             this.viewportHeight = game.ViewportAdapter.VirtualHeight;
             this.viewportWidth = game.ViewportAdapter.VirtualWidth;
+
 #if WINDOWS
             game.Window.ClientSizeChanged += Window_ClientSizeChanged;
 #endif
@@ -65,82 +64,47 @@ namespace Engendro
 
         #region Private members
 
-        // Approach
         private void Approach(Vector2 targetPosition, GameTime gameTime)
         {
-            // 1. Si ya estamos en el objetivo (dentro de la tolerancia), no hacemos nada.
             if (IsTargetFocused)
                 return;
 
-            // 2. Ajuste por Zoom
-            // Cuanto más Zoom (cerca), más lento debe ser el seguimiento visualmente.
-            // Usamos Math.Max(Zoom, 1f) para que si el zoom es menor a 1 (alejado), no se acelere extrañamente.
             float zoomFactor = Math.Max(Zoom, 1f);
-
-            // 3. Cálculo del factor de interpolación (t)
-            // Multiplicamos por TotalSeconds para independencia de FPS.
-            // IMPORTANTE: Al multiplicar por segundos (que es un número pequeño, ej 0.016),
-            // tu SmoothSpeed actual deberá ser mucho más alta (ej. pasar de 0.1 a 5.0).
             float timeFactor = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            // Combinamos velocidad, zoom y tiempo.
-            // El "Lerp" necesita un valor entre 0 y 1.
+            // Ajustamos la velocidad según zoom y delta time
             float t = SmoothSpeed / zoomFactor * timeFactor;
-
-            // Aseguramos que t nunca sea mayor a 1 (para evitar saltos instantáneos o errores)
             t = MathHelper.Clamp(t, 0f, 1f);
 
-            // 4. Aplicamos el movimiento usando Lerp (Linear Interpolation)
-            // Lerp te lleva de A a B en un porcentaje t.
+            // Interpolamos hacia el objetivo
+            // El setter de Position se encargará de frenar el movimiento si llegamos a un borde
             Position = Vector2.Lerp(Position, targetPosition, t);
-
-            // 5. Restricciones de bordes
-            ClampToSceneBounds();
-        }
-
-        // ClampToSceneBounds
-        private void ClampToSceneBounds()
-        {
-            // Calculate the visible width and height based on zoom
-            var visibleWidth = viewportWidth / Zoom;
-            var visibleHeight = viewportHeight / Zoom;
-
-            Rectangle sceneBounds = new(0, 0, SceneWidth, SceneHeight);
-
-            // Calculate the minimum and maximum limits for the camera position
-            var minX = sceneBounds.Left + (visibleWidth / 2);
-            var maxX = sceneBounds.Right - (visibleWidth / 2);
-            var minY = sceneBounds.Top + (visibleHeight / 2);
-            var maxY = sceneBounds.Bottom - (visibleHeight / 2);
-
-            // Applies constraint to camera position, snapping it to the center of the view
-            Position = new Vector2(MathHelper.Clamp(Position.X, minX, maxX), MathHelper.Clamp(Position.Y, minY, maxY));
         }
 
 #if WINDOWS
-        // Window_ClientSizeChanged
         private void Window_ClientSizeChanged(object? sender, EventArgs e)
         {
             isMatrixDirty = true;
         }
 #endif
 
-        // InvalidateLimits
         private void InvalidateLimits()
         {
+            // Calculamos cuánto mundo es visible
             var vw = viewportWidth / ZoomCore;
             var vh = viewportHeight / ZoomCore;
 
+            // Definimos los límites donde la cámara puede poner su CENTRO
             this.leftBarrier = vw * .5f;
             this.rightBarrier = SceneWidth - (vw * .5f);
             this.bottomBarrier = SceneHeight - (vh * .5f);
             this.topBarrier = vh * .5f;
 
-            this.CanScrollHorizontally = ScrollLock != ScrollLock.Horizontal && ScrollLock != ScrollLock.All && SceneWidth * ZoomCore > viewportWidth;
-            this.CanScrollVertically = ScrollLock != ScrollLock.Vertical && ScrollLock != ScrollLock.All && SceneHeight * ZoomCore > viewportHeight;
+            // Determinamos si es necesario hacer scroll
+            this.CanScrollHorizontally = ScrollLock != ScrollLock.Horizontal && ScrollLock != ScrollLock.All && (SceneWidth * ZoomCore) > viewportWidth;
+            this.CanScrollVertically = ScrollLock != ScrollLock.Vertical && ScrollLock != ScrollLock.All && (SceneHeight * ZoomCore) > viewportHeight;
         }
 
-        // ZoomCore
         private float ZoomCore
         {
             get;
@@ -148,11 +112,16 @@ namespace Engendro
             {
                 value = zoomRange.Clamp(value);
 
-                if (value != field)
+                // Solo recalculamos si hubo cambio real
+                if (Math.Abs(value - field) > 0.00001f)
                 {
                     field = value;
                     InvalidateLimits();
                     isMatrixDirty = true;
+
+                    // Al cambiar el zoom, validamos la posición actual
+                    // (Esto re-dispara el setter de Position con las nuevas barreras)
+                    Position = Position;
                 }
             }
         } = 1;
@@ -161,7 +130,6 @@ namespace Engendro
 
         #region Protected members
 
-        // Dispose
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -172,85 +140,59 @@ namespace Engendro
                     Game.Window.ClientSizeChanged -= Window_ClientSizeChanged;
 #endif
                 }
-
                 disposedValue = true;
             }
         }
 
         #endregion
 
-        // ApproachTolerance
+        // Properties
+
         public float ApproachTolerance { get; set; } = 1.5f;
 
-        // AtBottom
-        public bool AtBottom => VisibleBox.Bottom == SceneHeight;
+        // Tolerancia float para evitar flickering en comparaciones exactas
+        public bool AtBottom => VisibleBox.Bottom >= SceneHeight - 0.1f;
+        public bool AtLeft => VisibleBox.Left <= 0.1f;
+        public bool AtRight => VisibleBox.Right >= SceneWidth - 0.1f;
+        public bool AtTop => VisibleBox.Top <= 0.1f;
 
-        // AtLeft
-        public bool AtLeft => VisibleBox.Left == 0;
-
-        // AtRight
-        public bool AtRight => VisibleBox.Right == SceneWidth;
-
-        // AtTop
-        public bool AtTop => VisibleBox.Top == 0;
-
-        // CanScrollHorizontally
         public bool CanScrollHorizontally { get; private set; }
-
-        // CanScrollVertically
         public bool CanScrollVertically { get; private set; }
 
-        // CullingBox
         public RectangleF CullingBox { get; private set; }
-
-        // CullingBoxScale
         public Vector2 CullingBoxScale { get; set; } = Vector2.One;
 
-        // Dispose
         public void Dispose()
         {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
 
-        // FocusCenter
         public void FocusCenter()
         {
-            Position = new Vector2((float)SceneWidth / 2, (float)SceneHeight / 2);
+            // Apuntamos al centro de la escena. El setter decidirá si lo permite.
+            Position = new Vector2(SceneWidth / 2f, SceneHeight / 2f);
         }
 
-        // FocusTarget
         public void FocusTarget()
         {
             if (Target != null)
             {
                 StopMoving();
-
-                if (CanScrollHorizontally || CanScrollVertically)
-                    Position = Target.Position;
-                else
-                    FocusCenter();
+                Position = Target.Position;
             }
         }
 
-        // FollowTarget
-        public void FollowTarget(ITransform target)
-        {
-            FollowTarget(target, false);
-        }
+        public void FollowTarget(ITransform target) => FollowTarget(target, false);
 
-        // FollowTarget
         public void FollowTarget(ITransform target, bool focus)
         {
             Target = target;
-            if (focus)
-                FocusTarget();
+            if (focus) FocusTarget();
         }
 
-        // Game
         public EngendroGame Game { get; }
 
-        // GetTransformationMatrix
         public Matrix GetTransformationMatrix()
         {
             if (isMatrixDirty)
@@ -260,41 +202,29 @@ namespace Engendro
 
                 if (ShakeState != CameraShakeState.None)
                 {
-                    if (shakeHorzTween.IsRunning)
-                    {
-                        posX += shakeHorzTween.CurrentValue;
-                    }
-
-                    if (shakeVertTween.IsRunning)
-                    {
-                        posY += shakeVertTween.CurrentValue;
-                    }
+                    if (shakeHorzTween.IsRunning) posX += shakeHorzTween.CurrentValue;
+                    if (shakeVertTween.IsRunning) posY += shakeVertTween.CurrentValue;
                 }
 
                 camTranslationVector.X = posX;
                 camTranslationVector.Y = posY;
-
                 Matrix.CreateTranslation(ref camTranslationVector, out camTranslationMatrix);
 
                 scaleVector.X = ZoomCore;
                 scaleVector.Y = ZoomCore;
-                scaleVector.Z = 1;
-
                 Matrix.CreateScale(ref scaleVector, out scaleMatrix);
 
                 resTranslationVector.X = viewportWidth * .5f;
                 resTranslationVector.Y = viewportHeight * .5f;
-                resTranslationVector.Z = 0;
-
                 Matrix.CreateTranslation(ref resTranslationVector, out resTranslationMatrix);
 
                 Matrix.CreateRotationZ(Rotation, out rotationTranslationMatrix);
 
                 transformationMatrix = camTranslationMatrix *
-                            rotationTranslationMatrix *
-                            scaleMatrix *
-                            resTranslationMatrix *
-                            Game.ViewportAdapter.TransformationMatrix;
+                                       rotationTranslationMatrix *
+                                       scaleMatrix *
+                                       resTranslationMatrix *
+                                       Game.ViewportAdapter.TransformationMatrix;
 
                 isMatrixDirty = false;
             }
@@ -302,44 +232,29 @@ namespace Engendro
             return transformationMatrix;
         }
 
-        // IsTargetFocused
         public bool IsTargetFocused => Target != null && Vector2.Distance(Position, Target.Position) < ApproachTolerance;
-
-        // IsMoving
         public bool IsMoving => moveTween.IsRunning;
-
-        // IsRotating
         public bool IsRotating => rotationTween.IsRunning;
 
-        // MoveTo
         public void MoveTo(TweenStyle tweenStyle, Vector2 destination, int duration)
         {
             Target = null;
 
-            // Clamp destination to keep tween out effect
-            if (destination.X - (VisibleBox.Width / 2) < 0)
-                destination.X = VisibleBox.Width / 2;
+            // Clamp preventivo para que el tween apunte a un lugar válido,
+            // aunque el Setter corregiría de todas formas frame a frame.
+            float destX = CanScrollHorizontally ? MathHelper.Clamp(destination.X, leftBarrier, rightBarrier) : SceneWidth / 2f;
+            float destY = CanScrollVertically ? MathHelper.Clamp(destination.Y, topBarrier, bottomBarrier) : SceneHeight / 2f;
 
-            if (destination.Y - (VisibleBox.Height / 2) < 0)
-                destination.Y = VisibleBox.Height / 2;
-
-            // Clamp destination to keep tween out effect
-            if (destination.X + (VisibleBox.Width / 2) > SceneWidth)
-                destination.X = SceneWidth - (VisibleBox.Width / 2);
-
-            if (destination.Y + (VisibleBox.Height / 2) > SceneHeight)
-                destination.Y = SceneHeight - (VisibleBox.Height / 2);
-
-            moveTween.Start(tweenStyle, Position, destination, duration);
+            moveTween.Start(tweenStyle, Position, new Vector2(destX, destY), duration);
         }
 
-        // Name
         public string Name { get; }
-
-        // Offset
         public Vector2 Offset { get; private set; }
 
-        // Position
+        /// <summary>
+        /// Posición central de la cámara.
+        /// El setter contiene la lógica crítica de límites.
+        /// </summary>
         public Vector2 Position
         {
             get => position;
@@ -348,30 +263,50 @@ namespace Engendro
                 if (value == position && !isInitializing)
                     return;
 
-                if (!CanScrollHorizontally)
-                    value.X = VisibleBox.Center.X;
+                float finalX = value.X;
+                float finalY = value.Y;
 
-                if (!CanScrollVertically)
-                    value.Y = VisibleBox.Center.Y;
+                // --- LÓGICA CRÍTICA ---
+                // Si hay scroll, respetamos los límites (Clamp).
+                // Si NO hay scroll, forzamos el centro de la escena.
+                // Esto evita el error de "barreras invertidas" cuando el Zoom aleja mucho.
 
-                position = value;
+                if (CanScrollHorizontally)
+                    finalX = MathHelper.Clamp(finalX, leftBarrier, rightBarrier);
+                else
+                    finalX = SceneWidth / 2f;
 
-                position.X = MathHelper.Clamp(position.X, leftBarrier, rightBarrier);
-                position.Y = MathHelper.Clamp(position.Y, topBarrier, bottomBarrier);
+                if (CanScrollVertically)
+                    finalY = MathHelper.Clamp(finalY, topBarrier, bottomBarrier);
+                else
+                    finalY = SceneHeight / 2f;
 
-                VisibleBox = new RectangleF(position.X - (viewportWidth / 2 / ZoomCore), position.Y - (viewportHeight / 2 / ZoomCore), viewportWidth / ZoomCore, viewportHeight / ZoomCore);
+                position = new Vector2(finalX, finalY);
+
+                // Recalculamos el área visible basada en la posición final real
+                float halfVisibleW = (viewportWidth / ZoomCore) * 0.5f;
+                float halfVisibleH = (viewportHeight / ZoomCore) * 0.5f;
+
+                VisibleBox = new RectangleF(
+                    position.X - halfVisibleW,
+                    position.Y - halfVisibleH,
+                    viewportWidth / ZoomCore,
+                    viewportHeight / ZoomCore
+                );
 
                 CullingBox = RectangleF.Inflate(VisibleBox,
-                                                VisibleBox.Width * (CullingBoxScale.X - 1),
-                                                VisibleBox.Height * (CullingBoxScale.Y - 1));
+                    VisibleBox.Width * (CullingBoxScale.X - 1),
+                    VisibleBox.Height * (CullingBoxScale.Y - 1));
 
-                Offset = new Vector2(position.X - (VisibleBox.Width / 2), position.Y - (VisibleBox.Height / 2));
+                Offset = new Vector2(
+                    position.X - halfVisibleW,
+                    position.Y - halfVisibleH
+                );
 
                 isMatrixDirty = true;
             }
         }
 
-        // Reset
         public void Reset()
         {
             StopShaking();
@@ -379,32 +314,24 @@ namespace Engendro
             StopFollowing();
             StopZooming();
             StopRotating();
-            Position = Vector2.Zero;
+
+            // Reiniciamos valores base
             Zoom = 1;
             Rotation = 0;
+
+            // Centramos (ahora con Zoom 1 es seguro)
+            FocusCenter();
         }
 
-        // Rotate
-        public void Rotate(TweenStyle tweenStyle, float rotationValue, int duration)
+        public void Rotate(TweenStyle tweenStyle, float rotationValue, int duration, int bounceCount = 0)
         {
-            Rotate(tweenStyle, rotationValue, duration, 0);
-        }
-
-        // Rotate
-        public void Rotate(TweenStyle tweenStyle, float rotationValue, int duration, int bounceCount)
-        {
-            if (Rotation == rotationValue)
-            {
-                return;
-            }
-
+            if (Rotation == rotationValue) return;
             rotationTween.Start(tweenStyle, Rotation, rotationValue, duration, bounceCount);
         }
 
-        // Rotation
         public float Rotation
         {
-            get;
+            get => field;
             set
             {
                 if (value != field)
@@ -415,160 +342,100 @@ namespace Engendro
             }
         }
 
-        // SceneHeight
         public int SceneHeight { get; private set; }
-
-        // SceneWidth
         public int SceneWidth { get; private set; }
-
-        // ScrollLock
         public ScrollLock ScrollLock { get; set; }
 
-        // Setup
-        public void Setup(int sceneWidth, int sceneHeight)
-        {
-            Setup(sceneWidth, sceneHeight, ScrollLock.None, 1);
-        }
-
-        // Setup
-        public void Setup(int sceneWidth, int sceneHeight, ScrollLock scrollLock, float zoom)
+        public void Setup(int sceneWidth, int sceneHeight, ScrollLock scrollLock = ScrollLock.None, float zoom = 1)
         {
             isInitializing = true;
 
+            // 1. PRIMERO Reset: Limpia tweens y pone valores default (Zoom=1).
             Reset();
 
+            // 2. AHORA configuramos las propiedades nuevas.
             this.SceneWidth = sceneWidth;
             this.SceneHeight = sceneHeight;
-            this.Zoom = zoom;
             this.ScrollLock = scrollLock;
-            this.isMatrixDirty = true;
 
+            // 3. Aplicamos el Zoom deseado (sobrescribe el 1 del Reset).
+            this.ZoomCore = zoom;
+
+            // 4. Calculamos barreras y scroll flags con el zoom final.
             InvalidateLimits();
 
-            var newPos = Position;
-
-            if (!CanScrollHorizontally)
-                newPos.X = viewportWidth / 2;
-
-            if (!CanScrollVertically)
-                newPos.Y = viewportHeight / 2;
-
-            this.Position = newPos;
+            // 5. Posicionamos en el centro.
+            // El Setter usará CanScrollHorizontally/Vertically (calculados arriba) 
+            // para decidir si usa Clamp o fuerza el centro.
+            this.Position = new Vector2(sceneWidth / 2f, sceneHeight / 2f);
 
             isInitializing = false;
         }
 
-        // Shake
         public void Shake(TweenStyle tweenStyle, Vector2 intensity, int duration, int bounces)
         {
             ShakeHorizontally(tweenStyle, intensity.X, duration, bounces);
             ShakeVertically(tweenStyle, intensity.Y, duration, bounces);
         }
 
-        // ShakeHorizontally
         public void ShakeHorizontally(TweenStyle tweenStyle, float intensity, int duration, int bounces)
         {
             shakeHorzTween.Start(tweenStyle, -intensity, intensity, duration, bounces);
         }
 
-        // ShakeState
         public CameraShakeState ShakeState
         {
             get
             {
-                if (shakeHorzTween.IsRunning && shakeVertTween.IsRunning)
-                    return CameraShakeState.XY;
-
-                else if (shakeHorzTween.IsRunning)
-                    return CameraShakeState.X;
-
-                else if (shakeVertTween.IsRunning)
-                    return CameraShakeState.Y;
-
-                else
-                    return CameraShakeState.None;
+                if (shakeHorzTween.IsRunning && shakeVertTween.IsRunning) return CameraShakeState.XY;
+                else if (shakeHorzTween.IsRunning) return CameraShakeState.X;
+                else if (shakeVertTween.IsRunning) return CameraShakeState.Y;
+                else return CameraShakeState.None;
             }
         }
 
-        // ShakeVertically
         public void ShakeVertically(TweenStyle tweenStyle, float intensity, int duration, int bounces)
         {
             shakeVertTween.Start(tweenStyle, -intensity, intensity, duration, bounces);
         }
 
-        // SmoothSpeed
         public float SmoothSpeed { get; set; } = .01f;
 
-        // StopFollowing
-        public void StopFollowing()
-        {
-            Target = null;
-        }
-
-        // StopMoving
-        public void StopMoving()
-        {
-            moveTween.Stop();
-        }
-
-        // StopRotating
-        public void StopRotating()
-        {
-            rotationTween.Stop();
-        }
-
-        // StopShaking
+        public void StopFollowing() => Target = null;
+        public void StopMoving() => moveTween.Stop();
+        public void StopRotating() => rotationTween.Stop();
         public void StopShaking()
         {
             shakeHorzTween.Stop();
             shakeVertTween.Stop();
         }
+        public void StopZooming() => zoomTween.Stop();
 
-        // StopZooming
-        public void StopZooming()
-        {
-            zoomTween.Stop();
-        }
-
-        // Target
         public ITransform? Target { get; private set; }
 
-        // ToString
-        public override string ToString()
-        {
-            return Name;
-        }
+        public override string ToString() => Name;
 
-        // Update
         public void Update(GameTime gameTime)
         {
-            // Shake
             if (ShakeState != CameraShakeState.None)
             {
-                if (shakeHorzTween.IsRunning)
-                    shakeHorzTween.Update(gameTime);
-
-                if (shakeVertTween.IsRunning)
-                    shakeVertTween.Update(gameTime);
-
+                if (shakeHorzTween.IsRunning) shakeHorzTween.Update(gameTime);
+                if (shakeVertTween.IsRunning) shakeVertTween.Update(gameTime);
                 isMatrixDirty = true;
             }
 
-            // Rotation
             if (rotationTween.IsRunning)
             {
                 rotationTween.Update(gameTime);
                 Rotation = rotationTween.CurrentValue;
             }
 
-            // Zoom
             if (zoomTween.IsRunning)
             {
                 zoomTween.Update(gameTime);
                 ZoomCore = zoomTween.CurrentValue;
             }
 
-            // Movement
             if (IsMoving)
             {
                 moveTween.Update(gameTime);
@@ -581,16 +448,14 @@ namespace Engendro
             }
         }
 
-        // VisibleBox
         public RectangleF VisibleBox { get; private set; }
 
-        // Zoom
         public float Zoom
         {
             get => ZoomCore;
             set
             {
-                if (value != ZoomCore)
+                if (Math.Abs(value - ZoomCore) > 0.00001f)
                 {
                     ZoomCore = value;
                     StopZooming();
@@ -598,30 +463,19 @@ namespace Engendro
             }
         }
 
-        // ZoomTo
-        public void ZoomTo(TweenStyle tweenStyle, float zoomValue, int duration)
+        public void ZoomTo(TweenStyle tweenStyle, float zoomValue, int duration, int bounceCount = 0)
         {
-            ZoomTo(tweenStyle, zoomValue, duration, 0);
-        }
-
-        // ZoomTo
-        public void ZoomTo(TweenStyle tweenStyle, float zoomValue, int duration, int bounceCount)
-        {
-            if (Zoom == zoomValue)
-                return;
-
+            if (Math.Abs(Zoom - zoomValue) < 0.0001f) return;
             zoomTween.Start(tweenStyle, Zoom, zoomValue, duration, bounceCount);
         }
 
-        // ZoomState
         public ZoomState ZoomState
         {
             get
             {
                 if (zoomTween.IsRunning)
                     return zoomTween.EndValue > zoomTween.StartValue ? ZoomState.In : ZoomState.Out;
-                else
-                    return ZoomState.None;
+                return ZoomState.None;
             }
         }
     }

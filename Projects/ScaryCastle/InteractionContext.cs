@@ -126,6 +126,12 @@ namespace ScaryCastle
                 return;
             }
 
+            if (session.CombatManager != null && !session.CombatManager.IsWaitingPlayerInput)
+            {
+                MouseCursor.State = MouseCursorState.Wait;
+                return;
+            }
+
             // Session is awaiting
             if (session.IsAwaiting)
             {

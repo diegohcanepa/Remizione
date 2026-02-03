@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 
@@ -9,9 +10,13 @@ namespace ScaryCastle
     /// </summary>
     public sealed class CombatManager : GameObject, IInputHandler
     {
-        private readonly ImageSprite combatMask;
-        private CombatManagerState currentState;
-        private readonly UITargetMeter targetMeter;
+        private CombatManagerState currentState = null!;
+        private UIArenaHealthMeter enemyMeter;
+        private FacingDirection originalEnemyDirection;
+        private Vector2 originalEnemyPosition;
+        private FacingDirection originalPlayerDirection;
+        private Vector2 originalPlayerPosition;
+        private UIArenaHealthMeter playerMeter;
 
         #region Constructor
 
@@ -22,14 +27,42 @@ namespace ScaryCastle
             this.Session = player.Session;
             this.Player = player;
             this.Enemy = enemy;
-            this.targetMeter = new UITargetMeter(enemy);
-            this.currentState = new PlayerTurnState(this);
-            this.combatMask = new(Game, Atlases.UI.GetImage("CombatMask"))
-            {
-                PivotOrigin = RectanglePoint.Center,
-            };
 
-            combatMask.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicIn, 0, 1, 1000);
+            originalEnemyDirection = enemy.Direction;
+            originalEnemyPosition = enemy.Position;
+            originalPlayerDirection = enemy.Direction;
+            originalPlayerPosition = enemy.Position;
+
+            if (Session.Room is GameRoom room)
+            {
+                var playerAtLeft = Player.X < Enemy.X;
+                room.Children.Add(Enemy);
+                room.Children.Add(Player);
+
+                var leftPos = 100;
+                var rightPos = 140;
+                var y = 90;
+
+                if (playerAtLeft)
+                {
+                    Player.Position = new(leftPos, y);
+                    Enemy.Position = new(rightPos, y);
+                    Player.Direction = FacingDirection.Right;
+                    Enemy.Direction = FacingDirection.Left; 
+                }
+                else
+                {
+                    Enemy.Position = new(leftPos, y);
+                    Player.Position = new(rightPos, y);
+                    Player.Direction = FacingDirection.Left;
+                    Enemy.Direction = FacingDirection.Right;
+                }
+            }
+
+            playerMeter = new(Player);
+            enemyMeter = new(Enemy);
+
+            TransitionTo(new PlayerTurnState(this));
         }
 
         #endregion
@@ -39,18 +72,18 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            combatMask.Draw(gameTime);
-            targetMeter.Draw(gameTime);
+            //targetMeter.Draw(gameTime);
             currentState.Draw(gameTime);
+            enemyMeter.Draw(gameTime);
+            playerMeter.Draw(gameTime);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             currentState?.Update(gameTime);
-            combatMask.Update(gameTime);
-            combatMask.Position = Player.Position - Session.Camera.Offset;
-            targetMeter.Update(gameTime);
+            enemyMeter.Update(gameTime);
+            playerMeter.Update(gameTime);
         }
 
         #endregion
@@ -70,11 +103,29 @@ namespace ScaryCastle
                 return currentState.HandleInput(gameTime);
         }
 
+        // IsWaitingPlayerInput
+        public bool IsWaitingPlayerInput => currentState is PlayerTurnState;
+
         // Player
         public Actor Player { get; }
 
         // Session
         public GameSession Session { get; }
+
+        // Terminate
+        public void Terminate()
+        {
+            if (Session.PreviousRoom is GameRoom room)
+            {
+                room.Children.Add(Player);
+                room.Children.Add(Enemy);
+
+                Player.Position = originalPlayerPosition;
+                Player.Direction = originalPlayerDirection;
+                Enemy.Position = originalEnemyPosition;
+                Enemy.Direction = originalEnemyDirection;
+            }
+        }
 
         // TransitionTo
         public void TransitionTo(CombatManagerState newState)

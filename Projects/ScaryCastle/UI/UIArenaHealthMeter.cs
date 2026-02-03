@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -15,17 +16,27 @@ namespace ScaryCastle
         private Vector2 anchorPosition;
         private readonly List<ImageSprite> hearts = [];
         private int lastKnownHP;
-        private int maxHp;
-        private int totalHeartCount;
+        private readonly int maxHp;
+        private readonly int totalHeartCount;
 
-        // Constructor
-        public UIArenaHealthMeter(Actor actor) : base(actor.Game)
+        #endregion
+
+        #region Constructor
+
+        public UIArenaHealthMeter(Actor actor)
+            : base(actor.Game)
         {
             this.Actor = actor;
 
             this.maxHp = actor.MaxHP;
             this.HP = actor.HP;
-            this.anchorPosition = actor.GetOverheadPosition();
+            this.anchorPosition = actor.BoundingBox.Center;
+
+            if (actor.Direction == FacingDirection.Left)
+                this.anchorPosition.X += 6;
+            else
+                this.anchorPosition.X -= 6;
+
             totalHeartCount = (maxHp + 1) / 2;
 
             hearts.Clear();
@@ -37,22 +48,24 @@ namespace ScaryCastle
 
         #endregion
 
-
         #region Private members
 
-        // GenerateHearts
         private void GenerateHearts()
         {
             if (totalHeartCount <= 0)
                 return;
 
-            // Sprites para obtener dimensiones
             var tempSprite = new ImageSprite(Game, Atlases.UI.HeartFull);
             var w = tempSprite.BoundingBox.Width;
             var h = tempSprite.BoundingBox.Height;
 
-            // LISTA DE COLISIONES: Usamos esto para que no se superpongan demasiado
             var placedRects = new List<RectangleF>();
+
+            // --- CORRECCIÓN: Lógica invertida ---
+            // Antes usamos (Left ? 1 : -1). Como salían "hacia adelante", invertimos los valores.
+            // Ahora: Si mira a la Izquierda (-1), los corazones se invierten hacia la Derecha (Atrás).
+            // Si mira a la Derecha (1), los corazones se mantienen normales (o se invierten según tu sistema de coordenadas).
+            float dirMultiplier = (Actor.Direction == FacingDirection.Left) ? -1f : 1f;
 
             for (int i = 0; i < totalHeartCount; i++)
             {
@@ -61,26 +74,23 @@ namespace ScaryCastle
                     PivotOrigin = RectanglePoint.Center
                 };
 
-                // --- ALGORITMO DE NUBE ORGANIZADA ---
-
-                // 1. Calcular posición IDEAL (Simetría base)
-                // Intentamos crear una estructura piramidal/nube
+                // 1. Calcular posición IDEAL
                 Vector2 idealPos = GetOrganizedOffset(i, w, h);
 
-                // 2. Añadir JITTER (Imperfección)
-                // Desplazamos un poquito para que no sea una grilla perfecta
-                // +/- 4 pixeles de variación random
+                // 2. APLICAR ESPEJO (FLIP)
+                // Esto invierte la coordenada X de la estructura de la nube para que salga
+                // hacia el lado contrario a donde mira el personaje.
+                idealPos.X *= dirMultiplier;
+
+                // 3. JITTER
                 float jitterX = (float)((Random.Shared.NextDouble() * 8.0) - 4.0);
                 float jitterY = (float)((Random.Shared.NextDouble() * 6.0) - 3.0);
 
                 Vector2 attemptPos = anchorPosition + idealPos + new Vector2(jitterX, jitterY);
 
-                // 3. Resolución de Superposición (Physics light)
-                // Si la posición calculada (con jitter) choca con otro corazón, 
-                // la empujamos un poquito hacia afuera hasta que entre.
+                // 4. Resolución de Superposición
                 attemptPos = SolveOverlap(attemptPos, w, h, placedRects);
 
-                // Guardamos
                 placedRects.Add(new RectangleF(attemptPos.X, attemptPos.Y, w, h));
                 heart.Position = attemptPos;
                 hearts.Add(heart);
@@ -88,69 +98,44 @@ namespace ScaryCastle
 
             foreach (var heart in hearts)
             {
+                // Tween de flotación vertical
                 heart.Tweens.YTween = FloatTween.Create(TweenStyle.CubicInOut, heart.Y, heart.Y + Random.Shared.Next(-1f, 1f), Random.Shared.Next(400, 700), -1);
 
+                // Tween de escala inicial
                 var scaleTween = new Vector2Tween() { StartDelay = 400 };
                 scaleTween.Start(TweenStyle.CubicInOut, Vector2.One, Vector2.One * 1.2f, Random.Shared.Next(200, 400), 2);
                 heart.Tweens.ScaleTween = scaleTween;
             }
         }
 
-        /// <summary>
-        /// Calcula una posición base basada en un índice para formar una estructura
-        /// de racimo o pirámide invertida (crece hacia arriba).
-        /// </summary>
         private Vector2 GetOrganizedOffset(int index, float w, float h)
         {
-            // CONFIGURACIÓN DE ESPACIADO
-            float spacingX = w * 0.8f; // Un poco pegados horizontalmente
-            float spacingY = h * 0.7f; // Un poco pegados verticalmente (stacking)
+            float spacingX = w * 0.8f;
+            float spacingY = h * 0.7f;
 
-            if (index == 0) return new Vector2(-w / 2, -h); // El primero centrado justo arriba del anchor
-
-            // Para los siguientes, alternamos Izquierda / Derecha
-            // Nivel 1 (índices 1, 2): A los costados y un poco arriba
-            // Nivel 2 (índices 3, 4, 5): Más arriba
-
-            // Lógica de "Capas":
-            // Capa 0: 1 corazón
-            // Capa 1: 2 corazones
-            // Capa 2: 3 corazones...
+            if (index == 0) return new Vector2(-w / 2, -h);
 
             int layer = 0;
             int itemsInLayer = 1;
             int currentCount = 0;
 
-            // Buscamos en qué capa cae este índice
             while (index >= currentCount + itemsInLayer)
             {
                 currentCount += itemsInLayer;
-                itemsInLayer++; // Cada capa superior soporta un corazón más (pirámide)
+                itemsInLayer++;
                 layer++;
             }
 
-            // Índice dentro de la capa actual (0..itemsInLayer-1)
             int indexInLayer = index - currentCount;
-
-            // Centramos la capa horizontalmente
-            // Si la capa tiene 2 items, offset es: -0.5, 0.5
-            // Si la capa tiene 3 items, offset es: -1, 0, 1
             float centerOffset = (itemsInLayer - 1) / 2.0f;
             float xPos = (indexInLayer - centerOffset) * spacingX;
-
-            // La Y sube según la capa (negativo es arriba)
             float yPos = -h - (layer * spacingY);
 
-            // Ajuste fino: Las capas superiores se abren un poco más en abanico
             xPos *= 1.0f + (layer * 0.1f);
 
-            // Centramos el sprite (el origen del sprite suele ser topleft, ajustamos para que xPos sea el centro)
             return new Vector2(xPos - (w / 2), yPos);
         }
 
-        /// <summary>
-        /// Intenta corregir la posición si se superpone con los anteriores.
-        /// </summary>
         private static Vector2 SolveOverlap(Vector2 pos, float w, float h, List<RectangleF> others)
         {
             Vector2 currentPos = pos;
@@ -158,7 +143,6 @@ namespace ScaryCastle
             bool collided = true;
             int safetyBreak = 0;
 
-            // Hacemos unos pequeños "nudges" (empujones) si hay colisión
             while (collided && safetyBreak < 10)
             {
                 collided = false;
@@ -167,30 +151,24 @@ namespace ScaryCastle
                     if (myRect.Intersects(other))
                     {
                         collided = true;
-
-                        // Vector de empuje: alejarse del centro del otro corazón
                         Vector2 dir = currentPos - new Vector2(other.X, other.Y);
-                        if (dir == Vector2.Zero) dir = new Vector2(0, -1); // Evitar NaN
+                        if (dir == Vector2.Zero) dir = new Vector2(0, -1);
                         dir.Normalize();
 
-                        // Empujar 2 pixeles en esa dirección
                         currentPos += dir * 2f;
                         myRect = new RectangleF(currentPos.X, currentPos.Y, w, h);
                     }
                 }
                 safetyBreak++;
             }
-
             return currentPos;
         }
 
-        // RefreshVisuals
         private void RefreshVisuals()
         {
             int fullHeartsCount = HP / 2;
             bool hasHalfHeart = (HP % 2) == 1;
 
-            // Ordenamos visualmente el update para que se llene de abajo hacia arriba (por índice)
             for (int i = 0; i < hearts.Count; i++)
             {
                 if (i < fullHeartsCount)
@@ -206,7 +184,6 @@ namespace ScaryCastle
 
         #region Protected members
 
-        // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
             if (!Actor.IsDead)
@@ -218,7 +195,6 @@ namespace ScaryCastle
             }
         }
 
-        // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             if (lastKnownHP != Actor.HP)
@@ -235,10 +211,8 @@ namespace ScaryCastle
 
         #endregion
 
-        // Actor
         public Actor Actor { get; }
 
-        // HP
         public int HP
         {
             get;

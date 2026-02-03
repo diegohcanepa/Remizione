@@ -1074,12 +1074,11 @@ namespace ScaryCastle
             // 3. REACCIÓN DE EFECTOS (Espinas / Rebote) - CRÍTICO
             // ---------------------------------------------------------
             // Hacemos esto ANTES de calcular si muere o recibe daño real. 
-            // Si golpeo una pared de pinchos (MaxHP=0), igual quiero que mis efectos se activen.
-
-            if (Definition?.EffectDescriptors != null)
+            // Si golpeo una vasija igual quiero que mis efectos se activen.
+            if (Session.CombatManager == null)
             {
-                // "source" es el atacante, "target" soy yo.
-                EffectDescriptor.Apply(Definition.EffectDescriptors, this, attacker, attackType);
+                if (Definition?.EffectDescriptors != null)
+                    EffectDescriptor.Apply(Definition.EffectDescriptors, this, attacker, attackType);
             }
 
             // ---------------------------------------------------------

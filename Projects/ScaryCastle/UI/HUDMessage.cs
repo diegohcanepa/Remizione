@@ -11,12 +11,15 @@ namespace ScaryCastle
     {
         private readonly FloatTween fadeTween = new();
         private readonly TextSprite messageText;
+        private readonly Vector2 scale;
         private readonly Vector2Tween scaleTween = new();
 
         // Constructor
-        public HUDMessage(EngendroGame game, RectanglePoint pivotOrigin, Vector2 position)
+        public HUDMessage(EngendroGame game, RectanglePoint pivotOrigin, Vector2 position, Vector2 scale)
             : base(game)
         {
+            this.scale = scale;
+
             // Message text
             this.messageText = new(Game, Fonts.CommonOutline)
             {
@@ -87,7 +90,7 @@ namespace ScaryCastle
             messageText.Text = text;
             fadeTween.StartDelay = duration;
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 200);
-            scaleTween.Start(TweenStyle.CubicIn, ScaleInfo.Text.Huge * .8f, ScaleInfo.Text.Huge, 50);
+            scaleTween.Start(TweenStyle.CubicIn, scale * .8f, scale, 50);
             messageText.Tweens.ScaleTween = scaleTween;
         }
     }

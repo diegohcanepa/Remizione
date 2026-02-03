@@ -67,7 +67,7 @@ namespace ScaryCastle
 
                     // Damage
                     case EffectType.Damage:
-                        realTarget.TakeDamage(source, effect.AttackType, effect.DamageType, amount, effect.ImpactWord, effect.Knockback);
+                        realTarget.TakeDamage(realTarget, effect.AttackType, effect.DamageType, amount, effect.ImpactWord, effect.Knockback);
                         break;
 
                     // Death

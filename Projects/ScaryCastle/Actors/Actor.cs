@@ -323,10 +323,10 @@ namespace ScaryCastle
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType, Vector2 knockback)
         {
-            if (IsPlayer)
-                session.Camera.Shake(TweenStyle.Linear, Vector2.One, 100, 2);
+           // if (IsPlayer)
+             //   session.Camera.Shake(TweenStyle.Linear, Vector2.One, 100, 2);
 
-            FaceTo(attacker);
+            //FaceTo(attacker);
 
             if (Sprite.Animations.Contains(ActorStateNames.Hurt))
             {

@@ -69,11 +69,8 @@ namespace ScaryCastle
             DrawText(gameTime, text, $"Offset: {session.Camera.Offset}");
             DrawText(gameTime, text, $"Position: {session.Camera.Position}");
 
-            if (session.Camera.Target is Entity targetEntity)
-            {
-                DrawText(gameTime, text, $"Target: {targetEntity.Name}");
-            }
-
+            var target = session.Camera.Target?.ToString();
+            DrawText(gameTime, text, $"Target: {target}");
             DrawText(gameTime, text, $"Zoom / Rotation: {session.Camera.Zoom} / {session.Camera.Rotation}");
             DrawText(gameTime, text, $"BoundingBox: {session.Camera.VisibleBox}");
         }

@@ -11,6 +11,7 @@ namespace ScaryCastle
     public sealed class PlayerTurnState : CombatManagerState
     {
         private Script? awaitingScript;
+        private int awaitScriptCooldown;
         private readonly TextSprite tip;
         private int tipNumber;
         private readonly string[] tips = new string[3];
@@ -29,8 +30,8 @@ namespace ScaryCastle
             this.tip = new(manager.Session.Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Highlight,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 2, 12),
-                Scale = ScaleInfo.Text.Large
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 2, 2),
+                Scale = ScaleInfo.Text.Giant
             };
         }
 
@@ -79,6 +80,12 @@ namespace ScaryCastle
                 tip.Draw(gameTime);
         }
 
+        // OnEnter
+        protected override void OnEnter()
+        {
+            awaitScriptCooldown = 100;
+        }
+
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
@@ -124,8 +131,14 @@ namespace ScaryCastle
 
             if (awaitingScript != null)
             {
-                if (!Manager.Session.IsAwaitingScript(awaitingScript))
+                if (awaitScriptCooldown > 0)
+                {
+                    awaitScriptCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+                }
+                else if (!Manager.Session.IsAwaitingScript(awaitingScript))
+                {
                     Manager.TransitionTo(new EnemyTurnState(Manager));
+                }
             }
             else if (Manager.Enemy.Definition is ThingDefinition def)
             {
