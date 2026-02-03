@@ -22,11 +22,11 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public UIHealthMeter(EngendroGame game)
+        public UIHealthMeter(EngendroGame game, Vector2 margin)
             : base(game)
         {
             this.hearts = new ImageSprite[10];
-            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 2, 0);
+            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, margin);
 
             for (var i = 0; i < hearts.Length; i++)
             {

@@ -47,13 +47,15 @@ namespace ScaryCastle
                 MouseCursor.PerformClick();
                 return true;
             }
-            else
+            else if (Actor.Session.CombatManager == null || Actor.Session.CombatManager.CanSuspend)
             {
                 MouseCursor.AnimateClick();
                 var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
                 Actor.MoveTo(destination);
                 return true;
             }
+            else
+                return false;
         }
 
         // TestMouseRightButtonClick

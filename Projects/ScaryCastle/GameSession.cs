@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Procedural;
 using ScaryCastle.Scripting;
@@ -46,7 +47,6 @@ namespace ScaryCastle
             : base(game, new ScaryCastlePersistenceModel(), ContentManagerExtension.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
-            this.Deck = new Deck(this);
             this.Inventory = new(this);
             this.Environment = new Environment(this);
             this.LootGenerator = new(this);
@@ -96,14 +96,12 @@ namespace ScaryCastle
         private static void RegisterAotTypes()
         {
             AotTypeRegistry.Register(typeof(Actor));
-            AotTypeRegistry.Register(typeof(Arena));
             AotTypeRegistry.Register(typeof(Zabul));
             AotTypeRegistry.Register(typeof(BloodyEye));
             AotTypeRegistry.Register(typeof(BreakableProp));
             AotTypeRegistry.Register(typeof(CloseUpRoom));
             AotTypeRegistry.Register(typeof(Coin));
             AotTypeRegistry.Register(typeof(CreditsRoom));
-            AotTypeRegistry.Register(typeof(Card));
             AotTypeRegistry.Register(typeof(Dice));
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(HellGoat));
@@ -137,6 +135,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
             AotTypeRegistry.Register("await-player-approach", typeof(AwaitPlayerApproachCommand));
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
+            AotTypeRegistry.Register("begin-combat", typeof(BeginCombatCommand));
             AotTypeRegistry.Register("create-dialog-block", typeof(CreateDialogBlockCommand));
             AotTypeRegistry.Register("echo", typeof(EchoCommand));
             AotTypeRegistry.Register("empty-pilgrim-sack", typeof(EmptyPilgrimSackCommand));
@@ -188,7 +187,7 @@ namespace ScaryCastle
         {
             base.OnDraw(gameTime);
 
-            if (HUDVisible && IsCurrentScene && !IsInArena)
+            if (HUDVisible && IsCurrentScene)
                 HUD.Draw(gameTime);
 
             // Draw speech bubbles
@@ -210,7 +209,6 @@ namespace ScaryCastle
         // OnEnterRoom
         protected override void OnEnterRoom(Room room)
         {
-            IsInArena = room is Arena;
             InteractionContext.Reset();
             MouseCursor.Reset();
 
@@ -237,6 +235,9 @@ namespace ScaryCastle
 
             else if (HUD.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
+
+            else if (CombatManager != null)
+                return CombatManager.HandleInput(gameTime);
 
             else
                 return base.OnHandleInput(gameTime);
@@ -277,10 +278,6 @@ namespace ScaryCastle
             // Coins
             if (sessionNode.Attributes[nameof(Coins)]?.Value is string coins)
                 this.Coins = XmlConvert.ToInt32(coins);
-
-            // Deck
-            if (sessionNode.Attributes[nameof(Deck)]?.Value is string deckData)
-                Inventory.LoadState(deckData);
 
             // Inventory
             if (sessionNode.Attributes[nameof(Inventory)]?.Value is string inventoryData)
@@ -341,6 +338,8 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
+            CombatManager?.Update(gameTime);
+
             if (console != null)
             {
                 if (console.IsActive && roomEditor != null)
@@ -351,7 +350,7 @@ namespace ScaryCastle
 
             Environment.Update(gameTime);
 
-            if (HUDVisible && !IsInArena)
+            if (HUDVisible)
             {
                 HUD.Update(gameTime);
 
@@ -362,8 +361,7 @@ namespace ScaryCastle
                 }
             }
 
-            if (!IsInArena)
-                InteractionContext.Update();
+            InteractionContext.Update();
         }
 
         // OnWrite
@@ -382,10 +380,6 @@ namespace ScaryCastle
             // Coins
             output.WriteAttributeString(nameof(Coins), XmlConvert.ToString(Coins));
 
-            // Deck
-            if (Deck.SaveState() is string deckData)
-                output.WriteAttributeString(nameof(Deck), deckData);
-
             // Inventory
             if (Inventory.SaveState() is string inventoryData)
                 output.WriteAttributeString(nameof(Inventory), inventoryData);
@@ -393,6 +387,17 @@ namespace ScaryCastle
 
         #endregion
 
+        // BeginCombat
+        public void BeginCombat(Actor enemy)
+        {
+            if (CombatManager != null || Player == null || Room == null || enemy.MaxHP <= 0 || enemy.IsDead || Player.IsDead)
+                return;
+
+            CombatManager = new(Player, enemy);
+            AudioManager.Music.PlayTag("Combat");
+        }
+
+        // BeginRun
         [ScriptMethod]
         public void BeginRun()
         {
@@ -420,15 +425,15 @@ namespace ScaryCastle
         [ScriptProperty]
         public int Coins { get; set; }
 
+        // CombatManager
+        public CombatManager? CombatManager { get; private set; }
+
         // CompleteRun
         [ScriptMethod]
         public void CompleteRun()
         {
             EndRun();
         }
-
-        // Deck
-        public Deck Deck { get; }
 
         // DeclaredThings
         public NamedObjectReadOnlyCollection<GameThing> DeclaredThings { get; }
@@ -470,7 +475,7 @@ namespace ScaryCastle
 
         // Enemy
         [ScriptProperty]
-        public Actor? Enemy { get; set; }
+        public Actor? Enemy => CombatManager?.Enemy;
 
         // Environment
         public Environment Environment { get; }
@@ -506,9 +511,6 @@ namespace ScaryCastle
 
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
-
-        // IsInArena
-        public bool IsInArena { get; private set; }
 
         // KillEnemies
         [ScriptMethod]
@@ -609,9 +611,9 @@ namespace ScaryCastle
         }
 
         // ShowEcho
-        public void ShowEcho(string text, AtlasImage? image = null)
+        public void ShowEcho(string text, bool allowTyping, AtlasImage? image = null)
         {
-            echoScene.Show(text, image);
+            echoScene.Show(text, allowTyping, image);
             Game.SceneManager.Push(echoScene);
         }
     }

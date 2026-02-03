@@ -93,52 +93,55 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            // Prepared
-            if (state == SpearState.Prepared)
+            if (Session.CombatManager == null)
             {
-                if (cooldown > 0)
+                // Prepared
+                if (state == SpearState.Prepared)
                 {
-                    cooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                    if (cooldown <= 0)
-                        Attack();
-                }
-            }
-
-            // Attacking
-            else if (state == SpearState.Attacking)
-            {
-                if (!AnimationPlayer.IsPlaying)
-                {
-                    state = SpearState.Up;
-                    upCooldown = 1000;
-                }
-                else if (!damageApplied && Session.Player != null && RuntimeHotspot.BoundingRectangleF.Intersects(Session.Player.RuntimeCollider.BoundingRectangleF))
-                {
-                    damageApplied = true;
-                    if (Definition != null)
-                        EffectDescriptor.Apply(Definition.Effects, this, Session.Player, AttackType.Contact);
-                }
-            }
-
-            // Up
-            else if (state == SpearState.Up)
-            {
-                if (upCooldown > 0)
-                {
-                    upCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                    if (upCooldown <= 0)
+                    if (cooldown > 0)
                     {
-                        state = SpearState.Reloading;
-                        AnimationPlayer.Play(ReloadAnimationName, false);
+                        cooldown -= gameTime.ElapsedGameTime.Milliseconds;
+                        if (cooldown <= 0)
+                            Attack();
                     }
                 }
-            }
 
-            // Reloading
-            else if (state == SpearState.Reloading)
-            {
-                if (!AnimationPlayer.IsPlaying)
-                    Prepare();
+                // Attacking
+                else if (state == SpearState.Attacking)
+                {
+                    if (!AnimationPlayer.IsPlaying)
+                    {
+                        state = SpearState.Up;
+                        upCooldown = 1000;
+                    }
+                    else if (!damageApplied && Session.Player != null && RuntimeHotspot.BoundingRectangleF.Intersects(Session.Player.RuntimeCollider.BoundingRectangleF))
+                    {
+                        damageApplied = true;
+                        if (Definition != null)
+                            EffectDescriptor.Apply(Definition.Effects, this, Session.Player, AttackType.Contact);
+                    }
+                }
+
+                // Up
+                else if (state == SpearState.Up)
+                {
+                    if (upCooldown > 0)
+                    {
+                        upCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+                        if (upCooldown <= 0)
+                        {
+                            state = SpearState.Reloading;
+                            AnimationPlayer.Play(ReloadAnimationName, false);
+                        }
+                    }
+                }
+
+                // Reloading
+                else if (state == SpearState.Reloading)
+                {
+                    if (!AnimationPlayer.IsPlaying)
+                        Prepare();
+                }
             }
 
             base.OnUpdate(gameTime);

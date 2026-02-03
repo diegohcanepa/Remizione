@@ -16,7 +16,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly List<Card> cards = [];
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -46,7 +45,6 @@ namespace ScaryCastle
             this.DisplayNameKey = $"Actor.{DeclaredName}";
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
-            this.Cards = cards.AsReadOnly();
 
             headSprite = new AnimatedSprite(Game)
             {
@@ -179,14 +177,6 @@ namespace ScaryCastle
         #endregion
 
         #region Protected members
-
-        // AddCard
-        protected Card AddCard(string cardName)
-        {
-            var card = new Card(Game, cardName);
-            cards.Add(card);
-            return card;
-        }
 
         // CalculateSpeed
         protected override float CalculateSpeed()
@@ -428,9 +418,6 @@ namespace ScaryCastle
                 return StateMachine.CurrentState is ActorStandState or ActorMoveState;
             }
         }
-
-        // Cards
-        public ReadOnlyCollection<Card> Cards { get; }
 
         // FastMove
         public bool FastMove { get; set; }

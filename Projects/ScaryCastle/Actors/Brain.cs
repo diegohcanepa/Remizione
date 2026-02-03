@@ -11,12 +11,6 @@
             this.Owner = owner;
         }
 
-        // PickCard
-        public virtual Card? PickCard(Arena arena)
-        {
-            return null;
-        }
-
         // Owner
         public Actor Owner { get; }
     }

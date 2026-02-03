@@ -49,7 +49,6 @@ namespace ScaryCastle
         // InitializeProceduralContent
         private void InitializeProceduralContent()
         {
-            CardDefinition.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Cards.json"));
             ItemDefinition.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Items.json"));
             RoomDefinition.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
             ThingDefinition.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"),

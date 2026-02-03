@@ -36,7 +36,7 @@ namespace ScaryCastle
             DiceExpression? damage = element.GetObject("hp", value => new DiceExpression(value));
 
             // DamageType
-            var damageType = element.GetEnum<DamageType>("damageType", DamageType.None);
+            var damageType = element.GetEnum<DamageType>("damageType", DamageType.Undefined);
 
             // Durability
             Durability = element.GetFloat("durability", 0);
@@ -49,6 +49,9 @@ namespace ScaryCastle
 
             // ImpactWord
             var impactWord = element.GetEnum("impactWord", ImpactWordName.None);
+
+            // InventoryCategory
+            InventoryCategory = element.GetEnum<InventoryCategory>("inventoryCategory", InventoryCategory.Common);
 
             // IsStackable
             IsStackable = element.GetBool("isStackable", false);
@@ -170,6 +173,9 @@ namespace ScaryCastle
 
         // Image
         public AtlasImage? Image { get; }
+
+        // InventoryCategory
+        public InventoryCategory InventoryCategory { get; }
 
         // IsPassive
         public bool IsPassive { get; }

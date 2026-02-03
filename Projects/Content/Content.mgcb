@@ -89,21 +89,6 @@
 #begin Atlases/Castle_Wide_Common_01.xml
 /copy:Atlases/Castle_Wide_Common_01.xml
 
-#begin Atlases/CaveArena.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Atlases/CaveArena.png
-
-#begin Atlases/CaveArena.xml
-/copy:Atlases/CaveArena.xml
-
 #begin Atlases/Environment.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1034,6 +1019,12 @@
 /processorParam:Quality=Best
 /build:Audio/Music/Arrival.wav;Audio/Music/Arrival
 
+#begin Audio/Music/Combat1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Combat1.wav;Audio/Music/Combat1
+
 #begin Audio/Music/FirstSteps.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -1150,9 +1141,6 @@
 
 #begin System/Actors.json
 /copy:System/Actors.json
-
-#begin System/Cards.json
-/copy:System/Cards.json
 
 #begin System/Items.json
 /copy:System/Items.json

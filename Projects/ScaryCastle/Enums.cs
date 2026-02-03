@@ -22,34 +22,6 @@ namespace ScaryCastle
     // AttackType
     public enum AttackType { None, Melee, Ranged, Magic, Contact }
 
-    // BattleState
-    public enum BattleState
-    {
-        PlayEnemyCard,
-        DrawHand,
-        PlayerTurn,
-        PlayPlayerCard,
-        EnemyTurn,
-        WaitPlayerInput,
-        Win,
-        Lose
-    }
-
-    // CardAction
-    public enum CardAction
-    {
-        Damage,         // Aplica daño (Icono: Corazón Negro 🖤)
-        Shield,         // Aplica escudo temporal (Icono: Corazón Azul 💙)
-        Heal,           // Recupera vida (Icono: Corazón Rojo ❤️)
-        ApplyEffect,    // Para la categoría Status (Icono: Calavera/Espiral 💀)
-        Escape,         // Intenta huir (Icono: Salida >>)
-        ModifyDice,     // Buff al dado (Icono: Dado Brillante ✨)
-        DrawCards       // Robar cartas (Icono: Cartas 🃏)
-    }
-
-    // CardCategory
-    public enum CardCategory { Attack, Defense, Healing, Prayer, Status }
-
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }
 
@@ -57,7 +29,7 @@ namespace ScaryCastle
     public enum ConsumptionType { Quantity, Durability, None }
 
     // DamageType
-    public enum DamageType { None, Physical, Acid, Explosive, Fire, Ice, Lightning, Poison }
+    public enum DamageType { Undefined, Physical, Acid, Explosive, Fire, Ice, Lightning, Poison }
 
     // Difficulty
     public enum Difficulty { Easy, Normal, Hard }
@@ -78,9 +50,6 @@ namespace ScaryCastle
     // Faction
     public enum Faction { Neutral, Good, Evil }
 
-    // GridMeasureType
-    public enum GridMeasureType { BoundingBox, Collider, Hotspot }
-
     // HitEffect
     public enum HitEffect { None, Shake, Blink }
 
@@ -89,6 +58,9 @@ namespace ScaryCastle
 
     // ImpactWordName
     public enum ImpactWordName { None, AghGreen, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
+
+    // InventoryCategory
+    public enum InventoryCategory { Common, Sacred }
 
     // ItemCategory
     public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc }
@@ -179,9 +151,6 @@ namespace ScaryCastle
 
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }
-
-    // ThrowableBounceIntensity
-    public enum ThrowableBounceIntensity { Low, Medium, High }
 
     // UIControlGroupLayoutStyle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }

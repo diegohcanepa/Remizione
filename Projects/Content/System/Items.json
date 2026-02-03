@@ -23,12 +23,13 @@
 		{
 			"name": "Cross",
 			"category": "Luck",
+			"consumptionType": "None",
+			"inventoryCategory": "Sacred",
 			"effects": [
 				{
-					"effectType": "Luck",
-					"factor":0.2,
-					"isPassive": true,
-					"target": "Self"
+					"effectType": "Damage",
+					"damageType": "Physical",
+					"amount": "1d4"
 				}
 			]
 		},

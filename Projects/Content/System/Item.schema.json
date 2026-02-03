@@ -47,6 +47,13 @@
                 "Durability"
               ]
             },
+            "inventoryCategory": {
+              "type": "string",
+              "enum": [
+                "Common",
+                "Sacred"
+              ]
+            },            
             "isStackable": {
               "type": "boolean"
             },

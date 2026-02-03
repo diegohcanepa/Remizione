@@ -17,8 +17,6 @@ namespace ScaryCastle
             FastMoveFactor = 3;
             Guts = 7;
             ShadowSpotSize = 0;
-
-            AddCard("CardTest3");
         }
 
         #region Protected members
@@ -27,7 +25,7 @@ namespace ScaryCastle
         protected override void OnLoad()
         {
             base.OnLoad();
-            this.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.One, new(1, 1.05f), 600, -1);
+            //this.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.One, new(1, 1.05f), 600, -1);
         }
 
         // OnUpdate
@@ -47,15 +45,6 @@ namespace ScaryCastle
             public ActorBrain(Actor owner)
                 : base(owner)
             {
-            }
-
-            // PickCard
-            public override Card? PickCard(Arena arena)
-            {
-                if (Owner.Cards.Count == 0)
-                    return null;
-                else
-                    return Owner.Cards[0];
             }
         }
     }

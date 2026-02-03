@@ -23,7 +23,6 @@ namespace ScaryCastle
         private readonly Vector2 deckIconSelectedScale = Vector2.One * 1.1f;
         private readonly ImageSprite[] icons;
         private readonly TextSprite itemName;
-        private int lastSeenDeckVersion = -1;
         private int lastSeenInventoryVersion = -1;
         private readonly GameSession session;
         private readonly ImageSprite[] shadows;
@@ -156,7 +155,7 @@ namespace ScaryCastle
             {
                 if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
                 {
-                    session.ShowEcho(item.Definition.LocalizedDescription, item.Definition.Image);
+                    session.ShowEcho(item.Definition.LocalizedDescription, false, item.Definition.Image);
                 }
             }
 
@@ -195,13 +194,6 @@ namespace ScaryCastle
             }
 
             //?session.InteractionContext.HeldItem = MouseCursor.Item;
-        }
-
-        // RefreshDeck
-        private void RefreshDeck()
-        {
-            lastSeenDeckVersion = session.Deck.Count;
-            cardAmountText.Text = $"{session.Deck.Count}/{session.Deck.Capacity}";
         }
 
         #endregion
@@ -251,12 +243,6 @@ namespace ScaryCastle
             {
                 lastSeenInventoryVersion = session.Inventory.ContentVersion;
                 Refresh();
-            }
-
-            if (lastSeenDeckVersion != session.Deck.ContentVersion)
-            {
-                lastSeenDeckVersion = session.Deck.ContentVersion;
-                RefreshDeck();
             }
 
             if (!IsVisible)

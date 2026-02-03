@@ -15,8 +15,7 @@ namespace ScaryCastle
         private readonly ImageSprite container;
         private readonly ImageSprite fore;
         private readonly Vector2 padding = new(.5f);
-        private Vector2 position;
-        private static readonly Color previousValue = new(171, 81, 48);
+        private static readonly Color previousValue = new(125, 56, 51);
         private readonly ImageSprite previousValue1;
         private readonly FloatTween tween = new() { StartDelay = 200 };
         private float width;
@@ -34,7 +33,7 @@ namespace ScaryCastle
             // Container
             this.container = new ImageSprite(game, Atlases.UI.Pixel)
             {
-                Color = new(41, 29, 43),
+                Color = Color.Black,
                 ScaleY = size.Y,
                 ScaleX = size.X + (padding.X * 2) // ancho fijo para el container
             };
@@ -169,12 +168,12 @@ namespace ScaryCastle
         // Position
         public Vector2 Position
         {
-            get => position;
+            get;
             set
             {
-                if (value != position)
+                if (value != field)
                 {
-                    position = value;
+                    field = value;
                     Invalidate();
                 }
             }

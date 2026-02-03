@@ -12,6 +12,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private readonly ImageSprite playerIcon;
         private readonly UIHealthMeter healthMeter;
         private readonly GameSession session;
 
@@ -25,7 +26,12 @@ namespace ScaryCastle
         {
             this.session = session;
 
-            this.healthMeter = new(session.Game);
+            this.playerIcon = new(Game, Atlases.UI.GetImage("EdmundIcon"))
+            {
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop),
+            };
+
+            this.healthMeter = new(session.Game, new(playerIcon.BoundingBox.Width, 2));
             this.Log = new(Game);
             this.Message = new(Game);
 
@@ -52,6 +58,9 @@ namespace ScaryCastle
             if (session.IsCurrentScene)
             {
                 Game.SpriteBatch.Begin(Game.Camera);
+
+                session.CombatManager?.Draw(gameTime);
+                playerIcon.Draw(gameTime);
                 healthMeter.Draw(gameTime);
                 Inventory.Draw(gameTime);
                 CoinMeter.Draw(gameTime);

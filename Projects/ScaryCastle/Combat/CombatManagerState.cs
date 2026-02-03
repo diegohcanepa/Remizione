@@ -1,23 +1,30 @@
 ﻿using Engendro;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
 {
     /// <summary>
-    /// ArenaState
+    /// CombatManagerState
     /// </summary>
-    public abstract class ArenaState
+    public abstract class CombatManagerState : IInputHandler
     {
         // Constructor
-        protected ArenaState(Arena arena)
+        protected CombatManagerState(CombatManager manager)
         {
-            this.Arena = arena;
+            this.Manager = manager;
         }
 
         #region Protected members
 
-        // Arena
-        protected Arena Arena { get; }
+        // Manager
+        protected CombatManager Manager { get; }
+
+        // OnHandleInput
+        protected virtual HandleInputResult OnHandleInput(GameTime gameTime)
+        {
+            return HandleInputResult.Unhandled;
+        }
 
         // TimeInState
         protected float TimeInState { get; set; }
@@ -38,13 +45,14 @@ namespace ScaryCastle
         // HandleInput
         public virtual HandleInputResult HandleInput(GameTime gameTime)
         {
-            return HandleInputResult.Unhandled;
+            return OnHandleInput(gameTime);
         }
 
         // Update
         public virtual void Update(GameTime gameTime)
         {
-            TimeInState += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (Manager.Session.IsCurrentScene)
+                TimeInState += (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
     }
 }

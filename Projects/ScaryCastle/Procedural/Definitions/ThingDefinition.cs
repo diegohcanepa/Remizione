@@ -44,6 +44,11 @@ namespace ScaryCastle
             if (MinSpawnAmount > MaxSpawnAmount)
                 throw new InvalidOperationException($"[{Name}]: {nameof(MinSpawnAmount)} cannot be greater than MaxSpawnAmount.");
 
+            // Patience
+            Patience = element.GetInt32("patience", 30);
+            if (Patience < 10)
+                Patience = 10;
+
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
 
             // Placements
@@ -128,6 +133,9 @@ namespace ScaryCastle
         {
             return MaxPerRoom == -1 || instanceCount < MaxPerRoom;
         }
+
+        // Patience
+        public int Patience { get; }
 
         // Placements
         public ReadOnlyCollection<PlacementType> Placements { get; }

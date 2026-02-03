@@ -22,12 +22,21 @@ namespace ScaryCastle
         public EchoScene(ScaryCastleGame game)
             : base(game, SceneSettings.None)
         {
+            const int topMargin = 35;
+
+            // Gradient
+            this.gradient = new(game, Atlases.UI.BottomGradient)
+            {
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.Area.GetPoint(RectanglePoint.Bottom)
+            };
+
             // Arrow
             this.arrow = new(game, Atlases.UI.DialogArrowLarge)
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -5, -3),
+                Position = gradient.BoundingBox.GetPoint(RectanglePoint.RightBottom, -5, -3),
                 Scale = ScaleInfo.UIElement.Medium
             };
 
@@ -39,8 +48,8 @@ namespace ScaryCastle
                 Color = ColorPalette.Text.Sentence,
                 MaximumWidth = (int)(Screen.NativeWidth * .8f),
                 PauseOnPunctuationMarks = false,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -15),
+                PivotOrigin = RectanglePoint.Top,
+                Position = gradient.BoundingBox.GetPoint(RectanglePoint.Top, 0, topMargin),
                 Scale = ScaleInfo.Text.VeryLarge,
                 TypingSpeed = 20
             };
@@ -48,14 +57,8 @@ namespace ScaryCastle
             // Image
             this.image = new(game)
             {
-                PivotOrigin = RectanglePoint.Left
-            };
-
-            // Gradient
-            this.gradient = new(game, Atlases.UI.BottomGradient)
-            {
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.Bottom)
+                PivotOrigin = RectanglePoint.Left,
+                Position = gradient.BoundingBox.GetPoint(RectanglePoint.LeftTop, 8, topMargin)
             };
         }
 
@@ -120,17 +123,6 @@ namespace ScaryCastle
             return base.OnHandleInput(gameTime);
         }
 
-        // OnLoadContent
-        protected override void OnLoadContent()
-        {
-            if (!textSprite.IsEmpty)
-            {
-                opacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);
-                textSprite.Tweens.OpacityTween = opacityTween;
-                textSprite.StartTyping();
-            }
-        }
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
@@ -142,16 +134,16 @@ namespace ScaryCastle
         #endregion
 
         // Show
-        public void Show(string text, AtlasImage? image = null)
+        public void Show(string text, bool allowTyping, AtlasImage? image = null)
         {
             textSprite.Text = text;
             opacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);
             textSprite.Tweens.OpacityTween = opacityTween;
-            textSprite.StartTyping();
+
+            if (allowTyping)
+                textSprite.StartTyping();
 
             this.image.Image = image;
-            this.image.X = 5;
-            this.image.Y = textSprite.BoundingBox.Top;
         }
     }
 }

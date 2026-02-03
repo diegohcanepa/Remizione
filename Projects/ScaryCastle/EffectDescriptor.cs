@@ -12,13 +12,13 @@ namespace ScaryCastle
     /// </summary>
     public sealed class EffectDescriptor
     {
-        // Constructor privado
+        // Constructor
         public EffectDescriptor(JsonElement element)
         {
             Amount = element.GetObject("amount", v => new DiceExpression(v));
             AttackType = element.GetEnum("attackType", AttackType.None);
             Chance = element.GetFloat("chance", 1);
-            DamageType = element.GetEnum("damageType", DamageType.None);
+            DamageType = element.GetEnum("damageType", DamageType.Undefined);
             EffectType = element.GetEnum("effectType", EffectType.None);
             Factor = element.GetFloat("factor", 1);
             ImpactWord = element.GetEnum("impactWord", ImpactWordName.None);
@@ -27,7 +27,7 @@ namespace ScaryCastle
             Sound = element.GetObject("sound", Sound.Get);
             Target = element.GetEnum("target", EffectTarget.Target);
 
-            if (EffectType == EffectType.Damage && DamageType == DamageType.None)
+            if (EffectType == EffectType.Damage && DamageType == DamageType.Undefined)
                 throw new InvalidOperationException("Damage effects must have a valid damage type.");
         }
 
