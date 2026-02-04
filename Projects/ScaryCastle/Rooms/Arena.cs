@@ -1,4 +1,4 @@
-﻿namespace ScaryCastle.Rooms
+﻿namespace ScaryCastle
 {
     /// <summary>
     /// Arena
@@ -10,16 +10,20 @@
             : base(session, name)
         {
             FollowPlayer = false;
-            Zoom = 1.3f;
+            Zoom = 1.2f;
         }
 
         // OnLoad
         protected override void OnLoad()
         {
             base.OnLoad();
-            Session.Camera.StopFollowing();
-            Session.Camera.FocusCenter();
             Session.BeginCombat();
+        }
+
+        protected override void OnEnter()
+        {
+            base.OnEnter();
+            Session.Camera.Position = new(120, 900);
         }
     }
 }

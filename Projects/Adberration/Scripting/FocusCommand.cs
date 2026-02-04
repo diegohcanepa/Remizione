@@ -28,7 +28,7 @@ namespace Adberration.Scripting
 
             if (thing != null && HasArg(FollowArg))
             {
-                Session.Camera.FollowTarget(thing);
+                Session.Camera.Follow(thing);
                 thing = null;
             }
         }

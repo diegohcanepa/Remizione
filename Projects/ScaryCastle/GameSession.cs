@@ -4,7 +4,6 @@ using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Procedural;
-using ScaryCastle.Rooms;
 using ScaryCastle.Scripting;
 using System;
 using System.Collections.Generic;
@@ -214,14 +213,6 @@ namespace ScaryCastle
         {
             InteractionContext.Reset();
             MouseCursor.Reset();
-
-            var width = room.Width == 0 ? room.CustomWidth : room.Width;
-            var height = room.Height == 0 ? room.CustomHeight : room.Height;
-            Camera.Setup(width, height, room.ScrollLock, room.Zoom);
-
-            // Follow player
-            if (Player != null && Player.IsInCurrentRoom && room is GameRoom gameRoom && gameRoom.FollowPlayer)
-                Camera.FollowTarget(Player, true);
         }
 
         // OnExitRoom
@@ -419,7 +410,7 @@ namespace ScaryCastle
                 rideRoom.Children.Add(Player);
                 if (rideRoom.WalkArea != null)
                     Player.Position = rideRoom.WalkArea.Polygon.BoundingRectangleF.Center;
-                Camera.FollowTarget(Player, true);
+                Camera.Follow(Player, true);
                 EnterRoom(rideRoom);
             }
         }
@@ -567,7 +558,7 @@ namespace ScaryCastle
                     field = value;
                     HUD.Reset();
                     if (value != null)
-                        Camera.FollowTarget(value);
+                        Camera.Follow(value);
                 }
             }
         }

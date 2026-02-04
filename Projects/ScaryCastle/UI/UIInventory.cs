@@ -245,28 +245,21 @@ namespace ScaryCastle
                 Refresh();
             }
 
-            if (session.CombatMode)
+            if (!IsVisible)
             {
-                IsVisible = true;
+                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
+                {
+                    IsVisible = true;
+                    session.InteractionContext.HeldItem = null;
+                    return;
+                }
             }
             else
             {
-                if (!IsVisible)
+                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y < 105)
                 {
-                    if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
-                    {
-                        IsVisible = true;
-                        session.InteractionContext.HeldItem = null;
-                        return;
-                    }
-                }
-                else
-                {
-                    if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y < 105)
-                    {
-                        IsVisible = false;
-                        return;
-                    }
+                    IsVisible = false;
+                    return;
                 }
             }
 

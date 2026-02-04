@@ -220,7 +220,7 @@ namespace ScaryCastle
 
                         if (SelectedThing != null)
                         {
-                            session.Camera.FollowTarget(SelectedThing);
+                            session.Camera.Follow(SelectedThing);
                         }
 
                         selectedThings.Add(session.Room.CulledThings[i]);
@@ -453,14 +453,14 @@ namespace ScaryCastle
                             SelectFirstThing();
                             if (SelectedThing != null)
                             {
-                                session.Camera.FollowTarget(SelectedThing);
+                                session.Camera.Follow(SelectedThing);
                                 session.Camera.FocusTarget();
                             }
                         }
                     }
                     else if (session.Player is Actor player)
                     {
-                        session.Camera.FollowTarget(player);
+                        session.Camera.Follow(player);
                         SelectedThing = null;
                     }
                 }

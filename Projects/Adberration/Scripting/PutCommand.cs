@@ -82,7 +82,7 @@ namespace Adberration.Scripting
 
             // Follow
             if (HasArg(FollowArg))
-                Session.Camera.FollowTarget(thing);
+                Session.Camera.Follow(thing);
 
             // Opacity
             if (HasArg(OpacityArg))

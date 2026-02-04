@@ -18,8 +18,6 @@ namespace Adberration
 
         private readonly List<Area> areas = [];
         private readonly List<Thing> culledThings = new(1000);
-        private readonly Script? enteringScript;
-        private readonly Script? exitingScript;
         private readonly List<Script> routines = [];
         private readonly List<SoundInstance> sounds = [];
 
@@ -36,16 +34,6 @@ namespace Adberration
             CustomWidth = Session.Game.ViewportAdapter.VirtualWidth;
             CulledThings = new ReadOnlyCollection<Thing>(culledThings);
             Areas = new ReadOnlyCollection<Area>(areas);
-
-            // Cache scripts
-            if (InstanceKind != EntityInstanceKind.Anonymous)
-            {
-                enteringScript = session.ScriptLibrary.FindScript(ScriptType.Entering, Name);
-                enteringScript ??= session.ScriptLibrary.FindScript(ScriptType.Entering, DeclaredName);
-
-                exitingScript = session.ScriptLibrary.FindScript(ScriptType.Exiting, Name);
-                exitingScript ??= session.ScriptLibrary.FindScript(ScriptType.Exiting, DeclaredName);
-            }
         }
 
         #endregion
@@ -103,8 +91,8 @@ namespace Adberration
             return HandleInputResult.Unhandled;
         }
 
-        // OnEntering
-        protected virtual void OnEntering()
+        // OnEnter
+        protected virtual void OnEnter()
         {
         }
 
@@ -223,23 +211,21 @@ namespace Adberration
         // Enter
         internal void Enter()
         {
-            if (enteringScript != null)
-                RunScript(enteringScript);
-
-            OnEntering();
+            var width = Width == 0 ? CustomWidth : Width;
+            var height = Height == 0 ? CustomHeight : Height;
+            Session.Camera.Setup(width, height, ScrollLock, Zoom);
 
             for (var i = 0; i < Children.Count; i++)
             {
                 Children[i].EnterRoom();
             }
+
+            OnEnter();
         }
 
         // Exit
         internal void Exit()
         {
-            if (exitingScript != null)
-                RunScript(exitingScript);
-
             OnExit();
 
             for (var i = 0; i < Children.Count; i++)

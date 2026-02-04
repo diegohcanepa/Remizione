@@ -109,9 +109,11 @@ namespace ScaryCastle
         // DoorUp
         private Vector2? DoorUp { get; set; }
 
-        // OnEntering
-        protected override void OnEntering()
+        // OnEnter
+        protected override void OnEnter()
         {
+            base.OnEnter();
+
             // TODO: Check
             //if (RoomGraph.RoomType == RoomType.Start)
             //    AudioManager.Music.PlayTag("Run", 3000);

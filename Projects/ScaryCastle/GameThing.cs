@@ -1033,7 +1033,7 @@ namespace ScaryCastle
         public void ShowImpactWord(ImpactWordName impactWordName)
         {
             if (GetOverheadPosition() is Vector2 wordPos)
-                Session.ImpactWordPool.Get()?.Show(impactWordName, wordPos);
+                Session.ImpactWordPool.Get()?.Show(impactWordName, wordPos + new Vector2(0, 5));
         }
 
         // TakeDamage

@@ -33,15 +33,15 @@ namespace ScaryCastle
             originalPlayerDirection = enemy.Direction;
             originalPlayerPosition = enemy.Position;
 
-            if (Session.Room is GameRoom room)
+            if (Session.Room is Arena arena)
             {
                 var playerAtLeft = Player.X < Enemy.X;
-                room.Children.Add(Enemy);
-                room.Children.Add(Player);
+                arena.Children.Add(Enemy);
+                arena.Children.Add(Player);
 
-                var leftPos = 100;
-                var rightPos = 140;
-                var y = 90;
+                var leftPos = 90;
+                var rightPos = 150;
+                var y = 92;
 
                 if (playerAtLeft)
                 {

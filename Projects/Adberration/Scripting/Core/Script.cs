@@ -145,7 +145,7 @@ namespace Adberration.Scripting
 
             // Form header
             signature = tokens[0];
-            if (ScriptType is not ScriptType.EnterRoom and not ScriptType.NewSession)
+            if (ScriptType is not ScriptType.NewSession)
             {
                 if (tokens.Length < 2)
                     ThrowScriptSyntaxError(this, "Missing header name.");
@@ -574,15 +574,13 @@ namespace Adberration.Scripting
             // SetTargetEntity
             if (value == ScriptCapability.SetTargetEntity)
                 return ScriptType is ScriptType.Room or ScriptType.Thing or
-                       ScriptType.Entering or ScriptType.Exiting or
                        ScriptType.Load or ScriptType.Unload or
                        ScriptType.Enter or ScriptType.Outcome;
 
             // EntityContext
             if (value == ScriptCapability.EntityContext)
             {
-                return ScriptType is not ScriptType.EnterRoom and
-                       not ScriptType.Routine and
+                return ScriptType is not ScriptType.Routine and
                        not ScriptType.NewSession and
                        not ScriptType.Cloning and
                        not ScriptType.Declaration and

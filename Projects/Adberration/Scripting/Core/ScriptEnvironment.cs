@@ -103,8 +103,8 @@ namespace Adberration.Scripting
                 CodingContext.Initialization => scriptType == ScriptType.Initialization,
 
                 // Execution
-                CodingContext.Execution => scriptType is ScriptType.EnterRoom or ScriptType.Enter or ScriptType.Outcome or
-                                           ScriptType.Routine or ScriptType.NewSession or ScriptType.Load or ScriptType.Entering or
+                CodingContext.Execution => scriptType is ScriptType.Enter or ScriptType.Outcome or
+                                           ScriptType.Routine or ScriptType.NewSession or ScriptType.Load or
                                            ScriptType.Unload or ScriptType.Initialization,
                 // Default
                 _ => false,

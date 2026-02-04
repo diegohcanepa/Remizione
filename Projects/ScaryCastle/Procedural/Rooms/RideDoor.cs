@@ -66,7 +66,7 @@ namespace ScaryCastle
                 Session.Player.Unparent();
                 targetRoom.Children.Add(Session.Player);
                 Session.Player.Position = targetPosition;
-                Session.Camera.FollowTarget(Session.Player, true);
+                Session.Camera.Follow(Session.Player, true);
             }
 
             Session.EnterRoom(targetRoom);

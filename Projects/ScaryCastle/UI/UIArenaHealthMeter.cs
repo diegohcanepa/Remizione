@@ -37,6 +37,8 @@ namespace ScaryCastle
             else
                 this.anchorPosition.X -= 6;
 
+            anchorPosition.Y -= 15;
+
             totalHeartCount = (maxHp + 1) / 2;
 
             hearts.Clear();
@@ -50,6 +52,7 @@ namespace ScaryCastle
 
         #region Private members
 
+        // GenerateHearts
         private void GenerateHearts()
         {
             if (totalHeartCount <= 0)

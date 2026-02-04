@@ -680,11 +680,6 @@ namespace Adberration
         {
         }
 
-        // OnEnterRoomCompleted
-        protected virtual void OnEnterRoomCompleted(Room room)
-        {
-        }
-
         // OnExitRoom
         protected virtual void OnExitRoom(Room currentRoom, Room nextRoom)
         {
@@ -990,25 +985,17 @@ namespace Adberration
             if (IsEnteringRoom(nextRoom))
                 return false;
 
-            // Exit room
+            // Exit current room
             if (Room != null)
                 ExitRoom(this.Room, nextRoom);
 
-            if (nextRoom.IsPaused)
-                nextRoom.Resume();
-
             // New room
             this.Room = nextRoom;
-
-            // EnterRoom event (Global)
-            if (ScriptLibrary.FindScript(ScriptType.EnterRoom.ToString()) is Script script)
-                ScriptProcessor.RunScript(script);
 
             nextRoom.Load();
             nextRoom.Enter();
 
             OnEnterRoom(nextRoom);
-            OnEnterRoomCompleted(nextRoom);
             BeginEnterRoomOutcome();
 
             if (busyRooms.Count == 0)

@@ -22,7 +22,7 @@
             if (HasArg(FocusArg))
                 Session.Camera.Position = thing.Position;
 
-            Session.Camera.FollowTarget(thing);
+            Session.Camera.Follow(thing);
         }
     }
 }

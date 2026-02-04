@@ -360,6 +360,14 @@ namespace ScaryCastle
 #endif
         }
 
+        // OnEnter
+        protected override void OnEnter()
+        {
+            // Follow player
+            if (Session.Player != null && Session.Player.IsInCurrentRoom && FollowPlayer)
+                Session.Camera.Follow(Session.Player, true);
+        }
+
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
@@ -373,6 +381,10 @@ namespace ScaryCastle
         protected override void OnLoad()
         {
             base.OnLoad();
+
+            // Follow player
+            if (FollowPlayer && Session.Player?.Room == this)
+                Session.Camera.Follow(Session.Player, true);
 
             Session.Environment.GlobalLight.Scale = GlobalLightSize;
 
@@ -575,7 +587,7 @@ namespace ScaryCastle
                 Session.Player.Direction = lastKnownPlayerDirection;
                 Children.Add(Session.Player);
                 Session.Player.FlipHorizontally();
-                Session.Camera.FollowTarget(Session.Player, true);
+                Session.Camera.Follow(Session.Player, true);
             }
 
             if (!string.IsNullOrWhiteSpace(lastKnownMusicTag))
