@@ -59,6 +59,9 @@ namespace ScaryCastle
     // ImpactWordName
     public enum ImpactWordName { None, AghGreen, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
 
+    // IntentCategory
+    public enum IntentCategory { Attack, Defense, Healing, Prayer, Status }
+
     // InventoryCategory
     public enum InventoryCategory { Common, Sacred }
 

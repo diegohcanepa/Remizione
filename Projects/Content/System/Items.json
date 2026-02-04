@@ -29,7 +29,8 @@
 				{
 					"effectType": "Damage",
 					"damageType": "Physical",
-					"amount": "1d4"
+					"amount": "1d4",
+					"impactWord": "Kapow"
 				}
 			]
 		},

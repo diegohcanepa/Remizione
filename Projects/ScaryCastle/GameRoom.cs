@@ -346,6 +346,9 @@ namespace ScaryCastle
             // Foreround (layer)
             DrawThings(gameTime, RenderLayer.ForegroundNoLight);
 
+            // Combat manager
+            Session.CombatManager?.Draw(gameTime);
+
             // Draw hearts
             DrawFloatingHearts(gameTime);
 

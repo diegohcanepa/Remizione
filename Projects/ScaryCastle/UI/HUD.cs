@@ -33,7 +33,7 @@ namespace ScaryCastle
 
             this.healthMeter = new(session.Game, new(playerIcon.BoundingBox.Width, 2));
             this.Log = new(Game);
-            this.CombatFeedback = new(Game, RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 25), ScaleInfo.Text.ExtraGiant);
+            this.CombatFeedback = new(Game, RectanglePoint.Bottom, Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -20), ScaleInfo.Text.ExtraGiant);
             this.Message = new(Game, RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
 
             // Coin meter 
@@ -60,7 +60,7 @@ namespace ScaryCastle
             {
                 Game.SpriteBatch.Begin(Game.Camera);
 
-                session.CombatManager?.Draw(gameTime);
+                //session.CombatManager?.Draw(gameTime);
 
                 if (!session.CombatMode)
                 {

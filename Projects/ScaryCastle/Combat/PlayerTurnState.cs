@@ -12,73 +12,14 @@ namespace ScaryCastle
     {
         private Script? awaitingScript;
         private int awaitScriptCooldown;
-        private readonly TextSprite tip;
-        private int tipNumber;
-        private readonly string[] tips = new string[3];
 
         // PlayerTurnState
         public PlayerTurnState(CombatManager manager)
             : base(manager)
         {
-            // Tips
-            for (var i = 0; i < tips.Length; i++)
-            {
-                tips[i] = TextRepository.GetValue($"Combat.Tip{i+1}");
-            }
-
-            // Tip
-            this.tip = new(manager.Session.Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Highlight,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 2, 2),
-                Scale = ScaleInfo.Text.Giant
-            };
         }
-
-        #region Private members
-
-        // RefreshTip
-        private void RefreshTip(int patience)
-        {
-            if (tipNumber == 3)
-                return;
-
-            float progress = TimeInState / patience;
-            var changeTip = false;
-
-            if (progress < 0.5f)
-            {
-                if (tipNumber < 1)
-                    changeTip = true;
-            }
-            else if (progress < 0.75f)
-            {
-                if (tipNumber < 2)
-                    changeTip = true;
-            }
-            else
-            {
-                if (tipNumber < 3)
-                    changeTip = true;
-            }
-
-            if (changeTip)
-            {
-                tipNumber++;
-                tip.Text = tips[tipNumber - 1];
-            }
-        }
-
-        #endregion
 
         #region Protected members
-
-        // OnDraw
-        protected override void OnDraw(GameTime gameTime)
-        {
-            if (TimeInState > 2)
-                tip.Draw(gameTime);
-        }
 
         // OnEnter
         protected override void OnEnter()
@@ -144,8 +85,6 @@ namespace ScaryCastle
             {
                 if (TimeInState > def.Patience)
                     Manager.TransitionTo(new EnemyTurnState(Manager));
-                else
-                    RefreshTip(def.Patience);
             }
         }
 

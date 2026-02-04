@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "IntentDescriptor.schema.json",
+  "title": "Intent Descriptor",
+  "description": "Define una acción de combate. Hereda name, effects y spawnWeight de Definition.",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "./Definition.schema.json"
+    }
+  ],
+  "properties": {
+    "category": {
+      "type": "string",
+      "description": "Categoría lógica para el icono y la IA.",
+      "enum": [
+        "Attack",
+        "Defense",
+        "Healing",
+        "Prayer",
+        "Status"
+      ]
+    },
+    "phrase": {
+      "type": "string",
+      "description": "La blasfemia o frase que dirá el enemigo al ejecutar la acción."
+    }
+  },
+  "required": [
+    "category",
+    "phrase"
+  ]
+}

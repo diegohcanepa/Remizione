@@ -43,6 +43,7 @@
 	<FX Name="FartLong" MaxInstances="4" Sounds="1..6" />
 	<FX Name="FenceOpen" />
 	<FX Name="Firecracker" MaxInstances="10" Sounds="1..2" />
+	<FX Name="FleshImpact" MaxInstances="6" Sounds="1..2" />
 	<FX Name="FootstepA" MaxInstances="8" Sounds="1..2" Volume=".4" />
 	<FX Name="FootstepWater" MaxInstances="8" Sounds="1..6" Volume=".9" />
 	<FX Name="FuseHissing" MaxInstances="10" />

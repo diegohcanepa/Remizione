@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "CombatBehavior.schema.json",
+  "title": "Combat Behavior Data File",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/CombatBehavior" }
+    }
+  },
+  "required": [ "data" ],
+  "$defs": {
+    "CombatBehavior": {
+      "allOf": [
+        { "$ref": "./Definition.schema.json" },
+        {
+          "type": "object",
+          "properties": {
+            "archetype": {
+              "type": "string",
+              "enum": [ "Simple", "Aggressive", "Coward", "Erratic", "Tactical" ],
+              "default": "Simple"
+            },
+            "intents": {
+              "type": "array",
+              "items": { "$ref": "./IntentDescriptor.schema.json" },
+              "minItems": 1
+            }
+          },
+          "required": [ "archetype", "intents" ]
+        }
+      ]
+    }
+  }
+}

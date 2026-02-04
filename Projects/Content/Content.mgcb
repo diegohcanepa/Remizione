@@ -524,6 +524,18 @@
 /processorParam:Quality=Best
 /build:Audio/FX/Firecracker2.wav;Audio/FX/Firecracker2
 
+#begin Audio/FX/FleshImpact1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/FleshImpact1.wav;Audio/FX/FleshImpact1
+
+#begin Audio/FX/FleshImpact2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/FleshImpact2.wav;Audio/FX/FleshImpact2
+
 #begin Audio/FX/FootstepA1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

@@ -1,5 +1,6 @@
 ﻿using Adberration;
 using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace ScaryCastle
 
         private Vector2 anchorPosition;
         private readonly List<ImageSprite> hearts = [];
+        private bool initializing = true;
         private int lastKnownHP;
         private readonly int maxHp;
         private readonly int totalHeartCount;
@@ -46,6 +48,8 @@ namespace ScaryCastle
             RefreshVisuals();
 
             lastKnownHP = actor.HP;
+
+            initializing = false;
         }
 
         #endregion
@@ -174,12 +178,37 @@ namespace ScaryCastle
 
             for (int i = 0; i < hearts.Count; i++)
             {
+                var currentImage = hearts[i].Image;
+
                 if (i < fullHeartsCount)
+                {
                     hearts[i].Image = Atlases.UI.HeartFull;
+                }
                 else if (i == fullHeartsCount && hasHalfHeart)
+                {
                     hearts[i].Image = Atlases.UI.HeartHalf;
+                }
                 else
+                {
                     hearts[i].Image = Atlases.UI.HeartEmpty;
+                }
+
+                if (!initializing)
+                {
+                    if (currentImage != hearts[i].Image)
+                    {
+                        if (hearts[i].Image == Atlases.UI.HeartEmpty)
+                        {
+                            var tween = new Vector2Tween() { StartDelay = 500 + (i * 100) };
+                            tween.Start(TweenStyle.CubicInOut, hearts[i].Scale, Vector2.Zero, 300, () => Sound.Play(SoundNames.FleshImpact));
+                            hearts[i].Tweens.ScaleTween = tween;
+                        }
+                        else
+                        {
+                            hearts[i].Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, hearts[i].Scale, hearts[i].Scale * 1.3f, 300, 2);
+                        }
+                    }
+                }
             }
         }
 
@@ -187,6 +216,7 @@ namespace ScaryCastle
 
         #region Protected members
 
+        // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
             if (!Actor.IsDead)
@@ -198,6 +228,7 @@ namespace ScaryCastle
             }
         }
 
+        // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             if (lastKnownHP != Actor.HP)
@@ -214,8 +245,10 @@ namespace ScaryCastle
 
         #endregion
 
+        // Actor
         public Actor Actor { get; }
 
+        // HP
         public int HP
         {
             get;

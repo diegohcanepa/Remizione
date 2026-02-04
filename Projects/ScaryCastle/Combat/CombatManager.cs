@@ -10,13 +10,17 @@ namespace ScaryCastle
     /// </summary>
     public sealed class CombatManager : GameObject, IInputHandler
     {
+        #region Private fields
+
         private CombatManagerState currentState = null!;
-        private UIArenaHealthMeter enemyMeter;
-        private FacingDirection originalEnemyDirection;
+        private readonly UIArenaHealthMeter enemyMeter;
+        private readonly UIArenaHealthMeter playerMeter;
+        private readonly FacingDirection originalEnemyDirection;
         private Vector2 originalEnemyPosition;
-        private FacingDirection originalPlayerDirection;
+        private readonly FacingDirection originalPlayerDirection;
         private Vector2 originalPlayerPosition;
-        private UIArenaHealthMeter playerMeter;
+
+        #endregion
 
         #region Constructor
 
@@ -39,8 +43,8 @@ namespace ScaryCastle
                 arena.Children.Add(Enemy);
                 arena.Children.Add(Player);
 
-                var leftPos = 90;
-                var rightPos = 150;
+                var leftPos = 80;
+                var rightPos = 160;
                 var y = 92;
 
                 if (playerAtLeft)
@@ -48,7 +52,7 @@ namespace ScaryCastle
                     Player.Position = new(leftPos, y);
                     Enemy.Position = new(rightPos, y);
                     Player.Direction = FacingDirection.Right;
-                    Enemy.Direction = FacingDirection.Left; 
+                    Enemy.Direction = FacingDirection.Left;
                 }
                 else
                 {
@@ -59,10 +63,29 @@ namespace ScaryCastle
                 }
             }
 
+            RepositionActor(Enemy);
+            RepositionActor(Player);
+
             playerMeter = new(Player);
             enemyMeter = new(Enemy);
 
             TransitionTo(new PlayerTurnState(this));
+        }
+
+        #endregion
+
+        #region Private members
+
+        // RepositionActor
+        private static void RepositionActor(Actor actor)
+        {
+            float offset;
+            if (actor.Direction == FacingDirection.Left)
+                offset = actor.RuntimeHotspot.BoundingRectangleF.Left - actor.X;
+            else
+                offset = actor.RuntimeHotspot.BoundingRectangleF.Right - actor.X;
+
+            actor.X += offset;
         }
 
         #endregion
@@ -72,10 +95,17 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            //targetMeter.Draw(gameTime);
+            Game.SpriteBatch.Begin(Session.Camera);
             currentState.Draw(gameTime);
-            enemyMeter.Draw(gameTime);
-            playerMeter.Draw(gameTime);
+
+            if (SpeechBubble.ModalInstance == null || SpeechBubble.ModalInstance.Actor != Enemy)
+                enemyMeter.Draw(gameTime);
+
+            if (SpeechBubble.ModalInstance == null || SpeechBubble.ModalInstance.Actor != Player)
+                playerMeter.Draw(gameTime);
+
+
+            Game.SpriteBatch.End();
         }
 
         // OnUpdate
