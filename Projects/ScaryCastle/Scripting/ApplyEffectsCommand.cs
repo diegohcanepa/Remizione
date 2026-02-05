@@ -2,13 +2,13 @@
 
 namespace ScaryCastle.Scripting
 {
-    // ApplyEffectDescriptorsCommand
+    // ApplyEffectsCommand
     // Arguments: {Source:GameThing} {Target:GameThing}
     [ScriptStatement(CodingContext.Execution)]
-    internal sealed class ApplyEffectDescriptorsCommand : NonAwaitableCommand
+    internal sealed class ApplyEffectsCommand : NonAwaitableCommand
     {
         // Constructor
-        internal ApplyEffectDescriptorsCommand(Script script, string source, StatementBody args)
+        internal ApplyEffectsCommand(Script script, string source, StatementBody args)
             : base(script, source, args, 2)
         {
             AssertEntity<GameThing>(0);

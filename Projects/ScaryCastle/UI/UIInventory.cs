@@ -16,27 +16,23 @@ namespace ScaryCastle
 
         private readonly TextSprite[] amounts;
         private readonly ImageSprite bottomGradient;
-        private readonly TextSprite cardAmountText;
-        private readonly ImageSprite deckIcon;
-        private readonly string deckOptionName = TextRepository.GetValue("Misc.Deck");
         private readonly Vector2 deckIconOriginalScale = Vector2.One;
         private readonly Vector2 deckIconSelectedScale = Vector2.One * 1.1f;
         private readonly ImageSprite[] icons;
         private readonly TextSprite itemName;
         private int lastSeenInventoryVersion = -1;
-        private readonly GameSession session;
         private readonly ImageSprite[] shadows;
         private readonly ImageSprite[] slots;
+        private readonly ImageSprite switchInventorySlot;
 
         #endregion
 
         #region Constructor
 
         // Constructor
-        public UIInventory(GameSession session)
-            : base(session.Game)
+        public UIInventory(Inventory inventory)
+            : base(inventory.Session.Game)
         {
-            this.session = session;
             this.amounts = new TextSprite[Inventory.MaximumCapacity];
             this.icons = new ImageSprite[Inventory.MaximumCapacity];
             this.shadows = new ImageSprite[Inventory.MaximumCapacity];
@@ -50,27 +46,17 @@ namespace ScaryCastle
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
             };
 
-            // Deck icon
-            this.deckIcon = new(Game, Atlases.UI.Deck)
+            // Shortcut icon
+            this.switchInventorySlot = new(Game)
             {
-                PivotOrigin = RectanglePoint.LeftBottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, 7, -9),
-            };
-
-            // Card amount
-            this.cardAmountText = new TextSprite(Game, Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Highlight,
-                PivotOrigin = RectanglePoint.Top,
-                Position = deckIcon.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1),
-                Scale = ScaleInfo.Text.ExtraLarge,
-                Spacing = -6
+                PivotOrigin = RectanglePoint.Center,
+                Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, 18, -19),
             };
 
             // Slots
             for (var i = 0; i < slots.Length; i++)
             {
-                slots[i] = new(Game, Atlases.UI.InventorySlot)
+                slots[i] = new(Game, Atlases.UI.InventorySacredSlot)
                 {
                     PivotOrigin = RectanglePoint.LeftBottom,
                     Y = Screen.Area.Bottom - 10
@@ -110,6 +96,8 @@ namespace ScaryCastle
                 Y = slots[0].BoundingBox.Top - 3,
                 Scale = ScaleInfo.UISentence
             };
+
+            this.Inventory = inventory;
         }
 
         #endregion
@@ -124,15 +112,20 @@ namespace ScaryCastle
 
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
             {
-                if (session.InteractionContext.HeldItem == null && GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item grabbedItem)
+                if (Inventory.Session.InteractionContext.HeldItem == null && GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item grabbedItem)
                 {
                     if (grabbedItem.Definition.Image != null)
                     {
-                        session.InteractionContext.HeldItem = grabbedItem;
+                        Inventory.Session.InteractionContext.HeldItem = grabbedItem;
                         MouseCursor.PerformClick();
                         IsVisible = false;
                         return true;
                     }
+                }
+                else if (switchInventorySlot.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
+                {
+                    MouseCursor.PerformClick();
+                    SwitchInventory();
                 }
                 else
                 {
@@ -155,7 +148,8 @@ namespace ScaryCastle
             {
                 if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
                 {
-                    session.ShowEcho(item.Definition.LocalizedDescription, false, item.Definition.Image);
+                    Sound.Play(SoundNames.Interact);
+                    Inventory.Session.ShowEcho(item.Definition.LocalizedDescription, false, item.Definition.Image);
                 }
             }
 
@@ -166,7 +160,7 @@ namespace ScaryCastle
         private void Refresh()
         {
             float screenWidth = Screen.NativeWidth;
-            int slotCount = session.Inventory.Capacity;
+            int slotCount = Inventory.Capacity;
             float slotWidth = slots[0].BoundingBox.Width;
             float spacing = 1;
 
@@ -175,25 +169,33 @@ namespace ScaryCastle
 
             for (int i = 0; i < slotCount; i++)
             {
+                slots[i].Image = Inventory.Category == InventoryCategory.Common ? Atlases.UI.InventoryCommonSlot : Atlases.UI.InventorySacredSlot;
                 slots[i].X = startingX + (i * (slotWidth + spacing));
                 icons[i].Image = null;
                 shadows[i].Image = null;
                 amounts[i].Text = null;
 
-                if (i < session.Inventory.Count)
+                if (i < Inventory.Count)
                 {
                     icons[i].X = slots[i].BoundingBox.Center.X;
-                    icons[i].Image = session.Inventory[i].Definition.Image;
+                    icons[i].Image = Inventory[i].Definition.Image;
 
                     shadows[i].X = icons[i].X - 1;
-                    shadows[i].Image = session.Inventory[i].Definition.Image;
+                    shadows[i].Image = Inventory[i].Definition.Image;
 
                     amounts[i].X = icons[i].X;
-                    amounts[i].Text = session.Inventory[i].Definition.IsStackable ? session.Inventory[i].Count.ToString(CultureInfo.InvariantCulture) : null;
+                    amounts[i].Text = Inventory[i].Definition.IsStackable ? Inventory[i].Count.ToString(CultureInfo.InvariantCulture) : null;
                 }
             }
 
-            //?session.InteractionContext.HeldItem = MouseCursor.Item;
+            switchInventorySlot.Image = Inventory.Category == InventoryCategory.Common ? Atlases.UI.SacredSackShortcut : Atlases.UI.CommonSackShortcut;
+            switchInventorySlot.Position = slots[0].BoundingBox.GetPoint(RectanglePoint.Center, -switchInventorySlot.BoundingBox.Width - 4, 0);
+        }
+
+        // SwitchInventory
+        private void SwitchInventory()
+        {
+            this.Inventory = Inventory.Category == InventoryCategory.Common ? Inventory.Session.SacredInventory : Inventory.Session.CommonInventory;
         }
 
         #endregion
@@ -203,7 +205,7 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (!session.IsCurrentScene)
+            if (!Inventory.Session.IsCurrentScene)
                 return;
 
             if (!IsVisible)
@@ -212,16 +214,15 @@ namespace ScaryCastle
             // Gradient
             bottomGradient.Draw(gameTime);
 
-            deckIcon.Draw(gameTime);
-            cardAmountText.Draw(gameTime);
+            switchInventorySlot.Draw(gameTime);
 
-            for (var i = 0; i < session.Inventory.Capacity; i++)
+            for (var i = 0; i < Inventory.Capacity; i++)
             {
                 slots[i].Draw(gameTime);
 
-                if (session.InteractionContext.HeldItem?.Index == i)
+                if (Inventory.Session.InteractionContext.HeldItem?.Index == i)
                 {
-                    if (!session.Inventory[i].Definition.IsStackable)
+                    if (!Inventory[i].Definition.IsStackable)
                         continue;
                 }
 
@@ -236,12 +237,12 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (!session.IsCurrentScene)
+            if (!Inventory.Session.IsCurrentScene)
                 return;
 
-            if (lastSeenInventoryVersion != session.Inventory.ContentVersion)
+            if (lastSeenInventoryVersion != Inventory.ContentVersion)
             {
-                lastSeenInventoryVersion = session.Inventory.ContentVersion;
+                lastSeenInventoryVersion = Inventory.ContentVersion;
                 Refresh();
             }
 
@@ -250,7 +251,7 @@ namespace ScaryCastle
                 if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
                 {
                     IsVisible = true;
-                    session.InteractionContext.HeldItem = null;
+                    Inventory.Session.InteractionContext.HeldItem = null;
                     return;
                 }
             }
@@ -266,29 +267,20 @@ namespace ScaryCastle
             if (!IsVisible)
                 return;
 
-            deckIcon.Update(gameTime);
+            switchInventorySlot.Update(gameTime);
 
-            for (var i = 0; i < session.Inventory.Count; i++)
+            for (var i = 0; i < Inventory.Count; i++)
             {
                 icons[i].Scale = ScaleInfo.UIElement.Medium;
             }
 
-            var cursorOverDeckIcon = deckIcon.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);
+            var cursorOverDeckIcon = switchInventorySlot.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);
 
             if (GetSelectedItem() is Item item)
             {
                 itemName.Text = item.Definition.LocalizedDisplayName;
                 itemName.X = slots[item.Index].BoundingBox.Center.X;
                 icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;
-            }
-            else if (cursorOverDeckIcon)
-            {
-                itemName.X = deckIcon.BoundingBox.GetPoint(RectanglePoint.Top).X;
-                itemName.Text = deckOptionName;
-
-                if (itemName.BoundingBox.Left < 0)
-                    itemName.X += Math.Abs(itemName.BoundingBox.Left) + 4;
-
             }
             else
             {
@@ -297,14 +289,14 @@ namespace ScaryCastle
 
             if (cursorOverDeckIcon)
             {
-                if (deckIcon.Scale != deckIconSelectedScale)
+                if (switchInventorySlot.Scale != deckIconSelectedScale)
                 {
-                    deckIcon.Scale = deckIconSelectedScale;
+                    switchInventorySlot.Scale = deckIconSelectedScale;
                 }
             }
-            else if (deckIcon.Scale == deckIconSelectedScale)
+            else if (switchInventorySlot.Scale == deckIconSelectedScale)
             {
-                deckIcon.Scale = deckIconOriginalScale;
+                switchInventorySlot.Scale = deckIconOriginalScale;
             }
         }
 
@@ -313,10 +305,10 @@ namespace ScaryCastle
         // GetItemAt
         public Item? GetItemAt(Vector2 position)
         {
-            for (int i = 0; i < session.Inventory.Count; i++)
+            for (int i = 0; i < Inventory.Count; i++)
             {
                 if (slots[i].BoundingBox.Contains(position))
-                    return i < session.Inventory.Count ? session.Inventory[i] : null;
+                    return i < Inventory.Session.CommonInventory.Count ? Inventory[i] : null;
             }
 
             return null;
@@ -331,7 +323,7 @@ namespace ScaryCastle
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
-            if (!session.IsCurrentScene)
+            if (!Inventory.Session.IsCurrentScene)
                 return HandleInputResult.Unhandled;
 
             // Mouse input
@@ -342,6 +334,20 @@ namespace ScaryCastle
             }
 
             return HandleInputResult.Unhandled;
+        }
+
+        // Inventory
+        public Inventory Inventory
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    Refresh();
+                }
+            }
         }
 
         // IsVisible

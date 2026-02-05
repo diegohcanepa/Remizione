@@ -12,10 +12,11 @@ namespace ScaryCastle
     public sealed class Inventory : Collection<Item>
     {
         // Constructor
-        public Inventory(GameSession session)
+        public Inventory(GameSession session, InventoryCategory category)
             : base()
         {
             this.Session = session;
+            this.Category = category;
         }
 
         #region Protected members
@@ -88,11 +89,14 @@ namespace ScaryCastle
             }
         } = 9;
 
+        // Category
+        public InventoryCategory Category { get; }
+
         // ContentVersion
         public int ContentVersion { get; private set; }
 
         // DropItem
-        // TODO: Should in other class
+        // TODO: Should be in other class (What about sacrifice in exchange for life?)
         public void DropItem(Item item, Vector2 position)
         {
             if (Session.Room != null && Remove(item))

@@ -91,7 +91,7 @@ namespace ScaryCastle
                     continue;
 
                 // Filtro de Unicidad (Items únicos no se repiten si ya los tiene)
-                if (!definition.IsStackable && session.Inventory.Find(definition.Name) != null)
+                if (!definition.IsStackable && session.CommonInventory.Find(definition.Name) != null)
                     continue;
 
                 candidates.Add(definition);
@@ -170,7 +170,7 @@ namespace ScaryCastle
                 _ => 0.15f
             };
 
-            coinChance += session.Inventory.GetLuckFactor();
+            coinChance += session.CommonInventory.GetLuckFactor();
 
             if (!coinChance.Roll())
                 return 0;

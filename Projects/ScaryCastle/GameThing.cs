@@ -238,7 +238,7 @@ namespace ScaryCastle
                 _ => .02f
             };
 
-            lootChance += Session.Inventory.GetLuckFactor();
+            lootChance += Session.CommonInventory.GetLuckFactor();
 
             if (!lootChance.Roll())
                 return;
@@ -542,8 +542,6 @@ namespace ScaryCastle
                 Utils.ApplySoundEmitter(this, deathSoundInstance, deathSoundInstance.GetEffectiveVolume());
                 deathSoundInstance.Play();
             }
-
-            ShowImpactWord(ImpactWordName.PlopRed);
 
             OnDie();
             DropLoot();

@@ -66,10 +66,6 @@ namespace ScaryCastle
                     velocity = Vector2.Zero;
                     DepthOffset = 0;
                     isGrounded = true;
-
-                    if (threshold > 0)
-                        Color = LastResult <= threshold ? Color.Green * .7f : Color.Red * .7f;
-
                     Stop();
                 }
             }
@@ -119,6 +115,13 @@ namespace ScaryCastle
 
         // LastResult
         public int LastResult { get; private set; }
+
+        // Roll
+        [ScriptMethod]
+        public int Roll()
+        {
+            return Roll(Session.Player, 2);
+        }
 
         // Roll
         public int Roll(Actor actor, int threshold)

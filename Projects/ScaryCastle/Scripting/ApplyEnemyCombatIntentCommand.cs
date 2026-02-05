@@ -2,12 +2,12 @@
 
 namespace ScaryCastle.Scripting
 {
-    // ApplyCombatIntentCommand
+    // ApplyEnemyCombatIntentCommand 
     [ScriptStatement(CodingContext.Execution)]
-    internal sealed class ApplyCombatIntentCommand : NonAwaitableCommand
+    internal sealed class ApplyEnemyCombatIntentCommand : NonAwaitableCommand
     {
         // Constructor
-        internal ApplyCombatIntentCommand(Script script, string source, StatementBody args)
+        internal ApplyEnemyCombatIntentCommand(Script script, string source, StatementBody args)
             : base(script, source, args, 0)
         {
         }

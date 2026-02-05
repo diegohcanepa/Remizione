@@ -30,7 +30,9 @@ namespace ScaryCastle.Scripting
                 return;
 
             var amount = Parser.ParseInt32Argument(this, AmountArg, 1);
-            session.Inventory.Add(definition.Name, amount);
+
+            var inventory = definition.InventoryCategory == InventoryCategory.Common ? session.CommonInventory : session.SacredInventory;
+            inventory.Add(definition.Name, amount);
         }
     }
 }

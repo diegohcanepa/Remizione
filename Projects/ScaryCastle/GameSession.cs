@@ -24,7 +24,6 @@ namespace ScaryCastle
         private readonly List<GameThing> declaredThings = [];
         private readonly Dictionary<string, GameThing> declaredThingsDict = [];
         private readonly EchoScene echoScene;
-        private int playerHPBeforeOutcome;
         private Vector2? playerPosition;
         private readonly RoomEditor? roomEditor;
 
@@ -47,7 +46,8 @@ namespace ScaryCastle
             : base(game, new ScaryCastlePersistenceModel(), ContentManagerExtension.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
-            this.Inventory = new(this);
+            this.CommonInventory = new(this, InventoryCategory.Common);
+            this.SacredInventory = new(this, InventoryCategory.Sacred);
             this.Environment = new Environment(this);
             this.LootGenerator = new(this);
             this.HUD = new HUD(this);
@@ -128,8 +128,8 @@ namespace ScaryCastle
             AotTypeRegistry.Register("add-trigger-area", typeof(AddTriggerAreaCommand));
             AotTypeRegistry.Register("add-walk-area", typeof(AddWalkAreaCommand));
             AotTypeRegistry.Register("animate-actor", typeof(AnimateActorCommand));
-            AotTypeRegistry.Register("apply-combat-intent", typeof(ApplyCombatIntentCommand));
-            AotTypeRegistry.Register("apply-effect-descriptors", typeof(ApplyEffectDescriptorsCommand));
+            AotTypeRegistry.Register("apply-enemy-combat-intent", typeof(ApplyEnemyCombatIntentCommand));
+            AotTypeRegistry.Register("apply-effects", typeof(ApplyEffectsCommand));
             AotTypeRegistry.Register("attach-light", typeof(AttachLightCommand));
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
@@ -141,7 +141,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("combat-feedback", typeof(CombatFeedbackCommand));
             AotTypeRegistry.Register("create-dialog-block", typeof(CreateDialogBlockCommand));
             AotTypeRegistry.Register("echo", typeof(EchoCommand));
-            AotTypeRegistry.Register("empty-pilgrim-sack", typeof(EmptyPilgrimSackCommand));
             AotTypeRegistry.Register("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             AotTypeRegistry.Register("exit-session", typeof(ExitSessionCommand));
             AotTypeRegistry.Register("if-can-pickup-loot", typeof(IfCanPickUpLootStatement));
@@ -176,12 +175,6 @@ namespace ScaryCastle
 
                 return base.CanHandleRoomInput;
             }
-        }
-
-        // OnOutcome
-        protected override void OnOutcome(Thing target)
-        {
-            playerHPBeforeOutcome = Player?.HP ?? 0;
         }
 
         // OnDraw
@@ -273,9 +266,13 @@ namespace ScaryCastle
             if (sessionNode.Attributes[nameof(Coins)]?.Value is string coins)
                 this.Coins = XmlConvert.ToInt32(coins);
 
-            // Inventory
-            if (sessionNode.Attributes[nameof(Inventory)]?.Value is string inventoryData)
-                Inventory.LoadState(inventoryData);
+            // CommonInventory
+            if (sessionNode.Attributes[nameof(CommonInventory)]?.Value is string commonInventoryData)
+                CommonInventory.LoadState(commonInventoryData);
+
+            // SacredInventory
+            if (sessionNode.Attributes[nameof(SacredInventory)]?.Value is string sacredInventoryData)
+                SacredInventory.LoadState(sacredInventoryData);
         }
 
         // OnResume
@@ -374,9 +371,13 @@ namespace ScaryCastle
             // Coins
             output.WriteAttributeString(nameof(Coins), XmlConvert.ToString(Coins));
 
-            // Inventory
-            if (Inventory.SaveState() is string inventoryData)
-                output.WriteAttributeString(nameof(Inventory), inventoryData);
+            // CommonInventory
+            if (CommonInventory.SaveState() is string commonInventoryData)
+                output.WriteAttributeString(nameof(CommonInventory), commonInventoryData);
+
+            // SacredInventory
+            if (SacredInventory.SaveState() is string sacredInventoryData)
+                output.WriteAttributeString(nameof(SacredInventory), sacredInventoryData);
         }
 
         #endregion
@@ -426,6 +427,9 @@ namespace ScaryCastle
         [ScriptProperty]
         public bool CombatMode => CombatManager != null;
 
+        // CommonInventory
+        public Inventory CommonInventory { get; }
+
         // CompleteRun
         [ScriptMethod]
         public void CompleteRun()
@@ -451,7 +455,7 @@ namespace ScaryCastle
                 hubRoom.Unload();
 
             HUDVisible = false;
-            Inventory.Clear();
+            CommonInventory.Clear();
             Coins = 0;
             RunManager.Clear();
             CleanUpRuntimeEntities();
@@ -503,9 +507,6 @@ namespace ScaryCastle
 
         // InteractionContext
         public InteractionContext InteractionContext { get; }
-
-        // Inventory
-        public Inventory Inventory { get; }
 
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
@@ -564,10 +565,6 @@ namespace ScaryCastle
             }
         }
 
-        // PlayerTookDamage
-        [ScriptProperty]
-        public bool PlayerTookDamage => Player != null && Player.HP < playerHPBeforeOutcome;
-
         // PreviousRoom
         [ScriptProperty]
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
@@ -578,6 +575,9 @@ namespace ScaryCastle
         // Room
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
+
+        // SacredInventory
+        public Inventory SacredInventory { get; }
 
         // Seed
         [ScriptProperty]

@@ -204,6 +204,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Inventory-assets/InventoryCommonSlot.png</key>
+            <key type="filename">Inventory-assets/InventorySacredSlot.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,7,8</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,7,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Inventory-assets/InventoryContainer.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -276,21 +292,6 @@
                 <rect>22,2,44,5</rect>
                 <key>scale9Paddings</key>
                 <rect>22,2,44,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Inventory-assets/InventorySlot.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,4,7,8</rect>
-                <key>scale9Paddings</key>
-                <rect>4,4,7,8</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -638,6 +639,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">MouseCursors-assets/MouseCursorHit.png</key>
+            <key type="filename">UI-assets/EdmundIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">MouseCursors-assets/MouseCursorLeft.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorRight.png</key>
             <struct type="IndividualSpriteSettings">
@@ -756,21 +773,6 @@
                 <rect>1,1,2,2</rect>
                 <key>scale9Paddings</key>
                 <rect>1,1,2,2</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UI-assets/EdmundIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -917,7 +919,8 @@
             <key type="filename">UIIcons-assets/CardCategoryAttack.png</key>
             <key type="filename">UIIcons-assets/CardCategoryHealing.png</key>
             <key type="filename">UIIcons-assets/CardCategoryPrayer.png</key>
-            <key type="filename">UIIcons-assets/Sack.png</key>
+            <key type="filename">UIIcons-assets/CommonSack.png</key>
+            <key type="filename">UIIcons-assets/SacredSack.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -962,7 +965,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UIIcons-assets/Deck.png</key>
+            <key type="filename">UIIcons-assets/CommonSackShortcut.png</key>
+            <key type="filename">UIIcons-assets/SacredSackShortcut.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,3,9,6</rect>
+                <key>scale9Paddings</key>
+                <rect>4,3,9,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">UIIcons-assets/Dice.png</key>
             <key type="filename">XboxControls-assets/XboxA.png</key>
             <key type="filename">XboxControls-assets/XboxB.png</key>

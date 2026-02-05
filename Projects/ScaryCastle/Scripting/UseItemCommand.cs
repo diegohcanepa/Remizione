@@ -26,7 +26,7 @@ namespace ScaryCastle.Scripting
             if (session.Player is not Actor player)
                 return;
 
-            if (session.Inventory.Find(Body.Clauses[0]) is Item item)
+            if (session.CommonInventory.Find(Body.Clauses[0]) is Item item)
             {
                 if (HasArg(TargetArg))
                 {

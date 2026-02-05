@@ -4,34 +4,37 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     /// <summary>
-    /// UISackMeter
+    /// UIInventoryMeter
     /// </summary>
-    public sealed class UISackMeter : GameObject
+    public sealed class UIInventoryMeter : GameObject
     {
         #region Private fields
 
         private readonly TextSprite amountText;
         private readonly ImageSprite flyingIcon;
         private readonly ImageSprite icon;
+        private readonly Inventory inventory;
         private int lastKnownCount = -1;
-        private readonly GameSession session;
 
         #endregion
 
         #region Constructor
 
         // Constructor
-        public UISackMeter(GameSession session)
-            : base(session.Game)
+        public UIInventoryMeter(Inventory inventory)
+            : base(inventory.Session.Game)
         {
-            this.session = session;
+            this.inventory = inventory;
 
             // Icon
-            this.icon = new(Game, Atlases.UI.Sack)
+            this.icon = new(Game, inventory.Category == InventoryCategory.Common ? Atlases.UI.CommonSack : Atlases.UI.SacredSack)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.RightBottom, -7, -7),
             };
+
+            if (inventory.Category == InventoryCategory.Common)
+                icon.Y -= 8;
 
             // Amount
             this.amountText = new TextSprite(Game, Fonts.CommonOutline)
@@ -68,10 +71,10 @@ namespace ScaryCastle
             flyingIcon.Update(gameTime);
             icon.Update(gameTime);
 
-            if (lastKnownCount != session.Inventory.Count)
+            if (lastKnownCount != inventory.Count)
             {
-                lastKnownCount = session.Inventory.Count;
-                amountText.Text = $"{session.Inventory.Count}/{session.Inventory.Capacity}";
+                lastKnownCount = inventory.Count;
+                amountText.Text = $"{inventory.Count}/{inventory.Capacity}";
             }
         }
 

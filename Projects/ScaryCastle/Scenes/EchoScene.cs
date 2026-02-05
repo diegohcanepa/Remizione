@@ -36,8 +36,8 @@ namespace ScaryCastle
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = gradient.BoundingBox.GetPoint(RectanglePoint.RightBottom, -5, -3),
-                Scale = ScaleInfo.UIElement.Medium
+                Position = gradient.BoundingBox.GetPoint(RectanglePoint.RightBottom, -14, -8),
+                Scale = ScaleInfo.UIElement.Large
             };
 
             arrow.Tweens.YTween = FloatTween.Create(TweenStyle.CubicInOut, arrow.Y, arrow.Y + 1, 250, -1);
@@ -81,6 +81,7 @@ namespace ScaryCastle
                     textSprite.StopTyping();
                 else
                     SceneController.Pop();
+
                 return true;
             }
 

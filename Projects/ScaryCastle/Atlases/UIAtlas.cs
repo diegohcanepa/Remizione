@@ -14,9 +14,10 @@ namespace ScaryCastle
             BottomGradient = this[nameof(BottomGradient)];
             CheckMark = this[nameof(CheckMark)];
             Coin = this[nameof(Coin)];
+            CommonSack = this[nameof(CommonSack)];
+            CommonSackShortcut = this[nameof(CommonSackShortcut)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
-            Deck = this[nameof(Deck)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             HeartEmpty = this[nameof(HeartEmpty)];
             HeartHalf = this[nameof(HeartHalf)];
@@ -25,11 +26,12 @@ namespace ScaryCastle
             HeartBlackFull = this[nameof(HeartBlackFull)];
             HeartBlueHalf = this[nameof(HeartBlueHalf)];
             HeartBlueFull = this[nameof(HeartBlueFull)];
+            InventoryCommonSlot = this[nameof(InventoryCommonSlot)];
             InventoryGridContainer = this[nameof(InventoryGridContainer)];
             InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
             InventoryInfoTitleContainer = this[nameof(InventoryInfoTitleContainer)];
             InventoryNavigationBar = this[nameof(InventoryNavigationBar)];
-            InventorySlot = this[nameof(InventorySlot)];
+            InventorySacredSlot = this[nameof(InventorySacredSlot)];
             ItemGridSlot = this[nameof(ItemGridSlot)];
             ItemGridSlotSelected = this[nameof(ItemGridSlotSelected)];
             MessageContainer = this[nameof(MessageContainer)];
@@ -38,7 +40,8 @@ namespace ScaryCastle
             PointingHand = this[nameof(PointingHand)];
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
-            Sack = this[nameof(Sack)];
+            SacredSack = this[nameof(SacredSack)];
+            SacredSackShortcut = this[nameof(SacredSackShortcut)];
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
@@ -55,17 +58,23 @@ namespace ScaryCastle
         // Coin
         public AtlasImage Coin { get; }
 
+        // CommonSack
+        public AtlasImage CommonSack { get; }
+
+        // CommonSackShortcut
+        public AtlasImage CommonSackShortcut { get; }
+
         // ContextMenuOptionSelector
         public AtlasImage ContextMenuOptionSelector { get; }
 
         // CreditsBar
         public AtlasImage CreditsBar { get; }
 
-        // Deck
-        public AtlasImage Deck { get; }
-
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
+
+        // InventoryCommonSlot
+        public AtlasImage InventoryCommonSlot { get; }
 
         // InventoryGridContainer
         public AtlasImage InventoryGridContainer { get; }
@@ -79,8 +88,8 @@ namespace ScaryCastle
         // InventoryNavigationBar
         public AtlasImage InventoryNavigationBar { get; }
 
-        // InventorySlot
-        public AtlasImage InventorySlot { get; }
+        // InventorySacredSlot
+        public AtlasImage InventorySacredSlot { get; }
 
         // ItemGridSlot
         public AtlasImage ItemGridSlot { get; }
@@ -127,11 +136,14 @@ namespace ScaryCastle
         // PopupContainerShadow
         public AtlasImage PopupContainerShadow { get; }
 
-        // SackIcon
-        public AtlasImage Sack { get; }
-
         // SavingIcon
         public AtlasImage SavingIcon { get; }
+
+        // SacredSack
+        public AtlasImage SacredSack { get; }
+
+        // SacredSackShortcut
+        public AtlasImage SacredSackShortcut { get; }
 
         // SpeechBubbleCloseArrow
         public AtlasImage SpeechBubbleCloseArrow { get; }

@@ -66,7 +66,7 @@ namespace ScaryCastle
     public enum InventoryCategory { Common, Sacred }
 
     // ItemCategory
-    public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc }
+    public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Sacred }
 
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }

@@ -237,6 +237,8 @@ namespace ScaryCastle
             {
                 StateMachine.ChangeState(ActorStateNames.Death);
             }
+
+            ShowImpactWord(ImpactWordName.PlopRed);
         }
 
         // OnDraw

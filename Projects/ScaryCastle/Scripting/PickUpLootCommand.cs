@@ -22,7 +22,7 @@ namespace ScaryCastle.Scripting
                 if (itemLootContainer.Loot != null)
                 {
                     itemLootContainer.Loot.PickupSound?.Play();
-                    session.Inventory.Add(itemLootContainer.Loot);
+                    session.CommonInventory.Add(itemLootContainer.Loot);
                     itemLootContainer.Loot = null;
                 }
             }
