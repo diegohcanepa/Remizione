@@ -31,6 +31,13 @@ namespace ScaryCastle
         public DiceExpression? Amount { get; }
 
         // Apply
+        public static void Apply(GameThing source, GameThing target)
+        {
+            if (source.Definition?.EffectDescriptors is not null)
+                Apply(source.Definition.EffectDescriptors, source, target);
+        }
+
+        // Apply
         public static void Apply(IList<EffectDescriptor> effects, GameThing source, GameThing target)
         {
             if (effects.Count == 0)
@@ -60,7 +67,7 @@ namespace ScaryCastle
 
                     // Damage
                     case EffectType.Damage:
-                        realTarget.TakeDamage(realTarget, effect.DamageType, amount, effect.ImpactWord, effect.Knockback);
+                        realTarget.TakeDamage(source, effect.DamageType, amount, effect.ImpactWord, effect.Knockback);
                         break;
 
                     // Death

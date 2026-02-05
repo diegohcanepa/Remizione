@@ -15,9 +15,14 @@ namespace ScaryCastle
             DeathSound = Sound.Find(SoundNames.PotteryBreak);
             DepthOffset = -2;
             DisplayNameKey = "Prop.Pottery";
-            HitEffect = HitEffect.Shake;
             HitTestPolygon = TestPolygon.Hotspot;
             HurtSound = Sound.Find(SoundNames.ImpactA);
+        }
+
+        // GetMouseCursorState
+        public override MouseCursorState? GetMouseCursorState()
+        {
+            return MouseCursorState.Hit;
         }
 
         // OnDie

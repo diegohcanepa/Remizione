@@ -21,6 +21,7 @@ namespace ScaryCastle
         private bool dieCalled;
         private FloatTween? floatingTween;
         private readonly Polygon holePoly = new();
+        private static readonly Vector2 hurtShakeForce = new(1.5f, 0);
         private Vector2Tween? hurtShakeTween;
         private FloatTween? hurtTween;
         private bool isCollisionDirty;
@@ -542,8 +543,7 @@ namespace ScaryCastle
                 deathSoundInstance.Play();
             }
 
-            if (Session.Player == this)
-                ShowImpactWord(ImpactWordName.PlopRed);
+            ShowImpactWord(ImpactWordName.PlopRed);
 
             OnDie();
             DropLoot();
@@ -585,7 +585,7 @@ namespace ScaryCastle
 
         // HitEffect
         [ScriptProperty]
-        public HitEffect HitEffect { get; set; }
+        public virtual HitEffect HitEffect => HitEffect.Shake;
 
         // IsBlinking
         public bool IsBlinking => blinker.IsRunning && blinker.CurrentValue;
@@ -855,10 +855,6 @@ namespace ScaryCastle
             }
         }
 
-        // HurtShake
-        [ScriptProperty]
-        public Vector2 HurtShake { get; set; } = new Vector2(.5f, 0);
-
         // HurtImpactSound
         [ScriptProperty]
         public Sound? HurtImpactSound { get; set; }
@@ -1067,7 +1063,7 @@ namespace ScaryCastle
             if (HitEffect == HitEffect.Shake)
             {
                 hurtShakeTween ??= new();
-                hurtShakeTween.Start(TweenStyle.Linear, Vector2.Zero, HurtShake, 40, 4);
+                hurtShakeTween.Start(TweenStyle.Linear, Vector2.Zero, hurtShakeForce, 40, 4);
             }
 
             // ---------------------------------------------------------
@@ -1113,7 +1109,7 @@ namespace ScaryCastle
                     OnTakeDamage(attacker, finalDamage, damageType, Vector2.Zero);
 
                     // Impact Word (Solo mostramos "Pow!" si hubo daño real)
-                    if (impactWordName != ImpactWordName.None)
+                    if (impactWordName != ImpactWordName.None && !IsDead)
                         ShowImpactWord(impactWordName);
                 }
             }

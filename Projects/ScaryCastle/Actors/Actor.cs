@@ -43,7 +43,6 @@ namespace ScaryCastle
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
             this.CombatBehavior = CombatBehavior.Find(DeclaredName);
             this.DisplayNameKey = $"Actor.{DeclaredName}";
-            this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
 
             headSprite = new AnimatedSprite(Game)
@@ -323,10 +322,12 @@ namespace ScaryCastle
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType, Vector2 knockback)
         {
-           // if (IsPlayer)
-             //   session.Camera.Shake(TweenStyle.Linear, Vector2.One, 100, 2);
+            session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
 
             //FaceTo(attacker);
+
+            if (HurtVoice != null)
+                PlaySound(HurtVoice);
 
             if (Sprite.Animations.Contains(ActorStateNames.Hurt))
             {
@@ -474,6 +475,13 @@ namespace ScaryCastle
                     return speechBubble.State != SpeechBubbleState.Hidden;
             }
         }
+
+        // HitEffect
+        public override HitEffect HitEffect => HitEffect.Blink;
+
+        // HurtVoice
+        [ScriptProperty]
+        public Sound? HurtVoice { get; set; }
 
         // Interact
         public bool Interact(GameThing target, Item? item)

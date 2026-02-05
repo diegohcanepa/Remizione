@@ -11,7 +11,6 @@ namespace ScaryCastle
         public RideCar(GameSession session, string name)
             : base(session, name)
         {
-            HitEffect = HitEffect.Shake;
         }
 
         // GetOutRider

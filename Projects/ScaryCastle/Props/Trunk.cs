@@ -20,7 +20,6 @@ namespace ScaryCastle
             Atlas = Atlases.Environment;
             DeathSound = Sound.Find(SoundNames.WoodDebris);
             DisplayNameKey = "Prop.Trunk";
-            HitEffect = HitEffect.Shake;
             LockedSound = Sound.Find(SoundNames.TrunkLocked);
             OpenSound = Sound.Find(SoundNames.TrunkOpen);
             OverheadOrigin = new(6, 2);

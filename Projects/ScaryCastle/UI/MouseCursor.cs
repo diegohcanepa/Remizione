@@ -17,6 +17,7 @@ namespace ScaryCastle
 
         private static readonly AtlasImage?[] cursorImages;
         private static readonly ImageSprite cursorSprite;
+        private static readonly Vector2 defaultScale = ScaleInfo.UIElement.Large;
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
         private static readonly TextSprite textSprite;
@@ -32,7 +33,7 @@ namespace ScaryCastle
             cursorSprite = new ImageSprite(EngendroGame.Instance)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Scale = GetCurrentScale()
+                Scale = defaultScale
             };
 
             const string prefix = "MouseCursor";
@@ -78,12 +79,6 @@ namespace ScaryCastle
             }
         }
 
-        // GetCurrentScale
-        private static Vector2 GetCurrentScale()
-        {
-            return CustomImage != null ? ScaleInfo.InventoryHeldItem : ScaleInfo.UIElement.Large;
-        }
-
         // InvalidateCursorImage
         private static void InvalidateCursorImage()
         {
@@ -92,7 +87,7 @@ namespace ScaryCastle
             else
                 cursorSprite.Image = cursorImages[(int)State];
 
-            cursorSprite.Scale = GetCurrentScale();
+            cursorSprite.Scale = defaultScale;
             cursorSprite.PivotOrigin = State == MouseCursorState.Arrow ? RectanglePoint.LeftTop : RectanglePoint.Center;
         }
 
@@ -101,7 +96,7 @@ namespace ScaryCastle
         // AnimateClick
         public static void AnimateClick()
         {
-            scaleTween.Start(TweenStyle.QuadraticIn, GetCurrentScale() * .9f, GetCurrentScale(), 150);
+            scaleTween.Start(TweenStyle.QuadraticIn, defaultScale * .9f, defaultScale, 150);
             cursorSprite.Tweens.ScaleTween = scaleTween;
         }
 
@@ -138,7 +133,7 @@ namespace ScaryCastle
             EngendroGame.Instance.SpriteBatch.End();
 
             EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera);
-            if (State is MouseCursorState.Cross || CustomImage != null)
+            if (State == MouseCursorState.Cross || State == MouseCursorState.Hit || CustomImage != null)
                 textSprite.Draw(gameTime);
             EngendroGame.Instance.SpriteBatch.End();
         }

@@ -15,8 +15,6 @@ namespace ScaryCastle
         public BreakableProp(GameSession session, string name)
             : base(session, name)
         {
-            HitEffect = HitEffect.Shake;
-            HurtShake = new(1.5f, 0);
         }
 
         #region Protected members

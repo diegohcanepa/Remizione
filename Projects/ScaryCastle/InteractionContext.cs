@@ -1,5 +1,6 @@
 ﻿using Adberration.Scripting;
 using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using ScaryCastle.Scripting;
 
@@ -126,12 +127,14 @@ namespace ScaryCastle
                 return;
             }
 
+            // Combat in progress
             if (session.CombatManager != null && !session.CombatManager.IsWaitingPlayerInput && SpeechBubble.ModalInstance == null)
             {
                 MouseCursor.State = MouseCursorState.Wait;
                 return;
             }
 
+            // Modal speech bubble active
             if (SpeechBubble.ModalInstance != null)
             {
                 MouseCursor.State = MouseCursorState.Arrow;
@@ -139,7 +142,7 @@ namespace ScaryCastle
                 return;
             }
 
-            // Session is awaiting
+            // Session is awaiting script
             if (session.IsAwaiting)
             {
                 MouseCursor.State = session.AwaitingScript?.CurrentStatement is AwaitInputCommand ? MouseCursorState.Hand : MouseCursorState.Wait;
@@ -186,9 +189,14 @@ namespace ScaryCastle
             }
 
             if (HeldItem != null && UseWithScript == null)
-                session.AwaitRoutine(RoutineNames.UseWithFailOutcome);
+            {
+                Sound.Play(SoundNames.Error);
+                MouseCursor.Shake();
+            }
             else
+            {
                 player.ApproachAndInteract(Target, HeldItem);
+            }
 
             return true;
         }

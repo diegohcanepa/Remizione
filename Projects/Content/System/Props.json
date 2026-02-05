@@ -8,14 +8,14 @@
       ],
       "effects": [
         {
-          "effectType": "Death",
-          "impactWord": "CrackYellow",
-          "target": "Self"
-        },
-        {
           "chance": 0.5,
           "effectType": "Damage",
           "amount": "1"
+        },
+        {
+          "effectType": "Death",
+          "impactWord": "CrackYellow",
+          "target": "Self"
         }
       ]
     },

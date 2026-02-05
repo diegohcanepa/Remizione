@@ -110,7 +110,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(Monitor));
             AotTypeRegistry.Register(typeof(EnviousEye));
             AotTypeRegistry.Register(typeof(NumberSix));
-            AotTypeRegistry.Register(typeof(PostClock));
             AotTypeRegistry.Register(typeof(Pottery));
             AotTypeRegistry.Register(typeof(Prop));
             AotTypeRegistry.Register(typeof(RideCar));
@@ -130,6 +129,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("add-walk-area", typeof(AddWalkAreaCommand));
             AotTypeRegistry.Register("animate-actor", typeof(AnimateActorCommand));
             AotTypeRegistry.Register("apply-combat-intent", typeof(ApplyCombatIntentCommand));
+            AotTypeRegistry.Register("apply-effect-descriptors", typeof(ApplyEffectDescriptorsCommand));
             AotTypeRegistry.Register("attach-light", typeof(AttachLightCommand));
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
@@ -152,7 +152,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("set-light", typeof(SetLightCommand));
             AotTypeRegistry.Register("show-log-message", typeof(ShowLogMessageCommand));
             AotTypeRegistry.Register("show-message", typeof(ShowMessageCommand));
-            AotTypeRegistry.Register("take-damage", typeof(TakeDamageCommand));
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
             AotTypeRegistry.Register("use-item", typeof(UseItemCommand));
             AotTypeRegistry.Register("vibrate", typeof(VibrateCommand));

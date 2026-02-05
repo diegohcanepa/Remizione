@@ -38,7 +38,7 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            if (!scriptLaunched && TimeInState > 2)
+            if (!scriptLaunched && TimeInState > 1)
             {
                 scriptLaunched = true;
                 if (Manager.Session.ScriptLibrary.FindOutcome(Manager.Enemy.DeclaredName) is Script script)
