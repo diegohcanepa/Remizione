@@ -7,7 +7,6 @@
 			"effects": [
 				{
 					"effectType": "Damage",
-					"damageType": "Physical",
 					"amount": "1",
           "impactWord": "AghRed" 
 				}

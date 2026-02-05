@@ -17,8 +17,6 @@ namespace ScaryCastle
 
         private static readonly AtlasImage?[] cursorImages;
         private static readonly ImageSprite cursorSprite;
-        private static readonly Vector4 outlineColorGreen = ColorPalette.MouseCursorGreenOutline;
-        private static readonly Vector4 outlineColorRed = ColorPalette.MouseCursorRedOutline;
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
         private static readonly TextSprite textSprite;
@@ -124,11 +122,11 @@ namespace ScaryCastle
         // Draw
         public static void Draw(GameTime gameTime)
         {
-            OutlineEffect? effect = CustomImage != null && OutlineColor != MouseCursorOutline.None ? ScaryCastleGame.Effects.Outline : null;
+            OutlineEffect? effect = CustomImage != null && Hightlight ? ScaryCastleGame.Effects.Outline : null;
 
             if (effect != null && cursorSprite.Image?.Atlas != null)
             {
-                effect.Color.SetValue(OutlineColor == MouseCursorOutline.Green ? outlineColorGreen : outlineColorRed);
+                effect.Color.SetValue(ColorPalette.MouseCursorHighlight);
                 effect.TextureSize.SetValue(new Vector2(cursorSprite.Image.Atlas.Texture.Width, cursorSprite.Image.Atlas.Texture.Height));
                 effect.Thickness.SetValue(1);
             }
@@ -145,8 +143,8 @@ namespace ScaryCastle
             EngendroGame.Instance.SpriteBatch.End();
         }
 
-        // OutlineColor
-        public static MouseCursorOutline OutlineColor { get; set; }
+        // Highlight
+        public static bool Hightlight { get; set; }
 
         // PerformClick
         public static void PerformClick()
@@ -159,8 +157,8 @@ namespace ScaryCastle
         public static void Reset()
         {
             CustomImage = null;
+            Hightlight = false;
             State = MouseCursorState.Arrow;
-            OutlineColor = MouseCursorOutline.None;
             Text = null;
         }
 

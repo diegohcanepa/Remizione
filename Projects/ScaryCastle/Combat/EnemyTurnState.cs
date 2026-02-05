@@ -1,4 +1,6 @@
-﻿using Engendro;
+﻿using Adberration.Scripting;
+using Engendro;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
@@ -6,12 +8,11 @@ namespace ScaryCastle
     /// <summary>
     /// EnemyTurnState
     /// </summary>
-    public sealed class EnemyTurnState : CombatManagerState
+    public sealed class EnemyTurnState : CombatantTurnState
     {
-        private bool effectsApplied;
-        private bool attackLaunched;
+        private bool scriptLaunched;
 
-        // Constructor
+        // PlayerTurnState
         public EnemyTurnState(CombatManager manager)
             : base(manager)
         {
@@ -22,16 +23,29 @@ namespace ScaryCastle
         // OnEnter
         protected override void OnEnter()
         {
-            effectsApplied = false;
-            attackLaunched = false;
+            base.OnEnter();
+            scriptLaunched = false;
+        }
+
+        // OnScriptCompleted
+        protected override void OnScriptCompleted()
+        {
+            Manager.TransitionTo(new PlayerTurnState(Manager));
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-        }
 
+            if (!scriptLaunched && TimeInState > 2)
+            {
+                scriptLaunched = true;
+                if (Manager.Session.ScriptLibrary.FindOutcome(Manager.Enemy.DeclaredName) is Script script)
+                    AwaitScript(script);
+            }
+        }
+        
         #endregion
     }
 }

@@ -19,8 +19,8 @@ namespace ScaryCastle
         InFront         // Justo encima (para items o puertas)
     }
 
-    // AttackType
-    public enum AttackType { None, Melee, Ranged, Magic, Contact }
+    // CombatBehaviorArchetype
+    public enum CombatBehaviorArchetype { Simple, Aggressive, Coward, Erratic, Berserk }
 
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }
@@ -29,7 +29,7 @@ namespace ScaryCastle
     public enum ConsumptionType { Quantity, Durability, None }
 
     // DamageType
-    public enum DamageType { Undefined, Physical, Acid, Explosive, Fire, Ice, Lightning, Poison }
+    public enum DamageType { Physical, Acid, Explosive, Fire, Ice, Lightning, Poison }
 
     // Difficulty
     public enum Difficulty { Easy, Normal, Hard }
@@ -107,9 +107,6 @@ namespace ScaryCastle
 
     // MessageKind
     public enum MessageKind { CannotPlaceItem, InventoryFull, NotEnoughCoins }
-
-    // MouseCursorOutline
-    public enum MouseCursorOutline { None, Green, Red }
 
     // MouseCursorState
     public enum MouseCursorState { Arrow, Cross, Down, Hand, Left, Right, Up, Wait }

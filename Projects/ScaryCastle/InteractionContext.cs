@@ -126,28 +126,23 @@ namespace ScaryCastle
                 return;
             }
 
-            if (session.CombatManager != null && !session.CombatManager.IsWaitingPlayerInput)
+            if (session.CombatManager != null && !session.CombatManager.IsWaitingPlayerInput && SpeechBubble.ModalInstance == null)
             {
                 MouseCursor.State = MouseCursorState.Wait;
+                return;
+            }
+
+            if (SpeechBubble.ModalInstance != null)
+            {
+                MouseCursor.State = MouseCursorState.Arrow;
+                MouseCursor.CustomImage = null;
                 return;
             }
 
             // Session is awaiting
             if (session.IsAwaiting)
             {
-                if (session.Player?.HasSpeechBubble == true)
-                {
-                    MouseCursor.State = MouseCursorState.Arrow;
-                }
-                else if (session.AwaitingScript?.CurrentStatement is AwaitInputCommand)
-                {
-                    MouseCursor.State = MouseCursorState.Hand;
-                }
-                else
-                {
-                    MouseCursor.State = MouseCursorState.Wait;
-                }
-
+                MouseCursor.State = session.AwaitingScript?.CurrentStatement is AwaitInputCommand ? MouseCursorState.Hand : MouseCursorState.Wait;
                 return;
             }
 
@@ -163,16 +158,13 @@ namespace ScaryCastle
             if (HeldItem != null)
             {
                 MouseCursor.CustomImage = HeldItem.Definition.Image;
-                if (Target == null)
-                    MouseCursor.OutlineColor = MouseCursorOutline.None;
-                else
-                    MouseCursor.OutlineColor = UseWithScript == null ? MouseCursorOutline.Red : MouseCursorOutline.Green;
+                MouseCursor.Hightlight = Target != null;
             }
             else
             {
                 MouseCursor.CustomImage = null;
                 MouseCursor.State = Target?.GetMouseCursorState() ?? MouseCursorState.Cross;
-                MouseCursor.OutlineColor = MouseCursorOutline.None;
+                MouseCursor.Hightlight = false;
             }
 
             InvalidateText();

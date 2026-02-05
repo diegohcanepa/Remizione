@@ -16,9 +16,8 @@ namespace ScaryCastle
         public EffectDescriptor(JsonElement element)
         {
             Amount = element.GetObject("amount", v => new DiceExpression(v));
-            AttackType = element.GetEnum("attackType", AttackType.None);
             Chance = element.GetFloat("chance", 1);
-            DamageType = element.GetEnum("damageType", DamageType.Undefined);
+            DamageType = element.GetEnum<DamageType>("damageType", DamageType.Physical);
             EffectType = element.GetEnum("effectType", EffectType.None);
             Factor = element.GetFloat("factor", 1);
             ImpactWord = element.GetEnum("impactWord", ImpactWordName.None);
@@ -26,16 +25,13 @@ namespace ScaryCastle
             IsPassive = element.GetBool("isPassive", false);
             Sound = element.GetObject("sound", Sound.Get);
             Target = element.GetEnum("target", EffectTarget.Target);
-
-            if (EffectType == EffectType.Damage && DamageType == DamageType.Undefined)
-                throw new InvalidOperationException("Damage effects must have a valid damage type.");
         }
 
         // Amount
         public DiceExpression? Amount { get; }
 
         // Apply
-        public static void Apply(IList<EffectDescriptor> effects, GameThing source, GameThing target, AttackType attackType)
+        public static void Apply(IList<EffectDescriptor> effects, GameThing source, GameThing target)
         {
             if (effects.Count == 0)
                 return;
@@ -43,9 +39,6 @@ namespace ScaryCastle
             foreach (var effect in effects)
             {
                 if (!effect.Chance.Roll())
-                    continue;
-
-                if (effect.AttackType != AttackType.None && effect.AttackType != attackType)
                     continue;
 
                 var realTarget = effect.Target == EffectTarget.Self ? source : target;
@@ -67,7 +60,7 @@ namespace ScaryCastle
 
                     // Damage
                     case EffectType.Damage:
-                        realTarget.TakeDamage(realTarget, effect.AttackType, effect.DamageType, amount, effect.ImpactWord, effect.Knockback);
+                        realTarget.TakeDamage(realTarget, effect.DamageType, amount, effect.ImpactWord, effect.Knockback);
                         break;
 
                     // Death
@@ -77,9 +70,6 @@ namespace ScaryCastle
                 }
             }
         }
-
-        // AttackType
-        public AttackType AttackType { get; }
 
         // Chance
         public Ratio Chance { get; }

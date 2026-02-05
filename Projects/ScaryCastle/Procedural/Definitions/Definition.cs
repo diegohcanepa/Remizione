@@ -20,20 +20,20 @@ namespace ScaryCastle
         // Constructor
         protected Definition(JsonElement element)
         {
-            this.Name = element.GetProperty("name").GetString() ?? throw new InvalidDataException("Name not found.");
+            this.Name = element.GetProperty("name").GetString() ?? throw new InvalidOperationException("Name not found.");
 
             CodeContract.ValidName(this.Name, string.Empty);
 
             // Name cannot be a realm 
             if (Enum.IsDefined(typeof(Realm), Name))
-                throw new InvalidDataException($"The name '{Name}' cannot be used because it is an item realm.");
+                throw new InvalidOperationException($"The name '{Name}' cannot be used because it is an item realm.");
 
             // Name cannot be a category
             if (Enum.IsDefined(typeof(ItemCategory), Name))
-                throw new InvalidDataException($"The name '{Name}' cannot be used because it is an item category.");
+                throw new InvalidOperationException($"The name '{Name}' cannot be used because it is an item category.");
 
             if (definitions.Contains(Name))
-                throw new InvalidDataException($"The name '{Name}' cannot be used because it is already being used by another definition.");
+                throw new InvalidOperationException($"The name '{Name}' cannot be used because it is already being used by another definition.");
             else
                 definitions.Add(Name);
 

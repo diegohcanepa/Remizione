@@ -6,12 +6,15 @@
       "archetype": "Aggressive",
       "intents": [
         {
-          "name": "mordida",
+          "name": "Bite",
           "category": "Attack",
-          "phrase": "¡DAME TUS OJOS!",
           "weight": 80,
           "effects": [
-            { "effectType": "Damage", "amount": "1d4" }
+            {
+              "effectType": "Damage",
+              "amount": "1d4",
+              "impactWord": "AghRed"
+            }
           ]
         }
       ]

@@ -6,31 +6,33 @@
   "properties": {
     "data": {
       "type": "array",
+      "description": "Lista de configuraciones de comportamiento de combate.",
       "items": { "$ref": "#/$defs/CombatBehavior" }
     }
   },
   "required": [ "data" ],
   "$defs": {
     "CombatBehavior": {
-      "allOf": [
-        { "$ref": "./Definition.schema.json" },
-        {
-          "type": "object",
-          "properties": {
-            "archetype": {
-              "type": "string",
-              "enum": [ "Simple", "Aggressive", "Coward", "Erratic", "Tactical" ],
-              "default": "Simple"
-            },
-            "intents": {
-              "type": "array",
-              "items": { "$ref": "./IntentDescriptor.schema.json" },
-              "minItems": 1
-            }
-          },
-          "required": [ "archetype", "intents" ]
+      "type": "object",
+      "description": "Define la personalidad y el pool de intenciones de un actor.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "El nombre del comportamiento. Debe coincidir con el Name del Actor para el linkeo."
+        },
+        "archetype": {
+          "type": "string",
+          "enum": [ "Simple", "Aggressive", "Coward", "Erratic", "Berserk" ],
+          "default": "Simple"
+        },
+        "intents": {
+          "type": "array",
+          "description": "Lista de intenciones (ataques, estados, etc.) de este bicho.",
+          "items": { "$ref": "./CombatIntentDescriptor.schema.json" },
+          "minItems": 1
         }
-      ]
+      },
+      "required": [ "name", "archetype", "intents" ]
     }
   }
 }

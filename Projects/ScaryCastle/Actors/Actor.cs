@@ -41,7 +41,7 @@ namespace ScaryCastle
             this.session = session;
             this.Atlas = Atlases.Actors;
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
-            this.Brain = new(this);
+            this.CombatBehavior = CombatBehavior.Find(DeclaredName);
             this.DisplayNameKey = $"Actor.{DeclaredName}";
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
@@ -404,9 +404,6 @@ namespace ScaryCastle
         // BodySize
         public ActorSize BodySize { get; set; } = ActorSize.Medium;
 
-        // Brain
-        public Brain Brain { get; init; }
-
         // CanChangeState
         public bool CanChangeState
         {
@@ -417,6 +414,23 @@ namespace ScaryCastle
 
                 return StateMachine.CurrentState is ActorStandState or ActorMoveState;
             }
+        }
+
+        // CombatBehavior
+        public CombatBehavior? CombatBehavior { get; }
+
+        // CombatIntent
+        public CombatIntentDescriptor?CombatIntent { get; private set; }
+
+        // CombatIntentName
+        [ScriptProperty]
+        public string CombatIntentName => CombatIntent?.Name ?? string.Empty;
+
+        // DecideCombatIntent
+        public CombatIntentDescriptor? DecideCombatIntent()
+        {
+            CombatIntent = CombatBehavior == null ? null : Brain.Decide(CombatBehavior, HP, MaxHP);
+            return CombatIntent;
         }
 
         // FastMove

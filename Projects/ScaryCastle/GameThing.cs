@@ -1037,7 +1037,7 @@ namespace ScaryCastle
         }
 
         // TakeDamage
-        public void TakeDamage(GameThing attacker, AttackType attackType, DamageType damageType, int amount, ImpactWordName impactWordName, Vector2 knockbackForce)
+        public void TakeDamage(GameThing attacker, DamageType damageType, int amount, ImpactWordName impactWordName, Vector2 knockbackForce)
         {
             // ---------------------------------------------------------
             // 1. FILTROS DE SALIDA (Gatekeepers)
@@ -1078,7 +1078,7 @@ namespace ScaryCastle
             if (Session.CombatManager == null)
             {
                 if (Definition?.EffectDescriptors != null)
-                    EffectDescriptor.Apply(Definition.EffectDescriptors, this, attacker, attackType);
+                    EffectDescriptor.Apply(Definition.EffectDescriptors, this, attacker);
             }
 
             // ---------------------------------------------------------

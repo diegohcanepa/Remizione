@@ -16,7 +16,6 @@ namespace ScaryCastle
 
         private Vector2 anchorPosition;
         private readonly List<ImageSprite> hearts = [];
-        private bool initializing = true;
         private int lastKnownHP;
         private readonly int maxHp;
         private readonly int totalHeartCount;
@@ -48,8 +47,6 @@ namespace ScaryCastle
             RefreshVisuals();
 
             lastKnownHP = actor.HP;
-
-            initializing = false;
         }
 
         #endregion
@@ -193,21 +190,9 @@ namespace ScaryCastle
                     hearts[i].Image = Atlases.UI.HeartEmpty;
                 }
 
-                if (!initializing)
+                if (currentImage != hearts[i].Image)
                 {
-                    if (currentImage != hearts[i].Image)
-                    {
-                        if (hearts[i].Image == Atlases.UI.HeartEmpty)
-                        {
-                            var tween = new Vector2Tween() { StartDelay = 500 + (i * 100) };
-                            tween.Start(TweenStyle.CubicInOut, hearts[i].Scale, Vector2.Zero, 300, () => Sound.Play(SoundNames.FleshImpact));
-                            hearts[i].Tweens.ScaleTween = tween;
-                        }
-                        else
-                        {
-                            hearts[i].Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, hearts[i].Scale, hearts[i].Scale * 1.3f, 300, 2);
-                        }
-                    }
+                    hearts[i].Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, hearts[i].Scale, hearts[i].Scale * 1.3f, 300, 2);
                 }
             }
         }

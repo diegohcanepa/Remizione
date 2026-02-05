@@ -8,11 +8,8 @@ namespace ScaryCastle
     /// <summary>
     /// PlayerTurnState
     /// </summary>
-    public sealed class PlayerTurnState : CombatManagerState
+    public sealed class PlayerTurnState : CombatantTurnState
     {
-        private Script? awaitingScript;
-        private int awaitScriptCooldown;
-
         // PlayerTurnState
         public PlayerTurnState(CombatManager manager)
             : base(manager)
@@ -24,7 +21,8 @@ namespace ScaryCastle
         // OnEnter
         protected override void OnEnter()
         {
-            awaitScriptCooldown = 100;
+            base.OnEnter();
+            Manager.Enemy.DecideCombatIntent();
         }
 
         // OnHandleInput
@@ -35,7 +33,7 @@ namespace ScaryCastle
             if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
                 context.HeldItem = null;
-                return HandleInputResult.Handled; 
+                return HandleInputResult.Handled;
             }
 
             if (context.Target != null)
@@ -46,48 +44,28 @@ namespace ScaryCastle
                     {
                         if (context.UseWithScript != null)
                         {
-                            awaitingScript = context.UseWithScript;
+                            AwaitScript(context.UseWithScript);
                         }
                         else if (Manager.Session.ScriptLibrary.FindRoutine($"Use{item.Name}") is Script script)
                         {
-                            awaitingScript = script;
+                            AwaitScript(script);
                         }
                     }
 
-                    if (awaitingScript != null)
-                    {
+                    if (IsAwaitingScript)
                         context.HeldItem = null;
-                        Manager.Session.AwaitScript(awaitingScript);
-                    }
                 }
             }
 
             return HandleInputResult.Handled;
         }
 
-        // OnUpdate
-        protected override void OnUpdate(GameTime gameTime)
+        // OnScriptCompleted
+        protected override void OnScriptCompleted()
         {
-            base.OnUpdate(gameTime);
-
-            if (awaitingScript != null)
-            {
-                if (awaitScriptCooldown > 0)
-                {
-                    awaitScriptCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                }
-                else if (!Manager.Session.IsAwaitingScript(awaitingScript))
-                {
-                    Manager.TransitionTo(new EnemyTurnState(Manager));
-                }
-            }
-            else if (Manager.Enemy.Definition is ThingDefinition def)
-            {
-                if (TimeInState > def.Patience)
-                    Manager.TransitionTo(new EnemyTurnState(Manager));
-            }
+            Manager.TransitionTo(new EnemyTurnState(Manager));
         }
-
+        
         #endregion
     }
 }

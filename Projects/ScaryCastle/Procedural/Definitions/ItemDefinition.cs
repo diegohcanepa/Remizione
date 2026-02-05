@@ -35,9 +35,6 @@ namespace ScaryCastle
             // Damage
             DiceExpression? damage = element.GetObject("hp", value => new DiceExpression(value));
 
-            // DamageType
-            var damageType = element.GetEnum<DamageType>("damageType", DamageType.Undefined);
-
             // Durability
             Durability = element.GetFloat("durability", 0);
 

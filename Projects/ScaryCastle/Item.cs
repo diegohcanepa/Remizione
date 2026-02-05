@@ -201,7 +201,7 @@ namespace ScaryCastle
         public bool Use(GameThing source, GameThing target)
         {
             // TODO: Check attack type
-            EffectDescriptor.Apply(Definition.EffectDescriptors, source, target, AttackType.None);
+            EffectDescriptor.Apply(Definition.EffectDescriptors, source, target);
             Use();
 
             return true;

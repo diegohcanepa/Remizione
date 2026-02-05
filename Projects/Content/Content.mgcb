@@ -1169,6 +1169,9 @@
 #begin System/Actors.json
 /copy:System/Actors.json
 
+#begin System/CombatBehaviors.json
+/copy:System/CombatBehaviors.json
+
 #begin System/Items.json
 /copy:System/Items.json
 

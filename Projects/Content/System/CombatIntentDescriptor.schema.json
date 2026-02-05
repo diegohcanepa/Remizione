@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "IntentDescriptor.schema.json",
-  "title": "Intent Descriptor",
+  "$id": "CombatIntentDescriptor.schema.json",
+  "title": "Combat Intent Descriptor",
   "description": "Define una acción de combate. Hereda name, effects y spawnWeight de Definition.",
   "type": "object",
   "allOf": [
@@ -20,14 +20,9 @@
         "Prayer",
         "Status"
       ]
-    },
-    "phrase": {
-      "type": "string",
-      "description": "La blasfemia o frase que dirá el enemigo al ejecutar la acción."
     }
   },
   "required": [
-    "category",
-    "phrase"
+    "category"
   ]
 }

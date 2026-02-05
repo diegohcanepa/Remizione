@@ -13,7 +13,6 @@ namespace ScaryCastle
             : base(session, name)
         {
             AnimationSettings.SupressAll();
-            Brain = new ActorBrain(this);
             FastMoveFactor = 3;
             Guts = 7;
             ShadowSpotSize = 0;
@@ -35,17 +34,5 @@ namespace ScaryCastle
         }
 
         #endregion
-
-        /// <summary>
-        /// ActorBrain
-        /// </summary>
-        public sealed class ActorBrain : Brain
-        {
-            // Constructor
-            public ActorBrain(Actor owner)
-                : base(owner)
-            {
-            }
-        }
     }
 }

@@ -129,6 +129,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("add-trigger-area", typeof(AddTriggerAreaCommand));
             AotTypeRegistry.Register("add-walk-area", typeof(AddWalkAreaCommand));
             AotTypeRegistry.Register("animate-actor", typeof(AnimateActorCommand));
+            AotTypeRegistry.Register("apply-combat-intent", typeof(ApplyCombatIntentCommand));
             AotTypeRegistry.Register("attach-light", typeof(AttachLightCommand));
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
@@ -423,6 +424,7 @@ namespace ScaryCastle
         public CombatManager? CombatManager { get; private set; }
 
         // CombatMode
+        [ScriptProperty]
         public bool CombatMode => CombatManager != null;
 
         // CompleteRun

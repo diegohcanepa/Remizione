@@ -9,14 +9,12 @@
       "effects": [
         {
           "effectType": "Death",
-          "damageType": "Physical",
           "impactWord": "CrackYellow",
           "target": "Self"
         },
         {
           "chance": 0.5,
           "effectType": "Damage",
-          "damageType": "Physical",
           "amount": "1"
         }
       ]
@@ -40,7 +38,6 @@
         {
           "attackType": "Contact",
           "effectType": "Damage",
-          "damageType": "Physical",
           "amount": "1",
           "knockback": "15,5"
         }
