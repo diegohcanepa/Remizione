@@ -368,6 +368,13 @@ namespace ScaryCastle
                 Session.Camera.Follow(Session.Player, true);
         }
 
+        // OnExit
+        protected override void OnExit()
+        {
+            Session.ImpactWordPool.ReturnAll();
+            Session.ObjectPools.FloatingHearts.ReturnAll();
+        }
+
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
@@ -411,7 +418,6 @@ namespace ScaryCastle
         protected override void OnUnload()
         {
             base.OnUnload();
-            Session.ImpactWordPool.ReturnAll();
             dustEmitter?.Deactivate();
             fireflyEmitter?.Deactivate();
         }

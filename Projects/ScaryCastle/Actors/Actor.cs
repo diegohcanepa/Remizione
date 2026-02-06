@@ -15,6 +15,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private UIContextualHealthMeter? healthMeter;
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -271,6 +272,8 @@ namespace ScaryCastle
                 Rotation -= moveBalancingTween.CurrentValue;
 
             footstepEffect?.Draw(gameTime);
+
+            healthMeter?.Draw(gameTime);
         }
 
         // OnLoad
@@ -299,6 +302,8 @@ namespace ScaryCastle
         // OnStartMoving
         protected override void OnStartMoving()
         {
+            healthMeter?.Hide();
+
             StateMachine.ChangeState(ActorStateNames.Move);
 
             if (AnimationSettings.MoveBounce)
@@ -344,12 +349,20 @@ namespace ScaryCastle
                 Stand();
                 StateMachine.ChangeState(ActorStateNames.Hurt);
             }
+
+            if (!IsDead)
+            {
+                healthMeter ??= new(this);
+                healthMeter.Show();
+            }
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+
+            healthMeter?.Update(gameTime);
 
             headTween.Update(gameTime);
 
@@ -368,6 +381,9 @@ namespace ScaryCastle
         // PopHearts
         protected void PopHearts(int amount)
         {
+            if (Room == null)
+                return;
+
             var fullHearts = amount / 2;
             var hasHalfHeart = amount % 2 == 1;
             var pos = GetOverheadPosition();
