@@ -19,7 +19,8 @@ namespace ScaryCastle.Scripting
 
             if (session.OutcomeTarget is ILootConatiner<ItemDefinition> lootContainer && lootContainer.Loot != null)
             {
-                if (!session.CommonInventory.HasSpace(lootContainer.Loot))
+                var inventory = lootContainer.Loot.InventoryCategory == InventoryCategory.Common ? session.CommonInventory : session.SacredInventory;
+                if (!inventory.HasSpace(lootContainer.Loot))
                 {
                     session.HUD.Message.Show(MessageKind.InventoryFull);
                     return false;

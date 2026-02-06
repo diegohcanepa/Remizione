@@ -1,7 +1,6 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
-using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Procedural;
 using ScaryCastle.Scripting;
@@ -104,6 +103,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(CreditsRoom));
             AotTypeRegistry.Register(typeof(Dice));
             AotTypeRegistry.Register(typeof(GameRoom));
+            AotTypeRegistry.Register(typeof(GameThing));
             AotTypeRegistry.Register(typeof(HellGoat));
             AotTypeRegistry.Register(typeof(Hub));
             AotTypeRegistry.Register(typeof(Monitor));
@@ -148,6 +148,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("set-light", typeof(SetLightCommand));
             AotTypeRegistry.Register("show-log-message", typeof(ShowLogMessageCommand));
             AotTypeRegistry.Register("show-message", typeof(ShowMessageCommand));
+            AotTypeRegistry.Register("take-damage", typeof(TakeDamageCommand));
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
             AotTypeRegistry.Register("use-item", typeof(UseItemCommand));
             AotTypeRegistry.Register("vibrate", typeof(VibrateCommand));
@@ -222,6 +223,12 @@ namespace ScaryCastle
 
             else
                 return base.OnHandleInput(gameTime);
+        }
+
+        // OnOutcomeCompleted
+        protected override void OnOutcomeCompleted(Thing target)
+        {
+            HeadbuttMode = false;
         }
 
         // OnPause
@@ -466,6 +473,9 @@ namespace ScaryCastle
         // Game
         public new ScaryCastleGame Game { get; }
 
+        // HeadbuttMode
+        public bool HeadbuttMode { get; set; }
+
         // HUD
         public HUD HUD { get; }
 
@@ -510,13 +520,13 @@ namespace ScaryCastle
         // ObjectPools
         public ObjectPools ObjectPools { get; }
 
-        // OutcomeProp
-        [ScriptProperty]
-        public Prop? OutcomeProp => OutcomeTarget as Prop;
-
         // OutcomeDoor
         [ScriptProperty]
         public RideDoor? OutcomeDoor => OutcomeTarget as RideDoor;
+
+        // OutcomeTarget
+        [ScriptProperty]
+        public override GameThing? OutcomeTarget => base.OutcomeTarget as GameThing;
 
         // Player
         [ScriptProperty]

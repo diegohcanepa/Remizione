@@ -236,8 +236,6 @@ namespace ScaryCastle
             {
                 StateMachine.ChangeState(ActorStateNames.Death);
             }
-
-            ShowImpactWord(ImpactWordName.PlopRed);
         }
 
         // OnDraw
@@ -323,6 +321,12 @@ namespace ScaryCastle
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType, Vector2 knockback)
         {
+            if (IsPlayer)
+            {
+                Game.SceneManager.PopUntil(Session);
+                PopHearts(amount);
+            }
+
             session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
 
             //FaceTo(attacker);
@@ -356,9 +360,20 @@ namespace ScaryCastle
             StateMachine.Update(gameTime);
         }
 
-        // OnWillpowerChanged
-        protected virtual void OnWillpowerChanged()
+        // PopHearts
+        protected void PopHearts(int amount)
         {
+            var fullHearts = amount / 2;
+            var hasHalfHeart = amount % 2 == 1;
+            var pos = RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top);
+
+            for (var i = 0; i < fullHearts; i++)
+            {
+                Session.ObjectPools.FloatingHearts.Get()?.Show(pos, false);
+            }
+
+            if (hasHalfHeart)
+                Session.ObjectPools.FloatingHearts.Get()?.Show(pos, true);
         }
 
         // StateMachine
@@ -386,6 +401,14 @@ namespace ScaryCastle
             }
 
             return result;
+        }
+
+        // ApplyHeadbuttPenalty
+        [ScriptMethod]
+        public void ApplyHeadbuttPenalty()
+        {
+            HP -= 1;
+            PopHearts(1);
         }
 
         // ApproachAndInteract
@@ -486,7 +509,15 @@ namespace ScaryCastle
             if (Session.State != GameSessionState.Idle)
                 return false;
 
-            var script = item == null ? target.OutcomeScript : session.ScriptLibrary.FindOverload(target.DeclaredName, item.Name);
+            Script? script;
+            if (item == null)
+            {
+                script = Session.HeadbuttMode ? session.ScriptLibrary.FindRoutine(RoutineNames.ExecuteHeadbutt) : target.OutcomeScript;
+            }
+            else
+            {
+                script = session.ScriptLibrary.FindOverload(target.DeclaredName, item.Name);
+            }
 
             if (script != null)
             {

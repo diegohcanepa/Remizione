@@ -854,7 +854,9 @@ namespace Adberration
                     return awaitingScripts.Peek();
                 }
                 else
+                {
                     return script;
+                }
             }
         }
 
@@ -1120,7 +1122,7 @@ namespace Adberration
 
         // OutcomeTarget
         [ScriptProperty(CodingContext.Execution)]
-        public Thing? OutcomeTarget { get; private set; }
+        public virtual Thing? OutcomeTarget { get; private set; }
 
         // PersistenceModel
         public PersistenceModel PersistenceModel { get; protected set; }

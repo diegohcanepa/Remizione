@@ -25,6 +25,7 @@ namespace ScaryCastle
             : base(session, name)
         {
             this.ApproachBehavior = ApproachBehavior.InFront;
+            this.HurtSound = Sound.Find(SoundNames.ImpactA);
 
             // Shadow
             this.shadow = new ImageSprite(session.Game)

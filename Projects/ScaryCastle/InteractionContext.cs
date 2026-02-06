@@ -1,4 +1,5 @@
-﻿using Adberration.Scripting;
+﻿using Adberration;
+using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
@@ -12,6 +13,7 @@ namespace ScaryCastle
     public sealed class InteractionContext(GameSession session)
     {
         private readonly GameSession session = session;
+        private readonly string headbuttVerb = Localization.GetValue(Verb.Headbutt);
         private readonly string useVerb = Localization.GetValue(Verb.Use);
         private readonly string withPreposition = TextRepository.GetValue("Misc.WithPreposition");
 
@@ -28,12 +30,12 @@ namespace ScaryCastle
             }
 
             // Get sentence
-            var sentence = Target.GetInteractPrompt() ?? Target.LocalizedDisplayName;
+            var sentence = Target.LocalizedDisplayName;
 
             // Compose text
             if (HeldItem == null)
             {
-                MouseCursor.Text = sentence;
+                MouseCursor.Text = session.HeadbuttMode ? $"{headbuttVerb} {sentence}" : sentence;
             }
             else
             {
@@ -75,6 +77,7 @@ namespace ScaryCastle
                     field = value;
                     if (field == null)
                         MouseCursor.CustomImage = null;
+                    session.HeadbuttMode = false;
                 }
             }
         }
@@ -152,7 +155,12 @@ namespace ScaryCastle
             else
             {
                 MouseCursor.CustomImage = null;
-                MouseCursor.State = Target?.GetMouseCursorState() ?? MouseCursorState.Cross;
+                
+                if (session.HeadbuttMode)
+                    MouseCursor.State = MouseCursorState.Hit;
+                else
+                    MouseCursor.State = Target?.GetMouseCursorState() ?? MouseCursorState.Cross;
+
                 MouseCursor.Hightlight = false;
             }
 

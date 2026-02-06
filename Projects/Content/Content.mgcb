@@ -737,6 +737,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/PneumaticDoor.wav;Audio/FX/PneumaticDoor
 
+#begin Audio/FX/PopHeart.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/PopHeart.wav;Audio/FX/PopHeart
+
 #begin Audio/FX/PotteryBreak1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

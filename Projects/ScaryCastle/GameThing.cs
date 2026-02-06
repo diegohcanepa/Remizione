@@ -423,6 +423,10 @@ namespace ScaryCastle
 
         #endregion
 
+        // AllowHeadbuttImpact
+        [ScriptProperty]
+        public bool AllowHeadbuttImpact { get; set; } = true;
+
         // AllowInteraction
         [ScriptProperty]
         public bool AllowInteraction { get; set; } = true;
@@ -767,12 +771,6 @@ namespace ScaryCastle
             return null;
         }
 
-        // GetInteractPrompt
-        public virtual string? GetInteractPrompt()
-        {
-            return null;
-        }
-
         // GetMouseCursorState
         public virtual MouseCursorState? GetMouseCursorState()
         {
@@ -1104,7 +1102,7 @@ namespace ScaryCastle
                     OnTakeDamage(attacker, finalDamage, damageType, Vector2.Zero);
 
                     // Impact Word (Solo mostramos "Pow!" si hubo daño real)
-                    if (impactWordName != ImpactWordName.None && !IsDead)
+                    if (impactWordName != ImpactWordName.None)
                         ShowImpactWord(impactWordName);
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -67,8 +68,7 @@ namespace ScaryCastle
             yTween.Start(TweenStyle.CubicOut, origin.Y, origin.Y + distance.Y, duration * 2);
             xTween.Start(TweenStyle.CubicOut, origin.X, origin.X + distance.X, duration);
 
-            opacityTween.StartDelay = (int)(duration * .9f);
-            opacityTween.Start(TweenStyle.CubicIn, 1, 0, duration - opacityTween.StartDelay);
+            opacityTween.Start(TweenStyle.CubicIn, 1, 0, duration);
 
             var r = Random.Shared.Next(6, 11);
             rotationTween.Start(TweenStyle.Linear, -r, r, 100, -1);
@@ -82,6 +82,8 @@ namespace ScaryCastle
             image.Tweens.RotationTween = rotationTween;
 
             spawnLeft = !spawnLeft;
+
+            Sound.Play(SoundNames.PopHeart);
         }
     }
 }

@@ -26,10 +26,6 @@
           "default": 1,
           "minimum": 1
         },
-        "patience": {
-          "type": "integer",        
-          "minimum": 10
-        },
         "placements": {
           "type": "array",
           "items": {

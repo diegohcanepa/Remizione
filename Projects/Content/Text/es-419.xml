@@ -286,5 +286,6 @@ Bla bla bla</String>
   <String Key="Prop.WC">Inodoro</String>
   <String Key="Verb.Enter">Entrar</String>
   <String Key="Verb.Exit">Salir</String>
+  <String Key="Verb.Headbutt">Cabecear</String>
   <String Key="Verb.Use">Usar</String>
 </Strings>

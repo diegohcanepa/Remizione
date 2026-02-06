@@ -3,14 +3,7 @@
   "data": [
     {
       "name": "EnviousEye",
-      "placements": ["WalkArea"],
-			"effects": [
-				{
-					"effectType": "Damage",
-					"amount": "1",
-          "impactWord": "AghRed" 
-				}
-			]      
+      "placements": ["WalkArea"]
     }
   ],
     "unevaluatedProperties": false

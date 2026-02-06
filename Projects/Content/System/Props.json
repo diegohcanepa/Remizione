@@ -5,17 +5,6 @@
       "name": "PotteryA",
       "placements": [
         "Floor"
-      ],
-      "effects": [
-        {
-          "effectType": "Damage",
-          "amount": "1"
-        },
-        {
-          "effectType": "Death",
-          "impactWord": "CrackYellow",
-          "target": "Self"
-        }
       ]
     },
     {

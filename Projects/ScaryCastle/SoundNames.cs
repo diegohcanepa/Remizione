@@ -27,6 +27,7 @@
         internal const string MetalPropBreak = nameof(MetalPropBreak);
         internal const string PickupBag = nameof(PickupBag);
         internal const string PickupGeneric = nameof(PickupGeneric);
+        internal const string PopHeart = nameof(PopHeart);
         internal const string PotteryBreak = nameof(PotteryBreak);
         internal const string PowerRestored = nameof(PowerRestored);
         internal const string Redemption = nameof(Redemption);

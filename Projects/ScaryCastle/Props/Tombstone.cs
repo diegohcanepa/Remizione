@@ -12,7 +12,6 @@ namespace ScaryCastle
             : base(session, name)
         {
             DeathSound = Sound.Find(SoundNames.PotteryBreak);
-            HitTestPolygon = TestPolygon.Collider;
             HurtSound = Sound.Find(SoundNames.ImpactA);
             MaxHP = 8;
             ResistanceTableName = "ExplosiveOnly";
