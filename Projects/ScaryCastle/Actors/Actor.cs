@@ -43,6 +43,7 @@ namespace ScaryCastle
             this.CombatBehavior = CombatBehavior.Find(DeclaredName);
             this.DisplayNameKey = $"Actor.{DeclaredName}";
             this.IgnoreWalkArea = false;
+            this.SuppressImpactWordOnDeath = true;
 
             headSprite = new AnimatedSprite(Game)
             {
@@ -236,6 +237,8 @@ namespace ScaryCastle
             {
                 StateMachine.ChangeState(ActorStateNames.Death);
             }
+
+            ShowImpactWord(ImpactWordName.PlopRed);
         }
 
         // OnDraw
@@ -324,7 +327,9 @@ namespace ScaryCastle
             if (IsPlayer)
             {
                 Game.SceneManager.PopUntil(Session);
-                PopHearts(amount);
+
+                if (!IsDead)
+                    PopHearts(amount);
             }
 
             session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);

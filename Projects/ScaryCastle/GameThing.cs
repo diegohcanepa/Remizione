@@ -421,6 +421,9 @@ namespace ScaryCastle
             Utils.ApplySoundEmitter(this, instance, masterVolume);
         }
 
+        // SuppressImpactWordOnDeath
+        protected bool SuppressImpactWordOnDeath { get; init; }
+
         #endregion
 
         // AllowHeadbuttImpact
@@ -1102,7 +1105,7 @@ namespace ScaryCastle
                     OnTakeDamage(attacker, finalDamage, damageType, Vector2.Zero);
 
                     // Impact Word (Solo mostramos "Pow!" si hubo daño real)
-                    if (impactWordName != ImpactWordName.None)
+                    if (impactWordName != ImpactWordName.None && !IsDead)
                         ShowImpactWord(impactWordName);
                 }
             }
