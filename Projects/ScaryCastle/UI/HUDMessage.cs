@@ -60,7 +60,7 @@ namespace ScaryCastle
         // Show
         public void Show(MessageKind message)
         {
-            var text  = Localization.GetValue(message);
+            var text = Localization.GetValue(message);
             var color = ColorPalette.Text.Highlight;
 
             if (message == MessageKind.NotEnoughCoins)

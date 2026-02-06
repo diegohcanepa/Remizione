@@ -3,18 +3,16 @@
 namespace ScaryCastle.Scripting
 {
     // UseItemCommand
-    // Arguments: {ItemName} [#target:GameThing]
+    // Arguments: {ItemName}
     [ScriptStatement(CodingContext.Execution)]
     internal sealed class UseItemCommand : NonAwaitableCommand
     {
         // Constructor
         internal UseItemCommand(Script script, string source, StatementBody args)
-            : base(script, source, args, 1, TargetArg)
+            : base(script, source, args, 1)
         {
             if (ItemDefinition.Find(Body.Clauses[0]) == null)
                 throw new ScriptException(this, $"Item '{Body.Clauses[0]}' is not defined.");
-
-            Parser.ParseEntityArgument<GameThing>(this, TargetArg, null);
         }
 
         // OnExecute
@@ -26,18 +24,8 @@ namespace ScaryCastle.Scripting
             if (session.Player is not Actor player)
                 return;
 
-            if (session.CommonInventory.Find(Body.Clauses[0]) is Item item)
-            {
-                if (HasArg(TargetArg))
-                {
-                    if (Parser.ParseEntityArgument<GameThing>(this, TargetArg, null) is GameThing target)
-                        item.Use(player, target);
-                }
-                else
-                {
-                    item.Use(player, player);
-                }
-            }
+            if (Inventory.FindInAll(Body.Clauses[0]) is Item item && session.OutcomeTarget is GameThing target)
+                item.Use(player, target);
         }
     }
 }

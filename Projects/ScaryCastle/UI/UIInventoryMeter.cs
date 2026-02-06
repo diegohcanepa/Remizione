@@ -34,7 +34,7 @@ namespace ScaryCastle
             };
 
             if (inventory.Category == InventoryCategory.Common)
-                icon.Y -= 8;
+                icon.Y -= 8.5f;
 
             // Amount
             this.amountText = new TextSprite(Game, Fonts.CommonOutline)

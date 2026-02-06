@@ -5,7 +5,6 @@ using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace ScaryCastle
 {
@@ -422,18 +421,10 @@ namespace ScaryCastle
         // CombatBehavior
         public CombatBehavior? CombatBehavior { get; }
 
-        // CombatIntent
-        public CombatIntentDescriptor?CombatIntent { get; private set; }
-
-        // CombatIntentName
-        [ScriptProperty]
-        public string CombatIntentName => CombatIntent?.Name ?? string.Empty;
-
-        // DecideCombatIntent
-        public CombatIntentDescriptor? DecideCombatIntent()
+        // GetCombatIntent
+        public CombatIntentDescriptor? GetCombatIntent()
         {
-            CombatIntent = CombatBehavior == null ? null : Brain.Decide(CombatBehavior, HP, MaxHP);
-            return CombatIntent;
+            return CombatBehavior == null ? null : Brain.Decide(CombatBehavior, HP, MaxHP);
         }
 
         // FastMove

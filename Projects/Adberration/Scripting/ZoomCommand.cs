@@ -16,9 +16,6 @@ namespace Adberration.Scripting
             Parser.ParseEnumArgument<TweenStyle>(this, TweenArg);
         }
 
-        // IsAwaiting
-        public override bool IsAwaiting => Session.Camera.ZoomState != ZoomState.None;
-
         // OnExecute
         protected override void OnExecute()
         {
@@ -41,5 +38,8 @@ namespace Adberration.Scripting
                 Session.Camera.Zoom = zoom;
             }
         }
+
+        // IsAwaiting
+        public override bool IsAwaiting => Session.Camera.ZoomState != ZoomState.None;
     }
 }

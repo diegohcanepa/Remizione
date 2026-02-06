@@ -1,5 +1,4 @@
 ﻿using System;
-using Engendro;
 
 namespace ScaryCastle
 {
@@ -54,10 +53,10 @@ namespace ScaryCastle
                         {
                             // Multiplicador agresivo: a menor HP, mayor peso.
                             // A 10% de HP, el peso del ataque se multiplica por ~10.
-                            float berserkMult = 1.0f + (1.0f - hpPercent) * 10.0f;
+                            float berserkMult = 1.0f + ((1.0f - hpPercent) * 10.0f);
                             w *= berserkMult;
                         }
-                        else if (intent.Category == IntentCategory.Defense || intent.Category == IntentCategory.Healing)
+                        else if (intent.Category is IntentCategory.Defense or IntentCategory.Healing)
                         {
                             // El Berserk desprecia la defensa a medida que se descontrola
                             w *= hpPercent;

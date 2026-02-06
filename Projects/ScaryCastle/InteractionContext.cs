@@ -55,13 +55,6 @@ namespace ScaryCastle
                 if (session.Room.CulledThings[i] == session.Player && HeldItem == null)
                     continue;
 
-                // Only allow enemies in combat mode
-                if (session.CombatManager != null)
-                {
-                    if (session.Room.CulledThings[i] != session.CombatManager.Enemy && session.Room.CulledThings[i] != session.Player)
-                        continue;
-                }
-
                 if (session.Room.CulledThings[i] is GameThing target && target.CanInteract() && target.RuntimeHotspot.Contains(mousePos))
                     return target;
             }
@@ -127,13 +120,6 @@ namespace ScaryCastle
                 return;
             }
 
-            // Combat in progress
-            if (session.CombatManager != null && !session.CombatManager.IsWaitingPlayerInput && SpeechBubble.ModalInstance == null)
-            {
-                MouseCursor.State = MouseCursorState.Wait;
-                return;
-            }
-
             // Modal speech bubble active
             if (SpeechBubble.ModalInstance != null)
             {
@@ -181,12 +167,6 @@ namespace ScaryCastle
 
             if (session.Player is not Actor player)
                 return false;
-
-            // Combat in progress
-            if (session.CombatManager != null)
-            {
-                return true;
-            }
 
             if (HeldItem != null && UseWithScript == null)
             {

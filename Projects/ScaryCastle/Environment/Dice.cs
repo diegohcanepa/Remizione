@@ -117,13 +117,6 @@ namespace ScaryCastle
         public int LastResult { get; private set; }
 
         // Roll
-        [ScriptMethod]
-        public int Roll()
-        {
-            return Roll(Session.Player, 2);
-        }
-
-        // Roll
         public int Roll(Actor actor, int threshold)
         {
             this.owner = actor;

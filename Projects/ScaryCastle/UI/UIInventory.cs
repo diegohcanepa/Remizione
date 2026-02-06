@@ -2,7 +2,6 @@
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using System;
 using System.Globalization;
 
 namespace ScaryCastle
@@ -23,7 +22,7 @@ namespace ScaryCastle
         private int lastSeenInventoryVersion = -1;
         private readonly ImageSprite[] shadows;
         private readonly ImageSprite[] slots;
-        private readonly ImageSprite switchInventorySlot;
+        private readonly ImageSprite switchInventoryButton;
 
         #endregion
 
@@ -39,18 +38,17 @@ namespace ScaryCastle
             this.slots = new ImageSprite[Inventory.MaximumCapacity];
 
             // Bottom gradient
-            bottomGradient = new ImageSprite(Game, Atlases.UI.GetImage("InventoryContainer"))
+            this.bottomGradient = new ImageSprite(Game, Atlases.UI.GetImage("InventoryContainer"))
             {
                 Opacity = .8f,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
             };
 
-            // Shortcut icon
-            this.switchInventorySlot = new(Game)
+            // Switch inventory button
+            this.switchInventoryButton = new(Game)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, 18, -19),
             };
 
             // Slots
@@ -122,7 +120,7 @@ namespace ScaryCastle
                         return true;
                     }
                 }
-                else if (switchInventorySlot.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
+                else if (switchInventoryButton.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
                 {
                     MouseCursor.PerformClick();
                     SwitchInventory();
@@ -188,8 +186,9 @@ namespace ScaryCastle
                 }
             }
 
-            switchInventorySlot.Image = Inventory.Category == InventoryCategory.Common ? Atlases.UI.SacredSackShortcut : Atlases.UI.CommonSackShortcut;
-            switchInventorySlot.Position = slots[0].BoundingBox.GetPoint(RectanglePoint.Center, -switchInventorySlot.BoundingBox.Width - 4, 0);
+            switchInventoryButton.Scale = deckIconOriginalScale;
+            switchInventoryButton.Image = Inventory.Category == InventoryCategory.Sacred ? Atlases.UI.CommonSackShortcut : Atlases.UI.SacredSackShortcut;
+            switchInventoryButton.Position = slots[0].BoundingBox.GetPoint(RectanglePoint.Center, -switchInventoryButton.BoundingBox.Width - 4, 0);
         }
 
         // SwitchInventory
@@ -214,7 +213,7 @@ namespace ScaryCastle
             // Gradient
             bottomGradient.Draw(gameTime);
 
-            switchInventorySlot.Draw(gameTime);
+            switchInventoryButton.Draw(gameTime);
 
             for (var i = 0; i < Inventory.Capacity; i++)
             {
@@ -267,14 +266,14 @@ namespace ScaryCastle
             if (!IsVisible)
                 return;
 
-            switchInventorySlot.Update(gameTime);
+            switchInventoryButton.Update(gameTime);
 
             for (var i = 0; i < Inventory.Count; i++)
             {
                 icons[i].Scale = ScaleInfo.UIElement.Medium;
             }
 
-            var cursorOverDeckIcon = switchInventorySlot.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);
+            var cursorOverDeckIcon = switchInventoryButton.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);
 
             if (GetSelectedItem() is Item item)
             {
@@ -289,14 +288,14 @@ namespace ScaryCastle
 
             if (cursorOverDeckIcon)
             {
-                if (switchInventorySlot.Scale != deckIconSelectedScale)
+                if (switchInventoryButton.Scale != deckIconSelectedScale)
                 {
-                    switchInventorySlot.Scale = deckIconSelectedScale;
+                    switchInventoryButton.Scale = deckIconSelectedScale;
                 }
             }
-            else if (switchInventorySlot.Scale == deckIconSelectedScale)
+            else if (switchInventoryButton.Scale == deckIconSelectedScale)
             {
-                switchInventorySlot.Scale = deckIconOriginalScale;
+                switchInventoryButton.Scale = deckIconOriginalScale;
             }
         }
 

@@ -28,7 +28,7 @@ namespace ScaryCastle
             this.icon = new ImageSprite(Game, Atlases.UI.Coin)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.RightBottom, -7, -23),
+                Position = Screen.Area.GetPoint(RectanglePoint.RightBottom, -7, -24),
             };
 
             // Score text

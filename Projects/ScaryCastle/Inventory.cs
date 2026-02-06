@@ -11,13 +11,20 @@ namespace ScaryCastle
     /// </summary>
     public sealed class Inventory : Collection<Item>
     {
+        private static readonly List<Inventory> inventories = [];
+
+        #region Constructor
+
         // Constructor
         public Inventory(GameSession session, InventoryCategory category)
             : base()
         {
             this.Session = session;
             this.Category = category;
+            inventories.Add(this);
         }
+
+        #endregion
 
         #region Protected members
 
@@ -117,6 +124,18 @@ namespace ScaryCastle
             {
                 if (this[i].Name == name)
                     return this[i];
+            }
+
+            return null;
+        }
+
+        // FindInAll
+        public static Item? FindInAll(string name)
+        {
+            for (var i = 0; i < inventories.Count; i++)
+            {
+                if (inventories[i].Find(name) is Item item)
+                    return item;
             }
 
             return null;

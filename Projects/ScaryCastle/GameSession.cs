@@ -96,7 +96,6 @@ namespace ScaryCastle
         private static void RegisterAotTypes()
         {
             AotTypeRegistry.Register(typeof(Actor));
-            AotTypeRegistry.Register(typeof(Arena));
             AotTypeRegistry.Register(typeof(Zabul));
             AotTypeRegistry.Register(typeof(BloodyEye));
             AotTypeRegistry.Register(typeof(BreakableProp));
@@ -137,8 +136,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
             AotTypeRegistry.Register("await-player-approach", typeof(AwaitPlayerApproachCommand));
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
-            AotTypeRegistry.Register("begin-combat", typeof(BeginCombatCommand));
-            AotTypeRegistry.Register("combat-feedback", typeof(CombatFeedbackCommand));
             AotTypeRegistry.Register("create-dialog-block", typeof(CreateDialogBlockCommand));
             AotTypeRegistry.Register("echo", typeof(EchoCommand));
             AotTypeRegistry.Register("ensure-session-scene", typeof(EnsureSessionSceneCommand));
@@ -222,9 +219,6 @@ namespace ScaryCastle
 
             else if (HUD.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
-
-            else if (CombatManager != null)
-                return CombatManager.HandleInput(gameTime);
 
             else
                 return base.OnHandleInput(gameTime);
@@ -329,8 +323,6 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            CombatManager?.Update(gameTime);
-
             if (console != null)
             {
                 if (console.IsActive && roomEditor != null)
@@ -382,16 +374,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // BeginCombat
-        public void BeginCombat()
-        {
-            if (CombatManager != null || Player == null || OutcomeTarget is not Actor enemy || enemy.MaxHP <= 0 || enemy.IsDead || Player.IsDead)
-                return;
-
-            CombatManager = new(Player, enemy);
-            AudioManager.Music.PlayTag("Combat");
-        }
-
         // BeginRun
         [ScriptMethod]
         public void BeginRun()
@@ -419,13 +401,6 @@ namespace ScaryCastle
         // Coins
         [ScriptProperty]
         public int Coins { get; set; }
-
-        // CombatManager
-        public CombatManager? CombatManager { get; private set; }
-
-        // CombatMode
-        [ScriptProperty]
-        public bool CombatMode => CombatManager != null;
 
         // CommonInventory
         public Inventory CommonInventory { get; }
@@ -474,10 +449,6 @@ namespace ScaryCastle
             // marked as "garbage" and can finally be released from memory in this pass.
             GC.Collect(2, GCCollectionMode.Forced, true);
         }
-
-        // Enemy
-        [ScriptProperty]
-        public Actor? Enemy => CombatManager?.Enemy;
 
         // Environment
         public Environment Environment { get; }

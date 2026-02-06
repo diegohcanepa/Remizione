@@ -15,11 +15,15 @@ namespace ScaryCastle.Scripting
         // OnExecute
         protected override void OnExecute()
         {
+            // TODO: Check
+
+            /*
             if ((Session as GameSession)?.CombatManager is not CombatManager combatManager)
                 return;
 
             if (combatManager.Enemy.CombatIntent != null)
                 EffectDescriptor.Apply(combatManager.Enemy.CombatIntent.EffectDescriptors, combatManager.Enemy, combatManager.Player);
+            */
         }
     }
 }

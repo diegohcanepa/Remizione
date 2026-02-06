@@ -1069,11 +1069,8 @@ namespace ScaryCastle
             // ---------------------------------------------------------
             // Hacemos esto ANTES de calcular si muere o recibe daño real. 
             // Si golpeo una vasija igual quiero que mis efectos se activen.
-            if (Session.CombatManager == null)
-            {
-                if (Definition?.EffectDescriptors != null)
-                    EffectDescriptor.Apply(Definition.EffectDescriptors, this, attacker);
-            }
+            if (Definition?.EffectDescriptors != null)
+                EffectDescriptor.Apply(Definition.EffectDescriptors, this, attacker);
 
             // ---------------------------------------------------------
             // 4. LÓGICA DE SALUD (Solo si es Destructible)
