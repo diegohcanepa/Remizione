@@ -136,7 +136,7 @@ namespace ScaryCastle.Procedural
         {
             foreach (var room in rooms)
             {
-                room.RideRoom?.Children.Clear();
+                room.RideRoom.Children.Clear();
             }
 
             rooms.Clear();
@@ -168,13 +168,7 @@ namespace ScaryCastle.Procedural
             // Load rooms
             foreach (var room in rooms)
             {
-                if (room.Definition == null)
-                    throw new InvalidOperationException($"Room [{room}] has no definition.");
-
-                if (room.RideRoom == null)
-                    throw new InvalidOperationException($"Room [{room}] has no procedural room.");
-
-                room.RideRoom?.Load();
+                room.RideRoom.Load();
             }
         }
 

@@ -7,7 +7,7 @@ namespace ScaryCastle
     /// <summary>
     /// BreakableProp
     /// </summary>
-    public class BreakableProp : Prop
+    public class BreakableProp : ProceduralProp
     {
         private readonly List<ShatterPiece> pieces = [];
 

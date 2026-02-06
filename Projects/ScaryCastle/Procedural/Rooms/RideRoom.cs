@@ -19,26 +19,23 @@ namespace ScaryCastle
         public RideRoom(GameSession session, RoomGraph graph)
             : base(session, string.Empty, graph)
         {
-            if (graph.Definition is not RoomDefinition definition)
-                throw new InvalidOperationException();
-
             Zoom = 1.15f;
 
-            AtlasName = graph.Definition?.Name ?? string.Empty;
+            AtlasName = graph.Definition.Name ?? string.Empty;
             DefaultImageName = AtlasName;
             GlobalLightSize = new(2.2f, 2);
             LightMapColor = new(50, 50, 50);
             LightingSystem = true;
 
-            AddWalkArea("WalkArea", definition.WalkArea);
+            AddWalkArea("WalkArea", graph.Definition.WalkArea);
 
-            DoorDown = definition.DoorDown;
-            DoorLeft = definition.DoorLeft;
-            DoorRight = definition.DoorRight;
-            DoorUp = definition.DoorUp;
+            DoorDown = graph.Definition.DoorDown;
+            DoorLeft = graph.Definition.DoorLeft;
+            DoorRight = graph.Definition.DoorRight;
+            DoorUp = graph.Definition.DoorUp;
 
             // Add placeholders
-            foreach (var placeholder in definition.Placeholders)
+            foreach (var placeholder in graph.Definition.Placeholders)
             {
                 AddPlaceholder(placeholder);
             }
@@ -203,9 +200,6 @@ namespace ScaryCastle
         // CreateInstance
         public static RideRoom CreateInstance(GameSession session, RoomGraph graph)
         {
-            if (graph.Definition == null)
-                throw new InvalidOperationException($"Missing definition in room graph.");
-
             // Get type from AOT registry
             if (Activator.CreateInstance(typeof(RideRoom), session, graph) is not RideRoom result)
                 throw new InvalidOperationException($"Cannot create instance [{graph.Definition.Name}]");

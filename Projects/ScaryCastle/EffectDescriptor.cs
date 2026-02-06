@@ -32,8 +32,8 @@ namespace ScaryCastle
         // Apply
         public static void Apply(GameThing source, GameThing target)
         {
-            if (source.Definition?.EffectDescriptors is not null)
-                Apply(source.Definition.EffectDescriptors, source, target);
+            if (source is IProceduralThing t)
+                Apply(t.Definition.EffectDescriptors, source, target);
         }
 
         // Apply

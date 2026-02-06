@@ -6,7 +6,7 @@ namespace ScaryCastle
     /// <summary>
     /// SpearTrap
     /// </summary>
-    public class SpearTrap : Prop
+    public class SpearTrap : ProceduralProp
     {
         private enum SpearState { Prepared, Reloading, Attacking, Up }
 
@@ -115,8 +115,7 @@ namespace ScaryCastle
                 else if (!damageApplied && Session.Player != null && RuntimeHotspot.BoundingRectangleF.Intersects(Session.Player.RuntimeCollider.BoundingRectangleF))
                 {
                     damageApplied = true;
-                    if (Definition != null)
-                        EffectDescriptor.Apply(Definition.Effects, this, Session.Player);
+                    EffectDescriptor.Apply(Definition.Effects, this, Session.Player);
                 }
             }
 

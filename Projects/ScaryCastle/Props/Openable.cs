@@ -8,7 +8,7 @@ namespace ScaryCastle
     /// <summary>
     /// Openable
     /// </summary>
-    public class Openable : Prop
+    public class Openable : ProceduralProp
     {
         private bool actionInProgress;
         private readonly Vector2Tween shakeTween = new();

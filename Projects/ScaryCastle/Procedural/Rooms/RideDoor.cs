@@ -141,7 +141,7 @@ namespace ScaryCastle
             {
                 Sprite.ClearAnimations();
 
-                var prefix = rideRoom.Definition.Name.Split("_")[0];
+                var prefix = rideRoom.RoomGraph.Definition.Name.Split("_")[0];
                 prefix = $"{prefix}Door{DoorDirection}";
 
                 var animation = AddAnimation("Closed");

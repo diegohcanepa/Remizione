@@ -30,10 +30,6 @@ namespace ScaryCastle
         protected ProceduralRoom(GameSession session, string name, RoomGraph roomGraph)
             : base(session, name)
         {
-            if (roomGraph.Definition == null)
-                throw new InvalidOperationException("RoomGraph has no room definition assigned.");
-
-            this.Definition = RoomDefinition.Get(roomGraph.Definition.Name);
             this.RoomGraph = roomGraph;
 
             this.AllowGlobalLight = true;
@@ -69,23 +65,23 @@ namespace ScaryCastle
             return finalWeight;
         }
 
-        // ApplyPrimaryFilter
-        private List<ThingDefinition> ApplyPrimaryFilter<T>(IList<ThingDefinition> definitions)
-            where T : GameThing
+        // GetCandidateDefinitions
+        private List<ThingDefinition> GetCandidateDefinitions<T>(IList<ThingDefinition> definitions)
+            where T : IProceduralThing
         {
             var outList = new List<ThingDefinition>();
 
             foreach (var definition in definitions)
             {
                 // Filtro Techo: No permitimos que aparezcan cosas más difíciles que el cuarto
-                if (definition.Difficulty > Definition.Difficulty)
+                if (definition.Difficulty > RoomGraph.Definition.Difficulty)
                     continue;
 
                 // Thing requires a dead end room
                 if (definition.RequiresDeadEnd && RoomGraph.GetConnectionCount() > 1)
                     continue;
 
-                var thing = Session.FindDeclaredThing(definition.Name) ?? throw new InvalidOperationException($"There is no static thing named '{definition.Name}'. ");
+                var thing = Session.FindDeclaredThing(definition.Name) ?? throw new InvalidOperationException($"There is no declared thing named '{definition.Name}'. ");
 
                 // Is expected type?
                 if (thing is not T)
@@ -96,7 +92,7 @@ namespace ScaryCastle
                     continue;
 
                 // Scope rules
-                if (!definition.PassesScope(Definition.Scope))
+                if (!definition.PassesScope(RoomGraph.Definition.Scope))
                     continue;
 
                 // Passed all checks
@@ -186,7 +182,7 @@ namespace ScaryCastle
             var table = new ChanceTable();
             foreach (var c in candidates)
             {
-                var finalWeight = AdjustWeightByDifficulty(Definition.Difficulty, c.Difficulty, c.SpawnWeight);
+                var finalWeight = AdjustWeightByDifficulty(RoomGraph.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
                 table.Add(c.Name, finalWeight);
             }
 
@@ -280,17 +276,17 @@ namespace ScaryCastle
         // PopulateNPCs
         private void PopulateNPCs()
         {
-            var definitions = ApplyPrimaryFilter<Actor>(ThingDefinition.All);
-            SpawnInPlaceholders(definitions, Definition.MaxEnemies, enemiesSpawnCounter, PlaceholderTarget.Enemy);
-            SpawnInWalkArea(definitions, Definition.MaxEnemies, enemiesSpawnCounter);
+            var definitions = GetCandidateDefinitions<ProceduralActor>(ThingDefinition.All);
+            SpawnInPlaceholders(definitions, RoomGraph.Definition.MaxEnemies, enemiesSpawnCounter, PlaceholderTarget.Enemy);
+            SpawnInWalkArea(definitions, RoomGraph.Definition.MaxEnemies, enemiesSpawnCounter);
         }
 
         // PopulateProps
         private void PopulateProps()
         {
-            var definitions = ApplyPrimaryFilter<Prop>(ThingDefinition.All);
-            SpawnInPlaceholders(definitions, Definition.MaxProps, propsSpawnCounter, PlaceholderTarget.Prop);
-            SpawnInWalkArea(definitions, Definition.MaxProps, propsSpawnCounter);
+            var definitions = GetCandidateDefinitions<ProceduralProp>(ThingDefinition.All);
+            SpawnInPlaceholders(definitions, RoomGraph.Definition.MaxProps, propsSpawnCounter, PlaceholderTarget.Prop);
+            SpawnInWalkArea(definitions, RoomGraph.Definition.MaxProps, propsSpawnCounter);
         }
 
         // SpawnInPlaceholders
@@ -344,7 +340,7 @@ namespace ScaryCastle
                 var chanceTable = new ChanceTable();
                 foreach (var c in candidates)
                 {
-                    var finalWeight = AdjustWeightByDifficulty(Definition.Difficulty, c.Difficulty, c.SpawnWeight);
+                    var finalWeight = AdjustWeightByDifficulty(RoomGraph.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
                     chanceTable.Add(c.Name, finalWeight);
                 }
 
@@ -448,9 +444,6 @@ namespace ScaryCastle
 
             return result;
         }
-
-        // Definition
-        public RoomDefinition Definition { get; }
 
         // IsProcedural
         public override bool IsProcedural => true;

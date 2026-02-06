@@ -20,10 +20,10 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly ScriptConsole? console;
-        private readonly List<GameThing> declaredThings = [];
-        private readonly Dictionary<string, GameThing> declaredThingsDict = [];
         private readonly EchoScene echoScene;
         private Vector2? playerPosition;
+        private readonly List<GameThing> proceduralThings = [];
+        private readonly Dictionary<string, GameThing> proceduralThingsDict = [];
         private readonly RoomEditor? roomEditor;
 
         #endregion
@@ -51,7 +51,7 @@ namespace ScaryCastle
             this.LootGenerator = new(this);
             this.HUD = new HUD(this);
             this.InteractionContext = new(this);
-            this.DeclaredThings = new(declaredThings);
+            this.DeclaredThings = new(proceduralThings);
             this.Random = new Random(Seed);
 
             ObjectPools = new ObjectPools(this);
@@ -110,12 +110,13 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(EnviousEye));
             AotTypeRegistry.Register(typeof(NumberSix));
             AotTypeRegistry.Register(typeof(Pottery));
+            AotTypeRegistry.Register(typeof(ProceduralActor));
+            AotTypeRegistry.Register(typeof(ProceduralProp));
             AotTypeRegistry.Register(typeof(Prop));
             AotTypeRegistry.Register(typeof(RideCar));
             AotTypeRegistry.Register(typeof(RideDoor));
             AotTypeRegistry.Register(typeof(Sack));
             AotTypeRegistry.Register(typeof(SpearTrap));
-            AotTypeRegistry.Register(typeof(Tombstone));
             AotTypeRegistry.Register(typeof(Torch));
             AotTypeRegistry.Register(typeof(Trunk));
             AotTypeRegistry.Register(typeof(WaterPuddle));
@@ -314,10 +315,13 @@ namespace ScaryCastle
                 if (entity is not GameThing thing)
                     continue;
 
+                if (thing is not IProceduralThing)
+                    continue;
+
                 if (thing.InstanceKind == EntityInstanceKind.Declared)
                 {
-                    declaredThings.Add(thing);
-                    declaredThingsDict.Add(thing.DeclaredName, thing);
+                    proceduralThings.Add(thing);
+                    proceduralThingsDict.Add(thing.DeclaredName, thing);
                 }
             }
 
@@ -393,8 +397,9 @@ namespace ScaryCastle
 
             RunManager.Generate(this, Tags.EmptyList, FloorIndex);
 
-            if (Player != null && RunManager.Rooms[0].RideRoom is RideRoom rideRoom)
+            if (Player != null)
             {
+                var rideRoom = RunManager.Rooms[0].RideRoom;
                 Player.Reheal();
                 HUDVisible = true;
                 rideRoom.Children.Add(Player);
@@ -463,7 +468,7 @@ namespace ScaryCastle
         // FindDeclaredThing
         public GameThing? FindDeclaredThing(string name)
         {
-            return declaredThingsDict.TryGetValue(name, out var result) ? result : null;
+            return proceduralThingsDict.TryGetValue(name, out var result) ? result : null;
         }
 
         // FloorIndex

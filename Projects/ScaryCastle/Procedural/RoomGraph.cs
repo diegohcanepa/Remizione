@@ -15,7 +15,7 @@
         }
 
         // Definition
-        public RoomDefinition? Definition { get; set; }
+        public RoomDefinition Definition { get; set; } = null!;
 
         // DistanceFromStart
         public int DistanceFromStart { get; set; }
@@ -49,7 +49,7 @@
         public Realm Realm { get; set; }
 
         // RideRoom
-        public RideRoom? RideRoom { get; set; }
+        public RideRoom RideRoom { get; set; } = null!;
 
         // Right
         public RoomGraph? Right { get; set; }

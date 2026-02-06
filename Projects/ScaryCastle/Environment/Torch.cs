@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     // Torch
-    public sealed class Torch : Prop
+    public sealed class Torch : ProceduralProp
     {
         // Constructor
         public Torch(GameSession session, string name)

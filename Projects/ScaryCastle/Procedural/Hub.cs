@@ -24,7 +24,7 @@ namespace ScaryCastle
             if (Children.Find(thingName) is RideDoor gate)
             {
                 gate.TargetRoom = RunManager.Rooms[0].RideRoom;
-                RunManager.Rooms[0].RideRoom?.HubDoor = gate;
+                RunManager.Rooms[0].RideRoom.HubDoor = gate;
             }
         }
 

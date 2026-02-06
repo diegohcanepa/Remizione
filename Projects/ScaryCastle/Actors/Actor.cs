@@ -370,7 +370,7 @@ namespace ScaryCastle
         {
             var fullHearts = amount / 2;
             var hasHalfHeart = amount % 2 == 1;
-            var pos = RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top);
+            var pos = GetOverheadPosition();
 
             for (var i = 0; i < fullHearts; i++)
             {

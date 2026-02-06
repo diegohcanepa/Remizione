@@ -5,7 +5,7 @@ namespace ScaryCastle
     /// <summary>
     /// EnviousEye
     /// </summary>
-    public sealed class EnviousEye : Actor
+    public sealed class EnviousEye : ProceduralActor
     {
         // Constructor
         public EnviousEye(GameSession session, string name)

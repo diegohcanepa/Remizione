@@ -1,12 +1,12 @@
 ﻿using Engendro;
 using System;
 using System.Collections.Generic;
-using System.Linq; // Necesario para .Contains
+using System.Linq;
 
 namespace ScaryCastle
 {
     /// <summary>
-    /// LootGenerator: Centraliza toda la lógica de economía y generación de ítems.
+    /// LootGenerator
     /// </summary>
     public sealed class LootGenerator
     {
@@ -35,6 +35,53 @@ namespace ScaryCastle
 
         #endregion
 
+        // DropCoins
+        public void DropCoins(GameThing thing)
+        {
+            if (thing is not IProceduralThing t)
+                return;
+
+            if (session.Room is not ProceduralRoom room)
+                return;
+
+            var coins = RollCoins(room.RoomGraph.Definition, t.Definition);
+
+            if (coins > 0)
+            {
+                for (var i = 0; i < coins; i++)
+                {
+                    if (room.CreateThingClone("Coin") is Coin coin)
+                    {
+                        coin.Position = thing.Position;
+                        room.Children.Add(coin);
+                    }
+                }
+            }
+        }
+
+        // DropLoot
+        public void DropLoot(GameThing thing)
+        {
+            if (thing is not IProceduralThing t)
+                return;
+
+            if (session.Room is not ProceduralRoom)
+                return;
+
+            Ratio lootChance = t.Definition.Difficulty switch
+            {
+                Difficulty.Easy => .05f,   // 5%
+                Difficulty.Normal => .15f, // 15%
+                Difficulty.Hard => .30f,   // 30%
+                _ => .02f
+            };
+
+            lootChance += session.CommonInventory.GetLuckFactor() + session.SacredInventory.GetLuckFactor();
+
+            if (!lootChance.Roll())
+                return;
+        }
+
         // Get
         public ItemDefinition? Get()
         {
@@ -44,8 +91,8 @@ namespace ScaryCastle
         // Get
         public ItemDefinition? Get(GameThing thing)
         {
-            if (thing.Definition is ThingDefinition def)
-                return Get(def.PreferredLootRealm, def.PreferredLootCategory, null, def.QualityBoost);
+            if (thing is IProceduralThing t)
+                return Get(t.Definition.PreferredLootRealm, t.Definition.PreferredLootCategory, null, t.Definition.QualityBoost);
             else
                 return null;
         }
@@ -56,7 +103,7 @@ namespace ScaryCastle
             if (session.Room is not ProceduralRoom room)
                 return null;
 
-            return Get(room.Definition, lootRealm, lootCategory, denyCategories, qualityBoost);
+            return Get(room.RoomGraph.Definition, lootRealm, lootCategory, denyCategories, qualityBoost);
         }
 
         // Get

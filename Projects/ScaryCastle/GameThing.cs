@@ -45,8 +45,6 @@ namespace ScaryCastle
             this.Session = session;
             this.ResistanceTableName = DeclaredName;
             this.shadowSpot = new ShadowSpot(this);
-
-            Definition = ThingDefinition.Find(DeclaredName);
         }
 
         #endregion
@@ -219,53 +217,6 @@ namespace ScaryCastle
         protected virtual bool CanCheckCollisions()
         {
             return CollisionDetection;
-        }
-
-        // DropLoot
-        protected void DropLoot()
-        {
-            if (Room is not ProceduralRoom)
-                return;
-
-            if (Definition == null)
-                return;
-
-            Ratio lootChance = Definition.Difficulty switch
-            {
-                Difficulty.Easy => .05f,   // 5%
-                Difficulty.Normal => .15f, // 15%
-                Difficulty.Hard => .30f,   // 30%
-                _ => .02f
-            };
-
-            lootChance += Session.CommonInventory.GetLuckFactor();
-
-            if (!lootChance.Roll())
-                return;
-        }
-
-        // DropCoins
-        protected void DropCoins()
-        {
-            if (Definition == null)
-                return;
-
-            if (Session.Room is not ProceduralRoom room)
-                return;
-
-            var coins = Session.LootGenerator.RollCoins(room.Definition, Definition);
-
-            if (coins > 0)
-            {
-                for (var i = 0; i < coins; i++)
-                {
-                    if (room.CreateThingClone("Coin") is Coin coin)
-                    {
-                        coin.Position = Position;
-                        room.Children.Add(coin);
-                    }
-                }
-            }
         }
 
         // GetShakeOffset
@@ -533,9 +484,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public int CollisionHeight { get; set; }
 
-        // Definition
-        public ThingDefinition? Definition { get; }
-
         // Die
         [ScriptMethod]
         public void Die()
@@ -551,8 +499,8 @@ namespace ScaryCastle
             }
 
             OnDie();
-            DropLoot();
-            DropCoins();
+            Session.LootGenerator.DropLoot(this);
+            Session.LootGenerator.DropCoins(this);
         }
 
 #if DEBUG
@@ -1064,14 +1012,6 @@ namespace ScaryCastle
                 hurtShakeTween ??= new();
                 hurtShakeTween.Start(TweenStyle.Linear, Vector2.Zero, hurtShakeForce, 40, 4);
             }
-
-            // ---------------------------------------------------------
-            // 3. REACCIÓN DE EFECTOS (Espinas / Rebote) - CRÍTICO
-            // ---------------------------------------------------------
-            // Hacemos esto ANTES de calcular si muere o recibe daño real. 
-            // Si golpeo una vasija igual quiero que mis efectos se activen.
-            if (Definition?.EffectDescriptors != null)
-                EffectDescriptor.Apply(Definition.EffectDescriptors, this, attacker);
 
             // ---------------------------------------------------------
             // 4. LÓGICA DE SALUD (Solo si es Destructible)

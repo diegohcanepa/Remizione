@@ -12,6 +12,30 @@
       "minFloor": 10
     },
     {
+      "name": "PotteryC",
+      "minFloor": 10
+    },
+    {
+      "name": "PotteryD",
+      "minFloor": 10
+    },
+    {
+      "name": "PotteryE",
+      "minFloor": 10
+    },
+    {
+      "name": "RideDoorDown"
+    },
+    {
+      "name": "RideDoorLeft"
+    },
+    {
+      "name": "RideDoorRight"
+    },
+    {
+      "name": "RideDoorUp"
+    },    
+    {
       "name": "Torch",
       "placements": [
         "WallFrontHang"

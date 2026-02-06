@@ -6,7 +6,7 @@ namespace ScaryCastle.Scripting
     // Syntax: {Item} [#amount:Integer]
     internal sealed class AddItemCommand : NonAwaitableCommand
     {
-        private readonly ItemDefinition? definition;
+        private readonly ItemDefinition definition;
 
         // Constructor
         internal AddItemCommand(Script script, string source, StatementBody body)
@@ -14,10 +14,7 @@ namespace ScaryCastle.Scripting
         {
             var itemName = Parser.ParseName(this, 0);
             Parser.ParseInt32Argument(this, AmountArg);
-
-            definition = ItemDefinition.Find(itemName);
-            if (definition == null)
-                throw ScriptExceptionBuilder.InvalidValue(this, $"Item type'[{itemName}]'.");
+            definition = ItemDefinition.Get(itemName);
         }
 
         // OnExecute
