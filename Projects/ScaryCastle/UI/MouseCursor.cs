@@ -88,7 +88,7 @@ namespace ScaryCastle
                 cursorSprite.Image = cursorImages[(int)State];
 
             cursorSprite.Scale = defaultScale;
-            cursorSprite.PivotOrigin = State is MouseCursorState.Arrow or MouseCursorState.Hand ? RectanglePoint.LeftTop : RectanglePoint.Center;
+            cursorSprite.PivotOrigin = (State is MouseCursorState.Arrow or MouseCursorState.Hand) && CustomImage == null ? RectanglePoint.LeftTop : RectanglePoint.Center;
         }
 
         #endregion
