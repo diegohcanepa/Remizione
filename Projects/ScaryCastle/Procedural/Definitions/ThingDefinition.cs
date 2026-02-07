@@ -13,8 +13,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private static readonly Dictionary<string, ThingDefinition> data = [];
-        private static readonly List<ThingDefinition> dataList = [];
         private readonly List<EffectDescriptor> effects = [];
         private readonly List<PlacementType> placements = [];
 
@@ -73,40 +71,6 @@ namespace ScaryCastle
             }
 
             Effects = effects.AsReadOnly();
-
-            data.Add(Name, this);
-            dataList.Add(this);
-        }
-
-        #endregion
-
-        #region Static members
-
-        // All
-        public static ReadOnlyCollection<ThingDefinition> All { get; } = new(dataList);
-
-        // Find
-        public static ThingDefinition? Find(string name)
-        {
-            return data.TryGetValue(name, out ThingDefinition? definition) ? definition : null;
-        }
-
-        // Get
-        public static ThingDefinition Get(string name)
-        {
-            return data[name];
-        }
-
-        // Load
-        public static void Load(params string[] fileNames)
-        {
-            if (data.Count > 0)
-                throw new InvalidOperationException("Data already loaded.");
-
-            for (var i = 0; i < fileNames.Length; i++)
-            {
-                Utils.LoadJsonData<ThingDefinition>(fileNames[i], element => new ThingDefinition(element));
-            }
         }
 
         #endregion

@@ -52,8 +52,8 @@ namespace ScaryCastle
             CombatBehavior.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "CombatBehaviors.json"));
             ItemDefinition.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Items.json"));
             RoomDefinition.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
-            ThingDefinition.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"),
-                             ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"));
+            ActorDefinition.Definitions.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"));
+            PropDefinition.Definitions.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"));
         }
 
 #if !QUICK_START

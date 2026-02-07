@@ -6,6 +6,7 @@
   "properties": {
     "data": {
       "type": "array",
+      "description": "Lista de definiciones de Props.",
       "items": {
         "$ref": "#/$defs/Prop"
       }
@@ -16,7 +17,7 @@
   ],
   "$defs": {
     "Prop": {
-      "type": "object",
+      "description": "Una Prop hereda todo de Thing pero agrega propiedades de combate.",
       "allOf": [
         {
           "$ref": "./Thing.schema.json"

@@ -9,10 +9,17 @@
         protected ProceduralProp(GameSession session, string name)
             : base(session, name)
         {
-            Definition = ThingDefinition.Get(DeclaredName);
+            Definition = PropDefinition.Definitions.Get(DeclaredName);
         }
 
+        #region IProceduralThing explicit implementation
+
         // Definition
-        public ThingDefinition Definition { get; }
+        ThingDefinition IProceduralThing.Definition => this.Definition;
+
+        #endregion
+
+        // Definition
+        public PropDefinition Definition { get; }
     }
 }

@@ -66,10 +66,10 @@ namespace ScaryCastle
         }
 
         // GetCandidateDefinitions
-        private List<ThingDefinition> GetCandidateDefinitions<T>(IList<ThingDefinition> definitions)
-            where T : IProceduralThing
+        private List<TDefinition> GetCandidateDefinitions<TDefinition, TThing>(IList<TDefinition> definitions)
+            where TDefinition : ThingDefinition where TThing : GameThing
         {
-            var outList = new List<ThingDefinition>();
+            var outList = new List<TDefinition>();
 
             foreach (var definition in definitions)
             {
@@ -84,7 +84,7 @@ namespace ScaryCastle
                 var thing = Session.FindDeclaredThing(definition.Name) ?? throw new InvalidOperationException($"There is no declared thing named '{definition.Name}'. ");
 
                 // Is expected type?
-                if (thing is not T)
+                if (thing is not TThing)
                     continue;
 
                 // Run constraints
@@ -152,15 +152,118 @@ namespace ScaryCastle
             return cells;
         }
 
-        // SpawnInWalkArea (Completo)
-        private void SpawnInWalkArea(IList<ThingDefinition> definitions, int maxInstances, MultiCounter spawnCounter)
+        // Populate
+        private void Populate()
+        {
+            PopulateProps();
+            PopulateNPCs();
+        }
+
+        // PopulateNPCs
+        private void PopulateNPCs()
+        {
+            var definitions = GetCandidateDefinitions<ActorDefinition, ProceduralActor>(ActorDefinition.Definitions.All);
+            SpawnInPlaceholders(ActorDefinition.Definitions, definitions, RoomGraph.Definition.MaxEnemies, enemiesSpawnCounter, PlaceholderTarget.Enemy);
+            SpawnInWalkArea(ActorDefinition.Definitions, definitions, RoomGraph.Definition.MaxEnemies, enemiesSpawnCounter);
+        }
+
+        // PopulateProps
+        private void PopulateProps()
+        {
+            var definitions = GetCandidateDefinitions<PropDefinition, ProceduralProp>(PropDefinition.Definitions.All);
+            SpawnInPlaceholders(PropDefinition.Definitions, definitions, RoomGraph.Definition.MaxProps, propsSpawnCounter, PlaceholderTarget.Prop);
+            SpawnInWalkArea(PropDefinition.Definitions, definitions, RoomGraph.Definition.MaxProps, propsSpawnCounter);
+        }
+
+        // SpawnInPlaceholders
+        private void SpawnInPlaceholders<T>(DefinitionContainer<T> definitionContainer, IList<T> candidates, int maxInstances, MultiCounter spawnCounter, PlaceholderTarget target)
+            where T : ThingDefinition
+        {
+            if (Placeholders.Count == 0 || maxInstances == 0)
+                return;
+
+            // 1) Shuffle placeholders
+            var placeholders = new List<Placeholder>(Placeholders);
+            placeholders.Shuffle(Random);
+
+            // 2) Iterate placeholders
+            foreach (var placeholder in placeholders)
+            {
+                // Already used
+                if (placeholder.Used)
+                    continue;
+
+                // Functional filter (Prop vs Enemy)
+                if (placeholder.Target != PlaceholderTarget.Any && placeholder.Target != target)
+                    continue;
+
+                // Roll fillChance
+                if (!placeholder.FillChance.Roll(Random))
+                    continue;
+
+                // Collect candidates
+                var selectedCandidates = new List<T>();
+                foreach (var definition in candidates)
+                {
+                    // Is compatible with placehokder placement?
+                    if (!definition.Placements.Contains(placeholder.Placement))
+                        continue;
+
+                    // MaxPerRoom
+                    if (!definition.PassesMaxPerRoomConstraint(spawnCounter.GetCount(definition.Name)))
+                        continue;
+
+                    // MaxPerRun
+                    if (!definition.PassesMaxPerRunConstraint())
+                        continue;
+
+                    selectedCandidates.Add(definition);
+                }
+
+                if (selectedCandidates.Count == 0)
+                    continue;
+
+                // Pick
+                var chanceTable = new ChanceTable();
+                foreach (var c in selectedCandidates)
+                {
+                    var finalWeight = AdjustWeightByDifficulty(RoomGraph.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
+                    chanceTable.Add(c.Name, finalWeight);
+                }
+
+                if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
+                    continue;
+
+                if (definitionContainer.Find(chanceTableItem.Name) is not ThingDefinition chosen)
+                    continue;
+
+                // Log spawn in run
+                RunManager.SpawnCounter.Increment(chosen.Name);
+                spawnCounter.Increment(chosen.Name);
+
+                // Flag placeholder as used
+                placeholder.Used = true;
+
+                var instance = CreateThingClone(chosen.Name);
+                instance.Position = placeholder.Position;
+                Children.Add(instance);
+
+                // Max per room
+                if (maxInstances != -1 && spawnCounter.Increment(chosen.Name) >= maxInstances)
+                    return;
+            }
+        }
+
+        // SpawnInWalkArea
+        private void SpawnInWalkArea<T>(DefinitionContainer<T> definitionContainer, IList<T> candidates, int maxInstances, MultiCounter spawnCounter)
+            where T : ThingDefinition
         {
             if (WalkArea == null || maxInstances == 0)
                 return;
 
             // 1) Collect candidates
-            var candidates = new List<ThingDefinition>();
-            foreach (var definition in definitions)
+            var selectedCandidates = new List<ThingDefinition>();
+            foreach (var definition in candidates)
             {
                 // Allowed if list is empty or contains WalkArea enum value
                 if (!definition.Placements.Contains(PlacementType.WalkArea))
@@ -172,15 +275,15 @@ namespace ScaryCastle
                 if (!definition.PassesMaxPerRunConstraint())
                     continue;
 
-                candidates.Add(definition);
+                selectedCandidates.Add(definition);
             }
 
-            if (candidates.Count == 0)
+            if (selectedCandidates.Count == 0)
                 return;
 
             // 2) Build chance table
             var table = new ChanceTable();
-            foreach (var c in candidates)
+            foreach (var c in selectedCandidates)
             {
                 var finalWeight = AdjustWeightByDifficulty(RoomGraph.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
                 table.Add(c.Name, finalWeight);
@@ -194,7 +297,7 @@ namespace ScaryCastle
             const float decay = 0.7f; // ajustable
 
             // seguridad
-            int safety = (candidates.Count * 2) + 10; // Un poco más de margen de seguridad
+            int safety = (selectedCandidates.Count * 2) + 10; // Un poco más de margen de seguridad
 
             // 3) Pick groups
             while (table.Count > 0 && safety-- > 0)
@@ -219,7 +322,7 @@ namespace ScaryCastle
                 // Si la descomentas, cada tipo de enemigo aparece una sola vez por grupo.
                 table.Remove(item.Name);
 
-                if (ThingDefinition.Find(item.Name) is not ThingDefinition chosen)
+                if (definitionContainer.Find(item.Name) is not ThingDefinition chosen)
                     continue;
 
                 int min = Math.Max(1, chosen.MinSpawnAmount);
@@ -263,107 +366,6 @@ namespace ScaryCastle
                 var instance = CreateThingClone(spawnedNames[i]);
                 instance.Position = points[i];
                 Children.Add(instance);
-            }
-        }
-
-        // Populate
-        private void Populate()
-        {
-            PopulateProps();
-            PopulateNPCs();
-        }
-
-        // PopulateNPCs
-        private void PopulateNPCs()
-        {
-            var definitions = GetCandidateDefinitions<ProceduralActor>(ThingDefinition.All);
-            SpawnInPlaceholders(definitions, RoomGraph.Definition.MaxEnemies, enemiesSpawnCounter, PlaceholderTarget.Enemy);
-            SpawnInWalkArea(definitions, RoomGraph.Definition.MaxEnemies, enemiesSpawnCounter);
-        }
-
-        // PopulateProps
-        private void PopulateProps()
-        {
-            var definitions = GetCandidateDefinitions<ProceduralProp>(ThingDefinition.All);
-            SpawnInPlaceholders(definitions, RoomGraph.Definition.MaxProps, propsSpawnCounter, PlaceholderTarget.Prop);
-            SpawnInWalkArea(definitions, RoomGraph.Definition.MaxProps, propsSpawnCounter);
-        }
-
-        // SpawnInPlaceholders
-        private void SpawnInPlaceholders(IList<ThingDefinition> definitions, int maxInstances, MultiCounter spawnCounter, PlaceholderTarget target)
-        {
-            if (Placeholders.Count == 0 || maxInstances == 0)
-                return;
-
-            // 1) Shuffle placeholders
-            var placeholders = new List<Placeholder>(Placeholders);
-            placeholders.Shuffle(Random);
-
-            // 2) Iterate placeholders
-            foreach (var placeholder in placeholders)
-            {
-                // Already used
-                if (placeholder.Used)
-                    continue;
-
-                // Functional filter (Prop vs Enemy)
-                if (placeholder.Target != PlaceholderTarget.Any && placeholder.Target != target)
-                    continue;
-
-                // Roll fillChance
-                if (!placeholder.FillChance.Roll(Random))
-                    continue;
-
-                // Collect candidates
-                var candidates = new List<ThingDefinition>();
-                foreach (var definition in definitions)
-                {
-                    // Is compatible with placehokder placement?
-                    if (!definition.Placements.Contains(placeholder.Placement))
-                        continue;
-
-                    // MaxPerRoom
-                    if (!definition.PassesMaxPerRoomConstraint(spawnCounter.GetCount(definition.Name)))
-                        continue;
-
-                    // MaxPerRun
-                    if (!definition.PassesMaxPerRunConstraint())
-                        continue;
-
-                    candidates.Add(definition);
-                }
-
-                if (candidates.Count == 0)
-                    continue;
-
-                // Pick
-                var chanceTable = new ChanceTable();
-                foreach (var c in candidates)
-                {
-                    var finalWeight = AdjustWeightByDifficulty(RoomGraph.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
-                    chanceTable.Add(c.Name, finalWeight);
-                }
-
-                if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
-                    continue;
-
-                if (ThingDefinition.Find(chanceTableItem.Name) is not ThingDefinition chosen)
-                    continue;
-
-                // Log spawn in run
-                RunManager.SpawnCounter.Increment(chosen.Name);
-                spawnCounter.Increment(chosen.Name);
-
-                // Flag placeholder as used
-                placeholder.Used = true;
-
-                var instance = CreateThingClone(chosen.Name);
-                instance.Position = placeholder.Position;
-                Children.Add(instance);
-
-                // Max per room
-                if (maxInstances != -1 && spawnCounter.Increment(chosen.Name) >= maxInstances)
-                    return;
             }
         }
 

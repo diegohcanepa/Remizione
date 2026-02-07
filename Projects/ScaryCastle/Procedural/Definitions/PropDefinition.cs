@@ -3,14 +3,14 @@
 namespace ScaryCastle
 {
     /// <summary>
-    /// ActorDefinition
+    /// PropDefinition
     /// </summary>
-    public sealed class ActorDefinition : ThingDefinition
+    public sealed class PropDefinition : ThingDefinition
     {
         #region Constructor
 
         // Constructor
-        public ActorDefinition(JsonElement element)
+        public PropDefinition(JsonElement element)
             : base(element)
         {
             Definitions.Add(this);
@@ -19,6 +19,6 @@ namespace ScaryCastle
         #endregion
 
         // Definitions
-        public static DefinitionContainer<ActorDefinition> Definitions { get; } = new(element => new ActorDefinition(element));
+        public static DefinitionContainer<PropDefinition> Definitions { get; } = new(element => new PropDefinition(element));
     }
 }

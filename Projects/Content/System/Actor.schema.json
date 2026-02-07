@@ -17,12 +17,24 @@
   ],
   "$defs": {
     "Actor": {
-      "description": "Un Actor hereda todo de Thing (y Core) pero se define aquí para validación específica.",
+      "description": "Un Actor hereda todo de Thing pero agrega propiedades de combate.",
       "allOf": [
         {
           "$ref": "./Thing.schema.json"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "attackCooldown": {
+              "type": "integer",
+              "description": "Tiempo de espera entre ataques (en ticks/frames).",
+              "minimum": 0,
+              "default": 0
+            }
+          }
         }
-      ]
+      ],
+      "unevaluatedProperties": false
     }
   }
 }

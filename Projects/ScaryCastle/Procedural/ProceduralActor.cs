@@ -20,10 +20,17 @@ namespace ScaryCastle
         protected ProceduralActor(GameSession session, string name)
             : base(session, name)
         {
-            Definition = ThingDefinition.Get(DeclaredName);
+            Definition = ActorDefinition.Definitions.Get(DeclaredName);
             CombatBehavior = CombatBehavior.Find(DeclaredName);
             nervousTween.Start(TweenStyle.Linear, 0, .3f, 40, -1);
         }
+
+        #region IProceduralThing explicit implementation
+
+        // Definition
+        ThingDefinition IProceduralThing.Definition => this.Definition;
+
+        #endregion
 
         private void AttackCore()
         {
@@ -51,7 +58,7 @@ namespace ScaryCastle
         public CombatBehavior? CombatBehavior { get; }
 
         // Definition
-        public ThingDefinition Definition { get; }
+        public ActorDefinition Definition { get; }
 
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType, Vector2 knockback)
