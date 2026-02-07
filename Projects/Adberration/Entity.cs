@@ -742,11 +742,7 @@ namespace Adberration
         public Vector2 Scale
         {
             get => Sprite.Scale;
-            set
-            {
-                if (value != Sprite.Scale)
-                    Sprite.Scale = value;
-            }
+            set => Sprite.Scale = value;
         }
 
         // ScaleX
@@ -754,11 +750,7 @@ namespace Adberration
         public float ScaleX
         {
             get => Sprite.ScaleX;
-            set
-            {
-                if (value != Sprite.ScaleX)
-                    Sprite.ScaleX = value;
-            }
+            set => Sprite.ScaleX = value;
         }
 
         // ScaleY
@@ -766,11 +758,7 @@ namespace Adberration
         public float ScaleY
         {
             get => Sprite.ScaleY;
-            set
-            {
-                if (value != Sprite.ScaleY)
-                    Sprite.ScaleY = value;
-            }
+            set => Sprite.ScaleY = value;
         }
 
         // Session
@@ -833,11 +821,7 @@ namespace Adberration
         public float X
         {
             get => Sprite.X;
-            set
-            {
-                if (value != Sprite.X)
-                    Sprite.X = value;
-            }
+            set => Sprite.X = value;
         }
 
         // Y
@@ -845,11 +829,7 @@ namespace Adberration
         public float Y
         {
             get => Sprite.Y;
-            set
-            {
-                if (value != Sprite.Y)
-                    Sprite.Y = value;
-            }
+            set => Sprite.Y = value;
         }
 
         /// <summary>

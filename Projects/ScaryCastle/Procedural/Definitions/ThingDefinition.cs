@@ -9,7 +9,7 @@ namespace ScaryCastle
     /// <summary>
     /// ThingDefinition
     /// </summary>
-    public sealed class ThingDefinition : EntityDefinition
+    public abstract class ThingDefinition : EntityDefinition
     {
         #region Private fields
 
@@ -23,7 +23,7 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public ThingDefinition(JsonElement element)
+        protected ThingDefinition(JsonElement element)
             : base(element)
         {
             // MaxPerRoom

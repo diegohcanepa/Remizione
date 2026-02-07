@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Engendro;
+using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
 {
@@ -7,6 +8,8 @@ namespace ScaryCastle
     /// </summary>
     public sealed class EnviousEye : ProceduralActor
     {
+        private readonly Vector2Tween scaleTween;
+
         // Constructor
         public EnviousEye(GameSession session, string name)
             : base(session, name)
@@ -15,21 +18,27 @@ namespace ScaryCastle
             FastMoveFactor = 3;
             Guts = 7;
             ShadowSpotSize = 0;
+            AllowRandomMovement = true;
+            scaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.Zero, new(0, .05f), 600, -1);
         }
 
         #region Protected members
 
-        // OnLoad
-        protected override void OnLoad()
+        // OnDraw
+        protected override void OnDraw(GameTime gameTime)
         {
-            base.OnLoad();
-            //this.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.One, new(1, 1.05f), 600, -1);
+            SupressOnTransformNotification++;
+            Scale += scaleTween.CurrentValue;
+            base.OnDraw(gameTime);
+            Scale -= scaleTween.CurrentValue;
+            SupressOnTransformNotification--;
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+            scaleTween.Update(gameTime);
         }
 
         #endregion

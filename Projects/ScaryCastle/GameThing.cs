@@ -302,6 +302,9 @@ namespace ScaryCastle
         // OnTransform
         protected override void OnTransform(TransformChange change)
         {
+            if (SupressOnTransformNotification > 0)
+                return;
+
             base.OnTransform(change);
 
             isHotspotDirty = true;
@@ -374,6 +377,9 @@ namespace ScaryCastle
 
         // SuppressImpactWordOnDeath
         protected bool SuppressImpactWordOnDeath { get; init; }
+
+        // SupressOnTransformNotification
+        protected int SupressOnTransformNotification { get; set; }
 
         #endregion
 

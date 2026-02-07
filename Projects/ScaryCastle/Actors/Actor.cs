@@ -15,7 +15,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private UIContextualHealthMeter? healthMeter;
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -24,6 +23,7 @@ namespace ScaryCastle
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private GameThing? pendingInteractiveTarget;
+        private Vector2 pendingInteractiveTargetPosition;
         private Item? pendingInteractiveTargetItem;
         private readonly List<Vector2> pendingPathNodes = [];
         private readonly GameSession session;
@@ -41,7 +41,6 @@ namespace ScaryCastle
             this.session = session;
             this.Atlas = Atlases.Actors;
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
-            this.CombatBehavior = CombatBehavior.Find(DeclaredName);
             this.DisplayNameKey = $"Actor.{DeclaredName}";
             this.IgnoreWalkArea = false;
             this.SuppressImpactWordOnDeath = true;
@@ -99,7 +98,7 @@ namespace ScaryCastle
             if (!IsPlayer)
                 return;
 
-            if (pendingInteractiveTarget != null)
+            if (pendingInteractiveTarget != null && DistanceTo(pendingInteractiveTargetPosition) < 5)
             {
                 session.InteractionContext.HeldItem = null;
                 FaceTo(pendingInteractiveTarget);
@@ -107,6 +106,7 @@ namespace ScaryCastle
             }
 
             pendingInteractiveTarget = null;
+            pendingInteractiveTargetPosition = Vector2.Zero;
             pendingInteractiveTargetItem = null;
         }
 
@@ -272,8 +272,6 @@ namespace ScaryCastle
                 Rotation -= moveBalancingTween.CurrentValue;
 
             footstepEffect?.Draw(gameTime);
-
-            healthMeter?.Draw(gameTime);
         }
 
         // OnLoad
@@ -302,8 +300,6 @@ namespace ScaryCastle
         // OnStartMoving
         protected override void OnStartMoving()
         {
-            healthMeter?.Hide();
-
             StateMachine.ChangeState(ActorStateNames.Move);
 
             if (AnimationSettings.MoveBounce)
@@ -349,20 +345,12 @@ namespace ScaryCastle
                 Stand();
                 StateMachine.ChangeState(ActorStateNames.Hurt);
             }
-
-            if (!IsDead)
-            {
-                healthMeter ??= new(this);
-                healthMeter.Show();
-            }
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-
-            healthMeter?.Update(gameTime);
 
             headTween.Update(gameTime);
 
@@ -440,7 +428,9 @@ namespace ScaryCastle
 
             var destination = target.GetApproachPosition(this);
             var result = target != this && MoveTo(destination);
+            
             this.pendingInteractiveTarget = target;
+            this.pendingInteractiveTargetPosition = destination;
             this.pendingInteractiveTargetItem = item;
 
             if (!result)
@@ -460,15 +450,6 @@ namespace ScaryCastle
 
                 return StateMachine.CurrentState is ActorStandState or ActorMoveState;
             }
-        }
-
-        // CombatBehavior
-        public CombatBehavior? CombatBehavior { get; }
-
-        // GetCombatIntent
-        public CombatIntentDescriptor? GetCombatIntent()
-        {
-            return CombatBehavior == null ? null : Brain.Decide(CombatBehavior, HP, MaxHP);
         }
 
         // FastMove
@@ -552,6 +533,10 @@ namespace ScaryCastle
             }
         }
 
+        // IsAttacking
+        [ScriptProperty]
+        public bool IsAttacking { get; set; }
+
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }
 
@@ -564,6 +549,13 @@ namespace ScaryCastle
 
         // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;
+
+        // MoveRandomly
+        public void MoveRandomly()
+        {
+            if (Room?.WalkArea is WalkArea walkArea)
+                MoveTo(walkArea.RandomWalkablePoint());
+        }
 
         // MoveTo
         public override bool MoveTo(Vector2 destination)

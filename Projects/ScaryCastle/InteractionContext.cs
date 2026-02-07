@@ -98,6 +98,8 @@ namespace ScaryCastle
             {
                 if (value != field)
                 {
+                    (field as ProceduralActor)?.HideHealthMeter();
+
                     field = value;
 
                     UseWithScript = null;
@@ -106,6 +108,8 @@ namespace ScaryCastle
                         UseWithScript = field.Session.ScriptLibrary.FindOverload(field.DeclaredName, HeldItem.Name);
 
                     InvalidateText();
+
+                    (field as ProceduralActor)?.ShowHealthMeter();
                 }
             }
         }

@@ -3,22 +3,23 @@ using Microsoft.Xna.Framework;
 
 namespace ScaryCastle.Scripting
 {
-    // AwaitPlayerApproachCommand
-    // Syntax: {GameThing} [#behavior:ApproachBehavior]
+    // AwaitApproachCommand
+    // Syntax: {Source:Actor} {Target:GameThing} [#behavior:ApproachBehavior]
     [ForceAwait]
     [ScriptStatement(CodingContext.Execution)]
-    internal sealed class AwaitPlayerApproachCommand : AwaitableCommand
+    internal sealed class AwaitApproachCommand : AwaitableCommand
     {
         private readonly ApproachBehavior? behavior;
-        private Actor? player;
         private int directionCooldown;
+        private Actor? source;
         private GameThing? target;
 
         // Constructor
-        internal AwaitPlayerApproachCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, BehaviorArg)
+        internal AwaitApproachCommand(Script script, string source, StatementBody body)
+            : base(script, source, body, 2, BehaviorArg)
         {
-            AssertEntity<GameThing>(0);
+            AssertEntity<Actor>(0);
+            AssertEntity<GameThing>(1);
 
             if (HasArg(BehaviorArg))
                 behavior = Parser.ParseEnumArgument<ApproachBehavior>(this, BehaviorArg);
@@ -32,28 +33,28 @@ namespace ScaryCastle.Scripting
             if (Session is not GameSession session)
                 return;
 
-            target = AssertEntity<GameThing>(0);
+            source = AssertEntity<Actor>(0);
+            if (source == null || !source.IsInCurrentRoom || !source.CanMove)
+                return;
+
+            target = AssertEntity<GameThing>(1);
             if (target == null || !target.IsInCurrentRoom)
                 return;
 
-            player = session.Player;
-            if (player == null || !player.CanMove)
-                return;
+            var destination = target.GetApproachPosition(source, behavior);
 
-            var destination = target.GetApproachPosition(player, behavior);
-
-            directionCooldown = player.MoveTo(destination) ? 300 : 0;
+            directionCooldown = source.MoveTo(destination) ? 300 : 0;
         }
 
         // OnExecutionCompleted
         protected override void OnExecutionCompleted()
         {
-            if (player != null && target != null)
+            if (source != null && target != null)
             {
                 if (behavior is ApproachBehavior.FaceToFace or ApproachBehavior.ClosestSide)
-                    player.FaceTo(target);
+                    source.FaceTo(target);
 
-                player = null;
+                source = null;
                 target = null;
             }
         }
@@ -63,13 +64,13 @@ namespace ScaryCastle.Scripting
         {
             base.OnUpdate(gameTime);
 
-            if (player != null && !player.IsMoving && directionCooldown > 0)
+            if (source != null && !source.IsMoving && directionCooldown > 0)
                 directionCooldown -= gameTime.ElapsedGameTime.Milliseconds;
         }
 
         #endregion
 
         // IsAwaiting
-        public override bool IsAwaiting => player != null && (player.IsMoving || directionCooldown > 0);
+        public override bool IsAwaiting => source != null && (source.IsMoving || directionCooldown > 0);
     }
 }
