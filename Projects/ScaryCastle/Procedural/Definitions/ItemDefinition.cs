@@ -12,9 +12,6 @@ namespace ScaryCastle
     /// </summary>
     public sealed class ItemDefinition : Definition
     {
-        private static readonly Dictionary<string, ItemDefinition> data = [];
-        private static readonly List<ItemDefinition> dataList = [];
-
         #region Constructor
 
         // Constructor
@@ -91,64 +88,7 @@ namespace ScaryCastle
                 }
             }
 
-            data.Add(Name, this);
-            dataList.Add(this);
-        }
-
-        #endregion
-
-        #region Static members
-
-        // All
-        public static ReadOnlyCollection<ItemDefinition> All { get; } = new(dataList);
-
-        // Find
-        public static ItemDefinition? Find(string name)
-        {
-            return data.TryGetValue(name, out var result) ? result : null;
-        }
-
-        // Get
-        public static ItemDefinition Get(string name)
-        {
-            return Find(name) ?? throw new InvalidOperationException($"{nameof(ItemDefinition)} '{name}' not found.");
-        }
-
-        // GetItems
-        public static List<ItemDefinition> GetItems(ItemCategory category)
-        {
-            var result = new List<ItemDefinition>();
-
-            for (var i = 0; i < dataList.Count; i++)
-            {
-                if (dataList[i].Category == category)
-                    result.Add(dataList[i]);
-            }
-
-            return result;
-        }
-
-        // GetItems
-        public static List<ItemDefinition> GetItems(Realm realm)
-        {
-            var result = new List<ItemDefinition>();
-
-            for (var i = 0; i < dataList.Count; i++)
-            {
-                if (dataList[i].Realm == realm)
-                    result.Add(dataList[i]);
-            }
-
-            return result;
-        }
-
-        // Load
-        public static void Load(string fileName)
-        {
-            if (data.Count > 0)
-                throw new InvalidOperationException("Data already loaded.");
-
-            Utils.LoadJsonData(fileName, element => new ItemDefinition(element));
+            Definitions.Add(this);
         }
 
         #endregion
@@ -161,6 +101,9 @@ namespace ScaryCastle
 
         // ConsumptionType
         public ConsumptionType ConsumptionType { get; }
+
+        // Definitions
+        public static ItemDefinitionContainer Definitions { get; } = new(element => new ItemDefinition(element));
 
         // Durability
         public Ratio Durability { get; }

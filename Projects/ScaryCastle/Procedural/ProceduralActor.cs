@@ -21,7 +21,7 @@ namespace ScaryCastle
             : base(session, name)
         {
             Definition = ActorDefinition.Definitions.Get(DeclaredName);
-            CombatBehavior = CombatBehavior.Find(DeclaredName);
+            CombatBehavior = CombatBehavior.Behaviors.Find(DeclaredName);
             nervousTween.Start(TweenStyle.Linear, 0, .3f, 40, -1);
         }
 

@@ -49,9 +49,9 @@ namespace ScaryCastle
         // InitializeProceduralContent
         private void InitializeProceduralContent()
         {
-            CombatBehavior.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "CombatBehaviors.json"));
-            ItemDefinition.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Items.json"));
-            RoomDefinition.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
+            CombatBehavior.Behaviors.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "CombatBehaviors.json"));
+            ItemDefinition.Definitions.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Items.json"));
+            RoomDefinition.Definitions.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
             ActorDefinition.Definitions.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"));
             PropDefinition.Definitions.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"));
         }

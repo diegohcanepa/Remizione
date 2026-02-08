@@ -89,7 +89,7 @@ namespace ScaryCastle.Procedural
         {
             var result = new List<RoomDefinition>();
 
-            foreach (var definition in RoomDefinition.All)
+            foreach (var definition in RoomDefinition.Definitions.All)
             {
                 // Run constraints
                 if (!definition.PassesFloorConstraints(session))

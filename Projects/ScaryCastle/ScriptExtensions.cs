@@ -12,7 +12,7 @@ namespace ScaryCastle
             // AssertItemDefinition
             public void AssertItemDefinition(string name)
             {
-                if (ItemDefinition.Find(name) == null)
+                if (ItemDefinition.Definitions.Find(name) == null)
                     throw new ScriptException(script, $"Item definition [{name}] does not exist.");
             }
         }

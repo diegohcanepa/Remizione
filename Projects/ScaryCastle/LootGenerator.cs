@@ -120,7 +120,7 @@ namespace ScaryCastle
             lootRealm ??= roomDefinition.PreferredLootRealm;
             lootCategory ??= roomDefinition.PreferredLootCategory;
 
-            foreach (var definition in ItemDefinition.All)
+            foreach (var definition in ItemDefinition.Definitions.All)
             {
                 if (denyCategories != null && denyCategories.Contains(definition.Category))
                     continue;
@@ -185,7 +185,7 @@ namespace ScaryCastle
             if (item != null) return item;
 
             // Fallback a items básicos si todo falla
-            var fallbackCandidates = ItemDefinition.All.Where(x => x.Quality <= 1).ToList();
+            var fallbackCandidates = ItemDefinition.Definitions.All.Where(x => x.Quality <= 1).ToList();
 
             if (fallbackCandidates.Count == 0)
                 throw new InvalidOperationException("No items available for fallback.");

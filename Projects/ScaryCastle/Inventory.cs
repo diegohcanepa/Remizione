@@ -54,7 +54,7 @@ namespace ScaryCastle
         // Add
         public Item? Add(string name, int amount = 1)
         {
-            var definition = ItemDefinition.Find(name) ?? throw new InvalidOperationException("Item definition not found.");
+            var definition = ItemDefinition.Definitions.Find(name) ?? throw new InvalidOperationException("Item definition not found.");
             return Add(definition, amount);
         }
 
@@ -208,7 +208,7 @@ namespace ScaryCastle
             {
                 var itemData = itemList[i].Split(':');
 
-                if (ItemDefinition.Find(itemData[0]) != null)
+                if (ItemDefinition.Definitions.Find(itemData[0]) != null)
                 {
                     if (Add(itemData[0], int.Parse(itemData[1], CultureInfo.InvariantCulture)) is Item addedItem)
                     {

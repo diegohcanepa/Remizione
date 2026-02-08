@@ -11,7 +11,7 @@ namespace ScaryCastle.Scripting
         internal UseItemCommand(Script script, string source, StatementBody args)
             : base(script, source, args, 1)
         {
-            if (ItemDefinition.Find(Body.Clauses[0]) == null)
+            if (ItemDefinition.Definitions.Find(Body.Clauses[0]) == null)
                 throw new ScriptException(this, $"Item '{Body.Clauses[0]}' is not defined.");
         }
 

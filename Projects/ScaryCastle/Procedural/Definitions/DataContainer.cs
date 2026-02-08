@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engendro;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
@@ -6,16 +7,16 @@ using System.Text.Json;
 namespace ScaryCastle
 {
     /// <summary>
-    /// DefinitionContainer
+    /// DataContainer
     /// </summary>
-    public sealed class DefinitionContainer<T> where T : Definition
+    public class DataContainer<T> where T : INamedObject
     {
         private readonly Dictionary<string, T> data = [];
         private readonly List<T> dataList = [];
         private readonly Func<JsonElement, T> onCreate;
 
         // Constructor
-        public DefinitionContainer(Func<JsonElement, T> onCreate)
+        public DataContainer(Func<JsonElement, T> onCreate)
         {
             this.onCreate = onCreate;
             this.All = dataList.AsReadOnly();
@@ -34,7 +35,7 @@ namespace ScaryCastle
         // Find
         public T? Find(string name)
         {
-            return data.TryGetValue(name, out T? definition) ? definition : null;
+            return data.TryGetValue(name, out T? definition) ? definition : default;
         }
 
         // Get

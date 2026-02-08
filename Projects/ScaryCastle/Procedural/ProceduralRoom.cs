@@ -176,7 +176,7 @@ namespace ScaryCastle
         }
 
         // SpawnInPlaceholders
-        private void SpawnInPlaceholders<T>(DefinitionContainer<T> definitionContainer, IList<T> candidates, int maxInstances, MultiCounter spawnCounter, PlaceholderTarget target)
+        private void SpawnInPlaceholders<T>(DataContainer<T> definitionContainer, IList<T> candidates, int maxInstances, MultiCounter spawnCounter, PlaceholderTarget target)
             where T : ThingDefinition
         {
             if (Placeholders.Count == 0 || maxInstances == 0)
@@ -255,7 +255,7 @@ namespace ScaryCastle
         }
 
         // SpawnInWalkArea
-        private void SpawnInWalkArea<T>(DefinitionContainer<T> definitionContainer, IList<T> candidates, int maxInstances, MultiCounter spawnCounter)
+        private void SpawnInWalkArea<T>(DataContainer<T> definitionContainer, IList<T> candidates, int maxInstances, MultiCounter spawnCounter)
             where T : ThingDefinition
         {
             if (WalkArea == null || maxInstances == 0)

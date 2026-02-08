@@ -19,6 +19,6 @@ namespace ScaryCastle
         #endregion
 
         // Definitions
-        public static DefinitionContainer<ActorDefinition> Definitions { get; } = new(element => new ActorDefinition(element));
+        public static DataContainer<ActorDefinition> Definitions { get; } = new(element => new ActorDefinition(element));
     }
 }

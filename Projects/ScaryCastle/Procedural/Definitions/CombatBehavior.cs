@@ -9,12 +9,10 @@ namespace ScaryCastle
     /// <summary>
     /// CombatBehavior
     /// </summary>
-    public sealed class CombatBehavior
+    public sealed class CombatBehavior : INamedObject
     {
         #region Private fields
 
-        private static readonly Dictionary<string, CombatBehavior> data = [];
-        private static readonly List<CombatBehavior> dataList = [];
         private readonly List<CombatIntentDescriptor> intentDescriptors = [];
 
         #endregion
@@ -44,42 +42,16 @@ namespace ScaryCastle
 
             IntentDescriptors = intentDescriptors.AsReadOnly();
 
-            data.Add(Name, this);
-            dataList.Add(this);
-        }
-
-        #endregion
-
-        #region Static members
-
-        // All
-        public static ReadOnlyCollection<CombatBehavior> All { get; } = new(dataList);
-
-        // Find
-        public static CombatBehavior? Find(string name)
-        {
-            return data.TryGetValue(name, out var result) ? result : null;
-        }
-
-        // Get
-        public static CombatBehavior Get(string name)
-        {
-            return Find(name) ?? throw new InvalidOperationException($"{nameof(CombatBehavior)} '{name}' not found.");
-        }
-
-        // Load
-        public static void Load(string fileName)
-        {
-            if (data.Count > 0)
-                throw new InvalidOperationException("Data already loaded.");
-
-            Utils.LoadJsonData(fileName, element => new CombatBehavior(element));
+            Behaviors.Add(this);
         }
 
         #endregion
 
         // Archetype
         public CombatBehaviorArchetype Archetype { get; }
+
+        // Behaviors
+        public static DataContainer<CombatBehavior> Behaviors { get; } = new(element => new CombatBehavior(element));
 
         // IntentDescriptors
         public ReadOnlyCollection<CombatIntentDescriptor> IntentDescriptors { get; }

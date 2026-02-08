@@ -12,8 +12,6 @@ namespace ScaryCastle
     /// </summary>
     public sealed class RoomDefinition : EntityDefinition
     {
-        private static readonly Dictionary<string, RoomDefinition> data = [];
-        private static readonly List<RoomDefinition> dataList = [];
         private readonly List<Placeholder> placeholders = [];
 
         #region Constructor
@@ -72,39 +70,13 @@ namespace ScaryCastle
 
             Placeholders = placeholders.AsReadOnly();
 
-            data.Add(Name, this);
-            dataList.Add(this);
+            Definitions.Add(this);
         }
 
         #endregion
 
-        #region Static members
-
-        // All
-        public static ReadOnlyCollection<RoomDefinition> All { get; } = new(dataList);
-
-        // Find
-        public static RoomDefinition? Find(string name)
-        {
-            return data.TryGetValue(name, out var definition) ? definition : null;
-        }
-
-        // Get
-        public static RoomDefinition Get(string name)
-        {
-            return data[name];
-        }
-
-        // Load
-        public static void Load(string fileName)
-        {
-            if (data.Count > 0)
-                throw new InvalidOperationException("Data already loaded.");
-
-            Utils.LoadJsonData(fileName, element => new RoomDefinition(element));
-        }
-
-        #endregion
+        // Definitions
+        public static DataContainer<RoomDefinition> Definitions { get; } = new(element => new RoomDefinition(element));
 
         // DoorDown
         public Vector2 DoorDown { get; }

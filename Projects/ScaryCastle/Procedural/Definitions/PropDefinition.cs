@@ -19,6 +19,6 @@ namespace ScaryCastle
         #endregion
 
         // Definitions
-        public static DefinitionContainer<PropDefinition> Definitions { get; } = new(element => new PropDefinition(element));
+        public static DataContainer<PropDefinition> Definitions { get; } = new(element => new PropDefinition(element));
     }
 }

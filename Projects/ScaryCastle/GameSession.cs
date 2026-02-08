@@ -299,7 +299,7 @@ namespace ScaryCastle
             {
                 if (script.ScriptType == ScriptType.Outcome && script.OverloadName.Length > 0)
                 {
-                    if (ItemDefinition.Find(script.OverloadName) == null)
+                    if (ItemDefinition.Definitions.Find(script.OverloadName) == null)
                         throw new InvalidOperationException($"The item definition supplied in [{script.Name}] does not exist.");
                 }
             }
