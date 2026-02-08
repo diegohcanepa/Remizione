@@ -437,6 +437,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/EnergyBolt3.wav;Audio/FX/EnergyBolt3
 
+#begin Audio/FX/EnviousEyeAttack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/EnviousEyeAttack.wav;Audio/FX/EnviousEyeAttack
+
 #begin Audio/FX/Error1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

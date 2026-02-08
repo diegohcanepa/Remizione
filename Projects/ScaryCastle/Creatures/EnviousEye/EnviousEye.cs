@@ -24,6 +24,13 @@ namespace ScaryCastle
 
         #region Protected members
 
+        // OnAttack
+        protected override void OnAttack()
+        {
+            base.OnAttack();
+            PlaySound("EnviousEyeAttack");
+        }
+
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {

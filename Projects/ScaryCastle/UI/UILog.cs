@@ -9,13 +9,9 @@ namespace ScaryCastle
     /// </summary>
     public sealed class UILog : GameObject
     {
-        private ItemDefinition? itemDefinition;
         private readonly FloatTween fadeTween = new() { StartDelay = 2600 };
         private readonly ImageSprite icon;
-        private bool isWarning;
         private readonly TextSprite nounText;
-        private int showCooldown;
-        private LogVerb verb;
         private readonly TextSprite verbText;
 
         // Constructor
@@ -81,31 +77,6 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (showCooldown > 0)
-            {
-                showCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-
-                if (showCooldown <= 0 && itemDefinition != null)
-                {
-                    ShowCore(Localization.GetValue(verb), itemDefinition.LocalizedDisplayName, isWarning, itemDefinition.Image);
-
-                    if (verb == LogVerb.Found)
-                    {
-                        if (itemDefinition.PickupSound != null)
-                            itemDefinition.PickupSound.Play();
-                        else
-                            Sound.Play(SoundNames.PickupGeneric);
-                    }
-
-                    else if (verb == LogVerb.Requires)
-                        Sound.Play(SoundNames.Error);
-
-                    itemDefinition = null;
-                }
-
-                return;
-            }
-
             fadeTween.Update(gameTime);
             verbText.Update(gameTime);
             nounText.Update(gameTime);
@@ -125,24 +96,12 @@ namespace ScaryCastle
         }
 
         // Show
-        public void Show(string message, bool isWarning, AtlasImage? image = null)
+        public void Show(LogVerb verb, ItemDefinition itemDefinition, bool isWarning = false)
         {
-            ShowCore(message, string.Empty, isWarning, image);
-        }
+            ShowCore(Localization.GetValue(verb), itemDefinition.LocalizedDisplayName, isWarning, itemDefinition.Image);
 
-        // Show
-        public void Show(LogVerb verb, string noun, bool isWarning, AtlasImage? image = null)
-        {
-            ShowCore(Localization.GetValue(verb), noun, isWarning, image);
-        }
-
-        // Show
-        public void Show(LogVerb verb, ItemDefinition itemDefinition, int delay)
-        {
-            this.showCooldown = delay;
-            this.verb = verb;
-            this.itemDefinition = itemDefinition;
-            this.isWarning = verb is LogVerb.Used or LogVerb.Requires;
+            if (verb == LogVerb.Requires)
+                Sound.Play(SoundNames.Error);
         }
     }
 }

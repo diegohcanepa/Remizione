@@ -82,8 +82,6 @@ namespace ScaryCastle
             image.Tweens.RotationTween = rotationTween;
 
             spawnLeft = !spawnLeft;
-
-            Sound.Play(SoundNames.PopHeart);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace ScaryCastle
     /// <summary>
     /// ProceduralActor
     /// </summary>
-    public abstract class ProceduralActor : Actor, IProceduralThing
+    public abstract class ProceduralActor : Actor, IThingDefinition
     {
         private int attackCooldown;
         private UIContextualHealthMeter? healthMeter;
@@ -25,13 +25,14 @@ namespace ScaryCastle
             nervousTween.Start(TweenStyle.Linear, 0, .3f, 40, -1);
         }
 
-        #region IProceduralThing explicit implementation
+        #region IThingDefinition explicit implementation
 
         // Definition
-        ThingDefinition IProceduralThing.Definition => this.Definition;
+        ThingDefinition IThingDefinition.Definition => this.Definition;
 
         #endregion
 
+        // AttackCore
         private void AttackCore()
         {
             if (CombatBehavior == null || Session.Player == null)
@@ -41,14 +42,20 @@ namespace ScaryCastle
                 EffectDescriptor.Apply(intent.EffectDescriptors, this, Session.Player);
         }
 
+        protected virtual void OnAttack()
+        {
+        }
+
 
         // Attack
         [ScriptMethod]
         public void Attack()
         {
+            Session.Player?.StopMoving();
             attackCooldown = 5000;
             var distance = Direction == FacingDirection.Left ? -AttackRange : AttackRange;
-            Tweens.XTween = FloatTween.Create(TweenStyle.Linear, X, X + distance, 100, 2, AttackCore);
+            Tweens.XTween = FloatTween.Create(TweenStyle.CubicInOut, X, X + 6, 100, 2, AttackCore);
+            OnAttack();
         }
 
         // AttackRange
@@ -105,15 +112,15 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            if (attackCooldown > 0)
-                attackCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-
             nervousTween?.Update(gameTime);
 
             healthMeter?.Update(gameTime);
 
             if (!Session.IsAwaiting)
             {
+                if (attackCooldown > 0)
+                    attackCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+
                 if (IsNervous && Session.Player != null)
                 {
                     if (attackCooldown <= 0 && DistanceTo(Session.Player) <= AttackRange)

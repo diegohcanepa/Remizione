@@ -1,9 +1,9 @@
 ﻿namespace ScaryCastle
 {
     /// <summary>
-    /// IProceduralThing
+    /// IThingDefinition
     /// </summary>
-    internal interface IProceduralThing
+    internal interface IThingDefinition
     {
         ThingDefinition Definition { get; }
     }

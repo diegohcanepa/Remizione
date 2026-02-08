@@ -24,6 +24,7 @@ namespace ScaryCastle.Scripting
                     var inventory = lootContainer.Loot.InventoryCategory == InventoryCategory.Common ? session.CommonInventory : session.SacredInventory;
                     lootContainer.Loot.PickupSound?.Play();
                     inventory.Add(lootContainer.Loot);
+                    session.HUD.Log.Show(LogVerb.Found, lootContainer.Loot);
                     lootContainer.Loot = null;
                 }
             }

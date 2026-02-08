@@ -98,7 +98,7 @@ namespace ScaryCastle
             if (!IsPlayer)
                 return;
 
-            if (pendingInteractiveTarget != null && DistanceTo(pendingInteractiveTargetPosition) < 5)
+            if (pendingInteractiveTarget != null && pendingInteractiveTarget.Position == pendingInteractiveTargetPosition)
             {
                 session.InteractionContext.HeldItem = null;
                 FaceTo(pendingInteractiveTarget);
@@ -430,7 +430,7 @@ namespace ScaryCastle
             var result = target != this && MoveTo(destination);
             
             this.pendingInteractiveTarget = target;
-            this.pendingInteractiveTargetPosition = destination;
+            this.pendingInteractiveTargetPosition = target.Position;
             this.pendingInteractiveTargetItem = item;
 
             if (!result)
@@ -551,6 +551,7 @@ namespace ScaryCastle
         public override bool IsWalkAreaHole => false;
 
         // MoveRandomly
+        [ScriptMethod]
         public void MoveRandomly()
         {
             if (Room?.WalkArea is WalkArea walkArea)

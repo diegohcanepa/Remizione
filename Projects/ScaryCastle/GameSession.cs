@@ -147,7 +147,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("say", typeof(SayCommand));
             AotTypeRegistry.Register("select-walk-area", typeof(SelectWalkAreaCommand));
             AotTypeRegistry.Register("set-light", typeof(SetLightCommand));
-            AotTypeRegistry.Register("show-log-message", typeof(ShowLogMessageCommand));
             AotTypeRegistry.Register("show-message", typeof(ShowMessageCommand));
             AotTypeRegistry.Register("take-damage", typeof(TakeDamageCommand));
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
@@ -315,7 +314,7 @@ namespace ScaryCastle
                 if (entity is not GameThing thing)
                     continue;
 
-                if (thing is not IProceduralThing)
+                if (thing is not IThingDefinition)
                     continue;
 
                 if (thing.InstanceKind == EntityInstanceKind.Declared)

@@ -38,7 +38,7 @@ namespace ScaryCastle
         // DropCoins
         public void DropCoins(GameThing thing)
         {
-            if (thing is not IProceduralThing t)
+            if (thing is not IThingDefinition t)
                 return;
 
             if (session.Room is not ProceduralRoom room)
@@ -62,7 +62,7 @@ namespace ScaryCastle
         // DropLoot
         public void DropLoot(GameThing thing)
         {
-            if (thing is not IProceduralThing t)
+            if (thing is not IThingDefinition t)
                 return;
 
             if (session.Room is not ProceduralRoom)
@@ -91,7 +91,7 @@ namespace ScaryCastle
         // Get
         public ItemDefinition? Get(GameThing thing)
         {
-            if (thing is IProceduralThing t)
+            if (thing is IThingDefinition t)
                 return Get(t.Definition.PreferredLootRealm, t.Definition.PreferredLootCategory, null, t.Definition.QualityBoost);
             else
                 return null;

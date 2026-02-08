@@ -3,7 +3,7 @@
     /// <summary>
     /// ProceduralProp
     /// </summary>
-    public abstract class ProceduralProp : Prop, IProceduralThing
+    public abstract class ProceduralProp : Prop, IThingDefinition
     {
         // Constructor
         protected ProceduralProp(GameSession session, string name)
@@ -15,7 +15,7 @@
         #region IProceduralThing explicit implementation
 
         // Definition
-        ThingDefinition IProceduralThing.Definition => this.Definition;
+        ThingDefinition IThingDefinition.Definition => this.Definition;
 
         #endregion
 
