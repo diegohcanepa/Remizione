@@ -421,12 +421,12 @@ namespace ScaryCastle
         }
 
         // ApproachAndInteract
-        public void ApproachAndInteract(GameThing target, Item? item)
+        public void ApproachAndInteract(GameThing target, Item? item, ApproachBehavior? approachBehavior = null)
         {
             if (!IsPlayer)
                 return;
 
-            var destination = target.GetApproachPosition(this);
+            var destination = target.GetApproachPosition(this, approachBehavior);
             var result = target != this && MoveTo(destination);
             
             this.pendingInteractiveTarget = target;
@@ -451,6 +451,9 @@ namespace ScaryCastle
                 return StateMachine.CurrentState is ActorStandState or ActorMoveState;
             }
         }
+
+        // CombatBehavior
+        public CombatBehavior? CombatBehavior { get; init; }
 
         // FastMove
         public bool FastMove { get; set; }

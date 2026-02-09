@@ -843,6 +843,30 @@ namespace ScaryCastle
         // IsEmittingLight
         public virtual bool IsEmittingLight => AttachedLight != null && !IgnoreAttachedLight && AttachedLight.IsEmitting;
 
+        // IsFacingTowards
+        public bool IsFacingTowards(Actor target, float verticalTolerance = float.MaxValue)
+        {
+            // 1. Chequeo Vertical (Crítico para evitar ataques entre pisos)
+            // Si la diferencia de altura es mayor a la tolerancia, no lo "ve".
+            float diffY = Math.Abs(Position.Y - target.Position.Y);
+            if (diffY > verticalTolerance)
+                return false;
+
+            // 2. Chequeo Horizontal
+            float diffX = target.Position.X - Position.X;
+
+            // Si el objetivo está a la DERECHA (diffX > 0), debo mirar a la Derecha.
+            if (diffX > 0)
+                return Direction == FacingDirection.Right;
+
+            // Si el objetivo está a la IZQUIERDA (diffX < 0), debo mirar a la Izquierda.
+            else if (diffX < 0)
+                return Direction == FacingDirection.Left;
+
+            // Si están en el mismo pixel exacto de X, asumimos que sí lo ve.
+            return true;
+        }
+
         // IsMouseOver
         public bool IsMouseOver()
         {

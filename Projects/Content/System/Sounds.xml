@@ -39,6 +39,7 @@
 	<FX Name="ElectricZapStrong" />
 	<FX Name="EnergyBolt" MaxInstances="8" Sounds="1..3" />
 	<FX Name="EnviousEyeAttack" MaxInstances="8" />
+	<FX Name="EnviousEyeMove" MaxInstances="8" Volume=".2" />
 	<FX Name="Error" MaxInstances="4" Sounds="1..2" />
 	<FX Name="Fart" />
 	<FX Name="FartLong" MaxInstances="4" Sounds="1..6" />

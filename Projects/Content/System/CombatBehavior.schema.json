@@ -22,13 +22,13 @@
         },
         "archetype": {
           "type": "string",
-          "enum": [ "Simple", "Aggressive", "Coward", "Erratic", "Berserk" ],
-          "default": "Simple"
+          "enum": [ "Tactical", "Berserk" ],
+          "default": "Tactical"
         },
         "intents": {
           "type": "array",
           "description": "Lista de intenciones (ataques, estados, etc.) de este bicho.",
-          "items": { "$ref": "./CombatIntentDescriptor.schema.json" },
+          "items": { "$ref": "./CombatIntent.schema.json" },
           "minItems": 1
         }
       },

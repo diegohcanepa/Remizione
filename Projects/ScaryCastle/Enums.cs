@@ -20,7 +20,10 @@ namespace ScaryCastle
     }
 
     // CombatBehaviorArchetype
-    public enum CombatBehaviorArchetype { Simple, Aggressive, Coward, Erratic, Berserk }
+    public enum CombatBehaviorArchetype { Tactical, Berserk }
+
+    // CombatIntentCategory
+    public enum CombatIntentCategory { Basic, Special }
 
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }
@@ -58,9 +61,6 @@ namespace ScaryCastle
 
     // ImpactWordName
     public enum ImpactWordName { None, AghGreen, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
-
-    // IntentCategory
-    public enum IntentCategory { Attack, Defense, Healing, Prayer, Status }
 
     // InventoryCategory
     public enum InventoryCategory { Common, Sacred }
@@ -109,7 +109,7 @@ namespace ScaryCastle
     public enum MessageKind { CannotPlaceItem, InventoryFull, NotEnoughCoins }
 
     // MouseCursorState
-    public enum MouseCursorState { Arrow, Cross, Down, Hand, Hit, Left, Right, Up, Wait }
+    public enum MouseCursorState { Arrow, Cross, Down, Hand, Hit, Left, Prohibition, Right, Up, Wait }
 
     // PlaceholderTarget
     public enum PlaceholderTarget { Prop, Enemy, Any }

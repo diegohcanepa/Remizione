@@ -98,8 +98,6 @@ namespace ScaryCastle
             {
                 if (value != field)
                 {
-                    (field as ProceduralActor)?.HideHealthMeter();
-
                     field = value;
 
                     UseWithScript = null;
@@ -108,8 +106,6 @@ namespace ScaryCastle
                         UseWithScript = field.Session.ScriptLibrary.FindOverload(field.DeclaredName, HeldItem.Name);
 
                     InvalidateText();
-
-                    (field as ProceduralActor)?.ShowHealthMeter();
                 }
             }
         }
@@ -159,7 +155,7 @@ namespace ScaryCastle
             else
             {
                 MouseCursor.CustomImage = null;
-                
+
                 if (session.HeadbuttMode)
                     MouseCursor.State = MouseCursorState.Hit;
                 else
@@ -187,7 +183,7 @@ namespace ScaryCastle
             }
             else
             {
-                player.ApproachAndInteract(Target, HeldItem);
+                player.ApproachAndInteract(Target, HeldItem, session.HeadbuttMode ? ApproachBehavior.ClosestSide : null);
             }
 
             return true;

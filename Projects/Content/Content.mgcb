@@ -443,6 +443,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/EnviousEyeAttack.wav;Audio/FX/EnviousEyeAttack
 
+#begin Audio/FX/EnviousEyeMove.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/EnviousEyeMove.wav;Audio/FX/EnviousEyeMove
+
 #begin Audio/FX/Error1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

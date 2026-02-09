@@ -366,6 +366,9 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">EnviousEye-assets/CloseAttack01.png</key>
+            <key type="filename">EnviousEye-assets/CloseAttack02.png</key>
+            <key type="filename">EnviousEye-assets/CloseAttack03.png</key>
             <key type="filename">EnviousEye-assets/Move01.png</key>
             <key type="filename">EnviousEye-assets/Move02.png</key>
             <key type="filename">EnviousEye-assets/Move03.png</key>

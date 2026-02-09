@@ -1,8 +1,7 @@
-﻿using Adberration;
-using Adberration.Scripting;
+﻿using Adberration.Scripting;
 using Engendro;
-using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace ScaryCastle
 {
@@ -11,10 +10,14 @@ namespace ScaryCastle
     /// </summary>
     public abstract class ProceduralActor : Actor, IThingDefinition
     {
-        private int attackCooldown;
-        private UIContextualHealthMeter? healthMeter;
-        private int movementCooldown;
+        #region Private fields
+
+        private bool isAttacking;
         private readonly FloatTween nervousTween = new();
+
+        #endregion
+
+        #region Constructor
 
         // Constructor
         protected ProceduralActor(GameSession session, string name)
@@ -22,63 +25,169 @@ namespace ScaryCastle
         {
             Definition = ActorDefinition.Definitions.Get(DeclaredName);
             CombatBehavior = CombatBehavior.Behaviors.Find(DeclaredName);
-            nervousTween.Start(TweenStyle.Linear, 0, .3f, 40, -1);
+            nervousTween.Start(TweenStyle.Linear, 0, .4f, 40, -1);
         }
 
-        #region IThingDefinition explicit implementation
+        #endregion
 
-        // Definition
+        #region IThingDefinition
+
         ThingDefinition IThingDefinition.Definition => this.Definition;
 
         #endregion
 
-        // AttackCore
-        private void AttackCore()
+        #region Private members
+
+        // CheckCombatLogic
+        private void CheckCombatLogic()
         {
-            if (CombatBehavior == null || Session.Player == null)
+            if (Session.Player == null)
                 return;
 
-            if (Brain.Decide(CombatBehavior, HP, MaxHP) is CombatIntentDescriptor intent)
-                EffectDescriptor.Apply(intent.EffectDescriptors, this, Session.Player);
-        }
-
-        protected virtual void OnAttack()
-        {
-        }
-
-
-        // Attack
-        [ScriptMethod]
-        public void Attack()
-        {
-            Session.Player?.StopMoving();
-            attackCooldown = 5000;
-            var distance = Direction == FacingDirection.Left ? -AttackRange : AttackRange;
-            Tweens.XTween = FloatTween.Create(TweenStyle.CubicInOut, X, X + 6, 100, 2, AttackCore);
-            OnAttack();
-        }
-
-        // AttackRange
-        public int AttackRange { get; set; } = 15;
-
-        // CombatBehavior
-        public CombatBehavior? CombatBehavior { get; }
-
-        // Definition
-        public ActorDefinition Definition { get; }
-
-        // OnTakeDamage
-        protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType, Vector2 knockback)
-        {
-            base.OnTakeDamage(attacker, amount, damageType, knockback);
-
-            if (!IsDead)
+            // Intentar Atacar si el timer venció
+            if (AttackCooldown <= 0)
             {
-                ShowHealthMeter();
-                AudioManager.Music.PlayTag("Combat");
-                IsNervous = true;
+                if (IsFacingTowards(Session.Player))
+                {
+                    var dist = Vector2.Distance(Position, Session.Player.Position);
+
+                    if (dist <= AttackRange)
+                    {
+                        if (!RequiresLineOfSight || InLineOfSight(Session.Player.Position))
+                        {
+                            StartAttack();
+                        }
+                    }
+                }
             }
         }
+
+        // EndAttack
+        protected void EndAttack()
+        {
+            isAttacking = false;
+            AttackCooldown = AttackRate;
+        }
+
+        // InLineOfSight
+        protected virtual bool InLineOfSight(Vector2 targetPosition)
+        {
+            if (Room?.WalkArea != null)
+                return Room.WalkArea.InLineOfSight(Position, targetPosition);
+            else
+                return true;
+        }
+
+        // IsInsideVisibleBox
+        private bool IsInsideVisibleBox(Vector2 pos)
+        {
+            var view = Session.Camera.VisibleBox;
+            view.Inflate(-20, -20);
+            return view.Contains(pos);
+        }
+
+        // StartAttack
+        private void StartAttack()
+        {
+            isAttacking = true;
+            StopMoving();
+            Session.Player?.StopMoving();
+            BeginAttackExecution();
+        }
+
+        // UpdateMovementBehavior
+        private void UpdateMovementBehavior(GameTime gameTime)
+        {
+            if (!AllowMovementBehavior || MoveRate.IsEmpty || IsMoving)
+                return;
+
+            if (MoveCooldown > 0)
+            {
+                MoveCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+                if (MoveCooldown <= 0)
+                {
+                    BeginMovementBehavior();
+                    MoveCooldown = MoveRate.GetRandomValue(Random.Shared);
+                }
+            }
+            else
+                MoveCooldown = MoveRate.GetRandomValue(Random.Shared);
+        }
+
+        #endregion
+
+        #region Protected members
+
+        // AttackCooldown
+        protected int AttackCooldown { get; set; }
+
+        // AttackRange
+        protected float AttackRange { get; set; } = 8;
+
+        // AttackRate
+        protected int AttackRate { get; set; } = 2000;
+
+        // BeginAttackExecution
+        protected virtual void BeginAttackExecution()
+        {
+        }
+
+        // BeginMovementBehavior
+        protected virtual void BeginMovementBehavior()
+        {
+            MoveRandomly();
+        }
+
+        // CheckForAggroTrigger
+        protected virtual void CheckForAggroTrigger()
+        {
+            /*
+            if (Session.Player == null)
+                return;
+
+            float dist = Vector2.Distance(Position, Session.Player.Position);
+
+            // Si entra en rango visual (ej. 250px) y está en pantalla
+            if (dist < 250 && IsInsideVisibleBox(Position))
+            {
+                if (!RequiresLineOfSight || InLineOfSight(Session.Player.Position))
+                {
+                    IsNervous = true;
+                }
+            }
+            */
+        }
+
+        // DeAggroDistance
+        protected float DeAggroDistance { get; set; } = 500;
+
+        // ManageRandomMovement
+        protected void ManageRandomMovement(GameTime gameTime)
+        {
+            if (!AllowMovementBehavior || IsMoving)
+                return;
+
+            if (MoveCooldown > 0)
+            {
+                MoveCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+                if (MoveCooldown <= 0)
+                {
+                    MoveRandomly();
+                    MoveCooldown = Session.Random.Next(3000, 6000);
+                }
+            }
+            else
+                MoveCooldown = 500;
+        }
+
+        // MoveCooldown
+        protected int MoveCooldown { get; set; }
+
+        // MoveRate
+        protected Int32Range MoveRate { get; set; } = new(5000);
+
+        // OnAggro
+        protected virtual void OnAggro() { } // Opcional: Sonido "¡Te vi!"
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
@@ -96,15 +205,13 @@ namespace ScaryCastle
                 X -= nervousTween.CurrentValue;
                 SupressOnTransformNotification--;
             }
-
-            healthMeter?.Draw(gameTime);
         }
 
-        // OnStartMoving
-        protected override void OnStartMoving()
+        // OnTakeDamage
+        protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType, Vector2 knockback)
         {
-            base.OnStartMoving();
-            healthMeter?.Hide();
+            base.OnTakeDamage(attacker, amount, damageType, knockback);
+            IsNervous = true;
         }
 
         // OnUpdate
@@ -112,71 +219,76 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            nervousTween?.Update(gameTime);
+            nervousTween.Update(gameTime);
 
-            healthMeter?.Update(gameTime);
-
-            if (!Session.IsAwaiting)
+            // 1. Timer de Ataque (Solo si está nervioso y libre)
+            if (IsNervous && !isAttacking)
             {
-                if (attackCooldown > 0)
-                    attackCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+                if (AttackCooldown > 0)
+                    AttackCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+            }
 
-                if (IsNervous && Session.Player != null)
+            // 2. Máquina de Estados Simplificada
+            if (!isAttacking)
+            {
+                // A. Movimiento (Virtual: Patrulla o Persecución)
+                UpdateMovementBehavior(gameTime);
+
+                if (!IsNervous)
                 {
-                    if (attackCooldown <= 0 && DistanceTo(Session.Player) <= AttackRange)
-                    {
-                        var script = Session.ScriptLibrary.FindOutcome(DeclaredName);
-                        if (script != null)
-                        {
-                            StopMoving();
-                            IsAttacking = true;
-                            Session.BeginOutcome(script, this);
-                            return;
-                        }
-                    }
+                    // B. Si está tranquilo -> Chequear si debe enojarse
+                    CheckForAggroTrigger();
                 }
-
-                if (AllowRandomMovement && !IsMoving)
+                else
                 {
-                    if (movementCooldown > 0)
+                    // C. Si está nervioso -> Lógica de Combate
+                    CheckCombatLogic();
+
+                    // Opcional: Calmarse si el jugador se aleja mucho
+                    if (Session.Player != null && Vector2.Distance(Position, Session.Player.Position) > DeAggroDistance)
                     {
-                        movementCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                        if (movementCooldown <= 0)
-                        {
-                            MoveRandomly();
-                            AllowRandomMovement = true;
-                        }
+                        IsNervous = false;
                     }
                 }
             }
+            else
+            {
+                // D. Ejecución del ataque (esperando animación/proyectil)
+                UpdateAttackExecution(gameTime);
+            }
         }
 
-        // AllowRandomMovement
-        public bool AllowRandomMovement
+        // RequiresLineOfSight
+        protected bool RequiresLineOfSight { get; set; } = true;
+
+        // UpdateAttackExecution
+        protected abstract void UpdateAttackExecution(GameTime gameTime);
+
+        #endregion
+
+        // AllowMovementBehavior
+        public bool AllowMovementBehavior { get; set; }
+
+        // Definition
+        public ActorDefinition Definition { get; }
+
+        // IsNervous
+        [ScriptProperty]
+        public bool IsNervous
         {
             get;
             set
             {
-                field = value;
-                movementCooldown = 5000;
+                if (field != value)
+                {
+                    field = value;
+                    if (field)
+                    {
+                        AttackCooldown = AttackRate / 2;
+                        OnAggro();
+                    }
+                }
             }
-        }
-
-        // HideHealthMeter
-        public void HideHealthMeter()
-        {
-            healthMeter?.Hide();
-        }
-
-        // IsNervous
-        [ScriptProperty]
-        public bool IsNervous { get; set; }
-
-        // ShowHealthMeter
-        public void ShowHealthMeter()
-        {
-            healthMeter ??= new(this);
-            healthMeter.Show();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly List<CombatIntentDescriptor> intentDescriptors = [];
+        private readonly List<CombatIntent> intents = [];
 
         #endregion
 
@@ -36,11 +36,11 @@ namespace ScaryCastle
             {
                 foreach (var intentJson in intentsArray.EnumerateArray())
                 {
-                    intentDescriptors.Add(new(Name, intentJson));
+                    intents.Add(new(intentJson));
                 }
             }
 
-            IntentDescriptors = intentDescriptors.AsReadOnly();
+            IntentDescriptors = intents.AsReadOnly();
 
             Behaviors.Add(this);
         }
@@ -54,7 +54,7 @@ namespace ScaryCastle
         public static DataContainer<CombatBehavior> Behaviors { get; } = new(element => new CombatBehavior(element));
 
         // IntentDescriptors
-        public ReadOnlyCollection<CombatIntentDescriptor> IntentDescriptors { get; }
+        public ReadOnlyCollection<CombatIntent> IntentDescriptors { get; }
 
         // Name
         public string Name { get; }

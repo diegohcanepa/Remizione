@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:9ede3fc9c7e3fd1b4ed2ba718466b2b6:9261c54a35cb3a2a16260f5952a17592:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:a2dec58fd8aca39aa29adaf33de4d12f:8b72de0b47fa19a512a53eb831b3a06f:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -64,14 +64,14 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="BloodyEye-assets/Stand03.png" x="304" y="30" w="36" h="15"/>
     <sprite n="BloodyEye-assets/Stand04.png" x="304" y="47" w="36" h="15"/>
     <sprite n="Designer-assets/Move01.png" x="456" y="30" w="22" h="20"/>
-    <sprite n="Designer-assets/Move02.png" x="269" y="199" w="22" h="20"/>
-    <sprite n="Designer-assets/Move03.png" x="293" y="206" w="22" h="20"/>
-    <sprite n="Designer-assets/Move04.png" x="317" y="206" w="22" h="20"/>
-    <sprite n="Designer-assets/Stand01.png" x="341" y="206" w="22" h="20"/>
-    <sprite n="Designer-assets/StandHead01.png" x="365" y="206" w="22" h="20"/>
-    <sprite n="Designer-assets/StandHead02.png" x="389" y="218" w="22" h="20"/>
-    <sprite n="Designer-assets/TalkHead01.png" x="413" y="227" w="22" h="20"/>
-    <sprite n="Designer-assets/TalkHead02.png" x="460" y="245" w="22" h="20"/>
+    <sprite n="Designer-assets/Move02.png" x="350" y="206" w="22" h="20"/>
+    <sprite n="Designer-assets/Move03.png" x="374" y="206" w="22" h="20"/>
+    <sprite n="Designer-assets/Move04.png" x="398" y="218" w="22" h="20"/>
+    <sprite n="Designer-assets/Stand01.png" x="422" y="227" w="22" h="20"/>
+    <sprite n="Designer-assets/StandHead01.png" x="446" y="245" w="22" h="20"/>
+    <sprite n="Designer-assets/StandHead02.png" x="470" y="245" w="22" h="20"/>
+    <sprite n="Designer-assets/TalkHead01.png" x="92" y="194" w="22" h="20"/>
+    <sprite n="Designer-assets/TalkHead02.png" x="62" y="198" w="22" h="20"/>
     <sprite n="Edmund-assets/Back01.png" x="405" y="110" w="28" h="25"/>
     <sprite n="Edmund-assets/BackRaiseArm01.png" x="405" y="110" w="28" h="25"/>
     <sprite n="Edmund-assets/BackRaiseArm02.png" x="435" y="119" w="28" h="25"/>
@@ -128,29 +128,32 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Edmund-assets/UseCross01.png" x="152" y="167" w="28" h="25"/>
     <sprite n="Edmund-assets/UseCross02.png" x="182" y="167" w="28" h="25"/>
     <sprite n="Edmund-assets/UseCross03.png" x="212" y="179" w="28" h="25"/>
-    <sprite n="EnviousEye-assets/Move01.png" x="455" y="52" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Move02.png" x="421" y="71" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Move03.png" x="421" y="84" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Move04.png" x="421" y="97" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Stand01.png" x="455" y="52" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Stand02.png" x="228" y="86" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Stand03.png" x="228" y="99" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Stand04.png" x="228" y="112" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Stand05.png" x="242" y="197" w="25" h="11"/>
-    <sprite n="Father-assets/Move01.png" x="484" y="245" w="22" h="20"/>
-    <sprite n="Father-assets/Move02.png" x="92" y="194" w="22" h="20"/>
-    <sprite n="Father-assets/Move03.png" x="62" y="198" w="22" h="20"/>
-    <sprite n="Father-assets/Move04.png" x="32" y="216" w="22" h="20"/>
-    <sprite n="Father-assets/Stand01.png" x="2" y="228" w="22" h="20"/>
-    <sprite n="Father-assets/StandHead01.png" x="116" y="194" w="22" h="20"/>
-    <sprite n="Father-assets/StandHead02.png" x="140" y="194" w="22" h="20"/>
-    <sprite n="Father-assets/TalkHead01.png" x="164" y="194" w="22" h="20"/>
-    <sprite n="Father-assets/TalkHead02.png" x="188" y="194" w="22" h="20"/>
-    <sprite n="Grandma-assets/Stand01.png" x="437" y="227" w="21" h="20"/>
-    <sprite n="Grandma-assets/StandHead01.png" x="356" y="228" w="21" h="20"/>
-    <sprite n="Grandma-assets/StandHead02.png" x="379" y="240" w="21" h="20"/>
-    <sprite n="Grandma-assets/TalkHead01.png" x="402" y="249" w="21" h="20"/>
-    <sprite n="Grandma-assets/TalkHead02.png" x="425" y="249" w="21" h="20"/>
+    <sprite n="EnviousEye-assets/CloseAttack01.png" x="455" y="52" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/CloseAttack02.png" x="421" y="71" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/CloseAttack03.png" x="421" y="84" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Move01.png" x="421" y="97" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Move02.png" x="228" y="86" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Move03.png" x="228" y="99" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Move04.png" x="228" y="112" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand01.png" x="421" y="97" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand02.png" x="242" y="197" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand03.png" x="269" y="199" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand04.png" x="296" y="206" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand05.png" x="323" y="206" w="25" h="11"/>
+    <sprite n="Father-assets/Move01.png" x="32" y="216" w="22" h="20"/>
+    <sprite n="Father-assets/Move02.png" x="2" y="228" w="22" h="20"/>
+    <sprite n="Father-assets/Move03.png" x="116" y="194" w="22" h="20"/>
+    <sprite n="Father-assets/Move04.png" x="140" y="194" w="22" h="20"/>
+    <sprite n="Father-assets/Stand01.png" x="164" y="194" w="22" h="20"/>
+    <sprite n="Father-assets/StandHead01.png" x="188" y="194" w="22" h="20"/>
+    <sprite n="Father-assets/StandHead02.png" x="212" y="206" w="22" h="20"/>
+    <sprite n="Father-assets/TalkHead01.png" x="236" y="210" w="22" h="20"/>
+    <sprite n="Father-assets/TalkHead02.png" x="260" y="212" w="22" h="20"/>
+    <sprite n="Grandma-assets/Stand01.png" x="428" y="267" w="21" h="20"/>
+    <sprite n="Grandma-assets/StandHead01.png" x="451" y="267" w="21" h="20"/>
+    <sprite n="Grandma-assets/StandHead02.png" x="474" y="267" w="21" h="20"/>
+    <sprite n="Grandma-assets/TalkHead01.png" x="86" y="216" w="21" h="20"/>
+    <sprite n="Grandma-assets/TalkHead02.png" x="56" y="220" w="21" h="20"/>
     <sprite n="HellGoat-assets/Headbutt01.png" x="2" y="30" w="34" h="22"/>
     <sprite n="HellGoat-assets/Headbutt02.png" x="38" y="30" w="34" h="22"/>
     <sprite n="HellGoat-assets/Move01.png" x="342" y="47" w="34" h="22"/>
@@ -169,13 +172,13 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Mandinga-assets/StandHead02.png" x="228" y="30" w="36" h="30"/>
     <sprite n="Mandinga-assets/TalkHead01.png" x="266" y="30" w="36" h="30"/>
     <sprite n="Mandinga-assets/TalkHead02.png" x="190" y="30" w="36" h="30"/>
-    <sprite n="Reaper-assets/Move01.png" x="212" y="206" w="22" h="17"/>
-    <sprite n="Reaper-assets/Move02.png" x="236" y="210" w="22" h="17"/>
-    <sprite n="Reaper-assets/Move03.png" x="260" y="221" w="22" h="17"/>
-    <sprite n="Reaper-assets/Move04.png" x="284" y="228" w="22" h="17"/>
-    <sprite n="Reaper-assets/Stand01.png" x="284" y="228" w="22" h="17"/>
-    <sprite n="Reaper-assets/Talk01.png" x="308" y="228" w="22" h="17"/>
-    <sprite n="Reaper-assets/Talk02.png" x="332" y="228" w="22" h="17"/>
+    <sprite n="Reaper-assets/Move01.png" x="284" y="219" w="22" h="17"/>
+    <sprite n="Reaper-assets/Move02.png" x="308" y="219" w="22" h="17"/>
+    <sprite n="Reaper-assets/Move03.png" x="332" y="228" w="22" h="17"/>
+    <sprite n="Reaper-assets/Move04.png" x="356" y="228" w="22" h="17"/>
+    <sprite n="Reaper-assets/Stand01.png" x="356" y="228" w="22" h="17"/>
+    <sprite n="Reaper-assets/Talk01.png" x="380" y="240" w="22" h="17"/>
+    <sprite n="Reaper-assets/Talk02.png" x="404" y="249" w="22" h="17"/>
     <sprite n="Sister-assets/Bend01.png" x="2" y="2" w="38" h="26"/>
     <sprite n="Sister-assets/Bend02.png" x="42" y="2" w="38" h="26"/>
     <sprite n="Sister-assets/Bend03.png" x="82" y="2" w="38" h="26"/>

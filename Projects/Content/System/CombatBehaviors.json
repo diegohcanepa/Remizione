@@ -3,11 +3,11 @@
   "data": [
     {
       "name": "EnviousEye",
-      "archetype": "Aggressive",
+      "archetype": "Tactical",
       "intents": [
         {
           "name": "Bite",
-          "category": "Attack",
+          "category": "Basic",
           "weight": 80,
           "effects": [
             {

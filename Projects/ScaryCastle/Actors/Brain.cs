@@ -7,9 +7,14 @@ namespace ScaryCastle
     /// </summary>
     public static class Brain
     {
+        #region Private members
+
         // Decide
-        public static CombatIntentDescriptor? Decide(CombatBehavior behavior, int currentHp, int maxHp)
+        private static CombatIntent? Decide(Actor actor, GameThing target)
         {
+            if (actor.CombatBehavior is not CombatBehavior behavior)
+                return null;
+
             var intents = behavior.IntentDescriptors;
             int count = intents.Count;
 
@@ -21,7 +26,7 @@ namespace ScaryCastle
 
             Span<float> weights = stackalloc float[count];
             float totalWeight = 0;
-            float hpPercent = (float)currentHp / maxHp;
+            float hpPercent = (float)actor.HP / actor.MaxHP;
 
             for (int i = 0; i < count; i++)
             {
@@ -30,40 +35,21 @@ namespace ScaryCastle
 
                 switch (behavior.Archetype)
                 {
-                    // Aggresive
-                    case CombatBehaviorArchetype.Aggressive:
-                        if (intent.Category == IntentCategory.Attack)
-                            w *= 2.5f;
-                        break;
-
-                    // Coward
-                    case CombatBehaviorArchetype.Coward:
-                        if (hpPercent < 0.35f && (intent.Category == IntentCategory.Defense ||
-                            intent.Category == IntentCategory.Healing))
-                            w *= 4.0f;
-                        break;
-
-                    // Erratic
-                    case CombatBehaviorArchetype.Erratic:
-                        w = 1;
-                        break;
-
+                    // BERSERK: "Si estoy muriendo, tiro los ataques fuertes"
                     case CombatBehaviorArchetype.Berserk:
-                        if (intent.Category == IntentCategory.Attack)
+                        if (hpPercent < 0.40f) // Menos del 40% de vida
                         {
-                            // Multiplicador agresivo: a menor HP, mayor peso.
-                            // A 10% de HP, el peso del ataque se multiplica por ~10.
-                            float berserkMult = 1.0f + ((1.0f - hpPercent) * 10.0f);
-                            w *= berserkMult;
-                        }
-                        else if (intent.Category is IntentCategory.Defense or IntentCategory.Healing)
-                        {
-                            // El Berserk desprecia la defensa a medida que se descontrola
-                            w *= hpPercent;
+                            if (intent.Category == CombatIntentCategory.Special)
+                            {
+                                // Multiplicamos x3 la chance de tirar el especial
+                                // Esto acelera el final del combate (para bien o para mal)
+                                w *= 3.0f;
+                            }
                         }
                         break;
 
-                    case CombatBehaviorArchetype.Simple:
+                    // TACTICAL: Respeta el diseño original (Default)
+                    case CombatBehaviorArchetype.Tactical:
                     default:
                         break;
                 }
@@ -72,6 +58,7 @@ namespace ScaryCastle
                 totalWeight += w;
             }
 
+            // Selección Aleatoria Ponderada (Weighted Random)
             float roll = (float)Random.Shared.NextDouble() * totalWeight;
             float cumulative = 0;
 
@@ -83,6 +70,15 @@ namespace ScaryCastle
             }
 
             return intents[0];
+        }
+
+        #endregion
+
+        // Attack
+        public static void Attack(Actor actor, GameThing target)
+        {
+            if (Decide(actor, target) is CombatIntent intent)
+                EffectDescriptor.Apply(intent.EffectDescriptors, actor, target);
         }
     }
 }
