@@ -7,9 +7,6 @@ namespace ScaryCastle
     /// </summary>
     public sealed class ObjectPools(GameSession session)
     {
-        // FloatingHearts
-        public ObjectPool<FloatingHeart> FloatingHearts { get; } = new ObjectPool<FloatingHeart>(() => new FloatingHeart(session), 30);
-
         // FloatingTexts
         public ObjectPool<FloatingText> FloatingTexts { get; } = new ObjectPool<FloatingText>(() => new FloatingText(session), 30);
 

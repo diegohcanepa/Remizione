@@ -71,6 +71,12 @@ namespace Engendro
         }
 
         // GetRandomValue
+        public int GetRandomValue()
+        {
+            return GetRandomValue(Random.Shared);
+        }
+
+        // GetRandomValue
         public int GetRandomValue(Random random)
         {
             return random.Next(Minimum, Maximum + 1);

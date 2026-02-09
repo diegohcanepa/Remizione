@@ -61,7 +61,7 @@ namespace ScaryCastle
                 {
                     // Heal
                     case EffectType.Heal:
-                        realTarget.HP += amount;
+                        realTarget.Heal(amount);
                         break;
 
                     // Damage

@@ -14,7 +14,7 @@
         // CheckTransitions
         public override string? CheckTransitions()
         {
-            if (Owner.AnimationPlayer.IsPlaying == false)
+            if (!Owner.AnimationPlayer.IsPlaying)
             {
                 if (Owner.IsPlayer)
                     Owner.Session.AwaitRoutine(RoutineNames.GameOver);

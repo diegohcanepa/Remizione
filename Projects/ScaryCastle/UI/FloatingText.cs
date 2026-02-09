@@ -1,5 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
+using System.Globalization;
 
 namespace ScaryCastle
 {
@@ -96,10 +98,18 @@ namespace ScaryCastle
             ShowCore(origin, value, color, new Vector2(0, -6), scale, duration);
         }
 
-        // ShowDamage
-        public void ShowDamage(Vector2 origin, string value)
+        // ShowHPAmount
+        public void ShowHPAmount(GameThing source, int amount, bool isDamage)
         {
-            ShowCore(origin, value, ColorPalette.Text.Default, new(0, -6), defaultScale, 700);
+            if (amount == 0)
+                return;
+
+            var origin = source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, source.IsDead ? -4 : 0);
+            var color = isDamage ? ColorPalette.Text.Red : ColorPalette.Text.Green;
+            var deltaX = Random.Shared.Next(3, 6);
+            var horzDirection = source.Direction == Adberration.FacingDirection.Left ? deltaX : -deltaX;
+
+            ShowCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, new(horzDirection, -4), ScaleInfo.Text.Giant.X, 700);
         }
     }
 }

@@ -9,8 +9,6 @@ namespace Engendro
     /// </summary>
     public class DiceExpression
     {
-        private static readonly Random random = new();
-
         #region Constructor
 
         // Constructor
@@ -112,6 +110,12 @@ namespace Engendro
 
         // Roll
         public int Roll()
+        {
+            return Roll(Random.Shared);
+        }
+
+        // Roll
+        public int Roll(Random random)
         {
             if (IsFixedValue)
                 return FixedValue;

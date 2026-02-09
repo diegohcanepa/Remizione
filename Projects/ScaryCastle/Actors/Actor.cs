@@ -325,17 +325,12 @@ namespace ScaryCastle
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType, Vector2 knockback)
         {
-            if (IsPlayer)
-            {
-                Game.SceneManager.PopUntil(Session);
+            if (!IsDead)
+                FaceTo(attacker);
 
-                if (!IsDead)
-                    PopHearts(amount);
-            }
+            session.ObjectPools.FloatingTexts.Get()?.ShowHPAmount(this, amount, true);
 
             session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
-
-            //FaceTo(attacker);
 
             if (HurtVoice != null)
                 PlaySound(HurtVoice);
@@ -364,25 +359,6 @@ namespace ScaryCastle
             UpdateFootstep();
             footstepEffect?.Update(gameTime);
             StateMachine.Update(gameTime);
-        }
-
-        // PopHearts
-        protected void PopHearts(int amount)
-        {
-            if (Room == null)
-                return;
-
-            var fullHearts = amount / 2;
-            var hasHalfHeart = amount % 2 == 1;
-            var pos = GetOverheadPosition();
-
-            for (var i = 0; i < fullHearts; i++)
-            {
-                Session.ObjectPools.FloatingHearts.Get()?.Show(pos, false);
-            }
-
-            if (hasHalfHeart)
-                Session.ObjectPools.FloatingHearts.Get()?.Show(pos, true);
         }
 
         // StateMachine
@@ -416,8 +392,7 @@ namespace ScaryCastle
         [ScriptMethod]
         public void ApplyHeadbuttPenalty()
         {
-            HP -= 1;
-            PopHearts(1);
+            Damage(1);
         }
 
         // ApproachAndInteract

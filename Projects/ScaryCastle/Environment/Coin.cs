@@ -17,11 +17,11 @@ namespace ScaryCastle
             AllowHeadbuttImpact = false;
             ApproachBehavior = ApproachBehavior.ClosestSide;
             Collider = new Polygon("0,0;5,0;5,4;0,4");
-            DepthOffset = -20;
+            DepthOffset = 20;
             DisplayNameKey = "Prop.Coin";
             Hotspot = new Polygon("0,0;5,0;5,4;0,4");
             IgnoreWalkArea = false;
-            RenderLayer = RenderLayer.Background;
+            RenderLayer = RenderLayer.OverBackground;
             ShadowSpotSize = 0;
 
             var animation = AddAnimation("Default");

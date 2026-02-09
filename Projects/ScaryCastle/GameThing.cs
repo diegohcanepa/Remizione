@@ -542,23 +542,12 @@ namespace ScaryCastle
         public static bool ShowHotspots { get; set; }
 #endif
 
-        // HitEffect
-        [ScriptProperty]
-        public virtual HitEffect HitEffect => HitEffect.Shake;
-
-        // IsBlinking
-        public bool IsBlinking => blinker.IsRunning && blinker.CurrentValue;
-
-        // IsEnemy
-        public bool IsEnemy(GameThing target)
+        // Damage
+        public void Damage(int amount)
         {
-            if (Faction == target.Faction)
-                return false;
-
-            if (target.Faction == Faction.Neutral)
-                return false;
-
-            return true;
+            var current = HP;
+            HP -= amount;
+            Session.ObjectPools.FloatingTexts.Get()?.ShowHPAmount(this, Math.Abs(current - HP), true);
         }
 
         // DeathSound
@@ -753,6 +742,14 @@ namespace ScaryCastle
             return 1;
         }
 
+        // Heal
+        public void Heal(int amount)
+        {
+            var current = HP;
+            HP += amount;
+            Session.ObjectPools.FloatingTexts.Get()?.ShowHPAmount(this, Math.Abs(current - HP), false);
+        }
+
         // HighlightInteraction
         [ScriptProperty]
         public bool HighlightInteraction { get; set; } = true;
@@ -765,6 +762,10 @@ namespace ScaryCastle
             else
                 return (this as IHoleArea).Contains(value);
         }
+
+        // HitEffect
+        [ScriptProperty]
+        public virtual HitEffect HitEffect => HitEffect.Shake;
 
         // HitTestPolygon
         [ScriptProperty]
@@ -788,6 +789,7 @@ namespace ScaryCastle
                 }
             }
         } = PlacementMode.Relative;
+
 
         // HP
         [ScriptProperty]
@@ -837,11 +839,26 @@ namespace ScaryCastle
                 return false;
         }
 
+        // IsBlinking
+        public bool IsBlinking => blinker.IsRunning && blinker.CurrentValue;
+
         // IsDead
         public bool IsDead => (HP <= 0 && MaxHP > 0) || (HP == int.MinValue);
 
         // IsEmittingLight
         public virtual bool IsEmittingLight => AttachedLight != null && !IgnoreAttachedLight && AttachedLight.IsEmitting;
+
+        // IsEnemy
+        public bool IsEnemy(GameThing target)
+        {
+            if (Faction == target.Faction)
+                return false;
+
+            if (target.Faction == Faction.Neutral)
+                return false;
+
+            return true;
+        }
 
         // IsFacingTowards
         public bool IsFacingTowards(Actor target, float verticalTolerance = float.MaxValue)
@@ -1010,7 +1027,7 @@ namespace ScaryCastle
         }
 
         // TakeDamage
-        public void TakeDamage(GameThing attacker, DamageType damageType, int amount, ImpactWordName impactWordName, Vector2 knockbackForce)
+        public int TakeDamage(GameThing attacker, DamageType damageType, int amount, ImpactWordName impactWordName, Vector2 knockbackForce)
         {
             // ---------------------------------------------------------
             // 1. FILTROS DE SALIDA (Gatekeepers)
@@ -1018,11 +1035,11 @@ namespace ScaryCastle
 
             // Si la cantidad es 0 o negativa, no hay interacción de daño.
             if (amount <= 0)
-                return;
+                return 0;
 
             // Si ya está muerto o está en frames de invencibilidad, ignoramos todo.
             if (!CanTakeDamage())
-                return;
+                return 0;
 
             // ---------------------------------------------------------
             // 2. FEEDBACK INICIAL (Juice)
@@ -1102,6 +1119,8 @@ namespace ScaryCastle
                 // Aplicamos la fuerza
                 _knockbackVelocity = pushDirection * knockbackForce.Length() * 5f;
             }
+
+            return amount;
         }
 
         // TerrainParticleColor
