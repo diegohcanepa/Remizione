@@ -34,6 +34,15 @@ namespace ScaryCastle
             StateMachine.ChangeState(ActorStateNames.CloseAttack);
         }
 
+        // BeginMovementBehavior
+        protected override void BeginMovementBehavior()
+        {
+            if (IsNervous && Session.Player != null)
+                MoveTo(Session.Player.Position);
+            else
+                base.BeginMovementBehavior();
+        }
+
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {

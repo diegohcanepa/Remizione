@@ -1113,8 +1113,10 @@ namespace ScaryCastle
             if (knockbackForce != Vector2.Zero)
             {
                 Vector2 pushDirection = Position - attacker.Position;
-                if (pushDirection != Vector2.Zero) pushDirection.Normalize();
-                else pushDirection = new Vector2(1, 0);
+                if (pushDirection != Vector2.Zero)
+                    pushDirection.Normalize();
+                else
+                    pushDirection = new Vector2(1, 0);
 
                 // Aplicamos la fuerza
                 _knockbackVelocity = pushDirection * knockbackForce.Length() * 5f;

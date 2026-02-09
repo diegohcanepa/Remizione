@@ -21,6 +21,7 @@ namespace ScaryCastle
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
         private static readonly TextSprite textSprite;
+        private static readonly TextSprite textExtraSprite;
 
         #endregion
 
@@ -46,9 +47,18 @@ namespace ScaryCastle
                 cursorImages[i] = Atlases.UI.FindImage(imageName);
             }
 
+            // Text sprite
             textSprite = new(EngendroGame.Instance, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Sentence,
+                PivotOrigin = RectanglePoint.LeftTop,
+                Scale = ScaleInfo.UISentence
+            };
+
+            // Text sprite 2
+            textExtraSprite = new(EngendroGame.Instance, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.LeftTop,
                 Scale = ScaleInfo.UISentence
             };
@@ -68,14 +78,30 @@ namespace ScaryCastle
                 textSprite.PivotOrigin = RectanglePoint.LeftTop;
                 textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, -offset, -offset);
 
-                if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
+                if (!textExtraSprite.IsEmpty)
                 {
-                    textSprite.PivotOrigin = RectanglePoint.RightTop;
-                    textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, offset, -offset);
+                    textExtraSprite.PivotOrigin = RectanglePoint.LeftTop;
+                    textExtraSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.RightTop);
                 }
+            }
 
-                if (textSprite.BoundingBox.Bottom >= Screen.NativeHeight)
-                    textSprite.Y -= 10;
+            var rect = RectangleF.Union(textSprite.BoundingBox, textExtraSprite.BoundingBox);
+            if (!rect.IsInside(EngendroGame.Instance.Camera.VisibleBox))
+            {
+                textSprite.PivotOrigin = RectanglePoint.RightTop;
+                textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, offset, -offset);
+
+                if (!textExtraSprite.IsEmpty)
+                {
+                    textExtraSprite.PivotOrigin = RectanglePoint.RightTop;
+                    textExtraSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftTop, -2, 0);
+                }
+            }
+
+            if (textSprite.BoundingBox.Bottom >= Screen.NativeHeight)
+            {
+                textSprite.Y -= 10;
+                textExtraSprite.Y -= 10;
             }
         }
 
@@ -98,6 +124,13 @@ namespace ScaryCastle
         {
             scaleTween.Start(TweenStyle.QuadraticIn, defaultScale * .9f, defaultScale, 150);
             cursorSprite.Tweens.ScaleTween = scaleTween;
+        }
+
+        // ClearText
+        public static void ClearText()
+        {
+            textSprite.Clear();
+            textExtraSprite.Clear();
         }
 
         // CustomImage
@@ -134,7 +167,10 @@ namespace ScaryCastle
 
             EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera);
             if (State == MouseCursorState.Cross || State == MouseCursorState.Hit || CustomImage != null)
+            {
                 textSprite.Draw(gameTime);
+                textExtraSprite.Draw(gameTime);
+            }
             EngendroGame.Instance.SpriteBatch.End();
         }
 
@@ -183,6 +219,21 @@ namespace ScaryCastle
             get => textSprite.Text;
             set => textSprite.Text = value;
         }
+
+        // TextExtra
+        public static string? TextExtra
+        {
+            get => textExtraSprite.Text;
+            set => textExtraSprite.Text = value;
+        }
+
+        // TextExtraColor
+        public static Color TextExtraColor
+        {
+            get => textExtraSprite.Color;
+            set => textExtraSprite.Color = value;
+        }
+
 
         // Update
         public static void Update(GameTime gameTime)

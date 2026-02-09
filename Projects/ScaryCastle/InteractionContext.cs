@@ -1,5 +1,4 @@
-﻿using Adberration;
-using Adberration.Scripting;
+﻿using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
@@ -25,7 +24,7 @@ namespace ScaryCastle
             // No target
             if (Target == null)
             {
-                MouseCursor.Text = null;
+                MouseCursor.ClearText();
                 return;
             }
 
@@ -36,10 +35,23 @@ namespace ScaryCastle
             if (HeldItem == null)
             {
                 MouseCursor.Text = session.HeadbuttMode ? $"{headbuttVerb} {sentence}" : sentence;
+                if (Target.MaxHP > 0 && Target is ProceduralActor)
+                {
+                    MouseCursor.TextExtra = $" [{Target.HP}/{Target.MaxHP}]";
+
+                    var hpRatio = Target.HP / Target.MaxHP;
+                    if (hpRatio > .7f)
+                        MouseCursor.TextExtraColor = ColorPalette.Text.Highlight;
+                    else if (hpRatio > .4f)
+                        MouseCursor.TextExtraColor = ColorPalette.Text.Orange;
+                    else
+                        MouseCursor.TextExtraColor = ColorPalette.Text.Highlight;
+                }
             }
             else
             {
                 MouseCursor.Text = $"{useVerb} {HeldItem.Definition.LocalizedDisplayName} {withPreposition} {sentence}";
+                MouseCursor.TextExtra = null;
             }
         }
 

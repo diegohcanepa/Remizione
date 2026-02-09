@@ -403,7 +403,7 @@ namespace ScaryCastle
 
             var destination = target.GetApproachPosition(this, approachBehavior);
             var result = target != this && MoveTo(destination);
-            
+
             this.pendingInteractiveTarget = target;
             this.pendingInteractiveTargetPosition = target.Position;
             this.pendingInteractiveTargetItem = item;

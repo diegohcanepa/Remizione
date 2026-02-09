@@ -71,32 +71,17 @@ namespace ScaryCastle
             fore.Position = Position + padding;
             previousValue1.Position = Position + padding;
 
-            if (Alignment == HorizontalAlignment.Center)
-            {
-                var xOffset = container.BoundingBox.Width / 2;
-                container.X -= xOffset;
-                back.X -= xOffset;
-                fore.X -= xOffset;
-                previousValue1.X -= xOffset;
-            }
-
-            else if (Alignment == HorizontalAlignment.Right)
-            {
-                var xOffset = container.BoundingBox.Width;
-                container.X += xOffset;
-                back.X += xOffset;
-                fore.X += xOffset;
-                previousValue1.X += xOffset;
-            }
+            var xOffset = container.BoundingBox.Width / 2;
+            container.X -= xOffset;
+            back.X -= xOffset;
+            fore.X -= xOffset;
+            previousValue1.X -= xOffset;
         }
 
         // Convierte un valor lógico (0..MaximumValue) a ancho proporcional (0..fixedWidth)
         private float GetScaledWidth(float val)
         {
-            if (MaximumValue <= 0)
-                return 0;
-            else
-                return val / MaximumValue * width;
+            return MaximumValue <= 0 ? 0 : val / MaximumValue * width;
         }
 
         #endregion
@@ -124,20 +109,6 @@ namespace ScaryCastle
         }
 
         #endregion
-
-        // Alignment
-        public HorizontalAlignment Alignment
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    Invalidate();
-                }
-            }
-        }
 
         // BackColor
         public Color BackColor { get; }
