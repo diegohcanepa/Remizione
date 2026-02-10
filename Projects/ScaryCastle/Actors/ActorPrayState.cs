@@ -3,13 +3,13 @@
 namespace ScaryCastle
 {
     /// <summary>
-    /// ActorFatigueState
+    /// ActorPrayState
     /// </summary>
-    public sealed class ActorFatigueState : ActorAnimatedState
+    public sealed class ActorPrayState : ActorAnimatedState
     {
         // Constructor
-        public ActorFatigueState(Actor owner)
-            : base(owner, ActorStateNames.Fatigue, true)
+        public ActorPrayState(Actor owner)
+            : base(owner, ActorStateNames.Pray, false)
         {
         }
 

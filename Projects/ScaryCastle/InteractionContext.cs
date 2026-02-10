@@ -143,7 +143,7 @@ namespace ScaryCastle
                 return;
             }
 
-            if (session.Player?.IsTired == true)
+            if (session.Player?.IsPraying == true)
             {
                 MouseCursor.State = MouseCursorState.Wait;
                 return;

@@ -236,7 +236,7 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (!Inventory.Session.IsCurrentScene)
+            if (!Inventory.Session.IsCurrentScene || MouseCursor.State == MouseCursorState.Wait)
                 return;
 
             if (lastSeenInventoryVersion != Inventory.ContentVersion)

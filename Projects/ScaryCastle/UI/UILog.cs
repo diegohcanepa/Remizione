@@ -21,15 +21,15 @@ namespace ScaryCastle
             // Icon
             this.icon = new ImageSprite(game)
             {
-                PivotOrigin = RectanglePoint.Top,
-                Scale = ScaleInfo.UIElement.Small
+                PivotOrigin = RectanglePoint.LeftTop,
+                Scale = ScaleInfo.UIElement.Medium
             };
 
             // Verb
             this.verbText = new(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Top,
+                PivotOrigin = RectanglePoint.LeftTop,
                 Scale = ScaleInfo.Text.Giant
             };
 
@@ -37,7 +37,7 @@ namespace ScaryCastle
             this.nounText = new(Game, Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Top,
+                PivotOrigin = RectanglePoint.LeftTop,
                 Scale = ScaleInfo.Text.VeryLarge
             };
         }
@@ -48,13 +48,13 @@ namespace ScaryCastle
         private void ShowCore(string verb, string noun, bool isWarning, AtlasImage? image)
         {
             verbText.Color = isWarning ? ColorPalette.Text.Orange : ColorPalette.Text.Green;
-            verbText.Position = new Vector2(Screen.Center.X, 4);
+            verbText.Position = new Vector2(6, 18);
             verbText.Text = verb;
 
-            nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2);
+            nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -2);
             nounText.Text = noun;
             icon.Image = image;
-            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -1);
+            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -1);
 
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 1000);
         }

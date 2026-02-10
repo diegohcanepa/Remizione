@@ -158,6 +158,25 @@ namespace ScaryCastle
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));
         }
 
+        // SyncProceduralMusic
+        private void SyncProceduralMusic()
+        {
+            if (Room is ProceduralRoom proceduralRoom)
+            {
+                if (AngryMode)
+                {
+                    AudioManager.Music.PlayTag(GameSettings.MusicTagAngry);
+                }
+                else
+                {
+                    var tag = proceduralRoom.RoomGraph.Definition.MusicTag;
+                    if (string.IsNullOrWhiteSpace(tag))
+                        tag = GameSettings.MusicTagRide;
+                    AudioManager.Music.PlayTag(tag);
+                }
+            }
+        }
+
         // UpdateAngryMode
         public void UpdateAngryMode(GameTime gameTime)
         {
@@ -166,7 +185,7 @@ namespace ScaryCastle
 
             var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (Player.AnimationPlayer.Animation?.Name == AnimationNames.Fatigue)
+            if (Player.AnimationPlayer.Animation?.Name == AnimationNames.Pray)
             {
                 Will += GameSettings.Will.RecoveryPrayer * deltaTime;
                 if (Will >= GameSettings.Will.Maximum)
@@ -189,7 +208,7 @@ namespace ScaryCastle
                 if (Will <= 0)
                 {
                     Will = 0;
-                    Player.Fatigue();
+                    Player.Pray();
                 }
             }
         }
@@ -249,19 +268,7 @@ namespace ScaryCastle
                     angryList.Add(actor);
             }
 
-            if (room is ProceduralRoom proceduralRoom)
-            {
-                if (AngryMode)
-                    AudioManager.Music.PlayTag(GameSettings.MusicTagAngry);
-                else
-                {
-                    var tag = proceduralRoom.RoomGraph.Definition.MusicTag;
-                    if (string.IsNullOrWhiteSpace(tag))
-                        tag = GameSettings.MusicTagRide;
-
-                    AudioManager.Music.PlayTag(tag);
-                }
-            }
+            SyncProceduralMusic();
         }
 
         // OnExitRoom
@@ -677,6 +684,8 @@ namespace ScaryCastle
         public void UnregisterAngryActor(Actor actor)
         {
             angryList.Remove(actor);
+            if (angryList.Count == 0)
+                SyncProceduralMusic();
         }
 
         // Will
