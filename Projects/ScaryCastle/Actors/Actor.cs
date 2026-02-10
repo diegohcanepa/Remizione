@@ -423,9 +423,12 @@ namespace ScaryCastle
                 if (IsDead || session.IsAwaiting)
                     return false;
 
-                return StateMachine.CurrentState is ActorStandState or ActorMoveState;
+                return StateMachine.CurrentState is ActorStandState or ActorMoveState or ActorFatigueState;
             }
         }
+
+        // CanMove
+        public override bool CanMove => !IsTired && base.CanMove;
 
         // CombatBehavior
         public CombatBehavior? CombatBehavior { get; init; }
@@ -436,6 +439,19 @@ namespace ScaryCastle
         // FastMoveFactor
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public float FastMoveFactor { get; set; } = 1;
+
+        // Fatigue
+        public void Fatigue()
+        {
+            StopMoving();
+            var fatigueState = StateMachine.FindState(ActorStateNames.Fatigue);
+            if (fatigueState == null)
+            {
+                fatigueState = new ActorFatigueState(this);
+                StateMachine.RegisterState(fatigueState);
+            }
+            StateMachine.ChangeState(ActorStateNames.Fatigue);
+        }
 
         // FootstepSound
         [ScriptProperty]
@@ -521,6 +537,9 @@ namespace ScaryCastle
         // IsPlayer
         [ScriptProperty]
         public bool IsPlayer => Session.Player == this;
+
+        // IsTired
+        public bool IsTired => StateMachine.CurrentState is ActorFatigueState;
 
         // IsStandingOrMoving
         public bool IsStandingOrMoving => StateMachine.CurrentState is ActorStandState or ActorMoveState;

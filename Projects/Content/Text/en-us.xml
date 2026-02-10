@@ -223,6 +223,7 @@ Bla bla bla</String>
   <String Key="Misc.Stamina">Stamina</String>
   <String Key="Misc.Threshold">Threshold</String>
   <String Key="Misc.Unknown">???</String>
+  <String Key="Misc.Will">WILL</String>
   <String Key="Misc.WithPreposition">with</String>
   <String Key="Misc.Yes">Yes</String>
   <String Key="Misc.YouAreDead">YOU'RE DEAD.</String>

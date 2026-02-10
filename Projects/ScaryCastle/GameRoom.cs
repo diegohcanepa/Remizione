@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ScaryCastle
 {
@@ -352,13 +353,6 @@ namespace ScaryCastle
             // Follow player
             if (Session.Player != null && Session.Player.IsInCurrentRoom && FollowPlayer)
                 Session.Camera.Follow(Session.Player, true);
-        }
-
-        // OnExit
-        protected override void OnExit()
-        {
-            Session.ImpactWordPool.ReturnAll();
-            Session.ObjectPools.FloatingTexts.ReturnAll();
         }
 
         // OnHandleInput

@@ -27,20 +27,20 @@ namespace ScaryCastle
 
         #region Protected members
 
-        // BeginAttackExecution
-        protected override void BeginAttackExecution()
+        // OnBeginAttackExecution
+        protected override void OnBeginAttackExecution()
         {
             PlaySound("EnviousEyeAttack");
             StateMachine.ChangeState(ActorStateNames.CloseAttack);
         }
 
-        // BeginMovementBehavior
-        protected override void BeginMovementBehavior()
+        // OnBeginMovementBehavior
+        protected override void OnBeginMovementBehavior()
         {
-            if (IsNervous && Session.Player != null)
+            if (IsAngry && Session.Player != null)
                 MoveTo(Session.Player.Position);
             else
-                base.BeginMovementBehavior();
+                base.OnBeginMovementBehavior();
         }
 
         // OnDraw
@@ -60,8 +60,8 @@ namespace ScaryCastle
             scaleTween.Update(gameTime);
         }
 
-        // UpdateAttackExecution
-        protected override void UpdateAttackExecution(GameTime gameTime)
+        // OnUpdateAttackExecution
+        protected override void OnUpdateAttackExecution(GameTime gameTime)
         {
             if (StateMachine.CurrentState is not ActorCloseAttackState)
                 EndAttack();

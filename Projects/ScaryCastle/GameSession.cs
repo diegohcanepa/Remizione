@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Procedural;
 using ScaryCastle.Scripting;
@@ -19,6 +20,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private readonly HashSet<Actor> angryList = [];
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
         private Vector2? playerPosition;
@@ -156,6 +158,42 @@ namespace ScaryCastle
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));
         }
 
+        // UpdateAngryMode
+        public void UpdateAngryMode(GameTime gameTime)
+        {
+            if (!AngryMode || Player == null)
+                return;
+
+            var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (Player.AnimationPlayer.Animation?.Name == AnimationNames.Fatigue)
+            {
+                Will += GameSettings.Will.RecoveryPrayer * deltaTime;
+                if (Will >= GameSettings.Will.Maximum)
+                {
+                    Will = GameSettings.Will.Maximum;
+                    Player.Stand(true);
+                }
+            }
+            else
+            {
+                if (Player.IsMoving)
+                {
+                    Will -= GameSettings.Will.Drain * deltaTime;
+                }
+                else
+                {
+                   Will += GameSettings.Will.RecoveryStill * deltaTime;
+                }
+
+                if (Will <= 0)
+                {
+                    Will = 0;
+                    Player.Fatigue();
+                }
+            }
+        }
+
         #endregion
 
         #region Protected members
@@ -204,12 +242,35 @@ namespace ScaryCastle
         {
             InteractionContext.Reset();
             MouseCursor.Reset();
+
+            for (var i = 0; i < room.Children.Count; i++)
+            {
+                if (room.Children[i] is ProceduralActor actor && actor.IsAngry)
+                    angryList.Add(actor);
+            }
+
+            if (room is ProceduralRoom proceduralRoom)
+            {
+                if (AngryMode)
+                    AudioManager.Music.PlayTag(GameSettings.MusicTagAngry);
+                else
+                {
+                    var tag = proceduralRoom.RoomGraph.Definition.MusicTag;
+                    if (string.IsNullOrWhiteSpace(tag))
+                        tag = GameSettings.MusicTagRide;
+
+                    AudioManager.Music.PlayTag(tag);
+                }
+            }
         }
 
         // OnExitRoom
         protected override void OnExitRoom(Room currentRoom, Room nextRoom)
         {
             HUD.Reset();
+            ImpactWordPool.ReturnAll();
+            ObjectPools.FloatingTexts.ReturnAll();
+            angryList.Clear();
         }
 
         // OnHandleInput
@@ -355,6 +416,8 @@ namespace ScaryCastle
             }
 
             InteractionContext.Update();
+
+            UpdateAngryMode(gameTime);
         }
 
         // OnWrite
@@ -383,6 +446,9 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // AngryMode
+        public bool AngryMode => angryList.Count > 0;
 
         // BeginRun
         [ScriptMethod]
@@ -557,6 +623,13 @@ namespace ScaryCastle
         // Random
         public Random Random { get; private set; }
 
+        // RegisterAngryActor
+        public void RegisterAngryActor(Actor actor)
+        {
+            angryList.Add(actor);
+            AudioManager.Music.PlayTag(GameSettings.MusicTagAngry);
+        }
+
         // Room
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
@@ -599,5 +672,24 @@ namespace ScaryCastle
             echoScene.Show(text, allowTyping, image);
             Game.SceneManager.Push(echoScene);
         }
+
+        // UnregisterAngryActor
+        public void UnregisterAngryActor(Actor actor)
+        {
+            angryList.Remove(actor);
+        }
+
+        // Will
+        public float Will
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = float.Clamp(value, 0, GameSettings.Will.Maximum);
+                }
+            }
+        } = GameSettings.Will.Maximum;
     }
 }

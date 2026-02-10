@@ -80,6 +80,9 @@
                             "minimum": -1,
                             "description": "Max props."
                         },
+                        "musicTag": {
+                            "type": "string"
+                        },
                         "placeholders": {
                             "type": "array",
                             "items": {

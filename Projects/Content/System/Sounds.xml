@@ -7,13 +7,13 @@
 	
 	<!-- Music -->
 	<Music Name="Arrival" MaxInstances="2" />
-	<Music Name="Combat1" MaxInstances="2" Tags="Combat" />
+	<Music Name="Combat1" MaxInstances="2" Tags="Angry" />
 	<Music Name="FirstSteps" MaxInstances="2" />
 	<Music Name="GameOver" MaxInstances="2" />
 	<Music Name="Monitor" MaxInstances="2" Tags="Monitor,Ride" />
 	<Music Name="PilgrimPath01" MaxInstances="2" Tags="Ride" />
 	<Music Name="Ride01" MaxInstances="2" Tags="Ride" />
-	<Music Name="Run01" MaxInstances="2" Tags="Run" />
+	<Music Name="Run01" MaxInstances="2" Tags="Ride" />
 	<Music Name="ThemePark" MaxInstances="2" Tags="ThemePark" />
 	<Music Name="Toilet" MaxInstances="2" Tags="Toilet" />
 	
@@ -43,6 +43,7 @@
 	<FX Name="Error" MaxInstances="4" Sounds="1..2" />
 	<FX Name="Fart" />
 	<FX Name="FartLong" MaxInstances="4" Sounds="1..6" />
+	<FX Name="Fatigue" />
 	<FX Name="FenceOpen" />
 	<FX Name="Firecracker" MaxInstances="10" Sounds="1..2" />
 	<FX Name="FleshImpact" MaxInstances="6" Sounds="1..2" />

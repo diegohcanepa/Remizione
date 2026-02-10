@@ -14,7 +14,7 @@ namespace ScaryCastle
         private readonly ImageSprite back;
         private readonly ImageSprite container;
         private readonly ImageSprite fore;
-        private readonly Vector2 padding = new(.5f);
+        private readonly Vector2 padding = Vector2.One;
         private static readonly Color previousValue = new(125, 56, 51);
         private readonly ImageSprite previousValue1;
         private readonly FloatTween tween = new() { StartDelay = 200 };

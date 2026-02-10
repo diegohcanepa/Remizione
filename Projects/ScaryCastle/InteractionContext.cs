@@ -143,6 +143,12 @@ namespace ScaryCastle
                 return;
             }
 
+            if (session.Player?.IsTired == true)
+            {
+                MouseCursor.State = MouseCursorState.Wait;
+                return;
+            }
+
             // Session is awaiting script
             if (session.IsAwaiting)
             {

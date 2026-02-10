@@ -31,6 +31,12 @@ namespace ScaryCastle
         // CountdownMaximum
         public const int CountdownMaximum = 120_000;
 
+        // MusicTagAngry
+        public const string MusicTagAngry = "Angry";
+
+        // MusicTagRide
+        public const string MusicTagRide = "Ride";
+
         // PropRevealOpacity
         public const float PropRevealOpacity = .5f;
 
@@ -48,5 +54,15 @@ namespace ScaryCastle
 
         // UserSettingsFileName
         public const string UserSettingsFileName = "UserSettings.cfg";
+
+        // Will
+        internal static class Will
+        {
+            internal static int Drain { get; } = 12;
+            internal static int EvasionCost { get; } = 30;
+            internal static int Maximum { get; } = 100;
+            internal static int RecoveryPrayer { get; } = 33;
+            internal static int RecoveryStill { get; } = 4;
+        }
     }
 }

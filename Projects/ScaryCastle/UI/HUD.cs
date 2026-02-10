@@ -15,6 +15,7 @@ namespace ScaryCastle
         private readonly ImageSprite playerIcon;
         private readonly UIHealthMeter healthMeter;
         private readonly GameSession session;
+        private readonly UIWillMeter willMeter;
 
         #endregion
 
@@ -34,6 +35,7 @@ namespace ScaryCastle
             this.healthMeter = new(session.Game, new(playerIcon.BoundingBox.Width, 2));
             this.Log = new(Game);
             this.Message = new(Game, RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
+            this.willMeter = new(session);
 
             // Coin meter 
             this.CoinMeter = new(session);
@@ -72,8 +74,10 @@ namespace ScaryCastle
                 SacredInventoryMeter.Draw(gameTime);
                 Log.Draw(gameTime);
                 Message.Draw(gameTime);
-
                 Game.SpriteBatch.End();
+
+                if (session.AngryMode)
+                    willMeter.Draw(gameTime);
 
                 if (session.Room is ProceduralRoom)
                     MiniMap.Draw(gameTime);
@@ -91,6 +95,9 @@ namespace ScaryCastle
             Log.Update(gameTime);
             Message.Update(gameTime);
             CoinMeter.Update(gameTime);
+
+            if (session.AngryMode)
+                willMeter.Update(gameTime);
         }
 
         #endregion

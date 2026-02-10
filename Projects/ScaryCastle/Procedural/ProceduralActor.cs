@@ -12,8 +12,8 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private readonly FloatTween angryTween = new();
         private bool isAttacking;
-        private readonly FloatTween nervousTween = new();
 
         #endregion
 
@@ -25,7 +25,7 @@ namespace ScaryCastle
         {
             Definition = ActorDefinition.Definitions.Get(DeclaredName);
             CombatBehavior = CombatBehavior.Behaviors.Find(DeclaredName);
-            nervousTween.Start(TweenStyle.Linear, 0, .4f, 40, -1);
+            angryTween.Start(TweenStyle.Linear, 0, .4f, 40, -1);
         }
 
         #endregion
@@ -78,21 +78,12 @@ namespace ScaryCastle
                 return true;
         }
 
-        // IsInsideVisibleBox
-        private bool IsInsideVisibleBox(Vector2 pos)
-        {
-            var view = Session.Camera.VisibleBox;
-            view.Inflate(-20, -20);
-            return view.Contains(pos);
-        }
-
         // StartAttack
         private void StartAttack()
         {
             isAttacking = true;
-            StopMoving();
             Session.Player?.StopMoving();
-            BeginAttackExecution();
+            OnBeginAttackExecution();
         }
 
         // UpdateMovementBehavior
@@ -106,7 +97,7 @@ namespace ScaryCastle
                 MoveCooldown -= gameTime.ElapsedGameTime.Milliseconds;
                 if (MoveCooldown <= 0)
                 {
-                    BeginMovementBehavior();
+                    OnBeginMovementBehavior();
                     MoveCooldown = MoveRate.GetRandomValue(Random.Shared);
                 }
             }
@@ -127,13 +118,21 @@ namespace ScaryCastle
         // AttackRate
         protected int AttackRate { get; set; } = 2000;
 
-        // BeginAttackExecution
-        protected virtual void BeginAttackExecution()
+        // IsInsideVisibleBox
+        protected bool IsInsideVisibleBox(Vector2 pos)
+        {
+            var view = Session.Camera.VisibleBox;
+            view.Inflate(-20, -20);
+            return view.Contains(pos);
+        }
+
+        // OnBeginAttackExecution
+        protected virtual void OnBeginAttackExecution()
         {
         }
 
-        // BeginMovementBehavior
-        protected virtual void BeginMovementBehavior()
+        // OnBeginMovementBehavior
+        protected virtual void OnBeginMovementBehavior()
         {
             MoveRandomly();
         }
@@ -152,7 +151,7 @@ namespace ScaryCastle
             {
                 if (!RequiresLineOfSight || InLineOfSight(Session.Player.Position))
                 {
-                    IsNervous = true;
+                    IsAngry = true;
                 }
             }
             */
@@ -161,57 +160,40 @@ namespace ScaryCastle
         // DeAggroDistance
         protected float DeAggroDistance { get; set; } = 500;
 
-        // ManageRandomMovement
-        protected void ManageRandomMovement(GameTime gameTime)
-        {
-            if (!AllowMovementBehavior || IsMoving)
-                return;
-
-            if (MoveCooldown > 0)
-            {
-                MoveCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                if (MoveCooldown <= 0)
-                {
-                    MoveRandomly();
-                    MoveCooldown = Session.Random.Next(3000, 6000);
-                }
-            }
-            else
-                MoveCooldown = 500;
-        }
-
         // MoveCooldown
         protected int MoveCooldown { get; set; }
 
         // MoveRate
         protected Int32Range MoveRate { get; set; } = new(5000);
 
-        // OnAggro
-        protected virtual void OnAggro() { } // Opcional: Sonido "¡Te vi!"
-
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (IsNervous)
+            if (IsAngry)
             {
                 SupressOnTransformNotification++;
-                X += nervousTween.CurrentValue;
+                X += angryTween.CurrentValue;
             }
 
             base.OnDraw(gameTime);
 
-            if (IsNervous)
+            if (IsAngry)
             {
-                X -= nervousTween.CurrentValue;
+                X -= angryTween.CurrentValue;
                 SupressOnTransformNotification--;
             }
+        }
+
+        // OnGetAngry
+        protected virtual void OnGetAngry()
+        {
         }
 
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType, Vector2 knockback)
         {
             base.OnTakeDamage(attacker, amount, damageType, knockback);
-            IsNervous = true;
+            IsAngry = true;
         }
 
         // OnUpdate
@@ -219,10 +201,10 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            nervousTween.Update(gameTime);
+            angryTween.Update(gameTime);
 
             // 1. Timer de Ataque (Solo si está nervioso y libre)
-            if (IsNervous && !isAttacking)
+            if (IsAngry && !isAttacking)
             {
                 if (AttackCooldown > 0)
                     AttackCooldown -= gameTime.ElapsedGameTime.Milliseconds;
@@ -234,7 +216,7 @@ namespace ScaryCastle
                 // A. Movimiento (Virtual: Patrulla o Persecución)
                 UpdateMovementBehavior(gameTime);
 
-                if (!IsNervous)
+                if (!IsAngry)
                 {
                     // B. Si está tranquilo -> Chequear si debe enojarse
                     CheckForAggroTrigger();
@@ -247,22 +229,22 @@ namespace ScaryCastle
                     // Opcional: Calmarse si el jugador se aleja mucho
                     if (Session.Player != null && Vector2.Distance(Position, Session.Player.Position) > DeAggroDistance)
                     {
-                        IsNervous = false;
+                        IsAngry = false;
                     }
                 }
             }
             else
             {
                 // D. Ejecución del ataque (esperando animación/proyectil)
-                UpdateAttackExecution(gameTime);
+                OnUpdateAttackExecution(gameTime);
             }
         }
 
+        // OnUpdateAttackExecution
+        protected abstract void OnUpdateAttackExecution(GameTime gameTime);
+
         // RequiresLineOfSight
         protected bool RequiresLineOfSight { get; set; } = true;
-
-        // UpdateAttackExecution
-        protected abstract void UpdateAttackExecution(GameTime gameTime);
 
         #endregion
 
@@ -272,9 +254,9 @@ namespace ScaryCastle
         // Definition
         public ActorDefinition Definition { get; }
 
-        // IsNervous
+        // IsAngry
         [ScriptProperty]
-        public bool IsNervous
+        public bool IsAngry
         {
             get;
             set
@@ -284,8 +266,13 @@ namespace ScaryCastle
                     field = value;
                     if (field)
                     {
+                        Session.RegisterAngryActor(this);
                         AttackCooldown = AttackRate / 2;
-                        OnAggro();
+                        OnGetAngry();
+                    }
+                    else
+                    {
+                        Session.UnregisterAngryActor(this);
                     }
                 }
             }

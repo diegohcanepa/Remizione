@@ -27,6 +27,7 @@ namespace ScaryCastle
             LockType = element.GetEnum<LockType>("lockType", LockType.None);
             MaxEnemies = element.GetInt32("maxEnemies", -1);
             MaxProps = element.GetInt32("maxProps", -1);
+            MusicTag = element.GetString("musicTag");
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
             RoomType = element.GetEnum<RoomType>("roomType", RoomType.Connector);
 
@@ -98,6 +99,9 @@ namespace ScaryCastle
 
         // MaxProps
         public int MaxProps { get; }
+
+        // MusicTag
+        public string MusicTag { get; }
 
         // Placeholders
         public ReadOnlyCollection<Placeholder> Placeholders { get; }
