@@ -18,6 +18,7 @@ namespace ScaryCastle
         private static readonly AtlasImage?[] cursorImages;
         private static readonly ImageSprite cursorSprite;
         private static readonly Vector2 defaultScale = ScaleInfo.UIElement.Large;
+        private static readonly FloatTween opacityTween = FloatTween.Create(TweenStyle.CubicInOut, 1, .5f, 700, -1);
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
         private static readonly TextSprite textSprite;
@@ -238,6 +239,13 @@ namespace ScaryCastle
         // Update
         public static void Update(GameTime gameTime)
         {
+            opacityTween.Update(gameTime);
+
+            if (State == MouseCursorState.Cross)
+                cursorSprite.Opacity = opacityTween.CurrentValue;
+            else
+                cursorSprite.Opacity = 1;
+
             cursorSprite.Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
             cursorSprite.Update(gameTime);
             shakeTween.Update(gameTime);

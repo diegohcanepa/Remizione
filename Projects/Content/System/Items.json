@@ -80,6 +80,18 @@
 			"name": "RustyLockpick",
 			"category": "Access",
 			"skillChance": 30
-		}
+		},
+		{
+			"name": "SodaCan",
+			"category": "Food",
+			"isStackable": true,
+			"effects": [
+				{
+					"effectType": "RestoreWill",
+					"target": "Self",
+					"sound": "Drink"
+				}
+			]
+		}		
 	]
 }

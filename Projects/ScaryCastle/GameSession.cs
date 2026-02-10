@@ -185,9 +185,9 @@ namespace ScaryCastle
 
             var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (Player.AnimationPlayer.Animation?.Name == AnimationNames.Pray)
+            if (Player.AnimationPlayer.Animation?.Name == AnimationNames.Fatigue)
             {
-                Will += GameSettings.Will.RecoveryPrayer * deltaTime;
+                Will += GameSettings.Will.RecoveryFatigue * deltaTime;
                 if (Will >= GameSettings.Will.Maximum)
                 {
                     Will = GameSettings.Will.Maximum;
@@ -208,7 +208,7 @@ namespace ScaryCastle
                 if (Will <= 0)
                 {
                     Will = 0;
-                    Player.Pray();
+                    Player.Fatigue();
                 }
             }
         }

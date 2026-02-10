@@ -73,6 +73,11 @@ namespace ScaryCastle
                     case EffectType.Death:
                         realTarget.Die();
                         break;
+
+                    // RestoreWill
+                    case EffectType.RestoreWill:
+                        realTarget.Session.Will = GameSettings.Will.Maximum;
+                        break;
                 }
             }
         }

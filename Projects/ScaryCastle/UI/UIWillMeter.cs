@@ -10,6 +10,7 @@ namespace ScaryCastle
     {
         private readonly TextSprite labelText;
         private readonly Meter meter;
+        private readonly TextSprite recoveringText;
         private readonly GameSession session;
 
         // Constructor
@@ -34,6 +35,16 @@ namespace ScaryCastle
                 Text = TextRepository.GetValue("Misc.Will")
             };
 
+            // RecoveringText
+            this.recoveringText = new(Game, Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Green,
+                PivotOrigin = RectanglePoint.Top,
+                Position = meter.BoundingBox.GetPoint(RectanglePoint.Bottom),
+                Scale = ScaleInfo.Text.ExtraLarge,
+                Text = TextRepository.GetValue("Misc.Recovering")
+            };
+
             meter.MaximumValue = 100;
         }
 
@@ -45,6 +56,10 @@ namespace ScaryCastle
             Game.SpriteBatch.Begin(Game.Camera);
             meter.Draw(gameTime);
             labelText.Draw(gameTime);
+
+            if (session.Player?.IsTired == true)
+                recoveringText.Draw(gameTime);
+
             Game.SpriteBatch.End();
         }
 

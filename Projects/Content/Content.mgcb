@@ -401,6 +401,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/DoorTunnelOpen.wav;Audio/FX/DoorTunnelOpen
 
+#begin Audio/FX/Drink.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Drink.wav;Audio/FX/Drink
+
 #begin Audio/FX/EdmundHurt1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

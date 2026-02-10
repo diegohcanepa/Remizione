@@ -423,12 +423,12 @@ namespace ScaryCastle
                 if (IsDead || session.IsAwaiting)
                     return false;
 
-                return StateMachine.CurrentState is ActorStandState or ActorMoveState or ActorPrayState;
+                return StateMachine.CurrentState is ActorStandState or ActorMoveState or ActorFatigueState;
             }
         }
 
         // CanMove
-        public override bool CanMove => !IsPraying && base.CanMove;
+        public override bool CanMove => !IsTired && base.CanMove;
 
         // CombatBehavior
         public CombatBehavior? CombatBehavior { get; init; }
@@ -439,6 +439,19 @@ namespace ScaryCastle
         // FastMoveFactor
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public float FastMoveFactor { get; set; } = 1;
+
+        // Fatigue
+        public void Fatigue()
+        {
+            StopMoving();
+            var state = StateMachine.FindState(ActorStateNames.Fatigue);
+            if (state == null)
+            {
+                state = new ActorFatigueState(this);
+                StateMachine.RegisterState(state);
+            }
+            StateMachine.ChangeState(ActorStateNames.Fatigue);
+        }
 
         // FootstepSound
         [ScriptProperty]
@@ -525,11 +538,11 @@ namespace ScaryCastle
         [ScriptProperty]
         public bool IsPlayer => Session.Player == this;
 
-        // IsPraying
-        public bool IsPraying => StateMachine.CurrentState is ActorPrayState;
-
         // IsStandingOrMoving
         public bool IsStandingOrMoving => StateMachine.CurrentState is ActorStandState or ActorMoveState;
+
+        // IsTired
+        public bool IsTired => StateMachine.CurrentState is ActorFatigueState;
 
         // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;
@@ -603,19 +616,6 @@ namespace ScaryCastle
                 }
             }
         } = PlayerNumber.None;
-
-        // Pray
-        public void Pray()
-        {
-            StopMoving();
-            var state = StateMachine.FindState(ActorStateNames.Pray);
-            if (state == null)
-            {
-                state = new ActorPrayState(this);
-                StateMachine.RegisterState(state);
-            }
-            StateMachine.ChangeState(ActorStateNames.Pray);
-        }
 
         // Say
         public void Say(string text, bool awaitInput)
