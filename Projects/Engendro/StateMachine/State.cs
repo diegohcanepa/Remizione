@@ -1,36 +1,17 @@
-﻿using Engendro.Input;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace Engendro
 {
     /// <summary>
     /// State
     /// </summary>
-    public abstract class State<T> : IInputHandler
+    public abstract class State<TOwner>
     {
-        // Constructor
-        protected State(T owner, string name)
-        {
-            CodeContract.NotEmpty(name, nameof(name));
-            this.Owner = owner;
-            this.Name = name;
-        }
+        // Machine
+        protected StateMachine<TOwner> Machine { get; private set; } = null!;
 
-        #region Protected members
-
-        // OnHandleInput
-        protected virtual HandleInputResult OnHandleInput(GameTime gameTime)
-        {
-            return HandleInputResult.Unhandled;
-        }
-
-        #endregion
-
-        // CheckTransitions
-        public virtual string? CheckTransitions()
-        {
-            return null;
-        }
+        // Owner
+        public TOwner Owner => Machine.Owner;
 
         // Enter
         public virtual void Enter()
@@ -43,16 +24,16 @@ namespace Engendro
         }
 
         // HandleInput
-        public HandleInputResult HandleInput(GameTime gameTime)
+        public virtual HandleInputResult HandleInput(GameTime gameTime)
         {
             return HandleInputResult.Unhandled;
         }
 
-        // Name
-        public string Name { get; }
-
-        // Owner
-        public T Owner { get; }
+        // Initialize
+        public void Initialize(StateMachine<TOwner> machine)
+        {
+            Machine = machine;
+        }
 
         // Update
         public virtual void Update(GameTime gameTime)

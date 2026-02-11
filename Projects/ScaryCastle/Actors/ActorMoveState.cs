@@ -1,4 +1,6 @@
-﻿namespace ScaryCastle
+﻿using Microsoft.Xna.Framework;
+
+namespace ScaryCastle
 {
     /// <summary>
     /// ActorMoveState
@@ -6,8 +8,8 @@
     public sealed class ActorMoveState : ActorAnimatedState
     {
         // Constructor
-        public ActorMoveState(Actor owner)
-            : base(owner, ActorStateNames.Move, true)
+        public ActorMoveState()
+            : base(AnimationNames.Move, true)
         {
         }
 
@@ -17,7 +19,15 @@
             if (Owner.IsPlayer && Owner.Session.AngryMode)
                 return AnimationNames.MoveAngry;
             else
-                return AnimationNames.Move;
+                return base.GetAnimationName();
+        }
+
+        // Update
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            if (!Owner.IsMoving)
+                Machine.ChangeState<ActorStandState>();
         }
     }
 }

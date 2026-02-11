@@ -8,18 +8,18 @@ namespace ScaryCastle
     public sealed class ActorFatigueState : ActorAnimatedState
     {
         // Constructor
-        public ActorFatigueState(Actor owner)
-            : base(owner, ActorStateNames.Fatigue, true)
+        public ActorFatigueState()
+            : base(AnimationNames.Fatigue, true)
         {
         }
 
-        // CheckTransitions
-        public override string? CheckTransitions()
+        // Update
+        public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
+
             if (Owner.Session.Will == 100)
-                return ActorStateNames.Stand;
-            else
-                return base.CheckTransitions();
+                Machine.ChangeState<ActorStandState>();
         }
     }
 }

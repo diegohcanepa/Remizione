@@ -10,18 +10,9 @@ namespace ScaryCastle
         private int cooldown;
 
         // Constructor
-        public ActorHurtState(Actor owner)
-            : base(owner, ActorStateNames.Hurt, true)
+        public ActorHurtState()
+            : base(AnimationNames.Hurt, true)
         {
-        }
-
-        // CheckTransitions
-        public override string? CheckTransitions()
-        {
-            if (cooldown <= 0)
-                return ActorStateNames.Stand;
-            else
-                return base.CheckTransitions();
         }
 
         // Enter
@@ -35,6 +26,8 @@ namespace ScaryCastle
         public override void Update(GameTime gameTime)
         {
             cooldown -= gameTime.ElapsedGameTime.Milliseconds;
+            if (cooldown <= 0)
+                Machine.ChangeState<ActorStandState>();
         }
     }
 }

@@ -8,8 +8,7 @@ namespace ScaryCastle
     public class ActorState : State<Actor>
     {
         // Constructor
-        public ActorState(Actor owner, string name)
-            : base(owner, name)
+        public ActorState()
         {
         }
     }

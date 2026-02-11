@@ -1,4 +1,6 @@
-﻿namespace ScaryCastle
+﻿using Microsoft.Xna.Framework;
+
+namespace ScaryCastle
 {
     /// <summary>
     /// ActorDeathState
@@ -6,23 +8,23 @@
     public sealed class ActorDeathState : ActorAnimatedState
     {
         // Constructor
-        public ActorDeathState(Actor owner)
-            : base(owner, ActorStateNames.Death, false)
+        public ActorDeathState()
+            : base(AnimationNames.Death, false)
         {
         }
 
-        // CheckTransitions
-        public override string? CheckTransitions()
+        // Update
+        public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
+
             if (!Owner.AnimationPlayer.IsPlaying)
             {
                 if (Owner.IsPlayer)
                     Owner.Session.AwaitRoutine(RoutineNames.GameOver);
                 else
-                    return ActorStateNames.Stand;
+                    Machine.ChangeState<ActorStandState>();
             }
-
-            return base.CheckTransitions();
         }
     }
 }

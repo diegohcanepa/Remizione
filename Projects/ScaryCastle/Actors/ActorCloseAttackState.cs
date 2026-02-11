@@ -10,12 +10,17 @@ namespace ScaryCastle
         private bool damageTaken;
 
         // Constructor
-        public ActorCloseAttackState(Actor owner)
-            : base(owner, ActorStateNames.CloseAttack, false)
+        public ActorCloseAttackState()
+            : base(AnimationNames.CloseAttack, false)
         {
         }
 
-        #region Protected members
+        // Enter
+        public override void Enter()
+        {
+            base.Enter();
+            damageTaken = false;
+        }
 
         // Update
         public override void Update(GameTime gameTime)
@@ -25,24 +30,9 @@ namespace ScaryCastle
                 damageTaken = true;
                 Brain.Attack(Owner, Owner.Session.Player);
             }
-        }
 
-        #endregion
-
-        // CheckTransitions
-        public override string? CheckTransitions()
-        {
             if (!Owner.AnimationPlayer.IsPlaying)
-                return ActorStateNames.Stand;
-            else
-                return base.CheckTransitions();
-        }
-
-        // Enter
-        public override void Enter()
-        {
-            base.Enter();
-            damageTaken = false;
+                Machine.ChangeState<ActorStandState>();
         }
     }
 }

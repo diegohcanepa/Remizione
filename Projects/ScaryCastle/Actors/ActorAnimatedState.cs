@@ -5,13 +5,15 @@
     /// </summary>
     public class ActorAnimatedState : ActorState
     {
+        private readonly string defaultAnimationName;
         private readonly bool autoPlayAnimation;
         private readonly bool loopAnimation;
 
         // Constructor
-        public ActorAnimatedState(Actor owner, string name, bool loopAnimation, bool autoPlayAnimation = true)
-            : base(owner, name)
+        public ActorAnimatedState(string animationName, bool loopAnimation, bool autoPlayAnimation = true)
+            : base()
         {
+            this.defaultAnimationName = animationName;
             this.loopAnimation = loopAnimation;
             this.autoPlayAnimation = autoPlayAnimation;
         }
@@ -21,7 +23,7 @@
         // GetAnimationName
         protected virtual string GetAnimationName()
         {
-            return Name;
+            return defaultAnimationName;
         }
 
         // PlayAnimation

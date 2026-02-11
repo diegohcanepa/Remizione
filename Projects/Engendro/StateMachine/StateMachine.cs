@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Engendro.Input;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
@@ -7,17 +8,40 @@ namespace Engendro
     /// <summary>
     /// StateMachine
     /// </summary>
-    public class StateMachine<TOwner, TState> where TState : State<TOwner>
+    public class StateMachine<TOwner> : IInputHandler
     {
-        private readonly Dictionary<string, TState> states = [];
+        private bool isStarted;
+        private readonly Dictionary<Type, State<TOwner>> states = [];
 
         // Constructor
-        public StateMachine(TOwner owner, TState initialState)
+        public StateMachine(TOwner owner, State<TOwner> initialState)
         {
             Owner = owner;
-            RegisterState(initialState);
+            InitializeAndAdd(initialState);
             CurrentState = initialState;
         }
+
+        #region Private members
+
+        // EnsureStarted
+        private void EnsureStarted()
+        {
+            if (!isStarted)
+                throw new InvalidOperationException("State machine not started.");
+        }
+
+        // InitializeAndAdd
+        private void InitializeAndAdd(State<TOwner> state)
+        {
+            var type = state.GetType();
+            if (!states.ContainsKey(type))
+            {
+                state.Initialize(this);
+                states[type] = state;
+            }
+        }
+
+        #endregion
 
         #region Protected members
 
@@ -28,58 +52,78 @@ namespace Engendro
 
         #endregion
 
-        // ChangeState
-        public bool ChangeState(string newStateName, bool forceRestart = false)
+        // AddState
+        public void AddState(State<TOwner> state)
         {
-            if (newStateName == CurrentState.Name && !forceRestart)
-                return false;
+            InitializeAndAdd(state);
+        }
 
-            if (states.TryGetValue(newStateName, out var value))
+        // ChangeState
+        public void ChangeState<TNextState>() where TNextState : State<TOwner>
+        {
+            ChangeState(typeof(TNextState));
+        }
+
+        // ChangeState
+        public void ChangeState(Type nextStateType)
+        {
+            EnsureStarted();
+
+            if (CurrentState.GetType() == nextStateType)
+                return;
+
+            // Verificamos si existe, si no, explotamos (fail fast)
+            if (states.TryGetValue(nextStateType, out var nextState))
             {
                 CurrentState.Exit();
-                CurrentState = value;
+                CurrentState = nextState;
                 CurrentState.Enter();
                 OnStateChanged();
-                return true;
             }
-
-            return false;
+            else
+            {
+                throw new InvalidOperationException($"State {nextStateType.Name} not registered.");
+            }
         }
 
         // CurrentState
-        public TState CurrentState { get; private set; }
+        public State<TOwner> CurrentState { get; private set; }
 
         // FindState
-        public TState? FindState(string name)
+        public TState? FindState<TState>() where TState : State<TOwner>
         {
-            return states.TryGetValue(name, out TState? state) ? state : null;
+            return FindState(typeof(TState)) as TState;
+        }
+
+        // FindState
+        public State<TOwner>? FindState(Type stateType)
+        {
+            return states.TryGetValue(stateType, out var state) ? state : null;
+        }
+
+        // HandleInput
+        public HandleInputResult HandleInput(GameTime gameTime)
+        {
+            return CurrentState.HandleInput(gameTime);
         }
 
         // Owner
         public TOwner Owner { get; }
 
-        // RegisterState
-        public void RegisterState(TState state)
+        // Start
+        public void Start()
         {
-            RegisterState(state, false);
-        }
-
-        // RegisterState
-        public void RegisterState(TState state, bool replaceExisting)
-        {
-            if (!replaceExisting && states.ContainsKey(state.Name))
-                throw new InvalidOperationException("Duplicated state name.");
-
-            states[state.Name] = state;
+            if (isStarted)
+                return;
+            
+            isStarted = true;
+            CurrentState.Enter();
+            OnStateChanged();
         }
 
         // Update
         public void Update(GameTime gameTime)
         {
-            var nextStateName = CurrentState.CheckTransitions();
-            if (nextStateName != null && states.ContainsKey(nextStateName))
-                ChangeState(nextStateName);
-
             CurrentState.Update(gameTime);
         }
     }

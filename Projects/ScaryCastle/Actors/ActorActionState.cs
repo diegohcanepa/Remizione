@@ -10,8 +10,8 @@ namespace ScaryCastle
         private bool actionDone;
 
         // Constructor
-        protected ActorActionState(Actor owner, string animationName)
-            : base(owner, animationName, false)
+        protected ActorActionState(string animationName)
+            : base(animationName, false)
         {
         }
 
@@ -24,15 +24,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // CheckTransitions
-        public override string? CheckTransitions()
-        {
-            if (!Owner.AnimationPlayer.IsPlaying)
-                return ActorStateNames.Stand;
-            else
-                return base.CheckTransitions();
-        }
-
         // Enter
         public override void Enter()
         {
@@ -43,11 +34,16 @@ namespace ScaryCastle
         // Update
         public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
+
             if (!actionDone && Owner.AnimationPlayer.Frame?.IsEvent == true)
             {
                 actionDone = true;
                 OnExecuteAction();
             }
+
+            if (!Owner.AnimationPlayer.IsPlaying)
+                Machine.ChangeState<ActorStandState>();
         }
     }
 }

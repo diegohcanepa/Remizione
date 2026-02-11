@@ -8,8 +8,8 @@ namespace ScaryCastle
     public sealed class ActorUseItemState : ActorActionState
     {
         // Constructor
-        public ActorUseItemState(Actor owner, string animationName)
-            : base(owner, animationName)
+        public ActorUseItemState(string animationName)
+            : base(animationName)
         {
         }
 

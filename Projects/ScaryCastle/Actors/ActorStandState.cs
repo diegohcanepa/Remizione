@@ -10,18 +10,9 @@ namespace ScaryCastle
         private int idleCooldown;
 
         // Constructor
-        public ActorStandState(Actor owner)
-            : base(owner, ActorStateNames.Stand, true)
+        public ActorStandState()
+            : base(AnimationNames.Stand, true)
         {
-        }
-
-        // CheckTransitions
-        public override string? CheckTransitions()
-        {
-            if (Owner.IsPlayer && idleCooldown < 0)
-                return ActorStateNames.Idle;
-            else
-                return base.CheckTransitions();
         }
 
         // Enter
@@ -39,6 +30,11 @@ namespace ScaryCastle
 
             if (idleCooldown >= 0)
                 idleCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+
+            /*
+            if (Owner.IsPlayer && idleCooldown < 0)
+                Machine.ChangeState<ActorIdleState>();
+            */
         }
     }
 }

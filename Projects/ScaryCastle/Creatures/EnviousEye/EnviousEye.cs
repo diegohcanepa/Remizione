@@ -22,7 +22,7 @@ namespace ScaryCastle
             AttackRate = 2000;
             scaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.Zero, new(0, .05f), 600, -1);
 
-            StateMachine.RegisterState(new ActorCloseAttackState(this));
+            StateMachine.AddState(new ActorCloseAttackState());
         }
 
         #region Protected members
@@ -31,7 +31,7 @@ namespace ScaryCastle
         protected override void OnBeginAttackExecution()
         {
             PlaySound("EnviousEyeAttack");
-            StateMachine.ChangeState(ActorStateNames.CloseAttack);
+            StateMachine.ChangeState<ActorCloseAttackState>();
         }
 
         // OnBeginMovementBehavior
