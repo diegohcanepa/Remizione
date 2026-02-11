@@ -71,6 +71,9 @@
                 "Celestial"
               ]
             },
+            "selfTarget": {
+              "type": "boolean"
+            },
             "skillChance": {
               "type": "integer"
             }

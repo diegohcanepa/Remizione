@@ -138,7 +138,7 @@ namespace Engendro
                 }
 
                 var index = list.IndexOf(item);
-                if (index is (-1) or 0)
+                if (index is -1 or 0)
                 {
                     return false;
                 }

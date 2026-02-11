@@ -126,17 +126,6 @@ namespace ScaryCastle
             return view.Contains(pos);
         }
 
-        // OnBeginAttackExecution
-        protected virtual void OnBeginAttackExecution()
-        {
-        }
-
-        // OnBeginMovementBehavior
-        protected virtual void OnBeginMovementBehavior()
-        {
-            MoveRandomly();
-        }
-
         // CheckForAggroTrigger
         protected virtual void CheckForAggroTrigger()
         {
@@ -165,6 +154,24 @@ namespace ScaryCastle
 
         // MoveRate
         protected Int32Range MoveRate { get; set; } = new(5000);
+
+        // OnBeginAttackExecution
+        protected virtual void OnBeginAttackExecution()
+        {
+        }
+
+        // OnBeginMovementBehavior
+        protected virtual void OnBeginMovementBehavior()
+        {
+            MoveRandomly();
+        }
+
+        // OnDie
+        protected override void OnDie()
+        {
+            base.OnDie();
+            Session.RemoveAngryActor(this);
+        }
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
@@ -269,13 +276,13 @@ namespace ScaryCastle
                     field = value;
                     if (field)
                     {
-                        Session.RegisterAngryActor(this);
+                        Session.AddAngryActor(this);
                         AttackCooldown = AttackRate / 2;
                         OnGetAngry();
                     }
                     else
                     {
-                        Session.UnregisterAngryActor(this);
+                        Session.RemoveAngryActor(this);
                     }
                 }
             }

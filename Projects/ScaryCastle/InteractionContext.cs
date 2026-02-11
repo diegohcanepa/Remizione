@@ -41,11 +41,11 @@ namespace ScaryCastle
 
                     var hpRatio = Target.HP / Target.MaxHP;
                     if (hpRatio > .7f)
-                        MouseCursor.TextExtraColor = ColorPalette.Text.Highlight;
+                        MouseCursor.TextExtraColor = ColorPalette.Text.Yellow;
                     else if (hpRatio > .4f)
                         MouseCursor.TextExtraColor = ColorPalette.Text.Orange;
                     else
-                        MouseCursor.TextExtraColor = ColorPalette.Text.Highlight;
+                        MouseCursor.TextExtraColor = ColorPalette.Text.Red;
                 }
             }
             else
@@ -92,6 +92,49 @@ namespace ScaryCastle
                     session.HeadbuttMode = false;
                 }
             }
+        }
+
+        // PerformInteraction
+        public bool PerformInteraction()
+        {
+            void Fail()
+            {
+                Sound.Play(SoundNames.Error);
+                MouseCursor.Shake();
+            }
+
+            if (Target == null)
+                return false;
+
+            if (session.Player is not Actor player)
+                return false;
+
+            if (HeldItem != null && UseWithScript == null)
+            {
+                if (session.ScriptLibrary.FindRoutine($"{HeldItem.Name}Outcome") is Script script)
+                {
+                    if ((HeldItem.Definition.SelfTarget && Target != player) ||
+                        (!HeldItem.Definition.SelfTarget && Target == player))
+                    {
+                        Fail();
+                    }
+                    else
+                    {
+                        HeldItem = null;
+                        session.BeginOutcome(script, Target);
+                    }
+                }
+                else
+                {
+                    Fail();
+                }
+            }
+            else
+            {
+                player.ApproachAndInteract(Target, HeldItem, session.HeadbuttMode ? ApproachBehavior.ClosestSide : null);
+            }
+
+            return true;
         }
 
         // Reset
@@ -183,36 +226,6 @@ namespace ScaryCastle
             }
 
             InvalidateText();
-        }
-
-        // TryInteract
-        public bool TryInteract()
-        {
-            if (Target == null)
-                return false;
-
-            if (session.Player is not Actor player)
-                return false;
-
-            if (HeldItem != null && UseWithScript == null)
-            {
-                if (session.ScriptLibrary.FindRoutine($"Use{HeldItem.Name}") is Script script)
-                {
-                    HeldItem = null;
-                    session.BeginOutcome(script, Target);
-                }
-                else
-                {
-                    Sound.Play(SoundNames.Error);
-                    MouseCursor.Shake();
-                }
-            }
-            else
-            {
-                player.ApproachAndInteract(Target, HeldItem, session.HeadbuttMode ? ApproachBehavior.ClosestSide : null);
-            }
-
-            return true;
         }
 
         // UseWithScript

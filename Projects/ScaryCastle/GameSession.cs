@@ -202,7 +202,7 @@ namespace ScaryCastle
                 }
                 else
                 {
-                   Will += GameSettings.Will.RecoveryStill * deltaTime;
+                    Will += GameSettings.Will.RecoveryStill * deltaTime;
                 }
 
                 if (Will <= 0)
@@ -454,6 +454,13 @@ namespace ScaryCastle
 
         #endregion
 
+        // AddAngryActor
+        public void AddAngryActor(Actor actor)
+        {
+            angryList.Add(actor);
+            AudioManager.Music.PlayTag(GameSettings.MusicTagAngry);
+        }
+
         // AngryMode
         public bool AngryMode => angryList.Count > 0;
 
@@ -630,11 +637,12 @@ namespace ScaryCastle
         // Random
         public Random Random { get; private set; }
 
-        // RegisterAngryActor
-        public void RegisterAngryActor(Actor actor)
+        // RemoveAngryActor
+        public void RemoveAngryActor(Actor actor)
         {
-            angryList.Add(actor);
-            AudioManager.Music.PlayTag(GameSettings.MusicTagAngry);
+            angryList.Remove(actor);
+            if (angryList.Count == 0)
+                SyncProceduralMusic();
         }
 
         // Room
@@ -678,14 +686,6 @@ namespace ScaryCastle
         {
             echoScene.Show(text, allowTyping, image);
             Game.SceneManager.Push(echoScene);
-        }
-
-        // UnregisterAngryActor
-        public void UnregisterAngryActor(Actor actor)
-        {
-            angryList.Remove(actor);
-            if (angryList.Count == 0)
-                SyncProceduralMusic();
         }
 
         // Will

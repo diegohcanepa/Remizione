@@ -5,13 +5,13 @@ namespace ScaryCastle
     /// <summary>
     /// ActorActionState
     /// </summary>
-    public abstract class ActorActionState : ActorAnimatedState
+    public abstract class ActorActionState : ActorState
     {
         private bool actionDone;
 
         // Constructor
-        protected ActorActionState(string animationName)
-            : base(animationName, false)
+        protected ActorActionState()
+            : base()
         {
         }
 
@@ -24,11 +24,15 @@ namespace ScaryCastle
 
         #endregion
 
+        // AnimationName
+        public string AnimationName { get; set; } = string.Empty;
+
         // Enter
         public override void Enter()
         {
             base.Enter();
             actionDone = false;
+            Owner.AnimationPlayer.Play(AnimationName, false);
         }
 
         // Update

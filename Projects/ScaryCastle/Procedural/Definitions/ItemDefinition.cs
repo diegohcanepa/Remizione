@@ -56,6 +56,8 @@ namespace ScaryCastle
             // Realm
             Realm = element.GetEnum("realm", Realm.Earthly);
 
+            SelfTarget = element.GetBool("selfTarget", false);
+
             // SkillChance
             SkillChance = element.GetInt32("skillChance", 0);
 
@@ -140,6 +142,9 @@ namespace ScaryCastle
 
         // Realm
         public Realm Realm { get; }
+
+        // SelfTarget
+        public bool SelfTarget { get; }
 
         // SkillChance
         public int SkillChance { get; }

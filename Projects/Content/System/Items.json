@@ -5,6 +5,7 @@
 			"name": "Apple",
 			"category": "Food",
 			"isStackable": true,
+			"selfTarget": true,
 			"effects": [
 				{
 					"effectType": "Heal",
@@ -17,7 +18,6 @@
 		{
 			"name": "Burger",
 			"category": "Food",
-			"hp": "8",
 			"sound": "AppleBite"
 		},
 		{
@@ -73,7 +73,7 @@
 		{
 			"name": "RottenApple",
 			"category": "Food",
-			"hp": "1",
+			"selfTarget": true,
 			"sound": "AppleBite"
 		},
 		{
@@ -84,6 +84,7 @@
 		{
 			"name": "SodaCan",
 			"category": "Food",
+			"selfTarget": true,			
 			"isStackable": true,
 			"effects": [
 				{

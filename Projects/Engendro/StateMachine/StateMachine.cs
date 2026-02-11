@@ -97,13 +97,13 @@ namespace Engendro
             where TState : State<TOwner>, new()
         {
             var type = typeof(TState);
-            
+
             if (!states.TryGetValue(type, out var state))
             {
                 state = new TState();
                 InitializeAndAdd(state);
             }
-            
+
             return (TState)state;
         }
 
@@ -133,7 +133,7 @@ namespace Engendro
         {
             if (isStarted)
                 return;
-            
+
             isStarted = true;
             CurrentState.Enter();
             OnStateChanged();

@@ -30,7 +30,7 @@ namespace Engendro.Audio
             get;
             set
             {
-                if (value is < (-1.0f) or > 1.0f)
+                if (value is < -1.0f or > 1.0f)
                 {
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }
@@ -48,7 +48,7 @@ namespace Engendro.Audio
             get;
             set
             {
-                if (value is < (-1.0f) or > 1.0f)
+                if (value is < -1.0f or > 1.0f)
                 {
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }
