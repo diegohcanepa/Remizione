@@ -196,8 +196,16 @@ namespace ScaryCastle
 
             if (HeldItem != null && UseWithScript == null)
             {
-                Sound.Play(SoundNames.Error);
-                MouseCursor.Shake();
+                if (session.ScriptLibrary.FindRoutine($"Use{HeldItem.Name}") is Script script)
+                {
+                    HeldItem = null;
+                    session.BeginOutcome(script, Target);
+                }
+                else
+                {
+                    Sound.Play(SoundNames.Error);
+                    MouseCursor.Shake();
+                }
             }
             else
             {

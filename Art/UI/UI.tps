@@ -370,6 +370,7 @@
                 <false/>
             </struct>
             <key type="filename">Items-assets/GoldenKey.png</key>
+            <key type="filename">Items-assets/SodaCan.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

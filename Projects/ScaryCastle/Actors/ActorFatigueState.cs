@@ -3,7 +3,7 @@
 namespace ScaryCastle
 {
     /// <summary>
-    /// ActorPrayState
+    /// ActorFatigueState
     /// </summary>
     public sealed class ActorFatigueState : ActorAnimatedState
     {

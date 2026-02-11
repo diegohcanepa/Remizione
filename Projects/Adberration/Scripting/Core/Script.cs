@@ -154,7 +154,18 @@ namespace Adberration.Scripting
             }
 
             Persistent = tokens.Contains(ScriptSyntax.PersistentKeyword);
+            if (Persistent)
+            {
+                if (scriptType is not ScriptType.Thing and not ScriptType.Room)
+                    ThrowScriptSyntaxError(this, signature, $"The {ScriptSyntax.PersistentKeyword} keyword is only valid for Room and Thing declarations.");
+            }
+
             Cloneable = tokens.Contains(ScriptSyntax.CloneableKeyword);
+            if (Cloneable)
+            {
+                if (scriptType is not ScriptType.Thing)
+                    ThrowScriptSyntaxError(this, signature, $"The {ScriptSyntax.CloneableKeyword} keyword is only valid for Thing declarations.");
+            }
 
             // Assign Entity Name
             if (HasCapability(ScriptCapability.EntityContext))

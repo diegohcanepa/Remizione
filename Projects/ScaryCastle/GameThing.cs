@@ -427,7 +427,7 @@ namespace ScaryCastle
         }
 
         // CanTakeDamage
-        public bool CanTakeDamage()
+        public virtual bool CanTakeDamage()
         {
             return !IsDead && !blinker.IsRunning;
         }

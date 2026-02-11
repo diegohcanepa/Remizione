@@ -199,6 +199,9 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            if (Session.IsAwaiting)
+                return;
+
             base.OnUpdate(gameTime);
 
             angryTween.Update(gameTime);

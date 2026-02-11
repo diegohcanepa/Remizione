@@ -22,7 +22,7 @@ namespace ScaryCastle
             // Meter
             this.meter = new Meter(Game, ColorPalette.Text.TerraDarkest, ColorPalette.Text.Orange, new(34, 5))
             {
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 8)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5)
             };
 
             // Label

@@ -851,7 +851,7 @@ namespace Adberration
                 if (script.IsCompleted)
                 {
                     UpdateScripts();
-                    return awaitingScripts.Peek();
+                    return awaitingScripts.Count > 0 ? awaitingScripts.Peek() : null;
                 }
                 else
                 {

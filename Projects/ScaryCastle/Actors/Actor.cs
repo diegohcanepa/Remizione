@@ -190,6 +190,15 @@ namespace ScaryCastle
             return !IsFollowingPath && base.CanCheckCollisions();
         }
 
+        // CanTakeDamage
+        public override bool CanTakeDamage()
+        {
+            if (IsPlayer && Session.IsAwaiting)
+                return false;
+
+            return base.CanTakeDamage();
+        }
+
         // InputHandler
         protected InputHandler? InputHandler { get; set; }
 

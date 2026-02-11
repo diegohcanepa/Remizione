@@ -231,6 +231,9 @@
             <key type="filename">Edmund-assets/Consume02.png</key>
             <key type="filename">Edmund-assets/Consume03.png</key>
             <key type="filename">Edmund-assets/Consume04.png</key>
+            <key type="filename">Edmund-assets/Fatigue01.png</key>
+            <key type="filename">Edmund-assets/Fatigue02.png</key>
+            <key type="filename">Edmund-assets/Fatigue03.png</key>
             <key type="filename">Edmund-assets/Headbutt01.png</key>
             <key type="filename">Edmund-assets/Headbutt02.png</key>
             <key type="filename">Edmund-assets/Headbutt03.png</key>
@@ -250,12 +253,13 @@
             <key type="filename">Edmund-assets/Move02.png</key>
             <key type="filename">Edmund-assets/Move03.png</key>
             <key type="filename">Edmund-assets/Move04.png</key>
+            <key type="filename">Edmund-assets/MoveAngry01.png</key>
+            <key type="filename">Edmund-assets/MoveAngry02.png</key>
+            <key type="filename">Edmund-assets/MoveAngry03.png</key>
+            <key type="filename">Edmund-assets/MoveAngry04.png</key>
             <key type="filename">Edmund-assets/PickUp01.png</key>
             <key type="filename">Edmund-assets/PickUp02.png</key>
             <key type="filename">Edmund-assets/PickUp03.png</key>
-            <key type="filename">Edmund-assets/Pray01.png</key>
-            <key type="filename">Edmund-assets/Pray02.png</key>
-            <key type="filename">Edmund-assets/Pray03.png</key>
             <key type="filename">Edmund-assets/RaiseArm01.png</key>
             <key type="filename">Edmund-assets/RaiseArm02.png</key>
             <key type="filename">Edmund-assets/RaiseArm03.png</key>
