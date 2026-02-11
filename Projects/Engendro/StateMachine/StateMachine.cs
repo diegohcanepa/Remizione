@@ -39,6 +39,8 @@ namespace Engendro
                 state.Initialize(this);
                 states[type] = state;
             }
+            else
+                throw new InvalidOperationException("Duplicated state.");
         }
 
         #endregion
@@ -59,7 +61,8 @@ namespace Engendro
         }
 
         // ChangeState
-        public void ChangeState<TNextState>() where TNextState : State<TOwner>
+        public void ChangeState<TNextState>()
+            where TNextState : State<TOwner>
         {
             ChangeState(typeof(TNextState));
         }
@@ -88,6 +91,21 @@ namespace Engendro
 
         // CurrentState
         public State<TOwner> CurrentState { get; private set; }
+
+        // FindOrCreateState
+        public TState FindOrCreateState<TState>()
+            where TState : State<TOwner>, new()
+        {
+            var type = typeof(TState);
+            
+            if (!states.TryGetValue(type, out var state))
+            {
+                state = new TState();
+                InitializeAndAdd(state);
+            }
+            
+            return (TState)state;
+        }
 
         // FindState
         public TState? FindState<TState>() where TState : State<TOwner>

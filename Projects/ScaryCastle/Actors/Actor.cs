@@ -63,9 +63,6 @@ namespace ScaryCastle
             headTween.RandomizeTime();
 
             this.StateMachine = new ActorStateMachine(this, new ActorStandState());
-            this.StateMachine.AddState(new ActorAnimateState());
-            this.StateMachine.AddState(new ActorDeathState());
-            this.StateMachine.AddState(new ActorHurtState());
             this.StateMachine.AddState(new ActorMoveState());
 
             if (Atlas?.FindImage(Sprite.ImagePath + "Gut0") != null)
@@ -242,7 +239,8 @@ namespace ScaryCastle
             }
             else
             {
-                StateMachine.ChangeState<ActorDeathState>();
+                var deathState = StateMachine.FindOrCreateState<ActorDeathState>();
+                StateMachine.ChangeState(deathState.GetType());
             }
 
             ShowImpactWord(ImpactWordName.PlopRed);
@@ -347,7 +345,8 @@ namespace ScaryCastle
             if (Sprite.Animations.Contains(ActorStateNames.Hurt))
             {
                 Stand();
-                StateMachine.ChangeState<ActorHurtState>();
+                var state = StateMachine.FindOrCreateState<ActorHurtState>();
+                StateMachine.ChangeState(state.GetType());
             }
         }
 
@@ -388,11 +387,11 @@ namespace ScaryCastle
         public SpriteAnimation? Animate(string animationName, bool loop, AnimationDirection direction, bool preserve)
         {
             var result = AnimationPlayer.Play(animationName, loop, direction);
-            if (result != null && StateMachine.FindState<ActorAnimateState>() is ActorAnimateState animateState)
+            if (result != null)
             {
-                animateState.Preserve = preserve;
-                // TODO: usaba el viejo parametroi force para forzar el estado. Chequear que pasa ahora.
-                StateMachine.ChangeState<ActorAnimateState>();
+                var state = StateMachine.FindOrCreateState<ActorAnimateState>();
+                state.Preserve = preserve;
+                StateMachine.ChangeState(state.GetType());
             }
 
             return result;
