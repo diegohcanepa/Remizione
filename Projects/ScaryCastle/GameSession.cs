@@ -259,6 +259,7 @@ namespace ScaryCastle
         // OnEnterRoom
         protected override void OnEnterRoom(Room room)
         {
+            Will = GameSettings.Will.Maximum;
             InteractionContext.Reset();
             MouseCursor.Reset();
 
@@ -422,7 +423,7 @@ namespace ScaryCastle
                 }
             }
 
-            InteractionContext.Update();
+            InteractionContext.Refresh();
 
             UpdateAngryMode(gameTime);
         }

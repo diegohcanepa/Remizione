@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration.Scripting;
+using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
@@ -33,6 +34,46 @@ namespace ScaryCastle
             return HandleInputResult.Unhandled;
         }
 
+
+        // PerformInteraction
+        private void PerformInteraction()
+        {
+            if (Actor.Session.Player is not Actor player)
+                return;
+
+            var context = player.Session.InteractionContext;
+
+            MouseCursor.PerformClick();
+
+            if (context.Target == null)
+            {
+                var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(player.Session.Camera);
+                player.MoveTo(destination);
+                return;
+            }
+
+            if (context.HeldItem != null && !context.CursorOverride.HasValue)
+            {
+                if (MouseCursor.HightlightState == MouseCursorHightlightState.Red)
+                {
+                    Sound.Play(SoundNames.Error);
+                    MouseCursor.Shake();
+                    return;
+                }
+
+                if (context.Script?.ScriptType == ScriptType.Routine)
+                {
+                    context.HeldItem = null;
+                    player.StopMoving();
+                    player.FaceTo(context.Target);
+                    context.Session.BeginOutcome(context.Script, context.Target);
+                    return;
+                }
+            }
+
+            player.ApproachAndInteract(context.Target, context.CursorOverride.HasValue ? null : context.HeldItem, context.Session.HeadbuttMode ? ApproachBehavior.ClosestSide : null);
+        }
+
         // TestMouseLeftButtonClick
         private bool TestMouseLeftButtonClick()
         {
@@ -42,7 +83,7 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
 
-            Actor.Session.InteractionContext.PerformInteraction();
+            PerformInteraction();
 
             return false;
         }

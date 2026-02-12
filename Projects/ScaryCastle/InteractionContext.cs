@@ -9,97 +9,120 @@ namespace ScaryCastle
     /// <summary>
     /// InteractionContext
     /// </summary>
-    public sealed class InteractionContext(GameSession session)
+    public sealed class InteractionContext
     {
-        #region Private fields
-
-        private readonly string headbuttVerb = Localization.GetValue(Verb.Headbutt);
-        private readonly GameSession session = session;
-        private readonly string useVerb = Localization.GetValue(Verb.Use);
-        private readonly string withPreposition = TextRepository.GetValue("Misc.WithPreposition");
-
-        #endregion
+        // Constructor
+        public InteractionContext(GameSession session)
+        {
+            this.Session = session;
+        }
 
         #region Private members
 
-        // InvalidateMouseText
-        private void InvalidateMouseText()
+        // CanScanTarget
+        private bool CanScanTarget()
         {
-            // No target
-            if (Target == null)
+            // Modal speech bubble active
+            if (SpeechBubble.ModalInstance != null)
+                return false;
+
+            // Player is recovering will
+            if (Session.Player?.IsTired == true)
+                return false;
+
+            // Session is awaiting script
+            if (Session.IsAwaiting)
+                return false;
+
+            // Inventory is active
+            if (Session.HUD.Inventory.IsVisible)
+                return false;
+
+            return true;
+        }
+
+        // InvalidateScript
+        private void InvalidateScript()
+        {
+            if (Target == null || Session.Player == null)
             {
-                MouseCursor.ClearText();
+                CursorOverride = null;
+                Script = null;
                 return;
             }
 
-            // Get sentence
-            var sentence = Target.LocalizedDisplayName;
+            CursorOverride = Target.GetMouseCursorState();
+            if (CursorOverride != null)
+            {
+                Script = null;
+                return;
+            }
 
-            // Compose text
             if (HeldItem == null)
             {
-                MouseCursor.Text = session.HeadbuttMode ? $"{headbuttVerb} {sentence}" : sentence;
-                if (Target.MaxHP > 0 && Target is ProceduralActor)
-                {
-                    MouseCursor.TextExtra = $" [{Target.HP}/{Target.MaxHP}]";
-
-                    var hpRatio = Target.HP / Target.MaxHP;
-                    if (hpRatio > .7f)
-                        MouseCursor.TextExtraColor = ColorPalette.Text.Yellow;
-                    else if (hpRatio > .4f)
-                        MouseCursor.TextExtraColor = ColorPalette.Text.Orange;
-                    else
-                        MouseCursor.TextExtraColor = ColorPalette.Text.Red;
-                }
-            }
-            else
-            {
-                MouseCursor.Text = $"{useVerb} {HeldItem.Definition.LocalizedDisplayName} {withPreposition} {sentence}";
-                MouseCursor.TextExtra = null;
-            }
-        }
-
-        // InvalidateUseWithScript
-        private void InvalidateUseWithScript()
-        {
-            if (Target == null || HeldItem == null || session.Player == null)
-            {
-                UseWithScript = null;
+                Script = null;
                 return;
             }
 
             // Try to find an overload
-            UseWithScript = session.ScriptLibrary.FindOverload(Target.DeclaredName, HeldItem.Name);
+            Script = Session.ScriptLibrary.FindOverload(Target.DeclaredName, HeldItem.Name);
 
             // Try to find a routine that represents the item outcome
-            if (UseWithScript == null)
+            if (Script == null)
             {
-                if (session.ScriptLibrary.FindRoutine($"{HeldItem.Name}Outcome") is Script script)
+                if (Session.ScriptLibrary.FindRoutine($"{HeldItem.Name}Outcome") is Script script)
                 {
-                    if ((HeldItem.Definition.SelfTarget && Target == session.Player) ||
-                        (!HeldItem.Definition.SelfTarget && Target != session.Player))
+                    if ((HeldItem.Definition.SelfTarget && Target == Session.Player) ||
+                        (!HeldItem.Definition.SelfTarget && Target != Session.Player))
                     {
-                        UseWithScript = script;
+                        Script = script;
                     }
                 }
+            }
+        }
+
+        // RefreshCore
+        private void RefreshCore()
+        {
+            if (HeldItem?.Count <= 0)
+                HeldItem = null;
+
+            // Modal speech bubble active
+            
+            if (!CanScanTarget())
+            {
+                if (Target != null)
+                {
+                    Target = null;
+                    InvalidateScript();
+                }
+                return;
+            }
+
+            // Scan target
+            var newTarget = ScanForTarget();
+            if (newTarget != Target)
+            {
+                Target = newTarget;
+                InvalidateScript();
             }
         }
 
         // ScanForTarget
         private GameThing? ScanForTarget()
         {
-            if (session.Room == null)
+            if (Session.Room == null)
                 return null;
 
-            var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(session.Camera);
+            var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera);
 
-            for (int i = session.Room.CulledThings.Count - 1; i >= 0; i--)
+            for (int i = Session.Room.CulledThings.Count - 1; i >= 0; i--)
             {
                 // Player exclusion when holding no item
-                if (session.Room.CulledThings[i] == session.Player && HeldItem == null)
+                if (Session.Room.CulledThings[i] == Session.Player && HeldItem == null)
                     continue;
 
-                if (session.Room.CulledThings[i] is GameThing target && target.CanInteract() && target.RuntimeHotspot.Contains(mousePos))
+                if (Session.Room.CulledThings[i] is GameThing target && target.CanInteract() && target.RuntimeHotspot.Contains(mousePos))
                     return target;
             }
 
@@ -107,6 +130,9 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // CursorOverride
+        public MouseCursorState? CursorOverride { get; private set; }
 
         // HeldItem
         public Item? HeldItem
@@ -117,58 +143,29 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-                    if (field == null)
-                        MouseCursor.CustomImage = null;
-                    session.HeadbuttMode = false;
+                    Session.HeadbuttMode = false;
                 }
             }
         }
 
-        // PerformInteraction
-        public void PerformInteraction()
+        // IsValidInteraction
+        public bool IsValidInteraction { get; private set; }
+
+        // Refresh
+        public void Refresh()
         {
-            static void Fail()
+            RefreshCore();
+
+            IsValidInteraction = Target != null;
+
+            if (IsValidInteraction && HeldItem != null)
             {
-                Sound.Play(SoundNames.Error);
-                MouseCursor.Shake();
+                IsValidInteraction = Script != null;
+                if (HeldItem.Definition.InventoryCategory == InventoryCategory.Sacred && Target is not Actor)
+                    IsValidInteraction = false;
             }
 
-            if (session.Player == null)
-                return;
-
-            MouseCursor.PerformClick();
-
-            if (MouseCursor.State == MouseCursorState.Prohibition)
-            {
-                Fail();
-                return;
-            }
-
-            if (Target == null)
-            {
-                var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(session.Camera);
-                session.Player.MoveTo(destination);
-                return;
-            }
-
-            if (HeldItem != null)
-            {
-                if (MouseCursor.HightlightState == MouseCursorHightlightState.Red)
-                {
-                    Fail();
-                    return;
-                }
-                else if (UseWithScript?.ScriptType == ScriptType.Routine)
-                {
-                    HeldItem = null;
-                    session.Player.StopMoving();
-                    session.Player.FaceTo(Target);
-                    session.BeginOutcome(UseWithScript, Target);
-                    return;
-                }
-            }
-
-            session.Player.ApproachAndInteract(Target, HeldItem, session.HeadbuttMode ? ApproachBehavior.ClosestSide : null);
+            MouseCursorAppearance.Refresh(this);
         }
 
         // Reset
@@ -176,106 +173,17 @@ namespace ScaryCastle
         {
             HeldItem = null;
             Target = null;
-            UseWithScript = null;
+            Script = null;
+            MouseCursorAppearance.Refresh(this);
         }
+
+        // Script
+        public Script? Script { get; private set; }
+
+         // Session
+        public GameSession Session { get; }
 
         // Target
-        public GameThing? Target
-        {
-            get;
-            private set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    InvalidateUseWithScript();
-                    InvalidateMouseText();
-                    MouseCursor.HightlightState = Target == null ? MouseCursorHightlightState.None : MouseCursorHightlightState.Green;
-                    if (Target != null && HeldItem != null)
-                    {
-                        if (UseWithScript == null)
-                        {
-                            MouseCursor.HightlightState = MouseCursorHightlightState.Red;
-                        }
-                        else
-                        {
-                            if (HeldItem.Definition.InventoryCategory == InventoryCategory.Sacred && Target is not Actor)
-                                MouseCursor.HightlightState = MouseCursorHightlightState.Red;
-                            else
-                                MouseCursor.HightlightState = MouseCursorHightlightState.Green;
-                        }
-                    }
-                }
-            }
-        }
-
-        // Update
-        public void Update()
-        {
-            if (HeldItem?.Count <= 0)
-                HeldItem = null;
-
-            // No room 
-            if (session.Room == null)
-            {
-                Reset();
-                return;
-            }
-
-            // Modal speech bubble active
-            if (SpeechBubble.ModalInstance != null)
-            {
-                MouseCursor.State = MouseCursorState.Arrow;
-                MouseCursor.CustomImage = null;
-                return;
-            }
-
-            if (session.Player?.IsTired == true)
-            {
-                MouseCursor.State = MouseCursorState.Wait;
-                return;
-            }
-
-            // Session is awaiting script
-            if (session.IsAwaiting)
-            {
-                MouseCursor.State = session.AwaitingScript?.CurrentStatement is AwaitInputCommand ? MouseCursorState.Hand : MouseCursorState.Wait;
-                return;
-            }
-
-            if (session.HUD.Inventory.IsVisible)
-            {
-                MouseCursor.State = MouseCursorState.Hand;
-                return;
-            }
-
-            if (SpeechBubble.ModalInstance == null)
-                Target = ScanForTarget();
-
-            if (Target != null && Target.IsMoving)
-            {
-                MouseCursor.State = MouseCursorState.Prohibition;
-                MouseCursor.CustomImage = null;
-                Target = null;
-            }
-            else if (HeldItem != null)
-            {
-                MouseCursor.CustomImage = HeldItem.Definition.Image;
-            }
-            else
-            {
-                MouseCursor.CustomImage = null;
-
-                if (session.HeadbuttMode)
-                    MouseCursor.State = MouseCursorState.Hit;
-                else
-                    MouseCursor.State = Target?.GetMouseCursorState() ?? MouseCursorState.Cross;
-            }
-
-            InvalidateMouseText();
-        }
-
-        // UseWithScript
-        public Script? UseWithScript { get; private set; }
+        public GameThing? Target { get; private set; }
     }
 }

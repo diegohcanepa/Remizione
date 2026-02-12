@@ -247,7 +247,7 @@ namespace ScaryCastle
 
             if (!IsVisible)
             {
-                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
+                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 120)
                 {
                     IsVisible = true;
                     Inventory.Session.InteractionContext.HeldItem = null;

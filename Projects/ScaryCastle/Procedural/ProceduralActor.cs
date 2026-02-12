@@ -12,7 +12,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly FloatTween angryTween = new();
+        private readonly FloatTween angryTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 40, -1);
         private bool isAttacking;
 
         #endregion
@@ -23,9 +23,9 @@ namespace ScaryCastle
         protected ProceduralActor(GameSession session, string name)
             : base(session, name)
         {
+            AllowHeadbuttImpact = true;
             Definition = ActorDefinition.Definitions.Get(DeclaredName);
             CombatBehavior = CombatBehavior.Behaviors.Find(DeclaredName);
-            angryTween.Start(TweenStyle.Linear, 0, .4f, 40, -1);
         }
 
         #endregion
@@ -176,7 +176,7 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (IsAngry)
+            if (IsAngry && !IsMoving)
             {
                 SupressOnTransformNotification++;
                 X += angryTween.CurrentValue;
@@ -184,7 +184,7 @@ namespace ScaryCastle
 
             base.OnDraw(gameTime);
 
-            if (IsAngry)
+            if (IsAngry && !IsMoving)
             {
                 X -= angryTween.CurrentValue;
                 SupressOnTransformNotification--;

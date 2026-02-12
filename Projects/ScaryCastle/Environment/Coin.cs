@@ -13,8 +13,6 @@ namespace ScaryCastle
             : base(session, name)
         {
             Atlas = Atlases.Environment;
-
-            AllowHeadbuttImpact = false;
             ApproachBehavior = ApproachBehavior.ClosestSide;
             Collider = new Polygon("0,0;5,0;5,4;0,4");
             DepthOffset = 20;

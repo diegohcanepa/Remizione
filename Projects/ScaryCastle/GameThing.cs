@@ -385,7 +385,7 @@ namespace ScaryCastle
 
         // AllowHeadbuttImpact
         [ScriptProperty]
-        public bool AllowHeadbuttImpact { get; set; } = true;
+        public bool AllowHeadbuttImpact { get; set; } = false;
 
         // AllowInteraction
         [ScriptProperty]
@@ -411,18 +411,9 @@ namespace ScaryCastle
             if (!AllowInteraction)
                 return false;
 
-            if (IsDead || string.IsNullOrWhiteSpace(LocalizedDisplayName))
+            if (IsMoving || IsDead || string.IsNullOrWhiteSpace(LocalizedDisplayName))
                 return false;
 
-            if (Session.InteractionContext.HeldItem != null && !CanInteractWithItem())
-                return false;
-
-            return true;
-        }
-
-        // CanInteractWithItem
-        public virtual bool CanInteractWithItem()
-        {
             return true;
         }
 

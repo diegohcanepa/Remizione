@@ -195,6 +195,7 @@ namespace ScaryCastle
             HightlightState = MouseCursorHightlightState.None;
             State = MouseCursorState.Arrow;
             Text = null;
+            TextExtra = null;
         }
 
         // Shake

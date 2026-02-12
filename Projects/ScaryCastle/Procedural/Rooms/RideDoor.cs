@@ -101,12 +101,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // CanInteractWithItem
-        public override bool CanInteractWithItem()
-        {
-            return !IsOpen;
-        }
-
         // Connect
         [ScriptMethod(CodingContext.Execution)]
         public void Connect()
