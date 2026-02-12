@@ -4,6 +4,7 @@ using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace ScaryCastle
@@ -564,7 +565,10 @@ namespace ScaryCastle
         public void MoveRandomly()
         {
             if (Room?.WalkArea is WalkArea walkArea)
-                MoveTo(walkArea.RandomWalkablePoint());
+            {
+                var margin = Math.Abs(Position.X - RuntimeHotspot.BoundingRectangleF.Right);
+                MoveTo(walkArea.RandomWalkablePoint(margin));
+            }
         }
 
         // MoveTo

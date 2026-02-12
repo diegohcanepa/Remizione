@@ -373,6 +373,23 @@ namespace ScaryCastle
 
         #region Protected members
 
+        // AddPlaceholder
+        protected void AddPlaceholder(Placeholder placeholder)
+        {
+            placeholders.Add(placeholder);
+        }
+
+        // DropLoot
+        protected virtual void DropLoot()
+        {
+        }
+
+        // GetDropLootPosition
+        protected Vector2 GetDropLootPosition()
+        {
+            return WalkArea != null ? WalkArea.Polygon.BoundingRectangleF.Center : BoundingBox.Center;
+        }
+
         // OnChildAdded
         protected override void OnChildAdded(Entity child)
         {
@@ -391,21 +408,16 @@ namespace ScaryCastle
                 SackCount--;
         }
 
-        // AddPlaceholder
-        protected void AddPlaceholder(Placeholder placeholder)
+        // OnEnter
+        protected override void OnEnter()
         {
-            placeholders.Add(placeholder);
-        }
+            base.OnEnter();
 
-        // DropLoot
-        protected virtual void DropLoot()
-        {
-        }
-
-        // GetDropLootPosition
-        protected Vector2 GetDropLootPosition()
-        {
-            return WalkArea != null ? WalkArea.Polygon.BoundingRectangleF.Center : BoundingBox.Center;
+            // Reheal all things
+            foreach (var thing in Children.OfType<GameThing>())
+            {
+                thing.Reheal();
+            }
         }
 
         // OnLoad

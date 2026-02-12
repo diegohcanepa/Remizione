@@ -22,8 +22,8 @@ namespace ScaryCastle
 
         #region Private members
 
-        // InvalidateText
-        private void InvalidateText()
+        // InvalidateMouseText
+        private void InvalidateMouseText()
         {
             // No target
             if (Target == null)
@@ -127,10 +127,22 @@ namespace ScaryCastle
         // PerformInteraction
         public void PerformInteraction()
         {
+            static void Fail()
+            {
+                Sound.Play(SoundNames.Error);
+                MouseCursor.Shake();
+            }
+
             if (session.Player == null)
                 return;
 
             MouseCursor.PerformClick();
+
+            if (MouseCursor.State == MouseCursorState.Prohibition)
+            {
+                Fail();
+                return;
+            }
 
             if (Target == null)
             {
@@ -141,15 +153,16 @@ namespace ScaryCastle
 
             if (HeldItem != null)
             {
-                if (MouseCursor.HightlightColor == ColorPalette.MouseCursorHighlightRed)
+                if (MouseCursor.HightlightState == MouseCursorHightlightState.Red)
                 {
-                    Sound.Play(SoundNames.Error);
-                    MouseCursor.Shake();
+                    Fail();
                     return;
                 }
                 else if (UseWithScript?.ScriptType == ScriptType.Routine)
                 {
                     HeldItem = null;
+                    session.Player.StopMoving();
+                    session.Player.FaceTo(Target);
                     session.BeginOutcome(UseWithScript, Target);
                     return;
                 }
@@ -176,20 +189,20 @@ namespace ScaryCastle
                 {
                     field = value;
                     InvalidateUseWithScript();
-                    InvalidateText();
-                    MouseCursor.Hightlight = Target != null;
+                    InvalidateMouseText();
+                    MouseCursor.HightlightState = Target == null ? MouseCursorHightlightState.None : MouseCursorHightlightState.Green;
                     if (Target != null && HeldItem != null)
                     {
                         if (UseWithScript == null)
                         {
-                            MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightRed;
+                            MouseCursor.HightlightState = MouseCursorHightlightState.Red;
                         }
                         else
                         {
                             if (HeldItem.Definition.InventoryCategory == InventoryCategory.Sacred && Target is not Actor)
-                                MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightRed;
+                                MouseCursor.HightlightState = MouseCursorHightlightState.Red;
                             else
-                                MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightGreen;
+                                MouseCursor.HightlightState = MouseCursorHightlightState.Green;
                         }
                     }
                 }
@@ -239,7 +252,13 @@ namespace ScaryCastle
             if (SpeechBubble.ModalInstance == null)
                 Target = ScanForTarget();
 
-            if (HeldItem != null)
+            if (Target != null && Target.IsMoving)
+            {
+                MouseCursor.State = MouseCursorState.Prohibition;
+                MouseCursor.CustomImage = null;
+                Target = null;
+            }
+            else if (HeldItem != null)
             {
                 MouseCursor.CustomImage = HeldItem.Definition.Image;
             }
@@ -253,7 +272,7 @@ namespace ScaryCastle
                     MouseCursor.State = Target?.GetMouseCursorState() ?? MouseCursorState.Cross;
             }
 
-            InvalidateText();
+            InvalidateMouseText();
         }
 
         // UseWithScript

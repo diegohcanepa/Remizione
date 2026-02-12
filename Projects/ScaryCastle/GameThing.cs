@@ -411,7 +411,7 @@ namespace ScaryCastle
             if (!AllowInteraction)
                 return false;
 
-            if (IsMoving || IsDead || string.IsNullOrWhiteSpace(LocalizedDisplayName))
+            if (IsDead || string.IsNullOrWhiteSpace(LocalizedDisplayName))
                 return false;
 
             if (Session.InteractionContext.HeldItem != null && !CanInteractWithItem())

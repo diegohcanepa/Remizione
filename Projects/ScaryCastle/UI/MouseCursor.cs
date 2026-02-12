@@ -143,6 +143,9 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
+                    if (field != null)
+                        State = MouseCursorState.Cross;
+
                     InvalidateCursorImage();
                 }
             }
@@ -151,11 +154,11 @@ namespace ScaryCastle
         // Draw
         public static void Draw(GameTime gameTime)
         {
-            OutlineEffect? effect = CustomImage != null && Hightlight ? ScaryCastleGame.Effects.Outline : null;
+            OutlineEffect? effect = CustomImage != null && HightlightState != MouseCursorHightlightState.None ? ScaryCastleGame.Effects.Outline : null;
 
             if (effect != null && cursorSprite.Image?.Atlas != null)
             {
-                effect.Color.SetValue(HightlightColor);
+                effect.Color.SetValue(HightlightState == MouseCursorHightlightState.Green ? ColorPalette.MouseCursorHighlightGreen : ColorPalette.MouseCursorHighlightRed);
                 effect.TextureSize.SetValue(new Vector2(cursorSprite.Image.Atlas.Texture.Width, cursorSprite.Image.Atlas.Texture.Height));
                 effect.Thickness.SetValue(1);
             }
@@ -175,11 +178,8 @@ namespace ScaryCastle
             EngendroGame.Instance.SpriteBatch.End();
         }
 
-        // Highlight
-        public static bool Hightlight { get; set; }
-
-        // HightlightColor
-        public static Vector4 HightlightColor { get; set; }
+        // HightlightState
+        public static MouseCursorHightlightState HightlightState { get; set; }
 
         // PerformClick
         public static void PerformClick()
@@ -192,7 +192,7 @@ namespace ScaryCastle
         public static void Reset()
         {
             CustomImage = null;
-            Hightlight = false;
+            HightlightState = MouseCursorHightlightState.None;
             State = MouseCursorState.Arrow;
             Text = null;
         }
@@ -244,7 +244,7 @@ namespace ScaryCastle
         {
             opacityTween.Update(gameTime);
 
-            if (State == MouseCursorState.Cross)
+            if (State == MouseCursorState.Cross && CustomImage == null)
                 cursorSprite.Opacity = opacityTween.CurrentValue;
             else
                 cursorSprite.Opacity = 1;

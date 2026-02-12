@@ -13,7 +13,7 @@ namespace ScaryCastle
     /// </summary>
     public sealed class WalkArea : Room.Area
     {
-        #region Private members
+        #region Private fields
 
         private readonly ReadOnlyPolygon deflatedPolygon;
         private readonly PathNode findPathEndNode = new();
@@ -342,9 +342,17 @@ namespace ScaryCastle
         public ReadOnlyCollection<IHoleArea> ObstacleAreas { get; }
 
         // RandomWalkablePoint
-        public Vector2 RandomWalkablePoint()
+        public Vector2 RandomWalkablePoint(float margin = 0)
         {
-            return GetWalkablePoint(Polygon.RandomPoint());
+            var result = GetWalkablePoint(Polygon.RandomPoint());
+            
+            if (margin > 0)
+            {
+                var wap = new Polygon(Polygon.Vertices, -margin);
+                result = wap.Clamp(result);
+            }
+
+            return result;
         }
 
         // RandomWalkablePoint

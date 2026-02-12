@@ -108,6 +108,9 @@ namespace ScaryCastle
     // MessageKind
     public enum MessageKind { CannotPlaceItem, InventoryFull, NotEnoughCoins }
 
+    // MouseCursorHightlightState
+    public enum MouseCursorHightlightState { None, Green, Red }
+
     // MouseCursorState
     public enum MouseCursorState { Arrow, Cross, Down, Hand, Hit, Left, Prohibition, Right, Up, Wait }
 
