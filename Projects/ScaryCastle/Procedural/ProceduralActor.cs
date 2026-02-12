@@ -206,7 +206,7 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (Session.IsAwaiting)
+            if (Session.AwaitingScript != null && !Session.AwaitingScript.Interruptible)
                 return;
 
             base.OnUpdate(gameTime);

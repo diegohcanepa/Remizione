@@ -45,6 +45,7 @@
 		<Keywords fontWeight="regular" foreground="Purple">
 			<Word>Class:</Word>
 			<Word>Cloneable</Word>
+			<Word>Interruptible</Word>
 			<Word>Persistent</Word>
 		</Keywords>
 

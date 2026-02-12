@@ -187,7 +187,7 @@ namespace ScaryCastle
         // CanTakeDamage
         public override bool CanTakeDamage()
         {
-            if (IsPlayer && Session.IsAwaiting)
+            if (IsPlayer && Session.AwaitingScript?.Interruptible == false)
                 return false;
 
             return base.CanTakeDamage();

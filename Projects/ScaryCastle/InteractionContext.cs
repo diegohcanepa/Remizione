@@ -11,10 +11,14 @@ namespace ScaryCastle
     /// </summary>
     public sealed class InteractionContext(GameSession session)
     {
-        private readonly GameSession session = session;
+        #region Private fields
+
         private readonly string headbuttVerb = Localization.GetValue(Verb.Headbutt);
+        private readonly GameSession session = session;
         private readonly string useVerb = Localization.GetValue(Verb.Use);
         private readonly string withPreposition = TextRepository.GetValue("Misc.WithPreposition");
+
+        #endregion
 
         #region Private members
 
@@ -52,6 +56,32 @@ namespace ScaryCastle
             {
                 MouseCursor.Text = $"{useVerb} {HeldItem.Definition.LocalizedDisplayName} {withPreposition} {sentence}";
                 MouseCursor.TextExtra = null;
+            }
+        }
+
+        // InvalidateUseWithScript
+        private void InvalidateUseWithScript()
+        {
+            if (Target == null || HeldItem == null || session.Player == null)
+            {
+                UseWithScript = null;
+                return;
+            }
+
+            // Try to find an overload
+            UseWithScript = session.ScriptLibrary.FindOverload(Target.DeclaredName, HeldItem.Name);
+
+            // Try to find a routine that represents the item outcome
+            if (UseWithScript == null)
+            {
+                if (session.ScriptLibrary.FindRoutine($"{HeldItem.Name}Outcome") is Script script)
+                {
+                    if ((HeldItem.Definition.SelfTarget && Target == session.Player) ||
+                        (!HeldItem.Definition.SelfTarget && Target != session.Player))
+                    {
+                        UseWithScript = script;
+                    }
+                }
             }
         }
 
@@ -95,46 +125,37 @@ namespace ScaryCastle
         }
 
         // PerformInteraction
-        public bool PerformInteraction()
+        public void PerformInteraction()
         {
-            void Fail()
-            {
-                Sound.Play(SoundNames.Error);
-                MouseCursor.Shake();
-            }
+            if (session.Player == null)
+                return;
+
+            MouseCursor.PerformClick();
 
             if (Target == null)
-                return false;
-
-            if (session.Player is not Actor player)
-                return false;
-
-            if (HeldItem != null && UseWithScript == null)
             {
-                if (session.ScriptLibrary.FindRoutine($"{HeldItem.Name}Outcome") is Script script)
-                {
-                    if ((HeldItem.Definition.SelfTarget && Target != player) ||
-                        (!HeldItem.Definition.SelfTarget && Target == player))
-                    {
-                        Fail();
-                    }
-                    else
-                    {
-                        HeldItem = null;
-                        session.BeginOutcome(script, Target);
-                    }
-                }
-                else
-                {
-                    Fail();
-                }
-            }
-            else
-            {
-                player.ApproachAndInteract(Target, HeldItem, session.HeadbuttMode ? ApproachBehavior.ClosestSide : null);
+                var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(session.Camera);
+                session.Player.MoveTo(destination);
+                return;
             }
 
-            return true;
+            if (HeldItem != null)
+            {
+                if (MouseCursor.HightlightColor == ColorPalette.MouseCursorHighlightRed)
+                {
+                    Sound.Play(SoundNames.Error);
+                    MouseCursor.Shake();
+                    return;
+                }
+                else if (UseWithScript?.ScriptType == ScriptType.Routine)
+                {
+                    HeldItem = null;
+                    session.BeginOutcome(UseWithScript, Target);
+                    return;
+                }
+            }
+
+            session.Player.ApproachAndInteract(Target, HeldItem, session.HeadbuttMode ? ApproachBehavior.ClosestSide : null);
         }
 
         // Reset
@@ -154,13 +175,23 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-
-                    UseWithScript = null;
-
-                    if (field != null && HeldItem != null)
-                        UseWithScript = field.Session.ScriptLibrary.FindOverload(field.DeclaredName, HeldItem.Name);
-
+                    InvalidateUseWithScript();
                     InvalidateText();
+                    MouseCursor.Hightlight = Target != null;
+                    if (Target != null && HeldItem != null)
+                    {
+                        if (UseWithScript == null)
+                        {
+                            MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightRed;
+                        }
+                        else
+                        {
+                            if (HeldItem.Definition.InventoryCategory == InventoryCategory.Sacred && Target is not Actor)
+                                MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightRed;
+                            else
+                                MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightGreen;
+                        }
+                    }
                 }
             }
         }
@@ -171,7 +202,7 @@ namespace ScaryCastle
             if (HeldItem?.Count <= 0)
                 HeldItem = null;
 
-            // No room, no session. 
+            // No room 
             if (session.Room == null)
             {
                 Reset();
@@ -211,7 +242,6 @@ namespace ScaryCastle
             if (HeldItem != null)
             {
                 MouseCursor.CustomImage = HeldItem.Definition.Image;
-                MouseCursor.Hightlight = Target != null;
             }
             else
             {
@@ -221,8 +251,6 @@ namespace ScaryCastle
                     MouseCursor.State = MouseCursorState.Hit;
                 else
                     MouseCursor.State = Target?.GetMouseCursorState() ?? MouseCursorState.Cross;
-
-                MouseCursor.Hightlight = false;
             }
 
             InvalidateText();

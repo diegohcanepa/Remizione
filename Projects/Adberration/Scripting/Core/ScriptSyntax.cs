@@ -79,6 +79,9 @@ namespace Adberration.Scripting
         // InequalityOp
         public const string InequalityOp = "!=";
 
+        // InterruptibleKeyword
+        public const string InterruptibleKeyword = "Interruptible";
+
         // IsClonedName
         public static bool IsClonedName(string name)
         {

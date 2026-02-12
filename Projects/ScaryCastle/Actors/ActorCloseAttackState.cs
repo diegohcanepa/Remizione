@@ -29,6 +29,7 @@ namespace ScaryCastle
             {
                 damageTaken = true;
                 Brain.Attack(Owner, Owner.Session.Player);
+                Owner.Session.InterruptAwaitingScript();
             }
 
             if (!Owner.AnimationPlayer.IsPlaying)

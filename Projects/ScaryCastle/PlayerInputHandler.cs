@@ -42,18 +42,9 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
 
-            if (Actor.Session.InteractionContext.PerformInteraction())
-            {
-                MouseCursor.PerformClick();
-                return true;
-            }
-            else
-            {
-                MouseCursor.AnimateClick();
-                var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
-                Actor.MoveTo(destination);
-                return true;
-            }
+            Actor.Session.InteractionContext.PerformInteraction();
+
+            return false;
         }
 
         // TestMouseRightButtonClick

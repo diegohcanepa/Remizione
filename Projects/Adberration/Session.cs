@@ -1064,6 +1064,18 @@ namespace Adberration
             return randomNumbers[name];
         }
 
+        // InterruptAwaitingScript
+        public bool InterruptAwaitingScript()
+        {
+            if (AwaitingScript?.Interruptible == true)
+            {
+                ScriptProcessor.StopScript(AwaitingScript);
+                return true;
+            }
+            
+            return false;
+        }
+
         // IsAwaiting
         [ScriptProperty]
         public bool IsAwaiting => awaitingScripts.Count > 0;

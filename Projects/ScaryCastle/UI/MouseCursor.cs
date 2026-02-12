@@ -155,7 +155,7 @@ namespace ScaryCastle
 
             if (effect != null && cursorSprite.Image?.Atlas != null)
             {
-                effect.Color.SetValue(ColorPalette.MouseCursorHighlight);
+                effect.Color.SetValue(HightlightColor);
                 effect.TextureSize.SetValue(new Vector2(cursorSprite.Image.Atlas.Texture.Width, cursorSprite.Image.Atlas.Texture.Height));
                 effect.Thickness.SetValue(1);
             }
@@ -177,6 +177,9 @@ namespace ScaryCastle
 
         // Highlight
         public static bool Hightlight { get; set; }
+
+        // HightlightColor
+        public static Vector4 HightlightColor { get; set; }
 
         // PerformClick
         public static void PerformClick()

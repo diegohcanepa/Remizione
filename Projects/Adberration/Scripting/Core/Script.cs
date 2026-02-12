@@ -153,18 +153,28 @@ namespace Adberration.Scripting
                     signature += headerSeparator + tokens[1];
             }
 
+            // Persistent
             Persistent = tokens.Contains(ScriptSyntax.PersistentKeyword);
             if (Persistent)
             {
                 if (scriptType is not ScriptType.Thing and not ScriptType.Room)
-                    ThrowScriptSyntaxError(this, signature, $"The {ScriptSyntax.PersistentKeyword} keyword is only valid for Room and Thing declarations.");
+                    ThrowScriptSyntaxError(this, signature, $"The {ScriptSyntax.PersistentKeyword} keyword is not supported in this context.");
             }
 
+            // Cloneable
             Cloneable = tokens.Contains(ScriptSyntax.CloneableKeyword);
             if (Cloneable)
             {
                 if (scriptType is not ScriptType.Thing)
-                    ThrowScriptSyntaxError(this, signature, $"The {ScriptSyntax.CloneableKeyword} keyword is only valid for Thing declarations.");
+                    ThrowScriptSyntaxError(this, signature, $"The {ScriptSyntax.CloneableKeyword} keyword is not supported in this context.");
+            }
+
+            // Interruptible
+            Interruptible = tokens.Contains(ScriptSyntax.InterruptibleKeyword);
+            if (Interruptible)
+            {
+                if (scriptType is not ScriptType.Routine and not ScriptType.Outcome)
+                    ThrowScriptSyntaxError(this, signature, $"The {ScriptSyntax.InterruptibleKeyword} keyword is not supported in this context.");
             }
 
             // Assign Entity Name
@@ -621,6 +631,9 @@ namespace Adberration.Scripting
 
             return false;
         }
+
+        // Interruptible
+        public bool Interruptible { get; private set; }
 
         // IsCompiled
         public bool IsCompiled { get; private set; }
