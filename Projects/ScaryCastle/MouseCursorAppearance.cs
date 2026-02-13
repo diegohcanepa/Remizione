@@ -72,23 +72,10 @@ namespace ScaryCastle
             if (context.HeldItem == null)
             {
                 MouseCursor.Text = sentence;
-                if (target.MaxHP > 0 && target is Actor)
-                {
-                    MouseCursor.TextExtra = $" [{target.HP}/{target.MaxHP}]";
-
-                    var hpRatio = (float)target.HP / target.MaxHP;
-                    if (hpRatio > .7f)
-                        MouseCursor.TextExtraColor = ColorPalette.Text.Yellow;
-                    else if (hpRatio > .4f)
-                        MouseCursor.TextExtraColor = ColorPalette.Text.Orange;
-                    else
-                        MouseCursor.TextExtraColor = ColorPalette.Text.Red;
-                }
                 return;
             }
 
             MouseCursor.Text = $"{useVerb} {context.HeldItem.Definition.LocalizedDisplayName} {withPreposition} {sentence}";
-            MouseCursor.TextExtra = null;
         }
 
         // Refresh

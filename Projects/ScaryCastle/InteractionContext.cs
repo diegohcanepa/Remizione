@@ -86,8 +86,6 @@ namespace ScaryCastle
         {
             if (HeldItem?.Count <= 0)
                 HeldItem = null;
-
-            // Modal speech bubble active
             
             if (!CanScanTarget())
             {
