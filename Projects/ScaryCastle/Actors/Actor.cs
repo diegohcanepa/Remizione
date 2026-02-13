@@ -521,7 +521,7 @@ namespace ScaryCastle
             Script? script;
             if (item == null)
             {
-                script = Session.HeadbuttMode ? session.ScriptLibrary.FindRoutine(RoutineNames.ExecuteHeadbutt) : target.OutcomeScript;
+                script = target.OutcomeScript;
             }
             else
             {

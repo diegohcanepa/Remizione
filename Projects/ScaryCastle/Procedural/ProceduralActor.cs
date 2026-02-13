@@ -2,6 +2,7 @@
 using Engendro;
 using Microsoft.Xna.Framework;
 using System;
+using System.Linq;
 
 namespace ScaryCastle
 {
@@ -14,6 +15,7 @@ namespace ScaryCastle
 
         private readonly FloatTween angryTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 40, -1);
         private bool isAttacking;
+        private readonly Meter willMeter;
 
         #endregion
 
@@ -26,6 +28,10 @@ namespace ScaryCastle
             AllowHeadbuttImpact = true;
             Definition = ActorDefinition.Definitions.Get(DeclaredName);
             CombatBehavior = CombatBehavior.Behaviors.Find(DeclaredName);
+            willMeter = new Meter(Game, ColorPalette.WillMeter.Back, ColorPalette.WillMeter.Fore, new(8, 3))
+            {
+                MaximumValue = 1
+            };
         }
 
         #endregion
@@ -62,28 +68,18 @@ namespace ScaryCastle
             }
         }
 
-        // EndAttack
-        protected void EndAttack()
-        {
-            isAttacking = false;
-            AttackCooldown = AttackRate;
-        }
-
-        // InLineOfSight
-        protected virtual bool InLineOfSight(Vector2 targetPosition)
-        {
-            if (Room?.WalkArea != null)
-                return Room.WalkArea.InLineOfSight(Position, targetPosition);
-            else
-                return true;
-        }
+        // IsWillMeterVisible
+        private bool IsWillMeterVisible => IsAngry && !IsMoving;
 
         // StartAttack
         private void StartAttack()
         {
-            isAttacking = true;
-            Session.Player?.StopMoving();
-            OnBeginAttackExecution();
+            AttackCooldown = AttackRate;
+            if (OnStartAttack())
+            {
+                isAttacking = true;
+                Session.Player?.StopMoving();
+            }
         }
 
         // UpdateMovementBehavior
@@ -118,14 +114,6 @@ namespace ScaryCastle
         // AttackRate
         protected int AttackRate { get; set; } = 2000;
 
-        // IsInsideVisibleBox
-        protected bool IsInsideVisibleBox(Vector2 pos)
-        {
-            var view = Session.Camera.VisibleBox;
-            view.Inflate(-20, -20);
-            return view.Contains(pos);
-        }
-
         // CheckForAggroTrigger
         protected virtual void CheckForAggroTrigger()
         {
@@ -146,8 +134,32 @@ namespace ScaryCastle
             */
         }
 
+        // IsInsideVisibleBox
+        protected bool IsInsideVisibleBox(Vector2 pos)
+        {
+            var view = Session.Camera.VisibleBox;
+            view.Inflate(-20, -20);
+            return view.Contains(pos);
+        }
+
         // DeAggroDistance
         protected float DeAggroDistance { get; set; } = 500;
+
+        // EndAttack
+        protected void EndAttack()
+        {
+            isAttacking = false;
+            AttackCooldown = AttackRate;
+        }
+
+        // InLineOfSight
+        protected virtual bool InLineOfSight(Vector2 targetPosition)
+        {
+            if (Room?.WalkArea != null)
+                return Room.WalkArea.InLineOfSight(Position, targetPosition);
+            else
+                return true;
+        }
 
         // MoveCooldown
         protected int MoveCooldown { get; set; }
@@ -155,9 +167,11 @@ namespace ScaryCastle
         // MoveRate
         protected Int32Range MoveRate { get; set; } = new(5000);
 
-        // OnBeginAttackExecution
-        protected virtual void OnBeginAttackExecution()
+        // OnEnterRoom
+        protected override void OnEnterRoom()
         {
+            base.OnEnterRoom();
+
         }
 
         // OnBeginMovementBehavior
@@ -189,6 +203,9 @@ namespace ScaryCastle
                 X -= angryTween.CurrentValue;
                 SupressOnTransformNotification--;
             }
+
+            if (IsWillMeterVisible)
+                willMeter.Draw(gameTime);
         }
 
         // OnGetAngry
@@ -196,11 +213,21 @@ namespace ScaryCastle
         {
         }
 
+        // OnStartAttack
+        protected virtual bool OnStartAttack() => false;
+
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType, Vector2 knockback)
         {
             base.OnTakeDamage(attacker, amount, damageType, knockback);
-            IsAngry = true;
+
+            if (!Session.AngryMode && Room != null)
+            {
+                foreach (var actor in Room.Children.OfType<ProceduralActor>())
+                {
+                    actor.IsAngry = true;
+                }
+            }
         }
 
         // OnUpdate
@@ -250,6 +277,12 @@ namespace ScaryCastle
             {
                 // D. Ejecución del ataque (esperando animación/proyectil)
                 OnUpdateAttackExecution(gameTime);
+            }
+
+            if (IsWillMeterVisible)
+            {
+                willMeter.Value = (float)AttackCooldown / AttackRate;
+                willMeter.Position = BoundingBox.GetPoint(RectanglePoint.Top, 0, -2);
             }
         }
 

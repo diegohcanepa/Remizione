@@ -18,21 +18,15 @@ namespace ScaryCastle
             FastMoveFactor = 3;
             Guts = 7;
             ShadowSpotSize = 0;
+            IsAngry = true;
             AllowMovementBehavior = true;
-            AttackRate = 2000;
+            AttackRate = 4000;
             scaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.Zero, new(0, .05f), 600, -1);
 
             StateMachine.AddState(new ActorCloseAttackState());
         }
 
         #region Protected members
-
-        // OnBeginAttackExecution
-        protected override void OnBeginAttackExecution()
-        {
-            PlaySound("EnviousEyeAttack");
-            StateMachine.ChangeState<ActorCloseAttackState>();
-        }
 
         // OnBeginMovementBehavior
         protected override void OnBeginMovementBehavior()
@@ -51,6 +45,22 @@ namespace ScaryCastle
             base.OnDraw(gameTime);
             Scale -= scaleTween.CurrentValue;
             SupressOnTransformNotification--;
+        }
+
+        // OnStartAttack
+        protected override bool OnStartAttack()
+        {
+            if (Session.Player == null)
+                return false;
+
+            if (DistanceTo(Session.Player.Position) <= AttackRange)
+            {
+                PlaySound("EnviousEyeAttack");
+                StateMachine.ChangeState<ActorCloseAttackState>();
+                return true;
+            }
+            
+            return false;
         }
 
         // OnUpdate

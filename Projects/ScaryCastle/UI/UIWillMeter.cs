@@ -20,7 +20,7 @@ namespace ScaryCastle
             this.session = session;
 
             // Meter
-            this.meter = new Meter(Game, ColorPalette.Text.TerraDarkest, ColorPalette.Text.Orange, new(34, 5))
+            this.meter = new Meter(Game, ColorPalette.WillMeter.Back, ColorPalette.WillMeter.Fore, new(34, 5))
             {
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5)
             };

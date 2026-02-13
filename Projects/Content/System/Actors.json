@@ -3,6 +3,8 @@
   "data": [
     {
       "name": "EnviousEye",
+      "minSpawnAmount": 2,
+      "maxSpawnAmount": 3,
       "placements": [
         "WalkArea"
       ]

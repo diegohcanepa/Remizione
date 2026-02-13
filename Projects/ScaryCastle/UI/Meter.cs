@@ -120,7 +120,7 @@ namespace ScaryCastle
         public Color ForeColor { get; }
 
         // MaximumValue
-        public int MaximumValue
+        public float MaximumValue
         {
             get;
             set
@@ -151,7 +151,7 @@ namespace ScaryCastle
         }
 
         // Value
-        public int Value
+        public float Value
         {
             get;
             set

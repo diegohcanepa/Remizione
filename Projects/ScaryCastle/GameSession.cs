@@ -294,12 +294,6 @@ namespace ScaryCastle
                 return base.OnHandleInput(gameTime);
         }
 
-        // OnOutcomeCompleted
-        protected override void OnOutcomeCompleted(Thing target)
-        {
-            HeadbuttMode = false;
-        }
-
         // OnPause
         protected override void OnPause()
         {
@@ -557,9 +551,6 @@ namespace ScaryCastle
 
         // Game
         public new ScaryCastleGame Game { get; }
-
-        // HeadbuttMode
-        public bool HeadbuttMode { get; set; }
 
         // HUD
         public HUD HUD { get; }

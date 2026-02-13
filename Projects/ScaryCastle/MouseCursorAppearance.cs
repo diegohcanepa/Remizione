@@ -9,7 +9,6 @@ namespace ScaryCastle
     /// </summary>
     internal static class MouseCursorAppearance
     {
-        private static readonly string headbuttVerb = Localization.GetValue(Verb.Headbutt);
         private static readonly string useVerb = Localization.GetValue(Verb.Use);
         private static readonly string withPreposition = TextRepository.GetValue("Misc.WithPreposition");
 
@@ -57,13 +56,6 @@ namespace ScaryCastle
                 return;
             }
 
-            // Headbutt mode
-            if (context.Session.HeadbuttMode)
-            {
-                MouseCursor.State = MouseCursorState.Hit;
-                return;
-            }
-
             MouseCursor.State = context.Target?.GetMouseCursorState() ?? MouseCursorState.Cross;
         }
 
@@ -79,7 +71,7 @@ namespace ScaryCastle
             // No item 
             if (context.HeldItem == null)
             {
-                MouseCursor.Text = context.Session.HeadbuttMode ? $"{headbuttVerb} {sentence}" : sentence;
+                MouseCursor.Text = sentence;
                 if (target.MaxHP > 0 && target is Actor)
                 {
                     MouseCursor.TextExtra = $" [{target.HP}/{target.MaxHP}]";

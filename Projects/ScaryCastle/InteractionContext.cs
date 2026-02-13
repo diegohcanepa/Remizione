@@ -135,18 +135,7 @@ namespace ScaryCastle
         public MouseCursorState? CursorOverride { get; private set; }
 
         // HeldItem
-        public Item? HeldItem
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    Session.HeadbuttMode = false;
-                }
-            }
-        }
+        public Item? HeldItem { get; set; }
 
         // IsValidInteraction
         public bool IsValidInteraction { get; private set; }

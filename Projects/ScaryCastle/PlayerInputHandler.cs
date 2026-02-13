@@ -71,7 +71,7 @@ namespace ScaryCastle
                 }
             }
 
-            player.ApproachAndInteract(context.Target, context.CursorOverride.HasValue ? null : context.HeldItem, context.Session.HeadbuttMode ? ApproachBehavior.ClosestSide : null);
+            player.ApproachAndInteract(context.Target, context.CursorOverride.HasValue ? null : context.HeldItem);
         }
 
         // TestMouseLeftButtonClick
@@ -98,11 +98,6 @@ namespace ScaryCastle
             {
                 Sound.Play(SoundNames.Interact);
                 Actor.Session.InteractionContext.HeldItem = null;
-            }
-            else
-            {
-                Actor.Session.HeadbuttMode = !Actor.Session.HeadbuttMode;
-                MouseCursor.PerformClick();
             }
 
             return true;

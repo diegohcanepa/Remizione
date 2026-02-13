@@ -112,5 +112,12 @@ namespace ScaryCastle
 
         // TextStandardMenuTitle
         internal static Color TextStandardMenuTitle { get; } = new Color(227, 213, 200);
+
+        // WillMeter
+        internal static class WillMeter
+        {
+            internal static Color Back { get; } = Text.TerraDarkest;
+            internal static Color Fore { get; } = Text.Orange;
+        }
     }
 }

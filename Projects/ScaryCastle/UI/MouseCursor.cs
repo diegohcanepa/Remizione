@@ -170,7 +170,7 @@ namespace ScaryCastle
             EngendroGame.Instance.SpriteBatch.End();
 
             EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera);
-            if (State == MouseCursorState.Cross || State == MouseCursorState.Hit || CustomImage != null)
+            if (State == MouseCursorState.Cross || CustomImage != null)
             {
                 textSprite.Draw(gameTime);
                 textExtraSprite.Draw(gameTime);
