@@ -40,9 +40,6 @@ namespace ScaryCastle
             // Coin meter 
             this.CoinMeter = new(session);
 
-            // Inventory
-            this.Inventory = new(session.CommonInventory);
-
             // CommonInventoryMeter
             this.CommonInventoryMeter = new(session.CommonInventory);
 
@@ -60,34 +57,28 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (session.IsCurrentScene)
-            {
-                Game.SpriteBatch.Begin(Game.Camera);
+            Game.SpriteBatch.Begin(Game.Camera);
 
-                playerIcon.Draw(gameTime);
-                healthMeter.Draw(gameTime);
+            playerIcon.Draw(gameTime);
+            healthMeter.Draw(gameTime);
 
-                Inventory.Draw(gameTime);
+            CoinMeter.Draw(gameTime);
+            CommonInventoryMeter.Draw(gameTime);
+            SacredInventoryMeter.Draw(gameTime);
+            Log.Draw(gameTime);
+            Message.Draw(gameTime);
+            Game.SpriteBatch.End();
 
-                CoinMeter.Draw(gameTime);
-                CommonInventoryMeter.Draw(gameTime);
-                SacredInventoryMeter.Draw(gameTime);
-                Log.Draw(gameTime);
-                Message.Draw(gameTime);
-                Game.SpriteBatch.End();
+            if (session.AngryMode)
+                willMeter.Draw(gameTime);
 
-                if (session.AngryMode)
-                    willMeter.Draw(gameTime);
-
-                if (session.Room is ProceduralRoom)
-                    MiniMap.Draw(gameTime);
-            }
+            if (session.Room is ProceduralRoom)
+                MiniMap.Draw(gameTime);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            Inventory.Update(gameTime);
             CommonInventoryMeter.Update(gameTime);
             SacredInventoryMeter.Update(gameTime);
             healthMeter.Update(gameTime);
@@ -117,14 +108,8 @@ namespace ScaryCastle
             if (session.IsConsoleVisible)
                 return HandleInputResult.Unhandled;
 
-            if (Inventory.HandleInput(gameTime) == HandleInputResult.Handled)
-                return HandleInputResult.Handled;
-
             return HandleInputResult.Unhandled;
         }
-
-        // Inventory
-        public UIInventory Inventory { get; }
 
         // Log
         public UILog Log { get; }

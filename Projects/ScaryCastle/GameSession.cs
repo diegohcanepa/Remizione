@@ -2,6 +2,7 @@
 using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Procedural;
 using ScaryCastle.Scripting;
@@ -23,6 +24,7 @@ namespace ScaryCastle
         private readonly HashSet<Actor> angryList = [];
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
+        private readonly InventoryScene inventoryScene;
         private Vector2? playerPosition;
         private readonly List<GameThing> proceduralThings = [];
         private readonly Dictionary<string, GameThing> proceduralThingsDict = [];
@@ -55,6 +57,7 @@ namespace ScaryCastle
             this.InteractionContext = new(this);
             this.DeclaredThings = new(proceduralThings);
             this.Random = new Random(Seed);
+            this.inventoryScene = new(CommonInventory);
 
             ObjectPools = new ObjectPools(this);
             ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(game), 100);
@@ -163,17 +166,10 @@ namespace ScaryCastle
         {
             if (Room is ProceduralRoom proceduralRoom)
             {
-                if (AngryMode)
-                {
-                    AudioManager.Music.PlayTag(GameSettings.MusicTagAngry);
-                }
-                else
-                {
-                    var tag = proceduralRoom.RoomGraph.Definition.MusicTag;
-                    if (string.IsNullOrWhiteSpace(tag))
-                        tag = GameSettings.MusicTagRide;
-                    AudioManager.Music.PlayTag(tag);
-                }
+                var tag = proceduralRoom.RoomGraph.Definition.MusicTag;
+                if (string.IsNullOrWhiteSpace(tag))
+                    tag = GameSettings.MusicTagRide;
+                AudioManager.Music.PlayTag(tag);
             }
         }
 
@@ -420,6 +416,15 @@ namespace ScaryCastle
             InteractionContext.Refresh();
 
             UpdateAngryMode(gameTime);
+
+            if (!IsAwaiting)
+            {
+                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 120)
+                {
+                    inventoryScene.SceneController.Push();
+                    return;
+                }
+            }
         }
 
         // OnWrite
@@ -453,7 +458,6 @@ namespace ScaryCastle
         public void AddAngryActor(Actor actor)
         {
             angryList.Add(actor);
-            AudioManager.Music.PlayTag(GameSettings.MusicTagAngry);
         }
 
         // AngryMode

@@ -13,7 +13,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly FloatTween angryTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 40, -1);
         private bool isAttacking;
         private readonly Meter willMeter;
 
@@ -171,7 +170,11 @@ namespace ScaryCastle
         protected override void OnEnterRoom()
         {
             base.OnEnterRoom();
-
+            Reheal();
+            AttackCooldown = AttackRate;
+            IsAttacking = false;
+            IsAngry = true;
+            Stand();
         }
 
         // OnBeginMovementBehavior
@@ -190,20 +193,8 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (IsAngry && !IsMoving)
-            {
-                SupressOnTransformNotification++;
-                X += angryTween.CurrentValue;
-            }
-
             base.OnDraw(gameTime);
-
-            if (IsAngry && !IsMoving)
-            {
-                X -= angryTween.CurrentValue;
-                SupressOnTransformNotification--;
-            }
-
+            
             if (IsWillMeterVisible)
                 willMeter.Draw(gameTime);
         }
@@ -240,8 +231,6 @@ namespace ScaryCastle
             }
 
             base.OnUpdate(gameTime);
-
-            angryTween.Update(gameTime);
 
             // 1. Timer de Ataque (Solo si está nervioso y libre)
             if (IsAngry && !isAttacking)

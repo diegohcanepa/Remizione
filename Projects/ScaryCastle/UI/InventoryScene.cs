@@ -7,9 +7,9 @@ using System.Globalization;
 namespace ScaryCastle
 {
     /// <summary>
-    /// UIInventory
+    /// InventoryScene
     /// </summary>
-    public sealed class UIInventory : GameObject, IInputHandler
+    public sealed class InventoryScene : Scene, IInputHandler
     {
         #region Private fields
 
@@ -29,8 +29,8 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public UIInventory(Inventory inventory)
-            : base(inventory.Session.Game)
+        public InventoryScene(Inventory inventory)
+            : base(inventory.Session.Game, SceneSettings.PausePreviousScenes)
         {
             this.amounts = new TextSprite[Inventory.MaximumCapacity];
             this.icons = new ImageSprite[Inventory.MaximumCapacity];
@@ -105,9 +105,6 @@ namespace ScaryCastle
         // HandleMouseInput
         private bool HandleMouseInput()
         {
-            if (!IsVisible)
-                return false;
-
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
             {
                 if (Inventory.Session.InteractionContext.HeldItem == null && GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item grabbedItem)
@@ -116,7 +113,7 @@ namespace ScaryCastle
                     {
                         Inventory.Session.InteractionContext.HeldItem = grabbedItem;
                         MouseCursor.PerformClick();
-                        IsVisible = false;
+                        SceneController.Pop();
                         return true;
                     }
                 }
@@ -204,11 +201,7 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (!Inventory.Session.IsCurrentScene)
-                return;
-
-            if (!IsVisible)
-                return;
+            Game.SpriteBatch.Begin(Game.Camera);
 
             // Gradient
             bottomGradient.Draw(gameTime);
@@ -231,40 +224,50 @@ namespace ScaryCastle
             }
 
             itemName.Draw(gameTime);
+
+            Game.SpriteBatch.End();
+
+            Inventory.Session.HUD.Draw(gameTime);
         }
 
-        // OnUpdate
-        protected override void OnUpdate(GameTime gameTime)
+        // OnHandleInput
+        protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
-            if (!Inventory.Session.IsCurrentScene || MouseCursor.State == MouseCursorState.Wait)
-                return;
+            // Mouse input
+            if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
+            {
+                if (HandleMouseInput())
+                    return HandleInputResult.Handled;
+            }
+
+            return HandleInputResult.Unhandled;
+        }
+
+        // OnLoadContent
+        protected override void OnLoadContent()
+        {
+            base.OnLoadContent();
+
+            MouseCursor.State = MouseCursorState.Hand;
+            Inventory.Session.InteractionContext.HeldItem = null;
 
             if (lastSeenInventoryVersion != Inventory.ContentVersion)
             {
                 lastSeenInventoryVersion = Inventory.ContentVersion;
                 Refresh();
             }
+        }
 
-            if (!IsVisible)
-            {
-                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 120)
-                {
-                    IsVisible = true;
-                    Inventory.Session.InteractionContext.HeldItem = null;
-                    return;
-                }
-            }
-            else
-            {
-                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y < 105)
-                {
-                    IsVisible = false;
-                    return;
-                }
-            }
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            Inventory.Session.HUD.Update(gameTime);
 
-            if (!IsVisible)
+            if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y < 105)
+            {
+                SceneController.Pop();
                 return;
+            }
 
             switchInventoryButton.Update(gameTime);
 
@@ -319,22 +322,6 @@ namespace ScaryCastle
             return GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition);
         }
 
-        // HandleInput
-        public HandleInputResult HandleInput(GameTime gameTime)
-        {
-            if (!Inventory.Session.IsCurrentScene)
-                return HandleInputResult.Unhandled;
-
-            // Mouse input
-            if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
-            {
-                if (HandleMouseInput())
-                    return HandleInputResult.Handled;
-            }
-
-            return HandleInputResult.Unhandled;
-        }
-
         // Inventory
         public Inventory Inventory
         {
@@ -345,20 +332,6 @@ namespace ScaryCastle
                 {
                     field = value;
                     Refresh();
-                }
-            }
-        }
-
-        // IsVisible
-        public bool IsVisible
-        {
-            get;
-            private set
-            {
-                if (field != value)
-                {
-                    field = value;
-                    itemName.Text = null;
                 }
             }
         }

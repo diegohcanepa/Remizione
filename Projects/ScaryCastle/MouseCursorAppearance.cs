@@ -36,12 +36,14 @@ namespace ScaryCastle
                 return;
             }
 
+            /*
             // Inventory is visible
             if (context.Session.HUD.Inventory.IsVisible)
             {
                 MouseCursor.State = MouseCursorState.Hand;
                 return;
             }
+            */
 
             if (context.CursorOverride.HasValue)
             {

@@ -35,7 +35,7 @@ namespace ScaryCastle
                 return false;
 
             // Inventory is active
-            if (Session.HUD.Inventory.IsVisible)
+            if (!Session.IsCurrentScene)
                 return false;
 
             return true;

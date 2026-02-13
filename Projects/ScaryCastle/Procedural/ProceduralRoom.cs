@@ -408,18 +408,6 @@ namespace ScaryCastle
                 SackCount--;
         }
 
-        // OnEnter
-        protected override void OnEnter()
-        {
-            base.OnEnter();
-
-            // Reheal all things
-            foreach (var thing in Children.OfType<GameThing>())
-            {
-                thing.Reheal();
-            }
-        }
-
         // OnLoad
         protected override void OnLoad()
         {
