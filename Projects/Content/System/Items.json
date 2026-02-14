@@ -88,7 +88,8 @@
 			"isStackable": true,
 			"effects": [
 				{
-					"effectType": "RestoreWill",
+					"effectType": "Heal",
+					"amount": "4",
 					"target": "Self",
 					"sound": "Drink"
 				}

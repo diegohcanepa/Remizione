@@ -26,10 +26,6 @@ namespace ScaryCastle
             if (SpeechBubble.ModalInstance != null)
                 return false;
 
-            // Player is recovering will
-            if (Session.Player?.IsTired == true)
-                return false;
-
             // Session is awaiting script
             if (Session.IsAwaiting)
                 return false;

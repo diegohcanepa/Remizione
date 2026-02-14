@@ -14,7 +14,6 @@ namespace ScaryCastle
         private readonly ImageSprite back;
         private readonly ImageSprite container;
         private readonly ImageSprite fore;
-        private readonly Vector2 padding = Vector2.One;
         private static readonly Color previousValue = new(125, 56, 51);
         private readonly ImageSprite previousValue1;
         private readonly FloatTween tween = new() { StartDelay = 200 };
@@ -23,10 +22,11 @@ namespace ScaryCastle
         #endregion
 
         // Constructor
-        public Meter(EngendroGame game, Color backColor, Color foreColor, Vector2 size)
+        public Meter(EngendroGame game, Color backColor, Color foreColor, Vector2 size, float borderSize)
             : base(game)
         {
             this.BackColor = backColor;
+            this.BorderSize = new(borderSize);
             this.ForeColor = foreColor;
             this.width = size.X;
 
@@ -35,14 +35,14 @@ namespace ScaryCastle
             {
                 Color = Color.Black,
                 ScaleY = size.Y,
-                ScaleX = size.X + (padding.X * 2) // ancho fijo para el container
+                ScaleX = size.X + (BorderSize.X * 2) // ancho fijo para el container
             };
 
             // Back
             this.back = new ImageSprite(game, Atlases.UI.Pixel)
             {
                 Color = backColor,
-                ScaleY = container.ScaleY - (padding.Y * 2),
+                ScaleY = container.ScaleY - (BorderSize.Y * 2),
                 ScaleX = size.X
             };
 
@@ -50,14 +50,14 @@ namespace ScaryCastle
             this.fore = new ImageSprite(game, Atlases.UI.Pixel)
             {
                 Color = foreColor,
-                ScaleY = container.ScaleY - (padding.Y * 2)
+                ScaleY = container.ScaleY - (BorderSize.Y * 2)
             };
 
             // Previous value
             this.previousValue1 = new ImageSprite(game, Atlases.UI.Pixel)
             {
                 Color = previousValue,
-                ScaleY = container.ScaleY - (padding.Y * 2)
+                ScaleY = container.ScaleY - (BorderSize.Y * 2)
             };
         }
 
@@ -67,9 +67,9 @@ namespace ScaryCastle
         private void Invalidate()
         {
             container.Position = Position;
-            back.Position = Position + padding;
-            fore.Position = Position + padding;
-            previousValue1.Position = Position + padding;
+            back.Position = Position + BorderSize;
+            fore.Position = Position + BorderSize;
+            previousValue1.Position = Position + BorderSize;
 
             var xOffset = container.BoundingBox.Width / 2;
             container.X -= xOffset;
@@ -116,6 +116,9 @@ namespace ScaryCastle
         // BoundingBox
         public RectangleF BoundingBox => container.BoundingBox;
 
+        // BorderSize
+        public Vector2 BorderSize { get; }
+
         // ForeColor
         public Color ForeColor { get; }
 
@@ -130,7 +133,7 @@ namespace ScaryCastle
                     field = value;
                     this.Value = field; // setea al maximo
                     back.ScaleX = width;  // back siempre ancho fijo
-                    container.ScaleX = width + (padding.X * 2);
+                    container.ScaleX = width + (BorderSize.X * 2);
                     Invalidate();
                 }
             }
@@ -188,7 +191,7 @@ namespace ScaryCastle
                 {
                     width = value;
                     back.ScaleX = width;
-                    container.ScaleX = width + (padding.X * 2);
+                    container.ScaleX = width + (BorderSize.X * 2);
                     fore.ScaleX = GetScaledWidth(Value);
                     previousValue1.ScaleX = GetScaledWidth(Value);
                     Invalidate();

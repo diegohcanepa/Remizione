@@ -173,42 +173,6 @@ namespace ScaryCastle
             }
         }
 
-        // UpdateAngryMode
-        public void UpdateAngryMode(GameTime gameTime)
-        {
-            if (!AngryMode || Player == null)
-                return;
-
-            var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (Player.AnimationPlayer.Animation?.Name == AnimationNames.Fatigue)
-            {
-                Will += GameSettings.Will.RecoveryFatigue * deltaTime;
-                if (Will >= GameSettings.Will.Maximum)
-                {
-                    Will = GameSettings.Will.Maximum;
-                    Player.Stand(true);
-                }
-            }
-            else
-            {
-                if (Player.IsMoving)
-                {
-                    Will -= GameSettings.Will.Drain * deltaTime;
-                }
-                else
-                {
-                    Will += GameSettings.Will.RecoveryStill * deltaTime;
-                }
-
-                if (Will <= 0)
-                {
-                    Will = 0;
-                    Player.Fatigue();
-                }
-            }
-        }
-
         #endregion
 
         #region Protected members
@@ -255,7 +219,6 @@ namespace ScaryCastle
         // OnEnterRoom
         protected override void OnEnterRoom(Room room)
         {
-            Will = GameSettings.Will.Maximum;
             InteractionContext.Reset();
             MouseCursor.Reset();
 
@@ -414,8 +377,6 @@ namespace ScaryCastle
             }
 
             InteractionContext.Refresh();
-
-            UpdateAngryMode(gameTime);
 
             if (!IsAwaiting)
             {
@@ -683,18 +644,5 @@ namespace ScaryCastle
             echoScene.Show(text, allowTyping, image);
             Game.SceneManager.Push(echoScene);
         }
-
-        // Will
-        public float Will
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = float.Clamp(value, 0, GameSettings.Will.Maximum);
-                }
-            }
-        } = GameSettings.Will.Maximum;
     }
 }

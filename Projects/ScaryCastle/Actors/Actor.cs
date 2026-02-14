@@ -398,13 +398,6 @@ namespace ScaryCastle
             return result;
         }
 
-        // ApplyHeadbuttPenalty
-        [ScriptMethod]
-        public void ApplyHeadbuttPenalty()
-        {
-            Damage(1);
-        }
-
         // ApproachAndInteract
         public void ApproachAndInteract(GameThing target, Item? item, ApproachBehavior? approachBehavior = null)
         {
@@ -433,12 +426,9 @@ namespace ScaryCastle
                 if (IsDead || session.IsAwaiting)
                     return false;
 
-                return StateMachine.CurrentState is ActorStandState or ActorMoveState or ActorFatigueState;
+                return StateMachine.CurrentState is ActorStandState or ActorMoveState;
             }
         }
-
-        // CanMove
-        public override bool CanMove => !IsTired && base.CanMove;
 
         // CombatBehavior
         public CombatBehavior? CombatBehavior { get; init; }
@@ -449,22 +439,6 @@ namespace ScaryCastle
         // FastMoveFactor
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public float FastMoveFactor { get; set; } = 1;
-
-        // Fatigue
-        public void Fatigue()
-        {
-            StopMoving();
-
-            // TODO: Ahora se podrian hacer todos los states dinamicos on-demand y ahorrar un monton de instancias.
-            var state = StateMachine.FindState<ActorFatigueState>();
-            if (state == null)
-            {
-                state = new ActorFatigueState();
-                StateMachine.AddState(state);
-            }
-
-            StateMachine.ChangeState<ActorFatigueState>();
-        }
 
         // FootstepSound
         [ScriptProperty]
@@ -553,9 +527,6 @@ namespace ScaryCastle
 
         // IsStandingOrMoving
         public bool IsStandingOrMoving => StateMachine.CurrentState is ActorStandState or ActorMoveState;
-
-        // IsTired
-        public bool IsTired => StateMachine.CurrentState is ActorFatigueState;
 
         // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;

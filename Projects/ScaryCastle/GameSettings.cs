@@ -54,15 +54,5 @@ namespace ScaryCastle
 
         // UserSettingsFileName
         public const string UserSettingsFileName = "UserSettings.cfg";
-
-        // Will
-        internal static class Will
-        {
-            internal static int Drain { get; } = 12;
-            internal static int EvasionCost { get; } = 30;
-            internal static int Maximum { get; } = 100;
-            internal static int RecoveryFatigue { get; } = 33;
-            internal static int RecoveryStill { get; } = 4;
-        }
     }
 }

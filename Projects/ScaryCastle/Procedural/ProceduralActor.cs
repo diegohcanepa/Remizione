@@ -2,6 +2,7 @@
 using Engendro;
 using Microsoft.Xna.Framework;
 using System;
+using System.Globalization;
 using System.Linq;
 
 namespace ScaryCastle
@@ -13,8 +14,10 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private readonly FloatTween angryTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 40, -1);
+        private readonly ImageSprite heartIcon;
+        private readonly TextSprite hpText;
         private bool isAttacking;
-        private readonly Meter willMeter;
 
         #endregion
 
@@ -24,13 +27,20 @@ namespace ScaryCastle
         protected ProceduralActor(GameSession session, string name)
             : base(session, name)
         {
-            AllowHeadbuttImpact = true;
+            heartIcon = new(Game, Atlases.UI.HeartFull)
+            {
+                PivotOrigin = RectanglePoint.Bottom,
+                Scale = ScaleInfo.UIElement.Medium
+            };
+
+            hpText = new(Game, Fonts.CommonOutline)
+            {
+                PivotOrigin = RectanglePoint.Left,
+                Scale = ScaleInfo.Text.ExtraLarge
+            };
+
             Definition = ActorDefinition.Definitions.Get(DeclaredName);
             CombatBehavior = CombatBehavior.Behaviors.Find(DeclaredName);
-            willMeter = new Meter(Game, ColorPalette.WillMeter.Back, ColorPalette.WillMeter.Fore, new(8, 3))
-            {
-                MaximumValue = 1
-            };
         }
 
         #endregion
@@ -66,9 +76,6 @@ namespace ScaryCastle
                 }
             }
         }
-
-        // IsWillMeterVisible
-        private bool IsWillMeterVisible => IsAngry && !IsMoving;
 
         // StartAttack
         private void StartAttack()
@@ -171,7 +178,7 @@ namespace ScaryCastle
         {
             base.OnEnterRoom();
             Reheal();
-            AttackCooldown = AttackRate;
+            AttackCooldown = Random.Shared.Next(AttackRate / 4, AttackRate + 1);
             IsAttacking = false;
             IsAngry = true;
             Stand();
@@ -193,10 +200,27 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            var shake = AttackRate > 0 && AttackCooldown <= AttackRate / 4 && !IsMoving;
+
+            if (shake)
+            {
+                SupressOnTransformNotification++;
+                X += angryTween.CurrentValue;
+            }
+
             base.OnDraw(gameTime);
-            
-            if (IsWillMeterVisible)
-                willMeter.Draw(gameTime);
+
+            if (shake)
+            {
+                X -= angryTween.CurrentValue;
+                SupressOnTransformNotification--;
+            }
+
+            if (!Session.IsCurrentScene)
+            {
+                heartIcon.Draw(gameTime);
+                hpText.Draw(gameTime);
+            }
         }
 
         // OnGetAngry
@@ -205,7 +229,10 @@ namespace ScaryCastle
         }
 
         // OnStartAttack
-        protected virtual bool OnStartAttack() => false;
+        protected virtual bool OnStartAttack()
+        {
+            return false;
+        }
 
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType, Vector2 knockback)
@@ -231,6 +258,8 @@ namespace ScaryCastle
             }
 
             base.OnUpdate(gameTime);
+
+            angryTween.Update(gameTime);
 
             // 1. Timer de Ataque (Solo si está nervioso y libre)
             if (IsAngry && !isAttacking)
@@ -268,10 +297,12 @@ namespace ScaryCastle
                 OnUpdateAttackExecution(gameTime);
             }
 
-            if (IsWillMeterVisible)
+            if (MaxHP > 0)
             {
-                willMeter.Value = (float)AttackCooldown / AttackRate;
-                willMeter.Position = BoundingBox.GetPoint(RectanglePoint.Top, 0, -2);
+                hpText.Text = HP.ToString(CultureInfo.InvariantCulture);
+                heartIcon.Position = GetOverheadPosition();
+                heartIcon.X -= heartIcon.BoundingBox.Width / 2;
+                hpText.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Right, .5f, .5f);
             }
         }
 

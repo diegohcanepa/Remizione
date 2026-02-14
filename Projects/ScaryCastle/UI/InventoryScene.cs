@@ -310,7 +310,7 @@ namespace ScaryCastle
             for (int i = 0; i < Inventory.Count; i++)
             {
                 if (slots[i].BoundingBox.Contains(position))
-                    return i < Inventory.Session.CommonInventory.Count ? Inventory[i] : null;
+                    return i < Inventory.Count ? Inventory[i] : null;
             }
 
             return null;

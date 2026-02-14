@@ -22,13 +22,6 @@ namespace ScaryCastle
                 return;
             }
 
-            // Player is recharging will
-            if (context.Session.Player?.IsTired == true)
-            {
-                MouseCursor.State = MouseCursorState.Wait;
-                return;
-            }
-
             // Session is awaiting script
             if (context.Session.IsAwaiting)
             {

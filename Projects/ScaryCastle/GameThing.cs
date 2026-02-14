@@ -383,10 +383,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // AllowHeadbuttImpact
-        [ScriptProperty]
-        public bool AllowHeadbuttImpact { get; set; } = false;
-
         // AllowInteraction
         [ScriptProperty]
         public bool AllowInteraction { get; set; } = true;
