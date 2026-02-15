@@ -63,8 +63,8 @@ namespace ScaryCastle
             ResetHeadTween();
             headTween.RandomizeTime();
 
-            this.StateMachine = new ActorStateMachine(this, new ActorStandState());
-            this.StateMachine.AddState(new ActorMoveState());
+            this.BodyMachine = new BodyStateMachine(this, new BodyStandState());
+            this.BodyMachine.AddState(new BodyMoveState());
 
             if (Atlas?.FindImage(Sprite.ImagePath + "Gut0") != null)
             {
@@ -185,14 +185,8 @@ namespace ScaryCastle
             return !IsFollowingPath && base.CanCheckCollisions();
         }
 
-        // CanTakeDamage
-        public override bool CanTakeDamage()
-        {
-            if (IsPlayer && Session.AwaitingScript?.Interruptible == false)
-                return false;
-
-            return base.CanTakeDamage();
-        }
+        // BodyMachine
+        protected BodyStateMachine BodyMachine { get; }
 
         // InputHandler
         protected InputHandler? InputHandler { get; set; }
@@ -240,8 +234,8 @@ namespace ScaryCastle
             }
             else
             {
-                var deathState = StateMachine.FindOrCreateState<ActorDeathState>();
-                StateMachine.ChangeState(deathState.GetType());
+                var deathState = BodyMachine.FindOrCreateState<BodyDeathState>();
+                BodyMachine.ChangeState(deathState.GetType());
             }
 
             ShowImpactWord(ImpactWordName.PlopRed);
@@ -260,7 +254,7 @@ namespace ScaryCastle
 
             if (AnimationSettings.DetachedHead)
             {
-                if (StateMachine.CurrentState is ActorStandState && headSprite.Player.IsPlaying)
+                if (BodyMachine.CurrentState is BodyStandState && headSprite.Player.IsPlaying)
                 {
                     headSprite.Opacity = Opacity;
                     headSprite.OpacityFactor = OpacityFactor;
@@ -283,7 +277,7 @@ namespace ScaryCastle
         protected override void OnInitialize()
         {
             base.OnInitialize();
-            StateMachine.Start();
+            BodyMachine.Start();
         }
 
         // OnLoad
@@ -312,7 +306,7 @@ namespace ScaryCastle
         // OnStartMoving
         protected override void OnStartMoving()
         {
-            StateMachine.ChangeState<ActorMoveState>();
+            BodyMachine.ChangeState<BodyMoveState>();
 
             if (AnimationSettings.MoveBounce)
                 moveVerticalTween.Start(TweenStyle.QuadraticInOut, 0, .8f, 100, -1);
@@ -346,8 +340,8 @@ namespace ScaryCastle
             if (Sprite.Animations.Contains(ActorStateNames.Hurt))
             {
                 Stand();
-                var state = StateMachine.FindOrCreateState<ActorHurtState>();
-                StateMachine.ChangeState(state.GetType());
+                var state = BodyMachine.FindOrCreateState<BodyHurtState>();
+                BodyMachine.ChangeState(state.GetType());
             }
         }
 
@@ -367,11 +361,8 @@ namespace ScaryCastle
             UpdateDirection();
             UpdateFootstep();
             footstepEffect?.Update(gameTime);
-            StateMachine.Update(gameTime);
+            BodyMachine.Update(gameTime);
         }
-
-        // StateMachine
-        protected ActorStateMachine StateMachine { get; }
 
         #endregion
 
@@ -390,9 +381,9 @@ namespace ScaryCastle
             var result = AnimationPlayer.Play(animationName, loop, direction);
             if (result != null)
             {
-                var state = StateMachine.FindOrCreateState<ActorAnimateState>();
+                var state = BodyMachine.FindOrCreateState<BodyAnimateState>();
                 state.Preserve = preserve;
-                StateMachine.ChangeState(state.GetType());
+                BodyMachine.ChangeState(state.GetType());
             }
 
             return result;
@@ -426,12 +417,18 @@ namespace ScaryCastle
                 if (IsDead || session.IsAwaiting)
                     return false;
 
-                return StateMachine.CurrentState is ActorStandState or ActorMoveState;
+                return BodyMachine.CurrentState is BodyStandState or BodyMoveState;
             }
         }
 
-        // CombatBehavior
-        public CombatBehavior? CombatBehavior { get; init; }
+        // CanTakeDamage
+        public override bool CanTakeDamage()
+        {
+            if (IsPlayer && Session.AwaitingScript?.Interruptible == false)
+                return false;
+
+            return base.CanTakeDamage();
+        }
 
         // FastMove
         public bool FastMove { get; set; }
@@ -454,7 +451,7 @@ namespace ScaryCastle
             if (InputHandler == null || Session.IsAwaiting || !IsPlayer || !CanChangeState)
                 return HandleInputResult.Unhandled;
 
-            if (StateMachine.CurrentState.HandleInput(gameTime) == HandleInputResult.Handled)
+            if (BodyMachine.CurrentState.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
             if (InputHandler != null)
@@ -515,8 +512,7 @@ namespace ScaryCastle
         }
 
         // IsAttacking
-        [ScriptProperty]
-        public bool IsAttacking { get; set; }
+        public bool IsAttacking => BodyMachine.CurrentState is BodyAttackState;
 
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }
@@ -526,7 +522,7 @@ namespace ScaryCastle
         public bool IsPlayer => Session.Player == this;
 
         // IsStandingOrMoving
-        public bool IsStandingOrMoving => StateMachine.CurrentState is ActorStandState or ActorMoveState;
+        public bool IsStandingOrMoving => BodyMachine.CurrentState is BodyStandState or BodyMoveState;
 
         // IsWalkAreaHole
         public override bool IsWalkAreaHole => false;
@@ -581,7 +577,7 @@ namespace ScaryCastle
 
             IsFollowingPath = true;
 
-            StateMachine.ChangeState<ActorMoveState>();
+            BodyMachine.ChangeState<BodyMoveState>();
 
             return true;
         }
@@ -620,7 +616,7 @@ namespace ScaryCastle
         public void Stand(bool forceRestart = false)
         {
             //StateMachine.ChangeState(ActorStateNames.Stand, forceRestart);
-            StateMachine.ChangeState<ActorStandState>();
+            BodyMachine.ChangeState<BodyStandState>();
         }
 
         // StartTalking
@@ -642,9 +638,9 @@ namespace ScaryCastle
         }
 
         /// <summary>
-        /// ActorStateMachine
+        /// BodyStateMachine
         /// </summary>
-        public sealed class ActorStateMachine(Actor owner, ActorState initialState)
+        public sealed class BodyStateMachine(Actor owner, BodyState initialState)
             : StateMachine<Actor>(owner, initialState)
         {
             // OnStateChanged

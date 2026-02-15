@@ -135,6 +135,15 @@ namespace Engendro
         // Frame
         public SpriteFrame? Frame => frameIndex < 0 || Animation == null ? null : Animation.GetFrame(frameIndex);
 
+        // GetFrameSubArea
+        public RectangleF GetFrameSubArea()
+        {
+            if (Frame != null)
+                return sprite.GetAbsoluteBounds(Frame.SubArea);
+            else
+                return RectangleF.Empty;
+        }
+
         // GoTo
         public bool GoTo(int frameIndex)
         {

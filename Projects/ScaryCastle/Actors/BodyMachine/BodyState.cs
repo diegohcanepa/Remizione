@@ -3,12 +3,12 @@
 namespace ScaryCastle
 {
     /// <summary>
-    /// ActorState
+    /// BodyState
     /// </summary>
-    public class ActorState : State<Actor>
+    public class BodyState : State<Actor>
     {
         // Constructor
-        public ActorState()
+        public BodyState()
         {
         }
     }

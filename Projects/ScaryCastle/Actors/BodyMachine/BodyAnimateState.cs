@@ -3,12 +3,12 @@
 namespace ScaryCastle
 {
     /// <summary>
-    /// ActorAnimateState
+    /// BodyAnimateState
     /// </summary>
-    public sealed class ActorAnimateState : ActorState
+    public sealed class BodyAnimateState : BodyState
     {
         // Constructor
-        public ActorAnimateState()
+        public BodyAnimateState()
             : base()
         {
         }
@@ -20,7 +20,7 @@ namespace ScaryCastle
         public override void Update(GameTime gameTime)
         {
             if (!Preserve && !Owner.AnimationPlayer.IsPlaying)
-                Machine.ChangeState<ActorStandState>();
+                Machine.ChangeState<BodyStandState>();
         }
     }
 }

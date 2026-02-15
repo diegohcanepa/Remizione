@@ -21,7 +21,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly HashSet<Actor> angryList = [];
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
         private readonly InventoryScene inventoryScene;
@@ -221,13 +220,6 @@ namespace ScaryCastle
         {
             InteractionContext.Reset();
             MouseCursor.Reset();
-
-            for (var i = 0; i < room.Children.Count; i++)
-            {
-                if (room.Children[i] is ProceduralActor actor && actor.IsAngry)
-                    angryList.Add(actor);
-            }
-
             SyncProceduralMusic();
         }
 
@@ -237,7 +229,6 @@ namespace ScaryCastle
             HUD.Reset();
             ImpactWordPool.ReturnAll();
             ObjectPools.FloatingTexts.ReturnAll();
-            angryList.Clear();
         }
 
         // OnHandleInput
@@ -415,15 +406,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // AddAngryActor
-        public void AddAngryActor(Actor actor)
-        {
-            angryList.Add(actor);
-        }
-
-        // AngryMode
-        public bool AngryMode => angryList.Count > 0;
-
         // BeginRun
         [ScriptMethod]
         public void BeginRun()
@@ -593,14 +575,6 @@ namespace ScaryCastle
 
         // Random
         public Random Random { get; private set; }
-
-        // RemoveAngryActor
-        public void RemoveAngryActor(Actor actor)
-        {
-            angryList.Remove(actor);
-            if (angryList.Count == 0)
-                SyncProceduralMusic();
-        }
 
         // Room
         [ScriptProperty]

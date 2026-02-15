@@ -3,14 +3,14 @@
 namespace ScaryCastle
 {
     /// <summary>
-    /// ActorStandState
+    /// BodyStandState
     /// </summary>
-    public sealed class ActorStandState : ActorAnimatedState
+    public sealed class BodyStandState : BodyAnimatedState
     {
         private int idleCooldown;
 
         // Constructor
-        public ActorStandState()
+        public BodyStandState()
             : base(AnimationNames.Stand, true)
         {
         }

@@ -7,10 +7,8 @@ namespace ScaryCastle
     /// </summary>
     public static class Brain
     {
-        #region Private members
-
         // Decide
-        private static CombatIntent? Decide(Actor actor, GameThing target)
+        public static CombatIntent? Decide(ProceduralActor actor, GameThing target)
         {
             if (actor.CombatBehavior is not CombatBehavior behavior)
                 return null;
@@ -70,15 +68,6 @@ namespace ScaryCastle
             }
 
             return intents[0];
-        }
-
-        #endregion
-
-        // Attack
-        public static void Attack(Actor actor, GameThing target)
-        {
-            if (Decide(actor, target) is CombatIntent intent)
-                EffectDescriptor.Apply(intent.EffectDescriptors, actor, target);
         }
     }
 }

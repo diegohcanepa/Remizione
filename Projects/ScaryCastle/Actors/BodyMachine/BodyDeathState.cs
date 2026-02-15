@@ -3,12 +3,12 @@
 namespace ScaryCastle
 {
     /// <summary>
-    /// ActorDeathState
+    /// BodyDeathState
     /// </summary>
-    public sealed class ActorDeathState : ActorAnimatedState
+    public sealed class BodyDeathState : BodyAnimatedState
     {
         // Constructor
-        public ActorDeathState()
+        public BodyDeathState()
             : base(AnimationNames.Death, false)
         {
         }
@@ -23,7 +23,7 @@ namespace ScaryCastle
                 if (Owner.IsPlayer)
                     Owner.Session.AwaitRoutine(RoutineNames.GameOver);
                 else
-                    Machine.ChangeState<ActorStandState>();
+                    Machine.ChangeState<BodyStandState>();
             }
         }
     }

@@ -20,7 +20,7 @@ namespace ScaryCastle
     }
 
     // CombatBehaviorArchetype
-    public enum CombatBehaviorArchetype { Tactical, Berserk }
+    public enum CombatBehaviorArchetype { Tactical, Berserk, Coward, Sniper, Swarmer }
 
     // CombatIntentCategory
     public enum CombatIntentCategory { Basic, Special }

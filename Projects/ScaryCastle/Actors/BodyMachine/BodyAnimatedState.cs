@@ -1,16 +1,16 @@
 ﻿namespace ScaryCastle
 {
     /// <summary>
-    /// ActorAnimatedState
+    /// BodyAnimatedState
     /// </summary>
-    public class ActorAnimatedState : ActorState
+    public class BodyAnimatedState : BodyState
     {
         private readonly string defaultAnimationName;
         private readonly bool autoPlayAnimation;
         private readonly bool loopAnimation;
 
         // Constructor
-        public ActorAnimatedState(string animationName, bool loopAnimation, bool autoPlayAnimation = true)
+        public BodyAnimatedState(string animationName, bool loopAnimation, bool autoPlayAnimation = true)
             : base()
         {
             this.defaultAnimationName = animationName;

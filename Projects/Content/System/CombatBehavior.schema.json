@@ -22,7 +22,7 @@
         },
         "archetype": {
           "type": "string",
-          "enum": [ "Tactical", "Berserk" ],
+          "enum": [ "Tactical", "Berserk", "Coward", "Sniper", "Swarmer" ],
           "default": "Tactical"
         },
         "intents": {

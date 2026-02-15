@@ -3,14 +3,14 @@
 namespace ScaryCastle
 {
     /// <summary>
-    /// ActorHurtState
+    /// BodyHurtState
     /// </summary>
-    public sealed class ActorHurtState : ActorAnimatedState
+    public sealed class BodyHurtState : BodyAnimatedState
     {
         private int cooldown;
 
         // Constructor
-        public ActorHurtState()
+        public BodyHurtState()
             : base(AnimationNames.Hurt, true)
         {
         }
@@ -27,7 +27,7 @@ namespace ScaryCastle
         {
             cooldown -= gameTime.ElapsedGameTime.Milliseconds;
             if (cooldown <= 0)
-                Machine.ChangeState<ActorStandState>();
+                Machine.ChangeState<BodyStandState>();
         }
     }
 }
