@@ -15,6 +15,7 @@ namespace ScaryCastle
             : base(session, name)
         {
             AnimationSettings.SupressAll();
+            BodySize = ActorSize.Small;
             FastMoveFactor  = 3;
             Guts = 7;
             ShadowSpotSize = 0;
@@ -38,25 +39,10 @@ namespace ScaryCastle
             SupressOnTransformNotification--;
         }
 
-        /*
-        // OnBeginAttackState
-        protected override bool OnBeginAttackState()
-        {
-            if (Session.Player != null && DistanceTo(Session.Player.Position) <= AttackRange)
-            {
-                FaceTo(Session.Player);
-                PlaySound("EnviousEyeAttack");
-                StateMachine.ChangeState<ActorCloseAttackState>();
-                return true;
-            }
-            
-            return false;
-        }
-        */
-
         // OnStartAttack
         protected override void OnStartAttack(GameThing target, CombatIntent intent)
         {
+            PlaySound("EnviousEyeAttack");
             var state = BodyMachine.FindOrCreateState<BodyCloseAttackState>();
             state.Intent = intent;
             state.Target = target;

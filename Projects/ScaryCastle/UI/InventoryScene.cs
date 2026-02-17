@@ -30,7 +30,7 @@ namespace ScaryCastle
 
         // Constructor
         public InventoryScene(Inventory inventory)
-            : base(inventory.Session.Game, SceneSettings.PausePreviousScenes)
+            : base(inventory.Session.Game)
         {
             this.amounts = new TextSprite[Inventory.MaximumCapacity];
             this.icons = new ImageSprite[Inventory.MaximumCapacity];
@@ -201,6 +201,9 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            if (!IsCurrentScene)
+                return;
+
             Game.SpriteBatch.Begin(Game.Camera);
 
             // Gradient

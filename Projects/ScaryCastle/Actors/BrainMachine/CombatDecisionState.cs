@@ -1,5 +1,5 @@
-﻿using Engendro;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using System;
 
 namespace ScaryCastle
 {
@@ -8,56 +8,76 @@ namespace ScaryCastle
     /// </summary>
     public sealed class CombatDecisionState : BrainState
     {
+        private const float MIN_REACTION_TIME = 400;
+        private const float MAX_REACTION_TIME = 1200;
+        private float _thinkingTimer;
+
         #region Private members
 
         // DecideCombatManeuver
         private void DecideCombatManeuver()
         {
-            var target = Owner.GetTarget();
-            if (target == null)
+            if (Owner.GetTarget() is not {} target)
                 return;
 
-            // Usamos distancia al cuadrado para evitar Math.Sqrt (Optimización)
-            float distSq = Vector2.DistanceSquared(Owner.Position, target.Position);
-            float attackRangeSq = Owner.AttackRange * Owner.AttackRange;
+            bool inRange = Owner.IsInAttackRange(target.Position);
 
             // Decisión basada en el Arquetipo de Combate (Data-Driven)
             switch (Owner.CombatBehavior.Archetype)
             {
                 // BERSERK: Agresividad suicida
                 case CombatBehaviorArchetype.Berserk:
-                    if (distSq <= attackRangeSq)
+                    if (inRange)
                         TransitionTo<BrainAttackState>();
                     else
-                        TransitionTo<BrainChaseState>(); // Corre directo hacia el jugador
+                        TransitionTo<BrainChaseState>();
+                    break;
+
+                // COWARD
+                /*
+                case CombatBehaviorArchetype.Coward:
+                    float panicDistSq = 100 * 100;
+                    if (distSq < panicDistSq)
+                        TransitionTo<FleeState>(); // Huir
+                    else if (distSq <= attackRangeSq)
+                        TransitionTo<AttackState>(); // Atacar de lejos
+                    else
+                        TransitionTo<WaitState>(); // No acercarse
+                    break;
+                */
+
+                case CombatBehaviorArchetype.Sniper:
+                    break;
+                
+                case CombatBehaviorArchetype.Swarmer:
                     break;
 
                 // TACTICAL: Comportamiento estándar (puedes refinado luego)
                 case CombatBehaviorArchetype.Tactical:
                 default:
                     // Aquí podrías agregar lógica de "Strafe" o esperar
-                    if (distSq <= attackRangeSq)
+                    if (inRange)
                         TransitionTo<BrainAttackState>();
                     else
                         TransitionTo<BrainChaseState>();
                     break;
-
-                    // COWARD (Ejemplo por si lo agregas al Enum luego)
-                    /*
-                    case CombatBehaviorArchetype.Coward:
-                        float panicDistSq = 100 * 100;
-                        if (distSq < panicDistSq)
-                            TransitionTo<FleeState>(); // Huir
-                        else if (distSq <= attackRangeSq)
-                            TransitionTo<AttackState>(); // Atacar de lejos
-                        else
-                             TransitionTo<WaitState>(); // No acercarse
-                        break;
-                    */
             }
         }
 
         #endregion
+
+        // Enter
+        public override void Enter()
+        {
+            // 1. FRENAR TODO
+            // Lo primero que hace al entrar a decidir es detenerse.
+            // Esto elimina el "patinado" y pone al Body en Idle.
+            Owner.StopMoving();
+
+            // 2. CALCULAR TIEMPO DE PENSAMIENTO
+            // Un poco de random para que no parezcan robots sincronizados.
+            _thinkingTimer = MIN_REACTION_TIME + ((float)Random.Shared.NextDouble() * (MAX_REACTION_TIME - MIN_REACTION_TIME));
+        }
 
         // Update
         public override void Update(GameTime gameTime)
@@ -80,6 +100,21 @@ namespace ScaryCastle
                 return;
             }
 
+            // --- FASE DE PENSAMIENTO (La Pausa Dramática) ---
+
+            _thinkingTimer -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            // Mientras esté pensando, no hacemos NADA. 
+            // El enemigo se queda quieto mirándote.
+            if (_thinkingTimer > 0)
+            {
+                // Opcional: Hacer que mire al jugador mientras piensa
+                if (Owner.Sensor.CanSeeTarget && Owner.GetTarget() is {} t)
+                    Owner.FaceTo(t);
+                
+                return;
+            }
+
             // CASO B: Búsqueda (No lo ve ahora, pero recuerda dónde estaba)
             if (!Owner.Sensor.CanSeeTarget && Owner.Sensor.LastKnownTargetPos.HasValue)
             {
@@ -91,6 +126,7 @@ namespace ScaryCastle
 
                 // Ejecutamos el cambio
                 Machine.ChangeState<BrainInvestigateState>();
+
                 return;
             }
 

@@ -354,8 +354,6 @@ namespace ScaryCastle
                 console?.Update(gameTime);
             }
 
-            Environment.Update(gameTime);
-
             if (HUDVisible)
             {
                 HUD.Update(gameTime);

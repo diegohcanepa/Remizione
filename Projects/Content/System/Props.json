@@ -1,8 +1,20 @@
 {
-  "$schema": "./Thing.schema.json",
+  "$schema": "./Prop.schema.json",
   "data": [
     {
       "name": "PotteryA",
+      "effects": [
+            {
+              "damageType": "Physical",
+              "effectType": "Damage",
+              "amount": "1"
+            },
+            {
+              "damageType": "Physical",
+              "effectType": "Death",
+              "target": "Self"
+            }        
+      ],
       "placements": [
         "Floor"
       ]

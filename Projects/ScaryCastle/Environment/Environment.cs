@@ -11,8 +11,6 @@ namespace ScaryCastle
         // Constructor
         public Environment(GameSession session)
         {
-            this.Lightning = new(session);
-
             // Global light
             this.GlobalLight ??= new Light(session.Game, "GlobalLight")
             {
@@ -31,15 +29,6 @@ namespace ScaryCastle
         // GlobalLight
         internal Light GlobalLight { get; }
 
-        // Update
-        internal void Update(GameTime gameTime)
-        {
-            Lightning.Update(gameTime);
-        }
-
         #endregion
-
-        // Lightning
-        public Lightning Lightning { get; }
     }
 }

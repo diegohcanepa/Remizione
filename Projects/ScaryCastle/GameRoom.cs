@@ -323,7 +323,7 @@ namespace ScaryCastle
             // Foreround (layer)
             DrawThings(gameTime, RenderLayer.Foreground);
 
-            Session.Environment.Lightning.Draw(gameTime);
+            //Session.Environment.Lightning.Draw(gameTime);
 
             // Apply light map
             if (CanUseLightingSystem && Game.RenderTargets != null)

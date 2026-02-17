@@ -233,6 +233,11 @@ namespace Adberration
         [ScriptProperty]
         public bool IsMoving => Sprite.Velocity != Vector2.Zero;
 
+        protected virtual Vector2 OnAdjustMoveDirection(Vector2 direction)
+        {
+            return direction;
+        }
+
         // Move
         public bool Move(Vector2 direction)
         {
@@ -241,6 +246,8 @@ namespace Adberration
 
             if (!IsMoving && direction == Vector2.Zero)
                 return false;
+
+            direction = OnAdjustMoveDirection(direction);
 
             var previousVelocity = Sprite.Velocity;
             Sprite.Velocity = direction * CalculateSpeed();
@@ -265,6 +272,7 @@ namespace Adberration
                 return false;
 
             moveSegment.SetPath(Position, destination);
+
             Move(Vector2.Normalize(destination - Position));
 
             return true;

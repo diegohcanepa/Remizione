@@ -521,6 +521,9 @@ namespace ScaryCastle
         [ScriptProperty]
         public bool IsPlayer => Session.Player == this;
 
+        // IsSneaking
+        public bool IsSneaking { get; set; }
+
         // IsStandingOrMoving
         public bool IsStandingOrMoving => BodyMachine.CurrentState is BodyStandState or BodyMoveState;
 
@@ -533,7 +536,7 @@ namespace ScaryCastle
         {
             if (Room?.WalkArea is WalkArea walkArea)
             {
-                var margin = Math.Abs(Position.X - RuntimeHotspot.BoundingRectangleF.Right);
+                var margin = 0;// Math.Abs(Position.X - RuntimeHotspot.BoundingRectangleF.Right);
                 MoveTo(walkArea.RandomWalkablePoint(margin));
             }
         }

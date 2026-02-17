@@ -55,7 +55,7 @@
 	<FX Name="Gesture1" />
 	<FX Name="GutsLarge" MaxInstances="6" />
 	<FX Name="GutsMedium" MaxInstances="6" />
-	<FX Name="GutsSmall" MaxInstances="6" />
+	<FX Name="GutsSmall" MaxInstances="6" Sounds="1..3" />
 	<FX Name="Headbutt" MaxInstances="4" />
 	<FX Name="ImpactA" MaxInstances="6" />
 	<FX Name="ImpactB" MaxInstances="6" />

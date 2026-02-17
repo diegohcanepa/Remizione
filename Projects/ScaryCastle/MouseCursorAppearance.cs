@@ -15,6 +15,12 @@ namespace ScaryCastle
         // RefreshCursor
         private static void RefreshCursor(InteractionContext context)
         {
+            if (context.Session.Game.SceneManager.CurrentScene is InventoryScene)
+            {
+                MouseCursor.State = MouseCursorState.Hand;
+                return;
+            }
+
             // Modal speech bubble active
             if (SpeechBubble.ModalInstance != null)
             {

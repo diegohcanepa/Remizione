@@ -404,6 +404,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Environment-assets/ImpactArea.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,3,20,5</rect>
+                <key>scale9Paddings</key>
+                <rect>10,3,20,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Environment-assets/LightningLight.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -872,9 +887,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>9,34,17,69</rect>
+                <rect>9,45,17,91</rect>
                 <key>scale9Paddings</key>
-                <rect>9,34,17,69</rect>
+                <rect>9,45,17,91</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -887,9 +902,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>9,35,17,70</rect>
+                <rect>9,46,17,91</rect>
                 <key>scale9Paddings</key>
-                <rect>9,35,17,70</rect>
+                <rect>9,46,17,91</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -902,9 +917,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>9,35,19,69</rect>
+                <rect>9,45,18,91</rect>
                 <key>scale9Paddings</key>
-                <rect>9,35,19,69</rect>
+                <rect>9,45,18,91</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1507,7 +1522,6 @@
                     <filename>SinnerCross-assets</filename>
                     <filename>ImpactWords-assets</filename>
                     <filename>Throwables-assets</filename>
-                    <filename>Lightning-assets</filename>
                     <filename>Trunk-assets</filename>
                     <filename>TombstoneA-assets</filename>
                     <filename>TombstoneB-assets</filename>
@@ -1541,6 +1555,7 @@
                     <filename>Torch-assets</filename>
                     <filename>Dice-assets</filename>
                     <filename>GoldenTrunk-assets</filename>
+                    <filename>Lightning-assets</filename>
                 </array>
             </struct>
         </map>

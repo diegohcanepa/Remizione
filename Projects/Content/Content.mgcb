@@ -623,11 +623,23 @@
 /processorParam:Quality=Best
 /build:Audio/FX/GutsMedium.wav;Audio/FX/GutsMedium
 
-#begin Audio/FX/GutsSmall.wav
+#begin Audio/FX/GutsSmall1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/FX/GutsSmall.wav;Audio/FX/GutsSmall
+/build:Audio/FX/GutsSmall1.wav;Audio/FX/GutsSmall1
+
+#begin Audio/FX/GutsSmall2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/GutsSmall2.wav;Audio/FX/GutsSmall2
+
+#begin Audio/FX/GutsSmall3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/GutsSmall3.wav;Audio/FX/GutsSmall3
 
 #begin Audio/FX/Headbutt.wav
 /importer:WavImporter

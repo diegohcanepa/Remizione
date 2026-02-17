@@ -48,7 +48,18 @@ namespace ScaryCastle
             if (context.Target == null)
             {
                 var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(player.Session.Camera);
-                player.MoveTo(destination);
+                if (context.HeldItem == null)
+                {
+                    player.MoveTo(destination);
+                }
+                else if (context.HeldItem.Definition.InventoryCategory == InventoryCategory.Sacred)
+                {
+                    var lightning = new Lightning(player.Session);
+                    lightning.Show(destination, 1500, Actor, context.HeldItem);
+                    player.Room?.Children.Add(lightning);
+                    context.HeldItem = null;
+                }
+
                 return;
             }
 

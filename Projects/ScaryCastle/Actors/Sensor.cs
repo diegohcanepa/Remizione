@@ -74,8 +74,7 @@ namespace ScaryCastle
         private void PerformScan()
         {
             // No target or target is dead
-            var target = owner.GetTarget();
-            if (target == null)
+            if (owner.GetTarget() is not {} target)
             {
                 CanSeeTarget = false;
                 return;
@@ -90,7 +89,7 @@ namespace ScaryCastle
             // --- FASE 1: OÍDO (El chequeo más barato y tramposo) ---
             // Si el jugador hace ruido (no está sneaking) y está cerca, actualizamos la memoria.
             // Asumo que el Player tiene una propiedad IsSneaking.
-            bool isSneaking = false; // target.IsSneaking; 
+            bool isSneaking = target.IsSneaking; 
 
             float hearingRangeSq = HearingRange * HearingRange;
             if (distSq < hearingRangeSq && !isSneaking)
@@ -140,6 +139,22 @@ namespace ScaryCastle
 
         #endregion
 
+        #region Settings
+
+        // HearingRange (Qué tan lejos escucha - atraviesa paredes)
+        public float HearingRange { get; set; } = 150;
+
+        // MemoryDuration (Cuánto tiempo tarda en "olvidar" una posición conocida si no ve al target)
+        public float MemoryDuration { get; set; } = 5000; // 5 segundos
+
+        // SightRange (Qué tan lejos ve en pixels)
+        public float SightRange { get; set; } = 80;
+
+        // ViewAngle (Ángulo de visión en grados (ej. 90° = 45° a cada lado, 360° = Ojos en la espalda)
+        public float ViewAngle { get; set; } = 110;
+
+        #endregion
+
         // Forget
         public void Forget()
         {
@@ -151,20 +166,11 @@ namespace ScaryCastle
         // CanSeeTarget (¿Tiene contacto visual directo en este frame exacto?)
         public bool CanSeeTarget { get; private set; }
 
-        // HearingRange (Qué tan lejos escucha - atraviesa paredes)
-        public float HearingRange { get; set; } = 150;
-
         // IsAlerted (Helper rápido para la StateMachine: ¿Está en modo combate/búsqueda?)
         public bool IsAlerted => LastKnownTargetPos.HasValue;
 
         // LastKnownTargetPos (¿Sabe dónde está el jugador? (Ya sea por verlo ahora o recordarlo)
         public Vector2? LastKnownTargetPos { get; private set; }
-
-        // MemoryDuration (Cuánto tiempo tarda en "olvidar" una posición conocida si no ve al target)
-        public float MemoryDuration { get; set; } = 5000; // 5 segundos
-
-        // SightRange (Qué tan lejos ve en pixels)
-        public float SightRange { get; set; } = 400;
 
         // Update
         public void Update(GameTime gameTime)
@@ -188,8 +194,5 @@ namespace ScaryCastle
                 PerformScan();
             }
         }
-
-        // ViewAngle (Ángulo de visión en grados (ej. 90° = 45° a cada lado, 360° = Ojos en la espalda)
-        public float ViewAngle { get; set; } = 110;
     }
 }

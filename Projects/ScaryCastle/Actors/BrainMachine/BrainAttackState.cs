@@ -30,7 +30,7 @@ namespace ScaryCastle
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (Owner.IsAttacking)
+            if (!Owner.IsAttacking)
                 TransitionTo<CombatDecisionState>();
         }
     }
