@@ -27,8 +27,6 @@ namespace ScaryCastle
                 Color = ColorPalette.ShadowSpot,
                 PivotOrigin = RectanglePoint.Center
             };
-
-            this.Size = 6;
         }
 
         #endregion

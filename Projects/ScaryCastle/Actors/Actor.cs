@@ -24,7 +24,6 @@ namespace ScaryCastle
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private readonly List<Vector2> pendingPathNodes = [];
-        private readonly GameSession session;
         private SpeechBubble? speechBubble;
 
         #endregion
@@ -35,7 +34,6 @@ namespace ScaryCastle
         public Actor(GameSession session, string name)
             : base(session, name)
         {
-            this.session = session;
             this.Atlas = Atlases.Actors;
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
             this.DisplayNameKey = $"Actor.{DeclaredName}";
@@ -78,6 +76,8 @@ namespace ScaryCastle
                     index++;
                 }
             }
+
+            ShadowSpotSize = 6;
         }
 
         #endregion
@@ -94,7 +94,7 @@ namespace ScaryCastle
             if (Session.State != GameSessionState.Idle)
                 return;
 
-            InteractionData.Execute(Session);
+            Session.InteractionData.Execute(Session);
         }
 
         // MoveToNextPathNode
@@ -322,9 +322,9 @@ namespace ScaryCastle
             if (!IsDead)
                 FaceTo(attacker);
 
-            session.ObjectPools.FloatingTexts.Get()?.ShowHPAmount(this, amount, true);
+            Session.ObjectPools.FloatingTexts.Get()?.ShowHPAmount(this, amount, true);
 
-            session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
+            Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
 
             if (HurtVoice != null)
                 PlaySound(HurtVoice);
@@ -381,20 +381,25 @@ namespace ScaryCastle
             return result;
         }
 
-        // ApproachAndInteract
-        public void ApproachAndInteract(Vector2 destination, Item item, Script script)
+        // ApproachAndPlace
+        public bool ApproachAndPlace(Vector2 destination, Item item)
         {
             if (!IsPlayer)
-                return;
+                return false;
+
+            if (item.Definition.UsageMode != ItemUsageMode.Place)
+                return false;
 
             var result = Position == destination;
             if (!result)
-                MoveTo(destination);
+                result = MoveTo(destination);
 
-            //InteractionData.SetItemRoutine(item, script);
+            Session.InteractionData.SetPlaceOutcome(item);
 
             if (!result)
                 HandlePendingInteraction();
+
+            return true;
         }
 
         // ApproachAndInteract
@@ -407,11 +412,11 @@ namespace ScaryCastle
                 return false;
 
             if (item == null)
-                InteractionData.SetOutcome(target);
+                Session.InteractionData.SetOutcome(target);
             else
-                InteractionData.SetUseWithOutcome(target, item);
+                Session.InteractionData.SetUseWithOutcome(target, item);
 
-            if (InteractionData.Script == null)
+            if (Session.InteractionData.Script == null)
                 return false;
 
             var destination = target.GetApproachPosition(this);
@@ -423,21 +428,6 @@ namespace ScaryCastle
             return true;
         }
 
-        // ApproachAndInteract
-        public void ApproachAndInteract(GameThing target, Item? item, Script script, ApproachBehavior? approachBehavior = null)
-        {
-            if (!IsPlayer)
-                return;
-
-            var destination = target.GetApproachPosition(this, approachBehavior);
-            var result = target != this && MoveTo(destination);
-
-            //InteractionData.SetOutcome(target, target.Position, item, script);
-
-            if (!result)
-                HandlePendingInteraction();
-        }
-
         // BodySize
         public ActorSize BodySize { get; set; } = ActorSize.Medium;
 
@@ -446,7 +436,7 @@ namespace ScaryCastle
         {
             get
             {
-                if (IsDead || session.IsAwaiting)
+                if (IsDead || Session.IsAwaiting)
                     return false;
 
                 return BodyMachine.CurrentState is BodyStandState or BodyMoveState;
@@ -460,6 +450,25 @@ namespace ScaryCastle
                 return false;
 
             return base.CanTakeDamage();
+        }
+
+        // Cast
+        public bool Cast(Vector2 destination, Item item)
+        {
+            if (!IsPlayer)
+                return false;
+
+            if (item.Definition.UsageMode != ItemUsageMode.Cast)
+                return false;
+
+            if (Room?.WalkArea != null)
+                destination = Room.WalkArea.ClampInside(destination);
+
+            Session.InteractionData.SetCastOutcome(item);
+            
+            HandlePendingInteraction();
+
+            return true;
         }
 
         // FastMove

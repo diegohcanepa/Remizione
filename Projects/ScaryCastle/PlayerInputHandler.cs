@@ -59,67 +59,44 @@ namespace ScaryCastle
             {
                 if (context.HeldItem == null || context.HeldItem.Definition.UsageMode == ItemUsageMode.Default)
                 {
-                    InteractionData.Clear();
+                    Actor.Session.InteractionData.Clear();
                     Actor.MoveTo(destination);
+                    return;
                 }
-                return;
             }
 
             // 2. Outcome interaction: Approach and interact with target using outcome script
-            if (context.HeldItem == null || MouseCursor.IsArrow)
+            if (context.Target != null)
             {
-                Actor.ApproachAndInteract(context.Target, null);
-                return;
+                if (context.HeldItem == null || MouseCursor.IsArrow)
+                {
+                    Actor.ApproachAndInteract(context.Target, null);
+                    return;
+                }
+
+                // 3. Classic "Use with" interaction: Approach and interact with target using held item
+                if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Default)
+                {
+                    if (Actor.ApproachAndInteract(context.Target, context.HeldItem))
+                        return;
+                }
             }
 
-            if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Default)
+            // 3. Place item: Approach and place held item
+            if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Place)
             {
-                if (Actor.ApproachAndInteract(context.Target, context.HeldItem))
+                if (Actor.ApproachAndPlace(destination, context.HeldItem))
+                    return;
+            }
+
+            // 4. Cast
+            if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Cast)
+            {
+                if (Actor.Cast(destination, context.HeldItem))
                     return;
             }
 
             MouseCursor.Shake();
-
-            /*
-            if (context.Target == null)
-            {
-
-                // Walk to destination
-                if (context.InteractionType == InteractionType.None)
-                {
-                    Actor.MoveTo(destination);
-                }
-                else if (context.Script != null)
-                {
-                    // Cast item
-                    if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Cast)
-                    {
-                        Actor.ApproachAndInteract(Actor.Position, context.HeldItem, context.Script);
-                    }
-
-                    // Place item
-                    else if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Place)
-                    {
-                        Actor.ApproachAndInteract(destination, context.HeldItem, context.Script);
-                    }
-                }
-
-                return;
-            }
-
-            if (context.HeldItem != null && !context.CursorOverride.HasValue)
-            {
-                if (context.Script == null)
-                {
-                    Sound.Play(SoundNames.Error);
-                    MouseCursor.Shake();
-                    return;
-                }
-            }
-
-            if (context.Script != null)
-                Actor.ApproachAndInteract(context.Target, context.CursorOverride.HasValue ? null : context.HeldItem, context.Script);
-            */
         }
 
         // TestMouseLeftButtonClick
@@ -146,6 +123,8 @@ namespace ScaryCastle
             {
                 Sound.Play(SoundNames.Interact);
                 Actor.Session.InteractionContext.HeldItem = null;
+                Actor.Session.InteractionData.Clear();
+                Actor.StopMoving();
             }
 
             return true;

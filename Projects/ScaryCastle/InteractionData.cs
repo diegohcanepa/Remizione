@@ -7,12 +7,18 @@ namespace ScaryCastle
     /// <summary>
     /// InteractionData
     /// </summary>
-    public static class InteractionData
+    public sealed class InteractionData
     {
-        // Clear
-        public static void Clear()
+        // Constructor
+        public InteractionData(GameSession session)
         {
-            HasData = false;
+            this.Session = session;
+        }
+
+        // Clear
+        public void Clear()
+        {
+            InteractionType = InteractionType.None;
             Item = null;
             Script = null;
             Target = null;
@@ -20,66 +26,78 @@ namespace ScaryCastle
         }
 
         // Execute
-        public static bool Execute(GameSession session)
+        public bool Execute(GameSession session)
         {
-            if (!HasData)
+            if (InteractionType == InteractionType.None)
                 return false;
 
             var result = false;
+            
+            session.Player?.StopMoving();
 
             if (Target != null)
             {
-                session.Player?.StopMoving();
                 session.Player?.FaceTo(Target);
                 if (Script != null)
                     session.BeginOutcome(Script, Target);
             }
-
-            /*
-            if (Script != null)
+            else if (Script != null)
             {
-                if (Target == null)
-                {
-                    session.AwaitScript(Script);
-                    result = true;
-                }
-                else if (Target.Position == TargetPosition)
-                {
-                    session.InteractionContext.HeldItem = null;
-                    session.Player?.StopMoving();
-                    session.Player?.FaceTo(Target);
-                    session.BeginOutcome(Script, Target);
-                    result = true;
-                }
+                session.InteractionContext.HeldItem = null;
+                session.AwaitScript(Script);
             }
-            */
 
             Clear();
 
             return result;
         }
 
-        // HasData
-        public static bool HasData { get; private set; }
+        // InteractionType
+        public InteractionType InteractionType { get; private set; }
 
         // Item
-        public static Item? Item { get; private set; }
+        public Item? Item { get; private set; }
 
         // Script
-        public static Script? Script { get; private set; }
+        public Script? Script { get; private set; }
+
+        // Session
+        public GameSession Session { get; }
+
+        // SetCastOutcome
+        public void SetCastOutcome(Item item)
+        {
+            if (item.Definition.UsageMode != ItemUsageMode.Cast)
+                throw new InvalidOperationException($"Item '{item.Definition.Name}' cannot be casted.");
+
+            Clear();
+            Script = Session.ScriptLibrary.FindRoutine($"{item.Name}Outcome");
+            InteractionType = InteractionType.Cast;
+        }
+
+        // SetPlaceOutcome
+        public void SetPlaceOutcome(Item item)
+        {
+            if (item.Definition.UsageMode != ItemUsageMode.Place)
+                throw new InvalidOperationException($"Item '{item.Definition.Name}' cannot be placed.");
+
+            Clear();
+            Script = Session.ScriptLibrary.FindRoutine($"{item.Name}Outcome");
+            InteractionType = InteractionType.Place;
+        }
 
         // SetOutcome
-        public static void SetOutcome(GameThing target)
+        public void SetOutcome(GameThing target)
         {
             Clear();
             Target = target;
             TargetPosition = target.Position;
             Script = target.OutcomeScript;
-            HasData = true;
+            InteractionType = InteractionType.Outcome;
         }
 
         // SetUseWithOutcome
-        public static void SetUseWithOutcome(GameThing target, Item item)
+        public void SetUseWithOutcome(GameThing target, Item item)
         {
             if (item.Definition.UsageMode != ItemUsageMode.Default)
                 throw new InvalidOperationException($"Item '{item.Definition.Name}' cannot be used with other items.");
@@ -89,14 +107,18 @@ namespace ScaryCastle
             Target = target;
             TargetPosition = target.Position;
             Script = target.Session.ScriptLibrary.FindOverload(Target.DeclaredName, Item.Name);
-            HasData = true;
+
+            if (Script == null && item.Definition.SelfTarget && target.Session.Player == target)
+                Script = target.Session.ScriptLibrary.FindRoutine($"{item.Name}Outcome");
+
+            InteractionType = InteractionType.UseWithOutcome;
         }
 
         // Target
-        public static GameThing? Target { get; private set; }
+        public GameThing? Target { get; private set; }
 
         // TargetPosition
-        public static Vector2 TargetPosition { get; private set; }
+        public Vector2 TargetPosition { get; private set; }
     }
 }
 

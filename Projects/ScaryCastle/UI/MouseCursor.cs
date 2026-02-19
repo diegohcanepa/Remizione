@@ -64,22 +64,36 @@ namespace ScaryCastle
         // ClampTextToScreen
         private static void ClampTextToScreen()
         {
-            var offset = CustomImage == null ? 4 : 2;
+            if (textSprite.IsEmpty)
+                return;
 
-            if (!textSprite.IsEmpty)
+            if (TextIsLabel)
             {
+                textSprite.PivotOrigin = RectanglePoint.Left;
+                textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Right);
+
+                if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
+                {
+                    textSprite.PivotOrigin = RectanglePoint.Right;
+                    textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Left);
+                }
+            }
+            else
+            {
+                var offset = CustomImage == null ? 4 : 2;
+
                 textSprite.PivotOrigin = RectanglePoint.LeftTop;
                 textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, -offset, -offset);
-            }
 
-            if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
-            {
-                textSprite.PivotOrigin = RectanglePoint.RightTop;
-                textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, offset, -offset);
-            }
+                if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
+                {
+                    textSprite.PivotOrigin = RectanglePoint.RightTop;
+                    textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, offset, -offset);
+                }
 
-            if (textSprite.BoundingBox.Bottom >= Screen.NativeHeight)
-                textSprite.Y -= 10;
+                if (textSprite.BoundingBox.Bottom >= Screen.NativeHeight)
+                    textSprite.Y -= 10;
+            }
         }
 
         // InvalidateCursorImage
@@ -200,6 +214,9 @@ namespace ScaryCastle
             get => textSprite.Color;
             set => textSprite.Color = value;
         }
+
+        // TextIsLabel
+        public static bool TextIsLabel { get; set; }
 
         // Update
         public static void Update(GameTime gameTime)

@@ -52,53 +52,38 @@ namespace ScaryCastle
 
             // Item grabbed
             if (context.HeldItem != null)
-            {
-                /*
-                if (context.HeldItem.Definition.RequiresDrop)
-                {
-                    if (context.WalkArea == null)
-                    {
-                        MouseCursor.State = MouseCursorState.Cast;
-                    }
-                    else
-                    {
-                        var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(context.Session.Camera);
-                        MouseCursor.State = context.WalkArea.Contains(destination) ? MouseCursorState.Cast : MouseCursorState.Prohibition;
-                    }
-                }
-                else
-                */
-                {
-                    MouseCursor.CustomImage = context.HeldItem.Definition.Image;
-                }
-
-                return;
-            }
-
-            MouseCursor.State = context.Target?.GetMouseCursorState() ?? MouseCursorState.Cross;
+                MouseCursor.CustomImage = context.HeldItem.Definition.Image;
+            else
+                MouseCursor.State =  MouseCursorState.Cross;
         }
 
         // RefreshText
         private static void RefreshText(InteractionContext context)
         {
+            MouseCursor.TextIsLabel = false;
+
             if (MouseCursor.State == MouseCursorState.Hit)
             {
                 MouseCursor.TextColor = ColorPalette.Text.OrangeLight;
-                MouseCursor.Text = Localization.GetValue(Verb.Headbutt);
+                MouseCursor.Text = context.Target?.LocalizedDisplayName;
                 return;
             }
 
             if (context.HeldItem != null && context.HeldItem.Definition.UsageMode != ItemUsageMode.Default)
             {
-                if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Place)
+                if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Cast)
+                {
                     MouseCursor.Text = castHereText;
-
+                }
                 else if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Place)
+                {
                     MouseCursor.Text = placeHereText;
+                }
 
                 if (!string.IsNullOrWhiteSpace(MouseCursor.Text))
                 {
                     MouseCursor.TextColor = ColorPalette.Text.Yellow;
+                    MouseCursor.TextIsLabel = true;
                 }
 
                 return;

@@ -20,7 +20,6 @@ namespace ScaryCastle
             DefaultImageName = Atlases.Environment.GutStains[Random.Shared.Next(0, 2)].Name;
             PivotOrigin = RectanglePoint.Center;
             Opacity = bloodStain ? .8f : 0;
-            ShadowSpotSize = 0;
 
             // Guts pieces
             var guts = Math.Min(amount, Atlases.Environment.Guts.Count);

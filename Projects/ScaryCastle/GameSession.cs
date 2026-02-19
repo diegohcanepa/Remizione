@@ -54,6 +54,7 @@ namespace ScaryCastle
             this.LootGenerator = new(this);
             this.HUD = new HUD(this);
             this.InteractionContext = new(this);
+            this.InteractionData = new(this);
             this.DeclaredThings = new(proceduralThings);
             this.Random = new Random(Seed);
             this.inventoryScene = new(CommonInventory);
@@ -89,8 +90,6 @@ namespace ScaryCastle
             this.echoScene = new(Game);
 
             LocalizationSource = LocalizationSource.Script;
-
-            InteractionData.Clear();
         }
 
         #endregion
@@ -520,6 +519,9 @@ namespace ScaryCastle
 
         // InteractionContext
         public InteractionContext InteractionContext { get; }
+
+        // InteractionData
+        public InteractionData InteractionData { get; }
 
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;

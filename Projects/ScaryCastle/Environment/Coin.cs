@@ -20,7 +20,6 @@ namespace ScaryCastle
             Hotspot = new Polygon("0,0;5,0;5,4;0,4");
             IgnoreWalkArea = false;
             RenderLayer = RenderLayer.OverBackground;
-            ShadowSpotSize = 0;
 
             var animation = AddAnimation("Default");
             animation.AddFrame("Coin01", 1500);

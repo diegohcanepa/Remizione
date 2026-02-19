@@ -28,7 +28,6 @@ namespace ScaryCastle
             CollisionDetection = false;
             IgnoreWalkArea = false;
             DepthOffset = -5;
-            ShadowSpotSize = 0;
 
             var animation = AddAnimation(PreparedAnimationName);
             animation.AddFrame("SpearTrap01", 1000);

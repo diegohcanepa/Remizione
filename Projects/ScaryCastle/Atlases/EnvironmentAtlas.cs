@@ -14,8 +14,8 @@ namespace ScaryCastle
         {
             DefaultLight = this[nameof(DefaultLight)];
             DustParticles = CreateReadOnlyCollection("DustParticle", 1, 1);
-            DropMark = this[nameof(DropMark)];
             FireflyParticles = CreateReadOnlyCollection("FireflyParticle", 1, 2);
+            FloorMark = this[nameof(FloorMark)];
             Guts = CreateReadOnlyCollection("Gut", 1, 12);
             GutStains = CreateReadOnlyCollection("GutStain", 1, 2);
             GlobalLight = this[nameof(GlobalLight)];
@@ -29,11 +29,11 @@ namespace ScaryCastle
         // DustParticles
         public ReadOnlyCollection<AtlasImage> DustParticles { get; }
 
-        // DropMark
-        public AtlasImage DropMark { get; }
-
         // FireflyParticles
         public ReadOnlyCollection<AtlasImage> FireflyParticles { get; }
+
+        // FloorMark
+        public AtlasImage FloorMark { get; }
 
         // GlobalLight
         public AtlasImage GlobalLight { get; }

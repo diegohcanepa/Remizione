@@ -35,7 +35,6 @@ namespace ScaryCastle
             Atlas = Atlases.Environment;
             //Scale = new(.5f);
             //ShadowOffset = new(0, -2);
-            ShadowSpotSize = 0;
 
             this.initialVelocity = new Vector2(110, -50);
             this.weight = .8f;

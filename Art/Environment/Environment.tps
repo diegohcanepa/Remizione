@@ -367,7 +367,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Environment-assets/DropMark.png</key>
+            <key type="filename">Environment-assets/FloorMark.png</key>
             <key type="filename">Environment-assets/Sack.png</key>
             <key type="filename">Environment-assets/Ticket.png</key>
             <key type="filename">PostClock-assets/PostClockPiece7.png</key>
