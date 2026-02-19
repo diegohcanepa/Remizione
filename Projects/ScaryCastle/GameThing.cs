@@ -481,6 +481,9 @@ namespace ScaryCastle
         [ScriptMethod]
         public void Die()
         {
+            if (dieCalled)
+                return;
+
             dieCalled = true;
 
             HP = int.MinValue;
@@ -492,6 +495,7 @@ namespace ScaryCastle
             }
 
             OnDie();
+            
             Session.LootGenerator.DropLoot(this);
             Session.LootGenerator.DropCoins(this);
         }
@@ -1016,7 +1020,7 @@ namespace ScaryCastle
         public void ShowImpactWord(ImpactWordName impactWordName)
         {
             if (GetOverheadPosition() is Vector2 wordPos)
-                Session.ImpactWordPool.Get()?.Show(impactWordName, wordPos + new Vector2(0, 5));
+                Session.ImpactWordPool.Get()?.Show(impactWordName, wordPos + new Vector2(0, 10));
         }
 
         // TakeDamage
@@ -1085,8 +1089,11 @@ namespace ScaryCastle
                     OnTakeDamage(attacker, finalDamage, damageType, Vector2.Zero);
 
                     // Impact Word (Solo mostramos "Pow!" si hubo daño real)
-                    if (impactWordName != ImpactWordName.None && !IsDead)
-                        ShowImpactWord(impactWordName);
+                    if (impactWordName != ImpactWordName.None)
+                    {
+                        if (!IsDead || !SuppressImpactWordOnDeath)
+                            ShowImpactWord(impactWordName);
+                    }
                 }
             }
             else

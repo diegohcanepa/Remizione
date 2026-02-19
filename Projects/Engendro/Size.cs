@@ -7,7 +7,6 @@ namespace Engendro
     /// </summary>
     public readonly struct Size(int width, int height) : IEquatable<Size>
     {
-
         #region Operators
 
         // == operator

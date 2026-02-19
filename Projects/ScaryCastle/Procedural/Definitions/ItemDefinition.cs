@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Engendro.Audio;
+using Microsoft.Xna.Framework;
 using System.Text.Json;
 
 namespace ScaryCastle
@@ -65,13 +66,14 @@ namespace ScaryCastle
             // Realm
             Realm = element.GetEnum("realm", Realm.Earthly);
 
+            // Selftarget
             SelfTarget = element.GetBool("selfTarget", false);
 
             // SkillChance
             SkillChance = element.GetInt32("skillChance", 0);
 
             // Sound
-            Sound? sound = element.GetObject("sound", Sound.Get);
+            Sound = element.GetObject("sound", Sound.Get);
 
             this.LocalizedDescription = Localization.GetItemDescription(this);
             this.LocalizedDisplayName = Localization.GetItemName(this);
@@ -126,6 +128,19 @@ namespace ScaryCastle
         // ExecutionDelay
         public int ExecutionDelay { get; }
 
+        // GetAreaRangeSize
+        public static Vector2 GetAreaRangeSize(EffectAreaRange range)
+        {
+            return range switch
+            {
+                EffectAreaRange.Small => new Vector2(22, 10),
+                EffectAreaRange.Medium => new Vector2(44, 20),
+                EffectAreaRange.Large => new Vector2(88, 44),
+                EffectAreaRange.None => Vector2.Zero,
+                _ => Vector2.Zero
+            };
+        }
+
         // Image
         public AtlasImage? Image { get; }
 
@@ -153,9 +168,6 @@ namespace ScaryCastle
         // Quality
         public int Quality { get; }
 
-        // Range
-        public int Range { get; }
-
         // Realm
         public Realm Realm { get; }
 
@@ -164,6 +176,9 @@ namespace ScaryCastle
 
         // SkillChance
         public int SkillChance { get; }
+
+        // Sound
+        public Sound? Sound { get; }
 
         // UsageMode
         public ItemUsageMode UsageMode { get; }

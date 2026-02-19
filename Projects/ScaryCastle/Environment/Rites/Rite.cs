@@ -12,8 +12,7 @@ namespace ScaryCastle
         #region Private fields
 
         private int cooldown;
-        private readonly ImageSprite areaRange;
-        private readonly Item item;
+        private readonly ImageSprite areaMarker;
 
         #endregion
 
@@ -21,19 +20,20 @@ namespace ScaryCastle
         protected Rite(GameSession session, Item item, Vector2 castPosition)
             : base(session, string.Empty)
         {
-            this.item = item;
+            this.Item = item;
             this.Position = castPosition;
             this.cooldown = item.Definition.ExecutionDelay;
+            this.RenderLayer = RenderLayer.OverBackground;
 
             this.Atlas = Atlases.Environment;
             this.Scale = ScaleInfo.UIElement.Small;
-            this.areaRange = new(Game, Atlases.Environment.FindImage($"AreaRange{item.Definition.AreaRange}"))
+            this.areaMarker = new(Game, Atlases.Environment.FindImage($"AreaMarker{item.Definition.AreaRange}"))
             {
                 Color = ColorPalette.Text.Red * .6f,
                 PivotOrigin = RectanglePoint.Center,
                 Position = castPosition
             };
-            areaRange.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicInOut, 1, .7f, 100, -1);
+            areaMarker.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicInOut, 1, .7f, 100, -1);
         }
 
         #region Protected members
@@ -48,7 +48,7 @@ namespace ScaryCastle
         {
             if (cooldown > 0)
             {
-                areaRange.Draw(gameTime);
+                areaMarker.Draw(gameTime);
                 return;
             }
 
@@ -60,14 +60,16 @@ namespace ScaryCastle
         {
             if (cooldown > 0)
             {
-                areaRange.Update(gameTime);
+                areaMarker.Update(gameTime);
                 cooldown -= gameTime.ElapsedGameTime.Milliseconds;
                 if (cooldown <= 0)
                 {
+                    RenderLayer = RenderLayer.Default;
+
                     OnCast();
 
                     if (Room != null)
-                        item.Use(this, areaRange.BoundingBox, Room);
+                        Item.Use(this, Room);
                 }
                 return;
             }
@@ -79,5 +81,8 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // Item
+        public Item Item { get; }
     }
 }

@@ -5,27 +5,17 @@
   "type": "object",
   "description": "Clase base para definiciones con nombre y peso de aparición.",
   "properties": {
-    "name": {
-      "type": "string",
-      "description": "El nombre único de la definición. (Requerido)"
-    },
+    "name": { "type": "string" },
     "effects": {
       "type": "array",
-      "description": "Lista de efectos que provoca este item.",
-      "items": {
-        "$ref": "./EffectDescriptor.schema.json"
-      }
+      "items": { "$ref": "./EffectDescriptor.schema.json" }
     },
     "spawnWeight": {
       "type": "number",
-      "format": "float",
       "default": 1.0,
       "maximum": 1.0,
-      "minimum": 0,
-      "description": "Peso o probabilidad asociada a esta configuración. Por defecto es 1."
+      "minimum": 0
     }
   },
-  "required": [
-    "name"
-  ]
+  "required": ["name"]
 }

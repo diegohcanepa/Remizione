@@ -18,8 +18,8 @@ namespace Engendro
         }
 
         // Constructor
-        public RectangleF(Vector2 position, Vector2 size)
-            : this(position.X, position.Y, size.X, size.Y)
+        public RectangleF(Vector2 position, Vector2 size, bool fromCenter = false)
+            : this(position.X - (fromCenter ? size.X / 2 : 0), position.Y - (fromCenter ? size.Y / 2 : 0), size.X, size.Y)
         {
         }
 

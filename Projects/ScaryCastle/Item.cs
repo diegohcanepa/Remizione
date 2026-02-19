@@ -204,15 +204,24 @@ namespace ScaryCastle
         }
 
         // Use
-        public bool Use(GameThing source, RectangleF area, GameRoom room)
+        public bool Use(GameThing source, GameRoom room)
         {
             if (Definition.AreaRange == EffectAreaRange.None)
                 return false;
 
-            foreach (var enemy in room.Children.OfType<ProceduralActor>())
+            // Play sound
+            if (Definition.Sound != null)
+                source.PlaySound(Definition.Sound);
+
+            var area = new RectangleF(source.Position, ItemDefinition.GetAreaRangeSize(Definition.AreaRange), true);
+
+            foreach (var thing in room.Children.OfType<GameThing>())
             {
-                if (area.Contains(enemy.Position))
-                    EffectDescriptor.Apply(Definition.EffectDescriptors, source, enemy);
+                if (thing is Prop && Definition.InventoryCategory == InventoryCategory.Sacred)
+                    continue;
+
+                if (area.Contains(thing.Position))
+                    EffectDescriptor.Apply(Definition.EffectDescriptors, source, thing);
             }
             
             Use();
@@ -223,8 +232,13 @@ namespace ScaryCastle
         // Use
         public bool Use(GameThing source, GameThing target)
         {
+            // Play sound
+            if (Definition.Sound != null)
+                source.PlaySound(Definition.Sound);
+
             // TODO: Check attack type
             EffectDescriptor.Apply(Definition.EffectDescriptors, source, target);
+
             Use();
 
             return true;

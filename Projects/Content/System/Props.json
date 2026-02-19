@@ -7,6 +7,7 @@
             {
               "damageType": "Physical",
               "effectType": "Death",
+              "impactWord": "CrackBlue",
               "target": "Self"
             }        
       ],

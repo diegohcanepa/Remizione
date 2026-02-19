@@ -37,16 +37,51 @@
             },
             "areaRange": {
               "type": "string",
+              "default": "None",
               "enum": [
                 "None",
                 "Small",
                 "Medium",
                 "Large"
               ]
-            },            
-            "consumptionInterval": {
+            },
+            "durability": {
+              "type": "number"
+            },
+            "durabilityCost": {
+              "type": "number"
+            },
+            "executionDelay": {
               "type": "integer",
               "minimum": 0
+            },
+            "usageMode": {
+              "type": "string",
+              "enum": [
+                "Default",
+                "Cast",
+                "Place"
+              ]
+            },
+            "isStackable": {
+              "type": "boolean"
+            },
+            "selfTarget": {
+              "type": "boolean"
+            },
+            "inventoryCategory": {
+              "type": "string",
+              "enum": [
+                "Common",
+                "Sacred"
+              ]
+            },
+            "skillChance": {
+              "type": "integer"
+            },
+            "sound": {
+              "type": "string",
+              "description": "Nombre del archivo de sonido a reproducir."
             },
             "consumptionType": {
               "type": "string",
@@ -56,52 +91,13 @@
                 "Durability"
               ]
             },
-            "executionDelay": {
-              "type": "integer",
-              "default": 0,
-              "minimum": 0
-            },            
-            "inventoryCategory": {
-              "type": "string",
-              "enum": [
-                "Common",
-                "Sacred"
-              ]
-            },            
-            "isStackable": {
-              "type": "boolean"
-            },
-            "pickupSound": {
-              "type": "string"
-            },
-            "quality": {
+            "consumptionInterval": {
               "type": "integer"
-            },
-            "realm": {
-              "type": "string",
-              "enum": [
-                "Earthly",
-                "Infernal",
-                "Celestial"
-              ]
-            },
-            "selfTarget": {
-              "type": "boolean"
-            },
-            "skillChance": {
-              "type": "integer"
-            },
-            "usageMode": {
-              "type": "string",
-              "enum": [
-                "Default",
-                "Cast",
-                "Place"
-              ]
             }
           }
         }
-      ]
+      ],
+      "unevaluatedProperties": false
     }
   }
 }

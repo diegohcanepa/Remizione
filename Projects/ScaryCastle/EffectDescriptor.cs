@@ -71,7 +71,7 @@ namespace ScaryCastle
 
                     // Death
                     case EffectType.Death:
-                        realTarget.Die();
+                        realTarget.TakeDamage(source, effect.DamageType, int.MaxValue, effect.ImpactWord, effect.Knockback);
                         break;
                 }
             }
@@ -97,7 +97,7 @@ namespace ScaryCastle
 
         // Knockback
         public Vector2 Knockback { get; }
-        
+
         // Sound
         public Sound? Sound { get; }
 

@@ -10,10 +10,12 @@ namespace ScaryCastle
         extension(Script script)
         {
             // AssertItemDefinition
-            public void AssertItemDefinition(string name)
+            public ItemDefinition AssertItemDefinition(string name)
             {
-                if (ItemDefinition.Definitions.Find(name) == null)
+                var def = ItemDefinition.Definitions.Find(name);
+                if (def == null)
                     throw new ScriptException(script, $"Item definition [{name}] does not exist.");
+                return def;
             }
         }
     }

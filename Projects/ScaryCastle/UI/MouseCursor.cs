@@ -100,7 +100,7 @@ namespace ScaryCastle
         private static void InvalidateCursorImage()
         {
             cursorSprite.Image = CustomImage ?? cursorImages[(int)State];
-            cursorSprite.Scale = CustomImage != null ? ScaleInfo.UIElement.Medium : defaultScale;
+            cursorSprite.Scale = CustomImage != null ? ScaleInfo.UIElement.Large : defaultScale;
             cursorSprite.PivotOrigin = (State is MouseCursorState.Arrow or MouseCursorState.Hand) && CustomImage == null ? RectanglePoint.LeftTop : RectanglePoint.Center;
         }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:bda934a7dd12f4e9da7a99a4eabcd811:9cfd4b2ea6ea436eea738ea23676180b:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:ee0b0044701903e7a6cacd8244dd8402:9cfd4b2ea6ea436eea738ea23676180b:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -22,9 +22,9 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 <TextureAtlas imagePath="Environment.png" width="512" height="512">
     <sprite n="AghGreen.png" x="196" y="265" w="26" h="16"/>
     <sprite n="AghRed.png" x="248" y="219" w="26" h="16"/>
-    <sprite n="AreaRangeLarge.png" x="151" y="423" w="22" h="9"/>
-    <sprite n="AreaRangeMedium.png" x="151" y="423" w="22" h="9"/>
-    <sprite n="AreaRangeSmall.png" x="151" y="423" w="22" h="9"/>
+    <sprite n="AreaMarkerLarge.png" x="151" y="423" w="22" h="9"/>
+    <sprite n="AreaMarkerMedium.png" x="151" y="423" w="22" h="9"/>
+    <sprite n="AreaMarkerSmall.png" x="151" y="423" w="22" h="9"/>
     <sprite n="BangBlue.png" x="248" y="443" w="30" h="13"/>
     <sprite n="BangRed.png" x="222" y="495" w="30" h="13"/>
     <sprite n="BoomPurple.png" x="190" y="496" w="30" h="14"/>

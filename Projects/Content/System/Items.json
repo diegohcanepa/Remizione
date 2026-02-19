@@ -17,8 +17,7 @@
 		},
 		{
 			"name": "Burger",
-			"category": "Food",
-			"sound": "AppleBite"
+			"category": "Food"
 		},
 		{
 			"name": "Cross",
@@ -38,13 +37,19 @@
 		},
 		{
 			"name": "Firecracker",
+			"areaRange": "Medium",
 			"category": "Explosive",
-			"damage": "10",
-			"damageType": "Explosive",
-			"impactWord": "KapowStrong",
-			"range": 20,
-			"sound": "Firecracker",
-			"usageMode": "Place"
+			"executionDelay": 2000,
+		    "sound": "Firecracker",
+			"usageMode": "Place",
+			"effects": [
+				{
+					"effectType": "Damage",
+					"damageType": "Physical",
+					"amount": "1d4+4",
+					"impactWord": "Kapow"
+				}
+			]
 		},
 		{
 			"name": "GoldenKey",
@@ -76,8 +81,7 @@
 		{
 			"name": "RottenApple",
 			"category": "Food",
-			"selfTarget": true,
-			"sound": "AppleBite"
+			"selfTarget": true
 		},
 		{
 			"name": "RustyLockpick",
