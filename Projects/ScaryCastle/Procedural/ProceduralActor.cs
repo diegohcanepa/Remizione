@@ -149,6 +149,11 @@ namespace ScaryCastle
             BrainMachine.Update(gameTime);
             
             base.OnUpdate(gameTime);
+
+            if (GetTarget() is {} target && RuntimeCollider.Contains(target.Position))
+            {
+                EffectDescriptor.Apply(this, target);
+            }
         }
 
         // SeparationRadius (Configuración: Qué tan "gordos" son los enemigos (Radio personal))

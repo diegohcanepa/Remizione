@@ -71,6 +71,9 @@ namespace ScaryCastle
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }
 
+    // ItemUsageMode
+    public enum ItemUsageMode { Default, Cast, Place }
+
     // LargHandStyle
     public enum LargHandStyle { God, Devil }
 
@@ -108,11 +111,8 @@ namespace ScaryCastle
     // MessageKind
     public enum MessageKind { CannotPlaceItem, InventoryFull, NotEnoughCoins }
 
-    // MouseCursorHightlightState
-    public enum MouseCursorHightlightState { None, Green, Red }
-
     // MouseCursorState
-    public enum MouseCursorState { Arrow, Cross, Down, Hand, Left, Prohibition, Right, Up, Wait }
+    public enum MouseCursorState { Arrow, Cross, Down, Hand, Hit, Left, Prohibition, Right, Up, Wait }
 
     // PlaceholderTarget
     public enum PlaceholderTarget { Prop, Enemy, Any }
@@ -159,7 +159,7 @@ namespace ScaryCastle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
 
     // Verb
-    public enum Verb { Enter, Exit, Headbutt, Use }
+    public enum Verb { Cast, Enter, Exit, Headbutt, Place, Use }
 
     // VolumeCategory
     public enum VolumeCategory { Ambient, FX, Music, Voice, Master }

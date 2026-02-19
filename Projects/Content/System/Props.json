@@ -6,11 +6,6 @@
       "effects": [
             {
               "damageType": "Physical",
-              "effectType": "Damage",
-              "amount": "1"
-            },
-            {
-              "damageType": "Physical",
               "effectType": "Death",
               "target": "Self"
             }        

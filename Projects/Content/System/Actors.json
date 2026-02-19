@@ -3,6 +3,15 @@
   "data": [
     {
       "name": "EnviousEye",
+      "effects": [
+        {
+          "damageType":"Physical",
+          "effectType": "Damage",
+          "amount": "1",
+          "impactWord": "OuchGreen",
+          "knockback": "10,5"
+        }
+      ],
       "placements": [
         "WalkArea"
       ]

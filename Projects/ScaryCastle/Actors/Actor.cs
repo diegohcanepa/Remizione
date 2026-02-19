@@ -23,9 +23,6 @@ namespace ScaryCastle
         private readonly FloatTween headTween = new();
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
-        private GameThing? pendingInteractiveTarget;
-        private Vector2 pendingInteractiveTargetPosition;
-        private Item? pendingInteractiveTargetItem;
         private readonly List<Vector2> pendingPathNodes = [];
         private readonly GameSession session;
         private SpeechBubble? speechBubble;
@@ -90,19 +87,14 @@ namespace ScaryCastle
         // HandlePendingInteraction
         private void HandlePendingInteraction()
         {
-            if (!IsPlayer)
+            if (!IsPlayer || !IsInCurrentRoom)
                 return;
 
-            if (pendingInteractiveTarget != null && pendingInteractiveTarget.Position == pendingInteractiveTargetPosition)
-            {
-                session.InteractionContext.HeldItem = null;
-                FaceTo(pendingInteractiveTarget);
-                Interact(pendingInteractiveTarget, pendingInteractiveTargetItem);
-            }
+            // Session is busy
+            if (Session.State != GameSessionState.Idle)
+                return;
 
-            pendingInteractiveTarget = null;
-            pendingInteractiveTargetPosition = Vector2.Zero;
-            pendingInteractiveTargetItem = null;
+            InteractionData.Execute(Session);
         }
 
         // MoveToNextPathNode
@@ -390,7 +382,49 @@ namespace ScaryCastle
         }
 
         // ApproachAndInteract
-        public void ApproachAndInteract(GameThing target, Item? item, ApproachBehavior? approachBehavior = null)
+        public void ApproachAndInteract(Vector2 destination, Item item, Script script)
+        {
+            if (!IsPlayer)
+                return;
+
+            var result = Position == destination;
+            if (!result)
+                MoveTo(destination);
+
+            //InteractionData.SetItemRoutine(item, script);
+
+            if (!result)
+                HandlePendingInteraction();
+        }
+
+        // ApproachAndInteract
+        public bool ApproachAndInteract(GameThing target, Item? item)
+        {
+            if (!IsPlayer)
+                return false;
+
+            if (item != null && item.Definition.UsageMode != ItemUsageMode.Default)
+                return false;
+
+            if (item == null)
+                InteractionData.SetOutcome(target);
+            else
+                InteractionData.SetUseWithOutcome(target, item);
+
+            if (InteractionData.Script == null)
+                return false;
+
+            var destination = target.GetApproachPosition(this);
+            var result = target != this && MoveTo(destination);
+
+            if (!result)
+                HandlePendingInteraction();
+
+            return true;
+        }
+
+        // ApproachAndInteract
+        public void ApproachAndInteract(GameThing target, Item? item, Script script, ApproachBehavior? approachBehavior = null)
         {
             if (!IsPlayer)
                 return;
@@ -398,9 +432,7 @@ namespace ScaryCastle
             var destination = target.GetApproachPosition(this, approachBehavior);
             var result = target != this && MoveTo(destination);
 
-            this.pendingInteractiveTarget = target;
-            this.pendingInteractiveTargetPosition = target.Position;
-            this.pendingInteractiveTargetItem = item;
+            //InteractionData.SetOutcome(target, target.Position, item, script);
 
             if (!result)
                 HandlePendingInteraction();
@@ -479,38 +511,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public Sound? HurtVoice { get; set; }
 
-        // Interact
-        public bool Interact(GameThing target, Item? item)
-        {
-            if (!IsInCurrentRoom)
-                return false;
-
-            // Session is busy
-            if (Session.State != GameSessionState.Idle)
-                return false;
-
-            Script? script;
-            if (item == null)
-            {
-                script = target.OutcomeScript;
-            }
-            else
-            {
-                script = session.ScriptLibrary.FindOverload(target.DeclaredName, item.Name);
-            }
-
-            if (script != null)
-            {
-                StopMoving();
-                Session.BeginOutcome(script, target);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         // IsAttacking
         public bool IsAttacking => BodyMachine.CurrentState is BodyAttackState;
 
@@ -544,9 +544,6 @@ namespace ScaryCastle
         // MoveTo
         public override bool MoveTo(Vector2 destination)
         {
-            pendingInteractiveTarget = null;
-            pendingInteractiveTargetItem = null;
-
             // No path needed
             if (WalkArea == null || IgnoreWalkArea)
                 return base.MoveTo(destination);

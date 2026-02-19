@@ -89,6 +89,8 @@ namespace ScaryCastle
             this.echoScene = new(Game);
 
             LocalizationSource = LocalizationSource.Script;
+
+            InteractionData.Clear();
         }
 
         #endregion
@@ -106,6 +108,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(Coin));
             AotTypeRegistry.Register(typeof(CreditsRoom));
             AotTypeRegistry.Register(typeof(Dice));
+            AotTypeRegistry.Register(typeof(Firecracker));
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(GameThing));
             AotTypeRegistry.Register(typeof(HellGoat));
@@ -155,6 +158,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("take-damage", typeof(TakeDamageCommand));
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
             AotTypeRegistry.Register("use-item", typeof(UseItemCommand));
+            AotTypeRegistry.Register("use-sacred-item", typeof(UseSacredItemCommand));
             AotTypeRegistry.Register("vibrate", typeof(VibrateCommand));
             AotTypeRegistry.Register("x-tween", typeof(XTweenCommand));
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));
@@ -242,6 +246,13 @@ namespace ScaryCastle
 
             else
                 return base.OnHandleInput(gameTime);
+        }
+
+        // OnOutcome
+        protected override void OnOutcome(Thing target)
+        {
+            base.OnOutcome(target);
+            InteractionContext.HeldItem = null;
         }
 
         // OnPause
@@ -367,7 +378,7 @@ namespace ScaryCastle
 
             InteractionContext.Refresh();
 
-            if (!IsAwaiting)
+            if (!IsAwaiting && IsCurrentScene)
             {
                 if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 120)
                 {
@@ -561,6 +572,7 @@ namespace ScaryCastle
                     field?.StopMoving();
                     field = value;
                     HUD.Reset();
+                    InteractionData.Clear();
                     if (value != null)
                         Camera.Follow(value);
                 }

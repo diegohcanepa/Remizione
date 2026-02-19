@@ -582,7 +582,13 @@ namespace ScaryCastle
         // FaceTo
         public void FaceTo(GameThing thing)
         {
-            if (X < thing.X)
+            FaceTo(thing.Position);
+        }
+
+        // FaceTo
+        public void FaceTo(Vector2 position)
+        {
+            if (X < position.X)
                 Direction = FacingDirection.Right;
             else
                 Direction = FacingDirection.Left;

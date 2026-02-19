@@ -1,5 +1,4 @@
-﻿using Adberration.Scripting;
-using Engendro;
+﻿using Engendro;
 using ScaryCastle.Scripting;
 
 namespace ScaryCastle
@@ -9,12 +8,21 @@ namespace ScaryCastle
     /// </summary>
     internal static class MouseCursorAppearance
     {
+        #region Private fields
+
+        private static readonly string castHereText = Localization.GetValue(Verb.Cast);
+        private static readonly string placeHereText = Localization.GetValue(Verb.Place);
         private static readonly string useVerb = Localization.GetValue(Verb.Use);
         private static readonly string withPreposition = TextRepository.GetValue("Misc.WithPreposition");
+
+        #endregion
+
+        #region Private members
 
         // RefreshCursor
         private static void RefreshCursor(InteractionContext context)
         {
+            // Inventory
             if (context.Session.Game.SceneManager.CurrentScene is InventoryScene)
             {
                 MouseCursor.State = MouseCursorState.Hand;
@@ -35,25 +43,35 @@ namespace ScaryCastle
                 return;
             }
 
-            /*
-            // Inventory is visible
-            if (context.Session.HUD.Inventory.IsVisible)
+            // Cursor override
+            if (context.Target?.GetMouseCursorState() is { } customState)
             {
-                MouseCursor.State = MouseCursorState.Hand;
-                return;
-            }
-            */
-
-            if (context.CursorOverride.HasValue)
-            {
-                MouseCursor.State = context.CursorOverride.Value;
+                MouseCursor.State = customState;
                 return;
             }
 
             // Item grabbed
             if (context.HeldItem != null)
             {
-                MouseCursor.CustomImage = context.HeldItem.Definition.Image;
+                /*
+                if (context.HeldItem.Definition.RequiresDrop)
+                {
+                    if (context.WalkArea == null)
+                    {
+                        MouseCursor.State = MouseCursorState.Cast;
+                    }
+                    else
+                    {
+                        var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(context.Session.Camera);
+                        MouseCursor.State = context.WalkArea.Contains(destination) ? MouseCursorState.Cast : MouseCursorState.Prohibition;
+                    }
+                }
+                else
+                */
+                {
+                    MouseCursor.CustomImage = context.HeldItem.Definition.Image;
+                }
+
                 return;
             }
 
@@ -63,21 +81,49 @@ namespace ScaryCastle
         // RefreshText
         private static void RefreshText(InteractionContext context)
         {
-            if (context.Target is not { } target || context.CursorOverride.HasValue)
-                return;
-
-            // Get sentence
-            var sentence = target.LocalizedDisplayName;
-
-            // No item 
-            if (context.HeldItem == null)
+            if (MouseCursor.State == MouseCursorState.Hit)
             {
-                MouseCursor.Text = sentence;
+                MouseCursor.TextColor = ColorPalette.Text.OrangeLight;
+                MouseCursor.Text = Localization.GetValue(Verb.Headbutt);
                 return;
             }
 
-            MouseCursor.Text = $"{useVerb} {context.HeldItem.Definition.LocalizedDisplayName} {withPreposition} {sentence}";
+            if (context.HeldItem != null && context.HeldItem.Definition.UsageMode != ItemUsageMode.Default)
+            {
+                if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Place)
+                    MouseCursor.Text = castHereText;
+
+                else if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Place)
+                    MouseCursor.Text = placeHereText;
+
+                if (!string.IsNullOrWhiteSpace(MouseCursor.Text))
+                {
+                    MouseCursor.TextColor = ColorPalette.Text.Yellow;
+                }
+
+                return;
+            }
+
+            if (MouseCursor.State is MouseCursorState.Up or MouseCursorState.Down or MouseCursorState.Left or MouseCursorState.Right)
+                return;
+
+            if (context.Target is { } target)
+            {
+                // Get sentence
+                var sentence = target.LocalizedDisplayName;
+
+                // No item 
+                if (context.HeldItem == null)
+                {
+                    MouseCursor.Text = sentence;
+                    return;
+                }
+
+                MouseCursor.Text = $"{useVerb} {context.HeldItem.Definition.LocalizedDisplayName} {withPreposition} {sentence}";
+            }
         }
+
+        #endregion
 
         // Refresh
         internal static void Refresh(InteractionContext context)
@@ -88,10 +134,7 @@ namespace ScaryCastle
 
             RefreshText(context);
 
-            if (context.Target == null || context.CursorOverride.HasValue)
-                MouseCursor.HightlightState = MouseCursorHightlightState.None;
-            else
-                MouseCursor.HightlightState = context.IsValidInteraction ? MouseCursorHightlightState.Green : MouseCursorHightlightState.Red;
+            MouseCursor.Hightlight = context.Target != null;
         }
     }
 }

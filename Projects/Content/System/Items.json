@@ -25,6 +25,7 @@
 			"category": "Luck",
 			"consumptionType": "None",
 			"inventoryCategory": "Sacred",
+			"usageMode": "Cast",
 			"effects": [
 				{
 					"effectType": "Damage",
@@ -41,7 +42,8 @@
 			"damageType": "Explosive",
 			"impactWord": "KapowStrong",
 			"range": 20,
-			"sound": "Firecracker"
+			"sound": "Firecracker",
+			"usageMode": "Place"
 		},
 		{
 			"name": "GoldenKey",

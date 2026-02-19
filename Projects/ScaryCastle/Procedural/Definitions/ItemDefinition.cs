@@ -42,10 +42,13 @@ namespace ScaryCastle
             var impactWord = element.GetEnum("impactWord", ImpactWordName.None);
 
             // InventoryCategory
-            InventoryCategory = element.GetEnum<InventoryCategory>("inventoryCategory", InventoryCategory.Common);
+            InventoryCategory = element.GetEnum("inventoryCategory", InventoryCategory.Common);
 
             // IsStackable
             IsStackable = element.GetBool("isStackable", false);
+
+            // ItemUsageMode
+            UsageMode = element.GetEnum("usageMode", ItemUsageMode.Default);
 
             // PickupSound
             PickupSound = element.GetObject("pickupSound", Sound.Get) ?? Sound.Get(SoundNames.PickupGeneric);
@@ -66,6 +69,7 @@ namespace ScaryCastle
 
             this.LocalizedDescription = Localization.GetItemDescription(this);
             this.LocalizedDisplayName = Localization.GetItemName(this);
+            
             this.Image = Atlases.UI.FindImage(Name);
 
             this.Price = Quality switch
@@ -148,5 +152,8 @@ namespace ScaryCastle
 
         // SkillChance
         public int SkillChance { get; }
+
+        // UsageMode
+        public ItemUsageMode UsageMode { get; }
     }
 }

@@ -50,10 +50,11 @@ namespace ScaryCastle
             // Text sprite
             textSprite = new(EngendroGame.Instance, Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Sentence,
                 PivotOrigin = RectanglePoint.LeftTop,
                 Scale = ScaleInfo.UISentence
             };
+
+            Reset();
         }
 
         #endregion
@@ -84,12 +85,8 @@ namespace ScaryCastle
         // InvalidateCursorImage
         private static void InvalidateCursorImage()
         {
-            if (CustomImage != null)
-                cursorSprite.Image = CustomImage;
-            else
-                cursorSprite.Image = cursorImages[(int)State];
-
-            cursorSprite.Scale = defaultScale;
+            cursorSprite.Image = CustomImage ?? cursorImages[(int)State];
+            cursorSprite.Scale = CustomImage != null ? ScaleInfo.UIElement.Medium : defaultScale;
             cursorSprite.PivotOrigin = (State is MouseCursorState.Arrow or MouseCursorState.Hand) && CustomImage == null ? RectanglePoint.LeftTop : RectanglePoint.Center;
         }
 
@@ -98,7 +95,7 @@ namespace ScaryCastle
         // AnimateClick
         public static void AnimateClick()
         {
-            scaleTween.Start(TweenStyle.QuadraticIn, defaultScale * .9f, defaultScale, 150);
+            scaleTween.Start(TweenStyle.QuadraticIn, cursorSprite.Scale * .9f, cursorSprite.Scale, 150);
             cursorSprite.Tweens.ScaleTween = scaleTween;
         }
 
@@ -122,11 +119,11 @@ namespace ScaryCastle
         // Draw
         public static void Draw(GameTime gameTime)
         {
-            OutlineEffect? effect = CustomImage != null && HightlightState != MouseCursorHightlightState.None ? ScaryCastleGame.Effects.Outline : null;
+            OutlineEffect? effect = CustomImage != null && Hightlight ? ScaryCastleGame.Effects.Outline : null;
 
             if (effect != null && cursorSprite.Image?.Atlas != null)
             {
-                effect.Color.SetValue(HightlightState == MouseCursorHightlightState.Green ? ColorPalette.MouseCursorHighlightGreen : ColorPalette.MouseCursorHighlightRed);
+                effect.Color.SetValue(ColorPalette.MouseCursorHighlight);
                 effect.TextureSize.SetValue(new Vector2(cursorSprite.Image.Atlas.Texture.Width, cursorSprite.Image.Atlas.Texture.Height));
                 effect.Thickness.SetValue(1);
             }
@@ -138,15 +135,19 @@ namespace ScaryCastle
             EngendroGame.Instance.SpriteBatch.End();
 
             EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera);
-            if (State == MouseCursorState.Cross || CustomImage != null)
+            if (State == MouseCursorState.Cross || State == MouseCursorState.Hit || CustomImage != null)
             {
                 textSprite.Draw(gameTime);
             }
             EngendroGame.Instance.SpriteBatch.End();
         }
 
-        // HightlightState
-        public static MouseCursorHightlightState HightlightState { get; set; }
+        // Hightlight
+        public static bool Hightlight { get; set; }
+
+        // IsArrow
+        public static bool IsArrow => State is MouseCursorState.Up or MouseCursorState.Down or
+                                      MouseCursorState.Right or MouseCursorState.Left;
 
         // PerformClick
         public static void PerformClick()
@@ -158,8 +159,9 @@ namespace ScaryCastle
         // Reset
         public static void Reset()
         {
+            textSprite.Color = ColorPalette.Text.Sentence;
             CustomImage = null;
-            HightlightState = MouseCursorHightlightState.None;
+            Hightlight = false;
             State = MouseCursorState.Arrow;
             Text = null;
         }
@@ -168,6 +170,7 @@ namespace ScaryCastle
         public static void Shake()
         {
             shakeTween.Start(TweenStyle.CubicInOut, 0, 1, 50, 4);
+            Sound.Play(SoundNames.Error);
         }
 
         // State
@@ -189,6 +192,13 @@ namespace ScaryCastle
         {
             get => textSprite.Text;
             set => textSprite.Text = value;
+        }
+
+        // TextColor
+        public static Color TextColor
+        {
+            get => textSprite.Color;
+            set => textSprite.Color = value;
         }
 
         // Update

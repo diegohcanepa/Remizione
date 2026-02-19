@@ -4,6 +4,14 @@ using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 
+/*
+var lightning = new Lightning(player.Session);
+lightning.Show(destination, 1500, Actor, context.HeldItem);
+player.Room?.Children.Add(lightning);
+context.HeldItem = null;
+*/
+
+
 namespace ScaryCastle
 {
     /// <summary>
@@ -34,30 +42,66 @@ namespace ScaryCastle
             return HandleInputResult.Unhandled;
         }
 
-
         // PerformInteraction
         private void PerformInteraction()
         {
-            if (Actor.Session.Player is not Actor player)
+            if (!Actor.IsPlayer)
                 return;
 
-            var context = player.Session.InteractionContext;
+            var context = Actor.Session.InteractionContext;
 
             MouseCursor.PerformClick();
 
+            var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
+
+            // 1. No target: Basic walk to destination
             if (context.Target == null)
             {
-                var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(player.Session.Camera);
-                if (context.HeldItem == null)
+                if (context.HeldItem == null || context.HeldItem.Definition.UsageMode == ItemUsageMode.Default)
                 {
-                    player.MoveTo(destination);
+                    InteractionData.Clear();
+                    Actor.MoveTo(destination);
                 }
-                else if (context.HeldItem.Definition.InventoryCategory == InventoryCategory.Sacred)
+                return;
+            }
+
+            // 2. Outcome interaction: Approach and interact with target using outcome script
+            if (context.HeldItem == null || MouseCursor.IsArrow)
+            {
+                Actor.ApproachAndInteract(context.Target, null);
+                return;
+            }
+
+            if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Default)
+            {
+                if (Actor.ApproachAndInteract(context.Target, context.HeldItem))
+                    return;
+            }
+
+            MouseCursor.Shake();
+
+            /*
+            if (context.Target == null)
+            {
+
+                // Walk to destination
+                if (context.InteractionType == InteractionType.None)
                 {
-                    var lightning = new Lightning(player.Session);
-                    lightning.Show(destination, 1500, Actor, context.HeldItem);
-                    player.Room?.Children.Add(lightning);
-                    context.HeldItem = null;
+                    Actor.MoveTo(destination);
+                }
+                else if (context.Script != null)
+                {
+                    // Cast item
+                    if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Cast)
+                    {
+                        Actor.ApproachAndInteract(Actor.Position, context.HeldItem, context.Script);
+                    }
+
+                    // Place item
+                    else if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Place)
+                    {
+                        Actor.ApproachAndInteract(destination, context.HeldItem, context.Script);
+                    }
                 }
 
                 return;
@@ -65,24 +109,17 @@ namespace ScaryCastle
 
             if (context.HeldItem != null && !context.CursorOverride.HasValue)
             {
-                if (MouseCursor.HightlightState == MouseCursorHightlightState.Red)
+                if (context.Script == null)
                 {
                     Sound.Play(SoundNames.Error);
                     MouseCursor.Shake();
                     return;
                 }
-
-                if (context.Script?.ScriptType == ScriptType.Routine)
-                {
-                    context.HeldItem = null;
-                    player.StopMoving();
-                    player.FaceTo(context.Target);
-                    context.Session.BeginOutcome(context.Script, context.Target);
-                    return;
-                }
             }
 
-            player.ApproachAndInteract(context.Target, context.CursorOverride.HasValue ? null : context.HeldItem);
+            if (context.Script != null)
+                Actor.ApproachAndInteract(context.Target, context.CursorOverride.HasValue ? null : context.HeldItem, context.Script);
+            */
         }
 
         // TestMouseLeftButtonClick

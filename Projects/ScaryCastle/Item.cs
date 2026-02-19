@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration.Scripting;
+using Engendro;
 using Microsoft.Xna.Framework;
 using System.Globalization;
 
@@ -23,6 +24,7 @@ namespace ScaryCastle
             this.Inventory = inventory;
             this.Definition = definition;
             this.ConsumptionCooldown = definition.ConsumptionInterval;
+            this.Script = inventory.Session.ScriptLibrary.FindRoutine($"{Definition.Name}Outcome");
         }
 
         #endregion
@@ -146,6 +148,9 @@ namespace ScaryCastle
         // Inventory
         public Inventory Inventory { get; }
 
+        // IsSacred
+        public bool IsSacred => Definition.InventoryCategory == InventoryCategory.Sacred;
+
         // Name
         public string Name => Definition.Name;
 
@@ -154,6 +159,9 @@ namespace ScaryCastle
         {
             Inventory.Remove(this);
         }
+
+        // Script
+        public Script? Script { get; }
 
         // ToString
         public override string ToString()

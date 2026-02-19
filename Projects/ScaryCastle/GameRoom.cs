@@ -2,6 +2,7 @@
 using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -322,8 +323,6 @@ namespace ScaryCastle
 
             // Foreround (layer)
             DrawThings(gameTime, RenderLayer.Foreground);
-
-            //Session.Environment.Lightning.Draw(gameTime);
 
             // Apply light map
             if (CanUseLightingSystem && Game.RenderTargets != null)

@@ -20,7 +20,6 @@ namespace ScaryCastle
             Guts = 7;
             ShadowSpotSize = 0;
             AttackRange = 10;
-          //  AttackRate = 4000;
             scaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.Zero, new(0, .05f), 600, -1);
             Sensor.ViewAngle = 360;
 
