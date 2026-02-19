@@ -47,7 +47,7 @@
     "isPassive": {
       "type": "boolean",
       "description": "Indica si el efecto es pasivo."
-    },    
+    },
     "target": {
       "type": "string",
       "description": "A quién se aplica el efecto.",

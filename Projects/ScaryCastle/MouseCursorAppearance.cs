@@ -73,18 +73,17 @@ namespace ScaryCastle
             {
                 if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Cast)
                 {
+                    MouseCursor.TextColor = ColorPalette.Text.Purple;
                     MouseCursor.Text = castHereText;
                 }
                 else if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Place)
                 {
+                    MouseCursor.TextColor = ColorPalette.Text.Yellow;
                     MouseCursor.Text = placeHereText;
                 }
 
                 if (!string.IsNullOrWhiteSpace(MouseCursor.Text))
-                {
-                    MouseCursor.TextColor = ColorPalette.Text.Yellow;
                     MouseCursor.TextIsLabel = true;
-                }
 
                 return;
             }

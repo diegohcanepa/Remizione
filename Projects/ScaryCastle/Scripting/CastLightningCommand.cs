@@ -2,13 +2,13 @@
 
 namespace ScaryCastle.Scripting
 {
-    // UseSacredItemCommand
+    // CastLightningCommand
     // Arguments: {ItemName}
     [ScriptStatement(CodingContext.Execution)]
-    internal sealed class UseSacredItemCommand : NonAwaitableCommand
+    internal sealed class CastLightningCommand : NonAwaitableCommand
     {
         // Constructor
-        internal UseSacredItemCommand(Script script, string source, StatementBody args)
+        internal CastLightningCommand(Script script, string source, StatementBody args)
             : base(script, source, args, 1)
         {
             Script.AssertItemDefinition(Body.Clauses[0]);
@@ -23,8 +23,13 @@ namespace ScaryCastle.Scripting
             if (session.Player is not Actor player)
                 return;
 
-            if (Inventory.FindInAll(Body.Clauses[0]) is Item item)
+            if (player.Room != null)
             {
+                if (Inventory.FindInAll(Body.Clauses[0]) is Item item)
+                {
+                    var lightning = new LightningRite(session, item);
+                    player.Room.Children.Add(lightning);
+                }
             }
         }
     }

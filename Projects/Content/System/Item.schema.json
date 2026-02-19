@@ -35,6 +35,15 @@
                 "Misc"
               ]
             },
+            "areaRange": {
+              "type": "string",
+              "enum": [
+                "None",
+                "Small",
+                "Medium",
+                "Large"
+              ]
+            },            
             "consumptionInterval": {
               "type": "integer",
               "minimum": 0
@@ -47,6 +56,11 @@
                 "Durability"
               ]
             },
+            "executionDelay": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            },            
             "inventoryCategory": {
               "type": "string",
               "enum": [

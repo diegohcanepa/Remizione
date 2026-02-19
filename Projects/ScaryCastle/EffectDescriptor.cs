@@ -97,7 +97,7 @@ namespace ScaryCastle
 
         // Knockback
         public Vector2 Knockback { get; }
-
+        
         // Sound
         public Sound? Sound { get; }
 

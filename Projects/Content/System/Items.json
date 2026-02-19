@@ -22,8 +22,9 @@
 		},
 		{
 			"name": "Cross",
-			"category": "Luck",
+			"areaRange": "Small",
 			"consumptionType": "None",
+			"executionDelay": 1500,
 			"inventoryCategory": "Sacred",
 			"usageMode": "Cast",
 			"effects": [

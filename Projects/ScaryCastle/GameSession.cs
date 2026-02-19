@@ -143,6 +143,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
             AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
+            AotTypeRegistry.Register("cast-lightning", typeof(CastLightningCommand));
             AotTypeRegistry.Register("create-dialog-block", typeof(CreateDialogBlockCommand));
             AotTypeRegistry.Register("echo", typeof(EchoCommand));
             AotTypeRegistry.Register("ensure-session-scene", typeof(EnsureSessionSceneCommand));
@@ -157,7 +158,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("take-damage", typeof(TakeDamageCommand));
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
             AotTypeRegistry.Register("use-item", typeof(UseItemCommand));
-            AotTypeRegistry.Register("use-sacred-item", typeof(UseSacredItemCommand));
             AotTypeRegistry.Register("vibrate", typeof(VibrateCommand));
             AotTypeRegistry.Register("x-tween", typeof(XTweenCommand));
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));

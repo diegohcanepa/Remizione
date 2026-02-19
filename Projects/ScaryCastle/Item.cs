@@ -2,6 +2,7 @@
 using Engendro;
 using Microsoft.Xna.Framework;
 using System.Globalization;
+using System.Linq;
 
 namespace ScaryCastle
 {
@@ -148,9 +149,6 @@ namespace ScaryCastle
         // Inventory
         public Inventory Inventory { get; }
 
-        // IsSacred
-        public bool IsSacred => Definition.InventoryCategory == InventoryCategory.Sacred;
-
         // Name
         public string Name => Definition.Name;
 
@@ -201,6 +199,23 @@ namespace ScaryCastle
             }
 
             InvalidateDisplayText();
+
+            return true;
+        }
+
+        // Use
+        public bool Use(GameThing source, RectangleF area, GameRoom room)
+        {
+            if (Definition.AreaRange == EffectAreaRange.None)
+                return false;
+
+            foreach (var enemy in room.Children.OfType<ProceduralActor>())
+            {
+                if (area.Contains(enemy.Position))
+                    EffectDescriptor.Apply(Definition.EffectDescriptors, source, enemy);
+            }
+            
+            Use();
 
             return true;
         }

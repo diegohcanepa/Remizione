@@ -15,6 +15,9 @@ namespace ScaryCastle
         private ItemDefinition(JsonElement element)
             : base(element)
         {
+            // AreaRange
+            AreaRange = element.GetEnum("areaRange", EffectAreaRange.None);
+
             // Category
             Category = element.GetEnum("category", ItemCategory.Misc);
 
@@ -34,6 +37,9 @@ namespace ScaryCastle
 
             // DurabilityCost
             DurabilityCost = element.GetFloat("durabilityCost", 0);
+
+            // ExecutionDelay
+            ExecutionDelay = element.GetInt32("executionDelay", 0);
 
             // HP
             DiceExpression? hp = element.GetObject("hp", value => new DiceExpression(value));
@@ -96,6 +102,9 @@ namespace ScaryCastle
 
         #endregion
 
+        // AreaRange
+        public EffectAreaRange AreaRange { get; }
+
         // Category
         public ItemCategory Category { get; }
 
@@ -113,6 +122,9 @@ namespace ScaryCastle
 
         // DurabilityCost
         public float DurabilityCost { get; }
+
+        // ExecutionDelay
+        public int ExecutionDelay { get; }
 
         // Image
         public AtlasImage? Image { get; }

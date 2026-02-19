@@ -452,7 +452,7 @@ namespace ScaryCastle
         }
 
         // Cast
-        public bool Cast(Vector2 destination, Item item)
+        public bool Cast(Vector2 castPosition, Item item)
         {
             if (!IsPlayer)
                 return false;
@@ -461,9 +461,9 @@ namespace ScaryCastle
                 return false;
 
             if (Room?.WalkArea != null)
-                destination = Room.WalkArea.ClampInside(destination);
+                castPosition = Room.WalkArea.ClampInside(castPosition);
 
-            Session.InteractionData.SetCastOutcome(item);
+            Session.InteractionData.SetCastOutcome(item, castPosition);
 
             HandlePendingInteraction();
 

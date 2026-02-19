@@ -43,11 +43,14 @@ namespace ScaryCastle
     // EffectType
     public enum EffectType { None, Damage, Death, Heal, Luck, AddCondition, RemoveCondition }
 
+    // EffectAreaRange
+    public enum EffectAreaRange { None, Small, Medium, Large }
+
     // EffectTarget
     public enum EffectTarget
     {
-        Target, // Al que apunto (Enemigo o Jugador si es trampa)
-        Self   // A mí mismo (Consumible o Buff)
+        Target,
+        Self
     }
 
     // Faction

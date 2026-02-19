@@ -90,6 +90,7 @@ namespace ScaryCastle
             internal static Color Light { get; } = new(200, 165, 138);
             internal static Color Orange { get; } = new(171, 81, 48);
             internal static Color OrangeLight { get; } = new(207, 117, 43);
+            internal static Color Purple { get; } = new(156, 42, 112);
             internal static Color Red { get; } = new(173, 47, 69);
             internal static Color Sentence { get; } = new(255, 255, 255);
             internal static Color TerraDarker { get; } = new(61, 41, 54);

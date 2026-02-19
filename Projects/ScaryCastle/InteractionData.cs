@@ -44,6 +44,10 @@ namespace ScaryCastle
             else if (Script != null)
             {
                 session.InteractionContext.HeldItem = null;
+
+                if (InteractionType == InteractionType.Cast)
+                    session.Player?.FaceTo(LastKnownCastPosition);
+
                 session.AwaitScript(Script);
             }
 
@@ -58,6 +62,9 @@ namespace ScaryCastle
         // Item
         public Item? Item { get; private set; }
 
+        // LastKnownCastPosition
+        public Vector2 LastKnownCastPosition { get; private set; }
+
         // Script
         public Script? Script { get; private set; }
 
@@ -65,7 +72,7 @@ namespace ScaryCastle
         public GameSession Session { get; }
 
         // SetCastOutcome
-        public void SetCastOutcome(Item item)
+        public void SetCastOutcome(Item item, Vector2 castPosition)
         {
             if (item.Definition.UsageMode != ItemUsageMode.Cast)
                 throw new InvalidOperationException($"Item '{item.Definition.Name}' cannot be casted.");
@@ -73,6 +80,7 @@ namespace ScaryCastle
             Clear();
             Script = Session.ScriptLibrary.FindRoutine($"{item.Name}Outcome");
             InteractionType = InteractionType.Cast;
+            LastKnownCastPosition = castPosition;
         }
 
         // SetPlaceOutcome
@@ -121,4 +129,3 @@ namespace ScaryCastle
         public Vector2 TargetPosition { get; private set; }
     }
 }
-
