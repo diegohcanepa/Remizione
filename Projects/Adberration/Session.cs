@@ -1072,7 +1072,7 @@ namespace Adberration
                 ScriptProcessor.StopScript(AwaitingScript);
                 return true;
             }
-            
+
             return false;
         }
 

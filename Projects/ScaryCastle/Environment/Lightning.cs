@@ -13,7 +13,7 @@ namespace ScaryCastle
     {
         private int cooldown;
         private Item? item = null!;
-        private ImageSprite impactArea;
+        private readonly ImageSprite impactArea;
         private Vector2 position;
         private readonly GameSession session;
         private GameThing? source = null!;

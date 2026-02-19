@@ -12,7 +12,7 @@ namespace ScaryCastle
         {
             // 1. OBTENER TARGET
             // Usamos el helper seguro de ProceduralActor que ya valida si es null o IsDead
-            if (Owner.GetTarget() is not {} target)
+            if (Owner.GetTarget() is not { } target)
             {
                 TransitionTo<BrainPatrolState>();
                 return;

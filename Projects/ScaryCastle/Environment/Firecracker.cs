@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System;
-using System.Text;
-
-namespace ScaryCastle
+﻿namespace ScaryCastle
 {
     /// <summary>
     /// Firecracker

@@ -17,7 +17,7 @@ namespace ScaryCastle
         // DecideCombatManeuver
         private void DecideCombatManeuver()
         {
-            if (Owner.GetTarget() is not {} target)
+            if (Owner.GetTarget() is not { } target)
                 return;
 
             bool inRange = Owner.IsInAttackRange(target.Position);
@@ -48,7 +48,7 @@ namespace ScaryCastle
 
                 case CombatBehaviorArchetype.Sniper:
                     break;
-                
+
                 case CombatBehaviorArchetype.Swarmer:
                     break;
 
@@ -109,9 +109,9 @@ namespace ScaryCastle
             if (_thinkingTimer > 0)
             {
                 // Opcional: Hacer que mire al jugador mientras piensa
-                if (Owner.Sensor.CanSeeTarget && Owner.GetTarget() is {} t)
+                if (Owner.Sensor.CanSeeTarget && Owner.GetTarget() is { } t)
                     Owner.FaceTo(t);
-                
+
                 return;
             }
 

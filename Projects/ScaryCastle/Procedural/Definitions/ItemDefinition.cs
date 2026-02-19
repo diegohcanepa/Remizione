@@ -69,7 +69,7 @@ namespace ScaryCastle
 
             this.LocalizedDescription = Localization.GetItemDescription(this);
             this.LocalizedDisplayName = Localization.GetItemName(this);
-            
+
             this.Image = Atlases.UI.FindImage(Name);
 
             this.Price = Quality switch

@@ -32,7 +32,7 @@ namespace ScaryCastle
                 return false;
 
             var result = false;
-            
+
             session.Player?.StopMoving();
 
             if (Target != null)

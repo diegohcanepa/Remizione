@@ -4,7 +4,6 @@ using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace ScaryCastle
@@ -465,7 +464,7 @@ namespace ScaryCastle
                 destination = Room.WalkArea.ClampInside(destination);
 
             Session.InteractionData.SetCastOutcome(item);
-            
+
             HandlePendingInteraction();
 
             return true;

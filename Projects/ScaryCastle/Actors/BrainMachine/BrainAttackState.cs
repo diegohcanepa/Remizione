@@ -12,7 +12,7 @@ namespace ScaryCastle
         {
             Owner.StopMoving();
 
-            if (Owner.GetTarget() is not {} target)
+            if (Owner.GetTarget() is not { } target)
             {
                 TransitionTo<BrainPatrolState>();
                 return;

@@ -54,7 +54,7 @@ namespace ScaryCastle
             if (context.HeldItem != null)
                 MouseCursor.CustomImage = context.HeldItem.Definition.Image;
             else
-                MouseCursor.State =  MouseCursorState.Cross;
+                MouseCursor.State = MouseCursorState.Cross;
         }
 
         // RefreshText

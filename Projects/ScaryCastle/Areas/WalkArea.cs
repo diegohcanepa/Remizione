@@ -345,7 +345,7 @@ namespace ScaryCastle
         public Vector2 RandomWalkablePoint(float margin = 0)
         {
             var result = GetWalkablePoint(Polygon.RandomPoint());
-            
+
             if (margin > 0)
             {
                 var wap = new Polygon(Polygon.Vertices, -margin);

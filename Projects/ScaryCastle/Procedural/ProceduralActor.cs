@@ -1,7 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 using System;
-using System.Linq;
 
 namespace ScaryCastle
 {
@@ -114,7 +113,7 @@ namespace ScaryCastle
             // Multiplicamos por 0.8 para permitir un ligero solapamiento (se ve más natural).
             if (BoundingBox.Width > 0)
             {
-                SeparationRadius = (BoundingBox.Width / 2f) * 0.9f;
+                SeparationRadius = BoundingBox.Width / 2f * 0.9f;
             }
             else
             {
@@ -147,10 +146,10 @@ namespace ScaryCastle
         {
             Sensor.Update(gameTime);
             BrainMachine.Update(gameTime);
-            
+
             base.OnUpdate(gameTime);
 
-            if (GetTarget() is {} target && RuntimeCollider.Contains(target.Position))
+            if (GetTarget() is { } target && RuntimeCollider.Contains(target.Position))
             {
                 EffectDescriptor.Apply(this, target);
             }

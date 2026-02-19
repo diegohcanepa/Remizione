@@ -74,7 +74,7 @@ namespace ScaryCastle
         private void PerformScan()
         {
             // No target or target is dead
-            if (owner.GetTarget() is not {} target)
+            if (owner.GetTarget() is not { } target)
             {
                 CanSeeTarget = false;
                 return;
@@ -89,7 +89,7 @@ namespace ScaryCastle
             // --- FASE 1: OÍDO (El chequeo más barato y tramposo) ---
             // Si el jugador hace ruido (no está sneaking) y está cerca, actualizamos la memoria.
             // Asumo que el Player tiene una propiedad IsSneaking.
-            bool isSneaking = target.IsSneaking; 
+            bool isSneaking = target.IsSneaking;
 
             float hearingRangeSq = HearingRange * HearingRange;
             if (distSq < hearingRangeSq && !isSneaking)
