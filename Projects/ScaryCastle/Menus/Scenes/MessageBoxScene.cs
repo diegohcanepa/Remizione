@@ -141,6 +141,29 @@ namespace ScaryCastle.Menus
 
         #region Private members
 
+        // Invalidate
+        private void Invalidate()
+        {
+            message.Position = new Vector2(Screen.Center.X, 80);
+            var y = message.BoundingBox.GetPoint(RectanglePoint.Bottom).Y;
+
+            if (!subMessage.IsEmpty)
+            {
+                subMessage.Position = message.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 2);
+                y = subMessage.BoundingBox.GetPoint(RectanglePoint.Bottom).Y + 2;
+            }
+
+            menu.Position = new Vector2(Screen.Center.X, y + 10);
+
+            topOrnament.Position = message.BoundingBox.GetPoint(RectanglePoint.Top, 0, -9);
+            bottomOrnament.Position = menu.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 9);
+
+            if (!title.IsEmpty)
+            {
+                title.Position = topOrnament.BoundingBox.GetPoint(RectanglePoint.Top, 0, -3);
+            }
+        }
+
         // SelectOption
         private void SelectOption(MessageBoxOptions option)
         {
@@ -194,29 +217,6 @@ namespace ScaryCastle.Menus
             }
 
             return menu.HandleInput(gameTime);
-        }
-
-        // OnInvalidate
-        protected override void OnInvalidate()
-        {
-            message.Position = new Vector2(Screen.Center.X, 80);
-            var y = message.BoundingBox.GetPoint(RectanglePoint.Bottom).Y;
-
-            if (!subMessage.IsEmpty)
-            {
-                subMessage.Position = message.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 2);
-                y = subMessage.BoundingBox.GetPoint(RectanglePoint.Bottom).Y + 2;
-            }
-
-            menu.Position = new Vector2(Screen.Center.X, y + 10);
-
-            topOrnament.Position = message.BoundingBox.GetPoint(RectanglePoint.Top, 0, -9);
-            bottomOrnament.Position = menu.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 9);
-
-            if (!title.IsEmpty)
-            {
-                title.Position = topOrnament.BoundingBox.GetPoint(RectanglePoint.Top, 0, -3);
-            }
         }
 
         // OnLoadContent

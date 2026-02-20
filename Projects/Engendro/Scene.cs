@@ -85,11 +85,6 @@ namespace Engendro
         {
         }
 
-        // OnInvalidate
-        protected virtual void OnInvalidate()
-        {
-        }
-
         // OnLoadContent
         protected virtual void OnLoadContent()
         {
@@ -177,12 +172,6 @@ namespace Engendro
         public void Initialize()
         {
             OnInitialize();
-        }
-
-        // Invalidate
-        public void Invalidate()
-        {
-            OnInvalidate();
         }
 
         // IsContentLoaded

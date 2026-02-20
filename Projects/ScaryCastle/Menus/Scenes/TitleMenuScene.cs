@@ -126,6 +126,19 @@ namespace ScaryCastle.Menus
             Invalidate();
         }
 
+        // Invalidate
+        private void Invalidate()
+        {
+#if XBOX_ONE
+            xboxSigningButton.Position = Screen.SafeArea.GetPoint(RectanglePoint.LeftBottom);
+            xboxSigningButton.Text = string.IsNullOrWhiteSpace(Game.ActiveUser) ? VladUtils.EncodePlatformMessageKey(PlatformMessageKey.SignIn) : VladUtils.EncodePlatformMessageKey(PlatformMessageKey.ChangeUser);
+
+            xboxActiveUser.Position = xboxSigningButton.BoundingBox.GetPoint(RectanglePoint.LeftTop, 0, -2);
+            xboxActiveUser.Text = Game.ActiveUser;
+            xboxActiveUser.Scale = xboxSigningButton.TextScale;
+#endif
+        }
+
         // ResetNextBlinkTimer
         private void ResetNextBlinkTimer()
         {
@@ -210,19 +223,6 @@ namespace ScaryCastle.Menus
 #endif
 
             return menu.HandleInput(gameTime);
-        }
-
-        // OnInvalidate
-        protected override void OnInvalidate()
-        {
-#if XBOX_ONE
-            xboxSigningButton.Position = Screen.SafeArea.GetPoint(RectanglePoint.LeftBottom);
-            xboxSigningButton.Text = string.IsNullOrWhiteSpace(Game.ActiveUser) ? VladUtils.EncodePlatformMessageKey(PlatformMessageKey.SignIn) : VladUtils.EncodePlatformMessageKey(PlatformMessageKey.ChangeUser);
-
-            xboxActiveUser.Position = xboxSigningButton.BoundingBox.GetPoint(RectanglePoint.LeftTop, 0, -2);
-            xboxActiveUser.Text = Game.ActiveUser;
-            xboxActiveUser.Scale = xboxSigningButton.TextScale;
-#endif
         }
 
         // OnLoadContent
