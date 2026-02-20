@@ -60,20 +60,6 @@ namespace Engendro
     // RunningState
     public enum RunningState { Stopped, Running, Paused }
 
-    // SceneSettings
-    [Flags]
-    public enum SceneSettings
-    {
-        // None
-        None = 0,
-
-        // Scene is full screen hiding previous scenes (optimization to draw topmost scene only)
-        ExclusiveDraw = 1,
-
-        // Pauses previous scenes
-        PausePreviousScenes = 2
-    }
-
     // ScrollLock
     public enum ScrollLock { None, Horizontal, Vertical, All }
 

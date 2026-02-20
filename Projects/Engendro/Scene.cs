@@ -239,9 +239,6 @@ namespace Engendro
             }
         }
 
-        // SceneSettings
-        public SceneSettings SceneSettings { get; set; }
-
         // TransitionAware
         public bool TransitionAware { get; init; } = true;
 
