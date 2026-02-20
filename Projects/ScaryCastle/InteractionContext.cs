@@ -30,7 +30,7 @@ namespace ScaryCastle
             if (!Session.IsCurrentScene)
                 return false;
 
-            if (HeldItem != null && HeldItem.Definition.UsageMode != ItemUsageMode.Default)
+            if (HeldItem?.Definition.IsMagical == true)
                 return false;
 
             return true;

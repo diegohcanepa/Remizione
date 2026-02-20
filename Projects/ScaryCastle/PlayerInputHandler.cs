@@ -52,7 +52,7 @@ namespace ScaryCastle
             // 1. No target: Basic walk to destination
             if (context.Target == null)
             {
-                if (context.HeldItem == null || context.HeldItem.Definition.UsageMode == ItemUsageMode.Default)
+                if (context.HeldItem == null || !context.HeldItem.Definition.IsMagical)
                 {
                     Actor.Session.InteractionData.Clear();
                     Actor.MoveTo(destination);
@@ -70,22 +70,15 @@ namespace ScaryCastle
                 }
 
                 // 3. Classic "Use with" interaction: Approach and interact with target using held item
-                if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Default)
+                if (context.HeldItem?.Definition.IsMagical == false)
                 {
                     if (Actor.ApproachAndInteract(context.Target, context.HeldItem))
                         return;
                 }
             }
 
-            // 3. Place item: Approach and place held item
-            if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Place)
-            {
-                if (Actor.ApproachAndPlace(destination, context.HeldItem))
-                    return;
-            }
-
-            // 4. Cast
-            if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Cast)
+            // 3. Cast
+            if (context.HeldItem?.Definition.IsMagical == true)
             {
                 if (Actor.Cast(destination, context.HeldItem))
                     return;

@@ -55,19 +55,16 @@
               "type": "integer",
               "minimum": 0
             },
-            "usageMode": {
-              "type": "string",
-              "enum": [
-                "Default",
-                "Cast",
-                "Place"
-              ]
-            },
             "isStackable": {
               "type": "boolean"
             },
-            "selfTarget": {
-              "type": "boolean"
+            "verb": {
+              "type": "string",
+              "enum": [
+                "None",
+                "Eat",
+                "Ignite"
+              ]
             },
             "inventoryCategory": {
               "type": "string",
@@ -75,6 +72,9 @@
                 "Common",
                 "Sacred"
               ]
+            },
+            "isMagical": {
+              "type": "boolean"
             },
             "skillChance": {
               "type": "integer"

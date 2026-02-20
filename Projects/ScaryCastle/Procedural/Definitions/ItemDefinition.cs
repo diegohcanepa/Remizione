@@ -51,11 +51,11 @@ namespace ScaryCastle
             // InventoryCategory
             InventoryCategory = element.GetEnum("inventoryCategory", InventoryCategory.Common);
 
+            // IsMagical
+            IsMagical = element.GetBool("isMagical", false);
+
             // IsStackable
             IsStackable = element.GetBool("isStackable", false);
-
-            // ItemUsageMode
-            UsageMode = element.GetEnum("usageMode", ItemUsageMode.Default);
 
             // PickupSound
             PickupSound = element.GetObject("pickupSound", Sound.Get) ?? Sound.Get(SoundNames.PickupGeneric);
@@ -66,17 +66,18 @@ namespace ScaryCastle
             // Realm
             Realm = element.GetEnum("realm", Realm.Earthly);
 
-            // Selftarget
-            SelfTarget = element.GetBool("selfTarget", false);
-
             // SkillChance
             SkillChance = element.GetInt32("skillChance", 0);
 
             // Sound
             Sound = element.GetObject("sound", Sound.Get);
 
+            // Verb
+            Verb = element.GetEnum("verb", ItemVerb.None);
+
             this.LocalizedDescription = Localization.GetItemDescription(this);
             this.LocalizedDisplayName = Localization.GetItemName(this);
+            this.LocalizedVerbSentence = Verb == ItemVerb.None ? string.Empty : $"{Localization.GetValue<ItemVerb>(Verb)} {LocalizedDisplayName}";
 
             this.Image = Atlases.UI.FindImage(Name);
 
@@ -147,6 +148,9 @@ namespace ScaryCastle
         // InventoryCategory
         public InventoryCategory InventoryCategory { get; }
 
+        // IsMagical
+        public bool IsMagical { get; }
+
         // IsPassive
         public bool IsPassive { get; }
 
@@ -158,6 +162,9 @@ namespace ScaryCastle
 
         // LocalizedDisplayName
         public string LocalizedDisplayName { get; }
+
+        // LocalizedVerbSentence
+        public string LocalizedVerbSentence { get; }
 
         // PickupSound
         public Sound PickupSound { get; }
@@ -171,16 +178,13 @@ namespace ScaryCastle
         // Realm
         public Realm Realm { get; }
 
-        // SelfTarget
-        public bool SelfTarget { get; }
-
         // SkillChance
         public int SkillChance { get; }
 
         // Sound
         public Sound? Sound { get; }
 
-        // UsageMode
-        public ItemUsageMode UsageMode { get; }
+        // Verb
+        public ItemVerb Verb { get; }
     }
 }

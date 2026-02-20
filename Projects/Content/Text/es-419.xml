@@ -82,6 +82,8 @@
   <String Key="ItemCategory.LeftHand">Mano izquierda</String>
   <String Key="ItemCategory.RightHand">Mano derecha</String>
   <String Key="ItemProperty.Chance">Chance</String>
+  <String Key="ItemVerb.Eat">Comer</String>
+  <String Key="ItemVerb.Ignite">Encender</String>
   <String Key="KeyItemAction.UnlockDoor">Abrir puerta</String>
   <String Key="KeyItemAction.UnlockTrunk">Abrir baúl</String>
   <String Key="KeyItemAction.UseCoin">Dejar diezmo</String>
@@ -289,10 +291,7 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
   <String Key="Prop.VendingMachine">Máquina expendedora</String>
   <String Key="Prop.WC">Inodoro</String>
-  <String Key="Verb.Cast">Conjurar</String>
   <String Key="Verb.Enter">Entrar</String>
   <String Key="Verb.Exit">Salir</String>
-  <String Key="Verb.Headbutt">Cabecear</String>
-  <String Key="Verb.Place">Colocar</String>
   <String Key="Verb.Use">Usar</String>
 </Strings>

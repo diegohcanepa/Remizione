@@ -10,8 +10,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private static readonly string castHereText = Localization.GetValue(Verb.Cast);
-        private static readonly string placeHereText = Localization.GetValue(Verb.Place);
         private static readonly string useVerb = Localization.GetValue(Verb.Use);
         private static readonly string withPreposition = TextRepository.GetValue("Misc.WithPreposition");
 
@@ -60,34 +58,17 @@ namespace ScaryCastle
         // RefreshText
         private static void RefreshText(InteractionContext context)
         {
-            if (MouseCursor.State == MouseCursorState.Hit)
-            {
-                MouseCursor.TextColor = ColorPalette.Text.OrangeLight;
-                MouseCursor.Text = context.Target?.LocalizedDisplayName;
-                return;
-            }
-
-            if (context.HeldItem != null && context.HeldItem.Definition.UsageMode != ItemUsageMode.Default)
-            {
-                if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Cast)
-                {
-                    MouseCursor.TextColor = ColorPalette.Text.Purple;
-                    MouseCursor.Text = castHereText;
-                }
-                else if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.Place)
-                {
-                    MouseCursor.TextColor = ColorPalette.Text.Yellow;
-                    MouseCursor.Text = placeHereText;
-                }
-
-                return;
-            }
-
             if (MouseCursor.State is MouseCursorState.Up or MouseCursorState.Down or MouseCursorState.Left or MouseCursorState.Right)
                 return;
 
             if (context.Target is { } target)
             {
+                if (target == context.Session.Player && context.HeldItem?.Definition.Verb != ItemVerb.None)
+                {
+                    MouseCursor.Text = context.HeldItem?.Definition.LocalizedVerbSentence;
+                    return;
+                }
+
                 // Get sentence
                 var sentence = target.LocalizedDisplayName;
 
@@ -113,7 +94,14 @@ namespace ScaryCastle
 
             RefreshText(context);
 
-            MouseCursor.Hightlight = context.Target != null;
+            if (context.HeldItem?.Definition.IsMagical == true)
+                MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightBlue;
+            
+            else if (context.Target != null)
+                MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightWhite;
+
+            else
+                MouseCursor.HightlightColor = null;
         }
     }
 }

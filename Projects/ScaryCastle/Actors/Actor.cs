@@ -383,10 +383,12 @@ namespace ScaryCastle
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
 
-            if (IsPlayer && !Session.IsAwaiting && !IsMoving && CanHandleInput)
+            if (IsPlayer && Session.IsCurrentScene && !Session.IsAwaiting && !IsMoving && CanHandleInput)
             {
                 var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera);
-                FaceTo(mousePos);
+                if (mousePos.X <= RuntimeHotspot.BoundingRectangleF.Left ||
+                    mousePos.X >= RuntimeHotspot.BoundingRectangleF.Right)
+                    FaceTo(mousePos);
             }
         }
 
@@ -415,34 +417,13 @@ namespace ScaryCastle
             return result;
         }
 
-        // ApproachAndPlace
-        public bool ApproachAndPlace(Vector2 destination, Item item)
-        {
-            if (!IsPlayer)
-                return false;
-
-            if (item.Definition.UsageMode != ItemUsageMode.Place)
-                return false;
-
-            var result = Position == destination;
-            if (!result)
-                result = MoveTo(destination);
-
-            Session.InteractionData.SetPlaceOutcome(item);
-
-            if (!result)
-                HandlePendingInteraction();
-
-            return true;
-        }
-
         // ApproachAndInteract
         public bool ApproachAndInteract(GameThing target, Item? item)
         {
             if (!IsPlayer)
                 return false;
 
-            if (item != null && item.Definition.UsageMode != ItemUsageMode.Default)
+            if (item?.Definition.IsMagical == true)
                 return false;
 
             if (item == null)
@@ -511,7 +492,7 @@ namespace ScaryCastle
             if (!IsPlayer)
                 return false;
 
-            if (item.Definition.UsageMode != ItemUsageMode.Cast)
+            if (!item.Definition.IsMagical)
                 return false;
 
             if (Room?.WalkArea != null)

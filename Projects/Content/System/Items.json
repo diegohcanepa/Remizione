@@ -5,7 +5,7 @@
 			"name": "Apple",
 			"category": "Food",
 			"isStackable": true,
-			"selfTarget": true,
+			"verb": "Eat",
 			"effects": [
 				{
 					"effectType": "Heal",
@@ -25,7 +25,7 @@
 			"consumptionType": "None",
 			"executionDelay": 1500,
 			"inventoryCategory": "Sacred",
-			"usageMode": "Cast",
+			"isMagical": true,
 			"effects": [
 				{
 					"effectType": "Damage",
@@ -40,8 +40,8 @@
 			"areaRange": "Medium",
 			"category": "Explosive",
 			"executionDelay": 2000,
+			"verb": "Ignite",
 		    "sound": "Firecracker",
-			"usageMode": "Place",
 			"effects": [
 				{
 					"effectType": "Damage",
@@ -81,7 +81,7 @@
 		{
 			"name": "RottenApple",
 			"category": "Food",
-			"selfTarget": true
+			"verb": "Eat"
 		},
 		{
 			"name": "RustyLockpick",
@@ -91,7 +91,7 @@
 		{
 			"name": "SodaCan",
 			"category": "Food",
-			"selfTarget": true,			
+			"verb": "Eat",			
 			"isStackable": true,
 			"effects": [
 				{

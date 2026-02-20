@@ -18,7 +18,8 @@ namespace ScaryCastle
         private static readonly AtlasImage?[] cursorImages;
         private static readonly ImageSprite cursorSprite;
         private static readonly Vector2 defaultScale = ScaleInfo.UIElement.Large;
-        private static readonly FloatTween opacityTween = FloatTween.Create(TweenStyle.CubicInOut, 1, .5f, 700, -1);
+        private static OutlineEffect? effect;
+        private static readonly FloatTween opacityTween = FloatTween.Create(TweenStyle.CubicInOut, 1, .5f, 500, -1);
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
         private static readonly TextSprite textSprite;
@@ -86,18 +87,11 @@ namespace ScaryCastle
         private static void InvalidateCursorImage()
         {
             cursorSprite.Image = CustomImage ?? cursorImages[(int)State];
-            cursorSprite.Scale = CustomImage != null ? ScaleInfo.UIElement.Large : defaultScale;
+            cursorSprite.Scale = CustomImage != null ? ScaleInfo.InventoryHeldItem : defaultScale;
             cursorSprite.PivotOrigin = (State is MouseCursorState.Arrow or MouseCursorState.Hand) && CustomImage == null ? RectanglePoint.LeftTop : RectanglePoint.Center;
         }
 
         #endregion
-
-        // AnimateClick
-        public static void AnimateClick()
-        {
-            scaleTween.Start(TweenStyle.QuadraticIn, cursorSprite.Scale * .9f, cursorSprite.Scale, 150);
-            cursorSprite.Tweens.ScaleTween = scaleTween;
-        }
 
         // CustomImage
         public static AtlasImage? CustomImage
@@ -108,6 +102,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
+
                     if (field != null)
                         State = MouseCursorState.Cross;
 
@@ -119,22 +114,13 @@ namespace ScaryCastle
         // Draw
         public static void Draw(GameTime gameTime)
         {
-            OutlineEffect? effect = CustomImage != null && Hightlight ? ScaryCastleGame.Effects.Outline : null;
-
-            if (effect != null && cursorSprite.Image?.Atlas != null)
-            {
-                effect.Color.SetValue(ColorPalette.MouseCursorHighlight);
-                effect.TextureSize.SetValue(new Vector2(cursorSprite.Image.Atlas.Texture.Width, cursorSprite.Image.Atlas.Texture.Height));
-                effect.Thickness.SetValue(1);
-            }
-
             EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera, SamplerState.PointClamp, effect?.Effect);
             cursorSprite.X += shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             cursorSprite.Draw(gameTime);
             cursorSprite.X -= shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             EngendroGame.Instance.SpriteBatch.End();
 
-            if (State == MouseCursorState.Cross || State == MouseCursorState.Hit || CustomImage != null)
+            if (State == MouseCursorState.Cross || CustomImage != null)
             {
                 EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera);
                 textSprite.Draw(gameTime);
@@ -142,17 +128,22 @@ namespace ScaryCastle
             }
         }
 
-        // Hightlight
-        public static bool Hightlight { get; set; }
+        // HightlightColor
+        public static Vector4? HightlightColor { get; set; }
 
         // IsArrow
         public static bool IsArrow => State is MouseCursorState.Up or MouseCursorState.Down or
                                       MouseCursorState.Right or MouseCursorState.Left;
 
         // PerformClick
-        public static void PerformClick()
+        public static void PerformClick(bool animate = true)
         {
-            AnimateClick();
+            if (animate)
+            {
+                scaleTween.Start(TweenStyle.QuadraticIn, cursorSprite.Scale * .9f, cursorSprite.Scale, 150);
+                cursorSprite.Tweens.ScaleTween = scaleTween;
+            }
+
             Sound.Play(SoundNames.Interact);
         }
 
@@ -161,7 +152,7 @@ namespace ScaryCastle
         {
             textSprite.Color = ColorPalette.Text.Sentence;
             CustomImage = null;
-            Hightlight = false;
+            HightlightColor = null;
             State = MouseCursorState.Arrow;
             Text = null;
         }
@@ -205,16 +196,18 @@ namespace ScaryCastle
         public static void Update(GameTime gameTime)
         {
             opacityTween.Update(gameTime);
-
-            if (State == MouseCursorState.Cross && CustomImage == null)
-                cursorSprite.Opacity = opacityTween.CurrentValue;
-            else
-                cursorSprite.Opacity = 1;
-
             cursorSprite.Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
             cursorSprite.Update(gameTime);
             shakeTween.Update(gameTime);
             ClampTextToScreen();
+
+            effect = CustomImage != null && HightlightColor.HasValue ? ScaryCastleGame.Effects.Outline : null;
+            if (effect != null && HightlightColor.HasValue && cursorSprite.Image?.Atlas != null)
+            {
+                effect.Color.SetValue(HightlightColor.Value * opacityTween.CurrentValue);
+                effect.TextureSize.SetValue(new Vector2(cursorSprite.Image.Atlas.Texture.Width, cursorSprite.Image.Atlas.Texture.Height));
+                effect.Thickness.SetValue(1);
+            }
         }
     }
 }

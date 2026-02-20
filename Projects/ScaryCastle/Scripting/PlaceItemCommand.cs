@@ -11,9 +11,7 @@ namespace ScaryCastle.Scripting
         internal PlaceItemCommand(Script script, string source, StatementBody args)
             : base(script, source, args, 1)
         {
-            var def = Script.AssertItemDefinition(Body.Clauses[0]);
-            if (def.UsageMode != ItemUsageMode.Place)
-                throw new ScriptException($"Item '{def.Name}' is not placeable.");
+            Script.AssertItemDefinition(Body.Clauses[0]);
         }
 
         // OnExecute

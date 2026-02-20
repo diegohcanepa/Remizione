@@ -165,6 +165,12 @@ namespace ScaryCastle
         // BrainMachine
         public StateMachine<ProceduralActor> BrainMachine { get; }
 
+        // CanInteract
+        public override bool CanInteract()
+        {
+            return Faction != Faction.Evil && base.CanInteract();
+        }
+
         // CombatBehavior
         public CombatBehavior CombatBehavior { get; init; }
 

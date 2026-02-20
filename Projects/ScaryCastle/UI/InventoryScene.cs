@@ -15,8 +15,8 @@ namespace ScaryCastle
 
         private readonly TextSprite[] amounts;
         private readonly ImageSprite bottomGradient;
-        private readonly Vector2 deckIconOriginalScale = Vector2.One;
-        private readonly Vector2 deckIconSelectedScale = Vector2.One * 1.1f;
+        private readonly Vector2 buttonOriginalScale = Vector2.One;
+        private readonly Vector2 buttonSelectedScale = Vector2.One * 1.1f;
         private readonly ImageSprite[] icons;
         private readonly TextSprite itemName;
         private int lastSeenInventoryVersion = -1;
@@ -112,7 +112,7 @@ namespace ScaryCastle
                     if (grabbedItem.Definition.Image != null)
                     {
                         Inventory.Session.InteractionContext.HeldItem = grabbedItem;
-                        MouseCursor.PerformClick();
+                        MouseCursor.PerformClick(false);
                         Game.SceneManager.Pop();
                         return true;
                     }
@@ -183,7 +183,7 @@ namespace ScaryCastle
                 }
             }
 
-            switchInventoryButton.Scale = deckIconOriginalScale;
+            switchInventoryButton.Scale = buttonOriginalScale;
             switchInventoryButton.Image = Inventory.Category == InventoryCategory.Sacred ? Atlases.UI.CommonSackShortcut : Atlases.UI.SacredSackShortcut;
             switchInventoryButton.Position = slots[0].BoundingBox.GetPoint(RectanglePoint.Center, -switchInventoryButton.BoundingBox.Width - 4, 0);
         }
@@ -294,14 +294,14 @@ namespace ScaryCastle
 
             if (cursorOverDeckIcon)
             {
-                if (switchInventoryButton.Scale != deckIconSelectedScale)
+                if (switchInventoryButton.Scale != buttonSelectedScale)
                 {
-                    switchInventoryButton.Scale = deckIconSelectedScale;
+                    switchInventoryButton.Scale = buttonSelectedScale;
                 }
             }
-            else if (switchInventoryButton.Scale == deckIconSelectedScale)
+            else if (switchInventoryButton.Scale == buttonSelectedScale)
             {
-                switchInventoryButton.Scale = deckIconOriginalScale;
+                switchInventoryButton.Scale = buttonOriginalScale;
             }
         }
 

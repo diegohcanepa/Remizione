@@ -82,6 +82,8 @@
   <String Key="ItemCategory.LeftHand">Left hand</String>
   <String Key="ItemCategory.RightHand">Right hand</String>
   <String Key="ItemProperty.Chance">Chance</String>
+  <String Key="ItemVerb.Eat">Eat</String>
+  <String Key="ItemVerb.Ignite">Ignite</String>
   <String Key="KeyItemAction.UnlockDoor">Unlock door</String>
   <String Key="KeyItemAction.UnlockTrunk">Unlock trunk</String>
   <String Key="KeyItemAction.UseCoin">Leave Your Tithe</String>
@@ -289,10 +291,7 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Under ride</String>
   <String Key="Prop.VendingMachine">Vending machine</String>
   <String Key="Prop.WC">W.C.</String>
-  <String Key="Verb.Cast">Cast</String>
   <String Key="Verb.Enter">Enter</String>
   <String Key="Verb.Exit">Exit</String>
-  <String Key="Verb.Headbutt">Headbutt</String>
-  <String Key="Verb.Place">Place</String>
   <String Key="Verb.Use">Use</String>
 </Strings>

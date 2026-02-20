@@ -74,24 +74,13 @@ namespace ScaryCastle
         // SetCastOutcome
         public void SetCastOutcome(Item item, Vector2 castPosition)
         {
-            if (item.Definition.UsageMode != ItemUsageMode.Cast)
+            if (!item.Definition.IsMagical)
                 throw new InvalidOperationException($"Item '{item.Definition.Name}' cannot be casted.");
 
             Clear();
             Script = Session.ScriptLibrary.FindRoutine($"{item.Name}Outcome");
             InteractionType = InteractionType.Cast;
             LastKnownCastPosition = castPosition;
-        }
-
-        // SetPlaceOutcome
-        public void SetPlaceOutcome(Item item)
-        {
-            if (item.Definition.UsageMode != ItemUsageMode.Place)
-                throw new InvalidOperationException($"Item '{item.Definition.Name}' cannot be placed.");
-
-            Clear();
-            Script = Session.ScriptLibrary.FindRoutine($"{item.Name}Outcome");
-            InteractionType = InteractionType.Place;
         }
 
         // SetOutcome
@@ -107,7 +96,7 @@ namespace ScaryCastle
         // SetUseWithOutcome
         public void SetUseWithOutcome(GameThing target, Item item)
         {
-            if (item.Definition.UsageMode != ItemUsageMode.Default)
+            if (item.Definition.IsMagical)
                 throw new InvalidOperationException($"Item '{item.Definition.Name}' cannot be used with other items.");
 
             Clear();
@@ -116,7 +105,7 @@ namespace ScaryCastle
             TargetPosition = target.Position;
             Script = target.Session.ScriptLibrary.FindOverload(Target.DeclaredName, Item.Name);
 
-            if (Script == null && item.Definition.SelfTarget && target.Session.Player == target)
+            if (Script == null && item.Definition.Verb != ItemVerb.None && target.Session.Player == target)
                 Script = target.Session.ScriptLibrary.FindRoutine($"{item.Name}Outcome");
 
             InteractionType = InteractionType.UseWithOutcome;

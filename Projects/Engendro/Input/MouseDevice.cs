@@ -55,6 +55,26 @@ namespace Engendro.Input
             previousState = state;
             state = Mouse.GetState();
 
+            // 1. Left button hold
+            if (state.LeftButton == ButtonState.Pressed)
+            {
+                LeftButtonHoldTime += gameTime.ElapsedGameTime.Milliseconds;
+            }
+            else
+            {
+                LeftButtonHoldTime = 0;
+            }
+
+            // 2. Right button hold
+            if (state.RightButton == ButtonState.Pressed)
+            {
+                RightButtonHoldTime += gameTime.ElapsedGameTime.Milliseconds;
+            }
+            else
+            {
+                RightButtonHoldTime = 0;
+            }
+
             if (state.LeftButton == ButtonState.Pressed ||
                 state.RightButton == ButtonState.Pressed ||
                 state.MiddleButton == ButtonState.Pressed ||
@@ -77,6 +97,12 @@ namespace Engendro.Input
             return IsButtonDown(state.LeftButton);
         }
 
+        // IsLeftButtonHeld
+        public bool IsLeftButtonHeld(int threshold = 500)
+        {
+            return InputManager.AllowMouse && !InputManager.IsSuspended && LeftButtonHoldTime >= threshold;
+        }
+
         // IsLeftButtonPressed
         public bool IsLeftButtonPressed()
         {
@@ -95,6 +121,12 @@ namespace Engendro.Input
             return IsButtonDown(state.RightButton);
         }
 
+        // IsRightButtonHeld
+        public bool IsRightButtonHeld(int threshold = 500)
+        {
+            return InputManager.AllowMouse && !InputManager.IsSuspended && RightButtonHoldTime >= threshold;
+        }
+
         // IsRightButtonPressed
         public bool IsRightButtonPressed()
         {
@@ -107,6 +139,9 @@ namespace Engendro.Input
             return IsButtonUp(state.RightButton);
         }
 
+        // LeftButtonHoldTime
+        public int LeftButtonHoldTime { get; private set; }
+
         // Position
         public Point Position => state.Position;
 
@@ -117,7 +152,12 @@ namespace Engendro.Input
         public override void Reset()
         {
             previousState = state;
+            LeftButtonHoldTime = 0;
+            RightButtonHoldTime = 0;
         }
+
+        // RightButtonHoldTime
+        public int RightButtonHoldTime { get; private set; }
 
         // Tag
         public object? Tag { get; set; }

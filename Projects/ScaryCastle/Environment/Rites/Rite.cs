@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using System.Linq;
 
 namespace ScaryCastle
 {
@@ -29,7 +28,7 @@ namespace ScaryCastle
             this.Scale = ScaleInfo.UIElement.Small;
             this.areaMarker = new(Game, Atlases.Environment.FindImage($"AreaMarker{item.Definition.AreaRange}"))
             {
-                Color = ColorPalette.Text.Red * .6f,
+                Color = new(ColorPalette.MouseCursorHighlightBlue),
                 PivotOrigin = RectanglePoint.Center,
                 Position = castPosition
             };

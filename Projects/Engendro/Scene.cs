@@ -6,7 +6,7 @@ using System;
 
 namespace Engendro
 {
-    /// <summary>|
+    /// <summary>
     /// Scene
     /// </summary>
     public abstract class Scene : GameObject, IDisposable, IInputHandler
@@ -90,11 +90,6 @@ namespace Engendro
         {
         }
 
-        // OnUnloadContent
-        protected virtual void OnUnloadContent()
-        {
-        }
-
         // OnPause
         protected virtual void OnPause()
         {
@@ -102,6 +97,11 @@ namespace Engendro
 
         // OnResume
         protected virtual void OnResume()
+        {
+        }
+
+        // OnUnloadContent
+        protected virtual void OnUnloadContent()
         {
         }
 

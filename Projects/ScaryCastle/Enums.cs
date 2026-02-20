@@ -63,7 +63,7 @@ namespace ScaryCastle
     public enum ImpactWordName { None, AghGreen, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
 
     // InteractionType
-    public enum InteractionType { None, Outcome, UseWithOutcome, Cast, Place }
+    public enum InteractionType { None, Outcome, UseWithOutcome, Cast }
 
     // InventoryCategory
     public enum InventoryCategory { Common, Sacred }
@@ -71,11 +71,11 @@ namespace ScaryCastle
     // ItemCategory
     public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Sacred }
 
+    // ItemVerb
+    public enum ItemVerb { None, Eat, Ignite }
+
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }
-
-    // ItemUsageMode
-    public enum ItemUsageMode { Default, Cast, Place }
 
     // LargHandStyle
     public enum LargHandStyle { God, Devil }
@@ -115,7 +115,7 @@ namespace ScaryCastle
     public enum MessageKind { CannotPlaceItem, InventoryFull, NotEnoughCoins }
 
     // MouseCursorState
-    public enum MouseCursorState { Arrow, Cross, Down, Hand, Hit, Left, Prohibition, Right, Up, Wait }
+    public enum MouseCursorState { Arrow, Cross, Down, Hand, Left, Prohibition, Right, Up, Wait }
 
     // PlaceholderTarget
     public enum PlaceholderTarget { Prop, Enemy, Any }
@@ -159,7 +159,7 @@ namespace ScaryCastle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
 
     // Verb
-    public enum Verb { Cast, Enter, Exit, Headbutt, Place, Use }
+    public enum Verb { Enter, Exit, Use }
 
     // VolumeCategory
     public enum VolumeCategory { Ambient, FX, Music, Voice, Master }
