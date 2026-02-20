@@ -14,7 +14,7 @@
               "effectType": "Damage",
               "amount": "1d4",
               "impactWord": "Kapow",
-              "knockback": "5,0"
+              "knockback": "18,0"
             }
           ]
         }

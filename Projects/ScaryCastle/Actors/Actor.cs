@@ -4,6 +4,7 @@ using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace ScaryCastle
@@ -15,6 +16,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private const float AttackLaneThickness = 4;
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -164,6 +166,9 @@ namespace ScaryCastle
 
         #region Protected members
 
+        // BodyMachine
+        protected BodyStateMachine BodyMachine { get; }
+
         // CalculateSpeed
         protected override float CalculateSpeed()
         {
@@ -176,8 +181,32 @@ namespace ScaryCastle
             return !IsFollowingPath && base.CanCheckCollisions();
         }
 
-        // BodyMachine
-        protected BodyStateMachine BodyMachine { get; }
+        // GetKnockbackMultiplier
+        protected override float GetKnockbackMultiplier(GameThing target)
+        {
+            if (target is Prop)
+                return 0;
+
+            if (target is Actor targetActor)
+            {
+                // Esto permite asimetría y evita números mágicos en fórmulas
+                return (BodySize, targetActor.BodySize) switch
+                {
+                    (BodySize.Small, BodySize.Large) => 0.2f, // Penalización severa
+                    (BodySize.Small, BodySize.Medium) => 0.8f,
+
+                    (BodySize.Medium, BodySize.Small) => 1.5f,
+                    (BodySize.Medium, BodySize.Large) => 0.7f,
+
+                    (BodySize.Large, BodySize.Small) => 3.0f, // Bonus masivo (Smash)
+                    (BodySize.Large, BodySize.Medium) => 1.5f,
+
+                    _ => 1.0f // Tamaños iguales o casos no cubiertos
+                };
+            }
+
+            return 1;
+        }
 
         // InputHandler
         protected InputHandler? InputHandler { get; set; }
@@ -197,9 +226,9 @@ namespace ScaryCastle
                 {
                     var gutScale = BodySize switch
                     {
-                        ActorSize.Small => Vector2.One,
-                        ActorSize.Medium => Vector2.One,
-                        ActorSize.Large => Vector2.One,
+                        BodySize.Small => Vector2.One,
+                        BodySize.Medium => Vector2.One,
+                        BodySize.Large => Vector2.One,
                         _ => Vector2.One * 1.25f
                     };
 
@@ -214,8 +243,8 @@ namespace ScaryCastle
                     {
                         _ = BodySize switch
                         {
-                            ActorSize.Small => guts.PlaySound(SoundNames.GutsSmall),
-                            ActorSize.Medium => guts.PlaySound(SoundNames.GutsMedium),
+                            BodySize.Small => guts.PlaySound(SoundNames.GutsSmall),
+                            BodySize.Medium => guts.PlaySound(SoundNames.GutsMedium),
                             _ => guts.PlaySound(SoundNames.GutsLarge)
                         };
                     }
@@ -316,7 +345,7 @@ namespace ScaryCastle
         }
 
         // OnTakeDamage
-        protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType, Vector2 knockback)
+        protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
         {
             if (!IsDead)
                 FaceTo(attacker);
@@ -453,7 +482,7 @@ namespace ScaryCastle
         }
 
         // BodySize
-        public ActorSize BodySize { get; set; } = ActorSize.Medium;
+        public BodySize BodySize { get; set; } = BodySize.Medium;
 
         // CanHandleInput
         public bool CanHandleInput
@@ -543,6 +572,14 @@ namespace ScaryCastle
 
         // IsAttacking
         public bool IsAttacking => BodyMachine.CurrentState is BodyAttackState;
+
+        // IsInAttackLane
+        public bool IsInAttackLane(GameThing target)
+        {
+            // CONDICIÓN Y: Debe estar en mi misma línea de profundidad
+            float dy = Math.Abs(Position.Y - target.Y);
+            return dy <= AttackLaneThickness;
+        }
 
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }

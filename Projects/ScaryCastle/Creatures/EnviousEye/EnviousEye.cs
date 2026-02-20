@@ -15,11 +15,11 @@ namespace ScaryCastle
             : base(session, name)
         {
             AnimationSettings.SupressAll();
-            BodySize = ActorSize.Small;
+            BodySize = BodySize.Small;
             FastMoveFactor = 3;
             Guts = 7;
             AttackRange = 10;
-            scaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.Zero, new(0, .05f), 600, -1);
+            scaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.Zero, new(0, .1f), 600, -1);
             Sensor.ViewAngle = 360;
 
             BodyMachine.AddState(new BodyCloseAttackState());
@@ -30,11 +30,9 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            SupressOnTransformNotification++;
-            Scale += scaleTween.CurrentValue;
+            Sprite.ScaleFactor += scaleTween.CurrentValue;
             base.OnDraw(gameTime);
-            Scale -= scaleTween.CurrentValue;
-            SupressOnTransformNotification--;
+            Sprite.ScaleFactor -= scaleTween.CurrentValue;
         }
 
         // OnUpdate

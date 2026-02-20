@@ -5,9 +5,6 @@ namespace ScaryCastle
     // ActorDirection
     public enum ActorDirection { Down, Up }
 
-    // ActorSize
-    public enum ActorSize { Small, Medium, Large }
-
     // ApproachBehavior
     public enum ApproachBehavior
     {
@@ -15,6 +12,9 @@ namespace ScaryCastle
         ClosestSide,    // Lado más cercano (sin cruzar al NPC)
         InFront         // Justo encima (para items o puertas)
     }
+
+    // BodySize
+    public enum BodySize { Small, Medium, Large }
 
     // CombatBehaviorArchetype
     public enum CombatBehaviorArchetype { Tactical, Berserk, Coward, Sniper, Swarmer }

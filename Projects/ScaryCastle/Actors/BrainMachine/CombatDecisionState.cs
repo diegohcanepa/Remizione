@@ -20,7 +20,7 @@ namespace ScaryCastle
             if (Owner.GetTarget() is not { } target)
                 return;
 
-            bool inRange = Owner.IsInAttackRange(target.Position);
+            bool inRange = Owner.IsInAttackRange(target);
 
             // Decisión basada en el Arquetipo de Combate (Data-Driven)
             switch (Owner.CombatBehavior.Archetype)

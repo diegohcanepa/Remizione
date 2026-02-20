@@ -16,8 +16,11 @@
         {
             if (Owner.AnimationPlayer.Frame?.IsEvent == true)
             {
-                if (Owner.AnimationPlayer.GetFrameSubArea().Intersects(target.RuntimeHotspot.BoundingRectangleF))
-                    return true;
+                if (Owner.IsInAttackLane(target))
+                {
+                    if (Owner.AnimationPlayer.GetFrameSubArea().Intersects(target.RuntimeHotspot.BoundingRectangleF))
+                        return true;
+                }
             }
 
             return false;

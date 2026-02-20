@@ -26,7 +26,7 @@ namespace ScaryCastle
         private FloatTween? hurtTween;
         private bool isCollisionDirty;
         private bool isHotspotDirty = true;
-        private Vector2 _knockbackVelocity;
+        private Vector2 knockbackVelocity;
         private const float KnockbackFriction = 0.90f; // Ajustá este valor (0.8 - 0.95)
         private PathNode[]? pathNodes;
         private int renderLayerDepth;
@@ -219,6 +219,12 @@ namespace ScaryCastle
             return CollisionDetection;
         }
 
+        // GetKnockbackMultiplier
+        protected virtual float GetKnockbackMultiplier(GameThing target)
+        {
+            return 1;
+        }
+
         // GetShakeOffset
         protected Vector2 GetShakeOffset()
         {
@@ -295,16 +301,13 @@ namespace ScaryCastle
         }
 
         // OnTakeDamage
-        protected virtual void OnTakeDamage(GameThing attacker, int amount, DamageType damageType, Vector2 knockback)
+        protected virtual void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
         {
         }
 
         // OnTransform
         protected override void OnTransform(TransformChange change)
         {
-            if (SupressOnTransformNotification > 0)
-                return;
-
             base.OnTransform(change);
 
             isHotspotDirty = true;
@@ -332,22 +335,22 @@ namespace ScaryCastle
             hurtShakeTween?.Update(gameTime);
             shadowSpot.Update(gameTime);
 
-            if (_knockbackVelocity != Vector2.Zero)
+            if (knockbackVelocity != Vector2.Zero)
             {
                 float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                 // 1. Aplicar movimiento
-                Position += _knockbackVelocity * dt;
+                Position += knockbackVelocity * dt;
 
                 // 2. Aplicar fricción (decaimiento)
-                _knockbackVelocity *= KnockbackFriction;
+                knockbackVelocity *= KnockbackFriction;
 
                 // 3. Limpiar valores residuales muy chicos
-                if (_knockbackVelocity.LengthSquared() < 100f) // Ajustá según tu escala de píxeles
-                    _knockbackVelocity = Vector2.Zero;
+                if (knockbackVelocity.LengthSquared() < 100f) // Ajustá según tu escala de píxeles
+                    knockbackVelocity = Vector2.Zero;
 
                 // Si murió por el golpe, chequear acá si paró para llamar a Die() visualmente
-                if (_knockbackVelocity == Vector2.Zero && IsDead)
+                if (knockbackVelocity == Vector2.Zero && IsDead)
                     Die();
             }
             else if (IsDead && !dieCalled)
@@ -377,9 +380,6 @@ namespace ScaryCastle
 
         // SuppressImpactWordOnDeath
         protected bool SuppressImpactWordOnDeath { get; init; }
-
-        // SupressOnTransformNotification
-        protected int SupressOnTransformNotification { get; set; }
 
         #endregion
 
@@ -681,28 +681,6 @@ namespace ScaryCastle
 
             // Mantenemos la Y en la base del objeto (los pies)
             return new Vector2(targetX, BoundingBox.Bottom + Altitude);
-        }
-
-        // GetFloatingTextPosition
-        public Vector2 GetFloatingTextPosition(Vector2 knockback)
-        {
-            return GetFloatingTextPosition(knockback, 0, 0);
-        }
-
-        // GetFloatingTextPosition
-        public Vector2 GetFloatingTextPosition(Vector2 knockback, int xOffset, int yOffset)
-        {
-            var result = GetOverheadPosition();
-
-            if (Direction == FacingDirection.Right)
-                result.X -= Math.Abs(knockback.X);
-            else
-                result.X += Math.Abs(knockback.X);
-
-            result.X += xOffset;
-            result.Y += yOffset;
-
-            return result;
         }
 
         // GetFootstepSound
@@ -1086,7 +1064,7 @@ namespace ScaryCastle
                         blinker.Stop();
 
                     // Evento específico para lógicas custom
-                    OnTakeDamage(attacker, finalDamage, damageType, Vector2.Zero);
+                    OnTakeDamage(attacker, finalDamage, damageType);
 
                     // Impact Word (Solo mostramos "Pow!" si hubo daño real)
                     if (impactWordName != ImpactWordName.None)
@@ -1109,9 +1087,10 @@ namespace ScaryCastle
             // ---------------------------------------------------------
             // El empuje se aplica independientemente de la vida. 
             // Una caja de metal indestructible (MaxHP=0) debería poder ser empujada.
-
             if (knockbackForce != Vector2.Zero)
             {
+                knockbackForce *= attacker.GetKnockbackMultiplier(this);
+
                 Vector2 pushDirection = Position - attacker.Position;
                 if (pushDirection != Vector2.Zero)
                     pushDirection.Normalize();
@@ -1119,7 +1098,7 @@ namespace ScaryCastle
                     pushDirection = new Vector2(1, 0);
 
                 // Aplicamos la fuerza
-                _knockbackVelocity = pushDirection * knockbackForce.Length() * 5f;
+                knockbackVelocity = pushDirection * knockbackForce.Length() * 5f;
             }
 
             return amount;

@@ -159,10 +159,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // NUEVO: Tolerancia vertical (Profundidad)
-        // Si el jugador está más arriba o abajo que esto, el golpe fallará.
-        public float AttackLaneThickness { get; set; } = 15;
-
         // AttackRange
         public float AttackRange { get; set; }
 
@@ -183,16 +179,13 @@ namespace ScaryCastle
         }
 
         // IsInAttackRange
-        public bool IsInAttackRange(Vector2 targetPos)
+        public bool IsInAttackRange(GameThing target)
         {
-            float dx = Math.Abs(Position.X - targetPos.X);
-            float dy = Math.Abs(Position.Y - targetPos.Y);
-
-            // CONDICIÓN Y: Debe estar en mi misma línea de profundidad
-            if (dy > AttackLaneThickness)
+            if (!IsInAttackLane(target))
                 return false;
 
             // CONDICIÓN X: Debe estar al alcance de mi arma
+            float dx = Math.Abs(Position.X - target.X);
             if (dx > AttackRange)
                 return false;
 

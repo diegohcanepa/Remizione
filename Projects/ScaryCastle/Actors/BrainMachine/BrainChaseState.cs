@@ -34,7 +34,7 @@ namespace ScaryCastle
             // 4. CHECK DE RANGO DE ATAQUE
 
             // Si estamos lo suficientemente cerca para atacar...
-            if (Owner.IsInAttackRange(target.Position))
+            if (Owner.IsInAttackRange(target))
             {
                 // Importante: Frenar antes de cambiar de estado para no "deslizar" mientras ataca
                 Owner.StopMoving();

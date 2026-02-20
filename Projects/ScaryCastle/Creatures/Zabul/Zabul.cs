@@ -9,7 +9,7 @@
         public Zabul(GameSession session, string name)
             : base(session, name)
         {
-            BodySize = ActorSize.Small;
+            BodySize = BodySize.Small;
             AnimationSettings.SupressAll();
             Guts = 0;
             FloatingForce = 1;

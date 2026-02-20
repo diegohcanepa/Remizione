@@ -87,12 +87,12 @@ namespace Engendro
             if (InternalImage.TextureArea.IsEmpty)
             {
                 // No, so draw the entire texture
-                Game.SpriteBatch.Draw(InternalImage.Atlas.Texture, pos, null, Color * Opacity * OpacityFactor, Rotation, Pivot.Position, Scale, Effects, 0);
+                Game.SpriteBatch.Draw(InternalImage.Atlas.Texture, pos, null, Color * Opacity * OpacityFactor, Rotation, Pivot.Position, Scale * ScaleFactor, Effects, 0);
             }
             else
             {
                 // Yes, so just draw the specified SourceRect
-                Game.SpriteBatch.Draw(InternalImage.Atlas.Texture, pos, InternalImage.TextureArea, Color * Opacity * OpacityFactor, Rotation, Pivot.Position, Scale, Effects, 0);
+                Game.SpriteBatch.Draw(InternalImage.Atlas.Texture, pos, InternalImage.TextureArea, Color * Opacity * OpacityFactor, Rotation, Pivot.Position, Scale * ScaleFactor, Effects, 0);
             }
         }
 
@@ -396,6 +396,9 @@ namespace Engendro
                 }
             }
         }
+
+        // ScaleFactor
+        public Vector2 ScaleFactor { get; set; } = Vector2.One;
 
         // ScaleX
         public float ScaleX
