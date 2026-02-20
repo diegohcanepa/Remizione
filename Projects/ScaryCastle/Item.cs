@@ -217,9 +217,6 @@ namespace ScaryCastle
 
             foreach (var thing in room.Children.OfType<GameThing>())
             {
-                if (thing is Prop && Definition.InventoryCategory == InventoryCategory.Sacred)
-                    continue;
-
                 if (area.Contains(thing.Position))
                     EffectDescriptor.Apply(Definition.EffectDescriptors, source, thing);
             }

@@ -39,10 +39,7 @@ namespace ScaryCastle
             this.CoinMeter = new(session);
 
             // CommonInventoryMeter
-            this.CommonInventoryMeter = new(session.CommonInventory);
-
-            // SacredInventoryMeter
-            this.SacredInventoryMeter = new(session.SacredInventory);
+            this.CommonInventoryMeter = new(session.Inventory);
 
             // Mini map
             this.MiniMap = new(Game);
@@ -62,7 +59,6 @@ namespace ScaryCastle
 
             CoinMeter.Draw(gameTime);
             CommonInventoryMeter.Draw(gameTime);
-            SacredInventoryMeter.Draw(gameTime);
             Log.Draw(gameTime);
             Message.Draw(gameTime);
             Game.SpriteBatch.End();
@@ -75,7 +71,6 @@ namespace ScaryCastle
         protected override void OnUpdate(GameTime gameTime)
         {
             CommonInventoryMeter.Update(gameTime);
-            SacredInventoryMeter.Update(gameTime);
             healthMeter.Update(gameTime);
             MiniMap.Update(gameTime);
             Log.Update(gameTime);
@@ -117,8 +112,5 @@ namespace ScaryCastle
         {
             healthMeter.Actor = session.Player;
         }
-
-        // SacredInventoryMeter
-        public UIInventoryMeter SacredInventoryMeter { get; }
     }
 }

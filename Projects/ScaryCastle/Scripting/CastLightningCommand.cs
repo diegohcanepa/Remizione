@@ -25,7 +25,7 @@ namespace ScaryCastle.Scripting
 
             if (player.Room != null)
             {
-                if (Inventory.FindInAll(Body.Clauses[0]) is Item item)
+                if (session.Inventory.Find(Body.Clauses[0]) is Item item)
                 {
                     var lightning = new LightningRite(session, item);
                     player.Room.Children.Add(lightning);

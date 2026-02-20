@@ -23,7 +23,7 @@ namespace ScaryCastle.Scripting
             if (session.Player is not Actor player)
                 return;
 
-            if (Inventory.FindInAll(Body.Clauses[0]) is Item item && session.OutcomeTarget is GameThing target)
+            if (session.Inventory.Find(Body.Clauses[0]) is Item item && session.OutcomeTarget is GameThing target)
                 item.Use(player, target);
         }
     }

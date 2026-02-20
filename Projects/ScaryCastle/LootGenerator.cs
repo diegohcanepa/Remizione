@@ -76,7 +76,7 @@ namespace ScaryCastle
                 _ => .02f
             };
 
-            lootChance += session.CommonInventory.GetLuckFactor() + session.SacredInventory.GetLuckFactor();
+            lootChance += session.Inventory.GetLuckFactor();
 
             if (!lootChance.Roll())
                 return;
@@ -138,7 +138,7 @@ namespace ScaryCastle
                     continue;
 
                 // Filtro de Unicidad (Items únicos no se repiten si ya los tiene)
-                if (!definition.IsStackable && session.CommonInventory.Find(definition.Name) != null)
+                if (!definition.IsStackable && session.Inventory.Find(definition.Name) != null)
                     continue;
 
                 candidates.Add(definition);
@@ -217,7 +217,7 @@ namespace ScaryCastle
                 _ => 0.15f
             };
 
-            coinChance += session.CommonInventory.GetLuckFactor();
+            coinChance += session.Inventory.GetLuckFactor();
 
             if (!coinChance.Roll())
                 return 0;

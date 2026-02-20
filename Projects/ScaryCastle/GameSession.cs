@@ -48,8 +48,7 @@ namespace ScaryCastle
             : base(game, new ScaryCastlePersistenceModel(), ContentManagerExtension.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
-            this.CommonInventory = new(this, InventoryCategory.Common);
-            this.SacredInventory = new(this, InventoryCategory.Sacred);
+            this.Inventory = new(this);
             this.Environment = new Environment(this);
             this.LootGenerator = new(this);
             this.HUD = new HUD(this);
@@ -57,7 +56,7 @@ namespace ScaryCastle
             this.InteractionData = new(this);
             this.DeclaredThings = new(proceduralThings);
             this.Random = new Random(Seed);
-            this.inventoryScene = new(CommonInventory);
+            this.inventoryScene = new(Inventory);
 
             ObjectPools = new ObjectPools(this);
             ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(game), 100);
@@ -292,12 +291,8 @@ namespace ScaryCastle
                 this.Coins = XmlConvert.ToInt32(coins);
 
             // CommonInventory
-            if (sessionNode.Attributes[nameof(CommonInventory)]?.Value is string commonInventoryData)
-                CommonInventory.LoadState(commonInventoryData);
-
-            // SacredInventory
-            if (sessionNode.Attributes[nameof(SacredInventory)]?.Value is string sacredInventoryData)
-                SacredInventory.LoadState(sacredInventoryData);
+            if (sessionNode.Attributes[nameof(Inventory)]?.Value is string commonInventoryData)
+                Inventory.LoadState(commonInventoryData);
         }
 
         // OnResume
@@ -405,12 +400,8 @@ namespace ScaryCastle
             output.WriteAttributeString(nameof(Coins), XmlConvert.ToString(Coins));
 
             // CommonInventory
-            if (CommonInventory.SaveState() is string commonInventoryData)
-                output.WriteAttributeString(nameof(CommonInventory), commonInventoryData);
-
-            // SacredInventory
-            if (SacredInventory.SaveState() is string sacredInventoryData)
-                output.WriteAttributeString(nameof(SacredInventory), sacredInventoryData);
+            if (Inventory.SaveState() is string commonInventoryData)
+                output.WriteAttributeString(nameof(Inventory), commonInventoryData);
         }
 
         #endregion
@@ -444,9 +435,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public int Coins { get; set; }
 
-        // CommonInventory
-        public Inventory CommonInventory { get; }
-
         // CompleteRun
         [ScriptMethod]
         public void CompleteRun()
@@ -472,7 +460,7 @@ namespace ScaryCastle
                 hubRoom.Unload();
 
             HUDVisible = false;
-            CommonInventory.Clear();
+            Inventory.Clear();
             Coins = 0;
             RunManager.Clear();
             CleanUpRuntimeEntities();
@@ -523,6 +511,9 @@ namespace ScaryCastle
 
         // InteractionData
         public InteractionData InteractionData { get; }
+
+        // Inventory
+        public Inventory Inventory { get; }
 
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
@@ -592,9 +583,6 @@ namespace ScaryCastle
         // Room
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
-
-        // SacredInventory
-        public Inventory SacredInventory { get; }
 
         // Seed
         [ScriptProperty]

@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
@@ -42,7 +43,7 @@ namespace ScaryCastle
                 cooldown -= gameTime.ElapsedGameTime.Milliseconds;
                 if (cooldown <= 0)
                 {
-                    if (Room != null && Inventory.FindInAll("Firecracker") is Item item)
+                    if (Room != null && Session.Inventory.Find("Firecracker") is Item item)
                     {
                         item.Use(this, Room);
                         Session.Camera.Shake(TweenStyle.Linear, new Vector2(1.5f), 66, 4);

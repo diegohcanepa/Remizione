@@ -25,7 +25,7 @@ namespace ScaryCastle.Scripting
 
             if (session.Room != null)
             {
-                if (Inventory.FindInAll(Body.Clauses[0]) is Item item)
+                if (session.Inventory.Find(Body.Clauses[0]) is Item item)
                 {
                     var instance = new Firecracker(session, item, player.Position);
                     session.Room.Children.Add(instance);

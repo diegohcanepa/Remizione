@@ -15,14 +15,11 @@ namespace ScaryCastle
 
         private readonly TextSprite[] amounts;
         private readonly ImageSprite bottomGradient;
-        private readonly Vector2 buttonOriginalScale = Vector2.One;
-        private readonly Vector2 buttonSelectedScale = Vector2.One * 1.1f;
         private readonly ImageSprite[] icons;
         private readonly TextSprite itemName;
         private int lastSeenInventoryVersion = -1;
         private readonly ImageSprite[] shadows;
         private readonly ImageSprite[] slots;
-        private readonly ImageSprite switchInventoryButton;
 
         #endregion
 
@@ -43,12 +40,6 @@ namespace ScaryCastle
                 Opacity = .8f,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
-            };
-
-            // Switch inventory button
-            this.switchInventoryButton = new(Game)
-            {
-                PivotOrigin = RectanglePoint.Center,
             };
 
             // Slots
@@ -117,11 +108,6 @@ namespace ScaryCastle
                         return true;
                     }
                 }
-                else if (switchInventoryButton.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition))
-                {
-                    MouseCursor.PerformClick();
-                    SwitchInventory();
-                }
                 else
                 {
                     MouseCursor.Shake();
@@ -164,7 +150,7 @@ namespace ScaryCastle
 
             for (int i = 0; i < slotCount; i++)
             {
-                slots[i].Image = Inventory.Category == InventoryCategory.Common ? Atlases.UI.InventoryCommonSlot : Atlases.UI.InventorySacredSlot;
+                slots[i].Image = Atlases.UI.InventoryCommonSlot;
                 slots[i].X = startingX + (i * (slotWidth + spacing));
                 icons[i].Image = null;
                 shadows[i].Image = null;
@@ -182,16 +168,6 @@ namespace ScaryCastle
                     amounts[i].Text = Inventory[i].Definition.IsStackable ? Inventory[i].Count.ToString(CultureInfo.InvariantCulture) : null;
                 }
             }
-
-            switchInventoryButton.Scale = buttonOriginalScale;
-            switchInventoryButton.Image = Inventory.Category == InventoryCategory.Sacred ? Atlases.UI.CommonSackShortcut : Atlases.UI.SacredSackShortcut;
-            switchInventoryButton.Position = slots[0].BoundingBox.GetPoint(RectanglePoint.Center, -switchInventoryButton.BoundingBox.Width - 4, 0);
-        }
-
-        // SwitchInventory
-        private void SwitchInventory()
-        {
-            this.Inventory = Inventory.Category == InventoryCategory.Common ? Inventory.Session.SacredInventory : Inventory.Session.CommonInventory;
         }
 
         #endregion
@@ -208,8 +184,6 @@ namespace ScaryCastle
 
             // Gradient
             bottomGradient.Draw(gameTime);
-
-            switchInventoryButton.Draw(gameTime);
 
             for (var i = 0; i < Inventory.Capacity; i++)
             {
@@ -272,14 +246,10 @@ namespace ScaryCastle
                 return;
             }
 
-            switchInventoryButton.Update(gameTime);
-
             for (var i = 0; i < Inventory.Count; i++)
             {
                 icons[i].Scale = ScaleInfo.UIElement.Medium;
             }
-
-            var cursorOverDeckIcon = switchInventoryButton.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);
 
             if (GetSelectedItem() is Item item)
             {
@@ -290,18 +260,6 @@ namespace ScaryCastle
             else
             {
                 itemName.Text = null;
-            }
-
-            if (cursorOverDeckIcon)
-            {
-                if (switchInventoryButton.Scale != buttonSelectedScale)
-                {
-                    switchInventoryButton.Scale = buttonSelectedScale;
-                }
-            }
-            else if (switchInventoryButton.Scale == buttonSelectedScale)
-            {
-                switchInventoryButton.Scale = buttonOriginalScale;
             }
         }
 

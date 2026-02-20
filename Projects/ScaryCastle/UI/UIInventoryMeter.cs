@@ -27,14 +27,11 @@ namespace ScaryCastle
             this.inventory = inventory;
 
             // Icon
-            this.icon = new(Game, inventory.Category == InventoryCategory.Common ? Atlases.UI.CommonSack : Atlases.UI.SacredSack)
+            this.icon = new(Game, Atlases.UI.Sack)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.RightBottom, -7, -7),
             };
-
-            if (inventory.Category == InventoryCategory.Common)
-                icon.Y -= 8.5f;
 
             // Amount
             this.amountText = new TextSprite(Game, Fonts.CommonOutline)

@@ -24,7 +24,6 @@
 			"areaRange": "Small",
 			"consumptionType": "None",
 			"executionDelay": 1500,
-			"inventoryCategory": "Sacred",
 			"isMagical": true,
 			"effects": [
 				{

@@ -48,9 +48,6 @@ namespace ScaryCastle
             // ImpactWord
             var impactWord = element.GetEnum("impactWord", ImpactWordName.None);
 
-            // InventoryCategory
-            InventoryCategory = element.GetEnum("inventoryCategory", InventoryCategory.Common);
-
             // IsMagical
             IsMagical = element.GetBool("isMagical", false);
 
@@ -77,7 +74,7 @@ namespace ScaryCastle
 
             this.LocalizedDescription = Localization.GetItemDescription(this);
             this.LocalizedDisplayName = Localization.GetItemName(this);
-            this.LocalizedVerbSentence = Verb == ItemVerb.None ? string.Empty : $"{Localization.GetValue<ItemVerb>(Verb)} {LocalizedDisplayName}";
+            this.LocalizedVerbSentence = Verb == ItemVerb.None ? string.Empty : $"{Localization.GetValue(Verb)} {LocalizedDisplayName}";
 
             this.Image = Atlases.UI.FindImage(Name);
 
@@ -144,9 +141,6 @@ namespace ScaryCastle
 
         // Image
         public AtlasImage? Image { get; }
-
-        // InventoryCategory
-        public InventoryCategory InventoryCategory { get; }
 
         // IsMagical
         public bool IsMagical { get; }

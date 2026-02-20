@@ -66,13 +66,6 @@
                 "Ignite"
               ]
             },
-            "inventoryCategory": {
-              "type": "string",
-              "enum": [
-                "Common",
-                "Sacred"
-              ]
-            },
             "isMagical": {
               "type": "boolean"
             },

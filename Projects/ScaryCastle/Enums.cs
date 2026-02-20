@@ -65,9 +65,6 @@ namespace ScaryCastle
     // InteractionType
     public enum InteractionType { None, Outcome, UseWithOutcome, Cast }
 
-    // InventoryCategory
-    public enum InventoryCategory { Common, Sacred }
-
     // ItemCategory
     public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Sacred }
 

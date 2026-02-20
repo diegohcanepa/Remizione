@@ -3,7 +3,7 @@
 namespace ScaryCastle
 {
     /// <summary>
-    /// UIAtlas
+    /// UIAtlas abg3340
     /// </summary>
     public sealed partial class UIAtlas : Atlas
     {
@@ -14,8 +14,6 @@ namespace ScaryCastle
             BottomGradient = this[nameof(BottomGradient)];
             CheckMark = this[nameof(CheckMark)];
             Coin = this[nameof(Coin)];
-            CommonSack = this[nameof(CommonSack)];
-            CommonSackShortcut = this[nameof(CommonSackShortcut)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
@@ -40,8 +38,7 @@ namespace ScaryCastle
             PointingHand = this[nameof(PointingHand)];
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
-            SacredSack = this[nameof(SacredSack)];
-            SacredSackShortcut = this[nameof(SacredSackShortcut)];
+            Sack = this[nameof(Sack)];
             SavingIcon = this[nameof(SavingIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
@@ -57,12 +54,6 @@ namespace ScaryCastle
 
         // Coin
         public AtlasImage Coin { get; }
-
-        // CommonSack
-        public AtlasImage CommonSack { get; }
-
-        // CommonSackShortcut
-        public AtlasImage CommonSackShortcut { get; }
 
         // ContextMenuOptionSelector
         public AtlasImage ContextMenuOptionSelector { get; }
@@ -136,14 +127,11 @@ namespace ScaryCastle
         // PopupContainerShadow
         public AtlasImage PopupContainerShadow { get; }
 
+        // Sack
+        public AtlasImage Sack { get; }
+
         // SavingIcon
         public AtlasImage SavingIcon { get; }
-
-        // SacredSack
-        public AtlasImage SacredSack { get; }
-
-        // SacredSackShortcut
-        public AtlasImage SacredSackShortcut { get; }
 
         // SpeechBubbleCloseArrow
         public AtlasImage SpeechBubbleCloseArrow { get; }
