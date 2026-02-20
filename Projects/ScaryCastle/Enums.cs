@@ -8,9 +8,6 @@ namespace ScaryCastle
     // ActorSize
     public enum ActorSize { Small, Medium, Large }
 
-    // AIStateName
-    public enum AIStateName { Attack, Charge, Chase, CloseAttack, Decide, Idle, Move, Patrol, RangeAttack }
-
     // ApproachBehavior
     public enum ApproachBehavior
     {
@@ -139,9 +136,6 @@ namespace ScaryCastle
 
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
-
-    // PropState
-    public enum PropState { None, Closed, Empty, TurnedOff, Open, Locked, Unlocked }
 
     // Realm
     public enum Realm { Earthly, Infernal, Celestial }

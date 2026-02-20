@@ -331,6 +331,23 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Environment-assets/AreaMarkerLarge.png</key>
+            <key type="filename">Environment-assets/AreaMarkerMedium.png</key>
+            <key type="filename">Environment-assets/AreaMarkerSmall.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,2,11,5</rect>
+                <key>scale9Paddings</key>
+                <rect>6,2,11,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Environment-assets/Coin01.png</key>
             <key type="filename">Environment-assets/Coin02.png</key>
             <key type="filename">Environment-assets/Coin03.png</key>
@@ -401,21 +418,6 @@
                 <rect>64,56,128,113</rect>
                 <key>scale9Paddings</key>
                 <rect>64,56,128,113</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/ImpactArea.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>10,3,20,5</rect>
-                <key>scale9Paddings</key>
-                <rect>10,3,20,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

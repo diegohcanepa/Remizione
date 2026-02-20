@@ -8,10 +8,49 @@ namespace ScaryCastle
     public abstract class BodyAttackState : BodyAnimatedState
     {
         // Constructor
-        protected BodyAttackState(string animationName)
-            : base(animationName, false)
+        protected BodyAttackState()
+            : base(string.Empty, false)
         {
         }
+
+        #region Private members
+
+        // TryInflictDamage
+        private bool TryInflictDamage(CombatIntent intent)
+        {
+            if (Owner.Room != null)
+            {
+                for (var i = 0; i < Owner.Room.Children.Count; i++)
+                {
+                    if (Owner.Room.Children[i] is GameThing thing && Owner.IsEnemy(thing))
+                    {
+                        if (CanInflictDamage(thing))
+                        {
+                            EffectDescriptor.Apply(intent.EffectDescriptors, Owner, thing);
+                            Owner.Session.InterruptAwaitingScript();
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        // TryInflictDamage
+        private bool TryInflictDamage(CombatIntent intent, GameThing target)
+        {
+            if (CanInflictDamage(target))
+            {
+                EffectDescriptor.Apply(intent.EffectDescriptors, Owner, target);
+                Owner.Session.InterruptAwaitingScript();
+                return true;
+            }
+
+            return false;
+        }
+
+        #endregion
 
         #region Protected members
 
@@ -21,6 +60,12 @@ namespace ScaryCastle
         // DamageTaken
         protected bool DamageTaken { get; set; }
 
+        // GetAnimationName
+        protected override string GetAnimationName()
+        {
+            return Intent?.Name ?? string.Empty;
+        }
+
         #endregion
 
         // Enter
@@ -28,6 +73,8 @@ namespace ScaryCastle
         {
             base.Enter();
             DamageTaken = false;
+            if (Intent?.Sound is { } sound)
+                Owner.PlaySound(sound);
         }
 
         // Intent
@@ -39,14 +86,9 @@ namespace ScaryCastle
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (!DamageTaken && Intent != null && Target != null)
+            if (!DamageTaken && Intent != null)
             {
-                if (CanInflictDamage(Target))
-                {
-                    DamageTaken = true;
-                    EffectDescriptor.Apply(Intent.EffectDescriptors, Owner, Target);
-                    Owner.Session.InterruptAwaitingScript();
-                }
+                DamageTaken = Target == null ? TryInflictDamage(Intent) : TryInflictDamage(Intent, Target);
             }
 
             if (!Owner.AnimationPlayer.IsPlaying)

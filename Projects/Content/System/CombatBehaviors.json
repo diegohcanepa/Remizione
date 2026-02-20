@@ -2,12 +2,32 @@
   "$schema": "./CombatBehavior.schema.json",
   "data": [
     {
+      "name": "Edmund",
+      "archetype": "Tactical",
+      "intents": [
+        {
+          "name": "Headbutt",
+          "category": "Basic",
+          "sound": "WhooshA",
+          "effects": [
+            {
+              "effectType": "Damage",
+              "amount": "1d4",
+              "impactWord": "Kapow",
+              "knockback": "5,0"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "EnviousEye",
       "archetype": "Tactical",
       "intents": [
         {
           "name": "Bite",
           "category": "Basic",
+          "sound": "EnviousEyeAttack",
           "weight": 80,
           "effects": [
             {

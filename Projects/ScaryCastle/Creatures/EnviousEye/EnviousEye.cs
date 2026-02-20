@@ -37,16 +37,6 @@ namespace ScaryCastle
             SupressOnTransformNotification--;
         }
 
-        // OnStartAttack
-        protected override void OnStartAttack(GameThing target, CombatIntent intent)
-        {
-            PlaySound("EnviousEyeAttack");
-            var state = BodyMachine.FindOrCreateState<BodyCloseAttackState>();
-            state.Intent = intent;
-            state.Target = target;
-            BodyMachine.ChangeState(state.GetType());
-        }
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {

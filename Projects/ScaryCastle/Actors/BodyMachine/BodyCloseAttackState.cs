@@ -7,7 +7,7 @@
     {
         // Constructor
         public BodyCloseAttackState()
-            : base(AnimationNames.CloseAttack)
+            : base()
         {
         }
 

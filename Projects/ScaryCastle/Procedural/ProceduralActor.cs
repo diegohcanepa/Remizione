@@ -17,6 +17,7 @@ namespace ScaryCastle
         {
             Definition = ActorDefinition.Definitions.Get(DeclaredName);
             CombatBehavior = CombatBehavior.Behaviors.Get(DeclaredName);
+            Faction = Faction.Evil;
             Sensor = new(this);
 
             BrainMachine = new(this, new BrainPatrolState());
@@ -136,11 +137,6 @@ namespace ScaryCastle
             Stand();
         }
 
-        // OnStartAttack
-        protected virtual void OnStartAttack(GameThing target, CombatIntent intent)
-        {
-        }
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
@@ -162,14 +158,6 @@ namespace ScaryCastle
         protected float SeparationWeight { get; set; } = 2;
 
         #endregion
-
-        // Attack
-        public void Attack(GameThing target, CombatIntent intent)
-        {
-            StopMoving();
-            FaceTo(target);
-            OnStartAttack(target, intent);
-        }
 
         // NUEVO: Tolerancia vertical (Profundidad)
         // Si el jugador está más arriba o abajo que esto, el golpe fallará.

@@ -353,6 +353,12 @@ namespace ScaryCastle
             UpdateFootstep();
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
+
+            if (IsPlayer && !Session.IsAwaiting && !IsMoving && CanHandleInput)
+            {
+                var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera);
+                FaceTo(mousePos);
+            }
         }
 
         #endregion
@@ -427,11 +433,30 @@ namespace ScaryCastle
             return true;
         }
 
+        // Attack
+        public void Attack(CombatIntent intent, GameThing? target)
+        {
+            StopMoving();
+            if (target != null)
+                FaceTo(target);
+
+            if (intent.RangeAttack)
+            {
+            }
+            else
+            {
+                var state = BodyMachine.FindOrCreateState<BodyCloseAttackState>();
+                state.Intent = intent;
+                state.Target = target;
+                BodyMachine.ChangeState(state.GetType());
+            }
+        }
+
         // BodySize
         public ActorSize BodySize { get; set; } = ActorSize.Medium;
 
-        // CanChangeState
-        public bool CanChangeState
+        // CanHandleInput
+        public bool CanHandleInput
         {
             get
             {
@@ -488,11 +513,8 @@ namespace ScaryCastle
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
-            if (InputHandler == null || Session.IsAwaiting || !IsPlayer || !CanChangeState)
+            if (InputHandler == null || Session.IsAwaiting || !IsPlayer || !CanHandleInput)
                 return HandleInputResult.Unhandled;
-
-            if (BodyMachine.CurrentState.HandleInput(gameTime) == HandleInputResult.Handled)
-                return HandleInputResult.Handled;
 
             if (InputHandler != null)
                 return InputHandler.HandleInput(gameTime);

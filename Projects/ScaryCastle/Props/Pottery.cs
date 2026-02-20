@@ -18,11 +18,5 @@ namespace ScaryCastle
             HurtSound = Sound.Find(SoundNames.ImpactA);
             MaxHP = 1;
         }
-
-        // GetMouseCursorState
-        public override MouseCursorState? GetMouseCursorState()
-        {
-            return MouseCursorState.Hit;
-        }
     }
 }

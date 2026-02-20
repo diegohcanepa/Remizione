@@ -12,11 +12,19 @@
   "properties": {
     "category": {
       "type": "string",
-      "description": "Tipo de intensisas del ataque.",
+      "description": "Tipo de intensidades del ataque.",
       "enum": [
         "Basic",
         "Special"
       ]
+    },
+    "rangeAttack": {
+      "type": "boolean",
+      "description": "Es un ataque de rango."
+    },
+    "sound": {
+      "type": "string",
+      "description": "Nombre del archivo de sonido a reproducir."
     }
   },
   "required": [

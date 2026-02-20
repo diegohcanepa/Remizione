@@ -23,12 +23,6 @@ namespace Engendro
         {
         }
 
-        // HandleInput
-        public virtual HandleInputResult HandleInput(GameTime gameTime)
-        {
-            return HandleInputResult.Unhandled;
-        }
-
         // Initialize
         public void Initialize(StateMachine<TOwner> machine)
         {

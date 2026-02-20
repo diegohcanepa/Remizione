@@ -148,12 +148,12 @@ namespace ScaryCastle
             cursorSprite.X -= shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             EngendroGame.Instance.SpriteBatch.End();
 
-            EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera);
             if (State == MouseCursorState.Cross || State == MouseCursorState.Hit || CustomImage != null)
             {
+                EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera);
                 textSprite.Draw(gameTime);
+                EngendroGame.Instance.SpriteBatch.End();
             }
-            EngendroGame.Instance.SpriteBatch.End();
         }
 
         // Hightlight

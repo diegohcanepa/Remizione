@@ -1,15 +1,8 @@
-﻿using Engendro;
+﻿using Adberration.Scripting;
+using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-
-/*
-var lightning = new Lightning(player.Session);
-lightning.Show(destination, 1500, Actor, context.HeldItem);
-player.Room?.Children.Add(lightning);
-context.HeldItem = null;
-*/
-
 
 namespace ScaryCastle
 {
@@ -18,11 +11,14 @@ namespace ScaryCastle
     /// </summary>
     public sealed class PlayerInputHandler<T> : InputHandler where T : Actor
     {
+        private readonly CombatBehavior? combatBehavior;
+
         // Constructor
         public PlayerInputHandler(T actor, PlayerIndex playerIndex)
             : base(playerIndex)
         {
             this.Actor = actor;
+            this.combatBehavior = CombatBehavior.Behaviors.Find(actor.DeclaredName);
         }
 
         #region Private members
@@ -124,6 +120,10 @@ namespace ScaryCastle
                 Actor.Session.InteractionContext.HeldItem = null;
                 Actor.Session.InteractionData.Clear();
                 Actor.StopMoving();
+            }
+            else if (combatBehavior?.IntentDescriptors.Count > 0)
+            {
+                Actor.Attack(combatBehavior.IntentDescriptors[0], null);
             }
 
             return true;

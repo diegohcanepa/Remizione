@@ -8,7 +8,7 @@ namespace Engendro
     /// <summary>
     /// StateMachine
     /// </summary>
-    public class StateMachine<TOwner> : IInputHandler
+    public class StateMachine<TOwner>
     {
         private bool isStarted;
         private readonly Dictionary<Type, State<TOwner>> states = [];
@@ -117,12 +117,6 @@ namespace Engendro
         public State<TOwner>? FindState(Type stateType)
         {
             return states.TryGetValue(stateType, out var state) ? state : null;
-        }
-
-        // HandleInput
-        public HandleInputResult HandleInput(GameTime gameTime)
-        {
-            return CurrentState.HandleInput(gameTime);
         }
 
         // Owner

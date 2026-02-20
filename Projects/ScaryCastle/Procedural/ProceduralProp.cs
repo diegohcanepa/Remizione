@@ -10,6 +10,7 @@
             : base(session, name)
         {
             Definition = PropDefinition.Definitions.Get(DeclaredName);
+            Faction = Faction.Evil;
         }
 
         #region IProceduralThing explicit implementation

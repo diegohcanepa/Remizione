@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:b8c6caead18503ed29eda5deafffbf6e:f9b607833d1d703e96c1989a6da2d900:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:1ddb5a9b9f9ec91ce374adfeea783b42:f9b607833d1d703e96c1989a6da2d900:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -132,9 +132,9 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Edmund-assets/UseCross01.png" x="302" y="206" w="28" h="25"/>
     <sprite n="Edmund-assets/UseCross02.png" x="332" y="206" w="28" h="25"/>
     <sprite n="Edmund-assets/UseCross03.png" x="362" y="206" w="28" h="25"/>
-    <sprite n="EnviousEye-assets/CloseAttack01.png" x="455" y="52" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/CloseAttack02.png" x="421" y="71" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/CloseAttack03.png" x="421" y="84" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Bite01.png" x="455" y="52" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Bite02.png" x="421" y="71" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Bite03.png" x="421" y="84" w="25" h="11"/>
     <sprite n="EnviousEye-assets/Move01.png" x="421" y="97" w="25" h="11"/>
     <sprite n="EnviousEye-assets/Move02.png" x="228" y="86" w="25" h="11"/>
     <sprite n="EnviousEye-assets/Move03.png" x="228" y="99" w="25" h="11"/>

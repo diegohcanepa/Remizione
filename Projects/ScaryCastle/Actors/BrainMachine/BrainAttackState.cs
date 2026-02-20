@@ -24,7 +24,7 @@ namespace ScaryCastle
                 return;
             }
 
-            Owner.Attack(target, intent);
+            Owner.Attack(intent, target);
         }
 
         // Update

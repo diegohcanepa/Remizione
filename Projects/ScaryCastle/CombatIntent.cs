@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using System;
 using System.Text.Json;
 
@@ -18,9 +19,21 @@ namespace ScaryCastle
                 throw new InvalidOperationException("Missing category property.");
             else
                 this.Category = category;
+
+            // RangeAttack
+            RangeAttack = element.GetBool("rangeAttack", false);
+
+            // Sound
+            Sound = element.GetObject("sound", Sound.Get);
         }
 
         // Category
         public CombatIntentCategory Category { get; }
+
+        // RangeAttack
+        public bool RangeAttack { get; }
+
+        // Sound
+        public Sound? Sound { get; }
     }
 }
