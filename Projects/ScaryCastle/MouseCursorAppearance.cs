@@ -60,8 +60,6 @@ namespace ScaryCastle
         // RefreshText
         private static void RefreshText(InteractionContext context)
         {
-            MouseCursor.TextIsLabel = false;
-
             if (MouseCursor.State == MouseCursorState.Hit)
             {
                 MouseCursor.TextColor = ColorPalette.Text.OrangeLight;
@@ -81,9 +79,6 @@ namespace ScaryCastle
                     MouseCursor.TextColor = ColorPalette.Text.Yellow;
                     MouseCursor.Text = placeHereText;
                 }
-
-                if (!string.IsNullOrWhiteSpace(MouseCursor.Text))
-                    MouseCursor.TextIsLabel = true;
 
                 return;
             }

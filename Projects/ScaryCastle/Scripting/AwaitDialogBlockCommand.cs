@@ -25,7 +25,7 @@ namespace ScaryCastle.Scripting
 
             scene = new DialogBlockScene(session, DialogBlock.Instance);
             DialogBlock.Instance = null;
-            scene.SceneController.Push();
+            Game.SceneManager.Push(scene);
         }
 
         // OnExecutionCompleted
@@ -38,6 +38,6 @@ namespace ScaryCastle.Scripting
         #endregion
 
         // IsAwaiting
-        public override bool IsAwaiting => scene != null && scene.SceneController.IsPushed;
+        public override bool IsAwaiting => scene != null && Game.SceneManager.Contains(scene);
     }
 }

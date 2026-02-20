@@ -31,7 +31,7 @@ namespace ScaryCastle.Menus
             {
             };
 
-            menu.AddItem(MenuItemName.Resume, () => SceneController.Pop(), null);
+            menu.AddItem(MenuItemName.Resume, () => Game.SceneManager.Pop(), null);
             menu.AddItem(MenuItemName.Options, ShowOptions, Atlases.Menu.OptionsIcon);
             menu.AddItem(MenuItemName.ExitToMainMenu, ExitToMainMenu, null);
 
@@ -120,7 +120,7 @@ namespace ScaryCastle.Menus
             if (InputBindings.InGameMenu.IsPressed(0) || InputBindings.Back.IsPressed(0))
             {
                 InputManager.Suspend(300);
-                SceneController.Pop();
+                Game.SceneManager.Pop();
                 return HandleInputResult.Handled;
             }
 

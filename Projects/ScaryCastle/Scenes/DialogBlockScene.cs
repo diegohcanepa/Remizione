@@ -30,7 +30,7 @@ namespace ScaryCastle
 
         // Constructor
         public DialogBlockScene(GameSession session, DialogBlock dialogBlock)
-            : base(session.Game, SceneSettings.None)
+            : base(session.Game)
         {
             this.session = session;
             this.dialogBlock = dialogBlock;
@@ -71,7 +71,7 @@ namespace ScaryCastle
                     completed = true;
 
                 if (completed)
-                    SceneController.Pop();
+                    Game.SceneManager.Pop();
 
                 RunningOption = null;
 
@@ -191,7 +191,7 @@ namespace ScaryCastle
             // Quit
             else if (dialogBlock.AllowQuit && buttonQuit.TestPressed(0))
             {
-                SceneController.Pop();
+                Game.SceneManager.Pop();
             }
 
             // Select
@@ -239,7 +239,7 @@ namespace ScaryCastle
                 if (terminate)
                 {
                     terminate = false;
-                    SceneController.Pop();
+                    Game.SceneManager.Pop();
                 }
             }
 

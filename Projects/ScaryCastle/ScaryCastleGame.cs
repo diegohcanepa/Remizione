@@ -84,7 +84,8 @@ namespace ScaryCastle
         {
             if (!SceneManager.Contains<PauseMenuScene>() && CurrentSession?.Room is GameRoom room && room.AllowPauseMenu)
             {
-                new PauseMenuScene(CurrentSession).SceneController.Push();
+                var scene = new PauseMenuScene(CurrentSession);
+                SceneManager.Push(scene);
             }
         }
 
@@ -95,7 +96,7 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (SceneManager.CurrentScene != null && SceneManager.CurrentScene.SceneController.TransitionAware)
+            if (SceneManager.CurrentScene != null && SceneManager.CurrentScene.TransitionAware)
                 Effects.ColorReduction.SetColor(1 - TransitionManager.CurrentTransition.VisibleRatio);
             else
                 Effects.ColorReduction.SetColor(1);
@@ -199,7 +200,7 @@ namespace ScaryCastle
         {
             CurrentSession = new GameSession(this, slotNumber);
             CurrentSession.Start();
-            CurrentSession.SceneController.Push();
+            SceneManager.Push(CurrentSession);
             CurrentSession.Run();
         }
 

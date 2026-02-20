@@ -20,7 +20,7 @@ namespace ScaryCastle
 
         // Constructor
         public EchoScene(ScaryCastleGame game)
-            : base(game, SceneSettings.None)
+            : base(game)
         {
             const int topMargin = 35;
 
@@ -80,7 +80,7 @@ namespace ScaryCastle
                 if (textSprite.IsTyping)
                     textSprite.StopTyping();
                 else
-                    SceneController.Pop();
+                    Game.SceneManager.Pop();
 
                 return true;
             }
@@ -117,7 +117,7 @@ namespace ScaryCastle
                 if (textSprite.IsTyping)
                     textSprite.StopTyping();
                 else
-                    SceneController.Pop();
+                    Game.SceneManager.Pop();
                 return HandleInputResult.Handled;
             }
 

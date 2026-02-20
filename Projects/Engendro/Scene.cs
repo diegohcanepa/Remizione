@@ -18,32 +18,12 @@ namespace Engendro
 
         #endregion
 
-        #region Constructors
+        #region Constructor
 
         // Constructor
         protected Scene(EngendroGame game)
-            : this(game, 0)
-        {
-        }
-
-        // Constructor
-        protected Scene(EngendroGame game, SceneSettings settings)
-            : this(game, settings, string.Empty)
-        {
-        }
-
-        // Constructor
-        protected Scene(EngendroGame game, SceneSettings settings, string name)
             : base(game)
         {
-            this.SceneController = new SceneController(this)
-            {
-                ExclusiveDraw = settings.HasFlag(SceneSettings.ExclusiveDraw),
-                PausePreviousScenes = settings.HasFlag(SceneSettings.PausePreviousScenes)
-            };
-
-            this.SceneSettings = settings;
-            this.SceneName = string.IsNullOrWhiteSpace(name) ? GetType().Name : name;
         }
 
         #endregion
@@ -64,9 +44,7 @@ namespace Engendro
         protected override void BeforeDraw(GameTime gameTime)
         {
             if (BackgroundColor != Color.Transparent)
-            {
                 Game.GraphicsDevice.Clear(BackgroundColor);
-            }
         }
 
         // Dispose
@@ -172,6 +150,9 @@ namespace Engendro
             GC.SuppressFinalize(this);
         }
 
+        // ExclusiveDraw
+        public bool ExclusiveDraw { get; init; }
+
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
@@ -243,6 +224,9 @@ namespace Engendro
             }
         }
 
+        // PausePreviousScenes
+        public bool PausePreviousScenes { get; init; }
+
         // Resume
         public void Resume()
         {
@@ -266,14 +250,11 @@ namespace Engendro
             }
         }
 
-        // SceneController
-        public SceneController SceneController { get; }
-
-        // SceneName
-        public string SceneName { get; }
-
         // SceneSettings
         public SceneSettings SceneSettings { get; set; }
+
+        // TransitionAware
+        public bool TransitionAware { get; init; } = true;
 
         // UnloadContent
         public void UnloadContent()

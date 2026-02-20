@@ -382,7 +382,7 @@ namespace ScaryCastle
             {
                 if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 120)
                 {
-                    inventoryScene.SceneController.Push();
+                    Game.SceneManager.Push(inventoryScene);
                     return;
                 }
             }

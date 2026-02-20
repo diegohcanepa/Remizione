@@ -26,7 +26,7 @@ namespace ScaryCastle.Scripting
             if (Session is GameSession session)
             {
                 PopupScene popup = new(session, Parser.ParseQuotedString(this, 0), Parser.ParseQuotedString(this, 1), InputBindings.Close);
-                popup.SceneController.Push();
+                Game.SceneManager.Push(popup);
             }
         }
 

@@ -34,8 +34,10 @@ namespace ScaryCastle.Menus
 
         // Constructor
         internal TitleMenuScene(ScaryCastleGame game)
-            : base(game, null, SceneSettings.ExclusiveDraw)
+            : base(game, null)
         {
+            this.ExclusiveDraw = true;
+
             // Background
             background = new ImageSprite(game, Atlases.Menu.TitleScreen)
             {

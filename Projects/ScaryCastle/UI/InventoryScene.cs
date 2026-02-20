@@ -113,7 +113,7 @@ namespace ScaryCastle
                     {
                         Inventory.Session.InteractionContext.HeldItem = grabbedItem;
                         MouseCursor.PerformClick();
-                        SceneController.Pop();
+                        Game.SceneManager.Pop();
                         return true;
                     }
                 }
@@ -268,7 +268,7 @@ namespace ScaryCastle
 
             if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y < 105)
             {
-                SceneController.Pop();
+                Game.SceneManager.Pop();
                 return;
             }
 

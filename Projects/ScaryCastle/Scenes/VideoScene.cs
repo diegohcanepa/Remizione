@@ -10,7 +10,7 @@ namespace ScaryCastle
     {
         // Constructor
         public VideoScene(ScaryCastleGame game)
-            : base(game, SceneSettings.None)
+            : base(game)
         {
         }
 

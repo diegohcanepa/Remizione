@@ -65,7 +65,7 @@ namespace Engendro.Audio
             }
 
             var scene = EngendroGame.Instance?.SceneManager.CurrentScene;
-            if (scene == null || scene.SceneController.TransitionAware)
+            if (scene == null || scene.TransitionAware)
             {
                 if (TransitionAware)
                     instance.Volume *= 1 - TransitionManager.CurrentTransition.VisibleRatio;

@@ -21,9 +21,10 @@ namespace ScaryCastle.Menus
 
         // Constructor
         public AutoSaveAdviceScene(ScaryCastleGame game, int slotNumber)
-            : base(game, SceneSettings.PausePreviousScenes)
+            : base(game)
         {
             this.game = game;
+            this.PausePreviousScenes = true;
             this.slotNumber = slotNumber;
 
             BackgroundColor = Color.Black;
@@ -53,7 +54,7 @@ namespace ScaryCastle.Menus
         // StartSession
         private void StartSession()
         {
-            SceneController.Pop();
+            Game.SceneManager.Pop();
             game.StartSession(slotNumber);
             TransitionManager.CurrentTransition.Out(1000);
         }

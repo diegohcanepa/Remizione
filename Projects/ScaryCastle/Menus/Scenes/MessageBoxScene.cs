@@ -37,9 +37,10 @@ namespace ScaryCastle.Menus
 
         // Constructor
         public MessageBoxScene(ScaryCastleGame game, string text, MessageBoxOptions options, Action<MessageBoxOptions>? onSelect, MessageBoxOptions defaultOption)
-            : base(game, SceneSettings.PausePreviousScenes)
+            : base(game)
         {
             this.Options = options;
+            this.PausePreviousScenes = true;
             this.OnSelect = onSelect;
 
             BackgroundColor = Color.Black;
@@ -145,7 +146,7 @@ namespace ScaryCastle.Menus
         {
             if (AutoPopScene)
             {
-                SceneController.Pop();
+                Game.SceneManager.Pop();
             }
 
             OnSelect?.Invoke(option);
@@ -188,7 +189,7 @@ namespace ScaryCastle.Menus
 
             if (AllowBack && InputBindings.Back.IsPressed(0))
             {
-                SceneController.Pop();
+                Game.SceneManager.Pop();
                 return HandleInputResult.Handled;
             }
 

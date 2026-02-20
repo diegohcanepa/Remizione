@@ -69,7 +69,7 @@ namespace ScaryCastle
                 if (buttons[i].TestPressed(0))
                 {
                     Result = bindings[i];
-                    SceneController.Pop();
+                    Game.SceneManager.Pop();
                     return HandleInputResult.Handled;
                 }
             }

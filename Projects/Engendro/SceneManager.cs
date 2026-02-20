@@ -45,7 +45,7 @@ namespace Engendro
 
                 RemoveSceneCore(scene);
 
-                if (scene.SceneController.PausePreviousScenes)
+                if (scene.PausePreviousScenes)
                 {
                     for (var i = 0; i < scenes.Count; i++)
                     {
@@ -87,7 +87,7 @@ namespace Engendro
             if (CurrentScene == null)
                 return;
 
-            if (CurrentScene.SceneController.ExclusiveDraw)
+            if (CurrentScene.ExclusiveDraw)
             {
                 CurrentScene.Draw(gameTime);
             }
@@ -126,7 +126,7 @@ namespace Engendro
                     {
                         scenes[i].Update(gameTime);
                     }
-                    else if (!scenes[i - 1].SceneController.PausePreviousScenes)
+                    else if (!scenes[i - 1].PausePreviousScenes)
                     {
                         scenes[i].Update(gameTime);
                     }
@@ -217,7 +217,7 @@ namespace Engendro
             {
                 if (scenes.Count > 0)
                 {
-                    if (scene.SceneController.PausePreviousScenes)
+                    if (scene.PausePreviousScenes)
                     {
                         for (var i = 0; i < scenes.Count; i++)
                         {

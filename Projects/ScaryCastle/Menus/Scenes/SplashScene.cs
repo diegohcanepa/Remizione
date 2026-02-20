@@ -33,8 +33,10 @@ namespace ScaryCastle.Menus
 
         // Constructor
         public SplashScene(ScaryCastleGame game, AtlasImage? image, Vector2 imagePosition, float imageScale, int duration)
-            : base(game, SceneSettings.ExclusiveDraw)
+            : base(game)
         {
+            this.ExclusiveDraw = true;
+
             BackgroundColor = Color.Black;
 
             Image = new ImageSprite(game, image)

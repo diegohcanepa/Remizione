@@ -16,10 +16,12 @@ namespace ScaryCastle.Menus
         #region Constructor
 
         // Constructor
-        protected MenuScene(ScaryCastleGame game, AtlasImage? backgroundImage, SceneSettings settings = SceneSettings.ExclusiveDraw | SceneSettings.PausePreviousScenes)
-            : base(game, settings)
+        protected MenuScene(ScaryCastleGame game, AtlasImage? backgroundImage)
+            : base(game)
         {
             this.Game = game;
+            this.ExclusiveDraw = true;
+            this.PausePreviousScenes = true;
             this.backgroundSprite = new ImageSprite(game, backgroundImage);
             version = Utils.CreateVersionLabel(game);
             Stick = new StickInputController(GamePadThumbStick.Left) { AutoRepeatRate = 250 };
@@ -67,7 +69,7 @@ namespace ScaryCastle.Menus
         // Pop
         protected void Pop()
         {
-            TransitionManager.CurrentTransition.In(TransitionDuration, () => { SceneController.Pop(); TransitionManager.CurrentTransition.Out(500); });
+            TransitionManager.CurrentTransition.In(TransitionDuration, () => { Game.SceneManager.Pop(); TransitionManager.CurrentTransition.Out(500); });
         }
 
         // Stick
