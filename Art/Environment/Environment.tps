@@ -312,10 +312,6 @@
             <key type="filename">Guts-assets/Gut5.png</key>
             <key type="filename">Guts-assets/Gut6.png</key>
             <key type="filename">Guts-assets/Gut8.png</key>
-            <key type="filename">Throwables-assets/ThrowableChili.png</key>
-            <key type="filename">Throwables-assets/ThrowableChiliShadow.png</key>
-            <key type="filename">Throwables-assets/ThrowableDuck.png</key>
-            <key type="filename">Throwables-assets/ThrowableDuckShadow.png</key>
             <key type="filename">VendingMachine-assets/VendingMachineLed.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -345,6 +341,25 @@
                 <rect>6,2,11,5</rect>
                 <key>scale9Paddings</key>
                 <rect>6,2,11,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Environment-assets/Bible.png</key>
+            <key type="filename">Environment-assets/BibleShadow.png</key>
+            <key type="filename">Firecracker-assets/Firecracker01.png</key>
+            <key type="filename">Firecracker-assets/Firecracker02.png</key>
+            <key type="filename">Firecracker-assets/Firecracker03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,4,4</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,4,4</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -577,23 +592,6 @@
                 <rect>4,1,7,1</rect>
                 <key>scale9Paddings</key>
                 <rect>4,1,7,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Firecracker-assets/Firecracker01.png</key>
-            <key type="filename">Firecracker-assets/Firecracker02.png</key>
-            <key type="filename">Firecracker-assets/Firecracker03.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,4,4</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,4,4</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1523,7 +1521,6 @@
                     <filename>SmallRockB-assets</filename>
                     <filename>SinnerCross-assets</filename>
                     <filename>ImpactWords-assets</filename>
-                    <filename>Throwables-assets</filename>
                     <filename>Trunk-assets</filename>
                     <filename>TombstoneA-assets</filename>
                     <filename>TombstoneB-assets</filename>

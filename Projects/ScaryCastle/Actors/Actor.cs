@@ -451,8 +451,9 @@ namespace ScaryCastle
             if (target != null)
                 FaceTo(target);
 
-            if (intent.RangeAttack)
+            if (intent.ThrownObject != ThrownObjectType.None)
             {
+                ThrowObject(intent);
             }
             else
             {
@@ -520,7 +521,7 @@ namespace ScaryCastle
         // GetThrowableSpawnPosition
         public Vector2 GetThrowableSpawnPosition()
         {
-            return this.GetAbsolutePoint(ThrowableSpawnPosition);
+            return this.GetAbsolutePoint(ThrownObjectSpawnPosition);
         }
 
         // Guts
@@ -692,14 +693,15 @@ namespace ScaryCastle
                 Stand(true);
         }
 
-        // ThrowableSpawnPosition
+        // ThrownObjectSpawnPosition
         [ScriptProperty]
-        public Vector2 ThrowableSpawnPosition { get; set; }
+        public Vector2 ThrownObjectSpawnPosition { get; set; }
 
         // ThrowObject
-        public void ThrowObject()
+        public void ThrowObject(CombatIntent combatIntent)
         {
             var state = BodyMachine.FindOrCreateState<ActorThrowObjectState>();
+            state.CombatIntent = combatIntent;
             BodyMachine.ChangeState(state.GetType());
         }
 

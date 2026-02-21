@@ -7,26 +7,26 @@ namespace ScaryCastle
     /// </summary>
     public sealed class ObjectPools(GameSession session)
     {
-        // Ducks
-        public ObjectPool<ThrownDuck> Ducks { get; } = new ObjectPool<ThrownDuck>(() => new ThrownDuck(session), 50);
-
-        // FindThrownObject
-        public ThrownObject? FindThrownObject(string itemName)
-        {
-            if (itemName == "Duck")
-                return Ducks.Get();
-
-            return null;
-        }
+        // Bibles
+        public ObjectPool<ThrownBible> Bibles { get; } = new ObjectPool<ThrownBible>(() => new ThrownBible(session), 50);
 
         // FloatingTexts
         public ObjectPool<FloatingText> FloatingTexts { get; } = new ObjectPool<FloatingText>(() => new FloatingText(session), 30);
 
+        // GetThrownObject
+        public ThrownObject? GetThrownObject(ThrownObjectType objectType)
+        {
+            if (objectType == ThrownObjectType.Bible)
+                return Bibles.Get();
+
+            return null;
+        }
+
         // ReturnThrownObject
         public void ReturnThrownObject(ThrownObject obj)
         {
-            if (obj is ThrownDuck duck)
-                Ducks.Return(duck);
+            if (obj is ThrownBible bible)
+                Bibles.Return(bible);
         }
 
         // Sacks

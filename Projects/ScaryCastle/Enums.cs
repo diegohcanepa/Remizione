@@ -152,6 +152,9 @@ namespace ScaryCastle
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }
 
+    // ThrownObjectType
+    public enum ThrownObjectType { None, Bible }
+
     // UIControlGroupLayoutStyle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
 

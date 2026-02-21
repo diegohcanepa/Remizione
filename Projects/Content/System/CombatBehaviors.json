@@ -6,12 +6,12 @@
       "archetype": "Tactical",
       "intents": [
         {
-          "name": "ThrownDuck",
-          "category": "Basic",
+          "name": "Bible",
+          "thrownObject":"Bible",
           "effects": [
             {
               "effectType": "Damage",
-              "amount": "1",
+              "amount": "1d4",
               "knockback": "10,0"
             }
           ]
@@ -26,7 +26,6 @@
           "name": "Bite",
           "category": "Basic",
           "sound": "EnviousEyeAttack",
-          "weight": 80,
           "effects": [
             {
               "effectType": "Damage",

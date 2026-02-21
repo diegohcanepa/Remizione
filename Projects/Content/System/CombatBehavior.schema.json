@@ -7,10 +7,14 @@
     "data": {
       "type": "array",
       "description": "Lista de configuraciones de comportamiento de combate.",
-      "items": { "$ref": "#/$defs/CombatBehavior" }
+      "items": {
+        "$ref": "#/$defs/CombatBehavior"
+      }
     }
   },
-  "required": [ "data" ],
+  "required": [
+    "data"
+  ],
   "$defs": {
     "CombatBehavior": {
       "type": "object",
@@ -22,17 +26,30 @@
         },
         "archetype": {
           "type": "string",
-          "enum": [ "Tactical", "Berserk", "Coward", "Sniper", "Swarmer" ],
+          "enum": [
+            "Tactical",
+            "Berserk",
+            "Coward",
+            "Sniper",
+            "Swarmer"
+          ],
           "default": "Tactical"
         },
         "intents": {
           "type": "array",
           "description": "Lista de intenciones (ataques, estados, etc.) de este bicho.",
-          "items": { "$ref": "./CombatIntent.schema.json" },
+          "items": {
+            "$ref": "./CombatIntent.schema.json"
+          },
           "minItems": 1
         }
       },
-      "required": [ "name", "archetype", "intents" ]
+      "required": [
+        "name",
+        "archetype",
+        "intents"
+      ],
+      "unevaluatedProperties": false
     }
   }
 }

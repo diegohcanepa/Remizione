@@ -25,29 +25,17 @@ namespace ScaryCastle
         // GameFolder
         public const string GameFolder = "Scary Castle";
 
+        // InitialBibleCapacity
+        public const int InitialBibleCapacity = 20;
+
         // LogFileName
         public const string LogFileName = "ErrorLog.txt";
-
-        // CountdownMaximum
-        public const int CountdownMaximum = 120_000;
-
-        // MusicTagAngry
-        public const string MusicTagAngry = "Angry";
 
         // MusicTagRide
         public const string MusicTagRide = "Ride";
 
-        // PropRevealOpacity
-        public const float PropRevealOpacity = .5f;
-
         // SteamAppID
         public const int SteamAppID = 480;
-
-        // TimeCritical
-        public const int TimeCritical = 10_000;
-
-        // TimeWarning
-        public const int TimeWarning = 30_000;
 
         // Title
         public const string Title = "Scary Castle";

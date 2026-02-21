@@ -7,27 +7,32 @@
   "allOf": [
     {
       "$ref": "./Definition.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string",
+          "description": "Tipo de intensidades del ataque.",
+          "enum": [
+            "Basic",
+            "Special"
+          ]
+        },
+        "thrownObject": {
+          "type": "string",
+          "description": "Tipo de object arrojable.",
+          "enum": [
+            "None",
+            "Bible"
+          ]
+        },
+        "sound": {
+          "type": "string",
+          "description": "Nombre del archivo de sonido a reproducir."
+        }
+      }
     }
   ],
-  "properties": {
-    "category": {
-      "type": "string",
-      "description": "Tipo de intensidades del ataque.",
-      "enum": [
-        "Basic",
-        "Special"
-      ]
-    },
-    "rangeAttack": {
-      "type": "boolean",
-      "description": "Es un ataque de rango."
-    },
-    "sound": {
-      "type": "string",
-      "description": "Nombre del archivo de sonido a reproducir."
-    }
-  },
-  "required": [
-    "category"
-  ]
+  "unevaluatedProperties": false
 }

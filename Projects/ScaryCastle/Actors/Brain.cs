@@ -13,7 +13,7 @@ namespace ScaryCastle
             if (actor.CombatBehavior is not CombatBehavior behavior)
                 return null;
 
-            var intents = behavior.IntentDescriptors;
+            var intents = behavior.Intents;
             int count = intents.Count;
 
             if (count == 0)

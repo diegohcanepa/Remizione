@@ -24,9 +24,10 @@ namespace ScaryCastle
         private bool isGrounded;
         private object? lastThingCollisioned;
         private readonly int maxBounces = 3;    // gravedad base
-        private readonly FloatTween opacityTween = new() { StartDelay = 1000 };
+        private readonly FloatTween opacityTween = new();
         private GameThing? owner;
         private readonly float radius;      // "tamaño" del objeto en píxeles
+        private readonly Vector2Tween scaleTween = new();
         private readonly Polygon testPoly = new();
         private Vector2 velocity;
         private readonly float weight;      // Masa relativa (afecta la gravedad)
@@ -36,9 +37,10 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        protected ThrownObject(GameSession session, Vector2 initialVelocity, float weight, float bounciness, float gravity, float radius)
+        protected ThrownObject(GameSession session, float defaultScale, Vector2 initialVelocity, float weight, float bounciness, float gravity, float radius)
             : base(session, string.Empty)
         {
+            this.DefaultScale = new Vector2(defaultScale);
             this.Atlas = Atlases.Environment;
             this.PivotOrigin = RectanglePoint.Center;
             this.initialVelocity = initialVelocity;
@@ -52,6 +54,7 @@ namespace ScaryCastle
             {
                 Opacity = ColorPalette.ShadowOpacity,
                 PivotOrigin = RectanglePoint.Center,
+                Scale = DefaultScale
             };
         }
 
@@ -110,10 +113,11 @@ namespace ScaryCastle
         // ReturnToObjectPool
         private void ReturnToObjectPool()
         {
-            if (HasParent)// && item != null)
+            if (HasParent)
             {
                 Unparent();
                 Session.ObjectPools.ReturnThrownObject(this);
+                Session.BibleCount++;
             }
         }
 
@@ -144,8 +148,11 @@ namespace ScaryCastle
                     velocity = Vector2.Zero;
                     DepthOffset = 0;
                     isGrounded = true;
-                    opacityTween.Start(TweenStyle.CubicIn, Opacity, 0, 1000, ReturnToObjectPool);
+                    opacityTween.Start(TweenStyle.CubicIn, Opacity, 0, 500, ReturnToObjectPool);
+                    scaleTween.Start(TweenStyle.CubicIn, Scale, Scale * .3f, 500);
+                    
                     Tweens.OpacityTween = opacityTween;
+                    Tweens.ScaleTween = scaleTween;
                 }
             }
         }
@@ -153,6 +160,9 @@ namespace ScaryCastle
         #endregion
 
         #region Protected members
+
+        // DefaultScale
+        protected Vector2 DefaultScale { get; }
 
         // ImpactSound
         protected Sound? ImpactSound { get; set; }
@@ -175,10 +185,17 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (Shadow.Image != null)
-                Shadow.X = X;
-
             base.OnUpdate(gameTime);
+
+            if (Shadow.Image != null)
+            {
+                Shadow.X = X;
+                Shadow.Scale = Scale;
+                Shadow.Opacity = Opacity * ColorPalette.ShadowOpacity;
+            }
+
+            if (isGrounded)
+                return;
 
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -197,8 +214,6 @@ namespace ScaryCastle
 
             // Object collision
             CheckCollision(true);
-
-            Shadow.Opacity = Opacity * ColorPalette.ShadowOpacity;
         }
 
         // Shadow
@@ -210,7 +225,7 @@ namespace ScaryCastle
         public override float Depth => depth;
 
         // Launch
-        public void Launch(Actor owner)
+        public void Launch(Actor owner, CombatIntent combatIntent)
         {
             if (owner.Room == null)
             {
@@ -218,19 +233,18 @@ namespace ScaryCastle
                 return;
             }
 
+            this.combatIntent = combatIntent;
             this.owner = owner;
             this.bounceCount = 0;
             this.ignoreThing = null;
             this.isGrounded = false;
             this.Opacity = 1;
             this.Rotation = 0;
-            this.Scale = Vector2.One;
+            this.Scale = DefaultScale;
             this.opacityTween.Stop();
+            this.scaleTween.Stop();
             this.velocity = initialVelocity;
             this.lastThingCollisioned = null;
-            this.combatIntent = CombatBehavior.Behaviors.Find(owner.DeclaredName)?.IntentDescriptors.Find(GetType().Name);
-
-            //item.Use(owner);
 
             depth = owner.Depth + .01f;
 

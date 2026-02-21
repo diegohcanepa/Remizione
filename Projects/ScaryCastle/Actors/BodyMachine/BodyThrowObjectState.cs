@@ -16,6 +16,9 @@ namespace ScaryCastle
         {
         }
 
+        // CombatIntent
+        public CombatIntent? CombatIntent { get; set; }
+
         // Enter
         public override void Enter()
         {
@@ -26,17 +29,13 @@ namespace ScaryCastle
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (!objectThrown && Owner.AnimationPlayer.Frame?.IsEvent == true)
+            if (CombatIntent != null)
             {
-                if (Owner.Session.ObjectPools.FindThrownObject("Duck") is ThrownObject throwable)
+                if (!objectThrown && Owner.AnimationPlayer.Frame?.IsEvent == true)
                 {
-                    //if (Owner.WhooshSound != null)
-                        //  Owner.PlaySound(Owner.WhooshSound);
-
-                    throwable.Launch(Owner);
+                    Owner.Session.ObjectPools.GetThrownObject(CombatIntent.ThrownObject)?.Launch(Owner, CombatIntent);
+                    objectThrown = true;
                 }
-
-                objectThrown = true;
             }
 
             if (!Owner.AnimationPlayer.IsPlaying)

@@ -11,14 +11,14 @@ namespace ScaryCastle
     /// </summary>
     public sealed class PlayerInputHandler<T> : InputHandler where T : Actor
     {
-        private readonly CombatBehavior? combatBehavior;
+        private readonly CombatBehavior combatBehavior;
 
         // Constructor
         public PlayerInputHandler(T actor, PlayerIndex playerIndex)
             : base(playerIndex)
         {
             this.Actor = actor;
-            this.combatBehavior = CombatBehavior.Behaviors.Find(actor.DeclaredName);
+            this.combatBehavior = CombatBehavior.Behaviors.Get(actor.DeclaredName);
         }
 
         #region Private members
@@ -114,10 +114,9 @@ namespace ScaryCastle
                 Actor.Session.InteractionData.Clear();
                 Actor.StopMoving();
             }
-            else if (combatBehavior?.IntentDescriptors.Count > 0)
+            else
             {
-                //Actor.Attack(combatBehavior.IntentDescriptors[0], null);
-                Actor.ThrowObject();
+                Actor.Attack(combatBehavior.Intents[0], null);
             }
 
             return true;

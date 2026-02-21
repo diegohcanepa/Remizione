@@ -15,25 +15,22 @@ namespace ScaryCastle
             : base(element)
         {
             // Category
-            if (element.GetEnum<CombatIntentCategory>("category") is not CombatIntentCategory category)
-                throw new InvalidOperationException("Missing category property.");
-            else
-                this.Category = category;
-
-            // RangeAttack
-            RangeAttack = element.GetBool("rangeAttack", false);
+            Category = element.GetEnum<CombatIntentCategory>("category", CombatIntentCategory.Basic);
 
             // Sound
             Sound = element.GetObject("sound", Sound.Get);
+
+            // ThrownObject
+            ThrownObject = element.GetEnum<ThrownObjectType>("thrownObject", ThrownObjectType.None);
         }
 
         // Category
         public CombatIntentCategory Category { get; }
 
-        // RangeAttack
-        public bool RangeAttack { get; }
-
         // Sound
         public Sound? Sound { get; }
+
+        // ThrownObject
+        public ThrownObjectType ThrownObject { get; }
     }
 }
