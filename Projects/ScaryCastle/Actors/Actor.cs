@@ -38,6 +38,7 @@ namespace ScaryCastle
             this.Atlas = Atlases.Actors;
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
             this.DisplayNameKey = $"Actor.{DeclaredName}";
+            this.IgnoreThrowables = false;
             this.IgnoreWalkArea = false;
             this.SuppressImpactWordOnDeath = true;
 
@@ -516,6 +517,12 @@ namespace ScaryCastle
         [ScriptProperty]
         public Sound? FootstepSound { get; set; }
 
+        // GetThrowableSpawnPosition
+        public Vector2 GetThrowableSpawnPosition()
+        {
+            return this.GetAbsolutePoint(ThrowableSpawnPosition);
+        }
+
         // Guts
         [ScriptProperty]
         public int Guts { get; set; } = 3;
@@ -683,6 +690,17 @@ namespace ScaryCastle
                 headSprite.Player.Play(AnimationNames.Stand, true);
             else
                 Stand(true);
+        }
+
+        // ThrowableSpawnPosition
+        [ScriptProperty]
+        public Vector2 ThrowableSpawnPosition { get; set; }
+
+        // ThrowObject
+        public void ThrowObject()
+        {
+            var state = BodyMachine.FindOrCreateState<ActorThrowObjectState>();
+            BodyMachine.ChangeState(state.GetType());
         }
 
         /// <summary>

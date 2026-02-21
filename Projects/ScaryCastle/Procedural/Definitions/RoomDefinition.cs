@@ -13,6 +13,7 @@ namespace ScaryCastle
     public sealed class RoomDefinition : EntityDefinition
     {
         private readonly List<Placeholder> placeholders = [];
+        private readonly List<string> walls = [];
 
         #region Constructor
 
@@ -69,7 +70,19 @@ namespace ScaryCastle
                 ReadOnlyPolygon.GetVertices(WalkArea);
             }
 
+            // Walls
+            if (element.TryGetProperty("walls", out JsonElement wallsElement))
+            {
+                foreach (var item in wallsElement.EnumerateArray())
+                {
+                    var value = item.GetString() ?? string.Empty;
+                    ReadOnlyPolygon.GetVertices(value);
+                    walls.Add(value);
+                }
+            }
+
             Placeholders = placeholders.AsReadOnly();
+            Walls = walls.AsReadOnly();
 
             Definitions.Add(this);
         }
@@ -117,5 +130,8 @@ namespace ScaryCastle
 
         // WalkArea
         public string WalkArea { get; }
+
+        // Walls
+        public ReadOnlyCollection<string> Walls { get; }
     }
 }

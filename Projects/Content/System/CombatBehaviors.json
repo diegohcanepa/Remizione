@@ -6,15 +6,13 @@
       "archetype": "Tactical",
       "intents": [
         {
-          "name": "Headbutt",
+          "name": "ThrownDuck",
           "category": "Basic",
-          "sound": "WhooshA",
           "effects": [
             {
               "effectType": "Damage",
-              "amount": "1d4",
-              "impactWord": "Kapow",
-              "knockback": "18,0"
+              "amount": "1",
+              "knockback": "10,0"
             }
           ]
         }

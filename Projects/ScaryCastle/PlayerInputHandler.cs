@@ -116,7 +116,8 @@ namespace ScaryCastle
             }
             else if (combatBehavior?.IntentDescriptors.Count > 0)
             {
-                Actor.Attack(combatBehavior.IntentDescriptors[0], null);
+                //Actor.Attack(combatBehavior.IntentDescriptors[0], null);
+                Actor.ThrowObject();
             }
 
             return true;

@@ -40,7 +40,7 @@ namespace ScaryCastle
                 }
             }
 
-            IntentDescriptors = intents.AsReadOnly();
+            IntentDescriptors = new(intents);
 
             Behaviors.Add(this);
         }
@@ -54,7 +54,7 @@ namespace ScaryCastle
         public static DataContainer<CombatBehavior> Behaviors { get; } = new(element => new CombatBehavior(element));
 
         // IntentDescriptors
-        public ReadOnlyCollection<CombatIntent> IntentDescriptors { get; }
+        public NamedObjectReadOnlyCollection<CombatIntent> IntentDescriptors { get; }
 
         // Name
         public string Name { get; }

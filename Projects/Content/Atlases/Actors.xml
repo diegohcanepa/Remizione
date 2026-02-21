@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:1ddb5a9b9f9ec91ce374adfeea783b42:f9b607833d1d703e96c1989a6da2d900:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:825faba514983519f3ccb7e245037209:f9b607833d1d703e96c1989a6da2d900:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -125,8 +125,8 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Edmund-assets/TakeSack02.png" x="2" y="201" w="28" h="25"/>
     <sprite n="Edmund-assets/TalkHead01.png" x="122" y="167" w="28" h="25"/>
     <sprite n="Edmund-assets/TalkHead02.png" x="152" y="167" w="28" h="25"/>
-    <sprite n="Edmund-assets/ThrowItem01.png" x="182" y="167" w="28" h="25"/>
-    <sprite n="Edmund-assets/ThrowItem02.png" x="212" y="179" w="28" h="25"/>
+    <sprite n="Edmund-assets/ThrowObject01.png" x="182" y="167" w="28" h="25"/>
+    <sprite n="Edmund-assets/ThrowObject02.png" x="212" y="179" w="28" h="25"/>
     <sprite n="Edmund-assets/TouchHead01.png" x="242" y="197" w="28" h="25"/>
     <sprite n="Edmund-assets/TouchHead02.png" x="272" y="199" w="28" h="25"/>
     <sprite n="Edmund-assets/UseCross01.png" x="302" y="206" w="28" h="25"/>

@@ -18,6 +18,7 @@ namespace ScaryCastle
             DepthOffset = 20;
             DisplayNameKey = "Prop.Coin";
             Hotspot = new Polygon("0,0;5,0;5,4;0,4");
+            IgnoreThrowables = true;
             IgnoreWalkArea = false;
             RenderLayer = RenderLayer.OverBackground;
 

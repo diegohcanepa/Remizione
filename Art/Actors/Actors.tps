@@ -273,8 +273,8 @@
             <key type="filename">Edmund-assets/TakeSack02.png</key>
             <key type="filename">Edmund-assets/TalkHead01.png</key>
             <key type="filename">Edmund-assets/TalkHead02.png</key>
-            <key type="filename">Edmund-assets/ThrowItem01.png</key>
-            <key type="filename">Edmund-assets/ThrowItem02.png</key>
+            <key type="filename">Edmund-assets/ThrowObject01.png</key>
+            <key type="filename">Edmund-assets/ThrowObject02.png</key>
             <key type="filename">Edmund-assets/TouchHead01.png</key>
             <key type="filename">Edmund-assets/TouchHead02.png</key>
             <key type="filename">Edmund-assets/UseCross01.png</key>

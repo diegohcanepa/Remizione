@@ -934,8 +934,7 @@
             <key type="filename">UIIcons-assets/CardCategoryAttack.png</key>
             <key type="filename">UIIcons-assets/CardCategoryHealing.png</key>
             <key type="filename">UIIcons-assets/CardCategoryPrayer.png</key>
-            <key type="filename">UIIcons-assets/CommonSack.png</key>
-            <key type="filename">UIIcons-assets/SacredSack.png</key>
+            <key type="filename">UIIcons-assets/Sack.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -977,22 +976,6 @@
                 <rect>2,2,4,3</rect>
                 <key>scale9Paddings</key>
                 <rect>2,2,4,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UIIcons-assets/CommonSackShortcut.png</key>
-            <key type="filename">UIIcons-assets/SacredSackShortcut.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,3,9,6</rect>
-                <key>scale9Paddings</key>
-                <rect>4,3,9,6</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

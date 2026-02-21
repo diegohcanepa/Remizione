@@ -139,6 +139,13 @@
                         "walkArea": {
                             "type": "string",
                             "description": "Polígono del área caminable."
+                        },
+                        "walls": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Lista de paredes definidas para este room."
                         }
                     },
                     "required": [

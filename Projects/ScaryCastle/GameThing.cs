@@ -416,7 +416,13 @@ namespace ScaryCastle
         // CanTakeDamage
         public virtual bool CanTakeDamage()
         {
-            return !IsDead && !blinker.IsRunning;
+            if (IsDead)
+                return false;
+
+            if (Session.Player == this && blinker.IsRunning)
+                return false;
+
+            return true;
         }
 
         // Collider
@@ -796,6 +802,9 @@ namespace ScaryCastle
         // IgnoreAttachedLight
         [ScriptProperty]
         public bool IgnoreAttachedLight { get; set; }
+
+        // IgnoreThrowables
+        public bool IgnoreThrowables { get; set; } = true;
 
         // IgnoreWalkArea
         [ScriptProperty]

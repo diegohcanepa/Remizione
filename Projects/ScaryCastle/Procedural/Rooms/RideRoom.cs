@@ -39,6 +39,12 @@ namespace ScaryCastle
             {
                 AddPlaceholder(placeholder);
             }
+
+            // Add walls
+            foreach (var wall in graph.Definition.Walls)
+            {
+                AddWall(wall);
+            }
         }
 
         #endregion
