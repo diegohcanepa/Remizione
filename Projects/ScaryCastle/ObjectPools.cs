@@ -8,7 +8,7 @@ namespace ScaryCastle
     public sealed class ObjectPools(GameSession session)
     {
         // Bibles
-        public ObjectPool<ThrownBible> Bibles { get; } = new ObjectPool<ThrownBible>(() => new ThrownBible(session), 50);
+        public ObjectPool<Bible> Bibles { get; } = new ObjectPool<Bible>(() => new Bible(session), 50);
 
         // FloatingTexts
         public ObjectPool<FloatingText> FloatingTexts { get; } = new ObjectPool<FloatingText>(() => new FloatingText(session), 30);
@@ -25,7 +25,7 @@ namespace ScaryCastle
         // ReturnThrownObject
         public void ReturnThrownObject(ThrownObject obj)
         {
-            if (obj is ThrownBible bible)
+            if (obj is Bible bible)
                 Bibles.Return(bible);
         }
 

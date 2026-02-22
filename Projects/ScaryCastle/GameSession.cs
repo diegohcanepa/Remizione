@@ -232,6 +232,12 @@ namespace ScaryCastle
             HUD.Reset();
             ImpactWordPool.ReturnAll();
             ObjectPools.FloatingTexts.ReturnAll();
+
+            for (var i = currentRoom.Children.Count - 1; i >= 0; i--)
+            {
+                if (currentRoom.Children[i] is ThrownObject thrownObject)
+                    thrownObject.Unparent();
+            }
         }
 
         // OnHandleInput

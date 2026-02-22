@@ -1,5 +1,4 @@
-﻿using Adberration.Scripting;
-using Engendro;
+﻿using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
@@ -116,6 +115,8 @@ namespace ScaryCastle
             }
             else
             {
+                Actor.StopMoving();
+                Actor.FaceToMouseCursor();
                 Actor.Attack(combatBehavior.Intents[0], null);
             }
 

@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
@@ -14,6 +15,7 @@ namespace ScaryCastle
 
         private int bounceCount;
         private readonly float bounciness;  // Cuánto rebota (0=sin rebote, 1=rebotar igual de fuerte)
+        private readonly BrokenPieces brokenPieces;
         private CombatIntent? combatIntent;
         private float depth;
         private float floorY;               // Cuánto se frena en horizontal al chocar
@@ -24,10 +26,10 @@ namespace ScaryCastle
         private bool isGrounded;
         private object? lastThingCollisioned;
         private readonly int maxBounces = 3;    // gravedad base
-        private readonly FloatTween opacityTween = new();
+        private readonly FloatTween opacityTween = new() { StartDelay = 10000 };
+        private readonly Vector2Tween scaleTween = new();
         private GameThing? owner;
         private readonly float radius;      // "tamaño" del objeto en píxeles
-        private readonly Vector2Tween scaleTween = new();
         private readonly Polygon testPoly = new();
         private Vector2 velocity;
         private readonly float weight;      // Masa relativa (afecta la gravedad)
@@ -37,7 +39,7 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        protected ThrownObject(GameSession session, float defaultScale, Vector2 initialVelocity, float weight, float bounciness, float gravity, float radius)
+        protected ThrownObject(GameSession session, float defaultScale, float brokenPiecesScale, Vector2 initialVelocity, float weight, float bounciness, float gravity, float radius)
             : base(session, string.Empty)
         {
             this.DefaultScale = new Vector2(defaultScale);
@@ -50,6 +52,8 @@ namespace ScaryCastle
             this.gravity = gravity;
             this.radius = radius;
 
+            this.brokenPieces = new BrokenPieces(this, brokenPiecesScale);
+
             this.Shadow = new ImageSprite(session.Game)
             {
                 Opacity = ColorPalette.ShadowOpacity,
@@ -61,6 +65,24 @@ namespace ScaryCastle
         #endregion
 
         #region Private members
+
+        // Break
+        private void Break()
+        {
+            if (BreakSound != null)
+                PlaySound(BreakSound);
+
+            RenderLayer = RenderLayer.Background;
+            velocity = Vector2.Zero;
+            DepthOffset = 0;
+            isGrounded = true;
+            
+            opacityTween.Start(TweenStyle.CubicIn, Opacity, 0, 1000, Unparent);
+            Tweens.OpacityTween = opacityTween;
+
+            brokenPieces.Launch();
+            //Tweens.ScaleTween = scaleTween;
+        }
 
         // CheckCollision
         private GameThing? CheckCollision(bool applyDamage)
@@ -110,17 +132,6 @@ namespace ScaryCastle
             return null;
         }
 
-        // ReturnToObjectPool
-        private void ReturnToObjectPool()
-        {
-            if (HasParent)
-            {
-                Unparent();
-                Session.ObjectPools.ReturnThrownObject(this);
-                Session.BibleCount++;
-            }
-        }
-
         // UpdateFloorCollision
         private void UpdateFloorCollision()
         {
@@ -131,7 +142,7 @@ namespace ScaryCastle
             {
                 Position = new Vector2(Position.X, floorY);
 
-                if (MathF.Abs(velocity.Y) > 10f && bounceCount < maxBounces)
+                if (MathF.Abs(velocity.Y) > 10 && bounceCount < maxBounces)
                 {
                     // Rebote vertical
                     velocity = new Vector2(velocity.X * horizontalDamping, -velocity.Y * bounciness);
@@ -144,15 +155,7 @@ namespace ScaryCastle
                 }
                 else
                 {
-                    // Se queda quieto después de usar sus rebotes
-                    velocity = Vector2.Zero;
-                    DepthOffset = 0;
-                    isGrounded = true;
-                    opacityTween.Start(TweenStyle.CubicIn, Opacity, 0, 500, ReturnToObjectPool);
-                    scaleTween.Start(TweenStyle.CubicIn, Scale, Scale * .3f, 500);
-                    
-                    Tweens.OpacityTween = opacityTween;
-                    Tweens.ScaleTween = scaleTween;
+                    Break();
                 }
             }
         }
@@ -161,25 +164,47 @@ namespace ScaryCastle
 
         #region Protected members
 
+        // BreakSound
+        protected Sound? BreakSound { get; set; }
+
         // DefaultScale
         protected Vector2 DefaultScale { get; }
 
         // ImpactSound
         protected Sound? ImpactSound { get; set; }
 
+        // OnDraw
+        protected override void OnDraw(GameTime gameTime)
+        {
+            if (isGrounded)
+            {
+                if (scaleTween.IsRunning)
+                    base.OnDraw(gameTime);
+
+                brokenPieces.Draw(gameTime);
+            }
+            else
+            {
+                base.OnDraw(gameTime);
+            }
+        }
+
         // OnDrawShadow
         protected override void OnDrawShadow(GameTime gameTime)
         {
-            Shadow.Y = Y + 1;
-            Shadow.Rotation = Rotation;
-            Shadow.Draw(gameTime);
+            if (!isGrounded)
+            {
+                Shadow.Y = Y + 1;
+                Shadow.Rotation = Rotation;
+                Shadow.Draw(gameTime);
+            }
         }
 
-        // OnUnload
-        protected override void OnUnload()
+        // OnParentChanged
+        protected override void OnParentChanged(Entity? previousParent)
         {
-            base.OnUnload();
-            ReturnToObjectPool();
+            if (!HasParent)
+                Session.ObjectPools.ReturnThrownObject(this);
         }
 
         // OnUpdate
@@ -187,15 +212,11 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            if (Shadow.Image != null)
-            {
-                Shadow.X = X;
-                Shadow.Scale = Scale;
-                Shadow.Opacity = Opacity * ColorPalette.ShadowOpacity;
-            }
-
             if (isGrounded)
+            {
+                brokenPieces.Update(gameTime);
                 return;
+            }
 
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -214,6 +235,12 @@ namespace ScaryCastle
 
             // Object collision
             CheckCollision(true);
+
+            if (Shadow.Image != null)
+            {
+                Shadow.X = X;
+                Shadow.Scale = Scale;
+            }
         }
 
         // Shadow
@@ -229,7 +256,7 @@ namespace ScaryCastle
         {
             if (owner.Room == null)
             {
-                ReturnToObjectPool();
+                Session.ObjectPools.ReturnThrownObject(this);
                 return;
             }
 
@@ -238,13 +265,13 @@ namespace ScaryCastle
             this.bounceCount = 0;
             this.ignoreThing = null;
             this.isGrounded = false;
-            this.Opacity = 1;
             this.Rotation = 0;
+            this.Opacity = 1;
             this.Scale = DefaultScale;
-            this.opacityTween.Stop();
             this.scaleTween.Stop();
             this.velocity = initialVelocity;
             this.lastThingCollisioned = null;
+            this.RenderLayer = RenderLayer.Default;
 
             depth = owner.Depth + .01f;
 
@@ -271,7 +298,9 @@ namespace ScaryCastle
                             continue;
                     }
                     else if (testPoly.Vertices[i].X < owner.X)
+                    {
                         continue;
+                    }
 
                     if (testPoly.Vertices[i].Y > y)
                         y = testPoly.Vertices[i].Y;

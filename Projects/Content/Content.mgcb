@@ -233,6 +233,30 @@
 /processorParam:Quality=Best
 /build:Audio/FX/AppleBite.wav
 
+#begin Audio/FX/Bible1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Bible1.wav;Audio/FX/Bible1
+
+#begin Audio/FX/Bible2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Bible2.wav;Audio/FX/Bible2
+
+#begin Audio/FX/Bible3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Bible3.wav;Audio/FX/Bible3
+
+#begin Audio/FX/BibleBreak.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/BibleBreak.wav;Audio/FX/BibleBreak
+
 #begin Audio/FX/BlipA1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -922,30 +946,6 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/Text.wav;Audio/FX/Text
-
-#begin Audio/FX/ThrowableDuck1.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/ThrowableDuck1.wav;Audio/FX/ThrowableDuck1
-
-#begin Audio/FX/ThrowableDuck2.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/ThrowableDuck2.wav;Audio/FX/ThrowableDuck2
-
-#begin Audio/FX/ThrowableDuck3.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/ThrowableDuck3.wav;Audio/FX/ThrowableDuck3
-
-#begin Audio/FX/ThrowablePickup.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/ThrowablePickup.wav;Audio/FX/ThrowablePickup
 
 #begin Audio/FX/Thunder1.wav
 /importer:WavImporter

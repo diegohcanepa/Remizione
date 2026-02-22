@@ -306,7 +306,7 @@ namespace ScaryCastle
         {
             base.OnLoad();
             OpacityFactor = 1;
-            Stand(true);
+            Stand();
         }
 
         // OnMoveToCompleted
@@ -385,12 +385,7 @@ namespace ScaryCastle
             BodyMachine.Update(gameTime);
 
             if (IsPlayer && Session.IsCurrentScene && !Session.IsAwaiting && !IsMoving && CanHandleInput)
-            {
-                var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera);
-                if (mousePos.X <= RuntimeHotspot.BoundingRectangleF.Left ||
-                    mousePos.X >= RuntimeHotspot.BoundingRectangleF.Right)
-                    FaceTo(mousePos);
-            }
+                FaceToMouseCursor();
         }
 
         #endregion
@@ -507,6 +502,17 @@ namespace ScaryCastle
             return true;
         }
 
+        // FaceToMouseCursor
+        public void FaceToMouseCursor()
+        {
+            var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera);
+            if (mousePos.X <= RuntimeHotspot.BoundingRectangleF.Left ||
+                mousePos.X >= RuntimeHotspot.BoundingRectangleF.Right)
+            {
+                FaceTo(mousePos);
+            }
+        }
+
         // FastMove
         public bool FastMove { get; set; }
 
@@ -545,10 +551,7 @@ namespace ScaryCastle
         {
             get
             {
-                if (speechBubble == null)
-                    return false;
-                else
-                    return speechBubble.State != SpeechBubbleState.Hidden;
+                return speechBubble == null ? false : speechBubble.State != SpeechBubbleState.Hidden;
             }
         }
 
@@ -669,9 +672,8 @@ namespace ScaryCastle
 
         // Stand
         [ScriptMethod()]
-        public void Stand(bool forceRestart = false)
+        public void Stand()
         {
-            //StateMachine.ChangeState(ActorStateNames.Stand, forceRestart);
             BodyMachine.ChangeState<BodyStandState>();
         }
 
@@ -690,7 +692,7 @@ namespace ScaryCastle
             if (AnimationSettings.DetachedHead)
                 headSprite.Player.Play(AnimationNames.Stand, true);
             else
-                Stand(true);
+                Stand();
         }
 
         // ThrownObjectSpawnPosition

@@ -32,7 +32,7 @@ namespace ScaryCastle
 
         #region Constructor
 
-        public ShatterPiece(ScaryCastleGame game, AtlasImage image, Vector2 scale)
+        public ShatterPiece(EngendroGame game, AtlasImage image, Vector2 scale)
             : base(game)
         {
             this.image = new(Game, image)
