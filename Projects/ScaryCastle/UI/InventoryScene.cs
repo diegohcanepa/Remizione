@@ -46,7 +46,7 @@ namespace ScaryCastle
             // Slots
             for (var i = 0; i < slots.Length; i++)
             {
-                slots[i] = new(Game, Atlases.UI.InventorySacredSlot)
+                slots[i] = new(Game, Atlases.UI.InventorySlot)
                 {
                     PivotOrigin = RectanglePoint.LeftBottom,
                     Y = Screen.Area.Bottom - 10
@@ -151,7 +151,7 @@ namespace ScaryCastle
 
             for (int i = 0; i < slotCount; i++)
             {
-                slots[i].Image = Atlases.UI.InventoryCommonSlot;
+                slots[i].Image = Atlases.UI.InventorySlot;
                 slots[i].X = startingX + (i * (slotWidth + spacing));
                 icons[i].Image = null;
                 shadows[i].Image = null;

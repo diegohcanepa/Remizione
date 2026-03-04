@@ -20,6 +20,12 @@
 			"category": "Food"
 		},
 		{
+			"name": "Coin",
+			"category": "Misc",
+			"isStackable": true,
+			"pickupSound": "CollectCoin"
+		},		
+		{
 			"name": "Cross",
 			"areaRange": "Small",
 			"consumptionType": "None",

@@ -35,11 +35,8 @@ namespace ScaryCastle
             this.Log = new(Game);
             this.Message = new(Game, RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
 
-            // Coin meter 
-            this.CoinMeter = new(session);
-
             // CommonInventoryMeter
-            this.CommonInventoryMeter = new(session.Inventory);
+            this.InventoryMeter = new(session.Inventory);
 
             // Mini map
             this.MiniMap = new(Game);
@@ -57,8 +54,7 @@ namespace ScaryCastle
             playerIcon.Draw(gameTime);
             healthMeter.Draw(gameTime);
 
-            CoinMeter.Draw(gameTime);
-            CommonInventoryMeter.Draw(gameTime);
+            InventoryMeter.Draw(gameTime);
             Log.Draw(gameTime);
             Message.Draw(gameTime);
             Game.SpriteBatch.End();
@@ -70,21 +66,14 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            CommonInventoryMeter.Update(gameTime);
+            InventoryMeter.Update(gameTime);
             healthMeter.Update(gameTime);
             MiniMap.Update(gameTime);
             Log.Update(gameTime);
             Message.Update(gameTime);
-            CoinMeter.Update(gameTime);
         }
 
         #endregion
-
-        // CoinMeter
-        public UICoinMeter CoinMeter { get; }
-
-        // CommonInventoryMeter
-        public UIInventoryMeter CommonInventoryMeter { get; }
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
@@ -97,6 +86,9 @@ namespace ScaryCastle
 
             return HandleInputResult.Unhandled;
         }
+
+        // InventoryMeter
+        public UIInventoryMeter InventoryMeter { get; }
 
         // Log
         public UILog Log { get; }

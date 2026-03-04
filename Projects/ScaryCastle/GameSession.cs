@@ -292,10 +292,6 @@ namespace ScaryCastle
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
                 playerPosition = DataConvert.ToVector2(playerPositionValue);
 
-            // Coins
-            if (sessionNode.Attributes[nameof(Coins)]?.Value is string coins)
-                this.Coins = XmlConvert.ToInt32(coins);
-
             // CommonInventory
             if (sessionNode.Attributes[nameof(Inventory)]?.Value is string commonInventoryData)
                 Inventory.LoadState(commonInventoryData);
@@ -402,9 +398,6 @@ namespace ScaryCastle
             if (playerPosition.HasValue)
                 output.WriteAttributeString(nameof(playerPosition), DataConvert.ToString(playerPosition.Value));
 
-            // Coins
-            output.WriteAttributeString(nameof(Coins), XmlConvert.ToString(Coins));
-
             // CommonInventory
             if (Inventory.SaveState() is string commonInventoryData)
                 output.WriteAttributeString(nameof(Inventory), commonInventoryData);
@@ -437,10 +430,6 @@ namespace ScaryCastle
             }
         }
 
-        // Coins
-        [ScriptProperty]
-        public int Coins { get; set; }
-
         // CompleteRun
         [ScriptMethod]
         public void CompleteRun()
@@ -467,7 +456,6 @@ namespace ScaryCastle
 
             HUDVisible = false;
             Inventory.Clear();
-            Coins = 0;
             RunManager.Clear();
             CleanUpRuntimeEntities();
             Seed = 0;

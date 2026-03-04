@@ -24,12 +24,11 @@ namespace ScaryCastle
             HeartBlackFull = this[nameof(HeartBlackFull)];
             HeartBlueHalf = this[nameof(HeartBlueHalf)];
             HeartBlueFull = this[nameof(HeartBlueFull)];
-            InventoryCommonSlot = this[nameof(InventoryCommonSlot)];
+            InventorySlot = this[nameof(InventorySlot)];
             InventoryGridContainer = this[nameof(InventoryGridContainer)];
             InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
             InventoryInfoTitleContainer = this[nameof(InventoryInfoTitleContainer)];
             InventoryNavigationBar = this[nameof(InventoryNavigationBar)];
-            InventorySacredSlot = this[nameof(InventorySacredSlot)];
             ItemGridSlot = this[nameof(ItemGridSlot)];
             ItemGridSlotSelected = this[nameof(ItemGridSlotSelected)];
             MessageContainer = this[nameof(MessageContainer)];
@@ -64,8 +63,8 @@ namespace ScaryCastle
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
 
-        // InventoryCommonSlot
-        public AtlasImage InventoryCommonSlot { get; }
+        // InventorySlot
+        public AtlasImage InventorySlot { get; }
 
         // InventoryGridContainer
         public AtlasImage InventoryGridContainer { get; }
@@ -78,9 +77,6 @@ namespace ScaryCastle
 
         // InventoryNavigationBar
         public AtlasImage InventoryNavigationBar { get; }
-
-        // InventorySacredSlot
-        public AtlasImage InventorySacredSlot { get; }
 
         // ItemGridSlot
         public AtlasImage ItemGridSlot { get; }

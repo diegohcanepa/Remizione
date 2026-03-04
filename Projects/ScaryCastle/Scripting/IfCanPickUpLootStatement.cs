@@ -17,7 +17,7 @@ namespace ScaryCastle.Scripting
             if (Session is not GameSession session)
                 return false;
 
-            if (session.OutcomeTarget is ILootConatiner<ItemDefinition> lootContainer && lootContainer.Loot != null)
+            if (session.OutcomeTarget is ILoot<ItemDefinition> lootContainer && lootContainer.Loot != null)
             {
                 if (!session.Inventory.HasSpace(lootContainer.Loot))
                 {

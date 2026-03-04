@@ -7,7 +7,7 @@ namespace ScaryCastle
     /// <summary>
     /// Trunk
     /// </summary>
-    public class Trunk : Openable, ILootConatiner<ItemDefinition>
+    public class Trunk : Openable, ILoot<ItemDefinition>
     {
         private readonly ImageSprite itemImage;
         private readonly ImageSprite itemImageShadow;

@@ -46,7 +46,7 @@
   <String Key="Item.Battery.Name">Batería</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
   <String Key="Item.Chili.Name">Chile picante</String>
-  <String Key="Item.Coin.Description">La moneda favorita de San Peregrino. Porque la salvación no es gratis: tiene un precio divinamente sugerido.</String>
+  <String Key="Item.Coin.Description">Vil metal: La prueba física de que tu moral tiene un precio, y honestamente, es bastante bajo.</String>
   <String Key="Item.Coin.Name">Moneda de oro</String>
   <String Key="Item.Cross.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Cross.Name">Cruz de Zumbito</String>

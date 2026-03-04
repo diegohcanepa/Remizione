@@ -6,7 +6,7 @@ namespace ScaryCastle
     /// <summary>
     /// Coin
     /// </summary>
-    public sealed class Coin : Prop
+    public sealed class Coin : Prop, ILoot<ItemDefinition>
     {
         // Constructor
         public Coin(GameSession session, string name)
@@ -20,6 +20,7 @@ namespace ScaryCastle
             Hotspot = new Polygon("0,0;5,0;5,4;0,4");
             IgnoreThrowables = true;
             IgnoreWalkArea = false;
+            Loot = ItemDefinition.Definitions.Find("Coin");
             RenderLayer = RenderLayer.OverBackground;
 
             var animation = AddAnimation("Default");
@@ -28,6 +29,8 @@ namespace ScaryCastle
             animation.AddFrame("Coin03", 100);
             animation.AddFrame("Coin04", 100);
         }
+
+        #region Protected members
 
         // CanCheckCollisions
         protected override bool CanCheckCollisions()
@@ -56,5 +59,10 @@ namespace ScaryCastle
                 Tweens.PositionTween = Vector2Tween.Create(TweenStyle.CubicOut, Position, destination, tweenDuration);
             }
         }
+
+        #endregion
+
+        // Loot
+        public ItemDefinition? Loot { get; set; }
     }
 }

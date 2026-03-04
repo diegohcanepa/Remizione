@@ -54,7 +54,7 @@ namespace ScaryCastle
             nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -2);
             nounText.Text = noun;
             icon.Image = image;
-            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -1);
+            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
 
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 1000);
         }

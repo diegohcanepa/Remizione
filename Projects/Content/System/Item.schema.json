@@ -69,6 +69,10 @@
             "isMagical": {
               "type": "boolean"
             },
+            "pickupSound": {
+              "type": "string",
+              "description": "Nombre del archivo de sonido a reproducir cuando se colecta."
+            },
             "skillChance": {
               "type": "integer"
             },

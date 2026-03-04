@@ -17,14 +17,14 @@ namespace ScaryCastle.Scripting
             if (Session is not GameSession session)
                 return;
 
-            if (session.OutcomeTarget is ILootConatiner<ItemDefinition> lootContainer)
+            if (session.OutcomeTarget is ILoot<ItemDefinition> loot)
             {
-                if (lootContainer.Loot != null)
+                if (loot.Loot != null)
                 {
-                    lootContainer.Loot.PickupSound?.Play();
-                    session.Inventory.Add(lootContainer.Loot);
-                    session.HUD.Log.Show(LogVerb.Found, lootContainer.Loot);
-                    lootContainer.Loot = null;
+                    loot.Loot.PickupSound?.Play();
+                    session.Inventory.Add(loot.Loot);
+                    session.HUD.Log.Show(LogVerb.Found, loot.Loot);
+                    loot.Loot = null;
                 }
             }
         }

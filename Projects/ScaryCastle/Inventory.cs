@@ -90,7 +90,7 @@ namespace ScaryCastle
                     Invalidate();
                 }
             }
-        } = 9;
+        } = 6;
 
         // ContentVersion
         public int ContentVersion { get; private set; }
