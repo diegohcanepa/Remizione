@@ -278,7 +278,7 @@ namespace ScaryCastle
         protected override void OnRead(XmlNode sessionNode)
         {
             if (sessionNode == null || sessionNode.Attributes == null)
-                throw new InvalidOperationException("Session node attributes not found");
+                throw new InvalidOperationException("Session node attributes not found.");
 
             // FloorIndex
             if (sessionNode.Attributes[nameof(FloorIndex)]?.Value is string floorIndex)
@@ -292,9 +292,13 @@ namespace ScaryCastle
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
                 playerPosition = DataConvert.ToVector2(playerPositionValue);
 
-            // CommonInventory
-            if (sessionNode.Attributes[nameof(Inventory)]?.Value is string commonInventoryData)
-                Inventory.LoadState(commonInventoryData);
+            // Inventory
+            if (sessionNode.Attributes[nameof(Inventory)]?.Value is string inventoryData)
+                Inventory.LoadState(inventoryData);
+
+            // RunCount
+            if (sessionNode.Attributes[nameof(RunCount)]?.Value is string runCountValue)
+                RunCount = XmlConvert.ToInt32(runCountValue);
         }
 
         // OnResume
@@ -398,9 +402,12 @@ namespace ScaryCastle
             if (playerPosition.HasValue)
                 output.WriteAttributeString(nameof(playerPosition), DataConvert.ToString(playerPosition.Value));
 
-            // CommonInventory
-            if (Inventory.SaveState() is string commonInventoryData)
-                output.WriteAttributeString(nameof(Inventory), commonInventoryData);
+            // Inventory
+            if (Inventory.SaveState() is string inventoryData)
+                output.WriteAttributeString(nameof(Inventory), inventoryData);
+
+            // RunCount
+            output.WriteAttributeString(nameof(RunCount), XmlConvert.ToString(RunCount));
         }
 
         #endregion
@@ -435,6 +442,7 @@ namespace ScaryCastle
         public void CompleteRun()
         {
             EndRun();
+            RunCount++;
         }
 
         // DeclaredThings
@@ -577,6 +585,9 @@ namespace ScaryCastle
         // Room
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
+
+        // RunCount
+        public int RunCount { get; private set; }
 
         // Seed
         [ScriptProperty]

@@ -22,6 +22,7 @@ namespace ScaryCastle
             Difficulty = element.GetEnum("difficulty", Difficulty.Easy);
             MaxPerRun = element.GetInt32("maxPerRun", -1);
             MinFloor = element.GetInt32("minFloor", 0);
+            MinRun = element.GetInt32("minRun", 0);
             PreferredLootCategory = element.GetEnum<ItemCategory>("preferredLootCategory");
             PreferredLootRealm = element.GetEnum<Realm>("preferredLootRealm");
             QualityBoost = element.GetInt32("qualityBoost", 0);
@@ -60,13 +61,16 @@ namespace ScaryCastle
         // MinFloor
         public int MinFloor { get; }
 
-        // PassesFloorConstraints
-        public bool PassesFloorConstraints(GameSession session)
+        // MinRun
+        public int MinRun { get; }
+
+        // PassesRunConstraints
+        public bool PassesRunConstraints(GameSession session)
         {
             if (!PassesMaxPerRunConstraint())
                 return false;
 
-            return session.FloorIndex >= MinFloor;
+            return session.RunCount >= MinRun && session.FloorIndex >= MinFloor;
         }
 
         // PassesMaxPerRunConstraint
