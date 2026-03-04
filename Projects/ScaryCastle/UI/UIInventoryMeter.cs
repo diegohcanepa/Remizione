@@ -11,10 +11,11 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly TextSprite amountText;
-        private readonly ImageSprite flyingIcon;
         private readonly ImageSprite icon;
         private readonly Inventory inventory;
         private int lastKnownCount = -1;
+        private readonly FloatTween rotationTween = new();
+        private readonly Vector2Tween scaleTween = new();
 
         #endregion
 
@@ -29,8 +30,8 @@ namespace ScaryCastle
             // Icon
             this.icon = new(Game, Atlases.UI.Sack)
             {
-                PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.RightBottom, -7, -9),
+                PivotOrigin = RectanglePoint.Center,
+                Position = Screen.Area.GetPoint(RectanglePoint.RightBottom, -12, -12),
             };
 
             // Amount
@@ -42,12 +43,6 @@ namespace ScaryCastle
                 Scale = ScaleInfo.Text.Huge,
                 Spacing = -6
             };
-
-            // Flying icon
-            this.flyingIcon = new(Game)
-            {
-                PivotOrigin = RectanglePoint.Center,
-            };
         }
 
         #endregion
@@ -57,7 +52,6 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            flyingIcon.Draw(gameTime);
             icon.Draw(gameTime);
             amountText.Draw(gameTime);
         }
@@ -65,7 +59,6 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            flyingIcon.Update(gameTime);
             icon.Update(gameTime);
 
             if (lastKnownCount != inventory.Count)
@@ -76,5 +69,15 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // Animate
+        public void Animate()
+        {
+            rotationTween.Start(TweenStyle.QuadraticInOut, 0, 15, 50, 6);
+            scaleTween.Start(TweenStyle.QuadraticInOut, Vector2.One, Vector2.One * 1.3f, 150, 2);
+
+            icon.Tweens.RotationTween = rotationTween;
+            icon.Tweens.ScaleTween = scaleTween;
+        }
     }
 }
