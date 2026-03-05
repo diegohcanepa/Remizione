@@ -239,7 +239,7 @@ namespace ScaryCastle
 
             if (Session.Player != null)
             {
-                playerLight.Position = Session.Player.GetAbsolutePoint(15, 15);
+                playerLight.Position = Session.Player.GetAnchoredPosition(15, 15);
                 playerLight.Draw(gameTime);
             }
 

@@ -275,6 +275,8 @@
             <key type="filename">Edmund-assets/TalkHead02.png</key>
             <key type="filename">Edmund-assets/ThrowObject01.png</key>
             <key type="filename">Edmund-assets/ThrowObject02.png</key>
+            <key type="filename">Edmund-assets/ThrowObject03.png</key>
+            <key type="filename">Edmund-assets/ThrowObject04.png</key>
             <key type="filename">Edmund-assets/TouchHead01.png</key>
             <key type="filename">Edmund-assets/TouchHead02.png</key>
             <key type="filename">Edmund-assets/UseCross01.png</key>
@@ -616,6 +618,89 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Skeleton-assets/Gut0.png</key>
+            <key type="filename">Skeleton-assets/Gut4.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,2,2</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,2,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Skeleton-assets/Gut1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,1,3,1</rect>
+                <key>scale9Paddings</key>
+                <rect>2,1,3,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Skeleton-assets/Gut2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Skeleton-assets/Gut3.png</key>
+            <key type="filename">Skeleton-assets/Gut5.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,1,2</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,1,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Skeleton-assets/Move01.png</key>
+            <key type="filename">Skeleton-assets/Move02.png</key>
+            <key type="filename">Skeleton-assets/Move03.png</key>
+            <key type="filename">Skeleton-assets/Move04.png</key>
+            <key type="filename">Skeleton-assets/Stand01.png</key>
+            <key type="filename">Skeleton-assets/StandHead01.png</key>
+            <key type="filename">Skeleton-assets/StandHead02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,6,10,11</rect>
+                <key>scale9Paddings</key>
+                <rect>5,6,10,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Zabul-assets/Gut0.png</key>
             <key type="filename">Zabul-assets/Gut2.png</key>
             <key type="filename">Zabul-assets/Gut4.png</key>
@@ -685,6 +770,7 @@
                     <filename>Mandinga-assets</filename>
                     <filename>EnviousEye-assets</filename>
                     <filename>Father-assets</filename>
+                    <filename>Skeleton-assets</filename>
                 </array>
             </struct>
         </map>

@@ -35,6 +35,7 @@ namespace ScaryCastle
         public Actor(GameSession session, string name)
             : base(session, name)
         {
+            this.AffectsPathfinding = false;
             this.Atlas = Atlases.Actors;
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
             this.DisplayNameKey = $"Actor.{DeclaredName}";
@@ -527,7 +528,7 @@ namespace ScaryCastle
         // GetThrowableSpawnPosition
         public Vector2 GetThrowableSpawnPosition()
         {
-            return this.GetAbsolutePoint(ThrownObjectSpawnPosition);
+            return this.GetAnchoredPosition(ThrownObjectSpawnPosition);
         }
 
         // Guts
@@ -585,9 +586,6 @@ namespace ScaryCastle
 
         // IsStandingOrMoving
         public bool IsStandingOrMoving => BodyMachine.CurrentState is BodyStandState or BodyMoveState;
-
-        // IsWalkAreaHole
-        public override bool IsWalkAreaHole => false;
 
         // MoveRandomly
         [ScriptMethod]

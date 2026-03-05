@@ -24,10 +24,11 @@ namespace ScaryCastle
         public SpearTrap(GameSession session, string name)
             : base(session, name)
         {
+            AffectsPathfinding = false;
             Atlas = Atlases.Environment;
             CollisionDetection = false;
             IgnoreWalkArea = false;
-            DepthOffset = -5;
+            DepthOffset = -10;
 
             var animation = AddAnimation(PreparedAnimationName);
             animation.AddFrame("SpearTrap01", 1000);
@@ -45,6 +46,25 @@ namespace ScaryCastle
         }
 
         #region Private members
+
+        // ApplyDamage
+        private void ApplyDamage()
+        {
+            if (Room == null)
+                return;
+
+            for (var i = 0; i < Room.Children.Count; i++)
+            {
+                if (Room.Children[i] == this)
+                    continue;
+
+                if (Room.Children[i] is GameThing target)
+                {
+                    if (RuntimeCollider.BoundingRectangleF.Bottom >= target.Y && RuntimeCollider.BoundingRectangleF.Intersects(target.RuntimeHotspot.BoundingRectangleF))
+                        EffectDescriptor.Apply(Definition.Effects, this, target);
+                }
+            }
+        }
 
         // Attack
         private void Attack()
@@ -111,10 +131,10 @@ namespace ScaryCastle
                     state = SpearState.Up;
                     upCooldown = 1000;
                 }
-                else if (!damageApplied && Session.Player != null && RuntimeHotspot.BoundingRectangleF.Intersects(Session.Player.RuntimeCollider.BoundingRectangleF))
+                else if (!damageApplied)
                 {
                     damageApplied = true;
-                    EffectDescriptor.Apply(Definition.Effects, this, Session.Player);
+                    ApplyDamage();
                 }
             }
 

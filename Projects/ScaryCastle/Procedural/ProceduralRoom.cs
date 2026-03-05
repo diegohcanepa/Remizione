@@ -88,7 +88,7 @@ namespace ScaryCastle
                     continue;
 
                 // Run constraints
-                if (!definition.PassesFloorConstraints(Session))
+                if (!definition.PassesRunConstraints(Session))
                     continue;
 
                 // Scope rules

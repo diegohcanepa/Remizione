@@ -17,7 +17,7 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        protected Definition(JsonElement element)
+        protected Definition(JsonElement element, bool uniqueName = true)
         {
             this.Name = element.GetProperty("name").GetString() ?? throw new InvalidOperationException("Name not found.");
 
@@ -31,10 +31,13 @@ namespace ScaryCastle
             if (Enum.IsDefined(typeof(ItemCategory), Name))
                 throw new InvalidOperationException($"The name '{Name}' cannot be used because it is an item category.");
 
-            if (definitions.Contains(Name))
-                throw new InvalidOperationException($"The name '{Name}' cannot be used because it is already being used by another definition.");
-            else
-                definitions.Add(Name);
+            if (uniqueName)
+            {
+                if (definitions.Contains(Name))
+                    throw new InvalidOperationException($"The name '{Name}' cannot be used because it is already being used by another definition.");
+                else
+                    definitions.Add(Name);
+            }
 
             // SpawnWeight
             SpawnWeight = element.GetFloat("spawnWeight", 1);

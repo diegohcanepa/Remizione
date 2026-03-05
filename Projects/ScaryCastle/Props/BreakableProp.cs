@@ -36,7 +36,9 @@ namespace ScaryCastle
                 }
             }
             else
+            {
                 base.OnDraw(gameTime);
+            }
         }
 
         // OnLoad
@@ -55,7 +57,9 @@ namespace ScaryCastle
                         index++;
                     }
                     else
+                    {
                         break;
+                    }
                 }
             }
         }

@@ -109,7 +109,7 @@ namespace ScaryCastle
         }
 
         // IsActive
-        bool IHoleArea.IsActive => IsWalkAreaHole;
+        bool IHoleArea.IsActive => !Collider.IsEmpty && AffectsPathfinding;
 
         // Polygon
         ReadOnlyPolygon IHoleArea.Polygon => holePoly;
@@ -294,6 +294,10 @@ namespace ScaryCastle
         protected override void OnLoad()
         {
             base.OnLoad();
+
+            if (shadowSpot.Size > 0 && shadowSpot.AnchorPosition == Vector2.Zero && Sprite.Player.Frame != null) 
+                shadowSpot.AnchorPosition = new Vector2(Sprite.Width / 2, Sprite.Height - .5f);
+
             blinker.Stop();
             isCollisionDirty = true;
             InvalidateCollisionPolygons();
@@ -382,6 +386,10 @@ namespace ScaryCastle
         protected bool SuppressImpactWordOnDeath { get; init; }
 
         #endregion
+
+        // AffectsPathfinding
+        [ScriptProperty]
+        public bool AffectsPathfinding { get; set; } = true;
 
         // AllowInteraction
         [ScriptProperty]
@@ -575,7 +583,7 @@ namespace ScaryCastle
             if (AttachedLight != null)
             {
                 if (AttachedLightPosition != Vector2.Zero)
-                    AttachedLight.Position = this.GetAbsolutePoint(AttachedLightPosition);
+                    AttachedLight.Position = this.GetAnchoredPosition(AttachedLightPosition);
                 AttachedLight.Draw(gameTime);
             }
 
@@ -643,7 +651,7 @@ namespace ScaryCastle
                 if (HotspotPlacement == PlacementMode.Absolute)
                     return ApproachPosition;
                 else
-                    return this.GetAbsolutePoint(ApproachPosition);
+                    return this.GetAnchoredPosition(ApproachPosition);
             }
 
             // Datos básicos
@@ -711,7 +719,7 @@ namespace ScaryCastle
             if (OverheadOrigin == Vector2.Zero)
                 return BoundingBox.GetPoint(RectanglePoint.Top);
             else
-                return this.GetAbsolutePoint(OverheadOrigin);
+                return this.GetAnchoredPosition(OverheadOrigin);
         }
 
         // GetResistanceModifier
@@ -880,10 +888,6 @@ namespace ScaryCastle
                 return RuntimeHotspot.Contains(InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera));
         }
 
-        // IsWalkAreaHole
-        [ScriptProperty]
-        public virtual bool IsWalkAreaHole => !Collider.IsEmpty;
-
         // LocalizedDisplayName
         public string LocalizedDisplayName { get; private set; } = string.Empty;
 
@@ -980,14 +984,6 @@ namespace ScaryCastle
         // Session
         public new GameSession Session { get; }
 
-        // ShadowOffset
-        [ScriptProperty]
-        public Vector2 ShadowOffset
-        {
-            get => shadowSpot.Offset;
-            set => shadowSpot.Offset = value;
-        }
-
         // ShadowSpotSize
         [ScriptProperty]
         public int ShadowSpotSize
@@ -1055,22 +1051,30 @@ namespace ScaryCastle
                 int finalDamage = (int)(amount * GetResistanceModifier(damageType));
 
                 // Clamp para no restar más de lo que tiene
-                if (finalDamage > HP) finalDamage = HP;
+                if (finalDamage > HP)
+                    finalDamage = HP;
 
                 // Si después de la resistencia el daño es 0, salimos de la lógica de HP
                 if (finalDamage > 0)
                 {
                     HP -= finalDamage;
 
-                    // Feedback de Daño Real (Parpadeo Rojo / Blanco)
-                    // Solo parpadeamos si realmente perdimos vida
-                    hurtTween ??= new();
-                    hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
-
-                    if (HitEffect == HitEffect.Blink)
-                        blinker.Start(40, 15); // Invulnerabilidad post-daño
+                    if (IsDead)
+                    {
+                        knockbackForce = Vector2.Zero;
+                    }
                     else
-                        blinker.Stop();
+                    {
+                        // Feedback de Daño Real (Parpadeo Rojo / Blanco)
+                        // Solo parpadeamos si realmente perdimos vida
+                        hurtTween ??= new();
+                        hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
+
+                        if (HitEffect == HitEffect.Blink)
+                            blinker.Start(40, 15); // Invulnerabilidad post-daño
+                        else
+                            blinker.Stop();
+                    }
 
                     // Evento específico para lógicas custom
                     OnTakeDamage(attacker, finalDamage, damageType);

@@ -305,6 +305,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/BodyFallMedium1.wav
 
+#begin Audio/FX/Bones.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Bones.wav;Audio/FX/Bones
+
 #begin Audio/FX/CardFlap.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

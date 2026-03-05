@@ -53,9 +53,7 @@ namespace ScaryCastle
             {
                 spotImage.Effects = thing.Effects;
                 spotImage.Opacity = GetCurrentOpacity() * thing.Opacity;
-                var x = thing.IsFlippedHorizontally ? -Offset.X : Offset.X;
-                var y = Offset.Y;
-                spotImage.Position = thing.BoundingBox.GetPoint(RectanglePoint.Bottom, x, y);
+                spotImage.Position = thing.GetAnchoredPosition(AnchorPosition);
 
                 if (thing.Altitude > 0)
                     spotImage.Y += thing.Altitude;
@@ -66,8 +64,8 @@ namespace ScaryCastle
 
         #endregion
 
-        // Offset
-        public Vector2 Offset { get; set; }
+        // AnchorPosition
+        public Vector2 AnchorPosition { get; set; }
 
         // Size
         public int Size

@@ -26,6 +26,7 @@
 	<FX Name="BlipC" MaxInstances="4" Volume=".5" />
 	<FX Name="BlipMandinga" MaxInstances="4" />
 	<FX Name="BodyFallMedium" MaxInstances="8" Sounds="1..1" />
+	<FX Name="Bones" MaxInstances="6" />
 	<FX Name="ChatMessage" Volume=".6" />
 	<FX Name="CardFlap" />
 	<FX Name="CardWhoosh" MaxInstances="8" Sounds="1..6" />

@@ -224,7 +224,7 @@ namespace ScaryCastle
                      door.TargetRoom?.RoomGraph.Index == previousRoomIndex)
                 {
                     targetDoor = door;
-                    return door.GetAbsolutePoint(door.ApproachPosition);
+                    return door.GetAnchoredPosition(door.ApproachPosition);
                 }
             }
 

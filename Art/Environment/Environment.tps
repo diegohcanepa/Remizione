@@ -1399,9 +1399,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>3,6,5,13</rect>
+                <rect>10,11,19,21</rect>
                 <key>scale9Paddings</key>
-                <rect>3,6,5,13</rect>
+                <rect>10,11,19,21</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

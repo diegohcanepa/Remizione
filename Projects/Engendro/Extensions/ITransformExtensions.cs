@@ -32,45 +32,36 @@ namespace Engendro
                 return result;
             }
 
-            // GetAbsolutePoint
-            public Vector2 GetAbsolutePoint(float x, float y)
-            {
-                return GetAbsolutePoint(transform, new Vector2(x, y));
-            }
-
-            // GetAbsolutePoint
-            public Vector2 GetAbsolutePoint(Vector2 position)
-            {
-                return GetAbsolutePoint(transform, position, 0, 0);
-            }
-
-            // GetAbsolutePoint
-            public Vector2 GetAbsolutePoint(Vector2 position, Vector2 offset)
-            {
-                return GetAbsolutePoint(transform, position, offset.X, offset.Y);
-            }
-
-            // GetAbsolutePoint
-            public Vector2 GetAbsolutePoint(Vector2 position, float xOffset, float yOffset)
+            // GetAnchoredPosition
+            public Vector2 GetAnchoredPosition(Vector2 localOffset)
             {
                 var bbox = transform.BoundingBox;
 
-                // X
+                // 1. Aplicar la escala al desplazamiento local primero.
+                // Esto asegura que si el objeto es el doble de grande, el offset también lo sea.
+                float scaledX = localOffset.X * transform.ScaleX;
+                float scaledY = localOffset.Y * transform.ScaleY;
+
+                Vector2 result = new();
+
+                // 2. Proyectar sobre el BoundingBox considerando el Flip
                 if (transform.IsFlippedHorizontally)
-                    position.X = bbox.Left + bbox.Width - position.X;
+                    result.X = bbox.Right - scaledX;
                 else
-                    position.X += bbox.Left;
+                    result.X = bbox.Left + scaledX;
 
-                // Y
                 if (transform.IsFlippedVertically)
-                    position.Y = bbox.Top + bbox.Height - position.Y;
+                    result.Y = bbox.Bottom - scaledY;
                 else
-                    position.Y += bbox.Top;
+                    result.Y = bbox.Top + scaledY;
 
-                position.X += xOffset;
-                position.Y += yOffset;
+                return result;
+            }
 
-                return position;
+            // GetAnchoredPosition
+            public Vector2 GetAnchoredPosition(float x, float y)
+            {
+                return GetAnchoredPosition(transform, new Vector2(x, y));
             }
         }
 

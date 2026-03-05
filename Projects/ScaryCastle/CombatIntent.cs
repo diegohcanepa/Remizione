@@ -12,7 +12,7 @@ namespace ScaryCastle
     {
         // Constructor
         public CombatIntent(JsonElement element)
-            : base(element)
+            : base(element, false)
         {
             // Category
             Category = element.GetEnum<CombatIntentCategory>("category", CombatIntentCategory.Basic);

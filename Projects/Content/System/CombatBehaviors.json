@@ -36,6 +36,25 @@
           ]
         }
       ]
-    }
+    },
+    {
+      "name": "Skeleton",
+      "archetype": "Tactical",
+      "intents": [
+        {
+          "name": "Bite",
+          "category": "Basic",
+          "sound": "EnviousEyeAttack",
+          "effects": [
+            {
+              "effectType": "Damage",
+              "amount": "1d4",
+              "impactWord": "AghRed",
+              "knockback": "15,12"
+            }
+          ]
+        }
+      ]
+    }    
   ]
 }

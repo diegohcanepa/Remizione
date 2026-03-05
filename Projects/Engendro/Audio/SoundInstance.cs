@@ -58,10 +58,10 @@ namespace Engendro.Audio
                     Emitter.Update(this, GetEffectiveVolume());
                     instance.Volume = Volume.Current;
                 }
-                else
-                {
-                    Stop();
-                }
+                //else
+                //{
+                //    Stop();
+                //}
             }
 
             var scene = EngendroGame.Instance?.SceneManager.CurrentScene;

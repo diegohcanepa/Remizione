@@ -7,7 +7,24 @@
       "maxSpawnAmount": 3,
       "effects": [
         {
-          "damageType":"Physical",
+          "damageType": "Physical",
+          "effectType": "Damage",
+          "amount": "1",
+          "impactWord": "OuchGreen",
+          "knockback": "10,5"
+        }
+      ],
+      "placements": [
+        "WalkArea"
+      ]
+    },
+    {
+      "name": "Skeleton",
+      "minSpawnAmount": 1,
+      "maxSpawnAmount": 5,
+      "effects": [
+        {
+          "damageType": "Physical",
           "effectType": "Damage",
           "amount": "1",
           "impactWord": "OuchGreen",

@@ -92,7 +92,7 @@ namespace ScaryCastle.Procedural
             foreach (var definition in RoomDefinition.Definitions.All)
             {
                 // Run constraints
-                if (!definition.PassesFloorConstraints(session))
+                if (!definition.PassesRunConstraints(session))
                     continue;
 
                 // Pools

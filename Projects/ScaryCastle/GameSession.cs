@@ -121,6 +121,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(RideCar));
             AotTypeRegistry.Register(typeof(RideDoor));
             AotTypeRegistry.Register(typeof(Sack));
+            AotTypeRegistry.Register(typeof(Skeleton));
             AotTypeRegistry.Register(typeof(SpearTrap));
             AotTypeRegistry.Register(typeof(Torch));
             AotTypeRegistry.Register(typeof(Trunk));
