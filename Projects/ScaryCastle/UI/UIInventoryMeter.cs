@@ -11,7 +11,7 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly TextSprite amountText;
-        private readonly ImageSprite icon;
+        private readonly Sprite icon;
         private readonly Inventory inventory;
         private int lastKnownCount = -1;
         private readonly FloatTween rotationTween = new();

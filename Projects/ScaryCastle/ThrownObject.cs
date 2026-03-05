@@ -54,7 +54,7 @@ namespace ScaryCastle
 
             this.brokenPieces = new BrokenPieces(this, brokenPiecesScale);
 
-            this.Shadow = new ImageSprite(session.Game)
+            this.Shadow = new Sprite(session.Game)
             {
                 Opacity = ColorPalette.ShadowOpacity,
                 PivotOrigin = RectanglePoint.Center,
@@ -237,7 +237,7 @@ namespace ScaryCastle
             // Object collision
             CheckCollision(true);
 
-            if (Shadow.Image != null)
+            if (Shadow.RenderImage != null)
             {
                 Shadow.X = X;
                 Shadow.Scale = Scale;
@@ -245,7 +245,7 @@ namespace ScaryCastle
         }
 
         // Shadow
-        protected ImageSprite Shadow { get; }
+        protected Sprite Shadow { get; }
 
         #endregion
 

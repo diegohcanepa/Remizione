@@ -9,8 +9,8 @@ namespace ScaryCastle
     /// </summary>
     public class Trunk : Openable, ILoot<ItemDefinition>
     {
-        private readonly ImageSprite itemImage;
-        private readonly ImageSprite itemImageShadow;
+        private readonly Sprite itemImage;
+        private readonly Sprite itemImageShadow;
 
         // Constructor
         public Trunk(GameSession session, string name)
@@ -86,8 +86,8 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-                    itemImage.Image = field?.Image;
-                    itemImageShadow.Image = itemImage.Image;
+                    itemImage.RenderImage = field?.Image;
+                    itemImageShadow.RenderImage = itemImage.RenderImage;
                 }
             }
         }

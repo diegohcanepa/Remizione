@@ -10,7 +10,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly ImageSprite iconSprite;
+        private readonly Sprite iconSprite;
         private readonly UIContextMenu<T> menu;
         private Vector2 position;
         private readonly FloatTween shakeTween = new();
@@ -23,7 +23,7 @@ namespace ScaryCastle
         {
             this.menu = menu;
             this.Key = key;
-            this.iconSprite = new ImageSprite(menu.Game, icon)
+            this.iconSprite = new Sprite(menu.Game, icon)
             {
                 Scale = ScaleInfo.ContextMenu.Icon
             };

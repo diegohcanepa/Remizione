@@ -6,7 +6,7 @@ namespace ScaryCastle.Menus
 {
     public sealed partial class ControllerAdviceScene : MenuScene
     {
-        private readonly ImageSprite image;
+        private readonly Sprite image;
         private readonly ScaryCastleGame game;
         private readonly TextSprite message;
         private int nextSceneCooldown;
@@ -20,7 +20,7 @@ namespace ScaryCastle.Menus
             BackgroundColor = Color.Black;
 
             // Image
-            image = new ImageSprite(game, Atlases.Menu.ControllerAdvice)
+            image = new Sprite(game, Atlases.Menu.ControllerAdvice)
             {
                 PivotOrigin = RectanglePoint.Top,
                 Position = new Vector2(Screen.Center.X, 0),

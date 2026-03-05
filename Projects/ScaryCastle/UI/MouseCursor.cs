@@ -16,7 +16,7 @@ namespace ScaryCastle
         #region Private fields
 
         private static readonly AtlasImage?[] cursorImages;
-        private static readonly ImageSprite cursorSprite;
+        private static readonly Sprite cursorSprite;
         private static readonly Vector2 defaultScale = ScaleInfo.UIElement.Large;
         private static OutlineEffect? effect;
         private static readonly FloatTween opacityTween = FloatTween.Create(TweenStyle.CubicInOut, 1, .5f, 500, -1);
@@ -32,7 +32,7 @@ namespace ScaryCastle
         static MouseCursor()
         {
             // Cursor sprite
-            cursorSprite = new ImageSprite(EngendroGame.Instance)
+            cursorSprite = new Sprite(EngendroGame.Instance)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Scale = defaultScale
@@ -86,7 +86,7 @@ namespace ScaryCastle
         // InvalidateCursorImage
         private static void InvalidateCursorImage()
         {
-            cursorSprite.Image = CustomImage ?? cursorImages[(int)State];
+            cursorSprite.RenderImage = CustomImage ?? cursorImages[(int)State];
             cursorSprite.Scale = CustomImage != null ? ScaleInfo.InventoryHeldItem : defaultScale;
             cursorSprite.PivotOrigin = (State is MouseCursorState.Arrow or MouseCursorState.Hand) && CustomImage == null ? RectanglePoint.LeftTop : RectanglePoint.Center;
         }
@@ -202,10 +202,10 @@ namespace ScaryCastle
             ClampTextToScreen();
 
             effect = CustomImage != null && HightlightColor.HasValue ? ScaryCastleGame.Effects.Outline : null;
-            if (effect != null && HightlightColor.HasValue && cursorSprite.Image?.Atlas != null)
+            if (effect != null && HightlightColor.HasValue && cursorSprite.RenderImage?.Atlas != null)
             {
                 effect.Color.SetValue(HightlightColor.Value * opacityTween.CurrentValue);
-                effect.TextureSize.SetValue(new Vector2(cursorSprite.Image.Atlas.Texture.Width, cursorSprite.Image.Atlas.Texture.Height));
+                effect.TextureSize.SetValue(new Vector2(cursorSprite.RenderImage.Atlas.Texture.Width, cursorSprite.RenderImage.Atlas.Texture.Height));
                 effect.Thickness.SetValue(1);
             }
         }

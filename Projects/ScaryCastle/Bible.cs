@@ -16,7 +16,7 @@ namespace ScaryCastle
 
             BreakSound = Sound.Find(prefix + "Break");
             ImpactSound = Sound.Find(prefix);
-            Shadow.Image = Atlas?.FindImage(prefix + "Shadow");
+            Shadow.RenderImage = Atlas?.FindImage(prefix + "Shadow");
             Scale = new Vector2(.5f);
 
             var animation = AddAnimation(AnimationNames.Default);

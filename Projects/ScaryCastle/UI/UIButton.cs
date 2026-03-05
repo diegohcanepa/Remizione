@@ -13,10 +13,10 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly ImageSprite containerPattern;
-        private readonly ImageSprite containerEdgeLeft;
+        private readonly Sprite containerPattern;
+        private readonly Sprite containerEdgeLeft;
         private const float horzImagePadding = 1.5f;
-        private readonly ImageSprite image;
+        private readonly Sprite image;
         private InputBinding? inputBinding;
         private readonly TextSprite label;
         private InputMethod lastKnownInputMethod;
@@ -38,14 +38,14 @@ namespace ScaryCastle
             this.Camera = game.Camera;
 
             // Container
-            this.containerPattern = new ImageSprite(Game, Atlases.UI.UIButtonContainerPattern)
+            this.containerPattern = new Sprite(Game, Atlases.UI.UIButtonContainerPattern)
             {
                 PivotOrigin = RectanglePoint.Right,
                 Scale = ScaleInfo.UIElement.Medium * scaleFactor
             };
 
             // ContainerEdgeLeft
-            this.containerEdgeLeft = new ImageSprite(Game, Atlases.UI.UIButtonContainerEdge)
+            this.containerEdgeLeft = new Sprite(Game, Atlases.UI.UIButtonContainerEdge)
             {
                 PivotOrigin = RectanglePoint.Right,
                 Scale = ScaleInfo.UIElement.Medium * scaleFactor
@@ -59,7 +59,7 @@ namespace ScaryCastle
             };
 
             // Image
-            this.image = new ImageSprite(game)
+            this.image = new Sprite(game)
             {
                 Scale = ScaleInfo.UIElement.Medium * scaleFactor
             };
@@ -112,7 +112,7 @@ namespace ScaryCastle
         private void Invalidate()
         {
             // Image
-            image.Image = FindInputBindingImage(ImageName, InputBinding);
+            image.RenderImage = FindInputBindingImage(ImageName, InputBinding);
             image.PivotOrigin = PivotOrigin;
             image.Position = Position;
 

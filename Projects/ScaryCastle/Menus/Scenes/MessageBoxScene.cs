@@ -12,12 +12,12 @@ namespace ScaryCastle.Menus
     {
         #region Private fields
 
-        private readonly ImageSprite bottomOrnament;
+        private readonly Sprite bottomOrnament;
         private readonly Menu menu;
         private readonly TextSprite message;
         private readonly TextSprite subMessage;
         private readonly TextSprite title;
-        private readonly ImageSprite topOrnament;
+        private readonly Sprite topOrnament;
 
         #endregion
 
@@ -73,13 +73,13 @@ namespace ScaryCastle.Menus
             };
 
             // Top Ornament
-            topOrnament = new ImageSprite(Game, Atlases.Menu.MessageBoxOrnamentTop)
+            topOrnament = new Sprite(Game, Atlases.Menu.MessageBoxOrnamentTop)
             {
                 PivotOrigin = RectanglePoint.Bottom,
             };
 
             // Bottom Ornament
-            bottomOrnament = new ImageSprite(Game, Atlases.Menu.MessageBoxOrnamentBottom)
+            bottomOrnament = new Sprite(Game, Atlases.Menu.MessageBoxOrnamentBottom)
             {
                 PivotOrigin = RectanglePoint.Top
             };

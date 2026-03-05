@@ -14,7 +14,7 @@ namespace ScaryCastle
         private Color color = Color.White;
         private int duration;
         private readonly Blinker<bool> flashBlinker = new(false, true);
-        private readonly ImageSprite lightSprite;
+        private readonly Sprite lightSprite;
         private int litTweenDuration;
         private readonly FloatTween opacityTween = new();
         private Vector2 scale = Vector2.One;
@@ -29,9 +29,9 @@ namespace ScaryCastle
             : base(game)
         {
             this.Name = name;
-            this.lightSprite = new ImageSprite(Game)
+            this.lightSprite = new Sprite(Game)
             {
-                Image = Atlases.Environment.DefaultLight,
+                RenderImage = Atlases.Environment.DefaultLight,
                 PivotOrigin = RectanglePoint.Center
             };
         }
@@ -270,9 +270,9 @@ namespace ScaryCastle
         // Prepare
         public void Prepare(Atlas atlas)
         {
-            lightSprite.Image = Atlases.Environment.DefaultLight;
+            lightSprite.RenderImage = Atlases.Environment.DefaultLight;
             if (!string.IsNullOrWhiteSpace(ImageName) && atlas.FindImage(ImageName) is AtlasImage image)
-                lightSprite.Image = image;
+                lightSprite.RenderImage = image;
         }
 
         // Scale

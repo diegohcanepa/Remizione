@@ -12,7 +12,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly ImageSprite playerIcon;
+        private readonly Sprite playerIcon;
         private readonly UIHealthMeter healthMeter;
         private readonly GameSession session;
 

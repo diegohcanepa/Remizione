@@ -11,11 +11,11 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly ImageSprite back;
-        private readonly ImageSprite container;
-        private readonly ImageSprite fore;
+        private readonly Sprite back;
+        private readonly Sprite container;
+        private readonly Sprite fore;
         private static readonly Color previousValue = new(125, 56, 51);
-        private readonly ImageSprite previousValue1;
+        private readonly Sprite previousValue1;
         private readonly FloatTween tween = new() { StartDelay = 200 };
         private float width;
 
@@ -31,7 +31,7 @@ namespace ScaryCastle
             this.width = size.X;
 
             // Container
-            this.container = new ImageSprite(game, Atlases.UI.Pixel)
+            this.container = new Sprite(game, Atlases.UI.Pixel)
             {
                 Color = Color.Black,
                 ScaleY = size.Y,
@@ -39,7 +39,7 @@ namespace ScaryCastle
             };
 
             // Back
-            this.back = new ImageSprite(game, Atlases.UI.Pixel)
+            this.back = new Sprite(game, Atlases.UI.Pixel)
             {
                 Color = backColor,
                 ScaleY = container.ScaleY - (BorderSize.Y * 2),
@@ -47,14 +47,14 @@ namespace ScaryCastle
             };
 
             // Fore
-            this.fore = new ImageSprite(game, Atlases.UI.Pixel)
+            this.fore = new Sprite(game, Atlases.UI.Pixel)
             {
                 Color = foreColor,
                 ScaleY = container.ScaleY - (BorderSize.Y * 2)
             };
 
             // Previous value
-            this.previousValue1 = new ImageSprite(game, Atlases.UI.Pixel)
+            this.previousValue1 = new Sprite(game, Atlases.UI.Pixel)
             {
                 Color = previousValue,
                 ScaleY = container.ScaleY - (BorderSize.Y * 2)

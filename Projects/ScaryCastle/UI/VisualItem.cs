@@ -8,7 +8,7 @@ namespace ScaryCastle
     /// </summary>
     public sealed class VisualItem : GameObject
     {
-        private readonly ImageSprite image;
+        private readonly Sprite image;
 
         // Constructor
         public VisualItem(ScaryCastleGame game, Item item)

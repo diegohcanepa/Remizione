@@ -10,9 +10,9 @@ namespace ScaryCastle
     /// </summary>
     public sealed class EchoScene : Scene
     {
-        private readonly ImageSprite arrow;
-        private readonly ImageSprite gradient;
-        private readonly ImageSprite image;
+        private readonly Sprite arrow;
+        private readonly Sprite gradient;
+        private readonly Sprite image;
         private readonly FloatTween opacityTween = new();
         private readonly TextSprite textSprite;
 
@@ -144,7 +144,7 @@ namespace ScaryCastle
             if (allowTyping)
                 textSprite.StartTyping();
 
-            this.image.Image = image;
+            this.image.RenderImage = image;
         }
     }
 }

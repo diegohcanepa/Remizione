@@ -12,7 +12,7 @@ namespace ScaryCastle
 
         private int fullHearts;
         private bool hasHalfHeart;
-        private readonly ImageSprite[] hearts;
+        private readonly Sprite[] hearts;
         private int lastKnownMaxValue;
         private int lastKnownValue;
         private int totalHearts;
@@ -25,7 +25,7 @@ namespace ScaryCastle
         public UIHealthMeter(EngendroGame game, Vector2 margin)
             : base(game)
         {
-            this.hearts = new ImageSprite[10];
+            this.hearts = new Sprite[10];
             var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, margin);
 
             for (var i = 0; i < hearts.Length; i++)
@@ -56,13 +56,13 @@ namespace ScaryCastle
             for (int i = 0; i < totalHearts; i++)
             {
                 if (i < fullHearts)
-                    hearts[i].Image = Atlases.UI.HeartFull;
+                    hearts[i].RenderImage = Atlases.UI.HeartFull;
 
                 else if (i == fullHearts && hasHalfHeart)
-                    hearts[i].Image = Atlases.UI.HeartHalf;
+                    hearts[i].RenderImage = Atlases.UI.HeartHalf;
 
                 else
-                    hearts[i].Image = Atlases.UI.HeartEmpty;
+                    hearts[i].RenderImage = Atlases.UI.HeartEmpty;
             }
 
             lastKnownValue = Actor.HP;

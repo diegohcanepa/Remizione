@@ -10,7 +10,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly ImageSprite spotImage;
+        private readonly Sprite spotImage;
         private readonly GameThing thing;
 
         #endregion
@@ -22,7 +22,7 @@ namespace ScaryCastle
             : base(thing.Game)
         {
             this.thing = thing;
-            this.spotImage = new ImageSprite(Game)
+            this.spotImage = new Sprite(Game)
             {
                 Color = ColorPalette.ShadowSpot,
                 PivotOrigin = RectanglePoint.Center
@@ -76,7 +76,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-                    spotImage.Image = Atlases.Environment.FindImage($"{nameof(ShadowSpot)}{value}");
+                    spotImage.RenderImage = Atlases.Environment.FindImage($"{nameof(ShadowSpot)}{value}");
                 }
             }
         }

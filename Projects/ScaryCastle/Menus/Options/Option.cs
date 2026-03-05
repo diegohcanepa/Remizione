@@ -12,10 +12,10 @@ namespace ScaryCastle.Menus
     {
         #region Private members
 
-        private readonly ImageSprite[] arrows;
+        private readonly Sprite[] arrows;
         private const float disableColorFactor = .3f;
         private readonly List<string> displayNames = [];
-        private readonly ImageSprite icon;
+        private readonly Sprite icon;
         private readonly FloatTween shake = new();
         private readonly TextSprite[] textSprites;
         private T value;
@@ -58,9 +58,9 @@ namespace ScaryCastle.Menus
                 Scale = ScaleInfo.MenuOption,
             };
 
-            arrows = new ImageSprite[2];
+            arrows = new Sprite[2];
 
-            arrows[0] = new ImageSprite(game, Atlases.Menu.MenuItemArrowLeft)
+            arrows[0] = new Sprite(game, Atlases.Menu.MenuItemArrowLeft)
             {
                 PivotOrigin = RectanglePoint.Right,
                 X = 190,
@@ -72,7 +72,7 @@ namespace ScaryCastle.Menus
                 arrows[0].Color *= disableColorFactor;
             }
 
-            arrows[1] = new ImageSprite(game, Atlases.Menu.MenuItemArrowRight)
+            arrows[1] = new Sprite(game, Atlases.Menu.MenuItemArrowRight)
             {
                 PivotOrigin = RectanglePoint.Left,
                 X = 290,
@@ -90,7 +90,7 @@ namespace ScaryCastle.Menus
             IsEnabled = isEnabled;
 
             // Icon
-            this.icon = new ImageSprite(Game)
+            this.icon = new Sprite(Game)
             {
                 Color = ColorPalette.MenuOptionLabel,
                 PivotOrigin = RectanglePoint.Right,
@@ -227,8 +227,8 @@ namespace ScaryCastle.Menus
         // IconImage
         public AtlasImage? IconImage
         {
-            get => icon.Image;
-            set => icon.Image = value;
+            get => icon.RenderImage;
+            set => icon.RenderImage = value;
         }
 
         // IsEnabled

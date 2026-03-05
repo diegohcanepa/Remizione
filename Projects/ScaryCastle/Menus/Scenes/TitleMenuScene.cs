@@ -12,16 +12,16 @@ namespace ScaryCastle.Menus
     {
         #region Private fields
 
-        private readonly ImageSprite background;
+        private readonly Sprite background;
         private readonly FloatTween darknessTween = new();
         private readonly TextSprite experienceAdviceText;
         private readonly Timer fadeInTimer;
-        private readonly ImageSprite foreground;
-        private readonly ImageSprite foregroundLight;
+        private readonly Sprite foreground;
+        private readonly Sprite foregroundLight;
         private readonly Blinker<bool> lightBlink = new(false, true);
         private readonly Countdown nextBlinkTimer = new();
         private readonly Menu menu;
-        private readonly ImageSprite roofLight;
+        private readonly Sprite roofLight;
 
 #if XBOX_ONE
         private readonly TextSprite xboxActiveUser;
@@ -39,24 +39,24 @@ namespace ScaryCastle.Menus
             this.ExclusiveDraw = true;
 
             // Background
-            background = new ImageSprite(game, Atlases.Menu.TitleScreen)
+            background = new Sprite(game, Atlases.Menu.TitleScreen)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Position = Screen.Center,
             };
 
             // Foreground
-            foreground = new ImageSprite(game, Atlases.Menu.TitleScreenForeground)
+            foreground = new Sprite(game, Atlases.Menu.TitleScreenForeground)
             {
             };
 
             // ForegroundLight
-            foregroundLight = new ImageSprite(game, Atlases.Menu.TitleScreenForegroundLight)
+            foregroundLight = new Sprite(game, Atlases.Menu.TitleScreenForegroundLight)
             {
             };
 
             // RoofLight
-            roofLight = new ImageSprite(game, Atlases.Menu.TitleScreenRoofLight)
+            roofLight = new Sprite(game, Atlases.Menu.TitleScreenRoofLight)
             {
                 PivotOrigin = RectanglePoint.Top,
                 Position = Screen.Area.GetPoint(RectanglePoint.Top, 0, -4)

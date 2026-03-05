@@ -16,7 +16,7 @@ namespace ScaryCastle
         private float delayTimer;
         private const float gravity = 400;
         private float groundY;
-        private readonly ImageSprite image;
+        private readonly Sprite image;
         private float launchDelay;
         private bool launched;
 

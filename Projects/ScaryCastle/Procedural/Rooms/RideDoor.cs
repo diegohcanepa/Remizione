@@ -12,7 +12,7 @@ namespace ScaryCastle
     public class RideDoor : Openable
     {
         private readonly MouseCursorState arrowCursor;
-        private readonly ImageSprite lockImage;
+        private readonly Sprite lockImage;
 
         #region Constructor
 

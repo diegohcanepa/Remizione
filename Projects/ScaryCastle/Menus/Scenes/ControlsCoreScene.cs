@@ -10,7 +10,7 @@ namespace ScaryCastle.Menus
     /// </summary>
     public abstract class ControlsCoreScene : StandardMenuScene
     {
-        private readonly ImageSprite image;
+        private readonly Sprite image;
         private readonly TextSprite[] labels;
         protected enum LabelName { Interact, Inventory, Movement, MovementAlt, Run, Kick, Menu }
 
@@ -46,7 +46,7 @@ namespace ScaryCastle.Menus
             }
 
             // Image
-            this.image = new ImageSprite(game, image)
+            this.image = new Sprite(game, image)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Position = new Vector2(Screen.Center.X, Screen.Center.Y + verticalOffset),

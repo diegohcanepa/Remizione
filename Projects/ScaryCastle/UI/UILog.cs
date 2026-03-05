@@ -10,7 +10,7 @@ namespace ScaryCastle
     public sealed class UILog : GameObject
     {
         private readonly FloatTween fadeTween = new() { StartDelay = 2600 };
-        private readonly ImageSprite icon;
+        private readonly Sprite icon;
         private readonly TextSprite nounText;
         private readonly TextSprite verbText;
 
@@ -19,7 +19,7 @@ namespace ScaryCastle
             : base(game)
         {
             // Icon
-            this.icon = new ImageSprite(game)
+            this.icon = new Sprite(game)
             {
                 PivotOrigin = RectanglePoint.LeftTop,
                 Scale = ScaleInfo.UIElement.Medium
@@ -53,7 +53,7 @@ namespace ScaryCastle
 
             nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -2);
             nounText.Text = noun;
-            icon.Image = image;
+            icon.RenderImage = image;
             icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
 
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 1000);

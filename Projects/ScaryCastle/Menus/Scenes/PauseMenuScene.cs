@@ -11,7 +11,7 @@ namespace ScaryCastle.Menus
     {
         #region Private fields
 
-        private readonly ImageSprite bottomOrnament;
+        private readonly Sprite bottomOrnament;
         private bool disposeSession;
         private const float logoScale = .12f;
         private readonly Menu menu;
@@ -35,7 +35,7 @@ namespace ScaryCastle.Menus
             menu.AddItem(MenuItemName.Options, ShowOptions, Atlases.Menu.OptionsIcon);
             menu.AddItem(MenuItemName.ExitToMainMenu, ExitToMainMenu, null);
 
-            this.bottomOrnament = new ImageSprite(Game, Atlases.Menu.BottomOrnament)
+            this.bottomOrnament = new Sprite(Game, Atlases.Menu.BottomOrnament)
             {
                 PivotOrigin = RectanglePoint.Top,
                 Position = menu.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 7)

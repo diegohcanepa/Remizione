@@ -13,7 +13,7 @@ namespace ScaryCastle
         private readonly FloatTween opacityTween = new();
         private readonly Vector2 maxScale = new(.75f);
         private readonly Vector2Tween scaleTween = new();
-        private readonly ImageSprite sprite;
+        private readonly Sprite sprite;
         private readonly FloatTween xTween = new();
         private readonly FloatTween yTween = new();
 
@@ -21,7 +21,7 @@ namespace ScaryCastle
         public ImpactWord(EngendroGame game)
             : base(game)
         {
-            this.sprite = new ImageSprite(game, null)
+            this.sprite = new Sprite(game, null)
             {
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = maxScale
@@ -72,7 +72,7 @@ namespace ScaryCastle
         {
             sprite.Tweens.Reset();
             endingPhaseCooldown = 200;
-            sprite.Image = Atlases.Environment.FindImage(kind.ToString());
+            sprite.RenderImage = Atlases.Environment.FindImage(kind.ToString());
             sprite.Opacity = 1;
             sprite.Position = position;
             sprite.Rotation = RandomHelper.Next(Random.Shared, -.5f, .5f);

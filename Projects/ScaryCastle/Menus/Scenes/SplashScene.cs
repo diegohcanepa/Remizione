@@ -12,7 +12,7 @@ namespace ScaryCastle.Menus
         #region Private fields
 
         private const int defaultDuration = 1500;
-        private readonly ImageSprite gradientSpot;
+        private readonly Sprite gradientSpot;
         private readonly Timer gradientSpotStartTimer;
 
         #endregion
@@ -39,14 +39,14 @@ namespace ScaryCastle.Menus
 
             BackgroundColor = Color.Black;
 
-            Image = new ImageSprite(game, image)
+            Image = new Sprite(game, image)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Position = imagePosition,
                 Scale = new Vector2(imageScale)
             };
 
-            gradientSpot = new ImageSprite(game, Atlases.Menu.FadeCircle)
+            gradientSpot = new Sprite(game, Atlases.Menu.FadeCircle)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Scale = new Vector2(1.8f)
@@ -99,7 +99,7 @@ namespace ScaryCastle.Menus
         }
 
         // Image
-        protected ImageSprite Image { get; }
+        protected Sprite Image { get; }
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)

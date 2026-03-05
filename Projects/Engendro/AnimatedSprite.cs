@@ -93,9 +93,9 @@ namespace Engendro
         internal void InvalidateInternalImage()
         {
             if (Player.Frame == null)
-                InternalImage = string.IsNullOrWhiteSpace(DefaultImageName) ? null : Atlas?.FindImage(ImagePath + DefaultImageName);
+                RenderImage = string.IsNullOrWhiteSpace(DefaultImageName) ? null : Atlas?.FindImage(ImagePath + DefaultImageName);
             else
-                InternalImage = Atlas?.FindImage(ImagePath + Player.Frame.ImageName);
+                RenderImage = Atlas?.FindImage(ImagePath + Player.Frame.ImageName);
         }
 
         #endregion

@@ -13,7 +13,7 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly Vector2Tween bounceScaleTween = new();
-        private readonly ImageSprite shadow;
+        private readonly Sprite shadow;
         private readonly FloatTween xTween = new();
 
         #endregion
@@ -29,7 +29,7 @@ namespace ScaryCastle
             this.IgnoreThrowables = false;
 
             // Shadow
-            this.shadow = new ImageSprite(session.Game)
+            this.shadow = new Sprite(session.Game)
             {
                 Opacity = ColorPalette.ShadowOpacity,
                 PivotOrigin = RectanglePoint.Bottom,
@@ -43,7 +43,7 @@ namespace ScaryCastle
         // InvalidateShadowImage
         private void InvalidateShadowImage()
         {
-            shadow.Image = Atlas?.FindImage(GetDefaultImageName() + "Shadow");
+            shadow.RenderImage = Atlas?.FindImage(GetDefaultImageName() + "Shadow");
         }
 
         #endregion

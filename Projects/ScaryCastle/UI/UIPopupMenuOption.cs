@@ -11,7 +11,7 @@ namespace ScaryCastle
     public sealed class UIPopupMenuOption<TLinkedObject> where TLinkedObject : class
     {
         private readonly Action? action;
-        private readonly ImageSprite icon;
+        private readonly Sprite icon;
         private readonly UIPopupMenu<TLinkedObject> menu;
         private readonly TextSprite nameText;
 
@@ -38,7 +38,7 @@ namespace ScaryCastle
                 nameText.PivotOrigin = RectanglePoint.RightTop;
 
             // Icon
-            this.icon = new ImageSprite(menu.Game)
+            this.icon = new Sprite(menu.Game)
             {
                 PivotOrigin = RectanglePoint.Right,
                 Scale = ScaleInfo.UIElement.Small
@@ -97,8 +97,8 @@ namespace ScaryCastle
         // IconImage
         public AtlasImage? IconImage
         {
-            get => icon.Image;
-            set => icon.Image = value;
+            get => icon.RenderImage;
+            set => icon.RenderImage = value;
         }
 
         // Index

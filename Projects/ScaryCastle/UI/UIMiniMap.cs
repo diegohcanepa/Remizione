@@ -14,15 +14,15 @@ namespace ScaryCastle.UI
         #region Private fields
 
         private enum RoomImage { Current, Visited, NotVisited };
-        private readonly ImageSprite container;
-        private readonly ImageSprite containerBorder;
+        private readonly Sprite container;
+        private readonly Sprite containerBorder;
         private readonly Vector2 containerCenter;
         private readonly HashSet<RoomGraph> drawnRooms = [];
-        private readonly ImageSprite heartMarker;
+        private readonly Sprite heartMarker;
         private readonly FloatTween opacityTween = new();
         private readonly RasterizerState rasterizerState;
         private readonly Rectangle screenScissorRect;
-        private readonly ImageSprite[] roomImages;
+        private readonly Sprite[] roomImages;
 
         #endregion
 
@@ -35,14 +35,14 @@ namespace ScaryCastle.UI
             rasterizerState = new RasterizerState { ScissorTestEnable = true };
 
             // Container
-            container = new ImageSprite(game, Atlases.UI.GetImage("UIMiniMapContainer"))
+            container = new Sprite(game, Atlases.UI.GetImage("UIMiniMapContainer"))
             {
                 PivotOrigin = RectanglePoint.RightTop,
                 Position = new(234, 2)
             };
 
             // ContainerBorder
-            containerBorder = new ImageSprite(game, Atlases.UI.GetImage("UIMiniMapContainerBorder"))
+            containerBorder = new Sprite(game, Atlases.UI.GetImage("UIMiniMapContainerBorder"))
             {
                 PivotOrigin = RectanglePoint.RightTop,
                 Position = new(234, 2)
@@ -66,14 +66,14 @@ namespace ScaryCastle.UI
             );
 
             // Heart marker
-            heartMarker = new ImageSprite(game, Atlases.UI.GetImage("UIMiniMapMarkerHeart"))
+            heartMarker = new Sprite(game, Atlases.UI.GetImage("UIMiniMapMarkerHeart"))
             {
                 PivotOrigin = RectanglePoint.Center,
                 Scale = ScaleInfo.UIElement.Small
             };
 
             // Room images
-            roomImages = new ImageSprite[3];
+            roomImages = new Sprite[3];
             for (var i = 0; i < roomImages.Length; i++)
             {
                 roomImages[i] = new(game, Atlases.UI.GetImage($"UIMiniMapRoom{i}"))
@@ -93,7 +93,7 @@ namespace ScaryCastle.UI
         // DrawRoom
         private void DrawRoom(GameTime gameTime, RoomGraph roomGraph, Vector2 position)
         {
-            ImageSprite image;
+            Sprite image;
 
             // Current
             if (roomGraph == CurrentRoom)

@@ -14,8 +14,8 @@ namespace ScaryCastle
 
         private readonly InputBinding[] bindings;
         private readonly UIButton[] buttons;
-        private readonly ImageSprite container;
-        private readonly ImageSprite shadow;
+        private readonly Sprite container;
+        private readonly Sprite shadow;
         private readonly TextSprite text;
         private readonly TextSprite titleSprite;
 
@@ -27,8 +27,8 @@ namespace ScaryCastle
         {
             this.bindings = inputBindings;
 
-            this.container = new ImageSprite(session.Game, Atlases.UI.PopupContainer) { PivotOrigin = RectanglePoint.Center, Position = Screen.Area.Center.ToVector2() };
-            this.shadow = new ImageSprite(session.Game, Atlases.UI.PopupContainerShadow) { Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, 7, 7) };
+            this.container = new Sprite(session.Game, Atlases.UI.PopupContainer) { PivotOrigin = RectanglePoint.Center, Position = Screen.Area.Center.ToVector2() };
+            this.shadow = new Sprite(session.Game, Atlases.UI.PopupContainerShadow) { Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, 7, 7) };
 
             this.titleSprite = new TextSprite(session.Game, Fonts.Common) { Color = ColorPalette.PopupTitle, PivotOrigin = RectanglePoint.Top, Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 12), Scale = ScaleInfo.PopupTitle, Text = title };
             this.text = new TextSprite(session.Game, Fonts.Common) { Color = ColorPalette.TextWhite, MaximumWidth = 220, PivotOrigin = RectanglePoint.Top, Position = titleSprite.BoundingBox.GetPoint(RectanglePoint.Bottom), Scale = ScaleInfo.PopupText, Text = text };

@@ -13,7 +13,7 @@ namespace ScaryCastle.Menus
     {
         #region Private fields
 
-        private readonly ImageSprite highlightSprite;
+        private readonly Sprite highlightSprite;
         private readonly List<IOption> options = [];
         private Vector2 position;
         private readonly StickInputController stick;
@@ -29,7 +29,7 @@ namespace ScaryCastle.Menus
             this.VerticalSpacing = verticalSpacing;
 
             // Option highlight
-            highlightSprite = new ImageSprite(Game, Atlases.Menu.MenuItemHighlight)
+            highlightSprite = new Sprite(Game, Atlases.Menu.MenuItemHighlight)
             {
                 Opacity = .5f,
                 PivotOrigin = RectanglePoint.Center,

@@ -10,7 +10,7 @@ namespace ScaryCastle.Menus
     /// </summary>
     public partial class MenuScene : Scene
     {
-        private readonly ImageSprite backgroundSprite;
+        private readonly Sprite backgroundSprite;
         private readonly TextSprite version;
 
         #region Constructor
@@ -22,7 +22,7 @@ namespace ScaryCastle.Menus
             this.Game = game;
             this.ExclusiveDraw = true;
             this.PausePreviousScenes = true;
-            this.backgroundSprite = new ImageSprite(game, backgroundImage);
+            this.backgroundSprite = new Sprite(game, backgroundImage);
             version = Utils.CreateVersionLabel(game);
             Stick = new StickInputController(GamePadThumbStick.Left) { AutoRepeatRate = 250 };
         }

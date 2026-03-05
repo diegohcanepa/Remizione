@@ -11,7 +11,7 @@ namespace ScaryCastle
         #region Private fields
 
         private int cooldown;
-        private readonly ImageSprite areaMarker;
+        private readonly Sprite areaMarker;
 
         #endregion
 

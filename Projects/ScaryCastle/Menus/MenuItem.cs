@@ -12,8 +12,8 @@ namespace ScaryCastle.Menus
     {
         #region Private members
 
-        private readonly ImageSprite highlightSprite;
-        private readonly ImageSprite icon;
+        private readonly Sprite highlightSprite;
+        private readonly Sprite icon;
         private readonly Action? onPress;
         private readonly TextSprite textSprite;
 
@@ -29,14 +29,14 @@ namespace ScaryCastle.Menus
             this.Name = name;
             this.onPress = onPress;
 
-            this.icon = new ImageSprite(Game, iconImage) { PivotOrigin = RectanglePoint.Left, Scale = new Vector2(.2f) };
+            this.icon = new Sprite(Game, iconImage) { PivotOrigin = RectanglePoint.Left, Scale = new Vector2(.2f) };
             this.textSprite = new TextSprite(Game, Fonts.Common)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Text = $"@Menu.Items.{Name}"
             };
 
-            highlightSprite = new ImageSprite(Game, Atlases.Menu.MenuItemHighlight)
+            highlightSprite = new Sprite(Game, Atlases.Menu.MenuItemHighlight)
             {
                 Opacity = .5f,
                 PivotOrigin = RectanglePoint.Center

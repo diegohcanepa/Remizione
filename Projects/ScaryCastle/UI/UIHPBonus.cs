@@ -10,7 +10,7 @@ namespace ScaryCastle
     {
         private int fullHearts;
         private bool hasHalfHeart;
-        private readonly ImageSprite[] hearts;
+        private readonly Sprite[] hearts;
         private int lastKnownValue;
         private Vector2 position;
 
@@ -18,7 +18,7 @@ namespace ScaryCastle
         public UIHPBonus(EngendroGame game)
             : base(game)
         {
-            this.hearts = new ImageSprite[10];
+            this.hearts = new Sprite[10];
             var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 18, 0);
 
             for (var i = 0; i < hearts.Length; i++)
@@ -43,22 +43,22 @@ namespace ScaryCastle
 
             for (var i = 0; i < hearts.Length; i++)
             {
-                hearts[i].Image = null;
+                hearts[i].RenderImage = null;
             }
 
             if (fullHearts == 0 && hasHalfHeart)
             {
-                hearts[0].Image = Atlases.UI.HeartHalf;
+                hearts[0].RenderImage = Atlases.UI.HeartHalf;
             }
             else
             {
                 for (int i = 0; i < fullHearts; i++)
                 {
                     if (i < fullHearts)
-                        hearts[i].Image = Atlases.UI.HeartFull;
+                        hearts[i].RenderImage = Atlases.UI.HeartFull;
 
                     else if (i == fullHearts && hasHalfHeart)
-                        hearts[i].Image = Atlases.UI.HeartHalf;
+                        hearts[i].RenderImage = Atlases.UI.HeartHalf;
                 }
             }
 
@@ -83,7 +83,7 @@ namespace ScaryCastle
             Game.SpriteBatch.Begin(Game.Camera);
             for (var i = 0; i < hearts.Length; i++)
             {
-                if (hearts[i].Image == null)
+                if (hearts[i].RenderImage == null)
                     break;
 
                 hearts[i].Draw(gameTime);

@@ -26,14 +26,14 @@ namespace ScaryCastle
         #region Private fields
 
         private static readonly List<SpeechBubble> activeBubbles = [];
-        private readonly ImageSprite arrowImage;
+        private readonly Sprite arrowImage;
         private readonly FloatTween arrowTween = new();
         private int autoHideCooldown;
         private RectangleF bubbleArea;
-        private readonly ImageSprite bubbleImage;
-        private readonly ImageSprite bubbleImage2;
+        private readonly Sprite bubbleImage;
+        private readonly Sprite bubbleImage2;
         private int inputCooldown;
-        private readonly ImageSprite pipe;
+        private readonly Sprite pipe;
         private readonly float pipeHeight;
         private readonly FloatTween pipeTween = new();
         private readonly Vector2Tween shakeTween = new();
@@ -51,20 +51,20 @@ namespace ScaryCastle
             this.Actor = actor;
 
             // Arrow
-            this.arrowImage = new ImageSprite(Game, Atlases.UI.SpeechBubbleCloseArrow)
+            this.arrowImage = new Sprite(Game, Atlases.UI.SpeechBubbleCloseArrow)
             {
                 Color = ColorPalette.SpeechBubble.Text,
                 Scale = ScaleInfo.UIElement.Medium
             };
 
             // Bubble 1
-            this.bubbleImage = new ImageSprite(Game, Atlases.UI.Pixel);
+            this.bubbleImage = new Sprite(Game, Atlases.UI.Pixel);
 
             // Bubble 2
-            this.bubbleImage2 = new ImageSprite(Game, Atlases.UI.Pixel);
+            this.bubbleImage2 = new Sprite(Game, Atlases.UI.Pixel);
 
             // Pipe
-            pipe = new ImageSprite(Game, Atlases.UI.SpeechBubblePipe)
+            pipe = new Sprite(Game, Atlases.UI.SpeechBubblePipe)
             {
                 Color = ColorPalette.SpeechBubble.Fill,
                 PivotOrigin = RectanglePoint.Bottom

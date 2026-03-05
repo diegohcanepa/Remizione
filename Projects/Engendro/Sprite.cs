@@ -7,7 +7,7 @@ namespace Engendro
     /// <summary>
     /// Sprite
     /// </summary>
-    public abstract class Sprite : GameObject, ITransform
+    public class Sprite : GameObject, ITransform
     {
         #region Private fields
 
@@ -20,9 +20,16 @@ namespace Engendro
         #region Constructor
 
         // Constructor
-        protected Sprite(EngendroGame game)
+        public Sprite(EngendroGame game)
+            : this(game, null)
+        {
+        }
+
+        // Constructor
+        public Sprite(EngendroGame game, AtlasImage? image)
             : base(game)
         {
+            this.RenderImage = image;
             this.Pivot = new SpritePivot(this);
             this.Tweens = new TweenManager(this);
         }
@@ -54,20 +61,6 @@ namespace Engendro
             return 1;
         }
 
-        // InternalImage
-        protected AtlasImage? InternalImage
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    IsBoundingBoxDirty = true;
-                }
-            }
-        }
-
         // IsBoundingBoxDirty
         protected bool IsBoundingBoxDirty { get; set; } = true;
 
@@ -75,7 +68,7 @@ namespace Engendro
         protected override void OnDraw(GameTime gameTime)
         {
             // Do we have an image? If not then there is nothing to draw...
-            if (InternalImage == null || Width == 0 || Height == 0)
+            if (RenderImage == null || Width == 0 || Height == 0)
                 return;
 
             var pos = Position;
@@ -84,15 +77,15 @@ namespace Engendro
                 pos = GetAbsolutePosition();
 
             // Has a source rectangle been set?
-            if (InternalImage.TextureArea.IsEmpty)
+            if (RenderImage.TextureArea.IsEmpty)
             {
                 // No, so draw the entire texture
-                Game.SpriteBatch.Draw(InternalImage.Atlas.Texture, pos, null, Color * Opacity * OpacityFactor, Rotation, Pivot.Position, Scale * ScaleFactor, Effects, 0);
+                Game.SpriteBatch.Draw(RenderImage.Atlas.Texture, pos, null, Color * Opacity * OpacityFactor, Rotation, Pivot.Position, Scale * ScaleFactor, Effects, 0);
             }
             else
             {
                 // Yes, so just draw the specified SourceRect
-                Game.SpriteBatch.Draw(InternalImage.Atlas.Texture, pos, InternalImage.TextureArea, Color * Opacity * OpacityFactor, Rotation, Pivot.Position, Scale * ScaleFactor, Effects, 0);
+                Game.SpriteBatch.Draw(RenderImage.Atlas.Texture, pos, RenderImage.TextureArea, Color * Opacity * OpacityFactor, Rotation, Pivot.Position, Scale * ScaleFactor, Effects, 0);
             }
         }
 
@@ -280,12 +273,12 @@ namespace Engendro
         {
             get
             {
-                if (InternalImage == null)
+                if (RenderImage == null)
                     return 0;
-                else if (InternalImage.TextureArea.IsEmpty)
-                    return InternalImage.Atlas.Texture.Height;
+                else if (RenderImage.TextureArea.IsEmpty)
+                    return RenderImage.Atlas.Texture.Height;
                 else
-                    return InternalImage.TextureArea.Height;
+                    return RenderImage.TextureArea.Height;
             }
         }
 
@@ -360,6 +353,20 @@ namespace Engendro
                     position.Y = value.Y;
                     IsBoundingBoxDirty = true;
                     OnTransform(TransformChange.Position);
+                }
+            }
+        }
+
+        // RenderImage
+        public AtlasImage? RenderImage
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    IsBoundingBoxDirty = true;
                 }
             }
         }
@@ -450,14 +457,14 @@ namespace Engendro
         {
             get
             {
-                if (InternalImage == null)
+                if (RenderImage == null)
                     return 0;
 
-                else if (InternalImage.TextureArea.IsEmpty)
-                    return InternalImage.Atlas.Texture.Width;
+                else if (RenderImage.TextureArea.IsEmpty)
+                    return RenderImage.Atlas.Texture.Width;
 
                 else
-                    return InternalImage.TextureArea.Width;
+                    return RenderImage.TextureArea.Width;
             }
         }
 

@@ -16,7 +16,7 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly List<UIContextMenuOption<T>> optionList = [];
-        private readonly ImageSprite optionSelector;
+        private readonly Sprite optionSelector;
         private Vector2 optionTextScale = ScaleInfo.ContextMenu.Option;
         private Vector2 position;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 200 };
@@ -32,7 +32,7 @@ namespace ScaryCastle
             this.Font = font ?? Fonts.Common;
 
             // Option Selector
-            optionSelector = new ImageSprite(game, Atlases.UI.ContextMenuOptionSelector)
+            optionSelector = new Sprite(game, Atlases.UI.ContextMenuOptionSelector)
             {
                 PivotOrigin = RectanglePoint.Right
             };
@@ -231,8 +231,8 @@ namespace ScaryCastle
         // OptionSelectorImage
         public AtlasImage? OptionSelectorImage
         {
-            get => optionSelector.Image;
-            set => optionSelector.Image = value;
+            get => optionSelector.RenderImage;
+            set => optionSelector.RenderImage = value;
         }
 
         // OptionSpacing

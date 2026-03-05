@@ -13,8 +13,8 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly ImageSprite bottomBar;
-        private readonly ImageSprite topBar;
+        private readonly Sprite bottomBar;
+        private readonly Sprite topBar;
         private readonly List<Credit> lines = [];
 
         #endregion
@@ -25,13 +25,13 @@ namespace ScaryCastle
         public Credits(EngendroGame game, string text)
             : base(game)
         {
-            bottomBar = new ImageSprite(game, Atlases.UI.CreditsBar)
+            bottomBar = new Sprite(game, Atlases.UI.CreditsBar)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, 0, 3)
             };
 
-            topBar = new ImageSprite(game, Atlases.UI.CreditsBar)
+            topBar = new Sprite(game, Atlases.UI.CreditsBar)
             {
                 PivotOrigin = RectanglePoint.LeftTop,
                 Effects = SpriteEffects.FlipVertically,

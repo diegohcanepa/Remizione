@@ -12,7 +12,7 @@ namespace ScaryCastle.Menus
     {
         private int duration = 6000;
         private readonly ScaryCastleGame game;
-        private readonly ImageSprite icon;
+        private readonly Sprite icon;
         private readonly int slotNumber;
         private readonly TextSprite text;
         private const int transitionOutDuration = 500;
@@ -39,7 +39,7 @@ namespace ScaryCastle.Menus
                 Scale = ScaleInfo.Text.Medium
             };
 
-            icon = new ImageSprite(Game, Atlases.UI.SavingIcon)
+            icon = new Sprite(Game, Atlases.UI.SavingIcon)
             {
                 PivotOrigin = RectanglePoint.Top,
                 Position = text.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 5)

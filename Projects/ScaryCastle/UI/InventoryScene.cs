@@ -14,12 +14,12 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly TextSprite[] amounts;
-        private readonly ImageSprite bottomGradient;
-        private readonly ImageSprite[] icons;
+        private readonly Sprite bottomGradient;
+        private readonly Sprite[] icons;
         private readonly TextSprite itemName;
         private int lastSeenInventoryVersion = -1;
-        private readonly ImageSprite[] shadows;
-        private readonly ImageSprite[] slots;
+        private readonly Sprite[] shadows;
+        private readonly Sprite[] slots;
 
         #endregion
 
@@ -31,12 +31,12 @@ namespace ScaryCastle
         {
             this.PausePreviousScenes = true;
             this.amounts = new TextSprite[Inventory.MaximumCapacity];
-            this.icons = new ImageSprite[Inventory.MaximumCapacity];
-            this.shadows = new ImageSprite[Inventory.MaximumCapacity];
-            this.slots = new ImageSprite[Inventory.MaximumCapacity];
+            this.icons = new Sprite[Inventory.MaximumCapacity];
+            this.shadows = new Sprite[Inventory.MaximumCapacity];
+            this.slots = new Sprite[Inventory.MaximumCapacity];
 
             // Bottom gradient
-            this.bottomGradient = new ImageSprite(Game, Atlases.UI.GetImage("InventoryContainer"))
+            this.bottomGradient = new Sprite(Game, Atlases.UI.GetImage("InventoryContainer"))
             {
                 Opacity = .8f,
                 PivotOrigin = RectanglePoint.Bottom,
@@ -151,19 +151,19 @@ namespace ScaryCastle
 
             for (int i = 0; i < slotCount; i++)
             {
-                slots[i].Image = Atlases.UI.InventorySlot;
+                slots[i].RenderImage = Atlases.UI.InventorySlot;
                 slots[i].X = startingX + (i * (slotWidth + spacing));
-                icons[i].Image = null;
-                shadows[i].Image = null;
+                icons[i].RenderImage = null;
+                shadows[i].RenderImage = null;
                 amounts[i].Text = null;
 
                 if (i < Inventory.Count)
                 {
                     icons[i].X = slots[i].BoundingBox.Center.X;
-                    icons[i].Image = Inventory[i].Definition.Image;
+                    icons[i].RenderImage = Inventory[i].Definition.Image;
 
                     shadows[i].X = icons[i].X - 1;
-                    shadows[i].Image = Inventory[i].Definition.Image;
+                    shadows[i].RenderImage = Inventory[i].Definition.Image;
 
                     amounts[i].X = icons[i].X;
                     amounts[i].Text = Inventory[i].Definition.IsStackable ? Inventory[i].Count.ToString(CultureInfo.InvariantCulture) : null;
