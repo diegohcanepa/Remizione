@@ -46,7 +46,7 @@ namespace ScaryCastle
 
             for (int i = Session.Room.CulledThings.Count - 1; i >= 0; i--)
             {
-                // Player exclusion when holding no item
+                // Exclude player when HeldItem is null
                 if (Session.Room.CulledThings[i] == Session.Player && HeldItem == null)
                     continue;
 

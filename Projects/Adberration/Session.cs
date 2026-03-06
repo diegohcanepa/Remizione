@@ -796,6 +796,9 @@ namespace Adberration
 
         #region Internal members
 
+        // AnimationManager
+        internal AnimationManager AnimationManager { get; } = new();
+
         // NextEntityId
         internal long NextEntityId()
         {
