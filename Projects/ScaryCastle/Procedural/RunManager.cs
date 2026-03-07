@@ -10,7 +10,7 @@ namespace ScaryCastle.Procedural
     /// </summary>
     public static class RunManager
     {
-        private static readonly List<RoomGraph> rooms = [];
+        private static readonly List<RoomGraph> roomGraphs = [];
 
         #region Private members
 
@@ -18,12 +18,14 @@ namespace ScaryCastle.Procedural
         private static void ApplyDefinitions(List<RoomDefinition> definitions, int maxDistance)
         {
             float threshold = maxDistance / 3f;
-
             var candidates = new List<RoomDefinition>();
 
             // Rooms
-            foreach (var room in rooms)
+            foreach (var room in roomGraphs)
             {
+                // Detectamos si es el punto de partida real
+                bool isStartPoint = room.DistanceFromStart == 0;
+
                 // Determinamos la fase según la distancia del room
                 var targetDiff = Difficulty.Easy;
                 if (room.DistanceFromStart >= threshold * 2)
@@ -34,18 +36,22 @@ namespace ScaryCastle.Procedural
                 candidates.Clear();
                 foreach (var definition in definitions)
                 {
-                    // Match room type?
-                    if (definition.RoomType != room.RoomType)
+                    // 1. FILTRO DE INICIO: Regla crítica
+                    // Si es el inicio, solo queremos starters. Si NO es el inicio, NO queremos starters en medio del dungeon.
+                    if (definition.IsStartingRoom != isStartPoint)
                         continue;
 
-                    // Match difficulty
+                    // 2. DIFICULTAD (Básico)
                     if (definition.Difficulty != targetDiff)
                         continue;
 
-                    if (definition.RequiresDeadEnd && room.GetConnectionCount() > 1)
+                    // 3. REGLA DE INSTANCIAS (Tu lógica de MaxPerRun)
+                    if (!definition.PassesMaxPerRunConstraint())
                         continue;
 
-                    if (!definition.PassesMaxPerRunConstraint())
+                    // 4. REGLA DE DISEÑO LÓGICO (Callejones sin salida)
+                    // Impide que un asset diseñado para ser final de camino se use como conector.
+                    if (definition.RequiresDeadEnd && room.GetConnectionCount() > 1)
                         continue;
 
                     candidates.Add(definition);
@@ -80,7 +86,9 @@ namespace ScaryCastle.Procedural
                     room.Definition = chosenDefinition;
                 }
                 else
+                {
                     throw new InvalidOperationException("Failed to apply room definition. No match found.");
+                }
             }
         }
 
@@ -109,16 +117,19 @@ namespace ScaryCastle.Procedural
             return result;
         }
 
-        // GetRoomCountForFloor
-        private static int GetRoomCount(int floorIndex)
+        // GetRoomCount
+        private static int GetRoomCount(int runCount)
         {
-            const int MAX_FLOORS = 666;
+            const int MAX_RUNS = 666;
             const int MIN_ROOMS = 5;
             const int MAX_ROOMS = 60;
             const float CURVE = 1.5f; // Controla qué tan rápido crece el mapa
 
+            if (runCount > MAX_RUNS)
+                runCount = MAX_RUNS;
+
             // f entre 0.0 y 1.0
-            float f = (float)(floorIndex - 1) / (MAX_FLOORS - 1);
+            float f = (float)(runCount - 1) / (MAX_RUNS - 1);
 
             // Aplicar la potencia para crecimiento tardío
             float curvedProgress = (float)Math.Pow(f, CURVE);
@@ -134,12 +145,12 @@ namespace ScaryCastle.Procedural
         // Clear
         public static void Clear()
         {
-            foreach (var room in rooms)
+            foreach (var room in roomGraphs)
             {
                 room.RideRoom.Children.Clear();
             }
 
-            rooms.Clear();
+            roomGraphs.Clear();
             SpawnCounter.Reset();
             HasContent = false;
         }
@@ -149,9 +160,9 @@ namespace ScaryCastle.Procedural
         {
             HasContent = true;
 
-            rooms.Clear();
+            roomGraphs.Clear();
             var result = RunGraphGenerator.Generate(session.Random, GetRoomCount(floorIndex));
-            rooms.AddRange(result.Item1);
+            roomGraphs.AddRange(result.Item1);
 
             // Get available room definitions
             var definitions = GetAvailableDefinitions(session, pools);
@@ -160,13 +171,13 @@ namespace ScaryCastle.Procedural
             ApplyDefinitions(definitions, result.Item2);
 
             // Create ride rooms
-            foreach (var room in rooms)
+            foreach (var roomGraph in roomGraphs)
             {
-                room.RideRoom = RideRoom.CreateInstance(session, room);
+                roomGraph.RideRoom = RideRoom.CreateInstance(session, roomGraph);
             }
 
             // Load rooms
-            foreach (var room in rooms)
+            foreach (var room in roomGraphs)
             {
                 room.RideRoom.Load();
             }
@@ -176,7 +187,7 @@ namespace ScaryCastle.Procedural
         public static bool HasContent { get; private set; }
 
         // Rooms
-        public static ReadOnlyCollection<RoomGraph> Rooms { get; } = rooms.AsReadOnly();
+        public static ReadOnlyCollection<RoomGraph> Rooms { get; } = roomGraphs.AsReadOnly();
 
         // SpawnCounter
         public static MultiCounter SpawnCounter { get; } = new();

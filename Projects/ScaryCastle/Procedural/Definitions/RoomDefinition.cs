@@ -25,12 +25,15 @@ namespace ScaryCastle
             DoorLeft = element.GetVector2("doorLeft", Vector2.Zero);
             DoorRight = element.GetVector2("doorRight", Vector2.Zero);
             DoorUp = element.GetVector2("doorUp", Vector2.Zero);
-            LockType = element.GetEnum<LockType>("lockType", LockType.None);
+            IsStartingRoom = element.GetBool("isStartingRoom", false);
+            LockType = element.GetEnum("lockType", LockType.None);
             MaxEnemies = element.GetInt32("maxEnemies", -1);
             MaxProps = element.GetInt32("maxProps", -1);
             MusicTag = element.GetString("musicTag");
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
-            RoomType = element.GetEnum<RoomType>("roomType", RoomType.Connector);
+
+            if (DoorLeft == Vector2.Zero || DoorDown == Vector2.Zero || DoorRight == Vector2.Zero || DoorUp == Vector2.Zero)
+                throw new InvalidOperationException($"Missing doors [{Name}].");
 
             // Placeholders
             if (element.TryGetProperty("placeholders", out JsonElement placeholdersElement))
@@ -104,6 +107,9 @@ namespace ScaryCastle
         // DoorUp
         public Vector2 DoorUp { get; }
 
+        // IsStartingRoom
+        public bool IsStartingRoom { get; }
+
         // LockType
         public LockType LockType { get; }
 
@@ -122,11 +128,22 @@ namespace ScaryCastle
         // RequiresDeadEnd
         public bool RequiresDeadEnd { get; }
 
-        // RoomType
-        public RoomType RoomType { get; }
-
         // Scope
         public ScopeRules Scope { get; }
+
+        // Validate
+        public override void Validate(GameSession session)
+        {
+            base.Validate(session);
+
+            // Rule: MaxEnemies not allowed
+            if (IsStartingRoom && MaxEnemies > 0)
+                RaiseValidationError(this, "A starting room cannot define maximum enemies.", nameof(MaxEnemies));
+
+            // Rule: Dead end not allowed
+            if (IsStartingRoom && RequiresDeadEnd)
+                RaiseValidationError(this, "A starting room cannot be a dead end.", nameof(RequiresDeadEnd));
+        }
 
         // WalkArea
         public string WalkArea { get; }

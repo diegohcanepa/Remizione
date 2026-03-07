@@ -9,7 +9,7 @@ namespace ScaryCastle
     /// <summary>
     /// DataContainer
     /// </summary>
-    public class DataContainer<T> where T : INamedObject
+    public class DataContainer<T> where T : IDataObject
     {
         private readonly Dictionary<string, T> data = [];
         private readonly List<T> dataList = [];
@@ -51,6 +51,15 @@ namespace ScaryCastle
                 throw new InvalidOperationException("Data already loaded.");
 
             Utils.LoadJsonData(fileName, onCreate);
+        }
+
+        // Validate
+        public void Validate(GameSession session)
+        {
+            foreach (var def in dataList)
+            {
+                def.Validate(session);
+            }
         }
     }
 }

@@ -128,13 +128,6 @@ namespace ScaryCastle
         // OnLoad
         protected override void OnLoad()
         {
-            // Check door anchors
-            if (DoorLeft == Vector2.Zero || DoorDown == Vector2.Zero ||
-                DoorRight == Vector2.Zero || DoorUp == Vector2.Zero)
-            {
-                throw new InvalidOperationException($"One or more door anchor points are missing in room [{RoomGraph}].");
-            }
-
             base.OnLoad();
 
             var index = 0;

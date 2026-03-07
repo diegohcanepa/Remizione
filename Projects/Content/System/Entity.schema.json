@@ -22,11 +22,6 @@
           "type": "integer",
           "default": -1
         },
-        "minFloor": {
-          "type": "integer",
-          "default": 0,
-          "minimum": 0
-        },
         "minRun": {
           "type": "integer",
           "default": 0,

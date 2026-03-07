@@ -58,7 +58,7 @@ namespace ScaryCastle
                 if (Room.Children[i] == this)
                     continue;
 
-                if (Room.Children[i] is GameThing target)
+                if (Room.Children[i] is GameThing target && !target.IsDead)
                 {
                     if (RuntimeCollider.BoundingRectangleF.Bottom >= target.Y && RuntimeCollider.BoundingRectangleF.Intersects(target.RuntimeHotspot.BoundingRectangleF))
                         EffectDescriptor.Apply(Definition.Effects, this, target);

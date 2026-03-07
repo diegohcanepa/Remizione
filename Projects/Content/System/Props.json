@@ -17,19 +17,19 @@
     },
     {
       "name": "PotteryB",
-      "minFloor": 10
+      "minRun": 10
     },
     {
       "name": "PotteryC",
-      "minFloor": 10
+      "minRun": 10
     },
     {
       "name": "PotteryD",
-      "minFloor": 10
+      "minRun": 10
     },
     {
       "name": "PotteryE",
-      "minFloor": 10
+      "minRun": 10
     },
     {
       "name": "RideDoorDown"

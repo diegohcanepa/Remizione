@@ -295,7 +295,7 @@ namespace ScaryCastle
         {
             base.OnLoad();
 
-            if (shadowSpot.Size > 0 && shadowSpot.AnchorPosition == Vector2.Zero && Sprite.RenderImage != null) 
+            if (shadowSpot.Size > 0 && shadowSpot.AnchorPosition == Vector2.Zero && Sprite.RenderImage != null)
                 shadowSpot.AnchorPosition = new Vector2(Sprite.Width / 2, Sprite.Height - .5f);
 
             blinker.Stop();
@@ -509,7 +509,7 @@ namespace ScaryCastle
             }
 
             OnDie();
-            
+
             Session.LootGenerator.DropLoot(this);
             Session.LootGenerator.DropCoins(this);
         }

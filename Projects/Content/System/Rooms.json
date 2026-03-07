@@ -7,8 +7,8 @@
       "doorLeft": "21,80",
       "doorRight": "220,80",
       "doorDown": "152,145",
+      "isStartingRoom": true,
       "maxEnemies": 0,
-      "roomType": "Start",
       "placeholders": [
         {
           "position": "68,22",

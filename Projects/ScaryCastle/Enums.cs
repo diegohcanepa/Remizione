@@ -144,7 +144,7 @@ namespace ScaryCastle
     public enum RideDoorDirection { Up, Right, Down, Left }
 
     // RoomType
-    public enum RoomType { Connector, Start, Exit }
+    public enum RoomType { Connector, Start, End }
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }

@@ -8,7 +8,7 @@ namespace ScaryCastle
     /// <summary>
     /// CombatBehavior
     /// </summary>
-    public sealed class CombatBehavior : INamedObject
+    public sealed class CombatBehavior : IDataObject
     {
         #region Private fields
 
@@ -57,5 +57,10 @@ namespace ScaryCastle
 
         // Name
         public string Name { get; }
+
+        // Validate
+        public void Validate(GameSession session)
+        {
+        }
     }
 }

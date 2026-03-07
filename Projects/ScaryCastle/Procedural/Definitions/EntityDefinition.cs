@@ -21,7 +21,6 @@ namespace ScaryCastle
         {
             Difficulty = element.GetEnum("difficulty", Difficulty.Easy);
             MaxPerRun = element.GetInt32("maxPerRun", -1);
-            MinFloor = element.GetInt32("minFloor", 0);
             MinRun = element.GetInt32("minRun", 0);
             PreferredLootCategory = element.GetEnum<ItemCategory>("preferredLootCategory");
             PreferredLootRealm = element.GetEnum<Realm>("preferredLootRealm");
@@ -58,9 +57,6 @@ namespace ScaryCastle
         // MaxPerRun
         public int MaxPerRun { get; }
 
-        // MinFloor
-        public int MinFloor { get; }
-
         // MinRun
         public int MinRun { get; }
 
@@ -70,7 +66,7 @@ namespace ScaryCastle
             if (!PassesMaxPerRunConstraint())
                 return false;
 
-            return session.RunCount >= MinRun && session.FloorIndex >= MinFloor;
+            return session.RunCount >= MinRun;
         }
 
         // PassesMaxPerRunConstraint
@@ -139,23 +135,5 @@ namespace ScaryCastle
 
         // Tags
         public Tags Tags { get; }
-
-        // Validate
-        public virtual void Validate(GameSession session)
-        {
-        }
-
-        // ValidateIntegrity
-        public static void ValidateIntegrity(GameSession session)
-        {
-            // TODO: Hay que validar que los nombres en los configs existan como static things o los templates de los rooms
-            // que esten en el registry. Sino puede pasar como con expending machine que ahora es vending machine y al
-            // cambiar el nombre y no haber actualizado el config, esa prop nunca aparece graficamente.
-
-            foreach (var def in definitions.Values)
-            {
-                def.Validate(session);
-            }
-        }
     }
 }

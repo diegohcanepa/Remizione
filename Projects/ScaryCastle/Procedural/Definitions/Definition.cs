@@ -9,7 +9,7 @@ namespace ScaryCastle
     /// <summary>
     /// Definition
     /// </summary>
-    public abstract class Definition : INamedObject
+    public abstract class Definition : IDataObject
     {
         private static readonly HashSet<string> definitions = [];
         private readonly List<EffectDescriptor> effectDescriptors = [];
@@ -65,6 +65,17 @@ namespace ScaryCastle
 
         #endregion
 
+        #region Protected members
+
+        // RaiseValidationError
+        protected static void RaiseValidationError(Definition definition, string message, string? relatedProperty = null)
+        {
+            relatedProperty = relatedProperty == null ? string.Empty : "." + relatedProperty;
+            throw new InvalidOperationException($"[{definition.Name}{relatedProperty}]: {message}");
+        }
+
+        #endregion
+
         // EffectDescriptors
         public ReadOnlyCollection<EffectDescriptor> EffectDescriptors { get; }
 
@@ -81,6 +92,11 @@ namespace ScaryCastle
         public override string ToString()
         {
             return Name;
+        }
+
+        // Validate
+        public virtual void Validate(GameSession session)
+        {
         }
     }
 }

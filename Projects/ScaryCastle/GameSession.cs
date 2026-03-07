@@ -281,10 +281,6 @@ namespace ScaryCastle
             if (sessionNode == null || sessionNode.Attributes == null)
                 throw new InvalidOperationException("Session node attributes not found.");
 
-            // FloorIndex
-            if (sessionNode.Attributes[nameof(FloorIndex)]?.Value is string floorIndex)
-                FloorIndex = XmlConvert.ToInt32(floorIndex);
-
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
                 Player = FindEntity<Actor>(player);
@@ -333,8 +329,6 @@ namespace ScaryCastle
         // OnStarted
         protected override void OnStarted()
         {
-            EntityDefinition.ValidateIntegrity(this);
-
             foreach (var entity in Entities)
             {
                 if (entity is not GameThing thing)
@@ -350,8 +344,9 @@ namespace ScaryCastle
                 }
             }
 
-            if (FloorIndex > 0)
-                BeginRun();
+            ActorDefinition.Definitions.Validate(this);
+            PropDefinition.Definitions.Validate(this);
+            RoomDefinition.Definitions.Validate(this);
         }
 
         // OnUpdate
@@ -382,7 +377,7 @@ namespace ScaryCastle
 
             if (!IsAwaiting && IsCurrentScene)
             {
-                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 120)
+                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
                 {
                     Game.SceneManager.Push(inventoryScene);
                     return;
@@ -393,8 +388,6 @@ namespace ScaryCastle
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
-            output.WriteAttributeString(nameof(FloorIndex), XmlConvert.ToString(FloorIndex));
-
             // Player
             if (Player != null)
                 output.WriteAttributeString(nameof(Player), Player.Name);
@@ -423,7 +416,7 @@ namespace ScaryCastle
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            RunManager.Generate(this, Tags.EmptyList, FloorIndex);
+            RunManager.Generate(this, Tags.EmptyList, RunCount + 1);
 
             if (Player != null)
             {
@@ -491,10 +484,6 @@ namespace ScaryCastle
         {
             return proceduralThingsDict.TryGetValue(name, out var result) ? result : null;
         }
-
-        // FloorIndex
-        [ScriptProperty]
-        public int FloorIndex { get; set; } = 0;
 
         // Game
         public new ScaryCastleGame Game { get; }

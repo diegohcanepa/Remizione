@@ -175,7 +175,8 @@ namespace ScaryCastle
                     _ => 3
                 };
 
-                if (parent.RoomType == RoomType.Start && direction == 1) continue;
+                if (parent.RoomType == RoomType.Start && direction == 1)
+                    continue;
 
                 (int x, int y) target = GetCoords(parent.X, parent.Y, direction);
 
@@ -183,7 +184,7 @@ namespace ScaryCastle
 
                 // 3. Decisión de Colocación
                 int neighborsCount = CountNeighbors(target, occupied);
-                bool allowPlacement = false;
+                bool allowPlacement;
 
                 if (neighborsCount == 1)
                 {
@@ -220,12 +221,12 @@ namespace ScaryCastle
             }
 
             // 4. Procesar Distancias
-            RoomGraph coinRoom = ProcessMapData(start);
+            var endRoom = ProcessMapData(start);
 
-            if (coinRoom != start)
-                coinRoom.RoomType = RoomType.Exit;
+            if (endRoom != start)
+                endRoom.RoomType = RoomType.End;
 
-            return (rooms, coinRoom.DistanceFromStart);
+            return (rooms, endRoom.DistanceFromStart);
         }
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:e082dbe3f8558a69d94f2d4b9c8b5e33:0c172c93d14dd6983dc154dd5d93f2c4:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:7dd7e193f7a6efe6415fd2fe4288c7b8:32baf773c8dde550245396086a9ecba4:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,8 +20,8 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Actors.png" width="512" height="512">
-    <sprite n="Baal-assets/Stand01.png" x="490" y="214" w="18" h="14"/>
-    <sprite n="Baal-assets/Stand02.png" x="490" y="230" w="18" h="14"/>
+    <sprite n="Baal-assets/Stand01.png" x="70" y="90" w="18" h="14"/>
+    <sprite n="Baal-assets/Stand02.png" x="70" y="106" w="18" h="14"/>
     <sprite n="Berta-assets/Back01.png" x="482" y="2" w="28" h="25"/>
     <sprite n="Berta-assets/BackRaiseArm01.png" x="482" y="2" w="28" h="25"/>
     <sprite n="Berta-assets/BackRaiseArm02.png" x="482" y="2" w="28" h="25"/>
@@ -31,29 +31,29 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Berta-assets/Hurt01.png" x="200" y="62" w="28" h="25"/>
     <sprite n="Berta-assets/Hurt02.png" x="230" y="62" w="28" h="25"/>
     <sprite n="Berta-assets/InsertCoin01.png" x="92" y="86" w="28" h="25"/>
-    <sprite n="Berta-assets/InsertCoin02.png" x="54" y="90" w="28" h="25"/>
-    <sprite n="Berta-assets/InsertCoin03.png" x="122" y="86" w="28" h="25"/>
-    <sprite n="Berta-assets/InsertCoin04.png" x="152" y="86" w="28" h="25"/>
-    <sprite n="Berta-assets/InsertCoin05.png" x="284" y="71" w="28" h="25"/>
-    <sprite n="Berta-assets/InsertCoin06.png" x="182" y="89" w="28" h="25"/>
-    <sprite n="Berta-assets/InsertCoin07.png" x="212" y="89" w="28" h="25"/>
-    <sprite n="Berta-assets/InsertCoin08.png" x="84" y="113" w="28" h="25"/>
-    <sprite n="Berta-assets/LookBehind01.png" x="40" y="117" w="28" h="25"/>
-    <sprite n="Berta-assets/Move01.png" x="2" y="120" w="28" h="25"/>
-    <sprite n="Berta-assets/Move02.png" x="114" y="113" w="28" h="25"/>
-    <sprite n="Berta-assets/Move03.png" x="144" y="113" w="28" h="25"/>
+    <sprite n="Berta-assets/InsertCoin02.png" x="40" y="90" w="28" h="25"/>
+    <sprite n="Berta-assets/InsertCoin03.png" x="40" y="117" w="28" h="25"/>
+    <sprite n="Berta-assets/InsertCoin04.png" x="2" y="120" w="28" h="25"/>
+    <sprite n="Berta-assets/InsertCoin05.png" x="122" y="86" w="28" h="25"/>
+    <sprite n="Berta-assets/InsertCoin06.png" x="152" y="86" w="28" h="25"/>
+    <sprite n="Berta-assets/InsertCoin07.png" x="284" y="71" w="28" h="25"/>
+    <sprite n="Berta-assets/InsertCoin08.png" x="182" y="89" w="28" h="25"/>
+    <sprite n="Berta-assets/LookBehind01.png" x="212" y="89" w="28" h="25"/>
+    <sprite n="Berta-assets/Move01.png" x="90" y="113" w="28" h="25"/>
+    <sprite n="Berta-assets/Move02.png" x="120" y="113" w="28" h="25"/>
+    <sprite n="Berta-assets/Move03.png" x="150" y="113" w="28" h="25"/>
     <sprite n="Berta-assets/Move04.png" x="314" y="71" w="28" h="25"/>
     <sprite n="Berta-assets/PickUp01.png" x="344" y="71" w="28" h="25"/>
     <sprite n="Berta-assets/RaiseArm01.png" x="344" y="71" w="28" h="25"/>
     <sprite n="Berta-assets/RaiseArm02.png" x="374" y="71" w="28" h="25"/>
-    <sprite n="Berta-assets/RaiseArm03.png" x="212" y="89" w="28" h="25"/>
+    <sprite n="Berta-assets/RaiseArm03.png" x="284" y="71" w="28" h="25"/>
     <sprite n="Berta-assets/Stand01.png" x="404" y="71" w="28" h="25"/>
     <sprite n="Berta-assets/StandHead01.png" x="434" y="71" w="28" h="25"/>
     <sprite n="Berta-assets/StandHead02.png" x="464" y="80" w="28" h="25"/>
     <sprite n="Berta-assets/TakeSack01.png" x="284" y="98" w="28" h="25"/>
     <sprite n="Berta-assets/TakeSack02.png" x="242" y="106" w="28" h="25"/>
-    <sprite n="Berta-assets/TalkHead01.png" x="174" y="116" w="28" h="25"/>
-    <sprite n="Berta-assets/TalkHead02.png" x="204" y="116" w="28" h="25"/>
+    <sprite n="Berta-assets/TalkHead01.png" x="180" y="116" w="28" h="25"/>
+    <sprite n="Berta-assets/TalkHead02.png" x="210" y="116" w="28" h="25"/>
     <sprite n="Berta-assets/ThrowItem01.png" x="70" y="140" w="28" h="25"/>
     <sprite n="Berta-assets/ThrowItem02.png" x="32" y="144" w="28" h="25"/>
     <sprite n="BloodyEye-assets/Move01.png" x="284" y="30" w="36" h="15"/>
@@ -84,7 +84,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Edmund-assets/Consume03.png" x="434" y="98" w="28" h="25"/>
     <sprite n="Edmund-assets/Consume04.png" x="464" y="107" w="28" h="25"/>
     <sprite n="Edmund-assets/Fatigue01.png" x="272" y="125" w="28" h="25"/>
-    <sprite n="Edmund-assets/Fatigue02.png" x="234" y="133" w="28" h="25"/>
+    <sprite n="Edmund-assets/Fatigue02.png" x="240" y="133" w="28" h="25"/>
     <sprite n="Edmund-assets/Fatigue03.png" x="160" y="143" w="28" h="25"/>
     <sprite n="Edmund-assets/Headbutt01.png" x="190" y="143" w="28" h="25"/>
     <sprite n="Edmund-assets/Headbutt02.png" x="62" y="167" w="28" h="25"/>
@@ -99,7 +99,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Edmund-assets/InsertCoin05.png" x="422" y="125" w="28" h="25"/>
     <sprite n="Edmund-assets/InsertCoin06.png" x="452" y="134" w="28" h="25"/>
     <sprite n="Edmund-assets/InsertCoin07.png" x="482" y="134" w="28" h="25"/>
-    <sprite n="Edmund-assets/InsertCoin08.png" x="264" y="152" w="28" h="25"/>
+    <sprite n="Edmund-assets/InsertCoin08.png" x="270" y="152" w="28" h="25"/>
     <sprite n="Edmund-assets/LookBehind01.png" x="220" y="160" w="28" h="25"/>
     <sprite n="Edmund-assets/Move01.png" x="152" y="170" w="28" h="25"/>
     <sprite n="Edmund-assets/Move02.png" x="182" y="170" w="28" h="25"/>
@@ -108,17 +108,17 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Edmund-assets/MoveAngry01.png" x="2" y="201" w="28" h="25"/>
     <sprite n="Edmund-assets/MoveAngry02.png" x="92" y="194" w="28" h="25"/>
     <sprite n="Edmund-assets/MoveAngry03.png" x="122" y="194" w="28" h="25"/>
-    <sprite n="Edmund-assets/MoveAngry04.png" x="294" y="152" w="28" h="25"/>
+    <sprite n="Edmund-assets/MoveAngry04.png" x="300" y="152" w="28" h="25"/>
     <sprite n="Edmund-assets/PickUp01.png" x="314" y="98" w="28" h="25"/>
     <sprite n="Edmund-assets/PickUp02.png" x="344" y="98" w="28" h="25"/>
-    <sprite n="Edmund-assets/PickUp03.png" x="324" y="152" w="28" h="25"/>
-    <sprite n="Edmund-assets/RaiseArm01.png" x="264" y="152" w="28" h="25"/>
-    <sprite n="Edmund-assets/RaiseArm02.png" x="354" y="152" w="28" h="25"/>
+    <sprite n="Edmund-assets/PickUp03.png" x="330" y="152" w="28" h="25"/>
+    <sprite n="Edmund-assets/RaiseArm01.png" x="270" y="152" w="28" h="25"/>
+    <sprite n="Edmund-assets/RaiseArm02.png" x="360" y="152" w="28" h="25"/>
     <sprite n="Edmund-assets/RaiseArm03.png" x="482" y="134" w="28" h="25"/>
-    <sprite n="Edmund-assets/Stand01.png" x="384" y="152" w="28" h="25"/>
-    <sprite n="Edmund-assets/Stand02.png" x="414" y="152" w="28" h="25"/>
-    <sprite n="Edmund-assets/Stand03.png" x="444" y="161" w="28" h="25"/>
-    <sprite n="Edmund-assets/Stand04.png" x="474" y="161" w="28" h="25"/>
+    <sprite n="Edmund-assets/Stand01.png" x="390" y="152" w="28" h="25"/>
+    <sprite n="Edmund-assets/Stand02.png" x="420" y="152" w="28" h="25"/>
+    <sprite n="Edmund-assets/Stand03.png" x="450" y="161" w="28" h="25"/>
+    <sprite n="Edmund-assets/Stand04.png" x="480" y="161" w="28" h="25"/>
     <sprite n="Edmund-assets/StandHead01.png" x="250" y="179" w="28" h="25"/>
     <sprite n="Edmund-assets/StandHead02.png" x="212" y="187" w="28" h="25"/>
     <sprite n="Edmund-assets/TakeSack01.png" x="152" y="197" w="28" h="25"/>
@@ -199,12 +199,15 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Sister-assets/StandHead02.png" x="402" y="2" w="38" h="26"/>
     <sprite n="Sister-assets/TalkHead01.png" x="442" y="2" w="38" h="26"/>
     <sprite n="Sister-assets/TalkHead02.png" x="54" y="30" w="38" h="26"/>
-    <sprite n="Skeleton-assets/Gut0.png" x="48" y="75" w="4" h="4"/>
-    <sprite n="Skeleton-assets/Gut1.png" x="40" y="75" w="6" h="3"/>
-    <sprite n="Skeleton-assets/Gut2.png" x="40" y="80" w="5" h="5"/>
-    <sprite n="Skeleton-assets/Gut3.png" x="40" y="87" w="3" h="4"/>
-    <sprite n="Skeleton-assets/Gut4.png" x="47" y="81" w="4" h="4"/>
-    <sprite n="Skeleton-assets/Gut5.png" x="45" y="87" w="3" h="4"/>
+    <sprite n="Skeleton-assets/Gut0.png" x="40" y="80" w="3" h="1"/>
+    <sprite n="Skeleton-assets/Gut1.png" x="40" y="83" w="3" h="1"/>
+    <sprite n="Skeleton-assets/Gut2.png" x="45" y="83" w="3" h="1"/>
+    <sprite n="Skeleton-assets/Gut3.png" x="45" y="75" w="3" h="2"/>
+    <sprite n="Skeleton-assets/Gut4.png" x="40" y="86" w="3" h="1"/>
+    <sprite n="Skeleton-assets/Gut5.png" x="50" y="75" w="2" h="2"/>
+    <sprite n="Skeleton-assets/Gut6.png" x="50" y="75" w="2" h="2"/>
+    <sprite n="Skeleton-assets/Gut7.png" x="45" y="83" w="3" h="1"/>
+    <sprite n="Skeleton-assets/Gut8.png" x="40" y="83" w="3" h="1"/>
     <sprite n="Skeleton-assets/Move01.png" x="2" y="30" w="24" h="23"/>
     <sprite n="Skeleton-assets/Move02.png" x="28" y="30" w="24" h="23"/>
     <sprite n="Skeleton-assets/Move03.png" x="296" y="206" w="24" h="23"/>
@@ -212,11 +215,11 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Skeleton-assets/Stand01.png" x="265" y="219" w="24" h="23"/>
     <sprite n="Skeleton-assets/StandHead01.png" x="206" y="227" w="24" h="23"/>
     <sprite n="Skeleton-assets/StandHead02.png" x="206" y="227" w="24" h="23"/>
-    <sprite n="Zabul-assets/Gut0.png" x="474" y="35" w="3" h="2"/>
-    <sprite n="Zabul-assets/Gut1.png" x="474" y="39" w="3" h="1"/>
-    <sprite n="Zabul-assets/Gut2.png" x="474" y="30" w="3" h="3"/>
-    <sprite n="Zabul-assets/Gut3.png" x="474" y="42" w="2" h="1"/>
-    <sprite n="Zabul-assets/Gut4.png" x="50" y="87" w="2" h="2"/>
+    <sprite n="Zabul-assets/Gut0.png" x="45" y="79" w="3" h="2"/>
+    <sprite n="Zabul-assets/Gut1.png" x="45" y="86" w="3" h="1"/>
+    <sprite n="Zabul-assets/Gut2.png" x="40" y="75" w="3" h="3"/>
+    <sprite n="Zabul-assets/Gut3.png" x="50" y="83" w="2" h="1"/>
+    <sprite n="Zabul-assets/Gut4.png" x="50" y="79" w="2" h="2"/>
     <sprite n="Zabul-assets/Stand01.png" x="40" y="55" w="12" h="8"/>
     <sprite n="Zabul-assets/Stand02.png" x="40" y="65" w="12" h="8"/>
 </TextureAtlas>
