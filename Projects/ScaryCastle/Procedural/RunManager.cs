@@ -3,196 +3,134 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace ScaryCastle.Procedural
+namespace ScaryCastle
 {
-    /// <summary>
-    /// RunManager
-    /// </summary>
     public static class RunManager
     {
         private static readonly List<RoomGraph> roomGraphs = [];
 
         #region Private members
 
-        // ApplyDefinitions
-        private static void ApplyDefinitions(List<RoomDefinition> definitions, int maxDistance)
-        {
-            float threshold = maxDistance / 3f;
-            var candidates = new List<RoomDefinition>();
-
-            // Rooms
-            foreach (var room in roomGraphs)
-            {
-                // Detectamos si es el punto de partida real
-                bool isStartPoint = room.DistanceFromStart == 0;
-
-                // Determinamos la fase según la distancia del room
-                var targetDiff = Difficulty.Easy;
-                if (room.DistanceFromStart >= threshold * 2)
-                    targetDiff = Difficulty.Hard;
-                else if (room.DistanceFromStart >= threshold)
-                    targetDiff = Difficulty.Normal;
-
-                candidates.Clear();
-                foreach (var definition in definitions)
-                {
-                    // 1. FILTRO DE INICIO: Regla crítica
-                    // Si es el inicio, solo queremos starters. Si NO es el inicio, NO queremos starters en medio del dungeon.
-                    if (definition.IsStartingRoom != isStartPoint)
-                        continue;
-
-                    // 2. DIFICULTAD (Básico)
-                    if (definition.Difficulty != targetDiff)
-                        continue;
-
-                    // 3. REGLA DE INSTANCIAS (Tu lógica de MaxPerRun)
-                    if (!definition.PassesMaxPerRunConstraint())
-                        continue;
-
-                    // 4. REGLA DE DISEÑO LÓGICO (Callejones sin salida)
-                    // Impide que un asset diseñado para ser final de camino se use como conector.
-                    if (definition.RequiresDeadEnd && room.GetConnectionCount() > 1)
-                        continue;
-
-                    candidates.Add(definition);
-                }
-
-                // FALLBACK: Si no hay definitions específicas para esa fase, buscamos una inferior
-                if (candidates.Count == 0 && targetDiff > Difficulty.Easy)
-                {
-                    foreach (var definition in definitions)
-                    {
-                        if (definition.IsStartingRoom)
-                            continue;
-
-                        if (definition.Difficulty < targetDiff)
-                        {
-                            if (definition.RequiresDeadEnd && room.GetConnectionCount() > 1)
-                                continue;
-
-                            if (definition.PassesMaxPerRunConstraint())
-                                candidates.Add(definition);
-                        }
-                    }
-                }
-
-                // Pick
-                var chanceTable = new ChanceTable();
-                foreach (var candidate in candidates)
-                {
-                    chanceTable.Add(candidate.Name, candidate.SpawnWeight, 1, candidate);
-                }
-
-                if (chanceTable.GetValue()?.Context is RoomDefinition chosenDefinition)
-                {
-                    SpawnCounter.Increment(chosenDefinition.Name);
-                    room.Definition = chosenDefinition;
-                }
-                else
-                {
-                    throw new InvalidOperationException("Failed to apply room definition. No match found.");
-                }
-            }
-        }
-
-        // GetAvailableDefinitions
         private static List<RoomDefinition> GetAvailableDefinitions(GameSession session, Tags pools)
         {
             var result = new List<RoomDefinition>();
-
             foreach (var definition in RoomDefinition.Definitions.All)
             {
-                // Run constraints
-                if (!definition.PassesRunConstraints(session))
-                    continue;
-
-                // Pools
+                if (!definition.PassesRunConstraints(session)) continue;
                 if (pools.Count > 0)
                 {
-                    if (!Utils.Intersects(pools, definition.Pools))
-                        continue;
+                    if (!Utils.Intersects(pools, definition.Pools)) continue;
                 }
-
-                // Passed all checks
                 result.Add(definition);
             }
-
             return result;
         }
 
-        // GetRoomCount
-        private static int GetRoomCount(int runCount)
+        private static bool ApplyDefinitions(List<RoomDefinition> definitions, int maxDistance, Random rng, bool strict)
         {
-            const int MAX_RUNS = 666;
-            const int MIN_ROOMS = 5;
-            const int MAX_ROOMS = 60;
-            const float CURVE = 1.5f; // Controla qué tan rápido crece el mapa
+            float threshold = maxDistance / 3f;
+            var availableNodes = new List<RoomGraph>(roomGraphs);
 
-            if (runCount > MAX_RUNS)
-                runCount = MAX_RUNS;
+            // 1. INICIO
+            RoomGraph? startNode = null;
+            foreach (var n in availableNodes) if (n.DistanceFromStart == 0) { startNode = n; break; }
+            if (startNode != null)
+            {
+                RoomDefinition? startDef = null;
+                foreach (var d in definitions) if (d.IsStartingRoom && startNode.Fits(d)) { startDef = d; break; }
+                if (startDef == null && strict) return false;
+                if (startDef != null) Assign(startNode, startDef, availableNodes);
+            }
 
-            // f entre 0.0 y 1.0
-            float f = (float)(runCount - 1) / (MAX_RUNS - 1);
+            // 2. SALIDA (IsExit)
+            RoomGraph? exitNode = null;
+            foreach (var n in availableNodes) if (n.RoomType == RoomType.Exit) { exitNode = n; break; }
+            if (exitNode != null)
+            {
+                RoomDefinition? exitDef = null;
+                foreach (var d in definitions) if (d.IsExit && exitNode.Fits(d)) { exitDef = d; break; }
+                if (exitDef == null && strict) return false;
+                if (exitDef != null) Assign(exitNode, exitDef, availableNodes);
+            }
 
-            // Aplicar la potencia para crecimiento tardío
-            float curvedProgress = (float)Math.Pow(f, CURVE);
+            // 3. OBLIGATORIAS
+            var mandatory = new List<RoomDefinition>();
+            foreach (var d in definitions) if (d.IsMandatory && !d.IsStartingRoom && !d.IsExit) mandatory.Add(d);
+            foreach (var def in mandatory)
+            {
+                var validNodes = new List<RoomGraph>();
+                foreach (var n in availableNodes)
+                {
+                    if (n.Fits(def) && (!def.RequiresDeadEnd || n.ConnectionCount == 1)) validNodes.Add(n);
+                }
+                if (validNodes.Count > 0) Assign(validNodes[rng.Next(validNodes.Count)], def, availableNodes);
+                else if (strict) return false;
+            }
 
-            // Interpolación lineal
-            int count = (int)Math.Round(MIN_ROOMS + ((MAX_ROOMS - MIN_ROOMS) * curvedProgress));
-
-            return count;
+            // 4. RELLENO
+            var fluff = new List<RoomDefinition>();
+            foreach (var d in definitions) if (!d.IsMandatory && !d.IsStartingRoom && !d.IsExit) fluff.Add(d);
+            var nodesToFill = new List<RoomGraph>(availableNodes);
+            foreach (var node in nodesToFill)
+            {
+                var targetDiff = GetDifficulty(node.DistanceFromStart, threshold);
+                var candidates = new List<RoomDefinition>();
+                foreach (var d in fluff) if (d.Difficulty == targetDiff && node.Fits(d) && d.PassesMaxPerRunConstraint()) candidates.Add(d);
+                if (candidates.Count == 0) foreach (var d in fluff) if (node.Fits(d) && d.PassesMaxPerRunConstraint()) candidates.Add(d);
+                if (candidates.Count > 0) Assign(node, candidates[rng.Next(candidates.Count)], availableNodes);
+                else if (strict) return false;
+            }
+            return true;
         }
 
+        private static void Assign(RoomGraph node, RoomDefinition def, List<RoomGraph> pool)
+        {
+            node.Definition = def;
+            SpawnCounter.Increment(def.Name);
+            pool.Remove(node);
+        }
+
+        private static Difficulty GetDifficulty(int dist, float threshold)
+        {
+            if (dist >= threshold * 2) return Difficulty.Hard;
+            if (dist >= threshold) return Difficulty.Normal;
+            return Difficulty.Easy;
+        }
+
+        private static void ClearInternal() { roomGraphs.Clear(); SpawnCounter.Reset(); }
         #endregion
 
-        // Clear
-        public static void Clear()
-        {
-            foreach (var room in roomGraphs)
-            {
-                room.RideRoom.Children.Clear();
-            }
-
-            roomGraphs.Clear();
-            SpawnCounter.Reset();
-            HasContent = false;
-        }
-
-        // Generate
         public static void Generate(GameSession session, Tags pools, int floorIndex)
         {
-            roomGraphs.Clear();
-            var result = RunGraphGenerator.Generate(session.Random, GetRoomCount(floorIndex));
-            roomGraphs.AddRange(result.Item1);
+            HasContent = false;
+            var defs = GetAvailableDefinitions(session, pools);
+            int count = 10 + (floorIndex * 2);
 
-            // Get available room definitions
-            var definitions = GetAvailableDefinitions(session, pools);
-
-            // Assign definitions
-            ApplyDefinitions(definitions, result.Item2);
-
-            // Create ride rooms
-            foreach (var roomGraph in roomGraphs)
+            bool success = false;
+            for (int i = 0; i < 5; i++)
             {
-                roomGraph.RideRoom = RideRoom.CreateInstance(session, roomGraph);
+                ClearInternal();
+                var res = RunGraphGenerator.Generate(session.Random, count);
+                roomGraphs.AddRange(res.Item1);
+                if (ApplyDefinitions(defs, res.Item2, session.Random, true)) { success = true; break; }
             }
 
-            // Load rooms
-            foreach (var room in roomGraphs)
+            if (!success)
             {
-                room.RideRoom.Load();
+                ClearInternal();
+                var res = RunGraphGenerator.Generate(session.Random, count);
+                roomGraphs.AddRange(res.Item1);
+                ApplyDefinitions(defs, res.Item2, session.Random, false);
             }
 
+            foreach (var r in roomGraphs) r.RideRoom = RideRoom.CreateInstance(session, r);
+            foreach (var r in roomGraphs) r.RideRoom.Load();
             HasContent = true;
         }
 
-        // HasContent
+        public static void Clear() { foreach (var r in roomGraphs) r.RideRoom?.Children.Clear(); ClearInternal(); HasContent = false; }
         public static bool HasContent { get; private set; }
-
-        // Rooms
-        public static ReadOnlyCollection<RoomGraph> Rooms { get; } = roomGraphs.AsReadOnly();
-
-        // SpawnCounter
+        public static ReadOnlyCollection<RoomGraph> Rooms => roomGraphs.AsReadOnly();
         public static MultiCounter SpawnCounter { get; } = new();
     }
 }

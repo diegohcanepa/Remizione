@@ -53,6 +53,10 @@
               "type": "boolean",
               "default": false
             },
+            "isExit": {
+              "type": "boolean",
+              "default": false
+            },
             "isMandatory": {
               "type": "boolean",
               "default": false

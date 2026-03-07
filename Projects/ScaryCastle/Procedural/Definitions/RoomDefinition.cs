@@ -26,6 +26,7 @@ namespace ScaryCastle
             DoorRight = element.GetVector2("doorRight");
             DoorUp = element.GetVector2("doorUp");
             ExactMatch = element.GetBool("exactMatch", false);
+            IsExit = element.GetBool("isExit", false);
             IsMandatory = element.GetBool("isMandatory", false);
             IsStartingRoom = element.GetBool("isStartingRoom", false);
             LockType = element.GetEnum("lockType", LockType.None);
@@ -148,6 +149,9 @@ namespace ScaryCastle
 
         // HasUpDoor
         public bool HasUpDoor => DoorUp != null;
+
+        // IsExit
+        public bool IsExit { get; }
 
         // IsMandatory
         public bool IsMandatory { get; }

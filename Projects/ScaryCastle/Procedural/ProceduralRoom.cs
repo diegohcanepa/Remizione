@@ -1,7 +1,6 @@
 ﻿using Adberration;
 using Engendro;
 using Microsoft.Xna.Framework;
-using ScaryCastle.Procedural;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -78,7 +77,7 @@ namespace ScaryCastle
                     continue;
 
                 // Thing requires a dead end room
-                if (definition.RequiresDeadEnd && RoomGraph.GetConnectionCount() > 1)
+                if (definition.RequiresDeadEnd && RoomGraph.ConnectionCount > 1)
                     continue;
 
                 var thing = Session.FindDeclaredThing(definition.Name) ?? throw new InvalidOperationException($"There is no declared thing named '{definition.Name}'. ");
