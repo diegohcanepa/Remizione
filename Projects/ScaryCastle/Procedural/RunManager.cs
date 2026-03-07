@@ -62,6 +62,9 @@ namespace ScaryCastle.Procedural
                 {
                     foreach (var definition in definitions)
                     {
+                        if (definition.IsStartingRoom)
+                            continue;
+
                         if (definition.Difficulty < targetDiff)
                         {
                             if (definition.RequiresDeadEnd && room.GetConnectionCount() > 1)
@@ -158,8 +161,6 @@ namespace ScaryCastle.Procedural
         // Generate
         public static void Generate(GameSession session, Tags pools, int floorIndex)
         {
-            HasContent = true;
-
             roomGraphs.Clear();
             var result = RunGraphGenerator.Generate(session.Random, GetRoomCount(floorIndex));
             roomGraphs.AddRange(result.Item1);
@@ -181,6 +182,8 @@ namespace ScaryCastle.Procedural
             {
                 room.RideRoom.Load();
             }
+
+            HasContent = true;
         }
 
         // HasContent

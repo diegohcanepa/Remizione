@@ -9,7 +9,7 @@ namespace ScaryCastle
     /// <summary>
     /// Definition
     /// </summary>
-    public abstract class Definition : IDataObject
+    public abstract class Definition : INamedObject
     {
         private static readonly HashSet<string> definitions = [];
         private readonly List<EffectDescriptor> effectDescriptors = [];
@@ -25,16 +25,16 @@ namespace ScaryCastle
 
             // Name cannot be a realm 
             if (Enum.IsDefined(typeof(Realm), Name))
-                throw new InvalidOperationException($"The name '{Name}' cannot be used because it is an item realm.");
+                RaiseValidationError(this, $"The name '{Name}' cannot be used because it is an item realm.");
 
             // Name cannot be a category
             if (Enum.IsDefined(typeof(ItemCategory), Name))
-                throw new InvalidOperationException($"The name '{Name}' cannot be used because it is an item category.");
+                RaiseValidationError(this, $"The name '{Name}' cannot be used because it is an item category.");
 
             if (uniqueName)
             {
                 if (definitions.Contains(Name))
-                    throw new InvalidOperationException($"The name '{Name}' cannot be used because it is already being used by another definition.");
+                    RaiseValidationError(this, $"The name '{Name}' cannot be used because it is already being used by another definition.");
                 else
                     definitions.Add(Name);
             }
@@ -92,11 +92,6 @@ namespace ScaryCastle
         public override string ToString()
         {
             return Name;
-        }
-
-        // Validate
-        public virtual void Validate(GameSession session)
-        {
         }
     }
 }

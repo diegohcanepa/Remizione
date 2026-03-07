@@ -344,9 +344,15 @@ namespace ScaryCastle
                 }
             }
 
-            ActorDefinition.Definitions.Validate(this);
-            PropDefinition.Definitions.Validate(this);
-            RoomDefinition.Definitions.Validate(this);
+            foreach (var actorDef in ActorDefinition.Definitions.All)
+            {
+                actorDef.AssertScriptDeclaration(this);
+            }
+
+            foreach (var propDef in PropDefinition.Definitions.All)
+            {
+                propDef.AssertScriptDeclaration(this);
+            }
         }
 
         // OnUpdate

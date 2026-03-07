@@ -40,7 +40,7 @@ namespace ScaryCastle
                 MinSpawnAmount = 1;
 
             if (MinSpawnAmount > MaxSpawnAmount)
-                throw new InvalidOperationException($"[{Name}]: {nameof(MinSpawnAmount)} cannot be greater than MaxSpawnAmount.");
+                RaiseValidationError(this, $"{nameof(MinSpawnAmount)} cannot be greater than {nameof(MaxSpawnAmount)}.");
 
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
 
@@ -75,6 +75,13 @@ namespace ScaryCastle
 
         #endregion
 
+        // AssertScriptDeclaration
+        public void AssertScriptDeclaration(GameSession session)
+        {
+            if (session.FindDeclaredThing(Name) == null)
+                RaiseValidationError(this, "No script declaration.");
+        }
+
         // Effects
         public ReadOnlyCollection<EffectDescriptor> Effects { get; }
 
@@ -98,14 +105,5 @@ namespace ScaryCastle
 
         // RequiresDeadEnd
         public bool RequiresDeadEnd { get; }
-
-        // Validate
-        public override void Validate(GameSession session)
-        {
-            base.Validate(session);
-
-            if (session.FindDeclaredThing(Name) == null)
-                throw new InvalidOperationException($"[{Name}] has no script declaration.");
-        }
     }
 }

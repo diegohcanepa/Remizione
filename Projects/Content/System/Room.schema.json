@@ -49,6 +49,14 @@
             "doorUp": {
               "type": "string"
             },
+            "exactMatch": {
+              "type": "boolean",
+              "default": false
+            },
+            "isMandatory": {
+              "type": "boolean",
+              "default": false
+            },
             "isStartingRoom": {
               "type": "boolean",
               "default": false

@@ -120,9 +120,16 @@ namespace ScaryCastle
                         {
                             if (combatIntent != null)
                                 EffectDescriptor.Apply(combatIntent.EffectDescriptors, owner, target);
-                            //Bounce();
-                            Unparent();
-                            //lastThingCollisioned = target;
+
+                            if (target.MaxHP == 0)
+                            {
+                                Bounce();
+                                lastThingCollisioned = target;
+                            }
+                            else
+                            {
+                                Unparent();
+                            }
                         }
 
                         return target;

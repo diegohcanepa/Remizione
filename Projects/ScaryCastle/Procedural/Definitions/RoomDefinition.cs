@@ -21,19 +21,18 @@ namespace ScaryCastle
         private RoomDefinition(JsonElement element)
             : base(element)
         {
-            DoorDown = element.GetVector2("doorDown", Vector2.Zero);
-            DoorLeft = element.GetVector2("doorLeft", Vector2.Zero);
-            DoorRight = element.GetVector2("doorRight", Vector2.Zero);
-            DoorUp = element.GetVector2("doorUp", Vector2.Zero);
+            DoorDown = element.GetVector2("doorDown");
+            DoorLeft = element.GetVector2("doorLeft");
+            DoorRight = element.GetVector2("doorRight");
+            DoorUp = element.GetVector2("doorUp");
+            ExactMatch = element.GetBool("exactMatch", false);
+            IsMandatory = element.GetBool("isMandatory", false);
             IsStartingRoom = element.GetBool("isStartingRoom", false);
             LockType = element.GetEnum("lockType", LockType.None);
             MaxEnemies = element.GetInt32("maxEnemies", -1);
             MaxProps = element.GetInt32("maxProps", -1);
             MusicTag = element.GetString("musicTag");
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
-
-            if (DoorLeft == Vector2.Zero || DoorDown == Vector2.Zero || DoorRight == Vector2.Zero || DoorUp == Vector2.Zero)
-                throw new InvalidOperationException($"Missing doors [{Name}].");
 
             // Placeholders
             if (element.TryGetProperty("placeholders", out JsonElement placeholdersElement))
@@ -84,6 +83,8 @@ namespace ScaryCastle
                 }
             }
 
+            Validate();
+
             Placeholders = placeholders.AsReadOnly();
             Walls = walls.AsReadOnly();
 
@@ -92,20 +93,64 @@ namespace ScaryCastle
 
         #endregion
 
+        #region Private members
+
+        // Validate
+        private void Validate()
+        {
+            if (DoorLeft == null && DoorDown == null && DoorRight == null && DoorUp == Vector2.Zero)
+                RaiseValidationError(this, $"Must have one or more doors.");
+
+            if (IsStartingRoom)
+            {
+                // Rule: Difficulty must be easy
+                if (Difficulty != Difficulty.Easy)
+                    RaiseValidationError(this, "A starting room must have easy difficulty.", nameof(Difficulty));
+
+                // Rule: MaxEnemies not allowed
+                if (MaxEnemies > 0)
+                    RaiseValidationError(this, "A starting room cannot define maximum enemies.", nameof(MaxEnemies));
+
+                // Rule: Dead end not allowed
+                if (RequiresDeadEnd)
+                    RaiseValidationError(this, "A starting room cannot be a dead end.", nameof(RequiresDeadEnd));
+            }
+        }
+
+        #endregion
+
         // Definitions
         public static DataContainer<RoomDefinition> Definitions { get; } = new(element => new RoomDefinition(element));
 
         // DoorDown
-        public Vector2 DoorDown { get; }
+        public Vector2? DoorDown { get; }
 
         // DoorLeft
-        public Vector2 DoorLeft { get; }
+        public Vector2? DoorLeft { get; }
 
         // DoorRight
-        public Vector2 DoorRight { get; }
+        public Vector2? DoorRight { get; }
 
         // DoorUp
-        public Vector2 DoorUp { get; }
+        public Vector2? DoorUp { get; }
+
+        // ExactMatch
+        public bool ExactMatch { get; }
+
+        // HasDownDoor
+        public bool HasDownDoor => DoorDown != null;
+
+        // HasLeftDoor
+        public bool HasLeftDoor => DoorLeft != null;
+
+        // HasRightDoor
+        public bool HasRightDoor => DoorRight != null;
+
+        // HasUpDoor
+        public bool HasUpDoor => DoorUp != null;
+
+        // IsMandatory
+        public bool IsMandatory { get; }
 
         // IsStartingRoom
         public bool IsStartingRoom { get; }
@@ -130,27 +175,6 @@ namespace ScaryCastle
 
         // Scope
         public ScopeRules Scope { get; }
-
-        // Validate
-        public override void Validate(GameSession session)
-        {
-            base.Validate(session);
-
-            if (IsStartingRoom)
-            {
-                // Rule: Difficulty must be easy
-                if (Difficulty != Difficulty.Easy)
-                    RaiseValidationError(this, "A starting room must have easy difficulty.", nameof(Difficulty));
-
-                // Rule: MaxEnemies not allowed
-                if (MaxEnemies > 0)
-                    RaiseValidationError(this, "A starting room cannot define maximum enemies.", nameof(MaxEnemies));
-
-                // Rule: Dead end not allowed
-                if (RequiresDeadEnd)
-                    RaiseValidationError(this, "A starting room cannot be a dead end.", nameof(RequiresDeadEnd));
-            }
-        }
 
         // WalkArea
         public string WalkArea { get; }
