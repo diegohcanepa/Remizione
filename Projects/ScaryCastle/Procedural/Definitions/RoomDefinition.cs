@@ -136,13 +136,20 @@ namespace ScaryCastle
         {
             base.Validate(session);
 
-            // Rule: MaxEnemies not allowed
-            if (IsStartingRoom && MaxEnemies > 0)
-                RaiseValidationError(this, "A starting room cannot define maximum enemies.", nameof(MaxEnemies));
+            if (IsStartingRoom)
+            {
+                // Rule: Difficulty must be easy
+                if (Difficulty != Difficulty.Easy)
+                    RaiseValidationError(this, "A starting room must have easy difficulty.", nameof(Difficulty));
 
-            // Rule: Dead end not allowed
-            if (IsStartingRoom && RequiresDeadEnd)
-                RaiseValidationError(this, "A starting room cannot be a dead end.", nameof(RequiresDeadEnd));
+                // Rule: MaxEnemies not allowed
+                if (MaxEnemies > 0)
+                    RaiseValidationError(this, "A starting room cannot define maximum enemies.", nameof(MaxEnemies));
+
+                // Rule: Dead end not allowed
+                if (RequiresDeadEnd)
+                    RaiseValidationError(this, "A starting room cannot be a dead end.", nameof(RequiresDeadEnd));
+            }
         }
 
         // WalkArea
