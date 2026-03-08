@@ -40,7 +40,7 @@ namespace ScaryCastle
             }
         }
 
-        private static RoomGraph ProcessMapData(RoomGraph start, List<RoomGraph> allRooms)
+        private static RoomGraph ProcessMapData(RoomGraph start, List<RoomGraph> allRooms, Dictionary<(int x, int y), RoomGraph> occupied)
         {
             var queue = new Queue<RoomGraph>();
             var visited = new HashSet<RoomGraph>();
@@ -61,20 +61,30 @@ namespace ScaryCastle
 
             RoomGraph bestRoom = start;
             int maxDist = -1;
+
             foreach (var r in allRooms)
             {
+                // REGLA DE SALIDA PARA EL CARRITO: 
+                // 1. Debe ser un callejón (ConnectionCount == 1).
+                // 2. La conexión debe ser Vertical (Up o Down).
+                // 3. Los espacios físicos LEFT y RIGHT deben estar VACÍOS en el mapa (occupied).
                 if (r.ConnectionCount == 1 && r != start)
                 {
-                    if (r.DistanceFromStart > maxDist) { maxDist = r.DistanceFromStart; bestRoom = r; }
+                    bool isVertical = (r.Up != null || r.Down != null);
+                    bool physicalLeftEmpty = !occupied.ContainsKey((r.X - 1, r.Y));
+                    bool physicalRightEmpty = !occupied.ContainsKey((r.X + 1, r.Y));
+
+                    if (isVertical && physicalLeftEmpty && physicalRightEmpty)
+                    {
+                        if (r.DistanceFromStart > maxDist)
+                        {
+                            maxDist = r.DistanceFromStart;
+                            bestRoom = r;
+                        }
+                    }
                 }
             }
-            if (bestRoom == start)
-            {
-                foreach (var r in allRooms)
-                {
-                    if (r.DistanceFromStart > maxDist) { maxDist = r.DistanceFromStart; bestRoom = r; }
-                }
-            }
+
             return bestRoom;
         }
         #endregion
@@ -97,12 +107,15 @@ namespace ScaryCastle
                 var parent = rooms[rng.Next(rooms.Count)];
                 int direction = rng.Next(4);
 
-                // REGLA CRÍTICA: No crecer hacia abajo desde el inicio
                 if (parent.RoomType == RoomType.Start && direction == 1) continue;
 
                 var target = GetCoords(parent.X, parent.Y, direction);
                 if (occupied.ContainsKey(target)) continue;
-                if (CountNeighbors(target, occupied) >= 3) continue;
+
+                // --- CAMBIO PARA "AIREAR" EL MAPA ---
+                // Si tiene 2 o más vecinos, significa que estamos cerrando un ciclo o pegándonos a otra rama.
+                // Al ponerlo en >= 2, el mapa se vuelve mucho más ramificado (tipo árbol).
+                if (CountNeighbors(target, occupied) >= 2) continue;
 
                 var newRoom = new RoomGraph(rooms.Count, target.x, target.y, RoomType.Connector);
                 Link(parent, newRoom, direction);
@@ -110,7 +123,10 @@ namespace ScaryCastle
                 rooms.Add(newRoom);
             }
 
-            var exitRoom = ProcessMapData(start, rooms);
+            var exitRoom = ProcessMapData(start, rooms, occupied);
+
+            if (exitRoom == start) return (rooms, -1);
+
             exitRoom.RoomType = RoomType.Exit;
             return (rooms, exitRoom.DistanceFromStart);
         }

@@ -11,6 +11,19 @@ namespace ScaryCastle
 
         #region Private members
 
+        // Garantiza matemáticamente que el mapa tiene una salida válida
+        private static (List<RoomGraph>, int) GenerateValidTopology(Random rng, int count)
+        {
+            int safetyNet = 0;
+            while (safetyNet < 1000)
+            {
+                var res = RunGraphGenerator.Generate(rng, count);
+                if (res.Item2 != -1) return res;
+                safetyNet++;
+            }
+            throw new Exception("Error crítico: Imposible generar topología con Exit vertical.");
+        }
+
         private static List<RoomDefinition> GetAvailableDefinitions(GameSession session, Tags pools)
         {
             var result = new List<RoomDefinition>();
@@ -42,7 +55,7 @@ namespace ScaryCastle
                 if (startDef != null) Assign(startNode, startDef, availableNodes);
             }
 
-            // 2. SALIDA (IsExit)
+            // 2. SALIDA (Exit)
             RoomGraph? exitNode = null;
             foreach (var n in availableNodes) if (n.RoomType == RoomType.Exit) { exitNode = n; break; }
             if (exitNode != null)
@@ -107,10 +120,11 @@ namespace ScaryCastle
             int count = 10 + (floorIndex * 2);
 
             bool success = false;
-            for (int i = 0; i < 5; i++)
+            // 15 intentos puros de asignación (con topología ya garantizada)
+            for (int i = 0; i < 15; i++)
             {
                 ClearInternal();
-                var res = RunGraphGenerator.Generate(session.Random, count);
+                var res = GenerateValidTopology(session.Random, count);
                 roomGraphs.AddRange(res.Item1);
                 if (ApplyDefinitions(defs, res.Item2, session.Random, true)) { success = true; break; }
             }
@@ -118,7 +132,7 @@ namespace ScaryCastle
             if (!success)
             {
                 ClearInternal();
-                var res = RunGraphGenerator.Generate(session.Random, count);
+                var res = GenerateValidTopology(session.Random, count);
                 roomGraphs.AddRange(res.Item1);
                 ApplyDefinitions(defs, res.Item2, session.Random, false);
             }

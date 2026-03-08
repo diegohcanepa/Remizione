@@ -124,7 +124,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../../Projects/Content/Atlases/Castle_End.xml</filename>
+                <filename>../../../../Projects/Content/Atlases/Castle_Exit.xml</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -173,7 +173,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Castle_End-assets/View1.png</key>
+            <key type="filename">Castle_Exit-assets/View1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -195,7 +195,7 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>Castle_End-assets</filename>
+                    <filename>Castle_Exit-assets</filename>
                 </array>
             </struct>
         </map>
