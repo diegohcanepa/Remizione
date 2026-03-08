@@ -548,13 +548,7 @@ namespace ScaryCastle
         }
 
         // HasSpeechBubble
-        public bool HasSpeechBubble
-        {
-            get
-            {
-                return speechBubble == null ? false : speechBubble.State != SpeechBubbleState.Hidden;
-            }
-        }
+        public bool HasSpeechBubble => speechBubble == null ? false : speechBubble.State != SpeechBubbleState.Hidden;
 
         // HitEffect
         public override HitEffect HitEffect => HitEffect.Blink;

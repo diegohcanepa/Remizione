@@ -1,7 +1,7 @@
 ﻿namespace ScaryCastle
 {
     /// <summary>
-    /// RoomGraph
+    /// Represents a mathematical node in the room graph layout.
     /// </summary>
     public sealed class RoomGraph
     {
@@ -16,14 +16,27 @@
 
         #region Private members
 
-        // ConnectionCount
+        // UpdateConnectionCount
+        // Calculates how many active neighbors this node has.
         private void UpdateConnectionCount()
         {
-            var count = 0;
-            if (Up != null) count++;
-            if (Down != null) count++;
-            if (Left != null) count++;
-            if (Right != null) count++;
+            int count = 0;
+            if (Up != null)
+            {
+                count++;
+            }
+            if (Down != null)
+            {
+                count++;
+            }
+            if (Left != null)
+            {
+                count++;
+            }
+            if (Right != null)
+            {
+                count++;
+            }
             ConnectionCount = count;
         }
 
@@ -41,7 +54,7 @@
         // Down
         public RoomGraph? Down
         {
-            get;
+            get => field;
             set
             {
                 field = value;
@@ -50,32 +63,32 @@
         }
 
         // Fits
+        // Validates if a room asset can fit into this graph node's connectivity.
         public bool Fits(RoomDefinition def)
         {
-            // 1. ¿Qué conexiones reales tiene este nodo en el laberinto?
             bool needsUp = Up != null;
             bool needsDown = Down != null;
             bool needsLeft = Left != null;
             bool needsRight = Right != null;
 
-            // 2. Validación de Encaje Estricto (El caso del Patio/Balcón)
             if (def.ExactMatch)
             {
-                // La topología del nodo debe ser EXACTAMENTE igual a la de las puertas.
-                // Si el nodo pide Norte y Sur, el asset debe tener Norte y Sur, y NINGUNA OTRA.
                 return needsUp == def.HasUpDoor && needsDown == def.HasDownDoor &&
                        needsLeft == def.HasLeftDoor && needsRight == def.HasRightDoor;
             }
 
-            // 3. Validación Flexible (El caso estándar - "Over-provisioning")
-            // El asset tiene permiso para que le "sobren" puertas (que luego se taparán con un muro).
-            // Pero NO le pueden faltar puertas donde el grafo exige una conexión.
-            if (needsUp && !def.HasUpDoor) return false;
-            if (needsDown && !def.HasDownDoor) return false;
-            if (needsLeft && !def.HasLeftDoor) return false;
-            if (needsRight && !def.HasRightDoor) return false;
+            if (needsUp && !def.HasUpDoor)
+                return false;
 
-            // Si pasó todas las validaciones flexibles, el asset cabe perfectamente.
+            if (needsDown && !def.HasDownDoor)
+                return false;
+
+            if (needsLeft && !def.HasLeftDoor)
+                return false;
+
+            if (needsRight && !def.HasRightDoor)
+                return false;
+
             return true;
         }
 
@@ -88,7 +101,7 @@
         // Left
         public RoomGraph? Left
         {
-            get;
+            get => field;
             set
             {
                 field = value;
@@ -105,7 +118,7 @@
         // Right
         public RoomGraph? Right
         {
-            get;
+            get => field;
             set
             {
                 field = value;
@@ -125,7 +138,7 @@
         // Up
         public RoomGraph? Up
         {
-            get;
+            get => field;
             set
             {
                 field = value;

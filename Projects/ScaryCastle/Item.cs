@@ -220,7 +220,7 @@ namespace ScaryCastle
                 if (area.Contains(thing.Position))
                     EffectDescriptor.Apply(Definition.EffectDescriptors, source, thing);
             }
-            
+
             Use();
 
             return true;

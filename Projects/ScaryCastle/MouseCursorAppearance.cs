@@ -96,7 +96,7 @@ namespace ScaryCastle
 
             if (context.HeldItem?.Definition.IsMagical == true)
                 MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightBlue;
-            
+
             else if (context.Target != null)
                 MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightWhite;
 

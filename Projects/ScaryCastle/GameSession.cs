@@ -421,7 +421,7 @@ namespace ScaryCastle
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            RunManager.Generate(this, Tags.EmptyList, RunCount + 1);
+            RunManager.Generate(this, Tags.EmptyList);
 
             if (Player != null)
             {

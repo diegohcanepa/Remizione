@@ -116,13 +116,20 @@ namespace ScaryCastle
         protected override void OnEnter()
         {
             base.OnEnter();
-
-            // TODO: Check
-            //if (RoomGraph.RoomType == RoomType.Start)
-            //    AudioManager.Music.PlayTag("Run", 3000);
-
             RoomGraph.Visited = true;
             Session.HUD.MiniMap.CurrentRoom = RoomGraph;
+
+            if (RoomGraph.RoomType == RoomType.Exit)
+            {
+                if (Session.FindEntity<RideCar>("RideCar") is RideCar rideCar)
+                {
+                    if (Children.IndexOf(rideCar) == -1)
+                    {
+                        rideCar.Position = new(34, 70);
+                        Children.Add(rideCar);
+                    }
+                }
+            }
         }
 
         // OnLoad

@@ -76,7 +76,7 @@ namespace ScaryCastle
             velocity = Vector2.Zero;
             DepthOffset = 0;
             isGrounded = true;
-            
+
             opacityTween.Start(TweenStyle.CubicIn, Opacity, 0, 1000, Unparent);
             Tweens.OpacityTween = opacityTween;
 
