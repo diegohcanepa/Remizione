@@ -27,6 +27,7 @@ namespace ScaryCastle
         private readonly List<GameThing> proceduralThings = [];
         private readonly Dictionary<string, GameThing> proceduralThingsDict = [];
         private readonly RoomEditor? roomEditor;
+        private readonly Sprite savingIcon;
 
         #endregion
 
@@ -86,6 +87,13 @@ namespace ScaryCastle
             }
 
             this.echoScene = new(Game);
+
+            // Saving icon
+            this.savingIcon = new Sprite(Game, Atlases.UI.SavingIcon)
+            {
+                PivotOrigin = RectanglePoint.RightTop,
+                Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -6, 4)
+            };
 
             LocalizationSource = LocalizationSource.Script;
         }
@@ -207,6 +215,13 @@ namespace ScaryCastle
             // Draw speech bubbles
             SpeechBubble.DrawSpeechBubbles(gameTime);
 
+            if (savingIcon.Tweens.IsTweening)
+            {
+                Game.SpriteBatch.Begin(Game.Camera);
+                savingIcon.Draw(gameTime);
+                Game.SpriteBatch.End();
+            }
+
             /*
             if (IsPaused)
             {
@@ -313,6 +328,13 @@ namespace ScaryCastle
             }
         }
 
+        // OnSave
+        protected override void OnSave()
+        {
+            base.OnSave();
+            savingIcon.Tweens.OpacityTween = FloatTween.Create(TweenStyle.QuadraticInOut, 1, .8f, 300, 10);
+        }
+
         // OnScriptLibraryLoaded
         protected override void OnScriptLibraryLoaded()
         {
@@ -360,6 +382,8 @@ namespace ScaryCastle
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+
+            savingIcon.Update(gameTime);
 
             if (console != null)
             {
