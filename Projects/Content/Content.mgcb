@@ -89,6 +89,21 @@
 #begin Atlases/Castle_Std_Common_02.xml
 /copy:Atlases/Castle_Std_Common_02.xml
 
+#begin Atlases/Castle_Std_Pit_01.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Atlases/Castle_Std_Pit_01.png
+
+#begin Atlases/Castle_Std_Pit_01.xml
+/copy:Atlases/Castle_Std_Pit_01.xml
+
 #begin Atlases/Castle_Wide_Common_01.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -559,6 +574,18 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/Fatigue.wav;Audio/FX/Fatigue
+
+#begin Audio/FX/Fear1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Fear1.wav;Audio/FX/Fear1
+
+#begin Audio/FX/Fear2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Fear2.wav;Audio/FX/Fear2
 
 #begin Audio/FX/FenceOpen.wav
 /importer:WavImporter

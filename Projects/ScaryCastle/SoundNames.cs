@@ -10,6 +10,7 @@
         internal const string CollectCoin = nameof(CollectCoin);
         internal const string Dice = nameof(Dice);
         internal const string Error = nameof(Error);
+        internal const string Fear = nameof(Fear);
         internal const string FleshImpact = nameof(FleshImpact);
         internal const string FootstepA = nameof(FootstepA);
         internal const string FootstepWater = nameof(FootstepWater);

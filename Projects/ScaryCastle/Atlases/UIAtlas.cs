@@ -39,6 +39,9 @@ namespace ScaryCastle
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
             Sack = this[nameof(Sack)];
             SavingIcon = this[nameof(SavingIcon)];
+            SkullEmpty = this[nameof(SkullEmpty)];
+            SkullHalf = this[nameof(SkullHalf)];
+            SkullFull = this[nameof(SkullFull)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
@@ -128,6 +131,15 @@ namespace ScaryCastle
 
         // SavingIcon
         public AtlasImage SavingIcon { get; }
+
+        // SkullEmpty
+        public AtlasImage SkullEmpty { get; }
+
+        // SkullFull
+        public AtlasImage SkullFull { get; }
+
+        // SkullHalf
+        public AtlasImage SkullHalf { get; }
 
         // SpeechBubbleCloseArrow
         public AtlasImage SpeechBubbleCloseArrow { get; }

@@ -5,6 +5,9 @@ using System.Collections.ObjectModel;
 
 namespace ScaryCastle
 {
+    /// <summary>
+    /// RunManager
+    /// </summary>
     public static class RunManager
     {
         #region Private fields

@@ -67,13 +67,17 @@
       "name": "Trunk",
       "placements": [
         "Floor"
-      ]      
+      ],
+      "maxPerRun": 5,
+      "spawnWeight": 0.3      
     },
     {
       "name": "GoldenTrunk",
       "placements": [
         "Floor"
-      ]      
+      ],
+      "spawnWeight": 0.1,
+      "maxPerRun": 3
     }
   ],
   "unevaluatedProperties": false

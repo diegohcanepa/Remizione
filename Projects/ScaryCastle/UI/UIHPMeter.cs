@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     /// <summary>
-    /// UIHealthMeter
+    /// UIHPMeter
     /// </summary>
-    public sealed class UIHealthMeter : GameObject
+    public sealed class UIHPMeter : GameObject
     {
         #region Private fields
 
@@ -22,7 +22,7 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public UIHealthMeter(EngendroGame game, Vector2 margin)
+        public UIHPMeter(EngendroGame game, Vector2 margin)
             : base(game)
         {
             this.hearts = new Sprite[10];

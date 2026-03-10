@@ -133,6 +133,23 @@
       ]
     },
     {
+      "name": "Castle_Std_Pit_01",
+      "doorLeft": "21,80",
+      "doorRight": "220,80",
+      "exactMatch": true,
+      "placeholders": [
+        {
+          "position": "125,10",
+          "placement": "WallFrontHang"
+        }
+      ],
+      "walkArea": "213,62;227,91;178,91;171,93;144,93;132,89;103,94;62,93;16,91;31,62;95,60",
+      "walls": [
+        "2,0;2,113;37,44;36,0",
+        "240,0;240,113;207,44;208,0"
+      ]
+    },
+    {
       "name": "Castle_Wide_Common_01",
       "doorUp": "126,41",
       "doorLeft": "21,80",

@@ -134,6 +134,9 @@ namespace ScaryCastle
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
 
+    // PrimaryStat
+    public enum PrimaryStat { HP, Fear }
+
     // Realm
     public enum Realm { Earthly, Infernal, Celestial }
 

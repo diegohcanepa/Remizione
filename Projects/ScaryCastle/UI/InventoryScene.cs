@@ -29,7 +29,7 @@ namespace ScaryCastle
         public InventoryScene(Inventory inventory)
             : base(inventory.Session.Game)
         {
-            this.PausePreviousScenes = true;
+            this.PausePreviousScenes = false;
             this.amounts = new TextSprite[Inventory.MaximumCapacity];
             this.icons = new Sprite[Inventory.MaximumCapacity];
             this.shadows = new Sprite[Inventory.MaximumCapacity];

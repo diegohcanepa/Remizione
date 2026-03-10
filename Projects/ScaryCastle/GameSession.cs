@@ -388,6 +388,9 @@ namespace ScaryCastle
                     return;
                 }
             }
+
+            if (RunManager.HasContent && Room is RideRoom rideRoom)
+                FearManager.Update(gameTime, rideRoom.HasEnemies);
         }
 
         // OnWrite
@@ -420,6 +423,8 @@ namespace ScaryCastle
 
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
+
+            FearManager.CurrentFear = 0;
 
             RunManager.Generate(this, Tags.EmptyList);
 
@@ -483,6 +488,9 @@ namespace ScaryCastle
 
         // Environment
         public Environment Environment { get; }
+
+        // FearManager
+        public FearManager FearManager { get; } = new();
 
         // FindDeclaredThing
         public GameThing? FindDeclaredThing(string name)

@@ -48,6 +48,7 @@
 	<FX Name="Fart" />
 	<FX Name="FartLong" MaxInstances="4" Sounds="1..6" />
 	<FX Name="Fatigue" />
+	<FX Name="Fear" MaxInstances="4" Sounds="1..2" Volume=".3" />
 	<FX Name="FenceOpen" />
 	<FX Name="Firecracker" MaxInstances="10" Sounds="1..2" />
 	<FX Name="FleshImpact" MaxInstances="6" Sounds="1..2" />

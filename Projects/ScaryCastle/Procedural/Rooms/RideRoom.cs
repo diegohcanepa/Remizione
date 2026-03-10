@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace ScaryCastle
     public sealed class RideRoom : ProceduralRoom
     {
         private readonly List<RideDoor> doors = [];
+        private readonly HashSet<Actor> enemyList = [];
 
         #region Constructor
 
@@ -28,11 +30,6 @@ namespace ScaryCastle
             LightingSystem = true;
 
             AddWalkArea("WalkArea", graph.Definition.WalkArea);
-
-            DoorDown = graph.Definition.DoorDown;
-            DoorLeft = graph.Definition.DoorLeft;
-            DoorRight = graph.Definition.DoorRight;
-            DoorUp = graph.Definition.DoorUp;
 
             // Add placeholders
             foreach (var placeholder in graph.Definition.Placeholders)
@@ -54,41 +51,43 @@ namespace ScaryCastle
         // PopulateDoors
         private void PopulateDoors()
         {
+            var def = this.RoomGraph.Definition;
+
             // Up
-            if (RoomGraph.Up != null && DoorUp != null && CreateThingClone("RideDoorUp") is RideDoor upDoor)
+            if (RoomGraph.Up != null && def.DoorUp != null && CreateThingClone("RideDoorUp") is RideDoor upDoor)
             {
                 doors.Add(upDoor);
                 Children.Add(upDoor);
-                upDoor.Position = DoorUp.Value;
+                upDoor.Position = def.DoorUp.Value;
                 upDoor.TargetRoom = RoomGraph.Up.RideRoom;
             }
 
             // Left
-            if (RoomGraph.Left != null && DoorLeft != null && CreateThingClone("RideDoorLeft") is RideDoor leftDoor)
+            if (RoomGraph.Left != null && def.DoorLeft != null && CreateThingClone("RideDoorLeft") is RideDoor leftDoor)
             {
                 doors.Add(leftDoor);
                 Children.Add(leftDoor);
-                leftDoor.Position = DoorLeft.Value;
+                leftDoor.Position = def.DoorLeft.Value;
                 leftDoor.TargetRoom = RoomGraph.Left.RideRoom;
             }
 
             // Right
-            if (RoomGraph.Right != null && DoorRight != null && CreateThingClone("RideDoorRight") is RideDoor rightDoor)
+            if (RoomGraph.Right != null && def.DoorRight != null && CreateThingClone("RideDoorRight") is RideDoor rightDoor)
             {
                 doors.Add(rightDoor);
                 Children.Add(rightDoor);
-                rightDoor.Position = DoorRight.Value;
+                rightDoor.Position = def.DoorRight.Value;
                 rightDoor.TargetRoom = RoomGraph.Right.RideRoom;
             }
 
             // Down
             if (RoomGraph.Down != null)
             {
-                if (DoorDown != null && CreateThingClone("RideDoorDown") is RideDoor downDoor)
+                if (def.DoorDown != null && CreateThingClone("RideDoorDown") is RideDoor downDoor)
                 {
                     doors.Add(downDoor);
                     Children.Add(downDoor);
-                    downDoor.Position = DoorDown.Value;
+                    downDoor.Position = def.DoorDown.Value;
 
                     if (RoomGraph.Down != null)
                         downDoor.TargetRoom = RoomGraph.Down.RideRoom;
@@ -100,17 +99,25 @@ namespace ScaryCastle
 
         #region Protected members
 
-        // DoorDown
-        private Vector2? DoorDown { get; set; }
+        // OnChildAdded
+        protected override void OnChildAdded(Entity child)
+        {
+            base.OnChildAdded(child);
+            if (child is Actor actor && actor.Faction == Faction.Evil && !actor.IsDead)
+                enemyList.Add(actor);
+        }
 
-        // DoorLeft
-        private Vector2? DoorLeft { get; set; }
-
-        // DoorRight
-        private Vector2? DoorRight { get; set; }
-
-        // DoorUp
-        private Vector2? DoorUp { get; set; }
+        // OnChildRemoved
+        protected override void OnChildRemoved(Entity child)
+        {
+            base.OnChildRemoved(child);
+            
+            if (child is Actor actor && enemyList.Remove(actor))
+            {
+                if (enemyList.Count == 0)
+                    Session.FearManager.CurrentFear--;
+            }
+        }
 
         // OnEnter
         protected override void OnEnter()
@@ -230,6 +237,9 @@ namespace ScaryCastle
 
             return Vector2.Zero;
         }
+
+        // HasEnemies
+        public bool HasEnemies => enemyList.Count > 0;
 
         // HubDoor
         public RideDoor? HubDoor { get; set; }
