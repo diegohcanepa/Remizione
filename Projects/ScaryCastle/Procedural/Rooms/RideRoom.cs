@@ -1,5 +1,6 @@
 ﻿using Adberration;
 using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -103,6 +104,7 @@ namespace ScaryCastle
         protected override void OnChildAdded(Entity child)
         {
             base.OnChildAdded(child);
+
             if (child is Actor actor && actor.Faction == Faction.Evil && !actor.IsDead)
                 enemyList.Add(actor);
         }
@@ -115,7 +117,11 @@ namespace ScaryCastle
             if (child is Actor actor && enemyList.Remove(actor))
             {
                 if (enemyList.Count == 0)
-                    Session.FearManager.CurrentFear--;
+                {
+                    Session.FearManager.CurrentValue -= 10;
+                    Session.HUD.Message.Show(MessageKind.Courage, 2000);
+                    Sound.Play(SoundNames.Courage);
+                }
             }
         }
 
@@ -123,6 +129,7 @@ namespace ScaryCastle
         protected override void OnEnter()
         {
             base.OnEnter();
+
             RoomGraph.Visited = true;
             Session.HUD.MiniMap.CurrentRoom = RoomGraph;
 
@@ -137,6 +144,9 @@ namespace ScaryCastle
                     }
                 }
             }
+
+            if (HasEnemies)
+                Session.HUD.Message.Show(MessageKind.FearRises, 2000);
         }
 
         // OnLoad

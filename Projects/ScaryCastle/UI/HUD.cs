@@ -32,7 +32,7 @@ namespace ScaryCastle
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop),
             };
 
-            this.fearMeter = new(session, new(3, -10));
+            this.fearMeter = new(session);
             this.healthMeter = new(session.Game, new(playerIcon.BoundingBox.Width, 2));
             this.Log = new(Game);
             this.Message = new(Game, RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
@@ -54,8 +54,10 @@ namespace ScaryCastle
             Game.SpriteBatch.Begin(Game.Camera);
 
             playerIcon.Draw(gameTime);
-            fearMeter.Draw(gameTime);
             healthMeter.Draw(gameTime);
+
+            if (session.IsCurrentScene)
+                fearMeter.Draw(gameTime);
 
             InventoryMeter.Draw(gameTime);
             Log.Draw(gameTime);

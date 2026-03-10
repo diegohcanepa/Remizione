@@ -8,6 +8,7 @@
         internal const string CardFlap = nameof(CardFlap);
         internal const string CardWhoosh = nameof(CardWhoosh);
         internal const string CollectCoin = nameof(CollectCoin);
+        internal const string Courage = nameof(Courage);
         internal const string Dice = nameof(Dice);
         internal const string Error = nameof(Error);
         internal const string Fear = nameof(Fear);

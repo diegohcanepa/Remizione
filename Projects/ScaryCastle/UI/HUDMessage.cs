@@ -58,14 +58,19 @@ namespace ScaryCastle
         }
 
         // Show
-        public void Show(MessageKind message)
+        public void Show(MessageKind message, int duration = 1500)
         {
             var text = Localization.GetValue(message);
             var color = ColorPalette.Text.Highlight;
 
-            if (message == MessageKind.NotEnoughCoins)
+            if (message is MessageKind.NotEnoughCoins or MessageKind.FearRises)
             {
                 color = ColorPalette.Text.Orange;
+                Sound.Play(SoundNames.Error);
+            }
+            else if (message == MessageKind.Courage)
+            {
+                color = ColorPalette.Text.Green;
                 Sound.Play(SoundNames.Error);
             }
             else
@@ -74,7 +79,7 @@ namespace ScaryCastle
                 Sound.Play(SoundNames.Error);
             }
 
-            Show(text, color);
+            Show(text, color, duration);
         }
 
         // Show

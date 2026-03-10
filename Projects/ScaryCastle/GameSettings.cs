@@ -31,9 +31,6 @@ namespace ScaryCastle
         // LogFileName
         public const string LogFileName = "ErrorLog.txt";
 
-        // MusicTagRide
-        public const string MusicTagRide = "Ride";
-
         // SteamAppID
         public const int SteamAppID = 480;
 

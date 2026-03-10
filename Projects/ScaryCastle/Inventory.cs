@@ -200,7 +200,7 @@ namespace ScaryCastle
         }
 
         // MaximumCapacity
-        public const int MaximumCapacity = 10;
+        public const int MaximumCapacity = 8;
 
         // MinimumCapacity
         public const int MinimumCapacity = 3;

@@ -12,15 +12,15 @@ namespace ScaryCastle
         #region Private members
 
         // GetFearInterval
-        private int GetFearInterval(bool hasEnemies) => hasEnemies ? 8000 : 30000;
+        private int GetFearInterval(bool hasEnemies) => hasEnemies ? 600 : 2000;
 
         #endregion
 
-        // CurrentFear
-        public int CurrentFear
+        // CurrentValue
+        public int CurrentValue
         {
             get;
-            set => field = Math.Clamp(value, 0, MaxFear);
+            set => field = Math.Clamp(value, 0, MaximumValue);
         }
 
         // Update
@@ -32,13 +32,13 @@ namespace ScaryCastle
 
             if (currentTime - lastFearTickTime >= interval)
             {
-                CurrentFear = Math.Clamp(CurrentFear + 1, 0, MaxFear);
+                CurrentValue = Math.Clamp(CurrentValue + 1, 0, MaximumValue);
                 lastFearTickTime = currentTime;
             }
         }
 
-        // MaxFear
+        // MaximumValue
         // The maximum amount of fear the player can reach.
-        public int MaxFear { get; } = 10;
+        public int MaximumValue { get; } = 100;
     }
 }

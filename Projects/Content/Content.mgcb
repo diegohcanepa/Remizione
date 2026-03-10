@@ -395,6 +395,18 @@
 /processorParam:Quality=Best
 /build:Audio/FX/CollectCoin.wav;Audio/FX/CollectCoin
 
+#begin Audio/FX/Courage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Courage.wav;Audio/FX/Courage
+
+#begin Audio/FX/DeathByFear.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/DeathByFear.wav;Audio/FX/DeathByFear
+
 #begin Audio/FX/Dice1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

@@ -13,21 +13,18 @@ namespace ScaryCastle
 
         private readonly Sprite back;
         private readonly Sprite container;
+        private readonly Sprite diff;
         private readonly Sprite fore;
-        private static readonly Color previousValue = new(125, 56, 51);
-        private readonly Sprite previousValue1;
         private readonly FloatTween tween = new() { StartDelay = 200 };
         private float width;
 
         #endregion
 
         // Constructor
-        public Meter(EngendroGame game, Color backColor, Color foreColor, Vector2 size, float borderSize)
+        public Meter(EngendroGame game, Color backColor, Color foreColor, Color diffColor, Vector2 size, float borderSize)
             : base(game)
         {
-            this.BackColor = backColor;
             this.BorderSize = new(borderSize);
-            this.ForeColor = foreColor;
             this.width = size.X;
 
             // Container
@@ -54,9 +51,9 @@ namespace ScaryCastle
             };
 
             // Previous value
-            this.previousValue1 = new Sprite(game, Atlases.UI.Pixel)
+            this.diff = new Sprite(game, Atlases.UI.Pixel)
             {
-                Color = previousValue,
+                Color = diffColor,
                 ScaleY = container.ScaleY - (BorderSize.Y * 2)
             };
         }
@@ -69,13 +66,13 @@ namespace ScaryCastle
             container.Position = Position;
             back.Position = Position + BorderSize;
             fore.Position = Position + BorderSize;
-            previousValue1.Position = Position + BorderSize;
+            diff.Position = Position + BorderSize;
 
             var xOffset = container.BoundingBox.Width / 2;
             container.X -= xOffset;
             back.X -= xOffset;
             fore.X -= xOffset;
-            previousValue1.X -= xOffset;
+            diff.X -= xOffset;
         }
 
         // Convierte un valor lógico (0..MaximumValue) a ancho proporcional (0..fixedWidth)
@@ -93,8 +90,8 @@ namespace ScaryCastle
         {
             container.Draw(gameTime);
             back.Draw(gameTime);
-            if (previousValue1.ScaleX > 0)
-                previousValue1.Draw(gameTime);
+            if (diff.ScaleX > 0)
+                diff.Draw(gameTime);
             fore.Draw(gameTime);
         }
 
@@ -104,14 +101,18 @@ namespace ScaryCastle
             if (tween.IsRunning)
             {
                 tween.Update(gameTime);
-                previousValue1.ScaleX = tween.CurrentValue;
+                diff.ScaleX = tween.CurrentValue;
             }
         }
 
         #endregion
 
         // BackColor
-        public Color BackColor { get; }
+        public Color BackColor
+        {
+            get => back.Color;
+            set => back.Color = value;
+        }
 
         // BoundingBox
         public RectangleF BoundingBox => container.BoundingBox;
@@ -119,8 +120,19 @@ namespace ScaryCastle
         // BorderSize
         public Vector2 BorderSize { get; }
 
+        // DiffColor
+        public Color DiffColor
+        {
+            get => diff.Color;
+            set => diff.Color = value;
+        }
+
         // ForeColor
-        public Color ForeColor { get; }
+        public Color ForeColor
+        {
+            get => fore.Color;
+            set => fore.Color = value;
+        }
 
         // MaximumValue
         public float MaximumValue
@@ -153,6 +165,9 @@ namespace ScaryCastle
             }
         }
 
+        // Ratio
+        public float Ratio => Value / MaximumValue;
+
         // Value
         public float Value
         {
@@ -166,12 +181,12 @@ namespace ScaryCastle
                     if (value < field)
                     {
                         float prevWidth = fore.ScaleX;
-                        previousValue1.ScaleX = tween.IsRunning ? tween.CurrentValue : prevWidth;
-                        tween.Start(TweenStyle.CubicIn, previousValue1.ScaleX, newWidth, 1000);
+                        diff.ScaleX = tween.IsRunning ? tween.CurrentValue : prevWidth;
+                        tween.Start(TweenStyle.CubicIn, diff.ScaleX, newWidth, 1000);
                     }
                     else
                     {
-                        previousValue1.ScaleX = 0;
+                        diff.ScaleX = 0;
                         tween.Stop();
                     }
 
@@ -193,7 +208,7 @@ namespace ScaryCastle
                     back.ScaleX = width;
                     container.ScaleX = width + (BorderSize.X * 2);
                     fore.ScaleX = GetScaledWidth(Value);
-                    previousValue1.ScaleX = GetScaledWidth(Value);
+                    diff.ScaleX = GetScaledWidth(Value);
                     Invalidate();
                 }
             }

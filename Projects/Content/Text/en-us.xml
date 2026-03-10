@@ -64,7 +64,7 @@
   <String Key="Item.MagneticCard.Name">Magnetic card</String>
   <String Key="Item.MasterLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.MasterLockpick.Name">Master lockpick</String>
-  <String Key="Item.PieceOfWood.Description"></String>
+  <String Key="Item.PieceOfWood.Description" />
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
@@ -188,6 +188,8 @@
   <String Key="MessageBox.SlotDeleted">The slot has been deleted.</String>
   <String Key="MessageBox.Warning">Warning!</String>
   <String Key="MessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
+  <String Key="MessageKind.Courage">Courage restored!</String>
+  <String Key="MessageKind.FearRises">Tu miedo crece...</String>
   <String Key="MessageKind.InventoryFull">Inventory is full.</String>
   <String Key="MessageKind.NotEnoughCoins">Not enough coins.</String>
   <String Key="Misc.All">All</String>

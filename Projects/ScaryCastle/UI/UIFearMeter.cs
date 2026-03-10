@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
@@ -9,66 +8,30 @@ namespace ScaryCastle
     /// </summary>
     public sealed class UIFearMeter : GameObject
     {
-        #region Private fields
-
-        private int fullSkulls;
-        private bool hasHalfSkull;
-        private int lastKnownMaxValue;
-        private int lastKnownValue;
+        private readonly Sprite icon;
+        private readonly Meter meter;
         private readonly GameSession session;
-        private readonly Sprite[] skulls;
-        private int totalSkulls;
-
-        #endregion
+        private readonly Vector2Tween tween = Vector2Tween.Create(TweenStyle.Linear, Vector2.One, Vector2.One * .95f, 200, -1);
 
         #region Constructor
 
         // Constructor
-        public UIFearMeter(GameSession session, Vector2 margin)
+        public UIFearMeter(GameSession session)
             : base(session.Game)
         {
             this.session = session;
-            this.skulls = new Sprite[10];
-            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, margin);
 
-            for (var i = 0; i < skulls.Length; i++)
+            this.icon = new(Game, Atlases.UI.Skull)
             {
-                skulls[i] = new(Game, Atlases.UI.SkullFull)
-                {
-                    Position = pos
-                };
+                PivotOrigin = RectanglePoint.Center,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 6, -8)
+            };
 
-                pos.X += skulls[i].BoundingBox.Width + .5f;
-            }
-
-            Refresh();
-        }
-
-        #endregion
-
-        #region Private members
-
-        // Refresh
-        private void Refresh()
-        {
-            fullSkulls = session.FearManager.CurrentFear / 2;
-            hasHalfSkull = session.FearManager.CurrentFear % 2 == 1;
-            totalSkulls = session.FearManager.MaxFear / 2;
-
-            for (int i = 0; i < totalSkulls; i++)
+            this.meter = new Meter(Game, ColorPalette.Text.TerraDarker, ColorPalette.Text.Red, new(125, 56, 51), new(40, 5), 1)
             {
-                if (i < fullSkulls)
-                    skulls[i].RenderImage = Atlases.UI.SkullFull;
-
-                else if (i == fullSkulls && hasHalfSkull)
-                    skulls[i].RenderImage = Atlases.UI.SkullHalf;
-
-                else
-                    skulls[i].RenderImage = Atlases.UI.SkullEmpty;
-            }
-
-            lastKnownValue = session.FearManager.CurrentFear;
-            lastKnownMaxValue = session.FearManager.MaxFear;
+                MaximumValue = session.FearManager.MaximumValue,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 32, -10)
+            };
         }
 
         #endregion
@@ -78,22 +41,42 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            for (var i = 0; i < totalSkulls; i++)
-            {
-                skulls[i].Draw(gameTime);
-            }
+            icon.Draw(gameTime);
+            meter.Draw(gameTime);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (lastKnownValue != session.FearManager.CurrentFear || lastKnownMaxValue != session.FearManager.MaxFear)
-            {
-                if (lastKnownValue < session.FearManager.CurrentFear)
-                    Sound.Play(SoundNames.Fear);
+            tween.Update(gameTime);
 
-                Refresh();
+            if (meter.Ratio <= .3)
+            {
+                meter.ForeColor = ColorPalette.FearMeter.Green;
+                meter.DiffColor = ColorPalette.FearMeter.GreenDiff;
+                icon.Scale = Vector2.One;
             }
+            else if (meter.Ratio <= .6)
+            {
+                meter.ForeColor = ColorPalette.FearMeter.Yellow;
+                meter.DiffColor = ColorPalette.FearMeter.YellowDiff;
+                icon.Scale = Vector2.One;
+            }
+            else if (meter.Ratio <= .8)
+            {
+                meter.ForeColor = ColorPalette.FearMeter.Orange;
+                meter.DiffColor = ColorPalette.FearMeter.OrangeDiff;
+                icon.Scale = Vector2.One;
+            }
+            else
+            {
+                meter.ForeColor = ColorPalette.FearMeter.Red;
+                meter.DiffColor = ColorPalette.FearMeter.RedDiff;
+                icon.Scale = tween.CurrentValue;
+            }
+
+            meter.Value = session.FearManager.CurrentValue;
+            meter.Update(gameTime);
         }
 
         #endregion

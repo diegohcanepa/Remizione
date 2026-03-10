@@ -169,8 +169,10 @@ namespace ScaryCastle
             if (Room is ProceduralRoom proceduralRoom)
             {
                 var tag = proceduralRoom.RoomGraph.Definition.MusicTag;
+
                 if (string.IsNullOrWhiteSpace(tag))
-                    tag = GameSettings.MusicTagRide;
+                    tag = MusicTag.Ride;
+                
                 AudioManager.Music.PlayTag(tag);
             }
         }
@@ -373,8 +375,11 @@ namespace ScaryCastle
 
                 if (!IsAwaiting)
                 {
-                    if (Player?.IsDead == true)
+                    if (Player?.IsDead == true || DeathByFear)
+                    {
+                        Player?.StopMoving();
                         AwaitRoutine(RoutineNames.GameOver);
+                    }
                 }
             }
 
@@ -389,7 +394,7 @@ namespace ScaryCastle
                 }
             }
 
-            if (RunManager.HasContent && Room is RideRoom rideRoom)
+            if (RunManager.HasContent && Room is RideRoom rideRoom && IsCurrentScene)
                 FearManager.Update(gameTime, rideRoom.HasEnemies);
         }
 
@@ -424,7 +429,7 @@ namespace ScaryCastle
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            FearManager.CurrentFear = 0;
+            FearManager.CurrentValue = 0;
 
             RunManager.Generate(this, Tags.EmptyList);
 
@@ -448,6 +453,10 @@ namespace ScaryCastle
             EndRun();
             RunCount++;
         }
+
+        // DeathByFear
+        [ScriptProperty]
+        public bool DeathByFear => RunManager.HasContent && FearManager.CurrentValue == FearManager.MaximumValue;
 
         // DeclaredThings
         public NamedObjectReadOnlyCollection<GameThing> DeclaredThings { get; }

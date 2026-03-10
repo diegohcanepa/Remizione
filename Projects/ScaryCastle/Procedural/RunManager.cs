@@ -254,12 +254,12 @@ namespace ScaryCastle
         // Calculates room count using a curve based on the current episode/chapter.
         private static int GetRunLength(int chapter)
         {
-            const int MIN_ROOMS = 12;
-            const int MAX_ROOMS = 30;
-            const int MAX_EPISODES = 50;
+            const int MIN_ROOMS = 8;
+            const int MAX_ROOMS = 15;
+            const int MAX_CHAPTERS = 50;
             const float CURVE = 1.2f;
 
-            float f = Math.Clamp((float)(chapter - 1) / (MAX_EPISODES - 1), 0f, 1f);
+            float f = Math.Clamp((float)(chapter - 1) / (MAX_CHAPTERS - 1), 0f, 1f);
             float curvedProgress = (float)Math.Pow(f, CURVE);
 
             return (int)Math.Round(MIN_ROOMS + ((MAX_ROOMS - MIN_ROOMS) * curvedProgress));

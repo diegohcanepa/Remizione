@@ -24,6 +24,8 @@ namespace ScaryCastle
         {
             const int topMargin = 35;
 
+            PausePreviousScenes = true;
+
             // Gradient
             this.gradient = new(game, Atlases.UI.BottomGradient)
             {

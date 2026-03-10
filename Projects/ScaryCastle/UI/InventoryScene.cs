@@ -55,7 +55,6 @@ namespace ScaryCastle
                 icons[i] = new(Game)
                 {
                     PivotOrigin = RectanglePoint.Center,
-                    Scale = ScaleInfo.UIElement.Medium,
                     Y = slots[i].BoundingBox.Center.Y
                 };
 
@@ -144,7 +143,7 @@ namespace ScaryCastle
             float screenWidth = Screen.NativeWidth;
             int slotCount = Inventory.Capacity;
             float slotWidth = slots[0].BoundingBox.Width;
-            float spacing = 1;
+            float spacing = 2;
 
             float rowWidth = (slotCount * slotWidth) + ((slotCount - 1) * spacing);
             float startingX = (screenWidth - rowWidth) / 2;

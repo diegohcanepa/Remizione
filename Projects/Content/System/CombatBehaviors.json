@@ -11,8 +11,8 @@
           "effects": [
             {
               "effectType": "Damage",
-              "amount": "1d4",
-              "knockback": "10,0"
+              "amount": "1",
+              "knockback": "13,0"
             }
           ]
         }
