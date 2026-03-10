@@ -215,11 +215,14 @@ namespace ScaryCastle
             // Draw speech bubbles
             SpeechBubble.DrawSpeechBubbles(gameTime);
 
-            if (savingIcon.Tweens.IsTweening)
+            if (!RunManager.HasContent)
             {
-                Game.SpriteBatch.Begin(Game.Camera);
-                savingIcon.Draw(gameTime);
-                Game.SpriteBatch.End();
+                if (savingIcon.Tweens.IsTweening)
+                {
+                    Game.SpriteBatch.Begin(Game.Camera);
+                    savingIcon.Draw(gameTime);
+                    Game.SpriteBatch.End();
+                }
             }
 
             /*
