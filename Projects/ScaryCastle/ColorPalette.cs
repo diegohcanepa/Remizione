@@ -34,8 +34,8 @@ namespace ScaryCastle
             internal static Color OrangeDiff { get; } = new(207, 117, 43);
             internal static Color Red { get; } = new(173, 47, 69);
             internal static Color RedDiff { get; } = new(125, 56, 51);
-            internal static Color Yellow { get; } = new(240, 181, 65);
-            internal static Color YellowDiff { get; } = new(255, 238, 131);
+            internal static Color Yellow { get; } = new(188, 154, 86);
+            internal static Color YellowDiff { get; } = new(240, 181, 65);
         }
 
         // GlobalLight

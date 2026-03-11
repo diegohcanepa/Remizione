@@ -17,6 +17,7 @@ namespace ScaryCastle
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
+            FearIcon = this[nameof(FearIcon)];
             HeartEmpty = this[nameof(HeartEmpty)];
             HeartHalf = this[nameof(HeartHalf)];
             HeartFull = this[nameof(HeartFull)];
@@ -63,6 +64,9 @@ namespace ScaryCastle
 
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
+
+        // FearIcon
+        public AtlasImage FearIcon { get; }
 
         // InventorySlot
         public AtlasImage InventorySlot { get; }

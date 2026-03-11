@@ -24,6 +24,7 @@ namespace ScaryCastle
             DoorDown = element.GetVector2("doorDown");
             DoorLeft = element.GetVector2("doorLeft");
             DoorRight = element.GetVector2("doorRight");
+            DoorStyle = element.GetEnum<DoorStyle>("doorStyle", DoorStyle.Wooden);
             DoorUp = element.GetVector2("doorUp");
             ExactMatch = element.GetBool("exactMatch", false);
             IsExit = element.GetBool("isExit", false);
@@ -34,6 +35,7 @@ namespace ScaryCastle
             MaxProps = element.GetInt32("maxProps", -1);
             MusicTag = element.GetString("musicTag");
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
+            Theme = element.GetEnum<RoomTheme>("theme", RoomTheme.BlueStone);
 
             // Placeholders
             if (element.TryGetProperty("placeholders", out JsonElement placeholdersElement))
@@ -132,6 +134,9 @@ namespace ScaryCastle
         // DoorRight
         public Vector2? DoorRight { get; }
 
+        // DoorStyle
+        public DoorStyle DoorStyle { get; }
+
         // DoorUp
         public Vector2? DoorUp { get; }
 
@@ -179,6 +184,9 @@ namespace ScaryCastle
 
         // Scope
         public ScopeRules Scope { get; }
+
+        // Theme
+        public RoomTheme Theme { get; }
 
         // WalkArea
         public string WalkArea { get; }

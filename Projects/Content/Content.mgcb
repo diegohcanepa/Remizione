@@ -785,6 +785,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/Keyboard.wav;Audio/FX/Keyboard
 
+#begin Audio/FX/Lever.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Lever.wav;Audio/FX/Lever
+
 #begin Audio/FX/Lightning.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

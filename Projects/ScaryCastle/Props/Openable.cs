@@ -140,7 +140,7 @@ namespace ScaryCastle
                     if (LockedSound != null)
                         PlaySound(LockedSound);
 
-                    ShowFloatingText(TextRepository.GetValue("FloatingText.Locked"), ColorPalette.Text.Orange);
+                    ShowFloatingText(Localization.GetValue(FloatingMessage.Locked), ColorPalette.Text.Orange);
                 }
                 return;
             }

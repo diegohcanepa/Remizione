@@ -34,6 +34,9 @@ namespace ScaryCastle
     // Difficulty
     public enum Difficulty { Easy, Normal, Hard }
 
+    // DoorStyle
+    public enum DoorStyle { Wooden, Gate }
+
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
 
@@ -52,6 +55,9 @@ namespace ScaryCastle
 
     // Faction
     public enum Faction { Neutral, Good, Evil }
+
+    // FloatingMessage
+    public enum FloatingMessage { Failed, Locked, Success }
 
     // HitEffect
     public enum HitEffect { None, Shake, Blink }
@@ -145,6 +151,9 @@ namespace ScaryCastle
 
     // RideDoorDirection
     public enum RideDoorDirection { Up, Right, Down, Left }
+
+    // RoomTheme
+    public enum RoomTheme { BlueStone }
 
     // RoomType
     public enum RoomType { Connector, Start, Exit, Special }

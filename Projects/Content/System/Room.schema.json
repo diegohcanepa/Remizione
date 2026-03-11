@@ -49,6 +49,14 @@
             "doorUp": {
               "type": "string"
             },
+            "doorStyle": {
+              "type": "string",
+              "default": "Wooden",
+              "enum": [
+                "Wooden",
+                "Gate"
+              ]
+            },           
             "exactMatch": {
               "type": "boolean",
               "default": false
@@ -130,6 +138,13 @@
                 "additionalProperties": false
               }
             },
+            "theme": {
+              "type": "string",
+              "default": "BlueStone",
+              "enum": [
+                "BlueStone"
+              ]
+            },            
             "walkArea": {
               "type": "string"
             },

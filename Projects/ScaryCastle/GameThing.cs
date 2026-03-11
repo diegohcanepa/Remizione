@@ -812,6 +812,7 @@ namespace ScaryCastle
         public bool IgnoreAttachedLight { get; set; }
 
         // IgnoreThrowables
+        [ScriptProperty]
         public bool IgnoreThrowables { get; set; } = true;
 
         // IgnoreWalkArea

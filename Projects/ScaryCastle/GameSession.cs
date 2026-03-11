@@ -504,6 +504,7 @@ namespace ScaryCastle
 
             HUDVisible = false;
             Inventory.Clear();
+            Player?.Reheal();
             RunManager.Clear();
             CleanUpRuntimeEntities();
             Seed = 0;

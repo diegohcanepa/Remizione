@@ -135,8 +135,25 @@ namespace ScaryCastle
             {
                 Sprite.ClearAnimations();
 
-                var prefix = rideRoom.RoomGraph.Definition.Name.Split("_")[0];
-                prefix = $"{prefix}Door{DoorDirection}";
+                var assetPrefix = string.Empty;
+                if (DoorDirection == RideDoorDirection.Up && rideRoom.RoomGraph.Up != null)
+                {
+                    assetPrefix = rideRoom.RoomGraph.GetDoorAssetName(rideRoom.RoomGraph.Up);
+                }
+                else if (DoorDirection == RideDoorDirection.Right && rideRoom.RoomGraph.Right != null)
+                {
+                    assetPrefix = rideRoom.RoomGraph.GetDoorAssetName(rideRoom.RoomGraph.Right);
+                }
+                else if (DoorDirection == RideDoorDirection.Down && rideRoom.RoomGraph.Down != null)
+                {
+                    assetPrefix = rideRoom.RoomGraph.GetDoorAssetName(rideRoom.RoomGraph.Down);
+                }
+                else if (DoorDirection == RideDoorDirection.Left && rideRoom.RoomGraph.Left != null)
+                {
+                    assetPrefix = rideRoom.RoomGraph.GetDoorAssetName(rideRoom.RoomGraph.Left);
+                }
+
+                var prefix = $"RideDoor_{assetPrefix}_{DoorDirection}_";
 
                 var animation = AddAnimation("Closed");
                 animation.AddFrame(prefix + animation.Name, 1000);

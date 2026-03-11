@@ -21,7 +21,7 @@ namespace ScaryCastle
         {
             this.session = session;
 
-            this.icon = new(Game, Atlases.UI.Skull)
+            this.icon = new(Game, Atlases.UI.FearIcon)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 6, -8)
@@ -30,7 +30,7 @@ namespace ScaryCastle
             this.meter = new Meter(Game, ColorPalette.Text.TerraDarker, ColorPalette.Text.Red, new(125, 56, 51), new(40, 5), 1)
             {
                 MaximumValue = session.FearManager.MaximumValue,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 32, -10)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 33, -10)
             };
         }
 

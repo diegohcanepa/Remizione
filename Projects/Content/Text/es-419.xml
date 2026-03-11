@@ -18,9 +18,9 @@
   <String Key="DurabilityState.Sturdy">Integro</String>
   <String Key="DurabilityState.Used">Usado</String>
   <String Key="DurabilityState.Worn">Gastado</String>
-  <String Key="FloatingText.Failed">¡Fallaste!</String>
-  <String Key="FloatingText.Locked">Cerrado con llave</String>
-  <String Key="FloatingText.Success">¡Éxito!</String>
+  <String Key="FloatingMessage.Failed">¡Fallaste!</String>
+  <String Key="FloatingMessage.Locked">Cerrado con llave</String>
+  <String Key="FloatingMessage.Success">¡Éxito!</String>
   <String Key="HitType.Critical">¡Crítico!</String>
   <String Key="InputBinding.Back">Atrás</String>
   <String Key="InputBinding.BuyItem">Comprar</String>
@@ -280,6 +280,7 @@ Bla bla bla</String>
   <String Key="Prop.ExitTower">Torre de salida</String>
   <String Key="Prop.FoodStall">Puesto de comida</String>
   <String Key="Prop.Gate">Portón</String>
+  <String Key="Prop.Lever">Palanca</String>
   <String Key="Prop.PortableToilet">Pequeño purgatorio</String>
   <String Key="Prop.PostClock">Tiempo tirano</String>
   <String Key="Prop.RideCar">Carrito</String>

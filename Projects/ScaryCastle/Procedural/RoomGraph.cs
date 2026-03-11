@@ -92,6 +92,13 @@
             return true;
         }
 
+        // GetDoorAssetName
+        public string GetDoorAssetName(RoomGraph neighbor)
+        {
+            // Usage: "BlueStone_Gate" or "BlueStone_Wooden"
+            return $"{Definition.Theme}_{neighbor.Definition.DoorStyle}";
+        }
+
         // HeartCount
         public int HeartCount { get; set; }
 
