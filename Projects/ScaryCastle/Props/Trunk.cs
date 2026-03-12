@@ -17,7 +17,6 @@ namespace ScaryCastle
             : base(session, name)
         {
             ApproachBehavior = ApproachBehavior.ClosestSide;
-            Atlas = Atlases.Environment;
             DeathSound = Sound.Find(SoundNames.WoodDebris);
             DisplayNameKey = "Prop.Trunk";
             LockedSound = Sound.Find(SoundNames.TrunkLocked);

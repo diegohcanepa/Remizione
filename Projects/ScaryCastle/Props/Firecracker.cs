@@ -14,7 +14,7 @@ namespace ScaryCastle
         public Firecracker(GameSession session, Item item, Vector2 spawnPosition)
             : base(session, string.Empty)
         {
-            Atlas = Atlases.Environment;
+            Atlas = Atlases.Props;
             DepthOffset = -1;
             cooldown = item.Definition.ExecutionDelay;
             Position = spawnPosition;

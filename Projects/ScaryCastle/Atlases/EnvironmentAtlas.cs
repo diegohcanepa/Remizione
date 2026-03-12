@@ -20,7 +20,6 @@ namespace ScaryCastle
             GutStains = CreateReadOnlyCollection("GutStain", 1, 2);
             GlobalLight = this[nameof(GlobalLight)];
             LightningLight = this[nameof(LightningLight)];
-            Sack = this[nameof(Sack)];
         }
 
         // DefaultLight
@@ -46,8 +45,5 @@ namespace ScaryCastle
 
         // LightningLight
         public AtlasImage LightningLight { get; }
-
-        // Sack
-        public AtlasImage Sack { get; }
     }
 }

@@ -9,7 +9,7 @@
         public WaterPuddle(GameSession session, string name)
             : base(session, name)
         {
-            Atlas = Atlases.Environment;
+            Atlas = Atlases.Props;
             CollisionDetection = false;
             RenderLayer = RenderLayer.Background;
             //TerrainParticleColor = new Color(75, 133, 150);

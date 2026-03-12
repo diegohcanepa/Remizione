@@ -11,7 +11,6 @@ namespace ScaryCastle
         public Pottery(GameSession session, string name)
             : base(session, name)
         {
-            Atlas = Atlases.Environment;
             DeathSound = Sound.Find(SoundNames.PotteryBreak);
             DepthOffset = -2;
             HurtSound = Sound.Find(SoundNames.ImpactA);

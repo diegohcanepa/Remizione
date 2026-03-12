@@ -9,6 +9,7 @@
         protected ProceduralProp(GameSession session, string name)
             : base(session, name)
         {
+            Atlas = Atlases.Props;
             Definition = PropDefinition.Definitions.Get(DeclaredName);
             Faction = Faction.Evil;
         }

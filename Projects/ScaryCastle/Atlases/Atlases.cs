@@ -7,11 +7,7 @@ namespace ScaryCastle
     /// </summary>
     internal static class Atlases
     {
-        #region Private fields
-
         private static bool isLoaded;
-
-        #endregion
 
         #region Private members
 
@@ -22,6 +18,7 @@ namespace ScaryCastle
             Actors = new Atlas(EngendroGame.Instance.Content, nameof(Actors), ContentManagerExtension.EncodePath(ContentFolder.Atlases, nameof(Actors)), true);
             Environment = new EnvironmentAtlas(EngendroGame.Instance);
             Menu = new MenuAtlas(EngendroGame.Instance);
+            Props = new Atlas(EngendroGame.Instance.Content, nameof(Props), ContentManagerExtension.EncodePath(ContentFolder.Atlases, nameof(Props)), false);
             UI = new UIAtlas(EngendroGame.Instance);
         }
 
@@ -55,6 +52,19 @@ namespace ScaryCastle
 
         // Menu
         internal static MenuAtlas Menu
+        {
+            get
+            {
+                if (!isLoaded)
+                    Load();
+                return field;
+            }
+
+            private set;
+        } = null!;
+
+        // Props
+        internal static Atlas Props
         {
             get
             {

@@ -45,7 +45,6 @@ namespace ScaryCastle
                 throw new InvalidOperationException("Cannot infere door direction from entity name.");
             }
 
-            Atlas = Atlases.Environment;
             CollisionDetection = false;
             DisplayNameKey = "Prop.Door";
             CloseSound = Sound.Find("DoorClose");

@@ -1,4 +1,5 @@
 ﻿using Adberration.Scripting;
+using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
 {
@@ -11,6 +12,12 @@ namespace ScaryCastle
         public RideCar(GameSession session, string name)
             : base(session, name)
         {
+            Atlas = Atlases.Props;
+        }
+
+        protected override void OnDraw(GameTime gameTime)
+        {
+            base.OnDraw(gameTime);
         }
 
         // GetOutRider

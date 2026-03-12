@@ -10,8 +10,6 @@ namespace ScaryCastle
         public Torch(GameSession session, string name)
             : base(session, name)
         {
-            Atlas = Atlases.Environment;
-
             this.AttachedLight = new Light(session.Game, "Light")
             {
                 Color = new(255, 248, 143),

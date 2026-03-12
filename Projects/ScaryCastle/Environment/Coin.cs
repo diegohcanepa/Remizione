@@ -12,7 +12,7 @@ namespace ScaryCastle
         public Coin(GameSession session, string name)
             : base(session, name)
         {
-            Atlas = Atlases.Environment;
+            Atlas = Atlases.Props;
             ApproachBehavior = ApproachBehavior.ClosestSide;
             Collider = new Polygon("0,0;5,0;5,4;0,4");
             DepthOffset = 20;

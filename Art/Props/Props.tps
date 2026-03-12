@@ -124,7 +124,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../Projects/Content/Atlases/Environment.xml</filename>
+                <filename>../../Projects/Content/Atlases/Props.xml</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -173,8 +173,9 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Bible-assets/Bible.png</key>
-            <key type="filename">Bible-assets/BibleShadow.png</key>
+            <key type="filename">Firecracker-assets/Firecracker01.png</key>
+            <key type="filename">Firecracker-assets/Firecracker02.png</key>
+            <key type="filename">Firecracker-assets/Firecracker03.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -183,17 +184,18 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,2,3,4</rect>
+                <rect>3,1,5,2</rect>
                 <key>scale9Paddings</key>
-                <rect>2,2,3,4</rect>
+                <rect>3,1,5,2</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Bible-assets/BiblePiece1.png</key>
-            <key type="filename">Bible-assets/BiblePiece2.png</key>
-            <key type="filename">Bible-assets/BiblePiece3.png</key>
-            <key type="filename">Bible-assets/BiblePiece4.png</key>
-            <key type="filename">Bible-assets/BiblePiece5.png</key>
+            <key type="filename">GoldenTrunk-assets/GoldenTrunk01.png</key>
+            <key type="filename">GoldenTrunk-assets/GoldenTrunk02.png</key>
+            <key type="filename">GoldenTrunk-assets/GoldenTrunkShadow.png</key>
+            <key type="filename">Trunk-assets/Trunk01.png</key>
+            <key type="filename">Trunk-assets/Trunk02.png</key>
+            <key type="filename">Trunk-assets/TrunkShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -202,13 +204,14 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>0,0,1,1</rect>
+                <rect>3,5,7,9</rect>
                 <key>scale9Paddings</key>
-                <rect>0,0,1,1</rect>
+                <rect>3,5,7,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Bible-assets/BiblePiece10.png</key>
+            <key type="filename">Lever-assets/Lever01.png</key>
+            <key type="filename">Lever-assets/Lever02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -217,21 +220,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,1,3,3</rect>
+                <rect>3,4,7,7</rect>
                 <key>scale9Paddings</key>
-                <rect>2,1,3,3</rect>
+                <rect>3,4,7,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Bible-assets/BiblePiece6.png</key>
-            <key type="filename">Bible-assets/BiblePiece7.png</key>
-            <key type="filename">Bible-assets/BiblePiece8.png</key>
-            <key type="filename">DustParticles-assets/DustParticle1.png</key>
-            <key type="filename">FireflyParticles-assets/FireflyParticle1.png</key>
-            <key type="filename">Guts-assets/Gut2.png</key>
-            <key type="filename">Guts-assets/Gut5.png</key>
-            <key type="filename">Guts-assets/Gut6.png</key>
-            <key type="filename">Guts-assets/Gut8.png</key>
+            <key type="filename">PotteryA-assets/PotteryA.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -240,15 +235,33 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>1,1,1,1</rect>
+                <rect>2,3,3,6</rect>
                 <key>scale9Paddings</key>
-                <rect>1,1,1,1</rect>
+                <rect>2,3,3,6</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Bible-assets/BiblePiece9.png</key>
-            <key type="filename">Guts-assets/Gut11.png</key>
-            <key type="filename">Guts-assets/Gut3.png</key>
+            <key type="filename">PotteryA-assets/PotteryAPiece1.png</key>
+            <key type="filename">PotteryA-assets/PotteryAPiece3.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece3.png</key>
+            <key type="filename">PotteryD-assets/PotteryDPiece1.png</key>
+            <key type="filename">PotteryD-assets/PotteryDPiece2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,3,2</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,3,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PotteryA-assets/PotteryAPiece2.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -263,17 +276,11 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Dice-assets/Dice01.png</key>
-            <key type="filename">Dice-assets/Dice02.png</key>
-            <key type="filename">Dice-assets/Dice03.png</key>
-            <key type="filename">Dice-assets/Dice04.png</key>
-            <key type="filename">Dice-assets/Dice05.png</key>
-            <key type="filename">Dice-assets/Dice06.png</key>
-            <key type="filename">Dice-assets/Dice07.png</key>
-            <key type="filename">Dice-assets/Dice08.png</key>
-            <key type="filename">Dice-assets/Dice09.png</key>
-            <key type="filename">Dice-assets/Dice10.png</key>
-            <key type="filename">Dice-assets/Dice11.png</key>
+            <key type="filename">PotteryA-assets/PotteryAPiece4.png</key>
+            <key type="filename">PotteryA-assets/PotteryAPiece5.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece1.png</key>
+            <key type="filename">PotteryD-assets/PotteryDPiece4.png</key>
+            <key type="filename">PotteryE-assets/PotteryEPiece4.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -282,15 +289,14 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>5,5,11,10</rect>
+                <rect>1,1,2,2</rect>
                 <key>scale9Paddings</key>
-                <rect>5,5,11,10</rect>
+                <rect>1,1,2,2</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Environment-assets/AreaMarkerLarge.png</key>
-            <key type="filename">Environment-assets/AreaMarkerMedium.png</key>
-            <key type="filename">Environment-assets/AreaMarkerSmall.png</key>
+            <key type="filename">PotteryB-assets/PotteryB.png</key>
+            <key type="filename">PotteryB-assets/PotteryBShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -299,245 +305,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>6,2,11,5</rect>
+                <rect>4,4,7,8</rect>
                 <key>scale9Paddings</key>
-                <rect>6,2,11,5</rect>
+                <rect>4,4,7,8</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Environment-assets/DefaultLight.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,5,9,9</rect>
-                <key>scale9Paddings</key>
-                <rect>5,5,9,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/FloorMark.png</key>
-            <key type="filename">Environment-assets/Ticket.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,3,3</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,3,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/GlobalLight.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>64,56,128,113</rect>
-                <key>scale9Paddings</key>
-                <rect>64,56,128,113</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/LightningLight.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>67,40,133,79</rect>
-                <key>scale9Paddings</key>
-                <rect>67,40,133,79</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/ShadowSpot10.png</key>
-            <key type="filename">Environment-assets/ShadowSpot11.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,1,5,1</rect>
-                <key>scale9Paddings</key>
-                <rect>3,1,5,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/ShadowSpot4.png</key>
-            <key type="filename">Guts-assets/Gut10.png</key>
-            <key type="filename">Guts-assets/Gut12.png</key>
-            <key type="filename">Guts-assets/Gut4.png</key>
-            <key type="filename">Guts-assets/Gut9.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,2,1</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,2,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/ShadowSpot5.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,3,1</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,3,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/ShadowSpot6.png</key>
-            <key type="filename">Environment-assets/ShadowSpot7.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,1,3,1</rect>
-                <key>scale9Paddings</key>
-                <rect>2,1,3,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/ShadowSpot8.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,1,4,1</rect>
-                <key>scale9Paddings</key>
-                <rect>2,1,4,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/ShadowSpot9.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,1,5,1</rect>
-                <key>scale9Paddings</key>
-                <rect>2,1,5,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/ShadowSpotW12.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,1,6,1</rect>
-                <key>scale9Paddings</key>
-                <rect>3,1,6,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/ShadowSpotW13.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,1,7,1</rect>
-                <key>scale9Paddings</key>
-                <rect>3,1,7,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/ShadowSpotW14.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,1,7,1</rect>
-                <key>scale9Paddings</key>
-                <rect>4,1,7,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">FireflyParticles-assets/FireflyParticle2.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,3,3</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,3,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Guts-assets/Gut1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,1,3,2</rect>
-                <key>scale9Paddings</key>
-                <rect>2,1,3,2</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Guts-assets/Gut7.png</key>
+            <key type="filename">PotteryB-assets/PotteryBPiece1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -552,7 +326,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Guts-assets/GutStain1.png</key>
+            <key type="filename">PotteryB-assets/PotteryBPiece2.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece4.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -561,13 +336,17 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>5,3,9,5</rect>
+                <rect>1,1,1,3</rect>
                 <key>scale9Paddings</key>
-                <rect>5,3,9,5</rect>
+                <rect>1,1,1,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Guts-assets/GutStain2.png</key>
+            <key type="filename">PotteryB-assets/PotteryBPiece3.png</key>
+            <key type="filename">PotteryB-assets/PotteryBPiece5.png</key>
+            <key type="filename">PotteryE-assets/PotteryEPiece2.png</key>
+            <key type="filename">PotteryE-assets/PotteryEPiece5.png</key>
+            <key type="filename">PotteryE-assets/PotteryEPiece6.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -576,14 +355,17 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>4,3,9,5</rect>
+                <rect>2,1,3,3</rect>
                 <key>scale9Paddings</key>
-                <rect>4,3,9,5</rect>
+                <rect>2,1,3,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">ImpactWords-assets/AghGreen.png</key>
-            <key type="filename">ImpactWords-assets/AghRed.png</key>
+            <key type="filename">PotteryB-assets/PotteryBPiece4.png</key>
+            <key type="filename">PotteryE-assets/PotteryEPiece1.png</key>
+            <key type="filename">PotteryE-assets/PotteryEPiece3.png</key>
+            <key type="filename">Props-assets/Sack.png</key>
+            <key type="filename">VendingMachine-assets/VendingMachineGlass.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -592,14 +374,20 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>7,4,13,8</rect>
+                <rect>2,2,3,3</rect>
                 <key>scale9Paddings</key>
-                <rect>7,4,13,8</rect>
+                <rect>2,2,3,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">ImpactWords-assets/BangBlue.png</key>
-            <key type="filename">ImpactWords-assets/BangRed.png</key>
+            <key type="filename">PotteryB-assets/PotteryBPiece6.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece5.png</key>
+            <key type="filename">PotteryD-assets/PotteryDPiece3.png</key>
+            <key type="filename">PotteryD-assets/PotteryDPiece6.png</key>
+            <key type="filename">Props-assets/Coin01.png</key>
+            <key type="filename">Props-assets/Coin02.png</key>
+            <key type="filename">Props-assets/Coin03.png</key>
+            <key type="filename">Props-assets/Coin04.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -608,15 +396,14 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>8,3,15,7</rect>
+                <rect>1,1,3,3</rect>
                 <key>scale9Paddings</key>
-                <rect>8,3,15,7</rect>
+                <rect>1,1,3,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">ImpactWords-assets/BoomPurple.png</key>
-            <key type="filename">ImpactWords-assets/BoomRed.png</key>
-            <key type="filename">ImpactWords-assets/Kapow.png</key>
+            <key type="filename">PotteryC-assets/PotteryC.png</key>
+            <key type="filename">PotteryC-assets/PotteryCShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -625,14 +412,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>8,4,15,7</rect>
+                <rect>3,5,6,9</rect>
                 <key>scale9Paddings</key>
-                <rect>8,4,15,7</rect>
+                <rect>3,5,6,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">ImpactWords-assets/CrackBlue.png</key>
-            <key type="filename">ImpactWords-assets/CrackYellow.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece6.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -641,14 +427,14 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>8,3,17,7</rect>
+                <rect>1,2,3,3</rect>
                 <key>scale9Paddings</key>
-                <rect>8,3,17,7</rect>
+                <rect>1,2,3,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">ImpactWords-assets/CuackPurple.png</key>
-            <key type="filename">ImpactWords-assets/CuackYellow.png</key>
+            <key type="filename">PotteryD-assets/PotteryD.png</key>
+            <key type="filename">PotteryD-assets/PotteryDShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -657,13 +443,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>8,4,17,7</rect>
+                <rect>3,5,7,11</rect>
                 <key>scale9Paddings</key>
-                <rect>8,4,17,7</rect>
+                <rect>3,5,7,11</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">ImpactWords-assets/KapowStrong.png</key>
+            <key type="filename">PotteryD-assets/PotteryDPiece5.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -672,14 +458,14 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>10,3,19,7</rect>
+                <rect>2,1,3,2</rect>
                 <key>scale9Paddings</key>
-                <rect>10,3,19,7</rect>
+                <rect>2,1,3,2</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">ImpactWords-assets/OuchBlue.png</key>
-            <key type="filename">ImpactWords-assets/OuchGreen.png</key>
+            <key type="filename">PotteryE-assets/PotteryE.png</key>
+            <key type="filename">PotteryE-assets/PotteryEShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -688,14 +474,14 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>7,3,14,6</rect>
+                <rect>4,5,7,9</rect>
                 <key>scale9Paddings</key>
-                <rect>7,3,14,6</rect>
+                <rect>4,5,7,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">ImpactWords-assets/PlopRed.png</key>
-            <key type="filename">ImpactWords-assets/PlopYellow.png</key>
+            <key type="filename">Props-assets/BibleSheetWhite.png</key>
+            <key type="filename">Props-assets/BibleSheetYellow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -704,14 +490,17 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>7,3,13,5</rect>
+                <rect>2,2,4,5</rect>
                 <key>scale9Paddings</key>
-                <rect>7,3,13,5</rect>
+                <rect>2,2,4,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">ImpactWords-assets/SlapBlue.png</key>
-            <key type="filename">ImpactWords-assets/SlapRed.png</key>
+            <key type="filename">RideCar-assets/RideCar01.png</key>
+            <key type="filename">RideCar-assets/RideCar02.png</key>
+            <key type="filename">RideCar-assets/RideCar03.png</key>
+            <key type="filename">RideCar-assets/RideCar04.png</key>
+            <key type="filename">RideCar-assets/RideCar08.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -720,13 +509,14 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>6,3,13,6</rect>
+                <rect>7,6,13,11</rect>
                 <key>scale9Paddings</key>
-                <rect>6,3,13,6</rect>
+                <rect>7,6,13,11</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">ImpactWords-assets/Zap.png</key>
+            <key type="filename">RideDoorDown-assets/RideDoor_BlueStone_Wooden_Down_Closed.png</key>
+            <key type="filename">RideDoorDown-assets/RideDoor_BlueStone_Wooden_Down_Open.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -735,13 +525,18 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>5,3,10,7</rect>
+                <rect>8,9,16,18</rect>
                 <key>scale9Paddings</key>
-                <rect>5,3,10,7</rect>
+                <rect>8,9,16,18</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Lightning-assets/Lightning01.png</key>
+            <key type="filename">RideDoorLeft-assets/RideDoorLeftLock.png</key>
+            <key type="filename">RideDoorLeft-assets/RideDoor_BlueStone_Wooden_Left_Closed.png</key>
+            <key type="filename">RideDoorLeft-assets/RideDoor_BlueStone_Wooden_Left_Open.png</key>
+            <key type="filename">RideDoorRight-assets/BlueStone_Wooden_Door_Right_Closed.png</key>
+            <key type="filename">RideDoorRight-assets/BlueStone_Wooden_Door_Right_Open.png</key>
+            <key type="filename">RideDoorRight-assets/RideDoorRightLock.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -750,13 +545,15 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>9,45,17,91</rect>
+                <rect>4,14,8,27</rect>
                 <key>scale9Paddings</key>
-                <rect>9,45,17,91</rect>
+                <rect>4,14,8,27</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Lightning-assets/Lightning02.png</key>
+            <key type="filename">RideDoorUp-assets/RideDoorUpLock.png</key>
+            <key type="filename">RideDoorUp-assets/RideDoor_BlueStone_Wooden_Up_Closed.png</key>
+            <key type="filename">RideDoorUp-assets/RideDoor_BlueStone_Wooden_Up_Open.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -765,13 +562,18 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>9,46,17,91</rect>
+                <rect>8,9,17,18</rect>
                 <key>scale9Paddings</key>
-                <rect>9,46,17,91</rect>
+                <rect>8,9,17,18</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Lightning-assets/Lightning03.png</key>
+            <key type="filename">SpearTrap-assets/SpearTrap01.png</key>
+            <key type="filename">SpearTrap-assets/SpearTrap02.png</key>
+            <key type="filename">SpearTrap-assets/SpearTrap03.png</key>
+            <key type="filename">SpearTrap-assets/SpearTrap04.png</key>
+            <key type="filename">SpearTrap-assets/SpearTrap05.png</key>
+            <key type="filename">SpearTrap-assets/SpearTrap06.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -780,14 +582,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>9,45,18,91</rect>
+                <rect>10,11,19,21</rect>
                 <key>scale9Paddings</key>
-                <rect>9,45,18,91</rect>
+                <rect>10,11,19,21</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">NumberSix-assets/NumberSix01.png</key>
-            <key type="filename">NumberSix-assets/NumberSix02.png</key>
+            <key type="filename">Torch-assets/Torch.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -796,14 +597,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>4,7,8,13</rect>
+                <rect>5,6,9,11</rect>
                 <key>scale9Paddings</key>
-                <rect>4,7,8,13</rect>
+                <rect>5,6,9,11</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sign-assets/Sign.png</key>
-            <key type="filename">Sign-assets/SignShadow.png</key>
+            <key type="filename">VendingMachine-assets/VendingMachine.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -812,9 +612,69 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>5,7,9,14</rect>
+                <rect>5,8,11,16</rect>
                 <key>scale9Paddings</key>
-                <rect>5,7,9,14</rect>
+                <rect>5,8,11,16</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">VendingMachine-assets/VendingMachineLed.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,1,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,1,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">WaterPuddleA-assets/WaterPuddleA.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,2,11,3</rect>
+                <key>scale9Paddings</key>
+                <rect>6,2,11,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">WaterPuddleB-assets/WaterPuddleB.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,3,7,7</rect>
+                <key>scale9Paddings</key>
+                <rect>4,3,7,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">WaterPuddleC-assets/WaterPuddleC.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,3,9,6</rect>
+                <key>scale9Paddings</key>
+                <rect>5,3,9,6</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -825,16 +685,27 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>Environment-assets</filename>
-                    <filename>FireflyParticles-assets</filename>
-                    <filename>DustParticles-assets</filename>
-                    <filename>ImpactWords-assets</filename>
-                    <filename>Guts-assets</filename>
-                    <filename>Sign-assets</filename>
-                    <filename>NumberSix-assets</filename>
-                    <filename>Dice-assets</filename>
-                    <filename>Lightning-assets</filename>
-                    <filename>Bible-assets</filename>
+                    <filename>PotteryA-assets</filename>
+                    <filename>PotteryB-assets</filename>
+                    <filename>PotteryC-assets</filename>
+                    <filename>PotteryD-assets</filename>
+                    <filename>PotteryE-assets</filename>
+                    <filename>RideCar-assets</filename>
+                    <filename>RideDoorDown-assets</filename>
+                    <filename>RideDoorLeft-assets</filename>
+                    <filename>RideDoorRight-assets</filename>
+                    <filename>RideDoorUp-assets</filename>
+                    <filename>SpearTrap-assets</filename>
+                    <filename>Firecracker-assets</filename>
+                    <filename>WaterPuddleA-assets</filename>
+                    <filename>WaterPuddleB-assets</filename>
+                    <filename>WaterPuddleC-assets</filename>
+                    <filename>Lever-assets</filename>
+                    <filename>Trunk-assets</filename>
+                    <filename>VendingMachine-assets</filename>
+                    <filename>GoldenTrunk-assets</filename>
+                    <filename>Torch-assets</filename>
+                    <filename>Props-assets</filename>
                 </array>
             </struct>
         </map>

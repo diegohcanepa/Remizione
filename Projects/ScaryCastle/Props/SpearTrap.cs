@@ -25,7 +25,6 @@ namespace ScaryCastle
             : base(session, name)
         {
             AffectsPathfinding = false;
-            Atlas = Atlases.Environment;
             CollisionDetection = false;
             IgnoreWalkArea = false;
             DepthOffset = -10;

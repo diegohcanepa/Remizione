@@ -179,6 +179,21 @@
 #begin Atlases/Monitor.xml
 /copy:Atlases/Monitor.xml
 
+#begin Atlases/Props.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Atlases/Props.png
+
+#begin Atlases/Props.xml
+/copy:Atlases/Props.xml
+
 #begin Atlases/ThemePark.png
 /importer:TextureImporter
 /processor:TextureProcessor
