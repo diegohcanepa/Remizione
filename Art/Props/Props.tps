@@ -534,9 +534,9 @@
             <key type="filename">RideDoorLeft-assets/RideDoorLeftLock.png</key>
             <key type="filename">RideDoorLeft-assets/RideDoor_BlueStone_Wooden_Left_Closed.png</key>
             <key type="filename">RideDoorLeft-assets/RideDoor_BlueStone_Wooden_Left_Open.png</key>
-            <key type="filename">RideDoorRight-assets/BlueStone_Wooden_Door_Right_Closed.png</key>
-            <key type="filename">RideDoorRight-assets/BlueStone_Wooden_Door_Right_Open.png</key>
             <key type="filename">RideDoorRight-assets/RideDoorRightLock.png</key>
+            <key type="filename">RideDoorRight-assets/RideDoor_BlueStone_Wooden_Right_Closed.png</key>
+            <key type="filename">RideDoorRight-assets/RideDoor_BlueStone_Wooden_Right_Open.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

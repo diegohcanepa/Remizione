@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:c4d249e83ed9f0d13e8e0b87fa6aa0fc:e950848cf5c9a0a8733a9bd86dd78da2:124b3bd0ff56be329062dd178e80040a$ -->
+<!-- $TexturePacker:SmartUpdate:b16d6c8c3e1beeac8a85085486b230b1:9eb10297926a7a87b70045b6100bcaaf:124b3bd0ff56be329062dd178e80040a$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -22,8 +22,6 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 <TextureAtlas imagePath="Props.png" width="256" height="256">
     <sprite n="BibleSheetWhite.png" x="78" y="78" w="8" h="9"/>
     <sprite n="BibleSheetYellow.png" x="88" y="78" w="8" h="9"/>
-    <sprite n="BlueStone_Wooden_Door_Right_Closed.png" x="2" y="2" w="16" h="54"/>
-    <sprite n="BlueStone_Wooden_Door_Right_Open.png" x="2" y="58" w="16" h="54"/>
     <sprite n="Coin01.png" x="123" y="147" w="5" h="5"/>
     <sprite n="Coin02.png" x="123" y="154" w="5" h="5"/>
     <sprite n="Coin03.png" x="123" y="161" w="5" h="5"/>
@@ -81,8 +79,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="RideCar08.png" x="86" y="224" w="26" h="23"/>
     <sprite n="RideDoor_BlueStone_Wooden_Down_Closed.png" x="113" y="40" w="32" h="36"/>
     <sprite n="RideDoor_BlueStone_Wooden_Down_Open.png" x="100" y="109" w="32" h="36"/>
-    <sprite n="RideDoor_BlueStone_Wooden_Left_Closed.png" x="2" y="114" w="16" h="54"/>
-    <sprite n="RideDoor_BlueStone_Wooden_Left_Open.png" x="2" y="170" w="16" h="54"/>
+    <sprite n="RideDoor_BlueStone_Wooden_Left_Closed.png" x="2" y="2" w="16" h="54"/>
+    <sprite n="RideDoor_BlueStone_Wooden_Left_Open.png" x="2" y="58" w="16" h="54"/>
+    <sprite n="RideDoor_BlueStone_Wooden_Right_Closed.png" x="2" y="114" w="16" h="54"/>
+    <sprite n="RideDoor_BlueStone_Wooden_Right_Open.png" x="2" y="170" w="16" h="54"/>
     <sprite n="RideDoor_BlueStone_Wooden_Up_Closed.png" x="78" y="2" w="33" h="36"/>
     <sprite n="RideDoor_BlueStone_Wooden_Up_Open.png" x="78" y="40" w="33" h="36"/>
     <sprite n="RideDoorLeftLock.png" x="20" y="2" w="16" h="54"/>
