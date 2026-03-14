@@ -12,7 +12,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly UIFearMeter fearMeter;
         private readonly UIHPMeter healthMeter;
         private readonly Sprite playerIcon;
         private readonly GameSession session;
@@ -32,7 +31,7 @@ namespace ScaryCastle
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop),
             };
 
-            this.fearMeter = new(session);
+            this.FearMeter = new(session);
             this.healthMeter = new(session.Game, new(playerIcon.BoundingBox.Width, 2));
             this.Log = new(Game);
             this.Message = new(Game, RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
@@ -57,7 +56,7 @@ namespace ScaryCastle
             healthMeter.Draw(gameTime);
 
             if (session.IsCurrentScene)
-                fearMeter.Draw(gameTime);
+                FearMeter.Draw(gameTime);
 
             InventoryMeter.Draw(gameTime);
             Log.Draw(gameTime);
@@ -72,7 +71,7 @@ namespace ScaryCastle
         protected override void OnUpdate(GameTime gameTime)
         {
             InventoryMeter.Update(gameTime);
-            fearMeter.Update(gameTime);
+            FearMeter.Update(gameTime);
             healthMeter.Update(gameTime);
             MiniMap.Update(gameTime);
             Log.Update(gameTime);
@@ -80,6 +79,9 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // FearMeter
+        public UIFearMeter FearMeter { get; }
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)

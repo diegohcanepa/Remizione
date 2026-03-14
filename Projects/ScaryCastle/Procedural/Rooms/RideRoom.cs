@@ -1,5 +1,6 @@
 ﻿using Adberration;
 using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -103,7 +104,17 @@ namespace ScaryCastle
         {
             base.OnEnter();
 
-            RoomGraph.Visited = true;
+            if (!RoomGraph.Visited)
+            {
+                RoomGraph.Visited = true;
+
+                if (RoomGraph.RoomType != RoomType.Start)
+                {
+                    Session.Fear++;
+                    Sound.Play(SoundNames.Fear);
+                }
+            }
+
             Session.HUD.MiniMap.CurrentRoom = RoomGraph;
 
             if (RoomGraph.RoomType == RoomType.Exit)

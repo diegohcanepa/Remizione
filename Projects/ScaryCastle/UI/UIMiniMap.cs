@@ -114,11 +114,13 @@ namespace ScaryCastle.UI
 
             if (roomGraph != CurrentRoom)
             {
+                /*
                 if (roomGraph.HeartCount > 0)
                 {
                     heartMarker.Position = image.BoundingBox.GetPoint(RectanglePoint.Center, -.25f, -.25f);
                     heartMarker.Draw(gameTime);
                 }
+                */
             }
 
             drawnRooms.Add(roomGraph);

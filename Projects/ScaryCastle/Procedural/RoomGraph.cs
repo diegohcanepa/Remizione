@@ -1,7 +1,7 @@
 ﻿namespace ScaryCastle
 {
     /// <summary>
-    /// Represents a mathematical node in the room graph layout.
+    /// RoomGraph 
     /// </summary>
     public sealed class RoomGraph
     {
@@ -99,9 +99,6 @@
             return $"{Definition.Theme}_{neighbor.Definition.DoorStyle}";
         }
 
-        // HeartCount
-        public int HeartCount { get; set; }
-
         // Index
         public int Index { get; }
 
@@ -115,9 +112,6 @@
                 UpdateConnectionCount();
             }
         }
-
-        // Realm
-        public Realm Realm { get; set; }
 
         // RideRoom
         public RideRoom RideRoom { get; set; } = null!;

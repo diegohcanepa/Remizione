@@ -8,10 +8,9 @@ namespace ScaryCastle
     /// </summary>
     public sealed class UIFearMeter : GameObject
     {
-        private readonly Sprite icon;
-        private readonly Meter meter;
+        private readonly Sprite[] icons;
         private readonly GameSession session;
-        private readonly Vector2Tween tween = Vector2Tween.Create(TweenStyle.Linear, Vector2.One, Vector2.One * .95f, 200, -1);
+        private readonly FloatTween tween = new();
 
         #region Constructor
 
@@ -21,17 +20,15 @@ namespace ScaryCastle
         {
             this.session = session;
 
-            this.icon = new(Game, Atlases.UI.FearIcon)
-            {
-                PivotOrigin = RectanglePoint.Center,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 6, -8)
-            };
+            this.icons = new Sprite[10];
 
-            this.meter = new Meter(Game, ColorPalette.Text.TerraDarker, ColorPalette.Text.Red, new(125, 56, 51), new(40, 5), 1)
+            for (var i = 0; i < icons.Length; i++)
             {
-                MaximumValue = session.FearManager.MaximumValue,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 33, -10)
-            };
+                this.icons[i] = new(Game)
+                {
+                    PivotOrigin = RectanglePoint.Center,
+                };
+            }
         }
 
         #endregion
@@ -41,44 +38,57 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            icon.Draw(gameTime);
-            meter.Draw(gameTime);
+            if (!RunManager.HasContent)
+                return;
+
+            for (var i = 0; i < RunManager.MaximumFear; i++)
+            {
+                if (icons[i].IsEmpty)
+                    break;
+
+                icons[i].Draw(gameTime);
+            }
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            tween.Update(gameTime);
+            if (!RunManager.HasContent)
+                return;
 
-            if (meter.Ratio <= .3)
+            for (var i = 0; i < RunManager.MaximumFear; i++)
             {
-                meter.ForeColor = ColorPalette.FearMeter.Green;
-                meter.DiffColor = ColorPalette.FearMeter.GreenDiff;
-                icon.Scale = Vector2.One;
-            }
-            else if (meter.Ratio <= .6)
-            {
-                meter.ForeColor = ColorPalette.FearMeter.Yellow;
-                meter.DiffColor = ColorPalette.FearMeter.YellowDiff;
-                icon.Scale = Vector2.One;
-            }
-            else if (meter.Ratio <= .8)
-            {
-                meter.ForeColor = ColorPalette.FearMeter.Orange;
-                meter.DiffColor = ColorPalette.FearMeter.OrangeDiff;
-                icon.Scale = Vector2.One;
-            }
-            else
-            {
-                meter.ForeColor = ColorPalette.FearMeter.Red;
-                meter.DiffColor = ColorPalette.FearMeter.RedDiff;
-                icon.Scale = tween.CurrentValue;
-            }
+                if (icons[i].IsEmpty)
+                    break;
 
-            meter.Value = session.FearManager.CurrentValue;
-            meter.Update(gameTime);
+                icons[i].Update(gameTime);
+            }
         }
 
         #endregion
+
+        // Refresh
+        public void Refresh(bool blink)
+        {
+            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 6, -8);
+
+            for (var i = 0; i < icons.Length; i++)
+            {
+                icons[i].Position = pos;
+                icons[i].RenderImage = Atlases.UI.FearEmpty;
+                pos.X += icons[i].BoundingBox.Width + 1;
+            }
+
+            for (var i = 0; i < session.Fear; i++)
+            {
+                icons[i].RenderImage = Atlases.UI.FearFull;
+
+                if (blink && i == session.Fear - 1)
+                {
+                    tween.Start(TweenStyle.Linear, 1, .5f, 400, 10);
+                    icons[i].Tweens.OpacityTween = tween;
+                }
+            }
+        }
     }
 }

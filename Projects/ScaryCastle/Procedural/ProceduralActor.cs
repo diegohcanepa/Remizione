@@ -41,7 +41,7 @@ namespace ScaryCastle
         protected override void OnDie()
         {
             base.OnDie();
-            Session.FearManager.CurrentValue -= FearBonus;
+            Session.Fear -= FearBonus;
         }
 
         // OnEnterRoom
@@ -114,7 +114,7 @@ namespace ScaryCastle
 
         // FearBonus
         [ScriptProperty]
-        public int FearBonus { get; set; } = 2;
+        public int FearBonus { get; set; } = 1;
 
         // IsAngry
         [ScriptProperty]

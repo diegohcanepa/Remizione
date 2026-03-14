@@ -420,9 +420,6 @@ namespace ScaryCastle
                     return;
                 }
             }
-
-            if (RunManager.HasContent && Room is RideRoom rideRoom && IsCurrentScene)
-                FearManager.Update(gameTime);
         }
 
         // OnWrite
@@ -456,13 +453,12 @@ namespace ScaryCastle
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            FearManager.CurrentValue = 0;
-
             RunManager.Generate(this, Tags.EmptyList);
+            Fear = 0;
 
             if (Player != null)
             {
-                var rideRoom = RunManager.Rooms[0].RideRoom;
+                var rideRoom = RunManager.RoomGraphs[0].RideRoom;
                 Player.Reheal();
                 HUDVisible = true;
                 rideRoom.Children.Add(Player);
@@ -483,7 +479,7 @@ namespace ScaryCastle
 
         // DeathByFear
         [ScriptProperty]
-        public bool DeathByFear => RunManager.HasContent && FearManager.CurrentValue == FearManager.MaximumValue;
+        public bool DeathByFear => RunManager.HasContent && Fear == RunManager.MaximumFear;
 
         // DeclaredThings
         public NamedObjectReadOnlyCollection<GameThing> DeclaredThings { get; }
@@ -526,8 +522,17 @@ namespace ScaryCastle
         // Environment
         public Environment Environment { get; }
 
-        // FearManager
-        public FearManager FearManager { get; } = new();
+        // Fear
+        public int Fear
+        {
+            get;
+            set
+            {
+                var blink = value > field;
+                field = Math.Clamp(value, 0, RunManager.MaximumFear);
+                HUD.FearMeter.Refresh(blink);
+            }
+        }
 
         // FindDeclaredThing
         public GameThing? FindDeclaredThing(string name)

@@ -273,14 +273,12 @@ namespace ScaryCastle
         {
             foreach (var r in roomGraphs)
             {
-                if (r.RideRoom != null)
-                {
-                    r.RideRoom.Children.Clear();
-                }
+                r.RideRoom?.Children.Clear();
             }
 
             ClearInternal();
             HasContent = false;
+            MaximumFear = 0;
         }
 
         // Generate
@@ -326,14 +324,19 @@ namespace ScaryCastle
                 r.RideRoom.Load();
             }
 
+            MaximumFear = roomGraphs.Count / 2;
+
             HasContent = true;
         }
 
         // HasContent
         public static bool HasContent { get; private set; }
 
-        // Rooms
-        public static ReadOnlyCollection<RoomGraph> Rooms => roomGraphs.AsReadOnly();
+        // MaximumFear
+        public static int MaximumFear { get; private set; }
+
+        // RoomGraphs
+        public static ReadOnlyCollection<RoomGraph> RoomGraphs { get; } = roomGraphs.AsReadOnly();
 
         // SpawnCounter
         public static MultiCounter SpawnCounter { get; } = new();

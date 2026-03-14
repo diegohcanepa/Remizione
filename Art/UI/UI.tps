@@ -611,6 +611,8 @@
             <key type="filename">MiniMap-assets/UIMiniMapRoom0.png</key>
             <key type="filename">MiniMap-assets/UIMiniMapRoom1.png</key>
             <key type="filename">MiniMap-assets/UIMiniMapRoom2.png</key>
+            <key type="filename">UIIcons-assets/FearEmpty.png</key>
+            <key type="filename">UIIcons-assets/FearFull.png</key>
             <key type="filename">UIIcons-assets/Skull.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

@@ -25,19 +25,6 @@ namespace ScaryCastle
         // CreditLine
         internal static Color CreditLine { get; } = new Color(230, 230, 212);
 
-        // FearMeter
-        internal static class FearMeter
-        {
-            internal static Color Green { get; } = new(47, 87, 83);
-            internal static Color GreenDiff { get; } = new(59, 125, 79);
-            internal static Color Orange { get; } = new(171, 81, 48);
-            internal static Color OrangeDiff { get; } = new(207, 117, 43);
-            internal static Color Red { get; } = new(173, 47, 69);
-            internal static Color RedDiff { get; } = new(125, 56, 51);
-            internal static Color Yellow { get; } = new(188, 154, 86);
-            internal static Color YellowDiff { get; } = new(240, 181, 65);
-        }
-
         // GlobalLight
         internal static class GlobalLight
         {
