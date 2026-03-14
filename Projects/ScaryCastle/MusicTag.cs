@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ScaryCastle
+﻿namespace ScaryCastle
 {
     internal static class MusicTag
     {

@@ -7,14 +7,8 @@ namespace ScaryCastle
     // Handles the player's fear logic using discrete integer points.
     public sealed class FearManager
     {
+        private const double interval = 20000;
         private double lastFearTickTime;
-
-        #region Private members
-
-        // GetFearInterval
-        private int GetFearInterval(bool hasEnemies) => hasEnemies ? 600 : 2000;
-
-        #endregion
 
         // CurrentValue
         public int CurrentValue
@@ -25,9 +19,8 @@ namespace ScaryCastle
 
         // Update
         // Updates the fear level based on elapsed total game time.
-        public void Update(GameTime gameTime, bool hasEnemies)
+        public void Update(GameTime gameTime)
         {
-            double interval = GetFearInterval(hasEnemies);
             double currentTime = gameTime.TotalGameTime.TotalMilliseconds;
 
             if (currentTime - lastFearTickTime >= interval)

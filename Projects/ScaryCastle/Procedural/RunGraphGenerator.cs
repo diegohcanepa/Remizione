@@ -14,16 +14,16 @@ namespace ScaryCastle
             int count = 0;
             if (map.ContainsKey((c.x, c.y + 1)))
                 count++;
-            
+
             if (map.ContainsKey((c.x, c.y - 1)))
                 count++;
-            
+
             if (map.ContainsKey((c.x - 1, c.y)))
                 count++;
-            
+
             if (map.ContainsKey((c.x + 1, c.y)))
                 count++;
-            
+
             return count;
         }
 
@@ -50,15 +50,15 @@ namespace ScaryCastle
                 case 0:
                     p.Up = c; c.Down = p;
                     break;
-                
+
                 case 1:
                     p.Down = c; c.Up = p;
                     break;
-                
+
                 case 2:
                     p.Left = c; c.Right = p;
                     break;
-                
+
                 case 3:
                     p.Right = c; c.Left = p;
                     break;
@@ -84,7 +84,7 @@ namespace ScaryCastle
             while (queue.Count > 0)
             {
                 var current = queue.Dequeue();
-                
+
                 if (current.Up != null && !visited.Contains(current.Up))
                 {
                     current.Up.DistanceFromStart = current.DistanceFromStart + 1;
@@ -183,7 +183,7 @@ namespace ScaryCastle
                 return (rooms, -1);
 
             exitRoom.RoomType = RoomType.Exit;
-            
+
             return (rooms, exitRoom.DistanceFromStart);
         }
     }

@@ -12,7 +12,7 @@ namespace ScaryCastle
         {
             // 1. OBTENER TARGET
             // Usamos el helper seguro de ProceduralActor que ya valida si es null o IsDead
-            if (Owner.GetTarget() is not { } target)
+            if (Owner.Target == null)
             {
                 TransitionTo<BrainPatrolState>();
                 return;
@@ -29,12 +29,12 @@ namespace ScaryCastle
 
             // 3. MOVIMIENTO (El Cerebro ordena, el Cuerpo obedece)
             // Actualizamos la orden de movimiento hacia la posición actual del enemigo
-            Owner.MoveTo(target.Position);
+            Owner.MoveTo(Owner.Target.Position);
 
             // 4. CHECK DE RANGO DE ATAQUE
 
             // Si estamos lo suficientemente cerca para atacar...
-            if (Owner.IsInAttackRange(target))
+            if (Owner.IsInAttackRange(Owner.Target))
             {
                 // Importante: Frenar antes de cambiar de estado para no "deslizar" mientras ataca
                 Owner.StopMoving();

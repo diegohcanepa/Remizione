@@ -29,7 +29,6 @@ namespace ScaryCastle
 
         // Misc
         internal static readonly InputBinding Back = InputManager.AddBinding(nameof(Back), GetButtonB(), Keys.X);
-        internal static readonly InputBinding BuyItem = InputManager.AddBinding(nameof(BuyItem), Buttons.A, Keys.E, Keys.Enter);
         internal static readonly InputBinding ConsumeItem = InputManager.AddBinding(nameof(ConsumeItem), Buttons.A, Keys.E);
         internal static readonly InputBinding Continue = InputManager.AddBinding(nameof(Continue), GetButtonA(), Keys.E);
         internal static readonly InputBinding Close = InputManager.AddBinding(nameof(Close), GetButtonB(), Keys.X);
@@ -42,8 +41,7 @@ namespace ScaryCastle
         internal static readonly InputBinding SelectDialogOption = InputManager.AddBinding(nameof(SelectDialogOption), Buttons.A, Keys.E, Keys.Enter);
         internal static readonly InputBinding SpeechBubble = InputManager.AddBinding(nameof(SpeechBubble), Buttons.A, Keys.E, Keys.Enter);
         internal static readonly InputBinding UseFriendlyItem = InputManager.AddBinding(nameof(UseFriendlyItem), Buttons.A, Keys.E, Keys.Enter);
-        internal static readonly InputBinding UseLeftHandItem = InputManager.AddBinding(nameof(UseLeftHandItem), Buttons.X, Keys.Z);
-        internal static readonly InputBinding UseRightHandItem = InputManager.AddBinding(nameof(UseRightHandItem), Buttons.B, Keys.X);
+        internal static readonly InputBinding UseItem = InputManager.AddBinding(nameof(UseItem), Buttons.X, Keys.LeftControl, Keys.RightControl);
 
         // Keyboard movement
         internal static readonly InputBinding KeyboardMoveDown = InputManager.AddBinding(nameof(KeyboardMoveDown), 0, Keys.S);

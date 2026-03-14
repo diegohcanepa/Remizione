@@ -21,17 +21,6 @@
       "allOf": [
         {
           "$ref": "./Thing.schema.json"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "attackCooldown": {
-              "type": "integer",
-              "description": "Tiempo de espera entre ataques (en ticks/frames).",
-              "minimum": 0,
-              "default": 0
-            }
-          }
         }
       ],
       "unevaluatedProperties": false

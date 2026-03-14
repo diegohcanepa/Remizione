@@ -63,7 +63,7 @@ namespace ScaryCastle
             var text = Localization.GetValue(message);
             var color = ColorPalette.Text.Highlight;
 
-            if (message is MessageKind.NotEnoughCoins or MessageKind.FearRises)
+            if (message is MessageKind.NotEnoughCoins)
             {
                 color = ColorPalette.Text.Orange;
                 Sound.Play(SoundNames.Error);

@@ -10,7 +10,7 @@ namespace ScaryCastle
     {
         // Constructor
         public Bible(GameSession session)
-            : base(session, .7f, .75f, new Vector2(70, -50), 1.3f, .6f, 500, 5)
+            : base(session, .7f, .75f, new Vector2(90, -50), 1.3f, .6f, 500, 5)
         {
             //: base(session, .7f, .75f, new Vector2(110, -50), .8f, .6f, 500, 10)
 

@@ -285,7 +285,7 @@ namespace ScaryCastle
 
             //this.item = item;
             this.Position = owner.GetThrowableSpawnPosition();
-            this.floorY = owner.Y;
+            this.floorY = owner.Y - (BoundingBox.Height / 2);
 
             if (owner.IsFlippedHorizontally)
                 velocity.X *= -1;

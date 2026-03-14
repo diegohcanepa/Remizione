@@ -3,61 +3,89 @@ using System;
 
 namespace ScaryCastle
 {
-    /// <summary>
-    /// CombatDecisionState
-    /// </summary>
     public sealed class CombatDecisionState : BrainState
     {
-        private const float MIN_REACTION_TIME = 400;
-        private const float MAX_REACTION_TIME = 1200;
-        private float _thinkingTimer;
+        private const int MIN_REACTION_TIME = 400;
+        private const int MAX_REACTION_TIME = 1200;
+        private int _thinkingTimer;
+
+        public override void Enter()
+        {
+            Owner.StopMoving();
+            _thinkingTimer = Random.Shared.Next(MIN_REACTION_TIME, MAX_REACTION_TIME + 1);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (Owner.Target == null)
+            {
+                Owner.IsAngry = false;
+                Owner.CurrentRage = 0;
+                TransitionTo<BrainIdleState>();
+                return;
+            }
+
+            if (!Owner.IsAngry)
+            {
+                UpdateAnger(gameTime, Owner.Target);
+                if (!Owner.IsAngry) return;
+            }
+
+            if (_thinkingTimer > 0)
+            {
+                _thinkingTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                if (Owner.Sensor.CanSeeTarget) Owner.FaceTo(Owner.Target);
+                return;
+            }
+
+            if (!Owner.Sensor.CanSeeTarget && Owner.Sensor.LastKnownTargetPos.HasValue)
+            {
+                var investigateState = Machine.FindOrCreateState<BrainInvestigateState>();
+                investigateState.TargetLocation = Owner.Sensor.LastKnownTargetPos.Value;
+                Machine.ChangeState<BrainInvestigateState>();
+                return;
+            }
+
+            if (Owner.Sensor.CanSeeTarget)
+                DecideCombatManeuver(Owner.Target);
+        }
 
         #region Private members
 
-        // DecideCombatManeuver
-        private void DecideCombatManeuver()
+        // UpdateAnger
+        private void UpdateAnger(GameTime gameTime, Actor target)
         {
-            if (Owner.GetTarget() is not { } target)
-                return;
+            if (Owner.Brain.RageChargeTime == -1) return;
 
+            float dist = Vector2.Distance(Owner.Position, target.Position);
+
+            if (dist <= Owner.Brain.DetectionRadius)
+                Owner.CurrentRage += gameTime.ElapsedGameTime.Milliseconds;
+            else
+                Owner.CurrentRage = 0;
+
+            if (Owner.CurrentRage >= Owner.Brain.RageChargeTime || Owner.Brain.RageChargeTime == 0)
+            {
+                Owner.IsAngry = true;
+                // Pausa dramática aleatoria en MS
+                _thinkingTimer = Random.Shared.Next(MIN_REACTION_TIME, MAX_REACTION_TIME);
+            }
+        }
+
+        private void DecideCombatManeuver(Actor target)
+        {
             bool inRange = Owner.IsInAttackRange(target);
+            bool canAttack = Owner.AttackTimer <= 0;
 
-            // Decisión basada en el Arquetipo de Combate (Data-Driven)
             switch (Owner.CombatBehavior.Archetype)
             {
-                // BERSERK: Agresividad suicida
                 case CombatBehaviorArchetype.Berserk:
-                    if (inRange)
-                        TransitionTo<BrainAttackState>();
-                    else
-                        TransitionTo<BrainChaseState>();
-                    break;
-
-                // COWARD
-                /*
-                case CombatBehaviorArchetype.Coward:
-                    float panicDistSq = 100 * 100;
-                    if (distSq < panicDistSq)
-                        TransitionTo<FleeState>(); // Huir
-                    else if (distSq <= attackRangeSq)
-                        TransitionTo<AttackState>(); // Atacar de lejos
-                    else
-                        TransitionTo<WaitState>(); // No acercarse
-                    break;
-                */
-
-                case CombatBehaviorArchetype.Sniper:
-                    break;
-
-                case CombatBehaviorArchetype.Swarmer:
-                    break;
-
-                // TACTICAL: Comportamiento estándar (puedes refinado luego)
                 case CombatBehaviorArchetype.Tactical:
                 default:
-                    // Aquí podrías agregar lógica de "Strafe" o esperar
-                    if (inRange)
+                    if (inRange && canAttack)
                         TransitionTo<BrainAttackState>();
+                    else if (inRange && !canAttack)
+                        Owner.FaceTo(target);
                     else
                         TransitionTo<BrainChaseState>();
                     break;
@@ -65,74 +93,5 @@ namespace ScaryCastle
         }
 
         #endregion
-
-        // Enter
-        public override void Enter()
-        {
-            // 1. FRENAR TODO
-            // Lo primero que hace al entrar a decidir es detenerse.
-            // Esto elimina el "patinado" y pone al Body en Idle.
-            Owner.StopMoving();
-
-            // 2. CALCULAR TIEMPO DE PENSAMIENTO
-            // Un poco de random para que no parezcan robots sincronizados.
-            _thinkingTimer = MIN_REACTION_TIME + ((float)Random.Shared.NextDouble() * (MAX_REACTION_TIME - MIN_REACTION_TIME));
-        }
-
-        // Update
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-
-            // 1. FAILSAFE: Si el jugador no existe o murió, modo pasivo.
-            if (Owner.GetTarget() == null)
-            {
-                TransitionTo<BrainPatrolState>();
-                return;
-            }
-
-            // 2. PERCEPCIÓN: ¿Qué está sintiendo el enemigo?
-
-            // CASO A: Calma total (Ni ve, ni escucha, ni recuerda)
-            if (!Owner.Sensor.IsAlerted)
-            {
-                TransitionTo<BrainPatrolState>();
-                return;
-            }
-
-            // --- FASE DE PENSAMIENTO (La Pausa Dramática) ---
-
-            _thinkingTimer -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            // Mientras esté pensando, no hacemos NADA. 
-            // El enemigo se queda quieto mirándote.
-            if (_thinkingTimer > 0)
-            {
-                // Opcional: Hacer que mire al jugador mientras piensa
-                if (Owner.Sensor.CanSeeTarget && Owner.GetTarget() is { } t)
-                    Owner.FaceTo(t);
-
-                return;
-            }
-
-            // CASO B: Búsqueda (No lo ve ahora, pero recuerda dónde estaba)
-            if (!Owner.Sensor.CanSeeTarget && Owner.Sensor.LastKnownTargetPos.HasValue)
-            {
-                // Recuperamos la instancia del estado para pasarle el dato
-                var investigateState = Machine.FindOrCreateState<BrainInvestigateState>();
-
-                // Le pasamos la posición a investigar
-                investigateState.TargetLocation = Owner.Sensor.LastKnownTargetPos.Value;
-
-                // Ejecutamos el cambio
-                Machine.ChangeState<BrainInvestigateState>();
-
-                return;
-            }
-
-            // CASO C: Combate (Contacto Visual Directo)
-            if (Owner.Sensor.CanSeeTarget)
-                DecideCombatManeuver();
-        }
     }
 }

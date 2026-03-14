@@ -180,7 +180,7 @@ namespace ScaryCastle
 
                 if (string.IsNullOrWhiteSpace(tag))
                     tag = MusicTag.Ride;
-                
+
                 AudioManager.Music.PlayTag(tag);
             }
         }
@@ -422,7 +422,7 @@ namespace ScaryCastle
             }
 
             if (RunManager.HasContent && Room is RideRoom rideRoom && IsCurrentScene)
-                FearManager.Update(gameTime, rideRoom.HasEnemies);
+                FearManager.Update(gameTime);
         }
 
         // OnWrite

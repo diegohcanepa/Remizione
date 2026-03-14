@@ -50,7 +50,7 @@ namespace ScaryCastle
             CloseSound = Sound.Find("DoorClose");
             OpenSound = Sound.Find("DoorOpen");
 
-            this.lockImage = new(Game, Atlas.FindImage($"{DeclaredName}Lock"));
+            this.lockImage = new(Game, Atlas?.FindImage($"{DeclaredName}Lock"));
         }
 
         #endregion

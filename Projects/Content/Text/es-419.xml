@@ -189,7 +189,6 @@
   <String Key="MessageBox.Warning">¡Atención!</String>
   <String Key="MessageKind.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
   <String Key="MessageKind.Courage">¡Recuperaste coraje!</String>
-  <String Key="MessageKind.FearRises">Your fear rises...</String>
   <String Key="MessageKind.InventoryFull">El inventario está lleno.</String>
   <String Key="MessageKind.NotEnoughCoins">No tienes monedas suficientes.</String>
   <String Key="Misc.All">Todo</String>

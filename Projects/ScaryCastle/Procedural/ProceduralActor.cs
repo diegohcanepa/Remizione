@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration.Scripting;
+using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -9,6 +10,8 @@ namespace ScaryCastle
     /// </summary>
     public abstract class ProceduralActor : Actor, IThingDefinition
     {
+        private float contactCooldown;
+
         #region Constructor
 
         // Constructor
@@ -20,7 +23,7 @@ namespace ScaryCastle
             Faction = Faction.Evil;
             Sensor = new(this);
 
-            BrainMachine = new(this, new BrainPatrolState());
+            BrainMachine = new(this, new BrainIdleState());
             BrainMachine.Start();
         }
 
@@ -32,109 +35,30 @@ namespace ScaryCastle
 
         #endregion
 
-        #region Private members
-
-        // GetSeparationForce
-        private Vector2 GetSeparationForce()
-        {
-            var separationForce = Vector2.Zero;
-            int neighborsCount = 0;
-
-            if (Room != null)
-            {
-                for (var i = 0; i < Room.Children.Count; i++)
-                {
-                    // Self
-                    if (Room.Children[i] == this)
-                        continue;
-
-                    if (Room.Children[i] is not ProceduralActor other)
-                        continue;
-
-                    // Distancia a mi compañero
-                    float distSq = Vector2.DistanceSquared(this.Position, other.Position);
-                    float radiusSq = SeparationRadius * SeparationRadius;
-
-                    // Si está invadiendo mi espacio personal
-                    if (distSq < radiusSq && distSq > 0)
-                    {
-                        // Vector que apunta DESDE el otro HACIA mí (Empujón)
-                        Vector2 pushDir = this.Position - other.Position;
-
-                        // Normalizamos para tener solo dirección
-                        pushDir.Normalize();
-
-                        // Peso inverso: Cuanto más cerca, más fuerte empuja
-                        // (Evita division por cero agregando un pequeño float)
-                        float strength = 1.0f - (distSq / radiusSq);
-
-                        separationForce += pushDir * strength;
-                        neighborsCount++;
-                    }
-                }
-            }
-
-            if (neighborsCount > 0)
-            {
-                // Promediamos la fuerza
-                separationForce /= neighborsCount;
-                // Escalamos por la configuración de fuerza
-                separationForce *= SeparationWeight;
-            }
-
-            return separationForce;
-        }
-
-        #endregion
-
         #region Protected members
 
-        // OnAdjustMoveDirection
-        protected override Vector2 OnAdjustMoveDirection(Vector2 direction)
+        // OnDie
+        protected override void OnDie()
         {
-            var separation = GetSeparationForce();
-
-            var finalDirection = direction + separation;
-
-            // Volvemos a normalizar para que no camine más rápido en diagonal
-            if (finalDirection.LengthSquared() > 0)
-                finalDirection.Normalize();
-
-            return finalDirection;
+            base.OnDie();
+            Session.FearManager.CurrentValue -= FearBonus;
         }
 
         // OnEnterRoom
         protected override void OnEnterRoom()
         {
             base.OnEnterRoom();
-
-            // --- AUTOMATIZACIÓN CRÍTICA ---
-            // El radio de separación es el "Espacio Personal".
-            // Lo calculamos basado en el ancho del colisionador (BoundingBox).
-            // Multiplicamos por 0.8 para permitir un ligero solapamiento (se ve más natural).
-            if (BoundingBox.Width > 0)
-            {
-                SeparationRadius = BoundingBox.Width / 2f * 0.9f;
-            }
-            else
-            {
-                SeparationRadius = 40f; // Fallback por si no tiene collider aún
-            }
-
-            // Ajuste por Arquetipo (Opcional pero recomendado)
-            // Los enemigos tácticos respetan más el espacio personal que los Berserkers.
-            switch (CombatBehavior.Archetype)
-            {
-                case CombatBehaviorArchetype.Tactical:
-                    SeparationWeight = 3.5f; // Se separan mucho (formación)
-                    break;
-                case CombatBehaviorArchetype.Berserk:
-                    SeparationWeight = 1.0f; // Se amontonan un poco (horda)
-                    break;
-            }
-
             Reheal();
             Stand();
+        }
+
+        // OnTakeDamage
+        protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
+        {
+            base.OnTakeDamage(attacker, amount, damageType);
+
+            if (attacker is Actor)
+                IsAngry = true;
         }
 
         // OnUpdate
@@ -145,22 +69,30 @@ namespace ScaryCastle
 
             base.OnUpdate(gameTime);
 
-            if (GetTarget() is { } target && RuntimeCollider.Contains(target.Position))
+            if (contactCooldown > 0)
+                contactCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+
+            if (AttackTimer > 0)
+                AttackTimer -= gameTime.ElapsedGameTime.Milliseconds;
+
+            if (contactCooldown <= 0 && Target != null)
             {
-                EffectDescriptor.Apply(this, target);
+                if (RuntimeCollider.Contains(Target.Position))
+                {
+                    EffectDescriptor.Apply(this, Target);
+                    contactCooldown = 500;
+                    return;
+                }
             }
         }
 
-        // SeparationRadius (Configuración: Qué tan "gordos" son los enemigos (Radio personal))
-        protected float SeparationRadius { get; set; }
-
-        // SeparationWeight (Qué tan fuerte se empujan entre sí)
-        protected float SeparationWeight { get; set; } = 2;
-
         #endregion
 
-        // AttackRange
-        public float AttackRange { get; set; }
+        // AttackTimer
+        public int AttackTimer { get; set; }
+
+        // Brain
+        public BrainConfig Brain { get; } = new();
 
         // BrainMachine
         public StateMachine<ProceduralActor> BrainMachine { get; }
@@ -168,20 +100,30 @@ namespace ScaryCastle
         // CanInteract
         public override bool CanInteract()
         {
-            return Faction != Faction.Evil && base.CanInteract();
+            return !IsAngry && base.CanInteract();
         }
 
         // CombatBehavior
         public CombatBehavior CombatBehavior { get; init; }
 
+        // CurrentRage
+        public int CurrentRage { get; set; }
+
         // Definition
         public ActorDefinition Definition { get; }
 
-        // GetTarget
-        public Actor? GetTarget()
+        // FearBonus
+        [ScriptProperty]
+        public int FearBonus { get; set; } = 2;
+
+        // IsAngry
+        [ScriptProperty]
+        public bool IsAngry { get; set; }
+
+        // IsHostile
+        public virtual bool IsHostile(Actor other)
         {
-            var result = Session.Player;
-            return result == null || result.IsDead ? null : result;
+            return this.Faction == Faction.Evil && other == Session.Player;
         }
 
         // IsInAttackRange
@@ -192,13 +134,20 @@ namespace ScaryCastle
 
             // CONDICIÓN X: Debe estar al alcance de mi arma
             float dx = Math.Abs(Position.X - target.X);
-            if (dx > AttackRange)
-                return false;
+            
+            return dx <= Brain.AttackRange;
+        }
 
-            return true;
+        // ResetAttackTimer
+        public void ResetAttackTimer()
+        {
+            AttackTimer = Brain.AttackCooldown;
         }
 
         // Sensor
         public Sensor Sensor { get; }
+
+        // Target
+        public Actor? Target { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Adberration;
 using Engendro;
-using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,6 @@ namespace ScaryCastle
     public sealed class RideRoom : ProceduralRoom
     {
         private readonly List<RideDoor> doors = [];
-        private readonly HashSet<Actor> enemyList = [];
 
         #region Constructor
 
@@ -100,31 +98,6 @@ namespace ScaryCastle
 
         #region Protected members
 
-        // OnChildAdded
-        protected override void OnChildAdded(Entity child)
-        {
-            base.OnChildAdded(child);
-
-            if (child is Actor actor && actor.Faction == Faction.Evil && !actor.IsDead)
-                enemyList.Add(actor);
-        }
-
-        // OnChildRemoved
-        protected override void OnChildRemoved(Entity child)
-        {
-            base.OnChildRemoved(child);
-            
-            if (child is Actor actor && enemyList.Remove(actor))
-            {
-                if (enemyList.Count == 0)
-                {
-                    Session.FearManager.CurrentValue -= 10;
-                    Session.HUD.Message.Show(MessageKind.Courage, 2000);
-                    Sound.Play(SoundNames.Courage);
-                }
-            }
-        }
-
         // OnEnter
         protected override void OnEnter()
         {
@@ -144,9 +117,6 @@ namespace ScaryCastle
                     }
                 }
             }
-
-            if (HasEnemies)
-                Session.HUD.Message.Show(MessageKind.FearRises, 2000);
         }
 
         // OnLoad
@@ -247,9 +217,6 @@ namespace ScaryCastle
 
             return Vector2.Zero;
         }
-
-        // HasEnemies
-        public bool HasEnemies => enemyList.Count > 0;
 
         // HubDoor
         public RideDoor? HubDoor { get; set; }

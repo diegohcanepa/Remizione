@@ -10,7 +10,7 @@
             : base(session, name)
         {
             BodySize = BodySize.Medium;
-            AttackRange = 10;
+            Brain.AttackRange = 10;
             Guts = 0;
             Sensor.ViewAngle = 100;
 

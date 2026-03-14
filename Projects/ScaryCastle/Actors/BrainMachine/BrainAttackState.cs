@@ -12,19 +12,21 @@ namespace ScaryCastle
         {
             Owner.StopMoving();
 
-            if (Owner.GetTarget() is not { } target)
+            Owner.ResetAttackTimer();
+
+            if (Owner.Target == null)
             {
                 TransitionTo<BrainPatrolState>();
                 return;
             }
 
-            if (Brain.Decide(Owner, target) is not CombatIntent intent)
+            if (Brain.Decide(Owner) is not CombatIntent intent)
             {
                 TransitionTo<CombatDecisionState>();
                 return;
             }
 
-            Owner.Attack(intent, target);
+            Owner.Attack(intent, Owner.Target);
         }
 
         // Update
