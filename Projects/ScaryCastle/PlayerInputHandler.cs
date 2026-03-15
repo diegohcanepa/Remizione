@@ -10,14 +10,11 @@ namespace ScaryCastle
     /// </summary>
     public sealed class PlayerInputHandler<T> : InputHandler where T : Actor
     {
-        private readonly CombatBehavior combatBehavior;
-
         // Constructor
         public PlayerInputHandler(T actor, PlayerIndex playerIndex)
             : base(playerIndex)
         {
             this.Actor = actor;
-            this.combatBehavior = CombatBehavior.Behaviors.Get(actor.DeclaredName);
         }
 
         #region Private members
@@ -95,6 +92,7 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
 
+            Actor.Session.InteractionContext.HeadbuttMode = false;
             PerformInteraction();
 
             return false;
@@ -106,6 +104,7 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
                 return false;
 
+            // Drop held item
             if (Actor.Session.InteractionContext.HeldItem != null)
             {
                 Sound.Play(SoundNames.Interact);
@@ -113,11 +112,15 @@ namespace ScaryCastle
                 Actor.Session.InteractionData.Clear();
                 Actor.StopMoving();
             }
+            else if (Actor.Session.InteractionContext.Target?.CanBeHit == true && MouseCursor.State == MouseCursorState.Cross)
+            {
+                Actor.Session.InteractionContext.HeadbuttMode = MouseCursor.State == MouseCursorState.Cross;
+                PerformInteraction();
+            }
             else
             {
-                Actor.StopMoving();
-                Actor.FaceToMouseCursor();
-                Actor.Attack(combatBehavior.Intents[0], null);
+                Sound.Play(SoundNames.Error);
+                MouseCursor.Shake();
             }
 
             return true;

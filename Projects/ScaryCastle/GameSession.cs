@@ -149,6 +149,8 @@ namespace ScaryCastle
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
             AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
+            AotTypeRegistry.Register("await-npc-attack", typeof(AwaitNPCAttackCommand));
+            AotTypeRegistry.Register("await-player-attack", typeof(AwaitPlayerAttackCommand));
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
             AotTypeRegistry.Register("cast-lightning", typeof(CastLightningCommand));
             AotTypeRegistry.Register("create-dialog-block", typeof(CreateDialogBlockCommand));
@@ -163,7 +165,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("select-walk-area", typeof(SelectWalkAreaCommand));
             AotTypeRegistry.Register("set-light", typeof(SetLightCommand));
             AotTypeRegistry.Register("show-message", typeof(ShowMessageCommand));
-            AotTypeRegistry.Register("take-damage", typeof(TakeDamageCommand));
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
             AotTypeRegistry.Register("use-item", typeof(UseItemCommand));
             AotTypeRegistry.Register("vibrate", typeof(VibrateCommand));
@@ -278,6 +279,16 @@ namespace ScaryCastle
         {
             base.OnOutcome(target);
             InteractionContext.HeldItem = null;
+        }
+
+        // OnOutcomeCompleted
+        protected override void OnOutcomeCompleted(Thing target)
+        {
+            if (Player != null && target is ProceduralActor procActor && procActor.IsAngry && procActor.CounterAttack)
+            {
+                procActor.CounterAttack = false;
+                procActor.PerformOutcome();
+            }
         }
 
         // OnPause

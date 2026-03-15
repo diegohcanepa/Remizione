@@ -103,11 +103,6 @@ namespace ScaryCastle
 
             else
                 MouseCursor.HightlightColor = null;
-
-            if (context.Target?.MaxHP > 0)
-                MouseCursor.Color = ColorPalette.Text.Yellow;
-            else
-                MouseCursor.Color = Color.White;
         }
     }
 }

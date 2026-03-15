@@ -39,7 +39,6 @@ namespace ScaryCastle
             this.Atlas = Atlases.Actors;
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
             this.DisplayNameKey = $"Actor.{DeclaredName}";
-            this.IgnoreThrowables = false;
             this.IgnoreWalkArea = false;
             this.SuppressImpactWordOnDeath = true;
 
@@ -260,6 +259,9 @@ namespace ScaryCastle
                 BodyMachine.ChangeState(deathState.GetType());
             }
 
+            if (Faction == Faction.Evil)
+                Session.Fear--;
+
             ShowImpactWord(ImpactWordName.PlopRed);
         }
 
@@ -352,6 +354,9 @@ namespace ScaryCastle
             if (!IsDead)
                 FaceTo(attacker);
 
+            if (IsPlayer)
+                Session.InterruptAwaitingScript();
+
             Session.ObjectPools.FloatingTexts.Get()?.ShowHPAmount(this, amount, true);
 
             Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
@@ -384,9 +389,6 @@ namespace ScaryCastle
             UpdateFootstep();
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
-
-            if (IsPlayer && Session.IsCurrentScene && !Session.IsAwaiting && !IsMoving && CanHandleInput)
-                FaceToMouseCursor();
         }
 
         #endregion
@@ -424,12 +426,14 @@ namespace ScaryCastle
                 return false;
 
             if (item == null)
-                Session.InteractionData.SetOutcome(target);
+            {
+                var interactionType = Session.InteractionContext.HeadbuttMode ? InteractionType.Headbutt : InteractionType.Outcome;
+                Session.InteractionData.SetOutcome(target, interactionType);
+            }
             else
+            {
                 Session.InteractionData.SetUseWithOutcome(target, item);
-
-            if (Session.InteractionData.Script == null)
-                return false;
+            }
 
             var destination = target.GetApproachPosition(this);
             var result = target != this && MoveTo(destination);
@@ -478,10 +482,21 @@ namespace ScaryCastle
         // CanTakeDamage
         public override bool CanTakeDamage()
         {
-            if (IsPlayer && Session.AwaitingScript?.Interruptible == false)
-                return false;
+            if (IsPlayer && Session.AwaitingScript != null)
+            {
+                if (Session.AwaitingScript.Interruptible == true)
+                {
+                    return base.CanTakeDamage();
+                }
+                else if (Session.OutcomeTarget is ProceduralActor actor && (actor.CounterAttack || actor.IsAttacking))
+                {
+                    return base.CanTakeDamage();
+                }
 
-            return base.CanTakeDamage();
+                return false;
+            }
+            else
+                return base.CanTakeDamage();
         }
 
         // Cast
@@ -501,17 +516,6 @@ namespace ScaryCastle
             HandlePendingInteraction();
 
             return true;
-        }
-
-        // FaceToMouseCursor
-        public void FaceToMouseCursor()
-        {
-            var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera);
-            if (mousePos.X <= RuntimeHotspot.BoundingRectangleF.Left ||
-                mousePos.X >= RuntimeHotspot.BoundingRectangleF.Right)
-            {
-                FaceTo(mousePos);
-            }
         }
 
         // FastMove

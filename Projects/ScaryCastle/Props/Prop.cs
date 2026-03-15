@@ -26,7 +26,6 @@ namespace ScaryCastle
         {
             this.ApproachBehavior = ApproachBehavior.InFront;
             this.HurtSound = Sound.Find(SoundNames.ImpactA);
-            this.IgnoreThrowables = false;
 
             // Shadow
             this.shadow = new Sprite(session.Game)

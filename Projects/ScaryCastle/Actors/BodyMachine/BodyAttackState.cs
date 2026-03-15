@@ -27,7 +27,7 @@ namespace ScaryCastle
                         if (CanInflictDamage(thing))
                         {
                             EffectDescriptor.Apply(intent.EffectDescriptors, Owner, thing);
-                            Owner.Session.InterruptAwaitingScript();
+                            //Owner.Session.InterruptAwaitingScript();
                             return true;
                         }
                     }

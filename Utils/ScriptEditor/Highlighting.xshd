@@ -83,6 +83,7 @@
 			<Word>=></Word>
 			<Word>await-animation</Word>
 			<Word>await-answer</Word>
+			<Word>await-approach</Word>
 			<Word>await-camera</Word>
 			<Word>await-closeup</Word>
 			<Word>await-closing-credits</Word>
@@ -96,12 +97,13 @@
 			<Word>await-monitor-text</Word>
 			<Word>await-move</Word>
 			<Word>await-music</Word>
+			<Word>await-npc-attack</Word>
 			<Word>await-opacity-tween</Word>
 			<Word>await-option-menu</Word>
 			<Word>await-outcome-completion</Word>
 			<Word>await-outcome</Word>
 			<Word>await-pickup</Word>
-			<Word>await-player-approach</Word>			
+			<Word>await-player-attack</Word>			
 			<Word>await-popup</Word>
 			<Word>await-position-tween</Word>
 			<Word>await-qte</Word>

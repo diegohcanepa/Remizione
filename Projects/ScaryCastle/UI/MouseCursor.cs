@@ -93,13 +93,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // Color
-        public static Color Color
-        {
-            get => cursorSprite.Color;
-            set => cursorSprite.Color = value;
-        }
-
         // CustomImage
         public static AtlasImage? CustomImage
         {

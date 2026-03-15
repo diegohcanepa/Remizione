@@ -14,16 +14,7 @@
         // CanInflictDamage
         protected override bool CanInflictDamage(GameThing target)
         {
-            if (Owner.AnimationPlayer.Frame?.IsEvent == true)
-            {
-                if (Owner.IsInAttackLane(target))
-                {
-                    if (Owner.AnimationPlayer.GetFrameSubArea().Intersects(target.RuntimeHotspot.BoundingRectangleF))
-                        return true;
-                }
-            }
-
-            return false;
+            return target.CanBeHit && Owner.AnimationPlayer.Frame?.IsEvent == true;
         }
     }
 }

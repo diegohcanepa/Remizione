@@ -298,7 +298,7 @@ namespace Adberration
             if (OutcomeScript.HasCapability(ScriptCapability.SetTargetEntity))
                 OutcomeScript.SetTargetEntity(Name);
 
-            Session.AwaitScript(OutcomeScript);
+            Session.BeginOutcome(OutcomeScript, this);
 
             return OutcomeScript;
         }

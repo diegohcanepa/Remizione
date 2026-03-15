@@ -84,13 +84,19 @@ namespace ScaryCastle
         }
 
         // SetOutcome
-        public void SetOutcome(GameThing target)
+        public void SetOutcome(GameThing target, InteractionType interactionType)
         {
             Clear();
             Target = target;
             TargetPosition = target.Position;
-            Script = target.OutcomeScript;
-            InteractionType = InteractionType.Outcome;
+            InteractionType = interactionType;
+
+            Script = interactionType switch
+            {
+                InteractionType.Headbutt => Session.ScriptLibrary.FindRoutine(RoutineNames.Headbutt),
+                InteractionType.Outcome => target.OutcomeScript,
+                _ => null
+            };
         }
 
         // SetUseWithOutcome

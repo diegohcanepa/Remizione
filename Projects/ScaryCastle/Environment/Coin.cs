@@ -14,11 +14,11 @@ namespace ScaryCastle
         {
             Atlas = Atlases.Props;
             ApproachBehavior = ApproachBehavior.ClosestSide;
+            CanBeHit = false;
             Collider = new Polygon("0,0;5,0;5,4;0,4");
             DepthOffset = 20;
             DisplayNameKey = "Prop.Coin";
             Hotspot = new Polygon("0,0;5,0;5,4;0,4");
-            IgnoreThrowables = true;
             IgnoreWalkArea = false;
             Loot = ItemDefinition.Definitions.Find("Coin");
             RenderLayer = RenderLayer.OverBackground;

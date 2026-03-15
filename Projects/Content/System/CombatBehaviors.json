@@ -6,13 +6,12 @@
       "archetype": "Tactical",
       "intents": [
         {
-          "name": "Bible",
-          "thrownObject":"Bible",
+          "name": "Headbutt",
+          "sound": "WhooshA",
           "effects": [
             {
               "effectType": "Damage",
-              "amount": "1",
-              "knockback": "13,0"
+              "amount": "1"
             }
           ]
         }

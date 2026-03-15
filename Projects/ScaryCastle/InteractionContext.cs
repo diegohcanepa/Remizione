@@ -59,6 +59,9 @@ namespace ScaryCastle
 
         #endregion
 
+        // HeadbuttMode
+        public bool HeadbuttMode { get; set; }
+
         // HeldItem
         public Item? HeldItem { get; set; }
 
@@ -79,6 +82,7 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
+            HeadbuttMode = false;
             HeldItem = null;
             Target = null;
             MouseCursorAppearance.Refresh(this);

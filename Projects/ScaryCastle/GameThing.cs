@@ -409,6 +409,10 @@ namespace ScaryCastle
         // AttachedLightPosition
         public Vector2 AttachedLightPosition { get; set; }
 
+        // CanBeHit
+        [ScriptProperty]
+        public bool CanBeHit { get; set; } = true;
+
         // CanInteract
         public virtual bool CanInteract()
         {
@@ -810,10 +814,6 @@ namespace ScaryCastle
         // IgnoreAttachedLight
         [ScriptProperty]
         public bool IgnoreAttachedLight { get; set; }
-
-        // IgnoreThrowables
-        [ScriptProperty]
-        public bool IgnoreThrowables { get; set; } = true;
 
         // IgnoreWalkArea
         [ScriptProperty]

@@ -1,5 +1,4 @@
 ﻿using Adberration.Scripting;
-using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -51,10 +50,10 @@ namespace ScaryCastle
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
         {
-            base.OnTakeDamage(attacker, amount, damageType);
-
-            if (attacker is Actor)
+            if (Session.Player == attacker)
                 IsAngry = true;
+
+            base.OnTakeDamage(attacker, amount, damageType);
         }
 
         // OnUpdate
@@ -68,11 +67,11 @@ namespace ScaryCastle
             if (AttackTimer > 0)
                 AttackTimer -= gameTime.ElapsedGameTime.Milliseconds;
 
-            if (contactCooldown <= 0 && Target != null)
+            if (contactCooldown <= 0 && Session.Player != null)
             {
-                if (RuntimeCollider.Contains(Target.Position))
+                if (RuntimeCollider.Contains(Session.Player.Position))
                 {
-                    EffectDescriptor.Apply(this, Target);
+                    EffectDescriptor.Apply(this, Session.Player);
                     contactCooldown = 500;
                     return;
                 }
@@ -87,14 +86,12 @@ namespace ScaryCastle
         // Brain
         public BrainConfig Brain { get; } = new();
 
-        // CanInteract
-        public override bool CanInteract()
-        {
-            return !IsAngry && base.CanInteract();
-        }
-
         // CombatBehavior
         public CombatBehavior CombatBehavior { get; init; }
+
+        // CounterAttack
+        [ScriptProperty]
+        public bool CounterAttack { get; set; }
 
         // CurrentRage
         public int CurrentRage { get; set; }
@@ -124,7 +121,7 @@ namespace ScaryCastle
 
             // CONDICIÓN X: Debe estar al alcance de mi arma
             float dx = Math.Abs(Position.X - target.X);
-            
+
             return dx <= Brain.AttackRange;
         }
 
@@ -133,8 +130,5 @@ namespace ScaryCastle
         {
             AttackTimer = Brain.AttackCooldown;
         }
-
-        // Target
-        public Actor? Target { get; set; }
     }
 }

@@ -112,13 +112,13 @@ namespace Adberration
         // EndOutcome
         private void EndOutcome()
         {
+            var oldTarget = OutcomeTarget;
             State = GameSessionState.Idle;
-
-            if (OutcomeTarget != null)
-                OnOutcomeCompleted(OutcomeTarget);
-
             outcomeScript = null;
             OutcomeTarget = null;
+
+            if (oldTarget != null)
+                OnOutcomeCompleted(oldTarget);
         }
 
         // ExitRoom
@@ -320,8 +320,6 @@ namespace Adberration
             AotTypeRegistry.Register("await-move", typeof(AwaitMoveCommand));
             AotTypeRegistry.Register("await-music", typeof(AwaitMusicCommand));
             AotTypeRegistry.Register("await-opacity-tween", typeof(AwaitOpacityTweenCommand));
-            AotTypeRegistry.Register("await-outcome", typeof(AwaitOutcomeCommand));
-            AotTypeRegistry.Register("await-outcome-completion", typeof(AwaitOutcomeCompletionCommand));
             AotTypeRegistry.Register("await-routine", typeof(AwaitRoutineCommand));
             AotTypeRegistry.Register("await-script", typeof(AwaitScriptCommand));
             AotTypeRegistry.Register("await-session-scene", typeof(AwaitSessionSceneCommand));
