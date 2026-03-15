@@ -64,9 +64,6 @@ namespace ScaryCastle
             if (contactCooldown > 0)
                 contactCooldown -= gameTime.ElapsedGameTime.Milliseconds;
 
-            if (AttackTimer > 0)
-                AttackTimer -= gameTime.ElapsedGameTime.Milliseconds;
-
             if (contactCooldown <= 0 && Session.Player != null)
             {
                 if (RuntimeCollider.Contains(Session.Player.Position))
@@ -79,12 +76,6 @@ namespace ScaryCastle
         }
 
         #endregion
-
-        // AttackTimer
-        public int AttackTimer { get; set; }
-
-        // Brain
-        public BrainConfig Brain { get; } = new();
 
         // CombatBehavior
         public CombatBehavior CombatBehavior { get; init; }
@@ -111,24 +102,6 @@ namespace ScaryCastle
         public virtual bool IsHostile(Actor other)
         {
             return this.Faction == Faction.Evil && other == Session.Player;
-        }
-
-        // IsInAttackRange
-        public bool IsInAttackRange(GameThing target)
-        {
-            if (!IsInAttackLane(target))
-                return false;
-
-            // CONDICIÓN X: Debe estar al alcance de mi arma
-            float dx = Math.Abs(Position.X - target.X);
-
-            return dx <= Brain.AttackRange;
-        }
-
-        // ResetAttackTimer
-        public void ResetAttackTimer()
-        {
-            AttackTimer = Brain.AttackCooldown;
         }
     }
 }

@@ -18,7 +18,6 @@ namespace ScaryCastle
             BodySize = BodySize.Small;
             FastMoveFactor = 3;
             Guts = 7;
-            Brain.AttackRange = 15;
             scaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.Zero, new(0, .1f), 600, -1);
 
             BodyMachine.AddState(new BodyCloseAttackState());

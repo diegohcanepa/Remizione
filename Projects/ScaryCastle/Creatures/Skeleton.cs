@@ -10,7 +10,6 @@
             : base(session, name)
         {
             BodySize = BodySize.Medium;
-            Brain.AttackRange = 10;
             Guts = 0;
 
             BodyMachine.AddState(new BodyCloseAttackState());
