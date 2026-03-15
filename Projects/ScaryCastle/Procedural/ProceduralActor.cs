@@ -21,10 +21,6 @@ namespace ScaryCastle
             Definition = ActorDefinition.Definitions.Get(DeclaredName);
             CombatBehavior = CombatBehavior.Behaviors.Get(DeclaredName);
             Faction = Faction.Evil;
-            Sensor = new(this);
-
-            BrainMachine = new(this, new BrainIdleState());
-            BrainMachine.Start();
         }
 
         #endregion
@@ -64,9 +60,6 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            Sensor.Update(gameTime);
-            BrainMachine.Update(gameTime);
-
             base.OnUpdate(gameTime);
 
             if (contactCooldown > 0)
@@ -93,9 +86,6 @@ namespace ScaryCastle
 
         // Brain
         public BrainConfig Brain { get; } = new();
-
-        // BrainMachine
-        public StateMachine<ProceduralActor> BrainMachine { get; }
 
         // CanInteract
         public override bool CanInteract()
@@ -143,9 +133,6 @@ namespace ScaryCastle
         {
             AttackTimer = Brain.AttackCooldown;
         }
-
-        // Sensor
-        public Sensor Sensor { get; }
 
         // Target
         public Actor? Target { get; set; }

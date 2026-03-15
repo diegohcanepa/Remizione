@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Microsoft.Xna.Framework;
 using ScaryCastle.Scripting;
 
 namespace ScaryCastle
@@ -102,6 +103,11 @@ namespace ScaryCastle
 
             else
                 MouseCursor.HightlightColor = null;
+
+            if (context.Target?.MaxHP > 0)
+                MouseCursor.Color = ColorPalette.Text.Yellow;
+            else
+                MouseCursor.Color = Color.White;
         }
     }
 }

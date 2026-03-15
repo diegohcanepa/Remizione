@@ -103,7 +103,7 @@ namespace ScaryCastle
         // TestMouseRightButtonClick
         private bool TestMouseRightButtonClick()
         {
-            if (!InputManager.DefaultPlayer.Mouse.IsRightButtonPressed() && !InputBindings.UseItem.IsPressed(PlayerIndex.One))
+            if (!InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
                 return false;
 
             if (Actor.Session.InteractionContext.HeldItem != null)

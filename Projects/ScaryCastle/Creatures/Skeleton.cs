@@ -12,7 +12,6 @@
             BodySize = BodySize.Medium;
             Brain.AttackRange = 10;
             Guts = 0;
-            Sensor.ViewAngle = 100;
 
             BodyMachine.AddState(new BodyCloseAttackState());
         }
