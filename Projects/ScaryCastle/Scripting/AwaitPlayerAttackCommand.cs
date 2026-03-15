@@ -30,12 +30,7 @@ namespace ScaryCastle.Scripting
 
             var intent = CombatBehavior.Behaviors.Find(player.DeclaredName)?.Intents.Find("Headbutt");
             if (intent != null)
-            {
-                if (target is ProceduralActor procActor)
-                    procActor.CounterAttack = true;
-
                 player.Attack(intent, target);
-            }
         }
 
         // OnUpdate

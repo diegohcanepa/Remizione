@@ -9,6 +9,7 @@ namespace ScaryCastle
     /// </summary>
     public abstract class ProceduralActor : Actor, IThingDefinition
     {
+        private readonly bool canInflictContactDamage;
         private float contactCooldown;
 
         #region Constructor
@@ -20,6 +21,7 @@ namespace ScaryCastle
             Definition = ActorDefinition.Definitions.Get(DeclaredName);
             CombatBehavior = CombatBehavior.Behaviors.Get(DeclaredName);
             Faction = Faction.Evil;
+            canInflictContactDamage = Definition.Effects.Count > 0;
         }
 
         #endregion
@@ -51,7 +53,10 @@ namespace ScaryCastle
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
         {
             if (Session.Player == attacker)
+            {
                 IsAngry = true;
+                CounterAttack = true;
+            }
 
             base.OnTakeDamage(attacker, amount, damageType);
         }
@@ -61,16 +66,19 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            if (contactCooldown > 0)
-                contactCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-
-            if (contactCooldown <= 0 && Session.Player != null)
+            if (canInflictContactDamage)
             {
-                if (RuntimeCollider.Contains(Session.Player.Position))
+                if (contactCooldown > 0)
+                    contactCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+
+                if (contactCooldown <= 0 && Session.Player != null)
                 {
-                    EffectDescriptor.Apply(this, Session.Player);
-                    contactCooldown = 500;
-                    return;
+                    if (RuntimeCollider.Contains(Session.Player.Position))
+                    {
+                        EffectDescriptor.Apply(this, Session.Player);
+                        contactCooldown = 500;
+                        return;
+                    }
                 }
             }
         }
@@ -82,7 +90,7 @@ namespace ScaryCastle
 
         // CounterAttack
         [ScriptProperty]
-        public bool CounterAttack { get; set; }
+        public bool CounterAttack { get; private set; }
 
         // CurrentRage
         public int CurrentRage { get; set; }
@@ -96,12 +104,27 @@ namespace ScaryCastle
 
         // IsAngry
         [ScriptProperty]
-        public bool IsAngry { get; set; }
+        public bool IsAngry
+        {
+            get;
+            set
+            {
+                field = value;
+                CounterAttack = false;
+            }
+        }
 
         // IsHostile
         public virtual bool IsHostile(Actor other)
         {
             return this.Faction == Faction.Evil && other == Session.Player;
+        }
+
+        // PerformCounterAttack
+        public void PerformCounterAttack()
+        {
+            CounterAttack = false;
+            PerformOutcome();
         }
     }
 }

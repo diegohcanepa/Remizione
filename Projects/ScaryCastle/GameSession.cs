@@ -285,10 +285,7 @@ namespace ScaryCastle
         protected override void OnOutcomeCompleted(Thing target)
         {
             if (Player != null && target is ProceduralActor procActor && procActor.IsAngry && procActor.CounterAttack)
-            {
-                procActor.CounterAttack = false;
-                procActor.PerformOutcome();
-            }
+                procActor.PerformCounterAttack();
         }
 
         // OnPause

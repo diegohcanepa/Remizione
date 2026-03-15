@@ -35,7 +35,6 @@ namespace ScaryCastle
         public Actor(GameSession session, string name)
             : base(session, name)
         {
-            this.AffectsPathfinding = false;
             this.Atlas = Atlases.Actors;
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
             this.DisplayNameKey = $"Actor.{DeclaredName}";
