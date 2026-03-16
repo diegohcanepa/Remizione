@@ -195,7 +195,7 @@ namespace ScaryCastle.Menus
         public new ScaryCastleGame Game { get; }
 
         // HandleInput
-        public HandleInputResult HandleInput(GameTime gameTime)
+        public HandleInputResult HandleInput()
         {
             if (SelectedItem == null)
             {

@@ -54,7 +54,7 @@ namespace ScaryCastle.Menus
         }
 
         // OHandleInput
-        protected override HandleInputResult OnHandleInput(GameTime gameTime)
+        protected override HandleInputResult OnHandleInput()
         {
             // Back
             if (ControlGroup.Controls[0].TestPressed(0))
@@ -63,7 +63,7 @@ namespace ScaryCastle.Menus
                 return HandleInputResult.Handled;
             }
 
-            return base.OnHandleInput(gameTime);
+            return base.OnHandleInput();
         }
 
         // OnUpdate

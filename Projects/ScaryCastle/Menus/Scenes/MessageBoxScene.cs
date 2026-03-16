@@ -203,7 +203,7 @@ namespace ScaryCastle.Menus
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput(GameTime gameTime)
+        protected override HandleInputResult OnHandleInput()
         {
             if (TransitionManager.CurrentTransition.IsRunning)
             {
@@ -216,7 +216,7 @@ namespace ScaryCastle.Menus
                 return HandleInputResult.Handled;
             }
 
-            return menu.HandleInput(gameTime);
+            return menu.HandleInput();
         }
 
         // OnLoadContent

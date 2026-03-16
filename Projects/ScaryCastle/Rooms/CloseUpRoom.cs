@@ -40,7 +40,7 @@ namespace ScaryCastle
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput(GameTime gameTime)
+        protected override HandleInputResult OnHandleInput()
         {
             if (IsClosed || !AllowInput)
                 return HandleInputResult.Unhandled;
@@ -51,7 +51,7 @@ namespace ScaryCastle
                 return HandleInputResult.Handled;
             }
 
-            return base.OnHandleInput(gameTime);
+            return base.OnHandleInput();
         }
 
         // OnLoad

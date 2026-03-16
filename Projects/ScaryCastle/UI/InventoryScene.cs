@@ -208,7 +208,7 @@ namespace ScaryCastle
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput(GameTime gameTime)
+        protected override HandleInputResult OnHandleInput()
         {
             // Mouse input
             if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)

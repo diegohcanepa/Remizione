@@ -62,7 +62,7 @@ namespace ScaryCastle
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput(GameTime gameTime)
+        protected override HandleInputResult OnHandleInput()
         {
             for (var i = 0; i < buttons.Length; i++)
             {
@@ -74,7 +74,7 @@ namespace ScaryCastle
                 }
             }
 
-            return base.OnHandleInput(gameTime);
+            return base.OnHandleInput();
         }
 
         // OnLoadContent

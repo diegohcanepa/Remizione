@@ -84,7 +84,7 @@ namespace ScaryCastle
         public UIFearMeter FearMeter { get; }
 
         // HandleInput
-        public HandleInputResult HandleInput(GameTime gameTime)
+        public HandleInputResult HandleInput()
         {
             if (session.IsAwaiting)
                 return HandleInputResult.Unhandled;

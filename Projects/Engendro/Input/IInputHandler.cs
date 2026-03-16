@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-
-namespace Engendro.Input
+﻿namespace Engendro.Input
 {
     /// <summary>
     /// IInputHandler
@@ -8,6 +6,6 @@ namespace Engendro.Input
     public interface IInputHandler
     {
         // HandleInput
-        HandleInputResult HandleInput(GameTime gameTime);
+        HandleInputResult HandleInput();
     }
 }

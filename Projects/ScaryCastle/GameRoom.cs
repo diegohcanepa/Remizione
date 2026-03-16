@@ -362,12 +362,12 @@ namespace ScaryCastle
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput(GameTime gameTime)
+        protected override HandleInputResult OnHandleInput()
         {
             if (Session.Player != null)
-                return Session.Player.HandleInput(gameTime);
+                return Session.Player.HandleInput();
             else
-                return base.OnHandleInput(gameTime);
+                return base.OnHandleInput();
         }
 
         // OnLoad

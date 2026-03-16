@@ -132,7 +132,7 @@ namespace ScaryCastle
         public T Actor { get; }
 
         // HandleInput
-        public override HandleInputResult HandleInput(GameTime gameTime)
+        public override HandleInputResult HandleInput()
         {
             return HandleMouseInput();
         }

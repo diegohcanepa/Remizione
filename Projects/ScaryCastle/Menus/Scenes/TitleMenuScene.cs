@@ -209,7 +209,7 @@ namespace ScaryCastle.Menus
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput(GameTime gameTime)
+        protected override HandleInputResult OnHandleInput()
         {
 
 #if XBOX_ONE
@@ -222,7 +222,7 @@ namespace ScaryCastle.Menus
             }
 #endif
 
-            return menu.HandleInput(gameTime);
+            return menu.HandleInput();
         }
 
         // OnLoadContent

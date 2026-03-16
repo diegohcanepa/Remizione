@@ -105,14 +105,14 @@ namespace ScaryCastle.Menus
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput(GameTime gameTime)
+        protected override HandleInputResult OnHandleInput()
         {
             if (disposeSession)
             {
                 return HandleInputResult.Handled;
             }
 
-            if (menu.HandleInput(gameTime) == HandleInputResult.Handled)
+            if (menu.HandleInput() == HandleInputResult.Handled)
             {
                 return HandleInputResult.Handled;
             }
@@ -124,7 +124,7 @@ namespace ScaryCastle.Menus
                 return HandleInputResult.Handled;
             }
 
-            return base.OnHandleInput(gameTime);
+            return base.OnHandleInput();
         }
 
         // OnLoadContent

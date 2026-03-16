@@ -42,15 +42,15 @@ namespace ScaryCastle.Menus
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput(GameTime gameTime)
+        protected override HandleInputResult OnHandleInput()
         {
-            if (menu.HandleInput(gameTime) == HandleInputResult.Handled)
+            if (menu.HandleInput() == HandleInputResult.Handled)
             {
                 return HandleInputResult.Handled;
             }
             else
             {
-                return base.OnHandleInput(gameTime);
+                return base.OnHandleInput();
             }
         }
 

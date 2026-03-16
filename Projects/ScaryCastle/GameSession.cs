@@ -262,16 +262,16 @@ namespace ScaryCastle
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput(GameTime gameTime)
+        protected override HandleInputResult OnHandleInput()
         {
             if (roomEditor?.HandleInput() == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            else if (HUD.HandleInput(gameTime) == HandleInputResult.Handled)
+            else if (HUD.HandleInput() == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
             else
-                return base.OnHandleInput(gameTime);
+                return base.OnHandleInput();
         }
 
         // OnOutcome

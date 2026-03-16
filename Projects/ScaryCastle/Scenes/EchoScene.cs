@@ -109,7 +109,7 @@ namespace ScaryCastle
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput(GameTime gameTime)
+        protected override HandleInputResult OnHandleInput()
         {
             if (HandleMouseInput())
                 return HandleInputResult.Handled;
@@ -123,7 +123,7 @@ namespace ScaryCastle
                 return HandleInputResult.Handled;
             }
 
-            return base.OnHandleInput(gameTime);
+            return base.OnHandleInput();
         }
 
         // OnUpdate

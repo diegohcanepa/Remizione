@@ -177,12 +177,12 @@ namespace ScaryCastle
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput(GameTime gameTime)
+        protected override HandleInputResult OnHandleInput()
         {
             if (fadeTween.IsRunning || RunningOption != null)
                 return HandleInputResult.Unhandled;
 
-            if (menu.HandleInput(gameTime) == HandleInputResult.Handled || runSelectedOptionCooldown > 0)
+            if (menu.HandleInput() == HandleInputResult.Handled || runSelectedOptionCooldown > 0)
                 return HandleInputResult.Handled;
 
             if (HandleMouseInput())
@@ -202,7 +202,7 @@ namespace ScaryCastle
                 return HandleInputResult.Handled;
             }
 
-            return base.OnHandleInput(gameTime);
+            return base.OnHandleInput();
         }
 
         // OnLoadContent

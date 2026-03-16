@@ -86,7 +86,7 @@ namespace Adberration
         protected abstract string GetAtlasPath();
 
         // OnHandleInput
-        protected virtual HandleInputResult OnHandleInput(GameTime gameTime)
+        protected virtual HandleInputResult OnHandleInput()
         {
             return HandleInputResult.Unhandled;
         }
@@ -279,12 +279,12 @@ namespace Adberration
         public int CustomWidth { get; set; }
 
         // HandleInput
-        public HandleInputResult HandleInput(GameTime gameTime)
+        public HandleInputResult HandleInput()
         {
             if (Session.IsAwaiting)
                 return HandleInputResult.Unhandled;
             else
-                return OnHandleInput(gameTime);
+                return OnHandleInput();
         }
 
         // IsCurrentRoom

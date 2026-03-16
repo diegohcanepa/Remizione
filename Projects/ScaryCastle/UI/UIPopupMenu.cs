@@ -152,7 +152,7 @@ namespace ScaryCastle
         }
 
         // HandleInput
-        public HandleInputResult HandleInput(GameTime gameTime)
+        public HandleInputResult HandleInput()
         {
             if (HandleMouseInput())
                 return HandleInputResult.Handled;

@@ -542,13 +542,13 @@ namespace ScaryCastle
         public int Guts { get; set; } = 3;
 
         // HandleInput
-        public HandleInputResult HandleInput(GameTime gameTime)
+        public HandleInputResult HandleInput()
         {
             if (InputHandler == null || Session.IsAwaiting || !IsPlayer || !CanHandleInput)
                 return HandleInputResult.Unhandled;
 
             if (InputHandler != null)
-                return InputHandler.HandleInput(gameTime);
+                return InputHandler.HandleInput();
 
             return HandleInputResult.Unhandled;
         }
