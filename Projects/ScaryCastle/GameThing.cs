@@ -616,10 +616,6 @@ namespace ScaryCastle
                 Direction = FacingDirection.Left;
         }
 
-        // Faction
-        [ScriptProperty]
-        public Faction Faction { get; set; }
-
         // FloatingForce
         [ScriptProperty]
         public float FloatingForce
@@ -837,12 +833,6 @@ namespace ScaryCastle
 
         // IsEmittingLight
         public virtual bool IsEmittingLight => AttachedLight != null && !IgnoreAttachedLight && AttachedLight.IsEmitting;
-
-        // IsHostile
-        public virtual bool IsHostile(GameThing other)
-        {
-            return this.Faction == Faction.Evil && other == Session.Player;
-        }
 
         // IsMouseOver
         public bool IsMouseOver()

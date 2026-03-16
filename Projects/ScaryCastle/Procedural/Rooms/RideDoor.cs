@@ -20,6 +20,8 @@ namespace ScaryCastle
         public RideDoor(GameSession session, string name)
             : base(session, name)
         {
+            Atlas = Atlases.Props;
+
             if (name.StartsWith("RideDoorUp", StringComparison.OrdinalIgnoreCase))
             {
                 DoorDirection = RideDoorDirection.Up;

@@ -4,18 +4,18 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle.Scripting
 {
     // AwaitNPCAttackCommand
-    // Arguments: {ProceduralActor}
+    // Arguments: {Actor}
     [ScriptStatement(CodingContext.Execution)]
     [ForceAwait]
     internal sealed class AwaitNPCAttackCommand : AwaitableCommand
     {
-        private ProceduralActor? attacker;
+        private Actor? attacker;
 
         // Constructor
         internal AwaitNPCAttackCommand(Script script, string source, StatementBody args)
             : base(script, source, args, 1)
         {
-            AssertEntity<ProceduralActor>(0);
+            AssertEntity<Actor>(0);
         }
 
         // OnExecute
@@ -24,7 +24,7 @@ namespace ScaryCastle.Scripting
             if (Session is not GameSession session || session.Player == null)
                 return;
 
-            attacker = AssertEntity<ProceduralActor>(0);
+            attacker = AssertEntity<Actor>(0);
             if (attacker == null || attacker.IsPlayer || attacker.IsDead)
                 return;
 

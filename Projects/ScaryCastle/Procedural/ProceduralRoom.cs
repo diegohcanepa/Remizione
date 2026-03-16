@@ -161,7 +161,7 @@ namespace ScaryCastle
         // PopulateNPCs
         private void PopulateNPCs()
         {
-            var definitions = GetCandidateDefinitions<ActorDefinition, ProceduralActor>(ActorDefinition.Definitions.All);
+            var definitions = GetCandidateDefinitions<ActorDefinition, Actor>(ActorDefinition.Definitions.All);
             SpawnInPlaceholders(ActorDefinition.Definitions, definitions, RoomGraph.Definition.MaxEnemies, enemiesSpawnCounter, PlaceholderTarget.Enemy);
             SpawnInWalkArea(ActorDefinition.Definitions, definitions, RoomGraph.Definition.MaxEnemies, enemiesSpawnCounter);
         }
@@ -169,7 +169,7 @@ namespace ScaryCastle
         // PopulateProps
         private void PopulateProps()
         {
-            var definitions = GetCandidateDefinitions<PropDefinition, ProceduralProp>(PropDefinition.Definitions.All);
+            var definitions = GetCandidateDefinitions<PropDefinition, Prop>(PropDefinition.Definitions.All);
             SpawnInPlaceholders(PropDefinition.Definitions, definitions, RoomGraph.Definition.MaxProps, propsSpawnCounter, PlaceholderTarget.Prop);
             SpawnInWalkArea(PropDefinition.Definitions, definitions, RoomGraph.Definition.MaxProps, propsSpawnCounter);
         }

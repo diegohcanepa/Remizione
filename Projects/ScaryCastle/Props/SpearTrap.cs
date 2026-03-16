@@ -6,7 +6,7 @@ namespace ScaryCastle
     /// <summary>
     /// SpearTrap
     /// </summary>
-    public class SpearTrap : ProceduralProp
+    public class SpearTrap : Prop
     {
         private enum SpearState { Prepared, Reloading, Attacking, Up }
 
@@ -25,6 +25,7 @@ namespace ScaryCastle
             : base(session, name)
         {
             AffectsPathfinding = false;
+            Atlas = Atlases.Props;
             CollisionDetection = false;
             IgnoreWalkArea = false;
             DepthOffset = -10;
@@ -49,7 +50,7 @@ namespace ScaryCastle
         // ApplyDamage
         private void ApplyDamage()
         {
-            if (Room == null || Session.IsAwaiting)
+            if (Room == null || Session.IsAwaiting || Definition == null)
                 return;
 
             for (var i = 0; i < Room.Children.Count; i++)

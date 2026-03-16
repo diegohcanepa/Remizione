@@ -122,8 +122,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(EnviousEye));
             AotTypeRegistry.Register(typeof(NumberSix));
             AotTypeRegistry.Register(typeof(Pottery));
-            AotTypeRegistry.Register(typeof(ProceduralActor));
-            AotTypeRegistry.Register(typeof(ProceduralProp));
             AotTypeRegistry.Register(typeof(Prop));
             AotTypeRegistry.Register(typeof(RideCar));
             AotTypeRegistry.Register(typeof(RideDoor));
@@ -284,8 +282,8 @@ namespace ScaryCastle
         // OnOutcomeCompleted
         protected override void OnOutcomeCompleted(Thing target)
         {
-            if (Player != null && target is ProceduralActor procActor && procActor.IsAngry && procActor.CounterAttack)
-                procActor.PerformCounterAttack();
+            if (Player != null && target is Actor actor && actor.IsAngry && actor.CounterAttack)
+                actor.PerformCounterAttack();
         }
 
         // OnPause

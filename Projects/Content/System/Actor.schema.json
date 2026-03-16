@@ -23,6 +23,14 @@
           "$ref": "./Thing.schema.json"
         }
       ],
+      "faction": {
+        "type": "string",
+        "default": "Evil",
+        "enum": [
+          "Good",
+          "Evil"
+        ]
+      },
       "unevaluatedProperties": false
     }
   }

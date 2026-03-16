@@ -8,7 +8,7 @@ namespace ScaryCastle
     public static class Brain
     {
         // Decide
-        public static CombatIntent? Decide(ProceduralActor actor)
+        public static CombatIntent? Decide(Actor actor)
         {
             if (actor.CombatBehavior is not CombatBehavior behavior)
                 return null;

@@ -6,7 +6,7 @@ namespace ScaryCastle
     /// <summary>
     /// EnviousEye
     /// </summary>
-    public sealed class EnviousEye : ProceduralActor
+    public sealed class EnviousEye : Actor
     {
         private readonly Vector2Tween scaleTween;
 

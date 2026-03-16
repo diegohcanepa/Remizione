@@ -57,10 +57,5 @@ namespace ScaryCastle
 
         // Name
         public string Name { get; }
-
-        // Validate
-        public void Validate(GameSession session)
-        {
-        }
     }
 }

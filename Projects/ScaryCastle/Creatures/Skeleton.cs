@@ -3,7 +3,7 @@
     /// <summary>
     /// Skeleton
     /// </summary>
-    public sealed class Skeleton : ProceduralActor
+    public sealed class Skeleton : Actor
     {
         // Constructor
         public Skeleton(GameSession session, string name)

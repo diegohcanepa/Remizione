@@ -54,7 +54,7 @@ namespace ScaryCastle
     }
 
     // Faction
-    public enum Faction { Neutral, Good, Evil }
+    public enum Faction { Good, Evil }
 
     // FloatingMessage
     public enum FloatingMessage { Failed, Locked, Success }

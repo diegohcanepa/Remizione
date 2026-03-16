@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using Engendro;
+using System.Text.Json;
 
 namespace ScaryCastle
 {
@@ -11,10 +12,15 @@ namespace ScaryCastle
         public ActorDefinition(JsonElement element)
             : base(element)
         {
+            Faction = element.GetEnum("faction", Faction.Evil);
+
             Definitions.Add(this);
         }
 
         // Definitions
         public static DataContainer<ActorDefinition> Definitions { get; } = new(element => new ActorDefinition(element));
+
+        // Faction
+        public Faction Faction { get; }
     }
 }

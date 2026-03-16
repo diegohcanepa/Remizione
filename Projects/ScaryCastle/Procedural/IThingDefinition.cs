@@ -5,6 +5,6 @@
     /// </summary>
     internal interface IThingDefinition
     {
-        ThingDefinition Definition { get; }
+        ThingDefinition? Definition { get; }
     }
 }

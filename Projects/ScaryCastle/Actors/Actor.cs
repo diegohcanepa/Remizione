@@ -12,11 +12,12 @@ namespace ScaryCastle
     /// <summary>
     /// Actor
     /// </summary>
-    public class Actor : GameThing, IInputHandler
+    public class Actor : GameThing, IInputHandler, IThingDefinition
     {
         #region Private fields
 
         private const float AttackLaneThickness = 4;
+        private float contactCooldown;
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -35,12 +36,16 @@ namespace ScaryCastle
         public Actor(GameSession session, string name)
             : base(session, name)
         {
+            this.Definition = ActorDefinition.Definitions.Find(DeclaredName);
+            this.CombatBehavior = CombatBehavior.Behaviors.Find(DeclaredName);
+            this.CanInflictContactDamage = Definition?.Effects.Count > 0;
             this.Atlas = Atlases.Actors;
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
             this.DisplayNameKey = $"Actor.{DeclaredName}";
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
             this.SuppressImpactWordOnDeath = true;
+            this.Faction = Definition == null ? Faction.Good : Definition.Faction;
 
             headSprite = new AnimatedSprite(Game)
             {
@@ -81,6 +86,12 @@ namespace ScaryCastle
 
             ShadowSpotSize = 6;
         }
+
+        #endregion
+
+        #region IThingDefinition
+
+        ThingDefinition? IThingDefinition.Definition => this.Definition;
 
         #endregion
 
@@ -357,6 +368,12 @@ namespace ScaryCastle
             if (IsPlayer)
                 Session.InterruptAwaitingScript();
 
+            if (Session.Player == attacker)
+            {
+                IsAngry = true;
+                CounterAttack = true;
+            }
+
             Session.ObjectPools.FloatingTexts.Get()?.ShowHPAmount(this, amount, true);
 
             Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
@@ -389,6 +406,22 @@ namespace ScaryCastle
             UpdateFootstep();
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
+
+            if (CanInflictContactDamage)
+            {
+                if (contactCooldown > 0)
+                    contactCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+
+                if (contactCooldown <= 0 && Session.Player != null)
+                {
+                    if (RuntimeCollider.Contains(Session.Player.Position))
+                    {
+                        EffectDescriptor.Apply(this, Session.Player);
+                        contactCooldown = 500;
+                        return;
+                    }
+                }
+            }
         }
 
         #endregion
@@ -479,6 +512,9 @@ namespace ScaryCastle
             }
         }
 
+        // CanInflictContactDamage
+        public bool CanInflictContactDamage { get; }
+
         // CanTakeDamage
         public override bool CanTakeDamage()
         {
@@ -488,7 +524,7 @@ namespace ScaryCastle
                 {
                     return base.CanTakeDamage();
                 }
-                else if (Session.OutcomeTarget is ProceduralActor actor && (actor.CounterAttack || actor.IsAttacking))
+                else if (Session.OutcomeTarget is Actor actor && (actor.CounterAttack || actor.IsAttacking))
                 {
                     return base.CanTakeDamage();
                 }
@@ -519,6 +555,19 @@ namespace ScaryCastle
 
             return true;
         }
+
+        // CombatBehavior
+        public CombatBehavior? CombatBehavior { get; }
+
+        // CounterAttack
+        public bool CounterAttack { get; private set; }
+
+        // Definition
+        public ActorDefinition? Definition { get; }
+
+        // Faction
+        [ScriptProperty]
+        public Faction Faction { get; set; }
 
         // FastMove
         public bool FastMove { get; set; }
@@ -560,6 +609,18 @@ namespace ScaryCastle
         [ScriptProperty]
         public Sound? HurtVoice { get; set; }
 
+        // IsAngry
+        [ScriptProperty]
+        public bool IsAngry
+        {
+            get;
+            set
+            {
+                field = value;
+                CounterAttack = false;
+            }
+        }
+
         // IsAttacking
         public bool IsAttacking => BodyMachine.CurrentState is BodyAttackState;
 
@@ -573,6 +634,12 @@ namespace ScaryCastle
 
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }
+
+        // IsHostile
+        public virtual bool IsHostile(GameThing other)
+        {
+            return this.Faction == Faction.Evil && other == Session.Player;
+        }
 
         // IsPlayer
         [ScriptProperty]
@@ -631,6 +698,13 @@ namespace ScaryCastle
             BodyMachine.ChangeState<BodyMoveState>();
 
             return true;
+        }
+
+        // PerformCounterAttack
+        public void PerformCounterAttack()
+        {
+            CounterAttack = false;
+            PerformOutcome();
         }
 
         // PlayerNumber

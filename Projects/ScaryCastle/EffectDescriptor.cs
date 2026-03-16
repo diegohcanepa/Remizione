@@ -32,7 +32,7 @@ namespace ScaryCastle
         // Apply
         public static void Apply(GameThing source, GameThing target)
         {
-            if (source is IThingDefinition t)
+            if (source is IThingDefinition t && t.Definition != null)
                 Apply(t.Definition.EffectDescriptors, source, target);
         }
 

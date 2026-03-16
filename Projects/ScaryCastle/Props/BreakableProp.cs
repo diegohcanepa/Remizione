@@ -7,7 +7,7 @@ namespace ScaryCastle
     /// <summary>
     /// BreakableProp
     /// </summary>
-    public class BreakableProp : ProceduralProp
+    public class BreakableProp : Prop
     {
         private readonly List<ShatterPiece> pieces = [];
 
@@ -15,6 +15,7 @@ namespace ScaryCastle
         public BreakableProp(GameSession session, string name)
             : base(session, name)
         {
+            Atlas = Atlases.Props;
         }
 
         #region Protected members

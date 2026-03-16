@@ -8,7 +8,7 @@ namespace ScaryCastle
     /// <summary>
     /// Prop
     /// </summary>
-    public class Prop : GameThing
+    public class Prop : GameThing, IThingDefinition
     {
         #region Private fields
 
@@ -25,6 +25,7 @@ namespace ScaryCastle
             : base(session, name)
         {
             this.ApproachBehavior = ApproachBehavior.InFront;
+            this.Definition = PropDefinition.Definitions.Find(DeclaredName);
             this.HurtSound = Sound.Find(SoundNames.ImpactA);
 
             // Shadow
@@ -34,6 +35,12 @@ namespace ScaryCastle
                 PivotOrigin = RectanglePoint.Bottom,
             };
         }
+
+        #endregion
+
+        #region IThingDefinition
+
+        ThingDefinition? IThingDefinition.Definition => this.Definition;
 
         #endregion
 
@@ -99,6 +106,9 @@ namespace ScaryCastle
             bounceScaleTween.Start(TweenStyle.QuadraticInOut, Scale, new Vector2(1f, .95f), 100, 2);
             xTween.Start(TweenStyle.QuadraticInOut, X, X - 1, 40, 6);
         }
+
+        // Definition
+        public PropDefinition? Definition { get; }
 
         // SkillChancePenalty
         [ScriptProperty]
