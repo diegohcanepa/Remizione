@@ -602,9 +602,9 @@ namespace ScaryCastle
         }
 
         // FaceTo
-        public void FaceTo(GameThing thing)
+        public void FaceTo(GameThing target)
         {
-            FaceTo(thing.Position);
+            FaceTo(target.Position);
         }
 
         // FaceTo
@@ -704,10 +704,7 @@ namespace ScaryCastle
         // GetFootstepSound
         public Sound? GetFootstepSound(Vector2 position)
         {
-            if (RuntimeCollider?.Contains(position) == true)
-                return TerrainSound;
-
-            return null;
+            return RuntimeCollider?.Contains(position) == true ? TerrainSound : null;
         }
 
         // GetMouseCursorState
@@ -758,7 +755,7 @@ namespace ScaryCastle
 
         // HitEffect
         [ScriptProperty]
-        public virtual HitEffect HitEffect => HitEffect.Shake;
+        public HitEffect HitEffect { get; init; } = HitEffect.Shake;
 
         // HitTestPolygon
         [ScriptProperty]
@@ -841,40 +838,10 @@ namespace ScaryCastle
         // IsEmittingLight
         public virtual bool IsEmittingLight => AttachedLight != null && !IgnoreAttachedLight && AttachedLight.IsEmitting;
 
-        // IsEnemy
-        public bool IsEnemy(GameThing target)
+        // IsHostile
+        public virtual bool IsHostile(GameThing other)
         {
-            if (Faction == target.Faction)
-                return false;
-
-            if (target.Faction == Faction.Neutral)
-                return false;
-
-            return true;
-        }
-
-        // IsFacingTowards
-        public bool IsFacingTowards(Actor target, float verticalTolerance = float.MaxValue)
-        {
-            // 1. Chequeo Vertical (Crítico para evitar ataques entre pisos)
-            // Si la diferencia de altura es mayor a la tolerancia, no lo "ve".
-            float diffY = Math.Abs(Position.Y - target.Position.Y);
-            if (diffY > verticalTolerance)
-                return false;
-
-            // 2. Chequeo Horizontal
-            float diffX = target.Position.X - Position.X;
-
-            // Si el objetivo está a la DERECHA (diffX > 0), debo mirar a la Derecha.
-            if (diffX > 0)
-                return Direction == FacingDirection.Right;
-
-            // Si el objetivo está a la IZQUIERDA (diffX < 0), debo mirar a la Izquierda.
-            else if (diffX < 0)
-                return Direction == FacingDirection.Left;
-
-            // Si están en el mismo pixel exacto de X, asumimos que sí lo ve.
-            return true;
+            return this.Faction == Faction.Evil && other == Session.Player;
         }
 
         // IsMouseOver

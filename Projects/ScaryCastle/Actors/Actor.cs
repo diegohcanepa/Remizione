@@ -38,6 +38,7 @@ namespace ScaryCastle
             this.Atlas = Atlases.Actors;
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
             this.DisplayNameKey = $"Actor.{DeclaredName}";
+            this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
             this.SuppressImpactWordOnDeath = true;
 
@@ -392,9 +393,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // AnimationSettings
-        public ActorAnimationSettings AnimationSettings { get; } = new();
-
         // Animate
         public SpriteAnimation? Animate(string animationName)
         {
@@ -414,6 +412,9 @@ namespace ScaryCastle
 
             return result;
         }
+
+        // AnimationSettings
+        public ActorAnimationSettings AnimationSettings { get; } = new();
 
         // ApproachAndInteract
         public bool ApproachAndInteract(GameThing target, Item? item)
@@ -483,7 +484,7 @@ namespace ScaryCastle
         {
             if (IsPlayer && Session.AwaitingScript != null)
             {
-                if (Session.AwaitingScript.Interruptible == true)
+                if (Session.AwaitingScript.Interruptible)
                 {
                     return base.CanTakeDamage();
                 }
@@ -495,7 +496,9 @@ namespace ScaryCastle
                 return false;
             }
             else
+            {
                 return base.CanTakeDamage();
+            }
         }
 
         // Cast
@@ -551,10 +554,7 @@ namespace ScaryCastle
         }
 
         // HasSpeechBubble
-        public bool HasSpeechBubble => speechBubble == null ? false : speechBubble.State != SpeechBubbleState.Hidden;
-
-        // HitEffect
-        public override HitEffect HitEffect => HitEffect.Blink;
+        public bool HasSpeechBubble => speechBubble != null && speechBubble.State != SpeechBubbleState.Hidden;
 
         // HurtVoice
         [ScriptProperty]
@@ -577,9 +577,6 @@ namespace ScaryCastle
         // IsPlayer
         [ScriptProperty]
         public bool IsPlayer => Session.Player == this;
-
-        // IsSneaking
-        public bool IsSneaking { get; set; }
 
         // IsStandingOrMoving
         public bool IsStandingOrMoving => BodyMachine.CurrentState is BodyStandState or BodyMoveState;

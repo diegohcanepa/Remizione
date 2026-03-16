@@ -22,7 +22,7 @@ namespace ScaryCastle
             {
                 for (var i = 0; i < Owner.Room.Children.Count; i++)
                 {
-                    if (Owner.Room.Children[i] is GameThing thing && Owner.IsEnemy(thing))
+                    if (Owner.Room.Children[i] is GameThing thing && Owner.IsHostile(thing))
                     {
                         if (CanInflictDamage(thing))
                         {

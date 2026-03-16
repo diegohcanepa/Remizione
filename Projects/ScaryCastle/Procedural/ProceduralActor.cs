@@ -1,6 +1,5 @@
 ﻿using Adberration.Scripting;
 using Microsoft.Xna.Framework;
-using System;
 
 namespace ScaryCastle
 {
@@ -112,12 +111,6 @@ namespace ScaryCastle
                 field = value;
                 CounterAttack = false;
             }
-        }
-
-        // IsHostile
-        public virtual bool IsHostile(Actor other)
-        {
-            return this.Faction == Faction.Evil && other == Session.Player;
         }
 
         // PerformCounterAttack
