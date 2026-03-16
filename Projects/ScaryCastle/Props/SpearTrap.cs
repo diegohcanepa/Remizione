@@ -49,7 +49,7 @@ namespace ScaryCastle
         // ApplyDamage
         private void ApplyDamage()
         {
-            if (Room == null)
+            if (Room == null || Session.IsAwaiting)
                 return;
 
             for (var i = 0; i < Room.Children.Count; i++)
@@ -114,7 +114,7 @@ namespace ScaryCastle
             // Prepared
             if (state == SpearState.Prepared)
             {
-                if (cooldown > 0)
+                if (!Session.IsAwaiting && cooldown > 0)
                 {
                     cooldown -= gameTime.ElapsedGameTime.Milliseconds;
                     if (cooldown <= 0)

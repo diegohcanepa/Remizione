@@ -249,7 +249,9 @@ namespace Engendro
                 return true;
             }
             else
+            {
                 return RemoveSceneCore(scene);
+            }
         }
 
         // SceneCount

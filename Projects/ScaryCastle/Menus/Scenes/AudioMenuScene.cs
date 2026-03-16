@@ -79,17 +79,11 @@ namespace ScaryCastle.Menus
         {
             UserSettingsData.SaveCurrentSystemSettings(Game);
 
-            if (ambience != null)
-            {
-                ambience.Stop(300);
-                ambience = null;
-            }
+            ambience?.Stop(300);
+            ambience = null;
 
-            if (backgroundMusic != null)
-            {
-                backgroundMusic.Stop(300);
-                backgroundMusic = null;
-            }
+            backgroundMusic?.Stop(300);
+            backgroundMusic = null;
 
             base.OnUnloadContent();
         }

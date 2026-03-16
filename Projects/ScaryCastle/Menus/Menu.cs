@@ -170,8 +170,7 @@ namespace ScaryCastle.Menus
             items.Add(result);
             layout = true;
             Invalidate();
-            if (SelectedItem == null)
-                SelectedItem = result;
+            SelectedItem ??= result;
 
             return result;
         }
