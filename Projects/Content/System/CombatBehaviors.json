@@ -11,7 +11,8 @@
           "effects": [
             {
               "effectType": "Damage",
-              "amount": "1"
+              "amount": "1",
+              "impactWord": "Kapow"
             }
           ]
         }

@@ -40,11 +40,11 @@ namespace ScaryCastle
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
 
-    // EffectType
-    public enum EffectType { None, Damage, Death, Heal, Luck, AddCondition, RemoveCondition }
-
     // EffectAreaRange
     public enum EffectAreaRange { None, Small, Medium, Large }
+
+    // EffectType
+    public enum EffectType { None, Damage, Death, Heal, Luck, AddCondition, RemoveCondition }
 
     // EffectTarget
     public enum EffectTarget

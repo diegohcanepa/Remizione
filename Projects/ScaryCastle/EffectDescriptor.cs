@@ -11,6 +11,8 @@ namespace ScaryCastle
     /// </summary>
     public sealed class EffectDescriptor
     {
+        #region Constructor
+
         // Constructor
         public EffectDescriptor(JsonElement element)
         {
@@ -21,13 +23,13 @@ namespace ScaryCastle
             Factor = element.GetFloat("factor", 1);
             ImpactWord = element.GetEnum("impactWord", ImpactWordName.None);
             Knockback = element.GetVector2("knockback", Vector2.Zero);
-            IsPassive = element.GetBool("isPassive", false);
             Sound = element.GetObject("sound", Sound.Get);
             Target = element.GetEnum("target", EffectTarget.Target);
         }
 
-        // Amount
-        public DiceExpression? Amount { get; }
+        #endregion
+
+        #region Static members
 
         // Apply
         public static void Apply(GameThing source, GameThing target)
@@ -77,6 +79,11 @@ namespace ScaryCastle
             }
         }
 
+        #endregion
+
+        // Amount
+        public DiceExpression? Amount { get; }
+
         // Chance
         public Ratio Chance { get; }
 
@@ -91,9 +98,6 @@ namespace ScaryCastle
 
         // ImpactWord
         public ImpactWordName ImpactWord { get; }
-
-        // IsPassive
-        public bool IsPassive { get; }
 
         // Knockback
         public Vector2 Knockback { get; }

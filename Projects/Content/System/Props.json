@@ -3,14 +3,6 @@
   "data": [
     {
       "name": "PotteryA",
-      "effects": [
-            {
-              "damageType": "Physical",
-              "effectType": "Death",
-              "impactWord": "CrackBlue",
-              "target": "Self"
-            }        
-      ],
       "placements": [
         "Floor"
       ]

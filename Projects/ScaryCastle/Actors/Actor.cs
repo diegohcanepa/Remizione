@@ -17,7 +17,6 @@ namespace ScaryCastle
         #region Private fields
 
         private const float AttackLaneThickness = 4;
-        private float contactCooldown;
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -38,14 +37,16 @@ namespace ScaryCastle
         {
             this.Definition = ActorDefinition.Definitions.Find(DeclaredName);
             this.CombatBehavior = CombatBehavior.Behaviors.Find(DeclaredName);
-            this.CanInflictContactDamage = Definition?.Effects.Count > 0;
             this.Atlas = Atlases.Actors;
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
+            this.DeathWord = ImpactWordName.PlopRed;
             this.DisplayNameKey = $"Actor.{DeclaredName}";
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
-            this.SuppressImpactWordOnDeath = true;
             this.Faction = Definition == null ? Faction.Good : Definition.Faction;
+            
+            // TODO: Check
+            //this.CanInflictContactDamage = Definition?.HasPassiveEffects == true;
 
             headSprite = new AnimatedSprite(Game)
             {
@@ -406,22 +407,6 @@ namespace ScaryCastle
             UpdateFootstep();
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
-
-            if (CanInflictContactDamage)
-            {
-                if (contactCooldown > 0)
-                    contactCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-
-                if (contactCooldown <= 0 && Session.Player != null)
-                {
-                    if (RuntimeCollider.Contains(Session.Player.Position))
-                    {
-                        EffectDescriptor.Apply(this, Session.Player);
-                        contactCooldown = 500;
-                        return;
-                    }
-                }
-            }
         }
 
         #endregion
@@ -511,9 +496,6 @@ namespace ScaryCastle
                 return BodyMachine.CurrentState is BodyStandState or BodyMoveState;
             }
         }
-
-        // CanInflictContactDamage
-        public bool CanInflictContactDamage { get; }
 
         // CanTakeDamage
         public override bool CanTakeDamage()
@@ -622,7 +604,7 @@ namespace ScaryCastle
         }
 
         // IsAttacking
-        public bool IsAttacking => BodyMachine.CurrentState is BodyAttackState;
+        public bool IsAttacking => BodyMachine.CurrentState is BodyCloseAttackState;
 
         // IsInAttackLane
         public bool IsInAttackLane(GameThing target)

@@ -66,7 +66,8 @@ namespace ScaryCastle
             {
                 foreach (var effectJson in effectsArray.EnumerateArray())
                 {
-                    effects.Add(new(effectJson));
+                    var effect = new EffectDescriptor(effectJson);
+                    effects.Add(effect);
                 }
             }
 

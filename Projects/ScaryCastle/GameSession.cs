@@ -140,7 +140,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("add-walk-area", typeof(AddWalkAreaCommand));
             AotTypeRegistry.Register("animate-actor", typeof(AnimateActorCommand));
             AotTypeRegistry.Register("apply-enemy-combat-intent", typeof(ApplyEnemyCombatIntentCommand));
-            AotTypeRegistry.Register("apply-effects", typeof(ApplyEffectsCommand));
             AotTypeRegistry.Register("attach-light", typeof(AttachLightCommand));
             AotTypeRegistry.Register("await-approach", typeof(AwaitApproachCommand));
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));

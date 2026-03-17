@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle.Scripting
 {
     // AwaitPlayerAttackCommand
-    // Arguments: {Target:GameThing}
+    // Arguments: {CombatIntent} {Target:GameThing}
     [ScriptStatement(CodingContext.Execution)]
     [ForceAwait]
     internal sealed class AwaitPlayerAttackCommand : AwaitableCommand
@@ -13,22 +13,25 @@ namespace ScaryCastle.Scripting
 
         // Constructor
         internal AwaitPlayerAttackCommand(Script script, string source, StatementBody args)
-            : base(script, source, args, 1)
+            : base(script, source, args, 2)
         {
-            AssertEntity<GameThing>(0);
+            Parser.ParseName(this, 0);
+            AssertEntity<GameThing>(1);
         }
 
         // OnExecute
         protected override void OnExecute()
         {
             player = (Session as GameSession)?.Player;
-            if (player == null || player.IsDead)
+            if (player == null || player.IsDead || player.CombatBehavior == null)
                 return;
 
-            if (AssertEntity<GameThing>(0) is not GameThing target)
+            var combatIntentName = Parser.ParseName(this, 0);
+
+            if (AssertEntity<GameThing>(1) is not GameThing target)
                 return;
 
-            var intent = CombatBehavior.Behaviors.Find(player.DeclaredName)?.Intents.Find("Headbutt");
+            var intent = player.CombatBehavior.Intents.Find(combatIntentName);
             if (intent != null)
                 player.Attack(intent, target);
         }

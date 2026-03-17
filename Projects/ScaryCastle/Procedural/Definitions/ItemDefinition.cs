@@ -86,17 +86,6 @@ namespace ScaryCastle
                 _ => 5
             };
 
-            IsPassive = EffectDescriptors.Count > 0;
-
-            for (var i = 0; i < EffectDescriptors.Count; i++)
-            {
-                if (!EffectDescriptors[i].IsPassive)
-                {
-                    IsPassive = false;
-                    break;
-                }
-            }
-
             Definitions.Add(this);
         }
 
@@ -144,9 +133,6 @@ namespace ScaryCastle
 
         // IsMagical
         public bool IsMagical { get; }
-
-        // IsPassive
-        public bool IsPassive { get; }
 
         // IsStackable
         public bool IsStackable { get; }

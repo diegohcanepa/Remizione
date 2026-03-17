@@ -18,6 +18,7 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly Blinker<bool> blinker = new(false, true);
+        private float contactCooldown;
         private bool dieCalled;
         private FloatTween? floatingTween;
         private readonly Polygon holePoly = new();
@@ -374,6 +375,22 @@ namespace ScaryCastle
 
             if (blinker.IsRunning)
                 blinker.Update(gameTime);
+
+            if (CanInflictContactDamage)
+            {
+                if (contactCooldown > 0)
+                    contactCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+
+                if (contactCooldown <= 0 && Session.Player != null)
+                {
+                    if (RuntimeCollider.Contains(Session.Player.Position))
+                    {
+                        EffectDescriptor.Apply(this, Session.Player);
+                        contactCooldown = 500;
+                        return;
+                    }
+                }
+            }
         }
 
         // OnUpdateEmittingSound
@@ -381,9 +398,6 @@ namespace ScaryCastle
         {
             Utils.ApplySoundEmitter(this, instance, masterVolume);
         }
-
-        // SuppressImpactWordOnDeath
-        protected bool SuppressImpactWordOnDeath { get; init; }
 
         #endregion
 
@@ -412,6 +426,9 @@ namespace ScaryCastle
         // CanBeHit
         [ScriptProperty]
         public bool CanBeHit { get; set; } = true;
+
+        // CanInflictContactDamage
+        public bool CanInflictContactDamage { get; init; }
 
         // CanInteract
         public virtual bool CanInteract()
@@ -558,6 +575,10 @@ namespace ScaryCastle
             HP -= amount;
             Session.ObjectPools.FloatingTexts.Get()?.ShowHPAmount(this, Math.Abs(current - HP), true);
         }
+
+        // DeathWord
+        [ScriptProperty]
+        public ImpactWordName DeathWord { get; set; }
 
         // DeathSound
         [ScriptProperty]
@@ -961,7 +982,7 @@ namespace ScaryCastle
         public void ShowImpactWord(ImpactWordName impactWordName)
         {
             if (GetOverheadPosition() is Vector2 wordPos)
-                Session.ImpactWordPool.Get()?.Show(impactWordName, wordPos + new Vector2(0, 10));
+                Session.ImpactWordPool.Get()?.Show(impactWordName, wordPos);
         }
 
         // TakeDamage
@@ -1040,7 +1061,7 @@ namespace ScaryCastle
                     // Impact Word (Solo mostramos "Pow!" si hubo daño real)
                     if (impactWordName != ImpactWordName.None)
                     {
-                        if (!IsDead || !SuppressImpactWordOnDeath)
+                        if (!IsDead || DeathWord == ImpactWordName.None)
                             ShowImpactWord(impactWordName);
                     }
                 }
