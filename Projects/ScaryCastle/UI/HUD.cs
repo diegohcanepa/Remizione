@@ -12,8 +12,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly UIHPMeter healthMeter;
-        private readonly Sprite playerIcon;
+        private readonly UIHPMeter hpMeter;
         private readonly GameSession session;
 
         #endregion
@@ -26,13 +25,9 @@ namespace ScaryCastle
         {
             this.session = session;
 
-            this.playerIcon = new(Game, Atlases.UI.GetImage("EdmundIcon"))
-            {
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop),
-            };
-
+            this.ActionMessage = new(Game, RectanglePoint.Bottom, Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -5), ScaleInfo.Text.ExtraGiant);
             this.FearMeter = new(session);
-            this.healthMeter = new(session.Game, new(playerIcon.BoundingBox.Width, 2));
+            this.hpMeter = new(session.Game, new(1, 0));
             this.Log = new(Game);
             this.Message = new(Game, RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
 
@@ -52,14 +47,14 @@ namespace ScaryCastle
         {
             Game.SpriteBatch.Begin(Game.Camera);
 
-            playerIcon.Draw(gameTime);
-            healthMeter.Draw(gameTime);
+            hpMeter.Draw(gameTime);
 
             if (session.IsCurrentScene)
                 FearMeter.Draw(gameTime);
 
             InventoryMeter.Draw(gameTime);
             Log.Draw(gameTime);
+            ActionMessage.Draw(gameTime);
             Message.Draw(gameTime);
             Game.SpriteBatch.End();
 
@@ -72,13 +67,17 @@ namespace ScaryCastle
         {
             InventoryMeter.Update(gameTime);
             FearMeter.Update(gameTime);
-            healthMeter.Update(gameTime);
+            hpMeter.Update(gameTime);
             MiniMap.Update(gameTime);
             Log.Update(gameTime);
+            ActionMessage.Update(gameTime);
             Message.Update(gameTime);
         }
 
         #endregion
+
+        // ActionMessage
+        public HUDMessage ActionMessage { get; }
 
         // FearMeter
         public UIFearMeter FearMeter { get; }
@@ -110,7 +109,7 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
-            healthMeter.Actor = session.Player;
+            hpMeter.Actor = session.Player;
         }
     }
 }

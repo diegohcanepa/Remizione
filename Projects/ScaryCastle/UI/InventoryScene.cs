@@ -130,7 +130,7 @@ namespace ScaryCastle
                 if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
                 {
                     Sound.Play(SoundNames.Interact);
-                    Inventory.Session.ShowEcho(item.Definition.LocalizedDescription, false, item.Definition.Image);
+                    Inventory.Session.ShowEcho(item.Definition.Description, false, item.Definition.Image);
                 }
             }
 
@@ -253,7 +253,7 @@ namespace ScaryCastle
 
             if (GetSelectedItem() is Item item)
             {
-                itemName.Text = item.Definition.LocalizedDisplayName;
+                itemName.Text = item.Definition.DisplayName;
                 itemName.X = slots[item.Index].BoundingBox.Center.X;
                 icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;
             }

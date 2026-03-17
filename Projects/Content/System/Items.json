@@ -8,6 +8,7 @@
 			"verb": "Eat",
 			"effects": [
 				{
+					"context": "OnUse",
 					"effectType": "Heal",
 					"amount": "2",
 					"target": "Self",
@@ -33,6 +34,7 @@
 			"isMagical": true,
 			"effects": [
 				{
+					"context": "OnAttack",
 					"effectType": "Damage",
 					"damageType": "Physical",
 					"amount": "1d4",
@@ -49,6 +51,7 @@
 		    "sound": "Firecracker",
 			"effects": [
 				{
+					"context": "OnAttack",
 					"effectType": "Damage",
 					"damageType": "Physical",
 					"amount": "1d4+4",
@@ -59,15 +62,7 @@
 		{
 			"name": "GoldenKey",
 			"category": "Access",
-			"isStackable": true,
-			"effects": [
-				{
-					"effectType": "Heal",
-					"amount": "2",
-					"target": "Self",
-					"sound": "AppleBite"
-				}
-			]
+			"isStackable": true
 		},
 		{
 			"name": "Lantern",
@@ -100,6 +95,7 @@
 			"isStackable": true,
 			"effects": [
 				{
+					"context": "OnUse",
 					"effectType": "Heal",
 					"amount": "4",
 					"target": "Self",

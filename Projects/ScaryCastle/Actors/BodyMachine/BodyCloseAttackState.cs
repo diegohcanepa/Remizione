@@ -5,8 +5,10 @@ namespace ScaryCastle
     /// <summary>
     /// BodyCloseAttackState
     /// </summary>
-    public class BodyCloseAttackState : BodyAnimatedState
+    public sealed class BodyCloseAttackState : BodyAnimatedState
     {
+        private bool damageTaken;
+
         // Constructor
         public BodyCloseAttackState()
             : base(string.Empty, false)
@@ -15,13 +17,21 @@ namespace ScaryCastle
 
         #region Private members
 
+        // CanInflictDamage
+        private bool CanInflictDamage(GameThing target)
+        {
+            return target.CanBeHit && Owner.AnimationPlayer.Frame?.IsEvent == true;
+        }
+
         // TryInflictDamage
         private bool TryInflictDamage(CombatIntent intent, GameThing target)
         {
             if (CanInflictDamage(target))
             {
-                EffectDescriptor.Apply(intent.EffectDescriptors, Owner, target);
+                EffectDescriptor.Apply(intent.EffectDescriptors, Owner, target, EffectContext.OnAttack);
                 Owner.Session.InterruptAwaitingScript();
+                if (Owner.Faction == Faction.Evil)
+                    Owner.Session.HUD.ActionMessage.Show(intent.DisplayName, ColorPalette.Text.Red);
                 return true;
             }
 
@@ -31,15 +41,6 @@ namespace ScaryCastle
         #endregion
 
         #region Protected members
-
-        // CanInflictDamage
-        protected bool CanInflictDamage(GameThing target)
-        {
-            return target.CanBeHit && Owner.AnimationPlayer.Frame?.IsEvent == true;
-        }
-
-        // DamageTaken
-        protected bool DamageTaken { get; set; }
 
         // GetAnimationName
         protected override string GetAnimationName()
@@ -53,7 +54,7 @@ namespace ScaryCastle
         public override void Enter()
         {
             base.Enter();
-            DamageTaken = false;
+            damageTaken = false;
             if (Intent?.Sound is { } sound)
                 Owner.PlaySound(sound);
         }
@@ -67,10 +68,8 @@ namespace ScaryCastle
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (!DamageTaken && Intent != null && Target != null)
-            {
-                DamageTaken = TryInflictDamage(Intent, Target);
-            }
+            if (!damageTaken && Intent != null && Target != null)
+                damageTaken = TryInflictDamage(Intent, Target);
 
             if (!Owner.AnimationPlayer.IsPlaying)
                 Machine.ChangeState<BodyStandState>();

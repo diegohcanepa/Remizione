@@ -44,9 +44,6 @@ namespace ScaryCastle
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
             this.Faction = Definition == null ? Faction.Good : Definition.Faction;
-            
-            // TODO: Check
-            //this.CanInflictContactDamage = Definition?.HasPassiveEffects == true;
 
             headSprite = new AnimatedSprite(Game)
             {
@@ -86,6 +83,9 @@ namespace ScaryCastle
             }
 
             ShadowSpotSize = 6;
+
+            if (Definition != null)
+                this.CanInflictContactDamage = EffectDescriptor.Contains(Definition.Effects, EffectContext.OnContact);
         }
 
         #endregion
@@ -369,10 +369,13 @@ namespace ScaryCastle
             if (IsPlayer)
                 Session.InterruptAwaitingScript();
 
-            if (Session.Player == attacker)
+            if (!IsPlayer)
             {
-                IsAngry = true;
-                CounterAttack = true;
+                if (IsHostile(attacker))
+                {
+                    IsAngry = true;
+                    CounterAttack = true;
+                }
             }
 
             Session.ObjectPools.FloatingTexts.Get()?.ShowHPAmount(this, amount, true);

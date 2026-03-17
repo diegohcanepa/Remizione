@@ -10,6 +10,7 @@
           "sound": "WhooshA",
           "effects": [
             {
+              "context": "OnAttack",
               "effectType": "Damage",
               "amount": "1",
               "impactWord": "Kapow"
@@ -28,10 +29,10 @@
           "sound": "EnviousEyeAttack",
           "effects": [
             {
+              "context": "OnAttack",              
               "effectType": "Damage",
-              "amount": "1d4",
-              "impactWord": "AghRed",
-              "knockback": "15,12"
+              "amount": "2",
+              "impactWord": "AghRed"
             }
           ]
         }
@@ -44,15 +45,7 @@
         {
           "name": "Bite",
           "category": "Basic",
-          "sound": "EnviousEyeAttack",
-          "effects": [
-            {
-              "effectType": "Damage",
-              "amount": "1d4",
-              "impactWord": "AghRed",
-              "knockback": "15,12"
-            }
-          ]
+          "sound": "EnviousEyeAttack"
         }
       ]
     }    

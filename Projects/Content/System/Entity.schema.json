@@ -1,22 +1,14 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "Entity.schema.json",
-  "title": "Entity definition",
-  "type": "object",
   "allOf": [
+    { "$ref": "Definition.schema.json" },
     {
-      "$ref": "Definition.schema.json"
-    },
-    {
+      "type": "object",
       "properties": {
         "difficulty": {
           "type": "string",
-          "description": "Nivel de dificultad.",
-          "enum": [
-            "Easy",
-            "Normal",
-            "Hard"
-          ]
+          "enum": ["Easy", "Normal", "Hard"]
         },
         "maxPerRun": {
           "type": "integer",
@@ -27,34 +19,20 @@
           "default": 0,
           "minimum": 0
         },
-        "pools": {
-          "type": "string"
-        },
+        "pools": { "type": "string" },
         "preferredLootCategory": {
           "type": "string",
-          "enum": [
-            "Explosive",
-            "Food",
-            "Luck",
-            "Medicine",
-            "Misc"
-          ]
+          "enum": ["Explosive", "Food", "Luck", "Medicine", "Misc"]
         },
         "preferredLootRealm": {
           "type": "string",
-          "enum": [
-            "Earthly",
-            "Infernal",
-            "Celestial"
-          ]
+          "enum": ["Earthly", "Infernal", "Celestial"]
         },
         "qualityBoost": {
           "type": "integer",
           "minimum": 0
         },
-        "tags": {
-          "type": "string"
-        }
+        "tags": { "type": "string" }
       }
     }
   ]

@@ -16,15 +16,16 @@ namespace ScaryCastle
         // Constructor
         public EffectDescriptor(JsonElement element)
         {
-            Amount = element.GetObject("amount", v => new DiceExpression(v));
-            Chance = element.GetFloat("chance", 1);
-            DamageType = element.GetEnum<DamageType>("damageType", DamageType.Physical);
-            EffectType = element.GetEnum("effectType", EffectType.None);
-            Factor = element.GetFloat("factor", 1);
-            ImpactWord = element.GetEnum("impactWord", ImpactWordName.None);
-            Knockback = element.GetVector2("knockback", Vector2.Zero);
-            Sound = element.GetObject("sound", Sound.Get);
-            Target = element.GetEnum("target", EffectTarget.Target);
+            this.Amount = element.GetObject("amount", v => new DiceExpression(v));
+            this.Chance = element.GetFloat("chance", 1);
+            this.Context = element.GetEnum("context", EffectContext.OnContact);
+            this.DamageType = element.GetEnum("damageType", DamageType.Physical);
+            this.EffectType = element.GetEnum("effectType", EffectType.None);
+            this.Factor = element.GetFloat("factor", 1);
+            this.ImpactWord = element.GetEnum("impactWord", ImpactWordName.None);
+            this.Knockback = element.GetVector2("knockback", Vector2.Zero);
+            this.Sound = element.GetObject("sound", Sound.Get);
+            this.Target = element.GetEnum("target", EffectTarget.Target);
         }
 
         #endregion
@@ -32,20 +33,23 @@ namespace ScaryCastle
         #region Static members
 
         // Apply
-        public static void Apply(GameThing source, GameThing target)
+        public static void Apply(GameThing source, GameThing target, EffectContext context)
         {
             if (source is IThingDefinition t && t.Definition != null)
-                Apply(t.Definition.EffectDescriptors, source, target);
+                Apply(t.Definition.EffectDescriptors, source, target, context);
         }
 
         // Apply
-        public static void Apply(IList<EffectDescriptor> effects, GameThing source, GameThing target)
+        public static void Apply(IList<EffectDescriptor> effects, GameThing source, GameThing target, EffectContext context)
         {
             if (effects.Count == 0)
                 return;
 
             foreach (var effect in effects)
             {
+                if (effect.Context != context)
+                    continue;
+
                 if (!effect.Chance.Roll())
                     continue;
 
@@ -79,6 +83,18 @@ namespace ScaryCastle
             }
         }
 
+        // Contains
+        public static bool Contains(IList<EffectDescriptor> effects, EffectContext context)
+        {
+            for (var i = 0; i < effects.Count; i++)
+            {
+                if (effects[i].Context == context)
+                    return true;
+            }
+
+            return false;
+        }
+
         #endregion
 
         // Amount
@@ -86,6 +102,9 @@ namespace ScaryCastle
 
         // Chance
         public Ratio Chance { get; }
+
+        // Context
+        public EffectContext Context { get; }
 
         // DamageType
         public DamageType DamageType { get; }

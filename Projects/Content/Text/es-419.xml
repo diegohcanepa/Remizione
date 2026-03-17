@@ -13,6 +13,7 @@
   <String Key="ActorProperty.Grace.Name">Gracia</String>
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Level.Name">Estado de Gracia</String>
+  <String Key="CombatIntent.Bite">Mordida!</String>
   <String Key="DurabilityState.Broken">Roto</String>
   <String Key="DurabilityState.Cracked">Resquebrajado</String>
   <String Key="DurabilityState.Sturdy">Integro</String>

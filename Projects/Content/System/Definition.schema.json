@@ -1,9 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "Definition.schema.json",
-  "title": "Definition Base",
   "type": "object",
-  "description": "Clase base para definiciones con nombre y peso de aparición.",
   "properties": {
     "name": { "type": "string" },
     "effects": {
@@ -13,8 +11,8 @@
     "spawnWeight": {
       "type": "number",
       "default": 1.0,
-      "maximum": 1.0,
-      "minimum": 0
+      "minimum": 0,
+      "maximum": 1.0
     }
   },
   "required": ["name"]

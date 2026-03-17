@@ -38,7 +38,7 @@ namespace ScaryCastle
             if (!isDisplayTextDiry)
                 return;
 
-            var text = Definition.LocalizedDisplayName;
+            var text = Definition.DisplayName;
 
             // Durability state
             if (Definition.Durability > 0)
@@ -218,7 +218,7 @@ namespace ScaryCastle
             foreach (var thing in room.Children.OfType<GameThing>())
             {
                 if (area.Contains(thing.Position))
-                    EffectDescriptor.Apply(Definition.EffectDescriptors, source, thing);
+                    EffectDescriptor.Apply(Definition.EffectDescriptors, source, thing, EffectContext.OnCaca);
             }
 
             Use();
@@ -234,7 +234,7 @@ namespace ScaryCastle
                 source.PlaySound(Definition.Sound);
 
             // TODO: Check attack type
-            EffectDescriptor.Apply(Definition.EffectDescriptors, source, target);
+            EffectDescriptor.Apply(Definition.EffectDescriptors, source, target, EffectContext.OnCaca);
 
             Use();
 

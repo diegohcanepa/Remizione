@@ -21,6 +21,12 @@
       "minimum": 0,
       "description": "Probabilidad de que el efecto se aplique."
     },    
+    "context": {
+      "type": "string",
+      "description": "Contexto en donde es aplicable el efecto.",
+      "enum": [ "OnContact", "OnAttack", "OnUpdate", "OnUse" ],
+      "default": "OnContact"
+    },
     "damageType": {
       "type": "string",
       "description": "Si es daño, qué tipo es.",
@@ -55,5 +61,5 @@
       "description": "Nombre del archivo de sonido a reproducir."
     }
   },
-  "required": [ "effectType" ]
+  "required": [ "effectType", "context" ]
 }

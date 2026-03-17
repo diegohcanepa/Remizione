@@ -1,36 +1,31 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "Actor.schema.json",
-  "title": "Actor Data File",
   "type": "object",
   "properties": {
     "data": {
       "type": "array",
-      "description": "Lista de definiciones de Actores.",
       "items": {
         "$ref": "#/$defs/Actor"
       }
     }
   },
-  "required": [
-    "data"
-  ],
+  "required": ["data"],
   "$defs": {
     "Actor": {
-      "description": "Un Actor hereda todo de Thing pero agrega propiedades de combate.",
       "allOf": [
+        { "$ref": "./Thing.schema.json" },
         {
-          "$ref": "./Thing.schema.json"
+          "type": "object",
+          "properties": {
+            "faction": {
+              "type": "string",
+              "default": "Evil",
+              "enum": ["Good", "Evil"]
+            }
+          }
         }
       ],
-      "faction": {
-        "type": "string",
-        "default": "Evil",
-        "enum": [
-          "Good",
-          "Evil"
-        ]
-      },
       "unevaluatedProperties": false
     }
   }

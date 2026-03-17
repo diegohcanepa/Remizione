@@ -24,7 +24,7 @@ namespace ScaryCastle
             DoorDown = element.GetVector2("doorDown");
             DoorLeft = element.GetVector2("doorLeft");
             DoorRight = element.GetVector2("doorRight");
-            DoorStyle = element.GetEnum<DoorStyle>("doorStyle", DoorStyle.Wooden);
+            DoorStyle = element.GetEnum("doorStyle", DoorStyle.Wooden);
             DoorUp = element.GetVector2("doorUp");
             ExactMatch = element.GetBool("exactMatch", false);
             IsExit = element.GetBool("isExit", false);
@@ -35,7 +35,7 @@ namespace ScaryCastle
             MaxProps = element.GetInt32("maxProps", -1);
             MusicTag = element.GetString("musicTag");
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
-            Theme = element.GetEnum<RoomTheme>("theme", RoomTheme.BlueStone);
+            Theme = element.GetEnum("theme", RoomTheme.BlueStone);
 
             // Placeholders
             if (element.TryGetProperty("placeholders", out JsonElement placeholdersElement))

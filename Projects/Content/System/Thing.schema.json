@@ -1,17 +1,12 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "Thing.schema.json",
-  "title": "Thing schema",
-  "type": "object",
   "allOf": [
+    { "$ref": "./Entity.schema.json" },
     {
-      "$ref": "./Entity.schema.json"
-    },
-    {
+      "type": "object",
       "properties": {
-        "requiresDeadEnd": {
-          "type": "boolean"
-        },
+        "requiresDeadEnd": { "type": "boolean" },
         "maxPerRoom": {
           "type": "integer",
           "default": -1

@@ -13,18 +13,17 @@ namespace ScaryCastle
         public CombatIntent(JsonElement element)
             : base(element, false)
         {
-            // Category
-            Category = element.GetEnum<CombatIntentCategory>("category", CombatIntentCategory.Basic);
-
-            // Sound
-            Sound = element.GetObject("sound", Sound.Get);
-
-            // ThrownObject
-            ThrownObject = element.GetEnum<ThrownObjectType>("thrownObject", ThrownObjectType.None);
+            this.Category = element.GetEnum("category", CombatIntentCategory.Basic);
+            this.Sound = element.GetObject("sound", Sound.Get);
+            this.ThrownObject = element.GetEnum("thrownObject", ThrownObjectType.None);
+            this.DisplayName = TextRepository.GetValue($"CombatIntent.{Name}");
         }
 
         // Category
         public CombatIntentCategory Category { get; }
+
+        // DisplayName
+        public string DisplayName { get; }
 
         // Sound
         public Sound? Sound { get; }

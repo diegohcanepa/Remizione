@@ -35,8 +35,8 @@ namespace ScaryCastle
                 PivotOrigin = RectanglePoint.Bottom,
             };
 
-            // TODO: Check
-            //this.CanInflictContactDamage = Definition?.HasPassiveEffects == true;
+            if (Definition != null)
+                this.CanInflictContactDamage = EffectDescriptor.Contains(Definition.Effects, EffectContext.OnContact);
         }
 
         #endregion

@@ -119,7 +119,7 @@ namespace ScaryCastle
                         if (lastThingCollisioned == null && applyDamage)
                         {
                             if (combatIntent != null)
-                                EffectDescriptor.Apply(combatIntent.EffectDescriptors, owner, target);
+                                EffectDescriptor.Apply(combatIntent.EffectDescriptors, owner, target, EffectContext.OnContact);
 
                             if (target.MaxHP == 0)
                             {

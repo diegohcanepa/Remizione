@@ -72,9 +72,9 @@ namespace ScaryCastle
             // Verb
             Verb = element.GetEnum("verb", ItemVerb.None);
 
-            this.LocalizedDescription = Localization.GetItemDescription(this);
-            this.LocalizedDisplayName = Localization.GetItemName(this);
-            this.LocalizedVerbSentence = Verb == ItemVerb.None ? string.Empty : $"{Localization.GetValue(Verb)} {LocalizedDisplayName}";
+            this.Description = Localization.GetItemDescription(this);
+            this.DisplayName = Localization.GetItemName(this);
+            this.VerbSentence = Verb == ItemVerb.None ? string.Empty : $"{Localization.GetValue(Verb)} {DisplayName}";
 
             this.Image = Atlases.UI.FindImage(Name);
 
@@ -105,6 +105,12 @@ namespace ScaryCastle
 
         // Definitions
         public static ItemDefinitionContainer Definitions { get; } = new(element => new ItemDefinition(element));
+
+        // Description
+        public string Description { get; }
+
+        // DisplayName
+        public string DisplayName { get; }
 
         // Durability
         public Ratio Durability { get; }
@@ -137,15 +143,6 @@ namespace ScaryCastle
         // IsStackable
         public bool IsStackable { get; }
 
-        // LocalizedDescription
-        public string LocalizedDescription { get; }
-
-        // LocalizedDisplayName
-        public string LocalizedDisplayName { get; }
-
-        // LocalizedVerbSentence
-        public string LocalizedVerbSentence { get; }
-
         // PickupSound
         public Sound PickupSound { get; }
 
@@ -166,5 +163,8 @@ namespace ScaryCastle
 
         // Verb
         public ItemVerb Verb { get; }
+
+        // VerbSentence
+        public string VerbSentence { get; }
     }
 }

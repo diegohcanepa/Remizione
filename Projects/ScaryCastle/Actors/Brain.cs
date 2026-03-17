@@ -24,7 +24,6 @@ namespace ScaryCastle
 
             Span<float> weights = stackalloc float[count];
             float totalWeight = 0;
-            float hpPercent = (float)actor.HP / actor.MaxHP;
 
             for (int i = 0; i < count; i++)
             {
@@ -35,7 +34,7 @@ namespace ScaryCastle
                 {
                     // BERSERK: "Si estoy muriendo, tiro los ataques fuertes"
                     case CombatBehaviorArchetype.Berserk:
-                        if (hpPercent < 0.40f) // Menos del 40% de vida
+                        if (actor.HPRatio < .4f) // Menos del 40% de vida
                         {
                             if (intent.Category == CombatIntentCategory.Special)
                             {

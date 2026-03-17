@@ -385,7 +385,7 @@ namespace ScaryCastle
                 {
                     if (RuntimeCollider.Contains(Session.Player.Position))
                     {
-                        EffectDescriptor.Apply(this, Session.Player);
+                        EffectDescriptor.Apply(this, Session.Player, EffectContext.OnContact);
                         contactCooldown = 500;
                         return;
                     }
@@ -816,6 +816,10 @@ namespace ScaryCastle
                 }
             }
         }
+
+        // HPRatio
+        [ScriptProperty]
+        public Ratio HPRatio => (float)HP / MaxHP;
 
         // HurtImpactSound
         [ScriptProperty]

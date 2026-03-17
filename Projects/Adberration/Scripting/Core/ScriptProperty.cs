@@ -24,9 +24,7 @@ namespace Adberration.Scripting
                                    !typeof(Room).IsAssignableFrom(propertyInfo.PropertyType);
 
             if (shouldCheckType && !ScriptSyntax.SupportedPropertyTypes.Contains(propertyInfo.PropertyType))
-            {
                 throw new ArgumentException($"The type '{propertyInfo.PropertyType}' is not supported as a property.", nameof(propertyInfo));
-            }
         }
 
         #endregion

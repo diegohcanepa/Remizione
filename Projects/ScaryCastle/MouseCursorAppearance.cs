@@ -65,7 +65,7 @@ namespace ScaryCastle
             {
                 if (target == context.Session.Player && context.HeldItem?.Definition.Verb != ItemVerb.None)
                 {
-                    MouseCursor.Text = context.HeldItem?.Definition.LocalizedVerbSentence;
+                    MouseCursor.Text = context.HeldItem?.Definition.VerbSentence;
                     return;
                 }
 
@@ -79,7 +79,7 @@ namespace ScaryCastle
                     return;
                 }
 
-                MouseCursor.Text = $"{useVerb} {context.HeldItem.Definition.LocalizedDisplayName} {withPreposition} {sentence}";
+                MouseCursor.Text = $"{useVerb} {context.HeldItem.Definition.DisplayName} {withPreposition} {sentence}";
             }
         }
 

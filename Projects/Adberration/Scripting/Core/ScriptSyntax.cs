@@ -187,6 +187,7 @@ namespace Adberration.Scripting
                                                                                                                   typeof(int),
                                                                                                                   typeof(Int32Range),
                                                                                                                   typeof(long),
+                                                                                                                  typeof(Ratio),
                                                                                                                   typeof(Rectangle),
                                                                                                                   typeof(RectangleF),
                                                                                                                   typeof(Size),
