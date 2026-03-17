@@ -28,7 +28,7 @@ namespace ScaryCastle
         {
             if (CanInflictDamage(target))
             {
-                EffectDescriptor.Apply(intent.EffectDescriptors, Owner, target, EffectContext.OnAttack);
+                EffectDescriptor.Apply(intent.EffectDescriptors, Owner, target, EffectContext.Attack);
                 Owner.Session.InterruptAwaitingScript();
                 if (Owner.Faction == Faction.Evil)
                     Owner.Session.HUD.ActionMessage.Show(intent.DisplayName, ColorPalette.Text.Red);

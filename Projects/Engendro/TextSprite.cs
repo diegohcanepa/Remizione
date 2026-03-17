@@ -140,20 +140,14 @@ namespace Engendro
         private void InvalidateLocalizableText()
         {
             if (TextRepositoryKey == null || textRepositoryLoadCount == TextRepository.LoadCount)
-            {
                 return;
-            }
 
             textRepositoryLoadCount = TextRepository.LoadCount;
 
             if (TextRepositoryKey == null)
-            {
                 text = null;
-            }
             else
-            {
                 text = TextRepository.GetValue(TextRepositoryKey);
-            }
 
             Invalidate();
 

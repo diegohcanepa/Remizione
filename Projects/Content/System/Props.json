@@ -48,7 +48,7 @@
       ],
       "effects": [
         {
-          "context": "OnAttack",
+          "context": "Attack",
           "effectType": "Damage",
           "amount": "1",
           "knockback": "15,5"

@@ -85,7 +85,7 @@ namespace ScaryCastle
             ShadowSpotSize = 6;
 
             if (Definition != null)
-                this.CanInflictContactDamage = EffectDescriptor.Contains(Definition.Effects, EffectContext.OnContact);
+                this.CanInflictContactDamage = EffectDescriptor.Contains(Definition.Effects, EffectContext.Contact);
         }
 
         #endregion
@@ -456,6 +456,12 @@ namespace ScaryCastle
                 Session.InteractionData.SetUseWithOutcome(target, item);
             }
 
+            if (Session.InteractionData.Script == null)
+            {
+                MouseCursor.Shake();
+                return false;
+            }
+
             var destination = target.GetApproachPosition(this);
             var result = target != this && MoveTo(destination);
 
@@ -714,7 +720,7 @@ namespace ScaryCastle
         public void Say(string text, bool awaitInput)
         {
             speechBubble ??= new SpeechBubble(this);
-            speechBubble.Show(LocalizedDisplayName, text, awaitInput);
+            speechBubble.Show(DisplayName, text, awaitInput);
         }
 
         // SpeechBubbleSound

@@ -119,7 +119,6 @@ namespace ScaryCastle
             }
             else
             {
-                Sound.Play(SoundNames.Error);
                 MouseCursor.Shake();
             }
 

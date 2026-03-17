@@ -8,7 +8,7 @@
 			"verb": "Eat",
 			"effects": [
 				{
-					"context": "OnUse",
+					"context": "Use",
 					"effectType": "Heal",
 					"amount": "2",
 					"target": "Self",
@@ -34,7 +34,7 @@
 			"isMagical": true,
 			"effects": [
 				{
-					"context": "OnAttack",
+					"context": "Attack",
 					"effectType": "Damage",
 					"damageType": "Physical",
 					"amount": "1d4",
@@ -51,7 +51,7 @@
 		    "sound": "Firecracker",
 			"effects": [
 				{
-					"context": "OnAttack",
+					"context": "Attack",
 					"effectType": "Damage",
 					"damageType": "Physical",
 					"amount": "1d4+4",
@@ -95,7 +95,7 @@
 			"isStackable": true,
 			"effects": [
 				{
-					"context": "OnUse",
+					"context": "Use",
 					"effectType": "Heal",
 					"amount": "4",
 					"target": "Self",

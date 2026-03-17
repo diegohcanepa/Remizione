@@ -12,6 +12,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private readonly UIHPInfo hpInfo;
         private readonly UIHPMeter hpMeter;
         private readonly GameSession session;
 
@@ -27,6 +28,7 @@ namespace ScaryCastle
 
             this.ActionMessage = new(Game, RectanglePoint.Bottom, Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -5), ScaleInfo.Text.ExtraGiant);
             this.FearMeter = new(session);
+            this.hpInfo = new(Game);
             this.hpMeter = new(session.Game, new(1, 0));
             this.Log = new(Game);
             this.Message = new(Game, RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
@@ -59,7 +61,10 @@ namespace ScaryCastle
             Game.SpriteBatch.End();
 
             if (session.Room is ProceduralRoom)
+            {
+                hpInfo.Draw(gameTime);
                 MiniMap.Draw(gameTime);
+            }
         }
 
         // OnUpdate
@@ -67,11 +72,14 @@ namespace ScaryCastle
         {
             InventoryMeter.Update(gameTime);
             FearMeter.Update(gameTime);
+            hpInfo.Update(gameTime);
             hpMeter.Update(gameTime);
             MiniMap.Update(gameTime);
             Log.Update(gameTime);
             ActionMessage.Update(gameTime);
             Message.Update(gameTime);
+
+            hpInfo.Target = session.InteractionContext.Target?.MaxHP > 0 && session.InteractionContext.Target != session.Player ? session.InteractionContext.Target : null;
         }
 
         #endregion

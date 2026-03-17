@@ -10,7 +10,7 @@
           "sound": "WhooshA",
           "effects": [
             {
-              "context": "OnAttack",
+              "context": "Attack",
               "effectType": "Damage",
               "amount": "1",
               "impactWord": "Kapow"
@@ -29,7 +29,7 @@
           "sound": "EnviousEyeAttack",
           "effects": [
             {
-              "context": "OnAttack",              
+              "context": "Attack",
               "effectType": "Damage",
               "amount": "2",
               "impactWord": "AghRed"

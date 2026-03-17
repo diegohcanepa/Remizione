@@ -71,6 +71,28 @@ namespace ScaryCastle
         // ConsumptionCooldown
         public int ConsumptionCooldown { get; set; }
 
+        // ComputeUse
+        public bool ComputeUse()
+        {
+            // Quantity
+            if (Definition.ConsumptionType == ConsumptionType.Quantity)
+            {
+                Count--;
+                if (Count <= 0)
+                    Inventory.Remove(this);
+            }
+            else if (Definition.ConsumptionType == ConsumptionType.Durability)
+            {
+                Durability -= Definition.DurabilityCost;
+                if (Durability <= 0)
+                    Inventory.Remove(this);
+            }
+
+            InvalidateDisplayText();
+
+            return true;
+        }
+
         // Count
         public int Count
         {
@@ -182,28 +204,6 @@ namespace ScaryCastle
         }
 
         // Use
-        public bool Use()
-        {
-            // Quantity
-            if (Definition.ConsumptionType == ConsumptionType.Quantity)
-            {
-                Count--;
-                if (Count <= 0)
-                    Inventory.Remove(this);
-            }
-            else if (Definition.ConsumptionType == ConsumptionType.Durability)
-            {
-                Durability -= Definition.DurabilityCost;
-                if (Durability <= 0)
-                    Inventory.Remove(this);
-            }
-
-            InvalidateDisplayText();
-
-            return true;
-        }
-
-        // Use
         public bool Use(GameThing source, GameRoom room)
         {
             if (Definition.AreaRange == EffectAreaRange.None)
@@ -218,25 +218,24 @@ namespace ScaryCastle
             foreach (var thing in room.Children.OfType<GameThing>())
             {
                 if (area.Contains(thing.Position))
-                    EffectDescriptor.Apply(Definition.EffectDescriptors, source, thing, EffectContext.OnCaca);
+                    EffectDescriptor.Apply(Definition.EffectDescriptors, source, thing, EffectContext.Caca);
             }
 
-            Use();
+            ComputeUse();
 
             return true;
         }
 
         // Use
-        public bool Use(GameThing source, GameThing target)
+        public bool Use(GameThing source, GameThing target, EffectContext context)
         {
             // Play sound
             if (Definition.Sound != null)
                 source.PlaySound(Definition.Sound);
 
-            // TODO: Check attack type
-            EffectDescriptor.Apply(Definition.EffectDescriptors, source, target, EffectContext.OnCaca);
+            EffectDescriptor.Apply(Definition.EffectDescriptors, source, target, context);
 
-            Use();
+            ComputeUse();
 
             return true;
         }

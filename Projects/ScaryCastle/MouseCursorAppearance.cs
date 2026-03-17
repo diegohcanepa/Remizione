@@ -70,7 +70,7 @@ namespace ScaryCastle
                 }
 
                 // Get sentence
-                var sentence = target.LocalizedDisplayName;
+                var sentence = target.DisplayName;
 
                 // No item 
                 if (context.HeldItem == null)

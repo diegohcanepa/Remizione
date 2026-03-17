@@ -385,7 +385,7 @@ namespace ScaryCastle
                 {
                     if (RuntimeCollider.Contains(Session.Player.Position))
                     {
-                        EffectDescriptor.Apply(this, Session.Player, EffectContext.OnContact);
+                        EffectDescriptor.Apply(this, Session.Player, EffectContext.Contact);
                         contactCooldown = 500;
                         return;
                     }
@@ -436,7 +436,7 @@ namespace ScaryCastle
             if (!AllowInteraction)
                 return false;
 
-            if (IsMoving || IsDead || string.IsNullOrWhiteSpace(LocalizedDisplayName))
+            if (IsMoving || IsDead || string.IsNullOrWhiteSpace(DisplayName))
                 return false;
 
             return true;
@@ -584,6 +584,9 @@ namespace ScaryCastle
         [ScriptProperty]
         public Sound? DeathSound { get; set; }
 
+        // DisplayName
+        public string DisplayName { get; private set; } = string.Empty;
+
         // DisplayNameKey
         [ScriptProperty]
         public string DisplayNameKey
@@ -594,7 +597,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-                    LocalizedDisplayName = TextRepository.GetValue(DisplayNameKey);
+                    DisplayName = TextRepository.GetValue(DisplayNameKey);
                 }
             }
         } = string.Empty;
@@ -870,9 +873,6 @@ namespace ScaryCastle
             else
                 return RuntimeHotspot.Contains(InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera));
         }
-
-        // LocalizedDisplayName
-        public string LocalizedDisplayName { get; private set; } = string.Empty;
 
         // MaxHP
         [ScriptProperty]

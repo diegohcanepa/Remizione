@@ -36,7 +36,7 @@ namespace ScaryCastle
             };
 
             if (Definition != null)
-                this.CanInflictContactDamage = EffectDescriptor.Contains(Definition.Effects, EffectContext.OnContact);
+                this.CanInflictContactDamage = EffectDescriptor.Contains(Definition.Effects, EffectContext.Contact);
         }
 
         #endregion
@@ -124,7 +124,7 @@ namespace ScaryCastle
             var successChance = item.Definition.SkillChance - SkillChancePenalty;
             var success = roll <= successChance;
 
-            item.Use();
+            item.ComputeUse();
 
             var text = TextRepository.GetValue(success ? Localization.GetValue(FloatingMessage.Success) : Localization.GetValue(FloatingMessage.Failed));
 

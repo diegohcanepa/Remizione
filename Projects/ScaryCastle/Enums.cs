@@ -44,7 +44,7 @@ namespace ScaryCastle
     public enum EffectAreaRange { None, Small, Medium, Large }
 
     // EffectContext
-    public enum EffectContext { OnContact, OnAttack, OnUpdate, OnCaca, OnUse }
+    public enum EffectContext { Contact, Attack, Update, Caca, Use }
 
     // EffectType
     public enum EffectType { None, Damage, Death, Heal, Luck, AddCondition, RemoveCondition }

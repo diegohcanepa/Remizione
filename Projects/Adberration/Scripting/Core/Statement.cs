@@ -21,6 +21,7 @@ namespace Adberration.Scripting
         protected static readonly string ClearTagArg = "#clear-tag";
         protected static readonly string ColorArg = "#color";
         protected static readonly string ConditionArg = "#condition";
+        protected static readonly string ContextArg = "#context";
         protected static readonly string DecimalsArg = "#decimals";
         protected static readonly string DelayArg = "#delay";
         protected static readonly string DepthOffsetArg = "#depth-offset";

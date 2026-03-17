@@ -18,7 +18,7 @@ namespace ScaryCastle
         {
             this.Amount = element.GetObject("amount", v => new DiceExpression(v));
             this.Chance = element.GetFloat("chance", 1);
-            this.Context = element.GetEnum("context", EffectContext.OnContact);
+            this.Context = element.GetEnum("context", EffectContext.Contact);
             this.DamageType = element.GetEnum("damageType", DamageType.Physical);
             this.EffectType = element.GetEnum("effectType", EffectType.None);
             this.Factor = element.GetFloat("factor", 1);
