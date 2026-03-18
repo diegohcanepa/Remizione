@@ -89,12 +89,14 @@ namespace Engendro
 
             if (CurrentScene.ExclusiveDraw)
             {
+                CurrentScene.ClearBackground();
                 CurrentScene.Draw(gameTime);
             }
             else
             {
                 for (var i = scenes.Count - 1; i >= 0; i--)
                 {
+                    scenes[i].ClearBackground();
                     scenes[i].Draw(gameTime);
                 }
             }

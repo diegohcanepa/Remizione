@@ -40,13 +40,6 @@ namespace Engendro
 
         #region Protected members
 
-        // BeforeDraw
-        protected override void BeforeDraw(GameTime gameTime)
-        {
-            if (BackgroundColor != Color.Transparent)
-                Game.GraphicsDevice.Clear(BackgroundColor);
-        }
-
         // Dispose
         protected virtual void Dispose(bool disposing)
         {
@@ -134,6 +127,13 @@ namespace Engendro
 
         // BoundingBox
         public Rectangle BoundingBox { get; private set; }
+
+        // ClearBackground
+        public void ClearBackground()
+        {
+            if (BackgroundColor != Color.Transparent)
+                Game.GraphicsDevice.Clear(BackgroundColor);
+        }
 
         // Content
         public ContentManager? Content { get; private set; }

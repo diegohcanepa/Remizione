@@ -9,16 +9,6 @@ namespace Engendro
     {
         #region Protected members
 
-        // AfterDraw
-        protected virtual void AfterDraw(GameTime gameTime)
-        {
-        }
-
-        // BeforeDraw
-        protected virtual void BeforeDraw(GameTime gameTime)
-        {
-        }
-
         // OnDraw
         protected virtual void OnDraw(GameTime gameTime)
         {
@@ -35,11 +25,7 @@ namespace Engendro
         public void Draw(GameTime gameTime)
         {
             if (IsActiveInGameLoop)
-            {
-                BeforeDraw(gameTime);
                 OnDraw(gameTime);
-                AfterDraw(gameTime);
-            }
         }
 
         // Game
