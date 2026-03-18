@@ -42,7 +42,7 @@ namespace Engendro
                 float scaledX = localOffset.X * transform.ScaleX;
                 float scaledY = localOffset.Y * transform.ScaleY;
 
-                Vector2 result = new();
+                Vector2 result = Vector2.Zero;
 
                 // 2. Proyectar sobre el BoundingBox considerando el Flip
                 if (transform.IsFlippedHorizontally)

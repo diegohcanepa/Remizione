@@ -16,7 +16,7 @@ namespace ScaryCastle
             var intents = behavior.Intents;
             int count = intents.Count;
 
-            if (count == 0)
+            if (count == 0 || intents[0].Category == CombatIntentCategory.Contact)
                 return null;
 
             if (count == 1)
@@ -27,6 +27,9 @@ namespace ScaryCastle
 
             for (int i = 0; i < count; i++)
             {
+                if (intents[i].Category == CombatIntentCategory.Contact)
+                    continue;
+
                 var intent = intents[i];
                 float w = intent.SpawnWeight;
 

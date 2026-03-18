@@ -10,6 +10,12 @@
       ]
     },
     {
+      "name": "Rat",
+      "placements": [
+        "WalkArea"
+      ]
+    },
+    {
       "name": "Skeleton",
       "minRun": 10,
       "minSpawnAmount": 1,

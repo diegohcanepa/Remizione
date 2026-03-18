@@ -34,9 +34,6 @@ namespace ScaryCastle
                 Opacity = ColorPalette.ShadowOpacity,
                 PivotOrigin = RectanglePoint.Bottom,
             };
-
-            if (Definition != null)
-                this.CanInflictContactDamage = EffectDescriptor.Contains(Definition.Effects, EffectContext.Contact);
         }
 
         #endregion

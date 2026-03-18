@@ -35,7 +35,7 @@ namespace ScaryCastle
             {
                 foreach (var intentJson in intentsArray.EnumerateArray())
                 {
-                    intents.Add(new(intentJson));
+                    intents.Add(new(this, intentJson));
                 }
             }
 

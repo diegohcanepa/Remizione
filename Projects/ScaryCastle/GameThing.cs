@@ -376,7 +376,7 @@ namespace ScaryCastle
             if (blinker.IsRunning)
                 blinker.Update(gameTime);
 
-            if (CanInflictContactDamage)
+            if (ContactIntent != null)
             {
                 if (contactCooldown > 0)
                     contactCooldown -= gameTime.ElapsedGameTime.Milliseconds;
@@ -385,7 +385,7 @@ namespace ScaryCastle
                 {
                     if (RuntimeCollider.Contains(Session.Player.Position))
                     {
-                        EffectDescriptor.Apply(this, Session.Player, EffectContext.Contact);
+                        EffectDescriptor.Apply(ContactIntent.EffectDescriptors, this, Session.Player, EffectContext.Contact);
                         contactCooldown = 500;
                         return;
                     }
@@ -426,9 +426,6 @@ namespace ScaryCastle
         // CanBeHit
         [ScriptProperty]
         public bool CanBeHit { get; set; } = true;
-
-        // CanInflictContactDamage
-        public bool CanInflictContactDamage { get; init; }
 
         // CanInteract
         public virtual bool CanInteract()
@@ -511,6 +508,9 @@ namespace ScaryCastle
         // CollisionHeight
         [ScriptProperty]
         public int CollisionHeight { get; set; }
+
+        // ContactIntent
+        public CombatIntent? ContactIntent { get; init; }
 
         // Die
         [ScriptMethod]
@@ -824,10 +824,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public Ratio HPRatio => (float)HP / MaxHP;
 
-        // HurtImpactSound
-        [ScriptProperty]
-        public Sound? HurtImpactSound { get; set; }
-
         // HurtSound
         [ScriptProperty]
         public Sound? HurtSound { get; set; }
@@ -1012,9 +1008,6 @@ namespace ScaryCastle
             // Sonido de dolor o impacto
             if (HurtSound != null)
                 PlaySound(HurtSound);
-
-            if (HurtImpactSound != null)
-                PlaySound(HurtImpactSound);
 
             // Shake: El objeto tiembla por el golpe (incluso una pared dura puede vibrar)
             if (HitEffect == HitEffect.Shake)

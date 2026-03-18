@@ -39,6 +39,25 @@
       ]
     },
     {
+      "name": "Rat",
+      "archetype": "Tactical",
+      "intents": [
+        {
+          "name": "Bite",
+          "category": "Contact",
+          "effects": [
+            {
+              "context": "Contact",
+              "effectType": "Damage",
+              "amount": "1",
+              "impactWord": "AghRed",
+              "sound": "RatAttack"
+            }
+          ]
+        }
+      ]
+    },    
+    {
       "name": "Skeleton",
       "archetype": "Tactical",
       "intents": [

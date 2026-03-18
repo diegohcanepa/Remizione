@@ -83,18 +83,6 @@ namespace ScaryCastle
             }
         }
 
-        // Contains
-        public static bool Contains(IList<EffectDescriptor> effects, EffectContext context)
-        {
-            for (var i = 0; i < effects.Count; i++)
-            {
-                if (effects[i].Context == context)
-                    return true;
-            }
-
-            return false;
-        }
-
         #endregion
 
         // Amount

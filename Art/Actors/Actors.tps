@@ -573,6 +573,28 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Rat-assets/Move01.png</key>
+            <key type="filename">Rat-assets/Move02.png</key>
+            <key type="filename">Rat-assets/Move03.png</key>
+            <key type="filename">Rat-assets/Move04.png</key>
+            <key type="filename">Rat-assets/Move05.png</key>
+            <key type="filename">Rat-assets/Stand01.png</key>
+            <key type="filename">Rat-assets/Stand02.png</key>
+            <key type="filename">Rat-assets/Stand03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,4,14,7</rect>
+                <key>scale9Paddings</key>
+                <rect>7,4,14,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Reaper-assets/Move01.png</key>
             <key type="filename">Reaper-assets/Move02.png</key>
             <key type="filename">Reaper-assets/Move03.png</key>
@@ -776,6 +798,7 @@
                     <filename>EnviousEye-assets</filename>
                     <filename>Father-assets</filename>
                     <filename>Skeleton-assets</filename>
+                    <filename>Rat-assets</filename>
                 </array>
             </struct>
         </map>

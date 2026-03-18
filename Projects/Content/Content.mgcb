@@ -902,6 +902,60 @@
 /processorParam:Quality=Best
 /build:Audio/FX/PowerRestored.wav;Audio/FX/PowerRestored
 
+#begin Audio/FX/Rat1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Rat1.wav;Audio/FX/Rat1
+
+#begin Audio/FX/Rat2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Rat2.wav;Audio/FX/Rat2
+
+#begin Audio/FX/Rat3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Rat3.wav;Audio/FX/Rat3
+
+#begin Audio/FX/Rat4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Rat4.wav;Audio/FX/Rat4
+
+#begin Audio/FX/RatAttack1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/RatAttack1.wav;Audio/FX/RatAttack1
+
+#begin Audio/FX/RatAttack2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/RatAttack2.wav;Audio/FX/RatAttack2
+
+#begin Audio/FX/RatAttack3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/RatAttack3.wav;Audio/FX/RatAttack3
+
+#begin Audio/FX/RatDeath1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/RatDeath1.wav;Audio/FX/RatDeath1
+
+#begin Audio/FX/RatDeath2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/RatDeath2.wav;Audio/FX/RatDeath2
+
 #begin Audio/FX/Raven.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

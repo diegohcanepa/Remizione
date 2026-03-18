@@ -7,13 +7,14 @@
   <String Key="Actor.Grandma">Sweet old lady</String>
   <String Key="Actor.HellGoat">Hell goat</String>
   <String Key="Actor.Mandinga">Mandinga</String>
+  <String Key="Actor.Rat">Rat</String>
   <String Key="Actor.RiderlessHead">Riderless Head</String>
   <String Key="Actor.Sister">Sister Ham</String>
   <String Key="ActorProperty.Grace.Description">The ashes quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Grace.Name">Grace</String>
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Level.Name">State of Grace</String>
-  <String Key="CombatIntent.Bite">Bite!</String>
+  <String Key="CombatBehavior.Rat.Bite">Rat bite!</String>
   <String Key="DurabilityState.Broken">Broken</String>
   <String Key="DurabilityState.Cracked">Cracked</String>
   <String Key="DurabilityState.Sturdy">Sturdy</String>
@@ -65,7 +66,7 @@
   <String Key="Item.MagneticCard.Name">Magnetic card</String>
   <String Key="Item.MasterLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.MasterLockpick.Name">Master lockpick</String>
-  <String Key="Item.PieceOfWood.Description" />
+  <String Key="Item.PieceOfWood.Description"></String>
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>

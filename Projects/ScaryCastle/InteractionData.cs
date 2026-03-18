@@ -39,7 +39,10 @@ namespace ScaryCastle
             {
                 session.Player?.FaceTo(Target);
                 if (Script != null)
-                    session.BeginOutcome(Script, Target);
+                {
+                    if (Vector2.Distance(Target.Position, TargetPosition) <= 1)
+                        session.BeginOutcome(Script, Target);
+                }
             }
             else if (Script != null)
             {

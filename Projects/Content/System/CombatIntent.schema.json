@@ -16,7 +16,8 @@
           "description": "Tipo de intensidades del ataque.",
           "enum": [
             "Basic",
-            "Special"
+            "Special",
+            "Contact"
           ]
         },
         "thrownObject": {

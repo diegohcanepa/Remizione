@@ -12,6 +12,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private readonly HUDMessage actionMessage;
         private readonly UIHPInfo hpInfo;
         private readonly UIHPMeter hpMeter;
         private readonly GameSession session;
@@ -26,7 +27,7 @@ namespace ScaryCastle
         {
             this.session = session;
 
-            this.ActionMessage = new(Game, RectanglePoint.Bottom, Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -5), ScaleInfo.Text.ExtraGiant);
+            this.actionMessage = new(Game, RectanglePoint.Bottom, Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -5), ScaleInfo.Text.ExtraGiant);
             this.FearMeter = new(session);
             this.hpInfo = new(Game);
             this.hpMeter = new(session.Game, new(1, 0));
@@ -56,7 +57,7 @@ namespace ScaryCastle
 
             InventoryMeter.Draw(gameTime);
             Log.Draw(gameTime);
-            ActionMessage.Draw(gameTime);
+            actionMessage.Draw(gameTime);
             Message.Draw(gameTime);
             Game.SpriteBatch.End();
 
@@ -76,16 +77,13 @@ namespace ScaryCastle
             hpMeter.Update(gameTime);
             MiniMap.Update(gameTime);
             Log.Update(gameTime);
-            ActionMessage.Update(gameTime);
+            actionMessage.Update(gameTime);
             Message.Update(gameTime);
 
-            hpInfo.Target = session.InteractionContext.Target?.MaxHP > 0 && session.InteractionContext.Target != session.Player ? session.InteractionContext.Target : null;
+            hpInfo.Target = session.InteractionContext.Target is Actor && session.InteractionContext.Target?.MaxHP > 0 && session.InteractionContext.Target != session.Player ? session.InteractionContext.Target : null;
         }
 
         #endregion
-
-        // ActionMessage
-        public HUDMessage ActionMessage { get; }
 
         // FearMeter
         public UIFearMeter FearMeter { get; }
@@ -113,6 +111,12 @@ namespace ScaryCastle
 
         // Message
         public HUDMessage Message { get; }
+
+        // NotifyCombatIntent
+        public void NotifyCombatIntent(CombatIntent combatIntent)
+        {
+            actionMessage.Show(combatIntent.DisplayName, ColorPalette.Text.Red);
+        }
 
         // Reset
         public void Reset()

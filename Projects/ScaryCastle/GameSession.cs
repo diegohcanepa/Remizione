@@ -123,6 +123,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(NumberSix));
             AotTypeRegistry.Register(typeof(Pottery));
             AotTypeRegistry.Register(typeof(Prop));
+            AotTypeRegistry.Register(typeof(Rat));
             AotTypeRegistry.Register(typeof(RideCar));
             AotTypeRegistry.Register(typeof(RideDoor));
             AotTypeRegistry.Register(typeof(Sack));
