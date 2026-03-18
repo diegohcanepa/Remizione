@@ -99,6 +99,9 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            if (!IsRunning)
+                return;
+
             base.OnDraw(gameTime);
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
@@ -117,6 +120,9 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            if (!IsRunning)
+                return;
+
             base.OnUpdate(gameTime);
 
             var done = true;
@@ -138,9 +144,6 @@ namespace ScaryCastle
         {
             IsRunning = false;
         }
-
-        // IsActiveInGameLoop
-        public override bool IsActiveInGameLoop => IsRunning;
 
         // IsRunning
         public bool IsRunning { get; private set; } = true;

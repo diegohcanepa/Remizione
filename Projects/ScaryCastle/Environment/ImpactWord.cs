@@ -30,18 +30,21 @@ namespace ScaryCastle
 
         #region Protected members
 
-        // IsActiveInGameLoop
-        public override bool IsActiveInGameLoop => IsActive && base.IsActiveInGameLoop;
-
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            if (!IsActive)
+                return;
+
             sprite.Draw(gameTime);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            if (!IsActive)
+                return;
+
             sprite.Update(gameTime);
 
             if (endingPhaseCooldown > 0)

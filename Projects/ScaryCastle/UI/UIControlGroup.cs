@@ -25,6 +25,9 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            if (!IsVisible)
+                return;
+
             for (var i = 0; i < controlList.Count; i++)
             {
                 controlList[i].Draw(gameTime);
@@ -34,6 +37,9 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            if (!IsVisible)
+                return;
+
             var layout = false;
             var bbox = RectangleF.Empty;
 
@@ -76,9 +82,6 @@ namespace ScaryCastle
 
         // FirstControl
         public UIButton? FirstControl => controlList.Count == 0 ? null : controlList[0];
-
-        // IsActiveInGameLoop
-        public override bool IsActiveInGameLoop => IsVisible && base.IsActiveInGameLoop;
 
         // IsVisible
         public bool IsVisible { get; set; } = true;

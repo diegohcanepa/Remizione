@@ -24,21 +24,16 @@ namespace Engendro
         // Draw
         public void Draw(GameTime gameTime)
         {
-            if (IsActiveInGameLoop)
-                OnDraw(gameTime);
+            OnDraw(gameTime);
         }
 
         // Game
         public EngendroGame Game { get; } = game;
 
-        // IsActiveInGameLoop
-        public virtual bool IsActiveInGameLoop => true;
-
         // Update
         public void Update(GameTime gameTime)
         {
-            if (IsActiveInGameLoop)
-                OnUpdate(gameTime);
+            OnUpdate(gameTime);
         }
     }
 }

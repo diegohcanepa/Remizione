@@ -69,6 +69,9 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            if (!IsVisible)
+                return;
+
             Game.SpriteBatch.Begin(Camera);
             Game.Shapes.DrawRectangle(BoundingBox, Color.Black);
 
@@ -86,6 +89,9 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            if (!IsVisible)
+                return;
+
             if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
             {
                 if (GetOptionAt(InputManager.DefaultPlayer.Mouse.WorldPosition(Camera)) is ContextMenuOption<TKey> option)
@@ -110,9 +116,6 @@ namespace ScaryCastle
         }
 
         #endregion
-
-        // IsActiveInGameLoop
-        public override bool IsActiveInGameLoop => IsVisible;
 
         // AddOption
         public ContextMenuOption<TKey> AddOption(TKey key, string text)

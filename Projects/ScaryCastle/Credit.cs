@@ -31,6 +31,9 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            if (Done)
+                return;
+
             base.OnDraw(gameTime);
             textSprite.Draw(gameTime);
         }
@@ -38,6 +41,9 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            if (Done)
+                return;
+
             base.OnUpdate(gameTime);
 
             textSprite.Update(gameTime);
@@ -53,8 +59,5 @@ namespace ScaryCastle
 
         // Done
         public bool Done { get; private set; }
-
-        // IsActiveInGameLoop
-        public override bool IsActiveInGameLoop => !Done;
     }
 }

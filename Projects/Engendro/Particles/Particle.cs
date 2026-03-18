@@ -8,7 +8,6 @@ namespace Engendro
     /// </summary>
     public class Particle(EngendroGame game) : GameObject(game)
     {
-
         #region Private members
 
         // UpdatePosition
