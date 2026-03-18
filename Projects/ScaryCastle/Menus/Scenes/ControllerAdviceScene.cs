@@ -20,7 +20,7 @@ namespace ScaryCastle.Menus
             BackgroundColor = Color.Black;
 
             // Image
-            image = new Sprite(game, Atlases.Menu.ControllerAdvice)
+            image = new(Atlases.Menu.ControllerAdvice)
             {
                 PivotOrigin = RectanglePoint.Top,
                 Position = new Vector2(Screen.Center.X, 0),
@@ -28,7 +28,7 @@ namespace ScaryCastle.Menus
             };
 
             // Message
-            message = new TextSprite(game, Fonts.Common)
+            message = new(Fonts.Common)
             {
                 Color = ColorPalette.TextWhite,
                 PivotOrigin = RectanglePoint.Top,

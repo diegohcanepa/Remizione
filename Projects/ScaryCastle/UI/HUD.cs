@@ -23,22 +23,21 @@ namespace ScaryCastle
 
         // Constructor
         public HUD(GameSession session)
-            : base(session.Game)
         {
             this.session = session;
 
-            this.actionMessage = new(Game, RectanglePoint.Bottom, Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -5), ScaleInfo.Text.ExtraGiant);
+            this.actionMessage = new(RectanglePoint.Bottom, Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -5), ScaleInfo.Text.ExtraGiant);
             this.FearMeter = new(session);
-            this.hpInfo = new(Game);
-            this.hpMeter = new(session.Game, new(1, 0));
-            this.Log = new(Game);
-            this.Message = new(Game, RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
+            this.hpInfo = new();
+            this.hpMeter = new(new(1, 0));
+            this.Log = new();
+            this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
 
             // CommonInventoryMeter
             this.InventoryMeter = new(session.Inventory);
 
             // Mini map
-            this.MiniMap = new(Game);
+            this.MiniMap = new();
         }
 
         #endregion

@@ -54,7 +54,7 @@ namespace ScaryCastle
 
             this.brokenPieces = new BrokenPieces(this, brokenPiecesScale);
 
-            this.Shadow = new Sprite(session.Game)
+            this.Shadow = new()
             {
                 Opacity = ColorPalette.ShadowOpacity,
                 PivotOrigin = RectanglePoint.Center,

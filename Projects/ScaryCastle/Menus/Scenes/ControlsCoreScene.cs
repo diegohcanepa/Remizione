@@ -28,7 +28,7 @@ namespace ScaryCastle.Menus
             // Labels
             for (var i = 0; i < labels.Length; i++)
             {
-                labels[i] = new TextSprite(game, Fonts.Common)
+                labels[i] = new(Fonts.Common)
                 {
                     Color = ColorPalette.TextWhite,
                     Scale = ScaleInfo.ControlLabel,
@@ -46,7 +46,7 @@ namespace ScaryCastle.Menus
             }
 
             // Image
-            this.image = new Sprite(game, image)
+            this.image = new Sprite(image)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Position = new Vector2(Screen.Center.X, Screen.Center.Y + verticalOffset),

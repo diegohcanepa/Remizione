@@ -31,11 +31,10 @@ namespace ScaryCastle
 
         // Constructor
         internal RoomEditor(GameSession session)
-            : base(session.Game)
         {
             this.session = session;
-            editorInfoText = new TextSprite(session.Game, Fonts.Common) { Color = Color.White, PivotOrigin = RectanglePoint.RightTop, Scale = ScaleInfo.Text.Tiny };
-            text = new TextSprite(session.Game, Fonts.Common) { Color = Color.White, PivotOrigin = RectanglePoint.LeftTop, Scale = ScaleInfo.Text.Small };
+            editorInfoText = new TextSprite(Fonts.Common) { Color = Color.White, PivotOrigin = RectanglePoint.RightTop, Scale = ScaleInfo.Text.Tiny };
+            text = new TextSprite(Fonts.Common) { Color = Color.White, PivotOrigin = RectanglePoint.LeftTop, Scale = ScaleInfo.Text.Small };
         }
 
         #endregion

@@ -25,7 +25,6 @@ namespace ScaryCastle.Menus
 
         // Constructor
         public Menu(ScaryCastleGame game)
-            : base(game)
         {
             this.Game = game;
             this.Items = new ReadOnlyCollection<MenuItem>(items);

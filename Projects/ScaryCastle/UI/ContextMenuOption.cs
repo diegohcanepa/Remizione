@@ -18,7 +18,7 @@ namespace ScaryCastle
             this.Key = key;
             this.Tag = tag;
 
-            this.textSprite = new TextSprite(menu.Game, menu.Font)
+            this.textSprite = new(menu.Font)
             {
                 Scale = menu.TextScale,
                 Text = text

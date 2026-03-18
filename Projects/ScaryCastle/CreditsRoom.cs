@@ -20,7 +20,7 @@ namespace ScaryCastle
             AllowPauseMenu = false;
             AtlasName = string.Empty;
 
-            this.button = new UIButton(Game, InputBindings.Exit)
+            this.button = new UIButton(InputBindings.Exit)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom)
@@ -28,7 +28,7 @@ namespace ScaryCastle
 
             LightingSystem = false;
 
-            this.credits = new Credits(Game, TextRepository.GetValue("Misc.Credits"));
+            this.credits = new Credits(TextRepository.GetValue("Misc.Credits"));
         }
 
         #region Protected members

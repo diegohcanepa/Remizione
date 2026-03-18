@@ -16,7 +16,6 @@ namespace ScaryCastle
 
         // Constructor
         public UIFearMeter(GameSession session)
-            : base(session.Game)
         {
             this.session = session;
 
@@ -24,7 +23,7 @@ namespace ScaryCastle
 
             for (var i = 0; i < icons.Length; i++)
             {
-                this.icons[i] = new(Game)
+                this.icons[i] = new()
                 {
                     PivotOrigin = RectanglePoint.Center,
                 };

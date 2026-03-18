@@ -5,8 +5,14 @@ namespace Engendro
     /// <summary>
     /// GameObject
     /// </summary>
-    public abstract class GameObject(EngendroGame game)
+    public abstract class GameObject
     {
+        // Constructor
+        protected GameObject()
+        {
+            this.Game = EngendroGame.Instance;
+        }
+
         #region Protected members
 
         // OnDraw
@@ -28,7 +34,7 @@ namespace Engendro
         }
 
         // Game
-        public EngendroGame Game { get; } = game;
+        public EngendroGame Game { get; }
 
         // Update
         public void Update(GameTime gameTime)

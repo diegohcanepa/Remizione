@@ -29,20 +29,19 @@ namespace ScaryCastle.UI
         #region Constructor
 
         // Constructor
-        public UIMiniMap(EngendroGame game)
-            : base(game)
+        public UIMiniMap()
         {
             rasterizerState = new RasterizerState { ScissorTestEnable = true };
 
             // Container
-            container = new Sprite(game, Atlases.UI.GetImage("UIMiniMapContainer"))
+            container = new Sprite(Atlases.UI.GetImage("UIMiniMapContainer"))
             {
                 PivotOrigin = RectanglePoint.RightTop,
                 Position = new(234, 2)
             };
 
             // ContainerBorder
-            containerBorder = new Sprite(game, Atlases.UI.GetImage("UIMiniMapContainerBorder"))
+            containerBorder = new Sprite(Atlases.UI.GetImage("UIMiniMapContainerBorder"))
             {
                 PivotOrigin = RectanglePoint.RightTop,
                 Position = new(234, 2)
@@ -66,7 +65,7 @@ namespace ScaryCastle.UI
             );
 
             // Heart marker
-            heartMarker = new Sprite(game, Atlases.UI.GetImage("UIMiniMapMarkerHeart"))
+            heartMarker = new Sprite(Atlases.UI.GetImage("UIMiniMapMarkerHeart"))
             {
                 PivotOrigin = RectanglePoint.Center,
                 Scale = ScaleInfo.UIElement.Small
@@ -76,7 +75,7 @@ namespace ScaryCastle.UI
             roomImages = new Sprite[3];
             for (var i = 0; i < roomImages.Length; i++)
             {
-                roomImages[i] = new(game, Atlases.UI.GetImage($"UIMiniMapRoom{i}"))
+                roomImages[i] = new(Atlases.UI.GetImage($"UIMiniMapRoom{i}"))
                 {
                     PivotOrigin = RectanglePoint.Center,
                     Scale = new Vector2(.8f)

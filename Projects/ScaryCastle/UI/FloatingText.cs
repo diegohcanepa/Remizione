@@ -21,11 +21,10 @@ namespace ScaryCastle
 
         // Constructor
         public FloatingText(GameSession session)
-            : base(session.Game)
         {
             this.session = session;
 
-            this.text = new TextSprite(session.Game, Fonts.CommonOutline)
+            this.text = new TextSprite(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Bottom

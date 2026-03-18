@@ -22,8 +22,7 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public ContextMenu(EngendroGame game, Camera camera, Font? font = null)
-            : base(game)
+        public ContextMenu(Camera camera, Font? font = null)
         {
             this.Camera = camera;
             this.Font = font ?? Fonts.CommonOutline;

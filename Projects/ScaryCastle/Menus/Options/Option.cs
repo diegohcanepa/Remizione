@@ -33,7 +33,6 @@ namespace ScaryCastle.Menus
 
         // Constructor
         protected Option(ScaryCastleGame game, string label, bool isEnabled)
-            : base(game)
         {
             this.Game = game;
 
@@ -42,7 +41,7 @@ namespace ScaryCastle.Menus
             this.IsEnabled = isEnabled;
 
             // Label
-            this.textSprites[0] = new TextSprite(Game, Fonts.Common)
+            this.textSprites[0] = new TextSprite(Fonts.Common)
             {
                 Color = ColorPalette.MenuOptionLabel * (isEnabled ? 1 : disableColorFactor),
                 PivotOrigin = RectanglePoint.Right,
@@ -51,7 +50,7 @@ namespace ScaryCastle.Menus
             };
 
             // Value
-            this.textSprites[1] = new TextSprite(Game, Fonts.Common)
+            this.textSprites[1] = new TextSprite(Fonts.Common)
             {
                 Color = ColorPalette.TextWhite * (isEnabled ? 1 : disableColorFactor),
                 PivotOrigin = RectanglePoint.Center,
@@ -60,7 +59,7 @@ namespace ScaryCastle.Menus
 
             arrows = new Sprite[2];
 
-            arrows[0] = new Sprite(game, Atlases.Menu.MenuItemArrowLeft)
+            arrows[0] = new Sprite(Atlases.Menu.MenuItemArrowLeft)
             {
                 PivotOrigin = RectanglePoint.Right,
                 X = 190,
@@ -72,7 +71,7 @@ namespace ScaryCastle.Menus
                 arrows[0].Color *= disableColorFactor;
             }
 
-            arrows[1] = new Sprite(game, Atlases.Menu.MenuItemArrowRight)
+            arrows[1] = new(Atlases.Menu.MenuItemArrowRight)
             {
                 PivotOrigin = RectanglePoint.Left,
                 X = 290,
@@ -90,7 +89,7 @@ namespace ScaryCastle.Menus
             IsEnabled = isEnabled;
 
             // Icon
-            this.icon = new Sprite(Game)
+            this.icon = new()
             {
                 Color = ColorPalette.MenuOptionLabel,
                 PivotOrigin = RectanglePoint.Right,

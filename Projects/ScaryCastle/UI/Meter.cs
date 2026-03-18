@@ -21,14 +21,13 @@ namespace ScaryCastle
         #endregion
 
         // Constructor
-        public Meter(EngendroGame game, Color backColor, Color foreColor, Color diffColor, Vector2 size, float borderSize)
-            : base(game)
+        public Meter(Color backColor, Color foreColor, Color diffColor, Vector2 size, float borderSize)
         {
             this.BorderSize = new(borderSize);
             this.width = size.X;
 
             // Container
-            this.container = new Sprite(game, Atlases.UI.Pixel)
+            this.container = new Sprite(Atlases.UI.Pixel)
             {
                 Color = Color.Black,
                 ScaleY = size.Y,
@@ -36,7 +35,7 @@ namespace ScaryCastle
             };
 
             // Back
-            this.back = new Sprite(game, Atlases.UI.Pixel)
+            this.back = new Sprite(Atlases.UI.Pixel)
             {
                 Color = backColor,
                 ScaleY = container.ScaleY - (BorderSize.Y * 2),
@@ -44,14 +43,14 @@ namespace ScaryCastle
             };
 
             // Fore
-            this.fore = new Sprite(game, Atlases.UI.Pixel)
+            this.fore = new Sprite(Atlases.UI.Pixel)
             {
                 Color = foreColor,
                 ScaleY = container.ScaleY - (BorderSize.Y * 2)
             };
 
             // Previous value
-            this.diff = new Sprite(game, Atlases.UI.Pixel)
+            this.diff = new Sprite(Atlases.UI.Pixel)
             {
                 Color = diffColor,
                 ScaleY = container.ScaleY - (BorderSize.Y * 2)

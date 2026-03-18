@@ -6,7 +6,7 @@ namespace Engendro
     /// <summary>
     /// Particle
     /// </summary>
-    public class Particle(EngendroGame game) : GameObject(game)
+    public class Particle() : GameObject
     {
         #region Private members
 

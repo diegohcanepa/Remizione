@@ -15,7 +15,6 @@ namespace ScaryCastle
 
         // Constructor
         public BrokenPieces(GameThing source, float scale = 1)
-            : base(source.Game)
         {
             this.source = source;
             this.scale = scale;
@@ -25,7 +24,7 @@ namespace ScaryCastle
             {
                 if (source.Atlas?.FindImage($"{source.DeclaredName}Piece{index}") is { } image)
                 {
-                    pieces.Add(new ShatterPiece(Game, image, new(scale)));
+                    pieces.Add(new ShatterPiece(image, new(scale)));
                     index++;
                 }
                 else

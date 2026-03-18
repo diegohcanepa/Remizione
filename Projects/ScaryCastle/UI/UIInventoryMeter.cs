@@ -23,19 +23,18 @@ namespace ScaryCastle
 
         // Constructor
         public UIInventoryMeter(Inventory inventory)
-            : base(inventory.Session.Game)
         {
             this.inventory = inventory;
 
             // Icon
-            this.icon = new(Game, Atlases.UI.Sack)
+            this.icon = new(Atlases.UI.Sack)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Position = Screen.Area.GetPoint(RectanglePoint.RightBottom, -12, -12),
             };
 
             // Amount
-            this.amountText = new TextSprite(Game, Fonts.CommonOutline)
+            this.amountText = new TextSprite(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Right,

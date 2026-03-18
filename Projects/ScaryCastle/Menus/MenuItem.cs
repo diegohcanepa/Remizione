@@ -23,20 +23,19 @@ namespace ScaryCastle.Menus
 
         // Constructor
         public MenuItem(Menu menu, MenuItemName name, AtlasImage? iconImage, Action? onPress)
-            : base(menu.Game)
         {
             this.Menu = menu;
             this.Name = name;
             this.onPress = onPress;
 
-            this.icon = new Sprite(Game, iconImage) { PivotOrigin = RectanglePoint.Left, Scale = new Vector2(.2f) };
-            this.textSprite = new TextSprite(Game, Fonts.Common)
+            this.icon = new Sprite(iconImage) { PivotOrigin = RectanglePoint.Left, Scale = new Vector2(.2f) };
+            this.textSprite = new TextSprite(Fonts.Common)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Text = $"@Menu.Items.{Name}"
             };
 
-            highlightSprite = new Sprite(Game, Atlases.Menu.MenuItemHighlight)
+            highlightSprite = new Sprite(Atlases.Menu.MenuItemHighlight)
             {
                 Opacity = .5f,
                 PivotOrigin = RectanglePoint.Center

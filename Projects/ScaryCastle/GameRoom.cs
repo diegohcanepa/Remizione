@@ -50,7 +50,7 @@ namespace ScaryCastle
             fireflyEmitter ??= new FireflyEmitter(session, 1, 500, 20);
 
             // Player light
-            playerLight ??= new Light(Game, "PlayerLight")
+            playerLight ??= new Light("PlayerLight")
             {
                 LightKind = LightKind.Player,
                 PivotOrigin = RectanglePoint.Center,
@@ -452,7 +452,7 @@ namespace ScaryCastle
         public Light AddLight(string name)
         {
             CodeContract.NotDuplicate(Lights, name, nameof(name));
-            var result = new Light(Game, name);
+            var result = new Light(name);
             lights.Add(result);
             return result;
         }

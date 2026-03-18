@@ -59,14 +59,14 @@ namespace ScaryCastle
             this.inventoryScene = new(Inventory);
 
             ObjectPools = new ObjectPools(this);
-            ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(game), 100);
+            ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(), 100);
 
             BackgroundColor = ColorPalette.BackgroundColor;
             Camera.SmoothSpeed = GameSettings.CameraSmoothSpeed;
 
             if (EngendroGame.DebugMode)
             {
-                TextSprite consoleText = new(game, Fonts.CommonOutline)
+                TextSprite consoleText = new(Fonts.CommonOutline)
                 {
                     Color = ColorPalette.HighlightedText,
                     MaximumWidth = Screen.NativeWidth - 20,
@@ -89,7 +89,7 @@ namespace ScaryCastle
             this.echoScene = new(Game);
 
             // Saving icon
-            this.savingIcon = new Sprite(Game, Atlases.UI.SavingIcon)
+            this.savingIcon = new Sprite( Atlases.UI.SavingIcon)
             {
                 PivotOrigin = RectanglePoint.RightTop,
                 Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -6, 4)

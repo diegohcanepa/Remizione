@@ -15,7 +15,6 @@ namespace ScaryCastle.Menus
 
         // Constructor
         protected ButtonOption(ScaryCastleGame game, string label)
-            : base(game)
         {
             this.Game = game;
 
@@ -29,7 +28,7 @@ namespace ScaryCastle.Menus
                 }
             }
 
-            this.textSprite = new TextSprite(Game, Fonts.Common)
+            this.textSprite = new TextSprite(Fonts.Common)
             {
                 Color = ColorPalette.TextWhite,
                 PivotOrigin = RectanglePoint.Center,

@@ -19,7 +19,7 @@ namespace ScaryCastle.Menus
         public OptionsMenuScene(ScaryCastleGame game)
             : base(game, "@Menu.Titles.Options")
         {
-            this.mouseInfo = new TextSprite(game, Fonts.Common) { Scale = ScaleInfo.Text.Medium, Color = Color.White, PivotOrigin = RectanglePoint.LeftTop };
+            this.mouseInfo = new (Fonts.Common) { Scale = ScaleInfo.Text.Medium, Color = Color.White, PivotOrigin = RectanglePoint.LeftTop };
 
             menu = new OptionMenu(game, 6)
             {
@@ -47,7 +47,7 @@ namespace ScaryCastle.Menus
             */
 
             // Option description
-            this.optionDescription = new TextSprite(game, Fonts.Common)
+            this.optionDescription = new(Fonts.Common)
             {
                 Color = ColorPalette.TextWhite,
                 MaximumWidth = 100,

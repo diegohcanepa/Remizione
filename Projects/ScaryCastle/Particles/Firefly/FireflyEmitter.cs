@@ -11,7 +11,7 @@ namespace ScaryCastle
 
         // Constructor
         public FireflyEmitter(GameSession session, int burstAmount, int burstInterval, int maxParticles)
-            : base(session.Game, new FireflyParticleState(), new FireflyEmitterType(session.Camera), burstAmount, burstInterval, maxParticles)
+            : base(new FireflyParticleState(), new FireflyEmitterType(session.Camera), burstAmount, burstInterval, maxParticles)
         {
         }
 
@@ -20,7 +20,7 @@ namespace ScaryCastle
         // CreateNewParticle
         protected override Particle CreateNewParticle()
         {
-            return new FireflyParticle(Game);
+            return new();
         }
     }
 }

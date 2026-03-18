@@ -20,21 +20,20 @@ namespace ScaryCastle
 
         // Constructor
         public EchoScene(ScaryCastleGame game)
-            : base(game)
         {
             const int topMargin = 35;
 
             PausePreviousScenes = true;
 
             // Gradient
-            this.gradient = new(game, Atlases.UI.BottomGradient)
+            this.gradient = new(Atlases.UI.BottomGradient)
             {
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom)
             };
 
             // Arrow
-            this.arrow = new(game, Atlases.UI.DialogArrowLarge)
+            this.arrow = new(Atlases.UI.DialogArrowLarge)
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Bottom,
@@ -45,7 +44,7 @@ namespace ScaryCastle
             arrow.Tweens.YTween = FloatTween.Create(TweenStyle.CubicInOut, arrow.Y, arrow.Y + 1, 250, -1);
 
             // Text sprite
-            this.textSprite = new TextSprite(Game, Fonts.CommonOutline)
+            this.textSprite = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Sentence,
                 MaximumWidth = (int)(Screen.NativeWidth * .8f),
@@ -57,7 +56,7 @@ namespace ScaryCastle
             };
 
             // Image
-            this.image = new(game)
+            this.image = new()
             {
                 PivotOrigin = RectanglePoint.Left,
                 Position = gradient.BoundingBox.GetPoint(RectanglePoint.LeftTop, 8, topMargin)

@@ -22,16 +22,15 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public Credits(EngendroGame game, string text)
-            : base(game)
+        public Credits(string text)
         {
-            bottomBar = new Sprite(game, Atlases.UI.CreditsBar)
+            bottomBar = new Sprite(Atlases.UI.CreditsBar)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, 0, 3)
             };
 
-            topBar = new Sprite(game, Atlases.UI.CreditsBar)
+            topBar = new Sprite(Atlases.UI.CreditsBar)
             {
                 PivotOrigin = RectanglePoint.LeftTop,
                 Effects = SpriteEffects.FlipVertically,

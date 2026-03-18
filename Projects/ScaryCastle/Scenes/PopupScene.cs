@@ -23,20 +23,19 @@ namespace ScaryCastle
 
         // Constructor
         public PopupScene(GameSession session, string title, string text, params InputBinding[] inputBindings)
-            : base(session.Game)
         {
             this.bindings = inputBindings;
 
-            this.container = new Sprite(session.Game, Atlases.UI.PopupContainer) { PivotOrigin = RectanglePoint.Center, Position = Screen.Area.Center.ToVector2() };
-            this.shadow = new Sprite(session.Game, Atlases.UI.PopupContainerShadow) { Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, 7, 7) };
+            this.container = new Sprite(Atlases.UI.PopupContainer) { PivotOrigin = RectanglePoint.Center, Position = Screen.Area.Center.ToVector2() };
+            this.shadow = new Sprite(Atlases.UI.PopupContainerShadow) { Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, 7, 7) };
 
-            this.titleSprite = new TextSprite(session.Game, Fonts.Common) { Color = ColorPalette.PopupTitle, PivotOrigin = RectanglePoint.Top, Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 12), Scale = ScaleInfo.PopupTitle, Text = title };
-            this.text = new TextSprite(session.Game, Fonts.Common) { Color = ColorPalette.TextWhite, MaximumWidth = 220, PivotOrigin = RectanglePoint.Top, Position = titleSprite.BoundingBox.GetPoint(RectanglePoint.Bottom), Scale = ScaleInfo.PopupText, Text = text };
+            this.titleSprite = new TextSprite(Fonts.Common) { Color = ColorPalette.PopupTitle, PivotOrigin = RectanglePoint.Top, Position = container.BoundingBox.GetPoint(0), Scale = ScaleInfo.PopupTitle, Text = title };
+            this.text = new TextSprite(Fonts.Common) { Color = ColorPalette.TextWhite, MaximumWidth = 220, PivotOrigin = RectanglePoint.Top, Position = titleSprite.BoundingBox.GetPoint(RectanglePoint.Bottom), Scale = ScaleInfo.PopupText, Text = text };
 
             buttons = new UIButton[inputBindings.Length];
             for (var i = 0; i < inputBindings.Length; i++)
             {
-                buttons[i] = new UIButton(Game, inputBindings[i]) { PivotOrigin = RectanglePoint.RightTop };
+                buttons[i] = new UIButton(inputBindings[i]) { PivotOrigin = RectanglePoint.RightTop };
             }
         }
 

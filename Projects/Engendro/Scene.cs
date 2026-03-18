@@ -18,16 +18,6 @@ namespace Engendro
 
         #endregion
 
-        #region Constructor
-
-        // Constructor
-        protected Scene(EngendroGame game)
-            : base(game)
-        {
-        }
-
-        #endregion
-
         #region Private members
 
         // InvalidateBoundingBox

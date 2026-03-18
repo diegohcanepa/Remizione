@@ -28,8 +28,7 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public UIPopupMenu(EngendroGame game, HorizontalAlignment horizontalAlignment, bool sorted, RectangleF? boundingBox = null)
-            : base(game)
+        public UIPopupMenu(HorizontalAlignment horizontalAlignment, bool sorted, RectangleF? boundingBox = null)
         {
             this.sorted = sorted;
             this.HorizontalAlignment = horizontalAlignment;
@@ -38,7 +37,7 @@ namespace ScaryCastle
             this.Options = new ReadOnlyCollection<UIPopupMenuOption<TLinkedObject>>(optionList);
 
             // Title
-            this.titleText = new TextSprite(Game, Fonts.CommonOutline)
+            this.titleText = new TextSprite(Fonts.CommonOutline)
             {
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = TextScale

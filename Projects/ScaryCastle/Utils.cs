@@ -73,7 +73,7 @@ namespace ScaryCastle
         // CreateVersionLabel
         internal static TextSprite CreateVersionLabel(EngendroGame game)
         {
-            TextSprite result = new(game, Fonts.Common)
+            TextSprite result = new(Fonts.Common)
             {
                 Color = Color.DarkGray,
                 Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -5, 5),

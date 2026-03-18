@@ -24,12 +24,11 @@ namespace ScaryCastle.Menus
 
         // Constructor
         public OptionMenu(ScaryCastleGame game, int verticalSpacing)
-            : base(game)
         {
             this.VerticalSpacing = verticalSpacing;
 
             // Option highlight
-            highlightSprite = new Sprite(Game, Atlases.Menu.MenuItemHighlight)
+            highlightSprite = new Sprite(Atlases.Menu.MenuItemHighlight)
             {
                 Opacity = .5f,
                 PivotOrigin = RectanglePoint.Center,

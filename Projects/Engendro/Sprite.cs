@@ -20,14 +20,7 @@ namespace Engendro
         #region Constructor
 
         // Constructor
-        public Sprite(EngendroGame game)
-            : this(game, null)
-        {
-        }
-
-        // Constructor
-        public Sprite(EngendroGame game, AtlasImage? image)
-            : base(game)
+        public Sprite(AtlasImage? image = null)
         {
             this.RenderImage = image;
             this.Pivot = new SpritePivot(this);

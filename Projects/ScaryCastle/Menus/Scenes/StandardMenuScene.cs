@@ -21,10 +21,10 @@ namespace ScaryCastle.Menus
         protected StandardMenuScene(ScaryCastleGame game, string title)
             : base(game, Atlases.Menu.ContainerScreen)
         {
-            ControlGroup = new UIControlGroup(Game) { Spacing = 5 };
+            ControlGroup = new() { Spacing = 5 };
             ControlGroup.Add(InputBindings.Back);
 
-            titleSprite = new TextSprite(Game, Fonts.Common)
+            titleSprite = new TextSprite(Fonts.Common)
             {
                 Color = ColorPalette.TextStandardMenuTitle,
                 PivotOrigin = RectanglePoint.Center,

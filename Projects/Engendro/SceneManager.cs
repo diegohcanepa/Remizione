@@ -20,8 +20,7 @@ namespace Engendro
         #region Constructor
 
         // Constructor
-        internal SceneManager(EngendroGame game)
-            : base(game)
+        internal SceneManager()
         {
         }
 

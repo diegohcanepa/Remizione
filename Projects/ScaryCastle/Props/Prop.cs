@@ -29,7 +29,7 @@ namespace ScaryCastle
             this.HurtSound = Sound.Find(SoundNames.ImpactA);
 
             // Shadow
-            this.shadow = new Sprite(session.Game)
+            this.shadow = new Sprite()
             {
                 Opacity = ColorPalette.ShadowOpacity,
                 PivotOrigin = RectanglePoint.Bottom,

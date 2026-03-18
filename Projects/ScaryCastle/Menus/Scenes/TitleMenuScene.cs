@@ -39,24 +39,24 @@ namespace ScaryCastle.Menus
             this.ExclusiveDraw = true;
 
             // Background
-            background = new Sprite(game, Atlases.Menu.TitleScreen)
+            background = new(Atlases.Menu.TitleScreen)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Position = Screen.Center,
             };
 
             // Foreground
-            foreground = new Sprite(game, Atlases.Menu.TitleScreenForeground)
+            foreground = new(Atlases.Menu.TitleScreenForeground)
             {
             };
 
             // ForegroundLight
-            foregroundLight = new Sprite(game, Atlases.Menu.TitleScreenForegroundLight)
+            foregroundLight = new(Atlases.Menu.TitleScreenForegroundLight)
             {
             };
 
             // RoofLight
-            roofLight = new Sprite(game, Atlases.Menu.TitleScreenRoofLight)
+            roofLight = new(Atlases.Menu.TitleScreenRoofLight)
             {
                 PivotOrigin = RectanglePoint.Top,
                 Position = Screen.Area.GetPoint(RectanglePoint.Top, 0, -4)
@@ -82,7 +82,7 @@ namespace ScaryCastle.Menus
             menu.AddItem(MenuItemName.Exit, Game.Exit, null);
 
             // Experience advice
-            experienceAdviceText = new TextSprite(Game, Fonts.Common)
+            experienceAdviceText = new(Fonts.Common)
             {
                 Color = ColorPalette.TextWhite,
                 MaximumWidth = 260,

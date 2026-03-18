@@ -14,7 +14,7 @@ namespace Engendro
 
         // Constructor
         public AnimatedSprite(EngendroGame game)
-            : base(game)
+            : base()
         {
             this.Animations = new NamedObjectReadOnlyCollection<SpriteAnimation>(animations);
             this.Player = new SpriteAnimationPlayer(this);

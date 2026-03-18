@@ -23,8 +23,7 @@ namespace Engendro
         #region Constructor
 
         // Constructor
-        public ParticleEmitter(EngendroGame game, ParticleState particleState, IEmitterType emitterType, int burstAmount, int burstInterval, int maxParticles)
-            : base(game)
+        public ParticleEmitter(ParticleState particleState, IEmitterType emitterType, int burstAmount, int burstInterval, int maxParticles)
         {
             this.BurstInterval = burstInterval;
             this.BurstAmount = burstAmount;
@@ -83,7 +82,7 @@ namespace Engendro
         // CreateNewParticle
         protected virtual Particle CreateNewParticle()
         {
-            return new(Game);
+            return new();
         }
 
         // OnDraw

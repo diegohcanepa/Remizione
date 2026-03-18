@@ -15,13 +15,12 @@ namespace ScaryCastle
         private readonly Vector2Tween scaleTween = new();
 
         // Constructor
-        public HUDMessage(EngendroGame game, RectanglePoint pivotOrigin, Vector2 position, Vector2 scale)
-            : base(game)
+        public HUDMessage(RectanglePoint pivotOrigin, Vector2 position, Vector2 scale)
         {
             this.scale = scale;
 
             // Message text
-            this.messageText = new(Game, Fonts.CommonOutline)
+            this.messageText = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Highlight,
                 MaximumWidth = (int)(Screen.HUDArea.Width * .7f),

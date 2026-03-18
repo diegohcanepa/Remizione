@@ -23,7 +23,7 @@ namespace ScaryCastle
             this.action = action;
 
             // Name
-            this.nameText = new TextSprite(menu.Game, menu.Font)
+            this.nameText = new(menu.Font)
             {
                 MaximumWidth = (int)(menu.BoundingBox.Width * .9f)
             };
@@ -38,7 +38,7 @@ namespace ScaryCastle
                 nameText.PivotOrigin = RectanglePoint.RightTop;
 
             // Icon
-            this.icon = new Sprite(menu.Game)
+            this.icon = new Sprite()
             {
                 PivotOrigin = RectanglePoint.Right,
                 Scale = ScaleInfo.UIElement.Small

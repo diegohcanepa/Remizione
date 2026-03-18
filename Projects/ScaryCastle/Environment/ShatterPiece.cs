@@ -32,10 +32,9 @@ namespace ScaryCastle
 
         #region Constructor
 
-        public ShatterPiece(EngendroGame game, AtlasImage image, Vector2 scale)
-            : base(game)
+        public ShatterPiece(AtlasImage image, Vector2 scale)
         {
-            this.image = new(Game, image)
+            this.image = new(image)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Scale = scale

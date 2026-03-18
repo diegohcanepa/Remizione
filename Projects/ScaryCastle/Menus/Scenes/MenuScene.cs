@@ -17,12 +17,11 @@ namespace ScaryCastle.Menus
 
         // Constructor
         protected MenuScene(ScaryCastleGame game, AtlasImage? backgroundImage)
-            : base(game)
         {
             this.Game = game;
             this.ExclusiveDraw = true;
             this.PausePreviousScenes = true;
-            this.backgroundSprite = new Sprite(game, backgroundImage);
+            this.backgroundSprite = new Sprite(backgroundImage);
             version = Utils.CreateVersionLabel(game);
             Stick = new StickInputController(GamePadThumbStick.Left) { AutoRepeatRate = 250 };
         }

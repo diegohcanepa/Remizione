@@ -158,7 +158,7 @@ namespace ScaryCastle
             {
                 if (Room.CulledThings[i] is GameThing thing && thing.TerrainSound != null && thing.GetFootstepSound(Position) is Sound sound)
                 {
-                    footstepEffect ??= new(Game);
+                    footstepEffect ??= new();
                     if (!footstepEffect.IsActive)
                         footstepEffect.Spawn(Position, thing.TerrainParticleColor);
 

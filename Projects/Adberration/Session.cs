@@ -55,7 +55,6 @@ namespace Adberration
 
         // Constructor
         protected Session(AdventureGame game, PersistenceModel persistenceModel, string scriptLibraryPath, int saveFileNumber)
-            : base(game)
         {
             this.Game = game;
             this.ExclusiveDraw = true;

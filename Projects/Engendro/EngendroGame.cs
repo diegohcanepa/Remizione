@@ -60,7 +60,7 @@ namespace Engendro
 
             this.ViewportAdapter = new ViewportAdapter(this, nativeWidth, nativeHeight);
             this.Camera = new Camera(this, "UI", nativeWidth, nativeHeight);
-            this.SceneManager = new SceneManager(this);
+            this.SceneManager = new();
             this.Shapes = new Shapes(this);
 
             Window.Title = title;

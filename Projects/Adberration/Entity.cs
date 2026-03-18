@@ -31,7 +31,6 @@ namespace Adberration
 
         // Constructor
         protected Entity(Session session, string name)
-            : base(session.Game)
         {
             this.Session = session;
             this.EntityId = session.NextEntityId();

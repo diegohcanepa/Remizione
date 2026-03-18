@@ -26,7 +26,7 @@ namespace ScaryCastle
 
             this.Atlas = Atlases.Environment;
             this.Scale = ScaleInfo.UIElement.Small;
-            this.areaMarker = new(Game, Atlases.Environment.FindImage($"AreaMarker{item.Definition.AreaRange}"))
+            this.areaMarker = new(Atlases.Environment.FindImage($"AreaMarker{item.Definition.AreaRange}"))
             {
                 Color = new(ColorPalette.MouseCursorHighlightBlue),
                 PivotOrigin = RectanglePoint.Center,

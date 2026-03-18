@@ -22,8 +22,7 @@ namespace ScaryCastle
         #endregion
 
         // Constructor
-        public ParticlePopEffect(EngendroGame game)
-            : base(game)
+        public ParticlePopEffect()
         {
             pixel = new Texture2D(Game.GraphicsDevice, 1, 1);
             pixel.SetData([Color.White]);

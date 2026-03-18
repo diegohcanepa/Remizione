@@ -30,7 +30,7 @@ namespace ScaryCastle.Scripting
             var pivot = Parser.ParseEnumArgument(this, PivotArg, RectanglePoint.Center);
             var scale = Parser.ParseVector2Argument(this, ScaleArg);
 
-            thing.AttachedLight = new Light(Game, "")
+            thing.AttachedLight = new Light(string.Empty)
             {
                 Color = color,
                 LightKind = kind,

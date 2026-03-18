@@ -19,10 +19,9 @@ namespace ScaryCastle
 
         // Constructor
         public ShadowSpot(GameThing thing)
-            : base(thing.Game)
         {
             this.thing = thing;
-            this.spotImage = new Sprite(Game)
+            this.spotImage = new Sprite()
             {
                 Color = ColorPalette.ShadowSpot,
                 PivotOrigin = RectanglePoint.Center

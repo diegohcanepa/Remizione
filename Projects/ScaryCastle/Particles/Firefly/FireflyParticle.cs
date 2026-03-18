@@ -10,12 +10,6 @@ namespace ScaryCastle
     {
         private readonly FloatTween opacityTween = new();
 
-        // Constructor
-        public FireflyParticle(EngendroGame game)
-            : base(game)
-        {
-        }
-
         // OnActivate
         protected override void OnActivate()
         {

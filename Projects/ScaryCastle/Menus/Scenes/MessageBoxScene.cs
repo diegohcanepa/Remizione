@@ -37,7 +37,6 @@ namespace ScaryCastle.Menus
 
         // Constructor
         public MessageBoxScene(ScaryCastleGame game, string text, MessageBoxOptions options, Action<MessageBoxOptions>? onSelect, MessageBoxOptions defaultOption)
-            : base(game)
         {
             this.Options = options;
             this.PausePreviousScenes = true;
@@ -46,7 +45,7 @@ namespace ScaryCastle.Menus
             BackgroundColor = Color.Black;
 
             // Message
-            message = new TextSprite(Game, Fonts.Common)
+            message = new(Fonts.Common)
             {
                 Color = ColorPalette.TextWhite,
                 MaximumWidth = 250,
@@ -56,7 +55,7 @@ namespace ScaryCastle.Menus
             };
 
             // SubMessage
-            subMessage = new TextSprite(Game, Fonts.Common)
+            subMessage = new(Fonts.Common)
             {
                 Color = ColorPalette.TextWhite,
                 MaximumWidth = 200,
@@ -65,7 +64,7 @@ namespace ScaryCastle.Menus
             };
 
             // Title
-            title = new TextSprite(Game, Fonts.Common)
+            title = new(Fonts.Common)
             {
                 Color = ColorPalette.TextWhite,
                 PivotOrigin = RectanglePoint.Bottom,
@@ -73,13 +72,13 @@ namespace ScaryCastle.Menus
             };
 
             // Top Ornament
-            topOrnament = new Sprite(Game, Atlases.Menu.MessageBoxOrnamentTop)
+            topOrnament = new(Atlases.Menu.MessageBoxOrnamentTop)
             {
                 PivotOrigin = RectanglePoint.Bottom,
             };
 
             // Bottom Ornament
-            bottomOrnament = new Sprite(Game, Atlases.Menu.MessageBoxOrnamentBottom)
+            bottomOrnament = new(Atlases.Menu.MessageBoxOrnamentBottom)
             {
                 PivotOrigin = RectanglePoint.Top
             };

@@ -26,13 +26,12 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public UIContextMenu(EngendroGame game, Font? font = null)
-            : base(game)
+        public UIContextMenu(Font? font = null)
         {
             this.Font = font ?? Fonts.Common;
 
             // Option Selector
-            optionSelector = new Sprite(game, Atlases.UI.ContextMenuOptionSelector)
+            optionSelector = new Sprite(Atlases.UI.ContextMenuOptionSelector)
             {
                 PivotOrigin = RectanglePoint.Right
             };

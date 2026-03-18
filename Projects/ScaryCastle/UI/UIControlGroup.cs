@@ -14,8 +14,7 @@ namespace ScaryCastle
         private readonly List<UIButton> controlList = [];
 
         // Constructor
-        public UIControlGroup(EngendroGame game)
-            : base(game)
+        public UIControlGroup()
         {
             this.Controls = new ReadOnlyCollection<UIButton>(controlList);
         }
@@ -65,7 +64,7 @@ namespace ScaryCastle
         // Add
         public UIButton Add(InputBinding inputBinding)
         {
-            UIButton control = new(Game, inputBinding)
+            UIButton control = new(inputBinding)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
             };

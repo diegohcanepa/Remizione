@@ -21,7 +21,6 @@ namespace ScaryCastle.Menus
 
         // Constructor
         public AutoSaveAdviceScene(ScaryCastleGame game, int slotNumber)
-            : base(game)
         {
             this.game = game;
             this.PausePreviousScenes = true;
@@ -29,7 +28,7 @@ namespace ScaryCastle.Menus
 
             BackgroundColor = Color.Black;
 
-            text = new TextSprite(Game, Fonts.Common)
+            text = new(Fonts.Common)
             {
                 Color = ColorPalette.TextWhite,
                 MaximumWidth = 250,
@@ -39,7 +38,7 @@ namespace ScaryCastle.Menus
                 Scale = ScaleInfo.Text.Medium
             };
 
-            icon = new Sprite(Game, Atlases.UI.SavingIcon)
+            icon = new Sprite(Atlases.UI.SavingIcon)
             {
                 PivotOrigin = RectanglePoint.Top,
                 Position = text.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 5)

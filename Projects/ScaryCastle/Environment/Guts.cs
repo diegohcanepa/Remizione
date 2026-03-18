@@ -27,7 +27,7 @@ namespace ScaryCastle
             {
                 for (var i = 0; i < guts; i++)
                 {
-                    var piece = new ShatterPiece(session.Game, Atlases.Environment.Guts[i], scale)
+                    var piece = new ShatterPiece(Atlases.Environment.Guts[i], scale)
                     {
                         Scale = scale
                     };
@@ -41,7 +41,7 @@ namespace ScaryCastle
             {
                 for (var i = 0; i < extraImages.Count; i++)
                 {
-                    pieces.Add(new ShatterPiece(session.Game, extraImages[i], scale));
+                    pieces.Add(new ShatterPiece(extraImages[i], scale));
                 }
             }
 

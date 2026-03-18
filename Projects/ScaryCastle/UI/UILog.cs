@@ -15,18 +15,17 @@ namespace ScaryCastle
         private readonly TextSprite verbText;
 
         // Constructor
-        public UILog(EngendroGame game)
-            : base(game)
+        public UILog()
         {
             // Icon
-            this.icon = new Sprite(game)
+            this.icon = new Sprite()
             {
                 PivotOrigin = RectanglePoint.LeftTop,
                 Scale = ScaleInfo.UIElement.Medium
             };
 
             // Verb
-            this.verbText = new(Game, Fonts.CommonOutline)
+            this.verbText = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.LeftTop,
@@ -34,7 +33,7 @@ namespace ScaryCastle
             };
 
             // Noun
-            this.nounText = new(Game, Fonts.CommonOutline)
+            this.nounText = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.LeftTop,

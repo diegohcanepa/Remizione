@@ -18,10 +18,9 @@ namespace ScaryCastle
         private readonly FloatTween yTween = new();
 
         // Constructor
-        public ImpactWord(EngendroGame game)
-            : base(game)
+        public ImpactWord()
         {
-            this.sprite = new Sprite(game, null)
+            this.sprite = new Sprite(null)
             {
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = maxScale

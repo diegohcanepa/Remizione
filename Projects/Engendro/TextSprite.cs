@@ -40,8 +40,7 @@ namespace Engendro
         #region Constructor
 
         // Constructor
-        public TextSprite(EngendroGame game, Font? font)
-            : base(game)
+        public TextSprite(Font? font)
         {
             this.Font = font;
         }

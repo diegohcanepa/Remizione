@@ -29,37 +29,36 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public UIButton(EngendroGame game, InputBinding? inputBinding = null, float scaleFactor = 1)
-            : base(game)
+        public UIButton(InputBinding? inputBinding = null, float scaleFactor = 1)
         {
             this.inputBinding = inputBinding;
             this.scaleFactor = scaleFactor;
 
-            this.Camera = game.Camera;
+            this.Camera = Game.Camera;
 
             // Container
-            this.containerPattern = new Sprite(Game, Atlases.UI.UIButtonContainerPattern)
+            this.containerPattern = new Sprite(Atlases.UI.UIButtonContainerPattern)
             {
                 PivotOrigin = RectanglePoint.Right,
                 Scale = ScaleInfo.UIElement.Medium * scaleFactor
             };
 
             // ContainerEdgeLeft
-            this.containerEdgeLeft = new Sprite(Game, Atlases.UI.UIButtonContainerEdge)
+            this.containerEdgeLeft = new Sprite(Atlases.UI.UIButtonContainerEdge)
             {
                 PivotOrigin = RectanglePoint.Right,
                 Scale = ScaleInfo.UIElement.Medium * scaleFactor
             };
 
             // Label
-            this.label = new TextSprite(game, Fonts.CommonOutline)
+            this.label = new TextSprite(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
                 Scale = ScaleInfo.Text.VeryLarge * scaleFactor
             };
 
             // Image
-            this.image = new Sprite(game)
+            this.image = new Sprite()
             {
                 Scale = ScaleInfo.UIElement.Medium * scaleFactor
             };

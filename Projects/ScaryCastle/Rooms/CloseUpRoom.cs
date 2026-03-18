@@ -16,7 +16,7 @@ namespace ScaryCastle
             AllowPauseMenu = false;
             AllowSaving = false;
 
-            ControlGroup = new UIControlGroup(session.Game);
+            ControlGroup = new();
             ControlGroup.Add(InputBindings.Back);
         }
 

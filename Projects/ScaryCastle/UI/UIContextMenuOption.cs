@@ -23,12 +23,12 @@ namespace ScaryCastle
         {
             this.menu = menu;
             this.Key = key;
-            this.iconSprite = new Sprite(menu.Game, icon)
+            this.iconSprite = new(icon)
             {
                 Scale = ScaleInfo.ContextMenu.Icon
             };
 
-            this.textSprite = new TextSprite(menu.Game, menu.Font)
+            this.textSprite = new(menu.Font)
             {
                 Scale = menu.OptionTextScale,
                 Text = text

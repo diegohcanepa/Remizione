@@ -28,7 +28,6 @@ namespace Adberration
 
         // Constructor
         public ScriptConsole(Session session, InputBinding inputBinding, TextSprite textSprite, RectangleF backgroundArea)
-            : base(session.Game)
         {
             this.session = session;
             this.textSprite = textSprite;
@@ -40,7 +39,7 @@ namespace Adberration
             Game.Window.KeyDown += Window_KeyDown;
             Game.Window.TextInput += HandleTextInput;
 
-            this.cursorSprite = new TextSprite(textSprite.Game, textSprite.Font)
+            this.cursorSprite = new TextSprite(textSprite.Font)
             {
                 Color = textSprite.Color,
                 PivotOrigin = RectanglePoint.LeftBottom,

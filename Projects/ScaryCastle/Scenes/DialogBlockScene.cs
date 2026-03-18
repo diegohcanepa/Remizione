@@ -30,12 +30,11 @@ namespace ScaryCastle
 
         // Constructor
         public DialogBlockScene(GameSession session, DialogBlock dialogBlock)
-            : base(session.Game)
         {
             this.session = session;
             this.dialogBlock = dialogBlock;
 
-            this.menu = new UIContextMenu<string>(Game, Fonts.CommonOutline)
+            this.menu = new UIContextMenu<string>(Fonts.CommonOutline)
             {
                 OptionColor = ColorPalette.Text.TerraLight,
                 OptionSelectedColor = ColorPalette.Text.Yellow,
@@ -43,7 +42,7 @@ namespace ScaryCastle
                 SelectInputBinding = InputBindings.SelectDialogOption
             };
 
-            this.buttonQuit = new UIButton(Game, InputBindings.Exit)
+            this.buttonQuit = new UIButton(InputBindings.Exit)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom),

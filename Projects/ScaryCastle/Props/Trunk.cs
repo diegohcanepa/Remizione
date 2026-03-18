@@ -25,13 +25,13 @@ namespace ScaryCastle
             OverheadOrigin = new(6, 2);
             UnlockSound = Sound.Find(SoundNames.LockOpen);
 
-            this.itemImage = new(Game)
+            this.itemImage = new()
             {
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.UIElement.Tiny
             };
 
-            this.itemImageShadow = new(Game)
+            this.itemImageShadow = new()
             {
                 Color = Color.Black,
                 Opacity = ColorPalette.ShadowOpacity,

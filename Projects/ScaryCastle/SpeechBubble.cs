@@ -46,25 +46,24 @@ namespace ScaryCastle
 
         // Constructor
         public SpeechBubble(Actor actor)
-            : base(actor.Game)
         {
             this.Actor = actor;
 
             // Arrow
-            this.arrowImage = new Sprite(Game, Atlases.UI.SpeechBubbleCloseArrow)
+            this.arrowImage = new Sprite(Atlases.UI.SpeechBubbleCloseArrow)
             {
                 Color = ColorPalette.SpeechBubble.Text,
                 Scale = ScaleInfo.UIElement.Medium
             };
 
             // Bubble 1
-            this.bubbleImage = new Sprite(Game, Atlases.UI.Pixel);
+            this.bubbleImage = new Sprite(Atlases.UI.Pixel);
 
             // Bubble 2
-            this.bubbleImage2 = new Sprite(Game, Atlases.UI.Pixel);
+            this.bubbleImage2 = new Sprite(Atlases.UI.Pixel);
 
             // Pipe
-            pipe = new Sprite(Game, Atlases.UI.SpeechBubblePipe)
+            pipe = new Sprite(Atlases.UI.SpeechBubblePipe)
             {
                 Color = ColorPalette.SpeechBubble.Fill,
                 PivotOrigin = RectanglePoint.Bottom
@@ -72,7 +71,7 @@ namespace ScaryCastle
             pipeHeight = pipe.BoundingBox.Height;
 
             // Text
-            this.text = new TextSprite(Game, Fonts.Common)
+            this.text = new TextSprite(Fonts.Common)
             {
                 Color = ColorPalette.SpeechBubble.Text,
                 MaximumWidth = maxWidth,
@@ -80,7 +79,7 @@ namespace ScaryCastle
             };
 
             // Title
-            this.title = new TextSprite(Game, Fonts.Common)
+            this.title = new TextSprite(Fonts.Common)
             {
                 Color = ColorPalette.SpeechBubble.Title,
                 MaximumWidth = maxWidth,

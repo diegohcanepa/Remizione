@@ -11,7 +11,7 @@ namespace ScaryCastle
 
         // Constructor
         public DustEmitter(GameSession session, int burstAmount, int burstInterval, int maxParticles)
-            : base(session.Game, new DustParticleState(session), new DustEmitterType(session.Camera), burstAmount, burstInterval, maxParticles)
+            : base(new DustParticleState(session), new DustEmitterType(session.Camera), burstAmount, burstInterval, maxParticles)
         {
         }
 
@@ -22,7 +22,7 @@ namespace ScaryCastle
         // CreateNewParticle
         protected override Particle CreateNewParticle()
         {
-            return new DustParticle(Game);
+            return new();
         }
 
         #endregion

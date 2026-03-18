@@ -11,7 +11,7 @@ namespace ScaryCastle
         public Environment(GameSession session)
         {
             // Global light
-            this.GlobalLight ??= new Light(session.Game, "GlobalLight")
+            this.GlobalLight ??= new Light("GlobalLight")
             {
                 Color = ColorPalette.GlobalLight.Default,
                 LightKind = LightKind.Global,

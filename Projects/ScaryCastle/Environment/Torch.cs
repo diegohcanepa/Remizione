@@ -12,7 +12,7 @@ namespace ScaryCastle
         {
             Atlas = Atlases.Props;
 
-            this.AttachedLight = new Light(session.Game, "Light")
+            this.AttachedLight = new Light("Light")
             {
                 Color = new(255, 248, 143),
                 LightKind = LightKind.Fire,

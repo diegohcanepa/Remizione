@@ -39,7 +39,7 @@ namespace ScaryCastle
         // CreateText
         private TextSprite CreateText(string? text = null)
         {
-            return new(Game, Fonts.Common)
+            return new(Fonts.Common)
             {
                 Color = Color.White,
                 Opacity = .9f,

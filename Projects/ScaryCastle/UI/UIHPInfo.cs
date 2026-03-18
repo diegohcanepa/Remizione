@@ -15,16 +15,15 @@ namespace ScaryCastle.UI
         private readonly TextSprite amountText;
 
         // Constructor
-        public UIHPInfo(EngendroGame game)
-            : base(game)
+        public UIHPInfo()
         {
-            this.heartIcon = new(Game, Atlases.UI.HeartFull)
+            this.heartIcon = new(Atlases.UI.HeartFull)
             {
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.UIElement.Medium
             };
 
-            this.amountText = new(Game, Fonts.CommonOutline)
+            this.amountText = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Left,

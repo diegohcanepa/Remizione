@@ -22,15 +22,14 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public UIHPMeter(EngendroGame game, Vector2 margin)
-            : base(game)
+        public UIHPMeter(Vector2 margin)
         {
             this.hearts = new Sprite[10];
             var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, margin);
 
             for (var i = 0; i < hearts.Length; i++)
             {
-                hearts[i] = new(Game, Atlases.UI.HeartFull)
+                hearts[i] = new(Atlases.UI.HeartFull)
                 {
                     Position = pos
                 };

@@ -25,11 +25,10 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public Light(EngendroGame game, string name)
-            : base(game)
+        public Light(string name)
         {
             this.Name = name;
-            this.lightSprite = new Sprite(Game)
+            this.lightSprite = new Sprite()
             {
                 RenderImage = Atlases.Environment.DefaultLight,
                 PivotOrigin = RectanglePoint.Center

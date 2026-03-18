@@ -32,7 +32,7 @@ namespace ScaryCastle
         static MouseCursor()
         {
             // Cursor sprite
-            cursorSprite = new Sprite(EngendroGame.Instance)
+            cursorSprite = new Sprite()
             {
                 PivotOrigin = RectanglePoint.Center,
                 Scale = defaultScale
@@ -49,7 +49,7 @@ namespace ScaryCastle
             }
 
             // Text sprite
-            textSprite = new(EngendroGame.Instance, Fonts.CommonOutline)
+            textSprite = new(Fonts.CommonOutline)
             {
                 PivotOrigin = RectanglePoint.LeftTop,
                 Scale = ScaleInfo.UISentence

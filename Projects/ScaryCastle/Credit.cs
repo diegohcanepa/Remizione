@@ -12,9 +12,8 @@ namespace ScaryCastle
 
         // Constructor
         public Credit(Credits credits, string text, Vector2 position, Color textColor, Vector2 textScale)
-            : base(credits.Game)
         {
-            this.textSprite = new TextSprite(Game, Fonts.Common)
+            this.textSprite = new TextSprite(Fonts.Common)
             {
                 Color = textColor,
                 PivotOrigin = RectanglePoint.Top,

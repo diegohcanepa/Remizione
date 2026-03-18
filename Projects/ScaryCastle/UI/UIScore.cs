@@ -18,12 +18,11 @@ namespace ScaryCastle
 
         // Constructor
         public UIScore(EngendroGame game, Color textColor, Vector2 textScale, bool progressive = true)
-            : base(game)
         {
             this.Progressive = progressive;
 
             // Score text
-            this.valueText = new TextSprite(Game, Fonts.CommonOutline)
+            this.valueText = new(Fonts.CommonOutline)
             {
                 Color = textColor,
                 PivotOrigin = RectanglePoint.Top,

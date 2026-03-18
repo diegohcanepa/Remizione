@@ -35,7 +35,7 @@ namespace ScaryCastle.Menus
             menu.AddItem(MenuItemName.Options, ShowOptions, Atlases.Menu.OptionsIcon);
             menu.AddItem(MenuItemName.ExitToMainMenu, ExitToMainMenu, null);
 
-            this.bottomOrnament = new Sprite(Game, Atlases.Menu.BottomOrnament)
+            this.bottomOrnament = new(Atlases.Menu.BottomOrnament)
             {
                 PivotOrigin = RectanglePoint.Top,
                 Position = menu.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 7)

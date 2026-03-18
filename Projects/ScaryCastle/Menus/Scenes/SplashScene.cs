@@ -33,20 +33,19 @@ namespace ScaryCastle.Menus
 
         // Constructor
         public SplashScene(ScaryCastleGame game, AtlasImage? image, Vector2 imagePosition, float imageScale, int duration)
-            : base(game)
         {
             this.ExclusiveDraw = true;
 
             BackgroundColor = Color.Black;
 
-            Image = new Sprite(game, image)
+            Image = new(image)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Position = imagePosition,
                 Scale = new Vector2(imageScale)
             };
 
-            gradientSpot = new Sprite(game, Atlases.Menu.FadeCircle)
+            gradientSpot = new(Atlases.Menu.FadeCircle)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Scale = new Vector2(1.8f)

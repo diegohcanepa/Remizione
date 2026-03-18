@@ -27,7 +27,6 @@ namespace ScaryCastle
 
         // Constructor
         public InventoryScene(Inventory inventory)
-            : base(inventory.Session.Game)
         {
             this.PausePreviousScenes = false;
             this.amounts = new TextSprite[Inventory.MaximumCapacity];
@@ -36,7 +35,7 @@ namespace ScaryCastle
             this.slots = new Sprite[Inventory.MaximumCapacity];
 
             // Bottom gradient
-            this.bottomGradient = new Sprite(Game, Atlases.UI.GetImage("InventoryContainer"))
+            this.bottomGradient = new(Atlases.UI.GetImage("InventoryContainer"))
             {
                 Opacity = .8f,
                 PivotOrigin = RectanglePoint.Bottom,
@@ -46,19 +45,19 @@ namespace ScaryCastle
             // Slots
             for (var i = 0; i < slots.Length; i++)
             {
-                slots[i] = new(Game, Atlases.UI.InventorySlot)
+                slots[i] = new(Atlases.UI.InventorySlot)
                 {
                     PivotOrigin = RectanglePoint.LeftBottom,
                     Y = Screen.Area.Bottom - 10
                 };
 
-                icons[i] = new(Game)
+                icons[i] = new()
                 {
                     PivotOrigin = RectanglePoint.Center,
                     Y = slots[i].BoundingBox.Center.Y
                 };
 
-                shadows[i] = new(Game)
+                shadows[i] = new()
                 {
                     Color = Color.Black,
                     Opacity = ColorPalette.ShadowOpacity,
@@ -68,7 +67,7 @@ namespace ScaryCastle
                 };
 
                 // Amount text
-                amounts[i] = new(Game, Fonts.CommonOutline)
+                amounts[i] = new(Fonts.CommonOutline)
                 {
                     Color = ColorPalette.Text.Highlight,
                     PivotOrigin = RectanglePoint.Top,
@@ -78,7 +77,7 @@ namespace ScaryCastle
             }
 
             // Item name
-            this.itemName = new(Game, Fonts.CommonOutline)
+            this.itemName = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Bottom,

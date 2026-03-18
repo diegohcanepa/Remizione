@@ -54,7 +54,7 @@ namespace ScaryCastle
                 {
                     if (Atlas?.FindImage($"{DeclaredName}Piece{index}") is AtlasImage image)
                     {
-                        pieces.Add(new(Session.Game, image, Vector2.One));
+                        pieces.Add(new(image, Vector2.One));
                         index++;
                     }
                     else
