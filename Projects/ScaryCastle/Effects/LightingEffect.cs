@@ -10,8 +10,8 @@ namespace ScaryCastle.Effects
     public sealed class LightingEffect : ShaderEffect
     {
         // Constrcutor
-        public LightingEffect(EngendroGame game)
-            : base(game, "Effects/Lighting")
+        public LightingEffect()
+            : base("Effects/Lighting")
         {
             LightMask = Effect.Parameters["lightMask"] ?? throw new InvalidOperationException();
         }

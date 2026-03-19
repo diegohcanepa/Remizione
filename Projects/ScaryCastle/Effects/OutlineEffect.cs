@@ -9,8 +9,8 @@ namespace ScaryCastle.Effects
     public sealed class OutlineEffect : ShaderEffect
     {
         // Constrcutor
-        public OutlineEffect(EngendroGame game)
-            : base(game, "Effects/Outline")
+        public OutlineEffect()
+            : base("Effects/Outline")
         {
             Color = Effect.Parameters["outlineColor"];
             TextureSize = Effect.Parameters["textureSize"];

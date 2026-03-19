@@ -7,29 +7,19 @@ namespace ScaryCastle
     /// </summary>
     public sealed class GameEffects
     {
-        // Constructor
-        internal GameEffects(ScaryCastleGame game)
-        {
-            CRT = new CRTEffect(game);
-            ColorReduction = new ColorReductionEffect(game);
-            ColorSaturation = new ColorSaturationEffect(game);
-            Lighting = new LightingEffect(game);
-            Outline = new OutlineEffect(game);
-        }
-
         // ColorReduction
-        public ColorReductionEffect ColorReduction { get; }
+        public ColorReductionEffect ColorReduction { get; } = new();
 
         // ColorSaturation
-        public ColorSaturationEffect ColorSaturation { get; }
+        public ColorSaturationEffect ColorSaturation { get; } = new();
 
         // CRT
-        public CRTEffect CRT { get; }
+        public CRTEffect CRT { get; } = new();
 
         // Lighting
-        public LightingEffect Lighting { get; }
+        public LightingEffect Lighting { get; } = new();
 
         // Outline
-        public OutlineEffect Outline { get; }
+        public OutlineEffect Outline { get; } = new();
     }
 }

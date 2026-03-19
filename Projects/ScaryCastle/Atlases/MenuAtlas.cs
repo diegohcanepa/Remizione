@@ -8,8 +8,8 @@ namespace ScaryCastle
     public sealed partial class MenuAtlas : Atlas
     {
         // Constructor
-        public MenuAtlas(EngendroGame game)
-            : base(game.Content, "Menu", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "Menu"), false)
+        public MenuAtlas()
+            : base(EngendroGame.Instance.Content, "Menu", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "Menu"), false)
         {
             BottomOrnament = this[nameof(BottomOrnament)];
             ContainerScreen = this[nameof(ContainerScreen)];

@@ -8,8 +8,8 @@ namespace ScaryCastle
     public sealed partial class UIAtlas : Atlas
     {
         // Constructor
-        public UIAtlas(EngendroGame game)
-            : base(game.Content, "UI", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "UI"), false)
+        public UIAtlas()
+            : base(EngendroGame.Instance.Content, "UI", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
             BottomGradient = this[nameof(BottomGradient)];
             CheckMark = this[nameof(CheckMark)];

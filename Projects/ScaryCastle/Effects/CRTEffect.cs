@@ -8,8 +8,8 @@ namespace ScaryCastle.Effects
     public sealed class CRTEffect : ShaderEffect
     {
         // Constructor
-        public CRTEffect(EngendroGame game)
-            : base(game, "Effects/CRT")
+        public CRTEffect()
+            : base("Effects/CRT")
         {
             //Effect.Parameters["ScreenSize"].SetValue(new Vector2(1920, 1080));
             //Effect.Parameters["CurvatureAmount"].SetValue(0.1f);

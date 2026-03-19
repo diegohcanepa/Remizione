@@ -71,7 +71,7 @@ namespace ScaryCastle
         }
 
         // CreateVersionLabel
-        internal static TextSprite CreateVersionLabel(EngendroGame game)
+        internal static TextSprite CreateVersionLabel()
         {
             TextSprite result = new(Fonts.Common)
             {

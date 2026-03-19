@@ -64,7 +64,7 @@ namespace Adberration
             if (InstanceKind != EntityInstanceKind.Anonymous)
                 session.RegisterEntity(this);
 
-            Sprite = new EntitySprite(Game, this);
+            Sprite = new EntitySprite(this);
 
             DefaultImageName = DeclaredName;
             var index = DeclaredName.LastIndexOf('-');
@@ -1030,8 +1030,7 @@ namespace Adberration
             private readonly Entity entity;
 
             // Constructor
-            internal EntitySprite(EngendroGame game, Entity entity)
-                : base(game)
+            internal EntitySprite(Entity entity)
             {
                 this.entity = entity;
             }

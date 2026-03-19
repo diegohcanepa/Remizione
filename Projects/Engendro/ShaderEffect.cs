@@ -9,9 +9,9 @@ namespace Engendro
     public abstract class ShaderEffect
     {
         // Constructor
-        public ShaderEffect(EngendroGame game, string assetName)
+        public ShaderEffect(string assetName)
         {
-            Effect = game.Content.Load<Effect>(assetName) ?? throw new InvalidOperationException($"Asset not found: {assetName}.");
+            Effect = EngendroGame.Instance.Content.Load<Effect>(assetName) ?? throw new InvalidOperationException($"Asset not found: {assetName}.");
         }
 
         // Effect

@@ -80,14 +80,14 @@ namespace ScaryCastle
         }
 
         // FromSystem
-        public static UserSettingsData FromSystem(EngendroGame game)
+        public static UserSettingsData FromSystem()
         {
             UserSettingsData result = new()
             {
                 AllowVibration = GamePadDevice.AllowVibration,
                 AmbientVolume = AudioManager.AmbienceCategory.Volume.Master,
                 FXVolume = AudioManager.FXCategory.Volume.Master,
-                IsFullScreen = game.IsFullScreen,
+                IsFullScreen = EngendroGame.Instance.IsFullScreen,
                 LanguageTag = TextRepository.LanguagePackage?.LanguageTag ?? string.Empty,
                 MasterVolume = AudioManager.MasterVolume,
                 MusicVolume = AudioManager.MusicCategory.Volume.Master,
@@ -179,7 +179,7 @@ namespace ScaryCastle
         // SaveCurrentSystemSettings
         public static void SaveCurrentSystemSettings(ScaryCastleGame game)
         {
-            var userSettings = FromSystem(game);
+            var userSettings = FromSystem();
 
             using var output = new MemoryStream();
             using var w = XmlWriter.Create(output);

@@ -13,7 +13,7 @@ namespace Engendro
         // Estado interno
         private Vector2 _position;
         private float _zoom = 1f;
-        private float _rotation = 0f;
+        private float _rotation;
 
         // Variables de cache y cálculo
         private Matrix camTranslationMatrix = Matrix.Identity;
@@ -53,21 +53,21 @@ namespace Engendro
         #region Constructors
 
         // Constructor
-        public Camera(EngendroGame game, string name)
-            : this(game, name, 0, 0)
+        public Camera(string name)
+            : this(name, 0, 0)
         {
         }
 
         // Constructor
-        public Camera(EngendroGame game, string name, int sceneWidth, int sceneHeight)
+        public Camera(string name, int sceneWidth, int sceneHeight)
         {
-            this.Game = game;
+            this.Game = EngendroGame.Instance;
             this.Name = name;
 
             UpdateViewportDimensions();
 
 #if WINDOWS
-            game.Window.ClientSizeChanged += Window_ClientSizeChanged;
+            Game.Window.ClientSizeChanged += Window_ClientSizeChanged;
 #endif
 
             Setup(sceneWidth, sceneHeight);

@@ -44,10 +44,7 @@ namespace Engendro
         {
             CodeContract.NotEmpty(contentRootDirectory, nameof(contentRootDirectory));
 
-            if (Instance != null)
-                throw new InvalidOperationException("This class cannot be instantiated twice.");
-            else
-                Instance = this;
+            Instance = Instance != null ? throw new InvalidOperationException("This class cannot be instantiated twice.") : this;
 
             RunningPlatform = platform;
 
@@ -58,10 +55,10 @@ namespace Engendro
 
             Content.RootDirectory = contentRootDirectory;
 
-            this.ViewportAdapter = new ViewportAdapter(this, nativeWidth, nativeHeight);
-            this.Camera = new Camera(this, "UI", nativeWidth, nativeHeight);
+            this.ViewportAdapter = new ViewportAdapter(nativeWidth, nativeHeight);
+            this.Camera = new Camera("UI", nativeWidth, nativeHeight);
             this.SceneManager = new();
-            this.Shapes = new Shapes(this);
+            this.Shapes = new();
 
             Window.Title = title;
             Window.ClientSizeChanged += Window_ClientSizeChanged;
@@ -106,7 +103,7 @@ namespace Engendro
             if (renderTargets != null)
             {
                 renderTargets.Dispose();
-                renderTargets = new Renderer2D(this);
+                renderTargets = new();
             }
         }
 
@@ -131,9 +128,7 @@ namespace Engendro
         protected override void Dispose(bool disposing)
         {
             if (disposed)
-            {
                 return;
-            }
 
             if (disposing)
             {
@@ -266,18 +261,12 @@ namespace Engendro
         public bool IsFullScreen => Graphics.IsFullScreen;
 
         // RendererTargets
-        public Renderer2D RenderTargets => renderTargets ??= new Renderer2D(this);
+        public Renderer2D RenderTargets => renderTargets ??= new();
 
         // RunningPlatform
         public static RunningPlatform RunningPlatform
         {
-            get
-            {
-                if (field == RunningPlatform.Unknown)
-                    throw new InvalidOperationException();
-
-                return field;
-            }
+            get => field == RunningPlatform.Unknown ? throw new InvalidOperationException() : (field);
             private set;
         }
 

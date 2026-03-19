@@ -14,7 +14,6 @@ namespace Engendro
         #region Private fields
 
         private readonly List<RenderTarget2D> auxiliaryTargetList = [];
-        private readonly EngendroGame game;
         private int index;
         private readonly RenderTarget2D[] renderTargets = new RenderTarget2D[2];
 
@@ -23,10 +22,8 @@ namespace Engendro
         #region Constructor
 
         // Constructor
-        public Renderer2D(EngendroGame game)
+        public Renderer2D()
         {
-            this.game = game;
-
             // Render targets
             renderTargets[0] = CreateRenderTarget(RenderTargetUsage.PreserveContents);
             renderTargets[1] = CreateRenderTarget(RenderTargetUsage.PreserveContents);
@@ -48,9 +45,9 @@ namespace Engendro
         #region Private members
 
         // CreateRenderTarget
-        private RenderTarget2D CreateRenderTarget(RenderTargetUsage usage)
+        private static RenderTarget2D CreateRenderTarget(RenderTargetUsage usage)
         {
-            return new RenderTarget2D(game.GraphicsDevice, game.ViewportAdapter.DisplayWidth, game.ViewportAdapter.DisplayHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, usage);
+            return new RenderTarget2D(EngendroGame.Instance.GraphicsDevice, EngendroGame.Instance.ViewportAdapter.DisplayWidth, EngendroGame.Instance.ViewportAdapter.DisplayHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, usage);
         }
 
         #endregion
@@ -88,9 +85,9 @@ namespace Engendro
         public RenderTarget2D Swap(bool clear)
         {
             index = index == 0 ? 1 : 0;
-            game.GraphicsDevice.SetRenderTarget(CurrentTarget);
+            EngendroGame.Instance.GraphicsDevice.SetRenderTarget(CurrentTarget);
             if (clear)
-                game.GraphicsDevice.Clear(Color.Black);
+                EngendroGame.Instance.GraphicsDevice.Clear(Color.Black);
 
             return CurrentTarget;
         }

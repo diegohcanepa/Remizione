@@ -45,7 +45,7 @@ namespace ScaryCastle
             this.IgnoreWalkArea = false;
             this.Faction = Definition == null ? Faction.Good : Definition.Faction;
 
-            headSprite = new AnimatedSprite(Game)
+            headSprite = new AnimatedSprite()
             {
                 Atlas = Atlas,
                 ImagePath = ImagePath,
@@ -224,7 +224,7 @@ namespace ScaryCastle
         // OnCollisioning
         protected override void OnCollisioning(GameThing thing, out bool handled)
         {
-            handled = thing is Coin;
+            handled = thing.IsMoving;
         }
 
         // OnDie

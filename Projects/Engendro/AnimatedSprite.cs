@@ -13,8 +13,7 @@ namespace Engendro
         #region Constructors
 
         // Constructor
-        public AnimatedSprite(EngendroGame game)
-            : base()
+        public AnimatedSprite()
         {
             this.Animations = new NamedObjectReadOnlyCollection<SpriteAnimation>(animations);
             this.Player = new SpriteAnimationPlayer(this);

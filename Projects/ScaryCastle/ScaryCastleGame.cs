@@ -113,7 +113,7 @@ namespace ScaryCastle
         {
             base.OnInitialize();
 
-            Effects = new GameEffects(this);
+            Effects = new();
             LocalizationManager.Initialize(this);
             AudioManager.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Sounds.xml"));
 

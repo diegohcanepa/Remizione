@@ -8,12 +8,9 @@ namespace Engendro
     /// </summary>
     public sealed class Shapes
     {
-        private readonly EngendroGame game;
-
         // Constructor
-        internal Shapes(EngendroGame game)
+        internal Shapes()
         {
-            this.game = game;
         }
 
         // DrawFrame
@@ -51,13 +48,13 @@ namespace Engendro
         // DrawRectangle
         public void DrawRectangle(RectangleF rect, Color color, float rotation = 0)
         {
-            game.SpriteBatch.Draw(Pixel, rect.Location, null, color, rotation, Vector2.Zero, new Vector2(rect.Width, rect.Height), SpriteEffects.None, 0);
+            EngendroGame.Instance.SpriteBatch.Draw(Pixel, rect.Location, null, color, rotation, Vector2.Zero, new Vector2(rect.Width, rect.Height), SpriteEffects.None, 0);
         }
 
         // DrawRectangle
         public void DrawRectangle(Rectangle rect, Color color, float rotation = 0)
         {
-            game.SpriteBatch.Draw(Pixel, rect, null, color, rotation, Vector2.Zero, SpriteEffects.None, 0);
+            EngendroGame.Instance.SpriteBatch.Draw(Pixel, rect, null, color, rotation, Vector2.Zero, SpriteEffects.None, 0);
         }
 
         // Pixel
@@ -67,7 +64,7 @@ namespace Engendro
             {
                 if (field == null)
                 {
-                    field = new Texture2D(game.GraphicsDevice, 1, 1);
+                    field = new Texture2D(EngendroGame.Instance.GraphicsDevice, 1, 1);
                     field.SetData([Color.White]);
                 }
 

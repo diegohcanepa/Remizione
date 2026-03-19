@@ -11,7 +11,6 @@ namespace Engendro
     {
         #region Private fields
 
-        private readonly EngendroGame game;
         private Matrix transformationMatrix;
         private Matrix transformationMatrixForInput;
         private bool invertScale;
@@ -21,10 +20,8 @@ namespace Engendro
         #region Constructor
 
         // Constructor
-        internal ViewportAdapter(EngendroGame game, int virtualWidth, int virtualHeight)
+        internal ViewportAdapter(int virtualWidth, int virtualHeight)
         {
-            this.game = game;
-
             this.VirtualWidth = virtualWidth;
             this.VirtualHeight = virtualHeight;
             this.VirtualAspectRatio = VirtualWidth / (float)VirtualHeight;
@@ -95,16 +92,13 @@ namespace Engendro
                 invertScale = false;
             }
 
-            if (game.GraphicsDevice != null)
+            EngendroGame.Instance.GraphicsDevice?.Viewport = new Viewport
             {
-                game.GraphicsDevice.Viewport = new Viewport
-                {
-                    X = (DisplayWidth / 2) - (width / 2),
-                    Y = (DisplayHeight / 2) - (height / 2),
-                    Width = width,
-                    Height = height
-                };
-            }
+                X = (DisplayWidth / 2) - (width / 2),
+                Y = (DisplayHeight / 2) - (height / 2),
+                Width = width,
+                Height = height
+            };
         }
 
         #endregion

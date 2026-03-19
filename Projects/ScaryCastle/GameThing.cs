@@ -537,19 +537,19 @@ namespace ScaryCastle
 
 #if DEBUG
         // DrawBox
-        private static void DrawBox(EngendroGame game, RectangleF bounds, Color color)
+        private static void DrawBox(RectangleF bounds, Color color)
         {
-            game.Shapes.DrawRectangle(bounds, color);
+            EngendroGame.Instance.Shapes.DrawRectangle(bounds, color);
         }
 
         // DrawDebugBoxes
         public void DrawDebugBoxes()
         {
             if (ShowColliders)
-                DrawBox(Game, holePoly.BoundingRectangleF, Color.Red * .2f);
+                DrawBox(holePoly.BoundingRectangleF, Color.Red * .2f);
 
             if (ShowHotspots)
-                DrawBox(Game, RuntimeHotspot.BoundingRectangleF, Color.Purple * .2f);
+                DrawBox(RuntimeHotspot.BoundingRectangleF, Color.Purple * .2f);
 
             if (ShowBoundingBoxes)
                 Game.Shapes.DrawFrame(BoundingBox, Color.Yellow * .2f, .2f);

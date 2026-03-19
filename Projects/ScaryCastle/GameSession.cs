@@ -89,7 +89,7 @@ namespace ScaryCastle
             this.echoScene = new(Game);
 
             // Saving icon
-            this.savingIcon = new Sprite( Atlases.UI.SavingIcon)
+            this.savingIcon = new Sprite(Atlases.UI.SavingIcon)
             {
                 PivotOrigin = RectanglePoint.RightTop,
                 Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -6, 4)

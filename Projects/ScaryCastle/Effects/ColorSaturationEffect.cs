@@ -16,8 +16,8 @@ namespace ScaryCastle.Effects
         private readonly EffectParameter aParameter;
 
         // Constrcutor
-        public ColorSaturationEffect(EngendroGame game)
-            : base(game, "Effects/ColorSaturation")
+        public ColorSaturationEffect()
+            : base("Effects/ColorSaturation")
         {
             rParameter = Effect.Parameters["r"] ?? throw new InvalidOperationException();
             gParameter = Effect.Parameters["g"] ?? throw new InvalidOperationException();

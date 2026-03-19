@@ -22,7 +22,7 @@ namespace ScaryCastle.Menus
             this.ExclusiveDraw = true;
             this.PausePreviousScenes = true;
             this.backgroundSprite = new Sprite(backgroundImage);
-            version = Utils.CreateVersionLabel(game);
+            version = Utils.CreateVersionLabel();
             Stick = new StickInputController(GamePadThumbStick.Left) { AutoRepeatRate = 250 };
         }
 

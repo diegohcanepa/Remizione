@@ -25,7 +25,7 @@ namespace ScaryCastle
             AtlasName = graph.Definition.Name ?? string.Empty;
             DefaultImageName = AtlasName;
             GlobalLightSize = new(2.2f, 2);
-            LightMapColor = new(50, 50, 50);
+            LightMapColor = new(20, 20, 20);
             LightingSystem = true;
 
             AddWalkArea("WalkArea", graph.Definition.WalkArea);

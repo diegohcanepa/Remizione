@@ -9,8 +9,8 @@ namespace ScaryCastle
     public sealed partial class EnvironmentAtlas : Atlas
     {
         // Constructor
-        public EnvironmentAtlas(EngendroGame game)
-            : base(game.Content, "Environment", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "Environment"), false)
+        public EnvironmentAtlas()
+            : base(EngendroGame.Instance.Content, "Environment", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "Environment"), false)
         {
             DefaultLight = this[nameof(DefaultLight)];
             DustParticles = CreateReadOnlyCollection("DustParticle", 1, 1);

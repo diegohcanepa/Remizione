@@ -16,10 +16,10 @@ namespace ScaryCastle
         {
             isLoaded = true;
             Actors = new Atlas(EngendroGame.Instance.Content, nameof(Actors), ContentManagerExtension.EncodePath(ContentFolder.Atlases, nameof(Actors)), true);
-            Environment = new EnvironmentAtlas(EngendroGame.Instance);
-            Menu = new MenuAtlas(EngendroGame.Instance);
+            Environment = new EnvironmentAtlas();
+            Menu = new MenuAtlas();
             Props = new Atlas(EngendroGame.Instance.Content, nameof(Props), ContentManagerExtension.EncodePath(ContentFolder.Atlases, nameof(Props)), false);
-            UI = new UIAtlas(EngendroGame.Instance);
+            UI = new UIAtlas();
         }
 
         #endregion
