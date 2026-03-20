@@ -55,6 +55,16 @@ namespace Adberration
             return Speed;
         }
 
+        // OnActivate
+        protected virtual void OnActivate()
+        {
+        }
+
+        // OnDeactivate
+        protected virtual void OnDeactivate()
+        {
+        }
+
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
@@ -76,16 +86,6 @@ namespace Adberration
 
                 this.Position = pos;
             }
-        }
-
-        // OnEnterRoom
-        protected virtual void OnEnterRoom()
-        {
-        }
-
-        // OnExitRoom
-        protected virtual void OnExitRoom()
-        {
         }
 
         // OnLoad
@@ -146,25 +146,25 @@ namespace Adberration
 
         #region Internal members
 
-        // EnterRoom
-        internal void EnterRoom()
+        // Activate
+        internal void Activate()
         {
-            OnEnterRoom();
+            OnActivate();
 
             for (var i = 0; i < Children.Count; i++)
             {
-                Children[i].EnterRoom();
+                Children[i].Activate();
             }
         }
 
-        // ExitRoom
-        internal void ExitRoom()
+        // Deactivate
+        internal void Deactivate()
         {
-            OnExitRoom();
+            OnDeactivate();
 
             for (var i = 0; i < Children.Count; i++)
             {
-                Children[i].ExitRoom();
+                Children[i].Deactivate();
             }
         }
 

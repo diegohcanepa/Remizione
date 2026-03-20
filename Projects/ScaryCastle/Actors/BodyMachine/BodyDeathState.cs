@@ -21,7 +21,7 @@ namespace ScaryCastle
             if (!Owner.AnimationPlayer.IsPlaying)
             {
                 if (Owner.IsPlayer)
-                    Owner.Session.AwaitRoutine(RoutineNames.GameOver);
+                    Owner.Session.AwaitRoutine(RoutineNames.DeathByHealth);
                 else
                     Machine.ChangeState<BodyStandState>();
             }

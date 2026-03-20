@@ -109,7 +109,7 @@ namespace ScaryCastle
 
                 if (RoomGraph.RoomType != RoomType.Start)
                 {
-                    Session.Fear++;
+                    Session.FearManager.AddFear(1);
                     Sound.Play(SoundNames.Fear);
                 }
             }

@@ -997,7 +997,7 @@ namespace Adberration
             this.Room = nextRoom;
 
             nextRoom.Load();
-            nextRoom.Enter();
+            nextRoom.Activate();
 
             OnEnterRoom(nextRoom);
             BeginEnterRoomOutcome();

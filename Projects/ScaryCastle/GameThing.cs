@@ -18,7 +18,8 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly Blinker<bool> blinker = new(false, true);
-        private float contactCooldown;
+        private const int contactCooldown = 500;
+        private int contactTimer;
         private bool dieCalled;
         private FloatTween? floatingTween;
         private readonly Polygon holePoly = new();
@@ -235,6 +236,13 @@ namespace ScaryCastle
                 return Vector2.Zero;
         }
 
+        // OnActivate
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            contactTimer = 0;
+        }
+
         // OnCollision
         protected virtual void OnCollision(GameThing thing)
         {
@@ -303,6 +311,13 @@ namespace ScaryCastle
             isCollisionDirty = true;
             InvalidateCollisionPolygons();
             InvalidateWalkArea();
+        }
+
+        // OnStopMoving
+        protected override void OnStopMoving()
+        {
+            base.OnStopMoving();
+            contactTimer = contactCooldown;
         }
 
         // OnTakeDamage
@@ -376,17 +391,18 @@ namespace ScaryCastle
             if (blinker.IsRunning)
                 blinker.Update(gameTime);
 
-            if (ContactIntent != null)
+            if (CanInflictContactDamage)
             {
-                if (contactCooldown > 0)
-                    contactCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-
-                if (contactCooldown <= 0 && Session.Player != null)
+                if (contactTimer > 0)
+                {
+                    contactTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                }
+                else if (Session.Player != null && IsMoving)
                 {
                     if (RuntimeCollider.Contains(Session.Player.Position))
                     {
-                        EffectDescriptor.Apply(ContactIntent.EffectDescriptors, this, Session.Player, EffectContext.Contact);
-                        contactCooldown = 500;
+                        TryInflictContactDamage(Session.Player);
+                        contactTimer = 500;
                         return;
                     }
                 }
@@ -397,6 +413,11 @@ namespace ScaryCastle
         protected override void OnUpdateEmittingSound(SoundInstance instance, float masterVolume)
         {
             Utils.ApplySoundEmitter(this, instance, masterVolume);
+        }
+
+        // TryInflictContactDamage
+        protected virtual void TryInflictContactDamage(GameThing target)
+        {
         }
 
         #endregion
@@ -426,6 +447,9 @@ namespace ScaryCastle
         // CanBeHit
         [ScriptProperty]
         public bool CanBeHit { get; set; } = true;
+
+        // CanInflictContactDamage
+        public bool CanInflictContactDamage { get; init; }
 
         // CanInteract
         public virtual bool CanInteract()
@@ -508,9 +532,6 @@ namespace ScaryCastle
         // CollisionHeight
         [ScriptProperty]
         public int CollisionHeight { get; set; }
-
-        // ContactIntent
-        public CombatIntent? ContactIntent { get; init; }
 
         // Die
         [ScriptMethod]
@@ -822,7 +843,7 @@ namespace ScaryCastle
 
         // HPRatio
         [ScriptProperty]
-        public Ratio HPRatio => (float)HP / MaxHP;
+        public float HPRatio => (float)HP / MaxHP;
 
         // HurtSound
         [ScriptProperty]

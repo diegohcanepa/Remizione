@@ -57,6 +57,7 @@ namespace ScaryCastle
             this.DeclaredThings = new(proceduralThings);
             this.Random = new Random(Seed);
             this.inventoryScene = new(Inventory);
+            this.FearManager = new(this);
 
             ObjectPools = new ObjectPools(this);
             ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(), 100);
@@ -408,10 +409,18 @@ namespace ScaryCastle
 
                 if (!IsAwaiting)
                 {
-                    if (Player?.IsDead == true || DeathByFear)
+                    FearManager.Update(gameTime);
+
+
+                    if (Player?.IsDead == true)
                     {
                         Player?.StopMoving();
-                        AwaitRoutine(RoutineNames.GameOver);
+                        AwaitRoutine(RoutineNames.DeathByHealth);
+                    }
+                    else if (FearManager.IsDeadByFear)
+                    {
+                        Player?.StopMoving();
+                        AwaitRoutine(RoutineNames.DeathByFear);
                     }
                 }
             }
@@ -460,13 +469,15 @@ namespace ScaryCastle
                 Seed = System.Environment.TickCount;
 
             RunManager.Generate(this, Tags.EmptyList);
-            Fear = 0;
+
+            FearManager.Reset(RunManager.MaximumFear);
 
             if (Player != null)
             {
                 var rideRoom = RunManager.RoomGraphs[0].RideRoom;
                 Player.Reheal();
                 HUDVisible = true;
+                HUD.FearMeter.Reset();
                 rideRoom.Children.Add(Player);
                 if (rideRoom.WalkArea != null)
                     Player.Position = rideRoom.WalkArea.Polygon.BoundingRectangleF.Center;
@@ -482,10 +493,6 @@ namespace ScaryCastle
             EndRun();
             RunCount++;
         }
-
-        // DeathByFear
-        [ScriptProperty]
-        public bool DeathByFear => RunManager.HasContent && Fear == RunManager.MaximumFear;
 
         // DeclaredThings
         public NamedObjectReadOnlyCollection<GameThing> DeclaredThings { get; }
@@ -528,17 +535,8 @@ namespace ScaryCastle
         // Environment
         public Environment Environment { get; }
 
-        // Fear
-        public int Fear
-        {
-            get;
-            set
-            {
-                var blink = value > field;
-                field = Math.Clamp(value, 0, RunManager.MaximumFear);
-                HUD.FearMeter.Refresh(blink);
-            }
-        }
+        // FearManager
+        public FearManager FearManager { get; private set; }
 
         // FindDeclaredThing
         public GameThing? FindDeclaredThing(string name)

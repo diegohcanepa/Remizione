@@ -16,6 +16,9 @@ namespace ScaryCastle
         // ContentRootDirectory
         public const string ContentRootDirectory = "Content";
 
+        // DeathCoooldown
+        public const int DeathCoooldown = 15000;
+
         // DefaultGlobalLightSize
         public static readonly Vector2 DefaultGlobalLightSize = new(1.5f, 2);
 

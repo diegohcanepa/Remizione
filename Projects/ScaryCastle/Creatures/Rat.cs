@@ -8,7 +8,6 @@ namespace ScaryCastle
     /// </summary>
     public sealed class Rat : Actor
     {
-        private int moveCooldoown;
         private readonly Vector2Tween scaleTween;
 
         // Constructor
@@ -17,7 +16,6 @@ namespace ScaryCastle
         {
             AnimationSettings.SupressAll();
             BodySize = BodySize.Small;
-            ContactIntent = CombatBehavior?.Intents.Find("Bite");
             FastMoveFactor = 3;
             Guts = 4;
             Scale = new(.8f);
@@ -34,31 +32,11 @@ namespace ScaryCastle
             Sprite.ScaleFactor -= scaleTween.CurrentValue;
         }
 
-        // OnLoad
-        protected override void OnLoad()
-        {
-            base.OnLoad();
-            moveCooldoown = 4000;
-        }
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
             scaleTween.Update(gameTime);
-
-            if (!IsMoving)
-            {
-                if (moveCooldoown > 0)
-                {
-                    moveCooldoown -= gameTime.ElapsedGameTime.Milliseconds;
-                }
-                else
-                {
-                    MoveRandomly();
-                    moveCooldoown = 4000;
-                }
-            }
         }
 
         #endregion

@@ -208,8 +208,8 @@ namespace Adberration
 
         #region Internal members
 
-        // Enter
-        internal void Enter()
+        // Activate
+        internal void Activate()
         {
             var width = Width == 0 ? CustomWidth : Width;
             var height = Height == 0 ? CustomHeight : Height;
@@ -217,7 +217,7 @@ namespace Adberration
 
             for (var i = 0; i < Children.Count; i++)
             {
-                Children[i].EnterRoom();
+                Children[i].Activate();
             }
 
             OnEnter();
@@ -230,7 +230,7 @@ namespace Adberration
 
             for (var i = 0; i < Children.Count; i++)
             {
-                Children[i].ExitRoom();
+                Children[i].Deactivate();
             }
         }
 

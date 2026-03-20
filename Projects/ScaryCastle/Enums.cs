@@ -20,7 +20,7 @@ namespace ScaryCastle
     public enum CombatBehaviorArchetype { Tactical, Berserk, Coward, Sniper, Swarmer }
 
     // CombatIntentCategory
-    public enum CombatIntentCategory { Basic, Special, Contact }
+    public enum CombatIntentCategory { Basic, Special }
 
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }

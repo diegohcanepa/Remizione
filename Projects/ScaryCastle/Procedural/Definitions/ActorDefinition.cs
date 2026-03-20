@@ -13,7 +13,6 @@ namespace ScaryCastle
             : base(element)
         {
             Faction = element.GetEnum("faction", Faction.Evil);
-
             Definitions.Add(this);
         }
 

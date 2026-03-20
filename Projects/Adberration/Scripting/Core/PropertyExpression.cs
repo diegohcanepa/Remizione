@@ -38,15 +38,6 @@ namespace Adberration.Scripting
                 }
             }
 
-            var isSessionProperty = value.StartsWith(ScriptSyntax.SessionKeyword + ".", StringComparison.Ordinal);
-
-            if (isSessionProperty)
-            {
-            }
-            else
-            {
-            }
-
             var tokens = value.Split('.');
 
             // Session.Property

@@ -5,12 +5,29 @@
       "name": "EnviousEye",
       "minSpawnAmount": 1,
       "maxSpawnAmount": 2,
+      "effects": [
+        {
+          "context": "Contact",
+          "effectType": "Damage",
+          "amount": "1",
+          "impactWord": "AghRed"
+        }
+      ],      
       "placements": [
         "WalkArea"
       ]
     },
     {
       "name": "Rat",
+      "effects": [
+        {
+          "context": "Contact",
+          "effectType": "Damage",
+          "amount": "1",
+          "impactWord": "AghRed",
+          "sound": "RatAttack"
+        }
+      ],
       "placements": [
         "WalkArea"
       ]

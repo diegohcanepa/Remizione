@@ -25,6 +25,7 @@ namespace ScaryCastle
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private readonly List<Vector2> pendingPathNodes = [];
+        private int randomMoveTimer;
         private SpeechBubble? speechBubble;
 
         #endregion
@@ -83,6 +84,9 @@ namespace ScaryCastle
             }
 
             ShadowSpotSize = 6;
+
+            if (Definition != null)
+                CanInflictContactDamage = EffectDescriptor.Contains(Definition.Effects, EffectContext.Contact);
         }
 
         #endregion
@@ -221,6 +225,15 @@ namespace ScaryCastle
         // InputHandler
         protected InputHandler? InputHandler { get; set; }
 
+        // OnActivate
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+
+            if (RandomMoveCooldown > 0)
+                randomMoveTimer = Random.Shared.Next(1000, RandomMoveCooldown + 1);
+        }
+
         // OnCollisioning
         protected override void OnCollisioning(GameThing thing, out bool handled)
         {
@@ -269,7 +282,7 @@ namespace ScaryCastle
             }
 
             if (Faction == Faction.Evil)
-                Session.Fear--;
+                Session.FearManager.AddFear(-1);
 
             ShowImpactWord(ImpactWordName.PlopRed);
         }
@@ -407,6 +420,32 @@ namespace ScaryCastle
             UpdateFootstep();
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
+
+            if (RandomMoveCooldown > 0)
+            {
+                if (!IsMoving && !Session.IsAwaiting)
+                {
+                    if (randomMoveTimer > 0)
+                    {
+                        randomMoveTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                    }
+                    else
+                    {
+                        if (Session.Player != null && Random.Shared.NextDouble() <= RandomMoveAggressiveness)
+                            MoveTo(Session.Player.Position);
+                        else
+                            MoveRandomly();
+                        randomMoveTimer = RandomMoveCooldown;
+                    }
+                }
+            }
+        }
+
+        // TryInflictContactDamage
+        protected override void TryInflictContactDamage(GameThing target)
+        {
+            if (Definition != null)
+                EffectDescriptor.Apply(Definition.EffectDescriptors, this, target, EffectContext.Contact);
         }
 
         #endregion
@@ -459,7 +498,7 @@ namespace ScaryCastle
                 return false;
             }
 
-            var destination = target.GetApproachPosition(this);
+            var destination = target.GetApproachPosition(this, Session.InteractionData.InteractionType == InteractionType.Headbutt ? ApproachBehavior.ClosestSide : null);
             var result = target != this && MoveTo(destination);
 
             if (!result)
@@ -712,6 +751,22 @@ namespace ScaryCastle
                 }
             }
         } = PlayerNumber.None;
+
+        // RandomMoveAggressiveness
+        [ScriptProperty]
+        public float RandomMoveAggressiveness
+        {
+            get;
+            set
+            {
+                if (value != field)
+                    field = float.Clamp(value, 0, 1);
+            }
+        }
+
+        // RandomMoveCooldown
+        [ScriptProperty]
+        public int RandomMoveCooldown { get; set; }
 
         // Say
         public void Say(string text, bool awaitInput)
