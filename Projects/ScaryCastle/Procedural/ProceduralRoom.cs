@@ -46,22 +46,24 @@ namespace ScaryCastle
         #region Private members
 
         // AdjustWeightByDifficulty
-        private static float AdjustWeightByDifficulty(Difficulty roomDifficulty, Difficulty thingDifficulty, float thingWeight)
+        // Aplica un multiplicador al peso original basado en la disparidad de dificultad.
+        private static float AdjustWeightByDifficulty(Difficulty roomDiff, Difficulty thingDiff, float baseWeight)
         {
-            float finalWeight = thingWeight;
+            // Si coinciden, es el peso ideal.
+            if (roomDiff == thingDiff)
+                return baseWeight;
 
-            // Si el cuarto es Difícil, bajamos la chance de los "Flojitos"
-            if (roomDifficulty == Difficulty.Hard && thingDifficulty == Difficulty.Easy)
-            {
-                finalWeight *= .2f; // El multiplicador bizarro
-            }
-            // Si el cuarto es Difícil y el enemigo también, lo potenciamos
-            else if (roomDifficulty == Difficulty.Hard && thingDifficulty == Difficulty.Hard)
-            {
-                finalWeight *= 2.5f;
-            }
+            // Calculamos la distancia (Easy=0, Medium=1, Hard=2)
+            int distance = (int)roomDiff - (int)thingDiff;
 
-            return finalWeight;
+            float multiplier = distance switch
+            {
+                1 => 0.15f,  // Ej: Sala Medium, Enemigo Easy (1 escalón de diferencia)
+                2 => 0.02f,  // Ej: Sala Hard, Enemigo Easy (2 escalones de diferencia)
+                _ => 1.0f    // Por seguridad, aunque el techo ya filtra los negativos
+            };
+
+            return baseWeight * multiplier;
         }
 
         // GetCandidateDefinitions
@@ -69,32 +71,40 @@ namespace ScaryCastle
             where TDefinition : ThingDefinition where TThing : GameThing
         {
             var outList = new List<TDefinition>();
+            if (Session.CurrentRun == null)
+                return outList;
 
             foreach (var definition in definitions)
             {
-                // Filtro Techo: No permitimos que aparezcan cosas más difíciles que el cuarto
+                // 1. Filtro de dificultad: No permitimos que aparezcan cosas más difíciles que el cuarto
                 if (definition.Difficulty > RoomGraph.Definition.Difficulty)
                     continue;
 
-                // Thing requires a dead end room
+                // 2. Filtro de topologia
                 if (definition.RequiresDeadEnd && RoomGraph.ConnectionCount > 1)
                     continue;
 
+                // 3. Validación de Existencia de instancia declarada en script
                 var thing = Session.FindDeclaredThing(definition.Name) ?? throw new InvalidOperationException($"There is no declared thing named '{definition.Name}'. ");
 
                 // Is expected type?
                 if (thing is not TThing)
                     continue;
 
-                // Run constraints
-                if (!definition.PassesRunConstraints())
+                // 4. Meta-progreso
+                // Chequea si el enemigo está desbloqueado (MinRun)
+                if (!definition.PassesRunConstraints(Session.RunCount))
                     continue;
 
-                // Scope rules
+                // 5. Historial de la Run
+                // Chequea si el enemigo ya alcanzó su MaxPerRun global
+                if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.RunSpawns))
+                    continue;
+
+                // 6. Reglas de Scope (Pools/Tags de la habitación)
                 if (!definition.PassesScope(RoomGraph.Definition.Scope))
                     continue;
 
-                // Passed all checks
                 outList.Add(definition);
             }
 
@@ -208,12 +218,12 @@ namespace ScaryCastle
                     if (!definition.Placements.Contains(placeholder.Placement))
                         continue;
 
-                    // MaxPerRoom
+                    // MaxPerRoom (local)
                     if (!definition.PassesMaxPerRoomConstraint(spawnCounter.GetCount(definition.Name)))
                         continue;
 
-                    // MaxPerRun
-                    if (!definition.PassesMaxPerRunConstraint()
+                    // MaxPerRun (Global)
+                    if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.RunSpawns))
                         continue;
 
                     selectedCandidates.Add(definition);
@@ -233,12 +243,8 @@ namespace ScaryCastle
                 if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
                     continue;
 
-                if (definitionContainer.Find(chanceTableItem.Name) is not ThingDefinition chosen)
+                if (definitionContainer.Find(chanceTableItem.Name) is not T chosen)
                     continue;
-
-                // Log spawn in run
-                Session.CurrentRun.RunSpawns.Increment(chosen.Name);
-                spawnCounter.Increment(chosen.Name);
 
                 // Flag placeholder as used
                 placeholder.Used = true;
@@ -247,13 +253,19 @@ namespace ScaryCastle
                 instance.Position = placeholder.Position;
                 Children.Add(instance);
 
+                // Log spawn in run
+                Session.CurrentRun.RunSpawns.Increment(chosen.Name);
+
+                int currentRoomCount = spawnCounter.Increment(chosen.Name);
+                
                 // Max per room
-                if (maxInstances != -1 && spawnCounter.Increment(chosen.Name) >= maxInstances)
+                if (maxInstances != -1 && currentRoomCount >= maxInstances)
                     return;
             }
         }
 
         // SpawnInWalkArea
+        // Procesa la aparición de entidades en áreas caminables asegurando la sincronización de estado.
         private void SpawnInWalkArea<T>(DataContainer<T> definitionContainer, IList<T> candidates, int maxInstances, MultiCounter spawnCounter)
             where T : ThingDefinition
         {
@@ -261,17 +273,17 @@ namespace ScaryCastle
                 return;
 
             // 1) Collect candidates
-            var selectedCandidates = new List<ThingDefinition>();
+            var selectedCandidates = new List<T>();
             foreach (var definition in candidates)
             {
-                // Allowed if list is empty or contains WalkArea enum value
                 if (!definition.Placements.Contains(PlacementType.WalkArea))
                     continue;
 
                 if (!definition.PassesMaxPerRoomConstraint(spawnCounter.GetCount(definition.Name)))
                     continue;
 
-                if (!definition.PassesMaxPerRunConstraint())
+                // Corrección: Inyectamos el contador global de la run
+                if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.RunSpawns.GetCount(definition.Name)))
                     continue;
 
                 selectedCandidates.Add(definition);
@@ -288,24 +300,19 @@ namespace ScaryCastle
                 table.Add(c.Name, finalWeight);
             }
 
-            var spawnedNames = new List<string>();
+            // Usamos una lista de definiciones concretas en lugar de solo strings
+            var pendingSpawns = new List<T>();
             int remainingInstances = maxInstances;
-
-            // Corte blando
             var continueChance = 1f;
-            const float decay = 0.7f; // ajustable
+            const float decay = 0.7f;
+            int safety = (selectedCandidates.Count * 2) + 10;
 
-            // seguridad
-            int safety = (selectedCandidates.Count * 2) + 10; // Un poco más de margen de seguridad
-
-            // 3) Pick groups
+            // 3) Pick groups (Solo intención, no alteramos estado global)
             while (table.Count > 0 && safety-- > 0)
             {
                 if (maxInstances > 0 && remainingInstances <= 0)
                     break;
 
-                // roll de continuación (solo si es infinito, o lógica específica)
-                // Nota: Tu lógica original usaba maxInstances <= 0 para el decay, lo mantengo igual.
                 if (maxInstances <= 0)
                 {
                     if (Random.NextDouble() > continueChance)
@@ -317,54 +324,48 @@ namespace ScaryCastle
                 if (table.GetValue() is not ChanceTableItem item)
                     break;
 
-                // Nota: Si quieres que se puedan repetir tipos de enemigos, comenta la siguiente línea.
-                // Si la descomentas, cada tipo de enemigo aparece una sola vez por grupo.
                 table.Remove(item.Name);
 
-                if (definitionContainer.Find(item.Name) is not ThingDefinition chosen)
+                // Corrección: Usamos 'T' directo gracias al contenedor tipado
+                if (definitionContainer.Find(item.Name) is not T chosen)
                     continue;
 
                 int min = Math.Max(1, chosen.MinSpawnAmount);
                 int max = Math.Max(min, chosen.MaxSpawnAmount);
                 int amount = Random.Next(min, max + 1);
 
-                // respetar maxInstances si existe
                 if (maxInstances > 0)
                     amount = Math.Min(amount, remainingInstances);
 
+                // Agregamos a la lista de intención de spawn
                 for (int i = 0; i < amount; i++)
                 {
-                    spawnCounter.Increment(chosen.Name);
-                    Session.CurrentRun.RunSpawns.Increment(chosen.Name);
-                    spawnedNames.Add(chosen.Name);
+                    pendingSpawns.Add(chosen);
 
                     if (maxInstances > 0)
                         remainingInstances--;
                 }
             }
 
-            if (spawnedNames.Count == 0)
+            if (pendingSpawns.Count == 0)
                 return;
 
-            // 4) Spawn positions
-            // Creamos un polígono "seguro" reduciendo el original en 30 unidades.
-            // Esto asegura que cualquier punto validado por 'Contains' estará
-            // al menos a 30px de la pared más cercana.
+            // 4) Spawn positions y Confirmación de Estado
             var safePoly = new Polygon(WalkArea.Polygon.Vertices, -30);
+            var points = GetSpawnPoints(safePoly, pendingSpawns.Count, 45);
 
-            // CAMBIO IMPORTANTE: Aumentamos cellSize de 18 a 45.
-            // Esto reduce drásticamente la superposición de enemigos.
-            var points = GetSpawnPoints(safePoly, spawnedNames.Count, 45);
-
+            // Iteramos solo hasta la cantidad de puntos físicos que conseguimos
             for (int i = 0; i < points.Count; i++)
             {
-                // Si el cuarto es muy chico y no conseguimos puntos para todos los enemigos, paramos.
-                if (i >= spawnedNames.Count)
-                    break;
+                var chosenDef = pendingSpawns[i];
 
-                var instance = CreateThingClone(spawnedNames[i]);
+                var instance = CreateThingClone(chosenDef.Name);
                 instance.Position = points[i];
                 Children.Add(instance);
+
+                // CRÍTICO: Los contadores se incrementan SOLO cuando la instancia física existe
+                spawnCounter.Increment(chosenDef.Name);
+                Session.CurrentRun.RunSpawns.Increment(chosenDef.Name);
             }
         }
 

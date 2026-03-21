@@ -59,26 +59,36 @@ namespace ScaryCastle
         // MinRun
         public int MinRun { get; }
 
+        // PassesMaxPerRunConstraint
+        public bool PassesMaxPerRunConstraint(params MultiCounter[] counters)
+        {
+            var count = 0;
+            for (var i = 0; i < counters.Length; i++)
+            {
+                count += counters[i].GetCount(Name);
+            }
+            
+            return PassesMaxPerRunConstraint(count);
+        }
+
+        // PassesMaxPerRunConstraint
+        public bool PassesMaxPerRunConstraint(int count)
+        {
+            // Ilimitado
+            if (MaxPerRun < 0)
+                return true;
+
+            // Prohibido
+            if (MaxPerRun == 0)
+                return false;
+
+            return count < MaxPerRun;
+        }
+
         // PassesRunConstraints
         public bool PassesRunConstraints(int runCount)
         {
             return runCount >= MinRun;
-        }
-
-        // PassesMaxPerRunConstraint
-        public bool PassesMaxPerRunConstraint(MultiCounter floorSpawns, MultiCounter globalSpawns)
-        {
-            // Unlimited
-            if (MaxPerRun < 0)
-                return true;
-
-            // Not allowed
-            if (MaxPerRun == 0)
-                return false;
-
-            int currentTotal = globalSpawns.GetCount(Name) + floorSpawns.GetCount(Name);
-
-            return currentTotal < MaxPerRun;
         }
 
         // PassesScope
