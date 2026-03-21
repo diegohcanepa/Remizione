@@ -37,6 +37,15 @@ namespace ScaryCastle
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
             Theme = element.GetEnum("theme", RoomTheme.BlueStone);
 
+            if (IsStartingRoom || IsExit)
+            {
+                if (!IsMandatory)
+                    RaiseValidationError(this, "Starting and Exit rooms must be marked as IsMandatory = true.");
+
+                if (MaxPerRun != -1)
+                    RaiseValidationError(this, "Starting and Exit rooms must have MaxPerRun = -1 to ensure floor connectivity.");
+            }
+
             // Placeholders
             if (element.TryGetProperty("placeholders", out JsonElement placeholdersElement))
             {

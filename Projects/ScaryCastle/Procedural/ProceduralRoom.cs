@@ -87,7 +87,7 @@ namespace ScaryCastle
                     continue;
 
                 // Run constraints
-                if (!definition.PassesRunConstraints(Session))
+                if (!definition.PassesRunConstraints())
                     continue;
 
                 // Scope rules
@@ -178,7 +178,7 @@ namespace ScaryCastle
         private void SpawnInPlaceholders<T>(DataContainer<T> definitionContainer, IList<T> candidates, int maxInstances, MultiCounter spawnCounter, PlaceholderTarget target)
             where T : ThingDefinition
         {
-            if (Placeholders.Count == 0 || maxInstances == 0)
+            if (Placeholders.Count == 0 || maxInstances == 0 || Session.CurrentRun == null)
                 return;
 
             // 1) Shuffle placeholders
@@ -213,7 +213,7 @@ namespace ScaryCastle
                         continue;
 
                     // MaxPerRun
-                    if (!definition.PassesMaxPerRunConstraint())
+                    if (!definition.PassesMaxPerRunConstraint()
                         continue;
 
                     selectedCandidates.Add(definition);
@@ -237,7 +237,7 @@ namespace ScaryCastle
                     continue;
 
                 // Log spawn in run
-                RunManager.SpawnCounter.Increment(chosen.Name);
+                Session.CurrentRun.RunSpawns.Increment(chosen.Name);
                 spawnCounter.Increment(chosen.Name);
 
                 // Flag placeholder as used
@@ -257,7 +257,7 @@ namespace ScaryCastle
         private void SpawnInWalkArea<T>(DataContainer<T> definitionContainer, IList<T> candidates, int maxInstances, MultiCounter spawnCounter)
             where T : ThingDefinition
         {
-            if (WalkArea == null || maxInstances == 0)
+            if (WalkArea == null || maxInstances == 0 || Session.CurrentRun == null)
                 return;
 
             // 1) Collect candidates
@@ -335,7 +335,7 @@ namespace ScaryCastle
                 for (int i = 0; i < amount; i++)
                 {
                     spawnCounter.Increment(chosen.Name);
-                    RunManager.SpawnCounter.Increment(chosen.Name);
+                    Session.CurrentRun.RunSpawns.Increment(chosen.Name);
                     spawnedNames.Add(chosen.Name);
 
                     if (maxInstances > 0)

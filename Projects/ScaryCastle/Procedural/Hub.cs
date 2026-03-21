@@ -18,12 +18,15 @@ namespace ScaryCastle
         // LinkGate
         private void LinkGate()
         {
-            var thingName = $"{nameof(RideDoor)}Up*Hub";
-
-            if (Children.Find(thingName) is RideDoor gate)
+            if (Session.CurrentRun?.CurrentFloor is Floor floor)
             {
-                gate.TargetRoom = RunManager.RoomGraphs[0].RideRoom;
-                RunManager.RoomGraphs[0].RideRoom.HubDoor = gate;
+                var thingName = $"{nameof(RideDoor)}Up*Hub";
+
+                if (Children.Find(thingName) is RideDoor gate)
+                {
+                    gate.TargetRoom = floor.RoomGraphs[0].RideRoom;
+                    floor.RoomGraphs[0].RideRoom.HubDoor = gate;
+                }
             }
         }
 

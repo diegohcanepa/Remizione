@@ -30,6 +30,9 @@ namespace Engendro
             return data.TryGetValue(name, out var value) ? value : 0;
         }
 
+        // GetNames
+        public IEnumerable<string> GetNames() => data.Keys;
+
         // Increment
         public int Increment(string name)
         {

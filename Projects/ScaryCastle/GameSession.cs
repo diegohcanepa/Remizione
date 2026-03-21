@@ -215,7 +215,7 @@ namespace ScaryCastle
             // Draw speech bubbles
             SpeechBubble.DrawSpeechBubbles(gameTime);
 
-            if (!RunManager.HasContent)
+            if (CurrentRun == null)
             {
                 if (savingIcon.Tweens.IsTweening)
                 {
@@ -458,23 +458,30 @@ namespace ScaryCastle
 
         #endregion
 
+        // CurrentRun
+        public ActiveRun? CurrentRun { get; private set; }
+
         // BeginRun
         [ScriptMethod]
         public void BeginRun()
         {
-            if (RunManager.HasContent)
+            if (CurrentRun != null)
                 throw new InvalidOperationException("A run is already in progress.");
 
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            RunManager.Generate(this, Tags.EmptyList);
+            CurrentRun = new ActiveRun(this);
+            CurrentRun.LoadNextFloor(Tags.EmptyList);
 
-            FearManager.Reset(RunManager.MaximumFear);
+            if (CurrentRun.CurrentFloor == null)
+                throw new InvalidOperationException("Floor generation failed.");
+
+            FearManager.Reset(CurrentRun.CurrentFloor.RoomGraphs.Count / 2);
 
             if (Player != null)
             {
-                var rideRoom = RunManager.RoomGraphs[0].RideRoom;
+                var rideRoom = CurrentRun.CurrentFloor.RoomGraphs[0].RideRoom;
                 Player.Reheal();
                 HUDVisible = true;
                 HUD.FearMeter.Reset();
@@ -505,8 +512,11 @@ namespace ScaryCastle
         [ScriptMethod]
         public void EndRun()
         {
-            if (!RunManager.HasContent)
+            if (CurrentRun == null)
                 return;
+
+            CurrentRun?.Dispose();
+            CurrentRun = null;
 
             if (FindEntity<Hub>(nameof(Hub)) is Hub hubRoom)
                 hubRoom.Unload();
@@ -514,8 +524,6 @@ namespace ScaryCastle
             HUDVisible = false;
             Inventory.Clear();
             Player?.Reheal();
-            RunManager.Clear();
-            CleanUpRuntimeEntities();
             Seed = 0;
 
             // 1. Force an immediate collection of all generations (0, 1, and 2).

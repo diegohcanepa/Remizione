@@ -50,13 +50,13 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (!RunManager.HasContent)
+            if (session.CurrentRun == null)
                 return;
 
-            if (RunManager.HasContent && session.FearManager.CurrentFear == session.FearManager.MaximumFear && !session.FearManager.IsDeadByFear)
+            if (session.FearManager.CurrentFear == session.FearManager.MaximumFear && !session.FearManager.IsDeadByFear)
                 text.Draw(gameTime);
 
-            for (var i = 0; i < RunManager.MaximumFear; i++)
+            for (var i = 0; i < session.FearManager.MaximumFear; i++)
             {
                 if (icons[i].IsEmpty)
                     break;
@@ -68,7 +68,7 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (!RunManager.HasContent)
+            if (session.CurrentRun == null)
                 return;
 
             if (lastKnownAmount != session.FearManager.CurrentFear)
@@ -78,7 +78,7 @@ namespace ScaryCastle
                 Refresh(blink);
             }
 
-            for (var i = 0; i < RunManager.MaximumFear; i++)
+            for (var i = 0; i < session.FearManager.MaximumFear; i++)
             {
                 if (icons[i].IsEmpty)
                     break;
@@ -87,7 +87,7 @@ namespace ScaryCastle
             }
 
             // Evitamos lógica pesada: si no llegamos al máximo o ya morimos, no actualizamos el texto
-            if (!RunManager.HasContent || session.FearManager.CurrentFear < session.FearManager.MaximumFear || session.FearManager.IsDeadByFear)
+            if (session.CurrentRun == null || session.FearManager.CurrentFear < session.FearManager.MaximumFear || session.FearManager.IsDeadByFear)
                 return;
 
             // El manager nos da los milisegundos precisos, nosotros solo formateamos para el humano
