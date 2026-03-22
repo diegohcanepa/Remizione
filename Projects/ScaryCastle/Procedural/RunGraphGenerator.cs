@@ -66,77 +66,62 @@ namespace ScaryCastle
         }
 
         // ProcessMapData
-        // Runs BFS to calculate distances and selects the best Exit room node.
-        private static RoomGraph ProcessMapData(RoomGraph start, List<RoomGraph> allRooms, Dictionary<(int x, int y), RoomGraph> occupied)
+        // Selecciona la salida analizando la disponibilidad de espacio en la grilla sin alterar el orden original.
+        private static RoomGraph ProcessMapData(RoomGraph start, List<RoomGraph> rooms, Dictionary<(int x, int y), RoomGraph> map)
         {
-            Queue<RoomGraph> queue = new Queue<RoomGraph>();
-            HashSet<RoomGraph> visited = [];
-
-            foreach (var r in allRooms)
+            for (var i = 0; i < rooms.Count; i++)
             {
-                r.DistanceFromStart = -1;
+                rooms[i].Visited = false;
+                rooms[i].DistanceFromStart = 0;
             }
 
-            start.DistanceFromStart = 0;
+            var queue = new Queue<RoomGraph>();
+            start.Visited = true;
             queue.Enqueue(start);
-            visited.Add(start);
 
             while (queue.Count > 0)
             {
                 var current = queue.Dequeue();
 
-                if (current.Up != null && !visited.Contains(current.Up))
+                void CheckNeighbor(RoomGraph? neighbor)
                 {
-                    current.Up.DistanceFromStart = current.DistanceFromStart + 1;
-                    visited.Add(current.Up);
-                    queue.Enqueue(current.Up);
+                    if (neighbor == null || neighbor.Visited)
+                        return;
+
+                    neighbor.Visited = true;
+                    neighbor.DistanceFromStart = current.DistanceFromStart + 1;
+                    queue.Enqueue(neighbor);
                 }
 
-                if (current.Down != null && !visited.Contains(current.Down))
-                {
-                    current.Down.DistanceFromStart = current.DistanceFromStart + 1;
-                    visited.Add(current.Down);
-                    queue.Enqueue(current.Down);
-                }
-
-                if (current.Left != null && !visited.Contains(current.Left))
-                {
-                    current.Left.DistanceFromStart = current.DistanceFromStart + 1;
-                    visited.Add(current.Left);
-                    queue.Enqueue(current.Left);
-                }
-
-                if (current.Right != null && !visited.Contains(current.Right))
-                {
-                    current.Right.DistanceFromStart = current.DistanceFromStart + 1;
-                    visited.Add(current.Right);
-                    queue.Enqueue(current.Right);
-                }
+                CheckNeighbor(current.Up);
+                CheckNeighbor(current.Down);
+                CheckNeighbor(current.Left);
+                CheckNeighbor(current.Right);
             }
 
-            RoomGraph bestRoom = start;
-            int maxDist = -1;
+            // CORRECCIÓN: Creamos una lista temporal para buscar la salida sin romper el índice 0 del motor.
+            var searchList = new List<RoomGraph>(rooms);
+            searchList.Sort((a, b) => b.DistanceFromStart.CompareTo(a.DistanceFromStart));
 
-            foreach (var r in allRooms)
+            foreach (var room in searchList)
             {
-                if (r.ConnectionCount == 1 && r != start)
-                {
-                    bool isVertical = r.Up != null || r.Down != null;
-                    bool physicalLeftEmpty = !occupied.ContainsKey((r.X - 1, r.Y));
-                    bool physicalRightEmpty = !occupied.ContainsKey((r.X + 1, r.Y));
+                if (room == start)
+                    continue;
 
-                    if (isVertical && physicalLeftEmpty && physicalRightEmpty)
-                    {
-                        if (r.DistanceFromStart > maxDist)
-                        {
-                            maxDist = r.DistanceFromStart;
-                            bestRoom = r;
-                        }
-                    }
+                if (!map.ContainsKey((room.X + 1, room.Y)))
+                {
+                    room.RoomType = RoomType.RightExit;
+                    return room;
+                }
+
+                if (!map.ContainsKey((room.X - 1, room.Y)))
+                {
+                    room.RoomType = RoomType.LeftExit;
+                    return room;
                 }
             }
 
-            return bestRoom;
+            return start;
         }
 
         #endregion
@@ -182,9 +167,10 @@ namespace ScaryCastle
             if (exitRoom == start)
                 return (rooms, -1);
 
-            exitRoom.RoomType = RoomType.Exit;
+            // Quitamos la línea: exitRoom.RoomType = RoomType.Exit;
+            // Ya que ProcessMapData ya asignó LeftExit o RightExit.
 
-            return (rooms, exitRoom.DistanceFromStart);
+            return (rooms, exitRoom.Index);
         }
     }
 }

@@ -27,23 +27,22 @@ namespace ScaryCastle
             DoorStyle = element.GetEnum("doorStyle", DoorStyle.Wooden);
             DoorUp = element.GetVector2("doorUp");
             ExactMatch = element.GetBool("exactMatch", false);
-            IsExit = element.GetBool("isExit", false);
             IsMandatory = element.GetBool("isMandatory", false);
-            IsStartingRoom = element.GetBool("isStartingRoom", false);
             LockType = element.GetEnum("lockType", LockType.None);
             MaxEnemies = element.GetInt32("maxEnemies", -1);
             MaxProps = element.GetInt32("maxProps", -1);
             MusicTag = element.GetString("musicTag");
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
+            RoomType = element.GetEnum("roomType", RoomType.Connector);
             Theme = element.GetEnum("theme", RoomTheme.BlueStone);
 
-            if (IsStartingRoom || IsExit)
+            if (RoomType is RoomType.Start or RoomType.LeftExit or RoomType.RightExit)
             {
                 if (!IsMandatory)
-                    RaiseValidationError(this, "Starting and Exit rooms must be marked as IsMandatory = true.");
+                    RaiseValidationError(this, "Non-default rooms must be marked as IsMandatory = true.");
 
                 if (MaxPerRun != -1)
-                    RaiseValidationError(this, "Starting and Exit rooms must have MaxPerRun = -1 to ensure floor connectivity.");
+                    RaiseValidationError(this, "Non-default rooms must have MaxPerRun = -1 to ensure floor connectivity.");
             }
 
             // Placeholders
@@ -113,19 +112,19 @@ namespace ScaryCastle
             if (DoorLeft == null && DoorDown == null && DoorRight == null && DoorUp == Vector2.Zero)
                 RaiseValidationError(this, $"Must have one or more doors.");
 
-            if (IsStartingRoom)
+            if (RoomType is RoomType.Start)
             {
                 // Rule: Difficulty must be easy
                 if (Difficulty != Difficulty.Easy)
-                    RaiseValidationError(this, "A starting room must have easy difficulty.", nameof(Difficulty));
+                    RaiseValidationError(this, "A start room must have easy difficulty.", nameof(Difficulty));
 
                 // Rule: MaxEnemies not allowed
                 if (MaxEnemies > 0)
-                    RaiseValidationError(this, "A starting room cannot define maximum enemies.", nameof(MaxEnemies));
+                    RaiseValidationError(this, "A start room cannot define maximum enemies.", nameof(MaxEnemies));
 
                 // Rule: Dead end not allowed
                 if (RequiresDeadEnd)
-                    RaiseValidationError(this, "A starting room cannot be a dead end.", nameof(RequiresDeadEnd));
+                    RaiseValidationError(this, "A start room cannot be a dead end.", nameof(RequiresDeadEnd));
             }
         }
 
@@ -164,14 +163,8 @@ namespace ScaryCastle
         // HasUpDoor
         public bool HasUpDoor => DoorUp != null;
 
-        // IsExit
-        public bool IsExit { get; }
-
         // IsMandatory
         public bool IsMandatory { get; }
-
-        // IsStartingRoom
-        public bool IsStartingRoom { get; }
 
         // LockType
         public LockType LockType { get; }
@@ -190,6 +183,9 @@ namespace ScaryCastle
 
         // RequiresDeadEnd
         public bool RequiresDeadEnd { get; }
+
+        // RoomType
+        public RoomType RoomType { get; }
 
         // Scope
         public ScopeRules Scope { get; }

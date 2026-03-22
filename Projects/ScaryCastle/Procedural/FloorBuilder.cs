@@ -33,11 +33,9 @@ namespace ScaryCastle
                 // EXCEPCIÓN: Start y Exit ignoran el filtro de pools. 
                 // Esto asegura que siempre haya una entrada y salida, incluso si 
                 // olvidaste tagearlas para un bioma específico.
-                if (!definition.IsStartingRoom && !definition.IsExit)
-                {
+                if (definition.RoomType != RoomType.Start && definition.RoomType != RoomType.LeftExit && definition.RoomType != RoomType.RightExit)
                     if (pools.Count > 0 && !Utils.Intersects(pools, definition.Pools))
                         continue;
-                }
 
                 result.Add(definition);
             }
@@ -96,7 +94,7 @@ namespace ScaryCastle
                 RoomDefinition? startDef = null;
                 foreach (var d in definitions)
                 {
-                    if (d.IsStartingRoom && startNode.Fits(d))
+                    if (d.RoomType == RoomType.Start && startNode.Fits(d))
                     {
                         startDef = d;
                         break;
@@ -104,21 +102,17 @@ namespace ScaryCastle
                 }
 
                 if (startDef == null && strict)
-                {
                     return false;
-                }
 
                 if (startDef != null)
-                {
                     Assign(startNode, startDef, availableNodes);
-                }
             }
 
             // 2. EXIT ROOM
             RoomGraph? exitNode = null;
             foreach (var n in availableNodes)
             {
-                if (n.RoomType == RoomType.Exit)
+                if (n.RoomType == RoomType.LeftExit || n.RoomType == RoomType.RightExit)
                 {
                     exitNode = n;
                     break;
@@ -130,7 +124,8 @@ namespace ScaryCastle
                 RoomDefinition? exitDef = null;
                 foreach (var d in definitions)
                 {
-                    if (d.IsExit && exitNode.Fits(d))
+                    // Validación exacta: El JSON debe ser LeftExit si el nodo es LeftExit, y viceversa.
+                    if (d.RoomType == exitNode.RoomType && exitNode.Fits(d))
                     {
                         exitDef = d;
                         break;
@@ -138,24 +133,18 @@ namespace ScaryCastle
                 }
 
                 if (exitDef == null && strict)
-                {
                     return false;
-                }
 
                 if (exitDef != null)
-                {
                     Assign(exitNode, exitDef, availableNodes);
-                }
             }
 
             // 3. MANDATORY ROOMS
             List<RoomDefinition> mandatory = [];
             foreach (var d in definitions)
             {
-                if (d.IsMandatory && !d.IsStartingRoom && !d.IsExit)
-                {
+                if (d.IsMandatory && d.RoomType != RoomType.Start && d.RoomType != RoomType.LeftExit && d.RoomType != RoomType.RightExit)
                     mandatory.Add(d);
-                }
             }
 
             foreach (var def in mandatory)
@@ -164,29 +153,21 @@ namespace ScaryCastle
                 foreach (var n in availableNodes)
                 {
                     if (n.Fits(def) && (!def.RequiresDeadEnd || n.ConnectionCount == 1))
-                    {
                         validNodes.Add(n);
-                    }
                 }
 
                 if (validNodes.Count > 0)
-                {
                     Assign(validNodes[random.Next(validNodes.Count)], def, availableNodes);
-                }
                 else if (strict)
-                {
                     return false;
-                }
             }
 
             // 4. FILLER ROOMS (FLUFF)
             List<RoomDefinition> fluff = [];
             foreach (var d in definitions)
             {
-                if (!d.IsMandatory && !d.IsStartingRoom && !d.IsExit)
-                {
+                if (!d.IsMandatory && d.RoomType != RoomType.Start && d.RoomType != RoomType.LeftExit && d.RoomType != RoomType.RightExit)
                     fluff.Add(d);
-                }
             }
 
             List<RoomGraph> nodesToFill = [.. availableNodes];
@@ -198,9 +179,7 @@ namespace ScaryCastle
                 foreach (var d in fluff)
                 {
                     if (d.Difficulty == targetDiff && node.Fits(d) && d.PassesMaxPerRunConstraint(Spawns, globalSpawns))
-                    {
                         candidates.Add(d);
-                    }
                 }
 
                 if (candidates.Count == 0)
@@ -208,20 +187,14 @@ namespace ScaryCastle
                     foreach (var d in fluff)
                     {
                         if (node.Fits(d) && d.PassesMaxPerRunConstraint(Spawns, globalSpawns))
-                        {
                             candidates.Add(d);
-                        }
                     }
                 }
 
                 if (candidates.Count > 0)
-                {
                     Assign(node, candidates[random.Next(candidates.Count)], availableNodes);
-                }
                 else if (strict)
-                {
                     return false;
-                }
             }
 
             return true;
@@ -253,12 +226,11 @@ namespace ScaryCastle
             {
                 var res = RunGraphGenerator.Generate(rng, count);
                 if (res.Item2 != -1)
-                {
                     return res;
-                }
+
                 safetyNet++;
             }
-            throw new InvalidOperationException("Critical Error: Unable to generate topology with vertical Exit.");
+            throw new InvalidOperationException("Critical Error: Unable to generate topology with directional Exit.");
         }
 
         // GetDifficulty
@@ -266,14 +238,10 @@ namespace ScaryCastle
         private Difficulty GetDifficulty(int dist, float threshold)
         {
             if (dist >= threshold * 2)
-            {
                 return Difficulty.Hard;
-            }
 
             if (dist >= threshold)
-            {
                 return Difficulty.Normal;
-            }
 
             return Difficulty.Easy;
         }
@@ -290,7 +258,7 @@ namespace ScaryCastle
 
             // 1. Collect available room definitions for the floor
             List<RoomDefinition> defs = GetAvailableRoomDefinitions(session, Spawns, globalSpawns, pools);
-            
+
             // 2. Calculate run size
             int count = GetFloorLength(session.Chapter, floorIndex);
 

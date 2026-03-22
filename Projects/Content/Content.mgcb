@@ -29,7 +29,7 @@
 #begin Atlases/Actors.xml
 /copy:Atlases/Actors.xml
 
-#begin Atlases/Castle_Exit.png
+#begin Atlases/Castle_LeftExit.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -39,10 +39,25 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Atlases/Castle_Exit.png
+/build:Atlases/Castle_LeftExit.png
 
-#begin Atlases/Castle_Exit.xml
-/copy:Atlases/Castle_Exit.xml
+#begin Atlases/Castle_LeftExit.xml
+/copy:Atlases/Castle_LeftExit.xml
+
+#begin Atlases/Castle_RightExit.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Atlases/Castle_RightExit.png
+
+#begin Atlases/Castle_RightExit.xml
+/copy:Atlases/Castle_RightExit.xml
 
 #begin Atlases/Castle_Start.png
 /importer:TextureImporter

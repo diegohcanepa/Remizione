@@ -2,10 +2,36 @@
   "$schema": "./Room.schema.json",
   "data": [
     {
-      "name": "Castle_Exit",
+      "name": "Castle_LeftExit",
       "doorUp": "126,41",
       "doorDown": "152,145",
-      "isExit": true,
+      "doorRight": "220,80",
+      "roomType": "LeftExit",
+      "isMandatory": true,
+      "requiresDeadEnd": true,
+      "placeholders": [
+        {
+          "position": "68,22",
+          "placement": "WallFrontHang"
+        },
+        {
+          "position": "169,22",
+          "placement": "WallFrontHang"
+        }
+      ],
+      "walkArea": "205,46;238,111;6,111;38,46",
+      "walls": [
+        "1,2;1,115;36,46;35,2",
+        "241,2;241,115;206,46;207,2"
+      ]
+    },
+    {
+      "name": "Castle_RightExit",
+      "doorLeft": "21,80",
+      "doorUp": "126,41",
+      "doorDown": "152,145",
+      "roomType": "RightExit",
+      "isMandatory": true,
       "requiresDeadEnd": true,
       "placeholders": [
         {
@@ -29,7 +55,8 @@
       "doorLeft": "21,80",
       "doorRight": "220,80",
       "doorDown": "152,145",
-      "isStartingRoom": true,
+      "isMandatory": true,
+      "roomType": "Start",
       "maxEnemies": 0,
       "placeholders": [
         {

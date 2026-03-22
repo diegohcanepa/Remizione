@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
@@ -116,13 +117,23 @@ namespace ScaryCastle
 
             Session.HUD.MiniMap.CurrentRoom = RoomGraph;
 
-            if (RoomGraph.RoomType == RoomType.Exit)
+            if (RoomGraph.RoomType is RoomType.LeftExit or RoomType.RightExit)
             {
                 if (Session.FindEntity<RideCar>("RideCar") is RideCar rideCar)
                 {
                     if (Children.IndexOf(rideCar) == -1)
                     {
-                        rideCar.Position = new(34, 70);
+                        if (RoomGraph.RoomType == RoomType.LeftExit)
+                        {
+                            rideCar.Direction = FacingDirection.Left;
+                            rideCar.Position = new(74, 70);
+                        }
+                        else
+                        {
+                            rideCar.Direction = FacingDirection.Right;
+                            rideCar.Position = new(165, 70);
+                        }
+
                         Children.Add(rideCar);
                     }
                 }

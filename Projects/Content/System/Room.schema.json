@@ -61,15 +61,7 @@
               "type": "boolean",
               "default": false
             },
-            "isExit": {
-              "type": "boolean",
-              "default": false
-            },
             "isMandatory": {
-              "type": "boolean",
-              "default": false
-            },
-            "isStartingRoom": {
               "type": "boolean",
               "default": false
             },
@@ -83,6 +75,17 @@
             },
             "requiresDeadEnd": {
               "type": "boolean"
+            },
+            "roomType": {
+              "type": "string",
+              "default": "Connector",
+              "enum": [
+                "Connector",
+                "Start",
+                "LeftExit",
+                "RightExit",
+                "Special"
+              ]
             },
             "maxEnemies": {
               "type": "integer",

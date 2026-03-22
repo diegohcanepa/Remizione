@@ -162,26 +162,27 @@ namespace ScaryCastle
         }
 
         // Populate
+        // Orquesta la instanciación respetando estrictamente la jerarquía física (Mampostería -> IA).
         private void Populate()
         {
-            PopulateProps();
-            PopulateNPCs();
-        }
+            // CAPA 1: TOPOLOGÍA Y OBSTÁCULOS (Props)
+            var propDefinitions = GetCandidateDefinitions<PropDefinition, Prop>(PropDefinition.Definitions.All);
 
-        // PopulateNPCs
-        private void PopulateNPCs()
-        {
-            var definitions = GetCandidateDefinitions<ActorDefinition, Actor>(ActorDefinition.Definitions.All);
-            SpawnInPlaceholders(ActorDefinition.Definitions, definitions, RoomGraph.Definition.MaxEnemies, enemiesSpawnCounter, PlaceholderTarget.Enemy);
-            SpawnInWalkArea(ActorDefinition.Definitions, definitions, RoomGraph.Definition.MaxEnemies, enemiesSpawnCounter);
-        }
+            // 1.1 Props fijos en diseño
+            SpawnInPlaceholders(PropDefinition.Definitions, propDefinitions, RoomGraph.Definition.MaxProps, propsSpawnCounter, PlaceholderTarget.Prop);
 
-        // PopulateProps
-        private void PopulateProps()
-        {
-            var definitions = GetCandidateDefinitions<PropDefinition, Prop>(PropDefinition.Definitions.All);
-            SpawnInPlaceholders(PropDefinition.Definitions, definitions, RoomGraph.Definition.MaxProps, propsSpawnCounter, PlaceholderTarget.Prop);
-            SpawnInWalkArea(PropDefinition.Definitions, definitions, RoomGraph.Definition.MaxProps, propsSpawnCounter);
+            // 1.2 Props aleatorios rellenando el espacio
+            SpawnInWalkArea(PropDefinition.Definitions, propDefinitions, RoomGraph.Definition.MaxProps, propsSpawnCounter);
+
+
+            // CAPA 2: ACTORES Y ENEMIGOS (IA)
+            var actorDefinitions = GetCandidateDefinitions<ActorDefinition, Actor>(ActorDefinition.Definitions.All);
+
+            // 2.1 Enemigos en puntos de emboscada/diseñados
+            SpawnInPlaceholders(ActorDefinition.Definitions, actorDefinitions, RoomGraph.Definition.MaxEnemies, enemiesSpawnCounter, PlaceholderTarget.Enemy);
+
+            // 2.2 Enemigos aleatorios patrullando
+            SpawnInWalkArea(ActorDefinition.Definitions, actorDefinitions, RoomGraph.Definition.MaxEnemies, enemiesSpawnCounter);
         }
 
         // SpawnInPlaceholders
