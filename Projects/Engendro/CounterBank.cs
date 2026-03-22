@@ -4,11 +4,17 @@ using System.Collections.Generic;
 namespace Engendro
 {
     /// <summary>
-    /// MultiCounter
+    /// CounterBank
     /// </summary>
-    public sealed class MultiCounter
+    public sealed class CounterBank
     {
         private readonly Dictionary<string, int> data = [];
+
+        // Clear
+        public void Clear()
+        {
+            data.Clear();
+        }
 
         // Deserialize
         public void Deserialize(string input)
@@ -31,7 +37,10 @@ namespace Engendro
         }
 
         // GetNames
-        public IEnumerable<string> GetNames() => data.Keys;
+        public IEnumerable<string> GetNames()
+        {
+            return data.Keys;
+        }
 
         // Increment
         public int Increment(string name)
@@ -42,12 +51,6 @@ namespace Engendro
                 data[name] = 1;
 
             return data[name];
-        }
-
-        // Reset
-        public void Reset()
-        {
-            data.Clear();
         }
 
         // Serialize

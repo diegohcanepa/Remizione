@@ -15,10 +15,10 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly MultiCounter enemiesSpawnCounter = new();
+        private readonly CounterBank enemiesSpawnCounter = new();
         private int instanceCount;
         private readonly List<Placeholder> placeholders = [];
-        private readonly MultiCounter propsSpawnCounter = new();
+        private readonly CounterBank propsSpawnCounter = new();
         private readonly int randomSeed;
 
         #endregion
@@ -45,25 +45,36 @@ namespace ScaryCastle
 
         #region Private members
 
-        // AdjustWeightByDifficulty
-        // Aplica un multiplicador al peso original basado en la disparidad de dificultad.
-        private static float AdjustWeightByDifficulty(Difficulty roomDiff, Difficulty thingDiff, float baseWeight)
+        // AdjustWeight
+        // Modifica el peso de aparición combinando la dificultad base de la sala y la intensidad global de la partida.
+        private static float AdjustWeight(float runIntensity, Difficulty roomDiff, Difficulty thingDiff, float baseWeight)
         {
-            // Si coinciden, es el peso ideal.
-            if (roomDiff == thingDiff)
-                return baseWeight;
-
-            // Calculamos la distancia (Easy=0, Medium=1, Hard=2)
+            // 1. Lógica original: Respetamos la jerarquía de diseño de la sala
             int distance = (int)roomDiff - (int)thingDiff;
 
-            float multiplier = distance switch
+            float roomMultiplier = distance switch
             {
-                1 => 0.15f,  // Ej: Sala Medium, Enemigo Easy (1 escalón de diferencia)
-                2 => 0.02f,  // Ej: Sala Hard, Enemigo Easy (2 escalones de diferencia)
-                _ => 1.0f    // Por seguridad, aunque el techo ya filtra los negativos
+                1 => 0.15f,  // Ej: Sala Normal, Enemigo Easy (1 escalón)
+                2 => 0.02f,  // Ej: Sala Hard, Enemigo Easy (2 escalones)
+                _ => 1.0f
             };
 
-            return baseWeight * multiplier;
+            // 2. Lógica de Intensidad: Curvamos los pesos según el progreso del jugador
+            float intensityMultiplier = thingDiff switch
+            {
+                // Easy: Arranca en x1.0 y decae hasta x0.2 en el último piso
+                Difficulty.Easy => 1f - (runIntensity * 0.8f),
+
+                // Normal: Arranca bajo (x0.2) y escala hasta x1.0
+                Difficulty.Normal => 0.2f + (runIntensity * 0.8f),
+
+                // Hard: Arranca en x0.0 (no sale) y escala exponencialmente hasta x1.0
+                Difficulty.Hard => runIntensity * runIntensity,
+
+                _ => 1.0f
+            };
+
+            return baseWeight * roomMultiplier * intensityMultiplier;
         }
 
         // GetCandidateDefinitions
@@ -98,7 +109,7 @@ namespace ScaryCastle
 
                 // 5. Historial de la Run
                 // Chequea si el enemigo ya alcanzó su MaxPerRun global
-                if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.RunSpawns))
+                if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
                     continue;
 
                 // 6. Reglas de Scope (Pools/Tags de la habitación)
@@ -186,7 +197,7 @@ namespace ScaryCastle
         }
 
         // SpawnInPlaceholders
-        private void SpawnInPlaceholders<T>(DataContainer<T> definitionContainer, IList<T> candidates, int maxInstances, MultiCounter spawnCounter, PlaceholderTarget target)
+        private void SpawnInPlaceholders<T>(DataContainer<T> definitionContainer, IList<T> candidates, int maxInstances, CounterBank spawnCounter, PlaceholderTarget target)
             where T : ThingDefinition
         {
             if (Placeholders.Count == 0 || maxInstances == 0 || Session.CurrentRun == null)
@@ -224,7 +235,7 @@ namespace ScaryCastle
                         continue;
 
                     // MaxPerRun (Global)
-                    if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.RunSpawns))
+                    if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
                         continue;
 
                     selectedCandidates.Add(definition);
@@ -237,7 +248,7 @@ namespace ScaryCastle
                 var chanceTable = new ChanceTable();
                 foreach (var c in selectedCandidates)
                 {
-                    var finalWeight = AdjustWeightByDifficulty(RoomGraph.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
+                    var finalWeight = AdjustWeight(Session.CurrentRun.Intensity, RoomGraph.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
                     chanceTable.Add(c.Name, finalWeight);
                 }
 
@@ -255,7 +266,7 @@ namespace ScaryCastle
                 Children.Add(instance);
 
                 // Log spawn in run
-                Session.CurrentRun.RunSpawns.Increment(chosen.Name);
+                Session.CurrentRun.Spawns.Increment(chosen.Name);
 
                 int currentRoomCount = spawnCounter.Increment(chosen.Name);
                 
@@ -267,7 +278,7 @@ namespace ScaryCastle
 
         // SpawnInWalkArea
         // Procesa la aparición de entidades en áreas caminables asegurando la sincronización de estado.
-        private void SpawnInWalkArea<T>(DataContainer<T> definitionContainer, IList<T> candidates, int maxInstances, MultiCounter spawnCounter)
+        private void SpawnInWalkArea<T>(DataContainer<T> definitionContainer, IList<T> candidates, int maxInstances, CounterBank spawnCounter)
             where T : ThingDefinition
         {
             if (WalkArea == null || maxInstances == 0 || Session.CurrentRun == null)
@@ -284,7 +295,7 @@ namespace ScaryCastle
                     continue;
 
                 // Corrección: Inyectamos el contador global de la run
-                if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.RunSpawns.GetCount(definition.Name)))
+                if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns.GetCount(definition.Name)))
                     continue;
 
                 selectedCandidates.Add(definition);
@@ -297,7 +308,7 @@ namespace ScaryCastle
             var table = new ChanceTable();
             foreach (var c in selectedCandidates)
             {
-                var finalWeight = AdjustWeightByDifficulty(RoomGraph.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
+                var finalWeight = AdjustWeight(Session.CurrentRun.Intensity, RoomGraph.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
                 table.Add(c.Name, finalWeight);
             }
 
@@ -366,7 +377,7 @@ namespace ScaryCastle
 
                 // CRÍTICO: Los contadores se incrementan SOLO cuando la instancia física existe
                 spawnCounter.Increment(chosenDef.Name);
-                Session.CurrentRun.RunSpawns.Increment(chosenDef.Name);
+                Session.CurrentRun.Spawns.Increment(chosenDef.Name);
             }
         }
 
@@ -378,17 +389,6 @@ namespace ScaryCastle
         protected void AddPlaceholder(Placeholder placeholder)
         {
             placeholders.Add(placeholder);
-        }
-
-        // DropLoot
-        protected virtual void DropLoot()
-        {
-        }
-
-        // GetDropLootPosition
-        protected Vector2 GetDropLootPosition()
-        {
-            return WalkArea != null ? WalkArea.Polygon.BoundingRectangleF.Center : BoundingBox.Center;
         }
 
         // OnChildAdded

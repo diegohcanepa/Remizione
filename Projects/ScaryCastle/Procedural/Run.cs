@@ -4,16 +4,17 @@ using System;
 namespace ScaryCastle
 {
     /// <summary>
-    ///  ActiveRun
+    ///  Run
     /// </summary>
-    public sealed class ActiveRun : IDisposable
+    public sealed class Run : IDisposable
     {
         private readonly GameSession session;
 
-        // ActiveRun
-        public ActiveRun(GameSession session)
+        // Constructor
+        public Run(GameSession session, int maxFloors)
         {
             this.session = session;
+            this.MaxFloors = maxFloors;
         }
 
         // CleanUpCurrentFloor
@@ -51,6 +52,20 @@ namespace ScaryCastle
         // HasContent
         public bool HasContent => CurrentFloor?.RoomGraphs.Count > 0;
 
+        // Intensity
+        public float Intensity
+        {
+            get
+            {
+                if (MaxFloors <= 1)
+                    return 0;
+                
+                float progress = (float)CurrentFloorIndex / MaxFloors;
+                
+                return (float)Math.Pow(Math.Clamp(progress, 0f, 1f), 1.2f);
+            }
+        }
+
         // IsDisposed
         public bool IsDisposed { get; private set; }
 
@@ -59,12 +74,15 @@ namespace ScaryCastle
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
 
+            if (CurrentFloorIndex == MaxFloors)
+                return;
+
             var nextIndex = CurrentFloorIndex + 1;
 
             CleanUpCurrentFloor();
 
             var builder = new FloorBuilder();
-            CurrentFloor = builder.Build(session, nextIndex, pools, RunSpawns);
+            CurrentFloor = builder.Build(session, nextIndex, pools, Spawns);
 
             // Commit floor spawns
             foreach (var name in builder.Spawns.GetNames())
@@ -72,7 +90,7 @@ namespace ScaryCastle
                 int count = builder.Spawns.GetCount(name);
                 for (int i = 0; i < count; i++)
                 {
-                    RunSpawns.Increment(name);
+                    Spawns.Increment(name);
                 }
             }
 
@@ -88,7 +106,10 @@ namespace ScaryCastle
             }
         }
 
-        // RunSpawns
-        public MultiCounter RunSpawns { get; } = new();
+        // MaxFloors
+        public int MaxFloors { get; }
+
+        // Spawns
+        public CounterBank Spawns { get; } = new();
     }
 }

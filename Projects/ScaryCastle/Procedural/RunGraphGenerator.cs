@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace ScaryCastle
 {
+    /// <summary>
+    /// RunGraphGenerator
+    /// </summary>
     public static class RunGraphGenerator
     {
         #region Private members
@@ -166,9 +169,6 @@ namespace ScaryCastle
 
             if (exitRoom == start)
                 return (rooms, -1);
-
-            // Quitamos la línea: exitRoom.RoomType = RoomType.Exit;
-            // Ya que ProcessMapData ya asignó LeftExit o RightExit.
 
             return (rooms, exitRoom.Index);
         }

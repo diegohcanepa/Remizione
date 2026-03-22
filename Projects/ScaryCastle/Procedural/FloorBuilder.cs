@@ -15,7 +15,7 @@ namespace ScaryCastle
         #region Private Static members
 
         // GetAvailableRoomDefinitions
-        private static List<RoomDefinition> GetAvailableRoomDefinitions(GameSession session, MultiCounter floorSpawns, MultiCounter globalSpawns, Tags pools)
+        private static List<RoomDefinition> GetAvailableRoomDefinitions(GameSession session, CounterBank floorSpawns, CounterBank globalSpawns, Tags pools)
         {
             List<RoomDefinition> result = [];
 
@@ -73,7 +73,7 @@ namespace ScaryCastle
 
         // ApplyDefinitions
         // Logic for assigning room definitions to nodes based on type and constraints.
-        private bool ApplyDefinitions(List<RoomDefinition> definitions, int maxDistance, Random random, bool strict, MultiCounter globalSpawns)
+        private bool ApplyDefinitions(List<RoomDefinition> definitions, int maxDistance, Random random, bool strict, CounterBank globalSpawns)
         {
             float threshold = maxDistance / 3f;
             List<RoomGraph> availableNodes = [.. roomGraphs];
@@ -214,7 +214,7 @@ namespace ScaryCastle
         private void ClearInternal()
         {
             roomGraphs.Clear();
-            Spawns.Reset();
+            Spawns.Clear();
         }
 
         // GenerateValidTopology
@@ -249,7 +249,7 @@ namespace ScaryCastle
         #endregion
 
         // Build
-        public Floor Build(GameSession session, int floorIndex, Tags pools, MultiCounter globalSpawns)
+        public Floor Build(GameSession session, int floorIndex, Tags pools, CounterBank globalSpawns)
         {
             if (built)
                 throw new InvalidOperationException("Floor is already built.");
@@ -290,6 +290,6 @@ namespace ScaryCastle
         }
 
         // Spawns
-        public MultiCounter Spawns { get; } = new();
+        public CounterBank Spawns { get; } = new();
     }
 }

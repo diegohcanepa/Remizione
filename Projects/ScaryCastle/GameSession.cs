@@ -459,7 +459,7 @@ namespace ScaryCastle
         #endregion
 
         // CurrentRun
-        public ActiveRun? CurrentRun { get; private set; }
+        public Run? CurrentRun { get; private set; }
 
         // BeginRun
         [ScriptMethod]
@@ -471,7 +471,7 @@ namespace ScaryCastle
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            CurrentRun = new ActiveRun(this);
+            CurrentRun = new Run(this);
             CurrentRun.LoadNextFloor(Tags.EmptyList);
 
             if (CurrentRun.CurrentFloor == null)

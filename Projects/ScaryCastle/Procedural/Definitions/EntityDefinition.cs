@@ -60,7 +60,7 @@ namespace ScaryCastle
         public int MinRun { get; }
 
         // PassesMaxPerRunConstraint
-        public bool PassesMaxPerRunConstraint(params MultiCounter[] counters)
+        public bool PassesMaxPerRunConstraint(params CounterBank[] counters)
         {
             var count = 0;
             for (var i = 0; i < counters.Length; i++)
