@@ -292,6 +292,14 @@ namespace ScaryCastle
             return ContentManagerExtension.EncodePath(ContentFolder.Atlases, AtlasName);
         }
 
+        // OnActivate
+        protected override void OnActivate()
+        {
+            // Follow player
+            if (Session.Player != null && Session.Player.IsInCurrentRoom && FollowPlayer)
+                Session.Camera.Follow(Session.Player, true);
+        }
+
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
@@ -351,14 +359,6 @@ namespace ScaryCastle
 #if DEBUG
             DrawDebugBoxes();
 #endif
-        }
-
-        // OnEnter
-        protected override void OnEnter()
-        {
-            // Follow player
-            if (Session.Player != null && Session.Player.IsInCurrentRoom && FollowPlayer)
-                Session.Camera.Follow(Session.Player, true);
         }
 
         // OnHandleInput

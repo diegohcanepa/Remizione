@@ -6,8 +6,14 @@ namespace Engendro
     /// <summary>
     /// Particle
     /// </summary>
-    public class Particle() : GameObject
+    public class Particle : GameObject
     {
+        // Constructor
+        public Particle()
+            : base()
+        {
+        }
+
         #region Private members
 
         // UpdatePosition

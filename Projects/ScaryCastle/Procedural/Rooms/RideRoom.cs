@@ -99,10 +99,10 @@ namespace ScaryCastle
 
         #region Protected members
 
-        // OnEnter
-        protected override void OnEnter()
+        // OnActivate
+        protected override void OnActivate()
         {
-            base.OnEnter();
+            base.OnActivate();
 
             if (!RoomGraph.Visited)
             {
@@ -116,28 +116,6 @@ namespace ScaryCastle
             }
 
             Session.HUD.MiniMap.CurrentRoom = RoomGraph;
-
-            if (RoomGraph.RoomType is RoomType.LeftExit or RoomType.RightExit)
-            {
-                if (Session.FindEntity<RideCar>("RideCar") is RideCar rideCar)
-                {
-                    if (Children.IndexOf(rideCar) == -1)
-                    {
-                        if (RoomGraph.RoomType == RoomType.LeftExit)
-                        {
-                            rideCar.Direction = FacingDirection.Left;
-                            rideCar.Position = new(74, 70);
-                        }
-                        else
-                        {
-                            rideCar.Direction = FacingDirection.Right;
-                            rideCar.Position = new(165, 70);
-                        }
-
-                        Children.Add(rideCar);
-                    }
-                }
-            }
         }
 
         // OnLoad
@@ -168,6 +146,41 @@ namespace ScaryCastle
                     //if (door.TargetRoom?.Definition.LockType != LockType.None)
                     //    door.LockType = door.TargetRoom.Definition.LockType;
                 }
+            }
+
+            if (RoomGraph.RoomType is RoomType.LeftExit or RoomType.RightExit)
+            {
+                if (Session.FindEntity<RideCar>("RideCar") is RideCar rideCar)
+                {
+                    if (Children.IndexOf(rideCar) == -1)
+                    {
+                        if (RoomGraph.RoomType == RoomType.LeftExit)
+                        {
+                            rideCar.Direction = FacingDirection.Left;
+                            rideCar.Position = new(74, 70);
+                        }
+                        else
+                        {
+                            rideCar.Direction = FacingDirection.Right;
+                            rideCar.Position = new(165, 70);
+                        }
+
+                        Children.Add(rideCar);
+
+                        rideCar.AnimationPlayer.Play("Empty");
+                    }
+                }
+            }
+
+            if (RoomGraph.RoomType == RoomType.RightExit)
+            {
+                if (Session.FindEntity<GameThing>("RightTunnelPatch") is { } rightTunnelPatch)
+                    Children.Add(rightTunnelPatch);
+            }
+            else if (RoomGraph.RoomType == RoomType.LeftExit)
+            {
+                if (Session.FindEntity<GameThing>("LeftTunnelPatch") is { } leftTunnelPatch)
+                    Children.Add(leftTunnelPatch);
             }
         }
 

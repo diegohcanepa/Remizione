@@ -18,6 +18,7 @@
         internal const string Opening = nameof(Opening);
         internal const string PickUp = nameof(PickUp);
         internal const string Stand = nameof(Stand);
+        internal const string Talk = nameof(Talk);
         internal const string ThrowItem = nameof(ThrowItem);
         internal const string Unlocked = nameof(Unlocked);
     }

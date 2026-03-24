@@ -427,7 +427,7 @@ namespace ScaryCastle
 
             InteractionContext.Refresh();
 
-            if (!IsAwaiting && IsCurrentScene)
+            if (!IsAwaiting && IsCurrentScene && CurrentRun != null)
             {
                 if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
                 {
@@ -471,26 +471,10 @@ namespace ScaryCastle
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            CurrentRun = new Run(this);
-            CurrentRun.LoadNextFloor(Tags.EmptyList);
+            CurrentRun = new Run(this, 3);
+            FearManager.Reset(10);
 
-            if (CurrentRun.CurrentFloor == null)
-                throw new InvalidOperationException("Floor generation failed.");
-
-            FearManager.Reset(CurrentRun.CurrentFloor.RoomGraphs.Count / 2);
-
-            if (Player != null)
-            {
-                var rideRoom = CurrentRun.CurrentFloor.RoomGraphs[0].RideRoom;
-                Player.Reheal();
-                HUDVisible = true;
-                HUD.FearMeter.Reset();
-                rideRoom.Children.Add(Player);
-                if (rideRoom.WalkArea != null)
-                    Player.Position = rideRoom.WalkArea.Polygon.BoundingRectangleF.Center;
-                Camera.Follow(Player, true);
-                EnterRoom(rideRoom);
-            }
+            LoadNextFloor();
         }
 
         // CompleteRun
@@ -594,6 +578,37 @@ namespace ScaryCastle
         // LightingSystem
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;
+
+        // LoadNextFloor
+        [ScriptMethod]
+        public void LoadNextFloor()
+        {
+            if (CurrentRun == null)
+                return;
+
+            if (!CurrentRun.LoadNextFloor(Tags.EmptyList))
+            {
+                CompleteRun();
+                return;
+            }
+
+            CurrentRun.LoadNextFloor(Tags.EmptyList);
+            if (CurrentRun.CurrentFloor == null)
+                throw new InvalidOperationException("Floor generation failed.");
+
+            if (Player != null)
+            {
+                var rideRoom = CurrentRun.CurrentFloor.RoomGraphs[0].RideRoom;
+                Player.Reheal();
+                HUDVisible = true;
+                HUD.FearMeter.Reset();
+                rideRoom.Children.Add(Player);
+                if (rideRoom.WalkArea != null)
+                    Player.Position = rideRoom.WalkArea.Polygon.BoundingRectangleF.Center;
+                Camera.Follow(Player, true);
+                EnterRoom(rideRoom);
+            }
+        }
 
         // LootGenerator
         public LootGenerator LootGenerator { get; }

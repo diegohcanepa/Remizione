@@ -18,9 +18,7 @@ namespace Engendro
         internal SpriteAnimation(AnimatedSprite sprite, string name)
         {
             if (!string.IsNullOrEmpty(name))
-            {
                 CodeContract.ValidName(name, nameof(name));
-            }
 
             this.Sprite = sprite;
             this.Name = name;
@@ -139,6 +137,9 @@ namespace Engendro
         {
             return [.. frameList];
         }
+
+        // Headless
+        public bool Headless { get; set; }
 
         // Name
         public string Name { get; }

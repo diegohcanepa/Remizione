@@ -15,9 +15,7 @@ namespace Adberration.Scripting
             ImplicitAwait = GetType().GetTypeInfo().GetCustomAttribute<ForceAwaitAttribute>() != null;
 
             if (!Script.HasCapability(ScriptCapability.Await) && ShouldAwait)
-            {
                 throw new ScriptException(this, $"The script {Script.Name} is not awaitable.");
-            }
         }
 
         #region Protected members

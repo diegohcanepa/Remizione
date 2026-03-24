@@ -185,7 +185,6 @@ namespace ScaryCastle
             // 1.2 Props aleatorios rellenando el espacio
             SpawnInWalkArea(PropDefinition.Definitions, propDefinitions, RoomGraph.Definition.MaxProps, propsSpawnCounter);
 
-
             // CAPA 2: ACTORES Y ENEMIGOS (IA)
             var actorDefinitions = GetCandidateDefinitions<ActorDefinition, Actor>(ActorDefinition.Definitions.All);
 
@@ -363,7 +362,7 @@ namespace ScaryCastle
                 return;
 
             // 4) Spawn positions y Confirmación de Estado
-            var safePoly = new Polygon(WalkArea.Polygon.Vertices, -30);
+            var safePoly = new Polygon(WalkArea.Polygon.Vertices, -45);
             var points = GetSpawnPoints(safePoly, pendingSpawns.Count, 45);
 
             // Iteramos solo hasta la cantidad de puntos físicos que conseguimos

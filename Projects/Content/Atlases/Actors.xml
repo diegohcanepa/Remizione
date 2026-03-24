@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:994470f7951a7f96000b764de3ab4dce:122deb61e0c41ca0eb6edc65d6f445f3:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:0c4de1755c4454e0e274c8762ec051c2:8293fe2117c3951802637e6a8af262bb:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -154,16 +154,21 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Father-assets/Move02.png" x="2" y="269" w="22" h="20"/>
     <sprite n="Father-assets/Move03.png" x="86" y="262" w="22" h="20"/>
     <sprite n="Father-assets/Move04.png" x="400" y="228" w="22" h="20"/>
-    <sprite n="Father-assets/Stand01.png" x="352" y="241" w="22" h="20"/>
-    <sprite n="Father-assets/StandHead01.png" x="376" y="241" w="22" h="20"/>
-    <sprite n="Father-assets/StandHead02.png" x="324" y="244" w="22" h="20"/>
-    <sprite n="Father-assets/TalkHead01.png" x="268" y="257" w="22" h="20"/>
-    <sprite n="Father-assets/TalkHead02.png" x="236" y="258" w="22" h="20"/>
+    <sprite n="Father-assets/RaiseArm01.png" x="352" y="241" w="22" h="20"/>
+    <sprite n="Father-assets/RaiseArm02.png" x="376" y="241" w="22" h="20"/>
+    <sprite n="Father-assets/Stand01.png" x="324" y="244" w="22" h="20"/>
+    <sprite n="Father-assets/StandHead01.png" x="268" y="257" w="22" h="20"/>
+    <sprite n="Father-assets/StandHead02.png" x="236" y="258" w="22" h="20"/>
+    <sprite n="Father-assets/TalkHead01.png" x="292" y="257" w="22" h="20"/>
+    <sprite n="Father-assets/TalkHead02.png" x="197" y="263" w="22" h="20"/>
+    <sprite n="Father-assets/UseCross01.png" x="146" y="274" w="22" h="20"/>
+    <sprite n="Father-assets/UseCross02.png" x="170" y="274" w="22" h="20"/>
+    <sprite n="Father-assets/UseCross03.png" x="110" y="283" w="22" h="20"/>
     <sprite n="Grandma-assets/Stand01.png" x="407" y="206" w="21" h="20"/>
-    <sprite n="Grandma-assets/StandHead01.png" x="26" y="288" w="21" h="20"/>
-    <sprite n="Grandma-assets/StandHead02.png" x="2" y="291" w="21" h="20"/>
-    <sprite n="Grandma-assets/TalkHead01.png" x="80" y="284" w="21" h="20"/>
-    <sprite n="Grandma-assets/TalkHead02.png" x="49" y="303" w="21" h="20"/>
+    <sprite n="Grandma-assets/StandHead01.png" x="2" y="310" w="21" h="20"/>
+    <sprite n="Grandma-assets/StandHead02.png" x="74" y="303" w="21" h="20"/>
+    <sprite n="Grandma-assets/TalkHead01.png" x="50" y="322" w="21" h="20"/>
+    <sprite n="Grandma-assets/TalkHead02.png" x="25" y="326" w="21" h="20"/>
     <sprite n="HellGoat-assets/Headbutt01.png" x="284" y="47" w="34" h="22"/>
     <sprite n="HellGoat-assets/Headbutt02.png" x="320" y="47" w="34" h="22"/>
     <sprite n="HellGoat-assets/Move01.png" x="356" y="47" w="34" h="22"/>
@@ -190,13 +195,13 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Rat-assets/Stand01.png" x="32" y="252" w="28" h="12"/>
     <sprite n="Rat-assets/Stand02.png" x="2" y="255" w="28" h="12"/>
     <sprite n="Rat-assets/Stand03.png" x="92" y="248" w="28" h="12"/>
-    <sprite n="Reaper-assets/Move01.png" x="292" y="257" w="22" h="17"/>
-    <sprite n="Reaper-assets/Move02.png" x="197" y="263" w="22" h="17"/>
-    <sprite n="Reaper-assets/Move03.png" x="146" y="274" w="22" h="17"/>
-    <sprite n="Reaper-assets/Move04.png" x="170" y="274" w="22" h="17"/>
-    <sprite n="Reaper-assets/Stand01.png" x="170" y="274" w="22" h="17"/>
-    <sprite n="Reaper-assets/Talk01.png" x="110" y="283" w="22" h="17"/>
-    <sprite n="Reaper-assets/Talk02.png" x="56" y="284" w="22" h="17"/>
+    <sprite n="Reaper-assets/Move01.png" x="56" y="284" w="22" h="17"/>
+    <sprite n="Reaper-assets/Move02.png" x="26" y="288" w="22" h="17"/>
+    <sprite n="Reaper-assets/Move03.png" x="2" y="291" w="22" h="17"/>
+    <sprite n="Reaper-assets/Move04.png" x="80" y="284" w="22" h="17"/>
+    <sprite n="Reaper-assets/Stand01.png" x="80" y="284" w="22" h="17"/>
+    <sprite n="Reaper-assets/Talk01.png" x="50" y="303" w="22" h="17"/>
+    <sprite n="Reaper-assets/Talk02.png" x="26" y="307" w="22" h="17"/>
     <sprite n="Sister-assets/Bend01.png" x="2" y="2" w="38" h="26"/>
     <sprite n="Sister-assets/Bend02.png" x="42" y="2" w="38" h="26"/>
     <sprite n="Sister-assets/Bend03.png" x="82" y="2" w="38" h="26"/>

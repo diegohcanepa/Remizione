@@ -15,6 +15,7 @@ namespace ScaryCastle
             Atlas = Atlases.Props;
         }
 
+        // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
             base.OnDraw(gameTime);

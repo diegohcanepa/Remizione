@@ -125,7 +125,7 @@ namespace Adberration
         {
             this.NextRoom = nextRoom;
 
-            currentRoom.Exit();
+            currentRoom.Deactivate();
             OnExitRoom(currentRoom, nextRoom);
 
             if (musicTagRoomScope != null)

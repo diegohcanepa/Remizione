@@ -85,20 +85,20 @@ namespace Adberration
         // GetAtlasPath
         protected abstract string GetAtlasPath();
 
+        // OnActivate
+        protected virtual void OnActivate()
+        {
+        }
+
+        // OnDeactivate
+        protected virtual void OnDeactivate()
+        {
+        }
+
         // OnHandleInput
         protected virtual HandleInputResult OnHandleInput()
         {
             return HandleInputResult.Unhandled;
-        }
-
-        // OnEnter
-        protected virtual void OnEnter()
-        {
-        }
-
-        // OnExit
-        protected virtual void OnExit()
-        {
         }
 
         // OnLoad
@@ -156,9 +156,6 @@ namespace Adberration
                 Content.Dispose();
                 Content = null;
             }
-
-            StopRoutines();
-            StopSounds();
 
             base.OnUnload();
         }
@@ -220,18 +217,21 @@ namespace Adberration
                 Children[i].Activate();
             }
 
-            OnEnter();
+            OnActivate();
         }
 
-        // Exit
-        internal void Exit()
+        // Deactivate
+        internal void Deactivate()
         {
-            OnExit();
+            OnDeactivate();
 
             for (var i = 0; i < Children.Count; i++)
             {
                 Children[i].Deactivate();
             }
+
+            StopRoutines();
+            StopSounds();
         }
 
         // RegisterRoutine

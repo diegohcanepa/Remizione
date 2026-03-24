@@ -10,6 +10,11 @@ namespace ScaryCastle
     {
         private readonly FloatTween opacityTween = new();
 
+        public FireflyParticle()
+            : base()
+        {
+        }
+
         // OnActivate
         protected override void OnActivate()
         {

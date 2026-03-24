@@ -69,17 +69,17 @@ namespace ScaryCastle
         }
 
         // ProcessMapData
-        // Selecciona la salida analizando la disponibilidad de espacio en la grilla sin alterar el orden original.
+        // Calcula distancias y elige la salida sin usar la propiedad interna 'Visited'.
         private static RoomGraph ProcessMapData(RoomGraph start, List<RoomGraph> rooms, Dictionary<(int x, int y), RoomGraph> map)
         {
+            // Usamos un HashSet local para no tocar la propiedad de la clase
+            var visitedNodes = new HashSet<RoomGraph>();
+
             for (var i = 0; i < rooms.Count; i++)
-            {
-                rooms[i].Visited = false;
                 rooms[i].DistanceFromStart = 0;
-            }
 
             var queue = new Queue<RoomGraph>();
-            start.Visited = true;
+            visitedNodes.Add(start);
             queue.Enqueue(start);
 
             while (queue.Count > 0)
@@ -88,10 +88,11 @@ namespace ScaryCastle
 
                 void CheckNeighbor(RoomGraph? neighbor)
                 {
-                    if (neighbor == null || neighbor.Visited)
+                    // Verificamos contra el HashSet local
+                    if (neighbor == null || visitedNodes.Contains(neighbor))
                         return;
 
-                    neighbor.Visited = true;
+                    visitedNodes.Add(neighbor);
                     neighbor.DistanceFromStart = current.DistanceFromStart + 1;
                     queue.Enqueue(neighbor);
                 }
@@ -102,7 +103,6 @@ namespace ScaryCastle
                 CheckNeighbor(current.Right);
             }
 
-            // CORRECCIÓN: Creamos una lista temporal para buscar la salida sin romper el índice 0 del motor.
             var searchList = new List<RoomGraph>(rooms);
             searchList.Sort((a, b) => b.DistanceFromStart.CompareTo(a.DistanceFromStart));
 
@@ -126,7 +126,7 @@ namespace ScaryCastle
 
             return start;
         }
-
+        
         #endregion
 
         // Generate

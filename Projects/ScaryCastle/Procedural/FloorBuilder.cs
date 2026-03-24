@@ -260,7 +260,7 @@ namespace ScaryCastle
             List<RoomDefinition> defs = GetAvailableRoomDefinitions(session, Spawns, globalSpawns, pools);
 
             // 2. Calculate run size
-            int count = GetFloorLength(session.Chapter, floorIndex);
+            int count = 7;// GetFloorLength(session.Chapter, floorIndex);
 
             // 3. Try 15 strict assignment attempts with guaranteed skeletons
             bool success = false;

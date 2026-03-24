@@ -37,7 +37,13 @@ namespace ScaryCastle
             // Session is awaiting script
             if (context.Session.IsAwaiting)
             {
-                MouseCursor.State = context.Session.AwaitingScript?.CurrentStatement is AwaitInputCommand ? MouseCursorState.Hand : MouseCursorState.Wait;
+                if (context.Session.AwaitingScript?.CurrentStatement is AwaitInputCommand)
+                    MouseCursor.State = MouseCursorState.Hand;
+                else if (context.Session.AwaitingScript?.CurrentStatement is SayCommand)
+                    MouseCursor.State = MouseCursorState.Arrow;
+                else
+                    MouseCursor.State = MouseCursorState.Wait;
+
                 return;
             }
 

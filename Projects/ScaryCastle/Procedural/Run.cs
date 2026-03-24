@@ -70,12 +70,12 @@ namespace ScaryCastle
         public bool IsDisposed { get; private set; }
 
         // LoadNextFloor
-        public void LoadNextFloor(Tags pools)
+        public bool LoadNextFloor(Tags pools)
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
 
             if (CurrentFloorIndex == MaxFloors)
-                return;
+                return false;
 
             var nextIndex = CurrentFloorIndex + 1;
 
@@ -104,6 +104,8 @@ namespace ScaryCastle
             {
                 r.RideRoom.Load();
             }
+
+            return true;
         }
 
         // MaxFloors

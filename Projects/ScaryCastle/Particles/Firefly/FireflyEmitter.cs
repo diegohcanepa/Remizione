@@ -20,7 +20,7 @@ namespace ScaryCastle
         // CreateNewParticle
         protected override Particle CreateNewParticle()
         {
-            return new();
+            return new FireflyParticle();
         }
     }
 }

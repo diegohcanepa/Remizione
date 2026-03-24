@@ -24,6 +24,7 @@ namespace Engendro
 
         // Constructor
         public ParticleEmitter(ParticleState particleState, IEmitterType emitterType, int burstAmount, int burstInterval, int maxParticles)
+            : base()
         {
             this.BurstInterval = burstInterval;
             this.BurstAmount = burstAmount;

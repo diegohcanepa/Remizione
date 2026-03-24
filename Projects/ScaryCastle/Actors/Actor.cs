@@ -123,6 +123,7 @@ namespace ScaryCastle
         private void ResetHeadTween()
         {
             headTween.Start(TweenStyle.CubicInOut, 0, .25f, 400, -1);
+            headTween.RandomizeTime();
         }
 
         // SyncHeadAnimation
@@ -231,7 +232,7 @@ namespace ScaryCastle
             base.OnActivate();
 
             if (RandomMoveCooldown > 0)
-                randomMoveTimer = Random.Shared.Next(1000, RandomMoveCooldown + 1);
+                randomMoveTimer = (int)(Random.Shared.NextDouble() * RandomMoveCooldown);
         }
 
         // OnCollisioning
@@ -300,7 +301,7 @@ namespace ScaryCastle
 
             if (AnimationSettings.DetachedHead)
             {
-                if (BodyMachine.CurrentState is BodyStandState && headSprite.Player.IsPlaying)
+                if (AnimationPlayer.Animation?.Headless == true && headSprite.Player.IsPlaying)
                 {
                     headSprite.Opacity = Opacity;
                     headSprite.OpacityFactor = OpacityFactor;
@@ -435,7 +436,9 @@ namespace ScaryCastle
                             MoveTo(Session.Player.Position);
                         else
                             MoveRandomly();
-                        randomMoveTimer = RandomMoveCooldown;
+
+                        int jitter = (int)((Random.Shared.NextDouble() * 2 - 1) * (RandomMoveCooldown * .1f));
+                        randomMoveTimer = RandomMoveCooldown + jitter;
                     }
                 }
             }
@@ -792,7 +795,7 @@ namespace ScaryCastle
             if (AnimationSettings.DetachedHead)
                 headSprite.Player.Play(ActorStateNames.Talk, true);
             else
-                Animate("Talk", true, AnimationDirection.Forward, false);
+                Animate(AnimationNames.Talk, true, AnimationDirection.Forward, false);
         }
 
         // StopTalking

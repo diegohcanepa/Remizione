@@ -223,7 +223,6 @@ namespace ScaryCastle
         {
             base.OnLoadContent();
 
-            MouseCursor.State = MouseCursorState.Hand;
             Inventory.Session.InteractionContext.HeldItem = null;
 
             if (lastSeenInventoryVersion != Inventory.ContentVersion)
