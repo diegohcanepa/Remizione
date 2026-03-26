@@ -349,6 +349,9 @@
             <key type="filename">Father-assets/Move04.png</key>
             <key type="filename">Father-assets/RaiseArm01.png</key>
             <key type="filename">Father-assets/RaiseArm02.png</key>
+            <key type="filename">Father-assets/UseCross01.png</key>
+            <key type="filename">Father-assets/UseCross02.png</key>
+            <key type="filename">Father-assets/UseCross03.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

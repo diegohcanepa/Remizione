@@ -17,16 +17,15 @@ namespace ScaryCastle
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
+            FaithEmpty = this[nameof(FaithEmpty)];
+            FaithHalf = this[nameof(FaithHalf)];
+            FaithFull = this[nameof(FaithFull)];
             FearEmpty = this[nameof(FearEmpty)];
             FearFull = this[nameof(FearFull)];
             FearIcon = this[nameof(FearIcon)];
-            HeartEmpty = this[nameof(HeartEmpty)];
-            HeartHalf = this[nameof(HeartHalf)];
-            HeartFull = this[nameof(HeartFull)];
-            HeartBlackHalf = this[nameof(HeartBlackHalf)];
-            HeartBlackFull = this[nameof(HeartBlackFull)];
-            HeartBlueHalf = this[nameof(HeartBlueHalf)];
-            HeartBlueFull = this[nameof(HeartBlueFull)];
+            HPEmpty = this[nameof(HPEmpty)];
+            HPHalf = this[nameof(HPHalf)];
+            HPFull = this[nameof(HPFull)];
             InventorySlot = this[nameof(InventorySlot)];
             InventoryGridContainer = this[nameof(InventoryGridContainer)];
             InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
@@ -45,6 +44,7 @@ namespace ScaryCastle
             Skull = this[nameof(Skull)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
+            TalkIcon = this[nameof(TalkIcon)];
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
@@ -66,6 +66,15 @@ namespace ScaryCastle
 
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
+
+        // FaithEmpty
+        public AtlasImage FaithEmpty { get; }
+
+        // FaithHalf
+        public AtlasImage FaithHalf { get; }
+
+        // FaithFull
+        public AtlasImage FaithFull { get; }
 
         // FearEmpty
         public AtlasImage FearEmpty { get; }
@@ -98,25 +107,13 @@ namespace ScaryCastle
         public AtlasImage ItemGridSlotSelected { get; }
 
         // HeartEmpty
-        public AtlasImage HeartEmpty { get; }
-
-        // HeartBlackFull
-        public AtlasImage HeartBlackFull { get; }
-
-        // HeartBlackHalf
-        public AtlasImage HeartBlackHalf { get; }
-
-        // HeartBlueFull
-        public AtlasImage HeartBlueFull { get; }
-
-        // HeartBlueHalf
-        public AtlasImage HeartBlueHalf { get; }
+        public AtlasImage HPEmpty { get; }
 
         // HeartHalf
-        public AtlasImage HeartHalf { get; }
+        public AtlasImage HPHalf { get; }
 
         // HeartFull
-        public AtlasImage HeartFull { get; }
+        public AtlasImage HPFull { get; }
 
         // MessageContainer
         public AtlasImage MessageContainer { get; }
@@ -150,6 +147,9 @@ namespace ScaryCastle
 
         // SpeechBubblePipe
         public AtlasImage SpeechBubblePipe { get; }
+
+        // TalkIcon
+        public AtlasImage TalkIcon { get; }
 
         // UIButtonContainerEdge
         public AtlasImage UIButtonContainerEdge { get; }

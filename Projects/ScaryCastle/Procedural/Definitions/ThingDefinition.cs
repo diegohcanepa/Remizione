@@ -24,6 +24,9 @@ namespace ScaryCastle
         protected ThingDefinition(JsonElement element)
             : base(element)
         {
+            // AllowStartRoomSpawn
+            AllowStartRoomSpawn = element.GetBool("allowStartRoomSpawn", false);
+
             // MaxPerRoom
             MaxPerRoom = element.GetInt32("maxPerRoom", -1);
             if (MaxPerRoom < 0)
@@ -75,6 +78,9 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // AllowStartRoomSpawn
+        public bool AllowStartRoomSpawn { get; }
 
         // AssertScriptDeclaration
         public void AssertScriptDeclaration(GameSession session)

@@ -87,32 +87,36 @@ namespace ScaryCastle
 
             foreach (var definition in definitions)
             {
-                // 1. Filtro de dificultad: No permitimos que aparezcan cosas más difíciles que el cuarto
+                // 1. Filtro para cosas en el start room
+                if (RoomGraph.RoomType == RoomType.Start && !definition.AllowStartRoomSpawn)
+                    continue;
+
+                // 2. Filtro de dificultad: No permitimos que aparezcan cosas más difíciles que el cuarto
                 if (definition.Difficulty > RoomGraph.Definition.Difficulty)
                     continue;
 
-                // 2. Filtro de topologia
+                // 3. Filtro de topologia
                 if (definition.RequiresDeadEnd && RoomGraph.ConnectionCount > 1)
                     continue;
 
-                // 3. Validación de Existencia de instancia declarada en script
+                // 4. Validación de Existencia de instancia declarada en script
                 var thing = Session.FindDeclaredThing(definition.Name) ?? throw new InvalidOperationException($"There is no declared thing named '{definition.Name}'. ");
 
                 // Is expected type?
                 if (thing is not TThing)
                     continue;
 
-                // 4. Meta-progreso
+                // 5. Meta-progreso
                 // Chequea si el enemigo está desbloqueado (MinRun)
                 if (!definition.PassesRunConstraints(Session.RunCount))
                     continue;
 
-                // 5. Historial de la Run
+                // 6. Historial de la Run
                 // Chequea si el enemigo ya alcanzó su MaxPerRun global
                 if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
                     continue;
 
-                // 6. Reglas de Scope (Pools/Tags de la habitación)
+                // 7. Reglas de Scope (Pools/Tags de la habitación)
                 if (!definition.PassesScope(RoomGraph.Definition.Scope))
                     continue;
 

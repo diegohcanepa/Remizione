@@ -5,26 +5,26 @@ using System.Configuration;
 namespace ScaryCastle
 {
     /// <summary>
-    /// UIHPMeter
+    /// UIFaithMeter
     /// </summary>
-    public sealed class UIHPMeter : UIStatMeter
+    public sealed class UIFaithMeter : UIStatMeter
     {
         // Constructor
-        public UIHPMeter(Vector2 margin)
-            : base(margin, Atlases.UI.HPEmpty, Atlases.UI.HPHalf, Atlases.UI.HPFull)
+        public UIFaithMeter(Vector2 margin)
+            : base(margin, Atlases.UI.FaithEmpty, Atlases.UI.FaithHalf, Atlases.UI.FaithFull)
         {
         }
 
         // GetStatMaxValue
         protected override int GetStatMaxValue()
         {
-            return Actor == null ? 0 : Actor.MaxHP;
+            return Actor == null ? 0 : Actor.MaxFaith;
         }
 
         // GetStatValue
         protected override int GetStatValue()
         {
-            return Actor == null ? 0 : Actor.HP;
+            return Actor == null ? 0 : Actor.Faith;
         }
     }
 }

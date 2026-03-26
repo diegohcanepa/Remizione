@@ -27,6 +27,7 @@ namespace ScaryCastle
         private readonly List<Vector2> pendingPathNodes = [];
         private int randomMoveTimer;
         private SpeechBubble? speechBubble;
+        private Sprite? talkIcon;
 
         #endregion
 
@@ -318,6 +319,9 @@ namespace ScaryCastle
                 Rotation -= moveBalancingTween.CurrentValue;
 
             footstepEffect?.Draw(gameTime);
+
+            if (!Session.IsAwaiting && !IsMoving && ShowTalkIcon)
+                talkIcon?.Draw(gameTime);
         }
 
         // OnInitialize
@@ -442,6 +446,11 @@ namespace ScaryCastle
                     }
                 }
             }
+
+            if (!IsMoving)
+                talkIcon?.Position = RuntimeHotspot == null ? GetOverheadPosition() : RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, -2);
+
+            talkIcon?.Update(gameTime);
         }
 
         // TryInflictContactDamage
@@ -776,6 +785,23 @@ namespace ScaryCastle
         {
             speechBubble ??= new SpeechBubble(this);
             speechBubble.Show(DisplayName, text, awaitInput);
+        }
+
+        // ShowTalkIcon
+        [ScriptProperty]
+        public bool ShowTalkIcon
+        {
+            get;
+            set
+            {
+                field = value;
+                talkIcon ??= new Sprite(Atlases.UI.TalkIcon)
+                {
+                    PivotOrigin = RectanglePoint.Bottom
+                };
+
+                talkIcon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.One, Vector2.One * .95f, 200, -1);
+            }
         }
 
         // SpeechBubbleSound

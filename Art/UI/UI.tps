@@ -542,13 +542,12 @@
             <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>
             <key type="filename">UI-assets/PointingHand.png</key>
+            <key type="filename">UIIcons-assets/FaithFull.png</key>
+            <key type="filename">UIIcons-assets/HPEmpty.png</key>
+            <key type="filename">UIIcons-assets/HPFull.png</key>
+            <key type="filename">UIIcons-assets/HPHalf.png</key>
             <key type="filename">UIIcons-assets/HeartBlackFull.png</key>
             <key type="filename">UIIcons-assets/HeartBlackHalf.png</key>
-            <key type="filename">UIIcons-assets/HeartBlueFull.png</key>
-            <key type="filename">UIIcons-assets/HeartBlueHalf.png</key>
-            <key type="filename">UIIcons-assets/HeartEmpty.png</key>
-            <key type="filename">UIIcons-assets/HeartFull.png</key>
-            <key type="filename">UIIcons-assets/HeartHalf.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -859,6 +858,11 @@
             </struct>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
             <key type="filename">UIIcons-assets/CardCategoryStatus.png</key>
+            <key type="filename">UIIcons-assets/FaithEmpty.png</key>
+            <key type="filename">UIIcons-assets/FaithHalf.png</key>
+            <key type="filename">UIIcons-assets/SkullEmpty.png</key>
+            <key type="filename">UIIcons-assets/SkullFull.png</key>
+            <key type="filename">UIIcons-assets/TalkIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

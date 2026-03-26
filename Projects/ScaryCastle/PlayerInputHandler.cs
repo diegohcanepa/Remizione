@@ -112,7 +112,7 @@ namespace ScaryCastle
                 Actor.Session.InteractionData.Clear();
                 Actor.StopMoving();
             }
-            else if (Actor.Session.InteractionContext.Target?.CanBeHit == true && MouseCursor.State == MouseCursorState.Cross)
+            else if (Actor.Session.CurrentRun != null && Actor.Session.InteractionContext.Target?.CanBeHit == true && MouseCursor.State == MouseCursorState.Cross)
             {
                 Actor.Session.InteractionContext.HeadbuttMode = MouseCursor.State == MouseCursorState.Cross;
                 PerformInteraction();

@@ -411,7 +411,6 @@ namespace ScaryCastle
                 {
                     FearManager.Update(gameTime);
 
-
                     if (Player?.IsDead == true)
                     {
                         Player?.StopMoving();
@@ -472,9 +471,12 @@ namespace ScaryCastle
                 Seed = System.Environment.TickCount;
 
             CurrentRun = new Run(this, 3);
-            FearManager.Reset(10);
+            FearManager.Reset(5);
 
             LoadNextFloor();
+
+            if (ScriptLibrary.FindRoutine("PrepareStartRoom") is Script script)
+                ScriptProcessor.RunScript(script);
         }
 
         // CompleteRun
@@ -659,6 +661,7 @@ namespace ScaryCastle
         public new GameRoom? Room => (GameRoom?)base.Room;
 
         // RunCount
+        [ScriptProperty]
         public int RunCount { get; private set; }
 
         // Seed

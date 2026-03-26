@@ -13,6 +13,7 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly HUDMessage actionMessage;
+        private readonly UIFaithMeter faithMeter;
         private readonly UIHPInfo hpInfo;
         private readonly UIHPMeter hpMeter;
         private readonly GameSession session;
@@ -30,6 +31,7 @@ namespace ScaryCastle
             this.FearMeter = new(session);
             this.hpInfo = new();
             this.hpMeter = new(new(1, 0));
+            this.faithMeter = new(new(1, 7));
             this.Log = new();
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
 
@@ -50,6 +52,7 @@ namespace ScaryCastle
             Game.SpriteBatch.Begin(Game.Camera);
 
             hpMeter.Draw(gameTime);
+            faithMeter.Draw(gameTime);
 
             if (session.IsCurrentScene)
                 FearMeter.Draw(gameTime);
@@ -74,6 +77,7 @@ namespace ScaryCastle
             FearMeter.Update(gameTime);
             hpInfo.Update(gameTime);
             hpMeter.Update(gameTime);
+            faithMeter.Update(gameTime);
             MiniMap.Update(gameTime);
             Log.Update(gameTime);
             actionMessage.Update(gameTime);
@@ -121,6 +125,7 @@ namespace ScaryCastle
         public void Reset()
         {
             hpMeter.Actor = session.Player;
+            faithMeter.Actor = session.Player;
         }
     }
 }

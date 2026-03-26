@@ -2,11 +2,19 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "Thing.schema.json",
   "allOf": [
-    { "$ref": "./Entity.schema.json" },
+    {
+      "$ref": "./Entity.schema.json"
+    },
     {
       "type": "object",
       "properties": {
-        "requiresDeadEnd": { "type": "boolean" },
+        "allowStartRoomSpawn": {
+          "type": "boolean",
+          "default": false
+        },
+        "requiresDeadEnd": {
+          "type": "boolean"
+        },
         "maxPerRoom": {
           "type": "integer",
           "default": -1

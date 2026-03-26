@@ -308,7 +308,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Hub-assets/Numbers.png</key>
+            <key type="filename">Lever-assets/Lever01.png</key>
+            <key type="filename">Lever-assets/Lever02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -317,9 +318,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>17,8,33,17</rect>
+                <rect>3,4,7,7</rect>
                 <key>scale9Paddings</key>
-                <rect>17,8,33,17</rect>
+                <rect>3,4,7,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -331,6 +332,7 @@
                 <key>files</key>
                 <array>
                     <filename>Hub-assets</filename>
+                    <filename>Lever-assets</filename>
                 </array>
             </struct>
         </map>

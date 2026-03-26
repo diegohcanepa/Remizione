@@ -1,8 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ScaryCastle.UI
 {
@@ -17,7 +14,7 @@ namespace ScaryCastle.UI
         // Constructor
         public UIHPInfo()
         {
-            this.heartIcon = new(Atlases.UI.HeartFull)
+            this.heartIcon = new(Atlases.UI.HPFull)
             {
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.UIElement.Medium

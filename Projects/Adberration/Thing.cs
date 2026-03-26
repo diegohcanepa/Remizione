@@ -290,6 +290,7 @@ namespace Adberration
         public Vector2 ParallaxFactor { get; set; }
 
         // PerformOutcome
+        [ScriptMethod]
         public Script? PerformOutcome()
         {
             if (OutcomeScript == null)
