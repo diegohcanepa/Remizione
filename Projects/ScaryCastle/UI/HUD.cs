@@ -14,7 +14,6 @@ namespace ScaryCastle
 
         private readonly HUDMessage actionMessage;
         private readonly UIFaithMeter faithMeter;
-        private readonly UIHPInfo hpInfo;
         private readonly UIHPMeter hpMeter;
         private readonly GameSession session;
 
@@ -28,10 +27,8 @@ namespace ScaryCastle
             this.session = session;
 
             this.actionMessage = new(RectanglePoint.Bottom, Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -5), ScaleInfo.Text.ExtraGiant);
-            this.FearMeter = new(session);
-            this.hpInfo = new();
             this.hpMeter = new(new(1, 0));
-            this.faithMeter = new(new(1, 7));
+            this.faithMeter = new();
             this.Log = new();
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
 
@@ -54,9 +51,6 @@ namespace ScaryCastle
             hpMeter.Draw(gameTime);
             faithMeter.Draw(gameTime);
 
-            if (session.IsCurrentScene)
-                FearMeter.Draw(gameTime);
-
             InventoryMeter.Draw(gameTime);
             Log.Draw(gameTime);
             actionMessage.Draw(gameTime);
@@ -64,32 +58,22 @@ namespace ScaryCastle
             Game.SpriteBatch.End();
 
             if (session.Room is ProceduralRoom)
-            {
-                hpInfo.Draw(gameTime);
                 MiniMap.Draw(gameTime);
-            }
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             InventoryMeter.Update(gameTime);
-            FearMeter.Update(gameTime);
-            hpInfo.Update(gameTime);
             hpMeter.Update(gameTime);
             faithMeter.Update(gameTime);
             MiniMap.Update(gameTime);
             Log.Update(gameTime);
             actionMessage.Update(gameTime);
             Message.Update(gameTime);
-
-            hpInfo.Target = session.InteractionContext.Target is Actor && session.InteractionContext.Target?.MaxHP > 0 && session.InteractionContext.Target != session.Player ? session.InteractionContext.Target : null;
         }
 
         #endregion
-
-        // FearMeter
-        public UIFearMeter FearMeter { get; }
 
         // HandleInput
         public HandleInputResult HandleInput()

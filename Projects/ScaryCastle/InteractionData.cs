@@ -15,6 +15,16 @@ namespace ScaryCastle
             this.Session = session;
         }
 
+        // SetOutcomeCore
+        private void SetOutcomeCore(GameThing target, InteractionType interactionType, Script script)
+        {
+            Clear();
+            Target = target;
+            TargetPosition = target.Position;
+            InteractionType = interactionType;
+            Script = script;
+        }
+
         // Clear
         public void Clear()
         {
@@ -44,15 +54,6 @@ namespace ScaryCastle
                         session.BeginOutcome(Script, Target);
                 }
             }
-            else if (Script != null)
-            {
-                session.InteractionContext.HeldItem = null;
-
-                if (InteractionType == InteractionType.Cast)
-                    session.Player?.FaceTo(LastKnownCastPosition);
-
-                session.AwaitScript(Script);
-            }
 
             Clear();
 
@@ -65,9 +66,6 @@ namespace ScaryCastle
         // Item
         public Item? Item { get; private set; }
 
-        // LastKnownCastPosition
-        public Vector2 LastKnownCastPosition { get; private set; }
-
         // Script
         public Script? Script { get; private set; }
 
@@ -75,46 +73,39 @@ namespace ScaryCastle
         public GameSession Session { get; }
 
         // SetCastOutcome
-        public void SetCastOutcome(Item item, Vector2 castPosition)
+        public void SetCastOutcome(GameThing target, Item item)
         {
-            if (!item.Definition.IsMagical)
+            if (item.Definition.FaithCost == 0)
                 throw new InvalidOperationException($"Item '{item.Definition.Name}' cannot be casted.");
 
-            Clear();
-            Script = Session.ScriptLibrary.FindRoutine($"{item.Name}Outcome");
-            InteractionType = InteractionType.Cast;
-            LastKnownCastPosition = castPosition;
+            if (Session.ScriptLibrary.FindRoutine($"{item.Name}Outcome") is Script script)
+                SetOutcomeCore(target, InteractionType.Cast, script);
         }
 
-        // SetOutcome
-        public void SetOutcome(GameThing target, InteractionType interactionType)
+        // SetDefaultOutcome
+        public void SetDefaultOutcome(GameThing target)
         {
-            Clear();
-            Target = target;
-            TargetPosition = target.Position;
-            InteractionType = interactionType;
+            if (target.OutcomeScript != null)
+                SetOutcomeCore(target, InteractionType.Outcome, target.OutcomeScript);
+        }
 
-            Script = interactionType switch
-            {
-                InteractionType.Headbutt => Session.ScriptLibrary.FindRoutine(RoutineNames.Headbutt),
-                InteractionType.Outcome => target.OutcomeScript,
-                _ => null
-            };
+        // SetHeadbuttOutcome
+        public void SetHeadbuttOutcome(GameThing target)
+        {
+            if (Session.ScriptLibrary.FindRoutine(RoutineNames.Headbutt) is Script script)
+                SetOutcomeCore(target, InteractionType.Headbutt, script);
         }
 
         // SetUseWithOutcome
         public void SetUseWithOutcome(GameThing target, Item item)
         {
-            if (item.Definition.IsMagical)
-                throw new InvalidOperationException($"Item '{item.Definition.Name}' cannot be used with other items.");
-
             Clear();
             Item = item;
             Target = target;
             TargetPosition = target.Position;
             Script = target.Session.ScriptLibrary.FindOverload(Target.DeclaredName, Item.Name);
 
-            if (Script == null && item.Definition.Verb != ItemVerb.None && target.Session.Player == target)
+            if (Script == null && target.Session.Player == target)
                 Script = target.Session.ScriptLibrary.FindRoutine($"{item.Name}Outcome");
 
             InteractionType = InteractionType.UseWithOutcome;

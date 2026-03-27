@@ -630,6 +630,9 @@
             <key type="filename">Sister-assets/Move02.png</key>
             <key type="filename">Sister-assets/Move03.png</key>
             <key type="filename">Sister-assets/Move04.png</key>
+            <key type="filename">Sister-assets/RaiseArm01.png</key>
+            <key type="filename">Sister-assets/RaiseArm02.png</key>
+            <key type="filename">Sister-assets/RaiseArm03.png</key>
             <key type="filename">Sister-assets/Stand01.png</key>
             <key type="filename">Sister-assets/StandHead01.png</key>
             <key type="filename">Sister-assets/StandHead02.png</key>

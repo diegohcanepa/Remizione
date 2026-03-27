@@ -48,12 +48,9 @@ namespace ScaryCastle
             // 1. No target: Basic walk to destination
             if (context.Target == null)
             {
-                if (context.HeldItem == null || !context.HeldItem.Definition.IsMagical)
-                {
-                    Actor.Session.InteractionData.Clear();
-                    Actor.MoveTo(destination);
-                    return;
-                }
+                Actor.Session.InteractionData.Clear();
+                Actor.MoveTo(destination);
+                return;
             }
 
             // 2. Outcome interaction: Approach and interact with target using outcome script
@@ -66,18 +63,24 @@ namespace ScaryCastle
                 }
 
                 // 3. Classic "Use with" interaction: Approach and interact with target using held item
-                if (context.HeldItem?.Definition.IsMagical == false)
+                if (context.HeldItem.Definition.FaithCost == 0)
                 {
                     if (Actor.ApproachAndInteract(context.Target, context.HeldItem))
                         return;
                 }
-            }
-
-            // 3. Cast
-            if (context.HeldItem?.Definition.IsMagical == true)
-            {
-                if (Actor.Cast(destination, context.HeldItem))
-                    return;
+                else
+                {
+                    if (Actor.Faith == 0)
+                    {
+                        Actor.Session.HUD.Message.Show(MessageKind.NotEnoughFaith);
+                    }
+                    else
+                    {
+                        Actor.Faith--;
+                        if (Actor.Cast(context.Target, context.HeldItem))
+                            return;
+                    }
+                }
             }
 
             MouseCursor.Shake();

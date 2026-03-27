@@ -538,10 +538,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public int CollisionHeight { get; set; }
 
-        // DefaultCursor
-        [ScriptProperty]
-        public MouseCursorState DefaultCursor { get; set; } = MouseCursorState.Cross;
-
         // Die
         [ScriptMethod]
         public void Die()
@@ -775,7 +771,7 @@ namespace ScaryCastle
         // GetMouseCursorState
         public virtual MouseCursorState? GetMouseCursorState()
         {
-            return DefaultCursor;
+            return null;
         }
 
         // GetOverheadPosition

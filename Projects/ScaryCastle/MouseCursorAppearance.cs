@@ -69,23 +69,17 @@ namespace ScaryCastle
 
             if (context.Target is { } target)
             {
-                if (target == context.Session.Player && context.HeldItem?.Definition.Verb != ItemVerb.None)
-                {
-                    MouseCursor.Text = context.HeldItem?.Definition.VerbSentence;
-                    return;
-                }
-
-                // Get sentence
-                var sentence = target.DisplayName;
-
                 // No item 
                 if (context.HeldItem == null)
                 {
-                    MouseCursor.Text = sentence;
+                    MouseCursor.Text = target.DisplayName;
                     return;
                 }
 
-                MouseCursor.Text = $"{useVerb} {context.HeldItem.Definition.DisplayName} {withPreposition} {sentence}";
+                if (target == context.Session.Player)
+                    MouseCursor.Text = $"{useVerb} {context.HeldItem.Definition.DisplayName}";
+                else
+                    MouseCursor.Text = $"{useVerb} {context.HeldItem.Definition.DisplayName} {withPreposition} {target.DisplayName}";
             }
         }
 
@@ -100,7 +94,7 @@ namespace ScaryCastle
 
             RefreshText(context);
 
-            if (context.HeldItem?.Definition.IsMagical == true)
+            if (context.HeldItem?.Definition.FaithCost > 0)
                 MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightBlue;
 
             else if (context.Target != null)

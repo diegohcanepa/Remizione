@@ -17,7 +17,9 @@ namespace ScaryCastle
             : base(element)
         {
             // AreaRange
-            AreaRange = element.GetEnum("areaRange", EffectAreaRange.None);
+            AreaRange = element.GetInt32("areaRange", 0);
+            if (AreaRange < 0)
+                AreaRange = 0;
 
             // Category
             Category = element.GetEnum("category", ItemCategory.Misc);
@@ -42,14 +44,16 @@ namespace ScaryCastle
             // ExecutionDelay
             ExecutionDelay = element.GetInt32("executionDelay", 0);
 
+            // FaithCost
+            FaithCost = element.GetInt32("faithCost", 0);
+            if (FaithCost < 0)
+                FaithCost = 0;
+
             // HP
             DiceExpression? hp = element.GetObject("hp", value => new DiceExpression(value));
 
             // ImpactWord
             var impactWord = element.GetEnum("impactWord", ImpactWordName.None);
-
-            // IsMagical
-            IsMagical = element.GetBool("isMagical", false);
 
             // IsStackable
             IsStackable = element.GetBool("isStackable", false);
@@ -69,13 +73,8 @@ namespace ScaryCastle
             // Sound
             Sound = element.GetObject("sound", Sound.Get);
 
-            // Verb
-            Verb = element.GetEnum("verb", ItemVerb.None);
-
             this.Description = Localization.GetItemDescription(this);
             this.DisplayName = Localization.GetItemName(this);
-            this.VerbSentence = Verb == ItemVerb.None ? string.Empty : $"{Localization.GetValue(Verb)} {DisplayName}";
-
             this.Image = Atlases.UI.FindImage(Name);
 
             this.Price = Quality switch
@@ -92,7 +91,7 @@ namespace ScaryCastle
         #endregion
 
         // AreaRange
-        public EffectAreaRange AreaRange { get; }
+        public int AreaRange { get; }
 
         // Category
         public ItemCategory Category { get; }
@@ -121,24 +120,11 @@ namespace ScaryCastle
         // ExecutionDelay
         public int ExecutionDelay { get; }
 
-        // GetAreaRangeSize
-        public static Vector2 GetAreaRangeSize(EffectAreaRange range)
-        {
-            return range switch
-            {
-                EffectAreaRange.Small => new Vector2(22, 10),
-                EffectAreaRange.Medium => new Vector2(44, 20),
-                EffectAreaRange.Large => new Vector2(88, 44),
-                EffectAreaRange.None => Vector2.Zero,
-                _ => Vector2.Zero
-            };
-        }
+        // FaithCost
+        public int FaithCost { get; }
 
         // Image
         public AtlasImage? Image { get; }
-
-        // IsMagical
-        public bool IsMagical { get; }
 
         // IsStackable
         public bool IsStackable { get; }
@@ -160,11 +146,5 @@ namespace ScaryCastle
 
         // Sound
         public Sound? Sound { get; }
-
-        // Verb
-        public ItemVerb Verb { get; }
-
-        // VerbSentence
-        public string VerbSentence { get; }
     }
 }

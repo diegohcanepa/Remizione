@@ -860,6 +860,7 @@
             <key type="filename">UIIcons-assets/CardCategoryStatus.png</key>
             <key type="filename">UIIcons-assets/FaithEmpty.png</key>
             <key type="filename">UIIcons-assets/FaithHalf.png</key>
+            <key type="filename">UIIcons-assets/FaithIcon.png</key>
             <key type="filename">UIIcons-assets/SkullEmpty.png</key>
             <key type="filename">UIIcons-assets/SkullFull.png</key>
             <key type="filename">UIIcons-assets/TalkIcon.png</key>

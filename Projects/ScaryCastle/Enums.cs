@@ -40,11 +40,8 @@ namespace ScaryCastle
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
 
-    // EffectAreaRange
-    public enum EffectAreaRange { None, Small, Medium, Large }
-
     // EffectContext
-    public enum EffectContext { Contact, Attack, Update, Caca, Use }
+    public enum EffectContext { Contact, Attack, Update, Use }
 
     // EffectType
     public enum EffectType { None, Damage, Death, Heal, Luck, AddCondition, RemoveCondition }
@@ -76,9 +73,6 @@ namespace ScaryCastle
 
     // ItemCategory
     public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Sacred }
-
-    // ItemVerb
-    public enum ItemVerb { None, Eat, Ignite }
 
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }
@@ -118,7 +112,7 @@ namespace ScaryCastle
     }
 
     // MessageKind
-    public enum MessageKind { CannotPlaceItem, Courage, InventoryFull, NotEnoughCoins }
+    public enum MessageKind { CannotPlaceItem, Courage, InventoryFull, NotEnoughCoins, NotEnoughFaith }
 
     // MouseCursorState
     public enum MouseCursorState { Arrow, Cross, Down, Hand, Left, Prohibition, Right, Up, Wait }

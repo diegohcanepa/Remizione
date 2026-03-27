@@ -23,11 +23,14 @@ namespace ScaryCastle.Scripting
             if (session.Player is not Actor player)
                 return;
 
+            if (session.OutcomeTarget is not GameThing target)
+                return;
+
             if (player.Room != null)
             {
                 if (session.Inventory.Find(Body.Clauses[0]) is Item item)
                 {
-                    var lightning = new LightningRite(session, item);
+                    var lightning = new LightningRite(target, item);
                     player.Room.Children.Add(lightning);
                 }
             }

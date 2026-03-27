@@ -19,6 +19,7 @@ namespace ScaryCastle
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             FaithEmpty = this[nameof(FaithEmpty)];
             FaithHalf = this[nameof(FaithHalf)];
+            FaithIcon = this[nameof(FaithIcon)];
             FaithFull = this[nameof(FaithFull)];
             FearEmpty = this[nameof(FearEmpty)];
             FearFull = this[nameof(FearFull)];
@@ -72,6 +73,9 @@ namespace ScaryCastle
 
         // FaithHalf
         public AtlasImage FaithHalf { get; }
+
+        // FaithIcon
+        public AtlasImage FaithIcon { get; }
 
         // FaithFull
         public AtlasImage FaithFull { get; }

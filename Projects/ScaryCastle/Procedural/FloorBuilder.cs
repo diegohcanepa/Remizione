@@ -34,8 +34,10 @@ namespace ScaryCastle
                 // Esto asegura que siempre haya una entrada y salida, incluso si 
                 // olvidaste tagearlas para un bioma específico.
                 if (definition.RoomType != RoomType.Start && definition.RoomType != RoomType.LeftExit && definition.RoomType != RoomType.RightExit)
+                {
                     if (pools.Count > 0 && !Utils.Intersects(pools, definition.Pools))
                         continue;
+                }
 
                 result.Add(definition);
             }
@@ -219,7 +221,7 @@ namespace ScaryCastle
 
         // GenerateValidTopology
         // Loops until a mathematically valid map skeleton is generated.
-        private (List<RoomGraph>, int) GenerateValidTopology(Random rng, int count)
+        private static (List<RoomGraph>, int) GenerateValidTopology(Random rng, int count)
         {
             int safetyNet = 0;
             while (safetyNet < 1000)
@@ -260,7 +262,7 @@ namespace ScaryCastle
             List<RoomDefinition> defs = GetAvailableRoomDefinitions(session, Spawns, globalSpawns, pools);
 
             // 2. Calculate run size
-            int count = 7;// GetFloorLength(session.Chapter, floorIndex);
+            int count = GetFloorLength(session.Chapter, floorIndex);
 
             // 3. Try 15 strict assignment attempts with guaranteed skeletons
             bool success = false;

@@ -11,8 +11,8 @@ namespace ScaryCastle
     public sealed class LightningRite : Rite
     {
         // Constructor
-        public LightningRite(GameSession session, Item item)
-            : base(session, item, session.InteractionData.LastKnownCastPosition)
+        public LightningRite(GameThing target, Item item)
+            : base(target, item)
         {
             var animation = AddAnimation("Default");
             animation.AddFrameSequence("Lightning", 80, 1, 3);

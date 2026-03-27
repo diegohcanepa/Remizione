@@ -283,9 +283,6 @@ namespace ScaryCastle
                 BodyMachine.ChangeState(deathState.GetType());
             }
 
-            if (Faction == Faction.Evil)
-                Session.FearManager.AddFear(-1);
-
             ShowImpactWord(ImpactWordName.PlopRed);
         }
 
@@ -491,13 +488,12 @@ namespace ScaryCastle
             if (!IsPlayer)
                 return false;
 
-            if (item?.Definition.IsMagical == true)
-                return false;
-
             if (item == null)
             {
-                var interactionType = Session.InteractionContext.HeadbuttMode ? InteractionType.Headbutt : InteractionType.Outcome;
-                Session.InteractionData.SetOutcome(target, interactionType);
+                if (Session.InteractionContext.HeadbuttMode)
+                    Session.InteractionData.SetHeadbuttOutcome(target);
+                else
+                    Session.InteractionData.SetDefaultOutcome(target);
             }
             else
             {
@@ -577,18 +573,15 @@ namespace ScaryCastle
         }
 
         // Cast
-        public bool Cast(Vector2 castPosition, Item item)
+        public bool Cast(GameThing target, Item item)
         {
             if (!IsPlayer)
                 return false;
 
-            if (!item.Definition.IsMagical)
+            if (item.Definition.FaithCost == 0)
                 return false;
 
-            if (Room?.WalkArea != null)
-                castPosition = Room.WalkArea.ClampInside(castPosition);
-
-            Session.InteractionData.SetCastOutcome(item, castPosition);
+            Session.InteractionData.SetCastOutcome(target, item);
 
             HandlePendingInteraction();
 

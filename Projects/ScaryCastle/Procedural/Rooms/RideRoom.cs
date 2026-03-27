@@ -105,15 +105,7 @@ namespace ScaryCastle
             base.OnActivate();
 
             if (!RoomGraph.Visited)
-            {
                 RoomGraph.Visited = true;
-
-                if (RoomGraph.RoomType != RoomType.Start)
-                {
-                    Session.FearManager.AddFear(1);
-                    Sound.Play(SoundNames.Fear);
-                }
-            }
 
             Session.HUD.MiniMap.CurrentRoom = RoomGraph;
         }

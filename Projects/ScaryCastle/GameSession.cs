@@ -57,7 +57,6 @@ namespace ScaryCastle
             this.DeclaredThings = new(proceduralThings);
             this.Random = new Random(Seed);
             this.inventoryScene = new(Inventory);
-            this.FearManager = new(this);
 
             ObjectPools = new ObjectPools(this);
             ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(), 100);
@@ -409,17 +408,10 @@ namespace ScaryCastle
 
                 if (!IsAwaiting)
                 {
-                    FearManager.Update(gameTime);
-
                     if (Player?.IsDead == true)
                     {
                         Player?.StopMoving();
                         AwaitRoutine(RoutineNames.DeathByHealth);
-                    }
-                    else if (FearManager.IsDeadByFear)
-                    {
-                        Player?.StopMoving();
-                        AwaitRoutine(RoutineNames.DeathByFear);
                     }
                 }
             }
@@ -471,7 +463,6 @@ namespace ScaryCastle
                 Seed = System.Environment.TickCount;
 
             CurrentRun = new Run(this, 3);
-            FearManager.Reset(5);
 
             LoadNextFloor();
 
@@ -528,9 +519,6 @@ namespace ScaryCastle
 
         // Environment
         public Environment Environment { get; }
-
-        // FearManager
-        public FearManager FearManager { get; private set; }
 
         // FindDeclaredThing
         public GameThing? FindDeclaredThing(string name)
@@ -603,7 +591,6 @@ namespace ScaryCastle
                 var rideRoom = CurrentRun.CurrentFloor.RoomGraphs[0].RideRoom;
                 Player.Reheal();
                 HUDVisible = true;
-                HUD.FearMeter.Reset();
                 rideRoom.Children.Add(Player);
                 if (rideRoom.WalkArea != null)
                     Player.Position = rideRoom.WalkArea.Polygon.BoundingRectangleF.Center;

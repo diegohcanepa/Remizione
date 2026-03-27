@@ -36,14 +36,8 @@
               ]
             },
             "areaRange": {
-              "type": "string",
-              "default": "None",
-              "enum": [
-                "None",
-                "Small",
-                "Medium",
-                "Large"
-              ]
+              "type": "integer",
+              "default": 0
             },
             "durability": {
               "type": "number"
@@ -58,16 +52,8 @@
             "isStackable": {
               "type": "boolean"
             },
-            "verb": {
-              "type": "string",
-              "enum": [
-                "None",
-                "Eat",
-                "Ignite"
-              ]
-            },
-            "isMagical": {
-              "type": "boolean"
+            "faithCost": {
+              "type": "integer"
             },
             "pickupSound": {
               "type": "string",

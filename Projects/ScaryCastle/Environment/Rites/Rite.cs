@@ -8,31 +8,17 @@ namespace ScaryCastle
     /// </summary>
     public abstract class Rite : GameThing
     {
-        #region Private fields
-
-        private int cooldown;
-        private readonly Sprite areaMarker;
-
-        #endregion
+        private bool done;
 
         // Constructor
-        protected Rite(GameSession session, Item item, Vector2 castPosition)
-            : base(session, string.Empty)
+        protected Rite(GameThing target, Item item)
+            : base(target.Session, string.Empty)
         {
             this.Item = item;
-            this.Position = castPosition;
-            this.cooldown = item.Definition.ExecutionDelay;
+            this.Position = target.Position;
             this.RenderLayer = RenderLayer.OverBackground;
-
             this.Atlas = Atlases.Environment;
             this.Scale = ScaleInfo.UIElement.Small;
-            this.areaMarker = new(Atlases.Environment.FindImage($"AreaMarker{item.Definition.AreaRange}"))
-            {
-                Color = new(ColorPalette.MouseCursorHighlightBlue),
-                PivotOrigin = RectanglePoint.Center,
-                Position = castPosition
-            };
-            areaMarker.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicInOut, 1, .7f, 100, -1);
         }
 
         #region Protected members
@@ -42,34 +28,15 @@ namespace ScaryCastle
         {
         }
 
-        // OnDraw
-        protected override void OnDraw(GameTime gameTime)
-        {
-            if (cooldown > 0)
-            {
-                areaMarker.Draw(gameTime);
-                return;
-            }
-
-            base.OnDraw(gameTime);
-        }
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (cooldown > 0)
+            if (!done && Room != null)
             {
-                areaMarker.Update(gameTime);
-                cooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                if (cooldown <= 0)
-                {
-                    RenderLayer = RenderLayer.Default;
-
-                    OnCast();
-
-                    if (Room != null)
-                        Item.Use(this, Room);
-                }
+                done = true;
+                RenderLayer = RenderLayer.Default;
+                OnCast();
+                Item.Use(this, Session.OutcomeTarget, EffectContext.Attack);
                 return;
             }
 

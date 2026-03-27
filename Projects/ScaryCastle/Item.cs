@@ -204,36 +204,25 @@ namespace ScaryCastle
         }
 
         // Use
-        public bool Use(GameThing source, GameRoom room)
+        public bool Use(GameThing source, GameThing? target, EffectContext context)
         {
-            if (Definition.AreaRange == EffectAreaRange.None)
-                return false;
-
             // Play sound
             if (Definition.Sound != null)
                 source.PlaySound(Definition.Sound);
 
-            var area = new RectangleF(source.Position, ItemDefinition.GetAreaRangeSize(Definition.AreaRange), true);
-
-            foreach (var thing in room.Children.OfType<GameThing>())
+            if (Definition.AreaRange == 0)
             {
-                if (area.Contains(thing.Position))
-                    EffectDescriptor.Apply(Definition.EffectDescriptors, source, thing, EffectContext.Caca);
+                if (target != null)
+                    EffectDescriptor.Apply(Definition.EffectDescriptors, source, target, context);
             }
-
-            ComputeUse();
-
-            return true;
-        }
-
-        // Use
-        public bool Use(GameThing source, GameThing target, EffectContext context)
-        {
-            // Play sound
-            if (Definition.Sound != null)
-                source.PlaySound(Definition.Sound);
-
-            EffectDescriptor.Apply(Definition.EffectDescriptors, source, target, context);
+            else if (source.Room is GameRoom room)
+            {
+                foreach (var potentialTarget in room.Children.OfType<GameThing>())
+                {
+                    if (source.DistanceTo(potentialTarget) < Definition.AreaRange)
+                        EffectDescriptor.Apply(Definition.EffectDescriptors, source, potentialTarget, context);
+                }
+            }
 
             ComputeUse();
 

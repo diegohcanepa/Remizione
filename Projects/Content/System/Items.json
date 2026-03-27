@@ -5,7 +5,6 @@
 			"name": "Apple",
 			"category": "Food",
 			"isStackable": true,
-			"verb": "Eat",
 			"effects": [
 				{
 					"context": "Use",
@@ -28,10 +27,9 @@
 		},		
 		{
 			"name": "Cross",
-			"areaRange": "Small",
 			"consumptionType": "None",
 			"executionDelay": 1500,
-			"isMagical": true,
+			"faithCost": 1,
 			"effects": [
 				{
 					"context": "Attack",
@@ -44,10 +42,9 @@
 		},
 		{
 			"name": "Firecracker",
-			"areaRange": "Medium",
+			"areaRange": 40,
 			"category": "Explosive",
 			"executionDelay": 2000,
-			"verb": "Ignite",
 		    "sound": "Firecracker",
 			"effects": [
 				{
@@ -80,8 +77,7 @@
 		},
 		{
 			"name": "RottenApple",
-			"category": "Food",
-			"verb": "Eat"
+			"category": "Food"
 		},
 		{
 			"name": "RustyLockpick",
@@ -91,7 +87,6 @@
 		{
 			"name": "SodaCan",
 			"category": "Food",
-			"verb": "Eat",			
 			"isStackable": true,
 			"effects": [
 				{
