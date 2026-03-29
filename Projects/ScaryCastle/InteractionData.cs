@@ -99,16 +99,15 @@ namespace ScaryCastle
         // SetUseWithOutcome
         public void SetUseWithOutcome(GameThing target, Item item)
         {
-            Clear();
-            Item = item;
-            Target = target;
-            TargetPosition = target.Position;
-            Script = target.Session.ScriptLibrary.FindOverload(Target.DeclaredName, Item.Name);
+            var script = target.Session.ScriptLibrary.FindOverload(target.DeclaredName, item.Name);
+            script ??= target.Session.ScriptLibrary.FindRoutine($"{item.Name}Outcome");
 
-            if (Script == null && target.Session.Player == target)
-                Script = target.Session.ScriptLibrary.FindRoutine($"{item.Name}Outcome");
-
-            InteractionType = InteractionType.UseWithOutcome;
+            if (script != null)
+            {
+                SetOutcomeCore(target, InteractionType.UseWithOutcome, script);
+                Item = item;
+                InteractionType = InteractionType.UseWithOutcome;
+            }
         }
 
         // Target

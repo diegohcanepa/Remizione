@@ -53,33 +53,38 @@ namespace ScaryCastle
                 return;
             }
 
-            // 2. Outcome interaction: Approach and interact with target using outcome script
-            if (context.Target != null)
+            // 2. Target is moving
+            if (context.Target.IsMoving)
             {
-                if (context.HeldItem == null || MouseCursor.IsArrow)
-                {
-                    Actor.ApproachAndInteract(context.Target, null);
-                    return;
-                }
+                Actor.Session.InteractionContext.HeadbuttMode = false;
+                Actor.Session.HUD.Message.Show(MessageKind.MovingTarget);
+                return;
+            }
 
-                // 3. Classic "Use with" interaction: Approach and interact with target using held item
-                if (context.HeldItem.Definition.FaithCost == 0)
+            // 3. Outcome interaction: Approach and interact with target using outcome script
+            if (context.HeldItem == null || MouseCursor.IsArrow)
+            {
+                Actor.ApproachAndInteract(context.Target, null);
+                return;
+            }
+
+            // 4. Classic "Use with" interaction: Approach and interact with target using held item
+            if (context.HeldItem.Definition.FaithCost == 0)
+            {
+                if (Actor.ApproachAndInteract(context.Target, context.HeldItem))
+                    return;
+            }
+            else
+            {
+                if (Actor.Faith == 0)
                 {
-                    if (Actor.ApproachAndInteract(context.Target, context.HeldItem))
-                        return;
+                    Actor.Session.HUD.Message.Show(MessageKind.NotEnoughFaith);
                 }
                 else
                 {
-                    if (Actor.Faith == 0)
-                    {
-                        Actor.Session.HUD.Message.Show(MessageKind.NotEnoughFaith);
-                    }
-                    else
-                    {
-                        Actor.Faith--;
-                        if (Actor.Cast(context.Target, context.HeldItem))
-                            return;
-                    }
+                    Actor.Faith--;
+                    if (Actor.Cast(context.Target, context.HeldItem))
+                        return;
                 }
             }
 

@@ -2,25 +2,58 @@
 
 namespace ScaryCastle
 {
+    // CombatDecision
+    public record struct CombatDecision(CombatDecisionType Type, CombatIntent? Intent);
+
     /// <summary>
     /// Brain
     /// </summary>
     public static class Brain
     {
+        #region Private members
+
+        // ShouldAttemptFlee
+        private static bool ShouldAttemptFlee(Actor actor, CombatBehavior behavior)
+        {
+            // Definimos umbral de vida y chance de exito por arquetipo
+            var (hpThreshold, fleeChance) = behavior.Archetype switch
+            {
+                CombatBehaviorArchetype.Coward => (0.35f, 0.70f),   // Huye rapido y casi siempre
+                CombatBehaviorArchetype.Tactical => (0.15f, 0.40f),  // Huye solo si es critico y con cautela
+                CombatBehaviorArchetype.Berserk => (0.05f, 0.10f),   // Casi nunca huye, es un suicida
+                _ => (0f, 0f)
+            };
+
+            return actor.HPRatio > hpThreshold ? false : Random.Shared.NextDouble() < fleeChance;
+        }
+
+        #endregion
+
         // Decide
-        public static CombatIntent? Decide(Actor actor)
+        public static CombatDecision? Decide(Actor actor)
         {
             if (actor.CombatBehavior is not CombatBehavior behavior)
                 return null;
 
-            var intents = behavior.Intents;
-            int count = intents.Count;
+            // 1. Logica de Supervivencia (Generalizada)
+            if (ShouldAttemptFlee(actor, behavior))
+                return new CombatDecision(CombatDecisionType.Flee, null);
 
-            if (count == 0)
+            // 2. Logica de Ataque
+            var chosenIntent = SelectWeightedIntent(actor, behavior);
+            if (chosenIntent == null)
                 return null;
 
-            if (count == 1)
-                return intents[0];
+            return new CombatDecision(CombatDecisionType.Attack, chosenIntent);
+        }
+        
+        // SelectWeightedIntent
+        // Calcula los pesos segun el arquetipo (Berserk, Tactical, etc)
+        private static CombatIntent? SelectWeightedIntent(Actor actor, CombatBehavior behavior)
+        {
+            var intents = behavior.Intents;
+            int count = intents.Count;
+            if (count == 0) return null;
 
             Span<float> weights = stackalloc float[count];
             float totalWeight = 0;
@@ -30,32 +63,17 @@ namespace ScaryCastle
                 var intent = intents[i];
                 float w = intent.SpawnWeight;
 
-                switch (behavior.Archetype)
+                // BERSERK: Potencia especiales al morir
+                if (behavior.Archetype == CombatBehaviorArchetype.Berserk && actor.HPRatio < .4f)
                 {
-                    // BERSERK: "Si estoy muriendo, tiro los ataques fuertes"
-                    case CombatBehaviorArchetype.Berserk:
-                        if (actor.HPRatio < .4f) // Menos del 40% de vida
-                        {
-                            if (intent.Category == CombatIntentCategory.Special)
-                            {
-                                // Multiplicamos x3 la chance de tirar el especial
-                                // Esto acelera el final del combate (para bien o para mal)
-                                w *= 3.0f;
-                            }
-                        }
-                        break;
-
-                    // TACTICAL: Respeta el diseño original (Default)
-                    case CombatBehaviorArchetype.Tactical:
-                    default:
-                        break;
+                    if (intent.Category == CombatIntentCategory.Special)
+                        w *= 3.0f;
                 }
 
                 weights[i] = w;
                 totalWeight += w;
             }
 
-            // Selección Aleatoria Ponderada (Weighted Random)
             float roll = (float)Random.Shared.NextDouble() * totalWeight;
             float cumulative = 0;
 

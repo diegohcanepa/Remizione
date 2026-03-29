@@ -74,6 +74,9 @@ namespace ScaryCastle
             Target = CanScanTarget() ? ScanTarget() : null;
 
             MouseCursorAppearance.Refresh(this);
+
+            if (Target?.IsMoving == true)
+                MouseCursor.IsEnabled = false;
         }
 
         // Reset

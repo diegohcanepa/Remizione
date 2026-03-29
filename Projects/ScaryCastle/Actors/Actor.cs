@@ -245,6 +245,8 @@ namespace ScaryCastle
         // OnDie
         protected override void OnDie()
         {
+            PendingReaction = false;
+
             if (Guts > 0 || customGuts?.Count > 0)
             {
                 if (Room != null)
@@ -317,7 +319,7 @@ namespace ScaryCastle
 
             footstepEffect?.Draw(gameTime);
 
-            if (!Session.IsAwaiting && !IsMoving && ShowTalkIcon)
+            if (!Session.IsAwaiting && !IsMoving && CanTalk)
                 talkIcon?.Draw(gameTime);
         }
 
@@ -386,7 +388,7 @@ namespace ScaryCastle
                 if (IsHostile(attacker))
                 {
                     IsAngry = true;
-                    CounterAttack = true;
+                    PendingReaction = true;
                 }
             }
 
@@ -509,6 +511,9 @@ namespace ScaryCastle
             var destination = target.GetApproachPosition(this, Session.InteractionData.InteractionType == InteractionType.Headbutt ? ApproachBehavior.ClosestSide : null);
             var result = target != this && MoveTo(destination);
 
+            if (result && !Session.InteractionContext.HeadbuttMode && target is Actor actor && !actor.CanTalk)
+                result = false;
+
             if (!result)
                 HandlePendingInteraction();
 
@@ -559,7 +564,7 @@ namespace ScaryCastle
                 {
                     return base.CanTakeDamage();
                 }
-                else if (Session.OutcomeTarget is Actor actor && (actor.CounterAttack || actor.IsAttacking))
+                else if (Session.OutcomeTarget is Actor actor && (actor.PendingReaction || actor.IsAttacking))
                 {
                     return base.CanTakeDamage();
                 }
@@ -569,6 +574,23 @@ namespace ScaryCastle
             else
             {
                 return base.CanTakeDamage();
+            }
+        }
+
+        // CanTalk
+        [ScriptProperty]
+        public bool CanTalk
+        {
+            get;
+            set
+            {
+                field = value;
+                talkIcon ??= new Sprite(Atlases.UI.TalkIcon)
+                {
+                    PivotOrigin = RectanglePoint.Bottom
+                };
+
+                talkIcon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.One, Vector2.One * .95f, 200, -1);
             }
         }
 
@@ -590,9 +612,6 @@ namespace ScaryCastle
 
         // CombatBehavior
         public CombatBehavior? CombatBehavior { get; }
-
-        // CounterAttack
-        public bool CounterAttack { get; private set; }
 
         // Definition
         public ActorDefinition? Definition { get; }
@@ -643,15 +662,7 @@ namespace ScaryCastle
 
         // IsAngry
         [ScriptProperty]
-        public bool IsAngry
-        {
-            get;
-            set
-            {
-                field = value;
-                CounterAttack = false;
-            }
-        }
+        public bool IsAngry { get; set; }
 
         // IsAttacking
         public bool IsAttacking => BodyMachine.CurrentState is BodyCloseAttackState;
@@ -732,10 +743,13 @@ namespace ScaryCastle
             return true;
         }
 
-        // PerformCounterAttack
-        public void PerformCounterAttack()
+        // PendingReaction
+        [ScriptProperty]
+        public bool PendingReaction { get; set; }
+
+        // PerformReaction
+        public void PerformReaction()
         {
-            CounterAttack = false;
             PerformOutcome();
         }
 
@@ -778,23 +792,6 @@ namespace ScaryCastle
         {
             speechBubble ??= new SpeechBubble(this);
             speechBubble.Show(DisplayName, text, awaitInput);
-        }
-
-        // ShowTalkIcon
-        [ScriptProperty]
-        public bool ShowTalkIcon
-        {
-            get;
-            set
-            {
-                field = value;
-                talkIcon ??= new Sprite(Atlases.UI.TalkIcon)
-                {
-                    PivotOrigin = RectanglePoint.Bottom
-                };
-
-                talkIcon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.One, Vector2.One * .95f, 200, -1);
-            }
         }
 
         // SpeechBubbleSound

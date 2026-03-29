@@ -94,14 +94,17 @@ namespace ScaryCastle
 
             RefreshText(context);
 
-            if (context.HeldItem?.Definition.FaithCost > 0)
-                MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightBlue;
-
-            else if (context.Target != null)
-                MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightWhite;
-
+            if (context.Target != null)
+            {
+                if (context.HeldItem?.Definition.FaithCost > 0)
+                    MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightBlue;
+                else
+                    MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightWhite;
+            }
             else
+            {
                 MouseCursor.HightlightColor = null;
+            }
         }
     }
 }

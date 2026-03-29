@@ -193,6 +193,7 @@
   <String Key="MessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
   <String Key="MessageKind.Courage">Courage restored!</String>
   <String Key="MessageKind.InventoryFull">Inventory is full.</String>
+  <String Key="MessageKind.MovingTarget">Wait until it stops.</String>
   <String Key="MessageKind.NotEnoughCoins">Not enough coins.</String>
   <String Key="MessageKind.NotEnoughFaith">Not enough faith.</String>
   <String Key="Misc.All">All</String>

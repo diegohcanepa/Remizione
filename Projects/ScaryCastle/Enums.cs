@@ -17,7 +17,10 @@ namespace ScaryCastle
     public enum BodySize { Small, Medium, Large }
 
     // CombatBehaviorArchetype
-    public enum CombatBehaviorArchetype { Tactical, Berserk, Coward, Sniper, Swarmer }
+    public enum CombatBehaviorArchetype { Tactical, Berserk, Coward }
+
+    // CombatDecisionType
+    public enum CombatDecisionType { Attack, Flee }
 
     // CombatIntentCategory
     public enum CombatIntentCategory { Basic, Special }
@@ -112,10 +115,10 @@ namespace ScaryCastle
     }
 
     // MessageKind
-    public enum MessageKind { CannotPlaceItem, Courage, InventoryFull, NotEnoughCoins, NotEnoughFaith }
+    public enum MessageKind { CannotPlaceItem, Courage, InventoryFull, NotEnoughCoins, NotEnoughFaith, MovingTarget }
 
     // MouseCursorState
-    public enum MouseCursorState { Arrow, Cross, Down, Hand, Left, Prohibition, Right, Up, Wait }
+    public enum MouseCursorState { Arrow, Cross, CrossDisabled, Down, Hand, Left, Prohibition, Right, Up, Wait }
 
     // PlaceholderTarget
     public enum PlaceholderTarget { Prop, Enemy, Any }

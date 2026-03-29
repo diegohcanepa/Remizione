@@ -13,7 +13,6 @@ namespace ScaryCastle
         public CombatIntent(CombatBehavior owner, JsonElement element)
             : base(element, false)
         {
-            this.Owner = owner;
             this.Category = element.GetEnum("category", CombatIntentCategory.Basic);
             this.Sound = element.GetObject("sound", Sound.Get);
             this.ThrownObject = element.GetEnum("thrownObject", ThrownObjectType.None);
@@ -25,9 +24,6 @@ namespace ScaryCastle
 
         // DisplayName
         public string DisplayName { get; }
-
-        // Owner
-        public CombatBehavior Owner { get; }
 
         // Sound
         public Sound? Sound { get; }

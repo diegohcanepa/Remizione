@@ -462,7 +462,7 @@ namespace ScaryCastle
             if (!AllowInteraction)
                 return false;
 
-            if (IsMoving || IsDead || string.IsNullOrWhiteSpace(DisplayName))
+            if (IsDead || string.IsNullOrWhiteSpace(DisplayName))
                 return false;
 
             return true;
