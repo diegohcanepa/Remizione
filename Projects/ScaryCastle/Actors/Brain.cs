@@ -18,13 +18,26 @@ namespace ScaryCastle
             // Definimos umbral de vida y chance de exito por arquetipo
             var (hpThreshold, fleeChance) = behavior.Archetype switch
             {
-                CombatBehaviorArchetype.Coward => (0.35f, 0.70f),   // Huye rapido y casi siempre
-                CombatBehaviorArchetype.Tactical => (0.15f, 0.40f),  // Huye solo si es critico y con cautela
-                CombatBehaviorArchetype.Berserk => (0.05f, 0.10f),   // Casi nunca huye, es un suicida
+                CombatBehaviorArchetype.Coward => (.35f, .70f),   // Huye rapido y casi siempre
+                CombatBehaviorArchetype.Tactical => (.15f, .40f),  // Huye solo si es critico y con cautela
+                CombatBehaviorArchetype.Berserk => (.05f, .10f),   // Casi nunca huye, es un suicida
                 _ => (0f, 0f)
             };
 
             return actor.HPRatio > hpThreshold ? false : Random.Shared.NextDouble() < fleeChance;
+        }
+
+        // ShouldAttack
+        private static bool ShouldAttack(Actor actor, CombatBehavior behavior)
+        {
+            // Definimos umbral de vida y chance de exito por arquetipo
+            var chance = behavior.Archetype switch
+            {
+                CombatBehaviorArchetype.Coward => .5f,   // Huye rapido y casi siempre
+                _ => 1f
+            };
+
+            return Random.Shared.NextDouble() < chance;
         }
 
         #endregion
@@ -32,19 +45,22 @@ namespace ScaryCastle
         // Decide
         public static CombatDecision? Decide(Actor actor)
         {
-            if (actor.CombatBehavior is not CombatBehavior behavior)
+            if (actor.CombatBehavior is not CombatBehavior behavior || actor.CombatBehavior.Archetype == CombatBehaviorArchetype.None)
                 return null;
 
             // 1. Logica de Supervivencia (Generalizada)
             if (ShouldAttemptFlee(actor, behavior))
                 return new CombatDecision(CombatDecisionType.Flee, null);
 
-            // 2. Logica de Ataque
-            var chosenIntent = SelectWeightedIntent(actor, behavior);
-            if (chosenIntent == null)
-                return null;
+            // 2. Reacciona?
+            if (!ShouldAttack(actor, behavior))
+                return new CombatDecision(CombatDecisionType.Passive, null);
 
-            return new CombatDecision(CombatDecisionType.Attack, chosenIntent);
+            // 3. Logica de Ataque
+            if (SelectWeightedIntent(actor, behavior) is not CombatIntent intent)
+                return null;
+            else
+                return new CombatDecision(CombatDecisionType.Attack, intent);
         }
         
         // SelectWeightedIntent

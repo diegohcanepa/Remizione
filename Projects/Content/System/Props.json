@@ -45,14 +45,6 @@
       "name": "SpearTrap",
       "placements": [
         "WalkArea"
-      ],
-      "effects": [
-        {
-          "context": "Attack",
-          "effectType": "Damage",
-          "amount": "1",
-          "knockback": "15,5"
-        }
       ]
     },
     {

@@ -27,13 +27,12 @@
         "archetype": {
           "type": "string",
           "enum": [
+            "None",
             "Tactical",
             "Berserk",
-            "Coward",
-            "Sniper",
-            "Swarmer"
+            "Coward"
           ],
-          "default": "Tactical"
+          "default": "None"
         },
         "intents": {
           "type": "array",

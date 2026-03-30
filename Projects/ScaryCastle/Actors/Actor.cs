@@ -38,7 +38,6 @@ namespace ScaryCastle
             : base(session, name)
         {
             this.Definition = ActorDefinition.Definitions.Find(DeclaredName);
-            this.CombatBehavior = CombatBehavior.Behaviors.Find(DeclaredName);
             this.Atlas = Atlases.Actors;
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
             this.DeathWord = ImpactWordName.PlopRed;
@@ -85,9 +84,6 @@ namespace ScaryCastle
             }
 
             ShadowSpotSize = 6;
-
-            if (Definition != null)
-                CanInflictContactDamage = EffectDescriptor.Contains(Definition.Effects, EffectContext.Contact);
         }
 
         #endregion
@@ -245,7 +241,7 @@ namespace ScaryCastle
         // OnDie
         protected override void OnDie()
         {
-            PendingReaction = false;
+            Reaction = null;
 
             if (Guts > 0 || customGuts?.Count > 0)
             {
@@ -381,15 +377,13 @@ namespace ScaryCastle
                 FaceTo(attacker);
 
             if (IsPlayer)
-                Session.InterruptAwaitingScript();
-
-            if (!IsPlayer)
             {
-                if (IsHostile(attacker))
-                {
-                    IsAngry = true;
-                    PendingReaction = true;
-                }
+                Session.InterruptAwaitingScript();
+            }
+            else if (IsHostile(attacker) && !IsDead)
+            {
+                IsAngry = true;
+                Session.ReactiveActor = this;
             }
 
             Session.ObjectPools.FloatingTexts.Get()?.ShowHPAmount(this, amount, true);
@@ -455,8 +449,9 @@ namespace ScaryCastle
         // TryInflictContactDamage
         protected override void TryInflictContactDamage(GameThing target)
         {
-            if (Definition != null)
-                EffectDescriptor.Apply(Definition.EffectDescriptors, this, target, EffectContext.Contact);
+            base.TryInflictContactDamage(target);
+            if (ContactIntent != null && IsHostile(target))
+                Session.HUD.NotifyCombatIntent(ContactIntent);
         }
 
         #endregion
@@ -564,7 +559,7 @@ namespace ScaryCastle
                 {
                     return base.CanTakeDamage();
                 }
-                else if (Session.OutcomeTarget is Actor actor && (actor.PendingReaction || actor.IsAttacking))
+                else if (Session.OutcomeTarget is Actor actor && actor.IsAttacking)
                 {
                     return base.CanTakeDamage();
                 }
@@ -609,9 +604,6 @@ namespace ScaryCastle
 
             return true;
         }
-
-        // CombatBehavior
-        public CombatBehavior? CombatBehavior { get; }
 
         // Definition
         public ActorDefinition? Definition { get; }
@@ -743,16 +735,6 @@ namespace ScaryCastle
             return true;
         }
 
-        // PendingReaction
-        [ScriptProperty]
-        public bool PendingReaction { get; set; }
-
-        // PerformReaction
-        public void PerformReaction()
-        {
-            PerformOutcome();
-        }
-
         // PlayerNumber
         [ScriptProperty]
         public PlayerNumber PlayerNumber
@@ -786,6 +768,21 @@ namespace ScaryCastle
         // RandomMoveCooldown
         [ScriptProperty]
         public int RandomMoveCooldown { get; set; }
+
+        // React
+        public void React()
+        {
+            Reaction = Brain.Decide(this);
+            if (Reaction != null)
+                PerformOutcome();
+        }
+
+        // Reaction
+        public CombatDecision? Reaction { get; set; }
+
+        // ReactionType
+        [ScriptProperty]
+        public CombatDecisionType ReactionType => Reaction?.Type ?? CombatDecisionType.None;
 
         // Say
         public void Say(string text, bool awaitInput)

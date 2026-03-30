@@ -5,6 +5,9 @@ namespace ScaryCastle
     // ActorDirection
     public enum ActorDirection { Down, Up }
 
+    // ActorReaction
+    public enum ActorReaction { None, Attack, Talk }
+
     // ApproachBehavior
     public enum ApproachBehavior
     {
@@ -17,10 +20,10 @@ namespace ScaryCastle
     public enum BodySize { Small, Medium, Large }
 
     // CombatBehaviorArchetype
-    public enum CombatBehaviorArchetype { Tactical, Berserk, Coward }
+    public enum CombatBehaviorArchetype { None, Tactical, Berserk, Coward }
 
     // CombatDecisionType
-    public enum CombatDecisionType { Attack, Flee }
+    public enum CombatDecisionType { None, Attack, Flee, Passive }
 
     // CombatIntentCategory
     public enum CombatIntentCategory { Basic, Special }

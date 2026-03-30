@@ -3,16 +3,16 @@ using Microsoft.Xna.Framework;
 
 namespace ScaryCastle.Scripting
 {
-    // AwaitNPCReactionCommand
+    // AwaitNPCAttackCommand
     // Arguments: {Actor}
     [ScriptStatement(CodingContext.Execution)]
     [ForceAwait]
-    internal sealed class AwaitNPCReactionCommand : AwaitableCommand
+    internal sealed class AwaitNPCAttackCommand : AwaitableCommand
     {
         private Actor? npc;
 
         // Constructor
-        internal AwaitNPCReactionCommand(Script script, string source, StatementBody args)
+        internal AwaitNPCAttackCommand(Script script, string source, StatementBody args)
             : base(script, source, args, 1)
         {
             AssertEntity<Actor>(0);
@@ -25,28 +25,14 @@ namespace ScaryCastle.Scripting
                 return;
 
             npc = AssertEntity<Actor>(0);
-            if (npc == null || npc.IsPlayer || npc.IsDead)
-                return;
-
-            if (Brain.Decide(npc) is CombatDecision decision)
+            if (npc != null && npc.Reaction is CombatDecision decision)
             {
                 if (decision.Type == CombatDecisionType.Attack)
                 {
                     if (decision.Intent != null)
                         npc.Attack(decision.Intent, session.Player);
                 }
-                else if (decision.Type == CombatDecisionType.Flee)
-                {
-                    npc.MoveRandomly();
-                }
             }
-        }
-
-        // OnExecutionCompleted
-        protected override void OnExecutionCompleted()
-        {
-            base.OnExecutionCompleted();
-            npc?.PendingReaction = false;
         }
 
         // OnUpdate
@@ -57,6 +43,6 @@ namespace ScaryCastle.Scripting
         }
 
         // IsAwaiting
-        public override bool IsAwaiting => npc != null && npc.IsAttacking;
+        public override bool IsAwaiting => npc?.IsAttacking == true;
     }
 }

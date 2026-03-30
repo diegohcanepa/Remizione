@@ -25,7 +25,7 @@
       "type": "string",
       "description": "Contexto en donde es aplicable el efecto.",
       "enum": [ "Contact", "Attack", "Update", "Use" ],
-      "default": "OnContact"
+      "default": "Contact"
     },
     "damageType": {
       "type": "string",

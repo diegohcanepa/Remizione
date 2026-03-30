@@ -147,7 +147,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
             AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
-            AotTypeRegistry.Register("await-npc-reaction", typeof(AwaitNPCReactionCommand));
+            AotTypeRegistry.Register("await-npc-attack", typeof(AwaitNPCAttackCommand));
             AotTypeRegistry.Register("await-player-attack", typeof(AwaitPlayerAttackCommand));
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
             AotTypeRegistry.Register("cast-lightning", typeof(CastLightningCommand));
@@ -282,8 +282,15 @@ namespace ScaryCastle
         // OnOutcomeCompleted
         protected override void OnOutcomeCompleted(Thing target)
         {
-            if (Player != null && target is Actor actor && actor.PendingReaction)
-                actor.PerformReaction();
+            if (target is Actor actor && actor.Reaction != null)
+            {
+                actor.Reaction = null;
+            }
+            else
+            {
+                ReactiveActor?.React();
+                ReactiveActor = null;
+            }
         }
 
         // OnPause
@@ -642,6 +649,9 @@ namespace ScaryCastle
 
         // Random
         public Random Random { get; private set; }
+
+        // ReactiveActor
+        public Actor? ReactiveActor { get; set; }
 
         // Room
         [ScriptProperty]

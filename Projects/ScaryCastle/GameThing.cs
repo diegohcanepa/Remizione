@@ -47,6 +47,8 @@ namespace ScaryCastle
             this.Session = session;
             this.ResistanceTableName = DeclaredName;
             this.shadowSpot = new ShadowSpot(this);
+            this.CombatBehavior = CombatBehavior.Behaviors.Find(DeclaredName);
+            this.ContactIntent = CombatBehavior?.Intents.Find(EffectContext.Contact.ToString());
         }
 
         #endregion
@@ -396,7 +398,7 @@ namespace ScaryCastle
             if (blinker.IsRunning)
                 blinker.Update(gameTime);
 
-            if (CanInflictContactDamage)
+            if (ContactIntent != null)
             {
                 if (contactTimer > 0)
                 {
@@ -423,6 +425,10 @@ namespace ScaryCastle
         // TryInflictContactDamage
         protected virtual void TryInflictContactDamage(GameThing target)
         {
+            if (ContactIntent != null)
+            {
+                EffectDescriptor.Apply(ContactIntent.EffectDescriptors, this, target, EffectContext.Contact);
+            }
         }
 
         #endregion
@@ -452,9 +458,6 @@ namespace ScaryCastle
         // CanBeHit
         [ScriptProperty]
         public bool CanBeHit { get; set; } = true;
-
-        // CanInflictContactDamage
-        public bool CanInflictContactDamage { get; init; }
 
         // CanInteract
         public virtual bool CanInteract()
@@ -537,6 +540,12 @@ namespace ScaryCastle
         // CollisionHeight
         [ScriptProperty]
         public int CollisionHeight { get; set; }
+
+        // CombatBehavior
+        public CombatBehavior? CombatBehavior { get; }
+
+        // ContactIntent
+        public CombatIntent? ContactIntent { get; }
 
         // Die
         [ScriptMethod]

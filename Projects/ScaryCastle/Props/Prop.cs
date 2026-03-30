@@ -34,9 +34,6 @@ namespace ScaryCastle
                 Opacity = ColorPalette.ShadowOpacity,
                 PivotOrigin = RectanglePoint.Bottom,
             };
-
-            if (Definition != null)
-                CanInflictContactDamage = EffectDescriptor.Contains(Definition.Effects, EffectContext.Contact);
         }
 
         #endregion
@@ -98,13 +95,6 @@ namespace ScaryCastle
                 xTween.Update(gameTime);
                 X = xTween.CurrentValue;
             }
-        }
-
-        // TryInflictContactDamage
-        protected override void TryInflictContactDamage(GameThing target)
-        {
-            if (Definition != null)
-                EffectDescriptor.Apply(Definition.EffectDescriptors, this, target, EffectContext.Contact);
         }
 
         #endregion

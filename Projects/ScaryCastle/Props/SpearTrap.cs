@@ -61,7 +61,7 @@ namespace ScaryCastle
                 if (Room.Children[i] is GameThing target && !target.IsDead && target.MaxHP > 0)
                 {
                     if (RuntimeCollider.BoundingRectangleF.Bottom >= target.Y && RuntimeCollider.BoundingRectangleF.Intersects(target.RuntimeHotspot.BoundingRectangleF))
-                        EffectDescriptor.Apply(Definition.Effects, this, target, EffectContext.Attack);
+                        TryInflictContactDamage(target);
                 }
             }
         }
