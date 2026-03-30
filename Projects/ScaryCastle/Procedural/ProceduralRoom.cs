@@ -235,7 +235,7 @@ namespace ScaryCastle
                         continue;
 
                     // Match tags?
-                    if (!placeholder.AllowTags.Intersects(definition.Tags))
+                    if (placeholder.AllowTags.Count > 0 && !placeholder.AllowTags.Intersects(definition.Tags))
                         continue;
 
                     // MaxPerRoom (local)

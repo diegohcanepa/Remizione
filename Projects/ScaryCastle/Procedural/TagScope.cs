@@ -46,21 +46,21 @@ namespace ScaryCastle
             // DenyPools
             if (scope.DenyPools.Count > 0)
             {
-                if (Utils.Intersects(scope.DenyPools, pools))
+                if (scope.DenyPools.Intersects(pools))
                     return false;
             }
 
             // DenyTags
             if (scope.DenyTags.Count > 0)
             {
-                if (Utils.Intersects(scope.DenyTags, tags))
+                if (scope.DenyTags.Intersects(tags))
                     return false;
             }
 
             // AllowPools (si existe, requiere intersección)
             if (scope.AllowPools.Count > 0)
             {
-                if (!Utils.Intersects(scope.AllowPools, pools))
+                if (!scope.AllowPools.Intersects(pools))
                     return false;
             }
             else
@@ -69,7 +69,7 @@ namespace ScaryCastle
                 if (scope.AllowTags.Count > 0)
                 {
                     // si hay al menos una tag en allow, requerimos intersección
-                    if (!Utils.Intersects(scope.AllowTags, tags))
+                    if (!scope.AllowTags.Intersects(tags))
                         return false;
                 }
 

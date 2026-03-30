@@ -35,7 +35,7 @@ namespace ScaryCastle
                 // olvidaste tagearlas para un bioma específico.
                 if (definition.RoomType != RoomType.Start && definition.RoomType != RoomType.LeftExit && definition.RoomType != RoomType.RightExit)
                 {
-                    if (pools.Count > 0 && !Utils.Intersects(pools, definition.Pools))
+                    if (pools.Count > 0 && !pools.Intersects(definition.Pools))
                         continue;
                 }
 

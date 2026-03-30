@@ -118,26 +118,6 @@ namespace ScaryCastle
             return $"Build {GameSettings.Build} " + (EngendroGame.DebugMode ? "(dev)" : "(rel)");
         }
 
-        // Intersects
-        internal static bool Intersects(ReadOnlyCollection<string> listA, ReadOnlyCollection<string> listB)
-        {
-            if (listA.Count == 0 || listB.Count == 0)
-                return false;
-
-            for (int i = 0; i < listA.Count; i++)
-            {
-                var va = listA[i];
-
-                for (int j = 0; j < listB.Count; j++)
-                {
-                    if (string.Equals(va, listB[j], StringComparison.OrdinalIgnoreCase))
-                        return true;
-                }
-            }
-
-            return false;
-        }
-
         // LayoutControlsHorizontally
         internal static void LayoutControlsHorizontally(UIButton[] controlList, float spacing)
         {
