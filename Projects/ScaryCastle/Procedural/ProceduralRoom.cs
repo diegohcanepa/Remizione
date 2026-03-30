@@ -20,6 +20,7 @@ namespace ScaryCastle
         private readonly List<Placeholder> placeholders = [];
         private readonly CounterBank propsSpawnCounter = new();
         private readonly int randomSeed;
+        private HashSet<Placeholder> usedPlaceholders = [];
 
         #endregion
 
@@ -117,7 +118,7 @@ namespace ScaryCastle
                     continue;
 
                 // 7. Reglas de Scope (Pools/Tags de la habitación)
-                if (!definition.PassesScope(RoomGraph.Definition.Scope))
+                if (!TagScope.Test(RoomGraph.Definition.Scope, RoomGraph.Definition.Pools, RoomGraph.Definition.Tags))
                     continue;
 
                 outList.Add(definition);
@@ -214,7 +215,7 @@ namespace ScaryCastle
             foreach (var placeholder in placeholders)
             {
                 // Already used
-                if (placeholder.Used)
+                if (usedPlaceholders.Contains(placeholder))
                     continue;
 
                 // Functional filter (Prop vs Enemy)
@@ -229,8 +230,12 @@ namespace ScaryCastle
                 var selectedCandidates = new List<T>();
                 foreach (var definition in candidates)
                 {
-                    // Is compatible with placehokder placement?
+                    // Is compatible with placeholder placement?
                     if (!definition.Placements.Contains(placeholder.Placement))
+                        continue;
+
+                    // Match tags?
+                    if (!placeholder.AllowTags.Intersects(definition.Tags))
                         continue;
 
                     // MaxPerRoom (local)
@@ -262,7 +267,7 @@ namespace ScaryCastle
                     continue;
 
                 // Flag placeholder as used
-                placeholder.Used = true;
+                usedPlaceholders.Add(placeholder);
 
                 var instance = CreateThingClone(chosen.Name);
                 instance.Position = placeholder.Position;

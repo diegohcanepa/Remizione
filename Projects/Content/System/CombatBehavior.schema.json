@@ -27,12 +27,12 @@
         "archetype": {
           "type": "string",
           "enum": [
-            "None",
+            "Lurker",
             "Tactical",
             "Berserk",
             "Coward"
           ],
-          "default": "None"
+          "default": "Lurker"
         },
         "intents": {
           "type": "array",

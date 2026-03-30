@@ -68,12 +68,14 @@ namespace ScaryCastle
                     if (item.TryGetProperty("target", out JsonElement targetElement))
                         target = Enum.Parse<PlaceholderTarget>(targetElement.GetString() ?? string.Empty);
 
-                    placeholders.Add(new Placeholder(position, placement, fillChance, target));
+                    var allowTags = Tags.FromJson(item, "allowTags");
+
+                    placeholders.Add(new Placeholder(position, placement, fillChance, allowTags, target));
                 }
             }
 
             // Scope
-            this.Scope = ScopeRules.FromJson(element);
+            this.Scope = TagScope.FromJson(element);
 
             // WalkArea
             WalkArea = string.Empty;
@@ -188,7 +190,7 @@ namespace ScaryCastle
         public RoomType RoomType { get; }
 
         // Scope
-        public ScopeRules Scope { get; }
+        public TagScope Scope { get; }
 
         // Theme
         public RoomTheme Theme { get; }

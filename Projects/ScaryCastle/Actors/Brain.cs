@@ -45,7 +45,7 @@ namespace ScaryCastle
         // Decide
         public static CombatDecision? Decide(Actor actor)
         {
-            if (actor.CombatBehavior is not CombatBehavior behavior || actor.CombatBehavior.Archetype == CombatBehaviorArchetype.None)
+            if (actor.CombatBehavior is not CombatBehavior behavior || actor.CombatBehavior.Archetype == CombatBehaviorArchetype.Lurker)
                 return null;
 
             // 1. Logica de Supervivencia (Generalizada)

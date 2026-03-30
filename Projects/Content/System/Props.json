@@ -37,6 +37,8 @@
     },    
     {
       "name": "Torch",
+      "tags": "Torch",
+      "allowStartRoomSpawn": true,
       "placements": [
         "WallFrontHang"
       ]
@@ -45,6 +47,15 @@
       "name": "SpearTrap",
       "placements": [
         "WalkArea"
+      ],
+      "effects": [
+        {
+          "context": "Contact",
+          "effectType": "Damage",
+          "amount": "1",
+          "knockback": "15,5",
+          "impactWord": "AghRed"          
+        }
       ]
     },
     {

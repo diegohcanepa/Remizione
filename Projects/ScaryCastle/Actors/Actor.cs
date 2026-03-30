@@ -446,14 +446,6 @@ namespace ScaryCastle
             talkIcon?.Update(gameTime);
         }
 
-        // TryInflictContactDamage
-        protected override void TryInflictContactDamage(GameThing target)
-        {
-            base.TryInflictContactDamage(target);
-            if (ContactIntent != null && IsHostile(target))
-                Session.HUD.NotifyCombatIntent(ContactIntent);
-        }
-
         #endregion
 
         // Animate

@@ -50,5 +50,24 @@ namespace ScaryCastle
                 return EmptyList;
         }
 
+        // Intersects
+        public bool Intersects(ReadOnlyCollection<string> tags)
+        {
+            if (Count == 0 || tags.Count == 0)
+                return false;
+
+            for (int i = 0; i < Count; i++)
+            {
+                var va = this[i];
+
+                for (int j = 0; j < tags.Count; j++)
+                {
+                    if (string.Equals(va, tags[j], StringComparison.OrdinalIgnoreCase))
+                        return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

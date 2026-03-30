@@ -9,14 +9,18 @@ namespace ScaryCastle
     public sealed class Placeholder
     {
         // Constructor
-        public Placeholder(Vector2 position, PlacementType placement, Ratio fillChance, PlaceholderTarget target = PlaceholderTarget.Prop)
+        public Placeholder(Vector2 position, PlacementType placement, Ratio fillChance, Tags allowTags, PlaceholderTarget target = PlaceholderTarget.Prop)
         {
             this.Position = position;
             this.Placement = placement;
             this.FillChance = fillChance;
+            this.AllowTags = allowTags;
             this.FlipImage = placement is PlacementType.WallRightBase or PlacementType.WallRightHang;
             this.Target = target;
         }
+
+        // AllowTags
+        public Tags AllowTags { get; }
 
         // FillChance
         public Ratio FillChance { get; set; }
@@ -32,8 +36,5 @@ namespace ScaryCastle
 
         // Target
         public PlaceholderTarget Target { get; set; }
-
-        // Used
-        public bool Used { get; set; }
     }
 }

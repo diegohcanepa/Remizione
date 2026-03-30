@@ -589,7 +589,6 @@ namespace ScaryCastle
                 return;
             }
 
-            CurrentRun.LoadNextFloor(Tags.EmptyList);
             if (CurrentRun.CurrentFloor == null)
                 throw new InvalidOperationException("Floor generation failed.");
 

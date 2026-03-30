@@ -30,8 +30,6 @@ namespace ScaryCastle
             {
                 EffectDescriptor.Apply(intent.EffectDescriptors, Owner, target, EffectContext.Attack);
                 Owner.Session.InterruptAwaitingScript();
-                if (Owner.IsHostile(target))
-                    Owner.Session.HUD.NotifyCombatIntent(intent);
                 return true;
             }
 

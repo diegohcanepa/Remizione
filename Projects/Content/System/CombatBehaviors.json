@@ -40,7 +40,7 @@
     },
     {
       "name": "Rat",
-      "archetype": "None",
+      "archetype": "Lurker",
       "intents": [
         {
           "name": "Contact",
@@ -64,24 +64,6 @@
           "name": "Bite",
           "category": "Basic",
           "sound": "EnviousEyeAttack"
-        }
-      ]
-    },
-    {
-      "name": "SpearTrap",
-      "archetype": "None",
-      "intents": [
-        {
-          "name": "Contact",
-           "effects": [
-            {
-              "context": "Contact",
-              "effectType": "Damage",
-              "amount": "1",
-              "knockback": "15,5",
-              "impactWord": "AghRed"
-            }
-          ]
         }
       ]
     }

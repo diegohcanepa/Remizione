@@ -61,11 +61,15 @@
       "placeholders": [
         {
           "position": "68,22",
-          "placement": "WallFrontHang"
+          "placement": "WallFrontHang",
+          "fillChance": 1,
+          "allowTags": "Torch"
         },
         {
           "position": "169,22",
-          "placement": "WallFrontHang"
+          "placement": "WallFrontHang",
+          "fillChance": 1,
+          "allowTags": "Torch"
         }
       ],
       "walkArea": "204,43;237,109;5,109;37,44;54,44;59,47;78,47;84,44;156,44;162,47;179,47;184,43",

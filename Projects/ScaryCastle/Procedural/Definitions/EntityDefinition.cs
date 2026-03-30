@@ -91,45 +91,6 @@ namespace ScaryCastle
             return runCount >= MinRun;
         }
 
-        // PassesScope
-        public bool PassesScope(ScopeRules scope)
-        {
-            // DenyPools
-            if (scope.DenyPools.Count > 0)
-            {
-                if (Utils.Intersects(scope.DenyPools, Pools))
-                    return false;
-            }
-
-            // DenyTags
-            if (scope.DenyTags.Count > 0)
-            {
-                if (Utils.Intersects(scope.DenyTags, Tags))
-                    return false;
-            }
-
-            // AllowPools (si existe, requiere intersección)
-            if (scope.AllowPools.Count > 0)
-            {
-                if (!Utils.Intersects(scope.AllowPools, Pools))
-                    return false;
-            }
-            else
-            {
-                // AllowTags VACÍO -> aceptar todo (equivalente a "any")
-                if (scope.AllowTags.Count > 0)
-                {
-                    // si hay al menos una tag en allow, requerimos intersección
-                    if (!Utils.Intersects(scope.AllowTags, Tags))
-                        return false;
-                }
-
-                // si AllowTags está vacío o es null, no filtramos por tags (aceptamos)
-            }
-
-            return true;
-        }
-
         // Pools
         public Tags Pools { get; }
 
