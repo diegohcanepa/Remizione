@@ -1,7 +1,6 @@
 ﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using ScaryCastle.UI;
 
 namespace ScaryCastle
 {
@@ -32,9 +31,6 @@ namespace ScaryCastle
 
             // CommonInventoryMeter
             this.InventoryMeter = new(session.Inventory);
-
-            // Mini map
-            this.MiniMap = new();
         }
 
         #endregion
@@ -53,9 +49,6 @@ namespace ScaryCastle
             Log.Draw(gameTime);
             Message.Draw(gameTime);
             Game.SpriteBatch.End();
-
-            if (session.Room is ProceduralRoom)
-                MiniMap.Draw(gameTime);
         }
 
         // OnUpdate
@@ -64,7 +57,6 @@ namespace ScaryCastle
             InventoryMeter.Update(gameTime);
             hpMeter.Update(gameTime);
             faithMeter.Update(gameTime);
-            MiniMap.Update(gameTime);
             Log.Update(gameTime);
             Message.Update(gameTime);
         }
@@ -88,9 +80,6 @@ namespace ScaryCastle
 
         // Log
         public UILog Log { get; }
-
-        // MiniMap
-        public UIMiniMap MiniMap { get; }
 
         // Message
         public HUDMessage Message { get; }

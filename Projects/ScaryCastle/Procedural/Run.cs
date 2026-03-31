@@ -11,33 +11,33 @@ namespace ScaryCastle
         private readonly GameSession session;
 
         // Constructor
-        public Run(GameSession session, int maxFloors)
+        public Run(GameSession session, int maxStages)
         {
             this.session = session;
-            this.MaxFloors = maxFloors;
+            this.MaxStages = maxStages;
         }
 
-        // CleanUpCurrentFloor
-        private void CleanUpCurrentFloor()
+        // CleanUpCurrentStage
+        private void CleanUpCurrentStage()
         {
-            if (CurrentFloor == null)
+            if (CurrentStage == null)
                 return;
 
-            foreach (var r in CurrentFloor.RoomGraphs)
+            foreach (var r in CurrentStage.RoomGraphs)
             {
                 r.RideRoom?.Children.Clear();
             }
 
             session.CleanUpRuntimeEntities();
 
-            CurrentFloor = null;
+            CurrentStage = null;
         }
 
-        // CurrentFloor
-        public Floor? CurrentFloor { get; private set; }
+        // CurrentStage
+        public Stage? CurrentStage { get; private set; }
 
-        // CurrentFloorIndex
-        public int CurrentFloorIndex => CurrentFloor?.Index ?? 0;
+        // CurrentStageIndex
+        public int CurrentStageIndex => CurrentStage?.Index ?? 0;
 
         // Dispose
         public void Dispose()
@@ -45,22 +45,22 @@ namespace ScaryCastle
             if (IsDisposed)
                 return;
 
-            CleanUpCurrentFloor();
+            CleanUpCurrentStage();
             IsDisposed = true;
         }
 
         // HasContent
-        public bool HasContent => CurrentFloor?.RoomGraphs.Count > 0;
+        public bool HasContent => CurrentStage?.RoomGraphs.Count > 0;
 
         // Intensity
         public float Intensity
         {
             get
             {
-                if (MaxFloors <= 1)
+                if (MaxStages <= 1)
                     return 0;
                 
-                float progress = (float)CurrentFloorIndex / MaxFloors;
+                float progress = (float)CurrentStageIndex / MaxStages;
                 
                 return (float)Math.Pow(Math.Clamp(progress, 0f, 1f), 1.2f);
             }
@@ -69,20 +69,20 @@ namespace ScaryCastle
         // IsDisposed
         public bool IsDisposed { get; private set; }
 
-        // LoadNextFloor
-        public bool LoadNextFloor(Tags pools)
+        // LoadNextStage
+        public bool LoadNextStage(Tags pools)
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
 
-            if (CurrentFloorIndex == MaxFloors)
+            if (CurrentStageIndex == MaxStages)
                 return false;
 
-            var nextIndex = CurrentFloorIndex + 1;
+            var nextIndex = CurrentStageIndex + 1;
 
-            CleanUpCurrentFloor();
+            CleanUpCurrentStage();
 
-            var builder = new FloorBuilder();
-            CurrentFloor = builder.Build(session, nextIndex, pools, Spawns);
+            var builder = new StageBuilder();
+            CurrentStage = builder.Build(session, nextIndex, pools, Spawns);
 
             // Commit floor spawns
             foreach (var name in builder.Spawns.GetNames())
@@ -95,12 +95,12 @@ namespace ScaryCastle
             }
 
             // Build rooms
-            foreach (var r in CurrentFloor.RoomGraphs)
+            foreach (var r in CurrentStage.RoomGraphs)
             {
                 r.RideRoom = RideRoom.CreateInstance(session, r);
             }
 
-            foreach (var r in CurrentFloor.RoomGraphs)
+            foreach (var r in CurrentStage.RoomGraphs)
             {
                 r.RideRoom.Load();
             }
@@ -109,7 +109,7 @@ namespace ScaryCastle
         }
 
         // MaxFloors
-        public int MaxFloors { get; }
+        public int MaxStages { get; }
 
         // Spawns
         public CounterBank Spawns { get; } = new();

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 namespace ScaryCastle
 {
     /// <summary>
-    /// FloorBuilder
+    /// StageBuilder
     /// </summary>
-    public sealed class FloorBuilder
+    public sealed class StageBuilder
     {
         private bool built;
         private readonly List<RoomGraph> roomGraphs = [];
@@ -15,7 +15,7 @@ namespace ScaryCastle
         #region Private Static members
 
         // GetAvailableRoomDefinitions
-        private static List<RoomDefinition> GetAvailableRoomDefinitions(GameSession session, CounterBank floorSpawns, CounterBank globalSpawns, Tags pools)
+        private static List<RoomDefinition> GetAvailableRoomDefinitions(GameSession session, CounterBank stageSpawns, CounterBank globalSpawns, Tags pools)
         {
             List<RoomDefinition> result = [];
 
@@ -26,7 +26,7 @@ namespace ScaryCastle
                     continue;
 
                 // 2. ¿Salió muchas veces en esta partida?
-                if (!definition.PassesMaxPerRunConstraint(floorSpawns, globalSpawns))
+                if (!definition.PassesMaxPerRunConstraint(stageSpawns, globalSpawns))
                     continue;
 
                 // 3. ¿Pertenece al bioma/pool actual?
@@ -45,9 +45,9 @@ namespace ScaryCastle
             return result;
         }
 
-        // GetFloorLength
-        // Calcula la cantidad de salas basándose en el bioma (chapter) y el progreso interno (floorIndex).
-        private static int GetFloorLength(int chapter, int floorIndex)
+        // GetStageLength
+        // Calcula la cantidad de salas basándose en el bioma (chapter) y el progreso interno (stageIndex).
+        private static int GetStageLength(int chapter, int stageIndex)
         {
             // 1. Definimos la base según el capítulo
             const int MIN_ROOMS_START = 7;
@@ -63,10 +63,10 @@ namespace ScaryCastle
 
             // 2. Sumamos el incremento por piso dentro de la run actual
             // Cada piso suma 1 sala adicional (puedes ajustar este factor)
-            int floorBonus = (floorIndex - 1) * 1;
+            int stageBonus = (stageIndex - 1) * 1;
 
             // 3. Resultado final con un tope absoluto para no romper el generador
-            return Math.Min(baseSize + floorBonus, 20);
+            return Math.Min(baseSize + stageBonus, 20);
         }
 
         #endregion
@@ -251,18 +251,18 @@ namespace ScaryCastle
         #endregion
 
         // Build
-        public Floor Build(GameSession session, int floorIndex, Tags pools, CounterBank globalSpawns)
+        public Stage Build(GameSession session, int stageIndex, Tags pools, CounterBank globalSpawns)
         {
             if (built)
-                throw new InvalidOperationException("Floor is already built.");
+                throw new InvalidOperationException("Stage is already built.");
 
             built = true;
 
-            // 1. Collect available room definitions for the floor
+            // 1. Collect available room definitions for the stage
             List<RoomDefinition> defs = GetAvailableRoomDefinitions(session, Spawns, globalSpawns, pools);
 
             // 2. Calculate run size
-            int count = GetFloorLength(session.Chapter, floorIndex);
+            int count = GetStageLength(session.Chapter, stageIndex);
 
             // 3. Try 15 strict assignment attempts with guaranteed skeletons
             bool success = false;
@@ -288,7 +288,7 @@ namespace ScaryCastle
                 ApplyDefinitions(defs, res.Item2, session.Random, false, globalSpawns);
             }
 
-            return new Floor(roomGraphs, floorIndex);
+            return new Stage(roomGraphs, stageIndex);
         }
 
         // Spawns

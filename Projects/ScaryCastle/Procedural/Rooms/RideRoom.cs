@@ -106,8 +106,6 @@ namespace ScaryCastle
 
             if (!RoomGraph.Visited)
                 RoomGraph.Visited = true;
-
-            Session.HUD.MiniMap.CurrentRoom = RoomGraph;
         }
 
         // OnLoad

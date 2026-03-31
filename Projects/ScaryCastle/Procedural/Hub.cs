@@ -18,7 +18,7 @@ namespace ScaryCastle
         // LinkGate
         private void LinkGate()
         {
-            if (Session.CurrentRun?.CurrentFloor is Floor floor)
+            if (Session.CurrentRun?.CurrentStage is Stage floor)
             {
                 var thingName = $"{nameof(RideDoor)}Up*Hub";
 

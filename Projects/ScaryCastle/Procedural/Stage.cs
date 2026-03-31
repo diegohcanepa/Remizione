@@ -5,12 +5,12 @@ using System.Collections.ObjectModel;
 namespace ScaryCastle
 {
     /// <summary>
-    /// Floor
+    /// Stage
     /// </summary>
-    public sealed class Floor
+    public sealed class Stage
     {
         // Constructor
-        public Floor(List<RoomGraph> rooms, int index)
+        public Stage(List<RoomGraph> rooms, int index)
         {
             RoomGraphs = rooms.AsReadOnly();
             Index = index;

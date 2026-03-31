@@ -471,7 +471,7 @@ namespace ScaryCastle
 
             CurrentRun = new Run(this, 3);
 
-            LoadNextFloor();
+            LoadNextStage();
 
             if (ScriptLibrary.FindRoutine("PrepareStartRoom") is Script script)
                 ScriptProcessor.RunScript(script);
@@ -576,25 +576,25 @@ namespace ScaryCastle
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;
 
-        // LoadNextFloor
+        // LoadNextStage
         [ScriptMethod]
-        public void LoadNextFloor()
+        public void LoadNextStage()
         {
             if (CurrentRun == null)
                 return;
 
-            if (!CurrentRun.LoadNextFloor(Tags.EmptyList))
+            if (!CurrentRun.LoadNextStage(Tags.EmptyList))
             {
                 CompleteRun();
                 return;
             }
 
-            if (CurrentRun.CurrentFloor == null)
-                throw new InvalidOperationException("Floor generation failed.");
+            if (CurrentRun.CurrentStage == null)
+                throw new InvalidOperationException("Stage generation failed.");
 
             if (Player != null)
             {
-                var rideRoom = CurrentRun.CurrentFloor.RoomGraphs[0].RideRoom;
+                var rideRoom = CurrentRun.CurrentStage.RoomGraphs[0].RideRoom;
                 Player.Reheal();
                 HUDVisible = true;
                 rideRoom.Children.Add(Player);
