@@ -135,12 +135,16 @@ namespace ScaryCastle
 
         #region Protected members
 
+        // OnActivate
         protected override void OnActivate()
         {
             base.OnActivate();
 
-            if (Session.ScriptLibrary.FindRoutine("CorridorLeftGate-Down") is Script script)
-                Session.ScriptProcessor.StartScript(script);
+            if (RoomNode.RoomType == RoomType.Corridor)
+            {
+                if (Session.ScriptLibrary.FindRoutine("CorridorLeftGate-Down") is Script script)
+                    Session.ScriptProcessor.StartScript(script);
+            }
         }
 
         // OnLoad

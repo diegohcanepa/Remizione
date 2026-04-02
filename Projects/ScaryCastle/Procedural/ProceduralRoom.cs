@@ -181,23 +181,26 @@ namespace ScaryCastle
             var propDefinitions = GetCandidateDefinitions<PropDefinition, Prop>(PropDefinition.Definitions.All);
 
             // 1.1 Props fijos en diseño
-            SpawnInPlaceholders(PropDefinition.Definitions, propDefinitions, RoomNode.Definition.MaxProps, propsSpawnCounter, PlaceholderTarget.Prop);
+            SpawnInPlaceholders(PropDefinition.Definitions, propDefinitions, RoomNode.Definition.MaxProps, propsSpawnCounter);
 
             // 1.2 Props aleatorios rellenando el espacio
             SpawnInWalkArea(PropDefinition.Definitions, propDefinitions, RoomNode.Definition.MaxProps, propsSpawnCounter);
 
-            // CAPA 2: ACTORES Y ENEMIGOS (IA)
+            // CAPA 2: Ambient actors
             var actorDefinitions = GetCandidateDefinitions<ActorDefinition, Actor>(ActorDefinition.Definitions.All);
 
-            // 2.1 Enemigos en puntos de emboscada/diseñados
-            SpawnInPlaceholders(ActorDefinition.Definitions, actorDefinitions, RoomNode.Definition.MaxEnemies, enemiesSpawnCounter, PlaceholderTarget.Enemy);
+            // 2.2 Enemigos aleatorios patrullando (Ambient only)
+            for (var i = actorDefinitions.Count - 1; i >= 0; i--)
+            {
+                if (actorDefinitions[i].Role != ActorRole.Ambient)
+                    actorDefinitions.RemoveAt(i);
+            }
 
-            // 2.2 Enemigos aleatorios patrullando
             SpawnInWalkArea(ActorDefinition.Definitions, actorDefinitions, RoomNode.Definition.MaxEnemies, enemiesSpawnCounter);
         }
 
         // SpawnInPlaceholders
-        private void SpawnInPlaceholders<T>(DataContainer<T> definitionContainer, IList<T> candidates, int maxInstances, CounterBank spawnCounter, PlaceholderTarget target)
+        private void SpawnInPlaceholders<T>(DataContainer<T> definitionContainer, IList<T> candidates, int maxInstances, CounterBank spawnCounter)
             where T : ThingDefinition
         {
             if (Placeholders.Count == 0 || maxInstances == 0 || Session.CurrentRun == null)
@@ -212,10 +215,6 @@ namespace ScaryCastle
             {
                 // Already used
                 if (usedPlaceholders.Contains(placeholder))
-                    continue;
-
-                // Functional filter (Prop vs Enemy)
-                if (placeholder.Target != PlaceholderTarget.Any && placeholder.Target != target)
                     continue;
 
                 // Roll fillChance

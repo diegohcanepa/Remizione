@@ -94,6 +94,12 @@
                 "Treasure"
               ]
             },
+            "guardActorPosition": {
+              "type": "string"
+            },
+            "interactiveActorPosition": {
+              "type": "string"
+            },
             "playerPosition": {
               "type": "string"
             },
@@ -137,14 +143,6 @@
                     "type": "number",
                     "minimum": 0,
                     "maximum": 1
-                  },
-                  "target": {
-                    "type": "string",
-                    "enum": [
-                      "Prop",
-                      "Enemy",
-                      "Any"
-                    ]
                   }
                 },
                 "required": [

@@ -22,8 +22,16 @@
               "type": "string",
               "default": "Evil",
               "enum": ["Good", "Evil"]
+            },
+            "role": {
+              "type": "string",
+              "default": "Guard",
+              "enum": ["Ambient", "Guard"]
             }
-          }
+          },
+          "required": [
+            "role"
+          ]          
         }
       ],
       "unevaluatedProperties": false

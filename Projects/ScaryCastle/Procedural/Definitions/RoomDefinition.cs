@@ -32,7 +32,13 @@ namespace ScaryCastle
             MaxEnemies = element.GetInt32("maxEnemies", -1);
             MaxProps = element.GetInt32("maxProps", -1);
             MusicTag = element.GetString("musicTag");
-            
+
+            if (element.GetString("guardActorPosition") is string guardActorPositionValue && !string.IsNullOrWhiteSpace(guardActorPositionValue))
+                GuardActorPosition = DataConvert.ToVector2(guardActorPositionValue);
+
+            if (element.GetString("interactiveActorPosition") is string interactiveActorPositionValue && !string.IsNullOrWhiteSpace(interactiveActorPositionValue))
+                InteractiveActorPosition = DataConvert.ToVector2(interactiveActorPositionValue);
+
             if (element.GetString("playerPosition") is string playerPositionValue && !string.IsNullOrWhiteSpace(playerPositionValue))
                 PlayerPosition = DataConvert.ToVector2(playerPositionValue);
             
@@ -44,29 +50,9 @@ namespace ScaryCastle
             // Placeholders
             if (element.TryGetProperty("placeholders", out JsonElement placeholdersElement))
             {
-                foreach (var item in placeholdersElement.EnumerateArray())
+                foreach (var phElement in placeholdersElement.EnumerateArray())
                 {
-                    var position = DataConvert.ToVector2(item.GetProperty("position").GetString() ?? string.Empty);
-
-                    // Enum Placement
-                    var placementStr = item.GetProperty("placement").GetString() ?? string.Empty;
-                    var placement = Enum.Parse<PlacementType>(placementStr);
-
-                    // Ratio FillChance (por defecto 1.0 si no existe)
-                    float chanceValue = 1f;
-                    if (item.TryGetProperty("fillChance", out JsonElement chanceElement))
-                        chanceValue = chanceElement.GetSingle();
-
-                    Ratio fillChance = chanceValue;
-
-                    // Enum Target (por defecto Prop si no existe)
-                    var target = PlaceholderTarget.Prop;
-                    if (item.TryGetProperty("target", out JsonElement targetElement))
-                        target = Enum.Parse<PlaceholderTarget>(targetElement.GetString() ?? string.Empty);
-
-                    var allowTags = Tags.FromJson(item, "allowTags");
-
-                    placeholders.Add(new Placeholder(position, placement, fillChance, allowTags, target));
+                    placeholders.Add(new Placeholder(phElement));
                 }
             }
 
@@ -137,6 +123,9 @@ namespace ScaryCastle
         // ExactMatch
         public bool ExactMatch { get; }
 
+        // GuardActorPosition
+        public Vector2 GuardActorPosition { get; }
+
         // HasDownDoor
         public bool HasDownDoor => DoorDown != null;
 
@@ -148,6 +137,9 @@ namespace ScaryCastle
 
         // HasUpDoor
         public bool HasUpDoor => DoorUp != null;
+
+        // InteractiveActorPosition
+        public Vector2 InteractiveActorPosition { get; }
 
         // IsMandatory
         public bool IsMandatory { get; }

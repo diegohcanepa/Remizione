@@ -3,6 +3,7 @@
   "data": [
     {
       "name": "EnviousEye",
+      "role": "Guard",
       "minSpawnAmount": 1,
       "maxSpawnAmount": 2,
       "effects": [
@@ -19,15 +20,14 @@
     },
     {
       "name": "Rat",
+      "role": "Ambient",
       "placements": [
         "WalkArea"
       ]
     },
     {
       "name": "Skeleton",
-      "minRun": 10,
-      "minSpawnAmount": 1,
-      "maxSpawnAmount": 5,
+      "role": "Guard",
       "placements": [
         "WalkArea"
       ]

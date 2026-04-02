@@ -1,5 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
+using System.Text.Json;
 
 namespace ScaryCastle
 {
@@ -9,16 +11,21 @@ namespace ScaryCastle
     public sealed class Placeholder
     {
         // Constructor
-        public Placeholder(Vector2 position, PlacementType placement, Ratio fillChance, Tags allowTags, PlaceholderTarget target = PlaceholderTarget.Prop)
+        public Placeholder(JsonElement element)
         {
-            this.Position = position;
-            this.Placement = placement;
-            this.FillChance = fillChance;
-            this.AllowTags = allowTags;
-            this.FlipImage = placement is PlacementType.WallRightBase or PlacementType.WallRightHang;
-            this.Target = target;
-        }
+            AllowTags = Tags.FromJson(element, "allowTags");
+            FillChance = element.GetFloat("fillChance", 1);
+            FlipImage = element.GetBool("flipImage", false);
 
+            if (element.GetEnum<PlacementType>("placement") is { } placement)
+                Placement = placement;
+            else
+                throw new InvalidOperationException("Undefined placement property.");
+
+            if (element.GetString("position") is string positionValue && !string.IsNullOrWhiteSpace(positionValue))
+                Position = DataConvert.ToVector2(positionValue);
+        }
+        
         // AllowTags
         public Tags AllowTags { get; }
 
@@ -33,8 +40,5 @@ namespace ScaryCastle
 
         // Position
         public Vector2 Position { get; }
-
-        // Target
-        public PlaceholderTarget Target { get; set; }
     }
 }

@@ -5,6 +5,7 @@
       "name": "Castle_Std_Corridor_01",
       "roomType": "Corridor",
       "doorUp": "126,41",
+      "guardActorPosition": "230,90",
       "playerPosition": "30,90",
       "placeholders": [
       ],
@@ -13,7 +14,7 @@
         "36,0;36,71;0,108;0,0",
         "220,0;220,74;260,111;260,0"
       ]
-    },    
+    },
     {
       "name": "Castle_Std_Common_01",
       "roomType": "SideRoom",

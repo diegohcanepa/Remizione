@@ -8,6 +8,9 @@ namespace ScaryCastle
     // ActorReaction
     public enum ActorReaction { None, Attack, Talk }
 
+    // ActorRole
+    public enum ActorRole { Ambient, Guard, Interactive }
+
     // ApproachBehavior
     public enum ApproachBehavior
     {
@@ -123,9 +126,6 @@ namespace ScaryCastle
     // MouseCursorState
     public enum MouseCursorState { Arrow, Cross, CrossDisabled, Down, Hand, Left, Prohibition, Right, Up, Wait }
 
-    // PlaceholderTarget
-    public enum PlaceholderTarget { Prop, Enemy, Any }
-
     // PlacementType
     public enum PlacementType
     {
@@ -142,9 +142,6 @@ namespace ScaryCastle
 
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
-
-    // PrimaryStat
-    public enum PrimaryStat { HP, Fear }
 
     // Realm
     public enum Realm { Earthly, Infernal, Celestial }
