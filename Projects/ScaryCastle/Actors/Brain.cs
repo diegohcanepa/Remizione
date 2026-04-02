@@ -62,7 +62,7 @@ namespace ScaryCastle
             else
                 return new CombatDecision(CombatDecisionType.Attack, intent);
         }
-        
+
         // SelectWeightedIntent
         // Calcula los pesos segun el arquetipo (Berserk, Tactical, etc)
         private static CombatIntent? SelectWeightedIntent(Actor actor, CombatBehavior behavior)

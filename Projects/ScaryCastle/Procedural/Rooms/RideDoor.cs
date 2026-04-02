@@ -108,7 +108,7 @@ namespace ScaryCastle
         {
             if (TargetRoom != null)
             {
-                int roomIndex = Room is RideRoom rideRoom ? rideRoom.RoomGraph.Index : -1;
+                int roomIndex = Room is RideRoom rideRoom ? rideRoom.RoomNode.Index : -1;
                 var pos = TargetRoom.GetPlayerPosition(roomIndex, out RideDoor? door);
                 door?.IsOpen = true;
                 ConnectCore(TargetRoom, pos);
@@ -137,21 +137,21 @@ namespace ScaryCastle
                 Sprite.ClearAnimations();
 
                 var assetPrefix = string.Empty;
-                if (DoorDirection == RideDoorDirection.Up && rideRoom.RoomGraph.Up != null)
+                if (DoorDirection == RideDoorDirection.Up && rideRoom.RoomNode.Up != null)
                 {
-                    assetPrefix = rideRoom.RoomGraph.GetDoorAssetName(rideRoom.RoomGraph.Up);
+                    assetPrefix = rideRoom.RoomNode.GetDoorAssetName(rideRoom.RoomNode.Up);
                 }
-                else if (DoorDirection == RideDoorDirection.Right && rideRoom.RoomGraph.Right != null)
+                else if (DoorDirection == RideDoorDirection.Right && rideRoom.RoomNode.Right != null)
                 {
-                    assetPrefix = rideRoom.RoomGraph.GetDoorAssetName(rideRoom.RoomGraph.Right);
+                    assetPrefix = rideRoom.RoomNode.GetDoorAssetName(rideRoom.RoomNode.Right);
                 }
-                else if (DoorDirection == RideDoorDirection.Down && rideRoom.RoomGraph.Down != null)
+                else if (DoorDirection == RideDoorDirection.Down && rideRoom.RoomNode.Down != null)
                 {
-                    assetPrefix = rideRoom.RoomGraph.GetDoorAssetName(rideRoom.RoomGraph.Down);
+                    assetPrefix = rideRoom.RoomNode.GetDoorAssetName(rideRoom.RoomNode.Down);
                 }
-                else if (DoorDirection == RideDoorDirection.Left && rideRoom.RoomGraph.Left != null)
+                else if (DoorDirection == RideDoorDirection.Left && rideRoom.RoomNode.Left != null)
                 {
-                    assetPrefix = rideRoom.RoomGraph.GetDoorAssetName(rideRoom.RoomGraph.Left);
+                    assetPrefix = rideRoom.RoomNode.GetDoorAssetName(rideRoom.RoomNode.Left);
                 }
 
                 var prefix = $"RideDoor_{assetPrefix}_{DoorDirection}_";

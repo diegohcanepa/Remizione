@@ -8,7 +8,6 @@ namespace ScaryCastle
     /// </summary>
     public sealed class Run
     {
-        private readonly CounterBank counters = new();
         private int corridorIndex = -1;
         private readonly int maxCorridors;
         private readonly RoomRegistry registry = new();
@@ -26,13 +25,27 @@ namespace ScaryCastle
         // AssignAsset
         private void AssignAsset(RoomNode node, Difficulty diff, Random rng)
         {
-            var def = registry.GetValidDefinition(node, diff, this.counters, rng);
-
+            var def = registry.GetValidDefinition(node, diff, this.Spawns, rng);
             if (def == null)
                 throw new InvalidOperationException($"ERROR: No assets found for {node.RoomType}/{node.SideRoomCategory} in {diff}");
 
             node.Definition = def;
-            this.counters.Increment(def.Name);
+            
+            this.Spawns.Increment(def.Name);
+        }
+
+        // CleanUpCurrentCorridor
+        private void CleanUpCurrentCorridor()
+        {
+            if (CurrentCorridor == null)
+                return;
+
+            foreach (var r in CurrentCorridor.GetAllNodes())
+            {
+                r.RideRoom?.Children.Clear();
+            }
+
+            CurrentCorridor = null;
         }
 
         // GenerateTrident
@@ -80,9 +93,13 @@ namespace ScaryCastle
             // Calculamos el progreso normalizado (0.0 a 1.0)
             float progress = (float)(x + 1) / max;
 
-            if (progress <= 0.33f) return Difficulty.Easy;   // Primer tercio
-            if (progress <= 0.66f) return Difficulty.Normal; // Segundo tercio
-            return Difficulty.Hard;                          // Resto
+            if (progress <= .33f)
+                return Difficulty.Easy;   // Primer tercio
+
+            if (progress <= .66f)
+                return Difficulty.Normal; // Segundo tercio
+
+            return Difficulty.Hard;
         }
 
         // Populate
@@ -95,12 +112,18 @@ namespace ScaryCastle
             if (corridor.Up != null)
             {
                 var nexo = corridor.Up;
+                
                 this.AssignAsset(nexo, diff, rng);
 
                 // Solo uno de estos será distinto de null según el azar de GenerateTrident
-                if (nexo.Left != null) this.AssignAsset(nexo.Left, diff, rng);
-                if (nexo.Up != null) this.AssignAsset(nexo.Up, diff, rng);
-                if (nexo.Right != null) this.AssignAsset(nexo.Right, diff, rng);
+                if (nexo.Left != null)
+                    this.AssignAsset(nexo.Left, diff, rng);
+                
+                if (nexo.Up != null)
+                    this.AssignAsset(nexo.Up, diff, rng);
+                
+                if (nexo.Right != null)
+                    this.AssignAsset(nexo.Right, diff, rng);
             }
         }
 
@@ -109,9 +132,25 @@ namespace ScaryCastle
         // CurrentCorridor
         public RoomNode? CurrentCorridor { get; private set; }
 
-        // NextCorridor
-        public bool NextCorridor()
+        // Intensity
+        public float Intensity
         {
+            get
+            {
+                if (maxCorridors <= 1)
+                    return 0;
+
+                float progress = (float)corridorIndex / maxCorridors;
+
+                return (float)Math.Pow(Math.Clamp(progress, 0f, 1f), 1.2f);
+            }
+        }
+
+        // NextCorridor
+        public bool NextCorridor(GameSession session)
+        {
+            CleanUpCurrentCorridor();
+
             this.corridorIndex++;
 
             // Fin de la Run
@@ -140,7 +179,21 @@ namespace ScaryCastle
             // 4. Actualizar estado
             this.CurrentCorridor = corridor;
 
+            // Build rooms
+            foreach (var r in corridor.GetAllNodes())
+            {
+                r.RideRoom = RideRoom.CreateInstance(session, r);
+            }
+
+            foreach (var r in corridor.GetAllNodes())
+            {
+                r.RideRoom.Load();
+            }
+
             return true;
         }
+
+        // Spawns
+        public CounterBank Spawns { get; } = new();
     }
 }

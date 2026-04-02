@@ -67,7 +67,7 @@ namespace ScaryCastle
             {
                 count += counters[i].GetCount(Name);
             }
-            
+
             return PassesMaxPerRunConstraint(count);
         }
 

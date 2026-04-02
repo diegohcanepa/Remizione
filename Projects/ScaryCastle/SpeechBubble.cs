@@ -422,7 +422,7 @@ namespace ScaryCastle
             arrowTween.Start(TweenStyle.QuinticIn, 0, .3f, 150, -1);
 
             //if (Actor.IsStandingOrMoving)
-                Actor.StartTalking();
+            Actor.StartTalking();
 
             inputCooldown = 100;
         }

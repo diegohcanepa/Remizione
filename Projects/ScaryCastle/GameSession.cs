@@ -175,7 +175,7 @@ namespace ScaryCastle
         {
             if (Room is ProceduralRoom proceduralRoom)
             {
-                var tag = proceduralRoom.RoomGraph.Definition.MusicTag;
+                var tag = proceduralRoom.RoomNode.Definition.MusicTag;
 
                 if (string.IsNullOrWhiteSpace(tag))
                     tag = MusicTag.Ride;
@@ -457,7 +457,7 @@ namespace ScaryCastle
         #endregion
 
         // CurrentRun
-        public OldRun? CurrentRun { get; private set; }
+        public Run? CurrentRun { get; private set; }
 
         // BeginRun
         [ScriptMethod]
@@ -469,12 +469,9 @@ namespace ScaryCastle
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            CurrentRun = new OldRun(this, 3);
+            CurrentRun = new Run(Seed, 6);
 
             LoadNextCorridor();
-
-            if (ScriptLibrary.FindRoutine("PrepareStartRoom") is Script script)
-                ScriptProcessor.RunScript(script);
         }
 
         // CompleteRun
@@ -499,7 +496,6 @@ namespace ScaryCastle
             if (CurrentRun == null)
                 return;
 
-            CurrentRun?.Dispose();
             CurrentRun = null;
 
             if (FindEntity<Hub>(nameof(Hub)) is Hub hubRoom)
@@ -583,18 +579,20 @@ namespace ScaryCastle
             if (CurrentRun == null)
                 return;
 
-            if (!CurrentRun.LoadNextStage(Tags.EmptyList))
+            CleanUpRuntimeEntities();
+
+            if (!CurrentRun.NextCorridor(this))
             {
                 CompleteRun();
                 return;
             }
 
-            if (CurrentRun.CurrentStage == null)
-                throw new InvalidOperationException("Stage generation failed.");
+            if (CurrentRun.CurrentCorridor == null)
+                throw new InvalidOperationException("Corridor generation failed.");
 
             if (Player != null)
             {
-                var rideRoom = CurrentRun.CurrentStage.RoomGraphs[0].RideRoom;
+                var rideRoom = CurrentRun.CurrentCorridor.RideRoom;
                 Player.Reheal();
                 HUDVisible = true;
                 rideRoom.Children.Add(Player);

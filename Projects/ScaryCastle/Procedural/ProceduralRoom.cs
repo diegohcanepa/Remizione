@@ -20,23 +20,23 @@ namespace ScaryCastle
         private readonly List<Placeholder> placeholders = [];
         private readonly CounterBank propsSpawnCounter = new();
         private readonly int randomSeed;
-        private HashSet<Placeholder> usedPlaceholders = [];
+        private readonly HashSet<Placeholder> usedPlaceholders = [];
 
         #endregion
 
         #region Constructor
 
         // Constructor
-        protected ProceduralRoom(GameSession session, string name, RoomGraph roomGraph)
+        protected ProceduralRoom(GameSession session, string name, RoomNode roomNode)
             : base(session, name)
         {
-            this.RoomGraph = roomGraph;
+            this.RoomNode = roomNode;
 
             this.AllowGlobalLight = true;
             this.LightingSystem = true;
             this.UnloadMode = UnloadMode.Manual;
 
-            int salt = roomGraph.Index;
+            int salt = roomNode.Index;
             this.randomSeed = RandomHelper.GetSeed(Session.Seed, salt);
             this.Random = new Random(randomSeed);
             this.Placeholders = placeholders.AsReadOnly();
@@ -88,37 +88,33 @@ namespace ScaryCastle
 
             foreach (var definition in definitions)
             {
-                // 1. Filtro para cosas en el start room
-                if (RoomGraph.RoomType == RoomType.Start && !definition.AllowStartRoomSpawn)
+                // 1. Filtro de dificultad: No permitimos que aparezcan cosas más difíciles que el cuarto
+                if (definition.Difficulty > RoomNode.Definition.Difficulty)
                     continue;
 
-                // 2. Filtro de dificultad: No permitimos que aparezcan cosas más difíciles que el cuarto
-                if (definition.Difficulty > RoomGraph.Definition.Difficulty)
+                // 2. Filtro de topologia
+                if (definition.RequiresDeadEnd && RoomNode.ConnectionCount > 1)
                     continue;
 
-                // 3. Filtro de topologia
-                if (definition.RequiresDeadEnd && RoomGraph.ConnectionCount > 1)
-                    continue;
-
-                // 4. Validación de Existencia de instancia declarada en script
+                // 3. Validación de Existencia de instancia declarada en script
                 var thing = Session.FindDeclaredThing(definition.Name) ?? throw new InvalidOperationException($"There is no declared thing named '{definition.Name}'. ");
 
                 // Is expected type?
                 if (thing is not TThing)
                     continue;
 
-                // 5. Meta-progreso
+                // 4. Meta-progreso
                 // Chequea si el enemigo está desbloqueado (MinRun)
                 if (!definition.PassesRunConstraints(Session.RunCount))
                     continue;
 
-                // 6. Historial de la Run
+                // 5. Historial de la Run
                 // Chequea si el enemigo ya alcanzó su MaxPerRun global
                 if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
                     continue;
 
-                // 7. Reglas de Scope (Pools/Tags de la habitación)
-                if (!TagScope.Test(RoomGraph.Definition.Scope, RoomGraph.Definition.Pools, RoomGraph.Definition.Tags))
+                // 6. Reglas de Scope (Pools/Tags de la habitación)
+                if (!TagScope.Test(RoomNode.Definition.Scope, RoomNode.Definition.Pools, RoomNode.Definition.Tags))
                     continue;
 
                 outList.Add(definition);
@@ -185,19 +181,19 @@ namespace ScaryCastle
             var propDefinitions = GetCandidateDefinitions<PropDefinition, Prop>(PropDefinition.Definitions.All);
 
             // 1.1 Props fijos en diseño
-            SpawnInPlaceholders(PropDefinition.Definitions, propDefinitions, RoomGraph.Definition.MaxProps, propsSpawnCounter, PlaceholderTarget.Prop);
+            SpawnInPlaceholders(PropDefinition.Definitions, propDefinitions, RoomNode.Definition.MaxProps, propsSpawnCounter, PlaceholderTarget.Prop);
 
             // 1.2 Props aleatorios rellenando el espacio
-            SpawnInWalkArea(PropDefinition.Definitions, propDefinitions, RoomGraph.Definition.MaxProps, propsSpawnCounter);
+            SpawnInWalkArea(PropDefinition.Definitions, propDefinitions, RoomNode.Definition.MaxProps, propsSpawnCounter);
 
             // CAPA 2: ACTORES Y ENEMIGOS (IA)
             var actorDefinitions = GetCandidateDefinitions<ActorDefinition, Actor>(ActorDefinition.Definitions.All);
 
             // 2.1 Enemigos en puntos de emboscada/diseñados
-            SpawnInPlaceholders(ActorDefinition.Definitions, actorDefinitions, RoomGraph.Definition.MaxEnemies, enemiesSpawnCounter, PlaceholderTarget.Enemy);
+            SpawnInPlaceholders(ActorDefinition.Definitions, actorDefinitions, RoomNode.Definition.MaxEnemies, enemiesSpawnCounter, PlaceholderTarget.Enemy);
 
             // 2.2 Enemigos aleatorios patrullando
-            SpawnInWalkArea(ActorDefinition.Definitions, actorDefinitions, RoomGraph.Definition.MaxEnemies, enemiesSpawnCounter);
+            SpawnInWalkArea(ActorDefinition.Definitions, actorDefinitions, RoomNode.Definition.MaxEnemies, enemiesSpawnCounter);
         }
 
         // SpawnInPlaceholders
@@ -256,7 +252,7 @@ namespace ScaryCastle
                 var chanceTable = new ChanceTable();
                 foreach (var c in selectedCandidates)
                 {
-                    var finalWeight = AdjustWeight(Session.CurrentRun.Intensity, RoomGraph.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
+                    var finalWeight = AdjustWeight(Session.CurrentRun.Intensity, RoomNode.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
                     chanceTable.Add(c.Name, finalWeight);
                 }
 
@@ -277,7 +273,7 @@ namespace ScaryCastle
                 Session.CurrentRun.Spawns.Increment(chosen.Name);
 
                 int currentRoomCount = spawnCounter.Increment(chosen.Name);
-                
+
                 // Max per room
                 if (maxInstances != -1 && currentRoomCount >= maxInstances)
                     return;
@@ -316,7 +312,7 @@ namespace ScaryCastle
             var table = new ChanceTable();
             foreach (var c in selectedCandidates)
             {
-                var finalWeight = AdjustWeight(Session.CurrentRun.Intensity, RoomGraph.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
+                var finalWeight = AdjustWeight(Session.CurrentRun.Intensity, RoomNode.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
                 table.Add(c.Name, finalWeight);
             }
 
@@ -448,7 +444,7 @@ namespace ScaryCastle
         // CreateThingClone
         public GameThing CreateThingClone(string declaredName)
         {
-            if (Session.CreateThingClone(declaredName, $"{declaredName}*{RoomGraph.Index}_{Name}_{instanceCount}") is not GameThing result)
+            if (Session.CreateThingClone(declaredName, $"{declaredName}*{RoomNode.Index}_{Name}_{instanceCount}") is not GameThing result)
                 throw new InvalidOperationException($"Failed to create runtime clone from'{declaredName}'.");
 
             instanceCount++;
@@ -462,8 +458,8 @@ namespace ScaryCastle
         // Placeholders
         public ReadOnlyCollection<Placeholder> Placeholders { get; }
 
-        // RoomGraph
-        public RoomGraph RoomGraph { get; }
+        // RoomNode
+        public RoomNode RoomNode { get; }
 
         // SackCount
         public int SackCount { get; private set; }
@@ -471,7 +467,7 @@ namespace ScaryCastle
         // ToString
         public override string ToString()
         {
-            return RoomGraph.ToString();
+            return RoomNode.ToString();
         }
     }
 }

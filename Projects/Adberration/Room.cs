@@ -17,7 +17,7 @@ namespace Adberration
         #region Private fields
 
         private readonly List<Area> areas = [];
-        private readonly List<Thing> culledThings = new(1000);
+        private readonly List<Thing> culledThings = new(100);
         private readonly List<Script> routines = [];
         private readonly List<SoundInstance> sounds = [];
 

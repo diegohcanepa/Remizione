@@ -434,7 +434,7 @@ namespace ScaryCastle
                         else
                             MoveRandomly();
 
-                        int jitter = (int)((Random.Shared.NextDouble() * 2 - 1) * (RandomMoveCooldown * .1f));
+                        int jitter = (int)(((Random.Shared.NextDouble() * 2) - 1) * (RandomMoveCooldown * .1f));
                         randomMoveTimer = RandomMoveCooldown + jitter;
                     }
                 }

@@ -1,6 +1,4 @@
-﻿using Engendro;
-using Microsoft.Xna.Framework;
-using System.Configuration;
+﻿using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
 {

@@ -1,4 +1,6 @@
-﻿namespace ScaryCastle
+﻿using System.Collections.Generic;
+
+namespace ScaryCastle
 {
     /// <summary>
     /// RoomNode
@@ -84,6 +86,47 @@
             return true;
         }
 
+        // GetAllNodes
+        public IEnumerable<RoomNode> GetAllNodes()
+        {
+            var visited = new HashSet<RoomNode>();
+            var stack = new Stack<RoomNode>();
+
+            stack.Push(this);
+
+            while (stack.Count > 0)
+            {
+                var current = stack.Pop();
+
+                if (visited.Contains(current))
+                    continue;
+
+                visited.Add(current);
+
+                yield return current;
+
+                // Metemos los vecinos al stack para procesarlos
+                if (current.Up != null)
+                    stack.Push(current.Up);
+
+                if (current.Down != null)
+                    stack.Push(current.Down);
+
+                if (current.Left != null)
+                    stack.Push(current.Left);
+
+                if (current.Right != null)
+                    stack.Push(current.Right);
+            }
+        }
+
+        // GetDoorAssetName
+        public string GetDoorAssetName(RoomNode neighbor)
+        {
+            // Usage: "BlueStone_Gate" or "BlueStone_Wooden"
+            return $"{Definition.Theme}_{neighbor.Definition.DoorStyle}";
+        }
+
         // Index
         public int Index { get; }
 
@@ -97,6 +140,9 @@
                 UpdateConnectionCount();
             }
         }
+
+        // RideRoom
+        public RideRoom RideRoom { get; set; } = null!;
 
         // Right
         public RoomNode? Right

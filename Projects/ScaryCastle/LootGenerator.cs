@@ -44,7 +44,7 @@ namespace ScaryCastle
             if (session.Room is not ProceduralRoom room)
                 return;
 
-            var coins = RollCoins(room.RoomGraph.Definition, t.Definition);
+            var coins = RollCoins(room.RoomNode.Definition, t.Definition);
 
             if (coins > 0)
             {
@@ -103,7 +103,7 @@ namespace ScaryCastle
             if (session.Room is not ProceduralRoom room)
                 return null;
 
-            return Get(room.RoomGraph.Definition, lootRealm, lootCategory, denyCategories, qualityBoost);
+            return Get(room.RoomNode.Definition, lootRealm, lootCategory, denyCategories, qualityBoost);
         }
 
         // Get

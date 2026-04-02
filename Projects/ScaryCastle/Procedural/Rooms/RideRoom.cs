@@ -1,6 +1,4 @@
-﻿using Adberration;
-using Engendro;
-using Engendro.Audio;
+﻿using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -18,27 +16,27 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public RideRoom(GameSession session, RoomGraph graph)
-            : base(session, string.Empty, graph)
+        public RideRoom(GameSession session, RoomNode roomNode)
+            : base(session, string.Empty, roomNode)
         {
             Zoom = 1.15f;
 
-            AtlasName = graph.Definition.Name ?? string.Empty;
+            AtlasName = roomNode.Definition.Name ?? string.Empty;
             DefaultImageName = AtlasName;
             GlobalLightSize = new(2.2f, 2);
             LightMapColor = new(20, 20, 20);
             LightingSystem = true;
 
-            AddWalkArea("WalkArea", graph.Definition.WalkArea);
+            AddWalkArea("WalkArea", roomNode.Definition.WalkArea);
 
             // Add placeholders
-            foreach (var placeholder in graph.Definition.Placeholders)
+            foreach (var placeholder in roomNode.Definition.Placeholders)
             {
                 AddPlaceholder(placeholder);
             }
 
             // Add walls
-            foreach (var wall in graph.Definition.Walls)
+            foreach (var wall in roomNode.Definition.Walls)
             {
                 AddWall(wall);
             }
@@ -51,37 +49,37 @@ namespace ScaryCastle
         // PopulateDoors
         private void PopulateDoors()
         {
-            var def = this.RoomGraph.Definition;
+            var def = this.RoomNode.Definition;
 
             // Up
-            if (RoomGraph.Up != null && def.DoorUp != null && CreateThingClone("RideDoorUp") is RideDoor upDoor)
+            if (RoomNode.Up != null && def.DoorUp != null && CreateThingClone("RideDoorUp") is RideDoor upDoor)
             {
                 doors.Add(upDoor);
                 Children.Add(upDoor);
                 upDoor.Position = def.DoorUp.Value;
-                upDoor.TargetRoom = RoomGraph.Up.RideRoom;
+                upDoor.TargetRoom = RoomNode.Up.RideRoom;
             }
 
             // Left
-            if (RoomGraph.Left != null && def.DoorLeft != null && CreateThingClone("RideDoorLeft") is RideDoor leftDoor)
+            if (RoomNode.Left != null && def.DoorLeft != null && CreateThingClone("RideDoorLeft") is RideDoor leftDoor)
             {
                 doors.Add(leftDoor);
                 Children.Add(leftDoor);
                 leftDoor.Position = def.DoorLeft.Value;
-                leftDoor.TargetRoom = RoomGraph.Left.RideRoom;
+                leftDoor.TargetRoom = RoomNode.Left.RideRoom;
             }
 
             // Right
-            if (RoomGraph.Right != null && def.DoorRight != null && CreateThingClone("RideDoorRight") is RideDoor rightDoor)
+            if (RoomNode.Right != null && def.DoorRight != null && CreateThingClone("RideDoorRight") is RideDoor rightDoor)
             {
                 doors.Add(rightDoor);
                 Children.Add(rightDoor);
                 rightDoor.Position = def.DoorRight.Value;
-                rightDoor.TargetRoom = RoomGraph.Right.RideRoom;
+                rightDoor.TargetRoom = RoomNode.Right.RideRoom;
             }
 
             // Down
-            if (RoomGraph.Down != null)
+            if (RoomNode.Down != null)
             {
                 if (def.DoorDown != null && CreateThingClone("RideDoorDown") is RideDoor downDoor)
                 {
@@ -89,8 +87,8 @@ namespace ScaryCastle
                     Children.Add(downDoor);
                     downDoor.Position = def.DoorDown.Value;
 
-                    if (RoomGraph.Down != null)
-                        downDoor.TargetRoom = RoomGraph.Down.RideRoom;
+                    if (RoomNode.Down != null)
+                        downDoor.TargetRoom = RoomNode.Down.RideRoom;
                 }
             }
         }
@@ -98,15 +96,6 @@ namespace ScaryCastle
         #endregion
 
         #region Protected members
-
-        // OnActivate
-        protected override void OnActivate()
-        {
-            base.OnActivate();
-
-            if (!RoomGraph.Visited)
-                RoomGraph.Visited = true;
-        }
 
         // OnLoad
         protected override void OnLoad()
@@ -136,41 +125,6 @@ namespace ScaryCastle
                     //if (door.TargetRoom?.Definition.LockType != LockType.None)
                     //    door.LockType = door.TargetRoom.Definition.LockType;
                 }
-            }
-
-            if (RoomGraph.RoomType is RoomType.LeftExit or RoomType.RightExit)
-            {
-                if (Session.FindEntity<RideCar>("RideCar") is RideCar rideCar)
-                {
-                    if (Children.IndexOf(rideCar) == -1)
-                    {
-                        if (RoomGraph.RoomType == RoomType.LeftExit)
-                        {
-                            rideCar.Direction = FacingDirection.Left;
-                            rideCar.Position = new(74, 70);
-                        }
-                        else
-                        {
-                            rideCar.Direction = FacingDirection.Right;
-                            rideCar.Position = new(165, 70);
-                        }
-
-                        Children.Add(rideCar);
-
-                        rideCar.AnimationPlayer.Play("Empty");
-                    }
-                }
-            }
-
-            if (RoomGraph.RoomType == RoomType.RightExit)
-            {
-                if (Session.FindEntity<GameThing>("RightTunnelPatch") is { } rightTunnelPatch)
-                    Children.Add(rightTunnelPatch);
-            }
-            else if (RoomGraph.RoomType == RoomType.LeftExit)
-            {
-                if (Session.FindEntity<GameThing>("LeftTunnelPatch") is { } leftTunnelPatch)
-                    Children.Add(leftTunnelPatch);
             }
         }
 
@@ -215,11 +169,11 @@ namespace ScaryCastle
         #endregion
 
         // CreateInstance
-        public static RideRoom CreateInstance(GameSession session, RoomGraph graph)
+        public static RideRoom CreateInstance(GameSession session, RoomNode roomNode)
         {
             // Get type from AOT registry
-            if (Activator.CreateInstance(typeof(RideRoom), session, graph) is not RideRoom result)
-                throw new InvalidOperationException($"Cannot create instance [{graph.Definition.Name}]");
+            if (Activator.CreateInstance(typeof(RideRoom), session, roomNode) is not RideRoom result)
+                throw new InvalidOperationException($"Cannot create instance [{roomNode.Definition.Name}]");
 
             return result;
         }
@@ -232,7 +186,7 @@ namespace ScaryCastle
             foreach (var door in Children.OfType<RideDoor>())
             {
                 if ((previousRoomIndex == -1 && door.DoorDirection == RideDoorDirection.Down) ||
-                     door.TargetRoom?.RoomGraph.Index == previousRoomIndex)
+                     door.TargetRoom?.RoomNode.Index == previousRoomIndex)
                 {
                     targetDoor = door;
                     return door.GetAnchoredPosition(door.ApproachPosition);
@@ -241,8 +195,5 @@ namespace ScaryCastle
 
             return Vector2.Zero;
         }
-
-        // HubDoor
-        public RideDoor? HubDoor { get; set; }
     }
 }
