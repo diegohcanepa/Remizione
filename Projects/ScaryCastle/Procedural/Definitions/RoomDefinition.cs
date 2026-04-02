@@ -32,6 +32,10 @@ namespace ScaryCastle
             MaxEnemies = element.GetInt32("maxEnemies", -1);
             MaxProps = element.GetInt32("maxProps", -1);
             MusicTag = element.GetString("musicTag");
+            
+            if (element.GetString("playerPosition") is string playerPositionValue && !string.IsNullOrWhiteSpace(playerPositionValue))
+                PlayerPosition = DataConvert.ToVector2(playerPositionValue);
+            
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
             RoomType = element.GetEnum("roomType", RoomType.SideRoom);
             SideRoomCategory = element.GetEnum("sideRoomCategory", SideRoomCategory.None);
@@ -162,6 +166,9 @@ namespace ScaryCastle
 
         // Placeholders
         public ReadOnlyCollection<Placeholder> Placeholders { get; }
+
+        // PlayerPosition
+        public Vector2 PlayerPosition { get; }
 
         // RequiresDeadEnd
         public bool RequiresDeadEnd { get; }

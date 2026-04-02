@@ -94,6 +94,9 @@
                 "Treasure"
               ]
             },
+            "playerPosition": {
+              "type": "string"
+            },
             "maxEnemies": {
               "type": "integer",
               "minimum": -1
@@ -169,7 +172,8 @@
             }
           },
           "required": [
-            "roomType","walkArea"
+            "roomType",
+            "walkArea"
           ]
         }
       ],

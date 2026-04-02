@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration.Scripting;
+using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -93,9 +94,54 @@ namespace ScaryCastle
             }
         }
 
+        // PopulateCorridor
+        private void PopulateCorridor()
+        {
+            void AddGate(Prop gate)
+            {
+                gate.Atlas = Atlas;
+                gate.PivotOrigin = RectanglePoint.LeftTop;
+                gate.RenderLayer = RenderLayer.Background;
+                gate.DepthOffset = -1;
+                Children.Add(gate);
+            }
+
+            if (Session.FindDeclaredThing("CorridorLeftGate") is Prop leftGate)
+            {
+                leftGate.DefaultImageName = "LeftGate";
+                AddGate(leftGate);
+            }
+
+            if (Session.FindDeclaredThing("CorridorRightGate") is Prop rightGate)
+            {
+                rightGate.DefaultImageName = "RightGate";
+                AddGate(rightGate);
+            }
+
+            if (Session.FindDeclaredThing("CorridorLeftWall") is Prop leftWall)
+            {
+                leftWall.Atlas = Atlas;
+                Children.Add(leftWall);
+            }
+
+            if (Session.FindDeclaredThing("CorridorRightWall") is Prop rightWall)
+            {
+                rightWall.Atlas = Atlas;
+                Children.Add(rightWall);
+            }
+        }
+
         #endregion
 
         #region Protected members
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+
+            if (Session.ScriptLibrary.FindRoutine("CorridorLeftGate-Down") is Script script)
+                Session.ScriptProcessor.StartScript(script);
+        }
 
         // OnLoad
         protected override void OnLoad()
@@ -126,6 +172,9 @@ namespace ScaryCastle
                     //    door.LockType = door.TargetRoom.Definition.LockType;
                 }
             }
+
+            if (RoomNode.RoomType == RoomType.Corridor)
+                PopulateCorridor();
         }
 
         // OnPopulating

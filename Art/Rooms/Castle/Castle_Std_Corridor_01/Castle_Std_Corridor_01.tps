@@ -175,6 +175,7 @@
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">Castle_Std_Corridor_01-assets/LeftGate.png</key>
             <key type="filename">Castle_Std_Corridor_01-assets/RightGate.png</key>
+            <key type="filename">Castle_Std_Corridor_01-assets/View1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -183,9 +184,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>3,16,7,31</rect>
+                <rect>65,34,130,67</rect>
                 <key>scale9Paddings</key>
-                <rect>3,16,7,31</rect>
+                <rect>65,34,130,67</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -216,21 +217,6 @@
                 <rect>11,27,21,55</rect>
                 <key>scale9Paddings</key>
                 <rect>11,27,21,55</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Castle_Std_Corridor_01-assets/View1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>65,34,130,67</rect>
-                <key>scale9Paddings</key>
-                <rect>65,34,130,67</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

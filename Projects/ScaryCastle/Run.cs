@@ -22,8 +22,8 @@ namespace ScaryCastle
 
         #region Private members
 
-        // AssignAsset
-        private void AssignAsset(RoomNode node, Difficulty diff, Random rng)
+        // AssignDefinition
+        private void AssignDefinition(RoomNode node, Difficulty diff, Random rng)
         {
             var def = registry.GetValidDefinition(node, diff, this.Spawns, rng);
             if (def == null)
@@ -106,24 +106,24 @@ namespace ScaryCastle
         private void Populate(RoomNode corridor, Difficulty diff, Random rng)
         {
             // 1. Asignar al Corredor
-            this.AssignAsset(corridor, diff, rng);
+            this.AssignDefinition(corridor, diff, rng);
 
             // 2. Si hay Nexo, asignarlo y buscar la Hoja en sus 3 lados
             if (corridor.Up != null)
             {
                 var nexo = corridor.Up;
                 
-                this.AssignAsset(nexo, diff, rng);
+                this.AssignDefinition(nexo, diff, rng);
 
                 // Solo uno de estos será distinto de null según el azar de GenerateTrident
                 if (nexo.Left != null)
-                    this.AssignAsset(nexo.Left, diff, rng);
+                    this.AssignDefinition(nexo.Left, diff, rng);
                 
                 if (nexo.Up != null)
-                    this.AssignAsset(nexo.Up, diff, rng);
+                    this.AssignDefinition(nexo.Up, diff, rng);
                 
                 if (nexo.Right != null)
-                    this.AssignAsset(nexo.Right, diff, rng);
+                    this.AssignDefinition(nexo.Right, diff, rng);
             }
         }
 
@@ -146,8 +146,8 @@ namespace ScaryCastle
             }
         }
 
-        // NextCorridor
-        public bool NextCorridor(GameSession session)
+        // LoadNextCorridor
+        public bool LoadNextCorridor(GameSession session)
         {
             CleanUpCurrentCorridor();
 
@@ -183,10 +183,6 @@ namespace ScaryCastle
             foreach (var r in corridor.GetAllNodes())
             {
                 r.RideRoom = RideRoom.CreateInstance(session, r);
-            }
-
-            foreach (var r in corridor.GetAllNodes())
-            {
                 r.RideRoom.Load();
             }
 

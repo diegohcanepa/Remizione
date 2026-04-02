@@ -5,6 +5,7 @@
       "name": "Castle_Std_Corridor_01",
       "roomType": "Corridor",
       "doorUp": "126,41",
+      "playerPosition": "30,90",
       "placeholders": [
       ],
       "walkArea": "218,76;255,111;8,111;40,76",

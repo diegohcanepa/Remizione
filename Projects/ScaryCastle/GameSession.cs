@@ -581,7 +581,7 @@ namespace ScaryCastle
 
             CleanUpRuntimeEntities();
 
-            if (!CurrentRun.NextCorridor(this))
+            if (!CurrentRun.LoadNextCorridor(this))
             {
                 CompleteRun();
                 return;
@@ -597,7 +597,7 @@ namespace ScaryCastle
                 HUDVisible = true;
                 rideRoom.Children.Add(Player);
                 if (rideRoom.WalkArea != null)
-                    Player.Position = rideRoom.WalkArea.Polygon.BoundingRectangleF.Center;
+                    Player.Position = CurrentRun.CurrentCorridor.Definition.PlayerPosition;
                 Camera.Follow(Player, true);
                 EnterRoom(rideRoom);
             }
