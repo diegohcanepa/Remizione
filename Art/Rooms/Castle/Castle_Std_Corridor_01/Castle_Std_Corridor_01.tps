@@ -124,7 +124,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../../Projects/Content/Atlases/Castle_Start.xml</filename>
+                <filename>../../../../Projects/Content/Atlases/Castle_Std_Corridor_01.xml</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -173,7 +173,8 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Castle_Start-assets/View1.png</key>
+            <key type="filename">Castle_Std_Corridor_01-assets/LeftGate.png</key>
+            <key type="filename">Castle_Std_Corridor_01-assets/RightGate.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -182,9 +183,54 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>60,34,120,67</rect>
+                <rect>3,16,7,31</rect>
                 <key>scale9Paddings</key>
-                <rect>60,34,120,67</rect>
+                <rect>3,16,7,31</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Castle_Std_Corridor_01-assets/LeftWall.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,28,21,55</rect>
+                <key>scale9Paddings</key>
+                <rect>10,28,21,55</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Castle_Std_Corridor_01-assets/RightWall.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,27,21,55</rect>
+                <key>scale9Paddings</key>
+                <rect>11,27,21,55</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Castle_Std_Corridor_01-assets/View1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>65,34,130,67</rect>
+                <key>scale9Paddings</key>
+                <rect>65,34,130,67</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -195,7 +241,7 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>Castle_Start-assets</filename>
+                    <filename>Castle_Std_Corridor_01-assets</filename>
                 </array>
             </struct>
         </map>

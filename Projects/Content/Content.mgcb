@@ -29,51 +29,6 @@
 #begin Atlases/Actors.xml
 /copy:Atlases/Actors.xml
 
-#begin Atlases/Castle_LeftExit.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Atlases/Castle_LeftExit.png
-
-#begin Atlases/Castle_LeftExit.xml
-/copy:Atlases/Castle_LeftExit.xml
-
-#begin Atlases/Castle_RightExit.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Atlases/Castle_RightExit.png
-
-#begin Atlases/Castle_RightExit.xml
-/copy:Atlases/Castle_RightExit.xml
-
-#begin Atlases/Castle_Start.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Atlases/Castle_Start.png
-
-#begin Atlases/Castle_Start.xml
-/copy:Atlases/Castle_Start.xml
-
 #begin Atlases/Castle_Std_Common_01.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -103,6 +58,21 @@
 
 #begin Atlases/Castle_Std_Common_02.xml
 /copy:Atlases/Castle_Std_Common_02.xml
+
+#begin Atlases/Castle_Std_Corridor_01.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Atlases/Castle_Std_Corridor_01.png
+
+#begin Atlases/Castle_Std_Corridor_01.xml
+/copy:Atlases/Castle_Std_Corridor_01.xml
 
 #begin Atlases/Castle_Std_Pit_01.png
 /importer:TextureImporter

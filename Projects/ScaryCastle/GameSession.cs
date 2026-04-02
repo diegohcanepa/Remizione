@@ -457,7 +457,7 @@ namespace ScaryCastle
         #endregion
 
         // CurrentRun
-        public Run? CurrentRun { get; private set; }
+        public OldRun? CurrentRun { get; private set; }
 
         // BeginRun
         [ScriptMethod]
@@ -469,9 +469,9 @@ namespace ScaryCastle
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            CurrentRun = new Run(this, 3);
+            CurrentRun = new OldRun(this, 3);
 
-            LoadNextStage();
+            LoadNextCorridor();
 
             if (ScriptLibrary.FindRoutine("PrepareStartRoom") is Script script)
                 ScriptProcessor.RunScript(script);
@@ -576,9 +576,9 @@ namespace ScaryCastle
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;
 
-        // LoadNextStage
+        // LoadNextCorridor
         [ScriptMethod]
-        public void LoadNextStage()
+        public void LoadNextCorridor()
         {
             if (CurrentRun == null)
                 return;

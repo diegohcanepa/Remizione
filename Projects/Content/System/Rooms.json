@@ -2,82 +2,17 @@
   "$schema": "./Room.schema.json",
   "data": [
     {
-      "name": "Castle_LeftExit",
+      "name": "Castle_Std_Corridor_01",
+      "roomType": "Corridor",
       "doorUp": "126,41",
-      "doorDown": "152,145",
-      "doorRight": "220,80",
-      "roomType": "LeftExit",
-      "isMandatory": true,
-      "requiresDeadEnd": true,
       "placeholders": [
-        {
-          "position": "68,22",
-          "placement": "WallFrontHang"
-        },
-        {
-          "position": "169,22",
-          "placement": "WallFrontHang"
-        }
       ],
-      "walkArea": "205,46;238,111;6,111;38,46",
+      "walkArea": "218,76;255,111;8,111;40,76",
       "walls": [
-        "1,2;1,115;36,46;35,2",
-        "241,2;241,115;206,46;207,2"
+        "36,0;36,71;0,108;0,0",
+        "220,0;220,74;260,111;260,0"
       ]
-    },
-    {
-      "name": "Castle_RightExit",
-      "doorLeft": "21,80",
-      "doorUp": "126,41",
-      "doorDown": "152,145",
-      "roomType": "RightExit",
-      "isMandatory": true,
-      "requiresDeadEnd": true,
-      "placeholders": [
-        {
-          "position": "68,22",
-          "placement": "WallFrontHang"
-        },
-        {
-          "position": "169,22",
-          "placement": "WallFrontHang"
-        }
-      ],
-      "walkArea": "205,46;238,111;6,111;38,46",
-      "walls": [
-        "1,2;1,115;36,46;35,2",
-        "241,2;241,115;206,46;207,2"
-      ]
-    },
-    {
-      "name": "Castle_Start",
-      "doorUp": "126,41",
-      "doorLeft": "21,80",
-      "doorRight": "220,80",
-      "doorDown": "152,145",
-      "isMandatory": true,
-      "roomType": "Start",
-      "maxEnemies": 0,
-      "placeholders": [
-        {
-          "position": "68,22",
-          "placement": "WallFrontHang",
-          "fillChance": 1,
-          "allowTags": "Torch"
-        },
-        {
-          "position": "169,22",
-          "placement": "WallFrontHang",
-          "fillChance": 1,
-          "allowTags": "Torch"
-        }
-      ],
-      "walkArea": "204,43;237,109;5,109;37,44;54,44;59,47;78,47;84,44;156,44;162,47;179,47;184,43",
-      "walls": [
-        "0,0;0,113;35,44;34,0",
-        "240,0;240,113;205,44;206,0"
-      ]
-    },
+    },    
     {
       "name": "Castle_Std_Common_01",
       "doorUp": "126,41",

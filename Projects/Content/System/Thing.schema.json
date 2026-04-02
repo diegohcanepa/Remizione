@@ -8,10 +8,6 @@
     {
       "type": "object",
       "properties": {
-        "allowStartRoomSpawn": {
-          "type": "boolean",
-          "default": false
-        },
         "requiresDeadEnd": {
           "type": "boolean"
         },

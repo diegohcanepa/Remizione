@@ -159,7 +159,10 @@ namespace ScaryCastle
     public enum RoomTheme { BlueStone }
 
     // RoomType
-    public enum RoomType { Connector, Start, LeftExit, RightExit, Special }
+    public enum RoomType { Corridor, SideRoom }
+
+    // SideRoomCategory
+    public enum SideRoomCategory { None, Standard, Save, Treasure }
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }

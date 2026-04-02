@@ -78,13 +78,20 @@
             },
             "roomType": {
               "type": "string",
-              "default": "Connector",
+              "default": "Corridor",
               "enum": [
-                "Connector",
-                "Start",
-                "LeftExit",
-                "RightExit",
-                "Special"
+                "Corridor",
+                "SideRoom"
+              ]
+            },
+            "sideRoomCategory": {
+              "type": "string",
+              "default": "None",
+              "enum": [
+                "None",
+                "Standard",
+                "Save",
+                "Treasure"
               ]
             },
             "maxEnemies": {

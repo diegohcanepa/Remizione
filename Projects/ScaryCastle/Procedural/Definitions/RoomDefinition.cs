@@ -33,17 +33,9 @@ namespace ScaryCastle
             MaxProps = element.GetInt32("maxProps", -1);
             MusicTag = element.GetString("musicTag");
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
-            RoomType = element.GetEnum("roomType", RoomType.Connector);
+            RoomType = element.GetEnum("roomType", RoomType.SideRoom);
+            SideRoomCategory = element.GetEnum("sideRoomCategory", SideRoomCategory.None);
             Theme = element.GetEnum("theme", RoomTheme.BlueStone);
-
-            if (RoomType is RoomType.Start or RoomType.LeftExit or RoomType.RightExit)
-            {
-                if (!IsMandatory)
-                    RaiseValidationError(this, "Non-default rooms must be marked as IsMandatory = true.");
-
-                if (MaxPerRun != -1)
-                    RaiseValidationError(this, "Non-default rooms must have MaxPerRun = -1 to ensure floor connectivity.");
-            }
 
             // Placeholders
             if (element.TryGetProperty("placeholders", out JsonElement placeholdersElement))
@@ -111,23 +103,11 @@ namespace ScaryCastle
         // Validate
         private void Validate()
         {
-            if (DoorLeft == null && DoorDown == null && DoorRight == null && DoorUp == Vector2.Zero)
-                RaiseValidationError(this, $"Must have one or more doors.");
+            if (RoomType == RoomType.SideRoom && SideRoomCategory == SideRoomCategory.None)
+                RaiseValidationError(this, $"Side rooms must have a SideRoomCategory.");
 
-            if (RoomType is RoomType.Start)
-            {
-                // Rule: Difficulty must be easy
-                if (Difficulty != Difficulty.Easy)
-                    RaiseValidationError(this, "A start room must have easy difficulty.", nameof(Difficulty));
-
-                // Rule: MaxEnemies not allowed
-                if (MaxEnemies > 0)
-                    RaiseValidationError(this, "A start room cannot define maximum enemies.", nameof(MaxEnemies));
-
-                // Rule: Dead end not allowed
-                if (RequiresDeadEnd)
-                    RaiseValidationError(this, "A start room cannot be a dead end.", nameof(RequiresDeadEnd));
-            }
+            if (DoorLeft == null && DoorDown == null && DoorRight == null && DoorUp == null)
+                RaiseValidationError(this, $"Must have at least one door.");
         }
 
         #endregion
@@ -191,6 +171,9 @@ namespace ScaryCastle
 
         // Scope
         public TagScope Scope { get; }
+
+        // SideRoomCategory
+        public SideRoomCategory SideRoomCategory { get; }
 
         // Theme
         public RoomTheme Theme { get; }

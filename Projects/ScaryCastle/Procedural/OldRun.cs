@@ -4,14 +4,14 @@ using System;
 namespace ScaryCastle
 {
     /// <summary>
-    ///  Run
+    ///  OldRun
     /// </summary>
-    public sealed class Run : IDisposable
+    public sealed class OldRun : IDisposable
     {
         private readonly GameSession session;
 
         // Constructor
-        public Run(GameSession session, int maxStages)
+        public OldRun(GameSession session, int maxStages)
         {
             this.session = session;
             this.MaxStages = maxStages;

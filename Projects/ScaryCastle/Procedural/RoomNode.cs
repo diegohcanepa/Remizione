@@ -1,38 +1,38 @@
 ﻿namespace ScaryCastle
 {
     /// <summary>
-    /// RoomGraph 
+    /// RoomNode
     /// </summary>
-    public sealed class RoomGraph
+    public sealed class RoomNode
     {
         // Constructor
-        public RoomGraph(int index, int x, int y, RoomType roomType)
+        public RoomNode(int index, int x, int y, RoomType roomType, SideRoomCategory sideRoomCategory)
         {
             this.Index = index;
             this.X = x;
             this.Y = y;
             this.RoomType = roomType;
+            this.SideRoomCategory = sideRoomCategory;
         }
 
         #region Private members
 
         // UpdateConnectionCount
-        // Calculates how many active neighbors this node has.
         private void UpdateConnectionCount()
         {
             int count = 0;
             if (Up != null)
                 count++;
-            
+
             if (Down != null)
                 count++;
-            
+
             if (Left != null)
                 count++;
-            
+
             if (Right != null)
                 count++;
-            
+
             ConnectionCount = count;
         }
 
@@ -42,10 +42,10 @@
         public int ConnectionCount { get; private set; }
 
         // Definition
-        //public RoomDefinition Definition { get; set; } = null!;
+        public RoomDefinition Definition { get; set; } = null!;
 
         // Down
-        public RoomGraph? Down
+        public RoomNode? Down
         {
             get => field;
             set
@@ -56,49 +56,39 @@
         }
 
         // Fits
-        // Validates if a room asset can fit into this graph node's connectivity.
-        public bool Fits(RoomDefinition def)
+        public bool Fits(RoomDefinition definition)
         {
             bool needsUp = Up != null;
             bool needsDown = Down != null;
             bool needsLeft = Left != null;
             bool needsRight = Right != null;
 
-            if (def.ExactMatch)
+            if (definition.ExactMatch)
             {
-                return needsUp == def.HasUpDoor && needsDown == def.HasDownDoor &&
-                       needsLeft == def.HasLeftDoor && needsRight == def.HasRightDoor;
+                return needsUp == definition.HasUpDoor && needsDown == definition.HasDownDoor &&
+                       needsLeft == definition.HasLeftDoor && needsRight == definition.HasRightDoor;
             }
 
-            if (needsUp && !def.HasUpDoor)
+            if (needsUp && !definition.HasUpDoor)
                 return false;
 
-            if (needsDown && !def.HasDownDoor)
+            if (needsDown && !definition.HasDownDoor)
                 return false;
 
-            if (needsLeft && !def.HasLeftDoor)
+            if (needsLeft && !definition.HasLeftDoor)
                 return false;
 
-            if (needsRight && !def.HasRightDoor)
+            if (needsRight && !definition.HasRightDoor)
                 return false;
 
             return true;
         }
 
-        /*
-        // GetDoorAssetName
-        public string GetDoorAssetName(RoomGraph neighbor)
-        {
-            // Usage: "BlueStone_Gate" or "BlueStone_Wooden"
-            return $"{Definition.Theme}_{neighbor.Definition.DoorStyle}";
-        }
-        */
-
         // Index
         public int Index { get; }
 
         // Left
-        public RoomGraph? Left
+        public RoomNode? Left
         {
             get => field;
             set
@@ -108,13 +98,8 @@
             }
         }
 
-        /*
-        // RideRoom
-        public RideRoom RideRoom { get; set; } = null!;
-        */
-
         // Right
-        public RoomGraph? Right
+        public RoomNode? Right
         {
             get => field;
             set
@@ -127,6 +112,9 @@
         // RoomType
         public RoomType RoomType { get; set; }
 
+        // SideRoomCategory
+        public SideRoomCategory SideRoomCategory { get; set; }
+
         // ToString
         public override string ToString()
         {
@@ -134,7 +122,7 @@
         }
 
         // Up
-        public RoomGraph? Up
+        public RoomNode? Up
         {
             get => field;
             set
