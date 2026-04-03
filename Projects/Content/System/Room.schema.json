@@ -94,7 +94,17 @@
                 "Treasure"
               ]
             },
+            "allowEnemies": {
+              "type": "boolean",
+              "default": true
+            },
             "guardActorPosition": {
+              "type": "string"
+            },
+            "leftGatePosition": {
+              "type": "string"
+            },
+            "rightGatePosition": {
               "type": "string"
             },
             "interactiveActorPosition": {
@@ -102,14 +112,6 @@
             },
             "playerPosition": {
               "type": "string"
-            },
-            "maxEnemies": {
-              "type": "integer",
-              "minimum": -1
-            },
-            "maxProps": {
-              "type": "integer",
-              "minimum": -1
             },
             "musicTag": {
               "type": "string"
@@ -135,8 +137,7 @@
                       "WallLeftHang",
                       "WallRightBase",
                       "WallRightHang",
-                      "Ceiling",
-                      "WalkArea"
+                      "Ceiling"
                     ]
                   },
                   "fillChance": {

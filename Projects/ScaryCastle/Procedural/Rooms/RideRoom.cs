@@ -47,6 +47,47 @@ namespace ScaryCastle
 
         #region Private members
 
+        // PopulateCorridor
+        private void PopulateCorridor()
+        {
+            void AddGate(Prop gate, Vector2 position)
+            {
+                gate.Atlas = Atlas;
+                gate.PivotOrigin = RectanglePoint.LeftTop;
+                gate.RenderLayer = RenderLayer.Background;
+                gate.DepthOffset = -1;
+                gate.Position = position;
+                Children.Add(gate);
+            }
+
+            if (Session.FindDeclaredThing("CorridorLeftGate") is Prop leftGate)
+            {
+                leftGate.DefaultImageName = "LeftGate";
+                AddGate(leftGate, RoomNode.Definition.LeftGatePosition);
+            }
+
+            if (Session.FindDeclaredThing("CorridorRightGate") is Prop rightGate)
+            {
+                rightGate.DefaultImageName = "RightGate";
+                AddGate(rightGate, RoomNode.Definition.RightGatePosition);
+            }
+
+            if (Session.FindDeclaredThing("CorridorLeftWall") is Prop leftWall)
+            {
+                leftWall.Atlas = Atlas;
+                Children.Add(leftWall);
+            }
+
+            if (Session.FindDeclaredThing("CorridorRightWall") is Prop rightWall)
+            {
+                rightWall.Atlas = Atlas;
+                Children.Add(rightWall);
+            }
+
+            if (RoomNode.Definition.GuardActorPosition is Vector2 position)
+                SpawnActor(ActorRole.Guard, position);
+        }
+
         // PopulateDoors
         private void PopulateDoors()
         {
@@ -94,41 +135,50 @@ namespace ScaryCastle
             }
         }
 
-        // PopulateCorridor
-        private void PopulateCorridor()
+        // SpawnActor
+        private void SpawnActor(ActorRole role, Vector2 position)
         {
-            void AddGate(Prop gate)
+            if (Session.CurrentRun == null)
+                return;
+
+            // Collect candidates
+            var selectedCandidates = new List<ActorDefinition>();
+            foreach (var definition in ActorDefinition.Definitions.All)
             {
-                gate.Atlas = Atlas;
-                gate.PivotOrigin = RectanglePoint.LeftTop;
-                gate.RenderLayer = RenderLayer.Background;
-                gate.DepthOffset = -1;
-                Children.Add(gate);
+                if (definition.Role != role)
+                    continue;
+
+                // MaxPerRun
+                if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
+                    continue;
+
+                selectedCandidates.Add(definition);
             }
 
-            if (Session.FindDeclaredThing("CorridorLeftGate") is Prop leftGate)
+            if (selectedCandidates.Count == 0)
+                return;
+
+            // Pick
+            var chanceTable = new ChanceTable();
+            foreach (var c in selectedCandidates)
             {
-                leftGate.DefaultImageName = "LeftGate";
-                AddGate(leftGate);
+                var finalWeight = AdjustWeight(Session.CurrentRun.Intensity, RoomNode.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
+                chanceTable.Add(c.Name, finalWeight);
             }
 
-            if (Session.FindDeclaredThing("CorridorRightGate") is Prop rightGate)
-            {
-                rightGate.DefaultImageName = "RightGate";
-                AddGate(rightGate);
-            }
+            if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
+                return;
 
-            if (Session.FindDeclaredThing("CorridorLeftWall") is Prop leftWall)
-            {
-                leftWall.Atlas = Atlas;
-                Children.Add(leftWall);
-            }
+            if (ActorDefinition.Definitions.Find(chanceTableItem.Name) is not ActorDefinition chosen)
+                return;
 
-            if (Session.FindDeclaredThing("CorridorRightWall") is Prop rightWall)
-            {
-                rightWall.Atlas = Atlas;
-                Children.Add(rightWall);
-            }
+            var instance = CreateThingClone(chosen.Name);
+            instance.Position = position;
+            instance.Direction = Adberration.FacingDirection.Left;
+            Children.Add(instance);
+
+            // Log spawn
+            Session.CurrentRun.Spawns.Increment(chosen.Name);
         }
 
         #endregion
@@ -176,15 +226,15 @@ namespace ScaryCastle
                     //    door.LockType = door.TargetRoom.Definition.LockType;
                 }
             }
-
-            if (RoomNode.RoomType == RoomType.Corridor)
-                PopulateCorridor();
         }
 
         // OnPopulating
         protected override void OnPopulating()
         {
             PopulateDoors();
+
+            if (RoomNode.RoomType == RoomType.Corridor)
+                PopulateCorridor();
         }
 
         // OnPopulated
@@ -197,25 +247,6 @@ namespace ScaryCastle
             for (var i = 0; i < doors.Count; i++)
             {
                 doors[i].Prepare();
-            }
-
-            // Remove things that collides with doors
-            var removeList = new List<GameThing>();
-            foreach (var child in Children.OfType<GameThing>())
-            {
-                if (child is RideDoor)
-                    continue;
-
-                for (var i = 0; i < doors.Count; i++)
-                {
-                    if (child.BoundingBox.Intersects(doors[i].BoundingBox))
-                        removeList.Add(child);
-                }
-            }
-
-            for (var i = 0; i < removeList.Count; i++)
-            {
-                removeList[i].Unparent();
             }
         }
 

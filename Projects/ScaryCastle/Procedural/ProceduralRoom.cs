@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Windows.Globalization;
 
 namespace ScaryCastle
 {
@@ -46,40 +47,33 @@ namespace ScaryCastle
 
         #region Private members
 
-        // AdjustWeight
-        // Modifica el peso de aparición combinando la dificultad base de la sala y la intensidad global de la partida.
-        private static float AdjustWeight(float runIntensity, Difficulty roomDiff, Difficulty thingDiff, float baseWeight)
+        // CalculateEnemyBudget
+        private int CalculateEnemyBudget(Run run)
         {
-            // 1. Lógica original: Respetamos la jerarquía de diseño de la sala
-            int distance = (int)roomDiff - (int)thingDiff;
-
-            float roomMultiplier = distance switch
+            // 1. Definimos rangos mínimos y máximos según la dificultad de la zona
+            // Estos números son los "puntos de control". 
+            // Los mantenemos bajos (máximo 6) para no saturar el espacio.
+            var (min, max) = RoomNode.Definition.Difficulty switch
             {
-                1 => 0.15f,  // Ej: Sala Normal, Enemigo Easy (1 escalón)
-                2 => 0.02f,  // Ej: Sala Hard, Enemigo Easy (2 escalones)
-                _ => 1.0f
+                Difficulty.Easy => (1, 1), // Muy tranquilo
+                Difficulty.Normal => (1, 2), // Reto estándar
+                Difficulty.Hard => (1, 3), // Presión alta, pero navegable
+                _ => (0, 0)
             };
 
-            // 2. Lógica de Intensidad: Curvamos los pesos según el progreso del jugador
-            float intensityMultiplier = thingDiff switch
-            {
-                // Easy: Arranca en x1.0 y decae hasta x0.2 en el último piso
-                Difficulty.Easy => 1f - (runIntensity * 0.8f),
+            // 2. Usamos la Intensity (que ya tiene tu curva exponencial) para mover el presupuesto
+            // Si intensity es 0, tiende al min. Si es 1, tiende al max.
+            float baseBudget = min + (max - min) * run.Intensity;
 
-                // Normal: Arranca bajo (x0.2) y escala hasta x1.0
-                Difficulty.Normal => 0.2f + (runIntensity * 0.8f),
+            // 3. Variación aleatoria (+-1) para que no todas las salas de la misma zona sean iguales
+            int finalBudget = (int)Math.Round(baseBudget) + Random.Next(-1, 2);
 
-                // Hard: Arranca en x0.0 (no sale) y escala exponencialmente hasta x1.0
-                Difficulty.Hard => runIntensity * runIntensity,
-
-                _ => 1.0f
-            };
-
-            return baseWeight * roomMultiplier * intensityMultiplier;
+            // 4. Clamp final para respetar los límites físicos que decidimos
+            return Math.Clamp(finalBudget, min, max);
         }
 
         // GetCandidateDefinitions
-        private List<TDefinition> GetCandidateDefinitions<TDefinition, TThing>(IList<TDefinition> definitions)
+        private List<TDefinition> GetCandidateDefinitions<TDefinition, TThing>(IList<TDefinition> definitions, Func<TDefinition, bool>? predicate = null)
             where TDefinition : ThingDefinition where TThing : GameThing
         {
             var outList = new List<TDefinition>();
@@ -88,6 +82,9 @@ namespace ScaryCastle
 
             foreach (var definition in definitions)
             {
+                if (predicate != null && !predicate(definition))
+                    continue;
+
                 // 1. Filtro de dificultad: No permitimos que aparezcan cosas más difíciles que el cuarto
                 if (definition.Difficulty > RoomNode.Definition.Difficulty)
                     continue;
@@ -174,37 +171,94 @@ namespace ScaryCastle
         }
 
         // Populate
-        // Orquesta la instanciación respetando estrictamente la jerarquía física (Mampostería -> IA).
         private void Populate()
         {
-            // CAPA 1: TOPOLOGÍA Y OBSTÁCULOS (Props)
-            var propDefinitions = GetCandidateDefinitions<PropDefinition, Prop>(PropDefinition.Definitions.All);
-
-            // 1.1 Props fijos en diseño
-            SpawnInPlaceholders(PropDefinition.Definitions, propDefinitions, RoomNode.Definition.MaxProps, propsSpawnCounter);
-
-            // 1.2 Props aleatorios rellenando el espacio
-            SpawnInWalkArea(PropDefinition.Definitions, propDefinitions, RoomNode.Definition.MaxProps, propsSpawnCounter);
-
-            // CAPA 2: Ambient actors
-            var actorDefinitions = GetCandidateDefinitions<ActorDefinition, Actor>(ActorDefinition.Definitions.All);
-
-            // 2.2 Enemigos aleatorios patrullando (Ambient only)
-            for (var i = actorDefinitions.Count - 1; i >= 0; i--)
-            {
-                if (actorDefinitions[i].Role != ActorRole.Ambient)
-                    actorDefinitions.RemoveAt(i);
-            }
-
-            SpawnInWalkArea(ActorDefinition.Definitions, actorDefinitions, RoomNode.Definition.MaxEnemies, enemiesSpawnCounter);
+            SpawnProps();
+            if (RoomNode.Definition.AllowEnemies)
+                SpawnEnemies();
         }
 
-        // SpawnInPlaceholders
-        private void SpawnInPlaceholders<T>(DataContainer<T> definitionContainer, IList<T> candidates, int maxInstances, CounterBank spawnCounter)
-            where T : ThingDefinition
+        // SpawnEnemies
+        private void SpawnEnemies()
         {
-            if (Placeholders.Count == 0 || maxInstances == 0 || Session.CurrentRun == null)
+            if (WalkArea == null || Session.CurrentRun == null)
                 return;
+
+            // 1) Collect candidates
+            var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(ActorDefinition.Definitions.All, def => def.Role == ActorRole.Ambient);
+            var selectedCandidates = new List<ActorDefinition>();
+            foreach (var definition in candidates)
+            {
+                if (!definition.PassesMaxPerRoomConstraint(enemiesSpawnCounter.GetCount(definition.Name)))
+                    continue;
+
+                if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns.GetCount(definition.Name)))
+                    continue;
+
+                selectedCandidates.Add(definition);
+            }
+
+            if (selectedCandidates.Count == 0)
+                return;
+
+            // 2) Build chance table
+            var table = new ChanceTable();
+            foreach (var c in selectedCandidates)
+            {
+                var finalWeight = AdjustWeight(Session.CurrentRun.Intensity, RoomNode.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
+                table.Add(c.Name, finalWeight);
+            }
+
+            // Usamos una lista de definiciones concretas en lugar de solo strings
+            var pendingSpawns = new List<ActorDefinition>();
+            int remainingInstances = CalculateEnemyBudget(Session.CurrentRun);
+            int safety = (selectedCandidates.Count * 2) + 10;
+
+            // 3) Pick groups (Solo intención, no alteramos estado global)
+            while (table.Count > 0 && safety-- > 0)
+            {
+                if (remainingInstances <= 0)
+                    break;
+
+                if (table.GetValue() is not ChanceTableItem item)
+                    break;
+
+                table.Remove(item.Name);
+
+                if (ActorDefinition.Definitions.Find(item.Name) is not ActorDefinition chosen)
+                    continue;
+
+                pendingSpawns.Add(chosen);
+                remainingInstances--;
+            }
+
+            if (pendingSpawns.Count == 0)
+                return;
+
+            // 4) Spawn positions y Confirmación de Estado
+            var safePoly = new Polygon(WalkArea.Polygon.Vertices, -45);
+            var points = GetSpawnPoints(safePoly, pendingSpawns.Count, 45);
+
+            // Iteramos solo hasta la cantidad de puntos físicos que conseguimos
+            for (int i = 0; i < points.Count; i++)
+            {
+                var chosenDef = pendingSpawns[i];
+
+                var instance = CreateThingClone(chosenDef.Name);
+                instance.Position = points[i];
+                Children.Add(instance);
+                enemiesSpawnCounter.Increment(chosenDef.Name);
+                Session.CurrentRun.Spawns.Increment(chosenDef.Name);
+            }
+        }
+
+        // SpawnProps
+        private void SpawnProps()
+        {
+            if (Session.CurrentRun == null || Placeholders.Count == 0)
+                return;
+
+            var candidates = GetCandidateDefinitions<PropDefinition, Prop>(PropDefinition.Definitions.All);
 
             // 1) Shuffle placeholders
             var placeholders = new List<Placeholder>(Placeholders);
@@ -222,7 +276,7 @@ namespace ScaryCastle
                     continue;
 
                 // Collect candidates
-                var selectedCandidates = new List<T>();
+                var selectedCandidates = new List<PropDefinition>();
                 foreach (var definition in candidates)
                 {
                     // Is compatible with placeholder placement?
@@ -234,7 +288,7 @@ namespace ScaryCastle
                         continue;
 
                     // MaxPerRoom (local)
-                    if (!definition.PassesMaxPerRoomConstraint(spawnCounter.GetCount(definition.Name)))
+                    if (!definition.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(definition.Name)))
                         continue;
 
                     // MaxPerRun (Global)
@@ -258,7 +312,7 @@ namespace ScaryCastle
                 if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
                     continue;
 
-                if (definitionContainer.Find(chanceTableItem.Name) is not T chosen)
+                if (PropDefinition.Definitions.Find(chanceTableItem.Name) is not PropDefinition chosen)
                     continue;
 
                 // Flag placeholder as used
@@ -271,116 +325,11 @@ namespace ScaryCastle
                 // Log spawn in run
                 Session.CurrentRun.Spawns.Increment(chosen.Name);
 
-                int currentRoomCount = spawnCounter.Increment(chosen.Name);
+                int currentRoomCount = propsSpawnCounter.Increment(chosen.Name);
 
                 // Max per room
-                if (maxInstances != -1 && currentRoomCount >= maxInstances)
+                if (currentRoomCount >= chosen.MaxPerRun)
                     return;
-            }
-        }
-
-        // SpawnInWalkArea
-        // Procesa la aparición de entidades en áreas caminables asegurando la sincronización de estado.
-        private void SpawnInWalkArea<T>(DataContainer<T> definitionContainer, IList<T> candidates, int maxInstances, CounterBank spawnCounter)
-            where T : ThingDefinition
-        {
-            if (WalkArea == null || maxInstances == 0 || Session.CurrentRun == null)
-                return;
-
-            // 1) Collect candidates
-            var selectedCandidates = new List<T>();
-            foreach (var definition in candidates)
-            {
-                if (!definition.Placements.Contains(PlacementType.WalkArea))
-                    continue;
-
-                if (!definition.PassesMaxPerRoomConstraint(spawnCounter.GetCount(definition.Name)))
-                    continue;
-
-                // Corrección: Inyectamos el contador global de la run
-                if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns.GetCount(definition.Name)))
-                    continue;
-
-                selectedCandidates.Add(definition);
-            }
-
-            if (selectedCandidates.Count == 0)
-                return;
-
-            // 2) Build chance table
-            var table = new ChanceTable();
-            foreach (var c in selectedCandidates)
-            {
-                var finalWeight = AdjustWeight(Session.CurrentRun.Intensity, RoomNode.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
-                table.Add(c.Name, finalWeight);
-            }
-
-            // Usamos una lista de definiciones concretas en lugar de solo strings
-            var pendingSpawns = new List<T>();
-            int remainingInstances = maxInstances;
-            var continueChance = 1f;
-            const float decay = 0.7f;
-            int safety = (selectedCandidates.Count * 2) + 10;
-
-            // 3) Pick groups (Solo intención, no alteramos estado global)
-            while (table.Count > 0 && safety-- > 0)
-            {
-                if (maxInstances > 0 && remainingInstances <= 0)
-                    break;
-
-                if (maxInstances <= 0)
-                {
-                    if (Random.NextDouble() > continueChance)
-                        break;
-
-                    continueChance *= decay;
-                }
-
-                if (table.GetValue() is not ChanceTableItem item)
-                    break;
-
-                table.Remove(item.Name);
-
-                // Corrección: Usamos 'T' directo gracias al contenedor tipado
-                if (definitionContainer.Find(item.Name) is not T chosen)
-                    continue;
-
-                int min = Math.Max(1, chosen.MinSpawnAmount);
-                int max = Math.Max(min, chosen.MaxSpawnAmount);
-                int amount = Random.Next(min, max + 1);
-
-                if (maxInstances > 0)
-                    amount = Math.Min(amount, remainingInstances);
-
-                // Agregamos a la lista de intención de spawn
-                for (int i = 0; i < amount; i++)
-                {
-                    pendingSpawns.Add(chosen);
-
-                    if (maxInstances > 0)
-                        remainingInstances--;
-                }
-            }
-
-            if (pendingSpawns.Count == 0)
-                return;
-
-            // 4) Spawn positions y Confirmación de Estado
-            var safePoly = new Polygon(WalkArea.Polygon.Vertices, -45);
-            var points = GetSpawnPoints(safePoly, pendingSpawns.Count, 45);
-
-            // Iteramos solo hasta la cantidad de puntos físicos que conseguimos
-            for (int i = 0; i < points.Count; i++)
-            {
-                var chosenDef = pendingSpawns[i];
-
-                var instance = CreateThingClone(chosenDef.Name);
-                instance.Position = points[i];
-                Children.Add(instance);
-
-                // CRÍTICO: Los contadores se incrementan SOLO cuando la instancia física existe
-                spawnCounter.Increment(chosenDef.Name);
-                Session.CurrentRun.Spawns.Increment(chosenDef.Name);
             }
         }
 
@@ -392,6 +341,38 @@ namespace ScaryCastle
         protected void AddPlaceholder(Placeholder placeholder)
         {
             placeholders.Add(placeholder);
+        }
+
+        // AdjustWeight
+        // Modifica el peso de aparición combinando la dificultad base de la sala y la intensidad global de la partida.
+        protected static float AdjustWeight(float runIntensity, Difficulty roomDiff, Difficulty thingDiff, float baseWeight)
+        {
+            // 1. Lógica original: Respetamos la jerarquía de diseño de la sala
+            int distance = (int)roomDiff - (int)thingDiff;
+
+            float roomMultiplier = distance switch
+            {
+                1 => 0.15f,  // Ej: Sala Normal, Enemigo Easy (1 escalón)
+                2 => 0.02f,  // Ej: Sala Hard, Enemigo Easy (2 escalones)
+                _ => 1.0f
+            };
+
+            // 2. Lógica de Intensidad: Curvamos los pesos según el progreso del jugador
+            float intensityMultiplier = thingDiff switch
+            {
+                // Easy: Arranca en x1.0 y decae hasta x0.2 en el último piso
+                Difficulty.Easy => 1f - (runIntensity * 0.8f),
+
+                // Normal: Arranca bajo (x0.2) y escala hasta x1.0
+                Difficulty.Normal => 0.2f + (runIntensity * 0.8f),
+
+                // Hard: Arranca en x0.0 (no sale) y escala exponencialmente hasta x1.0
+                Difficulty.Hard => runIntensity * runIntensity,
+
+                _ => 1.0f
+            };
+
+            return baseWeight * roomMultiplier * intensityMultiplier;
         }
 
         // OnChildAdded

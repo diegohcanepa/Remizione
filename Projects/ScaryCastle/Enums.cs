@@ -136,8 +136,7 @@ namespace ScaryCastle
         WallLeftHang,   // Colgado en la pared izquierda
         WallRightBase,  // Apoyado contra la pared derecha
         WallRightHang,  // Colgado en la pared derecha
-        Ceiling,        // Techo (lámparas, telarañas)
-        WalkArea        // Cualquier lugar del suelo navegable
+        Ceiling         // Techo (lámparas, telarañas)
     }
 
     // PlayerNumber

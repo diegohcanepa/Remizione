@@ -2,10 +2,12 @@
   "$schema": "./Room.schema.json",
   "data": [
     {
-      "name": "Castle_Std_Corridor_01",
+      "name": "Castle_Std_Corridor_01",    
       "roomType": "Corridor",
-      "doorUp": "126,41",
-      "guardActorPosition": "230,90",
+      "doorUp": "130,72",
+      "leftGatePosition": "16,34",
+      "rightGatePosition": "232,34",
+      "guardActorPosition": "225,90",
       "playerPosition": "30,90",
       "placeholders": [
       ],

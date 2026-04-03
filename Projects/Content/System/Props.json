@@ -9,32 +9,28 @@
     },
     {
       "name": "PotteryB",
-      "minRun": 10
+      "minRun": 10,
+      "placements": [
+      ]      
     },
     {
       "name": "PotteryC",
-      "minRun": 10
+      "minRun": 10,
+      "placements": [
+      ]      
     },
     {
       "name": "PotteryD",
-      "minRun": 10
+      "minRun": 10,
+      "placements": [
+      ]      
     },
     {
       "name": "PotteryE",
-      "minRun": 10
+      "minRun": 10,
+      "placements": [
+      ]      
     },
-    {
-      "name": "RideDoorDown"
-    },
-    {
-      "name": "RideDoorLeft"
-    },
-    {
-      "name": "RideDoorRight"
-    },
-    {
-      "name": "RideDoorUp"
-    },    
     {
       "name": "Torch",
       "tags": "Torch",
@@ -44,9 +40,6 @@
     },
     {
       "name": "SpearTrap",
-      "placements": [
-        "WalkArea"
-      ],
       "effects": [
         {
           "context": "Contact",
@@ -55,7 +48,9 @@
           "knockback": "15,5",
           "impactWord": "AghRed"          
         }
-      ]
+      ],
+      "placements": [
+      ]      
     },
     {
       "name": "Trunk",

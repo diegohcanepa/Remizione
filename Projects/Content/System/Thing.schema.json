@@ -14,33 +14,6 @@
         "maxPerRoom": {
           "type": "integer",
           "default": -1
-        },
-        "maxSpawnAmount": {
-          "type": "integer",
-          "default": 1,
-          "minimum": 1
-        },
-        "minSpawnAmount": {
-          "type": "integer",
-          "default": 1,
-          "minimum": 1
-        },
-        "placements": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "Floor",
-              "WallFrontBase",
-              "WallFrontHang",
-              "WallLeftBase",
-              "WallLeftHang",
-              "WallRightBase",
-              "WallRightHang",
-              "Ceiling",
-              "WalkArea"
-            ]
-          }
         }
       }
     }

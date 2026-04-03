@@ -21,6 +21,30 @@
       "allOf": [
         {
           "$ref": "./Thing.schema.json"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "placements": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "Floor",
+                  "WallFrontBase",
+                  "WallFrontHang",
+                  "WallLeftBase",
+                  "WallLeftHang",
+                  "WallRightBase",
+                  "WallRightHang",
+                  "Ceiling"
+                ]
+              }
+            }
+          },
+          "required": [
+            "placements"
+          ]
         }
       ],
       "unevaluatedProperties": false

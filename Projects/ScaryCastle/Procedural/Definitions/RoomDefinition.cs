@@ -21,6 +21,7 @@ namespace ScaryCastle
         private RoomDefinition(JsonElement element)
             : base(element)
         {
+            AllowEnemies = element.GetBool("allowEnemies", true);
             DoorDown = element.GetVector2("doorDown");
             DoorLeft = element.GetVector2("doorLeft");
             DoorRight = element.GetVector2("doorRight");
@@ -29,8 +30,6 @@ namespace ScaryCastle
             ExactMatch = element.GetBool("exactMatch", false);
             IsMandatory = element.GetBool("isMandatory", false);
             LockType = element.GetEnum("lockType", LockType.None);
-            MaxEnemies = element.GetInt32("maxEnemies", -1);
-            MaxProps = element.GetInt32("maxProps", -1);
             MusicTag = element.GetString("musicTag");
 
             if (element.GetString("guardActorPosition") is string guardActorPositionValue && !string.IsNullOrWhiteSpace(guardActorPositionValue))
@@ -39,8 +38,14 @@ namespace ScaryCastle
             if (element.GetString("interactiveActorPosition") is string interactiveActorPositionValue && !string.IsNullOrWhiteSpace(interactiveActorPositionValue))
                 InteractiveActorPosition = DataConvert.ToVector2(interactiveActorPositionValue);
 
+            if (element.GetString("leftGatePosition") is string leftGatePositionValue && !string.IsNullOrWhiteSpace(leftGatePositionValue))
+                LeftGatePosition = DataConvert.ToVector2(leftGatePositionValue);
+
             if (element.GetString("playerPosition") is string playerPositionValue && !string.IsNullOrWhiteSpace(playerPositionValue))
                 PlayerPosition = DataConvert.ToVector2(playerPositionValue);
+
+            if (element.GetString("rightGatePosition") is string rightGatePositionValue && !string.IsNullOrWhiteSpace(rightGatePositionValue))
+                RightGatePosition = DataConvert.ToVector2(rightGatePositionValue);
             
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
             RoomType = element.GetEnum("roomType", RoomType.SideRoom);
@@ -93,6 +98,14 @@ namespace ScaryCastle
         // Validate
         private void Validate()
         {
+            /*
+            if (RoomType == RoomType.Corridor)
+            {
+                if (LeftGatePosition == Vector2.Zero || RightGatePosition == Vector2.Zero)
+                    RaiseValidationError(this, $"Corridors must define gate positions.");
+            }
+            */
+
             if (RoomType == RoomType.SideRoom && SideRoomCategory == SideRoomCategory.None)
                 RaiseValidationError(this, $"Side rooms must have a SideRoomCategory.");
 
@@ -101,6 +114,9 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // AllowEnemies
+        public bool AllowEnemies { get; }
 
         // Definitions
         public static DataContainer<RoomDefinition> Definitions { get; } = new(element => new RoomDefinition(element));
@@ -124,7 +140,7 @@ namespace ScaryCastle
         public bool ExactMatch { get; }
 
         // GuardActorPosition
-        public Vector2 GuardActorPosition { get; }
+        public Vector2? GuardActorPosition { get; }
 
         // HasDownDoor
         public bool HasDownDoor => DoorDown != null;
@@ -139,19 +155,16 @@ namespace ScaryCastle
         public bool HasUpDoor => DoorUp != null;
 
         // InteractiveActorPosition
-        public Vector2 InteractiveActorPosition { get; }
+        public Vector2? InteractiveActorPosition { get; }
 
         // IsMandatory
         public bool IsMandatory { get; }
 
+        // LeftGatePosition
+        public Vector2 LeftGatePosition { get; }
+
         // LockType
         public LockType LockType { get; }
-
-        // MaxEnemies
-        public int MaxEnemies { get; }
-
-        // MaxProps
-        public int MaxProps { get; }
 
         // MusicTag
         public string MusicTag { get; }
@@ -164,6 +177,9 @@ namespace ScaryCastle
 
         // RequiresDeadEnd
         public bool RequiresDeadEnd { get; }
+
+        // RightGatePosition
+        public Vector2 RightGatePosition { get; }
 
         // RoomType
         public RoomType RoomType { get; }

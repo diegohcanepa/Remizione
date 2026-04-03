@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:0995586108eb2a10f42f2b180ff0ffea:1868c0e0f6aeb4dea64da5b25ba8fb59:3fa69ca9cc4ae30214bcdfddb5cca2e9$ -->
+<!-- $TexturePacker:SmartUpdate:b5bf4781edfa7f25a33e630fcaaa73ef:a517d22fcd704bd88d8a2fcb6a8c60a9:3fa69ca9cc4ae30214bcdfddb5cca2e9$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,10 +19,10 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Castle_Std_Corridor_01.png" width="1024" height="1024">
-    <sprite n="LeftGate.png" x="2" y="2" w="260" h="135"/>
-    <sprite n="LeftWall.png" x="264" y="2" w="260" h="135"/>
-    <sprite n="RightGate.png" x="526" y="2" w="260" h="135"/>
+<TextureAtlas imagePath="Castle_Std_Corridor_01.png" width="512" height="512">
+    <sprite n="LeftGate.png" x="264" y="2" w="13" h="62"/>
+    <sprite n="LeftWall.png" x="2" y="2" w="260" h="135"/>
+    <sprite n="RightGate.png" x="279" y="2" w="13" h="62"/>
     <sprite n="RightWall.png" x="2" y="139" w="260" h="135"/>
-    <sprite n="View1.png" x="264" y="139" w="260" h="135"/>
+    <sprite n="View1.png" x="2" y="276" w="260" h="135"/>
 </TextureAtlas>

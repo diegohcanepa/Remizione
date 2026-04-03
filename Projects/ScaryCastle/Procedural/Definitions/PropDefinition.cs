@@ -1,4 +1,7 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Text.Json;
 
 namespace ScaryCastle
 {
@@ -7,12 +10,32 @@ namespace ScaryCastle
     /// </summary>
     public sealed class PropDefinition : ThingDefinition
     {
+        private readonly List<PlacementType> placements = [];
+
         #region Constructor
 
         // Constructor
         public PropDefinition(JsonElement element)
             : base(element)
         {
+            // Placements
+            if (element.TryGetProperty("placements", out JsonElement placementsElement))
+            {
+                foreach (var item in placementsElement.EnumerateArray())
+                {
+                    if (Enum.TryParse<PlacementType>(item.GetString(), out var value))
+                    {
+                        placements.Add(value);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException($"Cannot parse placement value.");
+                    }
+                }
+            }
+
+            this.Placements = placements.AsReadOnly();
+
             Definitions.Add(this);
         }
 
@@ -20,5 +43,8 @@ namespace ScaryCastle
 
         // Definitions
         public static DataContainer<PropDefinition> Definitions { get; } = new(element => new PropDefinition(element));
+
+        // Placements
+        public ReadOnlyCollection<PlacementType> Placements { get; }
     }
 }

@@ -4,8 +4,6 @@
     {
       "name": "EnviousEye",
       "role": "Guard",
-      "minSpawnAmount": 1,
-      "maxSpawnAmount": 2,
       "effects": [
         {
           "context": "Contact",
@@ -13,24 +11,15 @@
           "amount": "1",
           "impactWord": "AghRed"
         }
-      ],      
-      "placements": [
-        "WalkArea"
-      ]
+      ]      
     },
     {
       "name": "Rat",
-      "role": "Ambient",
-      "placements": [
-        "WalkArea"
-      ]
+      "role": "Ambient"
     },
     {
       "name": "Skeleton",
-      "role": "Guard",
-      "placements": [
-        "WalkArea"
-      ]
+      "role": "Guard"
     }
   ]
 }
