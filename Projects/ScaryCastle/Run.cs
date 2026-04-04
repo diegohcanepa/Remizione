@@ -30,22 +30,22 @@ namespace ScaryCastle
                 throw new InvalidOperationException($"ERROR: No assets found for {node.RoomType}/{node.SideRoomCategory} in {diff}");
 
             node.Definition = def;
-            
+
             this.Spawns.Increment(def.Name);
         }
 
         // CleanUpCurrentCorridor
         private void CleanUpCurrentCorridor()
         {
-            if (CurrentCorridor == null)
-                return;
-
-            foreach (var r in CurrentCorridor.GetAllNodes())
+            if (CurrentCorridor != null)
             {
-                r.RideRoom?.Children.Clear();
-            }
+                foreach (var r in CurrentCorridor.GetAllNodes())
+                {
+                    r.RideRoom?.Children.Clear();
+                }
 
-            CurrentCorridor = null;
+                CurrentCorridor = null;
+            }
         }
 
         // GenerateTrident
@@ -180,10 +180,14 @@ namespace ScaryCastle
             this.CurrentCorridor = corridor;
 
             // Build rooms
-            foreach (var r in corridor.GetAllNodes())
+            foreach (var roomNode in corridor.GetAllNodes())
             {
-                r.RideRoom = RideRoom.CreateInstance(session, r);
-                r.RideRoom.Load();
+                roomNode.RideRoom = RideRoom.CreateInstance(session, roomNode);
+            }
+
+            foreach (var roomNode in corridor.GetAllNodes())
+            {
+                roomNode.RideRoom.Load();
             }
 
             return true;

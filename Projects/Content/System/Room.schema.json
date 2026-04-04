@@ -61,6 +61,12 @@
               "type": "boolean",
               "default": false
             },
+            "exitApproachPosition": {
+              "type": "string"
+            },
+            "exitHotspot": {
+              "type": "string"
+            },            
             "isMandatory": {
               "type": "boolean",
               "default": false

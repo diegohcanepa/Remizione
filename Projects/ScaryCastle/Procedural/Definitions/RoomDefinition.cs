@@ -28,6 +28,14 @@ namespace ScaryCastle
             DoorStyle = element.GetEnum("doorStyle", DoorStyle.Wooden);
             DoorUp = element.GetVector2("doorUp");
             ExactMatch = element.GetBool("exactMatch", false);
+
+            if (element.GetString("exitApproachPosition") is string exitApproachPositionValue && !string.IsNullOrWhiteSpace(exitApproachPositionValue))
+                ExitApproachPosition = DataConvert.ToVector2(exitApproachPositionValue);
+
+            ExitHotspot = element.GetString("exitHotspot", string.Empty);
+            if (!string.IsNullOrWhiteSpace(ExitHotspot))
+                ReadOnlyPolygon.GetVertices(ExitHotspot);
+
             IsMandatory = element.GetBool("isMandatory", false);
             LockType = element.GetEnum("lockType", LockType.None);
             MusicTag = element.GetString("musicTag");
@@ -98,13 +106,17 @@ namespace ScaryCastle
         // Validate
         private void Validate()
         {
-            /*
             if (RoomType == RoomType.Corridor)
             {
                 if (LeftGatePosition == Vector2.Zero || RightGatePosition == Vector2.Zero)
                     RaiseValidationError(this, $"Corridors must define gate positions.");
+
+                if (ExitApproachPosition == Vector2.Zero)
+                    RaiseValidationError(this, $"Undefined exit approach position.", nameof(ExitApproachPosition));
+
+                if (string.IsNullOrWhiteSpace(ExitHotspot))
+                    RaiseValidationError(this, $"Undefined exit hotspot.", nameof(ExitHotspot));
             }
-            */
 
             if (RoomType == RoomType.SideRoom && SideRoomCategory == SideRoomCategory.None)
                 RaiseValidationError(this, $"Side rooms must have a SideRoomCategory.");
@@ -138,6 +150,12 @@ namespace ScaryCastle
 
         // ExactMatch
         public bool ExactMatch { get; }
+
+        // ExitApproachPosition
+        public Vector2 ExitApproachPosition { get; }
+
+        // ExitHotspot
+        public string ExitHotspot { get; }
 
         // GuardActorPosition
         public Vector2? GuardActorPosition { get; }

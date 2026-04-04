@@ -51,14 +51,14 @@ namespace ScaryCastle
             Game.SpriteBatch.End();
 
             if (session.Room is RideRoom rideRoom && rideRoom.RoomNode.RoomType == RoomType.Corridor)
-                BossMeter.Draw(gameTime);
+                GuardMeter.Draw(gameTime);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             InventoryMeter.Update(gameTime);
-            BossMeter.Update(gameTime);
+            GuardMeter.Update(gameTime);
             hpMeter.Update(gameTime);
             faithMeter.Update(gameTime);
             Log.Update(gameTime);
@@ -67,8 +67,8 @@ namespace ScaryCastle
 
         #endregion
 
-        // BossMeter
-        public UIBossMeter BossMeter { get; } = new();
+        // GuardMeter
+        public UIGuardMeter GuardMeter { get; } = new();
 
         // HandleInput
         public HandleInputResult HandleInput()

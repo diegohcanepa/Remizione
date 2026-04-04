@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     /// <summary>
-    /// UIBossMeter
+    /// UIGuardMeter
     /// </summary>
-    public sealed class UIBossMeter : GameObject
+    public sealed class UIGuardMeter : GameObject
     {
         #region Private fields
 
@@ -18,12 +18,12 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public UIBossMeter()
+        public UIGuardMeter()
             : base()
         {
             this.meter = new Meter(ColorPalette.Text.TerraDarker, ColorPalette.Text.Red, ColorPalette.Text.Orange, new(40, 6), 1)
             {
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 8)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -8)
             };
 
             this.labelText = new(Fonts.CommonOutline)

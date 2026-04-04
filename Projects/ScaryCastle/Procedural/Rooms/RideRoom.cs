@@ -1,5 +1,4 @@
-﻿using Adberration.Scripting;
-using Engendro;
+﻿using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -10,14 +9,14 @@ namespace ScaryCastle
     /// <summary>
     /// RideRoom
     /// </summary>
-    public sealed class RideRoom : ProceduralRoom
+    public abstract class RideRoom : ProceduralRoom
     {
         private readonly List<RideDoor> doors = [];
 
         #region Constructor
 
         // Constructor
-        public RideRoom(GameSession session, RoomNode roomNode)
+        protected RideRoom(GameSession session, RoomNode roomNode)
             : base(session, string.Empty, roomNode)
         {
             Zoom = 1.15f;
@@ -46,47 +45,6 @@ namespace ScaryCastle
         #endregion
 
         #region Private members
-
-        // PopulateCorridor
-        private void PopulateCorridor()
-        {
-            void AddGate(Prop gate, Vector2 position)
-            {
-                gate.Atlas = Atlas;
-                gate.PivotOrigin = RectanglePoint.LeftTop;
-                gate.RenderLayer = RenderLayer.Background;
-                gate.DepthOffset = -1;
-                gate.Position = position;
-                Children.Add(gate);
-            }
-
-            if (Session.FindDeclaredThing("CorridorLeftGate") is Prop leftGate)
-            {
-                leftGate.DefaultImageName = "LeftGate";
-                AddGate(leftGate, RoomNode.Definition.LeftGatePosition);
-            }
-
-            if (Session.FindDeclaredThing("CorridorRightGate") is Prop rightGate)
-            {
-                rightGate.DefaultImageName = "RightGate";
-                AddGate(rightGate, RoomNode.Definition.RightGatePosition);
-            }
-
-            if (Session.FindDeclaredThing("CorridorLeftWall") is Prop leftWall)
-            {
-                leftWall.Atlas = Atlas;
-                Children.Add(leftWall);
-            }
-
-            if (Session.FindDeclaredThing("CorridorRightWall") is Prop rightWall)
-            {
-                rightWall.Atlas = Atlas;
-                Children.Add(rightWall);
-            }
-
-            if (RoomNode.Definition.GuardActorPosition is Vector2 position)
-                SpawnActor(ActorRole.Guard, position);
-        }
 
         // PopulateDoors
         private void PopulateDoors()
@@ -135,67 +93,9 @@ namespace ScaryCastle
             }
         }
 
-        // SpawnActor
-        private void SpawnActor(ActorRole role, Vector2 position)
-        {
-            if (Session.CurrentRun == null)
-                return;
-
-            // Collect candidates
-            var selectedCandidates = new List<ActorDefinition>();
-            foreach (var definition in ActorDefinition.Definitions.All)
-            {
-                if (definition.Role != role)
-                    continue;
-
-                // MaxPerRun
-                if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
-                    continue;
-
-                selectedCandidates.Add(definition);
-            }
-
-            if (selectedCandidates.Count == 0)
-                return;
-
-            // Pick
-            var chanceTable = new ChanceTable();
-            foreach (var c in selectedCandidates)
-            {
-                var finalWeight = AdjustWeight(Session.CurrentRun.Intensity, RoomNode.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
-                chanceTable.Add(c.Name, finalWeight);
-            }
-
-            if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
-                return;
-
-            if (ActorDefinition.Definitions.Find(chanceTableItem.Name) is not ActorDefinition chosen)
-                return;
-
-            var instance = CreateThingClone(chosen.Name);
-            instance.Position = position;
-            instance.Direction = Adberration.FacingDirection.Left;
-            Children.Add(instance);
-
-            // Log spawn
-            Session.CurrentRun.Spawns.Increment(chosen.Name);
-        }
-
         #endregion
 
         #region Protected members
-
-        // OnActivate
-        protected override void OnActivate()
-        {
-            base.OnActivate();
-
-            if (RoomNode.RoomType == RoomType.Corridor)
-            {
-                if (Session.ScriptLibrary.FindRoutine("CorridorLeftGate-Down") is Script script)
-                    Session.ScriptProcessor.StartScript(script);
-            }
-        }
 
         // OnLoad
         protected override void OnLoad()
@@ -232,9 +132,6 @@ namespace ScaryCastle
         protected override void OnPopulating()
         {
             PopulateDoors();
-
-            if (RoomNode.RoomType == RoomType.Corridor)
-                PopulateCorridor();
         }
 
         // OnPopulated
@@ -250,13 +147,63 @@ namespace ScaryCastle
             }
         }
 
+        // SpawnActor
+        protected Actor? SpawnActor(ActorRole role, Vector2 position)
+        {
+            if (Session.CurrentRun == null)
+                return null;
+
+            // Collect candidates
+            var selectedCandidates = new List<ActorDefinition>();
+            foreach (var definition in ActorDefinition.Definitions.All)
+            {
+                if (definition.Role != role)
+                    continue;
+
+                // MaxPerRun
+                if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
+                    continue;
+
+                selectedCandidates.Add(definition);
+            }
+
+            if (selectedCandidates.Count == 0)
+                return null;
+
+            // Pick
+            var chanceTable = new ChanceTable();
+            foreach (var c in selectedCandidates)
+            {
+                var finalWeight = AdjustWeight(Session.CurrentRun.Intensity, RoomNode.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
+                chanceTable.Add(c.Name, finalWeight);
+            }
+
+            if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
+                return null;
+
+            if (ActorDefinition.Definitions.Find(chanceTableItem.Name) is not ActorDefinition chosen)
+                return null;
+
+            var instance = CreateThingClone(chosen.Name);
+            instance.Position = position;
+            instance.Direction = Adberration.FacingDirection.Left;
+            Children.Add(instance);
+
+            // Log spawn
+            Session.CurrentRun.Spawns.Increment(chosen.Name);
+
+            return instance as Actor;
+        }
+
         #endregion
 
         // CreateInstance
         public static RideRoom CreateInstance(GameSession session, RoomNode roomNode)
         {
+            var roomType = roomNode.RoomType == RoomType.Corridor ? typeof(CorridorRoom) : typeof(SideRoom);
+
             // Get type from AOT registry
-            if (Activator.CreateInstance(typeof(RideRoom), session, roomNode) is not RideRoom result)
+            if (Activator.CreateInstance(roomType, session, roomNode) is not RideRoom result)
                 throw new InvalidOperationException($"Cannot create instance [{roomNode.Definition.Name}]");
 
             return result;
