@@ -24,7 +24,7 @@ namespace ScaryCastle
         public UIGuardMeter()
             : base()
         {
-            this.meter = new Meter(ColorPalette.Text.TerraDarker, ColorPalette.Text.Red, ColorPalette.Text.Orange, new(40, 6), 1)
+            this.meter = new Meter(ColorPalette.GuardMeter.Back, ColorPalette.GuardMeter.Fore, ColorPalette.GuardMeter.Diff, new(40, 6), 1)
             {
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -10)
             };

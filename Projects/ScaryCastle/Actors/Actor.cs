@@ -429,10 +429,18 @@ namespace ScaryCastle
                     }
                     else
                     {
-                        if (Session.Player != null && Random.Shared.NextDouble() <= RandomMoveAggressiveness)
-                            MoveTo(Session.Player.Position);
+                        if (SuspendRandomMoveUntilVisible)
+                        {
+                            if (IsInViewport)
+                                SuspendRandomMoveUntilVisible = false;
+                        }
                         else
-                            MoveRandomly();
+                        {
+                            if (Session.Player != null && Random.Shared.NextDouble() <= RandomMoveAggressiveness)
+                                MoveTo(Session.Player.Position);
+                            else
+                                MoveRandomly();
+                        }
 
                         int jitter = (int)(((Random.Shared.NextDouble() * 2) - 1) * (RandomMoveCooldown * .1f));
                         randomMoveTimer = RandomMoveCooldown + jitter;
@@ -811,6 +819,9 @@ namespace ScaryCastle
             else
                 Stand();
         }
+
+        // SuspendRandomMoveUntilVisible
+        public bool SuspendRandomMoveUntilVisible { get; set; }
 
         // ThrownObjectSpawnPosition
         [ScriptProperty]

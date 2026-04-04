@@ -57,7 +57,6 @@ namespace ScaryCastle
             if (context.Target.IsMoving)
             {
                 Actor.Session.InteractionContext.HeadbuttMode = false;
-                Actor.Session.HUD.Message.Show(MessageKind.MovingTarget);
                 return;
             }
 

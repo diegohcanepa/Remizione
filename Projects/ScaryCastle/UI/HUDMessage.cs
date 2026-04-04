@@ -67,10 +67,9 @@ namespace ScaryCastle
                 color = ColorPalette.Text.Orange;
                 Sound.Play(SoundNames.Error);
             }
-            else if (message == MessageKind.Courage)
+            else if (message == MessageKind.TheWayIsOpen)
             {
                 color = ColorPalette.Text.Green;
-                Sound.Play(SoundNames.Error);
             }
             else
             {

@@ -218,6 +218,8 @@ namespace Adberration
             }
 
             OnActivate();
+
+            Visited = true;
         }
 
         // Deactivate
@@ -312,6 +314,10 @@ namespace Adberration
         public sealed override void Unparent()
         {
         }
+
+        // Visited
+        [ScriptProperty]
+        public bool Visited { get; private set; }
 
         // Zoom
         [ScriptProperty]

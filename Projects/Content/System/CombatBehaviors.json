@@ -24,6 +24,18 @@
       "archetype": "Coward",
       "intents": [
         {
+          "name": "Contact",
+          "sound": "RatAttack",
+          "effects": [
+            {
+              "context": "Contact",
+              "effectType": "Damage",
+              "amount": "1",
+              "impactWord": "AghRed"
+            }
+          ]
+        },
+        {
           "name": "Bite",
           "category": "Basic",
           "sound": "EnviousEyeAttack",

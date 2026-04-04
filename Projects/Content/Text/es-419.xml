@@ -192,9 +192,9 @@
   <String Key="MessageKind.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
   <String Key="MessageKind.Courage">¡Recuperaste coraje!</String>
   <String Key="MessageKind.InventoryFull">El inventario está lleno.</String>
-  <String Key="MessageKind.MovingTarget">Aguarda a que se detenga.</String>
   <String Key="MessageKind.NotEnoughCoins">No tienes monedas suficientes.</String>
   <String Key="MessageKind.NotEnoughFaith">No tienes la fe suficiente.</String>
+  <String Key="MessageKind.TheWayIsOpen">El camino se abre.</String>
   <String Key="Misc.All">Todo</String>
   <String Key="Misc.And">y</String>
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—</String>

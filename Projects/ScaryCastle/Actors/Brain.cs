@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ScaryCastle
 {
@@ -52,29 +53,34 @@ namespace ScaryCastle
             if (ShouldAttemptFlee(actor, behavior))
                 return new CombatDecision(CombatDecisionType.Flee, null);
 
-            // 2. Reacciona?
-            if (!ShouldAttack(actor, behavior))
-                return new CombatDecision(CombatDecisionType.Passive, null);
-
-            // 3. Logica de Ataque
-            if (SelectWeightedIntent(actor, behavior) is not CombatIntent intent)
-                return null;
-            else
+            // 2. Logica de Ataque
+            if (SelectWeightedIntent(actor, behavior) is CombatIntent intent)
                 return new CombatDecision(CombatDecisionType.Attack, intent);
+            else
+                return null;
         }
 
         // SelectWeightedIntent
         // Calcula los pesos segun el arquetipo (Berserk, Tactical, etc)
         private static CombatIntent? SelectWeightedIntent(Actor actor, CombatBehavior behavior)
         {
-            var intents = behavior.Intents;
-            int count = intents.Count;
-            if (count == 0) return null;
+            var intents = new List<CombatIntent>();
+            for (var i = 0; i < behavior.Intents.Count; i++)
+            {
+                // Skip contact intent because it's not a direct attack.
+                if (behavior.Intents[i].Name == nameof(EffectContext.Contact))
+                    continue;
 
-            Span<float> weights = stackalloc float[count];
+                intents.Add(behavior.Intents[i]);
+            }
+
+            if (intents.Count == 0)
+                return null;
+
+            Span<float> weights = stackalloc float[intents.Count];
             float totalWeight = 0;
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < intents.Count; i++)
             {
                 var intent = intents[i];
                 float w = intent.SpawnWeight;
@@ -93,7 +99,7 @@ namespace ScaryCastle
             float roll = (float)Random.Shared.NextDouble() * totalWeight;
             float cumulative = 0;
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < intents.Count; i++)
             {
                 cumulative += weights[i];
                 if (roll <= cumulative)
