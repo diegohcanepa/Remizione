@@ -13,6 +13,7 @@ namespace ScaryCastle
 
         private readonly UIFaithMeter faithMeter;
         private readonly UIHPMeter hpMeter;
+        private readonly UIRunProgressMeter progressMeter;
         private readonly GameSession session;
 
         #endregion
@@ -28,6 +29,7 @@ namespace ScaryCastle
             this.faithMeter = new();
             this.Log = new();
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
+            this.progressMeter = new(session);
 
             // CommonInventoryMeter
             this.InventoryMeter = new(session.Inventory);
@@ -44,14 +46,17 @@ namespace ScaryCastle
 
             hpMeter.Draw(gameTime);
             faithMeter.Draw(gameTime);
-
+            progressMeter.Draw(gameTime);
             InventoryMeter.Draw(gameTime);
             Log.Draw(gameTime);
             Message.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            if (session.Room is RideRoom rideRoom && rideRoom.RoomNode.RoomType == RoomType.Corridor)
-                GuardMeter.Draw(gameTime);
+            if (session.IsCurrentScene)
+            {
+                if (session.Room is RideRoom rideRoom && rideRoom.RoomNode.RoomType == RoomType.Corridor)
+                    GuardMeter.Draw(gameTime);
+            }
         }
 
         // OnUpdate
@@ -61,6 +66,7 @@ namespace ScaryCastle
             GuardMeter.Update(gameTime);
             hpMeter.Update(gameTime);
             faithMeter.Update(gameTime);
+            progressMeter.Update(gameTime);
             Log.Update(gameTime);
             Message.Update(gameTime);
         }

@@ -8,8 +8,6 @@ namespace ScaryCastle
     /// </summary>
     public sealed class Run
     {
-        private int corridorIndex = -1;
-        private readonly int maxCorridors;
         private readonly RoomRegistry registry = new();
         private readonly int seed;
 
@@ -17,7 +15,7 @@ namespace ScaryCastle
         public Run(int seed, int maxCorridors)
         {
             this.seed = seed;
-            this.maxCorridors = maxCorridors;
+            this.MaxCorridors = maxCorridors;
         }
 
         #region Private members
@@ -129,6 +127,9 @@ namespace ScaryCastle
 
         #endregion
 
+        // CorridorIndex
+        public int CorridorIndex { get; private set; } = -1;
+
         // CurrentCorridor
         public RoomNode? CurrentCorridor { get; private set; }
 
@@ -137,10 +138,10 @@ namespace ScaryCastle
         {
             get
             {
-                if (maxCorridors <= 1)
+                if (MaxCorridors <= 1)
                     return 0;
 
-                float progress = (float)corridorIndex / maxCorridors;
+                float progress = (float)CorridorIndex / MaxCorridors;
 
                 return (float)Math.Pow(Math.Clamp(progress, 0f, 1f), 1.2f);
             }
@@ -151,10 +152,10 @@ namespace ScaryCastle
         {
             CleanUpCurrentCorridor();
 
-            this.corridorIndex++;
+            this.CorridorIndex++;
 
             // Fin de la Run
-            if (this.corridorIndex >= this.maxCorridors)
+            if (this.CorridorIndex >= this.MaxCorridors)
             {
                 this.CurrentCorridor = null;
                 return false;
@@ -162,18 +163,18 @@ namespace ScaryCastle
 
             // 1. Esqueleto (Nodos)
             // Usamos corridorIndex para la semilla, garantizando determinismo
-            var rng = new Random(this.seed + this.corridorIndex);
+            var rng = new Random(this.seed + this.CorridorIndex);
             int localIndex = 0;
 
             // El RoomNode sigue necesitando X para la lógica de dificultad/posicionamiento
-            var corridor = new RoomNode(localIndex++, this.corridorIndex, 0, RoomType.Corridor, SideRoomCategory.None);
+            var corridor = new RoomNode(localIndex++, this.CorridorIndex, 0, RoomType.Corridor, SideRoomCategory.None);
 
             // 2. Tridente (Nexo + Hojas) - Lógica interna 50/50
             if (rng.NextDouble() < 0.5)
                 GenerateTrident(corridor, ref localIndex, rng);
 
             // 3. Población (Asignación de assets según dificultad)
-            Difficulty diff = GetDifficultyTier(this.corridorIndex, this.maxCorridors);
+            Difficulty diff = GetDifficultyTier(this.CorridorIndex, this.MaxCorridors);
             this.Populate(corridor, diff, rng);
 
             // 4. Actualizar estado
@@ -192,6 +193,9 @@ namespace ScaryCastle
 
             return true;
         }
+
+        // MaxCorridors
+        public int MaxCorridors { get; }
 
         // Spawns
         public CounterBank Spawns { get; } = new();
