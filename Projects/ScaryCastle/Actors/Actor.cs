@@ -430,8 +430,6 @@ namespace ScaryCastle
                 var state = BodyMachine.FindOrCreateState<BodyHurtState>();
                 BodyMachine.ChangeState(state.GetType());
             }
-
-            LastKnownAttacker = attacker;
         }
 
         // OnUpdate
@@ -490,7 +488,7 @@ namespace ScaryCastle
 
             talkIcon?.Update(gameTime);
 
-            if (IsPlayer && Session.IsCurrentScene && !Session.IsAwaiting && !IsMoving && CanHandleInput)
+            if (IsPlayer && CarriedProp != null && Session.IsCurrentScene && !Session.IsAwaiting && !IsMoving && CanHandleInput)
                 FaceToMouseCursor();
         }
 
@@ -734,9 +732,6 @@ namespace ScaryCastle
 
         // IsStandingOrMoving
         public bool IsStandingOrMoving => BodyMachine.CurrentState is BodyStandState or BodyMoveState;
-
-        // LastKnownAttacker
-        public GameThing? LastKnownAttacker { get; set; }
 
         // MoveRandomly
         [ScriptMethod]

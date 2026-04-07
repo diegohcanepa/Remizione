@@ -242,6 +242,8 @@
             <key type="filename">Edmund-assets/Headbutt02.png</key>
             <key type="filename">Edmund-assets/Headbutt03.png</key>
             <key type="filename">Edmund-assets/Headbutt04.png</key>
+            <key type="filename">Edmund-assets/Headbutt05.png</key>
+            <key type="filename">Edmund-assets/Headbutt06.png</key>
             <key type="filename">Edmund-assets/Hurt01.png</key>
             <key type="filename">Edmund-assets/Hurt02.png</key>
             <key type="filename">Edmund-assets/InsertCoin01.png</key>
