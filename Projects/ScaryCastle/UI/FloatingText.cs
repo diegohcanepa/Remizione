@@ -104,7 +104,7 @@ namespace ScaryCastle
                 return;
 
             var origin = source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, source.IsDead ? -4 : 0);
-            var color = isDamage ? ColorPalette.Text.Red : ColorPalette.Text.Green;
+            var color = isDamage ? ColorPalette.Text.Highlight : ColorPalette.Text.Green;
             var deltaX = Random.Shared.Next(3, 6);
             var horzDirection = source.Direction == Adberration.FacingDirection.Left ? deltaX : -deltaX;
 

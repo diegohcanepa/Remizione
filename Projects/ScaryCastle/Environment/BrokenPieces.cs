@@ -10,21 +10,19 @@ namespace ScaryCastle
     public sealed class BrokenPieces : GameObject
     {
         private readonly List<ShatterPiece> pieces = [];
-        private readonly float scale;
-        private readonly GameThing source;
+        private readonly ThrownProp source;
 
         // Constructor
-        public BrokenPieces(GameThing source, float scale = 1)
+        public BrokenPieces(ThrownProp source)
         {
             this.source = source;
-            this.scale = scale;
 
             var index = 1;
             while (true)
             {
-                if (source.Atlas?.FindImage($"{source.DeclaredName}Piece{index}") is { } image)
+                if (source.Prop.Atlas?.FindImage($"{source.Prop.DeclaredName}Piece{index}") is { } image)
                 {
-                    pieces.Add(new ShatterPiece(image, new(scale)));
+                    pieces.Add(new ShatterPiece(image, Vector2.One));
                     index++;
                 }
                 else
@@ -50,7 +48,7 @@ namespace ScaryCastle
         {
             for (var i = 0; i < pieces.Count; i++)
             {
-                pieces[i].Opacity = source.Opacity;
+                //pieces[i].Opacity = source.Opacity;
                 pieces[i].Update(gameTime);
             }
         }

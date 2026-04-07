@@ -25,7 +25,6 @@
       "intents": [
         {
           "name": "Contact",
-          "sound": "RatAttack",
           "effects": [
             {
               "context": "Contact",

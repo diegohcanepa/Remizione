@@ -15,6 +15,15 @@ namespace ScaryCastle
         {
         }
 
+        // GetAnimationName
+        protected override string GetAnimationName()
+        {
+            if (Owner.CarriedProp == null)
+                return base.GetAnimationName();
+            else
+                return AnimationNames.StandCarry;
+        }
+
         // Enter
         public override void Enter()
         {

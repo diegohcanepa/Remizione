@@ -13,6 +13,15 @@ namespace ScaryCastle
         {
         }
 
+        // GetAnimationName
+        protected override string GetAnimationName()
+        {
+            if (Owner.CarriedProp == null)
+                return base.GetAnimationName();
+            else
+                return AnimationNames.MoveCarry;
+        }
+
         // Update
         public override void Update(GameTime gameTime)
         {

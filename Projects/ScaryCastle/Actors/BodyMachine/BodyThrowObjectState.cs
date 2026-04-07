@@ -7,7 +7,7 @@ namespace ScaryCastle
     /// </summary>
     public sealed class ActorThrowObjectState : BodyAnimatedState
     {
-        private bool objectThrown;
+        private ThrownProp? thrownObject;
 
         // Constructor
         public ActorThrowObjectState()
@@ -15,25 +15,25 @@ namespace ScaryCastle
         {
         }
 
-        // CombatIntent
-        public CombatIntent? CombatIntent { get; set; }
+        // Prop
+        public Prop? Prop { get; set; }
 
         // Enter
         public override void Enter()
         {
             base.Enter();
-            objectThrown = false;
+            thrownObject = null;
         }
 
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (CombatIntent != null)
+            if (Prop != null)
             {
-                if (!objectThrown && Owner.AnimationPlayer.Frame?.IsEvent == true)
+                if (thrownObject == null && Owner.AnimationPlayer.Frame?.IsEvent == true)
                 {
-                    Owner.Session.ObjectPools.GetThrownObject(CombatIntent.ThrownObject)?.Launch(Owner, CombatIntent);
-                    objectThrown = true;
+                    thrownObject = new ThrownProp(Owner, Prop);
+                    thrownObject.Launch();
                 }
             }
 

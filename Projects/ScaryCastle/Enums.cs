@@ -26,7 +26,7 @@ namespace ScaryCastle
     public enum CombatBehaviorArchetype { Lurker, Tactical, Berserk, Coward }
 
     // CombatDecisionType
-    public enum CombatDecisionType { None, Attack, Flee }
+    public enum CombatDecisionType { None, Attack, Flee, Charge, Move }
 
     // CombatIntentCategory
     public enum CombatIntentCategory { Basic, Special }
@@ -165,9 +165,6 @@ namespace ScaryCastle
 
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }
-
-    // ThrownObjectType
-    public enum ThrownObjectType { None, Bible }
 
     // UIControlGroupLayoutStyle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }

@@ -125,7 +125,7 @@ namespace ScaryCastle
 
             var text = TextRepository.GetValue(success ? Localization.GetValue(FloatingMessage.Success) : Localization.GetValue(FloatingMessage.Failed));
 
-            actor.ShowFloatingText(text, success ? ColorPalette.Text.Green : ColorPalette.Text.Red);
+            actor.ShowFloatingText(text, success ? ColorPalette.Text.Green : ColorPalette.Text.Default);
 
             if (!success)
                 Sound.Play(SoundNames.TestSkillFail);

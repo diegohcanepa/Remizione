@@ -17,6 +17,7 @@ namespace ScaryCastle
         #region Private fields
 
         private const float AttackLaneThickness = 4;
+        private Sprite? carriedPropSprite;
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -96,6 +97,17 @@ namespace ScaryCastle
 
         #region Private members
 
+        // FaceToMouseCursor
+        private void FaceToMouseCursor()
+        {
+            var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera);
+            if (mousePos.X <= RuntimeHotspot.BoundingRectangleF.Left ||
+                mousePos.X >= RuntimeHotspot.BoundingRectangleF.Right)
+            {
+                FaceTo(mousePos);
+            }
+        }
+
         // HandlePendingInteraction
         private void HandlePendingInteraction()
         {
@@ -172,6 +184,19 @@ namespace ScaryCastle
 
             PlaySound(SoundNames.FootstepA);
             footstepLastUsedFrame = Sprite.Player.Frame;
+        }
+
+        // UseBrain
+        private void UseBrain()
+        {
+            if (Brain.Decide(this, Session.Player) is CombatDecision decision)
+            {
+                if (decision.Type == CombatDecisionType.Flee)
+                    MoveRandomly();
+
+                else if (decision.Type == CombatDecisionType.Attack && decision.Intent != null)
+                    Attack(decision.Intent, Session.Player);
+            }
         }
 
         #endregion
@@ -295,6 +320,12 @@ namespace ScaryCastle
 
             base.OnDraw(gameTime);
 
+            if (carriedPropSprite?.RenderImage != null)
+            {
+                carriedPropSprite.Position = RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, 1);
+                carriedPropSprite.Draw(gameTime);
+            }
+
             if (AnimationSettings.DetachedHead)
             {
                 if (AnimationPlayer.Animation?.Headless == true && headSprite.Player.IsPlaying)
@@ -399,6 +430,8 @@ namespace ScaryCastle
                 var state = BodyMachine.FindOrCreateState<BodyHurtState>();
                 BodyMachine.ChangeState(state.GetType());
             }
+
+            LastKnownAttacker = attacker;
         }
 
         // OnUpdate
@@ -436,10 +469,14 @@ namespace ScaryCastle
                         }
                         else
                         {
+                            UseBrain();
+
+                            /*
                             if (Session.Player != null && Random.Shared.NextDouble() <= RandomMoveAggressiveness)
                                 MoveTo(Session.Player.Position);
                             else
                                 MoveRandomly();
+                            */
                         }
 
                         int jitter = (int)(((Random.Shared.NextDouble() * 2) - 1) * (RandomMoveCooldown * .1f));
@@ -452,6 +489,9 @@ namespace ScaryCastle
                 talkIcon?.Position = RuntimeHotspot == null ? GetOverheadPosition() : RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, -2);
 
             talkIcon?.Update(gameTime);
+
+            if (IsPlayer && Session.IsCurrentScene && !Session.IsAwaiting && !IsMoving && CanHandleInput)
+                FaceToMouseCursor();
         }
 
         #endregion
@@ -522,17 +562,10 @@ namespace ScaryCastle
             if (target != null)
                 FaceTo(target);
 
-            if (intent.ThrownObject != ThrownObjectType.None)
-            {
-                ThrowObject(intent);
-            }
-            else
-            {
-                var state = BodyMachine.FindOrCreateState<BodyCloseAttackState>();
-                state.Intent = intent;
-                state.Target = target;
-                BodyMachine.ChangeState(state.GetType());
-            }
+            var state = BodyMachine.FindOrCreateState<BodyCloseAttackState>();
+            state.Intent = intent;
+            state.Target = target;
+            BodyMachine.ChangeState(state.GetType());
         }
 
         // BodySize
@@ -589,6 +622,31 @@ namespace ScaryCastle
             }
         }
 
+        // CarriedProp
+        [ScriptProperty]
+        public Prop? CarriedProp
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    
+                    if (field != null)
+                    {
+                        carriedPropSprite ??= new Sprite() { PivotOrigin = RectanglePoint.Bottom };
+                        carriedPropSprite.RenderImage = Atlases.Environment.FindImage(field.DeclaredName);
+                        field.Unparent();
+                        Stand();
+                    }
+                }
+            }
+        }
+
+        // CarriedPropPosition
+        public Vector2? CarriedPropPosition => carriedPropSprite?.Position;
+
         // Cast
         public bool Cast(GameThing target, Item item)
         {
@@ -622,12 +680,6 @@ namespace ScaryCastle
         // FootstepSound
         [ScriptProperty]
         public Sound? FootstepSound { get; set; }
-
-        // GetThrowableSpawnPosition
-        public Vector2 GetThrowableSpawnPosition()
-        {
-            return this.GetAnchoredPosition(ThrownObjectSpawnPosition);
-        }
 
         // Guts
         [ScriptProperty]
@@ -682,6 +734,9 @@ namespace ScaryCastle
 
         // IsStandingOrMoving
         public bool IsStandingOrMoving => BodyMachine.CurrentState is BodyStandState or BodyMoveState;
+
+        // LastKnownAttacker
+        public GameThing? LastKnownAttacker { get; set; }
 
         // MoveRandomly
         [ScriptMethod]
@@ -772,9 +827,17 @@ namespace ScaryCastle
         // React
         public void React()
         {
-            Reaction = Brain.Decide(this);
+            UseBrain();
+
+            /*
+            if (LastKnownAttacker == null)
+                return;
+
+            Reaction = Brain.Decide(this, LastKnownAttacker);
+            LastKnownAttacker = null;
             if (Reaction != null)
                 PerformOutcome();
+            */
         }
 
         // Reaction
@@ -823,16 +886,18 @@ namespace ScaryCastle
         // SuspendRandomMoveUntilVisible
         public bool SuspendRandomMoveUntilVisible { get; set; }
 
-        // ThrownObjectSpawnPosition
-        [ScriptProperty]
-        public Vector2 ThrownObjectSpawnPosition { get; set; }
-
-        // ThrowObject
-        public void ThrowObject(CombatIntent combatIntent)
+        // ThrowCarriedProp
+        public void ThrowCarriedProp()
         {
+            if (CarriedProp is null)
+                return;
+
             var state = BodyMachine.FindOrCreateState<ActorThrowObjectState>();
-            state.CombatIntent = combatIntent;
+            state.Prop = CarriedProp;
             BodyMachine.ChangeState(state.GetType());
+
+            carriedPropSprite?.RenderImage = null;
+            CarriedProp = null;
         }
 
         /// <summary>

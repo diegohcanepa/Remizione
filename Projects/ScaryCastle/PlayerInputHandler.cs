@@ -111,6 +111,12 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
                 return false;
 
+            if (Actor.CarriedProp != null)
+            {
+                Actor.ThrowCarriedProp();
+                return true;
+            }
+
             // Drop held item
             if (Actor.Session.InteractionContext.HeldItem != null)
             {

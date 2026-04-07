@@ -20,13 +20,9 @@
             "Contact"
           ]
         },
-        "thrownObject": {
-          "type": "string",
-          "description": "Tipo de object arrojable.",
-          "enum": [
-            "None",
-            "Bible"
-          ]
+        "range": {
+          "type": "integer",
+          "default": 10
         },
         "sound": {
           "type": "string",

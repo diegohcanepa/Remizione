@@ -3,6 +3,14 @@
   "data": [
     {
       "name": "PotteryA",
+      "effects": [
+        {
+          "context": "Contact",
+          "effectType": "Damage",
+          "amount": "1",
+          "impactWord": "Kapow"
+        }
+      ],
       "placements": [
         "Floor"
       ]
@@ -10,26 +18,22 @@
     {
       "name": "PotteryB",
       "minRun": 10,
-      "placements": [
-      ]      
+      "placements": []
     },
     {
       "name": "PotteryC",
       "minRun": 10,
-      "placements": [
-      ]      
+      "placements": []
     },
     {
       "name": "PotteryD",
       "minRun": 10,
-      "placements": [
-      ]      
+      "placements": []
     },
     {
       "name": "PotteryE",
       "minRun": 10,
-      "placements": [
-      ]      
+      "placements": []
     },
     {
       "name": "Torch",
@@ -46,11 +50,10 @@
           "effectType": "Damage",
           "amount": "1",
           "knockback": "15,5",
-          "impactWord": "AghRed"          
+          "impactWord": "AghRed"
         }
       ],
-      "placements": [
-      ]      
+      "placements": []
     },
     {
       "name": "Trunk",
@@ -58,7 +61,7 @@
         "Floor"
       ],
       "maxPerRun": 5,
-      "spawnWeight": 0.3      
+      "spawnWeight": 0.3
     },
     {
       "name": "GoldenTrunk",

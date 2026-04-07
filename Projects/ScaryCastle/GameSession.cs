@@ -254,7 +254,7 @@ namespace ScaryCastle
 
             for (var i = currentRoom.Children.Count - 1; i >= 0; i--)
             {
-                if (currentRoom.Children[i] is ThrownObject thrownObject)
+                if (currentRoom.Children[i] is ThrownProp thrownObject)
                     thrownObject.Unparent();
             }
         }
@@ -593,8 +593,13 @@ namespace ScaryCastle
             if (Player != null)
             {
                 var rideRoom = CurrentRun.CurrentCorridor.RideRoom;
-                Player.Reheal();
-                HUDVisible = true;
+
+                if (CurrentRun.CorridorIndex == 0)
+                {
+                    Player.Reheal();
+                    HUDVisible = true;
+                }
+
                 rideRoom.Children.Add(Player);
                 if (rideRoom.WalkArea != null)
                     Player.Position = CurrentRun.CurrentCorridor.Definition.PlayerPosition;

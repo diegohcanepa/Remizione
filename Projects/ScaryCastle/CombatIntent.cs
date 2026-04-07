@@ -14,8 +14,8 @@ namespace ScaryCastle
             : base(element, false)
         {
             this.Category = element.GetEnum("category", CombatIntentCategory.Basic);
+            this.Range = element.GetInt32("range", 5);
             this.Sound = element.GetObject("sound", Sound.Get);
-            this.ThrownObject = element.GetEnum("thrownObject", ThrownObjectType.None);
             this.DisplayName = TextRepository.GetValue($"{nameof(CombatBehavior)}.{owner.Name}.{Name}");
         }
 
@@ -25,10 +25,10 @@ namespace ScaryCastle
         // DisplayName
         public string DisplayName { get; }
 
+        // Range
+        public int Range { get; }
+
         // Sound
         public Sound? Sound { get; }
-
-        // ThrownObject
-        public ThrownObjectType ThrownObject { get; }
     }
 }

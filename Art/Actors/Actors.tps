@@ -261,6 +261,10 @@
             <key type="filename">Edmund-assets/MoveAngry02.png</key>
             <key type="filename">Edmund-assets/MoveAngry03.png</key>
             <key type="filename">Edmund-assets/MoveAngry04.png</key>
+            <key type="filename">Edmund-assets/MoveCarry01.png</key>
+            <key type="filename">Edmund-assets/MoveCarry02.png</key>
+            <key type="filename">Edmund-assets/MoveCarry03.png</key>
+            <key type="filename">Edmund-assets/MoveCarry04.png</key>
             <key type="filename">Edmund-assets/PickUp01.png</key>
             <key type="filename">Edmund-assets/PickUp02.png</key>
             <key type="filename">Edmund-assets/PickUp03.png</key>
@@ -271,6 +275,7 @@
             <key type="filename">Edmund-assets/Stand02.png</key>
             <key type="filename">Edmund-assets/Stand03.png</key>
             <key type="filename">Edmund-assets/Stand04.png</key>
+            <key type="filename">Edmund-assets/StandCarry01.png</key>
             <key type="filename">Edmund-assets/StandHead01.png</key>
             <key type="filename">Edmund-assets/StandHead02.png</key>
             <key type="filename">Edmund-assets/TakeSack01.png</key>
@@ -279,8 +284,6 @@
             <key type="filename">Edmund-assets/TalkHead02.png</key>
             <key type="filename">Edmund-assets/ThrowObject01.png</key>
             <key type="filename">Edmund-assets/ThrowObject02.png</key>
-            <key type="filename">Edmund-assets/ThrowObject03.png</key>
-            <key type="filename">Edmund-assets/ThrowObject04.png</key>
             <key type="filename">Edmund-assets/TouchHead01.png</key>
             <key type="filename">Edmund-assets/TouchHead02.png</key>
             <key type="filename">Edmund-assets/UseCross01.png</key>

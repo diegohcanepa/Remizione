@@ -4,175 +4,147 @@ using System;
 
 namespace ScaryCastle
 {
-    /// <summary>
-    /// ShatterPiece
-    /// </summary>
     public class ShatterPiece : GameObject
     {
-        #region Private fields
+        private readonly Sprite _image;
+        private GameRoom? _room;
 
-        private float angularVelocity;
-        private const float bounceFactor = .8f;
-        private float delayTimer;
-        private const float gravity = 400;
-        private float groundY;
-        private readonly Sprite image;
-        private float launchDelay;
-        private bool launched;
+        private Vector2 _startPos;
+        private Vector2 _targetPos;
+        private float _arcHeight;
+        private float _duration;
+        private float _elapsed;
 
-        // OPTIMIZACIÓN: Flag para saber si ya se detuvo
-        private bool isStopped;
-
-        private GameRoom? room;
-        private static readonly Color shadowColor = Color.Black * .3f;
-        private static readonly Vector2 shadowOffset = new(.5f);
-        private Vector2 velocity;
-
-        #endregion
-
-        #region Constructor
+        private bool _isFirstBounce;
+        private bool _active;
+        private bool _isLaunched;
+        private float _launchDelay;
+        private Vector2 _direction;
+        private float _speed;
 
         public ShatterPiece(AtlasImage image, Vector2 scale)
         {
-            this.image = new(image)
-            {
-                PivotOrigin = RectanglePoint.Center,
-                Scale = scale
-            };
+            _image = new Sprite(image) { PivotOrigin = RectanglePoint.Center, Scale = scale };
         }
 
-        #endregion
-
-        #region Protected members
-
-        protected override void OnDraw(GameTime gameTime)
+        public void Launch(GameThing owner)
         {
-            if (launched)
+            _room = owner.Session.Room;
+            _startPos = new Vector2(owner.X, owner.Y);
+
+            float angle = (float)(Random.Shared.NextDouble() * Math.PI * 2);
+            // 0.45f es el punto medio: ni muy chato ni muy esparcido en profundidad
+            _direction = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle) * 0.45f);
+
+            // Velocidad balanceada: 30-50
+            _speed = Random.Shared.Next(30, 55);
+
+            _isFirstBounce = true;
+            _active = true;
+            _isLaunched = false;
+
+            // Un delay un poco más variado (hasta 0.15s) para que no salgan en bloque
+            _launchDelay = (float)Random.Shared.NextDouble() * 0.15f;
+
+            CalculateNextArc(10, 18);
+        }
+
+        private void CalculateNextArc(float minHeight, float maxHeight)
+        {
+            _elapsed = 0;
+            _arcHeight = Random.Shared.Next((int)minHeight, (int)maxHeight);
+            _duration = _isFirstBounce ? 0.35f : 0.2f;
+
+            Vector2 tentativeTarget = _startPos + (_direction * _speed * _duration);
+
+            if (_room?.WalkArea is { } walkArea)
             {
-                var c = image.Color;
+                var bounds = walkArea.Polygon.BoundingRectangleF;
 
-                image.Position += shadowOffset;
-                image.Color = shadowColor;
-                image.Draw(gameTime);
-                image.Color = c;
-                image.Position -= shadowOffset;
+                tentativeTarget.X = MathHelper.Clamp(tentativeTarget.X, bounds.Left + 2, bounds.Right - 2);
+                tentativeTarget.Y = MathHelper.Clamp(tentativeTarget.Y, bounds.Top + 2, bounds.Bottom - 2);
 
-                image.Draw(gameTime);
+                if (!walkArea.Contains(tentativeTarget))
+                {
+                    if (tentativeTarget.Y < bounds.Top + 15)
+                    {
+                        _direction.Y = Math.Abs(_direction.Y);
+                        _direction.X = -_direction.X;
+                    }
+                    else if (tentativeTarget.Y > bounds.Bottom - 10)
+                    {
+                        _direction.Y = -Math.Abs(_direction.Y);
+                    }
+                    else
+                    {
+                        _direction.X = -_direction.X;
+                    }
+
+                    int safety = 0;
+                    while (!walkArea.Contains(tentativeTarget) && safety < 10)
+                    {
+                        tentativeTarget = Vector2.Lerp(tentativeTarget, _startPos, 0.5f);
+                        safety++;
+                    }
+                }
             }
+
+            _targetPos = tentativeTarget;
         }
 
         protected override void OnUpdate(GameTime gameTime)
         {
-            // OPTIMIZACIÓN: Si ya se detuvo, no calculamos nada más.
-            if (isStopped) return;
-
+            if (!_active) return;
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (!launched)
+            if (!_isLaunched)
             {
-                delayTimer += dt;
-                if (delayTimer >= launchDelay)
-                {
-                    velocity = new(Random.Shared.Next(-35f, 35f), Random.Shared.Next(-20f, 10f));
-                    angularVelocity = Random.Shared.Next(-5f, 5f);
-                    launched = true;
-                }
+                _launchDelay -= dt;
+                if (_launchDelay <= 0) _isLaunched = true;
                 return;
             }
 
-            velocity.Y += gravity * dt;
+            _elapsed += dt;
+            float t = MathHelper.Clamp(_elapsed / _duration, 0, 1);
 
-            // Guardamos X anterior para evitar tunneling (el fix anterior)
-            float previousX = image.X;
+            Vector2 groundPos = Vector2.Lerp(_startPos, _targetPos, t);
+            float height = 4 * _arcHeight * t * (1 - t);
 
-            image.X += velocity.X * dt;
-            image.Y += velocity.Y * dt;
+            _image.Position = new Vector2(groundPos.X, groundPos.Y - height);
+            _image.Rotation += dt * (_speed / 5f);
 
-            image.Rotation += angularVelocity * dt;
-
-            // Lógica de suelo y detención
-            if (image.Y >= groundY)
+            if (t >= 1)
             {
-                image.Y = groundY;
-                velocity.Y *= -bounceFactor;
-                velocity.X *= .7f;      // Fricción del suelo
-                angularVelocity *= .7f; // Fricción de rotación
-
-                // Si el rebote vertical es muy pequeño, lo anulamos
-                if (Math.Abs(velocity.Y) < 6f)
+                if (_isFirstBounce)
                 {
-                    velocity.Y = 0;
+                    _isFirstBounce = false;
+                    _startPos = _targetPos;
+                    _speed *= 0.25f; // Un poquito más de inercia para el segundo rebote
+                    CalculateNextArc(3, 7);
                 }
-
-                // OPTIMIZACIÓN: Chequeo de detención total
-                // Si no rebota en Y, y la velocidad en X es casi nula (menor a 1 pixel/segundo)
-                if (velocity.Y == 0 && Math.Abs(velocity.X) < 1f)
+                else
                 {
-                    velocity = Vector2.Zero;
-                    angularVelocity = 0;
-                    isStopped = true; // Dejamos de actualizar desde el próximo frame
+                    _active = false;
                 }
-            }
-
-            // Chequeo de WalkArea (solo si no se ha detenido aún)
-            if (!isStopped && CheckWalkAreaCollision())
-            {
-                image.X = previousX;
-            }
-
-            // Solo actualizamos el sprite si se mueve o anima
-            if (!isStopped)
-            {
-                image.Update(gameTime);
             }
         }
 
-        #endregion
-
-        // CheckWalkAreaCollision
-        private bool CheckWalkAreaCollision()
+        protected override void OnDraw(GameTime gameTime)
         {
-            if (room?.WalkArea is WalkArea walkArea)
-            {
-                if (image.Y >= walkArea.Polygon.BoundingRectangleF.Top && !walkArea.Contains(image.Position))
-                {
-                    velocity = new Vector2(-velocity.X, velocity.Y) * RandomHelper.Next(Random.Shared, .2f, .5f);
-                    return true;
-                }
-            }
-            return false;
-        }
+            if (!_active && _elapsed == 0) return;
 
-        // Launch
-        public void Launch(GameThing owner)
-        {
-            var bounds = owner.BoundingBox;
-            float yOffset = Random.Shared.Next(-4f, 2f);
+            var piecePos = _image.Position;
+            var pieceColor = _image.Color;
 
-            image.Position = new(Random.Shared.Next(bounds.Left + 5f, bounds.Right - 5f),
-                                Random.Shared.Next(bounds.Top, bounds.Bottom) + yOffset);
-
-            groundY = owner.Y + Random.Shared.Next(-3, 4);
-            launchDelay = Random.Shared.Next(0, .1f);
-            delayTimer = 0;
-            room = owner.Session.Room;
-            launched = false;
-
-            // Reiniciamos el estado para que pueda volver a moverse si se relanza
-            isStopped = false;
-        }
-
-        // Propiedades...
-        public float Opacity
-        {
-            get => image.Opacity;
-            set => image.Opacity = value;
+            _image.Position = piecePos;
+            _image.Color = pieceColor;
+            _image.Draw(gameTime);
         }
 
         public Vector2 Scale
         {
-            get => image.Scale;
-            set => image.Scale = value;
+            get => _image.Scale;
+            set => _image.Scale = value;
         }
     }
 }
