@@ -14,6 +14,11 @@ namespace ScaryCastle
         // Un valor bajo (0.2) crea un comportamiento de "acecho".
         public abstract Ratio AttackChance { get; }
 
+        // ConsiderContactAsIntent
+        // Por defecto, la mayoría de los enemigos no usan el "Contacto" como un ataque 
+        // que el Brain deba elegir (es pasivo). Pero un lurker SÍ.
+        public virtual bool ConsiderContactAsIntent => false;
+
         // FleeChance
         // Probabilidad de que efectivamente huya una vez herido.
         public abstract Ratio FleeChance { get; }
@@ -21,6 +26,17 @@ namespace ScaryCastle
         // FleeHPThreshold
         // Umbral de vida (0 a 1) por debajo del cual el NPC considera huir.
         public abstract Ratio FleeHPThreshold { get; }
+
+        // GetDecisionType
+        public virtual CombatDecisionType GetDecisionType(CombatIntent intent)
+        {
+            // Por defecto, si es contacto, asumimos que hay que "cargar"
+            // pero permitimos que otros arquetipos digan que no.
+            if (string.Equals(intent.Name, CombatIntent.ContactIntentName, StringComparison.OrdinalIgnoreCase))
+                return CombatDecisionType.Charge;
+
+            return CombatDecisionType.Attack;
+        }
 
         // GetIntentWeight
         // Calcula el peso específico de un intent. 
@@ -42,9 +58,7 @@ namespace ScaryCastle
         // SelectIntent
         // Selecciona un ataque de la lista disponible basándose en pesos y distancia.
         public virtual CombatIntent? SelectIntent(Actor actor, IList<CombatIntent> intents, float distance)
-        {
-            const string ContactIntentName = "Contact";
-
+        {        
             if (intents == null || intents.Count == 0)
                 return null;
 
@@ -57,8 +71,10 @@ namespace ScaryCastle
             {
                 var intent = intents[i];
 
-                // Ignoramos intents de "contacto" o no ofensivos si el sistema así lo requiere
-                if (intent.Name == ContactIntentName) // O el filtro que usaras antes
+                // FILTRO CRÍTICO:
+                // Si el intent se llama "Contact" y este arquetipo NO lo considera 
+                // un ataque elegible, lo ignoramos.
+                if (string.Equals(intent.Name, CombatIntent.ContactIntentName, StringComparison.OrdinalIgnoreCase) && !ConsiderContactAsIntent)
                 {
                     weights[i] = 0;
                     continue;

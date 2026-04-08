@@ -16,10 +16,10 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private const float AttackLaneThickness = 4;
+        private const float attackLaneThickness = 4;
+        private int brainTimer;
         private Sprite? carriedPropSprite;
         private readonly List<AtlasImage>? customGuts;
-        private int decisionTimer;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
@@ -147,6 +147,25 @@ namespace ScaryCastle
             }
         }
 
+        // UpdateBrain
+        private void UpdateBrain(GameTime gameTime)
+        {
+            // Can use brain?
+            if (IsPlayer || CombatBehavior == null || !IsAngry)
+                return;
+
+            // Can update timer?
+            if (IsMoving || Session.IsAwaiting || IsAttacking)
+                return;
+
+            brainTimer -= gameTime.ElapsedGameTime.Milliseconds;
+            if (brainTimer <= 0)
+            {
+                UseBrain();
+                brainTimer = CombatBehavior.Archetype.GetNextCooldown();
+            }
+        }
+
         // UpdateDirection
         private void UpdateDirection()
         {
@@ -191,11 +210,19 @@ namespace ScaryCastle
         {
             if (Brain.Decide(this, Session.Player) is CombatDecision decision)
             {
-                if (decision.Type == CombatDecisionType.Flee)
+                if (decision.Type == CombatDecisionType.Charge)
+                {
+                    if (Session.Player != null)
+                        MoveTo(Session.Player.Position);
+                }
+                else if (decision.Type == CombatDecisionType.Move)
+                {
                     MoveRandomly();
-
+                }
                 else if (decision.Type == CombatDecisionType.Attack && decision.Intent != null)
+                {
                     Attack(decision.Intent, Session.Player);
+                }
             }
         }
 
@@ -252,9 +279,8 @@ namespace ScaryCastle
         protected override void OnActivate()
         {
             base.OnActivate();
-
-            if (decisionTimer <= 0)
-                decisionTimer = CombatBehavior == null ? 2000 : CombatBehavior.Archetype.GetNextCooldown();
+            if (brainTimer <= 0)
+                brainTimer = CombatBehavior?.Archetype.GetNextCooldown() ?? 2000;
         }
 
         // OnCollisioning
@@ -412,7 +438,7 @@ namespace ScaryCastle
             else if (IsHostile(attacker) && !IsDead)
             {
                 IsAngry = true;
-                decisionTimer = 1;
+                brainTimer = 1;
             }
 
             Session.ObjectPools.FloatingTexts.Get()?.ShowHPAmount(this, amount, true);
@@ -448,24 +474,7 @@ namespace ScaryCastle
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
 
-            if (!IsPlayer)
-            {
-                if (decisionTimer > 0)
-                {
-                    if (!IsMoving && !Session.IsAwaiting)
-                    {
-                        if (decisionTimer > 0)
-                        {
-                            decisionTimer -= gameTime.ElapsedGameTime.Milliseconds;
-                            if (decisionTimer <= 0)
-                            {
-                                UseBrain();
-                                decisionTimer = CombatBehavior == null ? 2000 : CombatBehavior.Archetype.GetNextCooldown();
-                            }
-                        }
-                    }
-                }
-            }
+            UpdateBrain(gameTime);
 
             if (!IsMoving)
                 talkIcon?.Position = RuntimeHotspot == null ? GetOverheadPosition() : RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, -2);
@@ -698,7 +707,7 @@ namespace ScaryCastle
         {
             // CONDICIÓN Y: Debe estar en mi misma línea de profundidad
             float dy = Math.Abs(Position.Y - target.Y);
-            return dy <= AttackLaneThickness;
+            return dy <= attackLaneThickness;
         }
 
         // IsFollowingPath

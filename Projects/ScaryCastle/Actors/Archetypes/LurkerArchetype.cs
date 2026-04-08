@@ -12,10 +12,15 @@ namespace ScaryCastle
     {
         // Solo el 22% de las veces que el Brain procesa, decidirá morder.
         // Esto genera esa sensación de que "anda por ahí caminando" antes de saltar.
-        public override Ratio AttackChance => 0.22f;
+        public override Ratio AttackChance => .22f;
 
-        // Las ratas en este diseño son persistentes: solo huyen si están al borde de la muerte.
+        // ConsiderContactAsIntent
+        public override bool ConsiderContactAsIntent => true;
+
+        // FleeHPThreshold
         public override Ratio FleeHPThreshold => 0.08f;
+
+        // FleeChance
         public override Ratio FleeChance => 0.15f;
 
         // El Lurker usa 'Move' para merodear cuando no está atacando.

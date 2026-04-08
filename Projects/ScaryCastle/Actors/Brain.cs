@@ -43,7 +43,7 @@ namespace ScaryCastle
                     {
                         // Crítica de diseño: El Lurker usa Charge para representar su salto/mordida repentina.
                         // El resto usa Attack normal.
-                        var type = archetype is LurkerArchetype ? CombatDecisionType.Charge : CombatDecisionType.Attack;
+                        var type = archetype.GetDecisionType(intent);
                         return new CombatDecision(type, intent);
                     }
                 }

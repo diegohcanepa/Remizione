@@ -56,6 +56,7 @@
         {
           "name": "Contact",
           "sound": "RatAttack",
+          "range": 50,
           "effects": [
             {
               "context": "Contact",

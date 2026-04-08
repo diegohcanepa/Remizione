@@ -13,10 +13,7 @@ namespace ScaryCastle
         // Coward
         //public static CombatArchetype Coward { get; } = new CowardArchetype();
 
-        // Lurker
-        public static CombatArchetype Lurker { get; } = new LurkerArchetype();
-
-        // Si necesitas buscarlos por el Enum que tenías antes:
+        // Get
         public static CombatArchetype Get(CombatArchetypeName archetypeName)
         {
             return archetypeName switch
@@ -27,5 +24,8 @@ namespace ScaryCastle
                 _ => throw new ArgumentOutOfRangeException(nameof(archetypeName))
             };
         }
+
+        // Lurker
+        public static CombatArchetype Lurker { get; } = new LurkerArchetype();
     }
 }

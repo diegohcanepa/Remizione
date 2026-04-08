@@ -22,6 +22,9 @@ namespace ScaryCastle
         // Category
         public CombatIntentCategory Category { get; }
 
+        // ContactIntentName
+        public const string ContactIntentName = "Contact";
+
         // DisplayName
         public string DisplayName { get; }
 
