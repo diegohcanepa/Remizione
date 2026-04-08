@@ -25,10 +25,10 @@ namespace ScaryCastle
             CodeContract.ValidName(this.Name, string.Empty);
 
             // Archetype
-            if (element.GetEnum<CombatBehaviorArchetype>("archetype") is not CombatBehaviorArchetype archetype)
+            if (element.GetEnum<CombatArchetypeName>("archetype") is not CombatArchetypeName archetype)
                 throw new InvalidOperationException("Missing archetype property.");
             else
-                this.Archetype = archetype;
+                this.Archetype = Archetypes.Get(archetype);
 
             // Intents
             if (element.TryGetProperty("intents", out JsonElement intentsArray))
@@ -47,7 +47,7 @@ namespace ScaryCastle
         #endregion
 
         // Archetype
-        public CombatBehaviorArchetype Archetype { get; }
+        public CombatArchetype Archetype { get; }
 
         // Behaviors
         public static DataContainer<CombatBehavior> Behaviors { get; } = new(element => new CombatBehavior(element));

@@ -21,6 +21,7 @@ namespace ScaryCastle.Scripting
         // OnExecute
         protected override void OnExecute()
         {
+            /*
             if (Session is not GameSession session || session.Player == null)
                 return;
 
@@ -33,6 +34,7 @@ namespace ScaryCastle.Scripting
                         npc.Attack(decision.Intent, session.Player);
                 }
             }
+            */
         }
 
         // OnUpdate

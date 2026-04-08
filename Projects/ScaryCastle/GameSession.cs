@@ -279,20 +279,6 @@ namespace ScaryCastle
             InteractionContext.HeldItem = null;
         }
 
-        // OnOutcomeCompleted
-        protected override void OnOutcomeCompleted(Thing target)
-        {
-            if (target is Actor actor && actor.Reaction != null)
-            {
-                actor.Reaction = null;
-            }
-            else
-            {
-                ReactiveActor?.React();
-                ReactiveActor = null;
-            }
-        }
-
         // OnPause
         protected override void OnPause()
         {
@@ -651,9 +637,6 @@ namespace ScaryCastle
 
         // Random
         public Random Random { get; private set; }
-
-        // ReactiveActor
-        public Actor? ReactiveActor { get; set; }
 
         // Room
         [ScriptProperty]

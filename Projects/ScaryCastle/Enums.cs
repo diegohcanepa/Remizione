@@ -22,8 +22,8 @@ namespace ScaryCastle
     // BodySize
     public enum BodySize { Small, Medium, Large }
 
-    // CombatBehaviorArchetype
-    public enum CombatBehaviorArchetype { Lurker, Tactical, Berserk, Coward }
+    // CombatArchetypeName
+    public enum CombatArchetypeName { Lurker, Tactical, Berserk, Coward }
 
     // CombatDecisionType
     public enum CombatDecisionType { None, Attack, Flee, Charge, Move }

@@ -136,8 +136,8 @@ namespace ScaryCastle
             {
                 if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
                 {
-                    Sound.Play(SoundNames.Interact);
                     Inventory.Session.ShowEcho(item.Definition.Description, false, item.Definition.Image);
+                    Sound.Play(SoundNames.Interact);
                 }
             }
 

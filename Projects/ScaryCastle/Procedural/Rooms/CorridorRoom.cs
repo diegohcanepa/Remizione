@@ -124,8 +124,6 @@ namespace ScaryCastle
             if (RoomNode.Definition.GuardActorPosition is Vector2 position)
             {
                 this.Guard = SpawnActor(ActorRole.Guard, position);
-                this.Guard?.SuspendRandomMoveUntilVisible = true;
-
                 Session.HUD.GuardMeter.Target = Guard;
             }
         }

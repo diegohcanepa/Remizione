@@ -19,6 +19,7 @@ namespace ScaryCastle
         private const float AttackLaneThickness = 4;
         private Sprite? carriedPropSprite;
         private readonly List<AtlasImage>? customGuts;
+        private int decisionTimer;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
@@ -26,7 +27,6 @@ namespace ScaryCastle
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private readonly List<Vector2> pendingPathNodes = [];
-        private int randomMoveTimer;
         private SpeechBubble? speechBubble;
         private Sprite? talkIcon;
 
@@ -253,8 +253,8 @@ namespace ScaryCastle
         {
             base.OnActivate();
 
-            if (RandomMoveCooldown > 0)
-                randomMoveTimer = (int)(Random.Shared.NextDouble() * RandomMoveCooldown);
+            if (decisionTimer <= 0)
+                decisionTimer = CombatBehavior == null ? 2000 : CombatBehavior.Archetype.GetNextCooldown();
         }
 
         // OnCollisioning
@@ -266,8 +266,6 @@ namespace ScaryCastle
         // OnDie
         protected override void OnDie()
         {
-            Reaction = null;
-
             if (Guts > 0 || customGuts?.Count > 0)
             {
                 if (Room != null)
@@ -414,7 +412,7 @@ namespace ScaryCastle
             else if (IsHostile(attacker) && !IsDead)
             {
                 IsAngry = true;
-                Session.ReactiveActor = this;
+                decisionTimer = 1;
             }
 
             Session.ObjectPools.FloatingTexts.Get()?.ShowHPAmount(this, amount, true);
@@ -450,35 +448,21 @@ namespace ScaryCastle
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
 
-            if (RandomMoveCooldown > 0)
+            if (!IsPlayer)
             {
-                if (!IsMoving && !Session.IsAwaiting)
+                if (decisionTimer > 0)
                 {
-                    if (randomMoveTimer > 0)
+                    if (!IsMoving && !Session.IsAwaiting)
                     {
-                        randomMoveTimer -= gameTime.ElapsedGameTime.Milliseconds;
-                    }
-                    else
-                    {
-                        if (SuspendRandomMoveUntilVisible)
+                        if (decisionTimer > 0)
                         {
-                            if (IsInViewport)
-                                SuspendRandomMoveUntilVisible = false;
+                            decisionTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                            if (decisionTimer <= 0)
+                            {
+                                UseBrain();
+                                decisionTimer = CombatBehavior == null ? 2000 : CombatBehavior.Archetype.GetNextCooldown();
+                            }
                         }
-                        else
-                        {
-                            UseBrain();
-
-                            /*
-                            if (Session.Player != null && Random.Shared.NextDouble() <= RandomMoveAggressiveness)
-                                MoveTo(Session.Player.Position);
-                            else
-                                MoveRandomly();
-                            */
-                        }
-
-                        int jitter = (int)(((Random.Shared.NextDouble() * 2) - 1) * (RandomMoveCooldown * .1f));
-                        randomMoveTimer = RandomMoveCooldown + jitter;
                     }
                 }
             }
@@ -815,33 +799,6 @@ namespace ScaryCastle
             }
         }
 
-        // RandomMoveCooldown
-        [ScriptProperty]
-        public int RandomMoveCooldown { get; set; }
-
-        // React
-        public void React()
-        {
-            UseBrain();
-
-            /*
-            if (LastKnownAttacker == null)
-                return;
-
-            Reaction = Brain.Decide(this, LastKnownAttacker);
-            LastKnownAttacker = null;
-            if (Reaction != null)
-                PerformOutcome();
-            */
-        }
-
-        // Reaction
-        public CombatDecision? Reaction { get; set; }
-
-        // ReactionType
-        [ScriptProperty]
-        public CombatDecisionType ReactionType => Reaction?.Type ?? CombatDecisionType.None;
-
         // Say
         public void Say(string text, bool awaitInput)
         {
@@ -877,9 +834,6 @@ namespace ScaryCastle
             else
                 Stand();
         }
-
-        // SuspendRandomMoveUntilVisible
-        public bool SuspendRandomMoveUntilVisible { get; set; }
 
         // ThrowCarriedProp
         public void ThrowCarriedProp()
