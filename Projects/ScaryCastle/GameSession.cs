@@ -147,8 +147,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
             AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
-            AotTypeRegistry.Register("await-npc-attack", typeof(AwaitNPCAttackCommand));
-            AotTypeRegistry.Register("await-player-attack", typeof(AwaitPlayerAttackCommand));
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
             AotTypeRegistry.Register("cast-lightning", typeof(CastLightningCommand));
             AotTypeRegistry.Register("create-dialog-block", typeof(CreateDialogBlockCommand));
@@ -159,6 +157,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("if-test-skill", typeof(IfTestSkillStatement));
             AotTypeRegistry.Register("pickup-loot", typeof(PickUpLootCommand));
             AotTypeRegistry.Register("place-item", typeof(PlaceItemCommand));
+            AotTypeRegistry.Register("player-attack", typeof(PlayerAttackCommand));
             AotTypeRegistry.Register("say", typeof(SayCommand));
             AotTypeRegistry.Register("select-walk-area", typeof(SelectWalkAreaCommand));
             AotTypeRegistry.Register("set-light", typeof(SetLightCommand));
@@ -442,9 +441,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // CurrentRun
-        public Run? CurrentRun { get; private set; }
-
         // BeginRun
         [ScriptMethod]
         public void BeginRun()
@@ -467,6 +463,9 @@ namespace ScaryCastle
             EndRun();
             RunCount++;
         }
+
+        // CurrentRun
+        public Run? CurrentRun { get; private set; }
 
         // DeclaredThings
         public NamedObjectReadOnlyCollection<GameThing> DeclaredThings { get; }
@@ -518,6 +517,10 @@ namespace ScaryCastle
         // Game
         public new ScaryCastleGame Game { get; }
 
+        // Guard
+        [ScriptProperty]
+        public Actor? Guard { get; set; }
+
         // HUD
         public HUD HUD { get; }
 
@@ -567,6 +570,9 @@ namespace ScaryCastle
 
             CleanUpRuntimeEntities();
 
+            Guard = null;
+            HUD.GuardMeter.Target = null;
+
             if (!CurrentRun.LoadNextCorridor(this))
             {
                 CompleteRun();
@@ -589,6 +595,7 @@ namespace ScaryCastle
                 rideRoom.Children.Add(Player);
                 if (rideRoom.WalkArea != null)
                     Player.Position = CurrentRun.CurrentCorridor.Definition.PlayerPosition;
+                Player.Direction = FacingDirection.Right;
                 Camera.Follow(Player, true);
                 EnterRoom(rideRoom);
             }
@@ -680,6 +687,13 @@ namespace ScaryCastle
         {
             echoScene.Show(text, allowTyping, image);
             Game.SceneManager.Push(echoScene);
+        }
+
+        // ShowGuardMeter
+        [ScriptMethod]
+        public void ShowGuardMeter()
+        {
+            HUD.GuardMeter.Target = Guard;
         }
     }
 }

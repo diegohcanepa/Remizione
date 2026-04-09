@@ -16,7 +16,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private int angryTimer;
         private const float attackLaneThickness = 4;
         private Sprite? carriedPropSprite;
         private readonly List<AtlasImage>? customGuts;
@@ -29,7 +28,6 @@ namespace ScaryCastle
         private readonly List<Vector2> pendingPathNodes = [];
         private int reactionTimer;
         private SpeechBubble? speechBubble;
-        private Sprite? talkIcon;
 
         #endregion
 
@@ -108,19 +106,7 @@ namespace ScaryCastle
                 FaceTo(mousePos);
             }
         }
-
-        // GetAngryTimerCooldown
-        private int GetAngryTimerCooldown()
-        {
-            return Definition != null ? Definition.Difficulty switch
-            {
-                Difficulty.Easy => 10000,
-                Difficulty.Normal => 20000,
-                Difficulty.Hard => 30000,
-                _ => 30000
-            } : 0;
-        }
-
+        
         // HandlePendingInteraction
         private void HandlePendingInteraction()
         {
@@ -153,7 +139,13 @@ namespace ScaryCastle
                 }
                 else if (decision.Type == CombatDecisionType.Flee)
                 {
-                    MoveTo(new(X - 30, Y));
+                    if (Session.Player != null)
+                    {
+                        if (Direction == FacingDirection.Left)
+                            MoveTo(new(X + 30, Y));
+                        else
+                            MoveTo(new(X - 30, Y));
+                    }
                 }
                 else if (decision.Type == CombatDecisionType.Move)
                 {
@@ -183,17 +175,6 @@ namespace ScaryCastle
                 if (headSprite.Animations.Find(AnimationNames.Stand) != null)
                     headSprite.Player.Play(AnimationNames.Stand);
             }
-        }
-
-        // UpdateAngryTimer
-        private void UpdateAngryTimer(GameTime gameTime)
-        {
-            if (IsAngry || angryTimer <= 0 || Session.IsAwaiting)
-                return;
-
-            angryTimer -= gameTime.ElapsedGameTime.Milliseconds;
-            if (angryTimer <= 0)
-                IsAngry = true;
         }
 
         // UpdateReactionTimer
@@ -308,9 +289,6 @@ namespace ScaryCastle
         {
             base.OnActivate();
 
-            if (!IsAngry && !IsPlayer)
-                angryTimer = GetAngryTimerCooldown();
-
             if (reactionTimer <= 0)
                 reactionTimer = CombatBehavior?.Archetype.GetNextCooldown() ?? 2000;
         }
@@ -401,9 +379,6 @@ namespace ScaryCastle
                 Rotation -= moveBalancingTween.CurrentValue;
 
             footstepEffect?.Draw(gameTime);
-
-            if (!Session.IsAwaiting && !IsMoving && CanTalk)
-                talkIcon?.Draw(gameTime);
         }
 
         // OnInitialize
@@ -470,8 +445,6 @@ namespace ScaryCastle
             else if (IsHostile(attacker) && !IsDead)
             {
                 IsAngry = true;
-                Faction = Faction.Evil;
-                reactionTimer = 1;
             }
 
             Session.ObjectPools.FloatingTexts.Get()?.ShowHPAmount(this, amount, true);
@@ -507,13 +480,7 @@ namespace ScaryCastle
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
 
-            UpdateAngryTimer(gameTime);
             UpdateReactionTimer(gameTime);
-
-            if (!IsMoving)
-                talkIcon?.Position = RuntimeHotspot == null ? GetOverheadPosition() : RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, -2);
-
-            talkIcon?.Update(gameTime);
 
             if (IsPlayer && CarriedProp != null && Session.IsCurrentScene && !Session.IsAwaiting && !IsMoving && CanHandleInput)
                 FaceToMouseCursor();
@@ -571,7 +538,7 @@ namespace ScaryCastle
             var destination = target.GetApproachPosition(this, Session.InteractionData.InteractionType == InteractionType.Headbutt ? ApproachBehavior.ClosestSide : null);
             var result = target != this && MoveTo(destination);
 
-            if (result && !Session.InteractionContext.HeadbuttMode && target is Actor actor && !actor.CanTalk)
+            if (result && !Session.InteractionContext.HeadbuttMode && target is Actor actor && actor.IsAngry)
                 result = false;
 
             if (!result)
@@ -627,23 +594,6 @@ namespace ScaryCastle
             else
             {
                 return base.CanTakeDamage();
-            }
-        }
-
-        // CanTalk
-        [ScriptProperty]
-        public bool CanTalk
-        {
-            get;
-            set
-            {
-                field = value;
-                talkIcon ??= new Sprite(Atlases.UI.TalkIcon)
-                {
-                    PivotOrigin = RectanglePoint.Bottom
-                };
-
-                talkIcon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.One, Vector2.One * .95f, 200, -1);
             }
         }
 
@@ -731,7 +681,26 @@ namespace ScaryCastle
 
         // IsAngry
         [ScriptProperty]
-        public bool IsAngry { get; set; }
+        public bool IsAngry
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    
+                    if (value)
+                    {
+                        Faction = Faction.Evil;
+                        reactionTimer = 1;
+
+                        if (Session.Guard == this)
+                            Session.HUD.GuardMeter.Target = this;
+                    }
+                }
+            }
+        }
 
         // IsAttacking
         public bool IsAttacking => BodyMachine.CurrentState is BodyCloseAttackState;
@@ -745,9 +714,26 @@ namespace ScaryCastle
             var destX = Direction == FacingDirection.Left ? int.MaxValue : int.MinValue;
             var destination = Room.WalkArea.ClampInside(new(destX, Y));
 
-            var distanceToTarget = target != null ? DistanceTo(target.Position) : float.MaxValue;
+            var distanceToTarget = float.MaxValue;
+            if (target != null)
+            {
+                if (target.X < X)
+                {
+                    distanceToTarget = Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom), RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom));
+                }
+                else
+                {
+                    distanceToTarget = Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom), RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom));
+                }
+            }
 
-            return Vector2.Distance(Position, destination) < 30 || distanceToTarget < 20;
+            float distanceToWall;
+            if (Direction == FacingDirection.Left)
+                distanceToWall = Vector2.Distance(RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom), destination);
+            else
+                distanceToWall = Vector2.Distance(RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom), destination);
+
+            return distanceToWall < 40 && distanceToTarget < 20;
         }
 
         // IsInAttackLane

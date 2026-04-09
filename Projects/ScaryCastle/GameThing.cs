@@ -739,7 +739,7 @@ namespace ScaryCastle
 
             // Distancia de "respeto" (Spacing)
             // Si soy un Actor (NPC), dejo espacio para conversar. Si soy un objeto, te puedes pegar más.
-            float spacing = (this is Actor) ? requesterBox.Width + 3 : requesterBox.Width / 2;
+            float spacing = (this is Actor) ? requesterBox.Width : requesterBox.Width / 2;
 
             float targetX = X; // Default
 

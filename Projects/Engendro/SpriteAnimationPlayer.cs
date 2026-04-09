@@ -138,10 +138,7 @@ namespace Engendro
         // GetFrameSubArea
         public RectangleF GetFrameSubArea()
         {
-            if (Frame != null)
-                return sprite.GetAbsoluteBounds(Frame.SubArea);
-            else
-                return RectangleF.Empty;
+            return Frame != null ? sprite.GetAbsoluteBounds(Frame.SubArea) : RectangleF.Empty;
         }
 
         // GoTo

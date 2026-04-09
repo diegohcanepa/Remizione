@@ -62,7 +62,7 @@ namespace ScaryCastle
             if (!Visited)
             {
                 if (Session.ScriptLibrary.FindRoutine(CorridorLeftGateRoutineName) is Script script)
-                    Session.ScriptProcessor.StartScript(script);
+                    Session.AwaitScript(script);
             }
         }
 
@@ -71,9 +71,9 @@ namespace ScaryCastle
         {
             base.OnChildRemoved(child);
 
-            if (child == Guard)
+            if (child == Session.Guard)
             {
-                Guard = null;
+                Session.Guard = null;
 
                 if (Session.ScriptLibrary.FindRoutine(CorridorRightGateRoutineName) is Script script)
                 {
@@ -122,15 +122,9 @@ namespace ScaryCastle
 
             // Corridor guard
             if (RoomNode.Definition.GuardActorPosition is Vector2 position)
-            {
-                this.Guard = SpawnActor(ActorRole.Guard, position);
-                Session.HUD.GuardMeter.Target = Guard;
-            }
+                Session.Guard = SpawnActor(ActorRole.Guard, position);
         }
 
         #endregion
-
-        // Guard
-        public Actor? Guard { get; private set; }
     }
 }

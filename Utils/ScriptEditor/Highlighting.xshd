@@ -91,13 +91,13 @@
 			<Word>await-credits</Word>
 			<Word>await-dialog-block</Word>
 			<Word>await-dialog</Word>
-			<Word>await-enter-room</Word>			
+			<Word>await-enter-room</Word>
+			<Word>await-guard-intro</Word>
 			<Word>await-input</Word>
 			<Word>await-message</Word>
 			<Word>await-monitor-text</Word>
 			<Word>await-move</Word>
 			<Word>await-music</Word>
-			<Word>await-npc-attack</Word>
 			<Word>await-opacity-tween</Word>
 			<Word>await-option-menu</Word>
 			<Word>await-outcome-completion</Word>

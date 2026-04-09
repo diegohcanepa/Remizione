@@ -21,7 +21,7 @@
     },
     {
       "name": "EnviousEye",
-      "archetype": "Lurker",
+      "archetype": "Tactical",
       "intents": [
         {
           "name": "Contact",

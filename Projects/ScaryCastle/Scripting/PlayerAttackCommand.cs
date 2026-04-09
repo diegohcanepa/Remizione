@@ -3,16 +3,16 @@ using Microsoft.Xna.Framework;
 
 namespace ScaryCastle.Scripting
 {
-    // AwaitPlayerAttackCommand
+    // PlayerAttackCommand
     // Arguments: {CombatIntent} {Target:GameThing}
     [ScriptStatement(CodingContext.Execution)]
     [ForceAwait]
-    internal sealed class AwaitPlayerAttackCommand : AwaitableCommand
+    internal sealed class PlayerAttackCommand : NonAwaitableCommand
     {
         private Actor? player;
 
         // Constructor
-        internal AwaitPlayerAttackCommand(Script script, string source, StatementBody args)
+        internal PlayerAttackCommand(Script script, string source, StatementBody args)
             : base(script, source, args, 2)
         {
             Parser.ParseName(this, 0);
@@ -35,15 +35,5 @@ namespace ScaryCastle.Scripting
             if (intent != null)
                 player.Attack(intent, target);
         }
-
-        // OnUpdate
-        protected override void OnUpdate(GameTime gameTime)
-        {
-            if (player != null && !player.IsAttacking)
-                player = null;
-        }
-
-        // IsAwaiting
-        public override bool IsAwaiting => player != null && player.IsAttacking;
     }
 }
