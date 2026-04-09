@@ -603,7 +603,10 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">VendingMachine-assets/VendingMachine.png</key>
+            <key type="filename">Trunk-assets/TrunkPiece1.png</key>
+            <key type="filename">Trunk-assets/TrunkPiece3.png</key>
+            <key type="filename">Trunk-assets/TrunkPiece4.png</key>
+            <key type="filename">Trunk-assets/TrunkPiece6.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -612,12 +615,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>5,8,11,16</rect>
+                <rect>1,0,1,1</rect>
                 <key>scale9Paddings</key>
-                <rect>5,8,11,16</rect>
+                <rect>1,0,1,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Trunk-assets/TrunkPiece2.png</key>
             <key type="filename">VendingMachine-assets/VendingMachineLed.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -630,6 +634,36 @@
                 <rect>1,1,1,1</rect>
                 <key>scale9Paddings</key>
                 <rect>1,1,1,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Trunk-assets/TrunkPiece5.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>0,1,1,1</rect>
+                <key>scale9Paddings</key>
+                <rect>0,1,1,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">VendingMachine-assets/VendingMachine.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,8,11,16</rect>
+                <key>scale9Paddings</key>
+                <rect>5,8,11,16</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

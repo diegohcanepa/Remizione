@@ -33,7 +33,7 @@ namespace ScaryCastle.Scripting
 
             var intent = player.CombatBehavior.Intents.Find(combatIntentName);
             if (intent != null)
-                player.Attack(intent, target);
+                player.PerformAttack(intent, target);
         }
     }
 }

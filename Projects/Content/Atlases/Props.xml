@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:b16d6c8c3e1beeac8a85085486b230b1:9eb10297926a7a87b70045b6100bcaaf:124b3bd0ff56be329062dd178e80040a$ -->
+<!-- $TexturePacker:SmartUpdate:ab9d9988710a42cee335a59f802d5cbe:c7befb1bad106b5ad7db6db39677e5ba:124b3bd0ff56be329062dd178e80040a$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -38,10 +38,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PotteryAPiece1.png" x="152" y="238" w="5" h="4"/>
     <sprite n="PotteryAPiece2.png" x="132" y="181" w="4" h="5"/>
     <sprite n="PotteryAPiece3.png" x="123" y="175" w="5" h="4"/>
-    <sprite n="PotteryAPiece4.png" x="139" y="113" w="4" h="4"/>
-    <sprite n="PotteryAPiece5.png" x="140" y="98" w="4" h="4"/>
+    <sprite n="PotteryAPiece4.png" x="140" y="98" w="4" h="4"/>
+    <sprite n="PotteryAPiece5.png" x="134" y="127" w="4" h="4"/>
     <sprite n="PotteryB.png" x="100" y="181" w="14" h="16"/>
-    <sprite n="PotteryBPiece1.png" x="137" y="145" w="3" h="4"/>
+    <sprite n="PotteryBPiece1.png" x="140" y="127" w="3" h="4"/>
     <sprite n="PotteryBPiece2.png" x="134" y="107" w="3" h="5"/>
     <sprite n="PotteryBPiece3.png" x="115" y="249" w="6" h="5"/>
     <sprite n="PotteryBPiece4.png" x="148" y="244" w="6" h="6"/>
@@ -49,7 +49,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PotteryBPiece6.png" x="130" y="147" w="5" h="5"/>
     <sprite n="PotteryBShadow.png" x="116" y="181" w="14" h="16"/>
     <sprite n="PotteryC.png" x="72" y="90" w="12" h="19"/>
-    <sprite n="PotteryCPiece1.png" x="134" y="127" w="4" h="4"/>
+    <sprite n="PotteryCPiece1.png" x="134" y="133" w="4" h="4"/>
     <sprite n="PotteryCPiece2.png" x="132" y="188" w="4" h="5"/>
     <sprite n="PotteryCPiece3.png" x="130" y="175" w="5" h="4"/>
     <sprite n="PotteryCPiece4.png" x="134" y="114" w="3" h="5"/>
@@ -60,7 +60,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PotteryDPiece1.png" x="134" y="121" w="5" h="4"/>
     <sprite n="PotteryDPiece2.png" x="139" y="107" w="5" h="4"/>
     <sprite n="PotteryDPiece3.png" x="130" y="161" w="5" h="5"/>
-    <sprite n="PotteryDPiece4.png" x="134" y="133" w="4" h="4"/>
+    <sprite n="PotteryDPiece4.png" x="134" y="139" w="4" h="4"/>
     <sprite n="PotteryDPiece5.png" x="144" y="238" w="6" h="4"/>
     <sprite n="PotteryDPiece6.png" x="130" y="168" w="5" h="5"/>
     <sprite n="PotteryDShadow.png" x="56" y="202" w="13" h="21"/>
@@ -68,7 +68,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PotteryEPiece1.png" x="144" y="230" w="7" h="6"/>
     <sprite n="PotteryEPiece2.png" x="97" y="249" w="7" h="5"/>
     <sprite n="PotteryEPiece3.png" x="122" y="78" w="7" h="7"/>
-    <sprite n="PotteryEPiece4.png" x="134" y="139" w="4" h="4"/>
+    <sprite n="PotteryEPiece4.png" x="137" y="145" w="4" h="4"/>
     <sprite n="PotteryEPiece5.png" x="131" y="249" w="6" h="5"/>
     <sprite n="PotteryEPiece6.png" x="106" y="249" w="7" h="5"/>
     <sprite n="PotteryEShadow.png" x="55" y="90" w="15" h="19"/>
@@ -98,10 +98,16 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Torch.png" x="20" y="202" w="19" h="22"/>
     <sprite n="Trunk01.png" x="131" y="78" w="13" h="18"/>
     <sprite n="Trunk02.png" x="113" y="199" w="13" h="18"/>
+    <sprite n="TrunkPiece1.png" x="9" y="251" w="4" h="3"/>
+    <sprite n="TrunkPiece2.png" x="2" y="251" w="5" h="3"/>
+    <sprite n="TrunkPiece3.png" x="25" y="251" w="3" h="2"/>
+    <sprite n="TrunkPiece4.png" x="15" y="251" w="3" h="3"/>
+    <sprite n="TrunkPiece5.png" x="30" y="251" w="3" h="2"/>
+    <sprite n="TrunkPiece6.png" x="139" y="113" w="5" h="4"/>
     <sprite n="TrunkShadow.png" x="116" y="87" w="13" h="18"/>
     <sprite n="VendingMachine.png" x="100" y="147" w="21" h="32"/>
     <sprite n="VendingMachineGlass.png" x="139" y="244" w="7" h="7"/>
-    <sprite n="VendingMachineLed.png" x="2" y="251" w="3" h="3"/>
+    <sprite n="VendingMachineLed.png" x="20" y="251" w="3" h="3"/>
     <sprite n="WaterPuddleA.png" x="98" y="78" w="22" h="7"/>
     <sprite n="WaterPuddleB.png" x="129" y="215" w="15" h="13"/>
     <sprite n="WaterPuddleC.png" x="114" y="235" w="19" h="12"/>

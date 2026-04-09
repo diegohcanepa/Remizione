@@ -50,7 +50,7 @@ namespace ScaryCastle
             CollisionDetection = false;
             DisplayNameKey = "Prop.Door";
             CloseSound = Sound.Find("DoorClose");
-            OpenSound = Sound.Find("DoorOpen");
+            OpenSound = Sound.Find("SaintPeregrineArm");
 
             this.lockImage = new(Atlas?.FindImage($"{DeclaredName}Lock"));
         }

@@ -91,11 +91,12 @@ namespace ScaryCastle
             MouseCursor.Reset();
 
             RefreshCursor(context);
-
             RefreshText(context);
 
             if (context.Target != null)
             {
+                MouseCursor.IsEnabled = context.Session.Player?.CarriedProp == null;
+
                 if (context.HeldItem?.Definition.FaithCost > 0)
                     MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightBlue;
                 else

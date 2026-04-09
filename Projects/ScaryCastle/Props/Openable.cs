@@ -145,16 +145,17 @@ namespace ScaryCastle
                 return;
             }
 
-            if (OpenSound != null)
+            if (OpenSound?.PopInstance() is { } soundInstance)
             {
+                soundInstance.TransitionAware = false;
+                soundInstance.Play();
                 Bounce();
-                PlaySound(OpenSound);
             }
 
             actionInProgress = true;
             IsOpen = true;
             actionInProgress = false;
-        }
+        }   
 
         // OpenSound
         [ScriptProperty]

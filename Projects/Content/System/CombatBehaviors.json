@@ -21,7 +21,7 @@
     },
     {
       "name": "EnviousEye",
-      "archetype": "Tactical",
+      "archetype": "Stalker",
       "intents": [
         {
           "name": "Contact",
@@ -63,7 +63,8 @@
               "context": "Contact",
               "effectType": "Damage",
               "amount": "1",
-              "impactWord": "AghRed"
+              "impactWord": "AghRed",
+              "knockback": "15,5"
             }
           ]
         }

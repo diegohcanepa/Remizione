@@ -36,30 +36,39 @@ namespace ScaryCastle
         }
 
         // Execute
-        public bool Execute(GameSession session)
+        public void Execute(GameSession session)
         {
-            if (InteractionType == InteractionType.None)
-                return false;
+            if (InteractionType == InteractionType.None || session.Player == null)
+                return;
 
-            var result = false;
-
-            session.Player?.StopMoving();
+            session.Player.StopMoving();
 
             if (Target != null)
             {
-                session.Player?.FaceTo(Target);
-                if (Script != null)
+                if (Vector2.Distance(Target.Position, TargetPosition) > 1)
                 {
-                    if (Vector2.Distance(Target.Position, TargetPosition) <= 1)
-                        session.BeginOutcome(Script, Target);
-                    else
-                        session.HUD.Message.Show(MessageKind.OutOfReach);
+                    session.HUD.Message.Show(MessageKind.OutOfReach);
+                }
+                else
+                {
+                    session.Player.FaceTo(Target);
+                    if (Script != null)
+                    {
+                        if (InteractionType == InteractionType.Headbutt)
+                        {
+                            var intent = session.Player.CombatBehavior?.Intents.Find(RoutineNames.Headbutt);
+                            if (intent != null)
+                                session.Player.PerformAttack(intent, Target);
+                        }
+                        else
+                        {
+                            session.BeginOutcome(Script, Target);
+                        }
+                    }
                 }
             }
 
             Clear();
-
-            return result;
         }
 
         // InteractionType

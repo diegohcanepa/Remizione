@@ -801,7 +801,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">ThrownPotteryA-assets/PotteryA.png</key>
+            <key type="filename">ThrownProps-assets/PotteryA.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -813,6 +813,21 @@
                 <rect>3,2,6,3</rect>
                 <key>scale9Paddings</key>
                 <rect>3,2,6,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ThrownProps-assets/Trunk.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,7,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,7,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -833,7 +848,7 @@
                     <filename>Dice-assets</filename>
                     <filename>Lightning-assets</filename>
                     <filename>Bible-assets</filename>
-                    <filename>ThrownPotteryA-assets</filename>
+                    <filename>ThrownProps-assets</filename>
                 </array>
             </struct>
         </map>

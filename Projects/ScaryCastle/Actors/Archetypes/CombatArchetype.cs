@@ -53,6 +53,21 @@ namespace ScaryCastle
         // ya calculado según el rango del arquetipo.
         public abstract int GetNextCooldown();
 
+        /// <summary>
+        /// Distancia mínima que el bicho intenta mantener con el jugador.
+        /// </summary>
+        public abstract float MinComfortDistance { get; }
+
+        /// <summary>
+        /// Distancia máxima que el bicho tolera antes de querer acercarse.
+        /// </summary>
+        public abstract float MaxComfortDistance { get; }
+
+        /// <summary>
+        /// Qué tan rápido se mueve el bicho (multiplicador).
+        /// </summary>
+        public virtual float MovementSpeedFactor => 1;
+
         // IdleMoveType
         // El tipo de decisión por defecto cuando no está atacando o huyendo.
         public virtual CombatDecisionType IdleMoveType => CombatDecisionType.Move;

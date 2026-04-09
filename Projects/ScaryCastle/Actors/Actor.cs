@@ -130,30 +130,23 @@ namespace ScaryCastle
         // React
         private void React()
         {
-            if (Brain.Decide(this, Session.Player) is CombatDecision decision)
+            if (Brain.Decide(this, Session.Player) is CombatDecision decision && decision.Target is { } target)
             {
                 if (decision.Type == CombatDecisionType.Charge)
                 {
-                    if (Session.Player != null)
-                        MoveTo(Session.Player.Position);
+                    PerformChargeReaction(target);
                 }
                 else if (decision.Type == CombatDecisionType.Flee)
                 {
-                    if (Session.Player != null)
-                    {
-                        if (Direction == FacingDirection.Left)
-                            MoveTo(new(X + 30, Y));
-                        else
-                            MoveTo(new(X - 30, Y));
-                    }
+                    PerformFleeReaction(target);
                 }
                 else if (decision.Type == CombatDecisionType.Move)
                 {
-                    MoveRandomly();
+                    PerformMoveReaction(target);
                 }
                 else if (decision.Type == CombatDecisionType.Attack && decision.Intent != null)
                 {
-                    Attack(decision.Intent, Session.Player);
+                    PerformAttack(decision.Intent, target);
                 }
             }
         }
@@ -486,6 +479,45 @@ namespace ScaryCastle
                 FaceToMouseCursor();
         }
 
+        // PerformChargeReaction
+        protected virtual void PerformChargeReaction(GameThing target)
+        {
+            MoveTo(target.Position);
+        }
+
+        // PerformFleeReaction
+        protected virtual void PerformFleeReaction(GameThing target)
+        {
+            if (Direction == FacingDirection.Left)
+                MoveTo(new(X + 30, Y));
+            else
+                MoveTo(new(X - 30, Y));
+        }
+
+        // PerformMoveReaction
+        protected virtual void PerformMoveReaction(GameThing target)
+        {
+            var arch = CombatBehavior?.Archetype;
+            if (arch == null)
+                return;
+
+            // 1. Dirección: ¿Dónde está el bicho respecto al jugador?
+            Vector2 direction = Position - target.Position;
+            float currentDistance = direction.Length();
+
+            // Evitamos división por cero si están exactamente en el mismo pixel
+            direction = currentDistance > 0 ? direction / currentDistance : new Vector2(1, 0);
+
+            // 2. Distancia Ideal: El centro de su "zona de confort" definida en el arquetipo.
+            float idealDistance = (arch.MinComfortDistance + arch.MaxComfortDistance) / 2f;
+
+            // 3. El punto destino: Es la posición del jugador más el vector de dirección 
+            // por la distancia que al bicho le gusta mantener.
+            Vector2 finalTarget = target.Position + (direction * idealDistance);
+
+            MoveTo(finalTarget);
+        }
+
         #endregion
 
         // Animate
@@ -517,6 +549,12 @@ namespace ScaryCastle
             if (!IsPlayer)
                 return false;
 
+            if (!MouseCursor.IsEnabled)
+            {
+                Session.HUD.Message.Show(MessageKind.HandsFull);
+                return false;
+            }
+
             if (item == null)
             {
                 if (Session.InteractionContext.HeadbuttMode)
@@ -547,19 +585,6 @@ namespace ScaryCastle
             return true;
         }
 
-        // Attack
-        public void Attack(CombatIntent intent, GameThing? target)
-        {
-            StopMoving();
-            if (target != null)
-                FaceTo(target);
-
-            var state = BodyMachine.FindOrCreateState<BodyCloseAttackState>();
-            state.Intent = intent;
-            state.Target = target;
-            BodyMachine.ChangeState(state.GetType());
-        }
-
         // BodySize
         public BodySize BodySize { get; set; } = BodySize.Medium;
 
@@ -584,10 +609,10 @@ namespace ScaryCastle
                 {
                     return base.CanTakeDamage();
                 }
-                else if (Session.OutcomeTarget is Actor actor && actor.IsAttacking)
-                {
-                    return base.CanTakeDamage();
-                }
+                //else if (Session.OutcomeTarget is Actor actor && actor.IsAttacking)
+                //{
+                //    return base.CanTakeDamage();
+                //}
 
                 return false;
             }
@@ -810,6 +835,19 @@ namespace ScaryCastle
             BodyMachine.ChangeState<BodyMoveState>();
 
             return true;
+        }
+
+        // PerformAttack
+        public void PerformAttack(CombatIntent intent, GameThing? target)
+        {
+            StopMoving();
+            if (target != null)
+                FaceTo(target);
+
+            var state = BodyMachine.FindOrCreateState<BodyCloseAttackState>();
+            state.Intent = intent;
+            state.Target = target;
+            BodyMachine.ChangeState(state.GetType());
         }
 
         // PlayerNumber

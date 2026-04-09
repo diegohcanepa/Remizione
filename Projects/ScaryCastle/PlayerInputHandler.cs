@@ -95,7 +95,7 @@ namespace ScaryCastle
             Actor.Session.InteractionContext.HeadbuttMode = false;
             PerformInteraction();
 
-            return false;
+            return true;
         }
 
         // TestMouseRightButtonClick

@@ -114,7 +114,7 @@
 	<FX Name="UISelectPlayer" MaxInstances="4" />
 	<FX Name="VendingMachine" MaxInstances="2" />
 	<FX Name="VentBlower" MaxInstances="2" PauseAware="false" />
-	<FX Name="WoodDebris" MaxInstances="4" Sounds="1..2" />
+	<FX Name="WoodDebris" MaxInstances="4" Sounds="1..1" />
 	<FX Name="WhooshA" MaxInstances="6" />
 	<FX Name="ZapLoop" />
 </Data>
