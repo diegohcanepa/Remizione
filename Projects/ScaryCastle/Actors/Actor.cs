@@ -16,8 +16,8 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private int angryTimer;
         private const float attackLaneThickness = 4;
-        private int brainTimer;
         private Sprite? carriedPropSprite;
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
@@ -27,6 +27,7 @@ namespace ScaryCastle
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private readonly List<Vector2> pendingPathNodes = [];
+        private int reactionTimer;
         private SpeechBubble? speechBubble;
         private Sprite? talkIcon;
 
@@ -45,7 +46,7 @@ namespace ScaryCastle
             this.DisplayNameKey = $"Actor.{DeclaredName}";
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
-            this.Faction = Definition == null ? Faction.Good : Definition.Faction;
+            this.Faction = Definition == null || Definition.Role == ActorRole.Interactive ? Faction.Good : Faction.Evil;
 
             headSprite = new AnimatedSprite()
             {
@@ -108,6 +109,18 @@ namespace ScaryCastle
             }
         }
 
+        // GetAngryTimerCooldown
+        private int GetAngryTimerCooldown()
+        {
+            return Definition != null ? Definition.Difficulty switch
+            {
+                Difficulty.Easy => 10000,
+                Difficulty.Normal => 20000,
+                Difficulty.Hard => 30000,
+                _ => 30000
+            } : 0;
+        }
+
         // HandlePendingInteraction
         private void HandlePendingInteraction()
         {
@@ -126,6 +139,31 @@ namespace ScaryCastle
         {
             base.MoveTo(pendingPathNodes[0]);
             pendingPathNodes.RemoveAt(0);
+        }
+
+        // React
+        private void React()
+        {
+            if (Brain.Decide(this, Session.Player) is CombatDecision decision)
+            {
+                if (decision.Type == CombatDecisionType.Charge)
+                {
+                    if (Session.Player != null)
+                        MoveTo(Session.Player.Position);
+                }
+                else if (decision.Type == CombatDecisionType.Flee)
+                {
+                    MoveTo(new(X - 30, Y));
+                }
+                else if (decision.Type == CombatDecisionType.Move)
+                {
+                    MoveRandomly();
+                }
+                else if (decision.Type == CombatDecisionType.Attack && decision.Intent != null)
+                {
+                    Attack(decision.Intent, Session.Player);
+                }
+            }
         }
 
         // ResetHeadTween
@@ -147,8 +185,19 @@ namespace ScaryCastle
             }
         }
 
-        // UpdateBrain
-        private void UpdateBrain(GameTime gameTime)
+        // UpdateAngryTimer
+        private void UpdateAngryTimer(GameTime gameTime)
+        {
+            if (IsAngry || angryTimer <= 0 || Session.IsAwaiting)
+                return;
+
+            angryTimer -= gameTime.ElapsedGameTime.Milliseconds;
+            if (angryTimer <= 0)
+                IsAngry = true;
+        }
+
+        // UpdateReactionTimer
+        private void UpdateReactionTimer(GameTime gameTime)
         {
             // Can use brain?
             if (IsPlayer || CombatBehavior == null || !IsAngry)
@@ -158,11 +207,11 @@ namespace ScaryCastle
             if (IsMoving || Session.IsAwaiting || IsAttacking)
                 return;
 
-            brainTimer -= gameTime.ElapsedGameTime.Milliseconds;
-            if (brainTimer <= 0)
+            reactionTimer -= gameTime.ElapsedGameTime.Milliseconds;
+            if (reactionTimer <= 0)
             {
-                UseBrain();
-                brainTimer = CombatBehavior.Archetype.GetNextCooldown();
+                React();
+                reactionTimer = CombatBehavior.Archetype.GetNextCooldown();
             }
         }
 
@@ -203,27 +252,6 @@ namespace ScaryCastle
 
             PlaySound(SoundNames.FootstepA);
             footstepLastUsedFrame = Sprite.Player.Frame;
-        }
-
-        // UseBrain
-        private void UseBrain()
-        {
-            if (Brain.Decide(this, Session.Player) is CombatDecision decision)
-            {
-                if (decision.Type == CombatDecisionType.Charge)
-                {
-                    if (Session.Player != null)
-                        MoveTo(Session.Player.Position);
-                }
-                else if (decision.Type == CombatDecisionType.Move)
-                {
-                    MoveRandomly();
-                }
-                else if (decision.Type == CombatDecisionType.Attack && decision.Intent != null)
-                {
-                    Attack(decision.Intent, Session.Player);
-                }
-            }
         }
 
         #endregion
@@ -279,8 +307,12 @@ namespace ScaryCastle
         protected override void OnActivate()
         {
             base.OnActivate();
-            if (brainTimer <= 0)
-                brainTimer = CombatBehavior?.Archetype.GetNextCooldown() ?? 2000;
+
+            if (!IsAngry && !IsPlayer)
+                angryTimer = GetAngryTimerCooldown();
+
+            if (reactionTimer <= 0)
+                reactionTimer = CombatBehavior?.Archetype.GetNextCooldown() ?? 2000;
         }
 
         // OnCollisioning
@@ -438,7 +470,8 @@ namespace ScaryCastle
             else if (IsHostile(attacker) && !IsDead)
             {
                 IsAngry = true;
-                brainTimer = 1;
+                Faction = Faction.Evil;
+                reactionTimer = 1;
             }
 
             Session.ObjectPools.FloatingTexts.Get()?.ShowHPAmount(this, amount, true);
@@ -474,7 +507,8 @@ namespace ScaryCastle
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
 
-            UpdateBrain(gameTime);
+            UpdateAngryTimer(gameTime);
+            UpdateReactionTimer(gameTime);
 
             if (!IsMoving)
                 talkIcon?.Position = RuntimeHotspot == null ? GetOverheadPosition() : RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, -2);
@@ -701,6 +735,20 @@ namespace ScaryCastle
 
         // IsAttacking
         public bool IsAttacking => BodyMachine.CurrentState is BodyCloseAttackState;
+
+        // IsCornered
+        public bool IsCornered(GameThing target)
+        {
+            if (Room?.WalkArea == null)
+                return false;
+
+            var destX = Direction == FacingDirection.Left ? int.MaxValue : int.MinValue;
+            var destination = Room.WalkArea.ClampInside(new(destX, Y));
+
+            var distanceToTarget = target != null ? DistanceTo(target.Position) : float.MaxValue;
+
+            return Vector2.Distance(Position, destination) < 30 || distanceToTarget < 20;
+        }
 
         // IsInAttackLane
         public bool IsInAttackLane(GameThing target)

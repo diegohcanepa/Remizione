@@ -1,4 +1,6 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
@@ -58,7 +60,7 @@ namespace ScaryCastle
         // SelectIntent
         // Selecciona un ataque de la lista disponible basándose en pesos y distancia.
         public virtual CombatIntent? SelectIntent(Actor actor, IList<CombatIntent> intents, float distance)
-        {        
+        {
             if (intents == null || intents.Count == 0)
                 return null;
 

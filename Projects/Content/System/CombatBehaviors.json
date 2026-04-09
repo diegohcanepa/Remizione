@@ -38,6 +38,7 @@
           "name": "Bite",
           "category": "Basic",
           "sound": "EnviousEyeAttack",
+          "range": 15,
           "effects": [
             {
               "context": "Attack",

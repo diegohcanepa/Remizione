@@ -13,47 +13,36 @@ namespace ScaryCastle
     /// </summary>
     public static class Brain
     {
-        /// <summary>
-        /// Determina la acción a realizar en el frame actual.
-        /// </summary>
+        // Decide
         public static CombatDecision Decide(Actor actor, GameThing? target)
         {
-            // C# 14 Pattern Matching para extraer el arquetipo
-            if (actor.CombatBehavior == null)
+            if (actor.CombatBehavior is not { Archetype: var arch })
                 return new CombatDecision(CombatDecisionType.None, null);
 
-            var archetype = actor.CombatBehavior.Archetype;
+            bool isCornered = target != null && actor.IsCornered(target);
 
-            // 1. PRIORIDAD: Supervivencia (Check de huida)
-            if (actor.HPRatio <= archetype.FleeHPThreshold && Random.Shared.NextDouble() < archetype.FleeChance)
+            // 1. Decisión de Huida: Solo si NO está atrapado
+            if (!isCornered && actor.HPRatio <= arch.FleeHPThreshold && Random.Shared.NextDouble() < arch.FleeChance)
                 return new CombatDecision(CombatDecisionType.Flee, null);
 
-            // 2. LÓGICA DE COMBATE / MOVIMIENTO
+            // 2. Decisión de Ataque: 
+            // Si está acorralado, la probabilidad es 1.0 (100%). Si no, es la del arquetipo.
             if (target != null)
             {
+                float chance = isCornered ? 1.0f : arch.AttackChance;
                 float distance = actor.DistanceTo(target);
 
-                // El arquetipo decide si "se anima" a atacar según su AttackChance
-                if (Random.Shared.NextDouble() < archetype.AttackChance)
+                if (Random.Shared.NextDouble() < chance)
                 {
-                    // Delegamos la selección del ataque al arquetipo
-                    var intent = archetype.SelectIntent(actor, actor.CombatBehavior.Intents, distance);
-
+                    var intent = arch.SelectIntent(actor, actor.CombatBehavior.Intents, distance);
                     if (intent != null)
-                    {
-                        // Crítica de diseño: El Lurker usa Charge para representar su salto/mordida repentina.
-                        // El resto usa Attack normal.
-                        var type = archetype.GetDecisionType(intent);
-                        return new CombatDecision(type, intent);
-                    }
+                        return new CombatDecision(arch.GetDecisionType(intent), intent);
                 }
-
-                // 3. PLAN B: Si no hay ataque o falló el azar, se mueve según el estilo del bicho.
-                // El Lurker devolverá 'Move' (para merodear cerca).
-                return new CombatDecision(archetype.IdleMoveType, null);
             }
 
-            return new CombatDecision(CombatDecisionType.None, null);
+            // 3. Fallback (Si no atacó y no huyó)
+            // Ojo: Si es un cobarde acorralado y el SelectIntent falló, va a intentar Flee igual.
+            return new CombatDecision(arch.IdleMoveType, null);
         }
     }
 }

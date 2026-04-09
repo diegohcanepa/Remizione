@@ -135,21 +135,6 @@ namespace ScaryCastle
         public static bool IsArrow => State is MouseCursorState.Up or MouseCursorState.Down or
                                       MouseCursorState.Right or MouseCursorState.Left;
 
-        // IsEnabled
-        public static bool IsEnabled
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    cursorSprite.Opacity = value ? 1 : .4f;
-                    textSprite.Opacity = cursorSprite.Opacity;
-                }
-            }
-        } = true;
-
         // PerformClick
         public static void PerformClick(bool animate = true)
         {
@@ -167,7 +152,6 @@ namespace ScaryCastle
         {
             textSprite.Color = ColorPalette.Text.Sentence;
             CustomImage = null;
-            IsEnabled = true;
             HightlightColor = null;
             State = MouseCursorState.Arrow;
             Text = null;
@@ -217,16 +201,13 @@ namespace ScaryCastle
             shakeTween.Update(gameTime);
             ClampTextToScreen();
 
-            if (IsEnabled)
+            effect = CustomImage != null && HightlightColor.HasValue ? ScaryCastleGame.Effects.Outline : null;
+            if (effect != null && HightlightColor.HasValue && cursorSprite.RenderImage?.Atlas != null)
             {
-                effect = CustomImage != null && HightlightColor.HasValue ? ScaryCastleGame.Effects.Outline : null;
-                if (effect != null && HightlightColor.HasValue && cursorSprite.RenderImage?.Atlas != null)
-                {
-                    effect.Color.SetValue(HightlightColor.Value * opacityTween.CurrentValue);
-                    effect.TextureSize.SetValue(new Vector2(cursorSprite.RenderImage.Atlas.Texture.Width, cursorSprite.RenderImage.Atlas.Texture.Height));
-                    effect.Thickness.SetValue(1);
-                }
+                effect.Color.SetValue(HightlightColor.Value * opacityTween.CurrentValue);
+                effect.TextureSize.SetValue(new Vector2(cursorSprite.RenderImage.Atlas.Texture.Width, cursorSprite.RenderImage.Atlas.Texture.Height));
+                effect.Thickness.SetValue(1);
             }
-        }
+    }
     }
 }

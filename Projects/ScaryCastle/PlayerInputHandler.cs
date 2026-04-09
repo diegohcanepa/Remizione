@@ -53,13 +53,6 @@ namespace ScaryCastle
                 return;
             }
 
-            // 2. Target is moving
-            if (context.Target.IsMoving)
-            {
-                Actor.Session.InteractionContext.HeadbuttMode = false;
-                return;
-            }
-
             // 3. Outcome interaction: Approach and interact with target using outcome script
             if (context.HeldItem == null || MouseCursor.IsArrow)
             {

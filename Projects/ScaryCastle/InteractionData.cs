@@ -52,6 +52,8 @@ namespace ScaryCastle
                 {
                     if (Vector2.Distance(Target.Position, TargetPosition) <= 1)
                         session.BeginOutcome(Script, Target);
+                    else
+                        session.HUD.Message.Show(MessageKind.OutOfReach);
                 }
             }
 

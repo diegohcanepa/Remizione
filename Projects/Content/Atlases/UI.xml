@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:7f31e0893bf222e72dd8068bd153e725:d468c40a88a731917e8ede6190d16ed8:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:df09a36abd0c6828ea96fa9b8c240d9c:48b20cd9c7493cc4672b4fc8f93588aa:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -25,32 +25,32 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="BertaIcon.png" x="137" y="279" w="12" h="11"/>
     <sprite n="BottomGradient.png" x="268" y="74" w="240" h="67"/>
     <sprite n="Burger.png" x="484" y="50" w="22" h="22"/>
-    <sprite n="CheckMark.png" x="463" y="222" w="7" h="6"/>
+    <sprite n="CheckMark.png" x="316" y="249" w="7" h="6"/>
     <sprite n="Chili.png" x="228" y="176" w="22" h="22"/>
     <sprite n="Coin.png" x="228" y="200" w="22" h="22"/>
-    <sprite n="CoinIcon.png" x="327" y="249" w="8" h="8"/>
+    <sprite n="CoinIcon.png" x="492" y="232" w="8" h="8"/>
     <sprite n="ContextMenuOptionSelector.png" x="244" y="265" w="4" h="5"/>
     <sprite n="CreditsBar.png" x="2" y="2" w="480" h="67"/>
     <sprite n="Cross.png" x="416" y="198" w="22" h="22"/>
-    <sprite n="DialogArrowLarge.png" x="481" y="222" w="7" h="5"/>
-    <sprite n="DialogOptionBullet.png" x="152" y="264" w="4" h="4"/>
-    <sprite n="Dice.png" x="426" y="222" w="8" h="8"/>
+    <sprite n="DialogArrowLarge.png" x="334" y="249" w="7" h="5"/>
+    <sprite n="DialogOptionBullet.png" x="211" y="259" w="4" h="4"/>
+    <sprite n="Dice.png" x="502" y="240" w="8" h="8"/>
     <sprite n="Duck.png" x="354" y="207" w="22" h="22"/>
-    <sprite n="EdmundIcon.png" x="215" y="257" w="11" h="11"/>
-    <sprite n="FaithEmpty.png" x="367" y="242" w="7" h="7"/>
-    <sprite n="FaithFull.png" x="349" y="243" w="7" h="7"/>
-    <sprite n="FaithHalf.png" x="358" y="243" w="7" h="7"/>
-    <sprite n="FaithIcon.png" x="367" y="231" w="9" h="9"/>
-    <sprite n="FearEmpty.png" x="204" y="272" w="9" h="10"/>
-    <sprite n="FearFull.png" x="316" y="249" w="9" h="10"/>
-    <sprite n="FearIcon.png" x="215" y="270" w="11" h="11"/>
+    <sprite n="EdmundIcon.png" x="166" y="278" w="11" h="11"/>
+    <sprite n="FaithEmpty.png" x="503" y="222" w="7" h="7"/>
+    <sprite n="FaithFull.png" x="503" y="231" w="7" h="7"/>
+    <sprite n="FaithHalf.png" x="415" y="234" w="7" h="7"/>
+    <sprite n="FaithIcon.png" x="426" y="222" w="9" h="9"/>
+    <sprite n="FearEmpty.png" x="390" y="231" w="9" h="10"/>
+    <sprite n="FearFull.png" x="415" y="222" w="9" h="10"/>
+    <sprite n="FearIcon.png" x="402" y="222" w="11" h="11"/>
     <sprite n="Firecracker.png" x="378" y="207" w="22" h="22"/>
     <sprite n="GoldenKey.png" x="440" y="198" w="22" h="22"/>
-    <sprite n="HeartBlackFull.png" x="337" y="250" w="7" h="7"/>
-    <sprite n="HeartBlackHalf.png" x="376" y="242" w="7" h="7"/>
-    <sprite n="HPEmpty.png" x="385" y="242" w="7" h="7"/>
-    <sprite n="HPFull.png" x="436" y="222" w="7" h="7"/>
-    <sprite n="HPHalf.png" x="445" y="222" w="7" h="7"/>
+    <sprite n="HeartBlackFull.png" x="401" y="235" w="7" h="7"/>
+    <sprite n="HeartBlackHalf.png" x="390" y="243" w="7" h="7"/>
+    <sprite n="HPEmpty.png" x="350" y="244" w="7" h="7"/>
+    <sprite n="HPFull.png" x="359" y="244" w="7" h="7"/>
+    <sprite n="HPHalf.png" x="368" y="244" w="7" h="7"/>
     <sprite n="InventoryCategoryContainer.png" x="354" y="198" w="60" h="7"/>
     <sprite n="InventoryCategoryNotEmpty.png" x="508" y="2" w="2" h="2"/>
     <sprite n="InventoryContainer.png" x="268" y="143" w="240" h="53"/>
@@ -59,8 +59,8 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="InventoryInfoTitleContainer.png" x="2" y="238" w="96" h="8"/>
     <sprite n="InventoryNavigationBar.png" x="268" y="198" w="84" h="9"/>
     <sprite n="InventorySlot.png" x="99" y="270" w="15" h="16"/>
-    <sprite n="InventorySlotLockIcon.png" x="400" y="235" w="7" h="9"/>
-    <sprite n="InventorySlotQuestionIcon.png" x="166" y="275" w="7" h="11"/>
+    <sprite n="InventorySlotLockIcon.png" x="219" y="256" w="7" h="9"/>
+    <sprite n="InventorySlotQuestionIcon.png" x="219" y="243" w="7" h="11"/>
     <sprite n="ItemGridSlot.png" x="139" y="243" w="18" h="19"/>
     <sprite n="ItemGridSlotSelected.png" x="117" y="259" w="18" h="19"/>
     <sprite n="KeyboardD.png" x="252" y="176" w="14" h="14"/>
@@ -70,63 +70,64 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="KeyboardGadgetsSlot.png" x="340" y="209" w="12" h="12"/>
     <sprite n="KeyboardI.png" x="252" y="208" w="14" h="14"/>
     <sprite n="KeyboardJunkSlot.png" x="340" y="223" w="12" h="12"/>
-    <sprite n="KeyboardNextTab.png" x="159" y="243" w="18" h="14"/>
-    <sprite n="KeyboardPreviousTab.png" x="179" y="243" w="18" h="14"/>
+    <sprite n="KeyboardNextTab.png" x="179" y="243" w="18" h="14"/>
+    <sprite n="KeyboardPreviousTab.png" x="199" y="243" w="18" h="14"/>
     <sprite n="KeyboardS.png" x="252" y="224" w="14" h="14"/>
-    <sprite n="KeyboardSackSlot.png" x="190" y="259" w="12" h="12"/>
+    <sprite n="KeyboardSackSlot.png" x="152" y="264" w="12" h="12"/>
     <sprite n="KeyboardX.png" x="252" y="240" w="14" h="14"/>
-    <sprite n="KeyboardZ.png" x="199" y="243" w="14" h="14"/>
+    <sprite n="KeyboardZ.png" x="228" y="248" w="14" h="14"/>
     <sprite n="Lantern.png" x="464" y="198" w="22" h="22"/>
     <sprite n="MagneticCard.png" x="488" y="198" w="22" h="22"/>
     <sprite n="MasterLockpick.png" x="268" y="209" w="22" h="22"/>
     <sprite n="MessageContainer.png" x="2" y="147" w="251" h="27"/>
     <sprite n="MissingItem.png" x="228" y="224" w="22" h="22"/>
-    <sprite n="MouseCursorArrow.png" x="454" y="222" w="7" h="7"/>
-    <sprite n="MouseCursorCross.png" x="137" y="264" w="13" h="13"/>
+    <sprite n="MouseCursorArrow.png" x="377" y="244" w="7" h="7"/>
+    <sprite n="MouseCursorCross.png" x="211" y="267" w="13" h="13"/>
     <sprite n="MouseCursorDown.png" x="255" y="162" w="11" h="12"/>
     <sprite n="MouseCursorHand.png" x="255" y="147" w="11" h="13"/>
     <sprite n="MouseCursorLeft.png" x="116" y="280" w="12" h="11"/>
-    <sprite n="MouseCursorProhibition.png" x="175" y="259" w="13" h="13"/>
+    <sprite n="MouseCursorProhibition.png" x="137" y="264" w="13" h="13"/>
     <sprite n="MouseCursorRight.png" x="99" y="288" w="12" h="11"/>
-    <sprite n="MouseCursorUp.png" x="215" y="243" w="11" h="12"/>
-    <sprite n="MouseCursorWait.png" x="204" y="259" w="9" h="11"/>
-    <sprite n="PickupShadow.png" x="415" y="222" w="9" h="3"/>
+    <sprite n="MouseCursorUp.png" x="166" y="264" w="11" h="12"/>
+    <sprite n="MouseCursorWait.png" x="379" y="231" w="9" h="11"/>
+    <sprite n="PickupShadow.png" x="481" y="232" w="9" h="3"/>
     <sprite n="Pixel.png" x="508" y="19" w="1" h="1"/>
-    <sprite n="PointingHand.png" x="472" y="222" w="7" h="6"/>
+    <sprite n="PointingHand.png" x="325" y="249" w="7" h="6"/>
     <sprite n="PopupContainer.png" x="2" y="71" w="264" h="74"/>
     <sprite n="PopupContainerShadow.png" x="2" y="176" w="114" h="60"/>
-    <sprite n="ProhibitionIcon.png" x="378" y="231" w="9" h="9"/>
+    <sprite n="ProhibitionIcon.png" x="437" y="222" w="9" h="9"/>
     <sprite n="RottenApple.png" x="292" y="209" w="22" h="22"/>
     <sprite n="RustyLockpick.png" x="316" y="209" w="22" h="22"/>
-    <sprite n="Sack.png" x="354" y="231" w="11" h="10"/>
-    <sprite n="SackIcon.png" x="415" y="227" w="8" h="8"/>
-    <sprite n="SavingIcon.png" x="402" y="222" w="11" h="11"/>
-    <sprite n="Skull.png" x="389" y="231" w="9" h="9"/>
-    <sprite n="SkullEmpty.png" x="267" y="257" w="9" h="9"/>
-    <sprite n="SkullFull.png" x="278" y="257" w="9" h="9"/>
-    <sprite n="SkullIcon.png" x="289" y="257" w="9" h="8"/>
+    <sprite n="Sack.png" x="337" y="237" w="11" h="10"/>
+    <sprite n="SackIcon.png" x="426" y="233" w="8" h="8"/>
+    <sprite n="SacrificeSlot.png" x="159" y="243" w="18" h="19"/>
+    <sprite n="SavingIcon.png" x="354" y="231" w="11" h="11"/>
+    <sprite n="Skull.png" x="448" y="222" w="9" h="9"/>
+    <sprite n="SkullEmpty.png" x="459" y="222" w="9" h="9"/>
+    <sprite n="SkullFull.png" x="470" y="222" w="9" h="9"/>
+    <sprite n="SkullIcon.png" x="481" y="222" w="9" h="8"/>
     <sprite n="SodaCan.png" x="268" y="233" w="22" h="22"/>
-    <sprite n="SpeechBubbleCloseArrow.png" x="152" y="270" w="3" h="2"/>
+    <sprite n="SpeechBubbleCloseArrow.png" x="130" y="280" w="3" h="2"/>
     <sprite n="SpeechBubblePipe.png" x="244" y="260" w="5" h="3"/>
     <sprite n="SteelLockpick.png" x="292" y="233" w="22" h="22"/>
-    <sprite n="TalkIcon.png" x="300" y="257" w="9" h="8"/>
+    <sprite n="TalkIcon.png" x="492" y="222" w="9" h="8"/>
     <sprite n="TipBalloon.png" x="402" y="207" w="12" h="13"/>
-    <sprite n="TunnelIcon.png" x="337" y="237" w="10" h="11"/>
+    <sprite n="TunnelIcon.png" x="367" y="231" w="10" h="11"/>
     <sprite n="UIButtonContainerEdge.png" x="92" y="248" w="5" h="11"/>
     <sprite n="UIButtonContainerPattern.png" x="508" y="6" w="1" h="11"/>
     <sprite n="UIControlContainerEdgeLeftLarge.png" x="92" y="261" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeLeftSmall.png" x="92" y="287" w="5" h="10"/>
     <sprite n="UIControlContainerEdgeRightLarge.png" x="92" y="274" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeRightSmall.png" x="244" y="248" w="5" h="10"/>
-    <sprite n="XboxA.png" x="228" y="248" w="14" h="14"/>
-    <sprite n="XboxB.png" x="251" y="256" w="14" h="14"/>
-    <sprite n="XboxGadgetsSlot.png" x="190" y="273" w="12" h="12"/>
-    <sprite n="XboxJunkSlot.png" x="175" y="274" w="12" h="12"/>
+    <sprite n="XboxA.png" x="251" y="256" w="14" h="14"/>
+    <sprite n="XboxB.png" x="228" y="264" w="14" h="14"/>
+    <sprite n="XboxGadgetsSlot.png" x="179" y="275" w="12" h="12"/>
+    <sprite n="XboxJunkSlot.png" x="193" y="275" w="12" h="12"/>
     <sprite n="XboxLeftShoulder.png" x="100" y="238" w="16" h="14"/>
     <sprite n="XboxNextTab.png" x="99" y="254" w="16" h="14"/>
     <sprite n="XboxPreviousTab.png" x="100" y="238" w="16" h="14"/>
     <sprite n="XboxRightShoulder.png" x="99" y="254" w="16" h="14"/>
-    <sprite n="XboxSackSlot.png" x="152" y="275" w="12" h="12"/>
-    <sprite n="XboxX.png" x="228" y="264" w="14" h="14"/>
-    <sprite n="XboxY.png" x="159" y="259" w="14" h="14"/>
+    <sprite n="XboxSackSlot.png" x="152" y="278" w="12" h="12"/>
+    <sprite n="XboxX.png" x="179" y="259" w="14" h="14"/>
+    <sprite n="XboxY.png" x="195" y="259" w="14" h="14"/>
 </TextureAtlas>
