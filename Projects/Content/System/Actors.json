@@ -3,15 +3,7 @@
   "data": [
     {
       "name": "EnviousEye",
-      "role": "Guard",
-      "effects": [
-        {
-          "context": "Contact",
-          "effectType": "Damage",
-          "amount": "1",
-          "impactWord": "AghRed"
-        }
-      ]      
+      "role": "Guard"
     },
     {
       "name": "Rat",
@@ -20,6 +12,10 @@
     {
       "name": "Skeleton",
       "role": "Interactive"
+    },
+    {
+      "name": "StinkyRat",
+      "role": "Ambient"
     }
   ]
 }

@@ -54,6 +54,7 @@ namespace ScaryCastle
                     continue;
 
                 var realTarget = effect.Target == EffectTarget.Self ? source : target;
+                var actor = realTarget as Actor;
 
                 // Play sound
                 if (effect.Sound != null)

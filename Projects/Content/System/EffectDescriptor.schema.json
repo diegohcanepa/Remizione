@@ -7,7 +7,7 @@
     "effectType": {
       "type": "string",
       "description": "El tipo de acción a ejecutar.",
-      "enum": [ "None", "Damage", "Death", "Heal", "Luck", "AddCondition", "RemoveCondition" ] 
+      "enum": [ "None", "Damage", "Death", "Heal", "Luck" ] 
     },
     "amount": {
       "type": "string",
@@ -30,7 +30,7 @@
     "damageType": {
       "type": "string",
       "description": "Si es daño, qué tipo es.",
-      "enum": [ "None", "Physical", "Acid", "Explosive", "Fire", "Ice", "Lightning", "Poison" ],
+      "enum": [ "None", "Physical", "Acid", "Curse", "Explosive", "Fire", "Ice", "Lightning", "Poison" ],
       "default": "None"
     },
     "factor": {

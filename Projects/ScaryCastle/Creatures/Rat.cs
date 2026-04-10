@@ -6,7 +6,7 @@ namespace ScaryCastle
     /// <summary>
     /// Rat
     /// </summary>
-    public sealed class Rat : Actor
+    public class Rat : Actor
     {
         private readonly Vector2Tween scaleTween;
 
@@ -19,7 +19,6 @@ namespace ScaryCastle
             FastMoveFactor = 3;
             Guts = 4;
             IsAngry = true;
-            //Scale = new(.8f);
             scaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.Zero, new(0, .05f), 200, -1);
         }
 

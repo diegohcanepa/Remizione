@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:ca8d0919100fd5ad93332bfd588e3f40:17ac69242e5f58b3c4ab7aff9e8e257f:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:adbe83fa06361d4c402410208bb01456:02e5ccd784a1c57e16872ae736a027d2:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -63,15 +63,15 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="BloodyEye-assets/Stand02.png" x="404" y="30" w="36" h="15"/>
     <sprite n="BloodyEye-assets/Stand03.png" x="290" y="30" w="36" h="15"/>
     <sprite n="BloodyEye-assets/Stand04.png" x="442" y="30" w="36" h="15"/>
-    <sprite n="Designer-assets/Move01.png" x="2" y="255" w="22" h="20"/>
-    <sprite n="Designer-assets/Move02.png" x="85" y="251" w="22" h="20"/>
-    <sprite n="Designer-assets/Move03.png" x="168" y="248" w="22" h="20"/>
-    <sprite n="Designer-assets/Move04.png" x="192" y="248" w="22" h="20"/>
-    <sprite n="Designer-assets/Stand01.png" x="216" y="248" w="22" h="20"/>
-    <sprite n="Designer-assets/StandHead01.png" x="240" y="253" w="22" h="20"/>
-    <sprite n="Designer-assets/StandHead02.png" x="264" y="257" w="22" h="20"/>
-    <sprite n="Designer-assets/TalkHead01.png" x="109" y="263" w="22" h="20"/>
-    <sprite n="Designer-assets/TalkHead02.png" x="85" y="273" w="22" h="20"/>
+    <sprite n="Designer-assets/Move01.png" x="2" y="256" w="22" h="20"/>
+    <sprite n="Designer-assets/Move02.png" x="58" y="253" w="22" h="20"/>
+    <sprite n="Designer-assets/Move03.png" x="82" y="253" w="22" h="20"/>
+    <sprite n="Designer-assets/Move04.png" x="106" y="265" w="22" h="20"/>
+    <sprite n="Designer-assets/Stand01.png" x="130" y="265" w="22" h="20"/>
+    <sprite n="Designer-assets/StandHead01.png" x="58" y="275" w="22" h="20"/>
+    <sprite n="Designer-assets/StandHead02.png" x="82" y="275" w="22" h="20"/>
+    <sprite n="Designer-assets/TalkHead01.png" x="2" y="278" w="22" h="20"/>
+    <sprite n="Designer-assets/TalkHead02.png" x="26" y="278" w="22" h="20"/>
     <sprite n="Edmund-assets/Back01.png" x="370" y="125" w="28" h="25"/>
     <sprite n="Edmund-assets/BackRaiseArm01.png" x="370" y="125" w="28" h="25"/>
     <sprite n="Edmund-assets/BackRaiseArm02.png" x="400" y="125" w="28" h="25"/>
@@ -146,34 +146,34 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="EnviousEye-assets/Bite01.png" x="442" y="71" w="25" h="11"/>
     <sprite n="EnviousEye-assets/Bite02.png" x="442" y="84" w="25" h="11"/>
     <sprite n="EnviousEye-assets/Bite03.png" x="442" y="97" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Move01.png" x="62" y="225" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Move02.png" x="89" y="225" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Move03.png" x="116" y="225" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Move04.png" x="143" y="225" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Stand01.png" x="62" y="225" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Stand02.png" x="62" y="238" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Stand03.png" x="32" y="239" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Stand04.png" x="2" y="242" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Stand05.png" x="89" y="238" w="25" h="11"/>
-    <sprite n="Father-assets/Move01.png" x="55" y="276" w="22" h="20"/>
-    <sprite n="Father-assets/Move02.png" x="133" y="263" w="22" h="20"/>
-    <sprite n="Father-assets/Move03.png" x="2" y="277" w="22" h="20"/>
-    <sprite n="Father-assets/Move04.png" x="26" y="277" w="22" h="20"/>
-    <sprite n="Father-assets/RaiseArm01.png" x="157" y="270" w="22" h="20"/>
-    <sprite n="Father-assets/RaiseArm02.png" x="109" y="285" w="22" h="20"/>
-    <sprite n="Father-assets/Stand01.png" x="133" y="285" w="22" h="20"/>
-    <sprite n="Father-assets/StandHead01.png" x="79" y="295" w="22" h="20"/>
-    <sprite n="Father-assets/StandHead02.png" x="50" y="298" w="22" h="20"/>
-    <sprite n="Father-assets/TalkHead01.png" x="2" y="299" w="22" h="20"/>
-    <sprite n="Father-assets/TalkHead02.png" x="26" y="299" w="22" h="20"/>
-    <sprite n="Father-assets/UseCross01.png" x="181" y="270" w="22" h="20"/>
-    <sprite n="Father-assets/UseCross02.png" x="205" y="270" w="22" h="20"/>
-    <sprite n="Father-assets/UseCross03.png" x="229" y="275" w="22" h="20"/>
-    <sprite n="Grandma-assets/Stand01.png" x="127" y="307" w="21" h="20"/>
-    <sprite n="Grandma-assets/StandHead01.png" x="98" y="326" w="21" h="20"/>
-    <sprite n="Grandma-assets/StandHead02.png" x="74" y="336" w="21" h="20"/>
-    <sprite n="Grandma-assets/TalkHead01.png" x="2" y="321" w="21" h="20"/>
-    <sprite n="Grandma-assets/TalkHead02.png" x="25" y="321" w="21" h="20"/>
+    <sprite n="EnviousEye-assets/Move01.png" x="122" y="239" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Move02.png" x="149" y="239" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Move03.png" x="176" y="248" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Move04.png" x="203" y="248" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand01.png" x="122" y="239" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand02.png" x="230" y="253" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand03.png" x="257" y="257" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand04.png" x="122" y="252" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand05.png" x="149" y="252" w="25" h="11"/>
+    <sprite n="Father-assets/Move01.png" x="154" y="286" w="22" h="20"/>
+    <sprite n="Father-assets/Move02.png" x="106" y="287" w="22" h="20"/>
+    <sprite n="Father-assets/Move03.png" x="130" y="287" w="22" h="20"/>
+    <sprite n="Father-assets/Move04.png" x="178" y="286" w="22" h="20"/>
+    <sprite n="Father-assets/RaiseArm01.png" x="202" y="286" w="22" h="20"/>
+    <sprite n="Father-assets/RaiseArm02.png" x="50" y="297" w="22" h="20"/>
+    <sprite n="Father-assets/Stand01.png" x="74" y="297" w="22" h="20"/>
+    <sprite n="Father-assets/StandHead01.png" x="2" y="300" w="22" h="20"/>
+    <sprite n="Father-assets/StandHead02.png" x="26" y="300" w="22" h="20"/>
+    <sprite n="Father-assets/TalkHead01.png" x="284" y="260" w="22" h="20"/>
+    <sprite n="Father-assets/TalkHead02.png" x="254" y="270" w="22" h="20"/>
+    <sprite n="Father-assets/UseCross01.png" x="226" y="291" w="22" h="20"/>
+    <sprite n="Father-assets/UseCross02.png" x="154" y="308" w="22" h="20"/>
+    <sprite n="Father-assets/UseCross03.png" x="178" y="308" w="22" h="20"/>
+    <sprite n="Grandma-assets/Stand01.png" x="26" y="322" w="21" h="20"/>
+    <sprite n="Grandma-assets/StandHead01.png" x="2" y="341" w="21" h="20"/>
+    <sprite n="Grandma-assets/StandHead02.png" x="98" y="328" w="21" h="20"/>
+    <sprite n="Grandma-assets/TalkHead01.png" x="121" y="328" w="21" h="20"/>
+    <sprite n="Grandma-assets/TalkHead02.png" x="49" y="338" w="21" h="20"/>
     <sprite n="HellGoat-assets/Headbutt01.png" x="290" y="47" w="34" h="22"/>
     <sprite n="HellGoat-assets/Headbutt02.png" x="206" y="62" w="34" h="22"/>
     <sprite n="HellGoat-assets/Move01.png" x="242" y="62" w="34" h="22"/>
@@ -200,13 +200,13 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Rat-assets/Stand01.png" x="482" y="269" w="28" h="12"/>
     <sprite n="Rat-assets/Stand02.png" x="32" y="225" w="28" h="12"/>
     <sprite n="Rat-assets/Stand03.png" x="2" y="228" w="28" h="12"/>
-    <sprite n="Reaper-assets/Move01.png" x="157" y="292" w="22" h="17"/>
-    <sprite n="Reaper-assets/Move02.png" x="181" y="292" w="22" h="17"/>
-    <sprite n="Reaper-assets/Move03.png" x="205" y="292" w="22" h="17"/>
-    <sprite n="Reaper-assets/Move04.png" x="103" y="307" w="22" h="17"/>
-    <sprite n="Reaper-assets/Stand01.png" x="103" y="307" w="22" h="17"/>
-    <sprite n="Reaper-assets/Talk01.png" x="74" y="317" w="22" h="17"/>
-    <sprite n="Reaper-assets/Talk02.png" x="50" y="320" w="22" h="17"/>
+    <sprite n="Reaper-assets/Move01.png" x="202" y="308" w="22" h="17"/>
+    <sprite n="Reaper-assets/Move02.png" x="98" y="309" w="22" h="17"/>
+    <sprite n="Reaper-assets/Move03.png" x="122" y="309" w="22" h="17"/>
+    <sprite n="Reaper-assets/Move04.png" x="50" y="319" w="22" h="17"/>
+    <sprite n="Reaper-assets/Stand01.png" x="50" y="319" w="22" h="17"/>
+    <sprite n="Reaper-assets/Talk01.png" x="74" y="319" w="22" h="17"/>
+    <sprite n="Reaper-assets/Talk02.png" x="2" y="322" w="22" h="17"/>
     <sprite n="Sister-assets/Bend01.png" x="2" y="2" w="38" h="26"/>
     <sprite n="Sister-assets/Bend02.png" x="42" y="2" w="38" h="26"/>
     <sprite n="Sister-assets/Bend03.png" x="82" y="2" w="38" h="26"/>
@@ -233,11 +233,19 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Skeleton-assets/Gut6.png" x="40" y="85" w="5" h="3"/>
     <sprite n="Skeleton-assets/Move01.png" x="2" y="30" w="24" h="23"/>
     <sprite n="Skeleton-assets/Move02.png" x="28" y="30" w="24" h="23"/>
-    <sprite n="Skeleton-assets/Move03.png" x="116" y="238" w="24" h="23"/>
-    <sprite n="Skeleton-assets/Move04.png" x="142" y="238" w="24" h="23"/>
-    <sprite n="Skeleton-assets/Stand01.png" x="59" y="251" w="24" h="23"/>
-    <sprite n="Skeleton-assets/StandHead01.png" x="29" y="252" w="24" h="23"/>
-    <sprite n="Skeleton-assets/StandHead02.png" x="29" y="252" w="24" h="23"/>
+    <sprite n="Skeleton-assets/Move03.png" x="176" y="261" w="24" h="23"/>
+    <sprite n="Skeleton-assets/Move04.png" x="202" y="261" w="24" h="23"/>
+    <sprite n="Skeleton-assets/Stand01.png" x="228" y="266" w="24" h="23"/>
+    <sprite n="Skeleton-assets/StandHead01.png" x="32" y="253" w="24" h="23"/>
+    <sprite n="Skeleton-assets/StandHead02.png" x="32" y="253" w="24" h="23"/>
+    <sprite n="StinkyRat-assets/Move01.png" x="62" y="225" w="28" h="12"/>
+    <sprite n="StinkyRat-assets/Move02.png" x="92" y="225" w="28" h="12"/>
+    <sprite n="StinkyRat-assets/Move03.png" x="122" y="225" w="28" h="12"/>
+    <sprite n="StinkyRat-assets/Move04.png" x="152" y="225" w="28" h="12"/>
+    <sprite n="StinkyRat-assets/Move05.png" x="32" y="239" w="28" h="12"/>
+    <sprite n="StinkyRat-assets/Stand01.png" x="2" y="242" w="28" h="12"/>
+    <sprite n="StinkyRat-assets/Stand02.png" x="62" y="239" w="28" h="12"/>
+    <sprite n="StinkyRat-assets/Stand03.png" x="92" y="239" w="28" h="12"/>
     <sprite n="Zabul-assets/Gut0.png" x="278" y="62" w="3" h="2"/>
     <sprite n="Zabul-assets/Gut1.png" x="283" y="62" w="3" h="1"/>
     <sprite n="Zabul-assets/Gut2.png" x="47" y="85" w="3" h="3"/>

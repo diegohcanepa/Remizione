@@ -60,20 +60,23 @@ namespace ScaryCastle
         public void Show(MessageKind message, int duration = 1500)
         {
             var text = Localization.GetValue(message);
-            var color = ColorPalette.Text.Highlight;
 
+            var color = ColorPalette.Text.Highlight;
             if (message is MessageKind.NotEnoughCoins)
             {
                 color = ColorPalette.Text.Orange;
                 Sound.Play(SoundNames.Error);
             }
-            else if (message == MessageKind.TheWayIsOpen)
+            else if (message == MessageKind.Cursed)
+            {
+                color = ColorPalette.Text.Purple;
+            }
+            else if (message == MessageKind.Poisoned)
             {
                 color = ColorPalette.Text.Green;
             }
             else
             {
-                color = ColorPalette.Text.Highlight;
                 Sound.Play(SoundNames.Error);
             }
 

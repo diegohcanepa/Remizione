@@ -34,6 +34,7 @@ namespace ScaryCastle
         private int renderLayerDepth;
         private readonly ShadowSpot shadowSpot;
         private bool shouldClampToWalkablePosition;
+        private int statusEffectTimer;
 
         #endregion
 
@@ -211,6 +212,27 @@ namespace ScaryCastle
 
             shouldClampToWalkablePosition = true;
             isCollisionDirty = true;
+        }
+
+        // UpdateStatusEffect
+        private void UpdateStatusEffect(GameTime gameTime)
+        {
+            if (StatusEffect == StatusEffect.None)
+                return;
+
+            if (statusEffectTimer > 0)
+            {
+                statusEffectTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                if (statusEffectTimer <= 0)
+                {
+                    if (StatusEffectAmount > 0)
+                    {
+                        StatusEffectAmount -= 1;
+                        HP -= 1;
+                        statusEffectTimer = GameSettings.StatusEffectCooldown;
+                    }
+                }
+            }
         }
 
         #endregion
@@ -414,6 +436,8 @@ namespace ScaryCastle
                     }
                 }
             }
+
+            UpdateStatusEffect(gameTime);
         }
 
         // OnUpdateEmittingSound
@@ -440,6 +464,58 @@ namespace ScaryCastle
         // AllowInteraction
         [ScriptProperty]
         public bool AllowInteraction { get; set; } = true;
+
+        // ApplyStatusEffect
+        public void ApplyStatusEffect(StatusEffect statusEffect, int amount)
+        {
+            // 1. Clear status effect
+            if (statusEffect == StatusEffect.None)
+            {
+                this.StatusEffect = statusEffect;
+                this.StatusEffectAmount = 0;
+                return;
+            }
+
+            // 2. Si el efecto entrante es Maldición: PISA el veneno o SE SUMA a una maldición previa.
+            if (statusEffect == StatusEffect.Cursed)
+            {
+                if (StatusEffect != StatusEffect.Cursed)
+                {
+                    StatusEffect = StatusEffect.Cursed;
+                    StatusEffectAmount = amount;
+                    statusEffectTimer = GameSettings.StatusEffectCooldown;
+                }
+                else
+                {
+                    StatusEffectAmount += amount; // Ya estaba maldito, se acumula.
+                }
+
+                if (Session.Player == this)
+                    Session.HUD.Message.Show(MessageKind.Cursed, 2000);
+
+                return;
+            }
+
+            // 3. Si el efecto entrante es Veneno: Solo importa si no estás maldito.
+            if (statusEffect == StatusEffect.Poisoned && StatusEffect != StatusEffect.Cursed)
+            {
+                if (StatusEffect != StatusEffect.Poisoned)
+                {
+                    StatusEffect = StatusEffect.Poisoned;
+                    StatusEffectAmount = amount;
+                    statusEffectTimer = GameSettings.StatusEffectCooldown;
+                }
+                else
+                {
+                    StatusEffectAmount += amount; // Ya estaba envenenado, se acumula.
+                }
+
+                if (Session.Player == this)
+                    Session.HUD.Message.Show(MessageKind.Poisoned, 2000);
+
+                return;
+            }
+        }
 
         // ApproachBehavior
         [ScriptProperty]
@@ -902,6 +978,34 @@ namespace ScaryCastle
         // IsBlinking
         public bool IsBlinking => blinker.IsRunning && blinker.CurrentValue;
 
+        // IsCornered
+        public bool IsCornered(GameThing target)
+        {
+            if (Room?.WalkArea == null)
+                return false;
+
+            var destX = Direction == FacingDirection.Left ? int.MaxValue : int.MinValue;
+            var destination = Room.WalkArea.ClampInside(new(destX, Y));
+
+            var distanceToTarget = float.MaxValue;
+            if (target.X < X)
+            {
+                distanceToTarget = Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom), RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom));
+            }
+            else
+            {
+                distanceToTarget = Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom), RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom));
+            }
+
+            float distanceToWall;
+            if (Direction == FacingDirection.Left)
+                distanceToWall = Vector2.Distance(RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom), destination);
+            else
+                distanceToWall = Vector2.Distance(RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom), destination);
+
+            return distanceToWall < 40 && distanceToTarget < 20;
+        }
+
         // IsDead
         public bool IsDead => (HP <= 0 && MaxHP > 0) || (HP == int.MinValue);
 
@@ -1050,6 +1154,25 @@ namespace ScaryCastle
                 Session.ImpactWordPool.Get()?.Show(impactWordName, wordPos);
         }
 
+        // StatusEffect
+        public StatusEffect StatusEffect { get; private set; }
+
+        // StatusEffectAmount
+        [ScriptProperty]
+        public int StatusEffectAmount
+        {
+            get;
+            private set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    if (field < 0)
+                        field = 0;
+                }
+            }
+        }
+
         // TakeDamage
         public int TakeDamage(GameThing attacker, DamageType damageType, int amount, ImpactWordName impactWordName, Vector2 knockbackForce)
         {
@@ -1098,7 +1221,18 @@ namespace ScaryCastle
                 // Si después de la resistencia el daño es 0, salimos de la lógica de HP
                 if (finalDamage > 0)
                 {
-                    HP -= finalDamage;
+                    if (damageType == DamageType.Curse)
+                    {
+                        ApplyStatusEffect(StatusEffect.Cursed, finalDamage);
+                    }
+                    else if (damageType == DamageType.Poison)
+                    {
+                        ApplyStatusEffect(StatusEffect.Poisoned, finalDamage);
+                    }
+                    else
+                    {
+                        HP -= finalDamage;
+                    }
 
                     if (IsDead)
                     {

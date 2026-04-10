@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace ScaryCastle
@@ -12,10 +11,8 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private int fullIcons;
-        private bool hasHalfIcon;
-        private readonly List<IList<AtlasImage>> statusEffectImages = [];
         private readonly Sprite[] icons;
+        private readonly List<IList<AtlasImage>> imageGroups = [];
         private int lastKnownMaxValue;
         private int lastKnownStatusEffectAmount;
         private int lastKnownValue;
@@ -28,16 +25,16 @@ namespace ScaryCastle
         // Constructor
         public UIHPMeter(Vector2 margin)
         {
-            statusEffectImages.Add(Atlases.UI.RedHearts);
-            statusEffectImages.Add(Atlases.UI.PurpleHearts);
-            statusEffectImages.Add(Atlases.UI.GreenHearts);
+            imageGroups.Add(Atlases.UI.RedHearts);
+            imageGroups.Add(Atlases.UI.PurpleHearts);
+            imageGroups.Add(Atlases.UI.GreenHearts);
 
             this.icons = new Sprite[10];
             var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, margin);
 
             for (var i = 0; i < icons.Length; i++)
             {
-                icons[i] = new(statusEffectImages[0][0])
+                icons[i] = new(imageGroups[0][0])
                 {
                     Position = pos
                 };
@@ -67,23 +64,23 @@ namespace ScaryCastle
             // 2. Dimensionamiento
             totalIcons = maxHp / 2;
             var images = (Actor.StatusEffect != StatusEffect.None)
-                ? statusEffectImages[(int)Actor.StatusEffect]
-                : statusEffectImages[0];
+                ? imageGroups[(int)Actor.StatusEffect]
+                : imageGroups[0];
 
             for (int i = 0; i < totalIcons; i++)
             {
                 if (i >= icons.Length) break;
 
                 // Puntos de este icono (p1 = inferior, p2 = superior)
-                int p1 = i * 2 + 1;
-                int p2 = i * 2 + 2;
+                int p1 = (i * 2) + 1;
+                int p2 = (i * 2) + 2;
 
                 // --- LÓGICA DE RENDERIZADO ---
 
                 // CASO A: El corazón no tiene vida (puntos por encima del HP actual)
                 if (hp < p1)
                 {
-                    icons[i].RenderImage = statusEffectImages[0][0]; // Vacío
+                    icons[i].RenderImage = imageGroups[0][0]; // Vacío
                 }
 
                 // CASO B: El corazón está lleno (tiene los 2 puntos de vida)
@@ -92,7 +89,7 @@ namespace ScaryCastle
                     if (safeHp >= p2)
                     {
                         // Ambos puntos son rojos
-                        icons[i].RenderImage = statusEffectImages[0][2];
+                        icons[i].RenderImage = imageGroups[0][2];
                     }
                     else if (safeHp >= p1)
                     {
@@ -113,7 +110,7 @@ namespace ScaryCastle
                     if (safeHp >= p1)
                     {
                         // El único punto que tiene es rojo
-                        icons[i].RenderImage = statusEffectImages[0][1];
+                        icons[i].RenderImage = imageGroups[0][1];
                     }
                     else
                     {
@@ -149,7 +146,7 @@ namespace ScaryCastle
         {
             if (Actor != null)
             {
-                if (lastKnownValue != Actor.HP || 
+                if (lastKnownValue != Actor.HP ||
                     lastKnownMaxValue != Actor.MaxHP ||
                     lastKnownStatusEffectAmount != Actor.StatusEffectAmount)
                     Refresh();

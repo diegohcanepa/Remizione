@@ -38,7 +38,7 @@ namespace ScaryCastle
     public enum ConsumptionType { Quantity, Durability, None }
 
     // DamageType
-    public enum DamageType { Physical, Acid, Explosive, Fire, Ice, Lightning, Poison }
+    public enum DamageType { Physical, Acid, Curse, Explosive, Fire, Ice, Lightning, Poison }
 
     // Difficulty
     public enum Difficulty { Easy, Normal, Hard }
@@ -53,7 +53,7 @@ namespace ScaryCastle
     public enum EffectContext { Contact, Attack, Update, Use }
 
     // EffectType
-    public enum EffectType { None, Damage, Death, Heal, Luck, AddCondition, RemoveCondition }
+    public enum EffectType { None, Damage, Death, Heal, Luck }
 
     // EffectTarget
     public enum EffectTarget
@@ -121,7 +121,7 @@ namespace ScaryCastle
     }
 
     // MessageKind
-    public enum MessageKind { CannotPlaceItem, HandsFull, InventoryFull, NotEnoughCoins, NotEnoughFaith, OutOfReach, TheWayIsOpen }
+    public enum MessageKind { CannotPlaceItem, Cursed, HandsFull, InventoryFull, NotEnoughCoins, NotEnoughFaith, OutOfReach, Poisoned, TheWayIsOpen }
 
     // MouseCursorState
     public enum MouseCursorState { Arrow, Cross, Down, Hand, Left, Prohibition, Right, Up, Wait }

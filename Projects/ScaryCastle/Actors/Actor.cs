@@ -28,7 +28,6 @@ namespace ScaryCastle
         private readonly List<Vector2> pendingPathNodes = [];
         private int reactionTimer;
         private SpeechBubble? speechBubble;
-        private int statusEffectTimer;
 
         #endregion
 
@@ -171,25 +170,6 @@ namespace ScaryCastle
             }
         }
 
-        // UpdateReactionTimer
-        private void UpdateReactionTimer(GameTime gameTime)
-        {
-            // Can use brain?
-            if (IsPlayer || CombatBehavior == null || !IsAngry)
-                return;
-
-            // Can update timer?
-            if (IsMoving || Session.IsAwaiting || IsAttacking)
-                return;
-
-            reactionTimer -= gameTime.ElapsedGameTime.Milliseconds;
-            if (reactionTimer <= 0)
-            {
-                React();
-                reactionTimer = CombatBehavior.Archetype.GetNextCooldown();
-            }
-        }
-
         // UpdateDirection
         private void UpdateDirection()
         {
@@ -227,6 +207,25 @@ namespace ScaryCastle
 
             PlaySound(SoundNames.FootstepA);
             footstepLastUsedFrame = Sprite.Player.Frame;
+        }
+
+        // UpdateReactionTimer
+        private void UpdateReactionTimer(GameTime gameTime)
+        {
+            // Can use brain?
+            if (IsPlayer || CombatBehavior == null || !IsAngry || IsDead)
+                return;
+
+            // Can update timer?
+            if (IsMoving || Session.IsAwaiting || IsAttacking)
+                return;
+
+            reactionTimer -= gameTime.ElapsedGameTime.Milliseconds;
+            if (reactionTimer <= 0)
+            {
+                React();
+                reactionTimer = CombatBehavior.Archetype.GetNextCooldown();
+            }
         }
 
         #endregion
@@ -473,11 +472,20 @@ namespace ScaryCastle
             UpdateFootstep();
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
-
             UpdateReactionTimer(gameTime);
 
-            if (IsPlayer && CarriedProp != null && Session.IsCurrentScene && !Session.IsAwaiting && !IsMoving && CanHandleInput)
-                FaceToMouseCursor();
+            if (!Session.IsAwaiting && !IsMoving)
+            {
+                if (IsPlayer)
+                {
+                    if (CarriedProp != null && Session.IsCurrentScene && CanHandleInput)
+                        FaceToMouseCursor();
+                }
+                else if (IsAngry && Session.Player != null)
+                {
+                    FaceTo(Session.Player);
+                }
+            }
         }
 
         // PerformChargeReaction
@@ -502,21 +510,36 @@ namespace ScaryCastle
             if (arch == null)
                 return;
 
-            // 1. Dirección: ¿Dónde está el bicho respecto al jugador?
-            Vector2 direction = Position - target.Position;
-            float currentDistance = direction.Length();
+            if (WalkArea == null)
+                return;
 
-            // Evitamos división por cero si están exactamente en el mismo pixel
-            direction = currentDistance > 0 ? direction / currentDistance : new Vector2(1, 0);
+            Vector2 bestPoint = Position;
+            float moveRadius = 120f;
+            float minStep = 40f; // Si no se mueve al menos 40px, no nos sirve.
 
-            // 2. Distancia Ideal: El centro de su "zona de confort" definida en el arquetipo.
-            float idealDistance = (arch.MinComfortDistance + arch.MaxComfortDistance) / 2f;
+            for (int i = 0; i < 3; i++) // 3 intentos para encontrar un lugar decente
+            {
+                float angle = (float)(Random.Shared.NextDouble() * Math.PI * 2);
+                Vector2 offset = new(
+                    (float)Math.Cos(angle) * moveRadius,
+                    (float)Math.Sin(angle) * moveRadius
+                );
 
-            // 3. El punto destino: Es la posición del jugador más el vector de dirección 
-            // por la distancia que al bicho le gusta mantener.
-            Vector2 finalTarget = target.Position + (direction * idealDistance);
+                Vector2 potentialTarget = WalkArea.Polygon.Clamp(Position + offset);
 
-            MoveTo(finalTarget);
+                // ¿Este punto nos mueve lo suficiente?
+                if (Vector2.Distance(Position, potentialTarget) >= minStep)
+                {
+                    bestPoint = potentialTarget;
+                    break;
+                }
+
+                // Si no, guardamos el que más nos mueva por las dudas
+                if (Vector2.Distance(Position, potentialTarget) > Vector2.Distance(Position, bestPoint))
+                    bestPoint = potentialTarget;
+            }
+
+            MoveTo(bestPoint);
         }
 
         #endregion
@@ -731,37 +754,6 @@ namespace ScaryCastle
         // IsAttacking
         public bool IsAttacking => BodyMachine.CurrentState is BodyCloseAttackState;
 
-        // IsCornered
-        public bool IsCornered(GameThing target)
-        {
-            if (Room?.WalkArea == null)
-                return false;
-
-            var destX = Direction == FacingDirection.Left ? int.MaxValue : int.MinValue;
-            var destination = Room.WalkArea.ClampInside(new(destX, Y));
-
-            var distanceToTarget = float.MaxValue;
-            if (target != null)
-            {
-                if (target.X < X)
-                {
-                    distanceToTarget = Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom), RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom));
-                }
-                else
-                {
-                    distanceToTarget = Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom), RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom));
-                }
-            }
-
-            float distanceToWall;
-            if (Direction == FacingDirection.Left)
-                distanceToWall = Vector2.Distance(RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom), destination);
-            else
-                distanceToWall = Vector2.Distance(RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom), destination);
-
-            return distanceToWall < 40 && distanceToTarget < 20;
-        }
-
         // IsInAttackLane
         public bool IsInAttackLane(GameThing target)
         {
@@ -907,13 +899,6 @@ namespace ScaryCastle
             else
                 Animate(AnimationNames.Talk, true, AnimationDirection.Forward, false);
         }
-
-        // StatusEffect
-        public StatusEffect StatusEffect { get; set; } = StatusEffect.Poisoned;
-
-        // StatusEffectAmount
-        [ScriptProperty]
-        public int StatusEffectAmount { get; set; } = 3;
 
         // StopTalking
         public void StopTalking()

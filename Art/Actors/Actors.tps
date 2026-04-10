@@ -386,18 +386,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">EnviousEye-assets/Bite01.png</key>
-            <key type="filename">EnviousEye-assets/Bite02.png</key>
-            <key type="filename">EnviousEye-assets/Bite03.png</key>
-            <key type="filename">EnviousEye-assets/Move01.png</key>
-            <key type="filename">EnviousEye-assets/Move02.png</key>
-            <key type="filename">EnviousEye-assets/Move03.png</key>
-            <key type="filename">EnviousEye-assets/Move04.png</key>
             <key type="filename">EnviousEye-assets/Stand01.png</key>
             <key type="filename">EnviousEye-assets/Stand02.png</key>
-            <key type="filename">EnviousEye-assets/Stand03.png</key>
-            <key type="filename">EnviousEye-assets/Stand04.png</key>
-            <key type="filename">EnviousEye-assets/Stand05.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -812,6 +802,7 @@
                     <filename>Father-assets</filename>
                     <filename>Skeleton-assets</filename>
                     <filename>Rat-assets</filename>
+                    <filename>StinkyRat-assets</filename>
                 </array>
             </struct>
         </map>

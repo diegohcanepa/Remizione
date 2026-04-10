@@ -34,6 +34,9 @@ namespace ScaryCastle
         // LogFileName
         public const string LogFileName = "ErrorLog.txt";
 
+        // StatusEffectCooldown
+        public const int StatusEffectCooldown = 10000;
+
         // SteamAppID
         public const int SteamAppID = 480;
 

@@ -11,6 +11,7 @@
   <String Key="Actor.Rat">Rata</String>
   <String Key="Actor.RiderlessHead">Cabeza sin jinete</String>
   <String Key="Actor.Sister">Sor Jamona</String>
+  <String Key="Actor.StinkyRat">Rata apestosa</String>
   <String Key="ActorProperty.Grace.Description">La gracia quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Grace.Name">Gracia</String>
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
@@ -190,11 +191,13 @@
   <String Key="MessageBox.SlotDeleted">La ranura ha sido eliminada.</String>
   <String Key="MessageBox.Warning">¡Atención!</String>
   <String Key="MessageKind.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
+  <String Key="MessageKind.Cursed">¡Estás maldito!</String>
   <String Key="MessageKind.HandsFull">Tienes las manos ocupadas.</String>
   <String Key="MessageKind.InventoryFull">El inventario está lleno.</String>
   <String Key="MessageKind.NotEnoughCoins">No tienes monedas suficientes.</String>
   <String Key="MessageKind.NotEnoughFaith">No tienes la fe suficiente.</String>
   <String Key="MessageKind.OutOfReach">Fuera de alcance.</String>
+  <String Key="MessageKind.Poisoned">¡Envenenado!</String>
   <String Key="MessageKind.TheWayIsOpen">El camino se abre.</String>
   <String Key="Misc.All">Todo</String>
   <String Key="Misc.And">y</String>

@@ -11,6 +11,7 @@
   <String Key="Actor.Rat">Rat</String>
   <String Key="Actor.RiderlessHead">Riderless Head</String>
   <String Key="Actor.Sister">Sister Ham</String>
+  <String Key="Actor.StinkyRat">Stinky rat</String>
   <String Key="ActorProperty.Grace.Description">The ashes quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Grace.Name">Grace</String>
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
@@ -66,7 +67,7 @@
   <String Key="Item.MagneticCard.Name">Magnetic card</String>
   <String Key="Item.MasterLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.MasterLockpick.Name">Master lockpick</String>
-  <String Key="Item.PieceOfWood.Description"></String>
+  <String Key="Item.PieceOfWood.Description" />
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
@@ -190,11 +191,13 @@
   <String Key="MessageBox.SlotDeleted">The slot has been deleted.</String>
   <String Key="MessageBox.Warning">Warning!</String>
   <String Key="MessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
+  <String Key="MessageKind.Cursed">You're cursed!</String>
   <String Key="MessageKind.HandsFull">Your hands are full.</String>
   <String Key="MessageKind.InventoryFull">Inventory is full.</String>
   <String Key="MessageKind.NotEnoughCoins">Not enough coins.</String>
   <String Key="MessageKind.NotEnoughFaith">Not enough faith.</String>
   <String Key="MessageKind.OutOfReach">Out of reach.</String>
+  <String Key="MessageKind.Poisoned">Poisoned!</String>
   <String Key="MessageKind.TheWayIsOpen">The way is open.</String>
   <String Key="Misc.All">All</String>
   <String Key="Misc.And">and</String>

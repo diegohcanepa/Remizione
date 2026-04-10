@@ -80,6 +80,27 @@
           "sound": "EnviousEyeAttack"
         }
       ]
-    }
+    },
+    {
+      "name": "StinkyRat",
+      "archetype": "Lurker",
+      "intents": [
+        {
+          "name": "Contact",
+          "sound": "RatAttack",
+          "range": 50,
+          "effects": [
+            {
+              "context": "Contact",
+              "amount": "2",
+              "damageType": "Poison",
+              "effectType": "Damage",
+              "impactWord": "AghGreen",
+              "knockback": "15,5"
+            }
+          ]
+        }
+      ]
+    }    
   ]
 }
