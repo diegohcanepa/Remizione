@@ -163,6 +163,9 @@ namespace ScaryCastle
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }
 
+    // StatusEffect
+    public enum StatusEffect { None, Cursed, Poisoned }
+
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }
 

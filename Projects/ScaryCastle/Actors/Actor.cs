@@ -28,6 +28,7 @@ namespace ScaryCastle
         private readonly List<Vector2> pendingPathNodes = [];
         private int reactionTimer;
         private SpeechBubble? speechBubble;
+        private int statusEffectTimer;
 
         #endregion
 
@@ -906,6 +907,13 @@ namespace ScaryCastle
             else
                 Animate(AnimationNames.Talk, true, AnimationDirection.Forward, false);
         }
+
+        // StatusEffect
+        public StatusEffect StatusEffect { get; set; } = StatusEffect.Poisoned;
+
+        // StatusEffectAmount
+        [ScriptProperty]
+        public int StatusEffectAmount { get; set; } = 3;
 
         // StopTalking
         public void StopTalking()

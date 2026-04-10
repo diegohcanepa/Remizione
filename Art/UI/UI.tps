@@ -512,12 +512,20 @@
             <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>
             <key type="filename">UI-assets/PointingHand.png</key>
-            <key type="filename">UIIcons-assets/FaithFull.png</key>
-            <key type="filename">UIIcons-assets/HPEmpty.png</key>
-            <key type="filename">UIIcons-assets/HPFull.png</key>
-            <key type="filename">UIIcons-assets/HPHalf.png</key>
+            <key type="filename">UIIcons-assets/GreenHearts1.png</key>
+            <key type="filename">UIIcons-assets/GreenHearts2.png</key>
+            <key type="filename">UIIcons-assets/GreenHearts3.png</key>
+            <key type="filename">UIIcons-assets/GreenHearts4.png</key>
             <key type="filename">UIIcons-assets/HeartBlackFull.png</key>
             <key type="filename">UIIcons-assets/HeartBlackHalf.png</key>
+            <key type="filename">UIIcons-assets/PurpleHearts1.png</key>
+            <key type="filename">UIIcons-assets/PurpleHearts2.png</key>
+            <key type="filename">UIIcons-assets/PurpleHearts3.png</key>
+            <key type="filename">UIIcons-assets/PurpleHearts4.png</key>
+            <key type="filename">UIIcons-assets/RedHearts1.png</key>
+            <key type="filename">UIIcons-assets/RedHearts2.png</key>
+            <key type="filename">UIIcons-assets/RedHearts3.png</key>
+            <key type="filename">UIIcons-assets/RedHearts4.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -764,8 +772,6 @@
                 <false/>
             </struct>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
-            <key type="filename">UIIcons-assets/FaithEmpty.png</key>
-            <key type="filename">UIIcons-assets/FaithHalf.png</key>
             <key type="filename">UIIcons-assets/SkullEmpty.png</key>
             <key type="filename">UIIcons-assets/SkullFull.png</key>
             <key type="filename">UIIcons-assets/TalkIcon.png</key>

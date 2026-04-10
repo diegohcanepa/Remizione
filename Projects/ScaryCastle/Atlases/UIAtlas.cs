@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using System.Collections.ObjectModel;
 
 namespace ScaryCastle
 {
@@ -17,16 +18,11 @@ namespace ScaryCastle
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
-            FaithEmpty = this[nameof(FaithEmpty)];
-            FaithHalf = this[nameof(FaithHalf)];
             FaithIcon = this[nameof(FaithIcon)];
-            FaithFull = this[nameof(FaithFull)];
             FearEmpty = this[nameof(FearEmpty)];
             FearFull = this[nameof(FearFull)];
             FearIcon = this[nameof(FearIcon)];
-            HPEmpty = this[nameof(HPEmpty)];
-            HPHalf = this[nameof(HPHalf)];
-            HPFull = this[nameof(HPFull)];
+            GreenHearts = CreateReadOnlyCollection("GreenHearts", 1, 4);
             InventorySlot = this[nameof(InventorySlot)];
             InventoryGridContainer = this[nameof(InventoryGridContainer)];
             InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
@@ -40,6 +36,8 @@ namespace ScaryCastle
             PointingHand = this[nameof(PointingHand)];
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
+            PurpleHearts = CreateReadOnlyCollection("PurpleHearts", 1, 4);
+            RedHearts = CreateReadOnlyCollection("RedHearts", 1, 4);
             Sack = this[nameof(Sack)];
             SavingIcon = this[nameof(SavingIcon)];
             Skull = this[nameof(Skull)];
@@ -69,17 +67,8 @@ namespace ScaryCastle
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
 
-        // FaithEmpty
-        public AtlasImage FaithEmpty { get; }
-
-        // FaithHalf
-        public AtlasImage FaithHalf { get; }
-
         // FaithIcon
         public AtlasImage FaithIcon { get; }
-
-        // FaithFull
-        public AtlasImage FaithFull { get; }
 
         // FearEmpty
         public AtlasImage FearEmpty { get; }
@@ -89,6 +78,9 @@ namespace ScaryCastle
 
         // FearIcon
         public AtlasImage FearIcon { get; }
+
+        // GreenHearts
+        public ReadOnlyCollection<AtlasImage> GreenHearts { get; }
 
         // InventorySlot
         public AtlasImage InventorySlot { get; }
@@ -111,14 +103,8 @@ namespace ScaryCastle
         // ItemGridSlotSelected
         public AtlasImage ItemGridSlotSelected { get; }
 
-        // HeartEmpty
-        public AtlasImage HPEmpty { get; }
-
-        // HeartHalf
-        public AtlasImage HPHalf { get; }
-
-        // HeartFull
-        public AtlasImage HPFull { get; }
+        // RedHearts
+        public ReadOnlyCollection<AtlasImage> RedHearts { get; }
 
         // MessageContainer
         public AtlasImage MessageContainer { get; }
@@ -137,6 +123,9 @@ namespace ScaryCastle
 
         // PopupContainerShadow
         public AtlasImage PopupContainerShadow { get; }
+
+        // PurpleHearts
+        public ReadOnlyCollection<AtlasImage> PurpleHearts { get; }
 
         // Sack
         public AtlasImage Sack { get; }
