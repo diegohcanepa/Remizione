@@ -5,7 +5,6 @@ namespace ScaryCastle.Scripting
 {
     // AttachLightCommand
     // Arguments: {Thing} at {Vector2} [#color:Color] [#kind:LightKind] [#pivot:RectanglePoint] [#scale:Vector2]
-    [ScriptStatement(CodingContext.EntityDeclaration)]
     internal sealed class AttachLightCommand : NonAwaitableCommand
     {
         // Constructor

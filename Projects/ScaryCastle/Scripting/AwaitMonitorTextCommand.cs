@@ -5,7 +5,6 @@ namespace ScaryCastle.Scripting
     // AwaitMonitorTextCommand
     // Arguments: {"Text"}
     [ForceAwait]
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitMonitorTextCommand : LocalizableCommand
     {
         private Monitor? monitorRoom;

@@ -2,7 +2,6 @@
 {
     // StopRoutineCommand
     // Arguments: {Routine}
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class StopRoutineCommand : NonAwaitableCommand
     {
         private readonly Script? routine;

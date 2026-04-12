@@ -1,7 +1,6 @@
 ﻿namespace Adberration.Scripting
 {
     // SaveGameCommand
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class SaveGameCommand : NonAwaitableCommand
     {
         // Constructor

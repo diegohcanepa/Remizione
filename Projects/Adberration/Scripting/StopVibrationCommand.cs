@@ -3,7 +3,6 @@
 namespace Adberration.Scripting
 {
     // StopVibrationCommand
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class StopVibrationCommand : NonAwaitableCommand
     {
         // Constructor

@@ -6,7 +6,6 @@ namespace ScaryCastle.Scripting
     // AwaitApproachCommand
     // Syntax: {Source:Actor} {Target:GameThing} [#behavior:ApproachBehavior]
     [ForceAwait]
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitApproachCommand : AwaitableCommand
     {
         private readonly ApproachBehavior? behavior;

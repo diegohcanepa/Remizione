@@ -2,7 +2,6 @@
 {
     // FlagCommand
     // Arguments: {Name} = {Boolean} [#transient]
-    [ScriptStatement(CodingContext.Declaration)]
     internal sealed class FlagCommand : NonAwaitableCommand
     {
         // Constructor

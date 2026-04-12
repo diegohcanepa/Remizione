@@ -5,7 +5,6 @@ namespace Adberration.Scripting
     // AwaitSoundCommand
     // Arguments: {Name}
     [ForceAwait]
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitSoundCommand : AwaitableCommand
     {
         private SoundInstance? soundInstance;

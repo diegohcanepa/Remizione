@@ -4,7 +4,6 @@ namespace Adberration.Scripting
 {
     // AwaitTransitionCommand
     [ForceAwait]
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitTransitionCommand : AwaitableCommand
     {
         // Constructor

@@ -4,7 +4,6 @@ namespace Adberration.Scripting
 {
     // PauseSoundCommand
     // Arguments: {Name}
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class PauseSoundCommand : NonAwaitableCommand
     {
         // Constructor

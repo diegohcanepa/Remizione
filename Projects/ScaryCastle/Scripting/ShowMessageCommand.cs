@@ -4,7 +4,6 @@ namespace ScaryCastle.Scripting
 {
     // ShowMessageCommand
     // Arguments: {MessageKind}
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class ShowMessageCommand : NonAwaitableCommand
     {
         // Constructor

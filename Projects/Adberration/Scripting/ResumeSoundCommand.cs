@@ -4,7 +4,6 @@ namespace Adberration.Scripting
 {
     // ResumeSoundCommand
     // Arguments: {Name}
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class ResumeSoundCommand : NonAwaitableCommand
     {
         // Constructor

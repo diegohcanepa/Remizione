@@ -1,11 +1,10 @@
 ﻿using Adberration.Scripting;
 using Engendro.Input;
 
-namespace ScaryCastle.Scripting
+namespace Adberration.Scripting
 {
     // VibrateCommand
     // Arguments: {Duration:Integer} [#left:float] [#right:float] [#left-trigger:float] [#right-trigger:float]
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class VibrateCommand : NonAwaitableCommand
     {
         // Constructor

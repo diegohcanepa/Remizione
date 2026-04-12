@@ -4,7 +4,6 @@ namespace Adberration.Scripting
 {
     // FrameCommand
     // Arguments: {Range:Int32Range} duration {Int32} [#event] [#goto:Label] [#label:Name] [#repeat:Integer] [#sound:Name] [#sub-area:Rectangle] [#speed-factor:Float]
-    [ScriptStatement(CodingContext.EntityDeclaration)]
     internal sealed class FrameCommand : NonAwaitableCommand
     {
         // Constructor

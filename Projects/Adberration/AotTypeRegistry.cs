@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Adberration.Scripting;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Engendro
+namespace Adberration
 {
     /// <summary>
     /// AotTypeRegistry
@@ -30,12 +31,12 @@ namespace Engendro
         }
 
         // Register
-        public static void Register(string keyName, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] Type type)
+        public static void Register(string keyName, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] Type type, CodingContext context = CodingContext.Execution)
         {
             if (types.ContainsKey(keyName))
                 return;
 
-            types.Add(keyName, new AotTypeEntry(keyName, type));
+            types.Add(keyName, new AotTypeEntry(keyName, type, context));
         }
 
         // Types

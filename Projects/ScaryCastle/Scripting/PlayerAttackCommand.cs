@@ -5,7 +5,6 @@ namespace ScaryCastle.Scripting
 {
     // PlayerAttackCommand
     // Arguments: {CombatIntent} {Target:GameThing}
-    [ScriptStatement(CodingContext.Execution)]
     [ForceAwait]
     internal sealed class PlayerAttackCommand : NonAwaitableCommand
     {

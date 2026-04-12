@@ -1,7 +1,6 @@
 ﻿namespace Adberration.Scripting
 {
     // ResetCameraCommand
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class ResetCameraCommand : NonAwaitableCommand
     {
         // Constructor

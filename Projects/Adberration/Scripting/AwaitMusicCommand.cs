@@ -5,7 +5,6 @@ namespace Adberration.Scripting
 {
     // AwaitMusicCommand
     [ForceAwait]
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitMusicCommand : AwaitableCommand
     {
         // Constructor

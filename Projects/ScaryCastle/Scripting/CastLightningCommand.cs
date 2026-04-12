@@ -4,7 +4,6 @@ namespace ScaryCastle.Scripting
 {
     // CastLightningCommand
     // Arguments: {ItemName}
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class CastLightningCommand : NonAwaitableCommand
     {
         // Constructor

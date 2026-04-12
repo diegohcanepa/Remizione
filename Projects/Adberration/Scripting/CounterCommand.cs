@@ -2,7 +2,6 @@
 {
     // CounterCommand
     // Arguments: {Name} = {Integer}
-    [ScriptStatement(CodingContext.Declaration)]
     internal sealed class CounterCommand : NonAwaitableCommand
     {
         // Constructor

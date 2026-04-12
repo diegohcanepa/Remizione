@@ -2,7 +2,6 @@
 {
     // IfFlagStatement
     // Arguments: {Flag[,Flag...]}
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class IfFlagStatement : SelectionStatement
     {
         private readonly FlagCondition condition;

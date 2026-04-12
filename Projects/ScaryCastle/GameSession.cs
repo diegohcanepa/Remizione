@@ -135,14 +135,14 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(WaterPuddle));
 
             AotTypeRegistry.Register("add-dialog-option", typeof(AddDialogOptionCommand));
-            AotTypeRegistry.Register("add-hole", typeof(AddHoleCommand));
+            AotTypeRegistry.Register("add-hole", typeof(AddHoleCommand), CodingContext.EntityDeclaration);
             AotTypeRegistry.Register("add-item", typeof(AddItemCommand));
-            AotTypeRegistry.Register("add-light", typeof(AddLightCommand));
-            AotTypeRegistry.Register("add-trigger-area", typeof(AddTriggerAreaCommand));
-            AotTypeRegistry.Register("add-walk-area", typeof(AddWalkAreaCommand));
+            AotTypeRegistry.Register("add-light", typeof(AddLightCommand), CodingContext.EntityDeclaration);
+            AotTypeRegistry.Register("add-trigger-area", typeof(AddTriggerAreaCommand), CodingContext.EntityDeclaration);
+            AotTypeRegistry.Register("add-walk-area", typeof(AddWalkAreaCommand), CodingContext.EntityDeclaration);
             AotTypeRegistry.Register("animate-actor", typeof(AnimateActorCommand));
             AotTypeRegistry.Register("apply-item-effects", typeof(ApplyItemEffectsCommand));
-            AotTypeRegistry.Register("attach-light", typeof(AttachLightCommand));
+            AotTypeRegistry.Register("attach-light", typeof(AttachLightCommand), CodingContext.EntityDeclaration);
             AotTypeRegistry.Register("await-approach", typeof(AwaitApproachCommand));
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
@@ -164,7 +164,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("set-light", typeof(SetLightCommand));
             AotTypeRegistry.Register("show-message", typeof(ShowMessageCommand));
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
-            AotTypeRegistry.Register("vibrate", typeof(VibrateCommand));
             AotTypeRegistry.Register("x-tween", typeof(XTweenCommand));
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));
         }

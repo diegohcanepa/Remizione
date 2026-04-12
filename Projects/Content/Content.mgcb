@@ -479,6 +479,18 @@
 /processorParam:Quality=Best
 /build:Audio/FX/Drink.wav;Audio/FX/Drink
 
+#begin Audio/FX/EdmundEffortShort1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/EdmundEffortShort1.wav;Audio/FX/EdmundEffortShort1
+
+#begin Audio/FX/EdmundEffortShort2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/EdmundEffortShort2.wav;Audio/FX/EdmundEffortShort2
+
 #begin Audio/FX/EdmundHurt1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

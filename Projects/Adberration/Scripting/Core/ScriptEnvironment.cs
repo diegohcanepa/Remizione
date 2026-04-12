@@ -126,18 +126,14 @@ namespace Adberration.Scripting
 
             // Statements
             var statementType = typeof(Statement);
-            foreach (var typeInfo in AotTypeRegistry.Types)
+            foreach (var entry in AotTypeRegistry.Types)
             {
                 // Check if type is an entity
-                if (!statementType.IsAssignableFrom(typeInfo.Type))
+                if (!statementType.IsAssignableFrom(entry.Type))
                     continue;
 
-                var context = CodingContext.Any;
-                if (typeInfo.Type.GetCustomAttribute<ScriptStatementAttribute>() is ScriptStatementAttribute attr)
-                    context = attr.Context;
-
-                var instance = new ScriptStatement(session, typeInfo.KeyName, typeInfo.Type, context);
-                statements.Add(typeInfo.KeyName, instance);
+                var instance = new ScriptStatement(session, entry.KeyName, entry.Type, entry.Context);
+                statements.Add(entry.KeyName, instance);
             }
 
             // Entities

@@ -4,7 +4,6 @@ namespace Adberration.Scripting
 {
     // XTweenCommand
     // Arguments: {Entity} {TweenStyle} to {float} duration {Integer} [#bounces:Integer] [#bounce-delay:Integer] [#looped] [#relative]
-    [ScriptStatement(CodingContext.Execution)]
     public sealed class XTweenCommand : FloatTweenCommand
     {
         // Constructor

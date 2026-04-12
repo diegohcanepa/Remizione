@@ -3,7 +3,6 @@
     // AwaitMoveCommand
     // Arguments: {Thing[,...]} [#include-tweens]
     [ForceAwait]
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitMoveCommand : AwaitableCommand
     {
         private const string IncludeTweensArg = "#include-tweens";

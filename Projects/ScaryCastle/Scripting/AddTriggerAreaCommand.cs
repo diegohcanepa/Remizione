@@ -4,7 +4,6 @@ namespace ScaryCastle.Scripting
 {
     // AddTriggerAreaCommand
     // Arguments: {Name:String} routine {Routine} polygon {Polygon} [#condition:FlagCondition] [#no-await] [#no-stop] [#once] [#on-exit:Routine]
-    [ScriptStatement(CodingContext.EntityDeclaration)]
     internal sealed class AddTriggerAreaCommand : NonAwaitableCommand
     {
         private const string NoStopArg = "#no-stop";

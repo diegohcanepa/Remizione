@@ -4,7 +4,6 @@ namespace ScaryCastle.Scripting
 {
     // ApplyItemEffectsCommand
     // Arguments: {ItemName} [#context:{EffectContext}]
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class ApplyItemEffectsCommand : NonAwaitableCommand
     {
         // Constructor

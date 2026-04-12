@@ -4,7 +4,6 @@ namespace ScaryCastle.Scripting
 {
     // AwaitDialogBlockCommand
     [ForceAwait]
-    [ScriptStatement(CodingContext.Execution)]
     public sealed class AwaitDialogBlockCommand : AwaitableCommand
     {
         // Constructor

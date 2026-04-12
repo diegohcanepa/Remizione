@@ -1,7 +1,6 @@
 ﻿namespace Adberration.Scripting
 {
     // PopSceneCommand
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class PopSceneCommand : NonAwaitableCommand
     {
         // Constructor

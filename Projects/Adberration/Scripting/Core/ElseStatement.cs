@@ -1,7 +1,6 @@
 ﻿namespace Adberration.Scripting
 {
     // ElseStatement
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class ElseStatement : Statement
     {
         // Constructor

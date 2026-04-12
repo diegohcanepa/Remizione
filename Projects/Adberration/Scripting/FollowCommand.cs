@@ -2,7 +2,6 @@
 {
     // FollowCommand
     // Syntax: {Thing} [#focus]
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class FollowCommand : NonAwaitableCommand
     {
         // Constructor

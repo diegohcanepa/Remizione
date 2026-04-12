@@ -4,7 +4,6 @@ namespace Adberration.Scripting
 {
     // ShakeCommand
     // Arguments: {Vector2} duration {Integer} bounces {Integer} [#tween:TweenStyle]
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class ShakeCommand : AwaitableCommand
     {
         // Constructor

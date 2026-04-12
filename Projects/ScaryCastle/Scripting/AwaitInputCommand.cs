@@ -5,7 +5,6 @@ namespace ScaryCastle.Scripting
 {
     // AwaitInputCommand
     [ForceAwait]
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitInputCommand : AwaitableCommand
     {
         // Constructor

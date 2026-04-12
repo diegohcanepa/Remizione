@@ -2,7 +2,6 @@
 {
     // ResumeRoutineCommand
     // Arguments: {Routine}
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class ResumeRoutineCommand : NonAwaitableCommand
     {
         // Constructor

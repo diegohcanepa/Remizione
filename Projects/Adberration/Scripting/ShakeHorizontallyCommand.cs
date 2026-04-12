@@ -4,7 +4,6 @@ namespace Adberration.Scripting
 {
     // ShakeHorizontallyCommand
     // Arguments: {Float} duration {Integer} bounces {Integer} [#tween:TweenStyle]
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class ShakeHorizontallyCommand : AwaitableCommand
     {
         // Constructor

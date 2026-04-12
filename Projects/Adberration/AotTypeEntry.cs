@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Adberration.Scripting;
+using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Engendro
+namespace Adberration
 {
     /// <summary>
     /// AotTypeEntry
@@ -9,11 +10,15 @@ namespace Engendro
     public sealed class AotTypeEntry
     {
         // Constructor
-        internal AotTypeEntry(string keyName, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] Type type)
+        internal AotTypeEntry(string keyName, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] Type type, CodingContext context = CodingContext.Any)
         {
             KeyName = keyName;
             Type = type;
+            Context = context;
         }
+
+        // Context
+        public CodingContext Context { get; }
 
         // KeyName
         public string KeyName { get; }

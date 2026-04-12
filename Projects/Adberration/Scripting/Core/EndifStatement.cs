@@ -1,7 +1,6 @@
 ﻿namespace Adberration.Scripting
 {
     // EndifStatement
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class EndifStatement : Statement
     {
         // Constructor

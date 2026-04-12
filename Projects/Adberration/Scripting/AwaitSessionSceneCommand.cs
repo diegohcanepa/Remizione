@@ -2,7 +2,6 @@
 {
     // AwaitSessionSceneCommand
     [ForceAwait]
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitSessionSceneCommand : AwaitableCommand
     {
         // Constructor

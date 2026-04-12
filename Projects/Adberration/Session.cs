@@ -309,16 +309,16 @@ namespace Adberration
         // RegisterStatements
         private static void RegisterAotTypes()
         {
-            AotTypeRegistry.Register(ScriptSyntax.ProperyReference, typeof(SetPropertyCommand));
+            AotTypeRegistry.Register(ScriptSyntax.ProperyReference, typeof(SetPropertyCommand), CodingContext.Any);
             AotTypeRegistry.Register("animate-opacity", typeof(AnimateOpacityCommand));
-            AotTypeRegistry.Register("animation", typeof(AnimationCommand));
+            AotTypeRegistry.Register("animation", typeof(AnimationCommand), CodingContext.EntityDeclaration);
             AotTypeRegistry.Register("await-animation", typeof(AwaitAnimationCommand));
             AotTypeRegistry.Register("await-camera", typeof(AwaitCameraCommand));
             AotTypeRegistry.Register("await", typeof(AwaitCommand));
             AotTypeRegistry.Register("await-enter-room", typeof(AwaitEnterRoomCommand));
             AotTypeRegistry.Register("await-move", typeof(AwaitMoveCommand));
             AotTypeRegistry.Register("await-music", typeof(AwaitMusicCommand));
-            AotTypeRegistry.Register("await-opacity-tween", typeof(AwaitOpacityTweenCommand));
+            AotTypeRegistry.Register("await-opacity-tween", typeof(AwaitOpacityTweenCommand), CodingContext.Any);
             AotTypeRegistry.Register("await-routine", typeof(AwaitRoutineCommand));
             AotTypeRegistry.Register("await-script", typeof(AwaitScriptCommand));
             AotTypeRegistry.Register("await-session-scene", typeof(AwaitSessionSceneCommand));
@@ -328,9 +328,9 @@ namespace Adberration
             AotTypeRegistry.Register("await-this-routine", typeof(AwaitThisRountineCommand));
             AotTypeRegistry.Register("await-transition", typeof(AwaitTransitionCommand));
             AotTypeRegistry.Register("change-sound-settings", typeof(ChangeSoundSettingsCommand));
-            AotTypeRegistry.Register("color-tween", typeof(ColorTweenCommand));
-            AotTypeRegistry.Register("const", typeof(ConstCommand));
-            AotTypeRegistry.Register(ScriptSyntax.MethodReference, typeof(CallMethodCommand));
+            AotTypeRegistry.Register("color-tween", typeof(ColorTweenCommand), CodingContext.Any);
+            AotTypeRegistry.Register("const", typeof(ConstCommand), CodingContext.Declaration);
+            AotTypeRegistry.Register(ScriptSyntax.MethodReference, typeof(CallMethodCommand), CodingContext.Any);
             AotTypeRegistry.Register("else", typeof(ElseStatement));
             AotTypeRegistry.Register("endif", typeof(EndifStatement));
             AotTypeRegistry.Register("flip", typeof(FlipCommand));
@@ -347,20 +347,20 @@ namespace Adberration
             AotTypeRegistry.Register("if", typeof(IfCoreStatement));
             AotTypeRegistry.Register("restart", typeof(RestartStatement));
             AotTypeRegistry.Register("return", typeof(ReturnStatement));
-            AotTypeRegistry.Register(ScriptSyntax.CloneKeyword, typeof(CloneCommand));
-            AotTypeRegistry.Register("counter", typeof(CounterCommand));
+            AotTypeRegistry.Register(ScriptSyntax.CloneKeyword, typeof(CloneCommand), CodingContext.Instantiation);
+            AotTypeRegistry.Register("counter", typeof(CounterCommand), CodingContext.Declaration);
             AotTypeRegistry.Register("decrement-counter", typeof(DecrementCounterCommand));
             AotTypeRegistry.Register("export-localizable-texts", typeof(ExportLocalizableTextsCommand));
             AotTypeRegistry.Register("fade-sound", typeof(FadeSoundCommand));
-            AotTypeRegistry.Register("flag", typeof(FlagCommand));
+            AotTypeRegistry.Register("flag", typeof(FlagCommand), CodingContext.Declaration);
             AotTypeRegistry.Register("focus", typeof(FocusCommand));
             AotTypeRegistry.Register("focus-xy", typeof(FocusXYCommand));
             AotTypeRegistry.Register("follow", typeof(FollowCommand));
-            AotTypeRegistry.Register("frame", typeof(FrameCommand));
+            AotTypeRegistry.Register("frame", typeof(FrameCommand), CodingContext.EntityDeclaration);
             AotTypeRegistry.Register("generate-random-number", typeof(GenerateRandomNumberCommand));
             AotTypeRegistry.Register("increment-counter", typeof(IncrementCounterCommand));
             AotTypeRegistry.Register("move", typeof(MoveCommand));
-            AotTypeRegistry.Register("opacity-tween", typeof(OpacityTweenCommand));
+            AotTypeRegistry.Register("opacity-tween", typeof(OpacityTweenCommand), CodingContext.Any);
             AotTypeRegistry.Register("pause-routine", typeof(PauseRoutineCommand));
             AotTypeRegistry.Register("pause-sound", typeof(PauseSoundCommand));
             AotTypeRegistry.Register("play-animation", typeof(PlayAnimationCommand));
@@ -368,18 +368,18 @@ namespace Adberration
             AotTypeRegistry.Register("play-sound", typeof(PlaySoundCommand));
             AotTypeRegistry.Register("play-music-tag", typeof(PlayMusicTagCommand));
             AotTypeRegistry.Register("pop-scene", typeof(PopSceneCommand));
-            AotTypeRegistry.Register("position-tween", typeof(PositionTweenCommand));
-            AotTypeRegistry.Register("position-x-tween", typeof(XTweenCommand));
-            AotTypeRegistry.Register("position-y-tween", typeof(YTweenCommand));
-            AotTypeRegistry.Register("put", typeof(PutCommand));
+            AotTypeRegistry.Register("position-tween", typeof(PositionTweenCommand), CodingContext.Any);
+            AotTypeRegistry.Register("position-x-tween", typeof(XTweenCommand), CodingContext.Any);
+            AotTypeRegistry.Register("position-y-tween", typeof(YTweenCommand), CodingContext.Any);
+            AotTypeRegistry.Register("put", typeof(PutCommand), CodingContext.Any);
             AotTypeRegistry.Register("random-position", typeof(RandomPositionCommand));
             AotTypeRegistry.Register("reset-camera", typeof(ResetCameraCommand));
-            AotTypeRegistry.Register("reset-tweens", typeof(ResetTweensCommand));
+            AotTypeRegistry.Register("reset-tweens", typeof(ResetTweensCommand), CodingContext.Any);
             AotTypeRegistry.Register("resume-routine", typeof(ResumeRoutineCommand));
             AotTypeRegistry.Register("resume-sound", typeof(ResumeSoundCommand));
-            AotTypeRegistry.Register("rotation-tween", typeof(RotationTweenCommand));
+            AotTypeRegistry.Register("rotation-tween", typeof(RotationTweenCommand), CodingContext.Any);
             AotTypeRegistry.Register("save-game", typeof(SaveGameCommand));
-            AotTypeRegistry.Register("scale-tween", typeof(ScaleTweenCommand));
+            AotTypeRegistry.Register("scale-tween", typeof(ScaleTweenCommand), CodingContext.Any);
             AotTypeRegistry.Register("set-achievement", typeof(SetAchievementCommand));
             AotTypeRegistry.Register("set-counter", typeof(SetCounterCommand));
             AotTypeRegistry.Register("set-flag", typeof(SetFlagCommand));
@@ -401,6 +401,7 @@ namespace Adberration
             AotTypeRegistry.Register("toggle-flag", typeof(ToggleFlagCommand));
             AotTypeRegistry.Register("transition", typeof(TransitionCommand));
             AotTypeRegistry.Register("unparent", typeof(UnparentCommand));
+            AotTypeRegistry.Register("vibrate", typeof(VibrateCommand));
             AotTypeRegistry.Register("zoom", typeof(ZoomCommand));
         }
 

@@ -4,7 +4,6 @@ namespace ScaryCastle.Scripting
 {
     // AwaitCredits
     [ForceAwait]
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class AwaitCreditsCommand : AwaitableCommand
     {
         // Constructor

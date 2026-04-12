@@ -5,7 +5,6 @@ namespace ScaryCastle.Scripting
     // EchoCommand
     // Arguments: {"Text"} [#lid:Integer]
     [ForceAwait]
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class EchoCommand : LocalizableCommand
     {
         // Constructor

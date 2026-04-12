@@ -1,7 +1,6 @@
 ﻿namespace Adberration.Scripting
 {
     // StopShakingCommand
-    [ScriptStatement(CodingContext.Execution)]
     internal sealed class StopShakingCommand : NonAwaitableCommand
     {
         // Constructor
