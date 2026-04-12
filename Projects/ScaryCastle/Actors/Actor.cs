@@ -84,6 +84,7 @@ namespace ScaryCastle
             }
 
             ShadowSpotSize = 6;
+            Verb = Verb.TalkTo;
         }
 
         #endregion
@@ -736,7 +737,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-                    
+
                     if (value)
                     {
                         Faction = Faction.Evil;
@@ -745,6 +746,8 @@ namespace ScaryCastle
                         if (Session.Guard == this)
                             Session.HUD.GuardMeter.Target = this;
                     }
+
+                    Verb = field ? Verb.None : Verb.TalkTo;
                 }
             }
         }

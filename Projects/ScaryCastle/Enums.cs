@@ -173,7 +173,7 @@ namespace ScaryCastle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
 
     // Verb
-    public enum Verb { None, Ellipsis, Enter, Exit, Lift, Open, Use }
+    public enum Verb { None, Ellipsis, Enter, Exit, Lift, Open, TalkTo, Use }
 
     // VolumeCategory
     public enum VolumeCategory { Ambient, FX, Music, Voice, Master }

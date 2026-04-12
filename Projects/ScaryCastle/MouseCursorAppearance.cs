@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Microsoft.Xna.Framework;
 using ScaryCastle.Scripting;
 
 namespace ScaryCastle
@@ -113,6 +114,8 @@ namespace ScaryCastle
             {
                 MouseCursor.HightlightColor = null;
             }
+
+            MouseCursor.Color = context.Target is Actor actor && actor.IsAngry ? ColorPalette.Text.RedLight : Color.White;
         }
     }
 }
