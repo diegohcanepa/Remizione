@@ -162,7 +162,7 @@ namespace ScaryCastle
         // Launch
         public void Launch()
         {
-            if (owner.Room == null || owner.CarriedPropPosition == null)
+            if (owner.Room == null || owner.GetActiveThrowablePosition() == null)
                 return;
 
             this.ignoreThing = null;
@@ -173,7 +173,7 @@ namespace ScaryCastle
 
             depth = owner.Depth + .01f;
 
-            this.Position = owner.CarriedPropPosition.Value;
+            this.Position = owner.GetActiveThrowablePosition() ?? Vector2.Zero;
             this.floorY = owner.Y - (BoundingBox.Height / 2);
 
             if (owner.IsFlippedHorizontally)

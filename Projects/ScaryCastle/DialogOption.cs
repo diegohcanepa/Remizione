@@ -51,9 +51,6 @@ namespace ScaryCastle
             }
         }
 
-        // ReadKey
-        public string ReadKey => string.IsNullOrWhiteSpace(Dialog.ReadKeyPrefix) ? string.Empty : Dialog.ReadKeyPrefix + "_" + Id;
-
         // RequiredOptions
         public ReadOnlyCollection<int> RequiredOptions { get; }
 

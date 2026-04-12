@@ -2,13 +2,13 @@
 
 namespace ScaryCastle.Scripting
 {
-    // UseItemCommand
+    // ApplyItemEffectsCommand
     // Arguments: {ItemName} [#context:{EffectContext}]
     [ScriptStatement(CodingContext.Execution)]
-    internal sealed class UseItemCommand : NonAwaitableCommand
+    internal sealed class ApplyItemEffectsCommand : NonAwaitableCommand
     {
         // Constructor
-        internal UseItemCommand(Script script, string source, StatementBody args)
+        internal ApplyItemEffectsCommand(Script script, string source, StatementBody args)
             : base(script, source, args, 1, ContextArg)
         {
             Script.AssertItemDefinition(Body.Clauses[0]);
@@ -26,8 +26,8 @@ namespace ScaryCastle.Scripting
 
             if (session.Inventory.Find(Body.Clauses[0]) is Item item && session.OutcomeTarget is GameThing target)
             {
-                var context = Parser.ParseEnumArgument<EffectContext>(this, ContextArg, EffectContext.Use);
-                item.Use(player, target, context);
+                var context = Parser.ParseEnumArgument(this, ContextArg, EffectContext.Use);
+                item.ApplyEffects(player, target, context);
             }
         }
     }

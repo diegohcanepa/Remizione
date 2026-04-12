@@ -326,7 +326,6 @@
             </struct>
             <key type="filename">Inventory-assets/ItemGridSlot.png</key>
             <key type="filename">Inventory-assets/ItemGridSlotSelected.png</key>
-            <key type="filename">Inventory-assets/SacrificeSlot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

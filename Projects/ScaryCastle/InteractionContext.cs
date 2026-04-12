@@ -62,6 +62,9 @@ namespace ScaryCastle
         // HeldItem
         public Item? HeldItem { get; set; }
 
+        // Sacrifice
+        public bool Sacrifice { get; private set; }
+
         // Refresh
         public void Refresh()
         {
@@ -72,6 +75,7 @@ namespace ScaryCastle
             }
 
             Target = CanScanTarget() ? ScanTarget() : null;
+            Sacrifice = HeldItem != null && Session.HUD.IsSacrificeEnabled();
 
             MouseCursorAppearance.Refresh(this);
         }

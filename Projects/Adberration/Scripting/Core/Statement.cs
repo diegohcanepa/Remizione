@@ -68,6 +68,7 @@ namespace Adberration.Scripting
         protected static readonly string ReverseArg = "#reverse";
         protected static readonly string RightArg = "#right";
         protected static readonly string RightTriggerArg = "#right-trigger";
+        protected static readonly string RoutineArg = "#routine";
         protected static readonly string ScaleArg = "#scale";
         protected static readonly string ScopeArg = "#scope";
         protected static readonly string SoundArg = "#sound";

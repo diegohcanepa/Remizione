@@ -38,6 +38,8 @@ namespace ScaryCastle
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.UIElement.Tiny
             };
+
+            Verb = Verb.Ellipsis;
         }
 
         #region Protected members

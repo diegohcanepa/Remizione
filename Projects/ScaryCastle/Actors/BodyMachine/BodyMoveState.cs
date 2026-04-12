@@ -16,7 +16,7 @@ namespace ScaryCastle
         // GetAnimationName
         protected override string GetAnimationName()
         {
-            if (Owner.CarriedProp == null)
+            if (Owner.ActiveThrowable == null)
                 return base.GetAnimationName();
             else
                 return AnimationNames.MoveCarry;

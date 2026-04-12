@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using System;
+using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
@@ -10,6 +11,8 @@ namespace ScaryCastle
     /// </summary>
     public sealed class PlayerInputHandler<T> : InputHandler where T : Actor
     {
+        private SoundInstance? sacrificeSoundInstance;
+
         // Constructor
         public PlayerInputHandler(T actor, PlayerIndex playerIndex)
             : base(playerIndex)
@@ -43,9 +46,21 @@ namespace ScaryCastle
 
             MouseCursor.PerformClick();
 
+            // 1. Sacrifice
+            if (context.Sacrifice)
+            {
+                context.HeldItem?.Remove();
+                context.HeldItem = null;
+                sacrificeSoundInstance?.Stop();
+                sacrificeSoundInstance = Sound.Play(SoundNames.Redemption);
+                Actor.Faith++;
+                Actor.Session.HUD.FaithMeter.Animate();
+                return;
+            }
+
             var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
 
-            // 1. No target: Basic walk to destination
+            // 2. No target: Basic walk to destination
             if (context.Target == null)
             {
                 Actor.Session.InteractionData.Clear();
@@ -59,7 +74,7 @@ namespace ScaryCastle
                 Actor.ApproachAndInteract(context.Target, null);
                 return;
             }
-
+          
             // 4. Classic "Use with" interaction: Approach and interact with target using held item
             if (context.HeldItem.Definition.FaithCost == 0)
             {
@@ -104,9 +119,9 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
                 return false;
 
-            if (Actor.CarriedProp != null)
+            if (Actor.ActiveThrowable != null)
             {
-                Actor.ThrowCarriedProp();
+                Actor.ThrowActiveTrowable();
                 return true;
             }
 

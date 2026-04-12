@@ -68,6 +68,38 @@ namespace ScaryCastle
 
         #endregion
 
+        // ApplyEffects
+        public bool ApplyEffects(GameThing source, GameThing? target, EffectContext context)
+        {
+            // Play sound
+            if (Definition.Sound != null)
+                source.PlaySound(Definition.Sound);
+
+            if (Definition.AreaRange == 0)
+            {
+                if (target != null)
+                {
+                    EffectDescriptor.Apply(Definition.EffectDescriptors, source, target, context);
+
+                    // Any food item remove poison status
+                    if (Definition.Category == ItemCategory.Food && target.StatusEffect == StatusEffect.Poisoned)
+                        target.ApplyStatusEffect(StatusEffect.None, 0);
+                }
+            }
+            else if (source.Room is GameRoom room)
+            {
+                foreach (var potentialTarget in room.Children.OfType<GameThing>())
+                {
+                    if (source.DistanceTo(potentialTarget) < Definition.AreaRange)
+                        EffectDescriptor.Apply(Definition.EffectDescriptors, source, potentialTarget, context);
+                }
+            }
+
+            ComputeUse();
+
+            return true;
+        }
+
         // ConsumptionCooldown
         public int ConsumptionCooldown { get; set; }
 
@@ -201,32 +233,6 @@ namespace ScaryCastle
                     //Use( );
                 }
             }
-        }
-
-        // Use
-        public bool Use(GameThing source, GameThing? target, EffectContext context)
-        {
-            // Play sound
-            if (Definition.Sound != null)
-                source.PlaySound(Definition.Sound);
-
-            if (Definition.AreaRange == 0)
-            {
-                if (target != null)
-                    EffectDescriptor.Apply(Definition.EffectDescriptors, source, target, context);
-            }
-            else if (source.Room is GameRoom room)
-            {
-                foreach (var potentialTarget in room.Children.OfType<GameThing>())
-                {
-                    if (source.DistanceTo(potentialTarget) < Definition.AreaRange)
-                        EffectDescriptor.Apply(Definition.EffectDescriptors, source, potentialTarget, context);
-                }
-            }
-
-            ComputeUse();
-
-            return true;
         }
     }
 }

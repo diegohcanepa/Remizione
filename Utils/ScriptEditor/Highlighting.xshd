@@ -81,6 +81,7 @@
 			<Word>clone</Word>
 			<Word>=>></Word>
 			<Word>=></Word>
+			<Word>apply-item-effects</Word>
 			<Word>await-animation</Word>
 			<Word>await-answer</Word>
 			<Word>await-approach</Word>
@@ -140,7 +141,6 @@
 			<Word>save-game</Word>
 			<Word>true</Word>
 			<Word>this</Word>
-			<Word>use-item</Word>
 			<Word>verbs</Word>
 		</Keywords>
 
@@ -221,7 +221,6 @@
 			<Word>add-terrain-area</Word>
 			<Word>add-trigger-area</Word>
 			<Word>add-walk-area</Word>
-			<Word>apply-enemy-combat-intent</Word>
 			<Word>apply-effects</Word>
 			<Word>atlas</Word>
 			<Word>attach-light</Word>

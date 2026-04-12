@@ -51,6 +51,7 @@ namespace ScaryCastle
             DisplayNameKey = "Prop.Door";
             CloseSound = Sound.Find("DoorClose");
             OpenSound = Sound.Find("SaintPeregrineArm");
+            Verb = Verb.Open;
 
             this.lockImage = new(Atlas?.FindImage($"{DeclaredName}Lock"));
         }

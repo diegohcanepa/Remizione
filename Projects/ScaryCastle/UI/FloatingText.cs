@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 using System.Globalization;
@@ -97,18 +98,37 @@ namespace ScaryCastle
             ShowCore(origin, value, color, new Vector2(0, -6), scale, duration);
         }
 
-        // ShowHPAmount
-        public void ShowHPAmount(GameThing source, int amount, bool isDamage)
+        // ShowDamageAmount
+        public void ShowDamageAmount(GameThing source, DamageType damageType, int amount)
         {
             if (amount == 0)
                 return;
 
             var origin = source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, source.IsDead ? -4 : 0);
-            var color = isDamage ? ColorPalette.Text.Highlight : ColorPalette.Text.Green;
             var deltaX = Random.Shared.Next(3, 6);
-            var horzDirection = source.Direction == Adberration.FacingDirection.Left ? deltaX : -deltaX;
+            var horzDirection = source.Direction == FacingDirection.Left ? deltaX : -deltaX;
+
+            Color color = damageType switch
+            {
+                DamageType.Curse => ColorPalette.Text.Purple,
+                DamageType.Poison => ColorPalette.Text.Green,
+                _ => ColorPalette.Text.Highlight
+            };
 
             ShowCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, new(horzDirection, -10), ScaleInfo.Text.Giant.X, 1700);
+        }
+
+        // ShowHealingAmount
+        public void ShowHealingAmount(GameThing source, int amount)
+        {
+            if (amount == 0)
+                return;
+
+            var origin = source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, source.IsDead ? -4 : 0);
+            var deltaX = Random.Shared.Next(3, 6);
+            var horzDirection = source.Direction == FacingDirection.Left ? deltaX : -deltaX;
+
+            ShowCore(origin, amount.ToString(CultureInfo.InvariantCulture), ColorPalette.Text.SteelBlue, new(horzDirection, -10), ScaleInfo.Text.Giant.X, 1700);
         }
     }
 }

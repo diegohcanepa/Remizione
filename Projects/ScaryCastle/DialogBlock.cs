@@ -14,11 +14,10 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public DialogBlock(Script script, bool allowQuit)
+        public DialogBlock(Script? script, bool allowQuit)
         {
             this.Script = script;
             this.AllowQuit = allowQuit;
-            this.ReadKeyPrefix = allowQuit ? script.Name : string.Empty;
             this.AvailableOptions = new ReadOnlyCollection<DialogOption>(availableOptions);
 
             Invalidate();
@@ -116,9 +115,6 @@ namespace ScaryCastle
         // IsEmpty
         public bool IsEmpty => AvailableOptions.Count == 0;
 
-        // ReadKeyPrefix
-        public string ReadKeyPrefix { get; }
-
         // Remove
         public bool Remove(int id)
         {
@@ -135,6 +131,6 @@ namespace ScaryCastle
         }
 
         // Script
-        public Script Script { get; }
+        public Script? Script { get; }
     }
 }

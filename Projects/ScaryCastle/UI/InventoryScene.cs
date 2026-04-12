@@ -19,7 +19,6 @@ namespace ScaryCastle
         private readonly Sprite[] icons;
         private readonly TextSprite itemName;
         private int lastSeenInventoryVersion = -1;
-        private readonly Sprite sacrificeSlot;
         private readonly Sprite[] shadows;
         private readonly Sprite[] slots;
 
@@ -43,13 +42,6 @@ namespace ScaryCastle
                 Opacity = .8f,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
-            };
-
-            // Sacrifice slot
-            this.sacrificeSlot = new(Atlases.UI.GetImage("SacrificeSlot"))
-            {
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, 45, -8)
             };
 
             // Slots
@@ -207,9 +199,6 @@ namespace ScaryCastle
             // Gradient
             bottomGradient.Draw(gameTime);
 
-            if (Inventory.Count > 0)
-                sacrificeSlot.Draw(gameTime);
-
             for (var i = 0; i < Inventory.Capacity; i++)
             {
                 slots[i].Draw(gameTime);
@@ -264,8 +253,6 @@ namespace ScaryCastle
         protected override void OnUpdate(GameTime gameTime)
         {
             Inventory.Session.HUD.Update(gameTime);
-
-            sacrificeSlot.Update(gameTime);
 
             if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y < 105)
             {

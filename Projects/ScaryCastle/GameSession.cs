@@ -141,7 +141,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("add-trigger-area", typeof(AddTriggerAreaCommand));
             AotTypeRegistry.Register("add-walk-area", typeof(AddWalkAreaCommand));
             AotTypeRegistry.Register("animate-actor", typeof(AnimateActorCommand));
-            AotTypeRegistry.Register("apply-enemy-combat-intent", typeof(ApplyEnemyCombatIntentCommand));
+            AotTypeRegistry.Register("apply-item-effects", typeof(ApplyItemEffectsCommand));
             AotTypeRegistry.Register("attach-light", typeof(AttachLightCommand));
             AotTypeRegistry.Register("await-approach", typeof(AwaitApproachCommand));
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
@@ -164,7 +164,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("set-light", typeof(SetLightCommand));
             AotTypeRegistry.Register("show-message", typeof(ShowMessageCommand));
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
-            AotTypeRegistry.Register("use-item", typeof(UseItemCommand));
             AotTypeRegistry.Register("vibrate", typeof(VibrateCommand));
             AotTypeRegistry.Register("x-tween", typeof(XTweenCommand));
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));
@@ -411,12 +410,15 @@ namespace ScaryCastle
 
             InteractionContext.Refresh();
 
-            if (!IsAwaiting && IsCurrentScene && CurrentRun != null)
+            if (Player != null && Player.ActiveThrowable == null)
             {
-                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
+                if (!IsAwaiting && IsCurrentScene && CurrentRun != null)
                 {
-                    Game.SceneManager.Push(inventoryScene);
-                    return;
+                    if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
+                    {
+                        Game.SceneManager.Push(inventoryScene);
+                        return;
+                    }
                 }
             }
         }
@@ -681,6 +683,14 @@ namespace ScaryCastle
 
             else
                 Camera.Shake(TweenStyle.Linear, new Vector2(3.4f), 50, 4);
+        }
+
+        // ShowDialogMenu
+        public void ShowDialogMenu(DialogBlock dialogBlock)
+        {
+            DialogOptionId = -1;
+            var scene = new DialogBlockScene(this, dialogBlock);
+            Game.SceneManager.Push(scene);
         }
 
         // ShowEcho

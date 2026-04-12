@@ -16,6 +16,7 @@ namespace ScaryCastle
             DisplayNameKey = "Prop.Pottery";
             HurtSound = Sound.Find(SoundNames.ImpactA);
             MaxHP = 1;
+            Verb = Verb.Lift;
         }
     }
 }

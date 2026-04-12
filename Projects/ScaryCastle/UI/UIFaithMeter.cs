@@ -14,6 +14,7 @@ namespace ScaryCastle
         private readonly Sprite icon;
         private int lastKnownMaxValue;
         private int lastKnownValue;
+        private readonly FloatTween rotationTween = new();
         private readonly Vector2Tween scaleTween = new();
 
         #endregion
@@ -51,6 +52,8 @@ namespace ScaryCastle
             lastKnownMaxValue = Actor.MaxFaith;
 
             amountText.Text = $"{lastKnownValue}/{lastKnownMaxValue}";
+
+            BoundingBox = RectangleF.Union(icon.BoundingBox, amountText.BoundingBox);
         }
 
         #endregion
@@ -105,9 +108,14 @@ namespace ScaryCastle
         // Animate
         public void Animate()
         {
-            scaleTween.Start(TweenStyle.QuadraticInOut, Vector2.One, Vector2.One * 1.3f, 150, 2);
+            rotationTween.Start(TweenStyle.QuadraticInOut, 0, 15, 50, 6);
+            scaleTween.Start(TweenStyle.QuadraticInOut, Vector2.One, Vector2.One * 1.3f, 150, 4);
 
+            icon.Tweens.RotationTween = rotationTween;
             icon.Tweens.ScaleTween = scaleTween;
         }
+
+        // BoundingBox
+        public RectangleF BoundingBox { get; private set; }
     }
 }

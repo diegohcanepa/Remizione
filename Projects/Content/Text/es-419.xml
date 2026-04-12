@@ -233,8 +233,10 @@ Bla bla bla</String>
   <String Key="Misc.Mute">Silencio</String>
   <String Key="Misc.No">No</String>
   <String Key="Misc.NoInventoryItem">Vacío como el alma de un pecador.</String>
+  <String Key="Misc.Nothing">Nada</String>
   <String Key="Misc.Progress">Progreso</String>
   <String Key="Misc.Recovering">Recuperando</String>
+  <String Key="Misc.SacrificeForFaith">Sacrificar por Fe.</String>
   <String Key="Misc.SelectSlot">Seleccionar ranura</String>
   <String Key="Misc.Stamina">Resistencia</String>
   <String Key="Misc.Threshold">Umbral</String>
@@ -299,10 +301,15 @@ Bla bla bla</String>
   <String Key="Prop.Toilet">Baño</String>
   <String Key="Prop.Tower">Torre</String>
   <String Key="Prop.Trunk">Baúl</String>
+  <String Key="Prop.Tunnel">Túnel</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
   <String Key="Prop.VendingMachine">Máquina expendedora</String>
   <String Key="Prop.WC">Inodoro</String>
+  <String Key="Verb.Ellipsis" />
   <String Key="Verb.Enter">Entrar</String>
   <String Key="Verb.Exit">Salir</String>
+  <String Key="Verb.Lift">Alzar</String>
+  <String Key="Verb.None" />
+  <String Key="Verb.Open">Abrir</String>
   <String Key="Verb.Use">Usar</String>
 </Strings>

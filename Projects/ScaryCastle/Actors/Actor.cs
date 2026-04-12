@@ -16,8 +16,8 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private Sprite? activeThrowableSprite;
         private const float attackLaneThickness = 4;
-        private Sprite? carriedPropSprite;
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -347,10 +347,10 @@ namespace ScaryCastle
 
             base.OnDraw(gameTime);
 
-            if (carriedPropSprite?.RenderImage != null)
+            if (activeThrowableSprite?.RenderImage != null)
             {
-                carriedPropSprite.Position = RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, 1);
-                carriedPropSprite.Draw(gameTime);
+                activeThrowableSprite.Position = RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, 1);
+                activeThrowableSprite.Draw(gameTime);
             }
 
             if (AnimationSettings.DetachedHead)
@@ -440,8 +440,6 @@ namespace ScaryCastle
                 IsAngry = true;
             }
 
-            Session.ObjectPools.FloatingTexts.Get()?.ShowHPAmount(this, amount, true);
-
             Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
 
             if (HurtVoice != null)
@@ -478,7 +476,7 @@ namespace ScaryCastle
             {
                 if (IsPlayer)
                 {
-                    if (CarriedProp != null && Session.IsCurrentScene && CanHandleInput)
+                    if (ActiveThrowable != null && Session.IsCurrentScene && CanHandleInput)
                         FaceToMouseCursor();
                 }
                 else if (IsAngry && Session.Player != null)
@@ -543,6 +541,28 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // ActiveThrowable
+        [ScriptProperty]
+        public Prop? ActiveThrowable
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+
+                    if (field != null)
+                    {
+                        activeThrowableSprite ??= new Sprite() { PivotOrigin = RectanglePoint.Bottom };
+                        activeThrowableSprite.RenderImage = Atlases.Environment.FindImage(field.DeclaredName);
+                        field.Unparent();
+                        Stand();
+                    }
+                }
+            }
+        }
 
         // Animate
         public SpriteAnimation? Animate(string animationName)
@@ -646,31 +666,6 @@ namespace ScaryCastle
             }
         }
 
-        // CarriedProp
-        [ScriptProperty]
-        public Prop? CarriedProp
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    
-                    if (field != null)
-                    {
-                        carriedPropSprite ??= new Sprite() { PivotOrigin = RectanglePoint.Bottom };
-                        carriedPropSprite.RenderImage = Atlases.Environment.FindImage(field.DeclaredName);
-                        field.Unparent();
-                        Stand();
-                    }
-                }
-            }
-        }
-
-        // CarriedPropPosition
-        public Vector2? CarriedPropPosition => carriedPropSprite?.Position;
-
         // Cast
         public bool Cast(GameThing target, Item item)
         {
@@ -704,6 +699,9 @@ namespace ScaryCastle
         // FootstepSound
         [ScriptProperty]
         public Sound? FootstepSound { get; set; }
+
+        // GetActiveThrowablePosition
+        public Vector2? GetActiveThrowablePosition() => activeThrowableSprite?.Position;
 
         // Guts
         [ScriptProperty]
@@ -909,18 +907,18 @@ namespace ScaryCastle
                 Stand();
         }
 
-        // ThrowCarriedProp
-        public void ThrowCarriedProp()
+        // ThrowActiveTrowable
+        public void ThrowActiveTrowable()
         {
-            if (CarriedProp is null)
+            if (ActiveThrowable is null)
                 return;
 
             var state = BodyMachine.FindOrCreateState<ActorThrowObjectState>();
-            state.Prop = CarriedProp;
+            state.Prop = ActiveThrowable;
             BodyMachine.ChangeState(state.GetType());
 
-            carriedPropSprite?.RenderImage = null;
-            CarriedProp = null;
+            activeThrowableSprite?.RenderImage = null;
+            ActiveThrowable = null;
         }
 
         /// <summary>

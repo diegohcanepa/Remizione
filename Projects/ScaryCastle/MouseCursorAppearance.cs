@@ -27,6 +27,13 @@ namespace ScaryCastle
                 return;
             }
 
+            // DialogOption
+            if (context.Session.Game.SceneManager.CurrentScene is DialogBlockScene)
+            {
+                MouseCursor.State = MouseCursorState.Hand;
+                return;
+            }
+
             // Modal speech bubble active
             if (SpeechBubble.ModalInstance != null)
             {
@@ -67,19 +74,19 @@ namespace ScaryCastle
             if (MouseCursor.State is MouseCursorState.Up or MouseCursorState.Down or MouseCursorState.Left or MouseCursorState.Right)
                 return;
 
-            if (context.Target is { } target)
+            if (context.Target != null)
             {
                 // No item 
                 if (context.HeldItem == null)
                 {
-                    MouseCursor.Text = target.DisplayName;
+                    MouseCursor.Text = context.Target.DisplaySentence;
                     return;
                 }
 
-                if (target == context.Session.Player)
+                if (context.Target == context.Session.Player)
                     MouseCursor.Text = $"{useVerb} {context.HeldItem.Definition.DisplayName}";
                 else
-                    MouseCursor.Text = $"{useVerb} {context.HeldItem.Definition.DisplayName} {withPreposition} {target.DisplayName}";
+                    MouseCursor.Text = $"{useVerb} {context.HeldItem.Definition.DisplayName} {withPreposition} {context.Target.DisplayName}";
             }
         }
 
@@ -93,11 +100,11 @@ namespace ScaryCastle
             RefreshCursor(context);
             RefreshText(context);
 
-            if (context.Target != null)
+            if (context.Target != null || context.Sacrifice)
             {
-                MouseCursor.IsEnabled = context.Session.Player?.CarriedProp == null;
+                MouseCursor.IsEnabled = context.Session.Player?.ActiveThrowable == null;
 
-                if (context.HeldItem?.Definition.FaithCost > 0)
+                if (context.HeldItem?.Definition.FaithCost > 0 || context.Sacrifice)
                     MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightBlue;
                 else
                     MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightWhite;

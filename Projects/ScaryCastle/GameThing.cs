@@ -205,13 +205,30 @@ namespace ScaryCastle
         // InvalidateWalkArea
         private void InvalidateWalkArea()
         {
-            if (!string.IsNullOrWhiteSpace(WalkAreaName))
-                WalkArea = Room?.WalkAreas.Find(WalkAreaName);
-            else
-                WalkArea = null;
+            WalkArea = !string.IsNullOrWhiteSpace(WalkAreaName) ? (Room?.WalkAreas.Find(WalkAreaName)) : null;
 
             shouldClampToWalkablePosition = true;
             isCollisionDirty = true;
+        }
+
+        // RefreshDisplayName
+        private void RefreshDisplayName()
+        {
+            const string ellipsis = "...";
+
+            DisplayName = TextRepository.GetValue(DisplayNameKey);
+
+            if (Verb == Verb.Ellipsis)
+            {
+                DisplayName += ellipsis;
+                DisplaySentence = DisplayName;
+            }
+            else if (Verb != Verb.None)
+            {
+                DisplaySentence = Localization.GetValue(Verb) + " " + DisplayName;
+            }
+            else
+                DisplaySentence = DisplayName;
         }
 
         // UpdateStatusEffect
@@ -488,6 +505,8 @@ namespace ScaryCastle
                 else
                 {
                     StatusEffectAmount += amount; // Ya estaba maldito, se acumula.
+                    if (StatusEffectAmount > HP)
+                        HP -= 1;
                 }
 
                 if (Session.Player == this)
@@ -508,6 +527,8 @@ namespace ScaryCastle
                 else
                 {
                     StatusEffectAmount += amount; // Ya estaba envenenado, se acumula.
+                    if (StatusEffectAmount > HP)
+                        HP -= 1;
                 }
 
                 if (Session.Player == this)
@@ -679,14 +700,6 @@ namespace ScaryCastle
         public static bool ShowHotspots { get; set; }
 #endif
 
-        // Damage
-        public void Damage(int amount)
-        {
-            var current = HP;
-            HP -= amount;
-            Session.ObjectPools.FloatingTexts.Get()?.ShowHPAmount(this, Math.Abs(current - HP), true);
-        }
-
         // DeathWord
         [ScriptProperty]
         public ImpactWordName DeathWord { get; set; }
@@ -708,10 +721,13 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-                    DisplayName = TextRepository.GetValue(DisplayNameKey);
+                    RefreshDisplayName();
                 }
             }
         } = string.Empty;
+
+        // DisplaySentence
+        public string DisplaySentence { get; private set; } = string.Empty;
 
         // DrawLights
         public void DrawLights(GameTime gameTime)
@@ -883,7 +899,7 @@ namespace ScaryCastle
         {
             var current = HP;
             HP += amount;
-            Session.ObjectPools.FloatingTexts.Get()?.ShowHPAmount(this, Math.Abs(current - HP), false);
+            Session.ObjectPools.FloatingTexts.Get()?.ShowHealingAmount(this, Math.Abs(current - HP));
         }
 
         // HighlightInteraction
@@ -1254,6 +1270,9 @@ namespace ScaryCastle
                     // Evento específico para lógicas custom
                     OnTakeDamage(attacker, finalDamage, damageType);
 
+                    if (!IsDead)
+                        Session.ObjectPools.FloatingTexts.Get()?.ShowDamageAmount(this, damageType, amount);
+
                     // Impact Word (Solo mostramos "Pow!" si hubo daño real)
                     if (impactWordName != ImpactWordName.None)
                     {
@@ -1299,6 +1318,21 @@ namespace ScaryCastle
         // TerrainSound
         [ScriptProperty]
         public Sound? TerrainSound { get; set; }
+
+        // Verb
+        [ScriptProperty]
+        public Verb Verb
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    RefreshDisplayName();
+                }
+            }
+        }
 
         // WalkArea
         public WalkArea? WalkArea { get => field ?? Room?.WalkArea; private set; }
