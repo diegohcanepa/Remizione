@@ -10,7 +10,7 @@ namespace ScaryCastle
     /// </summary>
     public sealed class BrokenPieces : GameObject, IDisposable
     {
-        private readonly List<ShatterPiece> pieces = [];
+        private readonly List<Debris> debrisList = [];
         private readonly ThrownProp source;
 
         // Constructor
@@ -23,9 +23,9 @@ namespace ScaryCastle
             {
                 if (source.Prop.Atlas?.FindImage($"{source.Prop.DeclaredName}Piece{index}") is { } image)
                 {
-                    var shatterPiece = source.Session.ObjectPools.ShatterPieces.Get();
-                    shatterPiece.Image = image;
-                    pieces.Add(shatterPiece);
+                    var debris = source.Session.ObjectPools.Debris.Get();
+                    debris.Image = image;
+                    debrisList.Add(debris);
                     index++;
                 }
                 else
@@ -40,19 +40,19 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            for (var i = 0; i < pieces.Count; i++)
+            for (var i = 0; i < debrisList.Count; i++)
             {
-                pieces[i].Draw(gameTime);
+                debrisList[i].Draw(gameTime);
             }
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            for (var i = 0; i < pieces.Count; i++)
+            for (var i = 0; i < debrisList.Count; i++)
             {
                 //pieces[i].Opacity = source.Opacity;
-                pieces[i].Update(gameTime);
+                debrisList[i].Update(gameTime);
             }
         }
 
@@ -61,15 +61,15 @@ namespace ScaryCastle
         // Dispose
         public void Dispose()
         {
-            source.Session.ObjectPools.ShatterPieces.Return(pieces);
+            source.Session.ObjectPools.Debris.Return(debrisList);
         }
 
         // Launch
         public void Launch()
         {
-            for (var i = 0; i < pieces.Count; i++)
+            for (var i = 0; i < debrisList.Count; i++)
             {
-                pieces[i].Launch(source);
+                debrisList[i].Launch(source);
             }
         }
     }

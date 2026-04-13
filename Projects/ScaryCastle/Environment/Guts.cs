@@ -10,7 +10,7 @@ namespace ScaryCastle
     /// </summary>
     public class Guts : GameThing
     {
-        private readonly List<ShatterPiece> pieces = [];
+        private readonly List<Debris> debrisList = [];
 
         // Constructor
         public Guts(GameSession session, bool bloodStain, int amount, Vector2 scale, IList<AtlasImage>? extraImages)
@@ -27,10 +27,10 @@ namespace ScaryCastle
             {
                 for (var i = 0; i < guts; i++)
                 {
-                    var shatterPiece = Session.ObjectPools.ShatterPieces.Get();
-                    shatterPiece.Image = Atlases.Environment.Guts[i];
-                    shatterPiece.Scale = scale;
-                    pieces.Add(shatterPiece);
+                    var debris = Session.ObjectPools.Debris.Get();
+                    debris.Image = Atlases.Environment.Guts[i];
+                    debris.Scale = scale;
+                    debrisList.Add(debris);
                 }
             }
 
@@ -39,10 +39,10 @@ namespace ScaryCastle
             {
                 for (var i = 0; i < extraImages.Count; i++)
                 {
-                    var shatterPiece = Session.ObjectPools.ShatterPieces.Get();
-                    shatterPiece.Image = extraImages[i];
-                    shatterPiece.Scale = scale;
-                    pieces.Add(shatterPiece);
+                    var debris = Session.ObjectPools.Debris.Get();
+                    debris.Image = extraImages[i];
+                    debris.Scale = scale;
+                    debrisList.Add(debris);
                 }
             }
 
@@ -56,9 +56,9 @@ namespace ScaryCastle
         {
             base.OnDraw(gameTime);
 
-            for (var i = 0; i < pieces.Count; i++)
+            for (var i = 0; i < debrisList.Count; i++)
             {
-                pieces[i].Draw(gameTime);
+                debrisList[i].Draw(gameTime);
             }
         }
 
@@ -67,9 +67,9 @@ namespace ScaryCastle
         {
             base.OnLoad();
 
-            for (var i = 0; i < pieces.Count; i++)
+            for (var i = 0; i < debrisList.Count; i++)
             {
-                pieces[i].Launch(this);
+                debrisList[i].Launch(this);
                 RenderLayer = RenderLayer.OverBackground;
             }
 
@@ -81,9 +81,9 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            for (var i = 0; i < pieces.Count; i++)
+            for (var i = 0; i < debrisList.Count; i++)
             {
-                pieces[i].Update(gameTime);
+                debrisList[i].Update(gameTime);
             }
         }
 

@@ -4,7 +4,10 @@ using System;
 
 namespace ScaryCastle
 {
-    public class ShatterPiece : GameObject, IPoolable
+    /// <summary>
+    /// Debris
+    /// </summary>
+    public class Debris : GameObject, IPoolable
     {
         private readonly Sprite _image;
         private GameRoom? _room;
@@ -24,7 +27,7 @@ namespace ScaryCastle
         private float _rotationSpeed; // Nueva: para evitar rotación uniforme
 
         // Constructor
-        public ShatterPiece()
+        public Debris()
         {
             _image = new Sprite()
             {

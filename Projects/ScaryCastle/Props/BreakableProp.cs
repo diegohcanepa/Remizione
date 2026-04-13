@@ -9,7 +9,7 @@ namespace ScaryCastle
     /// </summary>
     public class BreakableProp : Prop
     {
-        private readonly List<ShatterPiece> pieces = [];
+        private readonly List<Debris> debrisList = [];
 
         // Constructor
         public BreakableProp(GameSession session, string name)
@@ -31,9 +31,9 @@ namespace ScaryCastle
         {
             if (IsBroken)
             {
-                for (var i = 0; i < pieces.Count; i++)
+                for (var i = 0; i < debrisList.Count; i++)
                 {
-                    pieces[i].Draw(gameTime);
+                    debrisList[i].Draw(gameTime);
                 }
             }
             else
@@ -47,16 +47,16 @@ namespace ScaryCastle
         {
             base.OnLoad();
 
-            if (pieces.Count == 0)
+            if (debrisList.Count == 0)
             {
                 var index = 1;
                 while (true)
                 {
                     if (Atlas?.FindImage($"{DeclaredName}Piece{index}") is AtlasImage image)
                     {
-                        var shatterPiece = Session.ObjectPools.ShatterPieces.Get();
-                        shatterPiece.Image = image;
-                        pieces.Add(shatterPiece);
+                        var debris = Session.ObjectPools.Debris.Get();
+                        debris.Image = image;
+                        debrisList.Add(debris);
                         index++;
                     }
                     else
@@ -71,7 +71,7 @@ namespace ScaryCastle
         protected override void OnUnload()
         {
             base.OnUnload();
-            Session.ObjectPools.ShatterPieces.Return(pieces);
+            Session.ObjectPools.Debris.Return(debrisList);
         }
 
         // OnUpdate
@@ -81,9 +81,9 @@ namespace ScaryCastle
 
             if (IsBroken)
             {
-                for (var i = 0; i < pieces.Count; i++)
+                for (var i = 0; i < debrisList.Count; i++)
                 {
-                    pieces[i].Update(gameTime);
+                    debrisList[i].Update(gameTime);
                 }
             }
         }
@@ -99,9 +99,9 @@ namespace ScaryCastle
             RenderLayer = RenderLayer.OverBackground;
 
             IsBroken = true;
-            for (var i = 0; i < pieces.Count; i++)
+            for (var i = 0; i < debrisList.Count; i++)
             {
-                pieces[i].Launch(this);
+                debrisList[i].Launch(this);
             }
         }
 
