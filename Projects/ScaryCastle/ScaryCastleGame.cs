@@ -119,6 +119,10 @@ namespace ScaryCastle
 
             Fonts.Initialize(Content);
             UserSettingsData userSettings = UserSettingsData.Load(this);
+
+            // TODO: Dev only
+            userSettings.LanguageTag = LocalizationManager.SpanishLatinAmerica;
+
             UserSettingsData.Apply(this, userSettings);
 
             InitializeProceduralContent();

@@ -127,6 +127,13 @@ namespace ScaryCastle
                 base.OnDraw(gameTime);
         }
 
+        // OnUnload
+        protected override void OnUnload()
+        {
+            base.OnUnload();
+            brokenPieces.Dispose();
+        }
+
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {

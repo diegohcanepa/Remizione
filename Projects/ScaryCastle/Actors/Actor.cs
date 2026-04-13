@@ -686,10 +686,6 @@ namespace ScaryCastle
         // Definition
         public ActorDefinition? Definition { get; }
 
-        // EffortShortSound
-        [ScriptProperty]
-        public Sound? EffortShortSound { get; set; }
-
         // Faction
         [ScriptProperty]
         public Faction Faction { get; set; }

@@ -54,7 +54,9 @@ namespace ScaryCastle
                 {
                     if (Atlas?.FindImage($"{DeclaredName}Piece{index}") is AtlasImage image)
                     {
-                        pieces.Add(new(image, Vector2.One));
+                        var shatterPiece = Session.ObjectPools.ShatterPieces.Get();
+                        shatterPiece.Image = image;
+                        pieces.Add(shatterPiece);
                         index++;
                     }
                     else
@@ -63,6 +65,13 @@ namespace ScaryCastle
                     }
                 }
             }
+        }
+
+        // OnUnload
+        protected override void OnUnload()
+        {
+            base.OnUnload();
+            Session.ObjectPools.ShatterPieces.Return(pieces);
         }
 
         // OnUpdate

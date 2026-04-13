@@ -27,12 +27,10 @@ namespace ScaryCastle
             {
                 for (var i = 0; i < guts; i++)
                 {
-                    var piece = new ShatterPiece(Atlases.Environment.Guts[i], scale)
-                    {
-                        Scale = scale
-                    };
-
-                    pieces.Add(piece);
+                    var shatterPiece = Session.ObjectPools.ShatterPieces.Get();
+                    shatterPiece.Image = Atlases.Environment.Guts[i];
+                    shatterPiece.Scale = scale;
+                    pieces.Add(shatterPiece);
                 }
             }
 
@@ -41,7 +39,10 @@ namespace ScaryCastle
             {
                 for (var i = 0; i < extraImages.Count; i++)
                 {
-                    pieces.Add(new ShatterPiece(extraImages[i], scale));
+                    var shatterPiece = Session.ObjectPools.ShatterPieces.Get();
+                    shatterPiece.Image = extraImages[i];
+                    shatterPiece.Scale = scale;
+                    pieces.Add(shatterPiece);
                 }
             }
 

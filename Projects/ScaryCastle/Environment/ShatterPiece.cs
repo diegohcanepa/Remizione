@@ -4,7 +4,7 @@ using System;
 
 namespace ScaryCastle
 {
-    public class ShatterPiece : GameObject
+    public class ShatterPiece : GameObject, IPoolable
     {
         private readonly Sprite _image;
         private GameRoom? _room;
@@ -21,10 +21,15 @@ namespace ScaryCastle
         private float _launchDelay;
         private Vector2 _direction;
         private float _speed;
+        private float _rotationSpeed; // Nueva: para evitar rotación uniforme
 
-        public ShatterPiece(AtlasImage image, Vector2 scale)
+        // Constructor
+        public ShatterPiece()
         {
-            _image = new Sprite(image) { PivotOrigin = RectanglePoint.Center, Scale = scale };
+            _image = new Sprite()
+            {
+                PivotOrigin = RectanglePoint.Center,
+            };
         }
 
         public void Launch(GameThing owner)
@@ -32,28 +37,35 @@ namespace ScaryCastle
             _room = owner.Session.Room;
             _startPos = new Vector2(owner.X, owner.Y);
 
+            // 1. Variación de ángulo y deformación de perspectiva (Y)
             float angle = (float)(Random.Shared.NextDouble() * Math.PI * 2);
-            // 0.45f es el punto medio: ni muy chato ni muy esparcido en profundidad
-            _direction = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle) * 0.45f);
+            float flattenFactor = 0.35f + (float)Random.Shared.NextDouble() * 0.25f;
+            _direction = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle) * flattenFactor);
 
-            // Velocidad balanceada: 30-50
-            _speed = Random.Shared.Next(30, 55);
+            // 2. Velocidad con rango más amplio
+            _speed = Random.Shared.Next(35, 65);
+
+            // 3. Rotación única (algunas giran hacia atrás, otras rápido, otras lento)
+            _rotationSpeed = (float)(Random.Shared.NextDouble() * 12 - 6);
 
             _isFirstBounce = true;
             _active = true;
             _isLaunched = false;
 
-            // Un delay un poco más variado (hasta 0.15s) para que no salgan en bloque
-            _launchDelay = (float)Random.Shared.NextDouble() * 0.15f;
+            // 4. Delay de salida más generoso para romper el "bloque" inicial
+            _launchDelay = (float)Random.Shared.NextDouble() * 0.2f;
 
-            CalculateNextArc(10, 18);
+            CalculateNextArc(12, 22);
         }
 
         private void CalculateNextArc(float minHeight, float maxHeight)
         {
             _elapsed = 0;
             _arcHeight = Random.Shared.Next((int)minHeight, (int)maxHeight);
-            _duration = _isFirstBounce ? 0.35f : 0.2f;
+
+            // 5. Duración aleatoria: esto es lo que evita que todas aterricen a la vez
+            float baseDuration = _isFirstBounce ? 0.3f : 0.15f;
+            _duration = baseDuration + (float)Random.Shared.NextDouble() * 0.25f;
 
             Vector2 tentativeTarget = _startPos + (_direction * _speed * _duration);
 
@@ -66,6 +78,7 @@ namespace ScaryCastle
 
                 if (!walkArea.Contains(tentativeTarget))
                 {
+                    // Lógica de rebote simple contra bordes del WalkArea
                     if (tentativeTarget.Y < bounds.Top + 15)
                     {
                         _direction.Y = Math.Abs(_direction.Y);
@@ -107,11 +120,16 @@ namespace ScaryCastle
             _elapsed += dt;
             float t = MathHelper.Clamp(_elapsed / _duration, 0, 1);
 
+            // Interpolación de posición en "suelo"
             Vector2 groundPos = Vector2.Lerp(_startPos, _targetPos, t);
+
+            // Parábola de altura
             float height = 4 * _arcHeight * t * (1 - t);
 
             _image.Position = new Vector2(groundPos.X, groundPos.Y - height);
-            _image.Rotation += dt * (_speed / 5f);
+
+            // Usamos la velocidad de rotación calculada en Launch
+            _image.Rotation += dt * _rotationSpeed;
 
             if (t >= 1)
             {
@@ -119,8 +137,12 @@ namespace ScaryCastle
                 {
                     _isFirstBounce = false;
                     _startPos = _targetPos;
-                    _speed *= 0.25f; // Un poquito más de inercia para el segundo rebote
-                    CalculateNextArc(3, 7);
+
+                    // 6. Fricción aleatoria para que no todas se deslicen igual al final
+                    float friction = 0.15f + (float)Random.Shared.NextDouble() * 0.25f;
+                    _speed *= friction;
+
+                    CalculateNextArc(4, 9);
                 }
                 else
                 {
@@ -131,14 +153,23 @@ namespace ScaryCastle
 
         protected override void OnDraw(GameTime gameTime)
         {
+            // Solo dibujamos si está activa o si acaba de terminar (para evitar parpadeo)
             if (!_active && _elapsed == 0) return;
-
-            var piecePos = _image.Position;
-            var pieceColor = _image.Color;
-
-            _image.Position = piecePos;
-            _image.Color = pieceColor;
             _image.Draw(gameTime);
+        }
+
+        // Image
+        public AtlasImage? Image
+        {
+            get => _image.RenderImage;
+            set => _image.RenderImage = value;
+        }
+
+        // Reset
+        public void Reset()
+        {
+            Image = null;
+            Scale = Vector2.One;
         }
 
         public Vector2 Scale

@@ -1166,8 +1166,8 @@ namespace ScaryCastle
         // ShowImpactWord
         public void ShowImpactWord(ImpactWordName impactWordName)
         {
-            if (GetOverheadPosition() is Vector2 wordPos)
-                Session.ImpactWordPool.Get()?.Show(impactWordName, wordPos);
+            var pos = RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, 3);
+            Session.ImpactWordPool.Get()?.Show(impactWordName, pos);
         }
 
         // StatusEffect

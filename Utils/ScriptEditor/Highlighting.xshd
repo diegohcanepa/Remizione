@@ -234,6 +234,7 @@
 			<Word>hide-dialog-box</Word>
 			<Word>hide-message</Word>
 			<Word>kill-all-creatures</Word>
+			<Word>lift-outcome-target</Word>
 			<Word>pickup-loot</Word>
 			<Word>push-dialog</Word>
 			<Word>push-scene</Word>

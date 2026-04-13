@@ -57,7 +57,7 @@ namespace ScaryCastle
         }
 
         // Show
-        public void Show(MessageKind message, int duration = 1500)
+        public void Show(MessageKind message, int duration = 2000)
         {
             var text = Localization.GetValue(message);
 
@@ -70,6 +70,10 @@ namespace ScaryCastle
             else if (message == MessageKind.Cursed)
             {
                 color = ColorPalette.Text.Purple;
+            }
+            else if (message == MessageKind.SacrificeDone)
+            {
+                color = ColorPalette.Text.SteelBlue;
             }
             else if (message == MessageKind.Poisoned)
             {
@@ -84,13 +88,13 @@ namespace ScaryCastle
         }
 
         // Show
-        public void Show(string text, int duration = 1500)
+        public void Show(string text, int duration = 2000)
         {
             Show(text, ColorPalette.Text.Highlight, duration);
         }
 
         // Show
-        public void Show(string text, Color color, int duration = 1500)
+        public void Show(string text, Color color, int duration = 2000)
         {
             messageText.Color = color;
             messageText.Text = text;

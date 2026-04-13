@@ -104,7 +104,7 @@ namespace ScaryCastle
             if (amount == 0)
                 return;
 
-            var origin = source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, source.IsDead ? -4 : 0);
+            var origin = source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, -4);
             var deltaX = Random.Shared.Next(3, 6);
             var horzDirection = source.Direction == FacingDirection.Left ? deltaX : -deltaX;
 

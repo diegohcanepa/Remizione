@@ -41,7 +41,6 @@
 	<FX Name="DoorTunnelClose" />
 	<FX Name="DoorTunnelOpen" />
 	<FX Name="Drink" />
-	<FX Name="EdmundEffortShort" MaxInstances="4" Sounds="1..2" />
 	<FX Name="EdmundHurt" MaxInstances="4" Sounds="1..2" />
 	<FX Name="ElectricZapStrong" />
 	<FX Name="EnergyBolt" MaxInstances="8" Sounds="1..3" />

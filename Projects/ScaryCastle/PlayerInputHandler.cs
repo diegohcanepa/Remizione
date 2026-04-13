@@ -55,6 +55,7 @@ namespace ScaryCastle
                 sacrificeSoundInstance = Sound.Play(SoundNames.Redemption);
                 Actor.Faith++;
                 Actor.Session.HUD.FaithMeter.Animate();
+                Actor.Session.HUD.Message.Show(MessageKind.SacrificeDone);
                 return;
             }
 

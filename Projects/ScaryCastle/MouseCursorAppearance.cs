@@ -115,7 +115,7 @@ namespace ScaryCastle
                 MouseCursor.HightlightColor = null;
             }
 
-            MouseCursor.Color = context.Target is Actor actor && actor.IsAngry ? ColorPalette.Text.RedLight : Color.White;
+            MouseCursor.Color = context.HeldItem == null && context.Target is Actor actor && actor.IsAngry ? ColorPalette.Text.RedLight : Color.White;
         }
     }
 }

@@ -29,8 +29,8 @@ namespace Engendro
             }
         }
 
-        // Available
-        public T[] Available => [.. pool];
+        // AvailableCount
+        public int AvailableCount => pool.Count;
 
         // Get
         public T Get()
@@ -46,23 +46,43 @@ namespace Engendro
         // Return
         public void Return(T obj)
         {
-            var index = inUse.IndexOf(obj);
-            if (index == -1)
+            if (!inUse.Remove(obj))
                 return;
 
-            inUse.RemoveAt(index);
+            // Optional reset
+            if (obj is IPoolable poolable)
+                poolable.Reset();
 
             if (pool.Count < maxSize)
                 pool.Enqueue(obj);
         }
 
+        // Return
+        public void Return(IList<T> items)
+        {
+            for (var i = 0; i < items.Count; i++)
+            {
+                Return(items[i]);
+            }
+        }
+
         // ReturnAll
         public void ReturnAll()
         {
-            while (inUse.Count > 0)
+            int count = inUse.Count;
+
+            for (int i = 0; i < count; i++)
             {
-                this.Return(inUse[0]);
+                T obj = inUse[i];
+
+                if (obj is IPoolable poolable)
+                    poolable.Reset();
+
+                if (pool.Count < maxSize)
+                    pool.Enqueue(obj);
             }
+
+            inUse.Clear();
         }
     }
 }

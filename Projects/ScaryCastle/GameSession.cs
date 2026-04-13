@@ -156,6 +156,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("exit-session", typeof(ExitSessionCommand));
             AotTypeRegistry.Register("if-can-pickup-loot", typeof(IfCanPickUpLootStatement));
             AotTypeRegistry.Register("if-test-skill", typeof(IfTestSkillStatement));
+            AotTypeRegistry.Register("lift-outcome-target", typeof(LiftOutcomeTargetCommand));
             AotTypeRegistry.Register("pickup-loot", typeof(PickUpLootCommand));
             AotTypeRegistry.Register("place-item", typeof(PlaceItemCommand));
             AotTypeRegistry.Register("player-attack", typeof(PlayerAttackCommand));

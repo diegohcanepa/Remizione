@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace ScaryCastle
@@ -7,7 +8,7 @@ namespace ScaryCastle
     /// <summary>
     /// BrokenPieces
     /// </summary>
-    public sealed class BrokenPieces : GameObject
+    public sealed class BrokenPieces : GameObject, IDisposable
     {
         private readonly List<ShatterPiece> pieces = [];
         private readonly ThrownProp source;
@@ -22,7 +23,9 @@ namespace ScaryCastle
             {
                 if (source.Prop.Atlas?.FindImage($"{source.Prop.DeclaredName}Piece{index}") is { } image)
                 {
-                    pieces.Add(new ShatterPiece(image, Vector2.One));
+                    var shatterPiece = source.Session.ObjectPools.ShatterPieces.Get();
+                    shatterPiece.Image = image;
+                    pieces.Add(shatterPiece);
                     index++;
                 }
                 else
@@ -55,6 +58,12 @@ namespace ScaryCastle
 
         #endregion
 
+        // Dispose
+        public void Dispose()
+        {
+            source.Session.ObjectPools.ShatterPieces.Return(pieces);
+        }
+
         // Launch
         public void Launch()
         {
@@ -64,4 +73,5 @@ namespace ScaryCastle
             }
         }
     }
+
 }

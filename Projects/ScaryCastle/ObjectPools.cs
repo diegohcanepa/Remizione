@@ -12,5 +12,8 @@ namespace ScaryCastle
 
         // Sacks
         public ObjectPool<Sack> Sacks { get; } = new ObjectPool<Sack>(() => new Sack(session, string.Empty), 30);
+
+        // ShatterPieces
+        public ObjectPool<ShatterPiece> ShatterPieces { get; } = new ObjectPool<ShatterPiece>(() => new ShatterPiece(), 100);
     }
 }
