@@ -45,7 +45,7 @@ namespace Engendro
         // GetAbsolutePosition
         protected Vector2 GetAbsolutePosition()
         {
-            return VisualParent == null ? Position : Position + VisualParent.GetAbsolutePosition();
+            return Position;
         }
 
         // GetSpeedFactor
@@ -66,8 +66,6 @@ namespace Engendro
 
             var pos = Position;
             pos.Y -= Altitude;
-            if (VisualParent != null)
-                pos = GetAbsolutePosition();
 
             // Has a source rectangle been set?
             if (RenderImage.TextureArea.IsEmpty)
@@ -141,8 +139,8 @@ namespace Engendro
                     {
                         var origin = this.Pivot.Position;
 
-                        boundingBox = new RectangleF(X + (-origin.X * ScaleX) + (VisualParent == null ? 0 : VisualParent.X),
-                                                     Y + (-origin.Y * ScaleY) + (VisualParent == null ? 0 : VisualParent.Y) - Altitude,
+                        boundingBox = new RectangleF(X + (-origin.X * ScaleX),
+                                                     Y + (-origin.Y * ScaleY) - Altitude,
                                                      Width * ScaleX,
                                                      Height * ScaleY);
                     }
@@ -441,9 +439,6 @@ namespace Engendro
 
         // Velocity
         public Vector2 Velocity { get; set; }
-
-        // VisualParent
-        public Sprite? VisualParent { get; set; }
 
         // Width
         public virtual int Width

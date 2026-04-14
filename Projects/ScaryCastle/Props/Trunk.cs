@@ -9,8 +9,12 @@ namespace ScaryCastle
     /// </summary>
     public class Trunk : Openable, ILoot<ItemDefinition>
     {
+        private int breakTimer = -1;
+        private readonly BrokenPieces brokenPieces;
+        private bool isBroken;
         private readonly Sprite itemImage;
         private readonly Sprite itemImageShadow;
+        private readonly Sprite lootImage;
 
         // Constructor
         public Trunk(GameSession session, string name)
@@ -24,6 +28,8 @@ namespace ScaryCastle
             OpenSound = Sound.Find(SoundNames.TrunkOpen);
             OverheadOrigin = new(6, 2);
             UnlockSound = Sound.Find(SoundNames.LockOpen);
+
+            this.brokenPieces = new BrokenPieces(this);
 
             this.itemImage = new()
             {
@@ -39,7 +45,26 @@ namespace ScaryCastle
                 Scale = ScaleInfo.UIElement.Tiny
             };
 
+            this.lootImage = new(Atlas.FindImage($"{DeclaredName}LootBag"))
+            {
+                PivotOrigin = RectanglePoint.Bottom,
+                VisualParent
+            };
+
             Verb = Verb.Ellipsis;
+        }
+
+        // Break
+        private void Break()
+        {
+            isBroken = true;
+
+            if (DeathSound != null)
+                PlaySound(DeathSound);
+
+            RenderLayer = RenderLayer.Background;
+            DepthOffset = 0;
+            brokenPieces.Launch();
         }
 
         #region Protected members
@@ -59,16 +84,52 @@ namespace ScaryCastle
                 }
 
                 if (actionInProgress)
+                {
                     Bounce();
+                    //breakTimer = 2000;
+                }
             }
         }
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            base.OnDraw(gameTime);
-            itemImageShadow.Draw(gameTime);
-            itemImage.Draw(gameTime);
+            if (isBroken)
+            {
+                brokenPieces.Draw(gameTime);
+            }
+            else
+            {
+                base.OnDraw(gameTime);
+                itemImageShadow.Draw(gameTime);
+                itemImage.Draw(gameTime);
+
+                //if (Loot != null)
+                    lootImage.Draw(gameTime);
+            }
+        }
+
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            base.OnUpdate(gameTime);
+
+            if (!isBroken)
+            {
+                if (breakTimer > 0)
+                {
+                    breakTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                    if (breakTimer < 0)
+                    {
+                        Break();
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                brokenPieces.Update(gameTime);
+            }
         }
 
         #endregion

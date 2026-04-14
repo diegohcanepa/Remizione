@@ -5,9 +5,6 @@ namespace ScaryCastle
     // ActorDirection
     public enum ActorDirection { Down, Up }
 
-    // ActorReaction
-    public enum ActorReaction { None, Attack, Talk }
-
     // ActorRole
     public enum ActorRole { Ambient, Guard, Interactive }
 
@@ -86,9 +83,6 @@ namespace ScaryCastle
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }
 
-    // LargHandStyle
-    public enum LargHandStyle { God, Devil }
-
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, Global, MuzzleFlash, Outdoor, Player }
 
@@ -100,9 +94,6 @@ namespace ScaryCastle
 
     // LogVerb
     public enum LogVerb { Bought, Found, Requires, Used }
-
-    // LootTag
-    public enum LootTag { Heal, Weapoon }
 
     // MenuItemName
     public enum MenuItemName { Options, Resume, Start, Exit, ExitToMainMenu, Yes, No, Cancel, Accept, Credits, WishlistNow, Memoirs }

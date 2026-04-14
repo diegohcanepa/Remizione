@@ -39,7 +39,7 @@ namespace ScaryCastle
             this.IgnoreWalkArea = true;
             this.weight = .8f;
             this.gravity = 500;
-            this.brokenPieces = new BrokenPieces(this);
+            this.brokenPieces = new BrokenPieces(prop);
 
             var animation = AddAnimation(AnimationNames.Default);
             animation.AddFrame(prop.DeclaredName, 1000);
@@ -59,6 +59,7 @@ namespace ScaryCastle
             velocity = Vector2.Zero;
             DepthOffset = 0;
             isGrounded = true;
+            Prop.Position = this.Position;
             brokenPieces.Launch();
         }
 

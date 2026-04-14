@@ -195,6 +195,7 @@
             <key type="filename">GoldenTrunk-assets/GoldenTrunkShadow.png</key>
             <key type="filename">Trunk-assets/Trunk01.png</key>
             <key type="filename">Trunk-assets/Trunk02.png</key>
+            <key type="filename">Trunk-assets/TrunkLootBag.png</key>
             <key type="filename">Trunk-assets/TrunkShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

@@ -11,17 +11,17 @@ namespace ScaryCastle
     public sealed class BrokenPieces : GameObject, IDisposable
     {
         private readonly List<Debris> debrisList = [];
-        private readonly ThrownProp source;
+        private readonly Prop source;
 
         // Constructor
-        public BrokenPieces(ThrownProp source)
+        public BrokenPieces(Prop source)
         {
             this.source = source;
 
             var index = 1;
             while (true)
             {
-                if (source.Prop.Atlas?.FindImage($"{source.Prop.DeclaredName}Piece{index}") is { } image)
+                if (source.Atlas?.FindImage($"{source.DeclaredName}Piece{index}") is { } image)
                 {
                     var debris = source.Session.ObjectPools.Debris.Get();
                     debris.Image = image;

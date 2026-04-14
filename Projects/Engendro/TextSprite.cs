@@ -75,7 +75,6 @@ namespace Engendro
             if (VisualParent != null)
                 pos = GetAbsolutePosition();
 
-            // OPTIMIZACIÓN: Pasamos el StringBuilder directamente al SpriteBatch
             Game.SpriteBatch.DrawString(font, _renderBuffer, pos, Color * Opacity * OpacityFactor, Rotation, Pivot.Position, Scale, SpriteEffects.None, 0);
         }
 
