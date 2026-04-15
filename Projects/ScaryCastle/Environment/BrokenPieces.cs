@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace ScaryCastle
@@ -8,7 +7,7 @@ namespace ScaryCastle
     /// <summary>
     /// BrokenPieces
     /// </summary>
-    public sealed class BrokenPieces : GameObject, IDisposable
+    public sealed class BrokenPieces : GameObject
     {
         private readonly List<Debris> debrisList = [];
         private readonly Prop source;
@@ -58,12 +57,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // Dispose
-        public void Dispose()
-        {
-            source.Session.ObjectPools.Debris.Return(debrisList);
-        }
-
         // Launch
         public void Launch()
         {
@@ -72,6 +65,11 @@ namespace ScaryCastle
                 debrisList[i].Launch(source);
             }
         }
-    }
 
+        // Release
+        public void Release()
+        {
+            source.Session.ObjectPools.Debris.Return(debrisList);
+        }
+    }
 }

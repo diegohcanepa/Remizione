@@ -49,20 +49,6 @@ namespace ScaryCastle
 
         #region Private members
 
-        // Break
-        private void Break()
-        {
-            if (Prop.DeathSound != null)
-                PlaySound(Prop.DeathSound);
-
-            RenderLayer = RenderLayer.Background;
-            velocity = Vector2.Zero;
-            DepthOffset = 0;
-            isGrounded = true;
-            Prop.Position = this.Position;
-            brokenPieces.Launch();
-        }
-
         // CheckCollision
         private GameThing? CheckCollision(bool appyDamage)
         {
@@ -86,7 +72,7 @@ namespace ScaryCastle
 
                 if (Room.CulledThings[i] is GameThing target && target.CanBeHit && target.CollisionDetection && target != lastThingCollisioned && !target.IsDead)
                 {
-                    if (target.HitTest(Position))
+                    if (BoundingBox.Contains(target.Position))
                     {
                         if (lastThingCollisioned == null && appyDamage)
                         {
@@ -132,7 +118,7 @@ namespace ScaryCastle
         protected override void OnUnload()
         {
             base.OnUnload();
-            brokenPieces.Dispose();
+            brokenPieces.Release();
         }
 
         // OnUpdate
@@ -163,6 +149,22 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // Break
+        public void Break()
+        {
+            if (Prop.DeathSound != null)
+                PlaySound(Prop.DeathSound);
+
+            RenderLayer = RenderLayer.Background;
+            velocity = Vector2.Zero;
+            DepthOffset = 0;
+            isGrounded = true;
+            Prop.Position = this.Position;
+            brokenPieces.Launch();
+
+            Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
+        }
 
         // Depth
         public override float Depth => depth;

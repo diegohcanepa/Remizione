@@ -95,6 +95,16 @@ namespace ScaryCastle
     // LogVerb
     public enum LogVerb { Bought, Found, Requires, Used }
 
+    // LootDropMode
+    public enum LootDropMode
+    {
+        Standard,    // Flujo normal (Saco -> Monedas)
+        CoinsOnly,   // Solo monedas
+        LootOnly,    // Solo sacos
+        Custom,      // Tira un ítem específico definido a mano
+        None         // Nada de nada
+    }
+
     // MenuItemName
     public enum MenuItemName { Options, Resume, Start, Exit, ExitToMainMenu, Yes, No, Cancel, Accept, Credits, WishlistNow, Memoirs }
 
@@ -164,7 +174,7 @@ namespace ScaryCastle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
 
     // Verb
-    public enum Verb { None, Ellipsis, Enter, Exit, Lift, Open, TalkTo, Use }
+    public enum Verb { None, Ellipsis, Enter, Exit, Lift, Open, Take, TalkTo, Use }
 
     // VolumeCategory
     public enum VolumeCategory { Ambient, FX, Music, Voice, Master }

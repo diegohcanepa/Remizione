@@ -59,6 +59,8 @@
   <String Key="Item.Firecracker.Name">Petardo</String>
   <String Key="Item.Gold.Description">Un puñado de polvo de oro.</String>
   <String Key="Item.Gold.Name">Polvo de oro</String>
+  <String Key="Item.GoldenKey.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
+  <String Key="Item.GoldenKey.Name">Llave dorada</String>
   <String Key="Item.Lantern.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.Lantern.Name">Lámpara</String>
   <String Key="Item.Lockpicking.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
@@ -306,12 +308,13 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
   <String Key="Prop.VendingMachine">Máquina expendedora</String>
   <String Key="Prop.WC">Inodoro</String>
-  <String Key="Verb.Ellipsis"></String>
+  <String Key="Verb.Ellipsis" />
   <String Key="Verb.Enter">Entrar</String>
   <String Key="Verb.Exit">Salir</String>
   <String Key="Verb.Lift">Alzar</String>
-  <String Key="Verb.None"></String>
+  <String Key="Verb.None" />
   <String Key="Verb.Open">Abrir</String>
+  <String Key="Verb.Take">Agarrar</String>
   <String Key="Verb.TalkTo">Hablar con</String>
   <String Key="Verb.Use">Usar</String>
 </Strings>

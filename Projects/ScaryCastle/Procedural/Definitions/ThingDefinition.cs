@@ -51,6 +51,12 @@ namespace ScaryCastle
                 RaiseValidationError(this, "No script declaration.");
         }
 
+        // DropMode
+        public LootDropMode DropMode { get; }
+
+        // DropChanceMultiplier
+        public float DropChanceMultiplier { get; }
+
         // Effects
         public ReadOnlyCollection<EffectDescriptor> Effects { get; }
 

@@ -57,6 +57,14 @@
     },
     {
       "name": "Trunk",
+      "effects": [
+        {
+          "context": "Contact",
+          "effectType": "Damage",
+          "amount": "1",
+          "impactWord": "Kapow"
+        }
+      ],      
       "placements": [
         "Floor"
       ],
@@ -65,6 +73,14 @@
     },
     {
       "name": "GoldenTrunk",
+      "effects": [
+        {
+          "context": "Contact",
+          "effectType": "Damage",
+          "amount": "1",
+          "impactWord": "Kapow"
+        }
+      ],      
       "placements": [
         "Floor"
       ],

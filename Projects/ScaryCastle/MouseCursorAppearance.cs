@@ -31,7 +31,7 @@ namespace ScaryCastle
             // DialogOption
             if (context.Session.Game.SceneManager.CurrentScene is DialogBlockScene)
             {
-                MouseCursor.State = MouseCursorState.Hand;
+                MouseCursor.State = MouseCursorState.Arrow;
                 return;
             }
 

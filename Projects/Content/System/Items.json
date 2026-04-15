@@ -16,10 +16,6 @@
 			]
 		},
 		{
-			"name": "Burger",
-			"category": "Food"
-		},
-		{
 			"name": "Coin",
 			"category": "Misc",
 			"isStackable": true,

@@ -239,7 +239,7 @@ namespace ScaryCastle
         // CalculateSpeed
         protected override float CalculateSpeed()
         {
-            return base.CalculateSpeed() * (FastMove ? FastMoveFactor : 1);
+            return base.CalculateSpeed() * (FastMove ? FastMoveFactor : 1) * (ActiveThrowable == null ? 1 : .7f);
         }
 
         // CanCheckCollisions
@@ -293,8 +293,8 @@ namespace ScaryCastle
             handled = thing.IsMoving;
         }
 
-        // OnDie
-        protected override void OnDie()
+        // OnDeath
+        protected override void OnDeath()
         {
             if (Guts > 0 || customGuts?.Count > 0)
             {
@@ -429,6 +429,14 @@ namespace ScaryCastle
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
         {
+            if (ActiveThrowable != null)
+            {
+                var thrownObject = new ThrownProp(this, ActiveThrowable);
+                thrownObject.Launch();
+                ActiveThrowable = null;
+            }
+
+
             if (!IsDead)
                 FaceTo(attacker);
 
@@ -560,6 +568,10 @@ namespace ScaryCastle
                         activeThrowableSprite.RenderImage = Atlases.Environment.FindImage(field.DeclaredName);
                         field.Unparent();
                         Stand();
+                    }
+                    else
+                    {
+                        activeThrowableSprite?.RenderImage = null;
                     }
                 }
             }

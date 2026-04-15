@@ -95,21 +95,6 @@ namespace ScaryCastle
         // ContentVersion
         public int ContentVersion { get; private set; }
 
-        // DropItem
-        // TODO: Should be in other class (What about sacrifice in exchange for life?)
-        public void DropItem(Item item, Vector2 position)
-        {
-            if (Session.Room != null && Remove(item))
-            {
-                if (Session.ObjectPools.Sacks.Get() is Sack sack)
-                {
-                    sack.Position = position;
-                    sack.Item = item;
-                    Session.Room.Children.Add(sack);
-                }
-            }
-        }
-
         // Find
         public Item? Find(string name)
         {

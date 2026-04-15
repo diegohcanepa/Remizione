@@ -21,7 +21,7 @@ namespace ScaryCastle
         #region Protected members
 
         // OnDie
-        protected override void OnDie()
+        protected override void OnDeath()
         {
             Break();
         }

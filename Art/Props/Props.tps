@@ -192,6 +192,7 @@
             </struct>
             <key type="filename">GoldenTrunk-assets/GoldenTrunk01.png</key>
             <key type="filename">GoldenTrunk-assets/GoldenTrunk02.png</key>
+            <key type="filename">GoldenTrunk-assets/GoldenTrunkLootBag.png</key>
             <key type="filename">GoldenTrunk-assets/GoldenTrunkShadow.png</key>
             <key type="filename">Trunk-assets/Trunk01.png</key>
             <key type="filename">Trunk-assets/Trunk02.png</key>
@@ -208,6 +209,71 @@
                 <rect>3,5,7,9</rect>
                 <key>scale9Paddings</key>
                 <rect>3,5,7,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">GoldenTrunk-assets/GoldenTrunkPiece1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,1,3,1</rect>
+                <key>scale9Paddings</key>
+                <rect>2,1,3,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">GoldenTrunk-assets/GoldenTrunkPiece2.png</key>
+            <key type="filename">PotteryD-assets/PotteryDPiece5.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,1,3,2</rect>
+                <key>scale9Paddings</key>
+                <rect>2,1,3,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">GoldenTrunk-assets/GoldenTrunkPiece3.png</key>
+            <key type="filename">GoldenTrunk-assets/GoldenTrunkPiece5.png</key>
+            <key type="filename">GoldenTrunk-assets/GoldenTrunkPiece6.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,3,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,3,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">GoldenTrunk-assets/GoldenTrunkPiece4.png</key>
+            <key type="filename">PotteryA-assets/PotteryAPiece2.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,2,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,2,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -258,22 +324,6 @@
                 <rect>1,1,3,2</rect>
                 <key>scale9Paddings</key>
                 <rect>1,1,3,2</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">PotteryA-assets/PotteryAPiece2.png</key>
-            <key type="filename">PotteryC-assets/PotteryCPiece2.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,2,3</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,2,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -447,21 +497,6 @@
                 <rect>3,5,7,11</rect>
                 <key>scale9Paddings</key>
                 <rect>3,5,7,11</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">PotteryD-assets/PotteryDPiece5.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,1,3,2</rect>
-                <key>scale9Paddings</key>
-                <rect>2,1,3,2</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

@@ -111,6 +111,10 @@ namespace ScaryCastle
                         HoveredOption.Shake();
                     }
                 }
+                else
+                {
+                    SelectedIndex = -1;
+                }
             }
 
             stick.Stick = GamePadThumbStick.Left;

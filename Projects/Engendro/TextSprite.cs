@@ -72,9 +72,6 @@ namespace Engendro
         private void DrawCore(SpriteFont font)
         {
             var pos = Position;
-            if (VisualParent != null)
-                pos = GetAbsolutePosition();
-
             Game.SpriteBatch.DrawString(font, _renderBuffer, pos, Color * Opacity * OpacityFactor, Rotation, Pivot.Position, Scale, SpriteEffects.None, 0);
         }
 

@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration.Scripting;
+using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
@@ -12,8 +13,6 @@ namespace ScaryCastle
         private int breakTimer = -1;
         private readonly BrokenPieces brokenPieces;
         private bool isBroken;
-        private readonly Sprite itemImage;
-        private readonly Sprite itemImageShadow;
         private readonly Sprite lootImage;
 
         // Constructor
@@ -31,24 +30,9 @@ namespace ScaryCastle
 
             this.brokenPieces = new BrokenPieces(this);
 
-            this.itemImage = new()
-            {
-                PivotOrigin = RectanglePoint.Bottom,
-                Scale = ScaleInfo.UIElement.Tiny
-            };
-
-            this.itemImageShadow = new()
-            {
-                Color = Color.Black,
-                Opacity = ColorPalette.ShadowOpacity,
-                PivotOrigin = RectanglePoint.Bottom,
-                Scale = ScaleInfo.UIElement.Tiny
-            };
-
             this.lootImage = new(Atlas.FindImage($"{DeclaredName}LootBag"))
             {
                 PivotOrigin = RectanglePoint.Bottom,
-                VisualParent
             };
 
             Verb = Verb.Ellipsis;
@@ -74,19 +58,18 @@ namespace ScaryCastle
         {
             if (IsOpen)
             {
-                if (Session.LootGenerator.Get(this) is ItemDefinition loot)
+                if (Session.LootGenerator.RollForLoot(this) is ItemDefinition loot)
                 {
-                    Loot = loot;
-                    DisplayNameKey = $"Item.{Loot.Name}.Name";
-                    itemImage.Position = BoundingBox.GetPoint(RectanglePoint.Top, 0, 14);
-                    itemImageShadow.Position = itemImage.Position;
-                    itemImageShadow.Y += 1;
+                    this.Loot = loot;
+                    DisplayNameKey = $"Item.{loot.Name}.Name";
+                    Verb = Verb.None;
                 }
 
                 if (actionInProgress)
                 {
                     Bounce();
-                    //breakTimer = 2000;
+                    if (Loot == null)
+                        breakTimer = 2000;
                 }
             }
         }
@@ -101,12 +84,24 @@ namespace ScaryCastle
             else
             {
                 base.OnDraw(gameTime);
-                itemImageShadow.Draw(gameTime);
-                itemImage.Draw(gameTime);
 
-                //if (Loot != null)
+                if (IsOpen && Loot != null)
                     lootImage.Draw(gameTime);
             }
+        }
+
+        // OnTransform
+        protected override void OnTransform(TransformChange change)
+        {
+            base.OnTransform(change);
+            lootImage?.MatchTransform(this.Sprite);
+        }
+
+        // OnUnload
+        protected override void OnUnload()
+        {
+            base.OnUnload();
+            brokenPieces.Release();
         }
 
         // OnUpdate
@@ -140,6 +135,10 @@ namespace ScaryCastle
             return (!IsOpen || Loot != null) && base.CanInteract();
         }
 
+        // HasLoot
+        [ScriptProperty]
+        public bool HasLoot => IsOpen && Loot != null;
+
         // Loot
         public ItemDefinition? Loot
         {
@@ -148,9 +147,10 @@ namespace ScaryCastle
             {
                 if (value != field)
                 {
+                    if (field != null && value == null)
+                        breakTimer = 2000;
+
                     field = value;
-                    itemImage.RenderImage = field?.Image;
-                    itemImageShadow.RenderImage = itemImage.RenderImage;
                 }
             }
         }

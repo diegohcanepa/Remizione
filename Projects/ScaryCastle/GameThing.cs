@@ -295,8 +295,8 @@ namespace ScaryCastle
             handled = false;
         }
 
-        // OnDie
-        protected virtual void OnDie()
+        // OnDeath
+        protected virtual void OnDeath()
         {
         }
 
@@ -644,6 +644,10 @@ namespace ScaryCastle
         // ContactIntent
         public CombatIntent? ContactIntent { get; }
 
+        // CustomDropName
+        [ScriptProperty]
+        public string CustomDropName { get; set; } = string.Empty;
+
         // Die
         [ScriptMethod]
         public void Die()
@@ -661,10 +665,10 @@ namespace ScaryCastle
                 deathSoundInstance.Play();
             }
 
-            OnDie();
+            OnDeath();
 
-            Session.LootGenerator.DropLoot(this);
-            Session.LootGenerator.DropCoins(this);
+            if (!Session.LootGenerator.TryDropLoot(this))
+                Session.LootGenerator.TryDropCoins(this);
         }
 
 #if DEBUG
@@ -751,6 +755,13 @@ namespace ScaryCastle
             if (!IsDead)
                 OnDrawShadow(gameTime);
         }
+
+        // DropMode
+        [ScriptProperty]
+        public LootDropMode DropMode { get; set; } = LootDropMode.Standard;
+
+        // DropChanceMultiplier
+        public Ratio DropChanceMultiplier { get; set; } = 1;
 
         // FaceTo
         public void FaceTo(GameThing target)

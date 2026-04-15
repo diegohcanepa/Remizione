@@ -15,11 +15,11 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private readonly Sprite bottomGradient;
         private bool completed;
         private readonly DialogBlock dialogBlock;
         private readonly UIContextMenu<string> menu;
         private Script? runningScript;
-        private int runSelectedOptionCooldown;
         private readonly GameSession session;
         private bool terminate;
 
@@ -33,11 +33,19 @@ namespace ScaryCastle
             this.session = session;
             this.dialogBlock = dialogBlock;
 
+            // Bottom gradient
+            this.bottomGradient = new(Atlases.UI.GetImage("DialogBlockContainer"))
+            {
+                Opacity = .8f,
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
+            };
+
             this.menu = new UIContextMenu<string>(Fonts.CommonOutline)
             {
                 OptionColor = ColorPalette.Text.Highlight,
                 OptionSelectedColor = ColorPalette.Text.Yellow,
-                OptionTextScale = ScaleInfo.ContextMenu.Option,
+                OptionTextScale = ScaleInfo.Text.Giant,
                 SelectInputBinding = InputBindings.SelectDialogOption
             };
         }
@@ -78,7 +86,7 @@ namespace ScaryCastle
                 if (menu.GetOptionAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) != null)
                 {
                     MouseCursor.PerformClick();
-                    runSelectedOptionCooldown = 500;
+                    RunSelectedOption();
                     return true;
                 }
             }
@@ -149,16 +157,12 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (completed || RunningOption != null || runSelectedOptionCooldown > 0)
+            if (completed || RunningOption != null)
                 return;
 
-            base.OnDraw(gameTime);
-
-            /*
             Game.SpriteBatch.Begin(Game.Camera);
-            Game.Shapes.DrawRectangle(new RectangleF(0, menu.Y - 4, 240, 135 - menu.Y + 4), Color.Black);
+            bottomGradient.Draw(gameTime);
             Game.SpriteBatch.End();
-            */
 
             menu.Draw(gameTime);
         }
@@ -169,7 +173,7 @@ namespace ScaryCastle
             if (RunningOption != null)
                 return HandleInputResult.Unhandled;
 
-            if (menu.HandleInput() == HandleInputResult.Handled || runSelectedOptionCooldown > 0)
+            if (menu.HandleInput() == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
             if (HandleMouseInput())
@@ -179,7 +183,6 @@ namespace ScaryCastle
             else if (menu.SelectInputBinding != null && menu.SelectInputBinding.IsPressed(PlayerIndex.One))
             {
                 Sound.Play(SoundNames.UISelectA);
-                runSelectedOptionCooldown = 500;
                 return HandleInputResult.Handled;
             }
 
@@ -198,13 +201,6 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            if (runSelectedOptionCooldown > 0)
-            {
-                runSelectedOptionCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                if (runSelectedOptionCooldown <= 0)
-                    RunSelectedOption();
-            }
-
             if (RunningOption == null)
                 menu.Update(gameTime);
 
@@ -218,8 +214,6 @@ namespace ScaryCastle
                     Game.SceneManager.Pop();
                 }
             }
-
-            //MouseCursor.Instance.State = menu.HoveredOption == null ? MouseCursorState.Arrow : MouseCursorState.ArrowOn;
         }
 
         #endregion

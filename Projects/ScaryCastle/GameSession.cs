@@ -80,6 +80,7 @@ namespace ScaryCastle
                     TextErrorColor = ColorPalette.Text.Terra
                 };
 
+                console.CommandList.Add("put Trunk into $Room #at:77,77");
                 console.CommandList.Add("add-item Coin");
                 console.CommandList.Add("add-item MasterLockpick");
 
