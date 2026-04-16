@@ -56,7 +56,7 @@ namespace ScaryCastle
             }
 
             // Cursor override
-            if (context.Target?.GetMouseCursorState() is { } customState)
+            if (context.Target?.GetMouseCursor() is { } customState)
             {
                 MouseCursor.State = customState;
                 return;
@@ -66,7 +66,7 @@ namespace ScaryCastle
             if (context.HeldItem != null)
                 MouseCursor.CustomImage = context.HeldItem.Definition.Image;
             else
-                MouseCursor.State = MouseCursorState.Cross;
+                MouseCursor.State = context.AttackMode ? MouseCursorState.Attack : MouseCursorState.Cross;
         }
 
         // RefreshText
@@ -80,7 +80,7 @@ namespace ScaryCastle
                 // No item 
                 if (context.HeldItem == null)
                 {
-                    MouseCursor.Text = context.Target.DisplaySentence;
+                    MouseCursor.Text = context.AttackMode ? context.Target.DisplayName : context.Target.DisplaySentence;
                     return;
                 }
 
@@ -114,8 +114,6 @@ namespace ScaryCastle
             {
                 MouseCursor.HightlightColor = null;
             }
-
-            MouseCursor.Color = context.HeldItem == null && context.Target is Actor actor && actor.IsAngry ? ColorPalette.Text.RedLight : Color.White;
         }
     }
 }

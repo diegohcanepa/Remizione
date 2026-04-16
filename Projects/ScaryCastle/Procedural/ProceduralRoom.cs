@@ -328,7 +328,7 @@ namespace ScaryCastle
                 int currentRoomCount = propsSpawnCounter.Increment(chosen.Name);
 
                 // Max per room
-                if (currentRoomCount >= chosen.MaxPerRun)
+                if (chosen.MaxPerRun > 0 && currentRoomCount >= chosen.MaxPerRun)
                     return;
             }
         }

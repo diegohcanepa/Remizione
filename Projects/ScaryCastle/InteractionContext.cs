@@ -56,11 +56,24 @@ namespace ScaryCastle
 
         #endregion
 
-        // HeadbuttMode
-        public bool HeadbuttMode { get; set; }
+        // AtttackMode
+        public bool AttackMode { get; set; }
 
         // HeldItem
-        public Item? HeldItem { get; set; }
+        public Item? HeldItem
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    if (field != null && value == null)
+                        AttackMode = false;
+
+                    field = value;
+                }
+            }
+        }
 
         // Sacrifice
         public bool Sacrifice { get; private set; }
@@ -83,7 +96,6 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
-            HeadbuttMode = false;
             HeldItem = null;
             Target = null;
             MouseCursorAppearance.Refresh(this);

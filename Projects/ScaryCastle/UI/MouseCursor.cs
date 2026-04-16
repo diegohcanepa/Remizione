@@ -127,7 +127,7 @@ namespace ScaryCastle
             cursorSprite.X -= shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             EngendroGame.Instance.SpriteBatch.End();
 
-            if (State == MouseCursorState.Cross || CustomImage != null)
+            //if (State == MouseCursorState.Cross || CustomImage != null)
             {
                 EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera);
                 textSprite.Draw(gameTime);

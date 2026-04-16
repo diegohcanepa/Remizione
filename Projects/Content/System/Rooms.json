@@ -2,7 +2,7 @@
   "$schema": "./Room.schema.json",
   "data": [
     {
-      "name": "Castle_Std_Corridor_01",    
+      "name": "Castle_Std_Corridor_01",
       "roomType": "Corridor",
       "doorUp": "130,72",
       "exitApproachPosition": "232,90",
@@ -12,6 +12,16 @@
       "guardActorPosition": "225,90",
       "playerPosition": "30,90",
       "placeholders": [
+        {
+          "position": "70,44",
+          "placement": "WallFrontHang",
+          "allowTags": "Torch"
+        },
+        {
+          "position": "188,44",
+          "placement": "WallFrontHang",
+          "allowTags": "Torch"
+        }
       ],
       "walkArea": "218,76;255,111;8,111;40,76",
       "walls": [

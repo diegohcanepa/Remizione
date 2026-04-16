@@ -84,7 +84,6 @@ namespace ScaryCastle
             }
 
             ShadowSpotSize = 6;
-            Verb = Verb.TalkTo;
         }
 
         #endregion
@@ -614,7 +613,7 @@ namespace ScaryCastle
 
             if (item == null)
             {
-                if (Session.InteractionContext.HeadbuttMode)
+                if (Session.InteractionContext.AttackMode)
                     Session.InteractionData.SetHeadbuttOutcome(target);
                 else
                     Session.InteractionData.SetDefaultOutcome(target);
@@ -633,7 +632,7 @@ namespace ScaryCastle
             var destination = target.GetApproachPosition(this, Session.InteractionData.InteractionType == InteractionType.Headbutt ? ApproachBehavior.ClosestSide : null);
             var result = target != this && MoveTo(destination);
 
-            if (result && !Session.InteractionContext.HeadbuttMode && target is Actor actor && actor.IsAngry)
+            if (result && !Session.InteractionContext.AttackMode && target is Actor actor && actor.IsAngry)
                 result = false;
 
             if (!result)
@@ -758,8 +757,6 @@ namespace ScaryCastle
                         if (Session.Guard == this)
                             Session.HUD.GuardMeter.Target = this;
                     }
-
-                    Verb = field ? Verb.None : Verb.TalkTo;
                 }
             }
         }

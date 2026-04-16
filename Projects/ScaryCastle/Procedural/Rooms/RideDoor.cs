@@ -120,8 +120,8 @@ namespace ScaryCastle
         [ScriptProperty]
         public RideDoorDirection DoorDirection { get; }
 
-        // GetMouseCursorState
-        public override MouseCursorState? GetMouseCursorState()
+        // GetMouseCursor
+        public override MouseCursorState? GetMouseCursor()
         {
             if (Session.InteractionContext.Target == this && IsOpen)
                 return arrowCursor;

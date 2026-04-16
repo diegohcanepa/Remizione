@@ -21,6 +21,7 @@ namespace ScaryCastle
         {
             Zoom = 1.15f;
 
+            AllowGlobalLight = false;
             AtlasName = roomNode.Definition.Name ?? string.Empty;
             DefaultImageName = AtlasName;
             GlobalLightSize = new(2.2f, 2);

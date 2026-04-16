@@ -227,10 +227,8 @@ namespace ScaryCastle
         // TryDropLoot
         public bool TryDropLoot(GameThing thing)
         {
-            // 1. Delegamos el cálculo puro al nuevo método
             ItemDefinition? itemDefinition = RollForLoot(thing);
 
-            // 2. Si hay un ítem, manejamos la parte física/visual
             if (itemDefinition != null && session.Room is ProceduralRoom room)
             {
                 if (room.CreateThingClone(nameof(Sack)) is Sack sack)

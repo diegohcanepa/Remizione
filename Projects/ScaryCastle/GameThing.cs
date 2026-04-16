@@ -644,6 +644,10 @@ namespace ScaryCastle
         // ContactIntent
         public CombatIntent? ContactIntent { get; }
 
+        // CustomMouseCursor
+        [ScriptProperty]
+        public MouseCursorState CustomMouseCursor { get; set; } = MouseCursorState.Cross;
+
         // CustomDropName
         [ScriptProperty]
         public string CustomDropName { get; set; } = string.Empty;
@@ -880,10 +884,13 @@ namespace ScaryCastle
             return RuntimeCollider?.Contains(position) == true ? TerrainSound : null;
         }
 
-        // GetMouseCursorState
-        public virtual MouseCursorState? GetMouseCursorState()
+        // GetMouseCursor
+        public virtual MouseCursorState? GetMouseCursor()
         {
-            return null;
+            if (UseCustomMouseCursor)
+                return CustomMouseCursor;
+            else
+                return null;
         }
 
         // GetOverheadPosition
@@ -1329,6 +1336,10 @@ namespace ScaryCastle
         // TerrainSound
         [ScriptProperty]
         public Sound? TerrainSound { get; set; }
+
+        // UseCustomMouseCursor
+        [ScriptProperty]
+        public bool UseCustomMouseCursor { get; set; }
 
         // Verb
         [ScriptProperty]

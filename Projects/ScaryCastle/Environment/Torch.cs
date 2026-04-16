@@ -14,12 +14,11 @@ namespace ScaryCastle
 
             this.AttachedLight = new Light("Light")
             {
-                Color = new(255, 248, 143),
-                LightKind = LightKind.Fire,
-                Passes = 3,
+                Color = new(255, 248, 173),
+                LightKind = LightKind.Default,
                 PivotOrigin = RectanglePoint.Center,
                 Position = new(9),
-                Scale = new(3)
+                Scale = new(12)
             };
 
             AttachedLightPosition = new(9);
