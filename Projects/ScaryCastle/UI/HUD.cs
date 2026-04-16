@@ -11,6 +11,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private readonly TextSprite attackName;
         private readonly UIHPMeter hpMeter;
         private readonly UIRunProgressMeter progressMeter;
         private readonly TextSprite sacrificeMessage;
@@ -24,6 +25,14 @@ namespace ScaryCastle
         public HUD(GameSession session)
         {
             this.session = session;
+
+            this.attackName = new(Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Orange,
+                PivotOrigin = RectanglePoint.LeftTop,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 2, 7),
+                Scale = ScaleInfo.Text.Huge
+            };
 
             this.hpMeter = new(new(1, 0));
             this.FaithMeter = new();
@@ -51,6 +60,9 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
+
+            if (session.InteractionContext.AttackMode)
+                attackName.Draw(gameTime);
 
             hpMeter.Draw(gameTime);
             FaithMeter.Draw(gameTime);
@@ -81,9 +93,19 @@ namespace ScaryCastle
             progressMeter.Update(gameTime);
             Log.Update(gameTime);
             Message.Update(gameTime);
+
+            if (attackName.Tag != session.Player?.CombatBehavior?.DefaultIntent)
+                attackName.Text = session.Player?.CombatBehavior?.DefaultIntent?.DisplayName;
         }
 
         #endregion
+
+        // AttackName
+        public string? AttackName
+        {
+            get => attackName.Text;
+            set => attackName.Text = value;
+        }
 
         // FaithMeter
         public UIFaithMeter FaithMeter;

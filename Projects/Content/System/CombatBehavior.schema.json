@@ -35,6 +35,9 @@
           ],
           "default": "Lurker"
         },
+        "defaultIntent": {
+          "type": "string"
+        },
         "intents": {
           "type": "array",
           "description": "Lista de intenciones (ataques, estados, etc.) de este bicho.",

@@ -55,11 +55,10 @@ namespace ScaryCastle
                     session.Player.FaceTo(Target);
                     if (Script != null)
                     {
-                        if (InteractionType == InteractionType.Headbutt)
+                        if (InteractionType == InteractionType.Attack)
                         {
-                            var intent = session.Player.CombatBehavior?.Intents.Find(RoutineNames.Headbutt);
-                            if (intent != null)
-                                session.Player.PerformAttack(intent, Target);
+                            if (session.Player.DefaultCombatIntent != null)
+                                session.Player.PerformAttack(session.Player.DefaultCombatIntent, Target);
                         }
                         else
                         {
@@ -84,6 +83,13 @@ namespace ScaryCastle
         // Session
         public GameSession Session { get; }
 
+        // SetAttackOutcome
+        public void SetAttackOutcome(GameThing target, CombatIntent combatIntent)
+        {
+            if (Session.ScriptLibrary.FindRoutine(combatIntent.Name) is Script script)
+                SetOutcomeCore(target, InteractionType.Attack, script);
+        }
+
         // SetCastOutcome
         public void SetCastOutcome(GameThing target, Item item)
         {
@@ -99,13 +105,6 @@ namespace ScaryCastle
         {
             if (target.OutcomeScript != null)
                 SetOutcomeCore(target, InteractionType.Outcome, target.OutcomeScript);
-        }
-
-        // SetHeadbuttOutcome
-        public void SetHeadbuttOutcome(GameThing target)
-        {
-            if (Session.ScriptLibrary.FindRoutine(RoutineNames.Headbutt) is Script script)
-                SetOutcomeCore(target, InteractionType.Headbutt, script);
         }
 
         // SetUseWithOutcome

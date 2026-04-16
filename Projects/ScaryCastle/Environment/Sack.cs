@@ -26,6 +26,12 @@ namespace ScaryCastle
 
         #region Protected members
 
+        // GetDisplayName
+        protected override string GetDisplayName()
+        {
+            return $"{TextRepository.GetValue("Prop.Sack")} [{TextRepository.GetValue(DisplayNameKey)}]";
+        }
+
         // OnParentChanged
         protected override void OnParentChanged(Entity? previousParent)
         {

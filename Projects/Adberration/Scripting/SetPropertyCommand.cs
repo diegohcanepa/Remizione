@@ -35,9 +35,7 @@ namespace Adberration.Scripting
             var expression = Parser.ParsePropertyExpression(this, Body.Clauses[0], false);
 
             if (expression.Instance == null)
-            {
                 throw new ScriptException("Instance is null.");
-            }
 
             var op = Body.Clauses[1];
             var value = Body.Clauses[2];

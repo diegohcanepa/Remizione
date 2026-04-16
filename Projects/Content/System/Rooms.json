@@ -14,12 +14,12 @@
       "playerPosition": "30,90",
       "placeholders": [
         {
-          "position": "70,44",
+          "position": "70,50",
           "placement": "WallFrontHang",
           "allowTags": "Torch"
         },
         {
-          "position": "188,44",
+          "position": "188,50",
           "placement": "WallFrontHang",
           "allowTags": "Torch"
         }

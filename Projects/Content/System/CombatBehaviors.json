@@ -4,6 +4,7 @@
     {
       "name": "Edmund",
       "archetype": "Lurker",
+      "defaultIntent": "Headbutt",
       "intents": [
         {
           "name": "Headbutt",

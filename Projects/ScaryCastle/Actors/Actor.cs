@@ -84,6 +84,8 @@ namespace ScaryCastle
             }
 
             ShadowSpotSize = 6;
+
+            DefaultCombatIntent = CombatBehavior?.DefaultIntent;
         }
 
         #endregion
@@ -614,7 +616,10 @@ namespace ScaryCastle
             if (item == null)
             {
                 if (Session.InteractionContext.AttackMode)
-                    Session.InteractionData.SetHeadbuttOutcome(target);
+                {
+                    if (DefaultCombatIntent != null)
+                        Session.InteractionData.SetAttackOutcome(target, DefaultCombatIntent);
+                }
                 else
                     Session.InteractionData.SetDefaultOutcome(target);
             }
@@ -629,7 +634,7 @@ namespace ScaryCastle
                 return false;
             }
 
-            var destination = target.GetApproachPosition(this, Session.InteractionData.InteractionType == InteractionType.Headbutt ? ApproachBehavior.ClosestSide : null);
+            var destination = target.GetApproachPosition(this, Session.InteractionData.InteractionType == InteractionType.Attack ? ApproachBehavior.ClosestSide : null);
             var result = target != this && MoveTo(destination);
 
             if (result && !Session.InteractionContext.AttackMode && target is Actor actor && actor.IsAngry)
@@ -692,6 +697,17 @@ namespace ScaryCastle
             HandlePendingInteraction();
 
             return true;
+        }
+
+        // DefaultCombatIntent
+        public CombatIntent? DefaultCombatIntent
+        {
+            get;
+            set
+            {
+                if (value != field)
+                    field = value ?? CombatBehavior?.DefaultIntent;
+            }
         }
 
         // Definition

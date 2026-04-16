@@ -33,8 +33,8 @@ namespace ScaryCastle
             return finalWeight;
         }
 
-        // GetFromNode
-        private ItemDefinition? GetFromNode(RoomNode node, Realm? lootRealm, ItemCategory? lootCategory, ItemCategory[]? denyCategories = null, int qualityBoost = 0, bool guaranteeDrop = false)
+        // GetLoot
+        private ItemDefinition? GetLoot(RoomNode node, Realm? lootRealm, ItemCategory? lootCategory, ItemCategory[]? denyCategories = null, int qualityBoost = 0, bool guaranteeDrop = false)
         {
             RoomDefinition def = node.Definition;
 
@@ -61,10 +61,13 @@ namespace ScaryCastle
             if (emptyWeight > 0)
                 table.Add("None", emptyWeight, 1, null);
 
-            // Filtro Principal (AOT-friendly, cero LINQ)
+            // Filtro Principal
             for (int i = 0; i < ItemDefinition.Definitions.All.Count; i++)
             {
                 var itemDef = ItemDefinition.Definitions.All[i];
+
+                if (itemDef.Name == nameof(Coin))
+                    continue;
 
                 if (IsDenied(itemDef.Category, denyCategories))
                     continue;
@@ -161,6 +164,9 @@ namespace ScaryCastle
         // RollForLoot
         public ItemDefinition? RollForLoot(GameThing thing, bool guaranteeDrop = false)
         {
+            if (thing.DropMode != LootDropMode.Standard && thing.DropChanceMultiplier == 1)
+                guaranteeDrop = true;
+
             // 1. FILTRO DE INSTANCIA: Si es None o solo Monedas, no hay chance de Saco
             if (thing.DropMode is LootDropMode.None or LootDropMode.CoinsOnly)
                 return null;
@@ -192,14 +198,14 @@ namespace ScaryCastle
                 return ItemDefinition.Definitions.Find(thing.CustomDropName);
 
             // De lo contrario, usamos el generador procedural por room node
-            return GetFromNode(room.RoomNode, t.Definition.PreferredLootRealm, t.Definition.PreferredLootCategory, null, t.Definition.QualityBoost, guaranteeDrop);
+            return GetLoot(room.RoomNode, t.Definition.PreferredLootRealm, t.Definition.PreferredLootCategory, null, t.Definition.QualityBoost, guaranteeDrop);
         }
 
         // TryDropCoins
         public void TryDropCoins(GameThing thing)
         {
             // 1. FILTRO DE INSTANCIA: Si el bicho está seteado para no dar nada o solo dar items, abortamos.
-            if (thing.DropMode is LootDropMode.None or LootDropMode.LootOnly)
+            if (thing.DropMode is LootDropMode.None or LootDropMode.LootOnly or LootDropMode.Custom)
                 return;
 
             if (thing is not IThingDefinition t || t.Definition == null || session.Room is not ProceduralRoom room)

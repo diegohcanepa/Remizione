@@ -216,7 +216,7 @@ namespace ScaryCastle
         {
             const string ellipsis = "...";
 
-            DisplayName = TextRepository.GetValue(DisplayNameKey);
+            DisplayName = GetDisplayName();
 
             if (Verb == Verb.Ellipsis)
             {
@@ -260,6 +260,12 @@ namespace ScaryCastle
         protected virtual bool CanCheckCollisions()
         {
             return CollisionDetection;
+        }
+
+        // GetDisplayName
+        protected virtual string GetDisplayName()
+        {
+            return TextRepository.GetValue(DisplayNameKey);
         }
 
         // GetKnockbackMultiplier
