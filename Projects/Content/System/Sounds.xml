@@ -7,7 +7,7 @@
 	
 	<!-- Music -->
 	<Music Name="Arrival" MaxInstances="2" />
-	<Music Name="Combat1" MaxInstances="2" Tags="Fear" />
+	<Music Name="Combat1" MaxInstances="2" Tags="BossFight" />
 	<Music Name="FirstSteps" MaxInstances="2" />
 	<Music Name="GameOver" MaxInstances="2" />
 	<Music Name="Monitor" MaxInstances="2" Tags="Monitor,Ride" />

@@ -122,7 +122,7 @@ namespace ScaryCastle
     }
 
     // MessageKind
-    public enum MessageKind { CannotPlaceItem, Cursed, HandsFull, InventoryFull, NotEnoughCoins, NotEnoughFaith, OutOfReach, Poisoned, SacrificeDone, TheWayIsOpen }
+    public enum MessageKind { CannotPlaceItem, Cursed, HandsFull, InventoryFull, NotEnoughCoins, NotEnoughFaith, OutOfReach, Poisoned, SacrificeDone }
 
     // MouseCursorState
     public enum MouseCursorState { Arrow, Attack, Cross, Down, Hand, Left, Prohibition, Right, Up, Wait }

@@ -119,6 +119,9 @@
             "playerPosition": {
               "type": "string"
             },
+            "leverPosition": {
+              "type": "string"
+            },
             "musicTag": {
               "type": "string"
             },

@@ -149,7 +149,7 @@ namespace ScaryCastle
         }
 
         // SpawnActor
-        protected Actor? SpawnActor(ActorRole role, Vector2 position)
+        protected Actor? SpawnActor(ActorRole role, Vector2? position = null)
         {
             if (Session.CurrentRun == null)
                 return null;
@@ -186,9 +186,12 @@ namespace ScaryCastle
                 return null;
 
             var instance = CreateThingClone(chosen.Name);
-            instance.Position = position;
-            instance.Direction = Adberration.FacingDirection.Left;
-            Children.Add(instance);
+
+            if (position.HasValue)
+            {
+                instance.Position = position.Value;
+                Children.Add(instance);
+            }
 
             // Log spawn
             Session.CurrentRun.Spawns.Increment(chosen.Name);

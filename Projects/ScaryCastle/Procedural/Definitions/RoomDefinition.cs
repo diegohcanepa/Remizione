@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
@@ -49,12 +48,15 @@ namespace ScaryCastle
             if (element.GetString("leftGatePosition") is string leftGatePositionValue && !string.IsNullOrWhiteSpace(leftGatePositionValue))
                 LeftGatePosition = DataConvert.ToVector2(leftGatePositionValue);
 
+            if (element.GetString("leverPosition") is string leverPositionValue && !string.IsNullOrWhiteSpace(leverPositionValue))
+                LeverPosition = DataConvert.ToVector2(leverPositionValue);
+
             if (element.GetString("playerPosition") is string playerPositionValue && !string.IsNullOrWhiteSpace(playerPositionValue))
                 PlayerPosition = DataConvert.ToVector2(playerPositionValue);
 
             if (element.GetString("rightGatePosition") is string rightGatePositionValue && !string.IsNullOrWhiteSpace(rightGatePositionValue))
                 RightGatePosition = DataConvert.ToVector2(rightGatePositionValue);
-            
+
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
             RoomType = element.GetEnum("roomType", RoomType.SideRoom);
             SideRoomCategory = element.GetEnum("sideRoomCategory", SideRoomCategory.None);
@@ -180,6 +182,9 @@ namespace ScaryCastle
 
         // LeftGatePosition
         public Vector2 LeftGatePosition { get; }
+
+        // LeverPosition
+        public Vector2? LeverPosition { get; }
 
         // LockType
         public LockType LockType { get; }

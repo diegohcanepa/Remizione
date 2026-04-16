@@ -111,7 +111,10 @@ namespace ScaryCastle
             if (Actor.Session.InteractionContext.AttackMode)
             {
                 if (Actor.Session.InteractionContext.Target != null && !Actor.Session.InteractionContext.Target.CanBeHit)
+                {
+                    MouseCursor.Shake();
                     return false;
+                }
             }
             
             PerformInteraction();

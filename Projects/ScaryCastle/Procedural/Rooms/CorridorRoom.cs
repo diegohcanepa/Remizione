@@ -17,11 +17,12 @@ namespace ScaryCastle
         private const string CorridorLeftGateName = "CorridorLeftGate";
         private const string CorridorLeftGateImageName = "LeftGate";
         private const string CorridorLeftGateRoutineName = "CorridorLeftGate-MoveDown";
-        private const string CorridorRightGateRoutineName = "CorridorRightGate-MoveUp";
         private const string CorridorLeftWallName = "CorridorLeftWall";
+        private const string CorridorLever = "CorridorLever";
         private const string CorridorRightGateName = "CorridorRightGate";
         private const string CorridorRightGateImageName = "RightGate";
         private const string CorridorRightWallName = "CorridorRightWall";
+        private const string CorridorRightWallPatchName = "CorridorRightWallPatch";
 
         #endregion
 
@@ -75,19 +76,24 @@ namespace ScaryCastle
             {
                 Session.Guard = null;
 
-                if (Session.ScriptLibrary.FindRoutine(CorridorRightGateRoutineName) is Script script)
+                if (Session.GetEntity<Prop>(CorridorExitName) is Prop exit)
                 {
-                    if (Session.GetEntity<Prop>(CorridorExitName) is Prop exit)
-                    {
-                        exit.ApproachPosition = RoomNode.Definition.ExitApproachPosition;
-                        exit.Hotspot.SetVertices(RoomNode.Definition.ExitHotspot);
-                        Children.Add(exit);
-                    }
-
-                    Session.HUD.Message.Show(MessageKind.TheWayIsOpen, 3000);
-
-                    Session.ScriptProcessor.StartScript(script);
+                    exit.ApproachPosition = RoomNode.Definition.ExitApproachPosition;
+                    exit.Hotspot.SetVertices(RoomNode.Definition.ExitHotspot);
+                    Children.Add(exit);
                 }
+            }
+        }
+
+        // OnLoad
+        protected override void OnLoad()
+        {
+            base.OnLoad();
+
+            if (Session.FindDeclaredThing(CorridorRightWallPatchName) is Prop rightWallPatch)
+            {
+                rightWallPatch.Atlas = Atlas;
+                rightWallPatch.Position = BoundingBox.GetPoint(RectanglePoint.RightTop);
             }
         }
 
@@ -120,9 +126,20 @@ namespace ScaryCastle
                 Children.Add(rightWall);
             }
 
+            if (Session.FindDeclaredThing(CorridorLever) is Prop lever)
+            {
+                if (RoomNode.Definition.LeverPosition.HasValue)
+                    lever.Position = RoomNode.Definition.LeverPosition.Value;
+                Children.Add(lever);
+            }
+
             // Corridor guard
-            if (RoomNode.Definition.GuardActorPosition is Vector2 position)
-                Session.Guard = SpawnActor(ActorRole.Guard, position);
+            if (RoomNode.Definition.GuardActorPosition != null)
+            {
+                Session.Guard = SpawnActor(ActorRole.Guard);
+                if (RoomNode.Definition.GuardActorPosition.HasValue)
+                    Session.Guard?.Position = RoomNode.Definition.GuardActorPosition.Value;
+            }
         }
 
         #endregion

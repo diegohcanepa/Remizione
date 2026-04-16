@@ -5,11 +5,12 @@
       "name": "Castle_Std_Corridor_01",
       "roomType": "Corridor",
       "doorUp": "130,72",
+      "leverPosition":"212,74",
       "exitApproachPosition": "232,90",
       "exitHotspot": "231,35;231,85;244,95;244,41",
       "leftGatePosition": "16,34",
       "rightGatePosition": "232,34",
-      "guardActorPosition": "225,90",
+      "guardActorPosition": "260,90",
       "playerPosition": "30,90",
       "placeholders": [
         {
