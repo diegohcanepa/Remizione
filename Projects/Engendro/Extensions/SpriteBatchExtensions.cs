@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Engendro
 {
@@ -30,7 +31,13 @@ namespace Engendro
             // Begin
             public void Begin(Camera camera, SamplerState samplerState, BlendState? blendState, Effect? effect, RasterizerState? rasterizerState = null)
             {
-                spriteBatch.Begin(SpriteSortMode.Deferred, blendState: blendState, samplerState: samplerState, transformMatrix: camera.GetTransformationMatrix(), effect: effect, rasterizerState: rasterizerState);
+                Begin(spriteBatch, camera.GetTransformationMatrix(), samplerState, blendState, effect, rasterizerState);
+            }
+
+            // Begin
+            public void Begin(Matrix matrix, SamplerState samplerState, BlendState? blendState, Effect? effect, RasterizerState? rasterizerState = null)
+            {
+                spriteBatch.Begin(SpriteSortMode.Deferred, blendState: blendState, samplerState: samplerState, transformMatrix: matrix, effect: effect, rasterizerState: rasterizerState);
             }
         }
     }

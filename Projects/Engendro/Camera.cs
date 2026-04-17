@@ -301,6 +301,33 @@ namespace Engendro
         // Game
         public EngendroGame Game { get; }
 
+        public Matrix GetViewMatrix(Vector2 parallaxFactor)
+        {
+            // 1. Calculamos el "centro" o foco de la cámara en el mundo
+            // Usamos _position porque es el punto que la cámara intenta centrar.
+
+            // 2. El truco: Hacemos que el parallax no genere un offset inicial.
+            // En lugar de: extra = pos * (factor - 1)
+            // Hacemos que el extra sea 0 cuando la cámara está en el origen del nivel 
+            // o en un punto de referencia.
+            float extraX = _position.X * (parallaxFactor.X - 1f);
+            float extraY = _position.Y * (parallaxFactor.Y - 1f);
+
+            // 3. Aplicamos el desplazamiento de la cámara
+            camTranslationVector.X = -_position.X - extraX;
+            camTranslationVector.Y = -_position.Y - extraY;
+
+            Matrix.CreateTranslation(ref camTranslationVector, out camTranslationMatrix);
+
+            // 4. Cadena de matrices:
+            // El secreto es que el Zoom (scaleMatrix) y el Centrado (resTranslationMatrix)
+            // actúan sobre una posición que ya incluye el "extra" de parallax.
+            return camTranslationMatrix *
+                   rotationTranslationMatrix *
+                   scaleMatrix *
+                   resTranslationMatrix * Game.ViewportAdapter.TransformationMatrix;
+        }
+
         // GetTransformationMatrix
         public Matrix GetTransformationMatrix()
         {

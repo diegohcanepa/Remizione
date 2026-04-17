@@ -188,7 +188,9 @@ namespace ScaryCastle
                         effect = ScaryCastleGame.Effects.ColorSaturation;
                     }
 
-                    Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, effect?.Effect);
+                    var matrix = Session.Camera.GetViewMatrix(thing.ParallaxFactor);
+
+                    Game.SpriteBatch.Begin(matrix, SamplerState.PointClamp, BlendState.AlphaBlend, effect?.Effect);
                     thing.Draw(gameTime);
                     Game.SpriteBatch.End();
                     currentDrawIndex++;

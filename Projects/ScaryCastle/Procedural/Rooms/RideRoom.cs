@@ -127,7 +127,6 @@ namespace ScaryCastle
                 animation.AddFrame(viewName, 10000);
                 foreground.Atlas = Atlas;
                 foreground.DefaultImageName = viewName + "Foreground";
-                foreground.ParallaxDepth = 8;
                 foreground.ParallaxFactor = new(1.1f, 0);
 
                 Children.Add(foreground);

@@ -68,24 +68,8 @@ namespace Adberration
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (Room == null)
-                return;
-
-            if (ParallaxDepth == 0)
-            {
+            if (Room != null)
                 base.OnDraw(gameTime);
-            }
-            else
-            {
-                var pos = this.Position;
-
-                float parallaxScale = 1f / (1 + ParallaxDepth);
-                this.Position = Position - (Session.Camera.Position * (ParallaxFactor * parallaxScale));
-
-                base.OnDraw(gameTime);
-
-                this.Position = pos;
-            }
         }
 
         // OnLoad
@@ -219,8 +203,17 @@ namespace Adberration
         public bool IsActiveInGameLoop => IgnoreCulling || IsInCullingBox || Tweens.IsTweeningPosition || IsMoving;
 
         // IsInCullingBox
-        public virtual bool IsInCullingBox => Session.Camera.CullingBox.Contains(Position) || BoundingBox.Intersects(Session.Camera.CullingBox);
+        public virtual bool IsInCullingBox
+        {
+            get
+            {
+                if (ParallaxFactor != Vector2.One)
+                    return true;
 
+                return Session.Camera.CullingBox.Contains(Position) || BoundingBox.Intersects(Session.Camera.CullingBox);
+            }
+        }
+            
         // IsInCurrentRoom
         [ScriptProperty]
         public bool IsInCurrentRoom => Room != null && Room == Session.Room;
@@ -281,13 +274,9 @@ namespace Adberration
         // OutcomeScript
         public Script? OutcomeScript { get; }
 
-        // ParallaxDepth
-        [ScriptProperty]
-        public float ParallaxDepth { get; set; }
-
         // ParallaxFactor
         [ScriptProperty]
-        public Vector2 ParallaxFactor { get; set; }
+        public Vector2 ParallaxFactor { get; set; } = Vector2.One;
 
         // PerformOutcome
         [ScriptMethod]
