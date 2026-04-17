@@ -68,7 +68,7 @@ namespace Adberration
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (!IsInCurrentRoom)
+            if (Room == null)
                 return;
 
             if (ParallaxDepth == 0)
@@ -79,7 +79,7 @@ namespace Adberration
             {
                 var pos = this.Position;
 
-                float parallaxScale = 1f / (1f + ParallaxDepth);
+                float parallaxScale = 1f / (1 + ParallaxDepth);
                 this.Position = Position - (Session.Camera.Position * (ParallaxFactor * parallaxScale));
 
                 base.OnDraw(gameTime);

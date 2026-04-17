@@ -74,6 +74,9 @@ namespace ScaryCastle
     // ImpactWordName
     public enum ImpactWordName { None, AghGreen, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
 
+    // Intensity
+    public enum Intensity { Low, Medium, High }
+
     // InteractionType
     public enum InteractionType { None, Outcome, UseWithOutcome, Cast, Attack }
 

@@ -93,6 +93,9 @@ namespace ScaryCastle
                 }
             }
 
+            if (RoomType == RoomType.SideRoom && SideRoomCategory == SideRoomCategory.Standard)
+                DoorStyle = DoorStyle.Gate;
+
             Validate();
 
             Placeholders = placeholders.AsReadOnly();
@@ -119,6 +122,9 @@ namespace ScaryCastle
                 if (string.IsNullOrWhiteSpace(ExitHotspot))
                     RaiseValidationError(this, $"Undefined exit hotspot.", nameof(ExitHotspot));
             }
+
+            if (RoomType != RoomType.SideRoom && SideRoomCategory != SideRoomCategory.None)
+                RaiseValidationError(this, $"Side room category cannot be specified due to the current room type.");
 
             if (RoomType == RoomType.SideRoom && SideRoomCategory == SideRoomCategory.None)
                 RaiseValidationError(this, $"Side rooms must have a SideRoomCategory.");

@@ -13,7 +13,6 @@ namespace ScaryCastle
 
         private readonly TextSprite attackName;
         private readonly UIHPMeter hpMeter;
-        private readonly UIRunProgressMeter progressMeter;
         private readonly TextSprite sacrificeMessage;
         private readonly GameSession session;
 
@@ -34,11 +33,10 @@ namespace ScaryCastle
                 Scale = ScaleInfo.Text.Huge
             };
 
-            this.hpMeter = new(new(1, 0));
+            this.hpMeter = new(new(4, 2));
             this.FaithMeter = new();
             this.Log = new();
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
-            this.progressMeter = new(session);
 
             this.InventoryMeter = new(session.Inventory);
 
@@ -66,7 +64,6 @@ namespace ScaryCastle
 
             hpMeter.Draw(gameTime);
             FaithMeter.Draw(gameTime);
-            progressMeter.Draw(gameTime);
             InventoryMeter.Draw(gameTime);
             Log.Draw(gameTime);
             Message.Draw(gameTime);
@@ -90,7 +87,6 @@ namespace ScaryCastle
             GuardMeter.Update(gameTime);
             hpMeter.Update(gameTime);
             FaithMeter.Update(gameTime);
-            progressMeter.Update(gameTime);
             Log.Update(gameTime);
             Message.Update(gameTime);
 

@@ -13,9 +13,11 @@ namespace ScaryCastle
 
         private readonly Sprite[] icons;
         private readonly List<IList<AtlasImage>> imageGroups = [];
+        private int lastFilledIconIndex = -1;
         private int lastKnownMaxValue;
         private int lastKnownStatusEffectAmount;
         private int lastKnownValue;
+        private readonly Vector2Tween scaleTween = new();
         private int totalIcons;
 
         #endregion
@@ -36,11 +38,14 @@ namespace ScaryCastle
             {
                 icons[i] = new(imageGroups[0][0])
                 {
+                    PivotOrigin = RectanglePoint.Center,
                     Position = pos
                 };
 
                 pos.X += icons[i].BoundingBox.Width + .5f;
             }
+
+            scaleTween.Start(TweenStyle.Linear, Vector2.One, Vector2.One * 1.2f, 300, -1);
         }
 
         #endregion
@@ -69,7 +74,8 @@ namespace ScaryCastle
 
             for (int i = 0; i < totalIcons; i++)
             {
-                if (i >= icons.Length) break;
+                if (i >= icons.Length)
+                    break;
 
                 // Puntos de este icono (p1 = inferior, p2 = superior)
                 int p1 = (i * 2) + 1;
@@ -123,6 +129,7 @@ namespace ScaryCastle
             lastKnownValue = hp;
             lastKnownMaxValue = maxHp;
             lastKnownStatusEffectAmount = amount;
+            lastFilledIconIndex = ((Actor.HP + 1) / 2) - 1;
         }
 
         #endregion
@@ -144,12 +151,20 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (Actor != null)
+            if (Actor == null || Actor.HP == 0)
+                return;
+
+            scaleTween.Update(gameTime);
+
+            if (lastKnownValue != Actor.HP || lastKnownMaxValue != Actor.MaxHP || lastKnownStatusEffectAmount != Actor.StatusEffectAmount)
+                Refresh();
+
+            if (totalIcons > 0)
             {
-                if (lastKnownValue != Actor.HP ||
-                    lastKnownMaxValue != Actor.MaxHP ||
-                    lastKnownStatusEffectAmount != Actor.StatusEffectAmount)
-                    Refresh();
+                if (Actor.HP <= 2 || Actor.StatusEffectAmount > 0)
+                    icons[lastFilledIconIndex].Scale = scaleTween.CurrentValue;
+                else
+                    icons[lastFilledIconIndex].Scale = Vector2.One;
             }
         }
 

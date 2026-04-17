@@ -98,7 +98,7 @@ namespace ScaryCastle
             {
                 if (value != field)
                 {
-                    field |= value;
+                    field = value;
                     OnClosureStatusChanged(actionInProgress);
                     SyncAnimation();
                 }

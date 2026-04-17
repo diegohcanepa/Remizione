@@ -3,6 +3,7 @@ using Adberration.Scripting;
 using Engendro;
 using Microsoft.Xna.Framework;
 using System;
+using System.Linq;
 
 namespace ScaryCastle
 {
@@ -101,6 +102,12 @@ namespace ScaryCastle
         protected override void OnPopulating()
         {
             base.OnPopulating();
+
+            foreach (var door in Children.OfType<RideDoor>())
+            {
+                if (door.DoorDirection == RideDoorDirection.Up)
+                    door.IsOpen = true;
+            }
 
             if (Session.FindDeclaredThing(CorridorLeftGateName) is Prop leftGate)
             {

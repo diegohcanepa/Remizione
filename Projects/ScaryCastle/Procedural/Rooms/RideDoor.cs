@@ -162,6 +162,8 @@ namespace ScaryCastle
 
                 animation = AddAnimation("Open");
                 animation.AddFrame(prefix + animation.Name, 1000);
+
+                SyncAnimation();
             }
         }
 

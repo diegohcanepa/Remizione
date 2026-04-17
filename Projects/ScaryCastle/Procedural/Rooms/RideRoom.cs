@@ -12,6 +12,7 @@ namespace ScaryCastle
     public abstract class RideRoom : ProceduralRoom
     {
         private readonly List<RideDoor> doors = [];
+        private readonly Prop foreground;
 
         #region Constructor
 
@@ -41,6 +42,13 @@ namespace ScaryCastle
             {
                 AddWall(wall);
             }
+
+            // Foreground
+            this.foreground = new(Session, string.Empty)
+            {
+                PivotOrigin = RectanglePoint.LeftTop,
+                RenderLayer = RenderLayer.Foreground
+            };
         }
 
         #endregion
@@ -115,7 +123,14 @@ namespace ScaryCastle
             if (index > 0)
             {
                 var animation = AddAnimation("View");
-                animation.AddFrame($"View{Random.Shared.Next(1, index + 1)}", 10000);
+                var viewName = $"View{Random.Shared.Next(1, index + 1)}";
+                animation.AddFrame(viewName, 10000);
+                foreground.Atlas = Atlas;
+                foreground.DefaultImageName = viewName + "Foreground";
+                foreground.ParallaxDepth = 8;
+                foreground.ParallaxFactor = new(1.1f, 0);
+
+                Children.Add(foreground);
             }
 
             foreach (var door in doors)

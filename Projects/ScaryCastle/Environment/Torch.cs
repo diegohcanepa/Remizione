@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration.Scripting;
+using Engendro;
 using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
@@ -18,10 +19,10 @@ namespace ScaryCastle
                 LightKind = LightKind.Default,
                 PivotOrigin = RectanglePoint.Center,
                 Position = new(9),
-                Scale = new(13)
             };
 
             AttachedLightPosition = new(9);
+            LightIntensity = Intensity.High;
         }
 
         #region Protected members
@@ -33,5 +34,28 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // LightIntensity
+        [ScriptProperty]
+        public Intensity LightIntensity
+        {
+            get;
+            set
+            {
+                field = value;
+
+                if (AttachedLight != null)
+                {
+                    if (field == Intensity.Low)
+                        AttachedLight.Scale = new(3);
+
+                    else if (field == Intensity.Medium)
+                        AttachedLight.Scale = new(7);
+
+                    if (field == Intensity.High)
+                        AttachedLight.Scale = new(13);
+                }
+            }
+        }
     }
 }
