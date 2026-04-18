@@ -49,8 +49,6 @@ namespace ScaryCastle
 
             CollisionDetection = false;
             DisplayNameKey = "Prop.Door";
-            CloseSound = Sound.Find("DoorClose");
-            OpenSound = Sound.Find("SaintPeregrineArm");
             Verb = Verb.Open;
 
             this.lockImage = new(Atlas?.FindImage($"{DeclaredName}Lock"));
@@ -72,6 +70,27 @@ namespace ScaryCastle
             }
 
             Session.EnterRoom(targetRoom);
+        }
+
+        // GetVisualAssetName
+        private static string GetVisualAssetName(RoomNode current, RoomNode neighbor)
+        {
+            if (neighbor == null)
+                return string.Empty;
+
+            SideRoomCategory category;
+            if (current.RoomType == RoomType.Corridor)
+            {
+                category = SideRoomCategory.Hub;
+            }
+            else
+            {
+                category = neighbor.SideRoomCategory;
+                if (neighbor.RoomType == RoomType.Corridor || category == SideRoomCategory.Hub)
+                    category = SideRoomCategory.Generic;
+            }
+
+            return $"{current.Definition.Theme}_{category}";
         }
 
         #endregion
@@ -140,19 +159,30 @@ namespace ScaryCastle
                 var assetPrefix = string.Empty;
                 if (DoorDirection == RideDoorDirection.Up && rideRoom.RoomNode.Up != null)
                 {
-                    assetPrefix = rideRoom.RoomNode.GetDoorAssetName(rideRoom.RoomNode.Up);
+                    assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Up);
                 }
                 else if (DoorDirection == RideDoorDirection.Right && rideRoom.RoomNode.Right != null)
                 {
-                    assetPrefix = rideRoom.RoomNode.GetDoorAssetName(rideRoom.RoomNode.Right);
+                    assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Right);
                 }
                 else if (DoorDirection == RideDoorDirection.Down && rideRoom.RoomNode.Down != null)
                 {
-                    assetPrefix = rideRoom.RoomNode.GetDoorAssetName(rideRoom.RoomNode.Down);
+                    assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Down);
                 }
                 else if (DoorDirection == RideDoorDirection.Left && rideRoom.RoomNode.Left != null)
                 {
-                    assetPrefix = rideRoom.RoomNode.GetDoorAssetName(rideRoom.RoomNode.Left);
+                    assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Left);
+                }
+
+                if (rideRoom.RoomNode.RoomType == RoomType.Corridor)
+                {
+                    CloseSound = Sound.Find($"DoorGateClose");
+                    OpenSound = Sound.Find($"DoorGateOpen");
+                }
+                else
+                {
+                    CloseSound = Sound.Find($"Door{assetPrefix}Close");
+                    OpenSound = Sound.Find($"Door{assetPrefix}Open");
                 }
 
                 var prefix = $"RideDoor_{assetPrefix}_{DoorDirection}_";

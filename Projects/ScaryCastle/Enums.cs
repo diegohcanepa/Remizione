@@ -162,7 +162,7 @@ namespace ScaryCastle
     public enum RoomType { Corridor, SideRoom }
 
     // SideRoomCategory
-    public enum SideRoomCategory { None, Standard, Save, Treasure }
+    public enum SideRoomCategory { None, Hub, Generic, Save, Treasure }
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }

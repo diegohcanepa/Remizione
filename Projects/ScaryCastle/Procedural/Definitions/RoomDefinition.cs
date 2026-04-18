@@ -24,7 +24,6 @@ namespace ScaryCastle
             DoorDown = element.GetVector2("doorDown");
             DoorLeft = element.GetVector2("doorLeft");
             DoorRight = element.GetVector2("doorRight");
-            DoorStyle = element.GetEnum("doorStyle", DoorStyle.Wooden);
             DoorUp = element.GetVector2("doorUp");
             ExactMatch = element.GetBool("exactMatch", false);
 
@@ -93,9 +92,6 @@ namespace ScaryCastle
                 }
             }
 
-            if (RoomType == RoomType.SideRoom && SideRoomCategory == SideRoomCategory.Standard)
-                DoorStyle = DoorStyle.Gate;
-
             Validate();
 
             Placeholders = placeholders.AsReadOnly();
@@ -149,9 +145,6 @@ namespace ScaryCastle
 
         // DoorRight
         public Vector2? DoorRight { get; }
-
-        // DoorStyle
-        public DoorStyle DoorStyle { get; }
 
         // DoorUp
         public Vector2? DoorUp { get; }

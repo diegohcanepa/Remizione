@@ -536,8 +536,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">RideDoorDown-assets/RideDoor_BlueStone_Wooden_Down_Closed.png</key>
-            <key type="filename">RideDoorDown-assets/RideDoor_BlueStone_Wooden_Down_Open.png</key>
+            <key type="filename">RideDoorDown-assets/RideDoor_BlueStone_Generic_Down_Closed.png</key>
+            <key type="filename">RideDoorDown-assets/RideDoor_BlueStone_Generic_Down_Open.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -553,11 +553,11 @@
                 <false/>
             </struct>
             <key type="filename">RideDoorLeft-assets/RideDoorLeftLock.png</key>
-            <key type="filename">RideDoorLeft-assets/RideDoor_BlueStone_Wooden_Left_Closed.png</key>
-            <key type="filename">RideDoorLeft-assets/RideDoor_BlueStone_Wooden_Left_Open.png</key>
+            <key type="filename">RideDoorLeft-assets/RideDoor_BlueStone_Generic_Left_Closed.png</key>
+            <key type="filename">RideDoorLeft-assets/RideDoor_BlueStone_Generic_Left_Open.png</key>
             <key type="filename">RideDoorRight-assets/RideDoorRightLock.png</key>
-            <key type="filename">RideDoorRight-assets/RideDoor_BlueStone_Wooden_Right_Closed.png</key>
-            <key type="filename">RideDoorRight-assets/RideDoor_BlueStone_Wooden_Right_Open.png</key>
+            <key type="filename">RideDoorRight-assets/RideDoor_BlueStone_Generic_Right_Closed.png</key>
+            <key type="filename">RideDoorRight-assets/RideDoor_BlueStone_Generic_Right_Open.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -573,10 +573,10 @@
                 <false/>
             </struct>
             <key type="filename">RideDoorUp-assets/RideDoorUpLock.png</key>
-            <key type="filename">RideDoorUp-assets/RideDoor_BlueStone_Gate_Up_Closed.png</key>
-            <key type="filename">RideDoorUp-assets/RideDoor_BlueStone_Gate_Up_Open.png</key>
-            <key type="filename">RideDoorUp-assets/RideDoor_BlueStone_Wooden_Up_Closed.png</key>
-            <key type="filename">RideDoorUp-assets/RideDoor_BlueStone_Wooden_Up_Open.png</key>
+            <key type="filename">RideDoorUp-assets/RideDoor_BlueStone_Generic_Up_Closed.png</key>
+            <key type="filename">RideDoorUp-assets/RideDoor_BlueStone_Generic_Up_Open.png</key>
+            <key type="filename">RideDoorUp-assets/RideDoor_BlueStone_Hub_Up_Closed.png</key>
+            <key type="filename">RideDoorUp-assets/RideDoor_BlueStone_Hub_Up_Open.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

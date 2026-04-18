@@ -35,8 +35,10 @@
 	<FX Name="DeathByFear" />
 	<FX Name="Dice" MaxInstances="6" Sounds="1..3" />
 	<FX Name="DoodleDoo" />
-	<FX Name="DoorClose" MaxInstances="4" Sounds="1..2" />
-	<FX Name="DoorOpen" MaxInstances="4" Sounds="1..2" />
+	<FX Name="DoorGateClose" MaxInstances="4" />
+	<FX Name="DoorGateOpen" MaxInstances="4" />
+	<FX Name="DoorGenericClose" MaxInstances="4" Sounds="1..2" />
+	<FX Name="DoorGenericOpen" MaxInstances="4" Sounds="1..2" />
 	<FX Name="DoorToilet" />
 	<FX Name="DoorTunnelClose" />
 	<FX Name="DoorTunnelOpen" />

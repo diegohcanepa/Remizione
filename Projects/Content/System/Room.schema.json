@@ -49,14 +49,6 @@
             "doorUp": {
               "type": "string"
             },
-            "doorStyle": {
-              "type": "string",
-              "default": "Wooden",
-              "enum": [
-                "Wooden",
-                "Gate"
-              ]
-            },
             "exactMatch": {
               "type": "boolean",
               "default": false
@@ -95,7 +87,8 @@
               "default": "None",
               "enum": [
                 "None",
-                "Standard",
+                "Generic",
+                "Hub",
                 "Save",
                 "Treasure"
               ]

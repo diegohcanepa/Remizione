@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:fb5330bad63882f0a78f8907dc9acac5:869b1d9b1febc060bd6867cdb391ab4f:124b3bd0ff56be329062dd178e80040a$ -->
+<!-- $TexturePacker:SmartUpdate:8ac56eb990235721255f2812978a1230:96cfeedf43aa4d58465ce1f79998745a:124b3bd0ff56be329062dd178e80040a$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -83,16 +83,16 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="RideCar03.png" x="58" y="225" w="26" h="23"/>
     <sprite n="RideCar04.png" x="71" y="199" w="26" h="23"/>
     <sprite n="RideCar08.png" x="86" y="224" w="26" h="23"/>
-    <sprite n="RideDoor_BlueStone_Gate_Up_Closed.png" x="78" y="2" w="33" h="36"/>
-    <sprite n="RideDoor_BlueStone_Gate_Up_Open.png" x="78" y="40" w="33" h="36"/>
-    <sprite n="RideDoor_BlueStone_Wooden_Down_Closed.png" x="189" y="2" w="32" h="36"/>
-    <sprite n="RideDoor_BlueStone_Wooden_Down_Open.png" x="113" y="40" w="32" h="36"/>
-    <sprite n="RideDoor_BlueStone_Wooden_Left_Closed.png" x="2" y="2" w="16" h="54"/>
-    <sprite n="RideDoor_BlueStone_Wooden_Left_Open.png" x="2" y="58" w="16" h="54"/>
-    <sprite n="RideDoor_BlueStone_Wooden_Right_Closed.png" x="2" y="114" w="16" h="54"/>
-    <sprite n="RideDoor_BlueStone_Wooden_Right_Open.png" x="2" y="170" w="16" h="54"/>
-    <sprite n="RideDoor_BlueStone_Wooden_Up_Closed.png" x="100" y="107" w="33" h="36"/>
-    <sprite n="RideDoor_BlueStone_Wooden_Up_Open.png" x="100" y="145" w="33" h="36"/>
+    <sprite n="RideDoor_BlueStone_Generic_Down_Closed.png" x="189" y="2" w="32" h="36"/>
+    <sprite n="RideDoor_BlueStone_Generic_Down_Open.png" x="113" y="40" w="32" h="36"/>
+    <sprite n="RideDoor_BlueStone_Generic_Left_Closed.png" x="2" y="2" w="16" h="54"/>
+    <sprite n="RideDoor_BlueStone_Generic_Left_Open.png" x="2" y="58" w="16" h="54"/>
+    <sprite n="RideDoor_BlueStone_Generic_Right_Closed.png" x="2" y="114" w="16" h="54"/>
+    <sprite n="RideDoor_BlueStone_Generic_Right_Open.png" x="2" y="170" w="16" h="54"/>
+    <sprite n="RideDoor_BlueStone_Generic_Up_Closed.png" x="78" y="2" w="33" h="36"/>
+    <sprite n="RideDoor_BlueStone_Generic_Up_Open.png" x="78" y="40" w="33" h="36"/>
+    <sprite n="RideDoor_BlueStone_Hub_Up_Closed.png" x="100" y="107" w="33" h="36"/>
+    <sprite n="RideDoor_BlueStone_Hub_Up_Open.png" x="100" y="145" w="33" h="36"/>
     <sprite n="RideDoorLeftLock.png" x="20" y="2" w="16" h="54"/>
     <sprite n="RideDoorRightLock.png" x="20" y="58" w="16" h="54"/>
     <sprite n="RideDoorUpLock.png" x="154" y="218" w="33" h="36"/>

@@ -50,7 +50,7 @@ namespace ScaryCastle
         private static void GenerateTrident(RoomNode corridor, ref int nodeCounter, Random rng)
         {
             // 1. El Nexo (Siempre arriba del corredor)
-            var nexo = new RoomNode(nodeCounter++, corridor.X, 1, RoomType.SideRoom, SideRoomCategory.Standard);
+            var nexo = new RoomNode(nodeCounter++, corridor.X, 1, RoomType.SideRoom, SideRoomCategory.Hub);
             corridor.Up = nexo;
             nexo.Down = corridor;
 
@@ -170,7 +170,7 @@ namespace ScaryCastle
             var corridor = new RoomNode(localIndex++, this.CorridorIndex, 0, RoomType.Corridor, SideRoomCategory.None);
 
             // 2. Tridente (Nexo + Hojas) - Lógica interna 50/50
-            if (rng.NextDouble() < 0.5)
+            if (CorridorIndex == 0 || rng.NextDouble() < 0.5)
                 GenerateTrident(corridor, ref localIndex, rng);
 
             // 3. Población (Asignación de assets según dificultad)

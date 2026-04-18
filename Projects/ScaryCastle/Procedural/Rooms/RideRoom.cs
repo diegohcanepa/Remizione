@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -127,7 +128,8 @@ namespace ScaryCastle
                 animation.AddFrame(viewName, 10000);
                 foreground.Atlas = Atlas;
                 foreground.DefaultImageName = viewName + "Foreground";
-                foreground.ParallaxFactor = new(1.1f, 0);
+                foreground.ParallaxFactor = new(1.1f, 1);
+                foreground.Position = new(0, 15);
 
                 Children.Add(foreground);
             }

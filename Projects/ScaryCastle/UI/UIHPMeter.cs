@@ -45,7 +45,7 @@ namespace ScaryCastle
                 pos.X += icons[i].BoundingBox.Width + .5f;
             }
 
-            scaleTween.Start(TweenStyle.Linear, Vector2.One, Vector2.One * 1.2f, 300, -1);
+            scaleTween.Start(TweenStyle.Linear, Vector2.One, Vector2.One * 1.1f, 300, -1);
         }
 
         #endregion

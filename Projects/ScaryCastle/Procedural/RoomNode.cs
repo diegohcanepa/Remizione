@@ -120,13 +120,6 @@ namespace ScaryCastle
             }
         }
 
-        // GetDoorAssetName
-        public string GetDoorAssetName(RoomNode neighbor)
-        {
-            // Usage: "BlueStone_Gate" or "BlueStone_Wooden"
-            return $"{Definition.Theme}_{neighbor.Definition.DoorStyle}";
-        }
-
         // Index
         public int Index { get; }
 

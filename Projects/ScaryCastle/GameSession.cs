@@ -8,6 +8,7 @@ using ScaryCastle.Scripting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Xml;
 
 namespace ScaryCastle
@@ -458,6 +459,20 @@ namespace ScaryCastle
             CurrentRun = new Run(Seed, 6);
 
             LoadNextCorridor();
+        }
+
+        // CloseCorridorDoor
+        [ScriptMethod]
+        public void CloseCorridorDoor()
+        {
+            if (Room is CorridorRoom corridor)
+            {
+                foreach (var door in corridor.Children.OfType<RideDoor>())
+                {
+                    door.Close();
+                    door.AllowInteraction = false;
+                }
+            }
         }
 
         // CompleteRun

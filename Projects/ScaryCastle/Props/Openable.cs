@@ -71,9 +71,10 @@ namespace ScaryCastle
         {
             if (IsOpen)
             {
-                if (CloseSound != null && IsInCurrentRoom)
+                if (IsInCurrentRoom)
                 {
-                    PlaySound(CloseSound);
+                    if (CloseSound != null)
+                        PlaySound(CloseSound);
                     actionInProgress = true;
                     IsOpen = false;
                     actionInProgress = false;

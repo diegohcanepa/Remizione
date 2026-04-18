@@ -33,7 +33,7 @@
     {
       "name": "Castle_Std_Common_01",
       "roomType": "SideRoom",
-      "sideRoomCategory": "Standard",
+      "sideRoomCategory": "Hub",
       "doorUp": "126,41",
       "doorLeft": "21,80",
       "doorRight": "220,80",
@@ -85,7 +85,7 @@
     {
       "name": "Castle_Std_Common_02",
       "roomType": "SideRoom",
-      "sideRoomCategory": "Standard",
+      "sideRoomCategory": "Hub",
       "doorUp": "150,54",
       "doorLeft": "21,126",
       "doorRight": "206,98",
@@ -122,7 +122,7 @@
     {
       "name": "Castle_Std_Pit_01",
       "roomType": "SideRoom",
-      "sideRoomCategory": "Standard",
+      "sideRoomCategory": "Hub",
       "doorLeft": "21,80",
       "doorRight": "220,80",
       "exactMatch": true,
@@ -141,7 +141,7 @@
     {
       "name": "Castle_Wide_Common_01",
       "roomType": "SideRoom",
-      "sideRoomCategory": "Standard",
+      "sideRoomCategory": "Hub",
       "doorUp": "126,41",
       "doorLeft": "21,80",
       "doorRight": "281,82",
