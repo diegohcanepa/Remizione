@@ -926,10 +926,6 @@ namespace ScaryCastle
             Session.ObjectPools.FloatingTexts.Get()?.ShowHealingAmount(this, Math.Abs(current - HP));
         }
 
-        // HighlightInteraction
-        [ScriptProperty]
-        public bool HighlightInteraction { get; set; } = true;
-
         // HitTest
         public bool HitTest(Vector2 value)
         {

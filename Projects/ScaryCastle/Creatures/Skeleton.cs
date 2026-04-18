@@ -11,8 +11,6 @@
         {
             BodySize = BodySize.Medium;
             Guts = 0;
-
-            BodyMachine.AddState(new BodyCloseAttackState());
         }
     }
 }

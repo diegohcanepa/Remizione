@@ -182,11 +182,6 @@ namespace ScaryCastle
                         ScaryCastleGame.Effects.ColorReduction.SetColor(1, 0, 0, 1);
                         effect = ScaryCastleGame.Effects.ColorReduction;
                     }
-                    else if (!Session.IsAwaiting && Session.InteractionContext.Target == thing && thing.HighlightInteraction && thing.Opacity == 1)
-                    {
-                        ScaryCastleGame.Effects.ColorSaturation.SetColor(.8f, .8f, .8f, 0);
-                        effect = ScaryCastleGame.Effects.ColorSaturation;
-                    }
 
                     var matrix = Session.Camera.GetViewMatrix(thing.ParallaxFactor);
 
