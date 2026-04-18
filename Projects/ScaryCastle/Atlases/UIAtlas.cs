@@ -17,6 +17,7 @@ namespace ScaryCastle
             Coin = this[nameof(Coin)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
+            CursedIcon = this[nameof(CursedIcon)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             FaithIcon = this[nameof(FaithIcon)];
             FearEmpty = this[nameof(FearEmpty)];
@@ -34,6 +35,7 @@ namespace ScaryCastle
             PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
             PointingHand = this[nameof(PointingHand)];
+            PoisonedIcon = this[nameof(PoisonedIcon)];
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
             PurpleHearts = CreateReadOnlyCollection("PurpleHearts", 1, 4);
@@ -63,6 +65,9 @@ namespace ScaryCastle
 
         // CreditsBar
         public AtlasImage CreditsBar { get; }
+
+        // CursedIcon
+        public AtlasImage CursedIcon { get; }
 
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
@@ -117,6 +122,9 @@ namespace ScaryCastle
 
         // PointingHand
         public AtlasImage PointingHand { get; }
+
+        // PoisonedIcon
+        public AtlasImage PoisonedIcon { get; }
 
         // PopupContainer
         public AtlasImage PopupContainer { get; }

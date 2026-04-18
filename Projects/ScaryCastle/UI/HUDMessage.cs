@@ -10,6 +10,7 @@ namespace ScaryCastle
     public sealed class HUDMessage : GameObject
     {
         private readonly FloatTween fadeTween = new();
+        private readonly Sprite icon = new() { PivotOrigin = RectanglePoint.Right };
         private readonly TextSprite messageText;
         private readonly Vector2 scale;
         private readonly Vector2Tween scaleTween = new();
@@ -37,6 +38,7 @@ namespace ScaryCastle
             if (!fadeTween.IsRunning)
                 return;
 
+            icon.Draw(gameTime);
             messageText.Draw(gameTime);
         }
 
@@ -46,6 +48,8 @@ namespace ScaryCastle
             fadeTween.Update(gameTime);
             messageText.Update(gameTime);
             messageText.Opacity = fadeTween.IsRunning ? fadeTween.CurrentValue : 1;
+            icon.Opacity = fadeTween.CurrentValue;
+            icon.Position = messageText.BoundingBox.GetPoint(RectanglePoint.Left, -1, 0);
         }
 
         #endregion
@@ -70,6 +74,7 @@ namespace ScaryCastle
             else if (message == MessageKind.Cursed)
             {
                 color = ColorPalette.Text.Purple;
+                icon.RenderImage = Atlases.UI.CursedIcon;
             }
             else if (message == MessageKind.SacrificeDone)
             {
@@ -78,6 +83,7 @@ namespace ScaryCastle
             else if (message == MessageKind.Poisoned)
             {
                 color = ColorPalette.Text.Green;
+                icon.RenderImage = Atlases.UI.PoisonedIcon;
             }
             else
             {

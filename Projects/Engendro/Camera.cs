@@ -301,27 +301,29 @@ namespace Engendro
         // Game
         public EngendroGame Game { get; }
 
+        // GetViewMatrix
         public Matrix GetViewMatrix(Vector2 parallaxFactor)
         {
-            // 1. Calculamos el "centro" o foco de la cámara en el mundo
-            // Usamos _position porque es el punto que la cámara intenta centrar.
-
-            // 2. El truco: Hacemos que el parallax no genere un offset inicial.
-            // En lugar de: extra = pos * (factor - 1)
-            // Hacemos que el extra sea 0 cuando la cámara está en el origen del nivel 
-            // o en un punto de referencia.
+            // 1. Calculamos el desfase relativo (Parallax)
             float extraX = _position.X * (parallaxFactor.X - 1f);
             float extraY = _position.Y * (parallaxFactor.Y - 1f);
 
-            // 3. Aplicamos el desplazamiento de la cámara
-            camTranslationVector.X = -_position.X - extraX;
-            camTranslationVector.Y = -_position.Y - extraY;
+            // 2. IMPORTANTE: Capturamos el Shake actual
+            float shakeX = shakeHorzTween.IsRunning ? shakeHorzTween.CurrentValue : 0f;
+            float shakeY = shakeVertTween.IsRunning ? shakeVertTween.CurrentValue : 0f;
+
+            // 3. Aplicamos el desplazamiento completo:
+            // Posición invertida + Desfase Parallax + Shake
+            // Nota: El shake se suma a la posición de la cámara, por lo que en la vista es negativo
+            camTranslationVector.X = -_position.X - extraX - shakeX;
+            camTranslationVector.Y = -_position.Y - extraY - shakeY;
+            camTranslationVector.Z = 0;
 
             Matrix.CreateTranslation(ref camTranslationVector, out camTranslationMatrix);
 
-            // 4. Cadena de matrices:
-            // El secreto es que el Zoom (scaleMatrix) y el Centrado (resTranslationMatrix)
-            // actúan sobre una posición que ya incluye el "extra" de parallax.
+            // 4. Multiplicación final manteniendo la jerarquía
+            // El Shake ahora será procesado antes del Zoom y el Centrado, 
+            // lo que garantiza que todo el frame tiemble coordinadamente.
             return camTranslationMatrix *
                    rotationTranslationMatrix *
                    scaleMatrix *
