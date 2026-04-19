@@ -301,29 +301,28 @@ namespace Engendro
         // Game
         public EngendroGame Game { get; }
 
-        // GetViewMatrix
         public Matrix GetViewMatrix(Vector2 parallaxFactor)
         {
-            // 1. Calculamos el desfase relativo (Parallax)
+            // CASO BASE: Si es Zero, usamos la identidad del adaptador (Fijo total)
+            if (parallaxFactor == Vector2.Zero)
+                return Game.ViewportAdapter.TransformationMatrix;
+
+            // LA CORRECCIÓN: 
+            // En lugar de multiplicar la posición absoluta, multiplicamos el desplazamiento
+            // El factor 1.0 es el pivote. 
             float extraX = _position.X * (parallaxFactor.X - 1f);
             float extraY = _position.Y * (parallaxFactor.Y - 1f);
 
-            // 2. IMPORTANTE: Capturamos el Shake actual
             float shakeX = shakeHorzTween.IsRunning ? shakeHorzTween.CurrentValue : 0f;
             float shakeY = shakeVertTween.IsRunning ? shakeVertTween.CurrentValue : 0f;
 
-            // 3. Aplicamos el desplazamiento completo:
-            // Posición invertida + Desfase Parallax + Shake
-            // Nota: El shake se suma a la posición de la cámara, por lo que en la vista es negativo
-            camTranslationVector.X = -_position.X - extraX - shakeX;
-            camTranslationVector.Y = -_position.Y - extraY - shakeY;
-            camTranslationVector.Z = 0;
+            // Posición final: La cámara siempre va hacia el lado opuesto (-position)
+            // El extraX debe seguir esa misma dirección.
+            camTranslationVector.X = -(_position.X + extraX) - shakeX;
+            camTranslationVector.Y = -(_position.Y + extraY) - shakeY;
 
             Matrix.CreateTranslation(ref camTranslationVector, out camTranslationMatrix);
 
-            // 4. Multiplicación final manteniendo la jerarquía
-            // El Shake ahora será procesado antes del Zoom y el Centrado, 
-            // lo que garantiza que todo el frame tiemble coordinadamente.
             return camTranslationMatrix *
                    rotationTranslationMatrix *
                    scaleMatrix *
