@@ -121,7 +121,7 @@ namespace ScaryCastle
                 var buttons = new List<UIButton>();
 
                 //if (dialogBlock.AllowQuit)
-                  //  buttons.Add(buttonQuit);
+                //  buttons.Add(buttonQuit);
 
                 Utils.LayoutControlsVertically([.. buttons], 1);
             }

@@ -63,8 +63,6 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            icon.Update(gameTime);
-
             if (Actor == null)
                 return;
 
@@ -77,6 +75,8 @@ namespace ScaryCastle
         {
             if (Actor == null)
                 return;
+
+            icon.Update(gameTime);
 
             if (lastKnownValue != Actor.Faith || lastKnownMaxValue != Actor.MaxFaith)
                 Refresh();

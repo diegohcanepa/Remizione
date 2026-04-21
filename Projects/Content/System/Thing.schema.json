@@ -8,6 +8,23 @@
     {
       "type": "object",
       "properties": {
+        "dropChanceMultiplier": {
+          "type": "number",
+          "default": 1.0,
+          "minimum": 0.0,
+          "maximum": 1.0
+        },        
+        "dropMode": {
+          "type": "string",
+          "enum": [
+            "Standard",
+            "CoinsOnly",
+            "SackOnly",
+            "Custom",
+            "None"
+          ],
+          "default": "Standard"
+        },
         "requiresDeadEnd": {
           "type": "boolean"
         },

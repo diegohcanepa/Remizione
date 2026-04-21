@@ -11,6 +11,7 @@
   <String Key="Actor.Rat">Rat</String>
   <String Key="Actor.RiderlessHead">Riderless Head</String>
   <String Key="Actor.Sister">Sister Ham</String>
+  <String Key="Actor.Skeleton">Skeleton</String>
   <String Key="Actor.StinkyRat">Stinky rat</String>
   <String Key="ActorProperty.Grace.Description">The ashes quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Grace.Name">Grace</String>
@@ -315,6 +316,7 @@ Bla bla bla</String>
   <String Key="Verb.Lift">Lift</String>
   <String Key="Verb.None"></String>
   <String Key="Verb.Open">Open</String>
+  <String Key="Verb.Pull">Pull</String>
   <String Key="Verb.Take">Take</String>
   <String Key="Verb.TalkTo">Talk to</String>
   <String Key="Verb.Use">Use</String>

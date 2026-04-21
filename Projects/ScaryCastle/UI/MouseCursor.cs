@@ -227,7 +227,7 @@ namespace ScaryCastle
             if (IsEnabled)
             {
                 effect = CustomImage != null && HightlightColor.HasValue ? ScaryCastleGame.Effects.Outline : null;
-                
+
                 if (effect != null && HightlightColor.HasValue && cursorSprite.RenderImage?.Atlas != null)
                 {
                     effect.Color.SetValue(HightlightColor.Value * opacityTween.CurrentValue);
@@ -235,6 +235,6 @@ namespace ScaryCastle
                     effect.Thickness.SetValue(1);
                 }
             }
-    }
+        }
     }
 }

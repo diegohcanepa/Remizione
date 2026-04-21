@@ -25,7 +25,7 @@ namespace ScaryCastle
             if (element.GetString("position") is string positionValue && !string.IsNullOrWhiteSpace(positionValue))
                 Position = DataConvert.ToVector2(positionValue);
         }
-        
+
         // AllowTags
         public Tags AllowTags { get; }
 

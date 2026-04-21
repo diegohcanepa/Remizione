@@ -16,6 +16,7 @@ namespace ScaryCastle
             CheckMark = this[nameof(CheckMark)];
             Coin = this[nameof(Coin)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
+            CorridorDoorIcon = this[nameof(CorridorDoorIcon)];
             CreditsBar = this[nameof(CreditsBar)];
             CursedIcon = this[nameof(CursedIcon)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
@@ -46,7 +47,6 @@ namespace ScaryCastle
             SkullIcon = this[nameof(SkullIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
-            TunnelIcon = this[nameof(TunnelIcon)];
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
@@ -62,6 +62,9 @@ namespace ScaryCastle
 
         // ContextMenuOptionSelector
         public AtlasImage ContextMenuOptionSelector { get; }
+
+        // CorridorDoorIcon
+        public AtlasImage CorridorDoorIcon { get; }
 
         // CreditsBar
         public AtlasImage CreditsBar { get; }
@@ -152,9 +155,6 @@ namespace ScaryCastle
 
         // SpeechBubblePipe
         public AtlasImage SpeechBubblePipe { get; }
-
-        // TunnelIcon
-        public AtlasImage TunnelIcon { get; }
 
         // UIButtonContainerEdge
         public AtlasImage UIButtonContainerEdge { get; }

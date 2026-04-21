@@ -27,7 +27,7 @@ namespace ScaryCastle
         // Decide
         public static CombatDecision Decide(Actor actor, GameThing? target)
         {
-            if (actor.CombatBehavior?.Archetype is not {} archetype)
+            if (actor.CombatBehavior?.Archetype is not { } archetype)
                 return new CombatDecision(CombatDecisionType.None, null, target);
 
             bool isCornered = target != null && actor.IsCornered(target);

@@ -1,5 +1,4 @@
-﻿using System;
-using Engendro;
+﻿using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
@@ -75,7 +74,7 @@ namespace ScaryCastle
                 Actor.ApproachAndInteract(context.Target, null);
                 return;
             }
-          
+
             // 4. Classic "Use with" interaction: Approach and interact with target using held item
             if (context.HeldItem.Definition.FaithCost == 0)
             {
@@ -116,7 +115,7 @@ namespace ScaryCastle
                     return false;
                 }
             }
-            
+
             PerformInteraction();
 
             return true;

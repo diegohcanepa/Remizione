@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
@@ -23,6 +22,12 @@ namespace ScaryCastle
         protected ThingDefinition(JsonElement element)
             : base(element)
         {
+            // DropChanceMultiplier
+            DropChanceMultiplier = element.GetFloat("dropChanceMultiplier", 1f);
+
+            // DropMode
+            DropMode = element.GetEnum("dropMode", LootDropMode.Standard);
+
             // MaxPerRoom
             MaxPerRoom = element.GetInt32("maxPerRoom", -1);
             if (MaxPerRoom < 0)

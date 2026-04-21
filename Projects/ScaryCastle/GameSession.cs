@@ -242,6 +242,7 @@ namespace ScaryCastle
         // OnEnterRoom
         protected override void OnEnterRoom(Room room)
         {
+            Game.SceneManager.PopUntil(this);
             InteractionContext.Reset();
             MouseCursor.Reset();
             SyncProceduralMusic();
@@ -466,14 +467,7 @@ namespace ScaryCastle
         [ScriptMethod]
         public void CloseCorridorDoor()
         {
-            if (Room is CorridorRoom corridor)
-            {
-                foreach (var door in corridor.Children.OfType<RideDoor>())
-                {
-                    door.Close();
-                    door.AllowInteraction = false;
-                }
-            }
+            (Room as CorridorRoom)?.CloseCorridorDoor();
         }
 
         // CompleteRun
@@ -506,6 +500,7 @@ namespace ScaryCastle
             if (FindEntity<Hub>(nameof(Hub)) is Hub hubRoom)
                 hubRoom.Unload();
 
+            HUD.Countdown.Reset();
             HUDVisible = false;
             Inventory.Clear();
             Player?.Reheal();

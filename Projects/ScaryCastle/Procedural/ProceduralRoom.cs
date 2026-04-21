@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Windows.Globalization;
 
 namespace ScaryCastle
 {
@@ -63,7 +62,7 @@ namespace ScaryCastle
 
             // 2. Usamos la Intensity (que ya tiene tu curva exponencial) para mover el presupuesto
             // Si intensity es 0, tiende al min. Si es 1, tiende al max.
-            float baseBudget = min + (max - min) * run.Intensity;
+            float baseBudget = min + ((max - min) * run.Intensity);
 
             // 3. Variación aleatoria (+-1) para que no todas las salas de la misma zona sean iguales
             int finalBudget = (int)Math.Round(baseBudget) + Random.Next(-1, 2);

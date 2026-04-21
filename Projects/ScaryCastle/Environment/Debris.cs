@@ -42,14 +42,14 @@ namespace ScaryCastle
 
             // 1. Variación de ángulo y deformación de perspectiva (Y)
             float angle = (float)(Random.Shared.NextDouble() * Math.PI * 2);
-            float flattenFactor = 0.35f + (float)Random.Shared.NextDouble() * 0.25f;
+            float flattenFactor = 0.35f + ((float)Random.Shared.NextDouble() * 0.25f);
             _direction = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle) * flattenFactor);
 
             // 2. Velocidad con rango más amplio
             _speed = Random.Shared.Next(35, 65);
 
             // 3. Rotación única (algunas giran hacia atrás, otras rápido, otras lento)
-            _rotationSpeed = (float)(Random.Shared.NextDouble() * 12 - 6);
+            _rotationSpeed = (float)((Random.Shared.NextDouble() * 12) - 6);
 
             _isFirstBounce = true;
             _active = true;
@@ -68,7 +68,7 @@ namespace ScaryCastle
 
             // 5. Duración aleatoria: esto es lo que evita que todas aterricen a la vez
             float baseDuration = _isFirstBounce ? 0.3f : 0.15f;
-            _duration = baseDuration + (float)Random.Shared.NextDouble() * 0.25f;
+            _duration = baseDuration + ((float)Random.Shared.NextDouble() * 0.25f);
 
             Vector2 tentativeTarget = _startPos + (_direction * _speed * _duration);
 
@@ -142,7 +142,7 @@ namespace ScaryCastle
                     _startPos = _targetPos;
 
                     // 6. Fricción aleatoria para que no todas se deslicen igual al final
-                    float friction = 0.15f + (float)Random.Shared.NextDouble() * 0.25f;
+                    float friction = 0.15f + ((float)Random.Shared.NextDouble() * 0.25f);
                     _speed *= friction;
 
                     CalculateNextArc(4, 9);

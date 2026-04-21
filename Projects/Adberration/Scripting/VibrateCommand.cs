@@ -1,5 +1,4 @@
-﻿using Adberration.Scripting;
-using Engendro.Input;
+﻿using Engendro.Input;
 
 namespace Adberration.Scripting
 {

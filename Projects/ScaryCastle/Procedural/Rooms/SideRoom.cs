@@ -14,5 +14,13 @@ namespace ScaryCastle
             if (roomNode.RoomType != RoomType.SideRoom)
                 throw new InvalidOperationException($"Invalid room type for SideRoom: {roomNode.RoomType}");
         }
+
+        // OnActivate
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            if (Session.PreviousRoom is CorridorRoom)
+                Session.HUD.Countdown.Start(GameSettings.CorridorRoomCooldown);
+        }
     }
 }

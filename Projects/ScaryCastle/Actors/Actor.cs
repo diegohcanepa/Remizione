@@ -4,6 +4,7 @@ using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using SharpDX.XAudio2;
 using System;
 using System.Collections.Generic;
 
@@ -86,6 +87,13 @@ namespace ScaryCastle
             ShadowSpotSize = 6;
 
             DefaultCombatIntent = CombatBehavior?.DefaultIntent;
+
+            // Assign defaults from definition if available
+            if (Definition != null)
+            {
+                this.DropMode = Definition.DropMode;
+                this.DropChanceMultiplier = Definition.DropChanceMultiplier;
+            }
         }
 
         #endregion
@@ -108,7 +116,7 @@ namespace ScaryCastle
                 FaceTo(mousePos);
             }
         }
-        
+
         // HandlePendingInteraction
         private void HandlePendingInteraction()
         {
@@ -406,6 +414,13 @@ namespace ScaryCastle
             }
         }
 
+        // OnParentChanged
+        protected override void OnParentChanged(Entity? previousParent)
+        {
+            base.OnParentChanged(previousParent);
+            ActiveThrowable = null;
+        }
+
         // OnStartMoving
         protected override void OnStartMoving()
         {
@@ -430,13 +445,7 @@ namespace ScaryCastle
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
         {
-            if (ActiveThrowable != null)
-            {
-                var thrownObject = new ThrownProp(this, ActiveThrowable);
-                thrownObject.Launch();
-                ActiveThrowable = null;
-            }
-
+            DiscardActiveThrowable();
 
             if (!IsDead)
                 FaceTo(attacker);
@@ -710,6 +719,18 @@ namespace ScaryCastle
             }
         }
 
+        // DiscardActiveThrowable
+        [ScriptMethod]
+        public void DiscardActiveThrowable()
+        {
+            if (ActiveThrowable != null)
+            {
+                var thrownObject = new ThrownProp(this, ActiveThrowable);
+                thrownObject.Launch();
+                ActiveThrowable = null;
+            }
+        }
+
         // Definition
         public ActorDefinition? Definition { get; }
 
@@ -729,7 +750,10 @@ namespace ScaryCastle
         public Sound? FootstepSound { get; set; }
 
         // GetActiveThrowablePosition
-        public Vector2? GetActiveThrowablePosition() => activeThrowableSprite?.Position;
+        public Vector2? GetActiveThrowablePosition()
+        {
+            return activeThrowableSprite?.Position;
+        }
 
         // Guts
         [ScriptProperty]

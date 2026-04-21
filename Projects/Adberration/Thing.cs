@@ -213,7 +213,7 @@ namespace Adberration
                 return Session.Camera.CullingBox.Contains(Position) || BoundingBox.Intersects(Session.Camera.CullingBox);
             }
         }
-            
+
         // IsInCurrentRoom
         [ScriptProperty]
         public bool IsInCurrentRoom => Room != null && Room == Session.Room;

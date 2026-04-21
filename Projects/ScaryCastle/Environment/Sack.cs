@@ -20,7 +20,10 @@ namespace ScaryCastle
         #region IPoolable interface
 
         // Reset
-        void IPoolable.Reset() => Loot = null;
+        void IPoolable.Reset()
+        {
+            Loot = null;
+        }
 
         #endregion
 

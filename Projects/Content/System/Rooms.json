@@ -22,6 +22,12 @@
           "position": "188,50",
           "placement": "WallFrontHang",
           "allowTags": "Torch"
+        },
+        {
+          "position": "56,76",
+          "placement": "Floor",
+          "fillChance": 0.9,
+          "allowTags": "Pottery"
         }
       ],
       "walkArea": "218,76;255,111;8,111;40,76",
@@ -50,16 +56,6 @@
           "fillChance": 0.5
         },
         {
-          "position": "20,102",
-          "placement": "Floor",
-          "fillChance": 0.5
-        },
-        {
-          "position": "222,102",
-          "placement": "Floor",
-          "fillChance": 0.5
-        },
-        {
           "position": "68,46",
           "placement": "WallFrontBase",
           "fillChance": 0.5
@@ -72,12 +68,12 @@
         {
           "position": "69,17",
           "placement": "WallFrontHang",
-          "fillChance": 0.5
+          "allowTags": "Torch"
         },
         {
           "position": "170,17",
           "placement": "WallFrontHang",
-          "fillChance": 0.5
+          "allowTags": "Torch"
         }
       ],
       "walkArea": "204,43;237,109;5,109;37,44;54,44;59,47;78,47;84,44;156,44;162,47;179,47;184,43"
@@ -129,7 +125,8 @@
       "placeholders": [
         {
           "position": "125,10",
-          "placement": "WallFrontHang"
+          "placement": "WallFrontHang",
+          "allowTags": "Torch"
         }
       ],
       "walkArea": "213,62;227,91;178,91;171,93;144,93;132,89;103,94;62,93;16,91;31,62;95,60",

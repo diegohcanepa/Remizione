@@ -27,6 +27,12 @@ namespace ScaryCastle
 
         #endregion
 
+        #region Private fields
+
+        private int closedDoorTimer = -1;
+
+        #endregion
+
         #region Constructor
 
         // Constructor
@@ -52,6 +58,21 @@ namespace ScaryCastle
             Children.Add(gate);
         }
 
+        // CloseCorridorDoorsCore
+        private void CloseCorridorDoorsCore()
+        {
+            var shake = false;
+
+            foreach (var door in Children.OfType<RideDoor>())
+            {
+                door.Close();
+                shake = true;
+            }
+
+            if (shake)
+                Session.Camera.Shake(TweenStyle.Linear, new(.8f), 50, 6);
+        }
+
         #endregion
 
         #region Protected members
@@ -65,6 +86,10 @@ namespace ScaryCastle
             {
                 if (Session.ScriptLibrary.FindRoutine(CorridorLeftGateRoutineName) is Script script)
                     Session.AwaitScript(script);
+            }
+            else if (Session.PreviousRoom is SideRoom)
+            {
+                Session.CloseCorridorDoor();
             }
         }
 
@@ -82,6 +107,9 @@ namespace ScaryCastle
                     exit.ApproachPosition = RoomNode.Definition.ExitApproachPosition;
                     exit.Hotspot.SetVertices(RoomNode.Definition.ExitHotspot);
                     Children.Add(exit);
+
+                    if (Session.ScriptLibrary.FindRoutine("CorridorRightGate-MoveUp") is Script script)
+                        Session.ScriptProcessor.StartScript(script);
                 }
             }
         }
@@ -149,6 +177,30 @@ namespace ScaryCastle
             }
         }
 
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            base.OnUpdate(gameTime);
+
+            if (closedDoorTimer >= 0)
+            {
+                closedDoorTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                if (closedDoorTimer < 0)
+                    CloseCorridorDoorsCore();
+            }
+        }
+
         #endregion
+
+        // CloseCorridorDoor
+        public void CloseCorridorDoor()
+        {
+            foreach (var door in Children.OfType<RideDoor>())
+            {
+                door.AllowInteraction = false;
+            }
+
+            closedDoorTimer = 500;
+        }
     }
 }

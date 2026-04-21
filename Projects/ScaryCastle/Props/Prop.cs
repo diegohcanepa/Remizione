@@ -28,6 +28,13 @@ namespace ScaryCastle
             this.Definition = PropDefinition.Definitions.Find(DeclaredName);
             this.HurtSound = Sound.Find(SoundNames.ImpactA);
 
+            // Assign defaults from definition if available
+            if (Definition != null)
+            {
+                this.DropMode = Definition.DropMode;
+                this.DropChanceMultiplier = Definition.DropChanceMultiplier;
+            }
+
             // Shadow
             this.shadow = new Sprite()
             {

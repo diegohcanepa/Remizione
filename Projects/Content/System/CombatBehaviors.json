@@ -76,9 +76,18 @@
       "archetype": "Lurker",
       "intents": [
         {
-          "name": "Bite",
-          "category": "Basic",
-          "sound": "EnviousEyeAttack"
+          "name": "Contact",
+          "sound": "RatAttack",
+          "range": 50,
+          "effects": [
+            {
+              "context": "Contact",
+              "effectType": "Damage",
+              "amount": "1",
+              "impactWord": "AghRed",
+              "knockback": "15,5"
+            }
+          ]
         }
       ]
     },
@@ -102,6 +111,6 @@
           ]
         }
       ]
-    }    
+    }
   ]
 }

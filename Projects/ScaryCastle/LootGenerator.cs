@@ -71,16 +71,16 @@ namespace ScaryCastle
 
                 if (IsDenied(itemDef.Category, denyCategories))
                     continue;
-                
+
                 if (itemDef.Quality > maxQ)
                     continue;
-                
+
                 if (lootRealm.HasValue && itemDef.Realm != lootRealm.Value)
                     continue;
-                
+
                 if (lootCategory.HasValue && itemDef.Category != lootCategory.Value)
                     continue;
-                
+
                 if (!itemDef.IsStackable && session.Inventory.Find(itemDef.Name) != null)
                     continue;
 
@@ -205,7 +205,7 @@ namespace ScaryCastle
         public void TryDropCoins(GameThing thing)
         {
             // 1. FILTRO DE INSTANCIA: Si el bicho está seteado para no dar nada o solo dar items, abortamos.
-            if (thing.DropMode is LootDropMode.None or LootDropMode.LootOnly or LootDropMode.Custom)
+            if (thing.DropMode is LootDropMode.None or LootDropMode.SackOnly or LootDropMode.Custom)
                 return;
 
             if (thing is not IThingDefinition t || t.Definition == null || session.Room is not ProceduralRoom room)

@@ -34,9 +34,8 @@ namespace ScaryCastle
             };
 
             this.hpMeter = new(new(4, 2));
-            this.FaithMeter = new();
-            this.Log = new();
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
+            this.Countdown = new(session);
 
             this.InventoryMeter = new(session.Inventory);
 
@@ -67,6 +66,7 @@ namespace ScaryCastle
             InventoryMeter.Draw(gameTime);
             Log.Draw(gameTime);
             Message.Draw(gameTime);
+            Countdown.Draw(gameTime);
 
             if (IsSacrificeEnabled())
                 sacrificeMessage.Draw(gameTime);
@@ -89,6 +89,7 @@ namespace ScaryCastle
             FaithMeter.Update(gameTime);
             Log.Update(gameTime);
             Message.Update(gameTime);
+            Countdown.Update(gameTime);
 
             if (attackName.Tag != session.Player?.CombatBehavior?.DefaultIntent)
                 attackName.Text = session.Player?.CombatBehavior?.DefaultIntent?.DisplayName;
@@ -103,8 +104,11 @@ namespace ScaryCastle
             set => attackName.Text = value;
         }
 
+        // Countdown
+        public UICountdown Countdown { get; }
+
         // FaithMeter
-        public UIFaithMeter FaithMeter;
+        public UIFaithMeter FaithMeter { get; } = new();
 
         // GuardMeter
         public UIGuardMeter GuardMeter { get; } = new();
@@ -131,7 +135,7 @@ namespace ScaryCastle
         }
 
         // Log
-        public UILog Log { get; }
+        public UILog Log { get; } = new();
 
         // Message
         public HUDMessage Message { get; }

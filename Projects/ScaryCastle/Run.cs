@@ -110,16 +110,16 @@ namespace ScaryCastle
             if (corridor.Up != null)
             {
                 var nexo = corridor.Up;
-                
+
                 this.AssignDefinition(nexo, diff, rng);
 
                 // Solo uno de estos será distinto de null según el azar de GenerateTrident
                 if (nexo.Left != null)
                     this.AssignDefinition(nexo.Left, diff, rng);
-                
+
                 if (nexo.Up != null)
                     this.AssignDefinition(nexo.Up, diff, rng);
-                
+
                 if (nexo.Right != null)
                     this.AssignDefinition(nexo.Right, diff, rng);
             }

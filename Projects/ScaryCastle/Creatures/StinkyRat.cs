@@ -1,7 +1,4 @@
-﻿using Engendro;
-using Microsoft.Xna.Framework;
-
-namespace ScaryCastle
+﻿namespace ScaryCastle
 {
     /// <summary>
     /// StinkyRat

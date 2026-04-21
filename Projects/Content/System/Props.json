@@ -3,6 +3,9 @@
   "data": [
     {
       "name": "PotteryA",
+      "dropChanceMultiplier": 0.5,
+      "dropMode": "CoinsOnly",
+      "tags": "Pottery",
       "effects": [
         {
           "context": "Contact",

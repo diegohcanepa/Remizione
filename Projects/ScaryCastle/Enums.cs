@@ -103,7 +103,7 @@ namespace ScaryCastle
     {
         Standard,    // Flujo normal (Saco -> Monedas)
         CoinsOnly,   // Solo monedas
-        LootOnly,    // Solo sacos
+        SackOnly,    // Solo sacos
         Custom,      // Tira un ítem específico definido a mano
         None         // Nada de nada
     }
@@ -177,7 +177,7 @@ namespace ScaryCastle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
 
     // Verb
-    public enum Verb { None, Ellipsis, Enter, Exit, Lift, Open, Take, TalkTo, Use }
+    public enum Verb { None, Ellipsis, Enter, Exit, Lift, Open, Pull, Take, TalkTo, Use }
 
     // VolumeCategory
     public enum VolumeCategory { Ambient, FX, Music, Voice, Master }

@@ -16,6 +16,9 @@ namespace ScaryCastle
         // ContentRootDirectory
         public const string ContentRootDirectory = "Content";
 
+        // CorridorRoomCooldown
+        public const int CorridorRoomCooldown = 30;
+
         // DeathCoooldown
         public const int DeathCoooldown = 15000;
 
