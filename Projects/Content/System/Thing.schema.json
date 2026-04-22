@@ -31,6 +31,12 @@
         "maxPerRoom": {
           "type": "integer",
           "default": -1
+        },
+        "minProgress": {
+          "type": "number",
+          "default": 0.0,
+          "minimum": 0.0,
+          "maximum": 1.0
         }
       }
     }

@@ -108,6 +108,8 @@ namespace ScaryCastle
                     exit.Hotspot.SetVertices(RoomNode.Definition.ExitHotspot);
                     Children.Add(exit);
 
+                    Session.HUD.Message.Show(MessageKind.PathCleared);
+
                     if (Session.ScriptLibrary.FindRoutine("CorridorRightGate-MoveUp") is Script script)
                         Session.ScriptProcessor.StartScript(script);
                 }
@@ -123,6 +125,19 @@ namespace ScaryCastle
             {
                 rightWallPatch.Atlas = Atlas;
                 rightWallPatch.Position = BoundingBox.GetPoint(RectanglePoint.RightTop);
+            }
+        }
+
+        // OnPopulated
+        protected override void OnPopulated()
+        {
+            base.OnPopulated();
+
+            // Move away NPCs from player
+            foreach (var npc in Children.OfType<Actor>())
+            {
+                if (npc.X < 100)
+                    npc.X = BoundingBox.Width / 2;
             }
         }
 

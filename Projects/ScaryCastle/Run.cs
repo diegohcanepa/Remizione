@@ -14,6 +14,8 @@ namespace ScaryCastle
         // Constructor
         public Run(int seed, int maxCorridors)
         {
+            CodeContract.GreaterThanZero(maxCorridors, nameof(maxCorridors));
+
             this.seed = seed;
             this.MaxCorridors = maxCorridors;
         }
@@ -196,6 +198,9 @@ namespace ScaryCastle
 
         // MaxCorridors
         public int MaxCorridors { get; }
+
+        // Progress
+        public Ratio Progress => CorridorIndex < 0 ? 0 : (float)CorridorIndex / MaxCorridors;
 
         // Spawns
         public CounterBank Spawns { get; } = new();

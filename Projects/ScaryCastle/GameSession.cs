@@ -468,6 +468,7 @@ namespace ScaryCastle
         public void CloseCorridorDoor()
         {
             (Room as CorridorRoom)?.CloseCorridorDoor();
+            HUD.Countdown.Reset();
         }
 
         // CompleteRun

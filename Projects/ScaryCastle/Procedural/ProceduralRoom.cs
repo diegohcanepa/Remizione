@@ -84,32 +84,36 @@ namespace ScaryCastle
                 if (predicate != null && !predicate(definition))
                     continue;
 
-                // 1. Filtro de dificultad: No permitimos que aparezcan cosas más difíciles que el cuarto
+                // 1. Filtro por progreso en el run
+                if (Session.CurrentRun.Progress < definition.MinProgress)
+                    continue;
+
+                // 2. Filtro de dificultad: No permitimos que aparezcan cosas más difíciles que el cuarto
                 if (definition.Difficulty > RoomNode.Definition.Difficulty)
                     continue;
 
-                // 2. Filtro de topologia
+                // 3. Filtro de topologia
                 if (definition.RequiresDeadEnd && RoomNode.ConnectionCount > 1)
                     continue;
 
-                // 3. Validación de Existencia de instancia declarada en script
+                // 4. Validación de Existencia de instancia declarada en script
                 var thing = Session.FindDeclaredThing(definition.Name) ?? throw new InvalidOperationException($"There is no declared thing named '{definition.Name}'. ");
 
                 // Is expected type?
                 if (thing is not TThing)
                     continue;
 
-                // 4. Meta-progreso
+                // 5. Meta-progreso
                 // Chequea si el enemigo está desbloqueado (MinRun)
                 if (!definition.PassesRunConstraints(Session.RunCount))
                     continue;
 
-                // 5. Historial de la Run
+                // 6. Historial de la Run
                 // Chequea si el enemigo ya alcanzó su MaxPerRun global
                 if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
                     continue;
 
-                // 6. Reglas de Scope (Pools/Tags de la habitación)
+                // 7. Reglas de Scope (Pools/Tags de la habitación)
                 if (!TagScope.Test(RoomNode.Definition.Scope, RoomNode.Definition.Pools, RoomNode.Definition.Tags))
                     continue;
 
@@ -183,50 +187,56 @@ namespace ScaryCastle
             if (WalkArea == null || Session.CurrentRun == null)
                 return;
 
-            // 1) Collect candidates
-            var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(ActorDefinition.Definitions.All, def => def.Role == ActorRole.Ambient);
-            var selectedCandidates = new List<ActorDefinition>();
-            foreach (var definition in candidates)
-            {
-                if (!definition.PassesMaxPerRoomConstraint(enemiesSpawnCounter.GetCount(definition.Name)))
-                    continue;
+            // 1) Collect candidates: GetCandidateDefinitions ya hace todos los filtros globales 
+            // (MinProgress, MaxPerRun global, Scope, Difficulty, etc.)
+            var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(
+                ActorDefinition.Definitions.All,
+                def => def.Role == ActorRole.Ambient
+            );
 
-                if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns.GetCount(definition.Name)))
-                    continue;
-
-                selectedCandidates.Add(definition);
-            }
-
-            if (selectedCandidates.Count == 0)
+            if (candidates.Count == 0)
                 return;
 
             // 2) Build chance table
             var table = new ChanceTable();
-            foreach (var c in selectedCandidates)
+            foreach (var c in candidates)
             {
                 var finalWeight = AdjustWeight(Session.CurrentRun.Intensity, RoomNode.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
                 table.Add(c.Name, finalWeight);
             }
 
-            // Usamos una lista de definiciones concretas en lugar de solo strings
             var pendingSpawns = new List<ActorDefinition>();
             int remainingInstances = CalculateEnemyBudget(Session.CurrentRun);
-            int safety = (selectedCandidates.Count * 2) + 10;
+            int safety = (candidates.Count * 2) + 10;
 
-            // 3) Pick groups (Solo intención, no alteramos estado global)
-            while (table.Count > 0 && safety-- > 0)
+            // 3) Pick groups (Generamos la lista de intenciones)
+            while (table.Count > 0 && remainingInstances > 0 && safety-- > 0)
             {
-                if (remainingInstances <= 0)
-                    break;
-
                 if (table.GetValue() is not ChanceTableItem item)
                     break;
-
-                table.Remove(item.Name);
 
                 if (ActorDefinition.Definitions.Find(item.Name) is not ActorDefinition chosen)
                     continue;
 
+                // VALIDACIÓN DE LÍMITE LOCAL (AOT-Friendly, sin LINQ)
+                // Contamos cuántos de este tipo ya pusimos en la lista de pendientes
+                int pendingCount = 0;
+                for (int i = 0; i < pendingSpawns.Count; i++)
+                {
+                    if (pendingSpawns[i].Name == chosen.Name)
+                        pendingCount++;
+                }
+
+                int currentInRoom = enemiesSpawnCounter.GetCount(chosen.Name) + pendingCount;
+
+                // Si sumar uno más rompe el límite de esta sala, lo fletamos de la tabla
+                if (!chosen.PassesMaxPerRoomConstraint(currentInRoom))
+                {
+                    table.Remove(item.Name);
+                    continue;
+                }
+
+                // Pasó la validación, lo agregamos a la cola y restamos presupuesto
                 pendingSpawns.Add(chosen);
                 remainingInstances--;
             }
@@ -238,7 +248,7 @@ namespace ScaryCastle
             var safePoly = new Polygon(WalkArea.Polygon.Vertices, -45);
             var points = GetSpawnPoints(safePoly, pendingSpawns.Count, 45);
 
-            // Iteramos solo hasta la cantidad de puntos físicos que conseguimos
+            // Iteramos solo hasta la cantidad de puntos físicos válidos que el motor encontró
             for (int i = 0; i < points.Count; i++)
             {
                 var chosenDef = pendingSpawns[i];
@@ -246,6 +256,8 @@ namespace ScaryCastle
                 var instance = CreateThingClone(chosenDef.Name);
                 instance.Position = points[i];
                 Children.Add(instance);
+
+                // 5) Incrementamos contadores reales ahora que el bicho existe en el mapa
                 enemiesSpawnCounter.Increment(chosenDef.Name);
                 Session.CurrentRun.Spawns.Increment(chosenDef.Name);
             }
@@ -257,16 +269,18 @@ namespace ScaryCastle
             if (Session.CurrentRun == null || Placeholders.Count == 0)
                 return;
 
+            // Filtro maestro inicial (Saca los props que ya agotaron su cupo global antes de entrar acá)
             var candidates = GetCandidateDefinitions<PropDefinition, Prop>(PropDefinition.Definitions.All);
+            if (candidates.Count == 0)
+                return;
 
             // 1) Shuffle placeholders
-            var placeholders = new List<Placeholder>(Placeholders);
-            placeholders.Shuffle(Random);
+            var shuffledPlaceholders = new List<Placeholder>(Placeholders);
+            shuffledPlaceholders.Shuffle(Random);
 
             // 2) Iterate placeholders
-            foreach (var placeholder in placeholders)
+            foreach (var placeholder in shuffledPlaceholders)
             {
-                // Already used
                 if (usedPlaceholders.Contains(placeholder))
                     continue;
 
@@ -274,61 +288,45 @@ namespace ScaryCastle
                 if (!placeholder.FillChance.Roll(Random))
                     continue;
 
-                // Collect candidates
-                var selectedCandidates = new List<PropDefinition>();
-                foreach (var definition in candidates)
+                var table = new ChanceTable();
+
+                // 3) Filtramos candidatos para ESTE placeholder específico
+                foreach (var def in candidates)
                 {
-                    // Is compatible with placeholder placement?
-                    if (!definition.Placements.Contains(placeholder.Placement))
+                    if (!def.Placements.Contains(placeholder.Placement))
                         continue;
 
-                    // Match tags?
-                    if (placeholder.AllowTags.Count > 0 && !placeholder.AllowTags.Intersects(definition.Tags))
+                    if (placeholder.AllowTags.Count > 0 && !placeholder.AllowTags.Intersects(def.Tags))
                         continue;
 
-                    // MaxPerRoom (local)
-                    if (!definition.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(definition.Name)))
+                    // Chequeo en tiempo real (vital porque los contadores suben en cada vuelta del placeholder)
+                    if (!def.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(def.Name)))
                         continue;
 
-                    // MaxPerRun (Global)
-                    if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
+                    if (!def.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns.GetCount(def.Name)))
                         continue;
 
-                    selectedCandidates.Add(definition);
+                    var finalWeight = AdjustWeight(Session.CurrentRun.Intensity, RoomNode.Definition.Difficulty, def.Difficulty, def.SpawnWeight);
+                    table.Add(def.Name, finalWeight);
                 }
 
-                if (selectedCandidates.Count == 0)
+                // Si no hay candidatos válidos para este placeholder, seguimos con el próximo
+                if (table.GetValue() is not ChanceTableItem item)
                     continue;
 
-                // Pick
-                var chanceTable = new ChanceTable();
-                foreach (var c in selectedCandidates)
-                {
-                    var finalWeight = AdjustWeight(Session.CurrentRun.Intensity, RoomNode.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
-                    chanceTable.Add(c.Name, finalWeight);
-                }
-
-                if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
+                if (PropDefinition.Definitions.Find(item.Name) is not PropDefinition chosen)
                     continue;
 
-                if (PropDefinition.Definitions.Find(chanceTableItem.Name) is not PropDefinition chosen)
-                    continue;
-
-                // Flag placeholder as used
+                // 4) Spawneo físico
                 usedPlaceholders.Add(placeholder);
 
                 var instance = CreateThingClone(chosen.Name);
                 instance.Position = placeholder.Position;
                 Children.Add(instance);
 
-                // Log spawn in run
+                // 5) Incrementamos contadores INMEDIATAMENTE (Sin returns locos)
                 Session.CurrentRun.Spawns.Increment(chosen.Name);
-
-                int currentRoomCount = propsSpawnCounter.Increment(chosen.Name);
-
-                // Max per room
-                if (chosen.MaxPerRun > 0 && currentRoomCount >= chosen.MaxPerRun)
-                    return;
+                propsSpawnCounter.Increment(chosen.Name);
             }
         }
 

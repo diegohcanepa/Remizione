@@ -33,6 +33,11 @@ namespace ScaryCastle
             if (MaxPerRoom < 0)
                 MaxPerRoom = -1;
 
+            // MinProgress
+            MinProgress = element.GetFloat("minProgress", 0);
+            if (MinProgress < 0)
+                MinProgress = 0;
+
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
 
             if (element.TryGetProperty("effects", out JsonElement effectsArray))
@@ -67,6 +72,9 @@ namespace ScaryCastle
 
         // MaxPerRoom
         public int MaxPerRoom { get; }
+
+        // MinProgress
+        public Ratio MinProgress { get; }
 
         // PassesMaxPerRoomConstraint
         public bool PassesMaxPerRoomConstraint(int instanceCount)

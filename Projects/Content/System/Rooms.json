@@ -26,8 +26,14 @@
         {
           "position": "56,76",
           "placement": "Floor",
-          "fillChance": 0.9,
+          "fillChance": 0.3,
           "allowTags": "Pottery"
+        },
+        {
+          "position": "130,90",
+          "placement": "Floor",
+          "fillChance": 0.2,
+          "allowTags": "Trap"
         }
       ],
       "walkArea": "218,76;255,111;8,111;40,76",

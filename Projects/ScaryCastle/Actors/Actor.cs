@@ -793,9 +793,6 @@ namespace ScaryCastle
                     {
                         Faction = Faction.Evil;
                         reactionTimer = 1;
-
-                        if (Session.Guard == this)
-                            Session.HUD.GuardMeter.Target = this;
                     }
                 }
             }
