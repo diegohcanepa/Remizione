@@ -120,29 +120,35 @@ namespace ScaryCastle
         }
 
         // RollCoinAmount
-        private int RollCoinAmount(RoomDefinition roomDef, ThingDefinition thingDef, float chanceMultiplier)
+        private int RollCoinAmount(ThingDefinition thingDef, float chanceMultiplier)
         {
-            // Chance base según qué tan duro es el enemigo
             float baseChance = thingDef.Difficulty switch
             {
-                Difficulty.Easy => 0.3f,   // 30%
-                Difficulty.Normal => 0.5f, // 50%
-                Difficulty.Hard => 0.9f,   // 90% (casi siempre tiran)
+                Difficulty.Easy => 0.3f,
+                Difficulty.Normal => 0.5f,
+                Difficulty.Hard => 0.9f,
                 _ => 0.1f
             };
 
-            // Sumamos la suerte del jugador y multiplicamos por el factor del NPC/Enemigo
-            float finalChance = (baseChance + session.Inventory.GetLuckFactor()) * chanceMultiplier;
+            float finalChance = baseChance * chanceMultiplier;
+
+            // Luck Base 0.0: Sumamos el bono directamente
+            if (session.CurrentRun != null)
+            {
+                float luckBonus = session.CurrentRun.PlayerStats.Luck.Value * 0.1f;
+                finalChance += luckBonus;
+            }
+
+            finalChance = MathHelper.Clamp(finalChance, 0.0f, 0.98f);
 
             if (session.Random.NextDouble() > finalChance)
                 return 0;
 
-            // Cantidad de monedas (Isaac-style, montos chicos)
             return thingDef.Difficulty switch
             {
                 Difficulty.Easy => 1,
-                Difficulty.Normal => session.Random.Next(1, 3), // 1 a 2 monedas
-                Difficulty.Hard => session.Random.Next(2, 5),   // 2 a 4 monedas
+                Difficulty.Normal => session.Random.Next(1, 3),
+                Difficulty.Hard => session.Random.Next(2, 5),
                 _ => 1
             };
         }
@@ -167,17 +173,15 @@ namespace ScaryCastle
             if (thing.DropMode != LootDropMode.Standard && thing.DropChanceMultiplier == 1)
                 guaranteeDrop = true;
 
-            // 1. FILTRO DE INSTANCIA: Si es None o solo Monedas, no hay chance de Saco
             if (thing.DropMode is LootDropMode.None or LootDropMode.CoinsOnly)
                 return null;
 
             if (thing is not IThingDefinition t || t.Definition == null || session.Room is not ProceduralRoom room)
                 return null;
 
-            // 2. CÁLCULO DE CHANCE (Solo si no es garantizado)
             if (!guaranteeDrop)
             {
-                float lootChance = t.Definition.Difficulty switch
+                float baseLootChance = t.Definition.Difficulty switch
                 {
                     Difficulty.Easy => 0.05f,
                     Difficulty.Normal => 0.12f,
@@ -185,19 +189,25 @@ namespace ScaryCastle
                     _ => 0.02f
                 };
 
-                // Aplicamos el multiplicador de la instancia
-                float finalChance = (lootChance + session.Inventory.GetLuckFactor()) * thing.DropChanceMultiplier;
+                float finalChance = baseLootChance;
+
+                // Luck Base 0.0: Bono directo
+                if (session.CurrentRun != null)
+                {
+                    float luckBonus = session.CurrentRun.PlayerStats.Luck.Value * 0.05f;
+                    finalChance += luckBonus;
+                }
+
+                finalChance *= thing.DropChanceMultiplier;
+                finalChance = MathHelper.Clamp(finalChance, 0.0f, 0.95f);
 
                 if (session.Random.NextDouble() > finalChance)
                     return null;
             }
 
-            // 3. SELECCIÓN DEL ÍTEM
-            // Si el modo es Custom, buscamos el ítem específico por nombre
             if (thing.DropMode == LootDropMode.Custom && !string.IsNullOrEmpty(thing.CustomDropName))
                 return ItemDefinition.Definitions.Find(thing.CustomDropName);
 
-            // De lo contrario, usamos el generador procedural por room node
             return GetLoot(room.RoomNode, t.Definition.PreferredLootRealm, t.Definition.PreferredLootCategory, null, t.Definition.QualityBoost, guaranteeDrop);
         }
 
@@ -212,7 +222,7 @@ namespace ScaryCastle
                 return;
 
             // 2. Calculamos la cantidad pasando el multiplicador de la instancia
-            int amount = RollCoinAmount(room.RoomNode.Definition, t.Definition, thing.DropChanceMultiplier);
+            int amount = RollCoinAmount(t.Definition, thing.DropChanceMultiplier);
 
             // 3. Instanciación física
             for (int i = 0; i < amount; i++)

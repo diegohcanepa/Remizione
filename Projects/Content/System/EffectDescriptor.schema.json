@@ -33,13 +33,6 @@
       "enum": [ "None", "Physical", "Acid", "Curse", "Explosive", "Fire", "Ice", "Lightning", "Poison" ],
       "default": "None"
     },
-    "factor": {
-      "type": "number",
-      "format": "float",
-      "default": 1.0,
-      "minimum": 0,
-      "description": "Multiplier."
-    },      
     "impactWord": {
       "type": "string",
       "description": "Nombre de la Onomatopella a mostrar.",
@@ -50,6 +43,11 @@
       "type": "string",
       "description": "Fuerza del knockback."
     },
+    "modifier": {
+      "type": "number",
+      "format": "float",
+      "description": "Multiplier."
+    },      
     "target": {
       "type": "string",
       "description": "A quién se aplica el efecto.",

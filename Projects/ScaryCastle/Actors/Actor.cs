@@ -248,7 +248,18 @@ namespace ScaryCastle
         // CalculateSpeed
         protected override float CalculateSpeed()
         {
-            return base.CalculateSpeed() * (FastMove ? FastMoveFactor : 1) * (ActiveThrowable == null ? 1 : .7f);
+            var result = base.CalculateSpeed();
+
+            if (FastMove)
+                result *= FastMoveFactor;
+
+            if (ActiveThrowable != null)
+                result *= .7f;
+
+            if (IsPlayer && Session.CurrentRun != null)
+                result *= Session.CurrentRun.PlayerStats.Speed.Value;
+
+            return result;
         }
 
         // CanCheckCollisions

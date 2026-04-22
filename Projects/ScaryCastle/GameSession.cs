@@ -667,7 +667,7 @@ namespace ScaryCastle
 
         // RunCount
         [ScriptProperty]
-        public int RunCount { get; private set; }
+        public int RunCount { get; set; }
 
         // Seed
         [ScriptProperty]

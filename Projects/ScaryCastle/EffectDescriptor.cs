@@ -21,7 +21,7 @@ namespace ScaryCastle
             this.Context = element.GetEnum("context", EffectContext.Contact);
             this.DamageType = element.GetEnum("damageType", DamageType.Physical);
             this.EffectType = element.GetEnum("effectType", EffectType.None);
-            this.Factor = element.GetFloat("factor", 1);
+            this.Modifier = element.GetFloat("modifier", 0);
             this.ImpactWord = element.GetEnum("impactWord", ImpactWordName.None);
             this.Knockback = element.GetVector2("knockback", Vector2.Zero);
             this.Sound = element.GetObject("sound", Sound.Get);
@@ -45,8 +45,10 @@ namespace ScaryCastle
             if (effects.Count == 0)
                 return;
 
-            foreach (var effect in effects)
+            for (var i = 0; i < effects.Count; i++)
             {
+                var effect = effects[i];
+
                 if (effect.Context != context)
                     continue;
 
@@ -66,6 +68,11 @@ namespace ScaryCastle
                 // Apply logic to target
                 switch (effect.EffectType)
                 {
+                    // None / Luck
+                    case EffectType.None:
+                    case EffectType.Luck:
+                        break;
+
                     // Heal
                     case EffectType.Heal:
                         realTarget.Heal(amount);
@@ -113,14 +120,14 @@ namespace ScaryCastle
         // EffectType
         public EffectType EffectType { get; }
 
-        // Factor
-        public float Factor { get; }
-
         // ImpactWord
         public ImpactWordName ImpactWord { get; }
 
         // Knockback
         public Vector2 Knockback { get; }
+
+        // Modifier
+        public float Modifier { get; }
 
         // Sound
         public Sound? Sound { get; }

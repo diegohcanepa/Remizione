@@ -68,6 +68,19 @@ namespace ScaryCastle
 
                 item = new Item(this, definition) { Count = amount };
                 Add(item);
+
+                if (Session.CurrentRun != null)
+                {
+                    for (int i = 0; i < item.Definition.EffectDescriptors.Count; i++)
+                    {
+                        var effect = item.Definition.EffectDescriptors[i];
+
+                        if (effect.EffectType == EffectType.Luck)
+                        {
+                            Session.CurrentRun.PlayerStats.Luck.AddModifier(new(effect.Modifier, item));
+                        }
+                    }
+                }
             }
             else
             {
@@ -126,19 +139,6 @@ namespace ScaryCastle
             return [.. result];
         }
 
-        // GetLuckFactor
-        public float GetLuckFactor()
-        {
-            float result = 0;
-
-            for (var i = 0; i < Count; i++)
-            {
-                result += this[i].Definition.LuckFactor;
-            }
-
-            return result;
-        }
-
         // HasSpace
         public bool HasSpace(ItemDefinition definition)
         {
@@ -192,7 +192,13 @@ namespace ScaryCastle
         // Remove
         public bool Remove(string name)
         {
-            return Find(name) is Item item && Remove(item);
+            if (Find(name) is Item item)
+            {
+                Session.CurrentRun?.PlayerStats.Luck.RemoveModifiers(item);
+                return Remove(item);
+            }
+
+            return false;
         }
 
         // SaveState

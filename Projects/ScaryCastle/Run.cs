@@ -199,6 +199,9 @@ namespace ScaryCastle
         // MaxCorridors
         public int MaxCorridors { get; }
 
+        // PlayerStats
+        public PlayerStats PlayerStats { get; } = new();
+
         // Progress
         public Ratio Progress => CorridorIndex < 0 ? 0 : (float)CorridorIndex / MaxCorridors;
 
