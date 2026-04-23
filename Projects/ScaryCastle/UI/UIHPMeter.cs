@@ -129,7 +129,7 @@ namespace ScaryCastle
             lastKnownValue = hp;
             lastKnownMaxValue = maxHp;
             lastKnownStatusEffectAmount = amount;
-            lastFilledIconIndex = ((Actor.HP + 1) / 2) - 1;
+            lastFilledIconIndex = Actor.IsDead ? 0 : ((Actor.HP + 1) / 2) - 1;
         }
 
         #endregion

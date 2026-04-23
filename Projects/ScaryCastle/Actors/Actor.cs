@@ -4,7 +4,6 @@ using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using SharpDX.XAudio2;
 using System;
 using System.Collections.Generic;
 
@@ -467,6 +466,9 @@ namespace ScaryCastle
             }
             else if (IsHostile(attacker) && !IsDead)
             {
+                if (Definition?.DropTrigger == LootDropTrigger.OnImpact)
+                    DropLoot();
+
                 IsAngry = true;
             }
 

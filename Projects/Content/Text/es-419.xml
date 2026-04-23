@@ -7,6 +7,7 @@
   <String Key="Actor.Father">Padre Olsen</String>
   <String Key="Actor.Grandma">Dulce ancianita</String>
   <String Key="Actor.HellGoat">Cabra del infierno</String>
+  <String Key="Actor.LootDropper">Loot Dropper</String>
   <String Key="Actor.Mandinga">Mandinga</String>
   <String Key="Actor.Rat">Rata</String>
   <String Key="Actor.RiderlessHead">Cabeza sin jinete</String>
@@ -311,11 +312,11 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
   <String Key="Prop.VendingMachine">Máquina expendedora</String>
   <String Key="Prop.WC">Inodoro</String>
-  <String Key="Verb.Ellipsis" />
+  <String Key="Verb.Ellipsis"></String>
   <String Key="Verb.Enter">Entrar</String>
   <String Key="Verb.Exit">Salir</String>
   <String Key="Verb.Lift">Alzar</String>
-  <String Key="Verb.None" />
+  <String Key="Verb.None"></String>
   <String Key="Verb.Open">Abrir</String>
   <String Key="Verb.Pull">Accionar</String>
   <String Key="Verb.Take">Agarrar</String>

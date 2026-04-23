@@ -71,7 +71,7 @@ namespace ScaryCastle
                     field = CalculateValue();
                     isDirty = false;
                 }
-                
+
                 return field;
             }
         }

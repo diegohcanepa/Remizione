@@ -82,6 +82,13 @@ namespace ScaryCastle
         {
             base.OnActivate();
 
+            // Move away NPCs from player
+            foreach (var npc in Children.OfType<Actor>())
+            {
+                if (!npc.IsPlayer && npc.X < 90)
+                    npc.X = BoundingBox.Width / 2;
+            }
+
             if (!Visited)
             {
                 if (Session.ScriptLibrary.FindRoutine(CorridorLeftGateRoutineName) is Script script)
@@ -125,19 +132,6 @@ namespace ScaryCastle
             {
                 rightWallPatch.Atlas = Atlas;
                 rightWallPatch.Position = BoundingBox.GetPoint(RectanglePoint.RightTop);
-            }
-        }
-
-        // OnPopulated
-        protected override void OnPopulated()
-        {
-            base.OnPopulated();
-
-            // Move away NPCs from player
-            foreach (var npc in Children.OfType<Actor>())
-            {
-                if (npc.X < 100)
-                    npc.X = BoundingBox.Width / 2;
             }
         }
 

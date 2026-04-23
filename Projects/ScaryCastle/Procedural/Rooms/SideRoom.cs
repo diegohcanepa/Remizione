@@ -41,7 +41,7 @@ namespace ScaryCastle
         protected override void OnActivate()
         {
             base.OnActivate();
- 
+
             if (!Visited && Session.CurrentRun != null && ActivateTimer(Session.CurrentRun))
                 Session.HUD.Countdown.Start(GameSettings.CorridorRoomCooldown);
         }

@@ -12,7 +12,7 @@ namespace ScaryCastle
     {
         private readonly Sprite icon;
         private double lastKnownValue;
-        private GameSession session;
+        private readonly GameSession session;
         private float timeLeft;
         private readonly TextSprite timeText;
 

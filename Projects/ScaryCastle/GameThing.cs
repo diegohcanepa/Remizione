@@ -262,6 +262,13 @@ namespace ScaryCastle
             return CollisionDetection;
         }
 
+        // DropLoot
+        protected void DropLoot()
+        {
+            if (!Session.LootGenerator.TryDropLoot(this))
+                Session.LootGenerator.TryDropCoins(this);
+        }
+
         // GetDisplayName
         protected virtual string GetDisplayName()
         {
@@ -677,8 +684,7 @@ namespace ScaryCastle
 
             OnDeath();
 
-            if (!Session.LootGenerator.TryDropLoot(this))
-                Session.LootGenerator.TryDropCoins(this);
+            DropLoot();
         }
 
 #if DEBUG

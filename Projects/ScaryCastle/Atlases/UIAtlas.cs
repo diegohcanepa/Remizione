@@ -43,7 +43,6 @@ namespace ScaryCastle
             RedHearts = CreateReadOnlyCollection("RedHearts", 1, 4);
             Sack = this[nameof(Sack)];
             SavingIcon = this[nameof(SavingIcon)];
-            Skull = this[nameof(Skull)];
             SkullIcon = this[nameof(SkullIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
             SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
@@ -143,9 +142,6 @@ namespace ScaryCastle
 
         // SavingIcon
         public AtlasImage SavingIcon { get; }
-
-        // Skull
-        public AtlasImage Skull { get; }
 
         // SkullIcon
         public AtlasImage SkullIcon { get; }

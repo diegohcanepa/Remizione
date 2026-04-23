@@ -17,6 +17,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private int ambientLightSourceCount;
         private Color brightnessColor;
         private int currentDrawIndex;
         private static DustEmitter dustEmitter = null!;
@@ -24,10 +25,16 @@ namespace ScaryCastle
         private RenderTarget2D? lightMapTarget;
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
-        private static Light playerLight = null!;
         private string lastKnownMusicTag = string.Empty;
         private FacingDirection lastKnownPlayerDirection;
         private Vector2? lastKnownPlayerPosition;
+        private static Light playerLight = new("PlayerLight")
+        {
+            LightKind = LightKind.Player,
+            PivotOrigin = RectanglePoint.Center,
+            Position = Screen.Center,
+            Scale = new Vector2(3)
+        };
         private readonly List<TriggerArea> triggerAreas = [];
         private readonly List<WalkArea> walkAreas = [];
         private readonly List<ReadOnlyPolygon> walls = [];
@@ -48,15 +55,6 @@ namespace ScaryCastle
 
             dustEmitter ??= new DustEmitter(session, 6, 1000, 35);
             fireflyEmitter ??= new FireflyEmitter(session, 1, 500, 20);
-
-            // Player light
-            playerLight ??= new Light("PlayerLight")
-            {
-                LightKind = LightKind.Player,
-                PivotOrigin = RectanglePoint.Center,
-                Position = Screen.Center,
-                Scale = new Vector2(3)
-            };
             playerLight.TurnOff(true);
         }
 
@@ -234,7 +232,7 @@ namespace ScaryCastle
                     thing.DrawLights(gameTime);
             }
 
-            if (Session.Player != null)
+            if (ambientLightSourceCount == 0 && Session.Player != null)
             {
                 playerLight.Position = Session.Player.GetAnchoredPosition(15, 15);
                 playerLight.Draw(gameTime);
@@ -295,6 +293,32 @@ namespace ScaryCastle
             // Follow player
             if (Session.Player != null && Session.Player.IsInCurrentRoom && FollowPlayer)
                 Session.Camera.Follow(Session.Player, true);
+        }
+
+        // OnChildAdded
+        protected override void OnChildAdded(Entity child)
+        {
+            base.OnChildAdded(child);
+            
+            if (child is Prop prop && prop.IsAmbientLightSource)
+            {
+                ambientLightSourceCount++;
+                if (ambientLightSourceCount == 1)
+                    playerLight.TurnOn();
+            }
+        }
+
+        // OnChildRemoved
+        protected override void OnChildRemoved(Entity child)
+        {
+            base.OnChildRemoved(child);
+
+            if (child is Prop prop && prop.IsAmbientLightSource)
+            {
+                ambientLightSourceCount--;
+                if (ambientLightSourceCount == 0)
+                    playerLight.TurnOff();
+            }
         }
 
         // OnDraw
@@ -426,7 +450,8 @@ namespace ScaryCastle
             if (AllowGlobalLight)
                 Session.Environment.GlobalLight.Update(gameTime);
 
-            playerLight.Update(gameTime);
+            if (ambientLightSourceCount == 0 && Session.Player != null)
+                playerLight.Update(gameTime);
 
             // Dust particles
             if (DustParticleKind != DustParticleKind.None)

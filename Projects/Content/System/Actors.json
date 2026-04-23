@@ -10,6 +10,12 @@
       "role": "Ambient"
     },
     {
+      "name": "LootDropper",
+      "dropTrigger": "OnImpact",
+      "dropChanceMultiplier": 1,
+      "role": "Ambient"
+    },
+    {
       "name": "Skeleton",
       "role": "Ambient"
     },

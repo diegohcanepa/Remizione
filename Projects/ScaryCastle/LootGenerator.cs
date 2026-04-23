@@ -170,7 +170,7 @@ namespace ScaryCastle
         // RollForLoot
         public ItemDefinition? RollForLoot(GameThing thing, bool guaranteeDrop = false)
         {
-            if (thing.DropMode != LootDropMode.Standard && thing.DropChanceMultiplier == 1)
+            if (thing.DropChanceMultiplier == 1)
                 guaranteeDrop = true;
 
             if (thing.DropMode is LootDropMode.None or LootDropMode.CoinsOnly)

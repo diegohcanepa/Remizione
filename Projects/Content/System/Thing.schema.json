@@ -25,6 +25,14 @@
           ],
           "default": "Standard"
         },
+        "dropTrigger": {
+          "type": "string",
+          "enum": [
+            "OnDeath",
+            "OnImpact"
+          ],
+          "default": "OnDeath"
+        },        
         "requiresDeadEnd": {
           "type": "boolean"
         },

@@ -89,9 +89,9 @@ namespace ScaryCastle
                 // Player
                 case LightKind.Player:
                     lightSprite.Tweens.Reset();
-                    lightSprite.Color = Color.Cyan;
-                    litTweenDuration = 5000;
-                    unlitTweenDuration = 5000;
+                    lightSprite.Color = Color.White * .8f;
+                    litTweenDuration = 0;
+                    unlitTweenDuration = 0;
                     break;
 
                 // Default

@@ -108,6 +108,13 @@ namespace ScaryCastle
         None         // Nada de nada
     }
 
+    // LootDropTrigger
+    public enum LootDropTrigger
+    {
+        OnDeath,
+        OnImpact
+    }
+
     // MenuItemName
     public enum MenuItemName { Options, Resume, Start, Exit, ExitToMainMenu, Yes, No, Cancel, Accept, Credits, WishlistNow, Memoirs }
 

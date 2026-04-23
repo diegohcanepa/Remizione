@@ -13,7 +13,7 @@ namespace ScaryCastle
         {
             Atlas = Atlases.Props;
 
-            this.AttachedLight = new Light("Light")
+            this.AttachedLight = new("Light")
             {
                 Color = new(255, 248, 183),
                 LightKind = LightKind.Default,
@@ -23,6 +23,7 @@ namespace ScaryCastle
 
             AttachedLightPosition = new(9);
             LightIntensity = Intensity.High;
+            IsAmbientLightSource = true;
         }
 
         #region Protected members

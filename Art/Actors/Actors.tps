@@ -560,6 +560,27 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">LootDropper-assets/Move01.png</key>
+            <key type="filename">LootDropper-assets/Move02.png</key>
+            <key type="filename">LootDropper-assets/Move03.png</key>
+            <key type="filename">LootDropper-assets/Move04.png</key>
+            <key type="filename">LootDropper-assets/Stand01.png</key>
+            <key type="filename">LootDropper-assets/StandHead01.png</key>
+            <key type="filename">LootDropper-assets/StandHead02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,4,9,7</rect>
+                <key>scale9Paddings</key>
+                <rect>5,4,9,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Mandinga-assets/Move01.png</key>
             <key type="filename">Mandinga-assets/Move02.png</key>
             <key type="filename">Mandinga-assets/Move03.png</key>
@@ -835,6 +856,7 @@
                     <filename>Skeleton-assets</filename>
                     <filename>Rat-assets</filename>
                     <filename>StinkyRat-assets</filename>
+                    <filename>LootDropper-assets</filename>
                 </array>
             </struct>
         </map>

@@ -52,6 +52,12 @@
       ]
     },
     {
+      "name": "LootDropper",
+      "archetype": "Lurker",
+      "intents": [
+      ]
+    },    
+    {
       "name": "Rat",
       "archetype": "Lurker",
       "intents": [
@@ -73,7 +79,7 @@
     },
     {
       "name": "Skeleton",
-      "archetype": "Lurker",
+      "archetype": "Stalker",
       "intents": [
         {
           "name": "Contact",

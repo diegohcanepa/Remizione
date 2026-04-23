@@ -28,6 +28,9 @@ namespace ScaryCastle
             // DropMode
             DropMode = element.GetEnum("dropMode", LootDropMode.Standard);
 
+            // DropTrigger
+            DropTrigger = element.GetEnum("dropTrigger", LootDropTrigger.OnDeath);
+
             // MaxPerRoom
             MaxPerRoom = element.GetInt32("maxPerRoom", -1);
             if (MaxPerRoom < 0)
@@ -63,6 +66,9 @@ namespace ScaryCastle
 
         // DropMode
         public LootDropMode DropMode { get; }
+
+        // DropTrigger
+        public LootDropTrigger DropTrigger { get; }
 
         // DropChanceMultiplier
         public float DropChanceMultiplier { get; }

@@ -79,6 +79,13 @@ namespace ScaryCastle
             InvalidateShadowImage();
         }
 
+        // OnTakeDamage
+        protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
+        {
+            if (!IsDead && Definition?.DropTrigger == LootDropTrigger.OnImpact)
+                DropLoot();
+        }
+
         // OnTransform
         protected override void OnTransform(TransformChange change)
         {
@@ -116,6 +123,9 @@ namespace ScaryCastle
 
         // Definition
         public PropDefinition? Definition { get; }
+
+        // IsAmbientLightSource
+        public bool IsAmbientLightSource { get; init; }
 
         // SkillChancePenalty
         [ScriptProperty]
