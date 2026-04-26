@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -17,6 +18,29 @@ namespace ScaryCastle
             : base()
         {
             this.Session = session;
+        }
+
+        #endregion
+
+        #region Private members
+
+        // InvalidateAmbientLightColor
+        private void InvalidateAmbientLightColor()
+        {
+            AmbientLightColor = null;
+
+            Item? selectedItem = null;
+            for (var i = 0; i < Items.Count; i++)
+            {
+                if (Items[i].Definition.LightModifier > 0)
+                {
+                    if (selectedItem == null || selectedItem.Definition.LightModifier < Items[i].Definition.LightModifier)
+                        selectedItem = Items[i];
+                }
+            }
+
+            if (selectedItem != null && selectedItem.Definition.LightColor != null)
+                AmbientLightColor = selectedItem.Definition.LightColor;
         }
 
         #endregion
@@ -40,7 +64,9 @@ namespace ScaryCastle
         // RemoveItem
         protected override void RemoveItem(int index)
         {
+            Session.CurrentRun?.PlayerStats.RemoveAllModifiers(this[index]);
             base.RemoveItem(index);
+            InvalidateAmbientLightColor();
             Invalidate();
         }
 
@@ -71,14 +97,14 @@ namespace ScaryCastle
 
                 if (Session.CurrentRun != null)
                 {
-                    for (int i = 0; i < item.Definition.EffectDescriptors.Count; i++)
+                    if (item.Definition.LuckModifier != 0)
                     {
-                        var effect = item.Definition.EffectDescriptors[i];
-
-                        if (effect.EffectType == EffectType.Luck)
-                        {
-                            Session.CurrentRun.PlayerStats.Luck.AddModifier(new(effect.Modifier, item));
-                        }
+                        Session.CurrentRun.PlayerStats.Luck.AddModifier(new(item.Definition.LuckModifier, item));
+                    }
+                    else if (item.Definition.LightModifier != 0)
+                    {
+                        Session.CurrentRun.PlayerStats.AmbientLight.AddModifier(new(item.Definition.LightModifier, item));
+                        InvalidateAmbientLightColor();
                     }
                 }
             }
@@ -89,6 +115,9 @@ namespace ScaryCastle
 
             return item;
         }
+
+        // AmbientLightColor
+        public Color? AmbientLightColor { get; private set; }
 
         // Capacity
         public int Capacity
@@ -193,10 +222,7 @@ namespace ScaryCastle
         public bool Remove(string name)
         {
             if (Find(name) is Item item)
-            {
-                Session.CurrentRun?.PlayerStats.Luck.RemoveModifiers(item);
                 return Remove(item);
-            }
 
             return false;
         }

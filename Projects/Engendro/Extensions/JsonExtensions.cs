@@ -29,6 +29,24 @@ namespace Engendro
                 return defaultValue;
             }
 
+            // GetColor
+            public Color? GetColor(string propertyName)
+            {
+                if (element.TryGetProperty(propertyName, out JsonElement prop) && prop.GetString() is string value)
+                    return DataConvert.ToColor(value);
+                else
+                    return null;
+            }
+
+            // GetColor
+            public Color GetColor(string propertyName, Color defaultValue)
+            {
+                if (element.TryGetProperty(propertyName, out JsonElement prop) && prop.GetString() is string value)
+                    return DataConvert.ToColor(value);
+
+                return defaultValue;
+            }
+
             // GetEnum
             public TEnum? GetEnum<TEnum>(string propertyName) where TEnum : struct, Enum
             {

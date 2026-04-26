@@ -6,21 +6,26 @@ using Microsoft.Xna.Framework.Graphics;
 namespace ScaryCastle
 {
     /// <summary>
-    /// EchoScene
+    /// ItemInfoScene
     /// </summary>
-    public sealed class EchoScene : Scene
+    public sealed class ItemInfoScene : Scene
     {
         private readonly Sprite arrow;
+        private readonly UIButton button;
         private readonly Sprite gradient;
         private readonly Sprite image;
+        private Item? item;
         private readonly FloatTween opacityTween = new();
+        private readonly GameSession session;
         private readonly TextSprite textSprite;
 
         #region Constructor
 
         // Constructor
-        public EchoScene(ScaryCastleGame game)
+        public ItemInfoScene(GameSession session)
         {
+            this.session = session;
+
             const int topMargin = 35;
 
             PausePreviousScenes = true;
@@ -60,6 +65,15 @@ namespace ScaryCastle
             {
                 PivotOrigin = RectanglePoint.Left,
                 Position = gradient.BoundingBox.GetPoint(RectanglePoint.LeftTop, 8, topMargin)
+            };
+
+            // Button
+            this.button = new()
+            {
+                ImageName = nameof(Atlases.UI.DiscardItemIcon),
+                PivotOrigin = RectanglePoint.Right,
+                Text = "Descartar",
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -40)
             };
         }
 
@@ -105,11 +119,22 @@ namespace ScaryCastle
             Game.SpriteBatch.Begin(Game.Camera);
             arrow.Draw(gameTime);
             Game.SpriteBatch.End();
+
+            button.Draw(gameTime);
         }
 
         // OnHandleInput
         protected override HandleInputResult OnHandleInput()
         {
+            if (button.TestPressed(PlayerIndex.One))
+            {
+                item?.Remove();
+                session.InteractionContext.HeldItem = null;
+                session.HUD.Message.Show(MessageKind.ItemDiscarded);
+                Game.SceneManager.Pop();
+                return HandleInputResult.Handled;
+            }
+
             if (HandleMouseInput())
                 return HandleInputResult.Handled;
 
@@ -129,6 +154,7 @@ namespace ScaryCastle
         protected override void OnUpdate(GameTime gameTime)
         {
             arrow.Update(gameTime);
+            button.Update(gameTime);
             textSprite.Update(gameTime);
             image.Opacity = textSprite.Opacity;
         }
@@ -136,16 +162,13 @@ namespace ScaryCastle
         #endregion
 
         // Show
-        public void Show(string text, bool allowTyping, AtlasImage? image = null)
+        public void Show(Item item)
         {
-            textSprite.Text = text;
+            this.item = item;
+            textSprite.Text = item.Definition.Description;
             opacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);
             textSprite.Tweens.OpacityTween = opacityTween;
-
-            if (allowTyping)
-                textSprite.StartTyping();
-
-            this.image.RenderImage = image;
+            this.image.RenderImage = item.Definition.Image;
         }
     }
 }

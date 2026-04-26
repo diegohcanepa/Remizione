@@ -133,6 +133,8 @@ namespace ScaryCastle
                 rightWallPatch.Atlas = Atlas;
                 rightWallPatch.Position = BoundingBox.GetPoint(RectanglePoint.RightTop);
             }
+
+
         }
 
         // OnPopulating

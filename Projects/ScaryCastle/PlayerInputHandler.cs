@@ -10,8 +10,6 @@ namespace ScaryCastle
     /// </summary>
     public sealed class PlayerInputHandler<T> : InputHandler where T : Actor
     {
-        private SoundInstance? sacrificeSoundInstance;
-
         // Constructor
         public PlayerInputHandler(T actor, PlayerIndex playerIndex)
             : base(playerIndex)
@@ -44,19 +42,6 @@ namespace ScaryCastle
             var context = Actor.Session.InteractionContext;
 
             MouseCursor.PerformClick();
-
-            // 1. Sacrifice
-            if (context.Sacrifice)
-            {
-                context.HeldItem?.Remove();
-                context.HeldItem = null;
-                sacrificeSoundInstance?.Stop();
-                sacrificeSoundInstance = Sound.Play(SoundNames.Redemption);
-                Actor.Faith++;
-                Actor.Session.HUD.FaithMeter.Animate();
-                Actor.Session.HUD.Message.Show(MessageKind.SacrificeDone);
-                return;
-            }
 
             var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
 

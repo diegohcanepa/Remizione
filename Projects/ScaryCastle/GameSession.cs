@@ -21,8 +21,8 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly ScriptConsole? console;
-        private readonly EchoScene echoScene;
         private readonly InventoryScene inventoryScene;
+        private readonly ItemInfoScene itemInfoScene;
         private Vector2? playerPosition;
         private readonly List<GameThing> proceduralThings = [];
         private readonly Dictionary<string, GameThing> proceduralThingsDict = [];
@@ -87,7 +87,7 @@ namespace ScaryCastle
                 roomEditor = new RoomEditor(this);
             }
 
-            this.echoScene = new(Game);
+            this.itemInfoScene = new(this);
 
             // Saving icon
             this.savingIcon = new Sprite(Atlases.UI.SavingIcon)
@@ -153,7 +153,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
             AotTypeRegistry.Register("cast-lightning", typeof(CastLightningCommand));
             AotTypeRegistry.Register("create-dialog-block", typeof(CreateDialogBlockCommand));
-            AotTypeRegistry.Register("echo", typeof(EchoCommand));
             AotTypeRegistry.Register("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             AotTypeRegistry.Register("exit-session", typeof(ExitSessionCommand));
             AotTypeRegistry.Register("if-can-pickup-loot", typeof(IfCanPickUpLootStatement));
@@ -162,6 +161,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("pickup-loot", typeof(PickUpLootCommand));
             AotTypeRegistry.Register("place-item", typeof(PlaceItemCommand));
             AotTypeRegistry.Register("player-attack", typeof(PlayerAttackCommand));
+            AotTypeRegistry.Register("remove-item", typeof(RemoveItemCommand));
             AotTypeRegistry.Register("say", typeof(SayCommand));
             AotTypeRegistry.Register("select-walk-area", typeof(SelectWalkAreaCommand));
             AotTypeRegistry.Register("set-light", typeof(SetLightCommand));
@@ -503,7 +503,14 @@ namespace ScaryCastle
             HUD.Countdown.Reset();
             HUDVisible = false;
             Inventory.Clear();
-            Player?.Reheal();
+
+            if (Player != null)
+            {
+                Player.Reheal();
+                Player.MaxFaith = 3;
+                Player.Faith = 3;
+            }
+
             Seed = 0;
 
             // 1. Force an immediate collection of all generations (0, 1, and 2).
@@ -705,11 +712,11 @@ namespace ScaryCastle
             Game.SceneManager.Push(scene);
         }
 
-        // ShowEcho
-        public void ShowEcho(string text, bool allowTyping, AtlasImage? image = null)
+        // ShowItemInfo
+        public void ShowItemInfo(Item item)
         {
-            echoScene.Show(text, allowTyping, image);
-            Game.SceneManager.Push(echoScene);
+            itemInfoScene.Show(item);
+            Game.SceneManager.Push(itemInfoScene);
         }
 
         // ShowGuardMeter

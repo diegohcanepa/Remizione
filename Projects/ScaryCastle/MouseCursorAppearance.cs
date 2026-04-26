@@ -100,11 +100,11 @@ namespace ScaryCastle
             RefreshCursor(context);
             RefreshText(context);
 
-            if (context.Target != null || context.Sacrifice)
+            if (context.Target != null)
             {
                 MouseCursor.IsEnabled = context.Session.Player?.ActiveThrowable == null;
 
-                if (context.HeldItem?.Definition.FaithCost > 0 || context.Sacrifice)
+                if (context.HeldItem?.Definition.FaithCost > 0)
                     MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightBlue;
                 else
                     MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightWhite;

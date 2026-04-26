@@ -60,10 +60,8 @@
 		{
 			"name": "Lantern",
 			"category": "Misc",
-			"consumptionInterval": 10000,
-			"consumptionType": "Durability",
-			"durability": 1,
-			"durabilityCost": 0.1
+			"lightModifier": 3,
+			"lightColor": "240,181,65"
 		},
 		{
 			"name": "MasterLockpick",

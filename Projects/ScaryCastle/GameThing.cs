@@ -348,11 +348,6 @@ namespace ScaryCastle
             shadowSpot.Draw(gameTime);
         }
 
-        // OnFaithChanged
-        protected virtual void OnFaithChanged()
-        {
-        }
-
         // OnHPChanged
         protected virtual void OnHPChanged()
         {
@@ -794,21 +789,6 @@ namespace ScaryCastle
                 Direction = FacingDirection.Left;
         }
 
-        // Faith
-        [ScriptProperty]
-        public int Faith
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = Math.Min(value, MaxFaith);
-                    OnFaithChanged();
-                }
-            }
-        }
-
         // FloatingForce
         [ScriptProperty]
         public float FloatingForce
@@ -1064,21 +1044,6 @@ namespace ScaryCastle
                 return BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera));
             else
                 return RuntimeHotspot.Contains(InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera));
-        }
-
-        // MaxFaith
-        [ScriptProperty]
-        public int MaxFaith
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    Faith = value;
-                }
-            }
         }
 
         // MaxHP

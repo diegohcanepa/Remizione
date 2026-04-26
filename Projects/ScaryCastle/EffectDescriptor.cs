@@ -70,7 +70,6 @@ namespace ScaryCastle
                 {
                     // None / Luck
                     case EffectType.None:
-                    case EffectType.Luck:
                         break;
 
                     // Heal

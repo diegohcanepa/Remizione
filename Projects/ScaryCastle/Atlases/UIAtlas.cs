@@ -20,11 +20,10 @@ namespace ScaryCastle
             CreditsBar = this[nameof(CreditsBar)];
             CursedIcon = this[nameof(CursedIcon)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
+            DiscardItemIcon = this[nameof(DiscardItemIcon)];
             FaithIcon = this[nameof(FaithIcon)];
-            FearEmpty = this[nameof(FearEmpty)];
-            FearFull = this[nameof(FearFull)];
-            FearIcon = this[nameof(FearIcon)];
-            GreenHearts = CreateReadOnlyCollection("GreenHearts", 1, 4);
+            FaithIcons = CreateReadOnlyCollection(nameof(FaithIcons), 1, 2);
+            GreenHearts = CreateReadOnlyCollection(nameof(GreenHearts), 1, 4);
             InventorySlot = this[nameof(InventorySlot)];
             InventoryGridContainer = this[nameof(InventoryGridContainer)];
             InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
@@ -39,8 +38,8 @@ namespace ScaryCastle
             PoisonedIcon = this[nameof(PoisonedIcon)];
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
-            PurpleHearts = CreateReadOnlyCollection("PurpleHearts", 1, 4);
-            RedHearts = CreateReadOnlyCollection("RedHearts", 1, 4);
+            PurpleHearts = CreateReadOnlyCollection(nameof(PurpleHearts), 1, 4);
+            RedHearts = CreateReadOnlyCollection(nameof(RedHearts), 1, 4);
             Sack = this[nameof(Sack)];
             SavingIcon = this[nameof(SavingIcon)];
             SkullIcon = this[nameof(SkullIcon)];
@@ -74,17 +73,14 @@ namespace ScaryCastle
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
 
+        // DiscardItemIcon
+        public AtlasImage DiscardItemIcon { get; }
+
         // FaithIcon
         public AtlasImage FaithIcon { get; }
 
-        // FearEmpty
-        public AtlasImage FearEmpty { get; }
-
-        // FearFull
-        public AtlasImage FearFull { get; }
-
-        // FearIcon
-        public AtlasImage FearIcon { get; }
+        // FaithIcons
+        public ReadOnlyCollection<AtlasImage> FaithIcons { get; }
 
         // GreenHearts
         public ReadOnlyCollection<AtlasImage> GreenHearts { get; }

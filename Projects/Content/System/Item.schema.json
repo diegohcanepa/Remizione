@@ -55,6 +55,18 @@
             "faithCost": {
               "type": "integer"
             },
+            "lightColor": {
+              "type": "string"
+            },
+            "lightModifier": {
+              "type": "number",
+              "default": 0.0,
+              "minimum": 0.0
+            },
+            "luckModifier": {
+              "type": "number",
+              "default": 0.0
+            },
             "pickupSound": {
               "type": "string",
               "description": "Nombre del archivo de sonido a reproducir cuando se colecta."

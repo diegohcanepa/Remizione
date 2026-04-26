@@ -136,7 +136,7 @@ namespace ScaryCastle
             {
                 if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
                 {
-                    Inventory.Session.ShowEcho(item.Definition.Description, false, item.Definition.Image);
+                    Inventory.Session.ShowItemInfo(item);
                     Sound.Play(SoundNames.Interact);
                 }
             }
@@ -247,6 +247,13 @@ namespace ScaryCastle
                 lastSeenInventoryVersion = Inventory.ContentVersion;
                 Refresh();
             }
+        }
+
+        // OnUnloadContent
+        protected override void OnUnloadContent()
+        {
+            base.OnUnloadContent();
+            itemName.Clear();
         }
 
         // OnUpdate

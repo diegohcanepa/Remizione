@@ -13,7 +13,6 @@ namespace ScaryCastle
 
         private readonly TextSprite attackName;
         private readonly UIHPMeter hpMeter;
-        private readonly TextSprite sacrificeMessage;
         private readonly GameSession session;
 
         #endregion
@@ -38,15 +37,6 @@ namespace ScaryCastle
             this.Countdown = new(session);
 
             this.InventoryMeter = new(session.Inventory);
-
-            this.sacrificeMessage = new(Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Highlight,
-                PivotOrigin = RectanglePoint.LeftBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 4, -16),
-                Scale = ScaleInfo.Text.Huge,
-                Text = TextRepository.GetValue("Misc.SacrificeForFaith")
-            };
         }
 
         #endregion
@@ -67,9 +57,6 @@ namespace ScaryCastle
             Log.Draw(gameTime);
             Message.Draw(gameTime);
             Countdown.Draw(gameTime);
-
-            if (IsSacrificeEnabled())
-                sacrificeMessage.Draw(gameTime);
 
             Game.SpriteBatch.End();
 
@@ -127,12 +114,6 @@ namespace ScaryCastle
 
         // InventoryMeter
         public UIInventoryMeter InventoryMeter { get; }
-
-        // IsSacrificeEnabled
-        public bool IsSacrificeEnabled()
-        {
-            return session.InteractionContext.HeldItem != null && FaithMeter.BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);
-        }
 
         // Log
         public UILog Log { get; } = new();

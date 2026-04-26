@@ -20,6 +20,8 @@ namespace ScaryCastle
         private int ambientLightSourceCount;
         private Color brightnessColor;
         private int currentDrawIndex;
+        private readonly Color defaultPlayerLightColor = Color.WhiteSmoke * .8f;
+        private readonly Vector2 defaultPlayerLightScale = new(5, 4);
         private static DustEmitter dustEmitter = null!;
         private static FireflyEmitter fireflyEmitter = null!;
         private RenderTarget2D? lightMapTarget;
@@ -28,12 +30,11 @@ namespace ScaryCastle
         private string lastKnownMusicTag = string.Empty;
         private FacingDirection lastKnownPlayerDirection;
         private Vector2? lastKnownPlayerPosition;
-        private static Light playerLight = new("PlayerLight")
+        private static readonly Light playerLight = new("PlayerLight")
         {
             LightKind = LightKind.Player,
             PivotOrigin = RectanglePoint.Center,
             Position = Screen.Center,
-            Scale = new Vector2(3)
         };
         private readonly List<TriggerArea> triggerAreas = [];
         private readonly List<WalkArea> walkAreas = [];
@@ -232,10 +233,15 @@ namespace ScaryCastle
                     thing.DrawLights(gameTime);
             }
 
-            if (ambientLightSourceCount == 0 && Session.Player != null)
+            if (Session.CurrentRun != null)
             {
-                playerLight.Position = Session.Player.GetAnchoredPosition(15, 15);
-                playerLight.Draw(gameTime);
+                if (ambientLightSourceCount == 0 && Session.Player != null)
+                {
+                    playerLight.Color = Session.Inventory.AmbientLightColor ?? defaultPlayerLightColor;
+                    playerLight.Scale = defaultPlayerLightScale * Session.CurrentRun.PlayerStats.AmbientLight.Value;
+                    playerLight.Position = Session.Player.GetAnchoredPosition(15, 15);
+                    playerLight.Draw(gameTime);
+                }
             }
 
             if (BrightnessModifier > 0)
@@ -299,7 +305,7 @@ namespace ScaryCastle
         protected override void OnChildAdded(Entity child)
         {
             base.OnChildAdded(child);
-            
+
             if (child is Prop prop && prop.IsAmbientLightSource)
             {
                 ambientLightSourceCount++;

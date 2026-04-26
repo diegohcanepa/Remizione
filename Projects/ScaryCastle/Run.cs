@@ -25,13 +25,15 @@ namespace ScaryCastle
         // AssignDefinition
         private void AssignDefinition(RoomNode node, Difficulty diff, Random rng)
         {
-            var def = registry.GetValidDefinition(node, diff, this.Spawns, rng);
-            if (def == null)
+            if (registry.GetValidDefinition(node, diff, this.Spawns, rng) is not RoomDefinition def)
+            {
                 throw new InvalidOperationException($"ERROR: No assets found for {node.RoomType}/{node.SideRoomCategory} in {diff}");
-
-            node.Definition = def;
-
-            this.Spawns.Increment(def.Name);
+            }
+            else
+            {
+                node.Definition = def;
+                this.Spawns.Increment(def.Name);
+            }
         }
 
         // CleanUpCurrentCorridor
@@ -148,6 +150,9 @@ namespace ScaryCastle
                 return (float)Math.Pow(Math.Clamp(progress, 0f, 1f), 1.2f);
             }
         }
+
+        // Inventory
+        public Inventory Inventory { get; }
 
         // LoadNextCorridor
         public bool LoadNextCorridor(GameSession session)

@@ -3,19 +3,12 @@
     /// <summary>
     /// StatModifier
     /// </summary>
-    public sealed class StatModifier
+    public sealed class StatModifier(float value, object source)
     {
-        // Constructor
-        public StatModifier(float value, object source)
-        {
-            this.Value = value;
-            this.Source = source;
-        }
-
         // Source
-        public object Source { get; }
+        public object Source { get; } = source;
 
         // Value
-        public float Value { get; }
+        public float Value { get; } = value;
     }
 }

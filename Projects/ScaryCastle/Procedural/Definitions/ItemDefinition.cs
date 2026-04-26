@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Engendro.Audio;
+using Microsoft.Xna.Framework;
 using System.Text.Json;
 
 namespace ScaryCastle
@@ -56,6 +57,17 @@ namespace ScaryCastle
 
             // IsStackable
             IsStackable = element.GetBool("isStackable", false);
+
+            // LightColor
+            LightColor = element.GetColor("lightColor");
+
+            // LightModifier
+            LightModifier = element.GetFloat("lightModifier", 0);
+            if (LightModifier < 0)
+                RaiseValidationError(this, "Light modifier must be equal or greater that zero.", nameof(LightModifier));
+
+            // LuckModifier
+            LuckModifier = element.GetFloat("luckModifier", 0);
 
             // PickupSound
             PickupSound = element.GetObject("pickupSound", Sound.Get) ?? Sound.Get(SoundNames.PickupGeneric);
@@ -127,6 +139,15 @@ namespace ScaryCastle
 
         // IsStackable
         public bool IsStackable { get; }
+
+        // LightColor
+        public Color? LightColor { get; }
+
+        // LightModifier
+        public float LightModifier { get; }
+
+        // LuckModifier
+        public float LuckModifier { get; }
 
         // PickupSound
         public Sound PickupSound { get; }

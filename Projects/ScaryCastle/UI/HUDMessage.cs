@@ -49,7 +49,7 @@ namespace ScaryCastle
             messageText.Update(gameTime);
             messageText.Opacity = fadeTween.IsRunning ? fadeTween.CurrentValue : 1;
             icon.Opacity = fadeTween.CurrentValue;
-            icon.Position = messageText.BoundingBox.GetPoint(RectanglePoint.Left, -1, 0);
+            icon.Position = messageText.BoundingBox.GetPoint(RectanglePoint.Left, -1, -1);
         }
 
         #endregion
@@ -66,19 +66,16 @@ namespace ScaryCastle
             var text = Localization.GetValue(message);
 
             var color = ColorPalette.Text.Highlight;
-            if (message is MessageKind.NotEnoughCoins)
+            if (message is MessageKind.NotEnoughCoins or MessageKind.ItemDiscarded or MessageKind.NotEnoughFaith)
             {
                 color = ColorPalette.Text.Orange;
+                icon.RenderImage = Atlases.UI.FaithIcon;
                 Sound.Play(SoundNames.Error);
             }
             else if (message == MessageKind.Cursed)
             {
                 color = ColorPalette.Text.Purple;
                 icon.RenderImage = Atlases.UI.CursedIcon;
-            }
-            else if (message == MessageKind.SacrificeDone)
-            {
-                color = ColorPalette.Text.SteelBlue;
             }
             else if (message == MessageKind.Poisoned)
             {

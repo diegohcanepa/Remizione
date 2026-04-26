@@ -139,6 +139,9 @@ namespace ScaryCastle
         // React
         private void React()
         {
+            if (IsPlayer)
+                return;
+
             if (Brain.Decide(this, Session.Player) is CombatDecision decision && decision.Target is { } target)
             {
                 if (decision.Type == CombatDecisionType.Charge)
@@ -392,6 +395,11 @@ namespace ScaryCastle
                 Rotation -= moveBalancingTween.CurrentValue;
 
             footstepEffect?.Draw(gameTime);
+        }
+
+        // OnFaithChanged
+        protected virtual void OnFaithChanged()
+        {
         }
 
         // OnInitialize
@@ -751,6 +759,21 @@ namespace ScaryCastle
         [ScriptProperty]
         public Faction Faction { get; set; }
 
+        // Faith
+        [ScriptProperty]
+        public int Faith
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = Math.Min(value, MaxFaith);
+                    OnFaithChanged();
+                }
+            }
+        }
+
         // FastMove
         public bool FastMove { get; set; }
 
@@ -838,6 +861,21 @@ namespace ScaryCastle
         // IsStandingOrMoving
         public bool IsStandingOrMoving => BodyMachine.CurrentState is BodyStandState or BodyMoveState;
 
+        // MaxFaith
+        [ScriptProperty]
+        public int MaxFaith
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    Faith = value;
+                }
+            }
+        }
+
         // MoveRandomly
         [ScriptMethod]
         public void MoveRandomly()
@@ -901,6 +939,7 @@ namespace ScaryCastle
             state.Intent = intent;
             state.Target = target;
             BodyMachine.ChangeState(state.GetType());
+            //(target as Actor)?.React();
         }
 
         // PlayerNumber

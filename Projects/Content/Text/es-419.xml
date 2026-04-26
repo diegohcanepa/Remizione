@@ -52,7 +52,7 @@
   <String Key="Item.Battery.Name">Batería</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
   <String Key="Item.Chili.Name">Chile picante</String>
-  <String Key="Item.Coin.Description">Vil metal: La prueba física de que tu moral tiene un precio, y honestamente, es bastante bajo.</String>
+  <String Key="Item.Coin.Description">El vil metal: La prueba física de que la moral y los principios tienen un precio.</String>
   <String Key="Item.Coin.Name">Moneda</String>
   <String Key="Item.Cross.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Cross.Name">Cruz de Zumbito</String>
@@ -199,12 +199,12 @@
   <String Key="MessageKind.Cursed">¡Estás maldito!</String>
   <String Key="MessageKind.HandsFull">Tienes las manos ocupadas.</String>
   <String Key="MessageKind.InventoryFull">El inventario está lleno.</String>
+  <String Key="MessageKind.ItemDiscarded">Item descartado.</String>
   <String Key="MessageKind.NotEnoughCoins">No tienes monedas suficientes.</String>
   <String Key="MessageKind.NotEnoughFaith">No tienes la fe suficiente.</String>
   <String Key="MessageKind.OutOfReach">Fuera de alcance.</String>
   <String Key="MessageKind.PathCleared">Camino despejado.</String>
   <String Key="MessageKind.Poisoned">¡Envenenado!</String>
-  <String Key="MessageKind.SacrificeDone">Lo material perece, la Fe permanece.</String>
   <String Key="Misc.All">Todo</String>
   <String Key="Misc.And">y</String>
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—</String>
@@ -242,7 +242,6 @@ Bla bla bla</String>
   <String Key="Misc.Nothing">Nada</String>
   <String Key="Misc.Progress">Progreso</String>
   <String Key="Misc.Recovering">Recuperando</String>
-  <String Key="Misc.SacrificeForFaith">Sacrificar por Fe.</String>
   <String Key="Misc.SelectSlot">Seleccionar ranura</String>
   <String Key="Misc.Stamina">Resistencia</String>
   <String Key="Misc.Threshold">Umbral</String>
@@ -312,11 +311,11 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
   <String Key="Prop.VendingMachine">Máquina expendedora</String>
   <String Key="Prop.WC">Inodoro</String>
-  <String Key="Verb.Ellipsis"></String>
+  <String Key="Verb.Ellipsis" />
   <String Key="Verb.Enter">Entrar</String>
   <String Key="Verb.Exit">Salir</String>
   <String Key="Verb.Lift">Alzar</String>
-  <String Key="Verb.None"></String>
+  <String Key="Verb.None" />
   <String Key="Verb.Open">Abrir</String>
   <String Key="Verb.Pull">Accionar</String>
   <String Key="Verb.Take">Agarrar</String>

@@ -48,6 +48,13 @@ namespace ScaryCastle
         // BaseValue
         public float BaseValue { get; }
 
+        // Clear
+        public void Clear()
+        {
+            modifiers.Clear();
+            isDirty = true;
+        }
+
         // RemoveModifiers
         public void RemoveModifiers(object source)
         {

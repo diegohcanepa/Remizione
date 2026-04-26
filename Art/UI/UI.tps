@@ -590,7 +590,6 @@
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorLeft.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorRight.png</key>
-            <key type="filename">UIIcons-assets/FaithIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -773,8 +772,9 @@
                 <false/>
             </struct>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
-            <key type="filename">UIIcons-assets/SkullEmpty.png</key>
-            <key type="filename">UIIcons-assets/SkullFull.png</key>
+            <key type="filename">UIIcons-assets/FaithIcon.png</key>
+            <key type="filename">UIIcons-assets/FaithIcons1.png</key>
+            <key type="filename">UIIcons-assets/FaithIcons2.png</key>
             <key type="filename">UIIcons-assets/TalkIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -890,7 +890,6 @@
             <key type="filename">UIIcons-assets/FearEmpty.png</key>
             <key type="filename">UIIcons-assets/FearFull.png</key>
             <key type="filename">UIIcons-assets/PoisonedIcon.png</key>
-            <key type="filename">UIIcons-assets/Skull.png</key>
             <key type="filename">UIIcons-assets/SkullIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -903,6 +902,21 @@
                 <rect>2,2,5,4</rect>
                 <key>scale9Paddings</key>
                 <rect>2,2,5,4</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UIIcons-assets/DiscardItemIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,3,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,3,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

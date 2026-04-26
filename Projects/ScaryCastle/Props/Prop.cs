@@ -25,6 +25,7 @@ namespace ScaryCastle
             : base(session, name)
         {
             this.ApproachBehavior = ApproachBehavior.InFront;
+            this.CanBeHit = false;
             this.Definition = PropDefinition.Definitions.Find(DeclaredName);
             this.HurtSound = Sound.Find(SoundNames.ImpactA);
 

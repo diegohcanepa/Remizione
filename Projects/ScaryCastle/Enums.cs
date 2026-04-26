@@ -50,7 +50,7 @@ namespace ScaryCastle
     public enum EffectContext { Contact, Attack, Update, Use }
 
     // EffectType
-    public enum EffectType { None, Damage, Death, Heal, Luck }
+    public enum EffectType { None, Damage, Death, Heal }
 
     // EffectTarget
     public enum EffectTarget
@@ -132,7 +132,7 @@ namespace ScaryCastle
     }
 
     // MessageKind
-    public enum MessageKind { CannotPlaceItem, Cursed, HandsFull, InventoryFull, NotEnoughCoins, NotEnoughFaith, OutOfReach, PathCleared, Poisoned, SacrificeDone }
+    public enum MessageKind { CannotPlaceItem, Cursed, HandsFull, InventoryFull, ItemDiscarded, NotEnoughCoins, NotEnoughFaith, OutOfReach, PathCleared, Poisoned }
 
     // MouseCursorState
     public enum MouseCursorState { Arrow, Attack, Cross, Down, Hand, Left, Prohibition, Right, Up, Wait }

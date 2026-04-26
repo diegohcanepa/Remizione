@@ -32,7 +32,7 @@ namespace ScaryCastle
         // GetDisplayName
         protected override string GetDisplayName()
         {
-            return $"{TextRepository.GetValue("Prop.Sack")} [{TextRepository.GetValue(DisplayNameKey)}]";
+            return TextRepository.GetValue(DisplayNameKey);
         }
 
         // OnParentChanged
