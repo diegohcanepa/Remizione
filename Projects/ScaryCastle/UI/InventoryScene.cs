@@ -27,14 +27,14 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public InventoryScene(Inventory inventory)
+        public InventoryScene(PlayerInventory inventory)
         {
             this.PausePreviousScenes = false;
-            this.amounts = new TextSprite[Inventory.MaximumCapacity];
-            this.faithIcons = new Sprite[Inventory.MaximumCapacity];
-            this.icons = new Sprite[Inventory.MaximumCapacity];
-            this.shadows = new Sprite[Inventory.MaximumCapacity];
-            this.slots = new Sprite[Inventory.MaximumCapacity];
+            this.amounts = new TextSprite[PlayerInventory.MaximumCapacity];
+            this.faithIcons = new Sprite[PlayerInventory.MaximumCapacity];
+            this.icons = new Sprite[PlayerInventory.MaximumCapacity];
+            this.shadows = new Sprite[PlayerInventory.MaximumCapacity];
+            this.slots = new Sprite[PlayerInventory.MaximumCapacity];
 
             // Bottom gradient
             this.bottomGradient = new(Atlases.UI.GetImage("InventoryContainer"))
@@ -305,7 +305,7 @@ namespace ScaryCastle
         }
 
         // Inventory
-        public Inventory Inventory
+        public PlayerInventory Inventory
         {
             get;
             set

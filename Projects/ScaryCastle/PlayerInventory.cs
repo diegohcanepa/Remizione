@@ -7,14 +7,14 @@ using System.Globalization;
 namespace ScaryCastle
 {
     /// <summary>
-    /// Inventory
+    /// PlayerInventory
     /// </summary>
-    public sealed class Inventory : Collection<Item>
+    public sealed class PlayerInventory : Collection<Item>
     {
         #region Constructor
 
         // Constructor
-        public Inventory(GameSession session)
+        public PlayerInventory(GameSession session)
             : base()
         {
             this.Session = session;
@@ -64,7 +64,7 @@ namespace ScaryCastle
         // RemoveItem
         protected override void RemoveItem(int index)
         {
-            Session.CurrentRun?.PlayerStats.RemoveAllModifiers(this[index]);
+            Session.PlayerStats.RemoveAllModifiers(this[index]);
             base.RemoveItem(index);
             InvalidateAmbientLightColor();
             Invalidate();
@@ -99,11 +99,11 @@ namespace ScaryCastle
                 {
                     if (item.Definition.LuckModifier != 0)
                     {
-                        Session.CurrentRun.PlayerStats.Luck.AddModifier(new(item.Definition.LuckModifier, item));
+                        Session.PlayerStats.Luck.AddModifier(new(item.Definition.LuckModifier, item));
                     }
                     else if (item.Definition.LightModifier != 0)
                     {
-                        Session.CurrentRun.PlayerStats.AmbientLight.AddModifier(new(item.Definition.LightModifier, item));
+                        Session.PlayerStats.AmbientLight.AddModifier(new(item.Definition.LightModifier, item));
                         InvalidateAmbientLightColor();
                     }
                 }

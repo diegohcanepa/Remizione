@@ -193,24 +193,12 @@ namespace Engendro
         }
 
         // GetVertices
-        public readonly Vector2[] GetVertices(float inflate = 0)
+        public readonly void GetVertices(Span<Vector2> destination)
         {
-            return [ GetPoint(RectanglePoint.LeftTop, -inflate, -inflate),
-                     GetPoint(RectanglePoint.RightTop, inflate, -inflate),
-                     GetPoint(RectanglePoint.RightBottom, inflate, inflate),
-                     GetPoint(RectanglePoint.LeftBottom, -inflate, inflate) ];
-        }
-
-        // GetVertices
-        public readonly void GetVertices(Span<Vector2> destination, float inflate)
-        {
-            if (destination.Length < 4)
-                throw new ArgumentException("Destination span is too small.");
-
-            destination[0] = GetPoint(RectanglePoint.LeftTop, -inflate, -inflate);
-            destination[1] = GetPoint(RectanglePoint.RightTop, inflate, -inflate);
-            destination[2] = GetPoint(RectanglePoint.RightBottom, inflate, inflate);
-            destination[3] = GetPoint(RectanglePoint.LeftBottom, -inflate, inflate);
+            destination[0] = GetPoint(RectanglePoint.LeftTop);
+            destination[1] = GetPoint(RectanglePoint.RightTop);
+            destination[2] = GetPoint(RectanglePoint.RightBottom);
+            destination[3] = GetPoint(RectanglePoint.LeftBottom);
         }
 
         // Inflate

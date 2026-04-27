@@ -258,8 +258,8 @@ namespace ScaryCastle
             if (ActiveThrowable != null)
                 result *= .7f;
 
-            if (IsPlayer && Session.CurrentRun != null)
-                result *= Session.CurrentRun.PlayerStats.Speed.Value;
+            if (IsPlayer)
+                result *= Session.PlayerStats.Speed.Value;
 
             return result;
         }

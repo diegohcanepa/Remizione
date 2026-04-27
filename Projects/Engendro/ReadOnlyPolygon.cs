@@ -253,9 +253,15 @@ namespace Engendro
         // ContainsVertex
         public bool ContainsVertex(ReadOnlyPolygon polygon)
         {
-            for (var i = 0; i < polygon.Vertices.Count; i++)
+            return ContainsVertex(polygon.Vertices);
+        }
+
+        // ContainsVertex
+        public bool ContainsVertex(IList<Vector2> vertices)
+        {
+            for (var i = 0; i < vertices.Count; i++)
             {
-                if (Contains(polygon.Vertices[i]))
+                if (Contains(vertices[i]))
                     return true;
             }
 

@@ -12,7 +12,7 @@ namespace ScaryCastle
 
         private readonly TextSprite amountText;
         private readonly Sprite icon;
-        private readonly Inventory inventory;
+        private readonly PlayerInventory inventory;
         private int lastKnownCount = -1;
         private readonly FloatTween rotationTween = new();
         private readonly Vector2Tween scaleTween = new();
@@ -22,7 +22,7 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public UIInventoryMeter(Inventory inventory)
+        public UIInventoryMeter(PlayerInventory inventory)
         {
             this.inventory = inventory;
 

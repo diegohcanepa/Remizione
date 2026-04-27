@@ -23,7 +23,7 @@ namespace ScaryCastle.Scripting
             if (session.Player is not Actor player)
                 return;
 
-            if (session.Inventory.Find(Body.Clauses[0]) is Item item && session.OutcomeTarget is GameThing target)
+            if (session.PlayerInventory.Find(Body.Clauses[0]) is Item item && session.OutcomeTarget is GameThing target)
             {
                 var context = Parser.ParseEnumArgument(this, ContextArg, EffectContext.Use);
                 item.ApplyEffects(player, target, context);

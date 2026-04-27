@@ -42,7 +42,7 @@ namespace ScaryCastle
                 cooldown -= gameTime.ElapsedGameTime.Milliseconds;
                 if (cooldown <= 0)
                 {
-                    if (Room != null && Session.Inventory.Find("Firecracker") is Item item)
+                    if (Room != null && Session.PlayerInventory.Find("Firecracker") is Item item)
                     {
                         item.ApplyEffects(this, null, EffectContext.Attack);
                         Session.Camera.Shake(TweenStyle.Linear, new Vector2(1.5f), 66, 4);

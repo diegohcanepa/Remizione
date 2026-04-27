@@ -36,7 +36,7 @@ namespace ScaryCastle
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
             this.Countdown = new(session);
 
-            this.InventoryMeter = new(session.Inventory);
+            this.InventoryMeter = new(session.PlayerInventory);
         }
 
         #endregion

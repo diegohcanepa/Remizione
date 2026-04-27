@@ -81,7 +81,7 @@ namespace ScaryCastle
                 if (lootCategory.HasValue && itemDef.Category != lootCategory.Value)
                     continue;
 
-                if (!itemDef.IsStackable && session.Inventory.Find(itemDef.Name) != null)
+                if (!itemDef.IsStackable && session.PlayerInventory.Find(itemDef.Name) != null)
                     continue;
 
                 float weight = AdjustWeightByQuality(def.Difficulty, itemDef.Quality, itemDef.SpawnWeight);
@@ -135,7 +135,7 @@ namespace ScaryCastle
             // Luck Base 0.0: Sumamos el bono directamente
             if (session.CurrentRun != null)
             {
-                float luckBonus = session.CurrentRun.PlayerStats.Luck.Value * 0.1f;
+                float luckBonus = session.PlayerStats.Luck.Value * 0.1f;
                 finalChance += luckBonus;
             }
 
@@ -194,7 +194,7 @@ namespace ScaryCastle
                 // Luck Base 0.0: Bono directo
                 if (session.CurrentRun != null)
                 {
-                    float luckBonus = session.CurrentRun.PlayerStats.Luck.Value * 0.05f;
+                    float luckBonus = session.PlayerStats.Luck.Value * 0.05f;
                     finalChance += luckBonus;
                 }
 

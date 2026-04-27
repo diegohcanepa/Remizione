@@ -151,9 +151,6 @@ namespace ScaryCastle
             }
         }
 
-        // Inventory
-        public Inventory Inventory { get; }
-
         // LoadNextCorridor
         public bool LoadNextCorridor(GameSession session)
         {
@@ -203,9 +200,6 @@ namespace ScaryCastle
 
         // MaxCorridors
         public int MaxCorridors { get; }
-
-        // PlayerStats
-        public PlayerStats PlayerStats { get; } = new();
 
         // Progress
         public Ratio Progress => CorridorIndex < 0 ? 0 : (float)CorridorIndex / MaxCorridors;

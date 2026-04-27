@@ -27,7 +27,7 @@ namespace ScaryCastle.Scripting
 
             var amount = Parser.ParseInt32Argument(this, AmountArg, 1);
 
-            session.Inventory.Remove(definition.Name);
+            session.PlayerInventory.Remove(definition.Name);
         }
     }
 }

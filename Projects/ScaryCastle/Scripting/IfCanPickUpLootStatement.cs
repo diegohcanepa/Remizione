@@ -19,7 +19,7 @@ namespace ScaryCastle.Scripting
 
             if (session.OutcomeTarget is ILoot<ItemDefinition> lootContainer && lootContainer.Loot != null)
             {
-                if (!session.Inventory.HasSpace(lootContainer.Loot))
+                if (!session.PlayerInventory.HasSpace(lootContainer.Loot))
                 {
                     session.HUD.Message.Show(MessageKind.InventoryFull);
                     return false;

@@ -55,16 +55,6 @@ namespace ScaryCastle
             if (Room == null || Prop.Definition == null)
                 return null;
 
-            for (var i = 0; i < Room.Walls.Count; i++)
-            {
-                if (Room.Walls[i] != lastThingCollisioned && Room.Walls[i].Contains(Position))
-                {
-                    lastThingCollisioned = Room.Walls[i];
-                    Break();
-                    return null;
-                }
-            }
-
             for (var i = 0; i < Room.CulledThings.Count; i++)
             {
                 if (Room.CulledThings[i] == this || Room.CulledThings[i] == owner || Room.CulledThings[i] == ignoreThing)
@@ -72,7 +62,7 @@ namespace ScaryCastle
 
                 if (Room.CulledThings[i] is GameThing target && target.CanBeHit && target.CollisionDetection && target != lastThingCollisioned && !target.IsDead)
                 {
-                    if (BoundingBox.Contains(target.Position))
+                    if (target.RuntimeHotspot.BoundingRectangleF.Intersects(BoundingBox))
                     {
                         if (lastThingCollisioned == null && appyDamage)
                         {
@@ -82,6 +72,16 @@ namespace ScaryCastle
 
                         return target;
                     }
+                }
+            }
+
+            for (var i = 0; i < Room.Walls.Count; i++)
+            {
+                if (Room.Walls[i] != lastThingCollisioned && Room.Walls[i].Contains(Position))
+                {
+                    lastThingCollisioned = Room.Walls[i];
+                    Break();
+                    return null;
                 }
             }
 

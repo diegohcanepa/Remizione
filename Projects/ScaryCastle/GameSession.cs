@@ -48,7 +48,7 @@ namespace ScaryCastle
             : base(game, new ScaryCastlePersistenceModel(), ContentManagerExtension.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
-            this.Inventory = new(this);
+            this.PlayerInventory = new(this);
             this.Environment = new Environment(this);
             this.LootGenerator = new(this);
             this.HUD = new HUD(this);
@@ -56,7 +56,7 @@ namespace ScaryCastle
             this.InteractionData = new(this);
             this.DeclaredThings = new(proceduralThings);
             this.Random = new Random(Seed);
-            this.inventoryScene = new(Inventory);
+            this.inventoryScene = new(PlayerInventory);
 
             ObjectPools = new ObjectPools(this);
             ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(), 100);
@@ -309,10 +309,6 @@ namespace ScaryCastle
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
                 playerPosition = DataConvert.ToVector2(playerPositionValue);
 
-            // Inventory
-            if (sessionNode.Attributes[nameof(Inventory)]?.Value is string inventoryData)
-                Inventory.LoadState(inventoryData);
-
             // RunCount
             if (sessionNode.Attributes[nameof(RunCount)]?.Value is string runCountValue)
                 RunCount = XmlConvert.ToInt32(runCountValue);
@@ -437,10 +433,6 @@ namespace ScaryCastle
             if (playerPosition.HasValue)
                 output.WriteAttributeString(nameof(playerPosition), DataConvert.ToString(playerPosition.Value));
 
-            // Inventory
-            if (Inventory.SaveState() is string inventoryData)
-                output.WriteAttributeString(nameof(Inventory), inventoryData);
-
             // RunCount
             output.WriteAttributeString(nameof(RunCount), XmlConvert.ToString(RunCount));
         }
@@ -502,7 +494,8 @@ namespace ScaryCastle
 
             HUD.Countdown.Reset();
             HUDVisible = false;
-            Inventory.Clear();
+            PlayerInventory.Clear();
+            PlayerStats.Reset();
 
             if (Player != null)
             {
@@ -558,9 +551,6 @@ namespace ScaryCastle
 
         // InteractionData
         public InteractionData InteractionData { get; }
-
-        // Inventory
-        public Inventory Inventory { get; }
 
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
@@ -659,6 +649,12 @@ namespace ScaryCastle
                 }
             }
         }
+
+        // PlayerInventory
+        public PlayerInventory PlayerInventory { get; }
+
+        // PlayerStats
+        public PlayerStats PlayerStats { get; } = new();
 
         // PreviousRoom
         [ScriptProperty]
