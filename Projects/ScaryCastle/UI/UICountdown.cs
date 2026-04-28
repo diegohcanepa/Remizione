@@ -10,7 +10,7 @@ namespace ScaryCastle
     /// </summary>
     public sealed class UICountdown : GameObject
     {
-        private readonly Sprite icon;
+        private readonly TextSprite labelText;
         private double lastKnownValue;
         private readonly GameSession session;
         private float timeLeft;
@@ -21,21 +21,23 @@ namespace ScaryCastle
         {
             this.session = session;
 
-            // Icon
-            this.icon = new(Atlases.UI.CorridorDoorIcon)
+            // Label text
+            this.labelText = new TextSprite(Fonts.CommonOutline)
             {
-                PivotOrigin = RectanglePoint.RightTop,
-                Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -4, 3),
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -3),
+                Scale = ScaleInfo.Text.Huge,
+                Spacing = -6,
+                Text = TextRepository.GetValue("Misc.Escape")
             };
 
-            // Amount
+            // Time text
             this.timeText = new TextSprite(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Yellow,
-                PivotOrigin = RectanglePoint.Right,
-                Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, 0, 1),
-                Scale = ScaleInfo.Text.ExtraGiant,
-                Spacing = -6
+                PivotOrigin = RectanglePoint.Left,
+                Position = labelText.BoundingBox.GetPoint(RectanglePoint.Right, 2, 0),
+                Scale = ScaleInfo.Text.Huge,
+                Spacing = -6,
             };
         }
 
@@ -47,7 +49,7 @@ namespace ScaryCastle
             if (!IsRunning)
                 return;
 
-            icon.Draw(gameTime);
+            labelText.Draw(gameTime);
             timeText.Draw(gameTime);
         }
 
@@ -68,6 +70,7 @@ namespace ScaryCastle
             else
             {
                 var value = Math.Ceiling(timeLeft);
+                
                 if (value != lastKnownValue)
                 {
                     timeText.Text = value.ToString(CultureInfo.InvariantCulture);
@@ -80,6 +83,8 @@ namespace ScaryCastle
 
                     else
                         timeText.Color = ColorPalette.Text.Red;
+
+                    labelText.Color = timeText.Color;
                 }
             }
         }

@@ -250,7 +250,7 @@ namespace ScaryCastle
             if (itemDefinition != null && session.Room is ProceduralRoom room)
             {
                 Prop? loot;
-                if (AotTypeRegistry.Find(itemDefinition.Name) != null)
+                if (AotTypeRegistry.Find(itemDefinition.Name) is AotTypeEntry entry && typeof(PickableLoot).IsAssignableFrom(entry.Type))
                 {
                     loot = room.CreateThingClone(itemDefinition.Name) as Prop;
                 }

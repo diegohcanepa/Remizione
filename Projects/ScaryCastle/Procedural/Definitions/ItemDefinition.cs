@@ -96,6 +96,8 @@ namespace ScaryCastle
                 _ => 5
             };
 
+            IsPassive = LightModifier != 0 || LuckModifier != 0;
+
             Definitions.Add(this);
         }
 
@@ -136,6 +138,9 @@ namespace ScaryCastle
 
         // Image
         public AtlasImage? Image { get; }
+
+        // IsPassive
+        public bool IsPassive { get; }
 
         // IsStackable
         public bool IsStackable { get; }

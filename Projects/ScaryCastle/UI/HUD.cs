@@ -35,8 +35,8 @@ namespace ScaryCastle
             this.hpMeter = new(new(4, 2));
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
             this.Countdown = new(session);
-
             this.InventoryMeter = new(session.PlayerInventory);
+            this.PassiveItems = new(session);
         }
 
         #endregion
@@ -57,6 +57,7 @@ namespace ScaryCastle
             Log.Draw(gameTime);
             Message.Draw(gameTime);
             Countdown.Draw(gameTime);
+            PassiveItems.Draw(gameTime);
 
             Game.SpriteBatch.End();
 
@@ -70,6 +71,7 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            PassiveItems.Update(gameTime);
             InventoryMeter.Update(gameTime);
             GuardMeter.Update(gameTime);
             hpMeter.Update(gameTime);
@@ -91,11 +93,11 @@ namespace ScaryCastle
             set => attackName.Text = value;
         }
 
-        // Countdown
-        public UICountdown Countdown { get; }
-
         // FaithMeter
         public UIFaithMeter FaithMeter { get; } = new();
+
+        // GateMeter
+        public UICountdown Countdown { get; }
 
         // GuardMeter
         public UIGuardMeter GuardMeter { get; } = new();
@@ -120,6 +122,9 @@ namespace ScaryCastle
 
         // Message
         public HUDMessage Message { get; }
+
+        // PassiveItems
+        public UIPassiveItems PassiveItems { get; }
 
         // Reset
         public void Reset()
