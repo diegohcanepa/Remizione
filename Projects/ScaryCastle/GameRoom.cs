@@ -233,12 +233,15 @@ namespace ScaryCastle
                     thing.DrawLights(gameTime);
             }
 
-            if (ambientLightSourceCount == 0 && Session.Player != null)
+            if (Session.Player != null)
             {
-                playerLight.Color = Session.PlayerInventory.AmbientLightColor ?? defaultPlayerLightColor;
-                playerLight.Scale = defaultPlayerLightScale * Session.PlayerStats.AmbientLight.Value;
-                playerLight.Position = Session.Player.GetAnchoredPosition(15, 15);
-                playerLight.Draw(gameTime);
+                if (ambientLightSourceCount == 0 || Session.PlayerInventory.AmbientLightColor != null)
+                {
+                    playerLight.Color = Session.PlayerInventory.AmbientLightColor ?? defaultPlayerLightColor;
+                    playerLight.Scale = defaultPlayerLightScale * Session.PlayerStats.AmbientLight.Value;
+                    playerLight.Position = Session.Player.GetAnchoredPosition(15, 15);
+                    playerLight.Draw(gameTime);
+                }
             }
 
             if (BrightnessModifier > 0)

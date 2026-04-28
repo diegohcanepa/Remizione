@@ -273,6 +273,9 @@
             <key type="filename">Edmund-assets/RaiseArm01.png</key>
             <key type="filename">Edmund-assets/RaiseArm02.png</key>
             <key type="filename">Edmund-assets/RaiseArm03.png</key>
+            <key type="filename">Edmund-assets/RaiseUpArm01.png</key>
+            <key type="filename">Edmund-assets/RaiseUpArm02.png</key>
+            <key type="filename">Edmund-assets/RaiseUpArm03.png</key>
             <key type="filename">Edmund-assets/Stand01.png</key>
             <key type="filename">Edmund-assets/Stand02.png</key>
             <key type="filename">Edmund-assets/Stand03.png</key>

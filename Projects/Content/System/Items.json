@@ -55,7 +55,8 @@
 		{
 			"name": "GoldenKey",
 			"category": "Access",
-			"isStackable": true
+			"isStackable": true,
+			"pickupSound": "PickupKey"
 		},
 		{
 			"name": "Lantern",

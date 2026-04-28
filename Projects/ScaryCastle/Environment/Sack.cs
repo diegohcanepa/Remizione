@@ -12,6 +12,7 @@ namespace ScaryCastle
         public Sack(GameSession session, string name)
             : base(session, name)
         {
+            ApproachBehavior = ApproachBehavior.ClosestSide;
             Atlas = Atlases.Props;
             DepthOffset = -2;
             Hotspot = new Polygon("0,0;7,0;7,7;0,7");

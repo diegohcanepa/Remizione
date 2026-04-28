@@ -117,6 +117,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(Firecracker));
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(GameThing));
+            AotTypeRegistry.Register(typeof(GoldenKey));
             AotTypeRegistry.Register(typeof(HellGoat));
             AotTypeRegistry.Register(typeof(Hub));
             AotTypeRegistry.Register(typeof(Monitor));

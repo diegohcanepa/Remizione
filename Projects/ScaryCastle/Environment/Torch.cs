@@ -26,16 +26,6 @@ namespace ScaryCastle
             IsAmbientLightSource = true;
         }
 
-        #region Protected members
-
-        // OnUpdate
-        protected override void OnUpdate(GameTime gameTime)
-        {
-            base.OnUpdate(gameTime);
-        }
-
-        #endregion
-
         // LightIntensity
         [ScriptProperty]
         public Intensity LightIntensity
@@ -48,13 +38,13 @@ namespace ScaryCastle
                 if (AttachedLight != null)
                 {
                     if (field == Intensity.Low)
-                        AttachedLight.Scale = new(3);
+                        AttachedLight.Scale = new(5);
 
                     else if (field == Intensity.Medium)
-                        AttachedLight.Scale = new(7);
+                        AttachedLight.Scale = new(9);
 
                     if (field == Intensity.High)
-                        AttachedLight.Scale = new(13);
+                        AttachedLight.Scale = new(15);
                 }
             }
         }

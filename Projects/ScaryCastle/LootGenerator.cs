@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -230,6 +231,7 @@ namespace ScaryCastle
                 if (room.CreateThingClone("Coin") is Coin coin)
                 {
                     coin.Position = thing.Position;
+                    
                     // Offset aleatorio para que no caigan apiladas exactamente en el mismo píxel
                     coin.Position += new Vector2(
                         session.Random.Next(-6, 7),
@@ -247,11 +249,21 @@ namespace ScaryCastle
 
             if (itemDefinition != null && session.Room is ProceduralRoom room)
             {
-                if (room.CreateThingClone(nameof(Sack)) is Sack sack)
+                Prop? loot;
+                if (AotTypeRegistry.Find(itemDefinition.Name) != null)
                 {
-                    sack.Loot = itemDefinition;
-                    sack.Position = thing.Position;
-                    room.Children.Add(sack);
+                    loot = room.CreateThingClone(itemDefinition.Name) as Prop;
+                }
+                else
+                {
+                    loot = room.CreateThingClone(nameof(Sack)) as Prop;
+                }
+
+                if (loot != null)
+                {
+                    (loot as ILoot<ItemDefinition>)?.Loot = itemDefinition;
+                    loot.Position = thing.Position;
+                    room.Children.Add(loot);
                     return true;
                 }
             }

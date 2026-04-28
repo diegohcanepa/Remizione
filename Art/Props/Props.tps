@@ -173,6 +173,22 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">CorridorLever-assets/CorridorLever01.png</key>
+            <key type="filename">CorridorLever-assets/CorridorLever02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,4,3,7</rect>
+                <key>scale9Paddings</key>
+                <rect>2,4,3,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Firecracker-assets/Firecracker01.png</key>
             <key type="filename">Firecracker-assets/Firecracker02.png</key>
             <key type="filename">Firecracker-assets/Firecracker03.png</key>
@@ -517,6 +533,24 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Props-assets/GoldenKey01.png</key>
+            <key type="filename">Props-assets/GoldenKey02.png</key>
+            <key type="filename">Props-assets/GoldenKey03.png</key>
+            <key type="filename">Props-assets/GoldenKey04.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,1,4,2</rect>
+                <key>scale9Paddings</key>
+                <rect>2,1,4,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">RideCar-assets/RideCar01.png</key>
             <key type="filename">RideCar-assets/RideCar02.png</key>
             <key type="filename">RideCar-assets/RideCar03.png</key>
@@ -764,6 +798,7 @@
                     <filename>Torch-assets</filename>
                     <filename>Props-assets</filename>
                     <filename>Psalm-assets</filename>
+                    <filename>CorridorLever-assets</filename>
                 </array>
             </struct>
         </map>
