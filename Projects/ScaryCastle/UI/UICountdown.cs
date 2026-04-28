@@ -10,6 +10,7 @@ namespace ScaryCastle
     /// </summary>
     public sealed class UICountdown : GameObject
     {
+        private readonly Sprite icon;
         private readonly TextSprite labelText;
         private double lastKnownValue;
         private readonly GameSession session;
@@ -39,6 +40,13 @@ namespace ScaryCastle
                 Scale = ScaleInfo.Text.Huge,
                 Spacing = -6,
             };
+
+            // Icon
+            this.icon = new(Atlases.UI.SkullIcon)
+            {
+                PivotOrigin = RectanglePoint.Right,
+                Position = labelText.BoundingBox.GetPoint(RectanglePoint.Left, -1, -.75f)
+            };
         }
 
         #region Protected members
@@ -49,6 +57,7 @@ namespace ScaryCastle
             if (!IsRunning)
                 return;
 
+            icon.Draw(gameTime);
             labelText.Draw(gameTime);
             timeText.Draw(gameTime);
         }
