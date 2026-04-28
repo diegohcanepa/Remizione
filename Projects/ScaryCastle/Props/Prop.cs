@@ -64,6 +64,13 @@ namespace ScaryCastle
 
         #region Protected members
 
+        // BounceCore
+        protected void BounceCore(float intensity, int bounceCount)
+        {
+            bounceScaleTween.Start(TweenStyle.QuadraticInOut, Scale, new Vector2(1f, intensity), 100, bounceCount);
+            xTween.Start(TweenStyle.QuadraticInOut, X, X - 1, 40, 6);
+        }
+
         // OnDrawShadow
         protected override void OnDrawShadow(GameTime gameTime)
         {
@@ -116,10 +123,9 @@ namespace ScaryCastle
 
         // Bounce
         [ScriptMethod]
-        public void Bounce()
+        public virtual void Bounce()
         {
-            bounceScaleTween.Start(TweenStyle.QuadraticInOut, Scale, new Vector2(1f, .95f), 100, 2);
-            xTween.Start(TweenStyle.QuadraticInOut, X, X - 1, 40, 6);
+            BounceCore(.95f, 2);
         }
 
         // Definition

@@ -36,6 +36,13 @@ namespace ScaryCastle
             return TextRepository.GetValue(DisplayNameKey);
         }
 
+        // OnLoad
+        protected override void OnLoad()
+        {
+            base.OnLoad();
+            Bounce();
+        }
+
         // OnParentChanged
         protected override void OnParentChanged(Entity? previousParent)
         {
@@ -52,6 +59,12 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // Bounce
+        public override void Bounce()
+        {
+            BounceCore(.75f, 8);
+        }
 
         // Loot
         public ItemDefinition? Loot
