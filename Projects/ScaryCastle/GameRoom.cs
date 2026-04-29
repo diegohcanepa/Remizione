@@ -17,6 +17,16 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private static readonly Light alarmLight = new("Alarm")
+        {
+            Color = Color.Red,
+            LightKind = LightKind.Alarm,
+            Passes = 3,
+            PivotOrigin = RectanglePoint.Center,
+            Position = Screen.Center,
+            Scale = new(20, 12)
+        };
+
         private int ambientLightSourceCount;
         private Color brightnessColor;
         private int currentDrawIndex;
@@ -205,14 +215,10 @@ namespace ScaryCastle
 
             Game.GraphicsDevice.Clear(LightMapColor);
 
-            if (AllowGlobalLight)
-            {
-                Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
-                Session.Environment.GlobalLight.Draw(gameTime);
-                Game.SpriteBatch.End();
-            }
-
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
+
+            if (AllowGlobalLight)
+                Session.Environment.GlobalLight.Draw(gameTime);
 
             // Owned lights
             for (int i = 0; i < lights.Count; i++)
@@ -243,6 +249,9 @@ namespace ScaryCastle
                     playerLight.Draw(gameTime);
                 }
             }
+
+            if (Session.HUD.Countdown.IsRunning)
+                alarmLight.Draw(gameTime);
 
             if (BrightnessModifier > 0)
                 Game.Shapes.DrawRectangle(Session.Viewport.ToRectangle(), brightnessColor);
@@ -458,6 +467,12 @@ namespace ScaryCastle
 
             if (ambientLightSourceCount == 0 && Session.Player != null)
                 playerLight.Update(gameTime);
+
+            if (Session.HUD.Countdown.IsRunning)
+            {
+                alarmLight.Position = Session.Camera.VisibleBox.Center;
+                alarmLight.Update(gameTime);
+            }
 
             // Dust particles
             if (DustParticleKind != DustParticleKind.None)

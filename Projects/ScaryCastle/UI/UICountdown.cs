@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Globalization;
@@ -10,7 +11,7 @@ namespace ScaryCastle
     /// </summary>
     public sealed class UICountdown : GameObject
     {
-        private readonly Sprite icon;
+        private SoundInstance? alarmSoundInstance;
         private readonly TextSprite labelText;
         private double lastKnownValue;
         private readonly GameSession session;
@@ -27,27 +28,20 @@ namespace ScaryCastle
             {
                 Color = ColorPalette.Text.Orange,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 15),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 20),
                 Scale = ScaleInfo.Text.Huge,
                 Spacing = -6,
-                Text = TextRepository.GetValue("Misc.Escape")
+                Text = TextRepository.GetValue("Misc.BackToCorridor")
             };
 
             // Time text
             this.timeText = new TextSprite(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Orange,
-                PivotOrigin = RectanglePoint.Left,
-                Position = labelText.BoundingBox.GetPoint(RectanglePoint.Right, 2, 0),
-                Scale = ScaleInfo.Text.Huge,
+                PivotOrigin = RectanglePoint.Top,
+                Position = labelText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2),
+                Scale = ScaleInfo.Text.Galactus,
                 Spacing = -6,
-            };
-
-            // Icon
-            this.icon = new(Atlases.UI.SkullIcon)
-            {
-                PivotOrigin = RectanglePoint.Right,
-                Position = labelText.BoundingBox.GetPoint(RectanglePoint.Left, -1, -.75f)
             };
         }
 
@@ -59,7 +53,6 @@ namespace ScaryCastle
             if (!IsRunning)
                 return;
 
-            icon.Draw(gameTime);
             labelText.Draw(gameTime);
             timeText.Draw(gameTime);
         }
@@ -100,6 +93,8 @@ namespace ScaryCastle
         {
             timeLeft = 0;
             IsRunning = false;
+            alarmSoundInstance?.Stop(2000);
+            alarmSoundInstance = null;
         }
 
         // Start
@@ -114,6 +109,14 @@ namespace ScaryCastle
             lastKnownValue = -1;
             timeLeft = duration;
             IsRunning = true;
+
+            this.alarmSoundInstance = Sound.Get(SoundNames.Alarm).PopInstance();
+            if (alarmSoundInstance != null)
+            {
+                alarmSoundInstance.IsLooped = true;
+                alarmSoundInstance.TransitionAware = false;
+                alarmSoundInstance.Play();
+            }
         }
     }
 }

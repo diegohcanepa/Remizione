@@ -5,6 +5,7 @@
     /// </summary>
     internal static class SoundNames
     {
+        internal const string Alarm = nameof(Alarm);
         internal const string CardFlap = nameof(CardFlap);
         internal const string CardWhoosh = nameof(CardWhoosh);
         internal const string CollectCoin = nameof(CollectCoin);

@@ -257,6 +257,12 @@
 /processorParam:Quality=Best
 /build:Audio/Ambience/Night.wav;Audio/Ambience/Night
 
+#begin Audio/FX/Alarm.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Alarm.wav;Audio/FX/Alarm
+
 #begin Audio/FX/AppleBite.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

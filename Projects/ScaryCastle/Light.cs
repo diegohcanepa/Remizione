@@ -49,6 +49,14 @@ namespace ScaryCastle
 
             switch (LightKind)
             {
+                //  Alarm
+                case LightKind.Alarm:
+
+                    lightSprite.Tweens.ColorTween = Utils.CreateLightColorTween(LightKind, Color);
+                    litTweenDuration = 1000;
+                    unlitTweenDuration = 1000;
+                    break;
+
                 //  Fire
                 case LightKind.Fire:
                     Passes = 2;

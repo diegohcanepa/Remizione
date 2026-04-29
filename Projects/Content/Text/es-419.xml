@@ -207,6 +207,7 @@
   <String Key="MessageKind.Poisoned">¡Envenenado!</String>
   <String Key="Misc.All">Todo</String>
   <String Key="Misc.And">y</String>
+  <String Key="Misc.BackToCorridor">¡Vuelve al pasillo!</String>
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
   <String Key="Misc.Credits">Remizione
@@ -233,7 +234,6 @@ Bla bla bla</String>
   <String Key="Misc.DisclaimerMessage">Algunas escenas e imágenes pueden herir la sensibilidad. La siguiente historia es ficticia y no representa a ninguna persona o evento real.</String>
   <String Key="Misc.DisclaimerTitle">ADVERTENCIA</String>
   <String Key="Misc.DollarSign">$</String>
-  <String Key="Misc.Escape">Escapar:</String>
   <String Key="Misc.FearSyncope">Síncope de miedo</String>
   <String Key="Misc.Here">Aquí</String>
   <String Key="Misc.Level">Nivel</String>
@@ -312,11 +312,11 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
   <String Key="Prop.VendingMachine">Máquina expendedora</String>
   <String Key="Prop.WC">Inodoro</String>
-  <String Key="Verb.Ellipsis"></String>
+  <String Key="Verb.Ellipsis" />
   <String Key="Verb.Enter">Entrar</String>
   <String Key="Verb.Exit">Salir</String>
   <String Key="Verb.Lift">Alzar</String>
-  <String Key="Verb.None"></String>
+  <String Key="Verb.None" />
   <String Key="Verb.Open">Abrir</String>
   <String Key="Verb.Pull">Accionar</String>
   <String Key="Verb.Take">Agarrar</String>
