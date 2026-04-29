@@ -41,7 +41,11 @@ namespace ScaryCastle
             if (MinProgress < 0)
                 MinProgress = 0;
 
+            // requiresDeadEnd
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
+
+            // RoomTheme
+            RoomTheme = element.GetEnum<RoomTheme>("roomTheme");
 
             // SpawnLocation
             SpawnLocation = element.GetEnum("spawnLocation", SpawnLocation.Any);
@@ -93,6 +97,9 @@ namespace ScaryCastle
 
         // RequiresDeadEnd
         public bool RequiresDeadEnd { get; }
+
+        // RoomTheme
+        public RoomTheme? RoomTheme { get; }
 
         // SpawnLocation
         public SpawnLocation SpawnLocation { get; }

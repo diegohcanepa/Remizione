@@ -163,7 +163,7 @@ namespace ScaryCastle
     public enum RideDoorDirection { Up, Right, Down, Left }
 
     // RoomTheme
-    public enum RoomTheme { BlueStone }
+    public enum RoomTheme { Castle }
 
     // RoomType
     public enum RoomType { Corridor, SideRoom }

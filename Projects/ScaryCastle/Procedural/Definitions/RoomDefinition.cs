@@ -59,7 +59,7 @@ namespace ScaryCastle
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
             RoomType = element.GetEnum("roomType", RoomType.SideRoom);
             SideRoomCategory = element.GetEnum("sideRoomCategory", SideRoomCategory.None);
-            Theme = element.GetEnum("theme", RoomTheme.BlueStone);
+            Theme = element.GetEnum("theme", RoomTheme.Castle);
 
             // Placeholders
             if (element.TryGetProperty("placeholders", out JsonElement placeholdersElement))

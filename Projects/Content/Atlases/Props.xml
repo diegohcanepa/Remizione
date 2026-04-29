@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:dd82092ca52a55130bc86fd527e76568:95a38eecc410193e0d075ef5de561d19:124b3bd0ff56be329062dd178e80040a$ -->
+<!-- $TexturePacker:SmartUpdate:42c18443621e34fdbaa9649cae093163:95a38eecc410193e0d075ef5de561d19:124b3bd0ff56be329062dd178e80040a$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -89,16 +89,16 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="RideCar03.png" x="58" y="226" w="26" h="23"/>
     <sprite n="RideCar04.png" x="139" y="2" w="26" h="23"/>
     <sprite n="RideCar08.png" x="131" y="150" w="26" h="23"/>
-    <sprite n="RideDoor_BlueStone_Generic_Down_Closed.png" x="129" y="205" w="32" h="36"/>
-    <sprite n="RideDoor_BlueStone_Generic_Down_Open.png" x="108" y="96" w="32" h="36"/>
-    <sprite n="RideDoor_BlueStone_Generic_Left_Closed.png" x="37" y="40" w="16" h="54"/>
-    <sprite n="RideDoor_BlueStone_Generic_Left_Open.png" x="37" y="152" w="16" h="54"/>
-    <sprite n="RideDoor_BlueStone_Generic_Right_Closed.png" x="55" y="152" w="16" h="54"/>
-    <sprite n="RideDoor_BlueStone_Generic_Right_Open.png" x="72" y="96" w="16" h="54"/>
-    <sprite n="RideDoor_BlueStone_Generic_Up_Closed.png" x="2" y="2" w="33" h="54"/>
-    <sprite n="RideDoor_BlueStone_Generic_Up_Open.png" x="2" y="58" w="33" h="54"/>
-    <sprite n="RideDoor_BlueStone_Hub_Up_Closed.png" x="2" y="114" w="33" h="54"/>
-    <sprite n="RideDoor_BlueStone_Hub_Up_Open.png" x="2" y="170" w="33" h="54"/>
+    <sprite n="RideDoor_Castle_Generic_Down_Closed.png" x="129" y="205" w="32" h="36"/>
+    <sprite n="RideDoor_Castle_Generic_Down_Open.png" x="108" y="96" w="32" h="36"/>
+    <sprite n="RideDoor_Castle_Generic_Left_Closed.png" x="37" y="40" w="16" h="54"/>
+    <sprite n="RideDoor_Castle_Generic_Left_Open.png" x="37" y="152" w="16" h="54"/>
+    <sprite n="RideDoor_Castle_Generic_Right_Closed.png" x="55" y="152" w="16" h="54"/>
+    <sprite n="RideDoor_Castle_Generic_Right_Open.png" x="72" y="96" w="16" h="54"/>
+    <sprite n="RideDoor_Castle_Generic_Up_Closed.png" x="2" y="2" w="33" h="54"/>
+    <sprite n="RideDoor_Castle_Generic_Up_Open.png" x="2" y="58" w="33" h="54"/>
+    <sprite n="RideDoor_Castle_Hub_Up_Closed.png" x="2" y="114" w="33" h="54"/>
+    <sprite n="RideDoor_Castle_Hub_Up_Open.png" x="2" y="170" w="33" h="54"/>
     <sprite n="RideDoorLeftLock.png" x="73" y="152" w="16" h="54"/>
     <sprite n="RideDoorRightLock.png" x="90" y="96" w="16" h="54"/>
     <sprite n="RideDoorUpLock.png" x="37" y="96" w="33" h="54"/>

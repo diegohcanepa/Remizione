@@ -241,7 +241,7 @@ namespace ScaryCastle
 
             if (Session.Player != null)
             {
-                if (ambientLightSourceCount == 0 || Session.PlayerInventory.AmbientLightColor != null)
+                if (ambientLightSourceCount == 0)
                 {
                     playerLight.Color = Session.PlayerInventory.AmbientLightColor ?? defaultPlayerLightColor;
                     playerLight.Scale = defaultPlayerLightScale * Session.PlayerStats.AmbientLight.Value;

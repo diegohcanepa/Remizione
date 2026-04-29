@@ -46,6 +46,12 @@
           "minimum": 0.0,
           "maximum": 1.0
         },
+        "roomTheme": {
+          "type": "string",
+          "enum": [
+            "Castle"
+          ]
+        },
         "spawnLocation": {
           "type": "string",
           "enum": [
@@ -53,7 +59,7 @@
             "Corridor",
             "SideRoom"
           ],
-          "default": "OnDeath"
+          "default": "Any"
         }        
       }
     }
