@@ -10,7 +10,12 @@
         internal StartRoutineCommand(Script script, string source, StatementBody body)
             : base(script, source, body, 1, ScopeArg)
         {
-            AssertRoutine(0);
+            if (AssertRoutine(0) is Script routine)
+            {
+                if (script.Interruptible && !routine.Interruptible)
+                    throw new ScriptException(this, $"Cannot start non-interruptible routine '{routine.Name}' from interruptible script '{script.Name}'.");
+            }
+
             Parser.ParseEnumArgument<LifetimeScope>(this, ScopeArg);
         }
 

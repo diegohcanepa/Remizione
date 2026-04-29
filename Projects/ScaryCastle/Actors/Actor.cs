@@ -229,7 +229,10 @@ namespace ScaryCastle
                 return;
 
             // Can update timer?
-            if (IsMoving || Session.IsAwaiting || IsAttacking)
+            if (IsMoving || IsAttacking)
+                return;
+
+            if (Session.IsAwaiting && Session.AwaitingScript != null && !Session.AwaitingScript.Interruptible)
                 return;
 
             reactionTimer -= gameTime.ElapsedGameTime.Milliseconds;
@@ -470,7 +473,12 @@ namespace ScaryCastle
 
             if (IsPlayer)
             {
-                Session.InterruptAwaitingScript();
+                if (Session.InterruptAwaitingScript())
+                {
+                    this.Game.SceneManager.PopUntil(Session);
+                    StopTalking();
+                    speechBubble?.Hide();
+                }
             }
             else if (IsHostile(attacker) && !IsDead)
             {

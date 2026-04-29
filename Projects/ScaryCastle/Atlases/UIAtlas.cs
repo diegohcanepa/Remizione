@@ -20,6 +20,7 @@ namespace ScaryCastle
             CreditsBar = this[nameof(CreditsBar)];
             CursedIcon = this[nameof(CursedIcon)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
+            DialogOptionBullet = this[nameof(DialogOptionBullet)];
             DiscardItemIcon = this[nameof(DiscardItemIcon)];
             FaithIcon = this[nameof(FaithIcon)];
             FaithIcons = CreateReadOnlyCollection(nameof(FaithIcons), 1, 2);
@@ -72,6 +73,9 @@ namespace ScaryCastle
 
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
+
+        // DialogOptionBullet
+        public AtlasImage DialogOptionBullet { get; }
 
         // DiscardItemIcon
         public AtlasImage DiscardItemIcon { get; }

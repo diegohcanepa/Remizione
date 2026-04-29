@@ -65,7 +65,7 @@
 			"lightColor": "240,181,65"
 		},
 		{
-			"name": "MasterLockpick",
+			"name": "Lockpick",
 			"category": "Access",
 			"skillChance": 70,
 			"isStackable": true

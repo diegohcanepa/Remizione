@@ -25,8 +25,9 @@ namespace ScaryCastle
             // Label text
             this.labelText = new TextSprite(Fonts.CommonOutline)
             {
+                Color = ColorPalette.Text.Orange,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -3),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 15),
                 Scale = ScaleInfo.Text.Huge,
                 Spacing = -6,
                 Text = TextRepository.GetValue("Misc.Escape")
@@ -35,6 +36,7 @@ namespace ScaryCastle
             // Time text
             this.timeText = new TextSprite(Fonts.CommonOutline)
             {
+                Color = ColorPalette.Text.Orange,
                 PivotOrigin = RectanglePoint.Left,
                 Position = labelText.BoundingBox.GetPoint(RectanglePoint.Right, 2, 0),
                 Scale = ScaleInfo.Text.Huge,
@@ -84,16 +86,6 @@ namespace ScaryCastle
                 {
                     timeText.Text = value.ToString(CultureInfo.InvariantCulture);
                     lastKnownValue = value;
-                    if (lastKnownValue > 15)
-                        timeText.Color = ColorPalette.Text.Highlight;
-
-                    else if (lastKnownValue > 5)
-                        timeText.Color = ColorPalette.Text.Orange;
-
-                    else
-                        timeText.Color = ColorPalette.Text.Red;
-
-                    labelText.Color = timeText.Color;
                 }
             }
         }

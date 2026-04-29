@@ -80,9 +80,9 @@ namespace ScaryCastle
                     TextErrorColor = ColorPalette.Text.Terra
                 };
 
-                console.CommandList.Add("put Trunk into $Room #at:77,77");
+                console.CommandList.Add("put GoldenTrunk into $Room #at:77,77");
                 console.CommandList.Add("add-item Coin");
-                console.CommandList.Add("add-item MasterLockpick");
+                console.CommandList.Add("add-item Lockpick");
 
                 roomEditor = new RoomEditor(this);
             }
@@ -113,7 +113,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(CloseUpRoom));
             AotTypeRegistry.Register(typeof(Coin));
             AotTypeRegistry.Register(typeof(CreditsRoom));
-            AotTypeRegistry.Register(typeof(Dice));
             AotTypeRegistry.Register(typeof(Firecracker));
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(GameThing));

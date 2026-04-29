@@ -350,7 +350,6 @@
             <key type="filename">Items-assets/Firecracker.png</key>
             <key type="filename">Items-assets/Lantern.png</key>
             <key type="filename">Items-assets/MagneticCard.png</key>
-            <key type="filename">Items-assets/MasterLockpick.png</key>
             <key type="filename">Items-assets/MissingItem.png</key>
             <key type="filename">Items-assets/RottenApple.png</key>
             <key type="filename">Items-assets/RustyLockpick.png</key>
@@ -388,6 +387,7 @@
                 <false/>
             </struct>
             <key type="filename">Items-assets/GoldenKey.png</key>
+            <key type="filename">Items-assets/Lockpick.png</key>
             <key type="filename">Items-assets/SodaCan.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

@@ -101,10 +101,12 @@ namespace ScaryCastle
 
             dialogBlock.Invalidate();
 
+            var image = Atlases.UI.FindImage("DialogOptionBullet");
             foreach (var option in dialogBlock.AvailableOptions)
             {
                 var optionText = option.Text;
-                menu.AddOption(option.Id.ToString(), optionText, Atlases.UI.FindImage("DialogOptionBullet"));
+                var menuOption = menu.AddOption(option.Id.ToString(), optionText, image);
+                menuOption.IconOffset = new(0, -1);
             }
 
             Layout();

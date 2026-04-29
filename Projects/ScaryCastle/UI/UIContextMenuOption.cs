@@ -25,7 +25,6 @@ namespace ScaryCastle
             this.Key = key;
             this.iconSprite = new(icon)
             {
-                Scale = ScaleInfo.ContextMenu.Icon
             };
 
             this.textSprite = new(menu.Font)
@@ -56,10 +55,10 @@ namespace ScaryCastle
             iconSprite.PivotOrigin = RectanglePoint.Center;
             iconSprite.X += iconSprite.BoundingBox.Width * .5f;
             iconSprite.Y = textSprite.BoundingBox.GetPoint(RectanglePoint.Left).Y;
+            iconSprite.Position += IconOffset;
 
             textSprite.Scale = menu.OptionTextScale;
             textSprite.Color = IsSelected ? menu.OptionSelectedColor : menu.OptionColor;
-            iconSprite.Color = textSprite.Color;
         }
 
         #endregion
@@ -73,6 +72,9 @@ namespace ScaryCastle
             iconSprite.Draw(gameTime);
             textSprite.Draw(gameTime);
         }
+
+        // IconOffset
+        public Vector2 IconOffset { get; set; }
 
         // IconScale
         public Vector2 IconScale

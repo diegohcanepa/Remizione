@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:c7ed785ecf9f60b1c890814c2168f760:57a2d8460a4aa1a5eba4ff434cfd50fc:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:d0fa1fc1d07fd4a69f2671ad7618e1b6:45751f766787c4c6d37528388935a4c8:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -59,6 +59,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="FireflyParticle2.png" x="50" y="502" w="5" h="5"/>
     <sprite n="FloorMark.png" x="32" y="502" w="7" h="6"/>
     <sprite n="GlobalLight.png" x="270" y="2" w="237" h="129"/>
+    <sprite n="GoldenTrunk.png" x="158" y="484" w="13" h="11"/>
     <sprite n="Gut1.png" x="20" y="390" w="6" h="4"/>
     <sprite n="Gut2.png" x="78" y="418" w="3" h="2"/>
     <sprite n="Gut3.png" x="63" y="502" w="4" h="5"/>
@@ -102,6 +103,6 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="SlapBlue.png" x="106" y="472" w="25" h="12"/>
     <sprite n="SlapRed.png" x="129" y="457" w="25" h="12"/>
     <sprite n="Ticket.png" x="41" y="502" w="7" h="6"/>
-    <sprite n="Trunk.png" x="158" y="484" w="13" h="11"/>
+    <sprite n="Trunk.png" x="158" y="497" w="13" h="11"/>
     <sprite n="Zap.png" x="119" y="428" w="20" h="13"/>
 </TextureAtlas>

@@ -459,7 +459,7 @@ namespace Adberration
 
             if (!IsAwaiting)
             {
-                if (outcomeScript != null && outcomeScript.IsCompleted)
+                if (outcomeScript != null)// && outcomeScript.IsCompleted)
                     EndOutcome();
 
                 if (pendingSave)
@@ -1070,13 +1070,22 @@ namespace Adberration
         // InterruptAwaitingScript
         public bool InterruptAwaitingScript()
         {
-            if (AwaitingScript?.Interruptible == true)
+            var result = false;
+
+            while (awaitingScripts.Count > 0)
             {
-                ScriptProcessor.StopScript(AwaitingScript);
-                return true;
+                if (awaitingScripts.Peek() is Script script)
+                {
+                    ScriptProcessor.StopScript(script);
+                    awaitingScripts.Pop();
+                    result = true;
+                }
             }
 
-            return false;
+            if (result)
+                UpdateScripts();
+
+            return result;
         }
 
         // IsAwaiting
