@@ -43,6 +43,9 @@ namespace ScaryCastle
 
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
 
+            // SpawnLocation
+            SpawnLocation = element.GetEnum("spawnLocation", SpawnLocation.Any);
+
             if (element.TryGetProperty("effects", out JsonElement effectsArray))
             {
                 foreach (var effectJson in effectsArray.EnumerateArray())
@@ -90,5 +93,8 @@ namespace ScaryCastle
 
         // RequiresDeadEnd
         public bool RequiresDeadEnd { get; }
+
+        // SpawnLocation
+        public SpawnLocation SpawnLocation { get; }
     }
 }

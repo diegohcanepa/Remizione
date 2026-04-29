@@ -209,7 +209,7 @@ namespace ScaryCastle
         {
             base.OnDraw(gameTime);
 
-            if (HUDVisible && IsCurrentScene)
+            if (IsHUDVisible)
                 HUD.Draw(gameTime);
 
             // Draw speech bubbles
@@ -393,9 +393,10 @@ namespace ScaryCastle
                 console?.Update(gameTime);
             }
 
-            if (HUDVisible)
+            if (CurrentRun != null)
             {
-                HUD.Update(gameTime);
+                if (IsHUDVisible)
+                    HUD.Update(gameTime);
 
                 if (!IsAwaiting)
                 {
@@ -493,7 +494,6 @@ namespace ScaryCastle
                 hubRoom.Unload();
 
             HUD.Countdown.Reset();
-            HUDVisible = false;
             PlayerInventory.Clear();
             PlayerStats.Reset();
 
@@ -539,10 +539,6 @@ namespace ScaryCastle
         // HUD
         public HUD HUD { get; }
 
-        // HUDVisible
-        [ScriptProperty]
-        public bool HUDVisible { get; set; }
-
         // ImpactWordPool
         public ObjectPool<ImpactWord> ImpactWordPool { get; }
 
@@ -554,6 +550,10 @@ namespace ScaryCastle
 
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
+
+        // IsHUDVisible
+        [ScriptProperty]
+        public bool IsHUDVisible => CurrentRun != null && Player != null && !Player.IsDead;
 
         // KillEnemies
         [ScriptMethod]
@@ -599,10 +599,7 @@ namespace ScaryCastle
                 var rideRoom = CurrentRun.CurrentCorridor.RideRoom;
 
                 if (CurrentRun.CorridorIndex == 0)
-                {
                     Player.Reheal();
-                    HUDVisible = true;
-                }
 
                 rideRoom.Children.Add(Player);
                 if (rideRoom.WalkArea != null)

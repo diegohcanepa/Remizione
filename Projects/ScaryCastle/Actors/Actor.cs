@@ -755,7 +755,7 @@ namespace ScaryCastle
             if (ActiveThrowable != null)
             {
                 var thrownObject = new ThrownProp(this, ActiveThrowable);
-                thrownObject.Launch();
+                thrownObject.Drop();
                 ActiveThrowable = null;
             }
         }

@@ -88,6 +88,61 @@ namespace ScaryCastle
             return null;
         }
 
+        // Launch
+        private void Launch(bool drop)
+        {
+            if (owner.Room == null || owner.GetActiveThrowablePosition() == null)
+                return;
+
+            this.ignoreThing = null;
+            this.isGrounded = false;
+            this.velocity = initialVelocity;
+            this.lastThingCollisioned = null;
+            this.RenderLayer = RenderLayer.Default;
+
+            depth = owner.Depth + .01f;
+
+            this.Position = owner.GetActiveThrowablePosition() ?? Vector2.Zero;
+            this.floorY = owner.Y - (BoundingBox.Height / 2);
+
+            if (drop)
+            {
+                velocity.X = 0;
+            }
+            else if (owner.IsFlippedHorizontally)
+            {
+                velocity.X *= -1;
+            }
+
+            owner.Room.Children.Add(this);
+
+            ignoreThing = CheckCollision(false);
+            var y = float.MinValue;
+            if (ignoreThing is IHoleArea holeArea)
+            {
+                testPoly.SetVertices(holeArea.Polygon.GetVertices(), -2);
+
+                for (var i = 0; i < testPoly.Vertices.Count; i++)
+                {
+                    if (owner.IsFlippedHorizontally)
+                    {
+                        if (testPoly.Vertices[i].X > owner.X)
+                            continue;
+                    }
+                    else if (testPoly.Vertices[i].X < owner.X)
+                    {
+                        continue;
+                    }
+
+                    if (testPoly.Vertices[i].Y > y)
+                        y = testPoly.Vertices[i].Y;
+                }
+
+                if (owner.Y <= y)
+                    ignoreThing = null;
+            }
+        }
+
         // UpdateFloorCollision
         private void UpdateFloorCollision()
         {
@@ -169,54 +224,11 @@ namespace ScaryCastle
         // Depth
         public override float Depth => depth;
 
-        // Launch
-        public void Launch()
-        {
-            if (owner.Room == null || owner.GetActiveThrowablePosition() == null)
-                return;
+        // Drop
+        public void Drop() => Launch(true);
 
-            this.ignoreThing = null;
-            this.isGrounded = false;
-            this.velocity = initialVelocity;
-            this.lastThingCollisioned = null;
-            this.RenderLayer = RenderLayer.Default;
-
-            depth = owner.Depth + .01f;
-
-            this.Position = owner.GetActiveThrowablePosition() ?? Vector2.Zero;
-            this.floorY = owner.Y - (BoundingBox.Height / 2);
-
-            if (owner.IsFlippedHorizontally)
-                velocity.X *= -1;
-
-            owner.Room.Children.Add(this);
-
-            ignoreThing = CheckCollision(false);
-            var y = float.MinValue;
-            if (ignoreThing is IHoleArea holeArea)
-            {
-                testPoly.SetVertices(holeArea.Polygon.GetVertices(), -2);
-
-                for (var i = 0; i < testPoly.Vertices.Count; i++)
-                {
-                    if (owner.IsFlippedHorizontally)
-                    {
-                        if (testPoly.Vertices[i].X > owner.X)
-                            continue;
-                    }
-                    else if (testPoly.Vertices[i].X < owner.X)
-                    {
-                        continue;
-                    }
-
-                    if (testPoly.Vertices[i].Y > y)
-                        y = testPoly.Vertices[i].Y;
-                }
-
-                if (owner.Y <= y)
-                    ignoreThing = null;
-            }
-        }
+        // Throw
+        public void Throw() => Launch(false);
 
         // Prop
         public Prop Prop { get; }

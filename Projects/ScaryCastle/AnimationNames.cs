@@ -10,6 +10,7 @@
         internal const string Hurt = nameof(Hurt);
         internal const string Move = nameof(Move);
         internal const string MoveCarry = nameof(MoveCarry);
+        internal const string PickUp = nameof(PickUp);
         internal const string Stand = nameof(Stand);
         internal const string StandCarry = nameof(StandCarry);
         internal const string Talk = nameof(Talk);

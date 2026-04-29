@@ -168,6 +168,19 @@ namespace ScaryCastle
                 else if (DoorDirection == RideDoorDirection.Down && rideRoom.RoomNode.Down != null)
                 {
                     assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Down);
+
+                    if (!rideRoom.HasAmbientLightSources)
+                    {
+                        this.AttachedLight = new("Light")
+                        {
+                            Color = new(240, 181, 65),
+                            LightKind = LightKind.Default,
+                            PivotOrigin = RectanglePoint.Center,
+                            Scale = new(9),
+                        };
+
+                        AttachedLightPosition = new(16, 20);
+                    }
                 }
                 else if (DoorDirection == RideDoorDirection.Left && rideRoom.RoomNode.Left != null)
                 {

@@ -84,36 +84,46 @@ namespace ScaryCastle
                 if (predicate != null && !predicate(definition))
                     continue;
 
-                // 1. Filtro por progreso en el run
+                // 1. Filtro por tipo de room
+                if (definition.SpawnLocation != SpawnLocation.Any)
+                {
+                    if (definition.SpawnLocation == SpawnLocation.Corridor && this is not CorridorRoom)
+                        continue;
+
+                    if (definition.SpawnLocation == SpawnLocation.SideRoom && this is not SideRoom)
+                        continue;
+                }
+
+                // 2. Filtro por progreso en el run
                 if (Session.CurrentRun.Progress < definition.MinProgress)
                     continue;
 
-                // 2. Filtro de dificultad: No permitimos que aparezcan cosas más difíciles que el cuarto
+                // 3. Filtro de dificultad: No permitimos que aparezcan cosas más difíciles que el cuarto
                 if (definition.Difficulty > RoomNode.Definition.Difficulty)
                     continue;
 
-                // 3. Filtro de topologia
+                // 4. Filtro de topologia
                 if (definition.RequiresDeadEnd && RoomNode.ConnectionCount > 1)
                     continue;
 
-                // 4. Validación de Existencia de instancia declarada en script
+                // 5. Validación de Existencia de instancia declarada en script
                 var thing = Session.FindDeclaredThing(definition.Name) ?? throw new InvalidOperationException($"There is no declared thing named '{definition.Name}'. ");
 
                 // Is expected type?
                 if (thing is not TThing)
                     continue;
 
-                // 5. Meta-progreso
+                // 6. Meta-progreso
                 // Chequea si el enemigo está desbloqueado (MinRun)
                 if (!definition.PassesRunConstraints(Session.RunCount))
                     continue;
 
-                // 6. Historial de la Run
+                // 7. Historial de la Run
                 // Chequea si el enemigo ya alcanzó su MaxPerRun global
                 if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
                     continue;
 
-                // 7. Reglas de Scope (Pools/Tags de la habitación)
+                // 8. Reglas de Scope (Pools/Tags de la habitación)
                 if (!TagScope.Test(RoomNode.Definition.Scope, RoomNode.Definition.Pools, RoomNode.Definition.Tags))
                     continue;
 

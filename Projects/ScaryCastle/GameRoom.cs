@@ -20,7 +20,7 @@ namespace ScaryCastle
         private int ambientLightSourceCount;
         private Color brightnessColor;
         private int currentDrawIndex;
-        private readonly Color defaultPlayerLightColor = Color.WhiteSmoke * .8f;
+        private readonly Color defaultPlayerLightColor = new(240, 181, 65);
         private readonly Vector2 defaultPlayerLightScale = new(5, 4);
         private static DustEmitter dustEmitter = null!;
         private static FireflyEmitter fireflyEmitter = null!;
@@ -559,6 +559,9 @@ namespace ScaryCastle
             get => Session.Environment.GlobalLight.Scale;
             set => Session.Environment.GlobalLight.Scale = value;
         }
+
+        // HasAmbientLightSources
+        public bool HasAmbientLightSources => ambientLightSourceCount > 0;
 
         // IsProcedural
         [ScriptProperty]

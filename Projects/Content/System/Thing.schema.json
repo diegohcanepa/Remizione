@@ -45,7 +45,16 @@
           "default": 0.0,
           "minimum": 0.0,
           "maximum": 1.0
-        }
+        },
+        "spawnLocation": {
+          "type": "string",
+          "enum": [
+            "Any",
+            "Corridor",
+            "SideRoom"
+          ],
+          "default": "OnDeath"
+        }        
       }
     }
   ]

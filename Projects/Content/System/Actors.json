@@ -13,7 +13,8 @@
       "name": "LootDropper",
       "dropTrigger": "OnImpact",
       "dropChanceMultiplier": 1,
-      "role": "Ambient"
+      "role": "Ambient",
+      "spawnLocation": "SideRoom"
     },
     {
       "name": "Skeleton",

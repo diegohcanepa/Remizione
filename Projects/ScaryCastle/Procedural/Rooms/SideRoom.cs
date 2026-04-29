@@ -45,8 +45,10 @@ namespace ScaryCastle
         {
             base.OnActivate();
 
-            //if (!Visited && Session.CurrentRun != null && ActivateTimer())
+            /*
+            if (!Visited && Session.CurrentRun != null && ActivateTimer())
                 Session.HUD.Countdown.Start(GameSettings.CorridorFrontGateCooldown);
+            */
         }
     }
 }
