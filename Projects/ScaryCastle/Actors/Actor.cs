@@ -40,7 +40,7 @@ namespace ScaryCastle
             this.Definition = ActorDefinition.Definitions.Find(DeclaredName);
             this.Atlas = Atlases.Actors;
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
-            this.DeathWord = ImpactWordName.PlopRed;
+            this.DeathWord = ComicTextKind.PlopRed;
             this.DisplayNameKey = $"Actor.{DeclaredName}";
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
@@ -127,6 +127,20 @@ namespace ScaryCastle
                 return;
 
             Session.InteractionData.Execute(Session);
+        }
+
+        // Hurt
+        private void Hurt()
+        {
+            if (HurtVoice != null)
+                PlaySound(HurtVoice);
+
+            if (Sprite.Animations.Contains(ActorStateNames.Hurt))
+            {
+                Stand();
+                var state = BodyMachine.FindOrCreateState<BodyHurtState>();
+                BodyMachine.ChangeState(state.GetType());
+            }
         }
 
         // MoveToNextPathNode
@@ -312,6 +326,11 @@ namespace ScaryCastle
                 reactionTimer = CombatBehavior?.Archetype.GetNextCooldown() ?? 2000;
         }
 
+        // OnApplyStatusEffect
+        protected override void OnApplyStatusEffect(StatusEffectType statusEffect, int amount)
+        {
+        }
+
         // OnCollisioning
         protected override void OnCollisioning(GameThing thing, out bool handled)
         {
@@ -359,7 +378,7 @@ namespace ScaryCastle
                 BodyMachine.ChangeState(deathState.GetType());
             }
 
-            ShowImpactWord(ImpactWordName.PlopRed);
+            ShowComicText(ComicTextKind.PlopRed);
         }
 
         // OnDraw
@@ -490,15 +509,7 @@ namespace ScaryCastle
 
             Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
 
-            if (HurtVoice != null)
-                PlaySound(HurtVoice);
-
-            if (Sprite.Animations.Contains(ActorStateNames.Hurt))
-            {
-                Stand();
-                var state = BodyMachine.FindOrCreateState<BodyHurtState>();
-                BodyMachine.ChangeState(state.GetType());
-            }
+            Hurt();
         }
 
         // OnUpdate
@@ -611,6 +622,7 @@ namespace ScaryCastle
                     else
                     {
                         activeThrowableSprite?.RenderImage = null;
+                        Stand(true);
                     }
                 }
             }
@@ -625,6 +637,7 @@ namespace ScaryCastle
         // Animate
         public SpriteAnimation? Animate(string animationName, bool loop, AnimationDirection direction, bool preserve)
         {
+            StopMoving();
             var result = AnimationPlayer.Play(animationName, loop, direction);
             if (result != null)
             {
@@ -704,16 +717,7 @@ namespace ScaryCastle
         {
             if (IsPlayer && Session.AwaitingScript != null)
             {
-                if (Session.AwaitingScript.Interruptible)
-                {
-                    return base.CanTakeDamage();
-                }
-                //else if (Session.OutcomeTarget is Actor actor && actor.IsAttacking)
-                //{
-                //    return base.CanTakeDamage();
-                //}
-
-                return false;
+                return Session.AwaitingScript.Interruptible && base.CanTakeDamage();
             }
             else
             {
@@ -793,6 +797,12 @@ namespace ScaryCastle
         [ScriptProperty]
         public Sound? FootstepSound { get; set; }
 
+        // ForceReaction
+        public void ForceReaction()
+        {
+            reactionTimer = 1;
+        }
+
         // GetActiveThrowablePosition
         public Vector2? GetActiveThrowablePosition()
         {
@@ -836,7 +846,7 @@ namespace ScaryCastle
                     if (value)
                     {
                         Faction = Faction.Evil;
-                        reactionTimer = 1;
+                        ForceReaction();
                     }
                 }
             }
@@ -993,9 +1003,9 @@ namespace ScaryCastle
 
         // Stand
         [ScriptMethod()]
-        public void Stand()
+        public void Stand(bool enforce = false)
         {
-            BodyMachine.ChangeState<BodyStandState>();
+            BodyMachine.ChangeState<BodyStandState>(enforce);
         }
 
         // StartTalking
@@ -1024,10 +1034,8 @@ namespace ScaryCastle
 
             var state = BodyMachine.FindOrCreateState<ActorThrowObjectState>();
             state.Prop = ActiveThrowable;
-            BodyMachine.ChangeState(state.GetType());
-
-            activeThrowableSprite?.RenderImage = null;
             ActiveThrowable = null;
+            BodyMachine.ChangeState(state.GetType());
         }
 
         /// <summary>

@@ -52,9 +52,6 @@ namespace ScaryCastle
             // HP
             DiceExpression? hp = element.GetObject("hp", value => new DiceExpression(value));
 
-            // ImpactWord
-            var impactWord = element.GetEnum("impactWord", ImpactWordName.None);
-
             // IsStackable
             IsStackable = element.GetBool("isStackable", false);
 

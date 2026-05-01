@@ -104,7 +104,6 @@
 			<Word>await-outcome-completion</Word>
 			<Word>await-outcome</Word>
 			<Word>await-pickup</Word>
-			<Word>await-player-attack</Word>			
 			<Word>await-popup</Word>
 			<Word>await-position-tween</Word>
 			<Word>await-qte</Word>
@@ -236,6 +235,7 @@
 			<Word>kill-all-creatures</Word>
 			<Word>lift-outcome-target</Word>
 			<Word>pickup-loot</Word>
+			<Word>player-attack</Word>
 			<Word>push-dialog</Word>
 			<Word>push-scene</Word>
 			<Word>put</Word>

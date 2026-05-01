@@ -38,6 +38,7 @@
         internal const string SaintPeregrineArm = nameof(SaintPeregrineArm);
         internal const string ShockZap = nameof(ShockZap);
         internal const string SpearTrap = nameof(SpearTrap);
+        internal const string StatusEffectDamage = nameof(StatusEffectDamage);
         internal const string TestSkillFail = nameof(TestSkillFail);
         internal const string Text = nameof(Text);
         internal const string TowerDoorClose = nameof(TowerDoorClose);

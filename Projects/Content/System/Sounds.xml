@@ -103,6 +103,7 @@
 	<FX Name="SmallWhooshA" MaxInstances="6" Sounds="1..4" />
 	<FX Name="SpearTrap" MaxInstances="4" />
 	<FX Name="SummonA" MaxInstances="4" />
+	<FX Name="StatusEffectDamage" MaxInstances="4" />
 	<FX Name="TestSkillFail" MaxInstances="4" />
 	<FX Name="Text" MaxInstances="4" Volume=".4" />
 	<FX Name="TowerDoorClose" MaxInstances="4" />

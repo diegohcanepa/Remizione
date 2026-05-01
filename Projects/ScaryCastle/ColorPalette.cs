@@ -25,6 +25,9 @@ namespace ScaryCastle
         // CreditLine
         internal static Color CreditLine { get; } = new Color(230, 230, 212);
 
+        // DefaultDarknessLight
+        internal static Color DefaultDarknessLight { get; } = Color.WhiteSmoke * .75f;
+
         // GlobalLight
         internal static class GlobalLight
         {

@@ -86,6 +86,20 @@ namespace ScaryCastle
             Game.SpriteBatch.End();
         }
 
+        // DrawComicTexts
+        private void DrawComicTexts(GameTime gameTime)
+        {
+            if (Session.ComicTextPool.InUse.Count == 0)
+                return;
+
+            Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
+            for (int i = 0; i < Session.ComicTextPool.InUse.Count; i++)
+            {
+                Session.ComicTextPool.InUse[i].Draw(gameTime);
+            }
+            Game.SpriteBatch.End();
+        }
+
 #if DEBUG
 
         // DrawDebugBoxes
@@ -141,20 +155,6 @@ namespace ScaryCastle
             for (var i = Session.ObjectPools.FloatingTexts.InUse.Count - 1; i >= 0; i--)
             {
                 Session.ObjectPools.FloatingTexts.InUse[i].Draw(gameTime);
-            }
-            Game.SpriteBatch.End();
-        }
-
-        // DrawImpactWords
-        private void DrawImpactWords(GameTime gameTime)
-        {
-            if (Session.ImpactWordPool.InUse.Count == 0)
-                return;
-
-            Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
-            for (int i = 0; i < Session.ImpactWordPool.InUse.Count; i++)
-            {
-                Session.ImpactWordPool.InUse[i].Draw(gameTime);
             }
             Game.SpriteBatch.End();
         }
@@ -390,7 +390,7 @@ namespace ScaryCastle
             DrawFloatingTexts(gameTime);
 
             // Impact words
-            DrawImpactWords(gameTime);
+            DrawComicTexts(gameTime);
 
 #if DEBUG
             DrawDebugBoxes();
@@ -449,9 +449,9 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            for (int i = 0; i < Session.ImpactWordPool.InUse.Count; i++)
+            for (int i = 0; i < Session.ComicTextPool.InUse.Count; i++)
             {
-                Session.ImpactWordPool.InUse[i].Update(gameTime);
+                Session.ComicTextPool.InUse[i].Update(gameTime);
             }
 
             TestTriggerAreas();

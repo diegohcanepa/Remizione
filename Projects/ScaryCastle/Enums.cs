@@ -28,6 +28,9 @@ namespace ScaryCastle
     // CombatIntentCategory
     public enum CombatIntentCategory { Basic, Special }
 
+    // ComicTextKind
+    public enum ComicTextKind { None, AghGreen, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
+
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }
 
@@ -35,7 +38,7 @@ namespace ScaryCastle
     public enum ConsumptionType { Quantity, Durability, None }
 
     // DamageType
-    public enum DamageType { Physical, Acid, Curse, Explosive, Fire, Ice, Lightning, Poison }
+    public enum DamageType { None, Physical, Acid, Explosive, Fire, Ice, Lightning }
 
     // Difficulty
     public enum Difficulty { Easy, Normal, Hard }
@@ -50,7 +53,7 @@ namespace ScaryCastle
     public enum EffectContext { Contact, Attack, Update, Use }
 
     // EffectType
-    public enum EffectType { None, Damage, Death, Heal }
+    public enum EffectType { None, Damage, Death, Heal, Status }
 
     // EffectTarget
     public enum EffectTarget
@@ -70,9 +73,6 @@ namespace ScaryCastle
 
     // ImpactType
     public enum ImpactType { Low, Medium, High }
-
-    // ImpactWordName
-    public enum ImpactWordName { None, AghGreen, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
 
     // Intensity
     public enum Intensity { Low, Medium, High }
@@ -177,8 +177,8 @@ namespace ScaryCastle
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }
 
-    // StatusEffect
-    public enum StatusEffect { None, Cursed, Poisoned }
+    // StatusEffectType
+    public enum StatusEffectType { None, Curse, Poison }
 
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }

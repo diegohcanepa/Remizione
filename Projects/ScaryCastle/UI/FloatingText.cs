@@ -98,8 +98,8 @@ namespace ScaryCastle
             ShowCore(origin, value, color, new Vector2(0, -6), scale, duration);
         }
 
-        // ShowDamageAmount
-        public void ShowDamageAmount(GameThing source, DamageType damageType, int amount)
+        // ShowAmount
+        public void ShowAmount(GameThing source, Color color, int amount)
         {
             if (amount == 0)
                 return;
@@ -107,13 +107,6 @@ namespace ScaryCastle
             var origin = source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, -4);
             var deltaX = Random.Shared.Next(3, 6);
             var horzDirection = source.Direction == FacingDirection.Left ? deltaX : -deltaX;
-
-            Color color = damageType switch
-            {
-                DamageType.Curse => ColorPalette.Text.Purple,
-                DamageType.Poison => ColorPalette.Text.Green,
-                _ => ColorPalette.Text.Highlight
-            };
 
             ShowCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, new(horzDirection, -10), ScaleInfo.Text.Giant.X, 1700);
         }

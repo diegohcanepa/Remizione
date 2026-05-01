@@ -60,18 +60,18 @@ namespace Engendro
         }
 
         // ChangeState
-        public void ChangeState<TNextState>()
+        public void ChangeState<TNextState>(bool enforce = false)
             where TNextState : State<TOwner>
         {
-            ChangeState(typeof(TNextState));
+            ChangeState(typeof(TNextState), enforce);
         }
 
         // ChangeState
-        public void ChangeState(Type nextStateType)
+        public void ChangeState(Type nextStateType, bool enforce = false)
         {
             EnsureStarted();
 
-            if (CurrentState.GetType() == nextStateType)
+            if (CurrentState.GetType() == nextStateType && !enforce)
                 return;
 
             // Verificamos si existe, si no, explotamos (fail fast)

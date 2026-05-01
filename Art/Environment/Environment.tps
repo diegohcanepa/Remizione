@@ -263,6 +263,165 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">ComicTexts-assets/ComicText_AghGreen.png</key>
+            <key type="filename">ComicTexts-assets/ComicText_AghRed.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,4,13,8</rect>
+                <key>scale9Paddings</key>
+                <rect>7,4,13,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ComicTexts-assets/ComicText_BangBlue.png</key>
+            <key type="filename">ComicTexts-assets/ComicText_BangRed.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,3,15,7</rect>
+                <key>scale9Paddings</key>
+                <rect>8,3,15,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ComicTexts-assets/ComicText_BoomPurple.png</key>
+            <key type="filename">ComicTexts-assets/ComicText_BoomRed.png</key>
+            <key type="filename">ComicTexts-assets/ComicText_Kapow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,4,15,7</rect>
+                <key>scale9Paddings</key>
+                <rect>8,4,15,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ComicTexts-assets/ComicText_CrackBlue.png</key>
+            <key type="filename">ComicTexts-assets/ComicText_CrackYellow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,3,17,7</rect>
+                <key>scale9Paddings</key>
+                <rect>8,3,17,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ComicTexts-assets/ComicText_CuackPurple.png</key>
+            <key type="filename">ComicTexts-assets/ComicText_CuackYellow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,4,17,7</rect>
+                <key>scale9Paddings</key>
+                <rect>8,4,17,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ComicTexts-assets/ComicText_KapowStrong.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,3,19,7</rect>
+                <key>scale9Paddings</key>
+                <rect>10,3,19,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ComicTexts-assets/ComicText_OuchBlue.png</key>
+            <key type="filename">ComicTexts-assets/ComicText_OuchGreen.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,3,14,6</rect>
+                <key>scale9Paddings</key>
+                <rect>7,3,14,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ComicTexts-assets/ComicText_PlopRed.png</key>
+            <key type="filename">ComicTexts-assets/ComicText_PlopYellow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,3,13,5</rect>
+                <key>scale9Paddings</key>
+                <rect>7,3,13,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ComicTexts-assets/ComicText_SlapBlue.png</key>
+            <key type="filename">ComicTexts-assets/ComicText_SlapRed.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,3,13,6</rect>
+                <key>scale9Paddings</key>
+                <rect>6,3,13,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ComicTexts-assets/ComicText_Zap.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,3,10,7</rect>
+                <key>scale9Paddings</key>
+                <rect>5,3,10,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Dice-assets/Dice01.png</key>
             <key type="filename">Dice-assets/Dice02.png</key>
             <key type="filename">Dice-assets/Dice03.png</key>
@@ -565,165 +724,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">ImpactWords-assets/AghGreen.png</key>
-            <key type="filename">ImpactWords-assets/AghRed.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,4,13,8</rect>
-                <key>scale9Paddings</key>
-                <rect>7,4,13,8</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ImpactWords-assets/BangBlue.png</key>
-            <key type="filename">ImpactWords-assets/BangRed.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>8,3,15,7</rect>
-                <key>scale9Paddings</key>
-                <rect>8,3,15,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ImpactWords-assets/BoomPurple.png</key>
-            <key type="filename">ImpactWords-assets/BoomRed.png</key>
-            <key type="filename">ImpactWords-assets/Kapow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>8,4,15,7</rect>
-                <key>scale9Paddings</key>
-                <rect>8,4,15,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ImpactWords-assets/CrackBlue.png</key>
-            <key type="filename">ImpactWords-assets/CrackYellow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>8,3,17,7</rect>
-                <key>scale9Paddings</key>
-                <rect>8,3,17,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ImpactWords-assets/CuackPurple.png</key>
-            <key type="filename">ImpactWords-assets/CuackYellow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>8,4,17,7</rect>
-                <key>scale9Paddings</key>
-                <rect>8,4,17,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ImpactWords-assets/KapowStrong.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>10,3,19,7</rect>
-                <key>scale9Paddings</key>
-                <rect>10,3,19,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ImpactWords-assets/OuchBlue.png</key>
-            <key type="filename">ImpactWords-assets/OuchGreen.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,3,14,6</rect>
-                <key>scale9Paddings</key>
-                <rect>7,3,14,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ImpactWords-assets/PlopRed.png</key>
-            <key type="filename">ImpactWords-assets/PlopYellow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,3,13,5</rect>
-                <key>scale9Paddings</key>
-                <rect>7,3,13,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ImpactWords-assets/SlapBlue.png</key>
-            <key type="filename">ImpactWords-assets/SlapRed.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,3,13,6</rect>
-                <key>scale9Paddings</key>
-                <rect>6,3,13,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ImpactWords-assets/Zap.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,3,10,7</rect>
-                <key>scale9Paddings</key>
-                <rect>5,3,10,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Lightning-assets/Lightning01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -842,7 +842,6 @@
                     <filename>Environment-assets</filename>
                     <filename>FireflyParticles-assets</filename>
                     <filename>DustParticles-assets</filename>
-                    <filename>ImpactWords-assets</filename>
                     <filename>Guts-assets</filename>
                     <filename>Sign-assets</filename>
                     <filename>NumberSix-assets</filename>
@@ -850,6 +849,7 @@
                     <filename>Lightning-assets</filename>
                     <filename>Bible-assets</filename>
                     <filename>ThrownProps-assets</filename>
+                    <filename>ComicTexts-assets</filename>
                 </array>
             </struct>
         </map>

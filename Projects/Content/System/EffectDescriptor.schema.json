@@ -7,7 +7,7 @@
     "effectType": {
       "type": "string",
       "description": "El tipo de acción a ejecutar.",
-      "enum": [ "None", "Damage", "Death", "Heal" ] 
+      "enum": [ "None", "Damage", "Death", "Heal", "Status" ] 
     },
     "amount": {
       "type": "string",
@@ -21,6 +21,11 @@
       "minimum": 0,
       "description": "Probabilidad de que el efecto se aplique."
     },    
+    "comicText": {
+      "type": "string",
+      "enum": [ "None", "AghGreen", "AghRed", "BoomPurple", "BoomRed", "BangBlue", "BangRed", "CrackBlue", "CrackYellow", "CuackPurple", "CuackYellow", "Kapow", "KapowStrong", "OuchBlue", "OuchGreen", "PlopRed", "PlopYellow", "SlapBlue", "SlapRed", "Zap" ],
+      "default": "None"
+    },
     "context": {
       "type": "string",
       "description": "Contexto en donde es aplicable el efecto.",
@@ -33,12 +38,6 @@
       "enum": [ "None", "Physical", "Acid", "Curse", "Explosive", "Fire", "Ice", "Lightning", "Poison" ],
       "default": "None"
     },
-    "impactWord": {
-      "type": "string",
-      "description": "Nombre de la Onomatopella a mostrar.",
-      "enum": [ "None", "AghGreen", "AghRed", "BoomPurple", "BoomRed", "BangBlue", "BangRed", "CrackBlue", "CrackYellow", "CuackPurple", "CuackYellow", "Kapow", "KapowStrong", "OuchBlue", "OuchGreen", "PlopRed", "PlopYellow", "SlapBlue", "SlapRed", "Zap" ],
-      "default": "None"
-    },
     "knockback": {
       "type": "string",
       "description": "Fuerza del knockback."
@@ -47,7 +46,13 @@
       "type": "number",
       "format": "float",
       "description": "Multiplier."
-    },      
+    },
+    "statusEffectType": {
+      "type": "string",
+      "description": "Si es status, qué tipo es.",
+      "enum": [ "None", "Curse", "Poison" ],
+      "default": "None"
+    },          
     "target": {
       "type": "string",
       "description": "A quién se aplica el efecto.",
@@ -59,5 +64,6 @@
       "description": "Nombre del archivo de sonido a reproducir."
     }
   },
-  "required": [ "effectType", "context" ]
+  "required": [ "effectType", "context" ],
+  "additionalProperties": false
 }

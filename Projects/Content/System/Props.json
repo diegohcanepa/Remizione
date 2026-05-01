@@ -11,7 +11,7 @@
           "context": "Contact",
           "effectType": "Damage",
           "amount": "1",
-          "impactWord": "Kapow"
+          "comicTextKind": "Kapow"
         }
       ],
       "placements": [
@@ -54,7 +54,7 @@
           "effectType": "Damage",
           "amount": "1",
           "knockback": "15,5",
-          "impactWord": "AghRed"
+          "comicTextKind": "AghRed"
         }
       ],
       "placements": ["Floor"]
@@ -66,7 +66,7 @@
           "context": "Contact",
           "effectType": "Damage",
           "amount": "1",
-          "impactWord": "Kapow"
+          "comicTextKind": "Kapow"
         }
       ],      
       "placements": [
@@ -82,7 +82,7 @@
           "context": "Contact",
           "effectType": "Damage",
           "amount": "1",
-          "impactWord": "Kapow"
+          "comicTextKind": "Kapow"
         }
       ],      
       "placements": [

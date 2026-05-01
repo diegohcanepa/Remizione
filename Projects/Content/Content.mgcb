@@ -1073,6 +1073,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/SpearTrap.wav;Audio/FX/SpearTrap
 
+#begin Audio/FX/StatusEffectDamage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/StatusEffectDamage.wav;Audio/FX/StatusEffectDamage
+
 #begin Audio/FX/SummonA.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

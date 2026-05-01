@@ -14,7 +14,7 @@
               "context": "Attack",
               "effectType": "Damage",
               "amount": "1",
-              "impactWord": "Kapow"
+              "comicText": "Kapow"
             }
           ]
         }
@@ -31,7 +31,7 @@
               "context": "Contact",
               "effectType": "Damage",
               "amount": "1",
-              "impactWord": "AghRed"
+              "comicText": "AghRed"
             }
           ]
         },
@@ -45,7 +45,7 @@
               "context": "Attack",
               "effectType": "Damage",
               "amount": "2",
-              "impactWord": "AghRed"
+              "comicText": "AghRed"
             }
           ]
         }
@@ -70,7 +70,7 @@
               "context": "Contact",
               "effectType": "Damage",
               "amount": "1",
-              "impactWord": "AghRed",
+              "comicText": "AghRed",
               "knockback": "15,5"
             }
           ]
@@ -90,7 +90,7 @@
               "context": "Contact",
               "effectType": "Damage",
               "amount": "1",
-              "impactWord": "AghRed",
+              "comicText": "AghRed",
               "knockback": "15,5"
             }
           ]
@@ -109,10 +109,11 @@
             {
               "context": "Contact",
               "amount": "2",
-              "damageType": "Poison",
-              "effectType": "Damage",
-              "impactWord": "AghGreen",
-              "knockback": "15,5"
+              "comicText": "AghGreen",
+              "effectType": "Status",
+              "statusEffectType": "Poison",
+              "knockback": "15,5",
+              "sound": "RatAttack"
             }
           ]
         }

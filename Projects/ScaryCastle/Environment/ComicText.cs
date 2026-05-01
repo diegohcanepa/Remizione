@@ -5,9 +5,9 @@ using System;
 namespace ScaryCastle
 {
     /// <summary>
-    /// ImpacWord
+    /// ComicText
     /// </summary>
-    public sealed class ImpactWord : GameObject
+    public sealed class ComicText : GameObject
     {
         private int endingPhaseCooldown;
         private readonly FloatTween opacityTween = new();
@@ -18,7 +18,7 @@ namespace ScaryCastle
         private readonly FloatTween yTween = new();
 
         // Constructor
-        public ImpactWord()
+        public ComicText()
         {
             this.sprite = new Sprite(null)
             {
@@ -70,11 +70,12 @@ namespace ScaryCastle
         public bool IsActive { get; private set; }
 
         // Show
-        public void Show(ImpactWordName kind, Vector2 position)
+        public void Show(ComicTextKind kind, Vector2 position)
         {
+            const string prefix = nameof(ComicText);
             sprite.Tweens.Reset();
             endingPhaseCooldown = 200;
-            sprite.RenderImage = Atlases.Environment.FindImage(kind.ToString());
+            sprite.RenderImage = Atlases.Environment.FindImage($"{prefix}_{kind}");
             sprite.Opacity = 1;
             sprite.Position = position;
             sprite.Rotation = RandomHelper.Next(Random.Shared, -.5f, .5f);

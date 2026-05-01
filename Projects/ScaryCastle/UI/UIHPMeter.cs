@@ -61,14 +61,14 @@ namespace ScaryCastle
             // 1. Fuentes de verdad
             int hp = Actor.HP;
             int maxHp = Actor.MaxHP;
-            int amount = (Actor.StatusEffect != StatusEffect.None) ? Actor.StatusEffectAmount : 0;
+            int amount = (Actor.StatusEffect != StatusEffectType.None) ? Actor.StatusEffectAmount : 0;
 
             // La "vida segura" es la que no está marcada por el estado
             int safeHp = hp - amount;
 
             // 2. Dimensionamiento
             totalIcons = maxHp / 2;
-            var images = (Actor.StatusEffect != StatusEffect.None)
+            var images = (Actor.StatusEffect != StatusEffectType.None)
                 ? imageGroups[(int)Actor.StatusEffect]
                 : imageGroups[0];
 

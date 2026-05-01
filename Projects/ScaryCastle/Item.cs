@@ -82,8 +82,21 @@ namespace ScaryCastle
                     EffectDescriptor.Apply(Definition.EffectDescriptors, source, target, context);
 
                     // Any food item remove poison status
-                    if (Definition.Category == ItemCategory.Food && target.StatusEffect == StatusEffect.Poisoned)
-                        target.ApplyStatusEffect(StatusEffect.None, 0);
+                    if (Definition.Category == ItemCategory.Food && target.StatusEffect == StatusEffectType.Poison)
+                    {
+                        var hasPoisonStatus = false;
+                        for (var i = 0; i < Definition.EffectDescriptors.Count; i++)
+                        {
+                            if (Definition.EffectDescriptors[i].StatusEffectType == StatusEffectType.Poison)
+                            {
+                                hasPoisonStatus = true;
+                                break;
+                            }
+                        }
+
+                        if (!hasPoisonStatus)
+                            target.ApplyStatusEffect(StatusEffectType.None, 0, ComicTextKind.None);
+                    }
                 }
             }
             else if (source.Room is GameRoom room)

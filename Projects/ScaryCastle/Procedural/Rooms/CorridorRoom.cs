@@ -211,7 +211,7 @@ namespace ScaryCastle
                 door.AllowInteraction = false;
             }
 
-            closedDoorTimer = 500;
+            closedDoorTimer = 1000;
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 namespace ScaryCastle
 {
     /// <summary>
-    /// UIAtlas abg3340
+    /// UIAtlas abg3340/midska/taoka24
     /// </summary>
     public sealed partial class UIAtlas : Atlas
     {

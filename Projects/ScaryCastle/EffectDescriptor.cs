@@ -18,13 +18,14 @@ namespace ScaryCastle
         {
             this.Amount = element.GetObject("amount", v => new DiceExpression(v));
             this.Chance = element.GetFloat("chance", 1);
+            this.ComicText = element.GetEnum("comicText", ComicTextKind.None);
             this.Context = element.GetEnum("context", EffectContext.Contact);
             this.DamageType = element.GetEnum("damageType", DamageType.Physical);
             this.EffectType = element.GetEnum("effectType", EffectType.None);
             this.Modifier = element.GetFloat("modifier", 0);
-            this.ImpactWord = element.GetEnum("impactWord", ImpactWordName.None);
             this.Knockback = element.GetVector2("knockback", Vector2.Zero);
             this.Sound = element.GetObject("sound", Sound.Get);
+            this.StatusEffectType = element.GetEnum("statusEffectType", StatusEffectType.None);
             this.Target = element.GetEnum("target", EffectTarget.Target);
         }
 
@@ -79,12 +80,17 @@ namespace ScaryCastle
 
                     // Damage
                     case EffectType.Damage:
-                        realTarget.TakeDamage(source, effect.DamageType, amount, effect.ImpactWord, effect.Knockback);
+                        realTarget.TakeDamage(source, effect.DamageType, amount, effect.ComicText, effect.Knockback);
                         break;
 
                     // Death
                     case EffectType.Death:
-                        realTarget.TakeDamage(source, effect.DamageType, int.MaxValue, effect.ImpactWord, effect.Knockback);
+                        realTarget.TakeDamage(source, effect.DamageType, int.MaxValue, effect.ComicText, effect.Knockback);
+                        break;
+
+                    // Status
+                    case EffectType.Status:
+                        realTarget.ApplyStatusEffect(effect.StatusEffectType, amount, effect.ComicText);
                         break;
                 }
             }
@@ -110,6 +116,9 @@ namespace ScaryCastle
         // Chance
         public Ratio Chance { get; }
 
+        // ComicText
+        public ComicTextKind ComicText { get; }
+
         // Context
         public EffectContext Context { get; }
 
@@ -119,9 +128,6 @@ namespace ScaryCastle
         // EffectType
         public EffectType EffectType { get; }
 
-        // ImpactWord
-        public ImpactWordName ImpactWord { get; }
-
         // Knockback
         public Vector2 Knockback { get; }
 
@@ -130,6 +136,9 @@ namespace ScaryCastle
 
         // Sound
         public Sound? Sound { get; }
+
+        // StatusEffectType
+        public StatusEffectType StatusEffectType { get; }
 
         // Target
         public EffectTarget Target { get; }

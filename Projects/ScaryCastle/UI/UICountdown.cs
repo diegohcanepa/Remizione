@@ -69,7 +69,7 @@ namespace ScaryCastle
             {
                 timeLeft = 0;
                 IsRunning = false;
-                session.AwaitRoutine(RoutineNames.DeathByFear);
+                session.AwaitRoutine(RoutineNames.DeathByGate);
             }
             else
             {

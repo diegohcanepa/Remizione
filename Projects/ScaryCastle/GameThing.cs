@@ -234,7 +234,7 @@ namespace ScaryCastle
         // UpdateStatusEffect
         private void UpdateStatusEffect(GameTime gameTime)
         {
-            if (StatusEffect == StatusEffect.None)
+            if (StatusEffect == StatusEffectType.None)
                 return;
 
             if (statusEffectTimer > 0)
@@ -247,6 +247,8 @@ namespace ScaryCastle
                         StatusEffectAmount -= 1;
                         HP -= 1;
                         statusEffectTimer = GameSettings.StatusEffectCooldown;
+                        Sound.Play(SoundNames.StatusEffectDamage);
+                        ShowComicText(ComicTextKind.AghGreen);
                     }
                 }
             }
@@ -295,6 +297,11 @@ namespace ScaryCastle
         {
             base.OnActivate();
             contactTimer = 0;
+        }
+
+        // OnApplyStatusEffect
+        protected virtual void OnApplyStatusEffect(StatusEffectType statusEffect, int amount)
+        {
         }
 
         // OnCollision
@@ -491,10 +498,10 @@ namespace ScaryCastle
         public bool AllowInteraction { get; set; } = true;
 
         // ApplyStatusEffect
-        public void ApplyStatusEffect(StatusEffect statusEffect, int amount)
+        public void ApplyStatusEffect(StatusEffectType statusEffect, int amount, ComicTextKind comicTextKind)
         {
             // 1. Clear status effect
-            if (statusEffect == StatusEffect.None)
+            if (statusEffect == StatusEffectType.None)
             {
                 this.StatusEffect = statusEffect;
                 this.StatusEffectAmount = 0;
@@ -502,11 +509,11 @@ namespace ScaryCastle
             }
 
             // 2. Si el efecto entrante es Maldición: PISA el veneno o SE SUMA a una maldición previa.
-            if (statusEffect == StatusEffect.Cursed)
+            if (statusEffect == StatusEffectType.Curse)
             {
-                if (StatusEffect != StatusEffect.Cursed)
+                if (StatusEffect != StatusEffectType.Curse)
                 {
-                    StatusEffect = StatusEffect.Cursed;
+                    StatusEffect = StatusEffectType.Curse;
                     StatusEffectAmount = amount;
                     statusEffectTimer = GameSettings.StatusEffectCooldown;
                 }
@@ -518,17 +525,18 @@ namespace ScaryCastle
                 }
 
                 if (Session.Player == this)
+                {
                     Session.HUD.Message.Show(MessageKind.Cursed, 2000);
-
-                return;
+                    Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Text.Purple, amount);
+                }
             }
 
             // 3. Si el efecto entrante es Veneno: Solo importa si no estás maldito.
-            if (statusEffect == StatusEffect.Poisoned && StatusEffect != StatusEffect.Cursed)
+            if (statusEffect == StatusEffectType.Poison && StatusEffect != StatusEffectType.Curse)
             {
-                if (StatusEffect != StatusEffect.Poisoned)
+                if (StatusEffect != StatusEffectType.Poison)
                 {
-                    StatusEffect = StatusEffect.Poisoned;
+                    StatusEffect = StatusEffectType.Poison;
                     StatusEffectAmount = amount;
                     statusEffectTimer = GameSettings.StatusEffectCooldown;
                 }
@@ -540,10 +548,20 @@ namespace ScaryCastle
                 }
 
                 if (Session.Player == this)
+                {
                     Session.HUD.Message.Show(MessageKind.Poisoned, 2000);
-
-                return;
+                    Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Text.Green, amount);
+                }
             }
+
+            // ComicText si hubo daño real
+            if (comicTextKind != ComicTextKind.None)
+            {
+                if (!IsDead || DeathWord == ComicTextKind.None)
+                    ShowComicText(comicTextKind);
+            }
+
+            OnApplyStatusEffect(statusEffect, amount);
         }
 
         // ApproachBehavior
@@ -717,7 +735,7 @@ namespace ScaryCastle
 
         // DeathWord
         [ScriptProperty]
-        public ImpactWordName DeathWord { get; set; }
+        public ComicTextKind DeathWord { get; set; }
 
         // DeathSound
         [ScriptProperty]
@@ -1147,6 +1165,13 @@ namespace ScaryCastle
             set => shadowSpot.Size = value;
         }
 
+        // ShowComicText
+        public void ShowComicText(ComicTextKind kind)
+        {
+            var pos = RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, 3);
+            Session.ComicTextPool.Get()?.Show(kind, pos);
+        }
+
         // ShowFloatingText
         public void ShowFloatingText(string text, Color color, int duration = 1000)
         {
@@ -1154,15 +1179,8 @@ namespace ScaryCastle
                 floatingText.Show(GetOverheadPosition(), text, color, duration);
         }
 
-        // ShowImpactWord
-        public void ShowImpactWord(ImpactWordName impactWordName)
-        {
-            var pos = RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, 3);
-            Session.ImpactWordPool.Get()?.Show(impactWordName, pos);
-        }
-
         // StatusEffect
-        public StatusEffect StatusEffect { get; private set; }
+        public StatusEffectType StatusEffect { get; private set; }
 
         // StatusEffectAmount
         [ScriptProperty]
@@ -1181,22 +1199,14 @@ namespace ScaryCastle
         }
 
         // TakeDamage
-        public int TakeDamage(GameThing attacker, DamageType damageType, int amount, ImpactWordName impactWordName, Vector2 knockbackForce)
+        public int TakeDamage(GameThing attacker, DamageType damageType, int amount, ComicTextKind comicTextKind, Vector2 knockbackForce)
         {
-            // ---------------------------------------------------------
-            // 1. FILTROS DE SALIDA (Gatekeepers)
-            // ---------------------------------------------------------
-
             // Si la cantidad es 0 o negativa, no hay interacción de daño.
-            if (amount <= 0)
-                return 0;
-
-            // Si ya está muerto o está en frames de invencibilidad, ignoramos todo.
-            if (!CanTakeDamage())
+            if (amount <= 0 || !CanTakeDamage())
                 return 0;
 
             // ---------------------------------------------------------
-            // 2. FEEDBACK INICIAL (Juice)
+            // 1. FEEDBACK INICIAL
             // ---------------------------------------------------------
             // Esto ocurre SIEMPRE que hay un impacto válido, aunque sea indestructible.
 
@@ -1212,7 +1222,7 @@ namespace ScaryCastle
             }
 
             // ---------------------------------------------------------
-            // 4. LÓGICA DE SALUD (Solo si es Destructible)
+            // 2. LÓGICA DE SALUD (Solo si es Destructible)
             // ---------------------------------------------------------
 
             // Aquí es donde manejamos el MaxHP == 0
@@ -1228,18 +1238,7 @@ namespace ScaryCastle
                 // Si después de la resistencia el daño es 0, salimos de la lógica de HP
                 if (finalDamage > 0)
                 {
-                    if (damageType == DamageType.Curse)
-                    {
-                        ApplyStatusEffect(StatusEffect.Cursed, finalDamage);
-                    }
-                    else if (damageType == DamageType.Poison)
-                    {
-                        ApplyStatusEffect(StatusEffect.Poisoned, finalDamage);
-                    }
-                    else
-                    {
-                        HP -= finalDamage;
-                    }
+                    HP -= finalDamage;
 
                     if (IsDead)
                     {
@@ -1247,28 +1246,26 @@ namespace ScaryCastle
                     }
                     else
                     {
-                        // Feedback de Daño Real (Parpadeo Rojo / Blanco)
-                        // Solo parpadeamos si realmente perdimos vida
                         hurtTween ??= new();
                         hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
 
+                        // Invulnerabilidad post-daño
                         if (HitEffect == HitEffect.Blink)
-                            blinker.Start(40, 15); // Invulnerabilidad post-daño
+                            blinker.Start(40, 15);
                         else
                             blinker.Stop();
                     }
 
-                    // Evento específico para lógicas custom
                     OnTakeDamage(attacker, finalDamage, damageType);
 
                     if (!IsDead)
-                        Session.ObjectPools.FloatingTexts.Get()?.ShowDamageAmount(this, damageType, amount);
+                        Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Text.Highlight, amount);
 
-                    // Impact Word (Solo mostramos "Pow!" si hubo daño real)
-                    if (impactWordName != ImpactWordName.None)
+                    // ComicText si hubo daño real
+                    if (comicTextKind != ComicTextKind.None)
                     {
-                        if (!IsDead || DeathWord == ImpactWordName.None)
-                            ShowImpactWord(impactWordName);
+                        if (!IsDead || DeathWord == ComicTextKind.None)
+                            ShowComicText(comicTextKind);
                     }
                 }
             }
@@ -1276,12 +1273,10 @@ namespace ScaryCastle
             {
                 // Lógica para Indestructibles (MaxHP == 0)
                 // Opcional: Sonido de "Metal/Rebote" o palabra "BLOCK"
-                // ShowImpactWord(ImpactWordName.Clink); 
             }
 
-
             // ---------------------------------------------------------
-            // 5. FÍSICAS (Knockback)
+            // 3. FÍSICAS (Knockback)
             // ---------------------------------------------------------
             // El empuje se aplica independientemente de la vida. 
             // Una caja de metal indestructible (MaxHP=0) debería poder ser empujada.
@@ -1291,9 +1286,13 @@ namespace ScaryCastle
 
                 Vector2 pushDirection = Position - attacker.Position;
                 if (pushDirection != Vector2.Zero)
+                {
                     pushDirection.Normalize();
+                }
                 else
+                {
                     pushDirection = new Vector2(1, 0);
+                }
 
                 // Aplicamos la fuerza
                 knockbackVelocity = pushDirection * knockbackForce.Length() * 5f;

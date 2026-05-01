@@ -87,7 +87,7 @@
     {
       "name": "Castle_Std_Common_02",
       "roomType": "SideRoom",
-      "sideRoomCategory": "Hub",
+      "sideRoomCategory": "Treasure",
       "doorUp": "150,54",
       "doorLeft": "21,126",
       "doorRight": "206,98",

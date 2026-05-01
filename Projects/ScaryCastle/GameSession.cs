@@ -59,7 +59,7 @@ namespace ScaryCastle
             this.inventoryScene = new(PlayerInventory);
 
             ObjectPools = new ObjectPools(this);
-            ImpactWordPool = new ObjectPool<ImpactWord>(() => new ImpactWord(), 100);
+            ComicTextPool = new ObjectPool<ComicText>(() => new ComicText(), 100);
 
             BackgroundColor = ColorPalette.BackgroundColor;
             Camera.SmoothSpeed = GameSettings.CameraSmoothSpeed;
@@ -251,7 +251,7 @@ namespace ScaryCastle
         protected override void OnExitRoom(Room currentRoom, Room nextRoom)
         {
             HUD.Reset();
-            ImpactWordPool.ReturnAll();
+            ComicTextPool.ReturnAll();
             ObjectPools.FloatingTexts.ReturnAll();
 
             for (var i = currentRoom.Children.Count - 1; i >= 0; i--)
@@ -459,9 +459,12 @@ namespace ScaryCastle
         [ScriptMethod]
         public void CloseCorridorDoor()
         {
-            (Room as CorridorRoom)?.CloseCorridorDoor();
             HUD.Countdown.Reset();
+            (Room as CorridorRoom)?.CloseCorridorDoor();
         }
+
+        // ComicTextPool
+        public ObjectPool<ComicText> ComicTextPool { get; }
 
         // CompleteRun
         [ScriptMethod]
@@ -520,6 +523,14 @@ namespace ScaryCastle
             GC.Collect(2, GCCollectionMode.Forced, true);
         }
 
+        // EnterCorridor
+        [ScriptMethod]
+        public void EnterCorridor()
+        {
+            if (CurrentRun?.CurrentCorridor?.RideRoom is CorridorRoom cr)
+                EnterRoom(cr);
+        }
+
         // Environment
         public Environment Environment { get; }
 
@@ -538,9 +549,6 @@ namespace ScaryCastle
 
         // HUD
         public HUD HUD { get; }
-
-        // ImpactWordPool
-        public ObjectPool<ImpactWord> ImpactWordPool { get; }
 
         // InteractionContext
         public InteractionContext InteractionContext { get; }

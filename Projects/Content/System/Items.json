@@ -32,7 +32,7 @@
 					"effectType": "Damage",
 					"damageType": "Physical",
 					"amount": "1d4",
-					"impactWord": "Kapow"
+					"comicText": "Kapow"
 				}
 			]
 		},
@@ -48,7 +48,7 @@
 					"effectType": "Damage",
 					"damageType": "Physical",
 					"amount": "1d4+4",
-					"impactWord": "Kapow"
+					"comicText": "Kapow"
 				}
 			]
 		},
@@ -72,7 +72,27 @@
 		},
 		{
 			"name": "RottenApple",
-			"category": "Food"
+			"category": "Food",
+			"isStackable": true,
+			"effects": [
+				{
+					"context": "Use",
+					"effectType": "Heal",
+					"amount": "2",
+					"target": "Self",
+					"sound": "AppleBite"
+				},
+				{
+					"context": "Use",
+					"effectType": "Status",
+					"statusEffectType": "Poison",
+					"amount": "2",
+					"chance": 0.95,
+					"target": "Self",
+					"comicText": "AghGreen"
+				}
+
+			]
 		},
 		{
 			"name": "RustyLockpick",

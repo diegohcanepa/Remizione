@@ -887,8 +887,6 @@
                 <false/>
             </struct>
             <key type="filename">UIIcons-assets/CursedIcon.png</key>
-            <key type="filename">UIIcons-assets/FearEmpty.png</key>
-            <key type="filename">UIIcons-assets/FearFull.png</key>
             <key type="filename">UIIcons-assets/PoisonedIcon.png</key>
             <key type="filename">UIIcons-assets/SkullIcon.png</key>
             <struct type="IndividualSpriteSettings">
